@@ -174,8 +174,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	}
 	ReconcileAmountCurrency: string;
 
-	ngOnInit()
-	{
+    ngOnInit() {
 		this.LoadPaymentMethods();
 
 		this.checkLedgerCreated();
@@ -323,8 +322,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
 
 
-			this._LedgerTransactionExtendedListService.getTransactionsForARPayment(this.EntityPM.Id, this.EntityPM.GLAccountId, this.EntityPM.PaymentCurrencyId).subscribe((myResult: ServiceResponse) =>
-			{
+
+
+
+
+            this._LedgerTransactionExtendedListService.getTransactionsForARPayment(this.EntityPM.Id, this.EntityPM.GLAccountId, this.EntityPM.PaymentCurrencyId).subscribe((myResult: ServiceResponse) => {
 
 				this._loading = false;
 
@@ -2051,8 +2053,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		sortedTransactions = closedTransactions.concat(partiallyOpenedTransactions).concat(openedTransactions);
 		return sortedTransactions;
 	}
-}
 
+
+    public get PaymentOpenAmount() : number {
+        return this.PaymenyAmount - this.paymentReconciledAmountTotal - this.amount2reconcileTotal;
+    }
+
+}
 
 
 export class TextStore
@@ -2160,8 +2167,8 @@ export class TransactionLineModel extends BaseComponent
 
 		if (v) {
 
-			if (this.AmountToReconcile == null || this.AmountToReconcile == 0)
-				this.AmountToReconcile = this.OpenAmount;
+
+            this.SetAmountToReconcile();
 
 			this.parent.PushTransaction(this.ledgerTransaction);
 		} else {
@@ -2171,10 +2178,33 @@ export class TransactionLineModel extends BaseComponent
 			if (this.EntityPM.InvoicesLedgerTransactions.length == 0) {
 				this.EntityPM.IsDirty = false;
 			}
-		}
 
+        }
+
+    }
+
+
+
+
+    private SetAmountToReconcile()
+    {
+        if (this.AmountToReconcile == null || this.AmountToReconcile == 0)
+        {
+            // if(this.CurrencyId == this.parent.EntityPM.PaymentCurrencyId)
+            // {
+
+                if (this.OpenAmount <= this.parent.PaymentOpenAmount)
+                    this.AmountToReconcile = this.OpenAmount;
+
+                else if (this.OpenAmount > this.parent.PaymentOpenAmount)
+                    this.AmountToReconcile = this.parent.PaymentOpenAmount;
+
+            // }else{
+
+            // }
+
+        }
 	}
-
 
 	get IsReconciled() { return this.LedgerTransactionPM.IsReconciled; }
 	set IsReconciled(value: boolean)
@@ -2428,8 +2458,8 @@ export class TransactionLineModel extends BaseComponent
 		} else { return this.OpenAmount; }
 	}
 
-	CalculatOriginalCurruncy()
-	{
+
+    CalculatOriginalCurruncy() {
 		//
 		// [i] copied from list template
 		//
