@@ -433,7 +433,7 @@ export class FieldTemplateComponent {
 
         }
         else {
-            alert("ShowGDMUSHARED");
+            alert("ShowSharedDocuments");
         }
 
     }
