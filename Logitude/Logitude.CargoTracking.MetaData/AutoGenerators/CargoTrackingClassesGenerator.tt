@@ -64,9 +64,9 @@ GenerateAllDomainServices("../EntityFiles","../../JustWebFreight/WebFreight.Web/
  
 
 // Generate Commmon TS files---------------------------------------------------------------------------------------------------------------
-//GenerateAllPMTS("../EntityFiles","../../AngularModules/AngularModules/CargoTracking/EntityPMs");
-//GenerateAllListTS("../EntityFiles","../../AngularModules/AngularModules/CargoTracking/EntityLists");
+GenerateAllPMTS("../EntityFiles","../../AngularModules/CargoTrackingModules/src/CargoTracking/EntityPMs");
+GenerateAllListTS("../EntityFiles","../../AngularModules/CargoTrackingModules/src/CargoTracking/EntityLists");
 
-//GenerateAllServices("../EntityFiles","../../AngularModules/AngularModules/CargoTracking/Services/StandardPMs","CargoTracking");
-//GenerateAllListServices("../EntityFiles","../../AngularModules/AngularModules/CargoTracking/Services/StandardLists","CargoTracking");
+GenerateAllServices("../EntityFiles","../../AngularModules/CargoTrackingModules/src/CargoTracking/Services/StandardPMs","CargoTracking");
+GenerateAllListServices("../EntityFiles","../../AngularModules/CargoTrackingModules/src/CargoTracking/Services/StandardLists","CargoTracking");
 #>
