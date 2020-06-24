@@ -16467,6 +16467,13 @@
         IsPredefined="true"
         Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;DeclarationWithoutRelease&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
