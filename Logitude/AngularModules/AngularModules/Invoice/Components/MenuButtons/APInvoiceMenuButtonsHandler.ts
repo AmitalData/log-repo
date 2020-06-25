@@ -158,7 +158,7 @@ export class APInvoiceMenuButtonsHandler {
                                 }
                             }
 
-                            button.IsHidden = false;
+                            button.IsHidden = isHidden;
                             break;
                         }
                     }
