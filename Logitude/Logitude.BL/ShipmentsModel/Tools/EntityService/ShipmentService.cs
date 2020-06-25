@@ -725,28 +725,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             IQueryable<WarehouseEntry> connectedWarehouseEntries = warehouseEntryRepository.GetActiveWarehouseEntriesByshipmentId(entityPM.Id, entityPM.Tenant);
             if (connectedWarehouseEntries.Count() != 0)
             {
-                WarehouseEntry leastWarehouseEntry = connectedWarehouseEntries.OrderByDescending(e => e.ActualEntryDate).FirstOrDefault();
+                WarehouseEntry leastWarehouseEntry = connectedWarehouseEntries.OrderBy(e => e.ActualEntryDate).FirstOrDefault();
                 if (leastWarehouseEntry != null)
                 {
                     entityPM.WarehouseLegActualEntryDate = leastWarehouseEntry.ActualEntryDate;
                     entityPM.WarehouseLegExpectedEntryDate = leastWarehouseEntry.ExpectedEntryDate;
                 }
             }
+            else
+            {
+                entityPM.WarehouseLegActualEntryDate = null;
+                entityPM.WarehouseLegExpectedEntryDate = null;
+            }
         }
 
         private void UpdateActualExpectedWarehouseReleasesDates()
         {
             WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(entityPM.Tenant);
-            IQueryable<WarehouseRelease> connectedWarehouseRelases = warehouseReleaseRepository.GetActiveWarehouseReleasesByshipmentId(entityPM.Id, entityPM.Tenant);
-            if (connectedWarehouseRelases.Count() != 0)
-            {
-                WarehouseRelease greatestWarehouseRelease = connectedWarehouseRelases.OrderByDescending(r => r.ActualReleaseDate).FirstOrDefault();
-                if (greatestWarehouseRelease != null)
-                {
-                    entityPM.WarehouseLegActualReleaseDate = greatestWarehouseRelease.ActualReleaseDate;
-                    entityPM.WarehouseLegExpectedReleaseDate = greatestWarehouseRelease.ExpectedReleaseDate;
-                }
-            }
+            IQueryable<WarehouseRelease> connectedWarehouseRelases = warehouseReleaseRepository.GetWarehouseReleasesByshipmentId(entityPM.Id, entityPM.Tenant);
             if (connectedWarehouseRelases.Count() == 1)
             {
                 WarehouseRelease warehouseRelease = connectedWarehouseRelases.FirstOrDefault();
@@ -755,6 +751,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 warehouseReleaseRepository.Update(warehouseRelease);
                 warehouseReleaseRepository.SubmitChanges();
                 UpdateDeliveryDepartureDates();
+            }
+            if (connectedWarehouseRelases.Count() != 0)
+            {
+                WarehouseRelease greatestWarehouseRelease = connectedWarehouseRelases.Where(r => r.ActualReleaseDate != null).OrderByDescending(r => r.ActualReleaseDate).FirstOrDefault();
+                if (greatestWarehouseRelease != null)
+                {
+                    entityPM.WarehouseLegActualReleaseDate = greatestWarehouseRelease.ActualReleaseDate;
+                    entityPM.WarehouseLegExpectedReleaseDate = greatestWarehouseRelease.ExpectedReleaseDate;
+                }
+            }
+            else
+            {
+                entityPM.WarehouseLegActualReleaseDate = null;
+                entityPM.WarehouseLegExpectedReleaseDate = null;
             }
         }
 
@@ -765,7 +775,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (shipmentPickUpDeliveries.Count == 1)
             {
                 shipmentPickUpDeliveries[0].ATD = entityPM.WarehouseLegActualReleaseDate;
-                shipmentPickUpDeliveries[0].ATA = entityPM.WarehouseLegExpectedReleaseDate;
+                shipmentPickUpDeliveries[0].ETD = entityPM.WarehouseLegExpectedReleaseDate;
                 shipmentPickUpDeliveryRepository.Update(shipmentPickUpDeliveries[0]);
                 shipmentPickUpDeliveryRepository.SubmitChanges();
             }
