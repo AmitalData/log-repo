@@ -6,6 +6,7 @@ using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,10 +47,16 @@ namespace Logitude.Customs.BL.Tasks
                 {
                     try
                     {
-                        courierMasterPMItem.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                        courierMasterPMItem.IsOpen = false;
-                        CourierMasterUpdateService.Update(courierMasterPMItem, true);
-                        LogMessagingUtil.Instance.AppendLine($"נסגרה טיסה " + courierMasterPMItem.AirlinePrefix + "-" + courierMasterPMItem.MAWB + "\n");
+                        using (var scope = TransactionFactory.GetNewTransaction())
+                        {
+                            courierMasterPMItem.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                            courierMasterPMItem.IsOpen = false;
+                            CourierMasterUpdateService.CloseCourierMaster = true;
+                            CourierMasterUpdateService.Update(courierMasterPMItem, true);
+                            LogMessagingUtil.Instance.AppendLine($"נסגרה טיסה " + courierMasterPMItem.AirlinePrefix + "-" + courierMasterPMItem.MAWB + "\n");
+
+                            scope.Complete();
+                        }
                     }
                     catch
                     {
