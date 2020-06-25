@@ -9,12 +9,13 @@ export class NewAgentScenario {
     private CreateEditShipment: CreateEditShipment = new CreateEditShipment();
 
     constructor() {
-    }}
+    }
+}
 
 
 it('OpenDocsInTab', function () {
 
-    cy.get('#ShipmentTHDocsIn').click();    
+    cy.get('#ShipmentTHDocsIn').click();
 
 });
 
@@ -25,19 +26,19 @@ it('Successfully Upload File', function () {
     cy.get('#SearchFieldsId_0_1').type('General Message');
     cy.wait(2000)
     cy.get('#row0').click();
-    cy.get('#UploadDocumentdbtn',{ multiple: true }).click();
+    cy.get('#UploadDocumentdbtn', { multiple: true }).click();
     //cy.get('.Button').click()
-const fileName = 'dummy.pdf'
-cy.fixture('dummy.pdf').then(function(fileContent){
-cy.get('input.upload').attachFile({fileContent,fileName,mimetype:'application/pdf'})
-cy.get('#FileUploadedSuccessfully').should('be.visible')
-//cy.get('#').should('be.visible')
-//cy.get(popupContainerSelector).contains('File Uploaded Successfully	').should('be.visible')
-//cy.title().should('contains', 'File Uploaded Successfully')
+    const fileName = 'dummy.pdf'
+    cy.fixture('dummy.pdf').then(function (fileContent) {
+        cy.get('input.upload').attachFile({ fileContent, fileName, mimetype: 'application/pdf' })
+        cy.get('#FileUploadedSuccessfully').should('be.visible')
+        //cy.get('#').should('be.visible')
+        //cy.get(popupContainerSelector).contains('File Uploaded Successfully	').should('be.visible')
+        //cy.title().should('contains', 'File Uploaded Successfully')
 
 
-//cy.wait(6000)
-   cy.get('.RedButton').click()
+        //cy.wait(6000)
+        cy.get('.RedButton').click()
 
-})
+    })
 })

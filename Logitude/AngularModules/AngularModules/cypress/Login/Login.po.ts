@@ -22,7 +22,8 @@ export class LoginComp {
 
 
  cy.server();
-   cy.route('test/api/ObjectTableLastUpdate/GetLastTableUpdateDate/?tenant=1102').as('LoadDataCompleted');
+   //cy.route('test/api/ObjectTableLastUpdate/GetLastTableUpdateDate/?tenant=1102').as('LoadDataCompleted');
+   cy.route('**/ObjectTableLastUpdate/**').as('LoadDataCompleted');
 
  cy.wait('@LoadDataCompleted');
 

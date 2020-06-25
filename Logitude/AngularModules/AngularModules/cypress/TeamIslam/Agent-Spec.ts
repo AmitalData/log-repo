@@ -8,16 +8,16 @@ import { LoginComp } from ".././login/Login.po";
 
 
 
-  describe('NewAgent', () => {
+describe('NewAgent', () => {
 
-   
+
     let AgentScenario: NewAgentScenario = new NewAgentScenario();
 
     beforeEach(() => {
 
     });
 
-   
+
 
     it('QuickSearch', function () {
 

@@ -994,6 +994,7 @@
     <TypeScriptCompile Include="cypress\TeamIslam\AgentScenario.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\BuildShipmentDocsIn.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\BuildShipmentDocsOut.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\BuildShipmentDocsOutx200.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\CreateEditShipment.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\DocOutSenario.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\DocsOut.e2e-spec.ts" />

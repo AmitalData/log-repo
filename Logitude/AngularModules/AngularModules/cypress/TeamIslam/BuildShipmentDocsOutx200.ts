@@ -1,15 +1,19 @@
 /// <reference types="cypress" />
 
 
-    var i = 0;
-    for (i = 0; i <= 200 ; i++) { 
 
-        
+var i = 0;
+for (i = 0; i <=100 ; i++) { 
+        describe("UseLocalStorage", ()=> {
+            beforeEach(() => {
+
+            cy.restoreLocalStorage()
+        })
+
+      
     it('Login Successfully', () => {
       
-       
-        
-        
+
   
         //cy.visit('http://localhost:4200/')
         
@@ -24,7 +28,8 @@
        
        
         cy.server();
-          cy.route('test/api/ObjectTableLastUpdate/GetLastTableUpdateDate/?tenant=1102').as('LoadDataCompleted');
+          //cy.route('test/api/ObjectTableLastUpdate/GetLastTableUpdateDate/?tenant=1102').as('LoadDataCompleted');
+          cy.route('**/ObjectTableLastUpdate/**').as('LoadDataCompleted');
        
         cy.wait('@LoadDataCompleted');
        
@@ -34,8 +39,10 @@
        )
        
 
+  
 
 it('Create Shipment Successfully', () => {
+ 
 cy.get('#GeneralMHOperations').click()
  cy.get('.DefaultMenuItem:first').click(); 
 cy.contains('Operation').click()
@@ -94,12 +101,14 @@ cy.get('#LogGrid_0_0row0').click()
     
 
 it('OpenDocOutTab', function () {
+  
 
     cy.get('#ShipmentTHDocsOut').click();    
 
 });
 
 it('Successfully Printing Document', function () {
+  
   
     cy.get('#SearchFieldsId_0_1').type('Export Trucking Order');
     cy.get('#ETO-L-DocsOut').click();
@@ -120,6 +129,7 @@ it('Successfully Printing Document', function () {
 })
 
 it('Failing Printing Document', function () {
+   
 
     cy.get('#SearchFieldsId_0_1').clear();
 
@@ -129,7 +139,15 @@ it('Failing Printing Document', function () {
     
     cy.get('#MessageWindow_Ok_0').click() 
 
+    cy.clearLocalStorage();
+
+})
 
 
+afterEach(() => {
+    cy.saveLocalStorage();
 
-})}
+  });
+
+})
+}
