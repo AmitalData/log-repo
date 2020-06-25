@@ -412,7 +412,7 @@ ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices:number,int
       else{
           NumberIdsSelected = interestReportArgs.SelectedIds.length;
       }
-      confirmWindow.Show(  NumberOfReportsWithoutInvoices+" "+TextCodeTranslator.Translate("InterestReport.O.OutOf")+" " + NumberIdsSelected + " " +TextCodeTranslator.Translate("InterestReport.O.SelectedReportsWillNotHaveAnInvoice"));
+      confirmWindow.Show(  NumberOfReportsWithoutInvoices+" "+TextCodeTranslator.Translate("InterestReport.O.OutOf")+" " + this.SelectedItemsCount + " " +TextCodeTranslator.Translate("InterestReport.O.SelectedReportsWillNotHaveAnInvoice"));
       confirmWindow.WindowClosed.subscribe((event: any) => {
           if (confirmWindow.Yes) {
              this.CreateInvoiceButtonClicked();
