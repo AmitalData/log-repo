@@ -259,8 +259,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if (this.ValidationErrorsList.length == 0) {
             var entity = this.CreateReconciliation();
             this.SubmitChanges(entity);
-
+          
         }
+    
     }
 
     SaveAsDraftButton() {
@@ -683,8 +684,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
 
     CheckBoxValueChanged(Row) {
-        this.TransactionFireCheckBoxChecked.emit({ rowData: Row.LedgerTransactionPM, IsChecked: false, RowIndex: Row.RowIndex, ById: true });
         this.PopLine(Row.LedgerTransactionPM.Id);
+        this.TransactionFireCheckBoxChecked.emit({ rowData: Row.LedgerTransactionPM, IsChecked: false, RowIndex: Row.RowIndex, ById: true });
     }
 
     CalculateTotals() {
@@ -930,8 +931,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
 
     ExtPageCheckBoxValueChanged(Row) {
-        this.ExtPageFireCheckBoxChecked.emit({ rowData: Row.PageLinePM, IsChecked: false, RowIndex: Row.RowIndex });
         this.ExtPagePopLine(Row.PageLinePM.Id);
+        this.ExtPageFireCheckBoxChecked.emit({ rowData: Row.PageLinePM, IsChecked: false, RowIndex: Row.RowIndex });
     }
 
 
@@ -980,6 +981,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
 
     AutoReco() {
+
+        this.TransactionSelectedLines.Clear();
+        this.ExtPageSelectedLines.Clear();
+
         console.log("[AUTO RECO] ", this.AmountCheckBoxChecked, this.ReferenceCheckBoxChecked, this.ReferenceDateCheckBoxChecked);
 
         this.IsAutoReconcile = true;
@@ -1380,10 +1385,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             if (!mm.HasError) {
 
                 this.ExternalRecoPM = entity;
-
-
-
                 this.ShowSuccessAlert();
+                this.TransactionSelectedLines.Clear();
+                this.ExtPageSelectedLines.Clear();
             }
 
             else {
