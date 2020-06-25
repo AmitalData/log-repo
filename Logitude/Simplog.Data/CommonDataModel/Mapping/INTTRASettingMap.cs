@@ -30,7 +30,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.INTTRAAlias).HasColumnName("INTTRAAlias");
 
             this.HasOptional(t => t.OutFTPDetail).WithMany().HasForeignKey(d => d.OutSettingsId);
-            this.HasRequired(t => t.InFTPDetail).WithMany().HasForeignKey(d => d.InSettingsId);
+            this.HasOptional(t => t.InFTPDetail).WithMany().HasForeignKey(d => d.InSettingsId);
             this.HasRequired(t => t.INTTRASettingMode).WithMany().HasForeignKey(d => d.INTTRASettingModeCode);
         }
     }
