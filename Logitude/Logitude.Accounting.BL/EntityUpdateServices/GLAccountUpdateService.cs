@@ -437,27 +437,33 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             if (entityPM.ActiveForInterest == true)
             {
-                if (entityPM.InterestCalculationStartDate == null)
+
+                GLAccountCurrencyQueryService gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService(entityPM.Tenant);
+                GLAccountCurrency gLAccountCurrency = gLAccountCurrencyQueryService.GetGLAccountCurrencyByGLAccountId(entityPM.Id, entityPM.Tenant);
+                if (gLAccountCurrency == null)
                 {
-                    throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.FieldInterestCalculationStartDateismandatory", entityPM.Tenant, showLocals));
-                }
-                else
-                {
-                    bool IsNotDeletde = false;
-                    for (int i = 0; i < entityPM.GLAccountInterestPeriods.Count; i++)
+                    if (entityPM.InterestCalculationStartDate == null)
                     {
-                        if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
+                        throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.FieldInterestCalculationStartDateismandatory", entityPM.Tenant, showLocals));
+                    }
+                    else
+                    {
+                        bool IsNotDeletde = false;
+                        for (int i = 0; i < entityPM.GLAccountInterestPeriods.Count; i++)
                         {
-                            IsNotDeletde = true;
+                            if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
+                            {
+                                IsNotDeletde = true;
+                            }
+
+                        }
+                        if (!IsNotDeletde)
+                        {
+                            throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", entityPM.Tenant, showLocals));
+
                         }
 
                     }
-                    if (!IsNotDeletde)
-                    {
-                        throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", entityPM.Tenant, showLocals));
-
-                    }
-
                 }
             }
             if (entityPM.ActiveForInterest == false)
