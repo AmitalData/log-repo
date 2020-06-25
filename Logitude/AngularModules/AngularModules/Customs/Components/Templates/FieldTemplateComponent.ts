@@ -1,8 +1,8 @@
-import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {CourierMasterService} from '../../Services/Others/CourierMasterService';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import { Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { CourierMasterService } from '../../Services/Others/CourierMasterService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { CustomsAutonomyKeywordExtendedPMService } from '../../Services/ExtendedPMs/CustomsAutonomyKeywordExtendedPMService';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { AppTool } from '../../../Infrastructure/Tools';
@@ -15,13 +15,13 @@ import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/U
 import { ResourceLoader } from '@angular/compiler';
 import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationReferantDataPMService';
 @Component({
-    
+
     templateUrl: './FieldTemplateComponent.html',
-    providers:[ListComponentArgs],
+    providers: [ListComponentArgs],
 })
 
 export class FieldTemplateComponent {
-  public IsDisplayOnly: boolean = false;
+    public IsDisplayOnly: boolean = false;
 
     public Entity: any = null;
     public FieldName: string = null;
@@ -45,7 +45,7 @@ export class FieldTemplateComponent {
 
     public ButtonClick() {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
-     }
+    }
     ShowUnifaceCustomFile() {
         let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
         //myDeclarationReferantDataList.CustomFileNo
@@ -103,37 +103,36 @@ export class FieldTemplateComponent {
         //static entityResourceService: EntityResourceService = new EntityResourceService();
 
         //entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response:any) {
-            //entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe((response:any) {
-            this.courierMasterService.getCourierMasterByDeclarationId(this.Entity.Id).subscribe((response: ServiceResponse) => {
-                if (response) {
-                    if (!response.HasError) {
-                        //this.EditEntity("Customs.CourierMaster", response.Result.Id, null, "COGN");
-                        var windowArgs: any = {};
-                        windowArgs.CurrentEntity = response.Result;
-                        var logWindow = new LogitudeWindow();
-                        logWindow.Width = 1500;
-                        logWindow.Height = 1000;
-                        logWindow.WindowArgs = windowArgs;
-                        logWindow.ShowCloseButton = true;
-                        //logWindow.IsHideHeader = true;
-                        logWindow.IsFillScreen = true;
-                        //AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
-                        logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
-                        logWindow.WindowClosed.subscribe(($event1: any) => {
-                            //this.ShowCourierMasterByIdReturnCloseSaveCallBack(isSaved);
-                        });
-                         
-                    }
+        //entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe((response:any) {
+        this.courierMasterService.getCourierMasterByDeclarationId(this.Entity.Id).subscribe((response: ServiceResponse) => {
+            if (response) {
+                if (!response.HasError) {
+                    //this.EditEntity("Customs.CourierMaster", response.Result.Id, null, "COGN");
+                    var windowArgs: any = {};
+                    windowArgs.CurrentEntity = response.Result;
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Width = 1500;
+                    logWindow.Height = 1000;
+                    logWindow.WindowArgs = windowArgs;
+                    logWindow.ShowCloseButton = true;
+                    //logWindow.IsHideHeader = true;
+                    logWindow.IsFillScreen = true;
+                    //AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
+                    logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
+                    logWindow.WindowClosed.subscribe(($event1: any) => {
+                        //this.ShowCourierMasterByIdReturnCloseSaveCallBack(isSaved);
+                    });
+
                 }
-                }); 
-            //});
+            }
+        });
+        //});
         //});
 
     }
     private _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
     EditFavorite() {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
-        debugger;
         var x = this.Entity.SortedColumns;
         this.Entity.Favorite = !this.Entity.Favorite;
         this._declarationReferantDataPMService.update(this.Entity).subscribe((response: any) => {
@@ -161,7 +160,7 @@ export class FieldTemplateComponent {
                 });
         }
     }
-    OpenControllerRemarks() { 
+    OpenControllerRemarks() {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};
@@ -171,17 +170,17 @@ export class FieldTemplateComponent {
         logitudeWindow.Width = 750;
         logitudeWindow.ShowCloseButton = true;
         if (this.Entity.IsControllerRemarks) {
-                _declarationRemarksService.GetINCorINAtatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
-                    .subscribe((response: any) => {
-                        windowArgs.EntityPM = response.Result;
-                        let counter = response.Result.length;
-                        logitudeWindow.Title = counter + "  הערות מבקר  ";
-                        logitudeWindow.WindowArgs = windowArgs;
-                        logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
-                    });
-         }
+            _declarationRemarksService.GetINCorINAtatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
+                .subscribe((response: any) => {
+                    windowArgs.EntityPM = response.Result;
+                    let counter = response.Result.length;
+                    logitudeWindow.Title = counter + "  הערות מבקר  ";
+                    logitudeWindow.WindowArgs = windowArgs;
+                    logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
+                });
+        }
     }
-    
+
 
 
     DeleteAutonomyKey(value: number) {
@@ -194,7 +193,7 @@ export class FieldTemplateComponent {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) { // YES
                     this.customsAutonomyKeywordExtendedPMService.deleteByid(value).subscribe((response: ServiceResponse) => {
-                      SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                        SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                         SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
                         this.CD.detectChanges();
                     });
@@ -398,45 +397,46 @@ export class FieldTemplateComponent {
     }
 
     ShowSharedDocuments() {
-        let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
-        let myViewModelName = "FieldTemplateComponent.ts-ShowSharedDocuments";
-        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-                .subscribe(
-                    (mess: UnifreightMessageM) => {
-                        var IsMatchUnifreightCallbackCommand = (
-                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
-                            mess.LogitudeEntityNumber == myDeclarationReferantDataList.DeclarationId &&
-                            mess.LogitudeViewModel == myViewModelName);
-                        if (IsMatchUnifreightCallbackCommand) {
-                            sub.unsubscribe();
-                            SessionLocator.SelectedSession.StopBusyIndicator();
-                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
-                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });;
+        if (this.Entity.IsCustomerLogBoxActivated) {
+            let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
+            let myViewModelName = "FieldTemplateComponent.ts-ShowSharedDocuments";
+            if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                    .subscribe(
+                        (mess: UnifreightMessageM) => {
+                            var IsMatchUnifreightCallbackCommand = (
+                                mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                                mess.LogitudeEntityNumber == myDeclarationReferantDataList.DeclarationId &&
+                                mess.LogitudeViewModel == myViewModelName);
+                            if (IsMatchUnifreightCallbackCommand) {
+                                sub.unsubscribe();
+                                SessionLocator.SelectedSession.StopBusyIndicator();
+                                let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                                SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });;
+                            }
                         }
-                    }
-                );
+                    );
 
-            SessionLocator.SelectedSession.StartBusyIndicator("");
-            var unifreightMessageM =
-                AmitalGatewayUtil.Instance.
-                    DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
-                        myViewModelName);
+                SessionLocator.SelectedSession.StartBusyIndicator("");
+                var unifreightMessageM =
+                    AmitalGatewayUtil.Instance.
+                        DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
+                            myViewModelName);
 
 
-            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-                "ScriptableGatewayUtil.ShowSharedDocuments",
-                "CFIHMAIN.LogitudeTask",
-                "ShowSharedDocuments",
-                unifreightMessageM,
-                " הצגת מסך : שיתוף מסמכים");
+                AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                    "ScriptableGatewayUtil.ShowSharedDocuments",
+                    "CFIHMAIN.LogitudeTask",
+                    "ShowSharedDocuments",
+                    unifreightMessageM,
+                    " הצגת מסך : שיתוף מסמכים");
 
+            }
+            else {
+                alert("ShowSharedDocuments");
+            }
         }
-        else {
-            alert("ShowSharedDocuments");
-        }
-
     }
 
     ShowMoneyOrder() {
@@ -521,6 +521,7 @@ export class FieldTemplateComponent {
             alert("ShowDelivery");
         }
 
+
     }
 
     ShowDeclaration(event) {
@@ -553,7 +554,7 @@ export class FieldTemplateComponent {
             SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
         }
     }
- 
+
     ShowCFIUFILEFromDeclarationReferantData() {
 
         let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
