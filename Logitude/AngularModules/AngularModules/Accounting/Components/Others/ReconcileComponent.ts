@@ -435,16 +435,16 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             this.openAmountFilter = null;
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
         }
-        let TempData = [];
+        // let TempData = [];
 
-        if (this.IsDraft == true) {
-            this.SelectedLines.Collection.forEach((value, key) => {
-                if (value.ledgerTransaction.Mark == true) {
-                    TempData.push(value);
-                }
-            });
-        }
-        this.SelectedLines = new ObservableCollection(TempData);
+        // if (this.IsDraft == true) {
+        //     this.SelectedLines.Collection.forEach((value, key) => {
+        //         if (value.ledgerTransaction.Mark == true) {
+        //             TempData.push(value);
+        //         }
+        //     });
+        // }
+        // this.SelectedLines = new ObservableCollection(TempData);
     }
     //#endregion
 
@@ -514,11 +514,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
+                    this.SelectedLines.Clear();
                     for (var i = 0; i < this.SelectedLines.Collection.length; i++) {
                         var line = this.SelectedLines.Collection[i];//new LineModel(result[i], this, -1);
                         this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: false, RowIndex: -1, ById: true });
                     }
-                    this.SelectedLines.Clear();// = [];
+                   // = [];
 
                     this.RunAutomaticReconcile();
 
