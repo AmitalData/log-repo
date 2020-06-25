@@ -114,6 +114,10 @@ export class WarehouseHelper {
         logWindow.Title = "New Cross Dock Entry";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./Warehouse/Components/NewWarehouseEntryComponent");
+        logWindow.WindowClosed.subscribe((event: any) => {
+            if (event == "Refresh")
+                this.CurrentSession.FireEvent("Refresh");
+        });
     }
 
 

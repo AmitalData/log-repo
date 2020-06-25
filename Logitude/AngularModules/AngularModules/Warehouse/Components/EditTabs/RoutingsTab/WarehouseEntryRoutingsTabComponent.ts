@@ -104,7 +104,7 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
                 }
             });
 
-            if (this.EntityPM.StatusCode == "CAEA") {
+            if (this.EntityPM && this.EntityPM.StatusCode == "CAEA") {
                 this.IsEnableEdit = false;
 
                 this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, this.IsEnableEdit);
