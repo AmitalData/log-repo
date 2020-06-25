@@ -123,11 +123,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 var createDateFilter = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault();
                 if (createDateFilter != null)
                 {
+
                     var from = createDateFilter.FieldValue.ToString();
-                    LTBFilter.From = Convert.ToDateTime(from);
+                    string[] fromDate = from.ToString().Split(';');
+                    LTBFilter.From = new DateTime(int.Parse(fromDate[0]), int.Parse(fromDate[1]) + 1, int.Parse(fromDate[2]), 0, 0, 0);
 
                     var to = createDateFilter.FieldValue2.ToString();
-                    LTBFilter.To = Convert.ToDateTime(to);
+                    string[] toDate = to.ToString().Split(';');
+                    LTBFilter.To = new DateTime(int.Parse(toDate[0]), int.Parse(toDate[1]) + 1, int.Parse(toDate[2]), 23, 59, 59);
+
+
                 }
 
                 //currency
@@ -201,8 +206,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         LTBFilter.SearchFields = searchFields;
                     }
                     LTBFilter.GLAccountId = glAccountId;
-                    LTBFilter.From = Convert.ToDateTime(from);
-                    LTBFilter.To = Convert.ToDateTime(to);
+
+                    string[] fromDate = from.ToString().Split(';');
+                    LTBFilter.From = new DateTime(int.Parse(fromDate[0]), int.Parse(fromDate[1])+1, int.Parse(fromDate[2]),0,0,0);
+
+                    string[] toDate = to.ToString().Split(';');
+                    LTBFilter.To = new DateTime(int.Parse(toDate[0]), int.Parse(toDate[1])+1, int.Parse(toDate[2]), 23, 59, 59);
+
                     LTBFilter.IncludeRelatedCurrenciesAccount = Convert.ToBoolean(includeRelatedCurrenciesAccount);
                     LTBFilter.IncludeChildAccounts = Convert.ToBoolean(includeChildAccounts);
                     LTBFilter.DateTypeCode = _dateTypeCode;
