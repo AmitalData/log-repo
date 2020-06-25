@@ -33,7 +33,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             {
                 interestReportPM = interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
                 DateTime? interestCalculationStartDate = GetInterestCalculationStartDate();
-                InterestTransactionGetParameters interestTransactionGetParameters = new InterestTransactionGetParameters(interestReportPM.InterestCalculationDate, tenant, interestReportPM.GLAccountId, interestCalculationStartDate);
+                List<string> glaccountIds = GetSplittedByCurrencyAcountsIds(interestReportPM.GLAccountId, tenant);
+                glaccountIds.Add(interestReportPM.GLAccountId);
+                InterestTransactionGetParameters interestTransactionGetParameters = new InterestTransactionGetParameters(interestReportPM.InterestCalculationDate, tenant, glaccountIds, interestCalculationStartDate);
                 interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(interestTransactionGetParameters);
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
@@ -54,6 +56,13 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 throw new Exception(e.Message+"\n"+ e.StackTrace);
             }
         }
+        private List<string> GetSplittedByCurrencyAcountsIds(string accountId, int tenant)
+        {
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
+            return gLAccountQueryService.GetSplittedByCurrencyGLAccountIds(accountId, tenant);
+
+        }
+
 
         private DateTime? GetInterestCalculationStartDate()
         {
