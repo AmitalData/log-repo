@@ -1062,7 +1062,9 @@
                                 });
                             }
                             else {
-                                $("#loginlogo").attr("src", "images/LoginScreen/header.jpg");
+
+                                $("#loginlogo").attr("src", GetApplicationLogoSource(myLogoCode));
+
                             }
 
                         },

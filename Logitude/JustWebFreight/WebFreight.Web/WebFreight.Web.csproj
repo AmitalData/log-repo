@@ -930,6 +930,7 @@
     <Content Include="App_Code\AngularJS_App_Code\Common\CommunicationLogStepController.cs" />
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
+    <Compile Include="Controllers\AccountingModel\ReconciliationStageCController.cs" />
     <Compile Include="FileNotFound.aspx.cs">
       <DependentUpon>FileNotFound.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

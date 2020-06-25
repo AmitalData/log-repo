@@ -268,6 +268,7 @@
         var _ReconciliationUrl = urlBase + '/api/ReconciliationOp';
         var _ReconciliationAfterConversionUrl = urlBase + '/api/ReconciliationAfterConversion';
         var _ReconciliationStageBUrl = urlBase + '/api/ReconciliationStageB';
+        var _ReconciliationStageCUrl = urlBase + '/api/ReconciliationStageC';
         var _CardGLAccountConnectUrl = urlBase + '/api/CardGLAccountConnect';
         var _RevaluationUrl = urlBase + '/api/RevaluationOp';
 
@@ -724,6 +725,165 @@
 
 
             $(".class_LabelLog").val("OnClickButtonReconcileStageB ..." + _ResponseToken);
+            $.ajax({
+                url: myUrl,
+                type: 'GET',
+                dataType: 'json',
+                headers: { 'Token': _ResponseToken },
+                contentType: 'application/json; charset=UTF-8', // This is the money shot
+                data: myJson,
+                success: function (response, textStatus, xhr) {
+                    //handle success 
+                    //alert("success ");;
+                    $(".class_LabelLog").val(JSON.stringify(response));
+                    DrawTableReconciliation(response, arryColumns);
+
+                    var obj = JSON.parse(myJson);
+                    obj.CallBack = response;
+                    var str = JSON.stringify(obj);
+                    $(".classTextBoxParam").val(str);
+                    //response.Token = response.Token;
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    if (textStatus != 'abort') {
+                        //handle error
+
+                        alert("error" + textStatus + errorThrown);
+
+                        $(".class_LabelLog").val(xhr.responseText);
+                    }
+                }
+            });
+
+
+            return false;
+        }
+
+
+
+
+        function OnClickButtonReconcileStageC() {
+
+            var defaultParam = new Object();
+            defaultParam.Tenant = 1;
+            defaultParam.GLAccountId = "Id, or empty value to get all";
+            defaultParam.AccountTypeCode = "2=Client, 3=Vendor";
+            defaultParam.UpToAccountingDate = "01.01.2020";
+            defaultParam.LT_LinesMaximum = 20;
+            defaultParam.MaximalDifference = 50.00;
+
+            if (!_ResponseToken) {
+                getToken();
+            }
+            try {
+                var myJson = $(".classTextBoxParam").val();
+
+                var objToCheck = JSON.parse(myJson);
+            } catch (e) {
+
+                var str = JSON.stringify(defaultParam);
+                $(".classTextBoxParam").val(str);
+                return false;
+            }
+            var objToCheck1 = JSON.parse(myJson);
+
+            var myUrl;
+            myUrl = _ReconciliationStageCUrl + "?tenant=" + objToCheck1.Tenant;
+            myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+
+            myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+
+            myUrl = myUrl + "&upToAccountingDate=" + objToCheck1.UpToAccountingDate;
+
+            myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
+
+            myUrl = myUrl + "&maximalDifference=" + objToCheck1.MaximalDifference;
+
+            //alert(myUrl);
+
+
+            $(".class_LabelLog").val("OnClickButtonReconcileStageC ..." + _ResponseToken);
+            $.ajax({
+                url: myUrl,
+                type: 'GET',
+                dataType: 'json',
+                headers: { 'Token': _ResponseToken },
+                contentType: 'application/json; charset=UTF-8', // This is the money shot
+                data: myJson,
+                success: function (response, textStatus, xhr) {
+                    //handle success 
+                    //alert("success ");;
+                    $(".class_LabelLog").val(JSON.stringify(response));
+                    DrawTableReconciliation(response, arryColumns);
+
+                    var obj = JSON.parse(myJson);
+                    obj.CallBack = response;
+                    var str = JSON.stringify(obj);
+                    $(".classTextBoxParam").val(str);
+                    //response.Token = response.Token;
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    if (textStatus != 'abort') {
+                        //handle error
+
+                        alert("error" + textStatus + errorThrown);
+
+                        $(".class_LabelLog").val(xhr.responseText);
+                    }
+                }
+            });
+
+
+            return false;
+        }
+
+
+
+
+        function OnClickButtonReconcileStageCNoBatch() {
+
+            var defaultParam = new Object();
+            defaultParam.Tenant = 1;
+            defaultParam.GLAccountId = "Id, or empty value to get all";
+            defaultParam.AccountTypeCode = "2=Client, 3=Vendor";
+            defaultParam.UpToAccountingDate = "01.01.2020";
+            defaultParam.LT_LinesMaximum = 20;
+            defaultParam.MaximalDifference = 50.00;
+            if (!_ResponseToken) {
+                getToken();
+            }
+            try {
+                var myJson = $(".classTextBoxParam").val();
+
+                var objToCheck = JSON.parse(myJson);
+            } catch (e) {
+
+                var str = JSON.stringify(defaultParam);
+                $(".classTextBoxParam").val(str);
+                return false;
+            }
+            var objToCheck1 = JSON.parse(myJson);
+
+            var myUrl;
+            myUrl = _ReconciliationStageCUrl + "?tenant=" + objToCheck1.Tenant;
+            myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+
+            myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+
+            myUrl = myUrl + "&upToAccountingDate=" + objToCheck1.UpToAccountingDate;
+
+            myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
+
+            myUrl = myUrl + "&maximalDifference=" + objToCheck1.MaximalDifference;
+
+            myUrl = myUrl + "&noBatch=1";
+
+            
+
+            //alert(myUrl);
+
+
+            $(".class_LabelLog").val("OnClickButtonReconcileStageC ..." + _ResponseToken);
             $.ajax({
                 url: myUrl,
                 type: 'GET',
@@ -1291,6 +1451,8 @@ div#two {
                     <%--<asp:Button ID="ButtonCardGLAccountConnect" runat="server" Text="Card GLAccount Connect (Tenant)" OnClick="ButtonCardGLAccountConnect_Click" />--%>        
                     <button id="ButtonCardGLAccountConnect"  onclick="javascript:return OnClickButtonCardGLAccountConnect();">Card GLAccount Connect (Tenant)</button>        
                     <asp:Button id="_ButtonCardIndexNew" runat="server" Text="Card Index New" OnClick="_ButtonCardIndexNew_Click" />
+                    <button id="ButtonReconcileStageC"  onclick="javascript:return OnClickButtonReconcileStageC();">Reconcile Stage C</button>        
+                    <button id="ButtonReconcileStageCNoBatch"  onclick="javascript:return OnClickButtonReconcileStageCNoBatch();">Reco Stage C - No Batch</button>        
                 </li>
                 <li>
                     <button id="ButtonPostDatedChequeRedemptionBatch" onclick="javascript:return OnClickButtonPostDatedChequeRedemptionBatch();" >PostDatedChequeRedemptionBatch</button>

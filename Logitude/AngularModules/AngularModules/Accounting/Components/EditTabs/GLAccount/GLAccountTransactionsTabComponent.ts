@@ -714,8 +714,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     LoadData() {
         if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate)) {
 
-            var _fromDate = new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0);
-            var _toDate = new Date(this.toDate.getFullYear(), this.toDate.getMonth(), this.toDate.getDate(), 23, 59, 59);
+            // var _fromDate = new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0);
+            var _fromDate =  [this.fromDate.getFullYear().toString(), this.FromDate.getMonth(), this.FromDate.getDate()].join(";");
+            // var _toDate = Date.UTC(this.toDate.getFullYear(), this.toDate.getMonth(), this.toDate.getDate(), 23, 59, 59);
+            var _toDate =  [this.toDate.getFullYear().toString(), this.toDate.getMonth(), this.toDate.getDate()].join(";");
             this.dateFilter = new FilterItem("AccountingDate", _fromDate, _toDate, null, "Between", false, false, false, "Date", false);
             console.log(">> Date Filter: ", _fromDate, _toDate);
 

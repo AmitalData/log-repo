@@ -195,7 +195,7 @@ namespace Logitude.Accounting.BL.DataContract
         {
             List<CardList> vendors = (from a in commoncontext.Cards
                                       where accountIds.Contains(a.GLAccountId)
-                                      && a.Tenant == Tenant
+                                      && a.Tenant == Tenant && a.CountryCode =="IL"
                                       select new CardList()
                                       {
                                           Id = a.Id,
@@ -265,7 +265,7 @@ namespace Logitude.Accounting.BL.DataContract
         public List<GLAccountList> GetGLAccountsByIds(List<string> accountIds)
         {
             return (from a in accountingContext.GLAccounts
-                    where a.Tenant == Tenant
+                    where a.Tenant == Tenant && a.ExcludeFromDeductionReport ==false
                     && accountIds.Contains(a.Id)
                     select new GLAccountList()
                     {
@@ -306,7 +306,7 @@ namespace Logitude.Accounting.BL.DataContract
                 List<LedgerTransaction> oppositeTransactions = oppositeAccountTransactions.Where(d => d.JournalId == transaction.JournalId && d.AccountId == transaction.OppositeAccountId && d.Reference1 == transaction.Reference1).ToList();
                 if(oppositeTransactions != null &&oppositeTransactions.Count > 0)
                 {
-                    taxDeductionReportLine.AmountInLocalCurrency = (double?)oppositeTransactions.Sum(d => d.LocalAmountDebit) - (double?) transaction.LocalAmountCredit;
+                    taxDeductionReportLine.AmountInLocalCurrency = (double?)oppositeTransactions.Sum(d => d.LocalAmountDebit);
                 }
                 taxDeductionReportLine.TaxDeductionLocalAmount = transaction.LocalAmountCredit;
                 taxDeductionReportLine.TaxDeductionPercentage =(int?) ( transaction.LocalAmountCredit == 0 ? 0 : Math.Round( (transaction.LocalAmountCredit / (transaction.LocalAmountCredit * 2)),2));
