@@ -209,7 +209,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         this.CheckEditEnabled(this.IsCustomsDocumentInRequest, !this.IsDisplayOnly);
         this.SelectedIndex = 0;
         this.FillConnectedToItems();
-        if (this.CustomsDocumentsTicket.CustomsDocumentPointers != null && this.CustomsDocumentsTicket.CustomsDocumentPointers.length > 0) {
+        if (this.CustomsDocumentsTicket != null && this.CustomsDocumentsTicket.CustomsDocumentPointers != null && this.CustomsDocumentsTicket.CustomsDocumentPointers.length > 0) {
             this.FillConnectedDocumentPointer();
         }
 
