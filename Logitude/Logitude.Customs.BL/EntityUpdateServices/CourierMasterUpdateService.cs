@@ -42,6 +42,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private Boolean toSetDeclarationChanged = false;
         private AmitalContext _AmitalContext;
 
+        public bool CloseCourierMaster { get;  set; }
+
         protected override void OnCreating(CourierMasterPM entityPM, EntityPM entityParentPM)
         {
             ValidateEntity(entityPM);
@@ -171,30 +173,34 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                  }
 
 
-            if (entityPM.IsCancelled==true)
+            if (!this.CloseCourierMaster)
             {
-   
+
+
+                if (entityPM.IsCancelled == true)
+                {
+
                     entityPM.IsOpen = false;
                     this.toSendTask = true;
-                if (!string.IsNullOrWhiteSpace(declarations))
-                {
-                    CancelledDeclarations(declarations, entityPM.Tenant);
-               }
- 
-            }
+                    if (!string.IsNullOrWhiteSpace(declarations))
+                    {
+                        CancelledDeclarations(declarations, entityPM.Tenant);
+                    }
 
-            else
-            {
- 
-                entityPM.IsOpen = true;
-                this.toSendTask = true;
-                if (!string.IsNullOrWhiteSpace(declarations))
-                {
-                    OpenDeclarations(declarations, entityPM.Tenant);
                 }
 
-            }
+                else
+                {
 
+                    entityPM.IsOpen = true;
+                    this.toSendTask = true;
+                    if (!string.IsNullOrWhiteSpace(declarations))
+                    {
+                        OpenDeclarations(declarations, entityPM.Tenant);
+                    }
+
+                }
+            }
             entityPM.ConnectedDeclarations = null;
             entityPM.NotConnectedDeclarations = null;
 
