@@ -482,43 +482,45 @@ export class FieldTemplateComponent {
     }
 
     ShowDelivery() {
-        let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
-        let myViewModelName = "FieldTemplateComponent.ts-ShowDelivery";
-        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-                .subscribe(
-                    (mess: UnifreightMessageM) => {
-                        var IsMatchUnifreightCallbackCommand = (
-                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
-                            mess.LogitudeEntityNumber == myDeclarationReferantDataList.DeclarationId &&
-                            mess.LogitudeViewModel == myViewModelName);
-                        if (IsMatchUnifreightCallbackCommand) {
-                            sub.unsubscribe();
-                            SessionLocator.SelectedSession.StopBusyIndicator();
-                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
-                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });;
+        if (this.Entity.IsCustomerLogBoxActivated) {
+            let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
+            let myViewModelName = "FieldTemplateComponent.ts-ShowDelivery";
+            if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                    .subscribe(
+                        (mess: UnifreightMessageM) => {
+                            var IsMatchUnifreightCallbackCommand = (
+                                mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                                mess.LogitudeEntityNumber == myDeclarationReferantDataList.DeclarationId &&
+                                mess.LogitudeViewModel == myViewModelName);
+                            if (IsMatchUnifreightCallbackCommand) {
+                                sub.unsubscribe();
+                                SessionLocator.SelectedSession.StopBusyIndicator();
+                                let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                                SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });;
+                            }
                         }
-                    }
-                );
+                    );
 
-            SessionLocator.SelectedSession.StartBusyIndicator("");
-            var unifreightMessageM =
-                AmitalGatewayUtil.Instance.
-                    DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
-                        myViewModelName);
+                SessionLocator.SelectedSession.StartBusyIndicator("");
+                var unifreightMessageM =
+                    AmitalGatewayUtil.Instance.
+                        DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
+                            myViewModelName);
 
 
-            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-                "ScriptableGatewayUtil.ShowDelivery",
-                "CFIHMAIN.LogitudeTask",
-                "ShowDelivery",
-                unifreightMessageM,
-                " הצגת מסך : הובלה יבשתית");
+                AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                    "ScriptableGatewayUtil.ShowDelivery",
+                    "CFIHMAIN.LogitudeTask",
+                    "ShowDelivery",
+                    unifreightMessageM,
+                    " הצגת מסך : הובלה יבשתית");
 
-        }
-        else {
-            alert("ShowDelivery");
+            }
+            else {
+                alert("ShowDelivery");
+            }
         }
 
     }
