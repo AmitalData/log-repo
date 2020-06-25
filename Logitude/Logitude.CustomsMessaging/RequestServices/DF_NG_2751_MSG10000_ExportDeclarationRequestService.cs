@@ -1508,7 +1508,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     supplierInvoiceItemPM.ClassificationCode = supplierInvoiceItemPM.ClassificationCode.Insert(10, "/");
                 }
-
+                if (string.IsNullOrEmpty(supplierInvoiceItemPM.ClassificationTypeCode)) supplierInvoiceItemPM.ClassificationTypeCode = "HS";
                 declarationGoodsItemCommodity.Classification = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassification[]
                 {
                     new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassification()
@@ -1806,8 +1806,8 @@ namespace Logitude.CustomsMessaging.RequestServices
              if(supplierInvoiceItemPM.SupplierInvoiceItemsPrices != null && supplierInvoiceItemPM.SupplierInvoiceItemsPrices.Count()>0)
             {
                 foreach (var price in supplierInvoiceItemPM.SupplierInvoiceItemsPrices)
-                {
-                declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(price.AdditionalPrice, price.AdditionalPriceTypeCode, cur));
+                {if(price.AdditionalPrice != null)
+                declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(Convert.ToDecimal (price.AdditionalPrice), price.AdditionalPriceTypeCode, cur));
 
                 }
             }

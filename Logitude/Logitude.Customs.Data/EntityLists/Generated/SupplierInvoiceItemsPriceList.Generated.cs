@@ -35,7 +35,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string AdditionalPriceTypeName  { get; set; }
        [DataMember]
-       public decimal AdditionalPrice  { get; set; }
+       public decimal? AdditionalPrice  { get; set; }
    }
 
 }

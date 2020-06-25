@@ -187,12 +187,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal additionalPrice ;
+	  private decimal? additionalPrice ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal AdditionalPrice  
+       public decimal? AdditionalPrice  
 	   {
 	    
 	     get
@@ -203,7 +203,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(additionalPrice != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AdditionalPrice",OldValue=additionalPrice,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AdditionalPrice",OldValue=additionalPrice,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   additionalPrice=value;
 		   }

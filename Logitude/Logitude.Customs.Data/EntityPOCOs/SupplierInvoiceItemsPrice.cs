@@ -43,7 +43,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	      
         public virtual AmountType AdditionalPriceType { get; set; }
         [Column("AdditionalPrice")]
-	    public decimal AdditionalPrice { get; set; }
+	    public decimal? AdditionalPrice { get; set; }
     }
 }
 	 

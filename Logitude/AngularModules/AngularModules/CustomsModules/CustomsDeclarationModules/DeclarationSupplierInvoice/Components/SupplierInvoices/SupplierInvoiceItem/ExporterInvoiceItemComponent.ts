@@ -48,11 +48,6 @@ export class ExporterInvoiceItemComponent extends BaseComponent
 
     public get ClassificationTypeCode() { return this.originalSupplierInvoiceItem ? this.originalSupplierInvoiceItem.ClassificationTypeCode : null; }
     public set ClassificationTypeCode(newValue: string) {
-        if (AppTool.IsNullOrEmpty(newValue))
-            this.UIProperties.SetRequired("ClassificationTypeCode", this.ObjectTableName, true);
-        else
-            this.UIProperties.SetRequired("ClassificationTypeCode", this.ObjectTableName, false);
-
         this.originalSupplierInvoiceItem.ClassificationTypeCode = newValue;
     }
 
@@ -308,6 +303,9 @@ export class ExporterInvoiceItemComponent extends BaseComponent
         }
 
 
+        if (AppTool.IsNullOrEmpty(this.originalSupplierInvoiceItemsPrice.AdditionalPriceTypeCode) && !AppTool.IsNullOrEmpty(this.originalSupplierInvoiceItemsPrice.DeclarationId)) {
+            this.originalSupplierInvoiceItem.RemoveSupplierInvoiceItemsPrice(this.originalSupplierInvoiceItemsPrice);
+        }
         //errors = this.ValidateCustomsItemField();
 
         var errors = [];
@@ -318,8 +316,7 @@ export class ExporterInvoiceItemComponent extends BaseComponent
 
         if (AppTool.IsNullOrEmpty(this.ClaimReasonCode)) errors.push("סיבת תביעה שדה חובה");
         if (AppTool.IsNullOrEmpty(this.TransactionNatureCode)) errors.push("אופי עסקה שדה חובה");
-        if (AppTool.IsNullOrEmpty(this.ClassificationTypeCode)) errors.push("סוג ערך סיווג שדה חובה");
-        
+         
         if (errors.length > 0) {
             {
                 //this.ValidationErrorsList = errors;
