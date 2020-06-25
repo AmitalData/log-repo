@@ -2,7 +2,7 @@
     "viewportWidth": 2000,
     "viewportHeight": 1000,
     "projectId": "b2kqc4",
-    "integrationFolder": "cypress/TeamIslam",
+    "integrationFolder": "Cypress/IslamsTeam",
     "screenshotsFolder": "cypress/results/html/screenshots",
     "scripts": {
         "cypressRun": "cypress run",
