@@ -8290,6 +8290,12 @@
         IndexOrder="11"
         LocalDefaultText="&quot;Enter External Payment&quot;"
         IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;BlockFromTransfer&quot;"
+        DefaultText="&quot;Block from transfer&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="12"
+        IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />

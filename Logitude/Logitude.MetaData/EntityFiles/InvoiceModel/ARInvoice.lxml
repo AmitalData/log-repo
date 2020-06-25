@@ -16614,6 +16614,12 @@
         TextCodeCode="&quot;ARInvoice.B.SendToQBO&quot;"
         FeatureTextCodeCode="&quot;ARInvoice.Features.SendToQBO&quot;"
         FeatureDefaultText="&quot;Send to QBO&quot;" />
+      <MenuItem
+        EventCode="&quot;BlockFromTransfer&quot;"
+        DefaultText="&quot;Block from transfer&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="15"
+        IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>
