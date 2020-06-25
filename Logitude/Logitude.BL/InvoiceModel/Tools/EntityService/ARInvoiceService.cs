@@ -541,6 +541,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     this.UpdateInvoicePayments(invoicePaymentsChangeSet);
                     this.UpdateInvoiceAmountDue();
+                    this.UpdatePaidDate();
                 }
 
                 this.BuildSearchFields();
@@ -3305,6 +3306,28 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
+
+        private void UpdatePaidDate()
+        {
+            if (entityPM.AmountDue != 0)
+            {
+                entityPM.PaidDate = null;
+            }
+            else
+            {
+                List<string> paymentsIds = invoicePaymentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.ARPaymentId).ToList();
+                if (paymentsIds!= null && paymentsIds.Count > 0)
+                {
+                    ARPayment invoiceLastPayment = (from d in objectContext.ARPayments
+                                                    where paymentsIds.Contains(d.Id)
+                                                    select d).OrderByDescending(a => a.ValueDate).FirstOrDefault();
+
+
+                    entityPM.PaidDate = invoiceLastPayment.ValueDate; 
+                }
+            }  
+        }
+
         #endregion
 
         #region SearchField

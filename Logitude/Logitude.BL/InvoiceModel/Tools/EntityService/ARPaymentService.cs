@@ -866,10 +866,30 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             throw new Exception("The Amount due is not suitable to the total amount paid!!");
                         }
-
+                        
+                        this.UpdateInvoicePaidDate(invoice, allConnectedItems);
                         invoiceRepository.Update(invoice);
                         #endregion
                     }
+                }
+            }
+        }
+
+        private void UpdateInvoicePaidDate(ARInvoice invoice, List<ARInvoicePayment> allConnectedItems)
+        {
+            if (invoice.AmountDue != 0)
+            {
+                invoice.PaidDate = null;
+            }
+            else
+            {
+                List<string> paymentsIds = allConnectedItems.Select(s => s.ARPaymentId).ToList();
+                if (paymentsIds != null && paymentsIds.Count > 0)
+                {
+                    ARPayment invoiceLastPayment = (from d in objectContext.ARPayments
+                                                    where paymentsIds.Contains(d.Id)
+                                                    select d).OrderByDescending(a => a.CreateDate).FirstOrDefault();
+                    invoice.PaidDate = invoiceLastPayment.ValueDate;
                 }
             }
         }
