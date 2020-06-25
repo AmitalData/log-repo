@@ -190,7 +190,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InterestCreditLimit, 
 	         NameForPrintingCheques, 
 	         Smallcashbook, 
-	         MinimumInterestInvoiceBilling,
+	         MinimumInterestInvoiceBilling, 
+	         IsSplitted,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

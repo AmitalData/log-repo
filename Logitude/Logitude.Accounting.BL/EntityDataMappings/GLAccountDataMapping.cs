@@ -268,6 +268,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     }
                 }
 
+
+                GLAccountCurrencyQueryService gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService(entityPM.Tenant);
+                GLAccountCurrency  gLAccountCurrency  = gLAccountCurrencyQueryService.GetGLAccountCurrencyByGLAccountId(entityPM.Id, entityPM.Tenant);
+                if (gLAccountCurrency != null)
+                {
+                    entityPM.IsSplitted = true;
+
+                }
+
                 //if (entityPOCO.ClientId != null)
                 //{
                 //    Card clientCard = CardRepository.GetSingleCard(entityPOCO.ClientId, entityPOCO.Tenant, true);

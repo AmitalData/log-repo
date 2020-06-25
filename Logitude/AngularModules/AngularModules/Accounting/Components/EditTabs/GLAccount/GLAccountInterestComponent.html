@@ -269,7 +269,7 @@
                     <tr>
                         <td>
                             <div>
-                                <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'Add'" [IsSmall]="true" [Left]="3" [disabled]="!EntityPM.ActiveForInterest" (click)="AddLine()"></IconButton>
+                                <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'Add'" [IsSmall]="true" [Left]="3" [disabled]="!EntityPM.ActiveForInterest ||  EntityPM.IsSplitted" (click)="AddLine()"></IconButton>
                             </div>
                         </td>
                     </tr>

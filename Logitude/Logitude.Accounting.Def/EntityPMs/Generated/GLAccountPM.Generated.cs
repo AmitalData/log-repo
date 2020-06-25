@@ -2574,6 +2574,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isSplitted ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsSplitted  
+	   {
+	    
+	     get
+		{
+		   return isSplitted;
+		 }
+		 set
+		 {
+		   if(isSplitted != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSplitted",OldValue=isSplitted,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isSplitted=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
