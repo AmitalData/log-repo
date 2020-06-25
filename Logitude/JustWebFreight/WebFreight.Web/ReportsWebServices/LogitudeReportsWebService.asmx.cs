@@ -11616,20 +11616,22 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_level = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Level").FirstOrDefault();
             QueryFilterItem filterItem_toDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_currency = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyDetailed").FirstOrDefault();
-            QueryFilterItem filterItem_customer = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Customer").FirstOrDefault();
-            QueryFilterItem filterItem_vendor = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Vendor").FirstOrDefault();
             QueryFilterItem filterItem_Category1 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category1").FirstOrDefault();
             QueryFilterItem filterItem_Category2 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category2").FirstOrDefault();
             QueryFilterItem filterItem_Category3 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category3").FirstOrDefault();
             QueryFilterItem filterItem_Category4 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category4").FirstOrDefault();
             
             QueryFilterItem filterItem_ChartOfAccountId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountId").FirstOrDefault();
-            QueryFilterItem filterItem_UseZeroFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "UseBalanceFilter").FirstOrDefault();
+            QueryFilterItem filterItem_DontShowCardsWith0Balance = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DontShowCardsWith0Balance").FirstOrDefault();
             QueryFilterItem filterItem_Category5 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category5").FirstOrDefault();
+            QueryFilterItem filterItem_DetailedCustomer = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForCustomers").FirstOrDefault();
+            QueryFilterItem filterItem_DetailedVendor = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForVendors").FirstOrDefault();
+            QueryFilterItem filterItem_DetailedJobs = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForJobs").FirstOrDefault();
+            QueryFilterItem filterItem_DetailedFiles = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForFiles").FirstOrDefault();
 
             //ChartOfAccountId
             string ChartOfAccountId = null;
-            if (filterItem_UseZeroFilter != null)
+            if (filterItem_ChartOfAccountId != null)
             {
                 if (filterItem_ChartOfAccountId.FieldValue != null)
                 {
@@ -11637,12 +11639,12 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
             //UseBalanceFilter
-            bool useZeroFilter = false;
-            if (filterItem_UseZeroFilter != null)
+            bool dontShowCardsWith0Balance = false;
+            if (filterItem_DontShowCardsWith0Balance != null)
             {
-                if (filterItem_UseZeroFilter.FieldValue != null)
+                if (filterItem_DontShowCardsWith0Balance.FieldValue != null)
                 {
-                    useZeroFilter = (bool)filterItem_UseZeroFilter.FieldValue;
+                    dontShowCardsWith0Balance = (bool)filterItem_DontShowCardsWith0Balance.FieldValue;
                 }
             }
             //category1
@@ -11738,25 +11740,42 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            //customer
             bool customer = false;
-            if (filterItem_customer != null)
+            if (filterItem_DetailedCustomer != null)
             {
-                if (filterItem_customer.FieldValue != null)
+                if (filterItem_DetailedCustomer.FieldValue != null)
                 {
-                    customer = (bool)filterItem_customer.FieldValue;
+                    customer = (bool)filterItem_DetailedCustomer.FieldValue;
+                   
                 }
             }
-            //vendor
             bool vendor = false;
-            if (filterItem_vendor != null)
+            if (filterItem_DetailedVendor != null)
             {
-                if (filterItem_vendor.FieldValue != null)
+                if (filterItem_DetailedVendor.FieldValue != null)
                 {
-                    vendor = (bool)filterItem_vendor.FieldValue;
+                    vendor = (bool)filterItem_DetailedVendor.FieldValue;
+
                 }
             }
+            bool jobs = false;
+            if (filterItem_DetailedJobs != null)
+            {
+                if (filterItem_DetailedJobs.FieldValue != null)
+                {
+                    jobs = (bool)filterItem_DetailedJobs.FieldValue;
 
+                }
+            }
+            bool files = false;
+            if (filterItem_DetailedFiles != null)
+            {
+                if (filterItem_DetailedFiles.FieldValue != null)
+                {
+                    files = (bool)filterItem_DetailedFiles.FieldValue;
+
+                }
+            }
             #endregion
             string category1Name = GetCategory1Name(category1, tenant);
             string category5Name = GetCategory5Name(category5, tenant);
@@ -11764,9 +11783,9 @@ namespace WebFreight.Web.ReportsWebServices
             ContactPM contact = GetLoggedContact(tenant);
             showLocals = !contact.DontShowLocal;
             totalData.DetailedCustomersAccounts = SetDetailedCustomersAccounts(customer);
-            totalData.DetailedVendorsAccounts = SetDetailedVendorsAccounts(customer);
+            totalData.DetailedVendorsAccounts = SetDetailedVendorsAccounts(vendor);
             totalData.Category = category1Name != null ? category1Name : category5Name;
-            totalData.UseZeroFilter = useZeroFilter;
+            totalData.DontShowCardsWith0Balance = dontShowCardsWith0Balance;
             totalData.FromDate = fromDate;
             totalData.ToDate = toDate;
 
@@ -11779,12 +11798,14 @@ namespace WebFreight.Web.ReportsWebServices
                 CurrenciesDetailed = (bool)currency,
                 DetailedControlVendors = vendor,
                 DetailedControlClients = customer,
+                DetailedControlFile = files,
+                DetailedControlJob= jobs,
                 Category1 = category1,
                 Category2 = category2,
                 Category3 = category3,
                 Category4 = category4,
                 Category5 = category5,
-                Suppress_DoNotShowCardWithoutActivity = useZeroFilter,
+                DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance,
                 IsRevenueExpenseReport = false,
                 //  Skip = true
 
@@ -11828,8 +11849,11 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 trailReportParam.DetailedControlVendors = false;
                 trailReportParam.DetailedControlClients = false;
+                trailReportParam.DetailedControlJob = false;
+                trailReportParam.DetailedControlFile = false;
                 trailReportParam.CurrenciesDetailed = false;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
+                trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
                 trailReportParam.Category1 = null;
                 trailReportParam.Category2 = null;
                 trailReportParam.Category3 = null;
@@ -11898,8 +11922,11 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 trailReportParam.DetailedControlVendors = false;
                 trailReportParam.DetailedControlClients = false;
+                trailReportParam.DetailedControlJob = false;
+                trailReportParam.DetailedControlFile = false;
                 trailReportParam.CurrenciesDetailed = false;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
+                trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
                 trailReportParam.Category1 = null;
                 trailReportParam.Category2 = null;
                 trailReportParam.Category3 = null;
@@ -12338,6 +12365,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                 trailReportParam.DetailedControlVendors = vendor;
                 trailReportParam.DetailedControlClients = customer;
+                trailReportParam.DetailedControlFile = files;
+                trailReportParam.DetailedControlJob = jobs;
                 trailReportParam.CurrenciesDetailed = currency;
                 trailReportParam.Category1 = category1;
                 trailReportParam.Category2 = category2;
@@ -12345,7 +12374,7 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.Category4 = category4;
                 trailReportParam.Category5 = category5;
                 trailReportParam.MyTrailReportLevel = ReportLevel.GLAccount;
-                trailReportParam.Suppress_DoNotShowCardWithoutActivity = useZeroFilter;
+                trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero =dontShowCardsWith0Balance;
                 var servce = TrailReportFactory.CreateNew(trailReportParam);
 
 

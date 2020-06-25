@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "57e163a2a1150cf4ffba2dc1ee7f9ad7";
+		public const string HashString = "5f21a5aff88a28f4b44c3855a2ea643a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "0763",
+			      				    Code =  "d910",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2381,6 +2381,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_AccountingGeneralOToDateGreater = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ToDateGreater", DefaultText = "To date must be Greater or equal than from date",LocalDefaultText = @"תאריך עד צריך להיות גדול או שווה מתאריך מ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOInvoiceDateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.InvoiceDateValidation", DefaultText = "Vendor invoice date typed, entered with old date (over 180 days back)",LocalDefaultText = @"תאריך חשבונית הספק שהוקלדה,  הוקלדה עם תאריך ישן (למעלה מ- 180 יום אחורה)", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingODetailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Detailed", DefaultText = "Detailed",LocalDefaultText = @"פירוט", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingOJobs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Jobs", DefaultText = "Jobs",LocalDefaultText = @" ג'ובים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingOFiles = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Files", DefaultText = "Files",LocalDefaultText = @"תיקים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingOCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Customers", DefaultText = "Customers",LocalDefaultText = @"לקוחות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingOVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Vendors", DefaultText = "Vendors",LocalDefaultText = @"ספקים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingODontShowCardsWith0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.DontShowCardsWith0", DefaultText = "Don't Include GLAccount with Close Balance 0",LocalDefaultText = @"לא לכלול כרטיסים ביתרת סגירה 0", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
