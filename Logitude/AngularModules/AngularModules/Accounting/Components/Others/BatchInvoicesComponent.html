@@ -17,7 +17,7 @@
 
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td colspan="10">
+        <td colspan="12">
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
@@ -28,7 +28,7 @@
 
             </div>
         </td>
-        <td *ngIf="IsSelectedItemsTextVisibile" style="width:90px">
+        <!--<td *ngIf="IsSelectedItemsTextVisibile" style="width:90px">
             <div style="width: 100%;text-align:center;  height:30px;">
                 <div class="DisbleBox">
 
@@ -37,13 +37,15 @@
 
                 </div>
             </div>
-        </td>
+        </td>-->
         <td style="width: 75px;">
             {{'Accounting.O.FromDate' | TextCodeTranslationPipe}}
         </td>
 
         <td style="width:120px;">
-            <LogDatePicker [ObjectFieldName]="'FromDate'" [NoObjectField]="true" [DataContext]="DataContext" [SelectedDateValue]="FromDate" [HideColumns]="true">></LogDatePicker>
+            <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                                        [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                                                        [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
         </td>
 
 
@@ -54,7 +56,9 @@
         </td>
 
         <td style="width:120px;">
-            <LogDatePicker [ObjectFieldName]="'ToDate'" [NoObjectField]="true" [DataContext]="DataContext" [SelectedDateValue]="ToDate" [HideColumns]="true">></LogDatePicker>
+            <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                                        [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                                                        [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
         </td>
         <td style="width:10px"></td>
 
