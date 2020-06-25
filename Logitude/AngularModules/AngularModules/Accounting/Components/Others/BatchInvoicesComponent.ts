@@ -39,6 +39,7 @@ export class BatchInvoicesComponent extends BaseComponent {
     public bteList: BatchTaskExecutionList;
     public timer: any;
     public timerInterval: number = 1000;
+    public ObjectTableName: string = "InterestReport";
     public CreateInvoiceText: string = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
     constructor(private CD: ChangeDetectorRef) {
     super();
@@ -171,24 +172,29 @@ export class BatchInvoicesComponent extends BaseComponent {
         });
 
     }
-
+    private timerToken: any;
     ValidateDate(fieldName: any) {
         this.ValidationErrorsList = [];
         if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate, true)) {
             if (fieldName == null) {
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
             }
-            this.UIProperties.SetValidity("ToDate", null, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
-            this.UIProperties.SetValidity("FromDate", null, false, TextCodeTranslator.Translate("Accounting.General.FromDateMustBeLTT"));
-            //  this.CD.detectChanges();
-
-        } else {
+            this.timerToken = setTimeout(() => {
+                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.FromDateMustBeLTT"));
+                this.CD.detectChanges();
+            }, 200);
+        }
+         else {
+            this.timerToken = setTimeout(() => {
 
             this.UIProperties.SetValidity("ToDate", null, true, "");
             this.UIProperties.SetValidity("FromDate", null, true, "");
-            this.ReloadData();
+            }, 200);
+                this.ReloadData();
         }
-
+           
+        
     }
   public DataCount: number;
   private EnabledDataCount: number;
@@ -208,7 +214,7 @@ export class BatchInvoicesComponent extends BaseComponent {
         if (this.fromDate != value) {
             this.fromDate = value;
             this.ValidateDate("FromDate");
-         
+
         }
     }
 
@@ -304,11 +310,14 @@ export class BatchInvoicesComponent extends BaseComponent {
     private selectedItems: ObservableCollection;
   public SelectedItemsCount: number=0;
     onCheckBoxChecked($event:any)
-  {
-        if ($event.IsChecked) {
+    {
+        var isChecked: boolean = $event.IsChecked == undefined ? $event.isChecked : $event.IsChecked;
 
-            if (!this.selectedItems.Collection.includes($event.rowData)) {
-                this.selectedItems.Insert($event.rowData);
+        var rowData = $event.rowData == undefined ? $event.line : $event.rowData;
+        if (isChecked) {
+
+            if (!this.selectedItems.Collection.includes(rowData)) {
+                this.selectedItems.Insert(rowData);
 
               this.SelectedItemsCount += 1;
               this.DataCount = this.DataSource.rowCount;
@@ -318,8 +327,8 @@ export class BatchInvoicesComponent extends BaseComponent {
               }
 
               if (this.AllSelected) {
-                  if (this.ExcludedItems.Collection.includes($event.rowData.Id)) {
-                      this.ExcludedItems.Remove($event.rowData.Id);
+                  if (this.ExcludedItems.Collection.includes(rowData.Id)) {
+                      this.ExcludedItems.Remove(rowData.Id);
                   }
               }
           }
@@ -327,7 +336,7 @@ export class BatchInvoicesComponent extends BaseComponent {
     
     else {
   
-            this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == $event.rowData.Id));
+            this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == rowData.Id));
       this.SelectedItemsCount -= 1;
 
       if (this.DataCount != null) {
@@ -335,8 +344,8 @@ export class BatchInvoicesComponent extends BaseComponent {
 
       }
         if (this.AllSelected) {
-            if (!this.ExcludedItems.Collection.includes($event.rowData.Id)) {
-                this.ExcludedItems.Insert($event.rowData.Id);
+            if (!this.ExcludedItems.Collection.includes(rowData.Id)) {
+                this.ExcludedItems.Insert(rowData.Id);
           }
         }
       if (this.SelectedItemsCount == 0) {
