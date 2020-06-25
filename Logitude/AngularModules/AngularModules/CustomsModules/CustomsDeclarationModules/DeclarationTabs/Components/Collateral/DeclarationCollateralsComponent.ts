@@ -109,6 +109,9 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
                     if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DCCL") {
                             this.LoadDeclarationCollateralsList();
+                            setTimeout(() => {
+                                this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+                            }, 10);
                         }
                     }
                 })
