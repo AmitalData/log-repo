@@ -118,10 +118,11 @@ MainInterfaceCode ="2892"
                     Name = "הודעה לסוכן על הוראת תשלום",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{""paymentStatus"":""5""}",
+                    Param1= @"{""paymentStatus"":""3"",  ""paymentProcess"" :""1""}",
                     Param2= @"{}",
                     MainInterfaceCode="3050",
                 },
+                
                    new SincroTestCaseDetail()
                 {
                     Code = "8211",

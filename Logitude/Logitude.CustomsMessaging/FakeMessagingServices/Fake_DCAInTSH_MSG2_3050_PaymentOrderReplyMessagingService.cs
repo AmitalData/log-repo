@@ -15,11 +15,14 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
     {
         private ResponseContentHeader _responseContentHeader;
         private PaymentOrderReply _paymentOrderReply;
-        private int paymentStatus;
+        private int paymentStatus=0;
+        private int paymentProcess=0;
+
         internal TSH_MSG2_PaymentOrderReply GetFakeCustomsResponse(GenericRequestParams requestParamsData)
         {
             dynamic data = JObject.Parse(requestParamsData.TestCase.Param1);
             paymentStatus = data.paymentStatus;
+            paymentProcess = data.paymentProcess;
 
             SetRequestContentHeader();
             SetPaymentOrderReply(requestParamsData);
@@ -54,9 +57,10 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             //_paymentOrderReply.PaymentDetails.paymentID = Convert.ToInt32(_dec.DeclarationNumber.Substring(_dec.DeclarationNumber.Length-4)); // Or Use counter?\
             _paymentOrderReply.PaymentDetails.paymentID = Convert.ToInt32(DateTime.Now.Ticks.ToString().Substring(10, 7));
             _paymentOrderReply.customsHouse = 2;
-            _paymentOrderReply.paymentProcess = 2;
+            _paymentOrderReply.paymentProcess = 1;
             _paymentOrderReply.paymentOrderType = 1;
-            _paymentOrderReply.paymentStatus = 1;
+            _paymentOrderReply.paymentStatus = ( paymentStatus != 0 ) ? paymentStatus : 3;
+            _paymentOrderReply.paymentProcess = (paymentProcess != 0) ? paymentProcess : 1;
             _paymentOrderReply.ConnectedEntity = new ConnectedEntity
             {
                 entityType = 1055,
