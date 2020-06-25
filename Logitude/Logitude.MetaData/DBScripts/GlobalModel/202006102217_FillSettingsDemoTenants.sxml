@@ -1,9 +1,9 @@
 ﻿<Script DBType="Global">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
     
       update settings   
-      set LogitudeDemoTenants = '65,2279,2307'
+      set LogitudeDemoTenants = '65,2279,2307,2322'
       
     ]]>
   </Sql>

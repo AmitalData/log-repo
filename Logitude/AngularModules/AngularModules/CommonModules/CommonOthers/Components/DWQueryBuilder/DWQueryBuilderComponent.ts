@@ -120,7 +120,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     this._entityResourceService.getEntityResourceByTableName("APInvoice").subscribe((response: any) => {
                     this._entityResourceService.getEntityResourceByTableName("ShipmentComputedFields").subscribe((response: any) => {
                         this._entityResourceService.getEntityResourceByTableName("ShipmentPayable").subscribe((response: any) => {
-                            this.Start();
+                            this._entityResourceService.getEntityResourceByTableName("ChargesType").subscribe((response: any) => {
+                                this.Start();
+                            });
                         });
                     });
                     });
@@ -1388,7 +1390,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public FullNameTextCodeCode: string;
     public PartnerFullNameTextCodeCode: string;
     public IsHaveTranslation: boolean = false;
-    
+    public TranslationText: string;
+
     constructor(DWObjectField: any = null, ParentClass: DWQueryBuilderComponent = null) {
         super();
         var idIndex = this.CurrentSession.GetNewId("Tooltip");
@@ -1435,6 +1438,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             
             this.DataTypeCode = DWObjectField.DataTypeCode;
             //if (DWObjectField.FilterItems && DWObjectField.FilterItems.length == 0) {
+            this.TranslationText = this.GetTranslationText(DWObjectField); 
             this.DisplayName = this.ComputeDisplayName(DWObjectField);
             //}
             this.CannotFilter = DWObjectField.CannotFilter;
@@ -1469,14 +1473,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
    // BIReportTranslate
     public ComputeDisplayName(DWObjectField: any) {
-        var displayname: string = DWObjectField.DisplayName;
-        if (!DWObjectField.IsCustom) {
-            var translateText = DWObjectField.FullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.FullNameTextCodeCode) : "";
-            var partnerTranslateText = DWObjectField.PartnerFullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.PartnerFullNameTextCodeCode) : "";
-      
-            displayname = (translateText ? translateText : DWObjectField.Name);
 
+        var displayname: string = this.GetTranslationText(DWObjectField);
+        if (!DWObjectField.IsCustom) {
             if (DWObjectField.DimensionTableDisplayName) {
+                var partnerTranslateText = DWObjectField.PartnerFullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.PartnerFullNameTextCodeCode) : "";
                 displayname = (partnerTranslateText ? partnerTranslateText : DWObjectField.DimensionTableDisplayName) + " " + displayname;
             }
         }
@@ -1484,6 +1485,22 @@ export class DWObjectFieldsDetails extends BaseComponent {
         return displayname;
     
     }
+
+
+    public GetTranslationText(DWObjectField: any) {
+        var result: string = DWObjectField.DisplayName;
+        if (!DWObjectField.IsCustom) {
+            var translateText = DWObjectField.FullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.FullNameTextCodeCode) : "";
+            result = (translateText ? translateText : DWObjectField.Name);
+        }
+
+        return result;
+
+    }
+
+
+
+
 
     CheckIsFieldHaveTranslation(DWObjectField: any) {
         var translateText = DWObjectField.FullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.FullNameTextCodeCode) : "";
@@ -1630,6 +1647,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
                 }
 
                 this.DWObjectTableCode = MyTable[0].Code;
+
+                this.TranslationText = this.GetTranslationText(this); 
                 this.DisplayName = this.ComputeDisplayName(this);//(AppTool.IsNullOrEmpty(this.DisplayName)) ? (this.DWObjectTableCode + ' ' + this.Code) : (this.DisplayName);
                 this.ParentDimTabelName = this.DimensionTableCode;
                 if (!AppTool.IsNullOrEmpty(this.DimensionTableDisplayName)) {
@@ -2090,6 +2109,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
         this.DataTypeCode = DWObjectField.DataTypeCode;
         this.DimensionTableCode = DWObjectField.DimensionTableCode;
+        this.TranslationText = this.GetTranslationText(DWObjectField); 
         this.DisplayName = this.ComputeDisplayName(DWObjectField);//(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
 
         if (!AppTool.IsNullOrEmpty(DWObjectField.DimensionTableDisplayName)) {

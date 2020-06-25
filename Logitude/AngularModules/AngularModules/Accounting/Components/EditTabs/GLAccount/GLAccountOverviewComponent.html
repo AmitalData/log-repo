@@ -594,11 +594,11 @@
                                             <div   (mouseover)="OnMouseOver('tooltip-CreditLimit','tooltip-body-CreditLimit')" (mouseleave)="OnMouseLeave('tooltip-body-CreditLimit')"  *ngIf="!IsCreditNotDefined()" style="font-weight: bold;" class="amount tooltip-CreditLimit" float-start style="padding-top: 5px;font-weight: bold;font-size: 18px;text-align: right;cursor: pointer;">
                                                 {{CreditLimitAmount | NumbersPipe:'N2'}}
 
-                                                <div     class="small-tooltip-body tooltip-body-CreditLimit">
+                                                <div *ngIf="accountCardlist && accountCardlist.length > 1"      class="small-tooltip-body tooltip-body-CreditLimit">
                                                     <div class="popup-arrow"></div>
  
                                                     <div   class="tooltip-text">
-                                                        <img   src="Images/WarningIcon.png" />  {{'GLAccount.O.GLaccountConnectedMoreOneCard' | TextCodeTranslationPipe}} 
+                                                        <img style="margin: 0 2px;" [style.float]="isRTL? 'right': 'left'"  src="Images/WarningIcon.png" />  {{'GLAccount.O.GLaccountConnectedMoreOneCard' | TextCodeTranslationPipe}} 
                                                     </div>
                       
                                                   </div>
@@ -666,12 +666,12 @@
                                                 <div      style="font-weight: bold;" class="amount tooltip-OpenShipments" float-start style="padding-top: 5px;font-weight: bold;font-size: 18px;text-align: right;">
                                                     {{OpenShipments | NumbersPipe:'N2'}}
     
-                                                    <div     class="small-tooltip-body tooltip-body-OpenShipments">
+                                                    <div *ngIf="accountCardlist && accountCardlist.length > 1"    class="small-tooltip-body tooltip-body-OpenShipments">
                                                         <div class="popup-arrow"></div>
                           
                            
                                                         <div   class="tooltip-text">
-                                                            <img   src="Images/WarningIcon.png" />    {{'GLAccount.O.GLaccountConnectedMoreOneCard' | TextCodeTranslationPipe}} 
+                                                            <img style="margin: 0 2px;" [style.float]="isRTL? 'right': 'left'"  src="Images/WarningIcon.png" />    {{'GLAccount.O.GLaccountConnectedMoreOneCard' | TextCodeTranslationPipe}} 
                                                         </div>
                           
                                                       </div>

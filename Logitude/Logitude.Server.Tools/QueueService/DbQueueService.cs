@@ -279,23 +279,23 @@ namespace Logitude.Server.Tools.QueueService
         { 
             if (HttpContext.Current != null && HttpContext.Current.Request != null)
             {
-                if (HttpContext.Current.Request.Headers["SentQueueMessages"] == null)
+                if (HttpContext.Current.Response.Headers["SentQueueMessages"] == null)
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>
                     {
                         { sQueueMessageId, messageBody }
                     };
                     string addedQueues = dictionary.FromDictionaryToJson();
-                    HttpContext.Current.Request.Headers.Add("SentQueueMessages", addedQueues);
+                    HttpContext.Current.Response.Headers.Add("SentQueueMessages", addedQueues);
 
                 }
                 else
                 {
-                    string openedQueues = HttpContext.Current.Request.Headers["SentQueueMessages"];
+                    string openedQueues = HttpContext.Current.Response.Headers["SentQueueMessages"];
                     Dictionary<string, string> dictionary = openedQueues.FromJsonToDictionary();
                     dictionary.Add(sQueueMessageId, messageBody);
                     string addedQueues = dictionary.FromDictionaryToJson();
-                    HttpContext.Current.Request.Headers["SentQueueMessages"] = addedQueues;
+                    HttpContext.Current.Response.Headers["SentQueueMessages"] = addedQueues;
 
 
                 }

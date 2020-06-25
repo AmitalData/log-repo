@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class INTTRASettingUpdateClass
    {  		
-		public const string HashString = "6ef014ce1ef460abd888a0bc6f0336a2";
+		public const string HashString = "2183baecf74ea6a2aaa94785993b88b3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "INTTRASetting",
 			      				    IsNew =  false,
 			      				    DBTableName =  "INTTRASettings",
-			      				    OldDBTableName =  "INTTRASettings",
 			      				    ObjectTableSingular =  "INTTRA Setting",
 			      				    ObjectTablePlural =  "INTTRA Settings",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "INTTRA Setting",
-			      				    Code =  "0c74",
+			      				    Code =  "ff55",
 			      				    Name =  "INTTRASetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -141,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "OutSettingsId",
-					  						OldFieldName =  "OutSettingsId",
 					  						ObjectTableName =  "INTTRASetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "FTPDetail",
@@ -205,13 +203,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InSettingsId",
-					  						OldFieldName =  "InSettingsId",
 					  						ObjectTableName =  "INTTRASetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "FTPDetail",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -269,7 +266,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "INTTRASettingModeCode",
-					  						OldFieldName =  "INTTRASettingModeCode",
 					  						ObjectTableName =  "INTTRASetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "INTTRASettingMode",
@@ -333,7 +329,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "OutSettingsHost",
-					  						OldFieldName =  "OutSettingsHost",
 					  						ObjectTableName =  "INTTRASetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -396,12 +391,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InSettingsHost",
-					  						OldFieldName =  "InSettingsHost",
 					  						ObjectTableName =  "INTTRASetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -459,7 +453,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "INTTRAId",
-					  						OldFieldName =  "INTTRAId",
 					  						ObjectTableName =  "INTTRASetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -522,7 +515,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "INTTRAAlias",
-					  						OldFieldName =  "INTTRAAlias",
 					  						ObjectTableName =  "INTTRASetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,

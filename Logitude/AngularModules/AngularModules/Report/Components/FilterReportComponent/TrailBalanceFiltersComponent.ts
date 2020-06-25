@@ -36,7 +36,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
     reportFliter: ReportFliter;
     queryFilterItems: QueryFilterItem[];
   public ValidationErrorsList: string[] = [];
-  IsDisplayOnly: boolean = false;
+   public IsEditable: boolean = false;
  // IsCategoryDisabled: boolean = false;
   queryFilterItem: QueryFilterItem;
   public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
@@ -112,40 +112,46 @@ export class TrailBalanceFiltersComponent extends BaseComponent
   public set Level(value: string) {
     if (this.level != value) {
       this.level = value;
-      if (this.level == "ChartOfAccount" || this.level == "ChartOfAccountType")
-      {
-        this.UIProperties.SetEnabled("ChartOfAccountId", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("Category1", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("Category2", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("Category3", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("Category4", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("Category5", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("Category4", this.ObjectTableName, false);
-        this.IsDisplayOnly = true;
-        this.IsCategoryDisabled = true;
-
-
-
-      }
-
-   else{
-          this.UIProperties.SetEnabled("ChartOfAccountId", this.ObjectTableName, true);
-        this.UIProperties.SetEnabled("Category1", this.ObjectTableName, true);
-        this.UIProperties.SetEnabled("Category2", this.ObjectTableName, true);
-        this.UIProperties.SetEnabled("Category3", this.ObjectTableName, true);
-        this.UIProperties.SetEnabled("Category4", this.ObjectTableName, true);
-        this.UIProperties.SetEnabled("Category5", this.ObjectTableName, true);
-        this.UIProperties.SetEnabled("Category4", this.ObjectTableName, true);
-        this.IsDisplayOnly = false;
-        this.IsCategoryDisabled = false;
-
-
-       }
-
+      this.SetEnabledProperties();
     
     }
 }
+    SetEnabledProperties() {
 
+        if (this.level == "ChartOfAccount" || this.level == "ChartOfAccountType") {
+            this.UIProperties.SetEnabled("ChartOfAccountId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("Category1", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("Category2", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("Category3", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("Category4", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("Category5", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("Category4", this.ObjectTableName, false);
+            this.IsEditable = false;
+            this.IsCategoryDisabled = true;
+
+
+
+        }
+
+        else {
+            this.UIProperties.SetEnabled("ChartOfAccountId", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("Category1", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("Category2", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("Category3", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("Category4", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("Category5", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("Category4", this.ObjectTableName, true);
+            this.IsEditable = true;
+            this.IsCategoryDisabled = false;
+
+
+        }
+
+
+
+
+
+    }
 private toDate: Date;
   public get ToDate() { return this.toDate; }
   public set ToDate(value: Date) {
@@ -178,19 +184,51 @@ private toDate: Date;
     }
   }
 
-  private useZeroBalanceFilter: boolean;
-  get UseZeroBalanceFilter() { return this.useZeroBalanceFilter; }
-  set UseZeroBalanceFilter(value: boolean) {
-    if (this.useZeroBalanceFilter != value) {
-      this.useZeroBalanceFilter = value;
+    private dontShowCardsWith0Balance: boolean;
+    get DontShowCardsWith0Balance() { return this.dontShowCardsWith0Balance; }
+    set DontShowCardsWith0Balance(value: boolean) {
+        if (this.dontShowCardsWith0Balance != value) {
+            this.dontShowCardsWith0Balance = value;
     }
   }
 
+    private detailedForVendors: boolean;
+    get DetailedForVendors() { return this.detailedForVendors; }
+    set DetailedForVendors(value: boolean) {
+        if (this.detailedForVendors != value) {
+            this.detailedForVendors = value;
+        }
+    }
+    private detailedForFiles: boolean;
+    get DetailedForFiles() { return this.detailedForFiles; }
+    set DetailedForFiles(value: boolean) {
+        if (this.detailedForFiles != value) {
+            this.detailedForFiles = value;
+        }
+    }
+    private detailedForCustomers: boolean;
+    get DetailedForCustomers() { return this.detailedForCustomers; }
+    set DetailedForCustomers(value: boolean) {
+        if (this.detailedForCustomers != value) {
+            this.detailedForCustomers = value;
+        }
+    }
+    private detailedForJobs: boolean;
+    get DetailedForJobs() { return this.detailedForJobs; }
+    set DetailedForJobs(value: boolean) {
+        if (this.detailedForJobs != value) {
+            this.detailedForJobs = value;
+        }
+    }
   private currencyFilter: boolean;
   get CurrencyFilter() { return this.currencyFilter; }
   set CurrencyFilter(value: boolean) {
     if (this.currencyFilter != value) {
-      this.currencyFilter = value;
+        this.currencyFilter = value;
+        this.SetEnabledProperties();
+        if (this.Level == "GLAccount" && value) {
+            this.IsDetailedCheckBoxEnabled = true;
+        } else this.IsDetailedCheckBoxEnabled = false;
     }
   }
 
@@ -258,13 +296,19 @@ private toDate: Date;
   FilterItemClicked(itemValue: string) {
     if (this.FilterSelectedValue != itemValue) {
       this.FilterSelectedValue = itemValue;
-      this.Level = itemValue;
-
-    }
+        this.Level = itemValue;
+        if(this.Level== "GLAccount" && this.CurrencyFilter){
+         this.IsDetailedCheckBoxEnabled = true;
+    } else  this.IsDetailedCheckBoxEnabled = false;
   }
-
-
-
+}
+    private isDetailedCheckBoxEnabled: boolean = false;
+    public get IsDetailedCheckBoxEnabled() { return this.isDetailedCheckBoxEnabled; }
+    public set IsDetailedCheckBoxEnabled(value: boolean) {
+        if (this.isDetailedCheckBoxEnabled != value) {
+            this.isDetailedCheckBoxEnabled = value;
+        }
+    }
 
   //#region Category fields
   IsCategoryDisabled: boolean = false;
@@ -339,17 +383,12 @@ private toDate: Date;
           this.queryFilterItems.push(new QueryFilterItem("Category4", this.Category4, "String"));
           this.queryFilterItems.push(new QueryFilterItem("Category5", this.Category5, "String"));
           this.queryFilterItems.push(new QueryFilterItem("CurrencyDetailed", this.CurrencyFilter, "boolean"));
-          if (this.CustomerDetailedControlFilter != null && this.CustomerDetailedControlFilter.Code == "1") {
+            this.queryFilterItems.push(new QueryFilterItem("DetailedForCustomers", this.DetailedForCustomers, "boolean"));
+            this.queryFilterItems.push(new QueryFilterItem("DetailedForFiles", this.DetailedForFiles, "boolean"));
+            this.queryFilterItems.push(new QueryFilterItem("DetailedForJobs", this.DetailedForJobs, "boolean"));
+            this.queryFilterItems.push(new QueryFilterItem("DetailedForVendors", this.DetailedForVendors, "boolean"));
 
-            this.queryFilterItems.push(new QueryFilterItem("Customer", true, "boolean"));
-
-          }
-          if (this.VendorDetailedControlFilter != null && this.VendorDetailedControlFilter.Code == "1") {
-
-            this.queryFilterItems.push(new QueryFilterItem("Vendor", true, "boolean"));
-
-          }
-          this.queryFilterItems.push(new QueryFilterItem("UseBalanceFilter", this.UseBalanceFilter, "boolean"));
+            this.queryFilterItems.push(new QueryFilterItem("DontShowCardsWith0Balance", this.DontShowCardsWith0Balance, "boolean"));
           this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountId", this.ChartOfAccountId, "String"));
 
 

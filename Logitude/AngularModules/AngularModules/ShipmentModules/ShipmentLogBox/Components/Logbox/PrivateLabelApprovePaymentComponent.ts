@@ -56,6 +56,8 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     _ImageLibraryService: ImageLibraryService;
     private CurrentSession = SessionLocator.SelectedSession;
+    private tax1Amount: number = 0;
+    private tax16Amount: number = 0;
     constructor() {
         super();
         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
@@ -197,6 +199,8 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                         //warningWindow.Title
                         var windowArgs: any = {};
                         windowArgs.WarningCode = warningCode;
+                        windowArgs.tax1Amount = this.tax1Amount;
+                        windowArgs.tax16Amount = this.tax16Amount;
                         windowArgs.RTL = this.RTL;
                         warningWindow.WindowArgs = windowArgs;
                         warningWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/WarningApprovePaymentComponent');
@@ -255,21 +259,21 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
 
     private GetWarningCodeBeforeApproval(TaxDetails) {
         this.AlertForTesting(TaxDetails);
-        var tax1Amount: number = 0, tax16Amount: number = 0;
+        this.tax1Amount = 0, this.tax16Amount = 0;
         TaxDetails.forEach((tax) => {
             if (tax.TaxTypeCode == '1')
-                tax1Amount = +tax.TaxAmount;
+                this.tax1Amount = +tax.TaxAmount;
             else if (tax.TaxTypeCode == '16')
-                tax16Amount = +tax.TaxAmount;
+                this.tax16Amount = +tax.TaxAmount;
         });
-        if (tax1Amount != 0 && tax16Amount != 0) {
-            if (tax1Amount + tax16Amount > 100)
+        if (this.tax1Amount != 0 && this.tax16Amount != 0) {
+            if (this.tax1Amount + this.tax16Amount > 100)
                 return '17';
         }
-        else if (tax1Amount > 100) {
+        else if (this.tax1Amount > 100) {
             return '1';
         }
-        else if (tax16Amount > 100) {
+        else if (this.tax16Amount > 100) {
             return '16';
         }
         return '0';
@@ -279,8 +283,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
     AlertForTesting(TaxDetails) {
         if (SessionLocator.LoggedUserPM.Email == "ahmadb@logitudeworld.com") { //For testing.
             TaxDetails.forEach((tax) => {
-                alert("tax type code:" + tax.TaxTypeCode);
-                alert("tax amount:" + tax.TaxAmount);
+                alert("tax type code:" + tax.TaxTypeCode + "\ntax amount:" + tax.TaxAmount);
             });
         }
     }

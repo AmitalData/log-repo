@@ -36,7 +36,7 @@ namespace WebFreight.Web.DataProviders
         public string DetailedVendorsAccounts { get; set; }
         public string DetailedCustomersAccounts { get; set; }
         public string Category { get; set; }
-        public bool UseZeroFilter { get; set; }
+        public bool DontShowCardsWith0Balance { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
     }
