@@ -1168,18 +1168,18 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             }
             this.cd.detectChanges();
          }
-        //  var DeleteSelected = this.rows.filter(a => a.rowData.IsChecked ==true);
-        //  for(let i =0 ; i < DeleteSelected.length ; i++){
-        //     var NRow = this.AllCheckedRecords.filter(a => a.Id ===  DeleteSelected[i].rowData.Id)[0];
-        //     if (!NRow) {
-        //         var Row = this.rows.filter(a => a.rowData.Id === DeleteSelected[i].rowData.Id)[0];
-        //         Row.rowData.IsChecked = false;
-        //         if (this.controller.cachedData[Row.rowIndex] && this.controller.cachedData[Row.rowIndex].IsChecked != null) {
-        //             this.controller.cachedData[Row.rowIndex].IsChecked = false;//this.controller.cachedData[row.rowIndex] && this.controller.cachedData[row.rowIndex].IsChecked;// == false ? false : true;
-        //         }
-        //      }
-        //      this.cd.detectChanges();
-        // } 
+         var DeleteSelected = this.rows.filter(a => a.rowData.IsChecked ==true);
+         for(let i =0 ; i < DeleteSelected.length ; i++){
+            var NRow = this.AllCheckedRecords.filter(a => a.Id ===  DeleteSelected[i].rowData.Id)[0];
+            if (!NRow) {
+                var Row = this.rows.filter(a => a.rowData.Id === DeleteSelected[i].rowData.Id)[0];
+                Row.rowData.IsChecked = false;
+                if (this.controller.cachedData[Row.rowIndex] && this.controller.cachedData[Row.rowIndex].IsChecked != null) {
+                    this.controller.cachedData[Row.rowIndex].IsChecked = false;//this.controller.cachedData[row.rowIndex] && this.controller.cachedData[row.rowIndex].IsChecked;// == false ? false : true;
+                }
+             }
+             this.cd.detectChanges();
+        } 
         
         // var Row = this.rows.filter(a => a.rowData.Id === res.MyRecord.Id)[0];
             // if (Row) {
