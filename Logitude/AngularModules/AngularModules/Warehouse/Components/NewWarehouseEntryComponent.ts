@@ -36,7 +36,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     warehouseHelper: WarehouseHelper = new WarehouseHelper();
     public ValidationErrorsList: string[];
-
+    public IsSelectedPackagesMoreThanAvaliable: boolean = false;
     IsNotSetWarehouseIdForWarehouseLegShipment: boolean = false;
     DataContext: any = this;
     ShipmentPM: ShipmentPM;
@@ -244,12 +244,30 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
 
 
     SaveButtonClicked() {
+        this.IsSelectedPackagesMoreThanAvaliable = false;
         this.warehouseEntryPM.ConnectedToShipment = true;
+        this.SetShipmentPackagesAsUsed();
         this.warehouseHelper.CreateWarehouseEntry(this.warehouseEntryPM, this);
 
     }
 
 
+
+    private SetShipmentPackagesAsUsed() {
+        if (this.ShipmentPM && this.ShipmentPM.DirectionId == "I") {
+            this.ShipmentPM.ShipmentPackages.forEach(shipmentPackage => {
+                this.warehouseEntryPM.WarehouseEntryPackages.forEach(entryPackage => {
+                    if (entryPackage.ShipmentPackageId == shipmentPackage.Id) {
+                        shipmentPackage.InUse += entryPackage.Quantity;
+                        if (shipmentPackage.InUse > shipmentPackage.Quantity) {
+                            shipmentPackage.InUse -= entryPackage.Quantity;
+                            this.IsSelectedPackagesMoreThanAvaliable = true;
+                        }
+                    }
+                });
+            });
+        }
+    }
 
     OnActualEntryDateDatePickerChange(value) {
 

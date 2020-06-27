@@ -19,147 +19,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Description"
-    Type="varchar"
-    Size="2000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PackageTypeId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ContainerNumber"
-    Type="varchar"
-    Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ShipperSeal"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CarrierSeal"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Tare"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Quantity"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Weight"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Volume"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Height"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Width"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Length"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="UnNumber"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ClassNumber"
-    Type="varchar"
-    Size="10">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Temperature"
-    Type="varchar"
-    Size="8">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Ventilation"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="SOC"
     Type="int">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="MarksAndNumbers"
-    Type="varchar"
-    Size="350">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PackagingGroup"
-    Type="varchar"
-    Size="10">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IMDGCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="FlashPoint"
-    Type="varchar"
-    Size="8">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Harmonize"
-    Type="varchar"
-    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
@@ -171,64 +32,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="MaterialDescription"
-    Type="varchar"
-    Size="30">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsDangerous"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="OriginalShipmentPackageId"
     Type="varchar"
     Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="VolumetricWeight"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CommodityId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="NumberOfInsidePackages"
-    Type="int"
-    DefaultValue="0">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="NumberOfInsidePackagesDetails"
-    Type="varchar"
-    Size="500">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="VGM"
-    Type="decimal"
-    Precision="18"
-    Scale="2">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="MethodUsed"
-    Type="nvarchar"
-    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -335,6 +141,200 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="PackageTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ContainerNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MarksAndNumbers"
+    Type="varchar"
+    Size="350">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Description"
+    Type="varchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Quantity"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tare"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Weight"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Volume"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Height"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Width"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Length"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UnNumber"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IMDGCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ClassNumber"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PackagingGroup"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FlashPoint"
+    Type="varchar"
+    Size="8">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MaterialDescription"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Temperature"
+    Type="varchar"
+    Size="8">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Ventilation"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipperSeal"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CarrierSeal"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Harmonize"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsDangerous"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="VolumetricWeight"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CommodityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NumberOfInsidePackages"
+    Type="int"
+    DefaultValue="0">i
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="NumberOfInsidePackagesDetails"
+    Type="varchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VGM"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MethodUsed"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="Reference1"
     Type="varchar"
     Size="2000">
@@ -356,13 +356,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Reference4"
-    Type="varchar"
-    Size="2000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="CommodityNumber"
     Type="varchar"
     Size="20">
@@ -370,11 +363,10 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CommodityName"
-    Type="varchar"
-    Size="250">
+    Name="IsMultiHarmonize"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="CeficClass"
@@ -418,6 +410,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="TemperatureUnitCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="NonActiveContainer"
     Type="bit">
     <Constraints
@@ -448,9 +447,16 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="WarehouseReleaseNumber"
+    Name="Reference4"
     Type="varchar"
-    Size="15">
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CommodityName"
+    Type="varchar"
+    Size="250">
     <Constraints
       Nullable="true" />
   </Column>
@@ -482,24 +488,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="TemperatureUnitCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="FlashPointTemperatureUnitCode"
     Type="varchar"
     Size="3">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="IsMultiHarmonize"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="ETD"
@@ -517,13 +510,6 @@
     Name="Routing"
     Type="varchar"
     Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="RoutingIds"
-    Type="varchar"
-    Size="50">
     <Constraints
       Nullable="true" />
   </Column>
@@ -589,19 +575,30 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
-    ForeignKeyColumn="PackageTypeId"
-    ReferencedTable="PackageTypes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+  <Column
+    Name="WarehouseReleaseNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RoutingIds"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InUse"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CommodityId"
-    ReferencedTable="ShipmentCommodities"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -613,6 +610,21 @@
     ForeignKeyColumn="EmptyContainerReturnId"
     ReferencedTable="ShipmentPickUpDeliveries"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PackageTypeId"
+    ReferencedTable="PackageTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CommodityId"
+    ReferencedTable="ShipmentCommodities"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TemperatureUnitCode"
+    ReferencedTable="TemperatureUnits"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="LastStatusCode"
@@ -627,11 +639,6 @@
   <Relation
     ForeignKeyColumn="ECRTransportModeCode"
     ReferencedTable="PickUpDeliveryTransportModes"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="TemperatureUnitCode"
-    ReferencedTable="TemperatureUnits"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation

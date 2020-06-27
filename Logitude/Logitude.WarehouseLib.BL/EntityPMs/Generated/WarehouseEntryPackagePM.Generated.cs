@@ -1170,6 +1170,29 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string shipmentPackageId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipmentPackageId  
+	   {
+	    
+	     get
+		{
+		   return shipmentPackageId;
+		 }
+		 set
+		 {
+		   if(shipmentPackageId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentPackageId",OldValue=shipmentPackageId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipmentPackageId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

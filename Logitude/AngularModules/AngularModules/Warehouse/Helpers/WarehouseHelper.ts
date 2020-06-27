@@ -127,64 +127,51 @@ export class WarehouseHelper {
         if (shipmentPackages && shipmentPackages.length > 0) {
             
             shipmentPackages.forEach((item) => {
-                var warehouseEntryPackagePM: WarehouseEntryPackagePM = new WarehouseEntryPackagePM(null);
-                warehouseEntryPackagePM.Width = item.Width;
-                warehouseEntryPackagePM.Height = item.Height;
-                warehouseEntryPackagePM.Length = item.Length;
-                warehouseEntryPackagePM.Description = item.Description;
-                warehouseEntryPackagePM.Quantity = item.Quantity;
-                warehouseEntryPackagePM.Volume = item.Volume;
-                warehouseEntryPackagePM.Weight = item.Weight;
-                warehouseEntryPackagePM.ContainerNumber = item.ContainerNumber;
-                warehouseEntryPackagePM.Seal = item.Seal;
-                warehouseEntryPackagePM.Tenant = item.Tenant;
-                warehouseEntryPackagePM.Harmonize = item.Harmonize;
-                warehouseEntryPackagePM.Instock = item.Quantity;
-                warehouseEntryPackagePM.PackageTypeId = item.PackageTypeId;
-                warehouseEntryPackagePM.PackageTypeName = item.PackageTypeName;
-                warehouseEntryPackagePM.Tenant = SessionLocator.TenantPM.Id;
-                warehouseEntryPackagePM.CreatedByUserId = SessionLocator.LoggedUserId;
-                warehouseEntryPackagePM.UpdatedByUserId = SessionLocator.LoggedUserId;
-                warehouseEntryPackagePM.CreateDate = DateTool.GetCurrentDateAsUtc();
-                warehouseEntryPackagePM.UpdateDate = DateTool.GetCurrentDateAsUtc();
-                warehouseEntryPackagePM.VolumetricWeight = item.VolumetricWeight;
+                if (item.Quantity != item.InUse) {
+                    var warehouseEntryPackagePM: WarehouseEntryPackagePM;
+                    if (entityPM.DirectionId == "I") {
+                        warehouseEntryPackagePM = this.FillWareHouseEntryPackageItem(item, item.InUse);
+                    }
+                    else {
+                        warehouseEntryPackagePM = this.FillWareHouseEntryPackageItem(item, 0);
+                    }
+                    if (packageType == "ShipmentPackages") warehouseEntryPackagePM.IsContainer = item.IsContainer;
+                    else {
 
-                if (packageType == "ShipmentPackages") warehouseEntryPackagePM.IsContainer = item.IsContainer;
-                else {
-
-                    if (!AppTool.IsNullOrEmpty(item.PackageTypeId)) {
-                        var myService: PackageTypeListService = new PackageTypeListService();
-                        myService.getSingleFromCache(item.PackageTypeId).subscribe((myResponse: ServiceResponse) => {
-                            if (!myResponse.HasError) {
-                                var list: any = myResponse.Result;
-                                if (list != null) {
-                                    warehouseEntryPackagePM.IsContainer = list.IsContainer;
+                        if (!AppTool.IsNullOrEmpty(item.PackageTypeId)) {
+                            var myService: PackageTypeListService = new PackageTypeListService();
+                            myService.getSingleFromCache(item.PackageTypeId).subscribe((myResponse: ServiceResponse) => {
+                                if (!myResponse.HasError) {
+                                    var list: any = myResponse.Result;
+                                    if (list != null) {
+                                        warehouseEntryPackagePM.IsContainer = list.IsContainer;
+                                    }
                                 }
+                            });
+                        } else {
+                            if (!AppTool.IsNullOrEmpty(item.ContainerNumber)) {
+                                warehouseEntryPackagePM.IsContainer = true;
                             }
-                        });
-                    } else {
-                        if (!AppTool.IsNullOrEmpty(item.ContainerNumber)) {
-                            warehouseEntryPackagePM.IsContainer = true;
+
                         }
 
                     }
 
+                    warehouseEntryPackagePM.Id = "1-1";
+                    warehouseEntryPackagePM.WarehouseEntryId = "1-1";
+                    var height: string = warehouseEntryPackagePM.Height ? warehouseEntryPackagePM.Height.toString() : "";
+                    var width: string = warehouseEntryPackagePM.Width ? warehouseEntryPackagePM.Width.toString() : "";
+                    var length: string = warehouseEntryPackagePM.Length ? warehouseEntryPackagePM.Length.toString() : "";
+                    warehouseEntryPackagePM.Dimensions = length + "-" + width + "-" + length;
+
+                    if (!AppTool.IsNullOrEmpty(warehouseEntryPackagePM.ContainerNumber) && warehouseEntryPackagePM.IsContainer) {
+                        var error = FormatTool.ValidateContainerNumber(warehouseEntryPackagePM.ContainerNumber);
+                        warehouseEntryPackagePM.ContainerNumberWarning = error;
+
+                    }
+
+                    warehouseEntryPackagesLists.push(warehouseEntryPackagePM);
                 }
-                
-                warehouseEntryPackagePM.Id = "1-1";
-                warehouseEntryPackagePM.WarehouseEntryId = "1-1";
-                var height: string = warehouseEntryPackagePM.Height ? warehouseEntryPackagePM.Height.toString() : "";
-                var width: string = warehouseEntryPackagePM.Width ? warehouseEntryPackagePM.Width.toString() : "";
-                var length: string = warehouseEntryPackagePM.Length ? warehouseEntryPackagePM.Length.toString() : "";
-                warehouseEntryPackagePM.Dimensions = length + "-" + width + "-" + length;
-
-                if (!AppTool.IsNullOrEmpty(warehouseEntryPackagePM.ContainerNumber) && warehouseEntryPackagePM.IsContainer) {
-                    var error = FormatTool.ValidateContainerNumber(warehouseEntryPackagePM.ContainerNumber);
-                    warehouseEntryPackagePM.ContainerNumberWarning = error;
-
-                }
-
-                warehouseEntryPackagesLists.push(warehouseEntryPackagePM);
 
 
             });
@@ -193,6 +180,32 @@ export class WarehouseHelper {
         return warehouseEntryPackagesLists;
     }
 
+
+    FillWareHouseEntryPackageItem(item: any, inUse: number) {
+        var warehouseEntryPackagePM: WarehouseEntryPackagePM = new WarehouseEntryPackagePM(null);
+        warehouseEntryPackagePM.Width = item.Width;
+        warehouseEntryPackagePM.Height = item.Height;
+        warehouseEntryPackagePM.Length = item.Length;
+        warehouseEntryPackagePM.Description = item.Description;
+        warehouseEntryPackagePM.Quantity = item.Quantity - inUse;
+        warehouseEntryPackagePM.Volume = item.Volume;
+        warehouseEntryPackagePM.Weight = item.Weight;
+        warehouseEntryPackagePM.ContainerNumber = item.ContainerNumber;
+        warehouseEntryPackagePM.Seal = item.Seal;
+        warehouseEntryPackagePM.Tenant = item.Tenant;
+        warehouseEntryPackagePM.Harmonize = item.Harmonize;
+        warehouseEntryPackagePM.Instock = item.Quantity - inUse;
+        warehouseEntryPackagePM.PackageTypeId = item.PackageTypeId;
+        warehouseEntryPackagePM.PackageTypeName = item.PackageTypeName;
+        warehouseEntryPackagePM.Tenant = SessionLocator.TenantPM.Id;
+        warehouseEntryPackagePM.CreatedByUserId = SessionLocator.LoggedUserId;
+        warehouseEntryPackagePM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        warehouseEntryPackagePM.CreateDate = DateTool.GetCurrentDateAsUtc();
+        warehouseEntryPackagePM.UpdateDate = DateTool.GetCurrentDateAsUtc();
+        warehouseEntryPackagePM.VolumetricWeight = item.VolumetricWeight;
+        warehouseEntryPackagePM.ShipmentPackageId = item.Id;
+        return warehouseEntryPackagePM;
+    }
 
     CreateWarehouseEntry(entityPM: WarehouseEntryPM, viewModel: any) {
 
@@ -210,6 +223,9 @@ export class WarehouseHelper {
                 });
             }
 
+            if (viewModel.IsSelectedPackagesMoreThanAvaliable) {
+                viewModel.ValidationErrorsList.push("Selected packages is more than available");
+            }
 
             entityPM.WarehouseEntryPackages = entityPM.WarehouseEntryPackages.filter(d => d.Quantity > 0);
 
