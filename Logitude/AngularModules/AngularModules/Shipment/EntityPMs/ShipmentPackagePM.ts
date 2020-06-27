@@ -434,6 +434,10 @@ export class ShipmentPackagePM {
     public get IsMultiHarmonize() { return this.isMultiHarmonize; }
     public set IsMultiHarmonize(newValue: boolean) { if (this.isMultiHarmonize != newValue) { this.isMultiHarmonize = newValue; this.MarkAsDirty("IsMultiHarmonize"); } }
 
+    private inUse: number;
+    public get InUse() { return this.inUse; }
+    public set InUse(newValue: number) { if (this.inUse != newValue) { this.inUse = newValue; this.MarkAsDirty("InUse"); } }
+
     private eTD: Date;
     public get ETD() { return this.eTD; }
     public set ETD(newValue: Date) {
