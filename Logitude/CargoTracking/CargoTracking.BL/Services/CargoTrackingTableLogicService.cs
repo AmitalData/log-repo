@@ -25,9 +25,25 @@ namespace CargoTracking.CargoTracking.BL.Services
 
             if (TableName == "CargoTrackingShipments")
             {
+                CompareNullabelFirstPickupETADateTime(TableRow);
                 TableRow.SetField("Master", TableRow["MasterShipmentDataId"]);
                 TableRow.SetField("PickupDate", TableRow["FirstPickupETA"]);
-                CompareNullabelFirstPickupETADateTime(TableRow);
+                TableRow.SetField("ClearanceDate", TableRow["CustomsClearanceDate"]);
+
+                if (!TableRow["CustomsClearanceDate"].Equals(null))
+                {
+                    TableRow.SetField("ClearanceDone", true);
+                }
+
+                if (TableRow["EntityType"].Equals("C") || TableRow["ShipmentLevelCode"].Equals("F"))
+                {
+                    TableRow.SetField("EntityId", TableRow["Id"]);
+                }
+                else if (TableRow["EntityType"].Equals("O"))
+                {
+                    TableRow.SetField("EntityId", TableRow["Id"]);
+
+                }
             }
 
         }

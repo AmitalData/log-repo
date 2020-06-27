@@ -29,6 +29,7 @@ namespace CargoTracking.Forms
         private int TableCellMrginHight = 10;
         private int TotalIncreasing = 0;
         private bool FirstInit = true;
+        private int NumberOfBulkPerTime = 1000;
         public CargoTrackingForm()
         {
             InitializeComponent();
@@ -109,15 +110,9 @@ namespace CargoTracking.Forms
         }
         private void UpdateCargoDataBase(CargoTable table)
         {
-            if (checkBox1.Checked == false)
-            {
-                NumberOfCoulmnUpdated = cargoTrackingService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection });
-            }
-            else
-            {
-                NumberOfCoulmnUpdated = cargoTrackingService.UpdateLineByLine(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection });
-
-            }
+ 
+           NumberOfCoulmnUpdated = cargoTrackingService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection }, NumberOfBulkPerTime);
+  
         }
 
 
@@ -424,6 +419,21 @@ namespace CargoTracking.Forms
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void radioButton7_CheckedChanged(object sender, EventArgs e)
+        {
+            this.NumberOfBulkPerTime = 1000;
+        }
+
+        private void radioButton8_CheckedChanged(object sender, EventArgs e)
+        {
+            this.NumberOfBulkPerTime = 5000;
+        }
+
+        private void radioButton9_CheckedChanged(object sender, EventArgs e)
+        {
+            this.NumberOfBulkPerTime = 10000;
         }
     }
 }

@@ -12,12 +12,63 @@
       PrimaryKey="true"
       Nullable="false" />
   </Column>
+  
+  <Column
+  Name="EntityId"
+  Type="varchar"
+  Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  
+  
+  <Column
+Name="ForwardingShipmentHeaderId"
+Type="varchar"
+Size="15">
+    <Constraints
+     Nullable="true" />
+    
+  </Column>
+
+  <Column
+ Name="CustomsShipmentHeaderId"
+Type="varchar"
+Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  
+  <Column
+ Name="EntityType"
+ Type="varchar"
+ Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  
+  <Column
+ Name="CurrentMilestoneCode"
+ Type="varchar"
+ Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  
+  <Column
+ Name="CurrentMilestoneDate"
+ Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  
   <Column
     Name="Tenant"
     Type="int">
     <Constraints
       Nullable="true" />
   </Column>
+  
   <Column
     Name="CustomerId"
     Type="varchar"
@@ -25,6 +76,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+  
   <Column
    Name="TransportModeId"
    Type="char"
@@ -102,12 +154,37 @@ Type="float"
     <Constraints
       Nullable="true" />
   </Column>
-
+  
+  <Column
+    Name="ClearanceDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  
   <Column
     Name="PickupDate"
     Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
+
+  <Column
+  Name="ClearanceDate"
+  Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  
+  <Relation
+    ForeignKeyColumn="EntityType"
+    ReferencedTable="CargoTrackingHeaderEntityTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+  ForeignKeyColumn="CurrentMilestoneCode"
+  ReferencedTable="CargoTrackingMilestones"
+  ReferencedColumn="Code"
+  ReferencedTableSchema="dbo" />
  
 </Table>
