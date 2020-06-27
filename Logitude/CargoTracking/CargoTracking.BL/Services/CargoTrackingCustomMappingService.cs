@@ -18,8 +18,12 @@ namespace CargoTracking.CargoTracking.BL.Services
         }
         private static void AddCustomColumn(DataTable dataTable, SqlBulkCopy sbc, string ColumnName)
         {
-            dataTable.Columns.Add(ColumnName);
-            sbc.ColumnMappings.Add(ColumnName, ColumnName);
+            if (!dataTable.Columns.Contains(ColumnName))
+            {
+                dataTable.Columns.Add(ColumnName);
+                sbc.ColumnMappings.Add(ColumnName, ColumnName);
+            }
+
         }
  
 
