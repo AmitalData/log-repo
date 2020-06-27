@@ -411,16 +411,17 @@ namespace Logitude.Accounting.BL.CoreBL
                     reference = Reference;
                     referenceGroup = "0000";
                 }
-
+                if (reference.Length > 9)
+                {
+                    reference = reference.Substring(reference.Length - 9);
+                }
             }
             else
             {
                 referenceGroup = "0000";
+                reference = null;
             }
-            if (reference.Length > 9)
-            {
-                reference = reference.Substring(reference.Length - 9);
-            }
+            
         }
         private static string RemoveSomeChars(string reference)
         {
