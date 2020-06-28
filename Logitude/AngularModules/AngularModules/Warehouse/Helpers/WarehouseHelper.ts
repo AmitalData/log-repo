@@ -223,10 +223,6 @@ export class WarehouseHelper {
                 });
             }
 
-            if (viewModel.IsSelectedPackagesMoreThanAvaliable) {
-                viewModel.ValidationErrorsList.push("Selected packages is more than available");
-            }
-
             entityPM.WarehouseEntryPackages = entityPM.WarehouseEntryPackages.filter(d => d.Quantity > 0);
 
             if (entityPM.WarehouseEntryPackages.length == 0) {

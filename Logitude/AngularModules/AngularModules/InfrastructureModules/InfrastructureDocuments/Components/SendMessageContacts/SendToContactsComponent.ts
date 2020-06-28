@@ -466,6 +466,10 @@ export class SendToContactsComponent implements OnInit {
         this.ToEmailLists = [];
         this.CcEmailLists = [];
         this.BccEmailLists = [];
+        window.ToEmailLists = [];
+        window.CcEmailLists = [];
+        window.BccEmailLists = [];
+        this.SearchFieldchangeevent.emit(this.searchFields);
     }
 
     CloseButtonClicked() {

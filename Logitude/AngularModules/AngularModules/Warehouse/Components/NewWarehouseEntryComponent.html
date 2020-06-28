@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .MessageText {
         white-space: normal;
@@ -25,17 +25,23 @@
             <td colspan="3">
                 <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
             </td>
-        </tr> 
+        </tr>
 
-        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:5px;">
+        <tr *ngIf="!IsNoPackagesAvaliable && ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:5px;">
             <td colspan="3">
                 <div style="height:5px"></div>
             </td>
         </tr>
-         
-         
-         
-        <tr style="height:210px;vertical-align:top;">
+
+        <tr *ngIf="IsNoPackagesAvaliable" style="height:50px;">
+            <td colspan="3">
+                <div style="height:500px"></div>
+            </td>
+        </tr>
+
+
+
+        <tr *ngIf="!IsNoPackagesAvaliable" style="height:210px;vertical-align:top;">
 
 
             <td style="width:400px">
@@ -43,27 +49,27 @@
                     <tr style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:125px;">  <LogLabel [ObjectFieldName]="'WarehouseId'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
-                        <td style="width:270px"><LogLov style="width:230px"  [SelectedValue]="warehouseEntryPM.WarehouseId" [ObjectFieldName]="'WarehouseId'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [LookUpTableName]="'Warehouse'"></LogLov></td>
+                        <td style="width:270px"><LogLov style="width:230px" [SelectedValue]="warehouseEntryPM.WarehouseId" [ObjectFieldName]="'WarehouseId'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [LookUpTableName]="'Warehouse'"></LogLov></td>
                         <td><div></div></td>
                     </tr>
 
-                     
-               
-                    <tr  style="vertical-align:top;height:30px">
+
+
+                    <tr style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:125px;">  <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
                         <td style="width:270px"><LogLov style="width:230px" [DependencyFilter1Value]="'CS'" [ObjectFieldName]="'CustomerId'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [LookUpTableName]="'Card'"></LogLov></td>
                         <td><div></div></td>
                     </tr>
 
-                    <tr  style="vertical-align:top;height:30px">
+                    <tr style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:125px;">  <LogLabel [ObjectFieldName]="'CustomerRef1'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
                         <td style="width:270px"><LogTextBox style="width:230px" [ObjectFieldName]="'CustomerRef1'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogTextBox></td>
                         <td><div></div></td>
                     </tr>
-                      
-                     
+
+
                     <tr style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:125px;">  <LogLabel [ObjectFieldName]="'CustomerRef2'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
@@ -80,14 +86,14 @@
                         <td style="width:5px"><div></div></td>
                         <td style="width:125px;">  <LogLabel [ObjectFieldName]="'SpecialInstruction'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
                         <td style="width:270px;">
-                        
+
                             <div style="height: 100%; width:270px;">
-                                <LogTextBox  style="width:270px;" [IsMultiline]="true" [ObjectFieldName]="'SpecialInstruction'"  [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogTextBox>
+                                <LogTextBox style="width:270px;" [IsMultiline]="true" [ObjectFieldName]="'SpecialInstruction'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogTextBox>
                             </div>
-                        
+
                         <td><div></div></td>
                     </tr>
-             
+
 
                     <tr><td></td></tr>
 
@@ -104,7 +110,7 @@
 
                 <table style="vertical-align:top">
 
-        
+
                     <tr style="vertical-align:top;height:30px">
 
 
@@ -116,28 +122,28 @@
                         <td style="width:5px"><div></div></td>
                         <td style="width:130px;"> <LogLabel [ObjectFieldName]="'ExpectedEntryDate'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
                         <td style="width:240px;">
-                        
-                        
-                        <table>
-                            <tr>
-                                <td style="width: 117px;">
 
-                                    <LogDatePicker [ObjectFieldName]="'ExpectedEntryDate'" [SelectedDateValue]="ExpectedEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [HideColumns]="true"></LogDatePicker>
-                                </td>
 
-                                <td style="width: 5px;">
-                                    <div></div>
-                                </td>
+                            <table>
+                                <tr>
+                                    <td style="width: 117px;">
 
-                                <td style="width: 117px;">
-                                    <LogDatePicker [ObjectFieldName]="'ExpectedEntryDate'" [SelectedDateValue]="ExpectedEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
-                                </td>
-                                <td><div></div></td>
-                            </tr>
-                        </table> 
-                 
-                        
-                        
+                                        <LogDatePicker [ObjectFieldName]="'ExpectedEntryDate'" [SelectedDateValue]="ExpectedEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [HideColumns]="true"></LogDatePicker>
+                                    </td>
+
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 117px;">
+                                        <LogDatePicker [ObjectFieldName]="'ExpectedEntryDate'" [SelectedDateValue]="ExpectedEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+                            </table>
+
+
+
                         </td>
                         <td><div></div></td>
                     </tr>
@@ -145,18 +151,18 @@
 
                     <tr style="vertical-align:top;height:30px">
                         <td colspan="2" style="width:75px"><div></div></td>
-          
+
                         <td style="width:130px;"> <LogLabel [Text]="'Actual Entry Date'" [ObjectFieldName]="'ActualEntryDate'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
 
 
 
                         <td style="width:240px;">
-                        
+
                             <table>
                                 <tr>
                                     <td style="width: 117px;">
-                        
-                                     <LogDatePicker  [ObjectFieldName]="'ActualEntryDate'" [SelectedDateValue]="ActualEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+
+                                        <LogDatePicker [ObjectFieldName]="'ActualEntryDate'" [SelectedDateValue]="ActualEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
 
                                     </td>
 
@@ -165,15 +171,15 @@
                                     </td>
 
                                     <td style="width: 117px;">
-                                    
 
-                                      <LogDatePicker [ObjectFieldName]="'ActualEntryDate'" [SelectedDateValue]="ActualEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+
+                                        <LogDatePicker [ObjectFieldName]="'ActualEntryDate'" [SelectedDateValue]="ActualEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
                                     </td>
                                     <td><div></div></td>
                                 </tr>
-                            </table> 
+                            </table>
 
-                        
+
                         </td>
                         <td><div></div></td>
                     </tr>
@@ -215,21 +221,21 @@
 
             </td>
 
-           
+
 
         </tr>
 
 
         <!--End Fields Grid-->
-        <tr style="vertical-align:central;height:10px;">
+        <tr *ngIf="!IsNoPackagesAvaliable" style="vertical-align:central;height:10px;">
             <td colspan="3">
-               <div></div>
+                <div></div>
             </td>
         </tr>
-    
-       <tr  style="vertical-align:central;height:100%;">
-            <td colspan="3" >
-                <div class="MediaFill"  LocationDirective Code="WEPD"></div>
+
+        <tr *ngIf="!IsNoPackagesAvaliable" style="vertical-align:central;height:100%;">
+            <td colspan="3">
+                <div class="MediaFill" LocationDirective Code="WEPD"></div>
             </td>
         </tr>
 
@@ -253,7 +259,7 @@
                             <div></div>
                         </td>
 
-                        <td style="width: 57px;">
+                        <td *ngIf="!IsNoPackagesAvaliable" style="width: 57px;">
                             <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
                         </td>
                     </tr>

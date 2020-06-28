@@ -42,6 +42,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     select a).ToList();
         }
 
+        public List<ShipmentPickUpDelivery> GetShipmentDeliveryByShipmentId(string shipmentId, int tenant)
+        {
+            return (from a in context.ShipmentPickUpDeliveries
+                    where a.ShipmentId == shipmentId && a.Tenant == tenant && a.PickUpDeliveryTypeCode == "DELV"
+                    select a).ToList();
+        }
+
         public void Add(ShipmentPickUpDelivery entity)
         {
             context.ShipmentPickUpDeliveries.Add(entity);
