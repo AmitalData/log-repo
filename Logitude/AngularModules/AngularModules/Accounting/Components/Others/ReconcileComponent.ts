@@ -514,12 +514,15 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
-                    this.SelectedLines.Clear();
                     for (var i = 0; i < this.SelectedLines.Collection.length; i++) {
                         var line = this.SelectedLines.Collection[i];//new LineModel(result[i], this, -1);
                         this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: false, RowIndex: -1, ById: true });
                     }
-                   // = [];
+                    for (var i = 0; i < this.SelectedLines.Collection.length; i++) {
+                        var line = this.SelectedLines.Collection[i]; 
+                        this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: false, RowIndex: line.myRowIndex, ById: true });
+                    }
+                    this.SelectedLines.Clear();
 
                     this.RunAutomaticReconcile();
 
@@ -534,6 +537,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
     RunAutomaticReconcile() {
         this.ValidationErrorsList = [];
+
+        
 
         //#region filters
         var filters = new ApiQueryFilters;
@@ -552,7 +557,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         filters.GetAll = true;
         filters.GetCount = true;
         //#endregion
-
+   
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
 
 
@@ -951,8 +956,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
 
     CheckBoxValueChanged(Row) {
-        this.FireCheckBoxChecked.emit({rowData: Row.LedgerTransactionPM, IsChecked: false, RowIndex: Row.myRowIndex,ById : true });
         this.PopLine(Row.LedgerTransactionPM.Id);
+        this.FireCheckBoxChecked.emit({rowData: Row.LedgerTransactionPM, IsChecked: false, RowIndex: Row.myRowIndex,ById : true });
     }
 
     CalculateOriginalAmount(row: LineModel) {

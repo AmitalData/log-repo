@@ -162,17 +162,16 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                         this.isTariffLinesDeleted = false;
                         this.CurrentSession.FireEvent("TariffLinesDeleted");                       
                     }
+
+                    if (this.isUpdateButtonClicked) {
+                        this.isUpdateButtonClicked = false;
+                        this.StartUpdateSurcharges();
+                    }
   
                     this.SetSurchargesLabelsAndVisibility();
                 }
 
                 else {
-                    //if (this.isApproveButtonClicked) {
-                        //if (this.isTariffLinesDeleted) {
-                        //    this.ResetDeletedLinesExpirationDates();                        
-                        //}
-                    //}
-
                     this.StopAllFlags();
                 }
             });
@@ -708,15 +707,18 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
     }
 
+    private isUpdateButtonClicked: boolean = false;
     UpdateSurchargesClicked() {
+        this.isUpdateButtonClicked = true;
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
+    }
+    private StartUpdateSurcharges() {
         var args: UpdateTariffArgs = new UpdateTariffArgs();
         args.Version = this.CurrentVersion;
         args.TariffCharges = this.tariffCharges;
         args.CarrierId = this.EntityPM.SellerId;
 
         var logWindow = new LogitudeWindow();
-        //logWindow.Width = 1300;
-        //logWindow.Height = 600;
         logWindow.IsFillScreen_90 = true;
         logWindow.WindowArgs = args;
         logWindow.Title = "Tariff Surcharge Update";

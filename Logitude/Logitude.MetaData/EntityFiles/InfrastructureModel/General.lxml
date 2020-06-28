@@ -35,7 +35,9 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;d910&quot;"
+
+  Code="&quot;e167&quot;"
+
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -6964,5 +6966,26 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+
+    <Feature
+      Code="&quot;BICentralDWH &quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.BICentralDWH &quot;"
+      FeatureDefaultText="&quot;BI Central DWH &quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+
+    <Feature
+      Code="&quot;PrivateDB&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.PrivateDB&quot;"
+      FeatureDefaultText="&quot;Private DB&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+
   </AdditionalFeatures>
 </entity>

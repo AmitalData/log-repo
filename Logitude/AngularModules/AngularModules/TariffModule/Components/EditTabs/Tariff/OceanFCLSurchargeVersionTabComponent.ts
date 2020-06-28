@@ -169,6 +169,11 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                         this.CurrentSession.FireEvent("TariffLinesDeleted");
                     }
 
+                    if (this.isUpdateButtonClicked) {
+                        this.isUpdateButtonClicked = false;
+                        this.StartUpdateSurcharges();
+                    }
+
                     this.SetSurchargesLabelsAndVisibility();
                     this.SetContainersLabelsAndVisibility();
                     this.SetSurchargesIds();
@@ -731,17 +736,18 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
     }
 
+    private isUpdateButtonClicked: boolean = false;
     UpdateSurchargesClicked() {
+        this.isUpdateButtonClicked = true;
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
+    }
+    private StartUpdateSurcharges() {
         var args: UpdateTariffArgs = new UpdateTariffArgs();
         args.Version = this.CurrentVersion;
         args.TariffCharges = this.tariffCharges;
         args.CarrierId = this.EntityPM.SellerId;
-        args.TypeCode = this.EntityPM.TypeCode;
-        args.FatherComponent = this;
 
         var logWindow = new LogitudeWindow();
-        //logWindow.Width = 1300;
-        //logWindow.Height = 600;
         logWindow.IsFillScreen_90 = true;
         logWindow.WindowArgs = args;
         logWindow.Title = "Tariff Surcharge Update";
@@ -754,7 +760,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
         logWindow.Show('./TariffModule/Components/EditTabs/Tariff/UpdateSurchargesComponent');
     }
-    
+
     public SelectedRow: OceanFCLSurchargeTariffLineData = null;
     OnRowSelected(itemComponent: OceanFCLSurchargeTariffLineData) {
         this.SelectedRow = itemComponent;

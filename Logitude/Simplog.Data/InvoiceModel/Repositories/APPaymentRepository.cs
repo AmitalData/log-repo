@@ -28,7 +28,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public APPayment GetSingleAPPayment(string id, int tenant)
         {
-            return (from a in context.APPayments.Include("LocalCurrency").Include("AccountingPaymentMethod").Include("PaymentCurrency").Include("VendorCard").Include("CreatedByUser.Contact").Include("Status").Include("Branch")
+            return (from a in context.APPayments.Include("LocalCurrency").Include("AccountingPaymentMethod").Include("PaymentCurrency").Include("VendorCard").Include("CreatedByUser.Contact").Include("Status").Include("Branch").Include("TransferStatus")
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }

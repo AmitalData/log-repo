@@ -9010,6 +9010,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;TotalVATOnly&quot;"
     ListPropertyPath="&quot;TotalVATOnly&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -10267,6 +10268,12 @@
         TextCodeCode="&quot;APInvoice.B.SendToQBO&quot;"
         FeatureTextCodeCode="&quot;APInvoice.Features.SendToQBO&quot;"
         FeatureDefaultText="&quot;Send to QBO&quot;" />
+      <MenuItem
+        EventCode="&quot;BlockFromTransfer&quot;"
+        DefaultText="&quot;Block from transfer&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="15"
+        IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>

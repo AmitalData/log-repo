@@ -55,18 +55,24 @@ export class GLAccountInterestComponent extends BaseComponent {
     }
     SetUIProperties() {
         if (this.EntityPM.ActiveForInterest) {
-            this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", true);
-            this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", true);
-            this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", true);
-            this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", true);
-
+            if(!this.EntityPM.IsSplitted){
+                this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", true);
+                this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", true);
+                this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", true);
+                this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", true);
+            }
+            else if(this.EntityPM.IsSplitted){
+                this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", true);
+                this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", false);
+                this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", false);
+                this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", false);
+            }
         }
         else {
-            this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", false);
-            this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", false);
-            this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", false);
-            this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", false);
-
+               this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", false);
+               this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", false);
+               this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", false);
+               this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", false);
         }
     }
     SetWindowArgs(args) {
@@ -95,7 +101,7 @@ export class GLAccountInterestComponent extends BaseComponent {
     }
 
     AddLine() {
-        if (!this.ActiveForInterest) return;
+        if (!this.ActiveForInterest || this.EntityPM.IsSplitted) return;
         var errors = [];
         if (this.GLAccountInterestPeriodsList.Collection.length > 0) {
             // Validation

@@ -2101,6 +2101,28 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             });
                     }
 
+                    else if (myObjectTableName == "ContainerFollowUp") {
+                        var windowArgs: any = {};
+                        windowArgs.EntityId = entityList.Id;
+                        windowArgs.IsNew = false;
+                        windowArgs.IsNewTemplate = true;
+
+                        windowTitle = TextCodeTranslator.Translate("General.O.EditEntity").replace("%Entity", TextCodeTranslator.Translate(myObjectTableName));
+
+                        var logWindow = new LogitudeWindow();
+                        logWindow.Width = 960;
+                        logWindow.Height = 570;
+                        logWindow.WindowArgs = windowArgs;
+                        logWindow.Title = windowTitle
+                        logWindow.ShowHeaderButtons = false;
+
+                        logWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardComponent");
+                        logWindow.WindowClosed.subscribe(($event1: any) => {
+                            this.isEditControlOpened = false;
+                            this.OnBackFromEdit(selectedEntityId, $event);
+                        });
+                    }
+
                     else {
 
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)

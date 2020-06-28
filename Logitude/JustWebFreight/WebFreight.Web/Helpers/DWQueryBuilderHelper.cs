@@ -19,6 +19,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using WebFreight.Web.DataContracts;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Helpers
 {
@@ -566,6 +567,8 @@ namespace WebFreight.Web.Helpers
                 FinalQuery = FinalSelectStmt + (HasMeasurement && FinalGroupByStmt != " group by" ? FinalGroupByStmt : "");
 
             }
+
+
             string TenantWhere = ".[Parent Tenant] = ";
             var DWSettings = new DWHSettingRepository(Tenant);
             var temp = DWSettings.GetSingleDWHSetting(Tenant);
@@ -573,6 +576,11 @@ namespace WebFreight.Web.Helpers
             if (!isParentTenant)//temp != null &&  temp.Tenant != temp.ParentTenant)
             {
                 TenantWhere = ".[Source Tenant] = ";
+            }
+            else
+            {
+                CheckBICentralDWHFeature();
+
             }
 
             if (FinalQuery.Contains("where"))
@@ -607,6 +615,18 @@ namespace WebFreight.Web.Helpers
 
 
             return sqlCommandDefinition;
+        }
+
+        private void CheckBICentralDWHFeature()
+        {
+            try
+            {
+                SecurityUtility.CheckContactFeature("General", "BICentralDWH", Tenant);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Sorry! You have no permission to run reports");
+            }
         }
 
         private static string GetDatePartsSqlColum(DWObjectFieldsDetails field)

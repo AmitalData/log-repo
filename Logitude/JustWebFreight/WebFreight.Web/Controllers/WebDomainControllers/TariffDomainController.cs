@@ -50,6 +50,8 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.EntityLists;
 using Logitude.TariffModule.Data.EntityListQueryServices;
 using Logitude.TariffModule.BL.Helpers;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -105,7 +107,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
                 
-                TariffQueryService tariffQueryService = new TariffQueryService(tenant);
                 DateTime? betweenDate = DateHelper.GetDate(args.Date);
                 if (betweenDate == null)
                 {
@@ -115,10 +116,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 PriceCheckManager priceCheckManager = new PriceCheckManager(args, tenant);
                 List<TariffSearchSummary> myResult = priceCheckManager.GetSummary();
-
-               //List<TariffSearchSummary> myResult;
-               //myResult=args.TariffType=="OFC"? tariffQueryService.GetTariffSearchFCLSummary(args, tenant) : tariffQueryService.GetTariffSearchSummary(args, tenant);
-               
+                
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
@@ -2864,7 +2862,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         if(isValid)
                         {
-                            if(routs.Count > 1000)
+                            int currentLinesCount = iDraftVersion.TariffLines.Count;
+
+                            if (routs.Count + currentLinesCount > 1000)
                             {
                                 isValid = false;
                                 throw new ApplicationException("Can't perform this update due to tariff lines limitation to 1000");
@@ -3485,6 +3485,33 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 
                 return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetTariffsPricesConnectedToPayables(string freightTariffId, string shipmentId, string tariffType)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
+
+                freightTariffId = this.FixFilter(freightTariffId);
+                shipmentId = this.FixFilter(shipmentId);
+                
+                PriceCheckManager priceCheckManager = new PriceCheckManager(freightTariffId, shipmentId, tariffType, tenant);
+                List<TariffSearchSummary> myResult = priceCheckManager.GetSummaryForExistedTariff();
+                
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
             catch (Exception ex)
