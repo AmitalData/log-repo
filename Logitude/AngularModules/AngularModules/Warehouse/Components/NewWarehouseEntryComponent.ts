@@ -36,7 +36,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     warehouseHelper: WarehouseHelper = new WarehouseHelper();
     public ValidationErrorsList: string[];
-    public IsSelectedPackagesMoreThanAvaliable: boolean = false;
+    public IsNoPackagesAvaliable: boolean = false;
     IsNotSetWarehouseIdForWarehouseLegShipment: boolean = false;
     DataContext: any = this;
     ShipmentPM: ShipmentPM;
@@ -52,7 +52,6 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
     constructor() {
         super();
         this.warehouseEntryPM = this.warehouseHelper.GetNewWarehouseEntry(this);
-
         this.validator = new ClassLevelValidator();
 
         var table = window.ObjectTables.filter(d=> d.Name == "WarehouseEntry")[0];
@@ -80,7 +79,12 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
 
         this.RunComponent();
         this.ShipmentPM = args.ShipmentPM;
-        
+        this.ValidationErrorsList = [];
+
+        if (args.WarehouseEntryPackagesLists.length == 0 && this.ShipmentPM.DirectionId == "I") {
+            this.IsNoPackagesAvaliable = true;
+            this.ValidationErrorsList.push("You are not allowed to create a new cross dock entry! Please add at least one shipment package.");
+        }
         if (args.WarehouseEntryPackagesLists){
             args.WarehouseEntryPackagesLists.forEach((item) => {
                 this.warehouseEntryPM.AddWarehouseEntryPackage(item);
@@ -244,7 +248,6 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
 
 
     SaveButtonClicked() {
-        this.IsSelectedPackagesMoreThanAvaliable = false;
         this.warehouseEntryPM.ConnectedToShipment = true;
         this.SetShipmentPackagesAsUsed();
         this.warehouseHelper.CreateWarehouseEntry(this.warehouseEntryPM, this);
@@ -259,10 +262,10 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
                 this.warehouseEntryPM.WarehouseEntryPackages.forEach(entryPackage => {
                     if (entryPackage.ShipmentPackageId == shipmentPackage.Id) {
                         shipmentPackage.InUse += entryPackage.Quantity;
-                        if (shipmentPackage.InUse > shipmentPackage.Quantity) {
-                            shipmentPackage.InUse -= entryPackage.Quantity;
-                            this.IsSelectedPackagesMoreThanAvaliable = true;
-                        }
+                        //if (shipmentPackage.InUse > shipmentPackage.Quantity) {
+                        //    shipmentPackage.InUse -= entryPackage.Quantity;
+                        //    this.IsSelectedPackagesMoreThanAvaliable = true;
+                        //}
                     }
                 });
             });
