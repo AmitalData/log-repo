@@ -334,6 +334,7 @@ export class AddEditPayableComponent implements OnDestroy {
         this.myCloner.AddField('VendorId');
         this.myCloner.AddField('Notes');
         this.myCloner.AddField('TariffId');
+        this.myCloner.AddField('TariffNumber');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.ShipmentPM);
     }

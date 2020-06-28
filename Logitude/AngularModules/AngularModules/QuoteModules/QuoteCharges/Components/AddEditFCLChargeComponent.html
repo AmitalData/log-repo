@@ -25,13 +25,45 @@
     <tr>
         <td>
             <table>
+                <tr *ngIf="DataContext.fatherComponent.IsPriceCheckVisible && DataContext.TariffNumber != null" style="height:1px;">
+                    <td>
+                        <table>
+                            <!-- Tariff -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 150px;">
+                                    <LogLabel [NoObjectField]="true" [Text]="'Tariff'" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:230px;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 50px;">
+                                                <Hyperlink [FontSize]="12" (click)="DataContext.fatherComponent.EditTariffClicked(DataContext)">{{ DataContext.TariffNumber}}</Hyperlink>
+                                            </td>
+                                            <td style="width: 15px;">
+                                                <div style="height: 20px;width: 14px;" [class.Disable]="!DataContext.IsEditingEnabled">
+                                                    <img style="width: 14px; height: 14px; cursor: pointer;" src="./Images/RedX2.png" (click)="DataContext.fatherComponent.DeleteTariff(DataContext)" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
                 <tr style="height:1px;">
                     <td>
                         <table>
                             <tr>
                                 <td style="width:370px;">
                                     <table class="FixedTable">
-
                                         <!-- ChargesTypeId -->
                                         <tr class="FormFieldRow">
                                             <td style="width: 150px;">
