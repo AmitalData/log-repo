@@ -198,7 +198,8 @@ namespace CargoTracking.Forms
             foreach (CargoTable table in CargoTableLists)
             {
                 table.Labels = new List<Label>();
-                AddLabelToGrid(table.CT_TableName, 1, 0, 1, table);
+                string TableNameLabe = table.CT_TableName.Length <23 ? table.CT_TableName : table.CT_TableName.Substring(0,17)+" ...";
+                AddLabelToGrid(TableNameLabe, 1, 0, 1, table);
                 AddLabelToGrid( "In Progress...", 1, 0, 2, table);
                 AddLabelToGrid( "Remaining ...", 0, 1, 3, table);
                 this.Table_X = 0;

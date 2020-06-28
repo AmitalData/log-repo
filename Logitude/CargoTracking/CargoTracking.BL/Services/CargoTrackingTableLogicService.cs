@@ -12,14 +12,14 @@ namespace CargoTracking.CargoTracking.BL.Services
     public class CargoTrackingTableLogicService
     {
 
-        public static  void SetTableLogic(DataRow TableRow,string TableName)
+        public static void SetTableLogic(DataRow TableRow, string TableName)
         {
             if (TableName == "CargoTrackingPorts")
             {
-                if ( TableRow["Code"].Equals("MUT"))
-                {
+                //if (TableRow["Code"].Equals("MUT"))
+                //{
                     TableRow.SetField("EnglishName", "Cargo_Test");
-                }
+                //}
 
             }
 
@@ -44,6 +44,13 @@ namespace CargoTracking.CargoTracking.BL.Services
                     TableRow.SetField("EntityId", TableRow["Id"]);
 
                 }
+            }
+
+            if (TableName == "CargoTrackingShipmentSearchFields")
+            {
+                TableRow.SetField("ShipmentDate", TableRow["CreateDateTime"]);
+                TableRow.SetField("SearchFields", "");
+                TableRow.SetField("ShipmentId", TableRow["Id"]);
             }
 
         }
@@ -72,10 +79,10 @@ namespace CargoTracking.CargoTracking.BL.Services
 
                 }
             }
-          
+
         }
 
 
     }
- 
+
 }

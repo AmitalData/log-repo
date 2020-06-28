@@ -21,11 +21,11 @@ namespace CargoTracking.CargoTracking.BL.Services
             if (!dataTable.Columns.Contains(ColumnName))
             {
                 dataTable.Columns.Add(ColumnName);
-                sbc.ColumnMappings.Add(ColumnName, ColumnName);
             }
+            sbc.ColumnMappings.Add(ColumnName, ColumnName);
 
         }
- 
+
 
     }
 

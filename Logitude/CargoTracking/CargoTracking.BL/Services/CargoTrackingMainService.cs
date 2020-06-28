@@ -48,6 +48,16 @@ namespace CargoTracking.CargoTracking.BL.Services
                 CT_FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate"
             });
 
+            //CargoTableLists.Add(new CargoTable()
+            //{
+            //    TableName = "Shipments",
+            //    FieldsDBName = "Id,Tenant,SearchFields,CreateDateTime,AutomaticLastUpdateDate",
+            //    KeyName = "Id",
+            //    CT_FieldsDBName = "Id,Tenant,ShipmentId,SearchFields,ShipmentDate",
+            //    DBTableName = "Shipments",
+            //    CT_TableName = "CargoTrackingShipmentSearchFields"
+            //});
+
             return CargoTableLists;
 
         }
