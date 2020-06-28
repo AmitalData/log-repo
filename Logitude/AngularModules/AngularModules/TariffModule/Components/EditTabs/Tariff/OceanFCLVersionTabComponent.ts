@@ -555,6 +555,8 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
         context.EntityPM.FileUploadedName = this.FileName;
     }
     SendExcelToServer(filter: any) {
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+
         this.TariffDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
               this.CurrentSession.StopBusyIndicator();
