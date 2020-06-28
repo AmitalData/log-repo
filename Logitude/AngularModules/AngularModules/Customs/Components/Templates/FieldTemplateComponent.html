@@ -20,6 +20,10 @@
                 background: #D3D3D3;
                 cursor: pointer;
             }
+    .DimLI {
+        opacity: 0.5;
+        cursor: default
+    }
 </style>
 <table *ngIf="Entity">
     <tr>
@@ -356,8 +360,10 @@
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMEnterRemarks();">
                                         <span>הזנת הערות לתור</span>
                                     </li>
-                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowSharedDocuments();">
-                                        <span>שיתוף מסמכים</span>
+                                    <li >
+                                        <span *ngIf="Entity['IsCustomerLogBoxActivated']== true" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowSharedDocuments();">שיתוף מסמכים</span>
+                                        <span *ngIf="Entity['IsCustomerLogBoxActivated']== false" class="DimLI" >שיתוף מסמכים</span>
+
                                     </li>
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowMoneyOrder();">
                                         <span>הזמנת כסף</span>
@@ -365,6 +371,7 @@
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowDelivery();">
                                         <span>הובלה יבשתית</span>
                                     </li>
+
                                 </ul>
                             </div>
                         </courier-filter-button>
