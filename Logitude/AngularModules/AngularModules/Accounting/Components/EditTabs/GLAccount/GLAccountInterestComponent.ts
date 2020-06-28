@@ -63,6 +63,9 @@ export class GLAccountInterestComponent extends BaseComponent {
             }
             else if(this.EntityPM.IsSplitted){
                 this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", true);
+                this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", false);
+                this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", false);
+                this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", false);
             }
         }
         else {
@@ -98,7 +101,7 @@ export class GLAccountInterestComponent extends BaseComponent {
     }
 
     AddLine() {
-        if (!this.ActiveForInterest) return;
+        if (!this.ActiveForInterest || this.EntityPM.IsSplitted) return;
         var errors = [];
         if (this.GLAccountInterestPeriodsList.Collection.length > 0) {
             // Validation
