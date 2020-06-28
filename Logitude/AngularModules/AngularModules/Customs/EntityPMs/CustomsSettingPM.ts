@@ -144,6 +144,16 @@ export class CustomsSettingPM {
     public set CompanyType(newValue: string) { if (this.companyType != newValue) { this.companyType = newValue; this.MarkAsDirty("CompanyType"); } }
        
 	 
+    private isMessagesPending: boolean;
+    public get IsMessagesPending() { return this.isMessagesPending; }
+    public set IsMessagesPending(newValue: boolean) { if (this.isMessagesPending != newValue) { this.isMessagesPending = newValue; this.MarkAsDirty("IsMessagesPending"); } }
+       
+	 
+    private qtyFeedbackInPendingMessage: number;
+    public get QtyFeedbackInPendingMessage() { return this.qtyFeedbackInPendingMessage; }
+    public set QtyFeedbackInPendingMessage(newValue: number) { if (this.qtyFeedbackInPendingMessage != newValue) { this.qtyFeedbackInPendingMessage = newValue; this.MarkAsDirty("QtyFeedbackInPendingMessage"); } }
+       
+	 
 
     public OldEntityPM: CustomsSettingPM;
 		

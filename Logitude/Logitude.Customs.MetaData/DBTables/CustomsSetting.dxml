@@ -152,6 +152,18 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsMessagesPending"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QtyFeedbackInPendingMessage"
+    Type="int" DefaultValue="100" >
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultNotificationAssignee"
     ReferencedTable="Users"
