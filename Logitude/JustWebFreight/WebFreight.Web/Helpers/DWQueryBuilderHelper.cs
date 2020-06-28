@@ -579,8 +579,8 @@ namespace WebFreight.Web.Helpers
             }
             else
             {
-                bool exist = SecurityUtility.CheckFeature("General", "BICentralDWH ", Tenant);
-                if (!exist) throw new Exception("Sorry! You have no permission to run reports");
+                CheckBICentralDWHFeature();
+
             }
 
             if (FinalQuery.Contains("where"))
@@ -615,6 +615,18 @@ namespace WebFreight.Web.Helpers
 
 
             return sqlCommandDefinition;
+        }
+
+        private void CheckBICentralDWHFeature()
+        {
+            try
+            {
+                SecurityUtility.CheckContactFeature("General", "BICentralDWH", Tenant);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Sorry! You have no permission to run reports");
+            }
         }
 
         private static string GetDatePartsSqlColum(DWObjectFieldsDetails field)
