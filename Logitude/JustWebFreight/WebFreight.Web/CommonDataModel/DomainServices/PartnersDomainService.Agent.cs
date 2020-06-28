@@ -269,33 +269,9 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
                     default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
                 }
-            }
-            this.UpdateCardCurrenciesAccountings_Agent(currentEntity);
-          
-            service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet, cardCurrenciesAccountingChangeSet_Agent);
+            }          
+            service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
             service.Update(currentEntity);
-        }
-
-        List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet_Agent;
-
-        private void UpdateCardCurrenciesAccountings_Agent(AgentPM currentEntity)
-        {
-            cardCurrenciesAccountingChangeSet_Agent = ChangeSet.GetAssociatedChanges(currentEntity, d => d.CardCurrenciesAccountings).Cast<CardCurrenciesAccountingPM>().ToList();
-            foreach (CardCurrenciesAccountingPM itemPM in cardCurrenciesAccountingChangeSet_Agent)
-            {
-                switch (ChangeSet.GetChangeOperation(itemPM))
-                {
-                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
-                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
-                    case ChangeOperation.Update:
-                        {
-                            itemPM.ChangeSetOp = ChangeSetOperation.Update;
-                            break;
-                        }
-
-                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
-                }
-            }
         }
 
         public void UpdateAgentList(AgentList currentEntity)

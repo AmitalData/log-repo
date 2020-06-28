@@ -70,7 +70,7 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
 
                 }
                 else {
-  
+
                     if ((!this.FromPortId && !this.FromCountryId) || (!this.ToPortId && !this.ToCountryId)) {
                         this.IsEnableEdit = true;
                     }
@@ -79,10 +79,11 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
                     this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, this.IsEnableEdit);
                     this.UIProperties.SetEnabled("FromCountryId", this.ObjectTableName, this.IsEnableEdit);
                     this.UIProperties.SetEnabled("ToCountryId", this.ObjectTableName, this.IsEnableEdit);
-                   
-  
+
+
                 }
             }
+            
 
         }
     }
@@ -102,6 +103,17 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
 
                 }
             });
+
+            if (this.EntityPM.StatusCode == "CAEA") {
+                this.IsEnableEdit = false;
+
+                this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, this.IsEnableEdit);
+                this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, this.IsEnableEdit);
+                this.UIProperties.SetEnabled("FromCountryId", this.ObjectTableName, this.IsEnableEdit);
+                this.UIProperties.SetEnabled("ToCountryId", this.ObjectTableName, this.IsEnableEdit);
+                this.UIProperties.SetEnabled("TruckerId", this.ObjectTableName, this.IsEnableEdit);
+                this.UIProperties.SetEnabled("TruckerReference", this.ObjectTableName, this.IsEnableEdit);
+            }
         }
     }
 

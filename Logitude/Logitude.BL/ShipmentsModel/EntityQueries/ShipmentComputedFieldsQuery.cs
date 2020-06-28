@@ -65,6 +65,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         PickupFrom = a.PickupFrom,
                         PickupTo = a.PickupTo,
                         CreatedFromDigital = a.CreatedFromDigital,
+                        DeliveryTruckerId = a.DeliveryTruckerId,
+                        DeliveryTruckerNumber = a.DeliveryTruckerNumber,
+                        DeliveryDriver = a.DeliveryDriver,
+                        DeliveryTrailerNumber = a.DeliveryTrailerNumber,
+                        DeliveryNotes = a.DeliveryNotes,
+                        PickupTruckerId = a.PickupTruckerId,
+                        PickupTruckerNumber = a.PickupTruckerNumber,
+                        PickupDriver = a.PickupDriver,
+                        PickupTrailerNumber = a.PickupTrailerNumber,
+                        PickupNotes = a.PickupNotes,
+
+
                     }).FirstOrDefault();
         }
 
@@ -107,6 +119,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                  PickupTo = a.PickupTo,
                                                                  OperationallyClosedByUserName = a.OperationallyClosedByUser.Contact.Name,
                                                                  CreatedFromDigital = a.CreatedFromDigital,
+                                                                 DeliveryTruckerId = a.DeliveryTruckerId,
+                                                                 DeliveryTruckerNumber = a.DeliveryTruckerNumber,
+                                                                 DeliveryDriver = a.DeliveryDriver,
+                                                                 DeliveryTrailerNumber = a.DeliveryTrailerNumber,
+                                                                 DeliveryNotes = a.DeliveryNotes,
+                                                                 PickupTruckerId = a.PickupTruckerId,
+                                                                 PickupTruckerNumber = a.PickupTruckerNumber,
+                                                                 PickupDriver = a.PickupDriver,
+                                                                 PickupTrailerNumber = a.PickupTrailerNumber,
+                                                                 PickupNotes = a.PickupNotes,
                                                              });
             return result;
         }

@@ -279,6 +279,11 @@ export class JournalPM {
     public set DueDate(newValue: Date) { if (this.dueDate != newValue) { this.dueDate = newValue; this.MarkAsDirty("DueDate"); } }
        
 	 
+    private aPPaymentCancelDate: Date;
+    public get APPaymentCancelDate() { return this.aPPaymentCancelDate; }
+    public set APPaymentCancelDate(newValue: Date) { if (this.aPPaymentCancelDate != newValue) { this.aPPaymentCancelDate = newValue; this.MarkAsDirty("APPaymentCancelDate"); } }
+       
+	 
 
     public OldEntityPM: JournalPM;
 		

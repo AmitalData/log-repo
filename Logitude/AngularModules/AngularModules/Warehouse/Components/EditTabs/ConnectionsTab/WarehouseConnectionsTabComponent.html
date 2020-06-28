@@ -96,7 +96,7 @@
                                         <table>
                                             <tr>
                                                 <td style="width:100%">Cross Docks Releases</td>
-                                                <td style="width:100px"><button  class="Button" (click)="NewWarehouseReleaseButtonClicked()">New Cross Dock Release</button></td>
+                                                <td style="width:100px"><button [disabled]="IsCancelled" class="Button" (click)="NewWarehouseReleaseButtonClicked()">New Cross Dock Release</button></td>
                                                 <td style="width:10px"></td>
                                             </tr>
                                         </table>

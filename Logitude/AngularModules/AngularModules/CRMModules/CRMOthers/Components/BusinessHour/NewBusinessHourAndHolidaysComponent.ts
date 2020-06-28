@@ -447,44 +447,43 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
     }
     private CheckBoxProcessing() {
         if (!this.IsMondayEnabeled) {
-            this.MondayToHourDate = DateTool.TruncateTime(this.MondayToHourDate);
-            this.MondayFromHourDate = DateTool.TruncateTime(this.MondayFromHourDate);
+            this.MondayToHourDate = null;
+            this.MondayFromHourDate = null;
         }
 
         if (!this.IsSaturdayEnabeled) {
-            this.SaturdayToHourDate = DateTool.TruncateTime(this.SaturdayToHourDate);
-            this.SaturdayFromHourDate = DateTool.TruncateTime(this.SaturdayFromHourDate);
+            this.SaturdayToHourDate = null;
+            this.SaturdayFromHourDate = null;
         }
 
         if (!this.IsTuesdayEnabeled) {
-            this.TuesdayToHourDate = DateTool.TruncateTime(this.TuesdayToHourDate);
-            this.TuesdayFromHourDate = DateTool.TruncateTime(this.TuesdayFromHourDate);
+            this.TuesdayToHourDate = null;
+            this.TuesdayFromHourDate = null;
         }
 
         if (!this.IsWednesdayEnabeled) {
-            this.WednesdayToHourDate = DateTool.TruncateTime(this.WednesdayToHourDate);
-            this.WednesdayFromHourDate = DateTool.TruncateTime(this.WednesdayFromHourDate);
+            this.WednesdayToHourDate = null;
+            this.WednesdayFromHourDate = null;
         }
 
         if (!this.IsThursdayEnabeled) {
-            this.ThursdayToHourDate = DateTool.TruncateTime(this.ThursdayToHourDate);
-            this.ThursdayFromHourDate = DateTool.TruncateTime(this.ThursdayFromHourDate);
+            this.ThursdayToHourDate = null;
+            this.ThursdayFromHourDate = null;
         }
 
         if (!this.IsFridayEnabeled) {
-            this.FridayToHourDate = DateTool.TruncateTime(this.FridayToHourDate);
-            this.FridayFromHourDate = DateTool.TruncateTime(this.FridayFromHourDate);
+            this.FridayToHourDate = null;
+            this.FridayFromHourDate = null;
         }
 
         if (!this.IsSundayEnabeled) {
-            this.SundayToHourDate = DateTool.TruncateTime(this.SundayToHourDate);
-            this.SundayFromHourDate = DateTool.TruncateTime(this.SundayFromHourDate);
+            this.SundayToHourDate = null;
+            this.SundayFromHourDate = null;
         }
 
         this.SetDateEnabled();
         this.getTotalWorkHours();
     }
-
 
 
     private timeDifferencecalCulationMethod(toHour: Date, fromHour: Date, isEnable: boolean) {

@@ -48,7 +48,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>All Models Metadata Only Generator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGenerators\CommonClassesGenerator.cs">
+    <Compile Include="AutoGenerators\CommonClassesGenerator1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CommonClassesGenerator.tt</DependentUpon>
@@ -121,8 +121,8 @@
     </Content>
     <Content Include="AutoGenerators\CommonClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CommonClassesGenerator.cs</LastGenOutput>
-      <LastOutputs>.\CommonClassesGenerator.cs</LastOutputs>
+      <LastOutputs>.\CommonClassesGenerator1.cs</LastOutputs>
+      <LastGenOutput>CommonClassesGenerator1.cs</LastGenOutput>
     </Content>
     <Content Include="AutoGenerators\EntityControllersGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -344,6 +344,7 @@
     <None Include="DBOthers\ShipmentsModel\Views\MessagingStockDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentFollowUpDataView.dxml" />
+    <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />
     <None Include="DBScripts\GlobalModel\202006102217_FillSettingsDemoTenants.sxml" />
     <None Include="DBScripts\InfrastructureModel\202006011050_UpdateAllowedInTicketFieldValueOfObjectTable.sxml" />
     <None Include="DBScripts\InfrastructureModel\202006171015_TruncateErrorLogs.sxml" />
@@ -860,7 +861,6 @@
     <None Include="EntityFiles\CommonDataModel\AgentSharedDocument.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\CommonDataModel\CardCurrenciesAccounting.lxml" />
     <None Include="EntityFiles\CommonDataModel\HybridTenantState.lxml" />
     <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">
       <SubType>Designer</SubType>

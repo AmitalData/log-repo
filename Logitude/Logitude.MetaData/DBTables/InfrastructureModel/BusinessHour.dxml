@@ -124,85 +124,85 @@
     Name="MondayFromHour"
     Type="time">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="TuesdayFromHour"
     Type="time">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="WednesdayFromHour"
     Type="time">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ThursdayFromHour"
     Type="time">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="FridayFromHour"
     Type="time">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="SaturdayFromHour"
     Type="time">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="SundayFromHour"
     Type="time">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="MondayToHour"
     Type="time">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="TuesdayToHour"
     Type="time">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="WednesdayToHour"
     Type="time">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ThursdayToHour"
     Type="time">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="FridayToHour"
     Type="time">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="SaturdayToHour"
     Type="time">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="SundayToHour"
     Type="time">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"

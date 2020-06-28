@@ -52,4 +52,16 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DefaultCurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="DefaultCurrencyId"
+    ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

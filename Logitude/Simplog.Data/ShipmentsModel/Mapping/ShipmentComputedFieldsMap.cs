@@ -35,6 +35,26 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PickupTo).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.OperationallyClosedByUserName).HasMaxLength(100).IsUnicode(false);
 
+            this.Property(t => t.DeliveryTruckerId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.PickupTruckerId).HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DeliveryTruckerNumber).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.PickupTruckerNumber).HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DeliveryDriver).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.PickupDriver).HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.DeliveryTrailerNumber).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.PickupTrailerNumber).HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DeliveryNotes).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.PickupNotes).HasMaxLength(2000).IsUnicode(true);
+
+
+
+
+
+
             // Table & Column Mappings
             this.ToTable("ShipmentComputedFields");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -50,6 +70,21 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.IsDigitalSignRequired).HasColumnName("IsDigitalSignRequired");
             this.Property(t => t.IsDepositionRequired).HasColumnName("IsDepositionRequired");
             this.Property(t => t.CreatedFromDigital).HasColumnName("CreatedFromDigital");
+
+
+
+            this.Property(t => t.DeliveryTruckerId).HasColumnName("DeliveryTruckerId");
+            this.Property(t => t.PickupTruckerId).HasColumnName("PickupTruckerId");
+            this.Property(t => t.DeliveryTruckerNumber).HasColumnName("DeliveryTruckerNumber");
+            this.Property(t => t.PickupTruckerNumber).HasColumnName("PickupTruckerNumber");
+            this.Property(t => t.DeliveryDriver).HasColumnName("DeliveryDriver");
+            this.Property(t => t.PickupDriver).HasColumnName("PickupDriver");
+            this.Property(t => t.DeliveryTrailerNumber).HasColumnName("DeliveryTrailerNumber");
+            this.Property(t => t.PickupTrailerNumber).HasColumnName("PickupTrailerNumber");
+            this.Property(t => t.DeliveryNotes).HasColumnName("DeliveryNotes");
+            this.Property(t => t.PickupNotes).HasColumnName("PickupNotes");
+
+
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -87,6 +122,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasRequired(t => t.Shipment);
             this.HasOptional(t => t.OperationallyClosedByUser).WithMany().HasForeignKey(d => d.OperationallyClosedByUserId);
             this.HasOptional(t => t.DeliveryToPort).WithMany().HasForeignKey(d => d.DeliveryToPortId);
+
+            this.HasOptional(t => t.DeliveryTrucker).WithMany().HasForeignKey(d => d.DeliveryTruckerId);
+            this.HasOptional(t => t.PickupTrucker).WithMany().HasForeignKey(d => d.PickupTruckerId);
+
+
         }
     }
 }

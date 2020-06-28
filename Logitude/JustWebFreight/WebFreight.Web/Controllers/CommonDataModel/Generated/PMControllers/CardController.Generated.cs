@@ -41,38 +41,38 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
-{
+{ 
 
-
+    
     public partial class CardsController : ApiController
     {
-
-
+	  
+       
         public HttpResponseMessage GetSingle(string id)
         {
-            try
+		  try
             {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
+			    string logKey = PerformanceLogger.LogCurrentTime();
+			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 CardQuery cardQuery = new CardQuery(authToken.Tenant);
                 CardPM cardPM = cardQuery.GetSinglePM(id, authToken.Tenant);
-
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                
+				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, cardPM);
-
-            }
+			 
+			}
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
+           
         }
 
-
-
+         
+		
 
         public HttpResponseMessage Post(CardPM entityPM)
         {
@@ -86,11 +86,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         CardService service = new CardService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
-
+				
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
                         // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Card", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
@@ -114,7 +114,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                 }
             }
             else
-            {
+            { 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
@@ -143,10 +143,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         {
                             CacheManager.CacheWrapper.Invalidate(entityPmName);
                         }
-
+                
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         CardService service = new CardService(MyContext, entityPM.Tenant);
-
+ 
                         service.Update(entityPM);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
@@ -173,7 +173,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                 }
             }
             else
-            {
+            { 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
@@ -182,18 +182,19 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
         public void Delete(int id)
         {
         }
+	    
 
 
+		
+          
+			
+			 
+		  
+        
 
-
-
-
-
-
-
-
-
-
-
+		
+			 		
+      
     }
 }
+	 

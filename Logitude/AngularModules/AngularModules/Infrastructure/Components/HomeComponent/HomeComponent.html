@@ -249,8 +249,8 @@
                                                         <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('BUY')">Buy e-AWB Stock</button>
                                                         <hr *ngIf="IsLogBox == false && !IsCountryIsrael" />
                                                         <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('CRM')">Subscribe to CRM</button>
-                                                        <hr *ngIf="IsLogBox == false" />
-                                                        <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('OTP')">One Time Payment</button>
+                                                        <hr *ngIf="IsLogBox == false"/>
+                                                        <button *ngIf="IsLogBox == false && IsBlusnapOneTimeActivated" [disabled]="IsTenant65" (click)="SubscribeClicked('OTP')">One Time Payment</button>
                                                         <hr *ngIf="IsLogBox == false" />
                                                         <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('INT')">Buy INTTRA Stock</button>
 

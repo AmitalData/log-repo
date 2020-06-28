@@ -462,7 +462,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return journalUpdate;
         }
         public JournalPM VoidJournal(string JournalId, int requestTenant,
-           StornoOverrideM stornoOverrideM
+           StornoOverrideM stornoOverrideM, DateTime? APPaymentCanceledDate=null
            ) //Call from JournalOpController
         {
 
@@ -471,6 +471,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 _StornoOverrideM = stornoOverrideM;
                 var qs = new JournalQueryService(this.MainContext as IAccountingContext);
                 _JornalPmSource = qs.GetSingle(JournalId, true, false);
+                _JornalPmSource.APPaymentCancelDate = APPaymentCanceledDate;
                 if (_JornalPmSource == null)
                 {
                     throw new Exception("Journal id couldn't find in db" + JournalId);
