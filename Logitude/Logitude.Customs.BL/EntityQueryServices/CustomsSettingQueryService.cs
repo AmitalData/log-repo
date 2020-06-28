@@ -152,21 +152,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public List<TenantDetailsMessagesPM> GetTenantDetailsMessagesPMs()
+        public List<CustomsSettingPM> GetTenantDetailsMessagesPMs()
         {
             var poco = repository.GetRealAll().ToList();
             var allPMs = poco.Select(rec => GetEntityPM(rec)).ToList();
-            List<TenantDetailsMessagesPM> tenantDetailsMessagesPMs = new List<TenantDetailsMessagesPM>();
-            foreach (var item in allPMs)
-            {
-                TenantDetailsMessagesPM tenantDetailsMessagesPM = new TenantDetailsMessagesPM();
-                tenantDetailsMessagesPM = item as TenantDetailsMessagesPM;
-                tenantDetailsMessagesPM.HasFeature = true;
-                tenantDetailsMessagesPM.MessagesAmount = 10;
-                tenantDetailsMessagesPMs.Add(tenantDetailsMessagesPM);
-            }
-              
-            return tenantDetailsMessagesPMs;
+    
+            return allPMs;
 
         }
 
@@ -175,12 +166,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
     }
 
-
-    public class TenantDetailsMessagesPM : CustomsSettingPM
-        {
-        public bool HasFeature { get; set; }
-        public int MessagesAmount { get; set; }
-    }
+ 
 #if false
     public class CustomsSettingQService
     {

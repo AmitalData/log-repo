@@ -141,6 +141,13 @@ export class CustomsSettingsComponent
     get PaymentOrderAccCard() { return this.entityPM != null ? this.entityPM.PaymentOrderAccCard : null; }
     set PaymentOrderAccCard(value: string) { this.entityPM.PaymentOrderAccCard = value; }
 
+    get QtyFeedbackInPendingMessage() { return this.entityPM != null ? this.entityPM.QtyFeedbackInPendingMessage : null; }
+    set QtyFeedbackInPendingMessage(value: number) { AppTool.IsNullOrEmpty(this.entityPM.QtyFeedbackInPendingMessage) ? this.entityPM.QtyFeedbackInPendingMessage = value : this.entityPM.QtyFeedbackInPendingMessage =100; }
+        
+
+    get IsMessagesPending() { return this.entityPM != null ? this.entityPM.IsMessagesPending : null; }
+    set IsMessagesPending(value: boolean) { this.entityPM.IsMessagesPending = value; }
+
 
 
     get IsConnectedToUniFreight() { return this.entityPM != null ? this.entityPM.IsConnectedToUniFreight : false; }

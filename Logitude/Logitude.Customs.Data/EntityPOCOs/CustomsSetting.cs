@@ -69,6 +69,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool AutoUnitMeasurement { get; set; }
         [Column("CompanyType")]
 	    public string CompanyType { get; set; }
+        [Column("IsMessagesPending")]
+	    public bool? IsMessagesPending { get; set; }
+        [Column("QtyFeedbackInPendingMessage")]
+	    public int? QtyFeedbackInPendingMessage { get; set; }
     }
 }
 	 
