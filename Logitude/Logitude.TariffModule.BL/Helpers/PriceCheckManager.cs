@@ -120,8 +120,9 @@ namespace Logitude.TariffModule.BL.Helpers
                 
                 fromPort = shipment.FromPortId;
                 toPort = shipment.ToPortId;
-                this.tariffType = tariffType;
             }
+
+            this.tariffType = tariffType;
         }
 
         private void SetSearchProperties()
