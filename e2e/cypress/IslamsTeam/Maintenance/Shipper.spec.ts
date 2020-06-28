@@ -3,20 +3,17 @@
   let timeStamp = (new Date()).getTime()
 
   //login
-  it('Sucessfully Login ', () => {
-      cy.visit('https://test.logitudeworld.com/test/')
-     // cy.visit('http://localhost:4200')
-      cy.get('#Email').click()
-      cy.get('#Email').clear()
-     cy.get('#Email').type('Raghad@protractor.com')
-     // cy.get('#Email').type('angular@fnarsoft.com')
-      cy.get('#Password').click()
-      cy.get('#Password').clear()
-     cy.get('#Password').type('!RS123Rs')
-     // cy.get('#Password').type('1')
-      cy.get('#cmdLogin').click()
+
   
-    })
+import { LoginComp } from '../../Login/Login.po';
+
+export class CreateNewShipper  {
+
+  private login: LoginComp = new LoginComp();
+  
+  constructor() {
+  }
+}
 
 
 
@@ -38,7 +35,9 @@ it('Create New Shipper', () => {
   })
 
 it('Search For Shipper', () => {
+
    cy.get('#SearchFieldsId_0_0').type("CypressShipper" + timeStamp)
+   cy.get('#BusyIndicator_0').should('not.be.visible')
    cy.get("#LogGrid_0_0row0").click()
 
 })
@@ -48,6 +47,7 @@ it('Search For Shipper', () => {
      cy.get('#CustomerTHGeneral').click()
    //  cy.wait(1000)
      cy.get('#Customer_LocalName').type('Test Company 123')
+     cy.wait(1000)
      cy.get("#Customer-Save").click()
 
   })

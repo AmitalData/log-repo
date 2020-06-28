@@ -1,21 +1,15 @@
 /// <reference types="cypress" />
   
+import { LoginComp } from '../../Login/Login.po';
 
-  //login
-  it('Sucessfully Login ', () => {
-      cy.visit('https://test.logitudeworld.com/test/')
-     // cy.visit('http://localhost:4200')
-      cy.get('#Email').click()
-      cy.get('#Email').clear()
-      cy.get('#Email').type('Raghad@protractor.com')
-     // cy.get('#Email').type('angular@fnarsoft.com')
-      cy.get('#Password').click()
-      cy.get('#Password').clear()
-      cy.get('#Password').type('!RS123Rs')
-     // cy.get('#Password').type('1')
-      cy.get('#cmdLogin').click()
+export class CompanyAddressSetting  {
+
+  private login: LoginComp = new LoginComp();
   
-    })
+  constructor() {
+  }
+}
+
 
 
 it('Srearch Company Address Setting ', () => {
@@ -35,4 +29,5 @@ it('Edit Copmnay Address Setting', () => {
 
 
 })
+
 

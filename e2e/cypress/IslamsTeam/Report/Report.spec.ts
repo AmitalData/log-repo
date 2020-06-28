@@ -2,16 +2,23 @@
   
 
   //login
-it('Sucessfully Login ', () => {
-    cy.visit('https://test.logitudeworld.com/test/')
-    cy.get('#Email').click()
-    cy.get('#Email').clear()
-    cy.get('#Email').type('Raghad@protractor.com')
-    cy.get('#Password').click()
-    cy.get('#Password').clear()
-    cy.get('#Password').type('!RS123Rs')
-    cy.get('#cmdLogin').click()
-  })
+/// <reference types="cypress" />
+  
+let timeStamp = (new Date()).getTime()
+
+//login
+
+
+import { LoginComp } from '../../Login/Login.po';
+
+export class RunReport {
+
+private login: LoginComp = new LoginComp();
+
+constructor() {
+}
+}
+
 
 
 
