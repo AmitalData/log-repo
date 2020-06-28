@@ -152,12 +152,22 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public List<CustomsSettingPM> GetTenantDetailsMessagesPMs()
+        public List<TenantM> GetTenantDetailsMessagesPMs()
         {
+            List<TenantM> tenantMs = new List<TenantM>();
             var poco = repository.GetRealAll().ToList();
-            var allPMs = poco.Select(rec => GetEntityPM(rec)).ToList();
+            foreach (var item in poco)
+            {
+                TenantM tenantM = new TenantM();
+                tenantM.CustomsAgentId = item.CustomsAgentId;
+                tenantM.HaveFeature = item.IsMessagesPending;
+                tenantM.TenantId = item.Tenant;
+                tenantM.IIGServiceAddress = item.IIGServiceAddress;
+                tenantMs.Add(tenantM);
+            }
+            //var allPMs = poco.Select(rec => GetEntityPM(rec)).ToList();
     
-            return allPMs;
+            return tenantMs;
 
         }
 
@@ -166,7 +176,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
     }
 
- 
+
+    public class TenantM
+    {
+        public string CustomsAgentId { get; internal set; }
+        public bool? HaveFeature { get; internal set; }
+        public int TenantId { get; internal set; }
+        public string IIGServiceAddress { get; internal set; }
+        public string LastActionLog { get; set; }
+        public string DCADownloadFolder { get; internal set; }
+    }
+
 #if false
     public class CustomsSettingQService
     {
@@ -185,4 +205,4 @@ namespace Logitude.Customs.BL.EntityQueryServices
     }
 #endif
 
-}
+    }

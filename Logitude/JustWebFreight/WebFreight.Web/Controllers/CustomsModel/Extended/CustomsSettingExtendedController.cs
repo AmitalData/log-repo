@@ -332,9 +332,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(MyContext);
 
-                var tenantDetailsMessagesPMs = customsSettingQuery.GetTenantDetailsMessagesPMs();
+                var tenantMs = customsSettingQuery.GetTenantDetailsMessagesPMs();
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { TenantDetailsMessagesPMs = tenantDetailsMessagesPMs });
+                return Request.CreateResponse(HttpStatusCode.OK, new { TenantMs = tenantMs });
             }
 
             catch (Exception ex)
