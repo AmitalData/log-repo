@@ -601,6 +601,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         context.EntityPM.FileUploadedName = this.FileName;
     }
     SendExcelToServer(filter: any) {
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+
         this.TariffDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 this.CurrentSession.StopBusyIndicator();
