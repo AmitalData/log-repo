@@ -32,45 +32,45 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 {
     public class WorkerRoleNamesExtendedController : ApiController
     {
-        public HttpResponseMessage Post(WorkerRoleNamePM entityPM)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    string logKey = PerformanceLogger.LogCurrentTime();
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        WorkerRoleNameQuery workerRoleNameQuery = new WorkerRoleNameQuery(authToken.Tenant);
-                        int latestWaitingStatus = workerRoleNameQuery.GetLatestWaitingStatusAfterCheckIfNotExist(entityPM.Name);
-                        if (latestWaitingStatus != 1)
-                        {
-                            IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
-                            WorkerRoleNameService service = new WorkerRoleNameService(MyContext);
-                            entityPM.WaitingStatus = latestWaitingStatus + 1;
-                            service.Create(entityPM);
-                        }
+        //public HttpResponseMessage Post(WorkerRoleNamePM entityPM)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            string logKey = PerformanceLogger.LogCurrentTime();
+        //            using (TransactionScope scope = TransactionFactory.GetTransaction())
+        //            {
+        //                string token = HttpContext.Current.Request.Headers["Token"];
+        //                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        //                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+        //                WorkerRoleNameQuery workerRoleNameQuery = new WorkerRoleNameQuery(authToken.Tenant);
+        //                int latestWaitingStatus = workerRoleNameQuery.GetLatestWaitingStatusAfterCheckIfNotExist(entityPM.Name);
+        //                if (latestWaitingStatus != 1)
+        //                {
+        //                    IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
+        //                    WorkerRoleNameService service = new WorkerRoleNameService(MyContext);
+        //                    entityPM.WaitingStatus = latestWaitingStatus + 1;
+        //                    service.Create(entityPM);
+        //                }
 
-                        scope.Complete();
-                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+        //                scope.Complete();
+        //                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-                    }
-                }
+        //                return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+        //            }
+        //        }
 
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
-            }
-        }
+        //        catch (Exception ex)
+        //        {
+        //            return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+        //    }
+        //}
 
 
 

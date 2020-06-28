@@ -33,7 +33,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string BillToPartnerTypeId { get; set; }
         public string BillToCode { get; set; }
         public string BillToAccountManagerName { get; set; }
+        public string BillToContactId { get; set; }
 
+        
         public bool BillToIsCreditLimitEnabled { get; set; }
         public double? BillToCreditLimitAmount { get; set; }
         public double? BillToCreditLimitOpenBalance { get; set; }

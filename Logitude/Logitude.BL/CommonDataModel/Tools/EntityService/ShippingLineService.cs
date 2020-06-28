@@ -31,6 +31,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CardQuery cardQuery;
         private ContactRepository contactRepository;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
+
         public ShippingLineService(ICommonDataContext objectContext,int tenant)
         {
             

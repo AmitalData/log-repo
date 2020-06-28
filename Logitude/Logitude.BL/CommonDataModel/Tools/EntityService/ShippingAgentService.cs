@@ -39,7 +39,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ContactRepository contactRepository;
         private CardContactRepository cardContactRepository;
         private ICommonDataContext objectContext;
-        private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;  
+        private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
         public ShippingAgentService(ICommonDataContext objectContext, int tenant)
         {
             
@@ -155,7 +155,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.UpdateCardExternalCodeByCurrencyCollection();
-
             ShippingAgentMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
             ShippingAgentValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
@@ -328,6 +327,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
+     
         private void CreateAddress(AddressPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("Address", tenant).ToString();

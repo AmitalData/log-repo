@@ -978,5 +978,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int? StorageFreeDays { get; set; }
+
+      
+        [DataMember]
+        public bool AccountingVATSplit { get; set; }
     }
 }

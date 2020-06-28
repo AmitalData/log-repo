@@ -593,6 +593,7 @@
     <Compile Include="InfrastructureModel\Repositories\RuleUpdateHistoryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SchedulerProcedureRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SharedUserQueryRepository.cs" />
+    <Compile Include="InvoiceModel\EntityPOCOs\APPayment.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStock.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStockLine.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStocksStatus.cs" />
@@ -644,6 +645,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsMessageType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentPackageHarmonize.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentSubType.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferHeaderMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferLineMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferTypeMap.cs" />
@@ -662,6 +664,7 @@
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsMessageTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsTransmissionMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentPackageHarmonizeMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ShipmentSubTypeMap.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferHeaderRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferLineRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferTypeRepository.cs" />
@@ -1080,6 +1083,7 @@
     <Compile Include="ShipmentsModel\Repositories\ShipmentCustomsMessageTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentCustomsTransmissionRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentPackageHarmonizeRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ShipmentSubTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\SpecialServicesTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\StateRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TarrifChargeRepository.cs" />
@@ -1326,8 +1330,6 @@
     <Compile Include="InvoiceModel\EntityPOCOs\APInvoiceStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APInvoiceTotalVAT.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APInvoiceType.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\APPayment.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\APPaymentMethod.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APPaymentStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoice.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceEntity.cs" />
@@ -1369,7 +1371,6 @@
     <Compile Include="InvoiceModel\Mapping\APInvoiceTotalVATMap.cs" />
     <Compile Include="InvoiceModel\Mapping\APInvoiceTypeMap.cs" />
     <Compile Include="InvoiceModel\Mapping\APPaymentMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\APPaymentMethodMap.cs" />
     <Compile Include="InvoiceModel\Mapping\APPaymentStatuMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoiceEntityMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoiceLineMap.cs" />
@@ -1403,7 +1404,6 @@
     <Compile Include="InvoiceModel\Repositories\APInvoiceStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\APInvoiceTotalVATRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\APInvoiceTypeRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\APPaymentMethodRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\APPaymentRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\APPaymentStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ARInvoiceEntityRepository.cs" />

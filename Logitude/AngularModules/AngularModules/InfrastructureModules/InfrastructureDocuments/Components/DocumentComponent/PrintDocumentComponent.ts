@@ -315,6 +315,9 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 case "INMA":
                 case "ABOCO":
                 case "SHCMR":
+                case "TEST":
+                    
+
                     return true;
 
                 default:
@@ -1271,7 +1274,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         this._exportDocumentService.GetIsRunStimulDocumentViaWorkerRole().subscribe((res: any) => {
 
             var serviceResponse: ServiceResponse = res;
-            if (!serviceResponse.HasError) this.IsBuildDocumentViaWorkerRole = serviceResponse.Result;
+            if (!serviceResponse.HasError) this.IsBuildDocumentViaWorkerRole = res;
 
         this._entityResourceService.getEntityResourceByTableName("DocsOut").subscribe((response:any) => {
 

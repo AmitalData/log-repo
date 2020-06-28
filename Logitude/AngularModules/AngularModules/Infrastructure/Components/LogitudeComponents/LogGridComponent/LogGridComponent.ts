@@ -27,7 +27,7 @@ import { filter } from 'rxjs/operators';
     //directives: [CORE_DIRECTIVES, ObjectFieldTemplate, ListHeaderTemplateComponent, ListTemplateComponent],
     providers: [PubSubService1],
     //pipes: [TextCodeTranslationPipe],
-    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'CheckboxProp'],
+    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData','NoDataTextCode','CheckboxProp'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -49,6 +49,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     public ToolTipWidth: number = 300;
     public ToolTipHeight: number = 120;
     public ToolTipBinding: string = "";
+    public NoDataTextCode:string=null;
     //public Direction: string = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
     IsSpotLight: boolean = false;
@@ -1167,7 +1168,20 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             }
             this.cd.detectChanges();
          }
-            // var Row = this.rows.filter(a => a.rowData.Id === res.MyRecord.Id)[0];
+         var DeleteSelected = this.rows.filter(a => a.rowData.IsChecked ==true);
+         for(let i =0 ; i < DeleteSelected.length ; i++){
+            var NRow = this.AllCheckedRecords.filter(a => a.Id ===  DeleteSelected[i].rowData.Id)[0];
+            if (!NRow) {
+                var Row = this.rows.filter(a => a.rowData.Id === DeleteSelected[i].rowData.Id)[0];
+                Row.rowData.IsChecked = false;
+                if (this.controller.cachedData[Row.rowIndex] && this.controller.cachedData[Row.rowIndex].IsChecked != null) {
+                    this.controller.cachedData[Row.rowIndex].IsChecked = false;//this.controller.cachedData[row.rowIndex] && this.controller.cachedData[row.rowIndex].IsChecked;// == false ? false : true;
+                }
+             }
+             this.cd.detectChanges();
+        } 
+        
+        // var Row = this.rows.filter(a => a.rowData.Id === res.MyRecord.Id)[0];
             // if (Row) {
             //    Row.rowData.IsChecked = true;
             //    if (this.controller.cachedData[Row.rowIndex] && this.controller.cachedData[Row.rowIndex].IsChecked != null) {
@@ -2515,8 +2529,10 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             this.controller.cachedData[RowIndex].IsCustomChecked = FromOutSide;
             //this.MustIgnoreRowIndexes.push({ Id: rowData.Id, IsChecked: IsChecked });
         }
+       
 
-        var Row = this.rows.filter(a => a.rowIndex === RowIndex)[0];
+        var Row = this.rows.filter(a => a.rowIndex == RowIndex)[0];
+
         if (Row) {
             Row.rowData.IsChecked = IsChecked;
             Row.rowData.IsCustomChecked = FromOutSide;

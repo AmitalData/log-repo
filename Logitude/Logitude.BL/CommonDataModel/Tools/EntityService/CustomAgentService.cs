@@ -36,7 +36,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ContactRepository contactRepository;
         private CardContactRepository cardContactRepository;
         private ICommonDataContext objectContext;
-        private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;  
+        private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
         public CustomAgentService(ICommonDataContext objectContext, int tenant, Contact loggedContact = null)
         {
             
@@ -120,8 +120,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
 
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomAgent");
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomAgent");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
@@ -173,8 +173,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();            
 
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomAgent");
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomAgent");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
         }
 
         private void InitializeComponent()
@@ -337,7 +337,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 cardExternalCodeByCurrencyRepository.Remove(itemPoco);
             }
         }
-
+       
         private void CreateAddress(AddressPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("Address", tenant).ToString();

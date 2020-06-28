@@ -21,7 +21,7 @@ export class CountersComponent implements OnInit {
     public IsResourcesReady: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
-        if (SessionLocator.Tenant == 65) {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com") {
                 this.IsDemoTenant = true;
             }

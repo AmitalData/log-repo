@@ -13,6 +13,8 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator'; 
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ARPaymentPMService} from '../../../../Invoice/Services/StandardPMs/ARPaymentPMService';
+import { InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainService';
+
 
 @Component({
     
@@ -90,7 +92,10 @@ export class ARPaymentTransferTemplate extends BaseComponent {
             if (!response.HasError) {
                 var card: CardList = response.Result;
                 if (card != null) {
-                    this.BillToExternalId = card.ReceivablesAccountingCard;
+                    var invoiceDomainService = new InvoiceDomainService();
+                    invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(card.Id, this.EntityPM.PaymentCurrencyId, false).subscribe((myResult: ServiceResponse) => {
+                        this.BillToExternalId = myResult.Result;
+                    });
                 }
                 this.isBillToFinished = true;
                 this.BuildList();
@@ -466,7 +471,10 @@ export class ARTransferLineArgs extends BaseComponent {
                 var entity = s.EntityPM;
                 if (entity != null) {
                     if (this.Code == "BLTO") {
-                        this.EditingFieldValue = entity.ReceivablesAccountingCard;
+                        var invoiceDomainService = new InvoiceDomainService();
+                        invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(entity.Id, this.EntityPM.PaymentCurrencyId, false).subscribe((myResult: ServiceResponse) => {
+                            this.EditingFieldValue = myResult.Result;
+                        });
                     }
                     else if (this.Code == "CURR") {
                         this.EditingFieldValue = entity.AccountingExternalCode;

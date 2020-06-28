@@ -175,6 +175,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+            shipmentPM.ShipmentSubTypeId = shipment.ShipmentSubTypeId;
+            if (!string.IsNullOrEmpty(shipment.ShipmentSubTypeId))
+            {
+                ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(shipment.Tenant);
+                ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubType(shipment.ShipmentSubTypeId, shipment.Tenant);
+                if (subType != null)
+                {
+                    shipmentPM.ShipmentSubTypeName = subType.Name;
+                }
+            }
+
             if (shipment.ShipmentLevelCode == "C")
             {
                 shipmentPM.MasterPreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
@@ -11452,11 +11463,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Routing = f.Routing,//(f.DirectionId!="D"&&f.TransportModeId!="I")?((f.PreCarriageFromPortCode != null ? f.PreCarriageFromPortCode + " > " : "") + (f.MasterShipmentDataId != null ? (f.MainCarriageFromPortCode != null ? f.MainCarriageFromPortCode + " > " : "") + (f.MainCarriageFinalDestinationPortCode != null ? (f.OnCarriageToPortCode != null ? f.MainCarriageFinalDestinationPortCode + " > " + f.OnCarriageToPortCode : f.MainCarriageFinalDestinationPortCode) : "") : ((f.FromPortCode != null ? f.FromPortCode + " > " : "") + (f.ToPortCode != null ? (f.OnCarriageToPortCode != null ? f.ToPortCode + " > " + f.OnCarriageToPortCode : f.ToPortCode) : "")))):(""),
                                FromPortId = f.FromPortId,
                                ToPortId = f.ToPortId,
+
+                               FromPortCode = f.FromPortCode,
                                FromPort = f.FromPort,
                                FromPortName = f.FromPortName,
                                FromPortCountry = f.MainCarriageFromPortCountryName,
 
                                // Column: To
+                               ToPortCode = f.ToPortCode,
                                ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageToCity : f.ToPortName,
                                ToPortName = f.ToPortName,
                                ToPortCountry = f.MainCarriageToPortCountryName,
@@ -11682,6 +11696,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                FirstARInvoiceApprovalDate = f.FirstARInvoiceApprovalDate,
                                MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
                                MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
+                               ShipmentSubTypeId = f.ShipmentSubTypeId,
+                               ShipmentSubTypeName = f.ShipmentSubTypeName,
                            };
             return myResult;
         }

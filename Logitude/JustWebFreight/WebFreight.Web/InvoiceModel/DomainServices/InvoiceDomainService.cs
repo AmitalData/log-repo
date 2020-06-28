@@ -50,7 +50,6 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
         private APInvoiceStatusRepository aPInvoiceStatusRepository;
         private APInvoiceTypeRepository aPInvoiceTypeRepository;
      
-        private APPaymentMethodRepository aPPaymentMethodRepository;
         private APPaymentStatusRepository aPPaymentStatusRepository;
         private CreditCardTypeRepository creditCardTypeRepository;
         private ExternalSystemsTablesCodeRepository externalSystemsTablesCodeRepository;
@@ -65,7 +64,6 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
         private APInvoiceLineQuery apInvoiceLineQuery;
         private APInvoiceStatusQuery apInvoiceStatusQuery;
         private APInvoiceTypeQuery apInvoiceTypeQuery;
-        private APPaymentMethodQuery apPaymentMethodQuery;
         private APPaymentStatusQuery apPaymentStatusQuery;
         private ARInvoiceStatusQuery arInvoiceStatusQuery;
         private ARInvoiceTotalVATQuery arInvoiceTotalVatQuery;

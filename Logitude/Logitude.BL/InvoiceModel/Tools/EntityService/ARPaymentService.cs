@@ -1647,18 +1647,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 string myError = null;
                 CardRepository cardRep = new CardRepository(newPayment.Tenant);
                 CurrencyRepository currencyRep = new CurrencyRepository(newPayment.Tenant);
-                Card card = cardRep.GetSingleCard(newPayment.BillToId, newPayment.Tenant);
+                Card card = cardRep.GetSingleCard(entityPM.BillToId, entityPM.Tenant);
                 Currency currency = currencyRep.GetSingleCurrency(newPayment.PaymentCurrencyId, newPayment.Tenant);
                 string currencyError = "Currency External Id is missing";
                 if (currency != null && !string.IsNullOrEmpty(currency.Code))
                 {
                     currencyError = "Currency: " + currency.Code + ". External Id is missing";
                 }
-                if (card != null && FieldIsEmpty(card.ReceivablesAccountingCard))
+
+                if (card != null)
                 {
-                    isReady = false;
-                    myError = "Bill To: " + entityPM.BillToName + ". External Id is missing";
+                    AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                    var receivablesAccountingCard = accountingSystemHelper.GetGenericCreditAccount(card.Id, entityPM.PaymentCurrencyId, tenant, false);
+                    if (FieldIsEmpty(receivablesAccountingCard))
+                    {
+                        isReady = false;
+                        myError = "Bill To: " + entityPM.BillToName + ". External Id is missing";
+                    }
                 }
+
                 if (currency != null && FieldIsEmpty(currency.AccountingExternalCode))
                 {
                     isReady = false;
@@ -2182,7 +2189,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 _payment.OpenAmount = 0;
             }
 
-            if (amount2reconcile > (decimal)_payment.OpenAmount)
+            if (amount2reconcile > (decimal)_payment.OpenAmountInLocalCurrency)
                 throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.paymentAmount2reconcileMSG", _payment.Tenant, showLocal));
         }
 
@@ -2191,10 +2198,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             bool useLocalRecoMethod = _payment.GLAccountRecoMethodCode == "0";
             decimal amount2reconcile = 0;
 
-            if (useLocalRecoMethod)
-                amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.LocalAmount);   // amount to reconcile = Local Amount
+            if (_payment.PaymentInvoices.Count > 0)
+            {
+
+                if (useLocalRecoMethod)
+                    amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.LocalAmount);   // amount to reconcile = Local Amount
+                else
+                    amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.ForeignAmount); // amount to reconcile = Foreign Amount
+            }
             else
-                amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.ForeignAmount); // amount to reconcile = Foreign Amount
+            {
+                    amount2reconcile = (decimal)_payment.InvoicesLedgerTransactions.Sum(d => d.AmountToReconcile);   // amount to reconcile = Local Amount
+            }
+
             return amount2reconcile;
         }
 

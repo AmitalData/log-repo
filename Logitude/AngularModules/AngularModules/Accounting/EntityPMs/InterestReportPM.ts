@@ -199,6 +199,16 @@ export class InterestReportPM {
     public set CustomerLocalName(newValue: string) { if (this.customerLocalName != newValue) { this.customerLocalName = newValue; this.MarkAsDirty("CustomerLocalName"); } }
        
 	 
+    private enableInvoiceing: boolean;
+    public get EnableInvoiceing() { return this.enableInvoiceing; }
+    public set EnableInvoiceing(newValue: boolean) { if (this.enableInvoiceing != newValue) { this.enableInvoiceing = newValue; this.MarkAsDirty("EnableInvoiceing"); } }
+       
+	 
+    private isFirstReport: boolean;
+    public get IsFirstReport() { return this.isFirstReport; }
+    public set IsFirstReport(newValue: boolean) { if (this.isFirstReport != newValue) { this.isFirstReport = newValue; this.MarkAsDirty("IsFirstReport"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		

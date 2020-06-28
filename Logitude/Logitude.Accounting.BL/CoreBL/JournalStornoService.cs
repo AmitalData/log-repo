@@ -50,10 +50,21 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 ThrowCloseMonth(_JournalPM.Tenant);
             }
-            if (!(JournalValidatorNotStatic.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), _JournalPM.AccountingDate)))
+            if (_JournalPM.APPaymentCancelDate == null)
             {
-                ThrowCloseMonth(_JournalPM.Tenant);
+                if (!(JournalValidatorNotStatic.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), _JournalPM.AccountingDate)))
+                {
+                    ThrowCloseMonth(_JournalPM.Tenant);
+                }
             }
+            else
+            {
+                if (!(JournalValidatorNotStatic.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(),(DateTime)_JournalPM.APPaymentCancelDate)))
+                {
+                    ThrowCloseMonth(_JournalPM.Tenant);
+                }
+            }
+  
 
         }
 

@@ -603,7 +603,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
 
-        if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && this.ObjectTableName == "Contact") {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare && this.ObjectTableName == "Contact") {
             this.IsDemoTenant = true;
         }
 
@@ -2101,6 +2101,28 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             });
                     }
 
+                    else if (myObjectTableName == "ContainerFollowUp") {
+                        var windowArgs: any = {};
+                        windowArgs.EntityId = entityList.Id;
+                        windowArgs.IsNew = false;
+                        windowArgs.IsNewTemplate = true;
+
+                        windowTitle = TextCodeTranslator.Translate("General.O.EditEntity").replace("%Entity", TextCodeTranslator.Translate(myObjectTableName));
+
+                        var logWindow = new LogitudeWindow();
+                        logWindow.Width = 960;
+                        logWindow.Height = 570;
+                        logWindow.WindowArgs = windowArgs;
+                        logWindow.Title = windowTitle
+                        logWindow.ShowHeaderButtons = false;
+
+                        logWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardComponent");
+                        logWindow.WindowClosed.subscribe(($event1: any) => {
+                            this.isEditControlOpened = false;
+                            this.OnBackFromEdit(selectedEntityId, $event);
+                        });
+                    }
+
                     else {
 
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -2311,7 +2333,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     }
                 }
 
-                if (this.TenantPM.Id == 65) {
+                if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString())) {
                     isEnabled = false;
 
                     if (SessionInfo.LoggedUserPM.IsCustomerCare && (this.ObjectTableName == "User" || this.ObjectTableName == "ChargesType")) {

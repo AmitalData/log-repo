@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,7 +49,37 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string PickupTo { get; set; }
         public string OperationallyClosedByUserName { get; set; }
         public bool CreatedFromDigital { get; set; }
+
+        public string DeliveryTruckerId { get; set; }
+        public string DeliveryTruckerNumber { get; set; }
+        public string DeliveryDriver { get; set; }
+        public string DeliveryTrailerNumber { get; set; }
+        public string DeliveryNotes { get; set; }
+
+        public string PickupTruckerId { get; set; }
+        public string PickupTruckerNumber { get; set; }
+        public string PickupDriver { get; set; }
+        public string PickupTrailerNumber { get; set; }
+        public string PickupNotes { get; set; }
+
+
+
+
+
+
+
+
+
+
         public virtual User OperationallyClosedByUser { get; set; }
         public virtual Port DeliveryToPort { get; set; }
+
+        [ForeignKey("DeliveryTruckerId")]
+        public Card DeliveryTrucker { get; set; }
+
+
+        [ForeignKey("PickupTruckerId")]
+        public Card PickupTrucker { get; set; }
+
     }
 }

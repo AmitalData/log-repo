@@ -48,7 +48,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>All Models Metadata Only Generator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGenerators\CommonClassesGenerator.cs">
+    <Compile Include="AutoGenerators\CommonClassesGenerator1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CommonClassesGenerator.tt</DependentUpon>
@@ -121,8 +121,8 @@
     </Content>
     <Content Include="AutoGenerators\CommonClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CommonClassesGenerator.cs</LastGenOutput>
-      <LastOutputs>.\CommonClassesGenerator.cs</LastOutputs>
+      <LastOutputs>.\CommonClassesGenerator1.cs</LastOutputs>
+      <LastGenOutput>CommonClassesGenerator1.cs</LastGenOutput>
     </Content>
     <Content Include="AutoGenerators\EntityControllersGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -344,16 +344,33 @@
     <None Include="DBOthers\ShipmentsModel\Views\MessagingStockDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentFollowUpDataView.dxml" />
+    <None Include="DBScripts\CommonModel\CargoTrackingMilestoneFillValues.sxml" />
+    <None Include="DBScripts\CommonModel\CargoTrackingHeaderEntityTypeFillValues.sxml" />
+    <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />
+    <None Include="DBScripts\GlobalModel\202006102217_FillSettingsDemoTenants.sxml" />
     <None Include="DBScripts\InfrastructureModel\202006011050_UpdateAllowedInTicketFieldValueOfObjectTable.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202006171015_TruncateErrorLogs.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202006171200_ModifyAnalyzeQueueIdOfInboundEmailTable.sxml" />
+    <None Include="DBScripts\InvoiceModel\202006151350_DeleteOldPaymentMethodsMetadata.sxml" />
+    <None Include="DBScripts\QuoteModel\202006132005_AddDepartureFrequencyToQuoteDetails.sxml" />
     <None Include="DBScripts\QuoteModel\202006011340_DropQuoteClosingReason.sxml" />
     <None Include="DBScripts\QuoteModel\202006011347_FillQuoteClosingReasonTable.sxml" />
     <None Include="DBScripts\QuoteModel\202006011458_FillQuoteClosingReasonId.sxml" />
     <None Include="DBScripts\QuoteModel\202006011500_AddQuoteClosingReasonEventTypesToTenants.sxml" />
+    <None Include="DBScripts\QuoteModel\202006151400_AddAirShipmentType_V2.sxml" />
+    <None Include="DBScripts\QuoteModel\202006151500_FillAirQuoteShipmentTypeField.sxml" />
+    <None Include="DBScripts\QuoteModel\202006151503_FillQuoteShipmentSubTypeBackward.sxml" />
+    <None Include="DBScripts\ShipmentModel\202006111511_AddAirShipmentType.sxml" />
+    <None Include="DBScripts\ShipmentModel\202006111515_AddShipmentSubTypesToTenants.sxml" />
+    <None Include="DBScripts\ShipmentModel\202006140958_FillAirShipmentShipmentTypeField.sxml" />
+    <None Include="DBScripts\ShipmentModel\202006141227_FillShipmentSubTypeBackward.sxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingCard.dxml" />
+    <None Include="DBTables\CommonDataModel\CargoTrackingShipmentSearchField.dxml" />
+    <None Include="DBTables\CommonDataModel\CargoTrackingMilestone.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingPort.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingShipment.dxml" />
     <None Include="DBScripts\202005311656_DeleteDuplicatedQueuesWR Batch Definition.sxml" />
-    <None Include="DBTables\CommonDataModel\ShipmentHeader.dxml" />
+    <None Include="DBTables\CommonDataModel\CargoTrackingHeaderEntityType.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingPartner.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingSetting.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingSystem.dxml" />
@@ -723,7 +740,6 @@
     <None Include="DBTables\InvoiceModel\APInvoiceTransferStatus.dxml" />
     <None Include="DBTables\InvoiceModel\APInvoiceType.dxml" />
     <None Include="DBTables\InvoiceModel\APPayment.dxml" />
-    <None Include="DBTables\InvoiceModel\APPaymentMethod.dxml" />
     <None Include="DBTables\InvoiceModel\APPaymentStatus.dxml" />
     <None Include="DBTables\InvoiceModel\APPaymentTransferStatus.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoice.dxml" />
@@ -845,6 +861,7 @@
     <None Include="DBTables\SystemLogsModel\ErrorLog.dxml" />
     <None Include="DBTables\SystemLogsModel\FailedLoginLog.dxml" />
     <None Include="DBTables\SystemLogsModel\FailedTokenLog.dxml" />
+    <None Include="EntityFiles\CommonDataModel\AddressType.lxml" />
     <None Include="EntityFiles\CommonDataModel\AgentSharedDocument.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -1253,7 +1270,6 @@
     <None Include="EntityFiles\InvoiceModel\APPayment.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\InvoiceModel\APPaymentMethod.lxml" />
     <None Include="EntityFiles\InvoiceModel\APPaymentStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\APPaymentTransferStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARInvoice.lxml">
@@ -1393,6 +1409,7 @@
     </None>
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivable.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivableStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentSubType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\SpecialServicesType.lxml" />
     <None Include="EntityFiles\InfrastructureModel\PrepaidCollect.lxml" />

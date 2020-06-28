@@ -320,6 +320,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
             service.Update(currentAirline);
         }
+       
 
         public void DeleteAirline(AirlinePM airline)
         {

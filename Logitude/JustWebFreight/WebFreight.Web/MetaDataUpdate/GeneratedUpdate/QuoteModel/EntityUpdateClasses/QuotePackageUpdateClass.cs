@@ -768,7 +768,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	    {   
 
 		   ObjectTable QuotePackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuotePackage" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> QuotePackageObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "QuotePackage").ToList();
+		   //List<ObjectField> QuotePackageObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "QuotePackage").ToList();
 		       
 	      
 

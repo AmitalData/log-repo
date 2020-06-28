@@ -325,6 +325,7 @@
     <Compile Include="QueueService\QueueSendService.cs" />
     <Compile Include="QueueService\QueueServiceManager.cs" />
     <Compile Include="QueueService\StateMachineProcess.cs" />
+    <Compile Include="QueueService\WorkerNameService.cs" />
     <Compile Include="Resolvers\DateTimeUtilResolver.cs" />
     <Compile Include="Resolvers\IdCounterUtilResolver.cs" />
     <Compile Include="Resolvers\TranslateTextsClassUtilResolver.cs" />

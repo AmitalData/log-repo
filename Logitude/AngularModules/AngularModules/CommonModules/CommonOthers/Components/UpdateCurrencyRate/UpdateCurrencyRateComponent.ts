@@ -66,7 +66,7 @@ export class UpdateCurrencyRateComponent extends BaseComponent {
     SetIsEditingEnabled() {
         var isEditingEnabled = true;
 
-        if (SessionLocator.Tenant == 65) {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
             isEditingEnabled = false;
 
             if (SessionLocator.LoggedUserPM.IsCustomerCare) {

@@ -123,11 +123,42 @@ namespace WebFreight.Web.ReportsWebServices
                 if (!string.IsNullOrEmpty(shipmentpm.ConsigneeId))
                 {
                     ContactQuery contactQuery = new ContactQuery(contactRepository);
+
+                    CardPM consignee = cardQuery.GetSinglePM(shipmentpm.ConsigneeId, tenant);
+                    if (consignee != null)
+                    {
+                        prealertDataProvider.Consignee = consignee.EnglishName;
+                        ContactPM consigneeContact = contactQuery.GetSinglePM(shipmentpm.ConsigneeContactId, tenant);
+                        if (consigneeContact != null)
+                        {
+                            prealertDataProvider.ConsigneeContactPhone = consigneeContact.BusinessPhone;
+                            prealertDataProvider.ConsigneeContactName = consigneeContact.EnglishName;
+
+                            Address consigneeContactAddress = addressRepository.GetSingleAddress(shipmentpm.ConsigneeAddressId, tenant);
+                            if (consigneeContactAddress != null)
+                            {
+                                if (consigneeContactAddress.IsLocalLanguage)
+                                {
+                                    if (consignee != null && !string.IsNullOrEmpty(consignee.LocalName))
+                                    {
+                                        prealertDataProvider.Company = consignee.LocalName;
+                                    }
+
+                                    if (!string.IsNullOrEmpty(consigneeContact.LocalName))
+                                    {
+                                        prealertDataProvider.ConsigneeContactName = consigneeContact.LocalName;
+                                    }
+                                }
+                                prealertDataProvider.ConsigneeAddress = DataProviders.General.GetAddress(consigneeContactAddress);
+                            }
+                        }
+                    }
+
                     ContactPM customerContact = contactQuery.GetSinglePM(shipmentpm.CustomerContactId, tenant);
                     if (customerContact != null)
                     {
                         prealertDataProvider.ClientName = customerContact.EnglishName;
-
+                       
                         Address consigneeContactAddress = addressRepository.GetSingleAddress(shipmentpm.ConsigneeAddressId, tenant);
                         if (consigneeContactAddress != null)
                         {
@@ -142,9 +173,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 {
                                     prealertDataProvider.ClientName = customerContact.LocalName;
                                 }
-                            }
-
-                            //prealertDataProvider.ContactDetails = DataProviders.General.GetAddress(consigneeContactAddress);
+                            } 
                         }
                     }
                 }
@@ -191,6 +220,7 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.ITDate = shipmentpm.ITDate;
                 prealertDataProvider.BookingConfirmationNumber = shipmentpm.BookingConfirmationNumber;
                 prealertDataProvider.IncotermCode = shipmentpm.IncotermCode;
+                prealertDataProvider.ShipmentSubTypeName = shipmentpm.ShipmentSubTypeName;
 
                 if (shipmentpm.DocumentsClosingDate != null)
                 {
@@ -336,16 +366,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 #endregion
 
-                #region Consignee
-                if (!string.IsNullOrEmpty(shipmentpm.ConsigneeId))
-                {
-                    CardPM consignee = cardQuery.GetSinglePM(shipmentpm.ConsigneeId, tenant);
-                    if (consignee != null)
-                    {
-                        prealertDataProvider.Consignee = consignee.EnglishName;
-                    }
-                }
-                #endregion
+                
 
                 #region DeliveryDetails                
                 ShipmentDeliveryQuery shipmentDeliveryQuery = new ShipmentDeliveryQuery(tenant);
@@ -748,6 +769,54 @@ namespace WebFreight.Web.ReportsWebServices
                             string itemText = package.Quantity.ToString() + " x " + num + "'" + alpha;
                             myTotalContainers = string.IsNullOrEmpty(myTotalContainers) ? itemText : myTotalContainers + ", " + itemText;
                         }
+                    }
+
+                    masterpackage.InsidePackagesLines = new List<InsidePackageLine>();
+                    List<InsideShipmentPackage> insidePackages = shipmentsContext.InsideShipmentPackages.Where(d => d.ShipmentPackageId == package.Id && d.Tenant == package.Tenant).ToList();
+                    foreach (InsideShipmentPackage insideItem in insidePackages)
+                    {
+                        PackageType insidePackageType = (from pa in commonContext.PackageTypes
+                                                         where pa.Id == insideItem.PackageTypeId
+                                                         select pa).FirstOrDefault();
+
+                        InsidePackageLine insidePackage = new InsidePackageLine();
+
+                        insidePackage.PackageType = insidePackageType == null ? "" : insidePackageType.EnglishName;
+                        insidePackage.Quantity = insideItem.Quantity;
+
+                        if (insideItem.Length != null && insideItem.Width != null && insideItem.Height != null)
+                        {
+                            insidePackage.Dimensions = insideItem.Length + "x" + insideItem.Width + "x" + insideItem.Height;
+                        }
+
+                        insidePackage.Volume = insideItem.Volume;
+                        insidePackage.VolumetricWeight = insideItem.VolumetricWeight;
+                        insidePackage.Weight = insideItem.Weight;
+                        insidePackage.Description = insideItem.Description;
+                        insidePackage.Reference1 = insideItem.Reference1;
+                        insidePackage.Reference2 = insideItem.Reference2;
+                        insidePackage.Reference3 = insideItem.Reference3;
+                        insidePackage.CommodityNumber = insideItem.CommodityNumber;
+
+                        #region Car Details
+                        insidePackage.Make = insideItem.Make;
+                        insidePackage.Model = insideItem.Model;
+                        insidePackage.Year = insideItem.Year;
+                        insidePackage.Color = insideItem.Color;
+                        insidePackage.ChassisNumber = insideItem.ChassisNumber;
+                        insidePackage.RegistrationNumber = insideItem.RegistrationNumber;
+
+                        if (!string.IsNullOrEmpty(insideItem.CountryId))
+                        {
+                            Country country = countryRepository.GetSingleCountry(insideItem.CountryId, tenant);
+                            if (country != null)
+                            {
+                                insidePackage.CountryName = country.EnglishName;
+                            }
+                        }
+                        #endregion
+
+                        masterpackage.InsidePackagesLines.Add(insidePackage);
                     }
 
                     packagesList.Add(masterpackage);

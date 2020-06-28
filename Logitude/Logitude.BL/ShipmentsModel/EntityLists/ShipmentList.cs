@@ -68,6 +68,11 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ToPortId { get; set; }
         public string ToPort { get; set; }
         public string ToPortName { get; set; }
+        public string ToPortCode { get; set; }
+        public string FromPortCode { get; set; }
+
+
+        
         public string ToPortCountry { get; set; }
         public string AMSBL { get; set; }
         public string House { get; set; }
@@ -530,6 +535,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? FirstARInvoiceApprovalDate { get; set; }
         public string SLAC { get; set; }
         public bool CreatedFromDigital { get; set; }
-
+        public string ShipmentSubTypeId { get; set; }
+        public string ShipmentSubTypeName { get; set; }
     }
 }

@@ -194,6 +194,7 @@
     <None Include="Accounting\UniTests\InterestReport\glaccountPeriods.csv" />
     <None Include="Accounting\UniTests\InterestReport\interestPeriods.csv" />
     <None Include="Accounting\UniTests\InterestReport\interestreport.csv" />
+    <None Include="Accounting\UniTests\InterestReport\interestreportglaccount.csv" />
     <None Include="Accounting\UniTests\InterestReport\interestreportlinesbydate.csv" />
     <None Include="Accounting\UniTests\InterestReport\interesttransactions.csv" />
     <None Include="Accounting\UniTests\InterestReport\interestTypes.csv" />

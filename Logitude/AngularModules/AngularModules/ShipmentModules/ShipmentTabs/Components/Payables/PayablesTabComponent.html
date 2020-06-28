@@ -563,11 +563,15 @@
                                             <log-cell-template [TabIndex]="-1" [Alignment]="'center'">
                                                 <div style="width: 100%; height: 100%; position: relative;">
                                                     <table>
-                                                        <tr>
-
-                                                            <td *ngIf="item.TariffNumber != null">
+                                                        <tr *ngIf="item.TariffNumber != null">
+                                                            <td>
                                                                 <div class="MediaFill">
                                                                     <Hyperlink class="CenterCenter" [FontSize]="12" (click)="EditTariffClicked(item)">{{ item.TariffNumber}}</Hyperlink>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="LeftCenter" style="height: 20px;"  [class.Disable]="!item.IsEditingEnabled">
+                                                                    <img class="LeftCenter" style="width: 14px; height: 14px; cursor: pointer;" src="./Images/RedX2.png" (click)="DeleteTariff(item)" />
                                                                 </div>
                                                             </td>
                                                         </tr>

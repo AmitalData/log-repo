@@ -271,5 +271,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public string SATForeignRFC { get; set; }
 
+        [DataMember]
+        public bool AccountingVATSplit { get; set; }
+
     }
 }

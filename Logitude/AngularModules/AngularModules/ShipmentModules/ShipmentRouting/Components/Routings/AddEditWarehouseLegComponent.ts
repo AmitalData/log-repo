@@ -44,6 +44,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         super();
         this.TenantPM = SessionLocator.TenantPM;
         this.InitServices();
+        this.CurrentSession.SessionEvent.subscribe($event => {
+            if ($event == "Refresh") {
+                this.EntityPM.IsDirty = true;
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
+            }
+        });
     }
 
     private myAddressListService: AddressListService;

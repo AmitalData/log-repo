@@ -930,15 +930,17 @@
     <Content Include="App_Code\AngularJS_App_Code\Common\CommunicationLogStepController.cs" />
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
+
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\HelpResourceController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\InterestReportController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BIReportFolderExtendedController.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
-    <Compile Include="FileNotFound.aspx.cs">
-      <DependentUpon>FileNotFound.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="DataContracts\InterestReportArgs.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentSubTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentSubTypeController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\ReconciliationStageCController.cs" />
     <Compile Include="FileNotFound.aspx.designer.cs">
       <DependentUpon>FileNotFound.aspx</DependentUpon>
     </Compile>
@@ -1814,7 +1816,6 @@
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\APInvoiceTransferStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\APInvoiceTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\APInvoiceViewsController.Generated.cs" />
-    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\APPaymentMethodViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\APPaymentStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\APPaymentViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceStatusViewsController.Generated.cs" />
@@ -1839,7 +1840,6 @@
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\AccountingTransferHeaderController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\APInvoiceController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\APPaymentController.Generated.cs" />
-    <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\APPaymentMethodController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ARInvoiceController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ARInvoiceStockController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ARPaymentController.Generated.cs" />
@@ -2453,6 +2453,7 @@
     <Compile Include="Helpers\LogBox\LogBoxMailgunAnalyzer.cs" />
     <Compile Include="Helpers\LogitudeLeadHelper.cs" />
     <Compile Include="Helpers\MetadataUpdateUtility.cs" />
+    <Compile Include="Helpers\ReferentPartnerService.cs" />
     <Compile Include="Helpers\NumbersConverterToWords.cs" />
     <Compile Include="Helpers\PasswordChangeHelper.cs" />
     <Compile Include="Helpers\QueueMessagesWebHelper.cs" />
@@ -2536,6 +2537,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AccountingSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AccountingSystemUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AdditionalServiceUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AddressTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AddressUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AgentSharedDocumentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AgentSharedManifestUpdateClass.cs" />
@@ -2930,7 +2932,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\APInvoiceTransferStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\APInvoiceTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\APInvoiceUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\APPaymentMethodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\APPaymentStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\APPaymentTransferStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\APPaymentUpdateClass.cs" />
@@ -3031,6 +3032,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentReceivableLineStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentReceivableStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentReceivableUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentSubTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\SpecialServicesTypeUpdateClass.cs" />
@@ -5341,7 +5343,6 @@
     </Compile>
     <Compile Include="QuickbooksOnline.aspx.cs">
       <DependentUpon>QuickbooksOnline.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="QuickbooksOnline.aspx.designer.cs">
       <DependentUpon>QuickbooksOnline.aspx</DependentUpon>
@@ -5644,7 +5645,6 @@
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.AccountingTransferHeader.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.AccountType.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APInvoiceType.cs" />
-    <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentMethod.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceTotalVAT.cs" />
@@ -5678,7 +5678,6 @@
     <Compile Include="MetaDataUpdate\DetailClasses\AdvancedFilterDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\APInvoiceStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\APInvoiceTypeDetails.cs" />
-    <Compile Include="MetaDataUpdate\DetailClasses\APPaymentMethodDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\APPaymentStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\AccountingPaymentMethodDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\ARPaymentStatusDetails.cs" />

@@ -242,6 +242,7 @@ import { AccountingPartnerListService } from './Services/StandardLists/Accountin
 import { AccountingPartnerPMService } from './Services/StandardPMs/AccountingPartnerPMService';
 import { UserLastSettingsPMService } from './Services/StandardPMs/UserLastSettingsPMService';
 import { UserLastSettingsExtendedPMService } from './Services/ExtendedPMs/UserLastSettingsExtendedPMService';
+import { AddressTypeListService } from './Services/StandardLists/AddressTypeListService';
 
 
 export class ModuleProviders {
@@ -499,8 +500,7 @@ export class ModuleProviders {
             case "AccountingPartnerPMService": { myResult = new AccountingPartnerPMService(); break; }
             case "UserLastSettingsPMService": { myResult = new UserLastSettingsPMService(); break; }
             case "UserLastSettingsExtendedPMService": { myResult = new UserLastSettingsExtendedPMService(); break; }
-  
-                
+            case "AddressTypeListService": { myResult = new AddressTypeListService(); break; }
         }
 
         return myResult;

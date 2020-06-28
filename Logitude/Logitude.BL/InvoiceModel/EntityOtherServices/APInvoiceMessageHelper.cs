@@ -213,7 +213,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
 
                     if (string.IsNullOrEmpty(myAccountingNumber))
                     {
-                        myAccountingNumber = myPartnerCard.PayablesAccountingCard;
+                        AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                        myAccountingNumber = accountingSystemHelper.GetGenericCreditAccount(myPartnerCard.Id, item.InvoiceCurrencyId, tenant, true);
                     }
 
                     invoiceElement.Card.AccountingCard = myAccountingNumber;
@@ -1974,7 +1975,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 Card myCard = CardRepository.GetSingleCard(invoice.VendorId, invoice.Tenant, true);
                 if (myCard != null)
                 {
-                    myResult = myCard.PayablesAccountingCard;
+                    AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                    myResult = accountingSystemHelper.GetGenericCreditAccount(myCard.Id, invoice.InvoiceCurrencyId, tenant, true);
                 }
             }
 

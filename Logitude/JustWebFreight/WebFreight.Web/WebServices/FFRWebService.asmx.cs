@@ -154,9 +154,12 @@ namespace WebFreight.Web.WebServices
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
+                SettingRepository settingRepository = new SettingRepository();
+                var isDemoTenant = settingRepository.IsDemoTenant(myTenant.ToString());
+
                 if (this.myTenant != 290)
                 {
-                    SettingRepository settingRepository = new SettingRepository();
+                   
                     Setting setting = settingRepository.GetSingleSetting("1");
                     if (setting != null)
                     {
@@ -182,7 +185,7 @@ namespace WebFreight.Web.WebServices
                         AWBMessagesCCSTypeCode = tenantManagement.AWBMessagesCCSTypeCode;
                     }
 
-                    if (myTenant == 65 || IsEAWBOnlyDemo)
+                    if (isDemoTenant || IsEAWBOnlyDemo)
                     {
                         this.IsDemoTenant = true;
                         this.myResult.IsDemoTenant = true;

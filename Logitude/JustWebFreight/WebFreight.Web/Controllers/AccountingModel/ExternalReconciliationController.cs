@@ -228,15 +228,24 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 }
                 #endregion
 
+                var args = new AutoExternalReconcileArgs()
+                {
+                    AmountReconcile = amountReconcile,
+                    ReferenceReconcile = referenceReconcile,
+                    RefDateReconcile = refDateReconcile,
+                    ObjectTableId = objectTableId,
+                    EntityId = entityId,
+                    GLAccountId = glAccountId,
+                    TransactionQueryOperations = queryOperationsTrans,
+                    BankPageLineQueryOperations = queryOperationsBankLine
+                };
 
-                var automaticExternalReconcileService = new AutomaticExternalReconcileService();
-                AutoSelectedExternalReconciliationLines resultedArray = automaticExternalReconcileService
-                    .AutomaticExternalReconcile(amountReconcile, referenceReconcile, refDateReconcile,
-                    objectTableId, entityId, glAccountId, queryOperationsTrans, queryOperationsBankLine, tenant);
+                var automaticExternalReconcileService = new AutomaticExternalReconcileService(tenant);
+                MatchedReconciliationLines matchedLines = automaticExternalReconcileService.GetMatchedLines(args );
 
                 ServiceResponse response = new ServiceResponse();
-                response.Result = resultedArray;
-                response.Count = resultedArray.Count;
+                response.Result = matchedLines;
+                response.Count = matchedLines.Count;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
@@ -257,7 +266,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
 
-                AutomaticExternalReconcileService automaticExternalReconcileService = new AutomaticExternalReconcileService();
+                AutomaticExternalReconcileService automaticExternalReconcileService = new  AutomaticExternalReconcileService(authToken.Tenant);
                 automaticExternalReconcileService.GenerateTestRecordsForExternalReco(glAccountId, bankAccountId, type, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "OK");

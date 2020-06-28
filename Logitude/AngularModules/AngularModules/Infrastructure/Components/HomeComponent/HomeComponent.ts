@@ -93,12 +93,10 @@ export class HomeComponent implements OnDestroy{
     public SystemFontFamily: string = "'Lucida Sans Unicode', 'Lucida Grande', sans-serif";
     table: any;
     InitializeComponent() {
-        this.IsBluesnapAccount = !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.BluesnapAccount);
+        this.InitializeBluesnapComponents();
         this.IsCountryIsrael = SessionLocator.TenantManagementJS.CountryName == "Israel";
 
 
-        
-        
         var isNewSignupTenant = false;
 
         if (AppTool.IsNullOrEmpty(SessionLocator.TenantPM.CurrencyId) || AppTool.IsNullOrEmpty(SessionLocator.TenantPM.ProfitCurrencyId) || AppTool.IsNullOrEmpty(SessionLocator.TenantPM.AddressId) || AppTool.IsNullOrEmpty(SessionLocator.TenantPM.AgentId)) {
@@ -107,7 +105,7 @@ export class HomeComponent implements OnDestroy{
 
         this.IsNewSignupTenant = SessionLocator.IsNewSignupTenant = isNewSignupTenant;
 
-        this.IsTenant65 = SessionLocator.Tenant == 65 ? true : false;
+        this.IsTenant65 = ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString());
         this.IsLogBox = SessionLocator.TenantPM.IsDocumentsArchive == true ? true : false;
 
         // Layout Direction
@@ -125,7 +123,10 @@ export class HomeComponent implements OnDestroy{
         var SettingBtnFeature = FeatureLocator.Features.filter(f => (f.Code == "AppSettingsBtn") && f.ObjectTableId == this.table.Id)[0];
         this.SettingBtnVisibility = !AppTool.IsNullOrEmpty(SettingBtnFeature) || SessionLocator.Tenant == 0;
     }
-
+    InitializeBluesnapComponents() {
+        this.IsBlusnapOneTimeActivated = !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.BluesnapOneTimeContract) && !AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapOneTimeContractQTY);
+        this.IsBluesnapAccount = !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.BluesnapAccount);
+    }
     // InitializeAppHeader
     public EnvironmentUrl: string = null;
     public EnvironmentSRC: string = null;
@@ -143,6 +144,7 @@ export class HomeComponent implements OnDestroy{
     public IsSetWorkerRoleNameVisible: boolean = false;
     public IsBluesnapAccount: boolean = false;
     public IsCountryIsrael: boolean = false;
+    public IsBlusnapOneTimeActivated: boolean = false;
     
     InitializeAppHeader() {
         this.EnvironmentUrl = Environment.GetEnvironmentUrl();
@@ -193,7 +195,7 @@ export class HomeComponent implements OnDestroy{
             this.IfBlueSnapContracts = true;
         }
 
-        if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage === "Dev" ) {
             this.IsSetWorkerRoleNameVisible = true;
         }
 

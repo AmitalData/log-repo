@@ -4,12 +4,15 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
 import {ARInvoiceLinePM} from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
-import {AppTool} from '../../../../Infrastructure/Tools';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { InvoiceTool } from '../../../../Invoice/Tools';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
 import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
 import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
-import {CardList} from '../../../../Common/EntityLists/CardList';
+import { CardList } from '../../../../Common/EntityLists/CardList';
+import { CardPMService } from '../../../../Common/Services/StandardPMs/CardPMService';
+import { CardPM } from '../../../../Common/EntityPMs/CardPM';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {AccountingSystemListService} from '../../../../Common/Services/StandardLists/AccountingSystemListService';
@@ -254,6 +257,7 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
     private PaymentTermListService: PaymentTermListService;
     private ChargesTypeListService: ChargesTypeListService;
     private InvoiceDomainService: InvoiceDomainService;
+    private CardPMService: CardPMService;
     InitalizeServices() {
         this.CardListService = new CardListService();
         this.CurrencyListService = new CurrencyListService();
@@ -261,6 +265,7 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
         this.PaymentTermListService = new PaymentTermListService();
         this.ChargesTypeListService = new ChargesTypeListService();
         this.InvoiceDomainService = new InvoiceDomainService();
+        this.CardPMService = new CardPMService();
     }
 
     // FillFieldsData
@@ -310,11 +315,14 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
         }
     }
     private GetBillToData() {
-        this.CardListService.getSingle(this.invoicePM.BillToId).subscribe((response: ServiceResponse) => {
+        this.CardPMService.get(this.invoicePM.BillToId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                var card: CardList = response.Result;
+                var card: CardPM = response.Result;
                 if (card != null) {
-                    this.EditingFieldValue = card.ReceivablesAccountingCard;
+                    var invoiceDomainService = new InvoiceDomainService();
+                    invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(card.Id, this.invoicePM.InvoiceCurrencyId, false).subscribe((myResult: ServiceResponse) => {
+                        this.EditingFieldValue = myResult.Result;
+                    });
                 }
             }
         });
@@ -869,7 +877,10 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
                 var entity = s.EntityPM;
                 if (entity != null) {
                     if (this.Code == "BLTO") {
-                        this.EditingFieldValue = entity.ReceivablesAccountingCard;
+                        var invoiceDomainService = new InvoiceDomainService();
+                        invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(entity.Id, this.invoicePM.InvoiceCurrencyId, false).subscribe((myResult: ServiceResponse) => {
+                            this.EditingFieldValue = myResult.Result;
+                        });
                     }
                     else if (this.Code == "CURR") {
                         this.EditingFieldValue = entity.AccountingExternalCode;

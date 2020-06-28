@@ -42,6 +42,107 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             });
 
         }
+        public ContactPM GetSinglePMFromCacheWithSystemUser(string id, int tenant)
+        {
+            string key = $"GetSinglePMFromCache({id},{tenant})";
+            return CacheManager.GetOrInsertNewObject<ContactPM>(key, () =>
+            {
+                return GetSinglePMWithSystemUser(id, tenant);
+            });
+
+        }
+        public ContactPM GetSinglePMWithSystemUser(string id, int tenant)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                ContactPM instance = (from a in repository.context.Contacts
+                                      where a.Tenant == tenant  
+                                      && a.Id == id
+                                      select new ContactPM()
+                                      {
+                                          Anniversary = a.Anniversary,
+                                          Birthday = a.Birthday,
+                                          BusinessPhone = a.BusinessPhone,
+                                          Email = a.Email,
+                                          EnglishName = a.EnglishName,
+                                          FacebookId = a.FacebookId,
+                                          Fax = a.Fax,
+                                          Id = a.Id,
+                                          InActive = a.InActive,
+                                          LocalName = a.LocalName,
+                                          SearchFields = a.SearchFields,
+                                          DontShowLocalLabels = a.DontShowLocalLabels,
+                                          Mobile = a.Mobile,
+                                          Notes = a.Notes,
+                                          Tenant = a.Tenant,
+                                          Signature = a.Signature,
+                                          SignatureHtml = a.SignatureHtml,
+                                          ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                          DontShowLocal = a.DontShowLocalLabels,
+                                          DisplayGettingStarted = a.DisplayGettingStarted,
+                                          BirthdayReminder = a.BirthdayReminder,
+                                          AnniversaryReminder = a.AnniversaryReminder,
+                                          ImageDetailId = a.ImageDetailId,
+                                          DoneDate = a.DoneDate,
+                                          BirthDayOfYear = a.BirthDayOfYear,
+                                          ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                          ContactDoneMethodName = a.ContactDoneMethod != null ? a.ContactDoneMethod.Name : null,
+                                          Position = a.Position,
+                                          ExternalId = a.ExternalId,
+                                          CompanyName = a.CompanyName,
+                                          CreateDate = a.CreateDate,
+                                          IndexColor = a.IndexColor,
+                                      }).FirstOrDefault();
+
+                if (instance != null)
+                {
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        IGlobalContext globalContext = GlobalContext.GetContext();
+                        ContactPassword contactPassword = globalContext.ContactPasswords.Where(cn => cn.Email == instance.Email.ToLower()).FirstOrDefault();
+                        GlobalContact globalContact = globalContext.GlobalContacts.Where(cn => cn.Email == instance.Email.ToLower() && cn.GlobalTenantId == tenant).FirstOrDefault();
+
+                        if (globalContact != null)
+                        {
+                            instance.IsUser = globalContact.IsUser;
+                        }
+
+                        if (contactPassword != null)
+                        {
+                            instance.Password = contactPassword.Password;
+                            instance.IsLocked = contactPassword.IsLocked;
+                            instance.MustChangePassword = contactPassword.MustChangePassword;
+                            instance.NumberOfRetries = contactPassword.NumberOfRetries;
+                        }
+                    }
+
+                    instance.HasCardContact = false;
+                    CardContactRepository cardcontactRep = new CardContactRepository(tenant);
+                    CardContact cardContact = cardcontactRep.GetSingleCardContactByContactId(instance.Id, instance.Tenant);
+                    if (cardContact != null)
+                    {
+                        instance.HasCardContact = true;
+                        instance.IsAll = cardContact.IsAll;
+                        instance.IsAirExport = cardContact.IsAirExport;
+                        instance.IsAirImport = cardContact.IsAirImport;
+                        instance.IsInlandExport = cardContact.IsInlandExport;
+                        instance.IsInlandImport = cardContact.IsInlandImport;
+                        instance.IsOceanExport = cardContact.IsOceanExport;
+                        instance.IsOceanImport = cardContact.IsOceanImport;
+                        instance.IsInlandDomestic = cardContact.IsInlandDomestic;
+                        instance.IsCustomsImport = cardContact.IsCustomsImport;
+
+                        //CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(repository.context);
+                        //CardContactAdditionalServiceQuery cardContactAdditionalServiceQuery = new CardContactAdditionalServiceQuery(cardContactAdditionalServiceRepository);
+                        //instance.CardContactAdditionalServices = cardContactAdditionalServiceQuery.GetCardContactAdditionalServicePMsByCardContactId(cardContact.Id, tenant).ToList();
+                    }
+                }
+
+                return instance;
+            }
+
+            return null;
+        }
         public ContactPM GetSinglePM(string id, int tenant)
         {
             if (!string.IsNullOrEmpty(id))

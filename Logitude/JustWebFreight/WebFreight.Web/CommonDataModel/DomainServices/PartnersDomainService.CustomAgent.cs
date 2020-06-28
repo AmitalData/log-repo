@@ -285,6 +285,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             service.Update(currentEntity);
         }
 
+
         public void UpdateCustomAgentList(CustomAgentList currentEntity)
         {
         }

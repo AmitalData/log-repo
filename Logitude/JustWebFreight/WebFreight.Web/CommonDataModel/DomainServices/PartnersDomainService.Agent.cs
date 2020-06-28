@@ -25,6 +25,7 @@ using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.CustomFilters;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
+using CWXSD;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -251,7 +252,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             {
                 objectContext = CommonDataContext.GetContext(currentEntity.Tenant);
             }
-
+            AgentService service = new AgentService(objectContext, currentEntity.Tenant);
             List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrenciesChangeSet = ChangeSet.GetAssociatedChanges(currentEntity, d => d.CardExternalCodeByCurrencies).Cast<CardExternalCodeByCurrencyPM>().ToList();
             foreach (CardExternalCodeByCurrencyPM itemPM in cardExternalCodeByCurrenciesChangeSet)
             {
@@ -268,9 +269,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
                     default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
                 }
-            }
-
-            AgentService service = new AgentService(objectContext, currentEntity.Tenant);
+            }          
             service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
             service.Update(currentEntity);
         }

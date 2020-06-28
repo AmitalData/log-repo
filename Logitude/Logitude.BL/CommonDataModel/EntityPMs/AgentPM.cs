@@ -294,5 +294,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public int? StorageFreeDays { get; set; }
 
+        [DataMember]
+        public bool AccountingVATSplit { get; set; }
+
     }
 }

@@ -328,10 +328,15 @@
                     </tr>
                     <tr>
                         <td>
-                            <img *ngIf="SelectedShipment && SelectedShipment.MainCarriageFromPortCode != '---'" src="{{SelectedShipment.MainCarriageFromPortCountryCode | CountryFlagPipe}}" style="width:17px;height:18px;vertical-align:middle;" />
-                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{SelectedShipment ? SelectedShipment.MainCarriageFromPortCode : ''}} , </span>
-                            <img *ngIf="SelectedShipment && SelectedShipment.MainCarriageToPortCode != '---'" src="{{SelectedShipment.MainCarriageToPortCountryCode | CountryFlagPipe}}" style="width:17px;height:18px;vertical-align:middle;" />
-                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{SelectedShipment ? SelectedShipment.MainCarriageToPortCode : ''}}</span>
+
+
+
+
+                            <img *ngIf="FromPortCountryCode" src="{{FromPortCountryCode  | CountryFlagPipe}}" style="width:17px;height:18px;vertical-align:middle;" />
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{FromPortCode}} , </span>
+                            <img *ngIf="ToPortCountryCode" src="{{ToPortCountryCode  | CountryFlagPipe}}" style="width:17px;height:18px;vertical-align:middle;" />
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{ToPortCode}}</span>
+
                             <span *ngIf="ShipmentPM && IsPrivateLabel == true && ShipmentPM.ForwarderPartnerId == ShipmentPM.ForwardingPartnerId" style="vertical-align:middle;font-size:12px;color:#6E7172;">{{'( ' + AgentLable + ' Forwarding ' + (SelectedShipment ? (SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---' ? ( ' - ' + SelectedShipment.IncotermCode + ' ' ) : '' ): '') + ')'}}</span>
                             <span *ngIf="ShipmentPM && IsPrivateLabel == true && ShipmentPM.ForwarderPartnerId != ShipmentPM.ForwardingPartnerId
                                          && SelectedShipment && SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---'" style="vertical-align:middle;font-size:12px;color:#6E7172;">{{'( ' + (SelectedShipment ? (SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---' ? ( ' ' + SelectedShipment.IncotermCode + ' ' ) : '' ): '') + ')'}}</span>

@@ -20,7 +20,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string SmallDocumentId { get; set; }
         public string CalculatedFileName { get; set; }
         public bool IsEncrypted { get; set; }
-        public bool MarkForDelete { get; set; }
+        public bool? MarkForDelete { get; set; }
         [ForeignKey("SmallDocumentId")]
         public SmallDocument SmallDocument { get; set; }
         //public List<DocumentIn> ExternalDocuments { get; set; }

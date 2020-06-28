@@ -138,6 +138,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 ChangeSetOp = ChangeSetOperation.Insert,
                                 LastUpdateDateTime = DateTime.Now,
                                 UpdatedByUserId = taxReport.UpdatedByUserId,
+                                UpdatedBUserName = taxReport.UpdatedByUserName,
                                 Tenant = tenant,
                                 TaxReportDate=taxReport.TaxReportMonth
 
@@ -258,6 +259,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     ChangeSetOp = ChangeSetOperation.Insert,
                     LastUpdateDateTime = DateTime.Now,
                     UpdatedByUserId = taxReport.UpdatedByUserId,
+                    UpdatedBUserName = taxReport.UpdatedByUserName,
                     Tenant = tenant,
                     TransmitStatusCode = transmitStatusCode,
                     TaxReportDate = taxReport.TaxReportMonth
@@ -411,13 +413,17 @@ namespace Logitude.Accounting.BL.CoreBL
                     reference = Reference;
                     referenceGroup = "0000";
                 }
-
+                if (reference.Length > 9)
+                {
+                    reference = reference.Substring(reference.Length - 9);
+                }
             }
             else
             {
                 referenceGroup = "0000";
-            }
-            if (reference.Length > 9)
+                reference = null;
+            }           
+             if (reference != null&& reference.Length > 9)
             {
                 reference = reference.Substring(reference.Length - 9);
             }

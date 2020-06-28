@@ -277,6 +277,11 @@ export class WarehouseEntryPackagePM {
     public set WarehouseEntryNumber(newValue: string) { if (this.warehouseEntryNumber != newValue) { this.warehouseEntryNumber = newValue; this.MarkAsDirty("WarehouseEntryNumber"); } }
        
 	 
+    private shipmentPackageId: string;
+    public get ShipmentPackageId() { return this.shipmentPackageId; }
+    public set ShipmentPackageId(newValue: string) { if (this.shipmentPackageId != newValue) { this.shipmentPackageId = newValue; this.MarkAsDirty("ShipmentPackageId"); } }
+       
+	 
 
     public OldEntityPM: WarehouseEntryPackagePM;
 	

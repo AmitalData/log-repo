@@ -19,6 +19,7 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -36,7 +37,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ContactRepository contactRepository;
         private CardContactRepository cardContactRepository;
         private ICommonDataContext objectContext;
-        private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;  
+        private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
+
         public TruckerService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -125,8 +127,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges(); 
 
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
@@ -164,7 +166,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.UpdateCardExternalCodeByCurrencyCollection();
-
             if (!entityPM.IsHybrid)
             {
                 TruckerTracing.Trace(entityPM, entityPOCO, isNewEntity);
@@ -177,8 +178,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
 
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
         }
 
         private void InitializeComponent()

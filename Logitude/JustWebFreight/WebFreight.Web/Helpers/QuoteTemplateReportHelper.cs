@@ -2357,6 +2357,10 @@ namespace Logitude.BL.Helpers
             {
                 FieldValue = quotePM.DescriptionOfGoods;
             }
+            else if (fieldname == "DEPARTUREFREQUENCY")
+            {
+                FieldValue = quotePM.DepartureFrequency;
+            }
             else if (fieldname == "DANGEROUSGOODS")
             {
                 FieldValue = !quotePM.IsDangerous ? TranslateTextsClass.Translate("General.O.No", quotePM.Tenant) : TranslateTextsClass.Translate("General.O.Yes", quotePM.Tenant);

@@ -14763,6 +14763,76 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;5bd37849-1186-4b95-ba8d-7735145d0e03&quot;"
+    FieldName="&quot;BillToContactId&quot;"
+    OldNames="BillToContact,BillToContactId,BillToContactId12321"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;ARInvoice&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;Contact&quot;"
+    MinLength="0"
+    MaxLength="15"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;BillToContactId&quot;"
+    ListPropertyPath="&quot;BillToContactId&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;BillToContactId&quot;"
+    DefaultText="&quot;Bill To Contact&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="true"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;All Invoices&quot;"
     TextCode="&quot;All Invoices&quot;"
@@ -16544,6 +16614,12 @@
         TextCodeCode="&quot;ARInvoice.B.SendToQBO&quot;"
         FeatureTextCodeCode="&quot;ARInvoice.Features.SendToQBO&quot;"
         FeatureDefaultText="&quot;Send to QBO&quot;" />
+      <MenuItem
+        EventCode="&quot;BlockFromTransfer&quot;"
+        DefaultText="&quot;Block from transfer&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="15"
+        IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>
@@ -17760,7 +17836,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-      <Feature
+    <Feature
       Code="&quot;AUTOMATION&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;ARInvoice.Features.Automation&quot;"
@@ -17769,7 +17845,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
     <Feature
       Code="&quot;DatesFieldEnabledWhileCrediting&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
@@ -17779,6 +17854,5 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
   </AdditionalFeatures>
 </entity>

@@ -76,7 +76,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool MarinePollutant { get; set; }
         public string Notes { get; set; }
         public bool NonActiveContainer { get; set; }
-        
+        public int InUse { get; set; }
+
         public DateTime? OnCarriageETD { get; set; }
         public DateTime? OnCarriageATD { get; set; }
         public DateTime? OnCarriageETA { get; set; }

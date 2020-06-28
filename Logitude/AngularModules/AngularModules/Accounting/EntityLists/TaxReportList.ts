@@ -38,6 +38,7 @@ export class TaxReportList {
 	CreatedByUserName: string;
 	StatusEnglishName: string;
 	NeedsRebulid: boolean;
+	UpdatedByUserName: string;
 	
 }
  

@@ -4592,6 +4592,15 @@ export class ShipmentPM {
     public get SLAC() { return this.sLAC; }
     public set SLAC(newValue: string) { if (this.sLAC != newValue) { this.sLAC = newValue; this.MarkAsDirty("SLAC"); } }
 
+    private shipmentSubTypeId: string;
+    public get ShipmentSubTypeId() { return this.shipmentSubTypeId; }
+    public set ShipmentSubTypeId(newValue: string) { if (this.shipmentSubTypeId != newValue) { this.shipmentSubTypeId = newValue; this.MarkAsDirty("ShipmentSubTypeId"); } }
+
+    private shipmentSubTypeName: string;
+    public get ShipmentSubTypeName() { return this.shipmentSubTypeName; }
+    public set ShipmentSubTypeName(newValue: string) { if (this.shipmentSubTypeName != newValue) { this.shipmentSubTypeName = newValue; this.MarkAsDirty("ShipmentSubTypeName"); } }
+
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];

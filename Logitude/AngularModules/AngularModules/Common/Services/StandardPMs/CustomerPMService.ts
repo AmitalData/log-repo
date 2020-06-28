@@ -375,7 +375,6 @@ export class CustomerPMService {
 
                 entityPM.OldEntityPM.CardExternalCodeByCurrencies.push(newCardExternalCodeByCurrencyPM);
             }
-
         }
         else {
 
@@ -1584,8 +1583,7 @@ export class CustomerPMService {
             }
         }
     }
-    //file not found! for child composition CardExternalCodeByCurrency
-
+  
     public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};

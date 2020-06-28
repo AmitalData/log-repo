@@ -149,6 +149,8 @@ namespace Simplog.Server.Infrastructure
         public static string SMSServiceUserId { get; set; }
         public static string SMSServiceAuthToken { get; set; }
         public static string SMSServicePhoneNumber { get; set; }
+
+        public static string WorkerRoleName { get; set; }
     }
 
     public class LogitudeCustomsSettingsM

@@ -43,6 +43,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CardRepository cardRepository;
         private CardQuery cardQuery;
         private ContactRepository contactRepository;
+
         public AirlineService(ICommonDataContext objectContext, int tenant)
         {
             
@@ -175,7 +176,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
                 }
 
-                this.UpdateCardExternalCodeByCurrencyCollection();                
+                this.UpdateCardExternalCodeByCurrencyCollection();
                 this.UpdateHasAdaptations();
 
                 if (!entityPM.IsHybrid)

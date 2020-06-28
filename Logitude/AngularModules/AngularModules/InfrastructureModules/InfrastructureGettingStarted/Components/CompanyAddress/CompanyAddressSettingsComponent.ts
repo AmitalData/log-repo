@@ -19,6 +19,7 @@ import {CountryList} from '../../../../Common/EntityLists/CountryList';
 import {CountryListService} from '../../../../Common/Services/StandardLists/CountryListService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'CompanyAddressSettingsComponent',
@@ -41,6 +42,8 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     public LocalAddressDataContext: AddressItem; 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsDemoTenant = false;
+
     constructor() {
         super();      
     }
@@ -63,7 +66,8 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
                 this.LoadAddressPM();
                 this.GetDemoMessageVisibility();
 
-                if (this.TenantPm.Id == 65 && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
+                if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString()) && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
+                    this.IsDemoTenant = true;
                     this.SetUIPropertiesHitVisible();
                 }
 
@@ -170,6 +174,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetEnabled("Signature", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("PhoneNumber", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("FaxNumber", this.AddressObjectTableName, false);
+        this.UIProperties.SetEnabled("StateId", this.AddressObjectTableName, false);       
     }
 
     // Cach Lists 
@@ -186,7 +191,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     public DemoMessageVisibility: boolean = false;
     private GetDemoMessageVisibility() {
         var result = false;
-        if (this.TenantPm.Id == 65) {
+        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString())) {
             result = true;
 
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {
@@ -412,7 +417,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
             }
         }
 
-        this.UIProperties.SetEnabled("StateId", "Address", isEnabled);
+        this.UIProperties.SetEnabled("StateId", "Address", isEnabled && !this.IsDemoTenant);
     }
     private SetUIProperties_StateRequired() {
         var isRequired = false;
@@ -736,7 +741,7 @@ export class AddressItem extends BaseComponent {
             }
         }
 
-        this.UIProperties.SetEnabled("StateId", "Address", isEnabled);
+        this.UIProperties.SetEnabled("StateId", "Address", isEnabled && !this.father.IsDemoTenant);
     }
     private SetUIProperties_StateRequired() {
         var isRequired = false;

@@ -120,7 +120,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     this._entityResourceService.getEntityResourceByTableName("APInvoice").subscribe((response: any) => {
                     this._entityResourceService.getEntityResourceByTableName("ShipmentComputedFields").subscribe((response: any) => {
                         this._entityResourceService.getEntityResourceByTableName("ShipmentPayable").subscribe((response: any) => {
-                            this.Start();
+                            this._entityResourceService.getEntityResourceByTableName("ChargesType").subscribe((response: any) => {
+                                this.Start();
+                            });
                         });
                     });
                     });
@@ -158,7 +160,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
             this.AllTables = myResult.Result;
             this._DWObjectTablePMService.get(this.FactTableName).subscribe((myResult: any) => {
                 if (!myResult.HasError) {
-                    this._DWObjectFieldPMService.GetDWObjectFieldsByDWTableIdGroupedByCategory(myResult.Result.Code).subscribe((Result: ServiceResponse) => {//getDWObjectFieldsByDWTableId
+                    var factTableCode: string = myResult.Result.Code;
+                    this._DWObjectFieldPMService.GetDWObjectFieldsByDWTableIdGroupedByCategory(factTableCode).subscribe((Result: ServiceResponse) => {//getDWObjectFieldsByDWTableId
                         if (!Result.HasError) {
                             var MyGroups = [];
                             var MyAllGroups = [];
@@ -232,26 +235,35 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     });
                     //this.StartFiltersBusyIndicator("Restoring filters ..");
                     //this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe((Result:any) => {
-                    var TempObsList = [];
-                    if (window.DWObjectFields) {
-                        window.DWObjectFields.forEach((field) => {
-                            if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) {
-                                var view = new DWObjectFieldsDetails(field, this);
-                                view.ParentDataTypeCode = field.DataTypeCode;
-                                this.AllFieldsObsList.push(field);
-                                TempObsList.push(view);
-                                //this.ObsListAll.push(view);
-                            }
-                        });
-                        //this.DataSource = this.ObsList;
-                        this.AllFieldsWithChildrenDataSource = TempObsList;//.sort((a, b) => { return (a.DisplayName.toLowerCase().trim() === b.DisplayName.toLowerCase().trim()) ? 0 : (a.DisplayName.toLowerCase().trim() < b.DisplayName.toLowerCase().trim()) ? -1 : 1 });
+                    if (factTableCode == "Fact_Shipments" && window.DWObjectFields) {
+                        this.FillAllFieldsWithChildrenDataSource(window.DWObjectFields);//.sort((a, b) => { return (a.DisplayName.toLowerCase().trim() === b.DisplayName.toLowerCase().trim()) ? 0 : (a.DisplayName.toLowerCase().trim() < b.DisplayName.toLowerCase().trim()) ? -1 : 1 });
                         //this.StopFiltersBusyIndicator();
+                    }
+                    else if (factTableCode == "Fact_Charges" && window.DWObjectFields_Charges) {
+                        this.FillAllFieldsWithChildrenDataSource(window.DWObjectFields_Charges);
                     }
 
                     //});
                 }
             });
         });
+
+
+    }
+
+    FillAllFieldsWithChildrenDataSource(objectFieldList: any) {
+        var TempObsList = [];
+        objectFieldList.forEach((field) => {
+            if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) {
+                var view = new DWObjectFieldsDetails(field, this);
+                view.ParentDataTypeCode = field.DataTypeCode;
+                this.AllFieldsObsList.push(field);
+                TempObsList.push(view);
+                //this.ObsListAll.push(view);
+            }
+        });
+        //this.DataSource = this.ObsList;
+        this.AllFieldsWithChildrenDataSource = TempObsList;
     }
 
 
@@ -628,12 +640,18 @@ export class DWQueryBuilderComponent extends BaseComponent {
             if (view.Name == 'Full Date') {
                 view.HasTree = false;
             }
+            if (view.DataTypeCode == "Boolean") view.ParentDataTypeCode = "Boolean";
+
             if (item.BaseDWObjectField.DataTypeCode == "LookUp" || item.BaseDWObjectField.DataTypeCode == "Dimension") {
                 view.ParentDimTabelName = item.BaseDWObjectField.DimensionTableCode;
             }
             else {
                 view.ParentDimTabelName = item.BaseDWObjectField.DWObjectTableCode;
             }
+
+
+
+        
         }
         else {
             view.ParentDataTypeCode = item.BaseDWObjectField.DataTypeCode;
@@ -1290,6 +1308,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         view.ParentDataTypeCode = "LookUp";
                     }
                     view.ParentDimTabelName = field.DWObjectTableCode;
+
+                    if (view.DataTypeCode == "Boolean") view.ParentDataTypeCode = "Boolean";
+
+
+
                 }
                 else {
                     view.ParentDataTypeCode = field.DataTypeCode;
@@ -1366,8 +1389,9 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public FilterTypes: ObjectFieldOperator[];
     public FullNameTextCodeCode: string;
     public PartnerFullNameTextCodeCode: string;
+    public IsHaveTranslation: boolean = false;
+    public TranslationText: string;
 
-    
     constructor(DWObjectField: any = null, ParentClass: DWQueryBuilderComponent = null) {
         super();
         var idIndex = this.CurrentSession.GetNewId("Tooltip");
@@ -1414,6 +1438,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             
             this.DataTypeCode = DWObjectField.DataTypeCode;
             //if (DWObjectField.FilterItems && DWObjectField.FilterItems.length == 0) {
+            this.TranslationText = this.GetTranslationText(DWObjectField); 
             this.DisplayName = this.ComputeDisplayName(DWObjectField);
             //}
             this.CannotFilter = DWObjectField.CannotFilter;
@@ -1441,26 +1466,46 @@ export class DWObjectFieldsDetails extends BaseComponent {
         }
 
         this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[0];
+        this.IsHaveTranslation = this.CheckIsFieldHaveTranslation(this);
 
 
     }
 
    // BIReportTranslate
     public ComputeDisplayName(DWObjectField: any) {
-        var displayname: string = DWObjectField.DisplayName;
+
+        var displayname: string = this.GetTranslationText(DWObjectField);
         if (!DWObjectField.IsCustom) {
-            var translateText = DWObjectField.FullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.FullNameTextCodeCode) : "";
-            var partnerTranslateText = DWObjectField.PartnerFullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.PartnerFullNameTextCodeCode) : "";
-
-            displayname = (translateText ? translateText : DWObjectField.Name);
-
             if (DWObjectField.DimensionTableDisplayName) {
+                var partnerTranslateText = DWObjectField.PartnerFullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.PartnerFullNameTextCodeCode) : "";
                 displayname = (partnerTranslateText ? partnerTranslateText : DWObjectField.DimensionTableDisplayName) + " " + displayname;
             }
         }
 
         return displayname;
     
+    }
+
+
+    public GetTranslationText(DWObjectField: any) {
+        var result: string = DWObjectField.DisplayName;
+        if (!DWObjectField.IsCustom) {
+            var translateText = DWObjectField.FullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.FullNameTextCodeCode) : "";
+            result = (translateText ? translateText : DWObjectField.Name);
+        }
+
+        return result;
+
+    }
+
+
+
+
+
+    CheckIsFieldHaveTranslation(DWObjectField: any) {
+        var translateText = DWObjectField.FullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.FullNameTextCodeCode) : "";
+
+        return !AppTool.IsNullOrEmpty(translateText) ? true : false;
     }
 
 
@@ -1602,6 +1647,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
                 }
 
                 this.DWObjectTableCode = MyTable[0].Code;
+
+                this.TranslationText = this.GetTranslationText(this); 
                 this.DisplayName = this.ComputeDisplayName(this);//(AppTool.IsNullOrEmpty(this.DisplayName)) ? (this.DWObjectTableCode + ' ' + this.Code) : (this.DisplayName);
                 this.ParentDimTabelName = this.DimensionTableCode;
                 if (!AppTool.IsNullOrEmpty(this.DimensionTableDisplayName)) {
@@ -2062,6 +2109,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
         this.DataTypeCode = DWObjectField.DataTypeCode;
         this.DimensionTableCode = DWObjectField.DimensionTableCode;
+        this.TranslationText = this.GetTranslationText(DWObjectField); 
         this.DisplayName = this.ComputeDisplayName(DWObjectField);//(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
 
         if (!AppTool.IsNullOrEmpty(DWObjectField.DimensionTableDisplayName)) {
@@ -2086,6 +2134,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
             } else this.ParentDataTypeCode = "LookUp";
 
             this.ParentDimTabelName = DWObjectField.DWObjectTableCode;
+
+            if (this.DataTypeCode == "Boolean") this.ParentDataTypeCode = "Boolean";
+
+
+
         }
         else {
             this.ParentDataTypeCode = DWObjectField.DataTypeCode;

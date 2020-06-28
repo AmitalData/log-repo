@@ -862,8 +862,8 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId, PartnerTypeId: this.CardLOVDependencyProperty1 };
-            logeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Partners/AddEditAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId };
+            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     if (myCode == "F") {
@@ -888,8 +888,8 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Add Address";
-            logeWindow.WindowArgs = { EntityPM: entityPM, PartnerTypeId: this.CardLOVDependencyProperty1 };
-            logeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Partners/AddEditAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM };
+            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     if (myCode == "F") {

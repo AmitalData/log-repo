@@ -87,7 +87,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         StatusEnglishName, 
 	         TaxReportLineLastLine, 
 	         NeedsRebulid, 
-	         IsNew,
+	         IsNew, 
+	         UpdatedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -1,4 +1,6 @@
 ﻿using CommunicationWorkerRole.Tasks;
+using Logitude.BL.CommonDataModel.CustomFilters;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityPMs;
@@ -9,6 +11,7 @@ using Logitude.Server.Tools.FTP;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
@@ -16,6 +19,7 @@ using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
+using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using Stimulsoft.Report;
 using System;
@@ -53,9 +57,17 @@ namespace CommunicationWorkerRole.Services
                 SchedulerDetails schedulerDetails = GetSchedulerDetails(reportTask);
                 reportTask.CreatedBy = schedulerDetails.ReportDetails.CreatedByUserId;
                 ReportFliter reportFilter = GetReportFilters(reportTask, schedulerDetails);
-                StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
-                string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
-                SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
+                List<ContactList> allPermittedContacts = GetAllPermittedContacts(reportTask.Tenant, null);
+                string cardId = GetcardIdValueField(schedulerDetails);
+                List<ContactList> allPermittedCards = GetAllPermittedContacts(reportTask.Tenant, cardId);
+                allPermittedContacts = allPermittedContacts.Concat(allPermittedCards).ToList();
+                schedulerDetails.ReportDetails.Recepients = RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);
+                if (schedulerDetails.ReportDetails.Recepients != null)
+                {
+                    StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
+                    string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
+                    SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
+                }
             }
             catch (Exception ex)
             {
@@ -77,6 +89,119 @@ namespace CommunicationWorkerRole.Services
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
             this.trackerCounter += 1;
             return schedulerDetails;
+        }
+        
+        private string GetcardIdValueField(SchedulerDetails schedulerDetails)
+        {
+            string cardId = null;
+            schedulerDetails.ReportDetails.ReportFilterItems.ForEach(item => {
+                if (item.FieldName == "GLAccountId")
+                {
+                    if(item.FieldValue != null)
+                        cardId = item.FieldValue.ToString();
+                }
+            });
+            return cardId;
+        }
+
+        private ReportSchedulerRecepients RemoveNonPermittedContacts(ReportSchedulerRecepients recepients, List<ContactList> allPermittedContacts)
+        {
+            List<ActivatedEmail> toEmails = FillAllRecepients(recepients.To);
+            List<ActivatedEmail> ccEmails = FillAllRecepients(recepients.Cc);
+            List<ActivatedEmail> bccEmails = FillAllRecepients(recepients.Bcc);
+
+            allPermittedContacts.ForEach(contact => {
+                toEmails.ForEach(to => {
+                    if (contact.Email == to.To)
+                        to.IsActive = true;
+                });
+                ccEmails.ForEach(cc => {
+                    if (contact.Email == cc.To)
+                        cc.IsActive = true;
+                });
+                bccEmails.ForEach(bcc => {
+                    if (contact.Email == bcc.To)
+                        bcc.IsActive = true;
+                });
+            });
+
+            recepients.To = FillOnlyActiveRecepients(toEmails);
+            recepients.Cc = FillOnlyActiveRecepients(ccEmails);
+            recepients.Bcc = FillOnlyActiveRecepients(bccEmails);
+            if (string.IsNullOrEmpty(recepients.To))
+                return null;
+            return recepients;
+        }
+        
+        private List<ActivatedEmail> FillAllRecepients(string recepients)
+        {
+            List<ActivatedEmail> activatedEmails = new List<ActivatedEmail>();
+            ActivatedEmail activatedEmail = null;
+            string[] allRecepients = recepients.Split(';');
+            for (int i = 0; i < allRecepients.Length; i++)
+            {
+                activatedEmail = new ActivatedEmail
+                {
+                    To = allRecepients[i],
+                    IsActive = false
+                };
+                activatedEmails.Add(activatedEmail);
+            }
+            return activatedEmails;
+        }
+        
+        private string FillOnlyActiveRecepients(List<ActivatedEmail> emails)
+        {
+            string recepients = "";
+            emails.ForEach(to => {
+                if (to.IsActive)
+                    recepients += to.To + ";";
+            });
+            if(recepients.Length > 0)
+                recepients = recepients.Substring(0, recepients.Length - 1);
+            return recepients;
+        }
+
+        private List<ContactList> GetAllPermittedContacts(int tenant, string cardId)
+        {
+            QueryOperations queryOperations = new QueryOperations()
+            {
+                ObjectTableName = "Contact",
+                PageIndex = 0,
+                PageSize = 30,
+                QuerySection = "Contacts",
+                SortByColumnName = null,
+                SortDirectin = "Ascending",
+                GetAll = false,
+            };
+
+            queryOperations.SetFilter("NotEqual", "", true, "NotEqual", null, true);
+            queryOperations.SetFilter("InActive", false, true, "Equals", null, true);
+
+            if (!string.IsNullOrEmpty(cardId))
+                queryOperations.SetFilter("CardId", cardId, true, "InListExact", null, true);
+
+            ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
+            ContactRepository contactRepository = new ContactRepository(MyContext);
+            IQueryable<Contact> entityPocos = contactRepository.GetContacts(tenant);
+            GenericFilter genericFilter = new GenericFilter();
+
+            ContactQuery contactQuery = new ContactQuery(contactRepository);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            ContactCustomFilter customfilters = new ContactCustomFilter(tenant);
+            entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+
+            entityPocos = genericFilter.GetFilteredQuery<Contact>(nonListQueryOperation, entityPocos);
+            int skippedEntities = queryOperations.PageIndex;
+
+            IQueryable<ContactList> entityLists = contactQuery.GetIQueryableEntityList(entityPocos);
+            entityLists = genericFilter.GetFilteredQuery<ContactList>(listQueryOperation, entityLists);
+            return entityLists.ToList();
         }
 
         private SchedulerDetails ModifyNullFilters(SchedulerDetails schedulerDetails)
@@ -223,6 +348,11 @@ namespace CommunicationWorkerRole.Services
 
             return logsMessage;
         }
+    }
+    public class ActivatedEmail
+    {
+        public string To;
+        public bool IsActive;
     }
 }
 

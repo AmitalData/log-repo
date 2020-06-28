@@ -11,6 +11,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {TenantLoginPolicyList} from '../../../../Common/EntityLists/TenantLoginPolicyList';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {UserExtendedListService} from '../../../../Common/Services/ExtendedLists/UserExtendedListService';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -178,7 +179,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         }
 
         var isEditingEnabled = true;
-        if (SessionLocator.Tenant == 65) {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
             if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
                 isEditingEnabled = false;
             }

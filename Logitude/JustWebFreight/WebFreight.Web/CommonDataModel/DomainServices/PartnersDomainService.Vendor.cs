@@ -271,12 +271,12 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
             }
 
-
             VendorService service = new VendorService(objectContext, currentEntity.Tenant);
             service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
             service.Update(currentEntity);
         }
 
+        
         public void DeleteVendor(VendorPM vendor)
         {
             if (objectContext == null)

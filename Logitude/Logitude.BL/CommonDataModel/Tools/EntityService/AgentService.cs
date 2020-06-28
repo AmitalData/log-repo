@@ -37,7 +37,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CardContactRepository cardContactRepository;
         private ICommonDataContext objectContext;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
-
         public AgentService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -128,8 +127,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
 
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
@@ -168,7 +167,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.UpdateCardExternalCodeByCurrencyCollection();
-
             if (!entityPM.IsHybrid)
             {
                 AgentTracing.Trace(entityPM, entityPOCO, isNewEntity);
@@ -181,8 +179,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
 
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
         }
 
         private void InitializeComponent()
@@ -323,7 +321,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
-
+      
         private void CreateCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("CardExternalCodeByCurrency", tenant).ToString();
@@ -345,6 +343,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CardExternalCodeByCurrencyMapping.MapEntity(itemPM, itemPoco, true);
             cardExternalCodeByCurrencyRepository.Add(itemPoco);
         }
+
         private void UpdateCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
             CardExternalCodeByCurrency itemPoco = cardExternalCodeByCurrencyRepository.GetSingleCardExternalCodeByCurrency(itemPM.Id, tenant);
@@ -361,6 +360,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
+     
         private void CreateAddress(AddressPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("Address", tenant).ToString();

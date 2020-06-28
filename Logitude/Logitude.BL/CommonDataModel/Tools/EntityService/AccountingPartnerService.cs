@@ -42,6 +42,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ICommonDataContext objectContext;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
         private ContactService contactService;
+
         public AccountingPartnerService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -393,6 +394,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 cardExternalCodeByCurrencyRepository.Remove(itemPoco);
             }
         }
+
 
         private void CreateAddress(AddressPM itemPM)
         {

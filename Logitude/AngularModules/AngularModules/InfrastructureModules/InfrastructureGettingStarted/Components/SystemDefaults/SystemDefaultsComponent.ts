@@ -15,6 +15,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'SystemDefaultsComponent',
@@ -70,7 +71,7 @@ export class SystemDefaultsComponent extends BaseComponent{
             this.UIProperties.SetVisibility("AgentId", "Tenant",  true);
         }
 
-        if (this.TenantPm.Id == 65 && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
+        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString()) && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
             this.SetUIPropertiesHitVisible();
         }
     }
@@ -108,9 +109,21 @@ export class SystemDefaultsComponent extends BaseComponent{
 
         this.UIProperties.SetEnabled("RegulatedAgentRegimeActivated", "Tenant", false);
         this.UIProperties.SetEnabled("RegulatedAgentNumber", "Tenant", false);
+
+        this.UIProperties.SetEnabled("DimensionsUnitCode", "Tenant", false);
+        this.UIProperties.SetEnabled("TemperatureUnitCode", "Tenant", false);
+        this.UIProperties.SetEnabled("SCACCode", "Tenant", false);
+        this.UIProperties.SetEnabled("CBSA", "Tenant", false);
+        this.UIProperties.SetEnabled("CAAT", "Tenant", false);
+        this.UIProperties.SetEnabled("FMCNumber", "Tenant", false);
+
+        this.UIProperties.SetEnabled("IsNotesRightToLeftEnabled", "Tenant", false);
+        this.UIProperties.SetEnabled("AllowCustomersInAgentsLOV", "Tenant", false);
+        this.UIProperties.SetEnabled("AllowAgentInCustomersLOV", "Tenant", false);
+
     }
     SetUIProperties_DemoAgent() {
-        if (this.TenantPm.Id == 65) {
+        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString())) {
             this.UIProperties.SetEnabled("AgentId", "Tenant", false);
         }
         else {
@@ -124,7 +137,7 @@ export class SystemDefaultsComponent extends BaseComponent{
         var isEditingEnabled: boolean = true;
         var isFieldEnabled: boolean = false;
 
-        if (this.TenantPm.Id == 65 && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
+        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString()) && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
             isEditingEnabled = false;
         }
 
@@ -168,7 +181,7 @@ export class SystemDefaultsComponent extends BaseComponent{
     // region Tenant 65
     get DemoMessageVisibility() {
         var result = false;
-        if (this.TenantPm.Id == 65) {
+        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString())) {
             result = true;
 
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {

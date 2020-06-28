@@ -181,6 +181,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                 AirDefaultStepsId = d.AirDefaultStepsId, 
                                                 LCLDefaultStepsId = d.LCLDefaultStepsId,
                                                 ContainerDefaults = d.ContainerDefaults,
+                                                DefaultCurrencyId = d.DefaultCurrencyId,
                                             }).FirstOrDefault();
 
                 IInfrastructureContext iInfrastructureContext = InfrastructureContext.GetContext(entityPM.Tenant);
@@ -1563,22 +1564,29 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 this.portRepository = new PortRepository(authToken.Tenant);
 
-                byte[] fileData = Convert.FromBase64String(filter.FileData);
+                //byte[] fileData = Convert.FromBase64String(filter.FileData);
 
-                TariffsExcelGeneratorArgs args = new TariffsExcelGeneratorArgs()
-                {
-                    LoggedUserEmail = loggedUserEmail,
-                    Tenant = authToken.Tenant,
-                };
-
-
-                this.UploadExcelFileToStorage(fileData, args, authToken.Tenant);
+                //TariffsExcelGeneratorArgs args = new TariffsExcelGeneratorArgs()
+                //{
+                //    LoggedUserEmail = loggedUserEmail,
+                //    Tenant = authToken.Tenant,
+                //};
 
 
+                //this.UploadExcelFileToStorage(fileData, args, authToken.Tenant);
+
+
+                GenerateTariffsArgs args = new GenerateTariffsArgs() { LoggedUserEmail = loggedUserEmail, Tenant = authToken.Tenant };
                 var stringwriter = new System.IO.StringWriter();
-                var serializer = new XmlSerializer(typeof(TariffsExcelGeneratorArgs));
+                var serializer = new XmlSerializer(typeof(GenerateTariffsArgs));
                 serializer.Serialize(stringwriter, args);
                 string xmlParameters = stringwriter.ToString();
+
+
+                //var stringwriter = new System.IO.StringWriter();
+                //var serializer = new XmlSerializer(typeof(TariffsExcelGeneratorArgs));
+                //serializer.Serialize(stringwriter, args);
+                //string xmlParameters = stringwriter.ToString();
 
                 BatchTaskExecutionPM taskExe = new BatchTaskExecutionPM()
                 {
@@ -2853,6 +2861,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         List<FromToClass> routs = this.ComputeRoutsList(args.From, args.To, authToken.Tenant, tariff.TypeCode);
                         bool isValid = this.ValidateStartDate(tariff, iDraftVersion, routs, args.StartDate, tariffContext);
+
+                        if(isValid)
+                        {
+                            if(routs.Count > 1000)
+                            {
+                                isValid = false;
+                                throw new ApplicationException("Can't perform this update due to tariff lines limitation to 1000");
+                            }
+                        }
 
                         if (isValid)
                         {

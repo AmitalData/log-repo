@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APPaymentUpdateClass
    {  		
-		public const string HashString = "71cf5e0fe7cfa6867d83f9bd4badee67";
+		public const string HashString = "10343265bd22b60c38e73b9c17fdf41b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -250,10 +250,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תםריך יצירה",
+					  						FullLocalDefaultText =  "תאריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תםריך יצירה",
+					  						ListLocalDefaultText =  "תאריך יצירה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -447,10 +447,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PrintDate",
 					  						DefaultText =  "Print Date",
-					  						FullLocalDefaultText =  "תםריך הדפסה",
+					  						FullLocalDefaultText =  "תאריך הדפסה",
 					  						ListFieldLable =  "PrintDateListLable",
 					  						ListLableDefaultText =  "Print Date",
-					  						ListLocalDefaultText =  "תםריך הדפסה",
+					  						ListLocalDefaultText =  "תאריך הדפסה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1232,7 +1232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingPaymentMethodCode",
 					  						DefaultText =  "Payment Method",
-					  						FullLocalDefaultText =  "םמצעי תשלום",
+					  						FullLocalDefaultText =  "אמצעי תשלום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1295,10 +1295,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentMethodName",
 					  						DefaultText =  "Payment Method",
-					  						FullLocalDefaultText =  "םמצעי תשלום",
+					  						FullLocalDefaultText =  "אמצעי תשלום",
 					  						ListFieldLable =  "PaymentMethodNameListLable",
 					  						ListLableDefaultText =  "Payment Method",
-					  						ListLocalDefaultText =  "םמצעי תשלום",
+					  						ListLocalDefaultText =  "אמצעי תשלום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1427,10 +1427,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InternalNotes",
 					  						DefaultText =  "Notes",
-					  						FullLocalDefaultText =  "םין סכומים שליליים פתוחים",
+					  						FullLocalDefaultText =  "אין סכומים שליליים פתוחים",
 					  						ListFieldLable =  "InternalNotesListLable",
 					  						ListLableDefaultText =  "Notes",
-					  						ListLocalDefaultText =  "םין סכומים שליליים פתוחים",
+					  						ListLocalDefaultText =  "אין סכומים שליליים פתוחים",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1560,10 +1560,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentCurrencyExchangeRateDate",
 					  						DefaultText =  "Exchange Date",
-					  						FullLocalDefaultText =  "תםריך שער חליפין",
+					  						FullLocalDefaultText =  "תאריך שער חליפין",
 					  						ListFieldLable =  "PaymentCurrencyExchangeRateDateListLable",
 					  						ListLableDefaultText =  "Exchange Date",
-					  						ListLocalDefaultText =  "תםריך שער חליפין",
+					  						ListLocalDefaultText =  "תאריך שער חליפין",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1691,10 +1691,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpenAmount",
 					  						DefaultText =  "Open Amount",
-					  						FullLocalDefaultText =  "סה''כ סכום שטרם הותםם",
+					  						FullLocalDefaultText =  "סה''כ סכום שטרם הותאם",
 					  						ListFieldLable =  "OpenAmountListLable",
 					  						ListLableDefaultText =  "Open Amount",
-					  						ListLocalDefaultText =  "סה''כ סכום שטרם הותםם",
+					  						ListLocalDefaultText =  "סה''כ סכום שטרם הותאם",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1758,10 +1758,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ValueDate",
 					  						DefaultText =  "Value Date",
-					  						FullLocalDefaultText =  "תםריך פרעון",
+					  						FullLocalDefaultText =  "תאריך פרעון",
 					  						ListFieldLable =  "ValueDateListLable",
 					  						ListLableDefaultText =  "Value Date",
-					  						ListLocalDefaultText =  "תםריך פרעון",
+					  						ListLocalDefaultText =  "תאריך פרעון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2202,10 +2202,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChequeOrPaymentRef",
 					  						DefaultText =  "Cheque Or Payment Ref",
-					  						FullLocalDefaultText =  "מספר המחםה",
+					  						FullLocalDefaultText =  "מספר המחאה",
 					  						ListFieldLable =  "ChequeOrPaymentRefListLable",
 					  						ListLableDefaultText =  "Cheque Or Payment Ref",
-					  						ListLocalDefaultText =  "מספר המחםה",
+					  						ListLocalDefaultText =  "מספר המחאה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2269,10 +2269,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RegisterDate",
 					  						DefaultText =  "Register Date",
-					  						FullLocalDefaultText =  "תםריך חשבונםי",
+					  						FullLocalDefaultText =  "תאריך חשבונאי",
 					  						ListFieldLable =  "RegisterDateListLable",
 					  						ListLableDefaultText =  "Register Date",
-					  						ListLocalDefaultText =  "תםריך חשבונםי",
+					  						ListLocalDefaultText =  "תאריך חשבונאי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2336,7 +2336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditCardTypeId",
 					  						DefaultText =  "Credit Card Type",
-					  						FullLocalDefaultText =  "סוג כרטיס םשרםי",
+					  						FullLocalDefaultText =  "סוג כרטיס אשראי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2587,7 +2587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentMethodCode",
 					  						DefaultText =  "Payment Method",
-					  						FullLocalDefaultText =  "םמצעי תשלום",
+					  						FullLocalDefaultText =  "אמצעי תשלום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2713,10 +2713,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransferError",
 					  						DefaultText =  "Transfer Error",
-					  						FullLocalDefaultText =  "שגיםה בהעברה",
+					  						FullLocalDefaultText =  "שגיאה בהעברה",
 					  						ListFieldLable =  "TransferErrorListLable",
 					  						ListLableDefaultText =  "Transfer Error",
-					  						ListLocalDefaultText =  "שגיםה בהעברה",
+					  						ListLocalDefaultText =  "שגיאה בהעברה",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2779,7 +2779,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransferStatusCode",
 					  						DefaultText =  "Transfer Status",
-					  						FullLocalDefaultText =  "סטםטוס העברה",
+					  						FullLocalDefaultText =  "סטאטוס העברה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2841,10 +2841,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransferStatusName",
 					  						DefaultText =  "Transfer Status",
-					  						FullLocalDefaultText =  "סטםטוס העברה",
+					  						FullLocalDefaultText =  "סטאטוס העברה",
 					  						ListFieldLable =  "TransferStatusNameListLable",
 					  						ListLableDefaultText =  "Transfer Status",
-					  						ListLocalDefaultText =  "סטםטוס העברה",
+					  						ListLocalDefaultText =  "סטאטוס העברה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2973,7 +2973,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NotReadyPayments",
 					  						DefaultText =  "Not Ready Payments",
-					  						FullLocalDefaultText =  "קבלות לם מוכנות",
+					  						FullLocalDefaultText =  "קבלות לא מוכנות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3099,7 +3099,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ApprovedByUserId",
 					  						DefaultText =  "Approved By User",
-					  						FullLocalDefaultText =  "משתמש מםשר",
+					  						FullLocalDefaultText =  "משתמש מאשר",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3163,7 +3163,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ApprovedDateTime",
 					  						DefaultText =  "Approved Date",
-					  						FullLocalDefaultText =  "תםריך םישור",
+					  						FullLocalDefaultText =  "תאריך אישור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3226,7 +3226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TaxDeductionPercentage",
 					  						DefaultText =  "Tax D. Percentage",
-					  						FullLocalDefaultText =  "םחוז ניכוי מס במקור מחושב",
+					  						FullLocalDefaultText =  "אחוז ניכוי מס במקור מחושב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3350,7 +3350,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingPaymentMethodId",
 					  						DefaultText =  "Payment Method",
-					  						FullLocalDefaultText =  "םמצעי תשלום",
+					  						FullLocalDefaultText =  "אמצעי תשלום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4341,7 +4341,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingCancelationDate",
 					  						DefaultText =  "Accounting Cancelation Date",
-					  						FullLocalDefaultText =  "תםריך ביטול חשבונםי",
+					  						FullLocalDefaultText =  "תאריך ביטול חשבונאי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4398,7 +4398,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DontIncludeInDeductionReport",
 					  						DefaultText =  "Dont Include In Deduction Report",
-					  						FullLocalDefaultText =  "הםם לדווח ביטול לניכוי במקור",
+					  						FullLocalDefaultText =  "האם לדווח ביטול לניכוי במקור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4728,11 +4728,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   Feature APPaymentFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPENPAYMENTS", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.OpenPayments", NameTextCodeDefaultText = "Open Payments", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,APPaymentObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode APPaymentTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.DraftAPPayments", DefaultText = @"Draft Payments",LocalDefaultText = "תשלומים בסטםטוס טיוטה", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode APPaymentTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.DraftAPPayments", DefaultText = @"Draft Payments",LocalDefaultText = "תשלומים בסטאטוס טיוטה", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature APPaymentFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DRAFTPAYMENTS", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.DraftPayments", NameTextCodeDefaultText = "Draft Payments", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,APPaymentObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode APPaymentTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.NotReadyPayments", DefaultText = @"Not Ready Payments",LocalDefaultText = "לם מוכן תשלומים", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode APPaymentTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.NotReadyPayments", DefaultText = @"Not Ready Payments",LocalDefaultText = "לא מוכן תשלומים", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature APPaymentFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTREADYPAYMENTS", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.NotReadyPayments", NameTextCodeDefaultText = "Not Ready Payments", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,APPaymentObjectTable, addedFeatures, addedTextCodes);
  
 
@@ -4983,7 +4983,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   Feature APPaymentGeneralFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPayment.Tab.General", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentFeatures.APPG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APPaymentObjectTable);
  
                  
-			   TextCode APPaymentDocsOutTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = "מסמכים שיצםו", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode APPaymentDocsOutTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = "מסמכים שיצאו", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature APPaymentDocsOutFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPayment.Tab.DocsOut", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentFeatures.APDO", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APPaymentObjectTable);
  
                  
@@ -4999,7 +4999,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   Feature APPaymentCancelationDetailsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPayment.Tab.CancelationDetails", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentFeatures.CNDT", NameTextCodeDefaultText = "Cancelation Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APPaymentObjectTable);
  
                  
-			   TextCode APPaymentEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.Events", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode APPaymentEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature APPaymentEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPayment.Tab.Events", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentFeatures.APPE", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APPaymentObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
@@ -5208,6 +5208,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
              			   Feature APPaymentFeature_MB21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VOID", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.Void", NameTextCodeDefaultText = "Void", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APPaymentObjectTable);
              			   Feature APPaymentFeature_MB22 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.SendToQBO", NameTextCodeDefaultText = "Send To QBO", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APPaymentObjectTable);
              			   Feature APPaymentFeature_MB23 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnterExternalPayment", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.EnterExternalPayment", NameTextCodeDefaultText = "Enter External Payment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APPaymentObjectTable);
+             			   Feature APPaymentFeature_MB24 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BlockFromTransfer", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.Blockfromtransfer", NameTextCodeDefaultText = "Block from transfer", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APPaymentObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -5233,7 +5234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						MenuButtonType = "button",
 						FeatureId = APPaymentFeature_MB0.Id,
 						Style = "ApproveButtonStyle",
-						LocalDefaultText = "םישור",
+						LocalDefaultText = "אישור",
 						FeatureUniqeCode = APPaymentFeature_MB0.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
@@ -5363,6 +5364,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureUniqeCode=  APPaymentFeature_MB23.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
+			   MenuButton APPaymentMenuButton25 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "BlockFromTransfer",
+						Index = 12, 
+						IsActive = true,
+						LabelTextCodeCode = "APPayment.B.Blockfromtransfer",
+						LabelTextCodeDefaultText = "Block from transfer",
+						Tenant = 0,
+						MenuButtonGroupId = APPaymentMenuButtonGroup.Id,
+						ParentMenuButtonId = APPaymentMenuButton2.Id,
+						ObjectTableId = APPaymentObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  APPaymentFeature_MB24.Id,
+						Style = null,
+						LocalDefaultText = null,
+						FeatureUniqeCode=  APPaymentFeature_MB24.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
@@ -5374,17 +5393,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode APPaymentTextCode_APPaymentSShortTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.ShortTitle", DefaultText = "A/P Payment",LocalDefaultText = @"תשלום לספק", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMFullAccountingCashBookCheck = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.FullAccountingCashBookCheck", DefaultText = "Cashbook amount is lower than payment amount",LocalDefaultText = @"היתרה בקופה הינה קטנה מסכום הורםת התשלום", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMFullAccountingCashBookCheck = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.FullAccountingCashBookCheck", DefaultText = "Cashbook amount is lower than payment amount",LocalDefaultText = @"היתרה בקופה הינה קטנה מסכום הוראת התשלום", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMNoVendorTaxWithholdingPercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.NoVendorTaxWithholdingPercentage", DefaultText = "There is no tax withholding definitions for this vendor, the default tax withholding percentage will be taken from system defaults",LocalDefaultText = @"לם מוגדר ללקוח םחוז ניכוי מס במקור, םחוז ניכוי ברירת מחדל ילקח מהגדרות מערכת", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMNoVendorTaxWithholdingPercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.NoVendorTaxWithholdingPercentage", DefaultText = "There is no tax withholding definitions for this vendor, the default tax withholding percentage will be taken from system defaults",LocalDefaultText = @"לא מוגדר ללקוח אחוז ניכוי מס במקור, אחוז ניכוי ברירת מחדל ילקח מהגדרות מערכת", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentMSearchByMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.SearchByMsg", DefaultText = "Search by Invoice #/ Vendor",LocalDefaultText = @"חפש לפי חשבונית\ספק", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMValueDateCantBeFutureDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.ValueDateCantBeFutureDate", DefaultText = "Value date can't be future date",LocalDefaultText = @"תםריך ערך לם יכול להיות תםריך עתידי", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMValueDateCantBeFutureDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.ValueDateCantBeFutureDate", DefaultText = "Value date can't be future date",LocalDefaultText = @"תאריך ערך לא יכול להיות תאריך עתידי", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMPaymentInvoicesHaveErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.PaymentInvoicesHaveErrors", DefaultText = "Payment Invoices have errors",LocalDefaultText = @"חשבוניות ספק עם שגיםות", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMPaymentInvoicesHaveErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.PaymentInvoicesHaveErrors", DefaultText = "Payment Invoices have errors",LocalDefaultText = @"חשבוניות ספק עם שגיאות", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentSDetailsCreditCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.CreditCard", DefaultText = "Credit Card",LocalDefaultText = @"כרטיס םשרםי", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentSDetailsCreditCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.CreditCard", DefaultText = "Credit Card",LocalDefaultText = @"כרטיס אשראי", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentSDetailsDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.Details", DefaultText = "Details",LocalDefaultText = @"פרטים", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -5392,53 +5411,53 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode APPaymentTextCode_APPaymentSDetailsCurrencyDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.CurrencyDetails", DefaultText = "Currency Details",LocalDefaultText = @"נתוני מטבע", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentSDetailsNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.NotMatched", DefaultText = "Not Matched",LocalDefaultText = @"לם מותםם", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentSDetailsNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.NotMatched", DefaultText = "Not Matched",LocalDefaultText = @"לא מותאם", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentSDetailsTotals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.Totals", DefaultText = "Totals",LocalDefaultText = @"סיכומים", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentSDetailsAPInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.APInvoices", DefaultText = "A/P Invoices",LocalDefaultText = @"חשבוניות ספק", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentSDetailsPaymentRef = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.PaymentRef", DefaultText = "Payment Ref",LocalDefaultText = @"םסמכתם תשלום ", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentSDetailsPaymentRef = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.PaymentRef", DefaultText = "Payment Ref",LocalDefaultText = @"אסמכתא תשלום ", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentSDetailsChequeRef = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.ChequeRef", DefaultText = "Cheque Ref",LocalDefaultText = @"מספק שיק", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentSDetailsAmountToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.AmountToPay", DefaultText = "Amount To Pay",LocalDefaultText = @"סה''כ סכום שהותםם", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentSDetailsAmountToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.AmountToPay", DefaultText = "Amount To Pay",LocalDefaultText = @"סה''כ סכום שהותאם", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentSDetailsCheque = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.Cheque", DefaultText = "Cheque",LocalDefaultText = @"שיק", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentSDetailsBankTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.BankTransfer", DefaultText = "Bank Transfer",LocalDefaultText = @"העברה בנקםית", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentSDetailsBankTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.Details.BankTransfer", DefaultText = "Bank Transfer",LocalDefaultText = @"העברה בנקאית", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMCantSetZeroAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.CantSetZeroAmount", DefaultText = "Can't set Payment Amount to Zero",LocalDefaultText = @"לם ניתן להגדיר סכום לתשלום בערך םפס", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMCantSetZeroAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.CantSetZeroAmount", DefaultText = "Can't set Payment Amount to Zero",LocalDefaultText = @"לא ניתן להגדיר סכום לתשלום בערך אפס", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMCantSetMinusAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.CantSetMinusAmount", DefaultText = "Can't set Payment Amount to minus amount",LocalDefaultText = @"לם ניתן להגדיר סכום לתשלום בערך שלילי", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMCantSetMinusAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.CantSetMinusAmount", DefaultText = "Can't set Payment Amount to minus amount",LocalDefaultText = @"לא ניתן להגדיר סכום לתשלום בערך שלילי", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMCantSetFutureDatePayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.CantSetFutureDatePayment", DefaultText = "Can't create payment with future date",LocalDefaultText = @"לם ניתן להכין תשלום עם תםריך עתידי", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMCantSetFutureDatePayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.CantSetFutureDatePayment", DefaultText = "Can't create payment with future date",LocalDefaultText = @"לא ניתן להכין תשלום עם תאריך עתידי", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentMPaymentInvoicesHasErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.PaymentInvoicesHasErrors", DefaultText = "Payment Invoices has errors",LocalDefaultText = null, ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMPaymentAmountPaidCantBeMinus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.PaymentAmountPaidCantBeMinus", DefaultText = "Payment Amount Paid can't be minus",LocalDefaultText = @"לם ניתן להגדיר סכום לתשלום בערך שלילי", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMPaymentAmountPaidCantBeMinus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.PaymentAmountPaidCantBeMinus", DefaultText = "Payment Amount Paid can't be minus",LocalDefaultText = @"לא ניתן להגדיר סכום לתשלום בערך שלילי", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMPaymentAmountPaidCantBeBigger = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.PaymentAmountPaidCantBeBigger", DefaultText = "Payment Amount Paid can't be bigger than Payment Amount",LocalDefaultText = @"הסכום ששולם לם יכול להיות גדול מהסכום לתשלום", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMPaymentAmountPaidCantBeBigger = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.PaymentAmountPaidCantBeBigger", DefaultText = "Payment Amount Paid can't be bigger than Payment Amount",LocalDefaultText = @"הסכום ששולם לא יכול להיות גדול מהסכום לתשלום", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMAccountingSettingsDontAllowVoid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.AccountingSettingsDontAllowVoid", DefaultText = "Accounting Settings doesn't allow void A/P Payment",LocalDefaultText = @"הגדרות המערכת לם מםפשרות התעלמות מתשלום לספק", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMAccountingSettingsDontAllowVoid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.AccountingSettingsDontAllowVoid", DefaultText = "Accounting Settings doesn't allow void A/P Payment",LocalDefaultText = @"הגדרות המערכת לא מאפשרות התעלמות מתשלום לספק", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMDisconnectInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.DisconnectInvoices", DefaultText = "Please disconnect all invoices",LocalDefaultText = @"םנם נתק םת כל החשבוניות", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMDisconnectInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.DisconnectInvoices", DefaultText = "Please disconnect all invoices",LocalDefaultText = @"אנא נתק את כל החשבוניות", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMConfirmVoid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.ConfirmVoid", DefaultText = "Once you void or delete an payment, the change is permanent. If you void or delete an payment and want to restore it later, you'll have to create a new payment.",LocalDefaultText = @"לםחר ביטול םו מחיקה של תשלום, השינוי הום קבוע. םם תבטל םו תמחק תשלום וברצונך לשחזר םותו במועד מםוחר יותר, יהיה עליך ליצור תשלום חדש.", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMConfirmVoid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.ConfirmVoid", DefaultText = "Once you void or delete an payment, the change is permanent. If you void or delete an payment and want to restore it later, you'll have to create a new payment.",LocalDefaultText = @"לאחר ביטול או מחיקה של תשלום, השינוי הוא קבוע. אם תבטל או תמחק תשלום וברצונך לשחזר אותו במועד מאוחר יותר, יהיה עליך ליצור תשלום חדש.", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMNoTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.NoTemplate", DefaultText = "A/P Payment document has no template!",LocalDefaultText = @"םין תבנית הדפסה למסמך תשלום לספק", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMNoTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.NoTemplate", DefaultText = "A/P Payment document has no template!",LocalDefaultText = @"אין תבנית הדפסה למסמך תשלום לספק", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentMOnlyMinusValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.OnlyMinusValue", DefaultText = "Only minus value allowed",LocalDefaultText = @"מותר רק ערכים שליליים", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMAmountPaidNotLess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.AmountPaidNotLess", DefaultText = "Amount Paid can't be less than",LocalDefaultText = @"סכום לתשלום לם יכול להיות קטן מ-", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMAmountPaidNotLess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.AmountPaidNotLess", DefaultText = "Amount Paid can't be less than",LocalDefaultText = @"סכום לתשלום לא יכול להיות קטן מ-", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMCantPayMinusValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.CantPayMinusValue", DefaultText = "Can't pay minus value",LocalDefaultText = @"לם ניתן לשלם סכום במינוס", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMCantPayMinusValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.CantPayMinusValue", DefaultText = "Can't pay minus value",LocalDefaultText = @"לא ניתן לשלם סכום במינוס", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMAmountPaidLessOrEqual = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.AmountPaidLessOrEqual", DefaultText = "Amount Paid must be less than or equals to",LocalDefaultText = @"סכום לתשלום חייב להיות שווה םו פחות מ-", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMAmountPaidLessOrEqual = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.AmountPaidLessOrEqual", DefaultText = "Amount Paid must be less than or equals to",LocalDefaultText = @"סכום לתשלום חייב להיות שווה או פחות מ-", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentONoDeductionFileNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.NoDeductionFileNumber", DefaultText = "Vendor Deduction File Number not specified",LocalDefaultText = @"לם הוגדר מספר תיק ניכויים בכרטיס הספק", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentONoDeductionFileNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.NoDeductionFileNumber", DefaultText = "Vendor Deduction File Number not specified",LocalDefaultText = @"לא הוגדר מספר תיק ניכויים בכרטיס הספק", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPAymentOCancellationDateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPAyment.O.CancellationDateValidation", DefaultText = "Cancellation date cannot be before APpayment date",LocalDefaultText = @"תםריך הביטול לם יכול להיות קודם לתםריך הורםת התשלום", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPAymentOCancellationDateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPAyment.O.CancellationDateValidation", DefaultText = "Cancellation date cannot be before APpayment date",LocalDefaultText = @"תאריך הביטול לא יכול להיות קודם לתאריך הוראת התשלום", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentOVoidByJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.VoidByJournal", DefaultText = "Void by journal number",LocalDefaultText = @"בוטל ע”י פקודת יומן ", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -5446,15 +5465,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode APPaymentTextCode_APPaymentOCancelAPPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.CancelAPPayment", DefaultText = "Cancel APPayment",LocalDefaultText = @"ביטול תשלום", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentOOtherPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.OtherPayments", DefaultText = "Other Payments",LocalDefaultText = @"קבלות םחרות", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentOOtherPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.OtherPayments", DefaultText = "Other Payments",LocalDefaultText = @"קבלות אחרות", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentOAmountToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.AmountToPay", DefaultText = "Amount To Pay",LocalDefaultText = @"סכום שהותםם", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentOAmountToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.AmountToPay", DefaultText = "Amount To Pay",LocalDefaultText = @"סכום שהותאם", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentOShipmentNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.ShipmentNo", DefaultText = "Shipment #",LocalDefaultText = @"משלוח", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentSAPPaymentAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.APPayment.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = @"Additional Fields", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentONoVendorCountry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.NoVendorCountry", DefaultText = "the Country of the vendor is not defined , The APPayment cannot be completed without this value",LocalDefaultText = @" “לם הוגדר מדינה בכרטיס הספק התפעולי , לם ניתן להשלים םת הורםת התשלום ללם ערך זה", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentONoVendorCountry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.NoVendorCountry", DefaultText = "the Country of the vendor is not defined , The APPayment cannot be completed without this value",LocalDefaultText = @" “לא הוגדר מדינה בכרטיס הספק התפעולי , לא ניתן להשלים את הוראת התשלום ללא ערך זה", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

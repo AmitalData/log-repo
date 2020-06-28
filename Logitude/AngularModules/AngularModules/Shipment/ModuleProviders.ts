@@ -30,6 +30,8 @@ import { HarmonizeCodeListService } from './Services/StandardLists/HarmonizeCode
 import { CustomsTransferHeaderListService } from './Services/StandardLists/CustomsTransferHeaderListService';
 import { CustomsTransferHeaderPMService } from './Services/StandardPMs/CustomsTransferHeaderPMService';
 import { AWBAdditionalHandlingInfoListService } from './Services/StandardLists/AWBAdditionalHandlingInfoListService';
+import { ShipmentSubTypeListService } from './Services/StandardLists/ShipmentSubTypeListService';
+import { ShipmentSubTypePMService } from './Services/StandardPMs/ShipmentSubTypePMService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -63,14 +65,16 @@ export class ModuleProviders {
             case "INTTRADocumentTypeListService": { myResult = new INTTRADocumentTypeListService(); break; }               
             case "HarmonizeCodeListService": { myResult = new HarmonizeCodeListService(); break; }
             case "CustomsTransferHeaderListService": { myResult = new CustomsTransferHeaderListService(); break; }
-            case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }               
+            case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }
+            case "ShipmentSubTypeListService": { myResult = new ShipmentSubTypeListService(); break; }    
 
             // PM
             case "MessagingStockPMService": { myResult = new MessagingStockPMService(); break; }
             case "ShipmentPMService": { myResult = new ShipmentPMService(); break; }
             case "SpecialServicesTypePMService": { myResult = new SpecialServicesTypePMService(); break; }
             case "FBLStockExtenedPMService": { myResult = new FBLStockExtenedPMService(); break; }
-            case "CustomsTransferHeaderPMService": { myResult = new CustomsTransferHeaderPMService(); break;}
+            case "CustomsTransferHeaderPMService": { myResult = new CustomsTransferHeaderPMService(); break; }
+            case "ShipmentSubTypePMService": { myResult = new ShipmentSubTypePMService(); break; }
 
             // Handler
             case "MessagingStockMenuButtonsHandler": { myResult = new MessagingStockMenuButtonsHandler(); break; }

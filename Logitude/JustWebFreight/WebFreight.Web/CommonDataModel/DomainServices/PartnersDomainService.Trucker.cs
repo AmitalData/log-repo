@@ -314,7 +314,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
             }
 
-
             CardPM c = cardQuery.GetSinglePM(currentTrucker.Id, currentTrucker.Tenant);
 
             bool exist = (from a in truckerRepository.GetTruckers(currentTrucker.Tenant)
@@ -336,7 +335,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 throw new Exception(msg);
             }
         }
-
+        
         public void DeleteTrucker(TruckerPM trucker)
         {
             if (objectContext == null)

@@ -101,5 +101,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public int? StorageFreeDays { get; set; }
         public string RankId { get; set; }
         public string IndustryId { get; set; }
+
+        public bool AccountingVATSplit { get; set; }
+
     }
 }

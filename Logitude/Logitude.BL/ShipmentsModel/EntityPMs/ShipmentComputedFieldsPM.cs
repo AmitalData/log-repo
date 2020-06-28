@@ -48,5 +48,18 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string PickupTo { get; set; }
         public string OperationallyClosedByUserName { get; set; }
         public bool CreatedFromDigital { get; set; }
+
+
+        public string DeliveryTruckerId { get; set; }
+        public string DeliveryTruckerNumber { get; set; }
+        public string DeliveryDriver { get; set; }
+        public string DeliveryTrailerNumber { get; set; }
+        public string DeliveryNotes { get; set; }
+
+        public string PickupTruckerId { get; set; }
+        public string PickupTruckerNumber { get; set; }
+        public string PickupDriver { get; set; }
+        public string PickupTrailerNumber { get; set; }
+        public string PickupNotes { get; set; }
     }
 }

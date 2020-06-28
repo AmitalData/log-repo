@@ -45,6 +45,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    CardPMId = a.Id,
                                    ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                    PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                   AccountingVATSplit = a.Card.AccountingVATSplit,
                                    CreateDate = a.Card.CreateDate,
                                    InActive = a.Card.InActive,
                                    Notes = a.Card.Notes,
@@ -86,6 +87,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             AccountingPartner.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(AccountingPartner.Id, AccountingPartner.Tenant);
 
+
             if (AccountingPartner != null)
             {
                 AccountingPartner.IsExternal = false;
@@ -121,6 +123,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    CardPMId = a.Id,
                                    ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                    PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                   AccountingVATSplit = a.Card.AccountingVATSplit,
                                    CreateDate = a.Card.CreateDate,
                                    InActive = a.Card.InActive,
                                    Notes = a.Card.Notes,
@@ -194,6 +197,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    CardPMId = a.Id,
                                    ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                    PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                   AccountingVATSplit = a.Card.AccountingVATSplit,
                                    CreateDate = a.Card.CreateDate,
                                    InActive = a.Card.InActive,
                                    Notes = a.Card.Notes,
@@ -267,6 +271,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                CardPMId = a.Id,
                                                ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                                PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                               AccountingVATSplit = a.Card.AccountingVATSplit,
                                                CreateDate = a.Card.CreateDate,
                                                InActive = a.Card.InActive,
                                                Notes = a.Card.Notes,
@@ -318,6 +323,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              CardPMId = a.Id,
                              ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                              PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                             AccountingVATSplit = a.Card.AccountingVATSplit,
                              CreateDate = a.Card.CreateDate,
                              InActive = a.Card.InActive,
                              Notes = a.Card.Notes,
@@ -427,6 +433,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    CardPMId = a.Id,
                                    ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                    PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                   AccountingVATSplit = a.Card.AccountingVATSplit,
                                    CreateDate = a.Card.CreateDate,
                                    InActive = a.Card.InActive,
                                    Notes = a.Card.Notes,

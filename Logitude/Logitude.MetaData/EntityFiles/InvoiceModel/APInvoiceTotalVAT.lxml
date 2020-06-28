@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="APInvoice"
   DefaultText="&quot;A/P Invoice Total VAT&quot;"
-  Code="&quot;e339&quot;"
+  Code="&quot;daf5&quot;"
   Name="&quot;APInvoiceTotalVAT&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
@@ -825,7 +825,7 @@
     FieldName="&quot;VatPercent&quot;"
     OldNames="VatPercent"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;APInvoiceTotalVAT&quot;"
     FieldsDataType="&quot;Double&quot;"
@@ -874,7 +874,7 @@
     ListFieldLable="&quot;VatPercentListLable&quot;"
     ListLableDefaultText="&quot;VAT Percent&quot;"
     ListLocalDefaultText="&quot;אחוז מע''מ&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
@@ -1319,7 +1319,68 @@
       IsFollowUp="false" />
   </EventTypes>
   <Records />
-  <DataContracts />
+  <DataContracts>
+    <DataContract
+      Name="&quot;APInvoiceTotalVAT&quot;"
+      Version="&quot;ApiV1&quot;">
+      <DCField
+        DCFieldName="&quot;Id&quot;"
+        FieldName="&quot;Id&quot;"
+        IsKey="true"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false" />
+      <DCField
+        DCFieldName="&quot;VatType&quot;"
+        FieldName="&quot;VatTypeId&quot;"
+        IsKey="false"
+        IsManualMapping="true"
+        IsMulti="false"
+        FieldsDataType="&quot;VatType&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false" />
+      <DCField
+        DCFieldName="&quot;VatPercent&quot;"
+        FieldName="&quot;VatPercent&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Double&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false" />
+      <DCField
+        DCFieldName="&quot;InvoiceCurrencyVATAmount&quot;"
+        FieldName="&quot;InvoiceCurrencyVATAmount&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Double&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false" />
+    </DataContract>
+  </DataContracts>
   <AdditionalTextCodes />
   <AdditionalFeatures />
 </entity>

@@ -88,7 +88,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         if (SessionLocator.LoggedUserPM.IsCustomerCare) {
             this.IsShowDownloadTemplateButton = true;
         }
-
+        ServiceLocator.SendTotangoUserActivity("Quotation", "View Quotation");
     }
 
 
@@ -139,7 +139,8 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
                     });
-              
+
+                   
                 }
             });
         }
@@ -1008,7 +1009,9 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                     this.GeneralEmailSender = new GeneralEmailSender("Quote", "QUOTE", this.QuotePM.Id, this.QuotePM.QuoteNumber, this.QuotePM.CustomerId, "", "", this.SelectedQuoteTemplate.Name, attachmentsList, eventRefreshName, this.QuotePM, false, "QEMO");
 
                     if (sendtype == "Send to Customer") {
+                      
                         this.GeneralEmailSender.ToSpecificeEmail = this.QuoteCustomerEmail;
+                        ServiceLocator.SendTotangoUserActivity("Quotation", "Send Quotation to Customer");
                     }
 
                     this.GeneralEmailSender.ShowFullSendControll();

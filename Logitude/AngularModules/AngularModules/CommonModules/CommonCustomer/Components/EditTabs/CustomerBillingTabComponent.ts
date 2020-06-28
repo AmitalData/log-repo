@@ -21,6 +21,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     public ObjectTableName: string = "Customer";
     public DataContext = this;
     public HasCreditLimitFeature: boolean = false;
+    public HasEditCreditAmountFeature: boolean = false;
     public IsCreditLimitActivated: boolean = false;
     public LocalCurrencyCode: string;
     public IsAccountingActivated: boolean;
@@ -36,6 +37,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
 
         this.HasCreditLimitFeature = FeatureLocator.HasFeaturePermession("CreditLimitSetting", "Module");
+        this.HasEditCreditAmountFeature = FeatureLocator.HasFeaturePermession("Customer", "EDITCREDITAMOUNT");
 
         if (this.HasCreditLimitFeature) {
             this.IsCreditLimitActivated = ObjectsLocator.CreditLimitSettingPM.IsCreditLimitEnabled;
@@ -109,6 +111,13 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
 
             this.GeneratedComponent.SetEnabled(enabled);
         }
+
+        if (SessionLocator.TenantPM.IsHybrid === true && this.IsAccountingActivated === true) {
+
+            this.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, this.HasEditCreditAmountFeature);
+            this.EntityPM.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, this.HasEditCreditAmountFeature);
+
+        }
     }
 
     public CreditLimitAmountLabel: string;
@@ -121,7 +130,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     }
 
     SetUIProperties() {
-
+       
         var isFieldActivated: boolean = false;
         if (this.HasCreditLimitFeature) {
             if (this.IsCreditLimitActivated) {
@@ -130,6 +139,8 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
                 }
             }
         }
+
+        
 
         this.UIProperties.SetEnabled("IsCreditLimitEnabled", this.ObjectTableName, this.IsCreditLimitActivated);
         this.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, isFieldActivated);
@@ -170,6 +181,8 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         }
 
         this.SetUIProperties_GeneratedComponent();
+
+        
     }
     
     private SessionEvent: any = null;

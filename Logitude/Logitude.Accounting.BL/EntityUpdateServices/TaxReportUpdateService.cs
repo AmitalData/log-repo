@@ -43,6 +43,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             FullAccountingSettingPM setting = GetFullAccountingSetting(entityPM.Tenant);
             entityPM.LastUpdateDate = new DateTime(date.Year, date.Month, 15);
             entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+            entityPM.UpdatedByUserName = GetLoggedContact(entityPM.Tenant).LocalName != null ? GetLoggedContact(entityPM.Tenant).LocalName : GetLoggedContact(entityPM.Tenant).EnglishName ;
             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
             entityPM.VatNumber = setting.ConsolidationVAT != null ? setting.ConsolidationVAT : tenantPM.VatNumber;
@@ -241,9 +242,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     });
                     TaxReportService.CalculateReportTotals(entityPM, linesPM);
                    
-                }
-                entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
-
+                } 
+               // entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+                ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
+                entityPM.UpdatedByUserName = loggedContact.LocalName != null ? loggedContact.LocalName : loggedContact.EnglishName;
             }
 
             base.OnUpdating(entityPM, entityPOCO);

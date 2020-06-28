@@ -1190,6 +1190,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
+
         public IDbSet<Report> Reports
         {
             get { throw new NotImplementedException(); }

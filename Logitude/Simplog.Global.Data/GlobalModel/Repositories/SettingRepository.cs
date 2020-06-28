@@ -4,6 +4,7 @@ using System.Linq;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure;
+using System;
 
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
@@ -86,6 +87,18 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         public Setting GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
+        }
+
+
+        public bool IsDemoTenant(string tenant)
+        {
+            var id = "1";
+            var sitting =  (from a in context.Settings
+                    where a.Id == id
+                    select a).FirstOrDefault();
+
+
+            return Array.IndexOf(sitting.LogitudeDemoTenants.Split(','), tenant) != -1;
         }
     }
 }

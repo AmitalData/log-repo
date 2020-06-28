@@ -108,7 +108,7 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <div *ngIf="!item.IsMultiPercentage" class="MediaFill TextTrimming" [ngStyle]="{color: item.VatTypeCellColor}" style="line-height: 25px; padding-left: 4px;">
+                                                <div *ngIf="!item.IsMultiPercentage" class="MediaFill TextTrimming" [ngStyle]="{color: item.VatTypeCellColor}" style="text-align: right;">
                                                     {{item.VatPercent | NumbersPipe:'N3'}}
                                                 </div>
 

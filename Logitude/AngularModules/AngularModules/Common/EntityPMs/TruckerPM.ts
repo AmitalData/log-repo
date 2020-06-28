@@ -367,6 +367,11 @@ export class TruckerPM {
     public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
        
 	 
+    private accountingVATSplit: boolean;
+    public get AccountingVATSplit() { return this.accountingVATSplit; }
+    public set AccountingVATSplit(newValue: boolean) { if (this.accountingVATSplit != newValue) { this.accountingVATSplit = newValue; this.MarkAsDirty("AccountingVATSplit"); } }
+       
+	 
 
     public OldEntityPM: TruckerPM;
 		

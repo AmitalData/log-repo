@@ -12,22 +12,45 @@ namespace CargoTracking.CargoTracking.BL.Services
     public class CargoTrackingTableLogicService
     {
 
-        public static  void SetTableLogic(DataRow TableRow,string TableName)
+        public static void SetTableLogic(DataRow TableRow, string TableName)
         {
             if (TableName == "CargoTrackingPorts")
             {
-                if ( TableRow["Code"].Equals("MUT"))
-                {
+                //if (TableRow["Code"].Equals("MUT"))
+                //{
                     TableRow.SetField("EnglishName", "Cargo_Test");
-                }
+                //}
 
             }
 
             if (TableName == "CargoTrackingShipments")
             {
+                CompareNullabelFirstPickupETADateTime(TableRow);
                 TableRow.SetField("Master", TableRow["MasterShipmentDataId"]);
                 TableRow.SetField("PickupDate", TableRow["FirstPickupETA"]);
-                CompareNullabelFirstPickupETADateTime(TableRow);
+                TableRow.SetField("ClearanceDate", TableRow["CustomsClearanceDate"]);
+
+                if (!TableRow["CustomsClearanceDate"].Equals(null))
+                {
+                    TableRow.SetField("ClearanceDone", true);
+                }
+
+                if (TableRow["EntityType"].Equals("C") || TableRow["ShipmentLevelCode"].Equals("F"))
+                {
+                    TableRow.SetField("EntityId", TableRow["Id"]);
+                }
+                else if (TableRow["EntityType"].Equals("O"))
+                {
+                    TableRow.SetField("EntityId", TableRow["Id"]);
+
+                }
+            }
+
+            if (TableName == "CargoTrackingShipmentSearchFields")
+            {
+                TableRow.SetField("ShipmentDate", TableRow["CreateDateTime"]);
+                TableRow.SetField("SearchFields", "");
+                TableRow.SetField("ShipmentId", TableRow["Id"]);
             }
 
         }
@@ -56,10 +79,10 @@ namespace CargoTracking.CargoTracking.BL.Services
 
                 }
             }
-          
+
         }
 
 
     }
- 
+
 }

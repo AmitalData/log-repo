@@ -194,7 +194,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 this.IsCommodityNameVisible = true;
             }
 
-            if (FeatureLocator.HasFeaturePermession("Shipment", "RELEASENUMBER")) {
+            if (FeatureLocator.HasFeaturePermession("Shipment", "RELEASENUMBER") && this.DirectionId != "I") {
                 this.IsShowReleaseNumber = true;
             }
 
@@ -1362,6 +1362,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     newInsidePackage.Reference4 = itemInside.Reference4;
                     newInsidePackage.CommodityNumber = itemInside.CommodityNumber;
                     newInsidePackage.CommodityName = itemInside.CommodityName;
+                    newInsidePackage.Harmonize = itemInside.Harmonize;
                     newPackage.AddInsideShipmentPackagePM(newInsidePackage);
                 });
 
@@ -1666,7 +1667,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             // Inside packages
             if (shipmentPackage.InsideShipmentPackages != null && shipmentPackage.InsideShipmentPackages.length > 0) {
                 for (var k = shipmentPackage.InsideShipmentPackages.length - 1; k >= 0; k--) {
-                    shipmentPackage.RemoveInsideShipmentPackagePM(shipmentPackage.InsideShipmentPackages[k]);
+                    var insidePackage = shipmentPackage.InsideShipmentPackages[k];
+
+                    if (insidePackage.InsidePackageHarmonizes != null && insidePackage.InsidePackageHarmonizes.length > 0) {
+                        for (var f = insidePackage.InsidePackageHarmonizes.length - 1; f >= 0; f--) {
+                            insidePackage.RemoveInsidePackageHarmonizePM(insidePackage.InsidePackageHarmonizes[f]);
+                        }
+                    }
+
+                    shipmentPackage.RemoveInsideShipmentPackagePM(insidePackage);
                 }
             }
 
@@ -2363,10 +2372,6 @@ export class ShipmentPackageItem extends BaseComponent {
         this.WarningErrorsList = warnings;
         this.ContainerNumberWarning = error;
     }
-
-
-
-
 
     // Dimensions
     get Quantity() { return this.EntityPM.Quantity; }
@@ -3434,7 +3439,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
     public IsNewEntity: boolean = false;
     public IsVehicleDetails: boolean = false;
     public CountryListService: CountryListService;
-
+    public IsEditingFieldsEnabled: boolean = false;
     constructor(entity: InsideShipmentPackagePM, public fatherComponent: ShipmentPackageItem, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -3442,6 +3447,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.ShipmentPackagePM = fatherComponent.EntityPM;
         this.IsNewEntity = isNew;
         this.CountryListService = new CountryListService();
+        this.IsEditingFieldsEnabled = fatherComponent.IsEditingFieldsEnabled;
 
         this.SetUIProperties();
         if (this.IsNewEntity) {
@@ -3476,9 +3482,10 @@ export class InsideShipmentPackageItem extends BaseComponent {
                 else if (this.Volume != null) {
                     isDimensionEnabled = false;
                 }
-            }
-           
+            }           
         }
+
+        this.SetUIProperties_Harmonize();
 
         this.UIProperties.SetEnabled("PackageTypeId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);
@@ -3525,6 +3532,34 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("CountryId", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("ChassisNumber", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("RegistrationNumber", this.ObjectTableName, isEnabled);
+    }
+    SetUIProperties_Harmonize() {
+
+        var isFieldEnabled: boolean = true;
+        if (this.IsEditingEnabled) {
+
+            isFieldEnabled = true;
+
+            if (this.IsMultiHarmonize == true) {
+                isFieldEnabled = false;
+            }
+        }
+
+        this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);
+    }
+
+    get Harmonize() { return this.EntityPM.Harmonize; }
+    set Harmonize(newValue: string) {
+        if (this.EntityPM.Harmonize != newValue) {
+            this.EntityPM.Harmonize = newValue;
+        }
+    }
+
+    get IsMultiHarmonize() { return this.EntityPM.IsMultiHarmonize }
+    set IsMultiHarmonize(newValue: boolean) {
+        if (this.EntityPM.IsMultiHarmonize != newValue) {
+            this.EntityPM.IsMultiHarmonize = newValue;
+        }
     }
 
     get PackageTypeId() { return this.EntityPM.PackageTypeId; }

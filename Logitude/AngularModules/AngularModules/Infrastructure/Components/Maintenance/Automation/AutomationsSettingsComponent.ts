@@ -227,7 +227,17 @@ export class AutomationsSettingsComponent implements OnInit {
             }
         }
 
+        windowArgs.AutomationItemClass = this.AutomationItemClass;
+
     }
+
+    public AutomationItemClass: any;
+    SetWindowArgs(args: any) {
+        this.AutomationItemClass = args.AutomationItemClass;
+    }
+
+
+
 
     AddAutomation(type: string) {
         var newEntity: AutomationPM = new AutomationPM();

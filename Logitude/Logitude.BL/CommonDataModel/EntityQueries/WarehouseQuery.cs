@@ -39,6 +39,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      {
                                          ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                          PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                         AccountingVATSplit = a.Card.AccountingVATSplit,
                                          AddedManually = a.AddedManually,
                                          Id = a.Id,
                                          Tenant = a.Tenant,
@@ -86,7 +87,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             warehouse.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(warehouse.Id, warehouse.Tenant);
-            
+          
             if (warehouse != null)
             {
                 warehouse.IsExternal = false;
@@ -116,6 +117,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      {
                                          ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                          PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                         AccountingVATSplit = a.Card.AccountingVATSplit,
                                          AddedManually = a.AddedManually,
                                          Id = a.Id,
                                          Tenant = a.Tenant,
@@ -161,7 +163,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             warehouse.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(warehouse.Id, warehouse.Tenant);
-            
+           
+
             if (warehouse != null)
             {
                 warehouse.IsExternal = false;
@@ -191,6 +194,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                    {
                        ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                        PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                       AccountingVATSplit = a.Card.AccountingVATSplit,
                        AddedManually = a.AddedManually,
                        Id = a.Id,
                        Tenant = a.Tenant,

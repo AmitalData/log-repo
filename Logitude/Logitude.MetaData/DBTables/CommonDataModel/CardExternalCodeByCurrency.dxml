@@ -19,20 +19,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ExternalRecievableTableId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ExternalPayableTableId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="CardId"
     Type="varchar"
     Size="15">
@@ -41,6 +27,20 @@
   </Column>
   <Column
     Name="CurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExternalRecievableTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExternalPayableTableId"
     Type="varchar"
     Size="15">
     <Constraints

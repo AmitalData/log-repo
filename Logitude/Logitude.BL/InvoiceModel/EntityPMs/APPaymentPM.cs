@@ -29,6 +29,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string TransferError { get; set; }
         public string TransferStatusName { get; set; }
         public bool ReadyForTransfer { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AccountingPaymentMethodId { get; set; }
 
         public string VendorBankAddress { get; set; }
@@ -42,8 +44,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string StatusCode { get; set; }
         public bool IsClosed { get; set; }
 
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        //public string PaymentMethodId { get; set; }
+        
         public string PaymentMethodCode { get; set; }
         public string PrintNotes { get; set; }
         public string InternalNotes { get; set; }

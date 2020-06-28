@@ -264,5 +264,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string UsoCFDICode { get; set; }
         [DataMember]
         public string GLAccountId { get; set; }
+        [DataMember]
+        public bool AccountingVATSplit { get; set; }
     }
 }

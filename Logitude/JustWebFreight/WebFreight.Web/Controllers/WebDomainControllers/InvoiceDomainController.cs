@@ -54,6 +54,26 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class InvoiceDomainController : ApiController
     {
+        public HttpResponseMessage GetCardCurrenciesAccountingByCurrencyAndId(string cardId, string currencyId, bool isPayable)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                var myResult = accountingSystemHelper.GetGenericCreditAccount(cardId, currencyId, tenant, isPayable);
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetAccountingReceivablesSummary()
         {
             try

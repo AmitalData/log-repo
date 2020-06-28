@@ -8,7 +8,6 @@ import {APInvoiceStatusListService} from './Services/StandardLists/APInvoiceStat
 import {APInvoiceTransferStatusListService} from './Services/StandardLists/APInvoiceTransferStatusListService';
 import {APInvoiceTypeListService} from './Services/StandardLists/APInvoiceTypeListService';
 import {APPaymentListService} from './Services/StandardLists/APPaymentListService';
-import {APPaymentMethodListService} from './Services/StandardLists/APPaymentMethodListService';
 import {APPaymentStatusListService} from './Services/StandardLists/APPaymentStatusListService';
 import {ARInvoiceListService} from './Services/StandardLists/ARInvoiceListService';
 import {ARInvoiceStatusListService} from './Services/StandardLists/ARInvoiceStatusListService';
@@ -36,8 +35,6 @@ import {CreditCardTypePMService} from './Services/StandardPMs/CreditCardTypePMSe
 import {SATInterfaceSettingPMService} from './Services/StandardPMs/SATInterfaceSettingPMService';
 import {BankAccountLitePMService} from './Services/StandardPMs/BankAccountLitePMService';
 import {BankAccountLiteListService} from './Services/StandardLists/BankAccountLiteListService';
-import {APPaymentMethodPMService} from './Services/StandardPMs/APPaymentMethodPMService';
-import {ARPaymentMethodPMService} from './Services/StandardPMs/ARPaymentMethodPMService';
 
 import {APInvoiceMenuButtonsHandler} from './Components/MenuButtons/APInvoiceMenuButtonsHandler';
 import {APPaymentMenuButtonsHandler} from './Components/MenuButtons/APPaymentMenuButtonsHandler';
@@ -62,7 +59,6 @@ export class ModuleProviders {
             case "ARPaymentTransferStatusListService": { myResult = new ARPaymentTransferStatusListService(); break; }               
             case "APInvoiceTypeListService": { myResult = new APInvoiceTypeListService(); break; }
             case "APPaymentListService": { myResult = new APPaymentListService(); break; }
-            case "APPaymentMethodListService": { myResult = new APPaymentMethodListService(); break; }
             case "APPaymentStatusListService": { myResult = new APPaymentStatusListService(); break; }
             case "ARInvoiceListService": { myResult = new ARInvoiceListService(); break; }
             case "ARInvoiceStatusListService": { myResult = new ARInvoiceStatusListService(); break; }
@@ -85,8 +81,6 @@ export class ModuleProviders {
             case "BankAccountLiteListService": { myResult = new BankAccountLiteListService(); break; }
             case "BankAccountLitePMService": { myResult = new BankAccountLitePMService(); break; }
             case "SATInvoiceStatusListService": { myResult = new SATInvoiceStatusListService(); break; }
-            case "APPaymentMethodPMService": { myResult = new APPaymentMethodPMService(); break; }
-            case "ARPaymentMethodPMService": { myResult = new ARPaymentMethodPMService(); break; }
             case "AccountingPaymentMethodPMService": { myResult = new AccountingPaymentMethodPMService(); break; }
             case "AccountingPaymentMethodListService": { myResult = new AccountingPaymentMethodListService(); break; }
             case "APPaymentTransferStatusListService": { myResult = new APPaymentTransferStatusListService(); break; }

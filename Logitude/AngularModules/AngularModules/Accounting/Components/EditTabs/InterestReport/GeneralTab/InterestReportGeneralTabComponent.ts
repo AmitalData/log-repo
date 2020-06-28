@@ -23,6 +23,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
     public DataContext: InterestReportGeneralTabComponent = this;
     private _entityListService: EntityListService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public  NoDataTextCode:string=null;
     public IsNew: boolean = false;
     public isRTL: boolean = false;
     public ValidationErrorsList: string[] = [];
@@ -30,6 +31,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
          this.EntityPM = entityArgs.EntityPM;
+         this.FillNoDataTextCodeValue();
          this.InterestReportLinesByDateList = new ObservableCollection([]);
          this._entityListService = new EntityListService();
          this.Listen();
@@ -37,6 +39,22 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
     }
     ngOnInit() {
         this.BuildColumns();
+    }
+    private FillNoDataTextCodeValue(){
+        switch(this.EntityPM.InterestReportStatusCode){
+            case "5":{
+                   this.NoDataTextCode=  "InterestReport.O.ReportinProgress";
+                break;
+            }
+            case "6":{
+                this.NoDataTextCode=  "InterestReport.O.ReportCreationFailed";
+                break;
+            }
+            default :{
+                this.NoDataTextCode=  null;
+                break;
+            }
+        }
     }
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
@@ -65,13 +83,29 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
      public DataSource = {
         pageSize: 50,
         rowCount: null,
-        //sortingCol: "CreateDateTime",
         sortingDir: "Ascending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
             return tempo;
         },
     };
+
+
+
+    LogWindowShow() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = TextCodeTranslator.Translate("InterestReport.O.EditOpenBalance");
+        var myPath = "./Accounting/Components/Packages/EditTabs/InterestReport/GeneralTab/InterestReportEditOpenBalanceComponent/InterestReportEditOpenBalanceComponent";
+        logWindow.Width = 350;
+        logWindow.Height = 160;
+        logWindow.DataContext = this.EntityPM.OpenBalance ;
+        logWindow.Show(myPath);
+        logWindow.WindowClosed.subscribe(s => {
+            if (s!=null) {
+               this.EntityPM.OpenBalance = s;
+            }
+        })
+    }
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         var filters = new ApiQueryFilters();
@@ -93,6 +127,18 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
     set CustomerId(newValue: string) {
         if (this.EntityPM.CustomerId != newValue) {
             this.EntityPM.CustomerId = newValue;
+        }
+    }
+    get IsFirstReport() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.IsFirstReport;
+        }
+        else
+            return null;
+    }
+    set IsFirstReport(newValue: boolean) {
+        if (this.EntityPM.IsFirstReport != newValue) {
+            this.EntityPM.IsFirstReport = newValue;
         }
     }
     get OpenBalance() {
@@ -199,33 +245,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
             IsCustomTemplate: true
         });
-        //this.columns.push({
-        //    FieldName: 'StandardInterestPercentage',
-        //    DataTypeCode: 'Number',
-        //    Display: TextCodeTranslator.Translate("InterestReportLinesByDate.F.StandardInterestPercentage"), // 'StandardInterestPercentage',
-        //    Styles: { width: '100px' },
-        //    HtmlListComponentName: 'InterestReportLinesByDateListTemplate',
-        //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
-        //    IsCustomTemplate: true
-        //});
-        //this.columns.push({
-        //    FieldName: 'ExceptionalInterestPercentage',
-        //    DataTypeCode: 'Number',
-        //    Display: TextCodeTranslator.Translate("InterestReportLinesByDate.F.ExceptionalInterestPercentage"), // 'ExceptionalInterestPercentage',
-        //    Styles: { width: '100px' },
-        //    HtmlListComponentName: 'InterestReportLinesByDateListTemplate',
-        //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
-        //    IsCustomTemplate: true
-        //});
-        //this.columns.push({
-        //    FieldName: 'CreditInterestPercentage',
-        //    DataTypeCode: 'Number',
-        //    Display: TextCodeTranslator.Translate("InterestReportLinesByDate.F.CreditInterestPercentage"), // 'CreditInterestPercentage',
-        //    Styles: { width: '100px' },
-        //    HtmlListComponentName: 'InterestReportLinesByDateListTemplate',
-        //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
-        //    IsCustomTemplate: true
-        //});
+
         this.columns.push({
             FieldName: 'ShowDetails',
             DataTypeCode: 'Number', 

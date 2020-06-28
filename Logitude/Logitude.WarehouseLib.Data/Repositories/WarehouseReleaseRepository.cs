@@ -28,7 +28,13 @@ namespace Logitude.WarehouseLib.Data.Repositories
             return myResult;
         }
 
-
+        public IQueryable<WarehouseRelease> GetActiveWarehouseReleasesByshipmentId(string shipmentId, int tenant)
+        {
+            IQueryable<WarehouseRelease> myResult = (from a in context.WarehouseReleases
+                                                     where a.ShipmentId == shipmentId && a.Tenant == tenant && a.StatusCode != "CARE"
+                                                     select a);
+            return myResult;
+        }
 
         public WarehouseRelease GetWarehouseReleasesByReleaseNumberAndShipmentId(string releaseNumber,string shipmentId, int tenant)
         {

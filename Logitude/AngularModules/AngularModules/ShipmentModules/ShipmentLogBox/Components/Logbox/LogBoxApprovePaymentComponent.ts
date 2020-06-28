@@ -37,13 +37,13 @@ import { HybridPartnerPMService } from '../../../../Common/Services/StandardPMs/
 
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 @Component({
-    
+
     templateUrl: './LogBoxApprovePaymentComponent.html'
 })
 
 export class LogBoxApprovePaymentComponent extends BaseComponent implements OnInit, AfterViewInit {
-  public SearchText: string = null;
-  public DeleteDocumentClicked(item: any) { }
+    public SearchText: string = null;
+    public DeleteDocumentClicked(item: any) { }
 
     DataContext: LogBoxApprovePaymentComponent = this;
     private myCommonDomainService: CommonDomainService;
@@ -132,12 +132,12 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
             }
             var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
-            this._HybridPartnerPMService.get(this.ForwarderPartnerId).subscribe((theResult:any) => {
+            this._HybridPartnerPMService.get(this.ForwarderPartnerId).subscribe((theResult: any) => {
                 if (!theResult.HasError) {
                     this.PartnerName = theResult.Result.Name;
                 }
             });
-            this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe((res:any) => {
+            this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe((res: any) => {
                 var Result = [];
 
                 Result = res.Result.filter(a => a.IsDeleted == false && a.HasFile == true);
@@ -149,9 +149,9 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
 
                 var DRELID = "";
 
-              
-                
-                this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe((myResult:any) => {
+
+
+                this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe((myResult: any) => {
                     if (myResult.Result) {
                         var DRELDecFormDocs = [];
                         var DRELOtherDocs = [];
@@ -203,11 +203,11 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
     }
     public ValidationWarningsList: string = null;
     ApproveButtonClicked() {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Approving ...");
         this.ValidationWarningsList = null;
-        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
+        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult: any) => {
             var entity = AdditionalResult.Result
             if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {// || !AppTool.IsNullOrEmpty(entity.DenyReason)
-                this.CurrentSession.CurrentWindow.StartBusyIndicator("Approving ...");
                 this.messageWindow.RTL = this.RTL;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;
@@ -218,97 +218,43 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
             else {
-                if (SessionLocator.PrivateLableSettings && SessionLocator.TenantPM.ShowTaxAmountWarning) {
-                    var warningCode: string;
-                    if (this.AdditionalData.TaxesMoreDetails) {
-                        warningCode = this.GetWarningCodeBeforeApproval(this.AdditionalData.TaxesMoreDetails);
+                entity.ApprovedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+                this._ShipmentAdditionalCloudDataService.update(entity).subscribe((AdditionalResult: any) => {
+                    ServiceLocator.SendTotangoUserActivity("LogBox", "Approve Declaration");
+                    this.DimApproveButton = true;
+                    var today = new Date();
+                    var d = today.getDate();
+                    var m = today.getMonth() + 1; //January is 0!
+                    var dd = "";
+                    var mm = "";
+                    var yyyy = today.getFullYear().toString();
+                    if (d < 10) {
+                        dd = '0' + d;
                     }
-                    if (warningCode && warningCode != '') {
-                        var warningWindow = new LogitudeWindow();
-                        warningWindow.Width = 340;
-                        warningWindow.Height = 200;
-                        warningWindow.RTL = this.RTL;
-                        //warningWindow.Title
-                        var windowArgs: any = {};
-                        var warningCode: string = this.GetWarningCodeBeforeApproval(this.AdditionalData.TaxesMoreDetails);
-                        windowArgs.WarningCode = warningCode;
-                        windowArgs.RTL = this.RTL;
-                        warningWindow.WindowArgs = windowArgs;
-                        warningWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/WarningApprovePaymentComponent');
-                        warningWindow.WindowClosed.subscribe((event: any) => {
-                            if (event == "Approved")
-                                this.UpdateShipmentAdditionalCloudData(entity);
-                        });
+                    else {
+                        dd = d.toString();
                     }
-                    else
-                        this.UpdateShipmentAdditionalCloudData(entity);
-                }
-                else {
-                    this.UpdateShipmentAdditionalCloudData(entity);
-                }
+                    if (m < 10) {
+                        mm = '0' + m;
+                    }
+                    else {
+                        mm = m.toString();
+                    }
+                    var to = dd + '/' + mm + '/' + yyyy;
+                    this.messageWindow.RTL = this.RTL;
+                    this.messageWindow.Width = 300;
+                    this.messageWindow.Height = 150;
+                    this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.StatementWasApproved");//"הצהרה אושרה";
+                    this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.ConfirmationSentTo") + this.PartnerName;//"Agent";//"אישור הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
+                    this.messageWindow.Show(this.messageWindow.Message);
+                    //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
+                    this.CurrentSession.CloseCurrentWindow();
+                });
             }
         });
 
-    }
-
-    private UpdateShipmentAdditionalCloudData(entity: any) {
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("Approving ...");
-        entity.ApprovedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-        this._ShipmentAdditionalCloudDataService.update(entity).subscribe((AdditionalResult: any) => {
-            ServiceLocator.SendTotangoUserActivity("LogBox", "Approve Declaration");
-            this.DimApproveButton = true;
-            var today = new Date();
-            var d = today.getDate();
-            var m = today.getMonth() + 1; //January is 0!
-            var dd = "";
-            var mm = "";
-            var yyyy = today.getFullYear().toString();
-            if (d < 10) {
-                dd = '0' + d;
-            }
-            else {
-                dd = d.toString();
-            }
-            if (m < 10) {
-                mm = '0' + m;
-            }
-            else {
-                mm = m.toString();
-            }
-            var to = dd + '/' + mm + '/' + yyyy;
-            this.messageWindow.RTL = this.RTL;
-            this.messageWindow.Width = 300;
-            this.messageWindow.Height = 150;
-            this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.StatementWasApproved"); //"הצהרה אושרה";
-            this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.ConfirmationSentTo") + this.PartnerName; //"Agent";//"אישור הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
-            this.messageWindow.Show(this.messageWindow.Message);
-            //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
-            this.CurrentSession.CloseCurrentWindow();
-        });
-    }
-
-    private GetWarningCodeBeforeApproval(TaxDetails) {
-        var tax1Amount: number = 0, tax16Amount: number = 0;
-        TaxDetails.forEach((tax) => {
-            if (tax.TaxTypeCode == '1')
-                tax1Amount = +tax.TaxAmount;
-            else if (tax.TaxTypeCode == '16')
-                tax16Amount = +tax.TaxAmount;
-        });
-        if (tax1Amount != 0 && tax16Amount != 0) {
-            if (tax1Amount + tax16Amount > 100)
-                return '17';
-        }
-        else if (tax1Amount > 100) {
-            return '1';
-        }
-        else if (tax16Amount > 100) {
-            return '16';
-        }
-        return '0';
-            
     }
 
     DenyButtonClicked() {
@@ -318,7 +264,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
         newWindow.Height = 280;
         newWindow.RTL = true;
 
-        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
+        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult: any) => {
             var entity = AdditionalResult.Result
             if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {//!AppTool.IsNullOrEmpty(entity.DenyReason) || 
                 this.messageWindow.RTL = this.RTL;
@@ -337,7 +283,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                 windowArgs.AdditionalData = entity;
                 newWindow.WindowArgs = windowArgs;
                 //newWindow.Add(control); 
-              newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DenyReasonComponent');
+                newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DenyReasonComponent');
                 newWindow.WindowClosed.subscribe(($event: any) => {
                     if ($event == "Denied") {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Deny Declaration");
@@ -357,7 +303,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
     }
 
     DownloadDocumentFile(item) {
-        this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe((res:any) => {
+        this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe((res: any) => {
             var EntityNumber = "";
             if (this.EntityPm != null) {
                 EntityNumber = this.EntityPm.ShipmentNumber;
@@ -487,7 +433,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
         windowArgs.AdditionalData = this.AdditionalData;
         newWindow.WindowArgs = windowArgs;
         //newWindow.Add(control); 
-      newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/GoodsValueComponent');
+        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/GoodsValueComponent');
 
     }
 
@@ -508,7 +454,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
         windowArgs.AdditionalData = this.AdditionalData;
         newWindow.WindowArgs = windowArgs;
         //newWindow.Add(control); 
-      newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/TaxScreenComponent');
+        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/TaxScreenComponent');
 
     }
 }

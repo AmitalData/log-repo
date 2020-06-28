@@ -31,6 +31,33 @@
                                 </td>
                             </tr>
 
+                            <!-- AddressTypeId -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 110px">
+                                    <LogLabel [ObjectFieldName]="'AddressTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 230px;">
+                                                <LogLov [ObjectFieldName]="'AddressTypeId'"
+                                                        [SelectedValue]="DataContext.AddressTypeId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'AddressType'">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- Description -->
                             <tr class="FormFieldRow">
                                 <td style="width: 110px">
                                     <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -41,8 +68,9 @@
                                 </td>
                             </tr>
 
+                            <!-- Name -->
                             <tr class="FormFieldRow">
-                                <td style="width: 110px">
+                                <td>
                                     <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
@@ -51,8 +79,9 @@
                                 </td>
                             </tr>
 
+                            <!-- Address1 -->
                             <tr class="FormFieldRow">
-                                <td style="width: 110px">
+                                <td>
                                     <LogLabel [ObjectFieldName]="'Address1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
@@ -61,8 +90,9 @@
                                 </td>
                             </tr>
 
+                            <!-- Address2 -->
                             <tr class="FormFieldRow">
-                                <td style="width: 110px">
+                                <td>
                                     <LogLabel [ObjectFieldName]="'Address2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
@@ -71,8 +101,9 @@
                                 </td>
                             </tr>
 
+                            <!-- ZipCode -->
                             <tr class="FormFieldRow">
-                                <td style="width: 110px">
+                                <td>
                                     <LogLabel [ObjectFieldName]="'ZipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
@@ -91,8 +122,9 @@
                                 </td>
                             </tr>
 
+                            <!-- City -->
                             <tr class="FormFieldRow">
-                                <td style="width: 110px">
+                                <td>
                                     <LogLabel [ObjectFieldName]="'City'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
@@ -115,8 +147,9 @@
                                 </td>
                             </tr>
 
+                            <!-- CountryId -->
                             <tr class="FormFieldRow">
-                                <td style="width: 110px">
+                                <td>
                                     <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
@@ -141,8 +174,9 @@
                                 </td>
                             </tr>
 
+                            <!-- StateId -->
                             <tr class="FormFieldRow">
-                                <td style="width: 110px">
+                                <td>
                                     <LogLabel [ObjectFieldName]="'StateId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
@@ -168,6 +202,7 @@
                                 </td>
                             </tr>
 
+                            <!-- InActive -->
                             <tr class="FormFieldRow" *ngIf="DataContext.IsInActiveVisible">
                                 <td style="width: 110px">
                                     <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>

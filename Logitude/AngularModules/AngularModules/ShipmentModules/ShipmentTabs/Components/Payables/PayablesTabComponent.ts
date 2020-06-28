@@ -1003,6 +1003,14 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             editWindow.ShowEditComponent(item.TariffId, "Tariff", item.TariffVersion + "");
         }
     }
+    DeleteTariff(item: ShipmentPayableItem) {
+        if (item != null) {
+            item.TariffId = null;
+            item.TariffNumber = null;
+            item.EntityPM.PayablesDisconnectedFromTariff = true;
+            item.SetUIProperties();
+        }
+    }
 
     ComputeShipmentFields() {
         if (this.EntityPM != null) {

@@ -323,6 +323,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
             }
 
+
             CardPM c = cardQuery.GetSinglePM(currentShippingLine.Id, currentShippingLine.Tenant);
 
             bool exist = (from a in shippingLineRepository.GetShippinngLines(currentShippingLine.Tenant)
@@ -345,6 +346,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             }
         }
 
+      
         public void DeleteShippingLine(ShippingLine shippingLine)
         {
             if (objectContext == null)

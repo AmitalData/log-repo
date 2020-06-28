@@ -367,6 +367,11 @@ export class VendorPM {
     public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
        
 	 
+    private accountingVATSplit: boolean;
+    public get AccountingVATSplit() { return this.accountingVATSplit; }
+    public set AccountingVATSplit(newValue: boolean) { if (this.accountingVATSplit != newValue) { this.accountingVATSplit = newValue; this.MarkAsDirty("AccountingVATSplit"); } }
+       
+	 
 
     public OldEntityPM: VendorPM;
 		

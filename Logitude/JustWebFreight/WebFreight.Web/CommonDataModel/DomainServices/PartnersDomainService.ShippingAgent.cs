@@ -250,6 +250,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             entity.Tenant = entityPm.Tenant;
             entity.ForwarderCreditNumber = entityPm.ForwarderCreditNumber;
             entity.ForwarderAccountNumber = entityPm.ForwarderAccountNumber;
+            card.AccountingVATSplit = entityPm.AccountingVATSplit;
             card.ReceivablesAccountingCard = entityPm.ReceivablesAccountingCard;
             card.PayablesAccountingCard = entityPm.PayablesAccountingCard;
             card.CreateDate = entityPm.CreateDate;
@@ -336,6 +337,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
             service.Update(currentEntity);
         }
+
 
         public void DeleteShippingAgent(ShippingAgentPM shippingAgent)
         {

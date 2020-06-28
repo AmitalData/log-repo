@@ -950,6 +950,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     }
 
     // Shipper
+    private ShipperCardList: CardList;
     private ShipperPartnerTypeId: string;
     private ShipperIsCustomer: boolean;
     get ShipperId() { return this.EntityPM.ShipperId; }
@@ -975,6 +976,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 this.EntityPM.KnownConsignorNumber = null;
                 this.EntityPM.KCExpirationDate = null;
                 this.ShipperAddressId = null;
+                this.ShipperCardList = null;
             }
 
             else {
@@ -992,6 +994,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                             this.EntityPM.KCExpirationDate = myCardList.KCExpirationDate;
                             this.ShipperAddressId = myCardList.MainAddressId;
                             this.ShipperIsCustomer = myCardList.IsCustomer;
+                            this.ShipperCardList = myCardList;
                         }
                     }
                 });
@@ -1054,6 +1057,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     }
 
     // Consignee
+    private ConsigneeCardList: CardList;
     private ConsigneePartnerTypeId: string;
     private ConsigneeIsCustomer: boolean;
     get ConsigneeId() { return this.EntityPM.ConsigneeId; }
@@ -1077,6 +1081,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 this.EntityPM.ConsigneeMainAddressId = null;
                 this.EntityPM.ConsigneePickAddressId = null;
                 this.ConsigneeAddressId = null;
+                this.ConsigneeCardList = null;
             }
 
             else {
@@ -1092,6 +1097,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                             this.EntityPM.ConsigneePickAddressId = myCardList.PickAddressId;
                             this.ConsigneeAddressId = myCardList.MainAddressId;
                             this.ConsigneeIsCustomer = myCardList.IsCustomer;
+                            this.ConsigneeCardList = myCardList;
                         }
                     }
                 });
@@ -2082,8 +2088,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
-            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId };
+            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {
@@ -2135,6 +2141,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         var entityPM: AddressPM = null;
         var myPartnerTypeId: string = null;
         var isCustomer: boolean;
+        var cardList: CardList = null;
 
         switch (myAddressCode) {
             case "S": {
@@ -2144,6 +2151,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 entityPM.CardId = this.ShipperId;
                 myPartnerTypeId = this.ShipperPartnerTypeId;
                 isCustomer = this.ShipperIsCustomer;
+                cardList = this.ShipperCardList
                 break;
             }
 
@@ -2154,6 +2162,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 entityPM.CardId = this.ConsigneeId;
                 myPartnerTypeId = this.ConsigneePartnerTypeId;
                 isCustomer = this.ConsigneeIsCustomer;
+                cardList = this.ConsigneeCardList;
                 break;
             }
 
@@ -2162,10 +2171,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                     if (!AppTool.IsNullOrEmpty(this.ShipperId)) {
                         entityPM = new AddressPM();
                         entityPM.Tenant = SessionLocator.Tenant;
-                        entityPM.AddressTypeId = "O";
+                        entityPM.AddressTypeId = "P";
                         entityPM.CardId = this.ShipperId;
                         myPartnerTypeId = this.ShipperPartnerTypeId;
                         isCustomer = this.ShipperIsCustomer;
+                        cardList = this.ShipperCardList
                     }
                 }
 
@@ -2177,10 +2187,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                     if (!AppTool.IsNullOrEmpty(this.ConsigneeId)) {
                         entityPM = new AddressPM();
                         entityPM.Tenant = SessionLocator.Tenant;
-                        entityPM.AddressTypeId = "O";
+                        entityPM.AddressTypeId = "P";
                         entityPM.CardId = this.ConsigneeId;
                         myPartnerTypeId = this.ConsigneePartnerTypeId;
                         isCustomer = this.ConsigneeIsCustomer;
+                        cardList = this.ConsigneeCardList;
                     }
                 }
 
@@ -2193,8 +2204,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Add Address";
-            logeWindow.WindowArgs = { EntityPM: entityPM, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
-            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM };
+            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {
@@ -2946,7 +2957,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                             this.EntityPM.ConsigneeNote = myCardList.Notes;
                             this.EntityPM.ConsigneeMainAddressId = myCardList.MainAddressId;
                             this.EntityPM.ConsigneePickAddressId = myCardList.PickAddressId;
-
+                            
                             if (AppTool.IsNullOrEmpty(this.SourceEntityPM.ConsigneeContactId)) {
                                 this.ConsigneeContactId = null;
                                 this.ConsigneeContactId = myCardList.PrimaryContactId;

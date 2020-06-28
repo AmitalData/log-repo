@@ -339,13 +339,27 @@
                 <!-- InterestReport -->
                 <div *ngIf="ObjectTableName == 'InterestReport'">
                     <div *ngIf="FieldName == 'InterestReportStatusName'">
-                        <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;"
+                        <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;" [style.color]="textColor"
                              [style.text-align]="isRTL ? 'right' : 'left'">
                             {{
                             FieldValue
                             }}
                         </div>
-                        <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;"
+                        <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;"[style.color]="textColor"
+                             [style.text-align]="isRTL ? 'right' : 'left'">
+                            {{
+                            FieldValue
+                            }}
+                        </div>
+                    </div>
+                    <div *ngIf="FieldName == 'InterestReportStatusLocalName'">
+                        <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;" [style.color]="textColor"
+                             [style.text-align]="isRTL ? 'right' : 'left'">
+                            {{
+                            FieldValue
+                            }}
+                        </div>
+                        <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;" [style.color]="textColor"
                              [style.text-align]="isRTL ? 'right' : 'left'">
                             {{
                             FieldValue

@@ -61,7 +61,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             string entityName = //"CurrencyPM" + id + tenant;
                 "CurrencyPM" + id + "," + tenant;
             CurrencyPM entity;
-            if (HttpContext.Current != null)
+            if (true)/// HttpContext.Current != null)
             {
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {

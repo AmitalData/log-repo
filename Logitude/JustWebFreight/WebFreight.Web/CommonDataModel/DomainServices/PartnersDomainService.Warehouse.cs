@@ -298,7 +298,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             }
 
         }
-
+       
         public void DeleteWarehouse(WarehousePM entity)
         {
             if (objectContext == null)

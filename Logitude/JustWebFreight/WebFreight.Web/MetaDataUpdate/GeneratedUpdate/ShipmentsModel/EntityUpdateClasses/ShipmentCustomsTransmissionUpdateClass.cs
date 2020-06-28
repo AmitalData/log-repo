@@ -390,6 +390,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
+		   ObjectTable ShipmentCustomsTransmissionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentCustomsTransmission" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ShipmentCustomsTransmissionObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ShipmentCustomsTransmission").ToList();
+		       
+	      
+
+	         Screen ShipmentCustomsTransmissionShipmentCustomsTransmissionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentCustomsTransmission.HeaderScreen", Name = "ShipmentCustomsTransmissionHeaderScreen", ObjectTableId = ShipmentCustomsTransmissionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    ShipmentCustomsTransmissionObjectTable.HeaderScreenId = ShipmentCustomsTransmissionShipmentCustomsTransmissionHeaderScreenScreen0.Id;
+		    ShipmentCustomsTransmissionObjectTable.HeaderScreenCode = ShipmentCustomsTransmissionShipmentCustomsTransmissionHeaderScreenScreen0.Code;
+
+	   		  
+
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)

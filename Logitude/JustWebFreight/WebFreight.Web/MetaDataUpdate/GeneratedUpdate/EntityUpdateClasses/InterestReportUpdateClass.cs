@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "6c34d823925e54722b8b6e15e5f2b50d";
+		public const string HashString = "d0bbed0106597fb3ab58403238553aa4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -724,11 +724,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalAmount",
-					  						DefaultText =  "Total Amount",
-					  						FullLocalDefaultText =  "סכום כולל",
+					  						DefaultText =  "Total Interest Amount",
+					  						FullLocalDefaultText =  "סכום ריבית מחושב",
 					  						ListFieldLable =  "TotalAmountListLable",
-					  						ListLableDefaultText =  "Total Amount",
-					  						ListLocalDefaultText =  "סכום כולל",
+					  						ListLableDefaultText =  "Total Interest Amount",
+					  						ListLocalDefaultText =  "סכום ריבית מחושב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -963,11 +963,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InvoiceAmount",
-					  						DefaultText =  "Invoice Amount",
-					  						FullLocalDefaultText =  "סכום חשבונית",
+					  						DefaultText =  "Invoice Amount Including VAT",
+					  						FullLocalDefaultText =  "סכום חשבונית כולל מעמ",
 					  						ListFieldLable =  "InvoiceAmountListLable",
-					  						ListLableDefaultText =  "Invoice Amount",
-					  						ListLocalDefaultText =  "סכום חשבונית",
+					  						ListLableDefaultText =  "Invoice Amount Including VAT",
+					  						ListLocalDefaultText =  "סכום חשבונית כולל מעמ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1589,7 +1589,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -1879,6 +1879,118 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "EnableInvoiceing",
+					  						ObjectTableName =  "InterestReport",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "EnableInvoiceing",
+					  						ListPropertyPath =  "EnableInvoiceing",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "EnableInvoiceing",
+					  						DefaultText =  "EnableInvoiceing",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsFirstReport",
+					  						ObjectTableName =  "InterestReport",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsFirstReport",
+					  						ListPropertyPath =  "IsFirstReport",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsFirstReport",
+					  						DefaultText =  "Is First Report",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -2025,7 +2137,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "UPEV",
                 EnglishName =  "Updated",
-                LocalName =  "Updated",
+                LocalName =  "עדכון",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -2134,6 +2246,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 Code =  "IRCD",
                 EnglishName =  "Created",
                 LocalName =  "נוצר",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = InterestReportObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "IRUP",
+                EnglishName =  "Updated",
+                LocalName =  "עדכון",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -2280,6 +2410,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportOTheReportisinProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.TheReportisinProgress", DefaultText = "The Report is in Progress, Can't Cancel until it Finishes",LocalDefaultText = @"הדוח בתהליך , לא ניתן לבטל כרגע", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOCustomeralreadyhasaninprogress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Customeralreadyhasaninprogress", DefaultText = "Customer already has an in progress interest report number",LocalDefaultText = @"ללקוח כבר קיים דוח בתהליך , נא להמתין לסיום ולנסות שנית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestInvoiceOBatchInterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestInvoice.O.BatchInterest", DefaultText = "Batch Interest",LocalDefaultText = @"הפקה מרוכזת", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOBatchInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.BatchInvoice", DefaultText = "Batch Invoice",LocalDefaultText = @"הפקת חשבונית ריבית מרוכזת", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOCreateInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CreateInvoice", DefaultText = "Create ARInvoices",LocalDefaultText = @"צור חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOSelectAtLeastOnLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.SelectAtLeastOnLine", DefaultText = "Please select at least one line",LocalDefaultText = @"אנא בחר שורה אחת לפחות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOShowInvoicingInProgressReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ShowInvoicingInProgressReports", DefaultText = "Show Invoicing In Progress Reports",LocalDefaultText = @"הצג דוחות בתהליך הפקת חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOReportIsBeingInvoiced = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ReportIsBeingInvoiced", DefaultText = "The Report is being Invoiced, Can't Cancel until it Finishes",LocalDefaultText = @" הדוח בתהליך הפקת חשבונית , ניתן יהיה לבטל בסיום", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOReportinProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ReportinProgress", DefaultText = "Report In Progress",LocalDefaultText = @"הדוח נמצא בתהליך בניה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOReportCreationFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ReportCreationFailed", DefaultText = "Report Creation Failed",LocalDefaultText = @"בנית הדוח נכשלה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOEditOpenBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EditOpenBalance", DefaultText = "Edit Open Balance",LocalDefaultText = @"עדכן יתרת פתיחה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOSelectedReportsWillNotHaveAnInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.SelectedReportsWillNotHaveAnInvoice", DefaultText = "selected reports will not have an invoice created for them because they do not meet the minimum billing requirements. They will be closed without invoices",LocalDefaultText = @"הדוחות שנבחרו לא תיווצר עבורם חשבונית מכיוון שהם לא עומדים בהגדרת החיוב המינמלית שבכרטיס . ", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOOutOf = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.OutOf", DefaultText = "out of",LocalDefaultText = @"מתוך", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

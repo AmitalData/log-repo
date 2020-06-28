@@ -138,6 +138,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int? StorageFreeDays { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
 
+        public bool AccountingVATSplit { get; set; }
+
 
     }
 }

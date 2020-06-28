@@ -392,6 +392,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.MoveType = shipment.MoveTypeName;
                     invoicedataprovider.MainCarriageLastdestinationPortName = shipment.MainCarriageFinalDestinationPortName;
                     invoicedataprovider.MainCarriageLastdestinationPortCode = shipment.MainCarriageFinalDestinationPortCode;
+                    invoicedataprovider.TrailerNumber = shipment.TrailerNumber;
 
                     User salesman = userRepository.GetSingleUser(shipment.SalesmanUserId, shipment.Tenant, false);
                     if (salesman != null)
@@ -1648,6 +1649,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                 invoicedataprovider.AmountDueInInvoiceCurrency = currentInvoice.AmountDue;
                 invoicedataprovider.AmountDueInLocalCurrency = currentInvoice.AmountDueInLocalCurrency;
+
+                invoicedataprovider.ShipmentSubTypeName = shipment == null ? null : shipment.ShipmentSubTypeName;
                 #endregion
 
                 #region Vatable amounts

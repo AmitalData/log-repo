@@ -215,12 +215,12 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<string> GetQAccIdByAcountIdTypeCategories(int tenant, string AccountId,
              string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType, string chartOfAccountsId,
-             string ChartOfAccountsTypeCode)
+             string ChartOfAccountsTypeCode, string salesmanId)
         {
             return
             this
                 .GetByAcountIdTypeCategories(tenant, AccountId, gLAccountType, chartOfAccountsId,
-            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode)
+            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode, salesmanId)
             .Select(a => a.Id);
 
         }
@@ -333,7 +333,7 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<GLAccount> GetByAcountIdTypeCategories(int tenant, string AccountId, string gLAccountType, string chartOfAccountsId,
             string Category1, string Category2, string Category3, string Category4, string Category5,
-            string ChartOfAccountsTypeCode)
+            string ChartOfAccountsTypeCode, string salesmanId)
         {
             IQueryable<GLAccount> q;
             if (!string.IsNullOrWhiteSpace(AccountId))
@@ -380,6 +380,22 @@ namespace Logitude.Accounting.Data.Repositories
             if (!string.IsNullOrWhiteSpace(ChartOfAccountsTypeCode))
             {
                 q = q.Where(r => r.ChartOfAccountsTypeCode == ChartOfAccountsTypeCode);
+            }
+            if (!string.IsNullOrWhiteSpace(salesmanId))
+            {
+                q = (
+                    from glacc in q
+                    
+                    join card in (this.context as AccountingContext).Cards.Where(r => r.Tenant == tenant)
+                    on glacc.Id equals card.GLAccountId
+
+                    join cust in (this.context as AccountingContext).Customers
+                       .Where(r => r.SalesmanUserId == salesmanId && r.Tenant == tenant)
+                    on card.Id equals cust.Id
+                    
+                    select glacc
+                     );
+
             }
             return q;
         }
@@ -897,7 +913,7 @@ namespace Logitude.Accounting.Data.Repositories
 
 
                         join a in context.GLAccounts
-       .Where(r => r.AccountTypeCode == "1" && r.Tenant == tenant)
+       .Where(r => (r.AccountTypeCode == "1" || r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
        on crm.PayablesAccountingCard equals a.DisplayNumber
 
                         select new CardDTO()
@@ -922,7 +938,7 @@ namespace Logitude.Accounting.Data.Repositories
 
                                                             
                                                             join a in context.GLAccounts
-                                           .Where(r => r.AccountTypeCode == "1" && r.Tenant == tenant)
+                                           .Where(r => (r.AccountTypeCode == "1" || r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
                                            on crm.ReceivablesAccountingCard equals a.DisplayNumber
 
                                                             select new CardDTO()

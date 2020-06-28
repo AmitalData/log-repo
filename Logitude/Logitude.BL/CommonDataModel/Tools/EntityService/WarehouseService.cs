@@ -37,7 +37,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ContactRepository contactRepository;
         private CardContactRepository cardContactRepository;
         private ICommonDataContext objectContext;
-        private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;  
+        private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
+
         public WarehouseService(ICommonDataContext objectContext,int tenant)
         {
             this.tenant = tenant;
@@ -64,6 +65,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
             this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
         }
+        
 
         private void GetLoggedContact()
         {
@@ -127,8 +129,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges(); 
 
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Warehouse");
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Warehouse");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
@@ -167,7 +169,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.UpdateCardExternalCodeByCurrencyCollection();
-            
+
             if (!entityPM.IsHybrid)
             {
                 WarehouseTracing.Trace(entityPM, entityPOCO, isNewEntity);
@@ -180,8 +182,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();       
 
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Warehouse");
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Warehouse");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
         }
 
         private void InitializeComponent()
@@ -340,7 +342,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 cardExternalCodeByCurrencyRepository.Remove(itemPoco);
             }
         }
-
+      
         private void CreateAddress(AddressPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("Address", tenant).ToString();

@@ -67,32 +67,17 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public CustomerService(ICommonDataContext objectContext, CustomerPM entityPM)
         {
-
-            this.entityPM = entityPM;
-            this.tenant = entityPM.Tenant;
-            this.objectContext = objectContext;
-            this.entityRepository = new CustomerRepository(objectContext);
-            this.addressRepository = new AddressRepository(objectContext);
-            this.cardRepository = new CardRepository(objectContext);
-            this.contactRepository = new ContactRepository(objectContext);
-            this.cardContactRepository = new CardContactRepository(objectContext);
-            this.productRepository = new CustomerProductRepository(objectContext);
-            this.productLocationRepository = new CustomerProductLocationRepository(objectContext);
-            this.competitorsRepository = new CustomerCompetitorRepository(objectContext);
-            this.competitorProductsRepository = new CustomerCompetitorProductRepository(objectContext);
-            this.servicesRepository = new CustomerAdditionalServiceRepository(objectContext);
-            this.salesNoteRepository = new CustomerSalesNoteRepository(objectContext);
-            this.customerSalesmanByProductRepository = new CustomerSalesmanByProductRepository(objectContext);
-            this.customerAccountManagerByProductRepository = new CustomerAccountManagerByProductRepository(objectContext);
-            this.customerCustomsAgentByProductRepository = new CustomerCustomsAgentByProductRepository(objectContext);
-            this.customerForwarderByProductRepository = new CustomerForwarderByProductRepository(objectContext);
-            this.customerMediatorByProductRepository = new CustomerMediatorByProductRepository(objectContext);
-            this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
-            this.contactService = new ContactService(objectContext, tenant);
+            this.Initialization(objectContext, entityPM);
             this.GetLoggedContact();
             this.SetHybridPartner(this.tenant);
         }
         public CustomerService(ICommonDataContext objectContext, CustomerPM entityPM, string loggedContactId)
+        {
+            this.Initialization(objectContext, entityPM);
+            this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
+            this.SetHybridPartner(this.tenant);
+        }
+        private void Initialization(ICommonDataContext objectContext, CustomerPM entityPM)
         {
             this.entityPM = entityPM;
             this.tenant = entityPM.Tenant;
@@ -115,8 +100,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.customerMediatorByProductRepository = new CustomerMediatorByProductRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
             this.contactService = new ContactService(objectContext, tenant);
-            this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
-            this.SetHybridPartner(this.tenant);
+
         }
         private void GetLoggedContact()
         {
@@ -153,6 +137,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private List<CustomerForwarderByProductPM> customerForwarderByProductChangeSet;
         private List<CustomerMediatorByProductPM> customerMediatorByProductChangeSet;
         private List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet;
+
         public void SetChangeSet(List<CustomerSalesNotePM> salesNotesChangeSet, List<CustomerProductPM> productsChangeSet, List<CustomerCompetitorPM> competitorsChangeSet, List<CustomerAdditionalServicePM> servicesChangeSet, List<CustomerSalesmanByProductPM> customerSalesmanByProductsChangeSet, List<CustomerAccountManagerByProductPM> customerAccountManagerByProductChangeSet, List<CustomerCustomsAgentByProductPM> customerCustomsAgentByProductChangeSet, List<CustomerForwarderByProductPM> customerForwarderByProductChangeSet, List<CustomerMediatorByProductPM> customerMediatorByProductChangeSet, List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet)
         {
             this.salesNotesChangeSet = salesNotesChangeSet;
@@ -376,6 +361,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.UpdateForwarderCollection();
             this.UpdateCustomerMediatorByProductCollection();
             this.UpdateCardExternalCodeByCurrencyCollection();
+
             this.UpdateGLAccount(entityPM, entityPOCO);
             //var tenantQuery = new TenantQuery(entityPM.Tenant);
             //var tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
@@ -1173,6 +1159,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
+       
         private void CreateCustomerProduct(CustomerProductPM itemPM)
         {
             itemPM.CustomerId = this.entityPM.Id;
