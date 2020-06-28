@@ -114,8 +114,7 @@ export class TariffDomainService {
         }
         );
     }
-
-    
+        
     GetTenantTariffSetting() {
 
 
@@ -319,6 +318,18 @@ export class TariffDomainService {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetTariffsPricesConnectedToPayables(freightTariffId: string, shipmentId: string, tariffType: string) {
+        var url = this._apiUrl + '/GetTariffsPricesConnectedToPayables?freightTariffId=' + freightTariffId + "&shipmentId=" + shipmentId + "&tariffType=" + tariffType
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));
         });
