@@ -32,7 +32,6 @@ export class DeclarationReferantDataFiltersMenuComponent
 
     constructor(private _CD: ChangeDetectorRef) {
         super();
-        
         if (this.CurrentSession == null) {
             this.TransportFilter_A = "TransportFilter_A_-1_-1";
             this.TransportFilter_O = "TransportFilter_O_-1_-1";
@@ -132,7 +131,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                     break;
                 }
 
-                case "I": {
+                case "L": {
                     img_I.setAttribute("src", "./Images/TransportModes/I_w.png");
                     break;
                 }
@@ -157,7 +156,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                     break;
                 }
 
-                case "I": {
+                case "L": {
                     img_I.setAttribute("src", "./Images/TransportModes/I.png");
                     //img_I.style.top = "1px";
                     break;
@@ -183,7 +182,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                     break;
                 }
 
-                case "I": {
+                case "L": {
                     img_I.setAttribute("src", "./Images/TransportModes/I_g.png");
                     break;
                 }
