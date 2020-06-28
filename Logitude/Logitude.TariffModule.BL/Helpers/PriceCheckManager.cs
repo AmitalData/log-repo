@@ -23,6 +23,9 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.TariffModule.Data;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.Helpers;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 
 namespace Logitude.TariffModule.BL.Helpers
 {
@@ -100,12 +103,21 @@ namespace Logitude.TariffModule.BL.Helpers
             this.tariffRepository = new TariffRepository(tenant);
             this.freightTariffId = freightTariffId;
 
-            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-            Shipment shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            ShipmentPM shipment = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
 
             if (shipment != null)
             {
-                betweenDate = shipment.CreateDateTime.Date;
+                betweenDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                if (shipment.MainCarriageATD != null)
+                {
+                    betweenDate = shipment.MainCarriageATD;
+                }
+                else if (shipment.MainCarriageETD != null)
+                {
+                    betweenDate = shipment.MainCarriageETD;
+                }
+                
                 fromPort = shipment.FromPortId;
                 toPort = shipment.ToPortId;
                 this.tariffType = tariffType;
