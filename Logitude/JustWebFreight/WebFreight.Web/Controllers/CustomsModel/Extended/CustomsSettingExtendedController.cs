@@ -334,7 +334,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 var tenantMs = customsSettingQuery.GetTenantDetailsMessagesPMs();
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { TenantMs = tenantMs });
+                return Request.CreateResponse(HttpStatusCode.OK,   tenantMs  );
             }
 
             catch (Exception ex)
