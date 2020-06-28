@@ -2864,7 +2864,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         if(isValid)
                         {
-                            if(routs.Count > 1000)
+                            int currentLinesCount = iDraftVersion.TariffLines.Count;
+
+                            if (routs.Count + currentLinesCount > 1000)
                             {
                                 isValid = false;
                                 throw new ApplicationException("Can't perform this update due to tariff lines limitation to 1000");

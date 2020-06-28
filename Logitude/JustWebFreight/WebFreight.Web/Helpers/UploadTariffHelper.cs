@@ -97,7 +97,7 @@ namespace WebFreight.Web.Helpers
             IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
             IWorksheet sheet = workbook.Worksheets[0];
 
-            if (sheet.UsedRange.Rows.Count() > 1000)
+            if (sheet.UsedRange.Rows.Count() - 1 > 1000)
             {
                 throw new ApplicationException("Can't upload this excel as it exceeds tariff lines limitation of 1000");
             }
