@@ -34,7 +34,6 @@
 				and ARInvoices.StatusCode = 'PD'
 				and EventTypes.Code = 'COAR'
 				and ObjectTables.Name = 'ARInvoice'
-				and TraceEvents.Notes like '%with Amount Due equals to: 0%'
 
 			declare @Tenant as int
 			declare @ARInvoiceId as varchar(15)
