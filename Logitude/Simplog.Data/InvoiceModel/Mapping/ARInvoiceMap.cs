@@ -185,6 +185,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.BillToGLAccountId).HasColumnName("BillToGLAccountId");
             this.Property(t => t.RegionalTaxId).HasColumnName("RegionalTaxId");
             this.Property(t => t.RegionalTaxPercentage).HasColumnName("RegionalTaxPercentage");
+            this.Property(t => t.PaidDate).HasColumnName("PaidDate");
 
             // Relationships
             this.HasOptional(t => t.BillToAddress).WithMany().HasForeignKey(d => d.BillToAddressId);
