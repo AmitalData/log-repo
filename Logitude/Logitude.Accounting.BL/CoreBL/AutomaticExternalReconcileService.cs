@@ -103,9 +103,9 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 MyLedgerTransaction matchedTransaction;
                 if (pageLine.CreditAmount != 0)
-                    matchedTransaction = GetNotUsedMatchedTransaction(transactionsByCreditAmountDictionary, pageLine.CreditAmount);
+                    matchedTransaction = GetNotUsedMatchedTransaction(transactionsByDebitAmountDictionary, pageLine.CreditAmount);
                 else
-                    matchedTransaction = GetNotUsedMatchedTransaction(transactionsByDebitAmountDictionary, pageLine.DebitAmount);
+                    matchedTransaction = GetNotUsedMatchedTransaction(transactionsByCreditAmountDictionary, pageLine.DebitAmount);
 
                 if (matchedTransaction != null)
                 {
@@ -128,9 +128,9 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 MyLedgerTransaction matchedTransaction;
                 if (pageLine.CreditAmount != 0)
-                    matchedTransaction = GetNotUsedMatchedTransaction(transactionsByCreditAmountAndReferenceDateDictionary, new AmountRefDateKey(pageLine.CreditAmount, pageLine.ReferenceDate));
+                    matchedTransaction = GetNotUsedMatchedTransaction(transactionsByDebitAmountAndReferenceDateDictionary, new AmountRefDateKey(pageLine.CreditAmount, pageLine.ReferenceDate));
                 else
-                    matchedTransaction = GetNotUsedMatchedTransaction(transactionsByDebitAmountAndReferenceDateDictionary, new AmountRefDateKey(pageLine.DebitAmount, pageLine.ReferenceDate));
+                    matchedTransaction = GetNotUsedMatchedTransaction(transactionsByCreditAmountAndReferenceDateDictionary, new AmountRefDateKey(pageLine.DebitAmount, pageLine.ReferenceDate));
 
                 if (matchedTransaction != null)
                 {
@@ -160,19 +160,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 MyLedgerTransaction matchedTransaction;
                 if (pageLine.CreditAmount != 0)
                 {
-                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref1, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference));
+                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref1, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref2, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref2, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref3, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref3, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference));
                 }
                 else
                 {
-                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref1, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference));
+                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref1, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref2, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref2, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref3, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref3, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference));
                 }
 
                 if (matchedTransaction != null)
@@ -200,19 +200,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 MyLedgerTransaction matchedTransaction;
                 if (pageLine.CreditAmount != 0)
                 {
-                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref1, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference, pageLine.ReferenceDate));
+                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref1, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference, pageLine.ReferenceDate));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref2, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference, pageLine.ReferenceDate));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref2, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference, pageLine.ReferenceDate));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref3, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference, pageLine.ReferenceDate));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref3, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference, pageLine.ReferenceDate));
                 }
                 else
                 {
-                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref1, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference, pageLine.ReferenceDate));
+                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref1, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference, pageLine.ReferenceDate));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref2, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference, pageLine.ReferenceDate));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref2, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference, pageLine.ReferenceDate));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref3, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference, pageLine.ReferenceDate));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref3, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference, pageLine.ReferenceDate));
                 }
                 if (matchedTransaction != null)
                 {
