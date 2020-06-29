@@ -592,6 +592,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                };
             return Accounts;
         }
+        public List<string> GetSplittedByCurrencyGLAccountIds(string accountId, int tenant)
+        {
+
+            return (from a in context.GLAccounts
+                                                join
+                   c in context.GLAccountCurrencies on a.Id equals c.GLAccountId
+                                                where c.MainGLAccountId == accountId && a.Tenant == tenant
+                                                select a.Id).ToList();
+           
+        }
 
         public IQueryable<GLAccountPM> GetChildrenGLAccounts(string accountId, int tenant)
         {

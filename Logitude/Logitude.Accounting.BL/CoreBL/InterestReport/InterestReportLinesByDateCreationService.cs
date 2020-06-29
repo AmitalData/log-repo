@@ -210,7 +210,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                                             select a).OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault();
 
             decimal exceptionalAdditionalInterestPercentage = gLAccountInterestPeriodPM.ExceptionalAddInterestPercent != null ? gLAccountInterestPeriodPM.ExceptionalAddInterestPercent.Value : 0;
-            decimal percentage = (Period.InterestRate + exceptionalAdditionalInterestPercentage);
+            decimal percentage =Period != null? (Period.InterestRate + exceptionalAdditionalInterestPercentage): 0;
             return percentage;
         }
 
