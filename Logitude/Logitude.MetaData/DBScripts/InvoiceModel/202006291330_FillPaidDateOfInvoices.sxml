@@ -22,18 +22,14 @@
 			ARInvoices.Tenant
 			into #temp
 			from ARInvoices
-			left outer join TraceEvents on TraceEvents.Id = (
+			left outer join TraceEvents on TraceEvents.Id =  (
 				select top 1 Id from TraceEvents
-				where TraceEvents.EntityId = ARInvoices.Id 
-				and TraceEvents.Notes like '%with Amount Due equals to: 0%' 
+				where EntityId = ARInvoices.Id 
+				and Notes like '%with Amount Due equals to: 0%' 
 				order by LogDateTime desc)
-			left outer join EventTypes on EventTypes.Id = TraceEvents.EventTypeId
-			left outer join ObjectTables on ObjectTables.Id = TraceEvents.ObjectTableId
 			where
 				ARInvoices.AmountDue = 0
 				and ARInvoices.StatusCode = 'PD'
-				and EventTypes.Code = 'COAR'
-				and ObjectTables.Name = 'ARInvoice'
 
 			declare @Tenant as int
 			declare @ARInvoiceId as varchar(15)
