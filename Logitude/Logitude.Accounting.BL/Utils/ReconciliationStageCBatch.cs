@@ -195,7 +195,7 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         journalLineList.Add(new JournalLineReco(journalLineLedgerTransactionDTO.JournalLine, journalLineLedgerTransactionDTO.LedgerTransaction));
                     }
-                    if (IsGroupReconciable(journalLineList, groupKey, maximalDifference))
+                    if (IsGroupReconciable(journalLineList, groupKey, maximalDifference, context, tenant))
                     {
                         ReconciableGroup recoGroup = new ReconciableGroup(groupKey, journalLineList);
                         reconciableGroupList.Add(recoGroup);
@@ -281,47 +281,75 @@ namespace Logitude.Accounting.BL.Utils
             return rv;
         }
 
-        private bool IsGroupReconciable(List<JournalLineReco> journalLineRecoList, string groupKey, decimal maximalDifference)
+        private bool IsGroupReconciable(List<JournalLineReco> journalLineRecoList, string groupKey, decimal maximalDifference, IAccountingContext context, int tenant)
         {
             bool rv = true;
-
-            List<JournalLineReco> creditLines = journalLineRecoList.Where(line => line._journalLine.ActionCode == "1").ToList<JournalLineReco>();
-            decimal credit_sum = 0m;
-            if (creditLines != null) credit_sum = creditLines.Sum(line => line._journalLine.LocalAmount + (line._journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
-
-            List<JournalLineReco> debitLines = journalLineRecoList.Where(line => line._journalLine.ActionCode == "2").ToList<JournalLineReco>();
-            decimal debit_sum = 0m;
-            if (debitLines != null) debit_sum = debitLines.Sum(line => line._journalLine.LocalAmount - (line._journalLine.ExternalOpenAmount ?? 0m));
-
-
-            if (journalLineRecoList.Count == 0)
+            string gLAccountId = GetGroupGLAccountId(journalLineRecoList);
+            if (String.IsNullOrWhiteSpace(gLAccountId))
             {
                 _NoLines.Add(groupKey);
                 rv = false;
             }
-            else if (journalLineRecoList.Count == 1)
-            {
-                _WrongSumToMatch.Add(groupKey);
-                rv = false;
-            }
-            else if (journalLineRecoList.Exists(line => line._journalLine.ActionCode != "1" && line._journalLine.ActionCode != "2"))
-            {
-                _WrongAction.Add(groupKey);
-                rv = false;
-            }
-            // else if (credit_sum - debit_sum != 0m)
-            else if (Math.Abs(credit_sum - debit_sum) > maximalDifference)
-            {
-                _WrongSumToMatch.Add(groupKey);
-                rv = false;
-            }
-            else if (journalLineRecoList.Exists(line => line._oneLineLedger == null))
-            {
-                rv = false;
-            }
             else
             {
-                rv = true;
+                GLAccountListQueryService glaQuery = new GLAccountListQueryService(context);
+                GLAccountList gla = glaQuery.GetByAccountId(gLAccountId, tenant);
+
+                List<JournalLineReco> creditLines = journalLineRecoList.Where(line => line._journalLine.ActionCode == "1").ToList<JournalLineReco>();
+                decimal credit_sum = 0m;
+                if (gla.ReconcileMethodCode == "1") // Foreign Currency
+                    if (creditLines != null) credit_sum = creditLines.Sum(line => line._journalLine.LocalAmount + (line._journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
+                else
+                    if (creditLines != null) credit_sum = creditLines.Sum(line => line._journalLine.LocalAmount + (line._journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
+
+                List<JournalLineReco> debitLines = journalLineRecoList.Where(line => line._journalLine.ActionCode == "2").ToList<JournalLineReco>();
+                decimal debit_sum = 0m;
+                if (gla.ReconcileMethodCode == "1") // Foreign Currency
+                    if (debitLines != null) debit_sum = debitLines.Sum(line => line._journalLine.LocalAmount - (line._journalLine.ExternalOpenAmount ?? 0m));
+                else
+                    if (debitLines != null) debit_sum = debitLines.Sum(line => line._journalLine.LocalAmount - (line._journalLine.ExternalOpenAmount ?? 0m));
+
+
+                if (journalLineRecoList.Count == 0)
+                {
+                    _NoLines.Add(groupKey);
+                    rv = false;
+                }
+                else if (journalLineRecoList.Count == 1)
+                {
+                    _WrongSumToMatch.Add(groupKey);
+                    rv = false;
+                }
+                else if (journalLineRecoList.Exists(line => line._journalLine.ActionCode != "1" && line._journalLine.ActionCode != "2"))
+                {
+                    _WrongAction.Add(groupKey);
+                    rv = false;
+                }
+                // else if (credit_sum - debit_sum != 0m)
+                else if (Math.Abs(credit_sum - debit_sum) > maximalDifference)
+                {
+                    _WrongSumToMatch.Add(groupKey);
+                    rv = false;
+                }
+                else if (journalLineRecoList.Exists(line => line._oneLineLedger == null))
+                {
+                    rv = false;
+                }
+                else
+                {
+                    rv = true;
+                    //if (gla.ReconcileMethodCode != "1") // NOT a Foreign Currency
+                    //{
+
+                    //Decimal sum = 0m;
+                    //sum = journalLineRecoList.Sum(line => line._valueToMatch);
+                    //if (sum != 0m)
+                    //{
+                    //    _WrongSumToMatch.Add(groupKey);
+                    //    rv = false;
+                    //}
+                    //}
+                }
             }
             return rv;
         }
