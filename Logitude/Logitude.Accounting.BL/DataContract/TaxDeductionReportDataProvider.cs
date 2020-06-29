@@ -411,7 +411,7 @@ namespace Logitude.Accounting.BL.DataContract
                         groupedbyVendor.VendorLocalName = selectedVendors[0].LocalName;
                         groupedbyVendor.SumOfAmountInLocalCurrency = Math.Round(item.AmountInLocalCurrency.Value, 0);
                         groupedbyVendor.SumOfTaxDeductionLocalAmount = Math.Round(item.TaxDeductionLocalAmount.Value, 0);
-                        if (groupedbyVendor.SumOfAmountInLocalCurrency != 0)
+                        if (groupedbyVendor.SumOfAmountInLocalCurrency > 0)
                           byVendorList.Add(groupedbyVendor) ;
                   
                 }
