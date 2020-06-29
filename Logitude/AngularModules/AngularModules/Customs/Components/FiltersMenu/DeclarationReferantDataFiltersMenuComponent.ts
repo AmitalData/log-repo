@@ -205,7 +205,7 @@ export class DeclarationReferantDataFiltersMenuComponent
             UsersListString = "HowCare"
             RemoveFilter = true;
         }
-        this.apiQueryFilters.addAdditionalFilter("ReferentUserId", UsersListString, null, null, "InList", false, false, false, "string", this._LOVListUsers.length == 0);
+        this.apiQueryFilters.addAdditionalFilter("ReferentUserId", UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
     }
 
@@ -223,7 +223,7 @@ export class DeclarationReferantDataFiltersMenuComponent
             LOVListDepartment = "HowCare"
             RemoveFilter = true;
         }
-        this.apiQueryFilters.addAdditionalFilter("DepartmentId", LOVListDepartment, null, null, "InList", false, false, false, "string", this._LOVListDepartment.length == 0);
+        this.apiQueryFilters.addAdditionalFilter("DepartmentId", LOVListDepartment, null, null, "InListExact", false, false, false, "string", this._LOVListDepartment.length == 0);
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
     }
 
