@@ -1057,6 +1057,15 @@ on record.JournalId equals j.Id
                  select a).ToList();
             return ledgerTransactionPOCOs;
         }
+        public List<string> GetTransactionsCurrencies(string accountId, int tenant)
+        {
+            List<string> transactionsCurrencies = (from lt in context.LedgerTransactions
+                                                   where lt.AccountId == accountId && lt.Tenant == tenant
+                                                   group lt by lt.CurrencyId into cr
+                                                   select cr.Key).ToList();
+
+            return transactionsCurrencies;
+        }
         public List<LedgerTransaction> GetLast10TransactionsForAccount(string accountId, int tenant)
         {
             List<LedgerTransaction> ledgerTransactionPOCOs =
