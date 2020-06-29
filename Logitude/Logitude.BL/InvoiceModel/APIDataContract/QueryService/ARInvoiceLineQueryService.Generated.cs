@@ -91,7 +91,8 @@ using Simplog.Data.InvoiceModel;
 					   					   temp.ARInvoiceLineAction = ARInvoiceLineActionService3.GetARInvoiceLineActionByCode(item.LineActionCode,Tenant); 
 			       
 					   				   }
-				   					
+				   
+				   temp.InvoiceCurrencyExchangeRate = item.InvoiceCurrencyExchangeRate;					
 					MyList.Add(temp);
 				}
 					
@@ -200,7 +201,8 @@ using Simplog.Data.InvoiceModel;
 						 
 					}
 			
-										   
+					
+					temp.InvoiceCurrencyExchangeRate = item.InvoiceCurrencyExchangeRate;					   
 						MyList.Add(temp);
 					}
 						
