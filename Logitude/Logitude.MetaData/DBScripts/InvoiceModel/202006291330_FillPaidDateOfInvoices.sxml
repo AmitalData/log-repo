@@ -63,7 +63,7 @@
 					if(@Count = 1000)
 	    			begin print @Count
 						update ARInvoices
-						set Drop_PaidDate = #temp_Invoices.PaidDate 
+						set PaidDate = #temp_Invoices.PaidDate 
 						FROM ARInvoices
 						INNER JOIN #temp_Invoices
 						on ARInvoices.Id = #temp_Invoices.ARInvoiceId
@@ -81,7 +81,7 @@
 			begin
 					update ARInvoices
 					set
-					Drop_PaidDate = #temp_Invoices.PaidDate 
+					PaidDate = #temp_Invoices.PaidDate 
 					FROM ARInvoices
 					INNER JOIN #temp_Invoices
 					on ARInvoices.Id = #temp_Invoices.ARInvoiceId
