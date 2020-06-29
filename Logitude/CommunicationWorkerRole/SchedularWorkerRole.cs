@@ -231,6 +231,12 @@ namespace CommunicationWorkerRole
                                         }
                                         thread.Start();
                                         TasksThreads.Add(thread);
+                                        bool testOnCurrentThread = false;
+                                        if (testOnCurrentThread)// tester !!
+                                        {
+                                            thread.Join();
+                                        }
+
                                         //queueservice.Complete();
                                         //AddSchedulerQueue(Task);// need to be Moved
                                     }
