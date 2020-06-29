@@ -761,7 +761,12 @@ namespace Logitude.TariffModule.BL.Helpers
                         }
                     }
 
-                    tariffsSummary.Remarks = result.Notes + ", "+ CurrentSurcharge.Notes;
+                    tariffsSummary.Remarks = result.Notes;
+                    if(CurrentSurcharge != null)
+                    {
+                        tariffsSummary.Remarks = tariffsSummary.Remarks + ", " + CurrentSurcharge.Notes;
+                    }
+
                     var calculatedLocalAmount = item.Price != null ? CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId) : 0;
                     tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
                     tariffsSummary.VersionId = item.TariffVersion + "";
@@ -898,7 +903,12 @@ namespace Logitude.TariffModule.BL.Helpers
                         }
                     }
 
-                    tariffsSummary.Remarks = trariff.Notes + ", " + CurrentSurcharge.Notes;
+                    tariffsSummary.Remarks = trariff.Notes;
+                    if (CurrentSurcharge != null)
+                    {
+                        tariffsSummary.Remarks = tariffsSummary.Remarks + ", " + CurrentSurcharge.Notes;
+                    }
+
                     var calculatedLocalAmount = CalculateLocalAmount(price, currencyId, trariff.CurrencyId, tenant);
                     tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
                     tariffsSummary.VersionId = tariffLine.Version + "";
