@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "06eb098b763746afb62ae0748193a1dc";
+		public const string HashString = "86ba4c7565a7a5039a8a763f286ece12";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -40126,9 +40126,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentSubTypeId",
-					  						DefaultText =  "Shipment Sub Type",
+					  						DefaultText =  "Sub Type",
 					  						ListFieldLable =  "ShipmentSubTypeIdListLable",
-					  						ListLableDefaultText =  "Shipment Sub Type",
+					  						ListLableDefaultText =  "Sub Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -40185,9 +40185,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentSubTypeName",
-					  						DefaultText =  "Shipment Sub Type",
+					  						DefaultText =  "Sub Type",
 					  						ListFieldLable =  "ShipmentSubTypeNameListLable",
-					  						ListLableDefaultText =  "Shipment Sub Type",
+					  						ListLableDefaultText =  "Sub Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
