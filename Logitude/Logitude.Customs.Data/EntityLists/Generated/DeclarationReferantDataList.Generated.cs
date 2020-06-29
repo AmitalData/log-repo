@@ -90,6 +90,8 @@ namespace Logitude.Customs.Data.EntityLists
        public int SortedColumns  { get; set; }
        [DataMember]
        public bool IsCustomerLogBoxActivated  { get; set; }
+       [DataMember]
+       public bool IsCancelled  { get; set; }
    }
 
 }

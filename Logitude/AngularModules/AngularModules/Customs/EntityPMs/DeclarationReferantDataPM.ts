@@ -139,6 +139,11 @@ export class DeclarationReferantDataPM {
     public set Favorite(newValue: boolean) { if (this.favorite != newValue) { this.favorite = newValue; this.MarkAsDirty("Favorite"); } }
        
 	 
+    private isCancelled: boolean;
+    public get IsCancelled() { return this.isCancelled; }
+    public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		
