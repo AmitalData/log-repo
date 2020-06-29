@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;סטטוס תיקון הצהרה&quot;"
-  Code="&quot;9d3c&quot;"
+  Code="&quot;e39a&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -61,9 +61,7 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false"
-  DxmlDatabaseTypeCode="Main"
-  DxmlDatabaseSchemaCode="Customs">
+  IsTabsHidden="false">
   <field
     Id="&quot;c136c12c-f749-4cf5-9d88-13bd8dc049f7&quot;"
     FieldName="&quot;Code&quot;"
@@ -274,18 +272,14 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.AmendmentStatus&quot;"
-      ShortView="true"
-      IsManualEntry="false"
-      LocalName="&quot;Created&quot;"
       EnglishName="&quot;Created&quot;"
+      LocalName="&quot;Created&quot;"
+      IsManualEntry="false"
+      ShortView="true"
       EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
@@ -296,10 +290,10 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.AmendmentStatus&quot;"
-      ShortView="false"
-      IsManualEntry="false"
-      LocalName="&quot;Updated&quot;"
       EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
       EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
@@ -308,4 +302,27 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records>
+    <Record
+      Code="1"
+      Name="&quot;ממתין לאישור/דחיה&quot;" />
+    <Record
+      Code="2"
+      Name="&quot;שגוי&quot;" />
+    <Record
+      Code="3"
+      Name="&quot;תיקון אושר&quot;" />
+    <Record
+      Code="4"
+      Name="&quot;תיקון נדחה&quot;" />
+    <Record
+      Code="5"
+      Name="&quot;בוטל&quot;" />
+    <Record
+      Code="6"
+      Name="&quot;אושרה חלקית&quot;" />
+  </Records>
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>
