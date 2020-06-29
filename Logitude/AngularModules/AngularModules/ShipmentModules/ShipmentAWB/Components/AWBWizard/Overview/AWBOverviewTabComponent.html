@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .StatusBoxItem {
         padding: 5px;
@@ -253,7 +253,7 @@
                                                                     <div class="Label" style="text-align: center;">{{'Shipment.O.Overview.ChargeableWeight' | TextCodeTranslationPipe}}</div>
                                                                 </td>
 
-                                                                <td style="vertical-align: middle;">
+                                                                <td style="vertical-align: middle;" *ngIf="PackagesResourcesReady">
                                                                     <div class="Value" style="text-align: center; font-size: 20px;">{{Quantity | NumbersPipe:'N0'}}</div>
                                                                     <div class="Label" style="text-align: center;">{{'ShipmentPackage.F.Quantity' | TextCodeTranslationPipe}}</div>
                                                                 </td>
