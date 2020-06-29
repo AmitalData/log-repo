@@ -3316,16 +3316,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             else
             {
-                List<string> paymentsIds = invoicePaymentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.ARPaymentId).ToList();
-                if (paymentsIds!= null && paymentsIds.Count > 0)
+                ARInvoicePaymentPM itemPM = invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).FirstOrDefault();
+                if(itemPM != null)
                 {
-                    ARPayment invoiceLastPayment = (from d in objectContext.ARPayments
-                                                    where paymentsIds.Contains(d.Id)
-                                                    select d).OrderByDescending(a => a.ValueDate).FirstOrDefault();
-
-
-                    entityPM.PaidDate = invoiceLastPayment.ValueDate; 
+                    entityPM.PaidDate = (from d in objectContext.ARPayments where d.Id == itemPM.ARPaymentId select d.ValueDate).FirstOrDefault();
                 }
+
+                //List<string> paymentsIds = invoicePaymentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.ARPaymentId).ToList();
+                //if (paymentsIds!= null && paymentsIds.Count > 0)
+                //{
+                //    ARPayment invoiceLastPayment = (from d in objectContext.ARPayments
+                //                                    where paymentsIds.Contains(d.Id)
+                //                                    select d).OrderByDescending(a => a.ValueDate).FirstOrDefault();
+
+
+                //    entityPM.PaidDate = invoiceLastPayment.ValueDate; 
+                //}
             }
 
             invoice.PaidDate = entityPM.PaidDate;

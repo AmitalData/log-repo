@@ -881,16 +881,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 invoice.PaidDate = null;
             }
+
             else
             {
-                List<string> paymentsIds = allConnectedItems.Select(s => s.ARPaymentId).ToList();
-                if (paymentsIds != null && paymentsIds.Count > 0)
-                {
-                    ARPayment invoiceLastPayment = (from d in objectContext.ARPayments
-                                                    where paymentsIds.Contains(d.Id)
-                                                    select d).OrderByDescending(a => a.CreateDate).FirstOrDefault();
-                    invoice.PaidDate = invoiceLastPayment.ValueDate;
-                }
+                invoice.PaidDate = this.entityPM.ValueDate;
+
+                //List<string> paymentsIds = allConnectedItems.Select(s => s.ARPaymentId).ToList();
+                //if (paymentsIds != null && paymentsIds.Count > 0)
+                //{
+                //    ARPayment invoiceLastPayment = (from d in objectContext.ARPayments
+                //                                    where paymentsIds.Contains(d.Id)
+                //                                    select d).OrderByDescending(a => a.CreateDate).FirstOrDefault();
+                //    invoice.PaidDate = invoiceLastPayment.ValueDate;
+                //}
             }
         }
         #endregion
