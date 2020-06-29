@@ -212,7 +212,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             
 
             GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
+            if (myGDFDATAPM == null) 
             {
                 return ("");
             }
