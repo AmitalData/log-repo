@@ -684,6 +684,7 @@ export class AWBWizardComponent implements AfterViewInit{
                                         .then(cmpRef => {
                                             this.PageChild_OVE = cmpRef.instance;
                                             this.PageChild_OVE.InitTab(this.EntityPM, this);
+                                            this.PageChild_OVE.PackagesResourcesReady = true;
                                         });
                                 });
                             }
