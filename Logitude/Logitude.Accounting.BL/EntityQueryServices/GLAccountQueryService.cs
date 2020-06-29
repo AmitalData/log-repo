@@ -598,7 +598,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return (from a in context.GLAccounts
                                                 join
                    c in context.GLAccountCurrencies on a.Id equals c.GLAccountId
-                                                where c.MainGLAccountId == accountId && a.Tenant == tenant
+                                                where c.MainGLAccountId == accountId && a.Tenant == tenant && a.ActiveForInterest ==true
                                                 select a.Id).ToList();
            
         }
