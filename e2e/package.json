@@ -1,6 +1,6 @@
 {
-  "name": "angularmodules",
-  "version": "0.0.0",
+  "name": "cypress",
+  "version": "4.9.0",
   "scripts": {
     "ng": "ng",
     "test": "ng test",
