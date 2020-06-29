@@ -3313,6 +3313,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.PaidDate = null;
             }
+
             else
             {
                 List<string> paymentsIds = invoicePaymentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.ARPaymentId).ToList();
@@ -3325,7 +3326,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     entityPM.PaidDate = invoiceLastPayment.ValueDate; 
                 }
-            }  
+            }
+
+            invoice.PaidDate = entityPM.PaidDate;
         }
 
         #endregion
