@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "0a70f8fc4be4d21aaa78d7ec50b37813";
+		public const string HashString = "1a922737cae7228a12282d2dc055a528";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,6 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Customs.Declaration",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Customs.Declarations",
+			      				    OldDBTableName =  "Customs.Declarations",
 			      				    ObjectTableSingular =  "Declaration",
 			      				    ObjectTablePlural =  "Declarations",
 			      				    HasCustomFilter =  false,
@@ -144,6 +145,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomFileNo",
+					  						OldFieldName =  "CustomFileNo",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -195,7 +197,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -207,6 +208,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerId",
+					  						OldFieldName =  "CustomerId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -259,7 +261,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -271,6 +272,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterId",
+					  						OldFieldName =  "ImporterId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.Client",
@@ -323,7 +325,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -335,6 +336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -389,7 +391,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -401,6 +402,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationNumber",
+					  						OldFieldName =  "DeclarationNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -451,7 +453,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -463,6 +464,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerName",
+					  						OldFieldName =  "CustomerName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -514,7 +516,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -526,6 +527,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VersionId",
+					  						OldFieldName =  "VersionId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -577,7 +579,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -589,6 +590,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExternalDeclarationNumber",
+					  						OldFieldName =  "ExternalDeclarationNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -640,7 +642,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -652,6 +653,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationOfficeCode",
+					  						OldFieldName =  "DeclarationOfficeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsHouseType",
@@ -704,7 +706,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -716,6 +717,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TaxationDateTime",
+					  						OldFieldName =  "TaxationDateTime",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -768,7 +770,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -780,6 +781,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AgentId",
+					  						OldFieldName =  "AgentId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -831,7 +833,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -843,6 +844,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ProcedureCurrentCode",
+					  						OldFieldName =  "ProcedureCurrentCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.GovernmentProcedureType",
@@ -895,7 +897,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -907,6 +908,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ProcedureCurrentName",
+					  						OldFieldName =  "ProcedureCurrentName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -958,7 +960,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -970,6 +971,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AutonomyRegionTypeCode",
+					  						OldFieldName =  "AutonomyRegionTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.AutonomyType",
@@ -1022,7 +1024,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1034,6 +1035,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AutonomyRegionTypeName",
+					  						OldFieldName =  "AutonomyRegionTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1085,7 +1087,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1097,6 +1098,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterPassCountryCode",
+					  						OldFieldName =  "ImporterPassCountryCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsCountry",
@@ -1149,7 +1151,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1161,6 +1162,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterPassCountryName",
+					  						OldFieldName =  "ImporterPassCountryName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1212,7 +1214,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1224,6 +1225,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransferImporterId",
+					  						OldFieldName =  "TransferImporterId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.Client",
@@ -1276,7 +1278,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1288,6 +1289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransferImporterCountryCode",
+					  						OldFieldName =  "TransferImporterCountryCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsCountry",
@@ -1340,7 +1342,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1352,6 +1353,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransferImporterCountryName",
+					  						OldFieldName =  "TransferImporterCountryName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1403,7 +1405,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1415,6 +1416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EntitleImporterId",
+					  						OldFieldName =  "EntitleImporterId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1466,7 +1468,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1478,6 +1479,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterEntitlementTypeCode",
+					  						OldFieldName =  "ImporterEntitlementTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.EntitlementType",
@@ -1530,7 +1532,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1542,6 +1543,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterEntitlementTypeName",
+					  						OldFieldName =  "ImporterEntitlementTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1593,7 +1595,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1605,6 +1606,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EntitleImporterCountryCode",
+					  						OldFieldName =  "EntitleImporterCountryCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsCountry",
@@ -1657,7 +1659,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1669,6 +1670,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EntitleImporterCountryName",
+					  						OldFieldName =  "EntitleImporterCountryName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1720,7 +1722,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1732,6 +1733,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationDocumentId",
+					  						OldFieldName =  "DeclarationDocumentId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1783,7 +1785,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1795,6 +1796,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationDocumentTypeCode",
+					  						OldFieldName =  "DeclarationDocumentTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.LeadDocumentType",
@@ -1847,7 +1849,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1859,6 +1860,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationDocumentTypeName",
+					  						OldFieldName =  "DeclarationDocumentTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1910,7 +1912,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1922,6 +1923,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
+					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -1974,7 +1976,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1986,6 +1987,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsChanged",
+					  						OldFieldName =  "IsChanged",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2037,7 +2039,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2049,6 +2050,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentDate",
+					  						OldFieldName =  "PaymentDate",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2101,7 +2103,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2113,6 +2114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "HatraDate",
+					  						OldFieldName =  "HatraDate",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2165,7 +2167,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2177,6 +2178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationStatusTypeCode",
+					  						OldFieldName =  "DeclarationStatusTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.DeclarationStatusType",
@@ -2229,7 +2231,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2241,6 +2242,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LoadingFactor",
+					  						OldFieldName =  "LoadingFactor",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2294,7 +2296,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2306,6 +2307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DealValue",
+					  						OldFieldName =  "DealValue",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2359,7 +2361,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2371,6 +2372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CIFValue",
+					  						OldFieldName =  "CIFValue",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2424,7 +2426,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2436,6 +2437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalTax",
+					  						OldFieldName =  "TotalTax",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2489,7 +2491,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2501,6 +2502,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationNumberandVersionId",
+					  						OldFieldName =  "DeclarationNumberandVersionId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2549,7 +2551,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2561,6 +2562,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Consignments",
+					  						OldFieldName =  "Consignments",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -2610,7 +2612,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2622,6 +2623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SupplierInvoices",
+					  						OldFieldName =  "SupplierInvoices",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -2669,7 +2671,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2681,6 +2682,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationTaxes",
+					  						OldFieldName =  "DeclarationTaxes",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -2726,7 +2728,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2738,6 +2739,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FileState",
+					  						OldFieldName =  "FileState",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2788,7 +2790,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2800,6 +2801,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransportModeId",
+					  						OldFieldName =  "TransportModeId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsTransportMode",
@@ -2851,7 +2853,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2863,6 +2864,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ErrosXml",
+					  						OldFieldName =  "ErrosXml",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2912,7 +2914,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2924,6 +2925,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationOfficeName",
+					  						OldFieldName =  "DeclarationOfficeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2973,7 +2975,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2985,6 +2986,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterName",
+					  						OldFieldName =  "ImporterName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3034,7 +3036,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3046,6 +3047,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DepartmentId",
+					  						OldFieldName =  "DepartmentId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Department",
@@ -3097,7 +3099,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3109,6 +3110,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DepartmentName",
+					  						OldFieldName =  "DepartmentName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3158,7 +3160,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3170,6 +3171,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReferentUserId",
+					  						OldFieldName =  "ReferentUserId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3220,7 +3222,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3232,6 +3233,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationStatusTypeName",
+					  						OldFieldName =  "DeclarationStatusTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3283,7 +3285,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3295,6 +3296,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StorageSiteCode",
+					  						OldFieldName =  "StorageSiteCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.DeliverySiteType",
@@ -3346,7 +3348,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3358,6 +3359,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PlatformFee",
+					  						OldFieldName =  "PlatformFee",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3411,7 +3413,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3423,6 +3424,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationConstraints",
+					  						OldFieldName =  "DeclarationConstraints",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -3468,7 +3470,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3480,6 +3481,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerCode",
+					  						OldFieldName =  "CustomerCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3528,7 +3530,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3540,6 +3541,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDateTime",
+					  						OldFieldName =  "CreateDateTime",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3591,7 +3593,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3603,6 +3604,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDateTime",
+					  						OldFieldName =  "UpdateDateTime",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3654,7 +3656,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3666,6 +3667,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCancelled",
+					  						OldFieldName =  "IsCancelled",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3716,7 +3718,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3728,6 +3729,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EntitleImporterName",
+					  						OldFieldName =  "EntitleImporterName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3777,7 +3779,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3789,6 +3790,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransportModeName",
+					  						OldFieldName =  "TransportModeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3838,7 +3840,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3850,6 +3851,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransferImporterName",
+					  						OldFieldName =  "TransferImporterName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3897,7 +3899,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3909,6 +3910,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DealValueWithoutFactor",
+					  						OldFieldName =  "DealValueWithoutFactor",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3961,7 +3963,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3973,6 +3974,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterCode",
+					  						OldFieldName =  "ImporterCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4023,7 +4025,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4035,6 +4036,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransferImporterCode",
+					  						OldFieldName =  "TransferImporterCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4085,7 +4087,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4097,6 +4098,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EntitleImporterCode",
+					  						OldFieldName =  "EntitleImporterCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4147,7 +4149,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4159,6 +4160,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MarkAsChanged",
+					  						OldFieldName =  "MarkAsChanged",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4203,7 +4205,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4215,6 +4216,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomsTapagNumeral",
+					  						OldFieldName =  "CustomsTapagNumeral",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4260,7 +4262,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4272,6 +4273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomsTapagFile",
+					  						OldFieldName =  "CustomsTapagFile",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4316,7 +4318,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4328,6 +4329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConcurrencyGUID",
+					  						OldFieldName =  "ConcurrencyGUID",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4372,7 +4374,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4384,6 +4385,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NewConcurrencyGUID",
+					  						OldFieldName =  "NewConcurrencyGUID",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4428,7 +4430,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4440,6 +4441,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
+					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4489,7 +4491,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4501,6 +4502,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterTypeCode",
+					  						OldFieldName =  "ImporterTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomerIdentifyType",
@@ -4552,7 +4554,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4564,6 +4565,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransferImporterTypeCode",
+					  						OldFieldName =  "TransferImporterTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomerIdentifyType",
@@ -4615,7 +4617,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4627,6 +4628,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EntitleImporterTypeCode",
+					  						OldFieldName =  "EntitleImporterTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomerIdentifyType",
@@ -4678,7 +4680,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4690,6 +4691,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterTypeName",
+					  						OldFieldName =  "ImporterTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4739,7 +4741,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4751,6 +4752,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransferImporterTypeName",
+					  						OldFieldName =  "TransferImporterTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4800,7 +4802,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4812,6 +4813,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EntitleImporterTypeName",
+					  						OldFieldName =  "EntitleImporterTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4861,7 +4863,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4873,6 +4874,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UserNotes",
+					  						OldFieldName =  "UserNotes",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4922,7 +4924,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4934,6 +4935,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FreightValuesFilled",
+					  						OldFieldName =  "FreightValuesFilled",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4978,7 +4980,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -4990,6 +4991,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaidDeclarationWithoutRelease",
+					  						OldFieldName =  "PaidDeclarationWithoutRelease",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5035,7 +5037,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5047,6 +5048,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationWithoutRelease",
+					  						OldFieldName =  "DeclarationWithoutRelease",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5092,7 +5094,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5104,6 +5105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "HasConstraint",
+					  						OldFieldName =  "HasConstraint",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5148,7 +5150,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5160,6 +5161,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PrimaryInvoiceCounterKey",
+					  						OldFieldName =  "PrimaryInvoiceCounterKey",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5205,7 +5207,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5217,6 +5218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentOrderNumber",
+					  						OldFieldName =  "PaymentOrderNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5267,7 +5269,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5279,6 +5280,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentStatusCode",
+					  						OldFieldName =  "PaymentStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5329,7 +5331,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5341,6 +5342,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsSignedVersion",
+					  						OldFieldName =  "IsSignedVersion",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5386,7 +5388,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5398,6 +5399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SignedByUserId",
+					  						OldFieldName =  "SignedByUserId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
@@ -5443,7 +5445,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5455,6 +5456,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StorageSiteName",
+					  						OldFieldName =  "StorageSiteName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -5505,7 +5507,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5517,6 +5518,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "HasDocument",
+					  						OldFieldName =  "HasDocument",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5561,7 +5563,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5573,6 +5574,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SignerPersonalId",
+					  						OldFieldName =  "SignerPersonalId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5623,7 +5625,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5635,6 +5636,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomsNumeral",
+					  						OldFieldName =  "CustomsNumeral",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -5679,7 +5681,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5691,6 +5692,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsConvertedDeclaration",
+					  						OldFieldName =  "IsConvertedDeclaration",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5741,7 +5743,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5753,6 +5754,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CorrectionsXml",
+					  						OldFieldName =  "CorrectionsXml",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -5803,7 +5805,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5815,6 +5816,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ResetDeclarationNumber",
+					  						OldFieldName =  "ResetDeclarationNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5859,7 +5861,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5871,6 +5872,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCopiedFromOtherDeclaration",
+					  						OldFieldName =  "IsCopiedFromOtherDeclaration",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5915,7 +5917,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5927,6 +5928,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RequestFileNumber",
+					  						OldFieldName =  "RequestFileNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5972,7 +5974,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -5984,6 +5985,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsReleaseFile",
+					  						OldFieldName =  "IsReleaseFile",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6034,7 +6036,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6046,6 +6047,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VatChanged",
+					  						OldFieldName =  "VatChanged",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6090,7 +6092,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6102,6 +6103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsConnectedToUnifreight",
+					  						OldFieldName =  "IsConnectedToUnifreight",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6147,7 +6149,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6159,6 +6160,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MainImporterEntitlemntTypeCode",
+					  						OldFieldName =  "MainImporterEntitlemntTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.EntitlementType",
@@ -6205,7 +6207,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6217,6 +6218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransImporterEntitleTypeCode",
+					  						OldFieldName =  "TransImporterEntitleTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.EntitlementType",
@@ -6263,7 +6265,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6275,6 +6276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterAddress",
+					  						OldFieldName =  "ImporterAddress",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6325,7 +6327,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6337,6 +6338,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransferImporterAddress",
+					  						OldFieldName =  "TransferImporterAddress",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6387,7 +6389,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6399,6 +6400,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EntitleImporterAddress",
+					  						OldFieldName =  "EntitleImporterAddress",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6449,7 +6451,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6461,6 +6462,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterPassportNumber",
+					  						OldFieldName =  "ImporterPassportNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6511,7 +6513,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6523,6 +6524,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransferPassportNumber",
+					  						OldFieldName =  "TransferPassportNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6573,7 +6575,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6585,6 +6586,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EntitlePassportNumber",
+					  						OldFieldName =  "EntitlePassportNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6635,7 +6637,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6647,6 +6648,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FacilityTypeName",
+					  						OldFieldName =  "FacilityTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6691,7 +6693,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6703,6 +6704,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CalculatedImporterName",
+					  						OldFieldName =  "CalculatedImporterName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6747,7 +6749,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6759,6 +6760,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CalculatedTransferImporterName",
+					  						OldFieldName =  "CalculatedTransferImporterName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6803,7 +6805,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6815,6 +6816,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CalculatedEntitleImporterName",
+					  						OldFieldName =  "CalculatedEntitleImporterName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6859,7 +6861,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6871,6 +6872,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerVatNo",
+					  						OldFieldName =  "CustomerVatNo",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6919,7 +6921,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6931,6 +6932,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationErrorViews2",
+					  						OldFieldName =  "DeclarationErrorViews2",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -6976,7 +6978,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6988,6 +6989,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationPaymentChanged",
+					  						OldFieldName =  "DeclarationPaymentChanged",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7032,7 +7034,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7044,6 +7045,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomsRequestsSheetId",
+					  						OldFieldName =  "CustomsRequestsSheetId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7088,7 +7090,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7100,6 +7101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DocumentDeclarationId",
+					  						OldFieldName =  "DocumentDeclarationId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7144,7 +7146,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7156,6 +7157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StorageStatusCode",
+					  						OldFieldName =  "StorageStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.StorageStatus",
@@ -7207,7 +7209,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7219,6 +7220,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CasualSupplierName",
+					  						OldFieldName =  "CasualSupplierName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -7267,7 +7269,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7279,6 +7280,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CasualSupplierAddress",
+					  						OldFieldName =  "CasualSupplierAddress",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -7327,7 +7329,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7339,6 +7340,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCourierDeclaration",
+					  						OldFieldName =  "IsCourierDeclaration",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7389,7 +7391,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7401,6 +7402,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ManifestCargoStatusCode",
+					  						OldFieldName =  "ManifestCargoStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.ManifestCargoStatus",
@@ -7452,7 +7454,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7464,6 +7465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ManifestErrorXml",
+					  						OldFieldName =  "ManifestErrorXml",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7513,7 +7515,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7525,6 +7526,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierHAWB",
+					  						OldFieldName =  "CourierHAWB",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7575,7 +7577,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7587,6 +7588,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ManifestNumber",
+					  						OldFieldName =  "ManifestNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7631,7 +7633,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7643,6 +7644,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StorageStatusName",
+					  						OldFieldName =  "StorageStatusName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7693,7 +7695,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7705,6 +7706,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsAccumulated",
+					  						OldFieldName =  "IsAccumulated",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7749,7 +7751,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7761,6 +7762,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExcludeConsignment",
+					  						OldFieldName =  "ExcludeConsignment",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7809,7 +7811,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7821,6 +7822,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierCustomStatusCode",
+					  						OldFieldName =  "CourierCustomStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CourierCustomStatus",
@@ -7872,7 +7874,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7884,6 +7885,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierSuspentionReasonCode",
+					  						OldFieldName =  "CourierSuspentionReasonCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.AgentTalkBackType",
@@ -7935,7 +7937,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -7947,6 +7948,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierReleaseStatusCode",
+					  						OldFieldName =  "CourierReleaseStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7996,7 +7998,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8008,6 +8009,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierHataraStatusCode",
+					  						OldFieldName =  "CourierHataraStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8056,7 +8058,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8068,6 +8069,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierData",
+					  						OldFieldName =  "CourierData",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8113,7 +8115,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8125,6 +8126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InvoiceHasFreight",
+					  						OldFieldName =  "InvoiceHasFreight",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8169,7 +8171,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8181,6 +8182,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DealValueWithFactor",
+					  						OldFieldName =  "DealValueWithFactor",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -8232,7 +8234,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8244,6 +8245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsValueForCustomsOnly",
+					  						OldFieldName =  "IsValueForCustomsOnly",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8293,7 +8295,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8305,6 +8306,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "WeightValue",
+					  						OldFieldName =  "WeightValue",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.FreightPaymentMethod",
@@ -8356,7 +8358,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8368,6 +8369,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "WeightValueName",
+					  						OldFieldName =  "WeightValueName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -8418,7 +8420,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8430,6 +8431,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationConsAcceptances",
+					  						OldFieldName =  "DeclarationConsAcceptances",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -8478,7 +8480,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8490,6 +8491,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierSearchFields",
+					  						OldFieldName =  "CourierSearchFields",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -8543,7 +8545,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8555,6 +8556,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierCustomStatusName",
+					  						OldFieldName =  "CourierCustomStatusName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8606,7 +8608,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8618,6 +8619,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ManifestCargoStatusName",
+					  						OldFieldName =  "ManifestCargoStatusName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8668,7 +8670,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8680,6 +8681,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MAWBCourierMaster",
+					  						OldFieldName =  "MAWBCourierMaster",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8730,7 +8732,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8742,6 +8743,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierSuspentionReasonName",
+					  						OldFieldName =  "CourierSuspentionReasonName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -8792,7 +8794,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8804,6 +8805,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AcceptanceStatusCode",
+					  						OldFieldName =  "AcceptanceStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.AcceptanceStatus",
@@ -8855,7 +8857,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8867,6 +8868,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CasualImporterAddress1",
+					  						OldFieldName =  "CasualImporterAddress1",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -8917,7 +8919,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8929,6 +8930,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CasualImporterAddress2",
+					  						OldFieldName =  "CasualImporterAddress2",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -8979,7 +8981,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -8991,6 +8992,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CasualImporterCity",
+					  						OldFieldName =  "CasualImporterCity",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -9041,7 +9043,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9053,6 +9054,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CasualImporterZipCode",
+					  						OldFieldName =  "CasualImporterZipCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9103,7 +9105,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9115,6 +9116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CasualImporterFax",
+					  						OldFieldName =  "CasualImporterFax",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9165,7 +9167,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9177,6 +9178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CasualImporterEmail",
+					  						OldFieldName =  "CasualImporterEmail",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9227,7 +9229,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9239,6 +9240,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CasualImporterTel",
+					  						OldFieldName =  "CasualImporterTel",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9289,7 +9291,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9301,6 +9302,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CasualImporterContact",
+					  						OldFieldName =  "CasualImporterContact",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -9351,7 +9353,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9363,6 +9364,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ItemsProcessTypesList",
+					  						OldFieldName =  "ItemsProcessTypesList",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9413,7 +9415,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9425,6 +9426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsClose",
+					  						OldFieldName =  "IsClose",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -9474,7 +9476,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9486,6 +9487,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AcceptanceStatusName",
+					  						OldFieldName =  "AcceptanceStatusName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9536,7 +9538,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9548,6 +9549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierSuspentionCode",
+					  						OldFieldName =  "CourierSuspentionCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.DeclarationStatusType",
@@ -9599,7 +9601,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9611,6 +9612,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierSuspentionName",
+					  						OldFieldName =  "CourierSuspentionName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -9661,7 +9663,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9673,6 +9674,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DepositionStatusCode",
+					  						OldFieldName =  "DepositionStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9723,7 +9725,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9735,6 +9736,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierMasterId",
+					  						OldFieldName =  "CourierMasterId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9779,7 +9781,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9791,6 +9792,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsClosedForFollowUp",
+					  						OldFieldName =  "IsClosedForFollowUp",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -9840,7 +9842,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9852,6 +9853,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FastIndividualProcessCode",
+					  						OldFieldName =  "FastIndividualProcessCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9901,7 +9903,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9913,6 +9914,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalInvoiceAmountInUSD",
+					  						OldFieldName =  "TotalInvoiceAmountInUSD",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -9964,7 +9966,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -9976,6 +9977,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsPending902",
+					  						OldFieldName =  "IsPending902",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -10025,7 +10027,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10037,6 +10038,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCourierMissingClassification",
+					  						OldFieldName =  "IsCourierMissingClassification",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -10086,7 +10088,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10098,6 +10099,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MAWB",
+					  						OldFieldName =  "MAWB",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -10147,7 +10149,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10159,6 +10160,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsPending900",
+					  						OldFieldName =  "IsPending900",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -10208,7 +10210,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10220,6 +10221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierPendingReasonList",
+					  						OldFieldName =  "CourierPendingReasonList",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -10269,7 +10271,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10281,6 +10282,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CargoDescription",
+					  						OldFieldName =  "CargoDescription",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -10330,7 +10332,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10342,6 +10343,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsPaymentProtested",
+					  						OldFieldName =  "IsPaymentProtested",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -10392,7 +10394,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10404,6 +10405,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FastIndividualProcessName",
+					  						OldFieldName =  "FastIndividualProcessName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10453,7 +10455,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10465,6 +10466,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DecDangersContacts",
+					  						OldFieldName =  "DecDangersContacts",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -10514,7 +10516,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10526,6 +10527,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmendmentRequestNumber",
+					  						OldFieldName =  "AmendmentRequestNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10575,7 +10577,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10587,6 +10588,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmendmentStatus",
+					  						OldFieldName =  "AmendmentStatus",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10632,7 +10634,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10644,6 +10645,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmendmentissueDate",
+					  						OldFieldName =  "AmendmentissueDate",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -10693,7 +10695,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10705,6 +10706,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmendmentRemarks",
+					  						OldFieldName =  "AmendmentRemarks",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -10750,7 +10752,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10762,6 +10763,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmendmentDeficitInitiated",
+					  						OldFieldName =  "AmendmentDeficitInitiated",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -10807,7 +10809,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10819,6 +10820,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmendDeficitInitiatedReasTo",
+					  						OldFieldName =  "AmendDeficitInitiatedReasTo",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -10864,7 +10866,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10876,6 +10877,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmendmentCorrectedByUserId",
+					  						OldFieldName =  "AmendmentCorrectedByUserId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10921,7 +10923,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10933,6 +10934,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmendmentRejectionReason",
+					  						OldFieldName =  "AmendmentRejectionReason",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -10978,7 +10980,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -10990,6 +10991,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsAmendment",
+					  						OldFieldName =  "IsAmendment",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11035,7 +11037,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11047,6 +11048,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmendmentOriginalDeclartation",
+					  						OldFieldName =  "AmendmentOriginalDeclartation",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11092,7 +11094,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11104,6 +11105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmendmentCorrectedByUserName",
+					  						OldFieldName =  "AmendmentCorrectedByUserName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11153,7 +11155,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11165,6 +11166,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmendmentStatusName",
+					  						OldFieldName =  "AmendmentStatusName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11210,7 +11212,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11222,6 +11223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierManifestStatusCode",
+					  						OldFieldName =  "CourierManifestStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11272,7 +11274,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11284,6 +11285,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierPaymentStatusCode",
+					  						OldFieldName =  "CourierPaymentStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11334,7 +11336,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11346,6 +11347,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsPendingNotNull",
+					  						OldFieldName =  "IsPendingNotNull",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11395,7 +11397,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11407,6 +11408,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsDiamondDeclaration",
+					  						OldFieldName =  "IsDiamondDeclaration",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11452,7 +11454,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11464,6 +11465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmendmentDontDisplayInList",
+					  						OldFieldName =  "AmendmentDontDisplayInList",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11514,7 +11516,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11526,6 +11527,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmendmentMessage",
+					  						OldFieldName =  "AmendmentMessage",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -11570,7 +11572,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11582,6 +11583,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsAmendmentDisplayOnly",
+					  						OldFieldName =  "IsAmendmentDisplayOnly",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11626,7 +11628,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11638,6 +11639,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsMissMandatoryDiamond",
+					  						OldFieldName =  "IsMissMandatoryDiamond",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11687,7 +11689,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11699,6 +11700,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsValidTicketsDiamond",
+					  						OldFieldName =  "IsValidTicketsDiamond",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11748,7 +11750,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11760,6 +11761,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomFileAmendment",
+					  						OldFieldName =  "CustomFileAmendment",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -11810,7 +11812,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11822,6 +11823,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationNoAmendment",
+					  						OldFieldName =  "DeclarationNoAmendment",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11871,7 +11873,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11883,6 +11884,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AvailabilityDate",
+					  						OldFieldName =  "AvailabilityDate",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -11928,7 +11930,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -11940,6 +11941,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmendmentNumber",
+					  						OldFieldName =  "AmendmentNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -11989,7 +11991,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -12001,6 +12002,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CourierPendingReasonName",
+					  						OldFieldName =  "CourierPendingReasonName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -12050,7 +12052,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HtmlListComponentUrl =  "./CustomsModules/CustomsListTemplates/Components/DeclarationListTemplate",
 					  						HtmlListComponentName =  "DeclarationListTemplate",
 					  						HasTemplate =  false,
@@ -12064,6 +12065,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AutomaticPayment",
+					  						OldFieldName =  "AutomaticPayment",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -12108,7 +12110,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -12120,6 +12121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LoadingDateTime",
+					  						OldFieldName =  "LoadingDateTime",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -12170,7 +12172,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -12182,6 +12183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipCode",
+					  						OldFieldName =  "ShipCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsShip",
@@ -12233,7 +12235,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -12245,6 +12246,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsExporterConfirmation",
+					  						OldFieldName =  "IsExporterConfirmation",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -12295,7 +12297,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -12307,6 +12308,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipName",
+					  						OldFieldName =  "ShipName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12355,7 +12357,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -12367,6 +12368,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DestinationCountryName",
+					  						OldFieldName =  "DestinationCountryName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12416,7 +12418,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -12428,6 +12429,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationExportRecipients",
+					  						OldFieldName =  "DeclarationExportRecipients",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -12476,7 +12478,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -12488,6 +12489,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Direction",
+					  						OldFieldName =  "Direction",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12538,7 +12540,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -12550,6 +12551,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AgentRoleCode",
+					  						OldFieldName =  "AgentRoleCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12600,7 +12602,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -12612,6 +12613,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExportFile",
+					  						OldFieldName =  "ExportFile",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12662,7 +12664,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -12674,6 +12675,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DestinationCountryCode",
+					  						OldFieldName =  "DestinationCountryCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsCountry",
@@ -12725,7 +12727,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -14719,6 +14720,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "DWR",
+                EnglishName =  "Amendment Waiting for customs",
+                LocalName =  "תיקון הצהרה ממתינה לטיפול מכס",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DeclarationObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -14784,7 +14803,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "שלח הצהרה",
 						FeatureUniqeCode = DeclarationFeature_MB0.FeatureUniqeCode,
-						HtmlComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendDeclarationComponent",
+						HtmlComponentPath = null,
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
@@ -14804,7 +14823,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "שלח מצהר",
 						FeatureUniqeCode = DeclarationFeature_MB1.FeatureUniqeCode,
-						HtmlComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendManifestComponent",
+						HtmlComponentPath = null,
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
@@ -15204,8 +15223,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "רשימת מסמכים",
 						FeatureUniqeCode = DeclarationFeature_MB5.FeatureUniqeCode,
-						HtmlComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DocumentsPanel/DocumentsPanelComponent",
-						Width = 30,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 	    }
