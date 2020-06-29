@@ -140,5 +140,6 @@ export class ARInvoiceList {
 		BillToGLAccountId: string;
 		RegionalTaxId: string;
 		RegionalTaxPercentage: number;
+		PaidDate: Date;
 	
 }

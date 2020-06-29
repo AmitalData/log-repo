@@ -16,6 +16,8 @@ import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExec
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+ 
+ 
 
 
 
@@ -24,7 +26,7 @@ import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
     providers: [EntityListService],
   templateUrl: './BatchInvoicesComponent.html',
 })
-export class BatchInvoicesComponent extends BaseComponent {
+export class BatchInvoicesComponent extends BaseComponent implements AfterViewInit, OnInit{
     entityListService = new EntityListService();
     DataContext: any = this;
     LoadGrids: boolean = false;
@@ -54,6 +56,7 @@ export class BatchInvoicesComponent extends BaseComponent {
   //public MarkIsChecked: EventEmitter<any> = new EventEmitter();
     public ColumnsReady: EventEmitter<any> = new EventEmitter();
   ngOnInit() {
+    this.InitializeDate();
     this.BuildColumns();
     this.ReloadData();
 
@@ -208,7 +211,7 @@ export class BatchInvoicesComponent extends BaseComponent {
      today: Date = new Date();
      lastmonth:any = this.today.setDate(this.today.getDay() - 30);
   
-  private fromDate: Date = DateTool.NextDay(DateTool.GetCurrentDateTimeAsUtc(), -30);
+  private fromDate: Date;
     public get FromDate() { return this.fromDate; }
     public set FromDate(value: Date) {
         if (this.fromDate != value) {
@@ -218,7 +221,7 @@ export class BatchInvoicesComponent extends BaseComponent {
         }
     }
 
-  private toDate: Date = new Date();
+  private toDate: Date;
     public get ToDate() { return this.toDate; }
     public set ToDate(value: Date) {
         if (this.toDate != value) {
@@ -286,9 +289,12 @@ export class BatchInvoicesComponent extends BaseComponent {
     filters.PageIndex = skip + 1; // decremented 1 in the service
     filters.GetAll = true;
     filters.GetCount = true;
-    var fromDate = new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0);
-    var toDate = new Date(this.ToDate.getFullYear(), this.ToDate.getMonth(), this.ToDate.getDate(), 0, 0, 0);
-    filters.addAdditionalFilter("InterestCalculationDate", fromDate, toDate, null, "Between", false, false, false, "DateTime"); 
+    // var fromDate = new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0);
+    // var toDate = new Date(this.ToDate.getFullYear(), this.ToDate.getMonth(), this.ToDate.getDate(), 0, 0, 0);
+    // console.log(fromDate);
+    // console.log(toDate);
+
+    filters.addAdditionalFilter("InterestCalculationDate", this.fromDate, this.toDate, null, "Between", false, false, false, "DateTime"); 
     if (this.ShowInProgressReports) {
       filters.addAdditionalFilter("InterestReportStatusCode", "1,9,8", null, null, "InList", false, false, false, "string"); 
     }
@@ -400,8 +406,29 @@ export class BatchInvoicesComponent extends BaseComponent {
     }
 
   }
+  InitializeDate(){
+  
+  var month = new Date().getMonth();
+  var Year = new Date().getFullYear();
+  var Day = new Date().getDate();
+  this.ToDate = this.SetDate(Year, month, Day);
+  this.FromDate = this.SetDate(Year, month, Day);
+  this.FromDate.setUTCDate(this.ToDate.getDate() - 30);
+}
 
  
+  SetDate(year: number, month: number, day: number) {
+    var date = new Date();
+    date.setUTCFullYear(year);
+    date.setUTCMonth(month);
+    date.setUTCDate(day);
+    date.setUTCHours(0);
+    date.setUTCMinutes(0);
+    date.setUTCSeconds(0);
+    date.setUTCMilliseconds(0);
+
+    return date;
+}
 ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices:number,interestReportArgs: InterestReportArguments) {
       var confirmWindow = new ConfirmWindow();
       confirmWindow.Width = 390;

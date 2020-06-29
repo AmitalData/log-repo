@@ -19,6 +19,22 @@
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px;
     }
+
+    .SimpleGridViewRow:hover {
+        background: #f8f8f8;
+    }
+
+        .SimpleGridViewRow:hover .deleteIcon {
+            display: block !important;
+        }
+
+    .deleteIcon {
+        opacity: 0;
+    }
+
+        .deleteIcon:hover {
+            opacity: 1;
+        }
 </style>
 
 <table>
@@ -570,7 +586,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div class="LeftCenter" style="height: 20px;"  [class.Disable]="!item.IsEditingEnabled">
+                                                                <div class="deleteIcon" style="height: 20px;"  [class.Disable]="!item.IsEditingEnabled">
                                                                     <img class="LeftCenter" style="width: 14px; height: 14px; cursor: pointer;" src="./Images/RedX2.png" (click)="DeleteTariff(item)" />
                                                                 </div>
                                                             </td>

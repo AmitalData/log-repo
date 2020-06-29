@@ -130,7 +130,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                             temp.LocalDescription = myChargesTypePM.LocalName;
                         }
                     }
-                 //   temp.EntityId = "1";
+                    temp.InvoiceCurrencyExchangeRate = item.InvoiceCurrencyExchangeRate;
                     MyList.Add(temp);
                 }
 
@@ -209,7 +209,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     }
 
 
-
+                    temp.InvoiceCurrencyExchangeRate = item.InvoiceCurrencyExchangeRate;
 
                     MyList.Add(temp);
                 }

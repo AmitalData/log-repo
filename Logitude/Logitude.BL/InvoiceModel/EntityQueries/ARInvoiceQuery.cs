@@ -1413,6 +1413,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             CreatedByPartner = a.CreatedByPartner,
                             RegionalTaxId = a.RegionalTaxId,
                             RegionalTaxPercentage = a.RegionalTaxPercentage,
+                            PaidDate  = a.PaidDate,
                         };
 
             return query;
@@ -1552,6 +1553,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              CreatedByPartner = entity.CreatedByPartner,
                              RegionalTaxId = entity.RegionalTaxId,
                              RegionalTaxPercentage = entity.RegionalTaxPercentage,
+                             PaidDate = entity.PaidDate,
                          };
 
             return result;
@@ -1666,6 +1668,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               CreatedByPartner = a.CreatedByPartner,
                                               RegionalTaxId = a.RegionalTaxId,
                                               RegionalTaxPercentage = a.RegionalTaxPercentage,
+                                              PaidDate = a.PaidDate,
                                           }).ToList();
             return invoices;
         }
@@ -1783,6 +1786,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     CreatedByPartner = entityPOCO.CreatedByPartner,
                     RegionalTaxId = entityPOCO.RegionalTaxId,
                     RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
+                    PaidDate = entityPOCO.PaidDate,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -2110,6 +2114,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              SATXML = entity.SATXML,
                              RegionalTaxId = entity.RegionalTaxId,
                              RegionalTaxPercentage = entity.RegionalTaxPercentage,
+                             PaidDate = entity.PaidDate,
                          };
 
             return result;

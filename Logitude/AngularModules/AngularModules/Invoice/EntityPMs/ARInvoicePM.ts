@@ -1047,6 +1047,11 @@ export class ARInvoicePM {
     public set RegionalTaxPercentage(newValue: number) { if (this.regionalTaxPercentage != newValue) { this.regionalTaxPercentage = newValue; this.MarkAsDirty("RegionalTaxPercentage"); } }
        
 	 
+    private paidDate: Date;
+    public get PaidDate() { return this.paidDate; }
+    public set PaidDate(newValue: Date) { if (this.paidDate != newValue) { this.paidDate = newValue; this.MarkAsDirty("PaidDate"); } }
+       
+	 
 
     public OldEntityPM: ARInvoicePM;
 		

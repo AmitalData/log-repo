@@ -535,7 +535,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         double? lineInvoiceAmount_Computed = MethodHelper.Round((item.LocalCurrencyAmount / exchangeRate), 2);
                         if (item.ForiegnCurrencyId == entityPM.InvoiceCurrencyId)
                         {
-                            if (lineInvoiceAmount != lineForiegnAmount && !IsFullAccountingActivated(entityPM.Tenant))
+                            if (lineInvoiceAmount != lineForiegnAmount )
                             {
                                 throw new ApplicationException("Wrong Line Invoice Amount");
                             }
@@ -543,7 +543,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                         else
                         {
-                            if (lineInvoiceAmount != lineInvoiceAmount_Computed && !IsFullAccountingActivated(entityPM.Tenant))
+                        if (item.InvoiceCurrencyExchangeRate == null) item.InvoiceCurrencyExchangeRate = entityPM.InvoiceCurrencyExchangeRate;
+                        lineInvoiceAmount_Computed = IsFullAccountingActivated(entityPM.Tenant) ? MethodHelper.Round(item.ForiegnCurrencyAmount * item.InvoiceCurrencyExchangeRate, 2) : lineInvoiceAmount_Computed;
+
+                        if (lineInvoiceAmount != lineInvoiceAmount_Computed )
                             {
                                 throw new ApplicationException("Wrong Line Invoice Amount");
                             }
