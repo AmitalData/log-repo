@@ -43,7 +43,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AutoFillPaymentScreen, 
 	         AutoFillAccountType, 
 	         AutoUnitMeasurement, 
-	         CompanyType,
+	         CompanyType, 
+	         IsMessagesPending, 
+	         QtyFeedbackInPendingMessage,
 	      }
 
 
@@ -73,7 +75,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AutoFillPaymentScreen, 
 	         AutoFillAccountType, 
 	         AutoUnitMeasurement, 
-	         CompanyType,
+	         CompanyType, 
+	         IsMessagesPending, 
+	         QtyFeedbackInPendingMessage,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -185,6 +189,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CompanyType))
             {
 				entityPOCO.CompanyType = entityPM.CompanyType;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMessagesPending))
+            {
+				entityPOCO.IsMessagesPending = entityPM.IsMessagesPending;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QtyFeedbackInPendingMessage))
+            {
+				entityPOCO.QtyFeedbackInPendingMessage = entityPM.QtyFeedbackInPendingMessage;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -303,6 +317,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CompanyType = entityPOCO.CompanyType;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsMessagesPending))
+            {
+					entityPM.IsMessagesPending = entityPOCO.IsMessagesPending;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QtyFeedbackInPendingMessage))
+            {
+					entityPM.QtyFeedbackInPendingMessage = entityPOCO.QtyFeedbackInPendingMessage;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -412,6 +436,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CompanyType))
             {
                 oldEntityPM.CompanyType = entityPM.CompanyType;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMessagesPending))
+            {
+                oldEntityPM.IsMessagesPending = entityPM.IsMessagesPending;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QtyFeedbackInPendingMessage))
+            {
+                oldEntityPM.QtyFeedbackInPendingMessage = entityPM.QtyFeedbackInPendingMessage;
             }
 			
 		}

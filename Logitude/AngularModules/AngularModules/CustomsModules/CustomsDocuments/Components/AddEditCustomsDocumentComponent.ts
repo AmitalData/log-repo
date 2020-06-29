@@ -47,8 +47,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     }
     set DocumentTypeCode(value: string) {
-        debugger;
-        if (value != this.documentTypeCode) {
+         if (value != this.documentTypeCode) {
             this.documentTypeCode = value;
             //if (value != null) {
             if (this.CustomsDocument) {
@@ -577,7 +576,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     OkMethod(isSendToQueue: boolean) {
-          var errors = [];
+           var errors = [];
         if (this.CustomsDocument) {
             Validator.TryValidateObject(this.CustomsDocument, "Customs.CustomsDocument", errors);
             if (errors.length > 0) {
@@ -989,16 +988,16 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             customsClosedTableListService.getAll().subscribe((resp: ServiceResponse) => {
                 this.customsClosedTableList = resp.Result;
                 customDocumentTypeListService.getSingle(this.CustomsDocument.DocumentTypeCode).subscribe((docTypeRes: ServiceResponse) => {
-
-                    if (this.previousValueList != null) {
+                     if (this.previousValueList != null) {
                         this.customDocumentTypeMetaDataList.forEach((metaData) => {
                             if (!AppTool.IsNullOrEmpty(this.customDocumentMetaDataValueList) && this.customDocumentMetaDataValueList.length >0) {
-                                var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d.MetaDataTypeCode == metaData.MetaDataTypeCode)[0];
+                                var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d!= null &&  d.MetaDataTypeCode == metaData.MetaDataTypeCode)[0];
                                 if (value == null) {
 
 
                                     _DocumentTypeMetaDataExtendedService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(this.CustomsDocument.DocumentsFilingId, metaData.MetaDataTypeCode)
                                         .subscribe(myDocFilingResult => {
+                                         
                                             value = new CustomsDocumentMetaDataValuePM(this.CustomsDocument);
                                             value.MetaDataTypeCode = metaData.MetaDataTypeCode;
                                             value.Tenant = SessionLocator.Tenant;
@@ -1011,7 +1010,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                                                     }
                                                 }
                                             }
-                                            if (!myDocFilingResult.Result || myDocFilingResult.Result.length == 1) {
+                                            if (myDocFilingResult.Result && myDocFilingResult.Result.length >0) {
                                                 if (AppTool.IsNullOrEmpty(value.MetaDataValue) && !AppTool.IsNullOrEmpty(myDocFilingResult.Result.MetaDataValue)) {
                                                     value.MetaDataValue = myDocFilingResult.Result.MetaDataValue;
                                                 }
@@ -1022,7 +1021,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                                         });
 
 
-
+                                    if (value!= null)
                                     this.customDocumentMetaDataValueList.push(value);
                                 }
                             }
@@ -1039,7 +1038,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     SetCommonMetaDataValues(previousValues: CustomsDocumentMetaDataValuePM[], docType: any) {
         previousValues.forEach((valuePM) => {
-            var newValue = this.customDocumentMetaDataValueList.filter(d => d.MetaDataTypeCode == valuePM.MetaDataTypeCode)[0];
+            var newValue = this.customDocumentMetaDataValueList.filter(d => d != null && d.MetaDataTypeCode == valuePM.MetaDataTypeCode)[0];
             if (newValue != null) {
                 newValue.MetaDataValue = valuePM.MetaDataValue;
             }
@@ -1054,7 +1053,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             return (a.Mandatory === b.Mandatory) ? 0 : (a.Mandatory < b.Mandatory) ? 1 : -1
         });
         this.customDocumentTypeMetaDataList.forEach((type) => {
-            var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d.MetaDataTypeCode == type.MetaDataTypeCode)[0];
+            var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d != null && d.MetaDataTypeCode == type.MetaDataTypeCode)[0];
 
             var metaDataViewModel = new MetaDataViewModel(type, value, this.CustomsDocument, this.customsClosedTableList, docType);
             this.MetaDataViewModels.push(metaDataViewModel);

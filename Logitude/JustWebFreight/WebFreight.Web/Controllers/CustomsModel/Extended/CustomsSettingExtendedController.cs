@@ -212,7 +212,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             
 
             GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
+            if (myGDFDATAPM == null) 
             {
                 return ("");
             }
@@ -315,6 +315,32 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
 
+        }
+
+
+        public HttpResponseMessage GetTenantDetailsMessagesPMs()
+        {
+
+            try
+            {
+                //string token = HttpContext.Current.Request.Headers["Token"];
+                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+
+                //SecurityUtility.AuthenticationOnTenant(tenant);
+                ICustomContext MyContext = CustomContext.GetContext(0);
+
+                CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(MyContext);
+
+                var tenantMs = customsSettingQuery.GetTenantDetailsMessagesPMs();
+
+                return Request.CreateResponse(HttpStatusCode.OK,   tenantMs  );
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
     }
 }
