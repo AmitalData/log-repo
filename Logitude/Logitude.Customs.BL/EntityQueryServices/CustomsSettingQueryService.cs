@@ -163,6 +163,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 tenantM.HaveFeature = item.IsMessagesPending;
                 tenantM.TenantId = item.Tenant;
                 tenantM.IIGServiceAddress = item.IIGServiceAddress;
+                tenantM.QtyFeedbackInPendingMessage =Convert.ToInt32( item.QtyFeedbackInPendingMessage);
+                tenantM.DCAPartnerVault = item.DCAPartnerVault;
                 tenantMs.Add(tenantM);
             }
             //var allPMs = poco.Select(rec => GetEntityPM(rec)).ToList();
@@ -182,9 +184,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public string CustomsAgentId { get; internal set; }
         public bool? HaveFeature { get; internal set; }
         public int TenantId { get; internal set; }
+        public int QtyFeedbackInPendingMessage { get; internal set; }
         public string IIGServiceAddress { get; internal set; }
         public string LastActionLog { get; set; }
         public string DCADownloadFolder { get; internal set; }
+        public string DCAPartnerVault { get; internal set; }
+
     }
 
 #if false
@@ -205,4 +210,4 @@ namespace Logitude.Customs.BL.EntityQueryServices
     }
 #endif
 
-    }
+}

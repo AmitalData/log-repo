@@ -212,7 +212,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             
 
             GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
+            if (myGDFDATAPM == null) 
             {
                 return ("");
             }
@@ -334,7 +334,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 var tenantMs = customsSettingQuery.GetTenantDetailsMessagesPMs();
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { TenantMs = tenantMs });
+                return Request.CreateResponse(HttpStatusCode.OK,   tenantMs  );
             }
 
             catch (Exception ex)
