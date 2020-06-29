@@ -289,12 +289,12 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     filters.PageIndex = skip + 1; // decremented 1 in the service
     filters.GetAll = true;
     filters.GetCount = true;
-    var fromDate = new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0);
-    var toDate = new Date(this.ToDate.getFullYear(), this.ToDate.getMonth(), this.ToDate.getDate(), 0, 0, 0);
+    // var fromDate = new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0);
+    // var toDate = new Date(this.ToDate.getFullYear(), this.ToDate.getMonth(), this.ToDate.getDate(), 0, 0, 0);
     // console.log(fromDate);
     // console.log(toDate);
 
-    filters.addAdditionalFilter("InterestCalculationDate", fromDate, toDate, null, "Between", false, false, false, "DateTime"); 
+    filters.addAdditionalFilter("InterestCalculationDate", this.fromDate, this.toDate, null, "Between", false, false, false, "DateTime"); 
     if (this.ShowInProgressReports) {
       filters.addAdditionalFilter("InterestReportStatusCode", "1,9,8", null, null, "InList", false, false, false, "string"); 
     }
@@ -425,6 +425,8 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     date.setUTCHours(0);
     date.setUTCMinutes(0);
     date.setUTCSeconds(0);
+    date.setUTCMilliseconds(0);
+
     return date;
 }
 ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices:number,interestReportArgs: InterestReportArguments) {
