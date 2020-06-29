@@ -205,72 +205,14 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.ProfitCurrencyId = entityPM.ProfitCurrencyId;
             entityPoco.ProfitExchangeRate = entityPM.ProfitExchangeRate;
             entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
-
-            MapShipmentSubType(entityPM, entityPoco);
+            entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
+            
             BuildSearchField(entityPM, entityPoco);
 
             entityPM.ConvertToLCL = false;
             entityPM.ConvertToFCL = false;
         }
-
-        private static void MapShipmentSubType(QuotePM entityPM, Quote entityPoco)
-        {
-            if (entityPM.TransportModeId == "A")
-            {
-                entityPM.ShipmentTypeId = "Air";
-                entityPoco.ShipmentTypeId = "Air";
-            }
-
-            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
-            {
-                ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
-
-                string code = null;
-                if (entityPM.TransportModeId == "A")
-                {
-                    code = "Air";
-                }
-
-                if (entityPM.TransportModeId == "I")
-                {
-                    if (entityPM.ShipmentTypeId == "FTL")
-                    {
-                        code = "FTL";
-                    }
-
-                    else
-                    {
-                        code = "LTL";
-                    }
-                }
-
-                if (entityPM.TransportModeId == "O")
-                {
-                    if (entityPM.ShipmentTypeId == "FCLD")
-                    {
-                        code = "FCL";
-                    }
-
-                    else
-                    {
-                        code = "LCL";
-                    }
-                }
-
-                ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubTypeByCode(code, entityPM.Tenant);
-                if (subType != null)
-                {
-                    entityPM.ShipmentSubTypeId = subType.Id;
-                    entityPoco.ShipmentSubTypeId = subType.Id;
-                }
-            }
-
-            else
-            {
-                entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
-            }
-        }
-
+        
         private static void BuildSearchField(QuotePM entityPM, Quote entityPoco)
         {
             string mySearchFields = "";
