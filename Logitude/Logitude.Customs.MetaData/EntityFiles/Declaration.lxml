@@ -18200,19 +18200,6 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-    <EventType
-      Code="&quot;DWR&quot;"
-      ObjectTableName="&quot;Customs.Declaration&quot;"
-      EnglishName="&quot;Amendment Waiting for customs&quot;"
-      LocalName="&quot;תיקון הצהרה ממתינה לטיפול מכס&quot;"
-      IsManualEntry="false"
-      ShortView="false"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
@@ -18228,7 +18215,8 @@
       IsPackagable="false"
       TextCodeCode="&quot;Customs.Declaration.B.SendDeclaration&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.SendDeclaration&quot;"
-      FeatureDefaultText="&quot;Send Declarations&quot;" />
+      FeatureDefaultText="&quot;Send Declarations&quot;"
+      HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendDeclarationComponent&quot;" />
     <MenuButton
       EventCode="&quot;SendManifest&quot;"
       DefaultText="&quot;Send Manifest&quot;"
@@ -18239,7 +18227,8 @@
       IsPackagable="true"
       TextCodeCode="&quot;Customs.Declaration.B.SendManifest&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.SendManifest&quot;"
-      FeatureDefaultText="&quot;Send Manifest&quot;" />
+      FeatureDefaultText="&quot;Send Manifest&quot;"
+      HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendManifestComponent&quot;" />
     <MenuButton
       EventCode="&quot;Forms&quot;"
       DefaultText="&quot;Forms&quot;"
@@ -18410,7 +18399,7 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="10"
         LocalDefaultText="&quot;מחיקת Pending&quot;"
-        IsPackagable="false" />
+        IsPackagable="true" />
       <MenuItem
         EventCode="&quot;Declaration Closure&quot;"
         DefaultText="&quot;Declaration Closure&quot;"
@@ -18426,7 +18415,7 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="12"
         LocalDefaultText="&quot;ביטול סגירת הצהרה&quot;"
-        IsPackagable="false"
+        IsPackagable="true"
         TextCodeCode="&quot;Customs.Declaration.B.CancelDeclarationClosure&quot;" />
       <MenuItem
         EventCode="&quot;Declaration Customs Requests&quot;"
@@ -18450,7 +18439,9 @@
       IsPackagable="true"
       TextCodeCode="&quot;Customs.Declaration.B.DocumentsPanel&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.DocumentsPanel&quot;"
-      FeatureDefaultText="&quot;Declaration Documents Panel&quot;" />
+      FeatureDefaultText="&quot;Declaration Documents Panel&quot;"
+      HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DocumentsPanel/DocumentsPanelComponent&quot;"
+      Width="30" />
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes>
