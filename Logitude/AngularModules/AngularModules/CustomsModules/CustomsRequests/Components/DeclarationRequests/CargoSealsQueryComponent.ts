@@ -13,7 +13,7 @@ import { ClientList } from '../../../../Customs/EntityLists/ClientList';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from '../../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
-import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs, SendRequestVIA } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { CargoSealPM } from '../../../../Customs/EntityPMs/CargoSealPM';
@@ -22,6 +22,8 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { AmendmentTypeList } from '../../../../Customs/EntityLists/AmendmentTypeList';
 import { AmendmentTypeListService } from '../../../../Customs/Services/StandardLists/AmendmentTypeListService';
+import { CargoQueryRequestParams } from '../../../../Customs/DataContract/RequestParams/CargoQueryRequestParams';
+import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 
 @Component({
      templateUrl: './CargoSealsQueryComponent.html',
@@ -66,6 +68,54 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
     ngOnInit() {
         super.ngOnInit();
     }
+    _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
+
+
+    SendCargoQueryRequest() {
+
+        var currRequestParams = new CargoQueryRequestParams();///Force new GUID On Each Send !!
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
+        currRequestParams.ForcePersonalSign = false;
+
+        currRequestParams.AppicationId =   this.DeclarationId;
+        currRequestParams.DeclarationId = this.DeclarationId;
+         currRequestParams.DeclarationNumber = this.DeclarationNumber;
+        currRequestParams.CustomsFile = this.CustomFileNo;
+
+        currRequestParams.CargoTypeCode = this.CargoIdentifierTypeCode;
+        currRequestParams.ManifestNumber = this.CargoIdentifierKey1;
+        currRequestParams.SecondCargoID = this.CargoIdentifierKey2;
+        currRequestParams.ThirdCargoID = this.CargoIdentifierKey3;
+        currRequestParams.RequestName = "Manifest Status Query";
+        currRequestParams.ResponseName = "Manifest Status Query";
+
+        //CustomMessageProgressComponent
+        //    .ShowProgressBar(currRequestParams.PBId,
+        //        "שליחת שאילתא למצהר"
+        //        , true)
+        //    .then((res) => {
+        //        this.ResponseData = res;
+        //        if (this._IsFromDeclaration && this.ResponseData.HasException == false) {
+        //            if (this.CurrentSession.CurrentEditComponent != null) {
+        //                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        //            }
+        //        }
+        //        this.OnMassageDisplayMethod();
+        //    }
+        //    ).catch((err) => {
+        //        this.ValidationErrorsList.push(err);
+        //    });
+
+
+        this._IIGGeneralMessagesService.PostCargoQueryRequestParams(currRequestParams)
+            .subscribe((myServiceResponse: ServiceResponse) => {
+                debugger;
+            });
+    }
+
 
     @ViewChild(CustomMessageWrapperComponent)
     SuperCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
@@ -125,6 +175,7 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
             var result = response.Result;
             if (!AppTool.IsNullOrEmpty(result)) {
                 this.CurrentEntity = result;
+
                 this._IsNew = false;
                 this.CargoRowNumber = this.CurrentEntity.CargoRowNumber;
                 this.DeclarationId = this.CurrentEntity.DeclarationId;
@@ -603,6 +654,9 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
             this.CargoIdentifierKey1 = pm.ManifestNumber;
             this.CargoIdentifierKey2 = pm.SecondCargoID;
             this.CargoIdentifierKey3 = pm.ThirdCargoID;
+
+            this.SendCargoQueryRequest();
+
             this.SetFieldsEnabled(false);
 
         } else {
