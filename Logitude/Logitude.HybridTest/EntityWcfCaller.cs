@@ -4,7 +4,7 @@ namespace Logitude.HybridTest.WcfCallers
 {
     public class EntityWcfCaller
     {
-        public static Response CallEntityUpsert<T>(T entityPM,string secondaryToken = null, AdditionalIncludedData includedData = null)
+        public static ServiceOutcome CallEntityUpsert<T>(T entityPM,string secondaryToken = null, AdditionalIncludedData includedData = null)
         {
             string entityPMName = entityPM.GetType().Name; //ServiceNamePM = entityPM
             string serviceName = entityPMName.Substring(0, entityPMName.Length - 2);//ServiceName = entity
@@ -24,7 +24,8 @@ namespace Logitude.HybridTest.WcfCallers
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { entityPM, false };
             ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
-            return serviceOutcome.Response;
+
+            return serviceOutcome;
         }
     }
 }

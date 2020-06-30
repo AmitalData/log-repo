@@ -126,9 +126,9 @@ namespace Logitude.HybridTest.WcfCallers
         }
         private static void AssertResponse<T>(T entityPM)
         {
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(entityPM);
-            Assert.IsFalse(serviceResponse.HasError, "Prepare System Vars Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Prepare System Vars Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(entityPM);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Prepare System Vars Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "Prepare System Vars Failed! " + serviceOutcome.Response.ErrorMessage);
         }
     }
 }

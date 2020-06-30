@@ -19,9 +19,9 @@ namespace Logitude.HybridTest.ServicesTest
                 LocalName = "Hybrid SpecialServicesType",
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(specialServicesTypePM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(specialServicesTypePM);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }
     }
 }

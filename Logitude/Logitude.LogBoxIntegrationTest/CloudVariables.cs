@@ -14,5 +14,7 @@ namespace Logitude.LogboxIntegrationTest
         public const string FromPortCodeUSBOS = "USBOS";
         public const string ToPortCodeAUAAB = "AUAAB";
         public const string IncotermCodeFOB = "FOB";
+
+        public static string TempShipmentNumber = string.Empty;
     }
 }

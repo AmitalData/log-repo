@@ -15,6 +15,7 @@ namespace Logitude.LogboxIntegrationTest.PrepareSystem
         public static void PrepareSystemVars(TestContext context)
         {
             GetAuthenticationCloudTenantToken();
+            //GetAuthenticationLogboxTenantToken();
         }
         private static void GetAuthenticationCloudTenantToken()
         {
