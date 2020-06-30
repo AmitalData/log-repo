@@ -30,9 +30,9 @@ namespace Logitude.HybridTest.ServicesTest
                 CountryCode = HybridData.CountryCodeUS,
                 CardCode = "new",
             });
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(vendorPM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(vendorPM);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }
     }
 }
