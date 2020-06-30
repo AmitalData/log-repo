@@ -13,6 +13,7 @@ namespace CargoTracking.CargoTracking.BL.HelperClasses
         public string DBTableName { get; set; }
         public string CT_TableName { get; set; }
         public string KeyName { get; set; }
+        public string ConditionKey { get; set; }
         public string FieldsDBName { get; set; }
         public string CT_FieldsDBName { get; set; }
         public string RefreshIds { get; set; }

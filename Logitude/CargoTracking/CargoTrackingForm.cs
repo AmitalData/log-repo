@@ -20,6 +20,7 @@ namespace CargoTracking.Forms
     {
         private string LocalConectionstring = "Logitude2-5_Main,sa,Saas256,.";
         private string TestConectionstring =  "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
+        private string CloudConectionstring = "Main,sa,Saas256,amitaldata.cloudapp.net";
         private string dbSourceConnection  ; 
         private string dbDestinationConnection;
         private CargoTrackingMainService cargoTrackingService;
@@ -435,6 +436,18 @@ namespace CargoTracking.Forms
         private void radioButton9_CheckedChanged(object sender, EventArgs e)
         {
             this.NumberOfBulkPerTime = 10000;
+        }
+
+        private void radioButton10_CheckedChanged(object sender, EventArgs e)
+        {
+            SourceConnectionlTextBox.Enabled = false;
+            this.SourceConnectionlTextBox.Text = CloudConectionstring;
+        }
+
+        private void radioButton11_CheckedChanged(object sender, EventArgs e)
+        {
+            DestinationConnectionlTextBox.Enabled = false;
+            this.DestinationConnectionlTextBox.Text = CloudConectionstring;
         }
     }
 }
