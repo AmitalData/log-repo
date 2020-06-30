@@ -21,41 +21,41 @@ namespace Logitude.Customs.BL
        public List<AmendmentStatusDetails> GetAll()
        {
 		    var all = new List<AmendmentStatusDetails>();  
-            all.Add(new AmendmentStatusDetails()
-            {    
-                Code = 1, 
-                Name = "ממתין לאישור/דחיה", 
-			});
+   //         all.Add(new AmendmentStatusDetails()
+   //         {    
+   //             Code = 1, 
+   //             Name = "ממתין לאישור/דחיה", 
+			//});
 			 
-            all.Add(new AmendmentStatusDetails()
-            {    
-                Code = 2, 
-                Name = "שגוי", 
-			});
+   //         all.Add(new AmendmentStatusDetails()
+   //         {    
+   //             Code = 2, 
+   //             Name = "שגוי", 
+			//});
 			 
-            all.Add(new AmendmentStatusDetails()
-            {    
-                Code = 3, 
-                Name = "תיקון אושר", 
-			});
+   //         all.Add(new AmendmentStatusDetails()
+   //         {    
+   //             Code = 3, 
+   //             Name = "תיקון אושר", 
+			//});
 			 
-            all.Add(new AmendmentStatusDetails()
-            {    
-                Code = 4, 
-                Name = "תיקון נדחה", 
-			});
+   //         all.Add(new AmendmentStatusDetails()
+   //         {    
+   //             Code = 4, 
+   //             Name = "תיקון נדחה", 
+			//});
 			 
-            all.Add(new AmendmentStatusDetails()
-            {    
-                Code = 5, 
-                Name = "בוטל", 
-			});
+   //         all.Add(new AmendmentStatusDetails()
+   //         {    
+   //             Code = 5, 
+   //             Name = "בוטל", 
+			//});
 			 
-            all.Add(new AmendmentStatusDetails()
-            {    
-                Code = 6, 
-                Name = "אושרה חלקית", 
-			});
+   //         all.Add(new AmendmentStatusDetails()
+   //         {    
+   //             Code = 6, 
+   //             Name = "אושרה חלקית", 
+			//});
 			
             return all;
        }
