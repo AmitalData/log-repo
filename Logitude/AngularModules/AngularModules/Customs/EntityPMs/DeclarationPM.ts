@@ -1244,6 +1244,11 @@ export class DeclarationPM {
     public set ExportAutonomyRegionTypeCode(newValue: string) { if (this.exportAutonomyRegionTypeCode != newValue) { this.exportAutonomyRegionTypeCode = newValue; this.MarkAsDirty("ExportAutonomyRegionTypeCode"); } }
        
 	 
+    private declarationTypeCode: string;
+    public get DeclarationTypeCode() { return this.declarationTypeCode; }
+    public set DeclarationTypeCode(newValue: string) { if (this.declarationTypeCode != newValue) { this.declarationTypeCode = newValue; this.MarkAsDirty("DeclarationTypeCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

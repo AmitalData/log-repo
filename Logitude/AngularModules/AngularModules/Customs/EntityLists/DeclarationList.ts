@@ -175,6 +175,7 @@ export class DeclarationList {
 	ExportFile: string;
 	DestinationCountryCode: string;
 	ExportAutonomyRegionTypeCode: string;
+	DeclarationTypeCode: string;
 	
 }
  
