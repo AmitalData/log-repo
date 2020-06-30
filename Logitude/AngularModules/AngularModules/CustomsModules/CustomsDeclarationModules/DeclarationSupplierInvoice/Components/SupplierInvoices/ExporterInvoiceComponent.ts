@@ -41,40 +41,40 @@ export class ExporterInvoiceComponent extends BaseComponent
 
     public get BuyerName() { return this.originalSupplierInvoice ? this.originalSupplierInvoice.BuyerName : null; }
     public set BuyerName(newValue: string) {
-        if (AppTool.IsNullOrEmpty(newValue))
-            this.UIProperties.SetRequired("BuyerName", this.ObjectTableName, true);
-        else
-            this.UIProperties.SetRequired("BuyerName", this.ObjectTableName, false);
+        //if (AppTool.IsNullOrEmpty(newValue))
+        //    this.UIProperties.SetRequired("BuyerName", this.ObjectTableName, true);
+        //else
+        //    this.UIProperties.SetRequired("BuyerName", this.ObjectTableName, false);
 
         this.originalSupplierInvoice.BuyerName = newValue;
     }
 
     public get BuyerAddress() { return this.originalSupplierInvoice ? this.originalSupplierInvoice.BuyerAddress : null; }
     public set BuyerAddress(newValue: string) {
-        if (AppTool.IsNullOrEmpty(newValue))
-            this.UIProperties.SetRequired("BuyerAddress", this.ObjectTableName, true);
-        else
-            this.UIProperties.SetRequired("BuyerAddress", this.ObjectTableName, false);
+        //if (AppTool.IsNullOrEmpty(newValue))
+        //    this.UIProperties.SetRequired("BuyerAddress", this.ObjectTableName, true);
+        //else
+        //    this.UIProperties.SetRequired("BuyerAddress", this.ObjectTableName, false);
 
         this.originalSupplierInvoice.BuyerAddress = newValue;
     }
 
     public get BuyerCountryCode() { return this.originalSupplierInvoice ? this.originalSupplierInvoice.BuyerCountryCode : null; }
     public set BuyerCountryCode(newValue: string) {
-        if (AppTool.IsNullOrEmpty(newValue))
-            this.UIProperties.SetRequired("BuyerCountryCode", this.ObjectTableName, true);
-        else
-            this.UIProperties.SetRequired("BuyerCountryCode", this.ObjectTableName, false);
+        //if (AppTool.IsNullOrEmpty(newValue))
+        //    this.UIProperties.SetRequired("BuyerCountryCode", this.ObjectTableName, true);
+        //else
+        //    this.UIProperties.SetRequired("BuyerCountryCode", this.ObjectTableName, false);
 
         this.originalSupplierInvoice.BuyerCountryCode = newValue;
     }
 
     public get BuyerRoleCode() { return this.originalSupplierInvoice ? this.originalSupplierInvoice.BuyerRoleCode : null; }
     public set BuyerRoleCode(newValue: string) {
-         if (AppTool.IsNullOrEmpty(newValue))
-             this.UIProperties.SetRequired("BuyerRoleCode", this.ObjectTableName, true);
-         else
-            this.UIProperties.SetRequired("BuyerRoleCode", this.ObjectTableName, false);
+         //if (AppTool.IsNullOrEmpty(newValue))
+         //    this.UIProperties.SetRequired("BuyerRoleCode", this.ObjectTableName, true);
+         //else
+         //   this.UIProperties.SetRequired("BuyerRoleCode", this.ObjectTableName, false);
 
         this.originalSupplierInvoice.BuyerRoleCode = newValue;
     }
@@ -269,11 +269,11 @@ export class ExporterInvoiceComponent extends BaseComponent
         Validator.TryValidateObject(this.originalSupplierInvoice, "Customs.SupplierInvoice", errors);
         Validator.TryValidateObject(this.originalSupplierInvoicePayment, "Customs.SupplierInvoicePayment", errors);
         Validator.TryValidateObject(this.originalSupplierInvoiceUCR, "Customs.SupplierInvoiceUCR", errors);
-        if (AppTool.IsNullOrEmpty(this.BuyerAddress)) errors.push( "כתובת הקונה שדה חובה");
-        if (AppTool.IsNullOrEmpty(this.BuyerCountryCode)) errors.push("מדינת הקונה שדה חובה");
-        if (AppTool.IsNullOrEmpty(this.BuyerName)) errors.push("שם הקונה שדה חובה");
+      //  if (AppTool.IsNullOrEmpty(this.BuyerAddress)) errors.push( "כתובת הקונה שדה חובה");
+       // if (AppTool.IsNullOrEmpty(this.BuyerCountryCode)) errors.push("מדינת הקונה שדה חובה");
+      //  if (AppTool.IsNullOrEmpty(this.BuyerName)) errors.push("שם הקונה שדה חובה");
         if (AppTool.IsNullOrEmpty(this.PartyRelationshipCode)) errors.push("קוד קשר בעלות שדה חובה");
-        if (AppTool.IsNullOrEmpty(this.BuyerRoleCode)) errors.push("תפקיד הקונה שדה חובה");
+        //if (AppTool.IsNullOrEmpty(this.BuyerRoleCode)) errors.push("תפקיד הקונה שדה חובה");
 
         if (errors.length > 0) {
             this.ValidationErrorsList = errors;

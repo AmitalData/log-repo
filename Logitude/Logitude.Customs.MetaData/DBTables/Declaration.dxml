@@ -866,6 +866,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DeclarationTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1025,7 +1032,7 @@
     ForeignKeyColumn="AmendmentStatus"
     ReferencedTable="AmendmentStatuses"
     ReferencedColumn="Code"
-    ReferencedTableSchema="" />
+    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="AmendmentCorrectedByUserId"
     ReferencedTable="Users"
@@ -1044,6 +1051,11 @@
   <Relation
     ForeignKeyColumn="ExportAutonomyRegionTypeCode"
     ReferencedTable="AutonomyRegionTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DeclarationTypeCode"
+    ReferencedTable="LeadDocumentTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

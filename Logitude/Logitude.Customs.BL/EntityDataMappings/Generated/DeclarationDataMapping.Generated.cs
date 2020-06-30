@@ -147,7 +147,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AgentRoleCode, 
 	         ExportFile, 
 	         DestinationCountryCode, 
-	         ExportAutonomyRegionTypeCode,
+	         ExportAutonomyRegionTypeCode, 
+	         DeclarationTypeCode,
 	      }
 
 
@@ -353,7 +354,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AgentRoleCode, 
 	         ExportFile, 
 	         DestinationCountryCode, 
-	         ExportAutonomyRegionTypeCode,
+	         ExportAutonomyRegionTypeCode, 
+	         DeclarationTypeCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -985,6 +987,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportAutonomyRegionTypeCode))
             {
 				entityPOCO.ExportAutonomyRegionTypeCode = entityPM.ExportAutonomyRegionTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
+            {
+				entityPOCO.DeclarationTypeCode = entityPM.DeclarationTypeCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1623,6 +1630,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExportAutonomyRegionTypeCode = entityPOCO.ExportAutonomyRegionTypeCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationTypeCode))
+            {
+					entityPM.DeclarationTypeCode = entityPOCO.DeclarationTypeCode;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2252,6 +2264,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportAutonomyRegionTypeCode))
             {
                 oldEntityPM.ExportAutonomyRegionTypeCode = entityPM.ExportAutonomyRegionTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
+            {
+                oldEntityPM.DeclarationTypeCode = entityPM.DeclarationTypeCode;
             }
 			
 		}

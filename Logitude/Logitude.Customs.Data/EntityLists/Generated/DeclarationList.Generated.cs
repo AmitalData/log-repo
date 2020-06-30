@@ -348,6 +348,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string DestinationCountryCode  { get; set; }
        [DataMember]
        public string ExportAutonomyRegionTypeCode  { get; set; }
+       [DataMember]
+       public string DeclarationTypeCode  { get; set; }
    }
 
 }

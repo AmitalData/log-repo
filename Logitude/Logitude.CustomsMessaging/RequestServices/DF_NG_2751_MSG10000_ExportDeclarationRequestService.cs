@@ -728,7 +728,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             customDeclaration.DeclarationOfficeID = SetIDTypeValue<DeclarationDeclarationOfficeIDType>(declarationPM.DeclarationOfficeCode);
  
 
-            customDeclaration.TypeCode = SetCodeTypeValue<DeclarationTypeCodeType>(declarationPM.DeclarationDocumentTypeCode);// MUST  hard coded
+            customDeclaration.TypeCode = SetCodeTypeValue<DeclarationTypeCodeType>(declarationPM.DeclarationTypeCode);// MUST  hard coded
 
             customDeclaration.DMExtensions = GetDMExtensions(declarationPM);
              customDeclaration.Agent = GetDeclarationAgent(declarationPM);
