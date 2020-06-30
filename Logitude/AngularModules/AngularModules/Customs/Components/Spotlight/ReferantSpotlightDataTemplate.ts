@@ -193,26 +193,25 @@ export class ReferantSpotlightDataTemplate
             if (this.errors.length == 0) {
                 this.ShowBusyIndicator = true;
                 this.BuildExceptionReasonsList();
-                this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
-
-                    SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.RowIndex });
-                    //SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
-                });
                 this.DeletedCodeList.forEach((item: string) => {
                     this._referantExceptionExtendedPMService.Delete(this.EntityPM.DeclarationId, item).subscribe((response: any) => {
                         this.DeletedCodeList.splice(this.DeletedCodeList.indexOf(item), 1);
                     });
                 });
-                this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
-                    if (item.IsNew == true) {
-                        this._referantExceptionPMService.insert(item.EntityPM).subscribe((response: any) => {
-                            item.IsNew = false;
-                            item.ShowCode = true;
-                        });
-                    } else if (item.EntityPM.IsDirty == true) {
-                        this._referantExceptionPMService.update(item.EntityPM).subscribe();
-                    }
-                }); 
+                this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
+                    this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
+                        if (item.IsNew == true) {
+                            this._referantExceptionPMService.insert(item.EntityPM).subscribe((response: any) => {
+                                item.IsNew = false;
+                                item.ShowCode = true;
+                            });
+                        } else if (item.EntityPM.IsDirty == true) {
+                            this._referantExceptionPMService.update(item.EntityPM).subscribe();
+                        }
+                    });
+                    SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.RowIndex });
+                    //SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                });
             }
             this.spotlightSharedDataService.IsDirty = false;
             this.ShowBusyIndicator = false;
