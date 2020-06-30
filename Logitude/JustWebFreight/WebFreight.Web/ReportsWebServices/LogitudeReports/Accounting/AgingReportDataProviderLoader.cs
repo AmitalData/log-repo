@@ -112,7 +112,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             bool showDetailedCurrencyAccounts = GetFilterValue<bool> ("Detailed");
             if (showDetailedCurrencyAccounts)
-                groupedPeriodsByAccount = result.Where(d=> d.CurrencyCode != totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Select(d => new AgingPeriod()
+                groupedPeriodsByAccount = result.Where(d=> true || d.CurrencyCode != totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Select(d => new AgingPeriod()
                 {
                     PeriodName = showLocals ? "סיכום במט''ז" : "Total Foreign Balance",
                     Total = d.Sum(x => x.Total),
@@ -145,19 +145,33 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             //var groupedPeriodsByAccount0 = result.GroupBy(d => d.AccountId);
             List<AgingPeriod> groupedPeriodsByAccount;
             bool showDetailedCurrencyAccounts = GetFilterValue<bool>("Detailed");
-            if (showDetailedCurrencyAccounts)
-                groupedPeriodsByAccount = result.Where(d=>d.Total != null && d.CurrencyCode == totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Distinct().Select(d => new AgingPeriod()
+            if (showDetailedCurrencyAccounts) { 
+                groupedPeriodsByAccount = result.Where(d => d.Total != null && d.CurrencyCode == totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Distinct().Select(d => new AgingPeriod()
                 {
                     PeriodName = showLocals ? "סיכום בש''ח" : "Total Local Balance",
                     Total = d.Sum(x => x.Total),
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
                     AccountEnglishName = d.First().AccountEnglishName + " / " + d.First().CurrencyCode,
-                    AccountCurrencyCode = d.Where(x=>x.CurrencyCode != null).First().CurrencyCode,
+                    AccountCurrencyCode = d.Where(x => x.CurrencyCode != null).First().CurrencyCode,
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
-                                d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
+                                  d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
 
                 }).ToList();
+            totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
+                groupedPeriodsByAccount = result.Where(d => d.Total != null && d.CurrencyCode != totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Distinct().Select(d => new AgingPeriod()
+                {
+                    PeriodName = showLocals ? "סיכום בש''ח" : "Total Local Balance",
+                    Total = d.First().BalanceInLocalCurrency,
+                    AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
+                    AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
+                    AccountEnglishName = d.First().AccountEnglishName + " / " + d.First().CurrencyCode,
+                    AccountCurrencyCode = d.Where(x => x.CurrencyCode != null).First().CurrencyCode,
+                    AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
+                                  d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
+
+                }).ToList();
+            }
             else
                 groupedPeriodsByAccount = result.Where(d => d.Total != null).GroupBy(d => d.AccountId).Distinct().Select(d => new AgingPeriod()
                 {
