@@ -1018,7 +1018,7 @@
     ForeignKeyColumn="AmendmentStatus"
     ReferencedTable="AmendmentStatuses"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="AmendmentCorrectedByUserId"
     ReferencedTable="Users"

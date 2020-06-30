@@ -177,7 +177,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     ApplyCheckMenuButtonsState(menuButtons: MenuButtonPM[]) {
         let parentButton: MenuButtonPM;
-
+        debugger;
         if (this.EntityPM != null) {
             if (this.CurrentSession.CurrentEditComponent != null) {
 
