@@ -51,6 +51,9 @@
     <Compile Include="CargoTracking.BL\HelperClasses\CargoTable.cs" />
     <Compile Include="CargoTracking.BL\Services\CargoTrackingCustomMappingService.cs" />
     <Compile Include="CargoTracking.BL\Services\CargoTrackingBlockRecordsService.cs" />
+    <Compile Include="CargoTracking.BL\Services\CargoTrackingTableLogicAfterUpdating.cs" />
+    <Compile Include="CargoTracking.BL\Services\CargoTrackingSearchService.cs" />
+    <Compile Include="CargoTracking.BL\Services\CargoTrackingUpdatedAfterFinishMapping.cs" />
     <Compile Include="CargoTracking.BL\Services\CargoTrackingTableLogicService.cs" />
     <Compile Include="CargoTracking.BL\Services\CargoTrackingMainService.cs" />
     <Compile Include="CargoTrackingForm.cs">
