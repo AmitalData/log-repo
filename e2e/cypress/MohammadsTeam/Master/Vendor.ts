@@ -26,7 +26,7 @@ export class VendorGLAccount {
             cy.get('#row0col0').click();
             cy.log('Createing new vendor is done');
 
-        })
+        }
 
     }
     ActivateVendorGlaccount() {

@@ -38,7 +38,7 @@ export class NewBankAccount {
             cy.get('button[id=OKBUTTON]').click();
 
 
-        })
+        }
 
     }
 
