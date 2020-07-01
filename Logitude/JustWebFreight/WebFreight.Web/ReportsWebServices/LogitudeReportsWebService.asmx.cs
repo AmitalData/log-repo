@@ -2868,7 +2868,10 @@ namespace WebFreight.Web.ReportsWebServices
                 acountsRecored.DaysPastDue91_105 = sum91_105;
                 acountsRecored.DaysPastDue106_120 = sum106_120;
 
-                dataProvider.AgedAccountsReceivableList.Add(acountsRecored);
+                if (acountsRecored.CustomerTotals != 0)
+                {
+                    dataProvider.AgedAccountsReceivableList.Add(acountsRecored);
+                }
             }
 
             #endregion
