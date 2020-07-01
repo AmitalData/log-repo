@@ -255,6 +255,21 @@ export class ShipmentComputedFieldsPM {
     public set PickupNotes(newValue: string) { if (this.pickupNotes != newValue) { this.pickupNotes = newValue; this.MarkAsDirty("PickupNotes"); } }
        
 	 
+    private deliveryDate: Date;
+    public get DeliveryDate() { return this.deliveryDate; }
+    public set DeliveryDate(newValue: Date) { if (this.deliveryDate != newValue) { this.deliveryDate = newValue; this.MarkAsDirty("DeliveryDate"); } }
+       
+	 
+    private onHandDate: Date;
+    public get OnHandDate() { return this.onHandDate; }
+    public set OnHandDate(newValue: Date) { if (this.onHandDate != newValue) { this.onHandDate = newValue; this.MarkAsDirty("OnHandDate"); } }
+       
+	 
+    private pODDate: Date;
+    public get PODDate() { return this.pODDate; }
+    public set PODDate(newValue: Date) { if (this.pODDate != newValue) { this.pODDate = newValue; this.MarkAsDirty("PODDate"); } }
+       
+	 
 
     public OldEntityPM: ShipmentComputedFieldsPM;
 		

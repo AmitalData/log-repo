@@ -75,6 +75,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         PickupDriver = a.PickupDriver,
                         PickupTrailerNumber = a.PickupTrailerNumber,
                         PickupNotes = a.PickupNotes,
+                        DeliveryDate = a.DeliveryDate,
+                        OnHandDate = a.OnHandDate,
+                        PODDate = a.PODDate,
 
 
                     }).FirstOrDefault();
@@ -129,6 +132,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                  PickupDriver = a.PickupDriver,
                                                                  PickupTrailerNumber = a.PickupTrailerNumber,
                                                                  PickupNotes = a.PickupNotes,
+                                                                 DeliveryDate = a.DeliveryDate,
+                                                                 OnHandDate = a.OnHandDate,
+                                                                 PODDate = a.PODDate,
                                                              });
             return result;
         }

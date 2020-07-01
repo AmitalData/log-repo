@@ -56,5 +56,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string PickupDriver { get; set; }
         public string PickupTrailerNumber { get; set; }
         public string PickupNotes { get; set; }
+        public DateTime? DeliveryDate { get; set; }
+        public DateTime? OnHandDate { get; set; }
+        public DateTime? PODDate { get; set; }
     }
 }
