@@ -230,7 +230,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             entityPM.StatusDate = newTraceEvent.EventDateTime;
                             entityPM.StatusLocation = null;
                             entityPM.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
+                            entityPM.IsStatusChange = true;
                             //if (entityPOCO.ShipmentLevelCode == "D" || entityPOCO.ShipmentLevelCode == "C")
                             //{
                             //    ShipmentMasterDataRepository shipmentMasterDataRepository = new ShipmentMasterDataRepository(objectContext);
@@ -265,13 +265,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 entityPM.StatusDate = newTraceEvent.EventDateTime;
                                 entityPM.StatusLocation = null;
                                 entityPM.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                                entityPM.IsStatusChange = true;
 
                                 //if (entityPOCO.ShipmentLevelCode == "D" || entityPOCO.ShipmentLevelCode == "C")
                                 //{
                                 //    ShipmentMasterDataRepository shipmentMasterDataRepository = new ShipmentMasterDataRepository(objectContext);
                                 //    ShipmentMasterData entityMasterData = shipmentMasterDataRepository.GetSingleMasterData
 
-                              // if( entityPOCO.MasterShipmentDataId!=null){
+                                // if( entityPOCO.MasterShipmentDataId!=null){
                                 //    entityMasterData.StatusId = entityPOCO.StatusId;
                                 //    entityMasterData.StatusDate = entityPOCO.StatusDate;
                                 //    entityMasterData.StatusLocation = entityPOCO.StatusLocation;
@@ -349,7 +350,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         myResult.LastSharedEventDate = entityPM.LastSharedEventDate;
                     }
 
-                    //shipmentRepository.Update(entityPOCO);
                     shipmentRepository.SubmitChanges();
                 }
             }
