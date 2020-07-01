@@ -351,7 +351,6 @@
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ActionListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
-
     <Content Include="CustomsModules\InvoiceQueue\Components\InvoiceQueueComponent.html" />
     <Content Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.html" />
     <Content Include="Customs\Components\ListTemplates\CourierWorksheetListTemplate.html" />
@@ -638,6 +637,10 @@
     <Content Include="Images\numberIcon.png" />
     <Content Include="Images\PriceCheck\EmptyTariffPrice.png" />
     <Content Include="Images\PriceCheck\FillDimensions.png" />
+    <Content Include="Images\Referant\New.png" />
+    <Content Include="Images\Referant\Active_Favorite.png" />
+    <Content Include="Images\Referant\Unactive_Favorite.png" />
+    <Content Include="Images\Referant\No-Sivug.png" />
     <Content Include="Images\ReportScheduler.png" />
     <Content Include="Images\ShowFilters.png" />
     <Content Include="Images\process_failed%401x.png" />
@@ -1192,6 +1195,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\AmendmentTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AmountTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ApprovedProfessionList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\AutonomyRegionTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CargoSealIdentifierList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ClaimReasonTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ClassificationTypeList.ts" />
@@ -1208,6 +1212,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationRefernatDataList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeficitDecisionList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExceptionReasonList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\ExporterRoleTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassRequestList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassReturnCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\HazardousSubstanceList.ts" />
@@ -1230,6 +1235,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\AmendmentTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmountTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ApprovedProfessionPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\AutonomyRegionTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CargoSealIdentifierPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CargoSealPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ClaimReasonTypePM.ts" />
@@ -1254,6 +1260,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationRefernatDataPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeficitDecisionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExceptionReasonPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ExporterRoleTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\InvoiceQueue.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\DeclarationRemarks.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassRequestPM.ts" />
@@ -1298,6 +1305,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmendmentTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmountTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ApprovedProfessionListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\AutonomyRegionTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CargoSealIdentifierListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ClaimReasonTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ClassificationTypeListService.ts" />
@@ -1325,6 +1333,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationRefernatDataListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeficitDecisionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExceptionReasonListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\ExporterRoleTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestsListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassReturnCodeListService.ts" />
@@ -1376,11 +1385,8 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ReferantExceptionPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\TPGFileTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\CustomDocumentViewerService.ts" />
-
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeficitsPMService.ts" />
-
     <TypeScriptCompile Include="Customs\Services\WebServices\InvoiceQueueWebService.ts" />
-
     <TypeScriptCompile Include="Customs\Services\WebServices\SupplierInvioceItemCertificatsService.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.ts" />
@@ -7528,8 +7534,7 @@
     <Content Include="e2e\Testing Scenarios\Production\Team Mohammad\TeamMohammadCases.bat" />
     <Content Include="dist\out-tsc\Infrastructure\Components\LoginComponent\CustomLoginComponents\DSVLoginProcessComponent.js.map" />
     <Content Include="dist\out-tsc\Infrastructure\Components\LoginComponent\CustomLoginComponents\DSVMobileLoginProcessComponent.js.map" />
-	    <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\ExporterInvoiceComponent.ts" />
-
+    <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\ExporterInvoiceComponent.ts" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />

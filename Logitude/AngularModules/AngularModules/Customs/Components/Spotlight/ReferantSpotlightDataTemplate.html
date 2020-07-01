@@ -3,7 +3,7 @@
         <div class="MediaFillRelative"style="overflow-x: auto;overflow-y: hidden;">
             <table style="width:80%;">
                 <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-                    <td colspan="2">
+                    <td colspan="2" style="top:5px;">
                         <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
                     </td>
                 </tr>
