@@ -1,7 +1,7 @@
 <table>
     <tr>
         <td>
-            <div [innerHTML]="WarningMessage"></div>
+            <div [style.direction]="RTL ? 'ltr':'rtl'" [innerHTML]="WarningMessage"></div>
         </td>
     </tr>
     <tr style="height:1px;">

@@ -316,6 +316,9 @@
     <Content Include="CRMModules\CRMActivity\Components\NewEntity\NewTaskComponent.html" />
     <Content Include="Customs\Components\ListTemplates\EndDateComponent.html" />
     <Content Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.html" />
+    <Content Include="cypress\Cypress.conf.js" />
+    <Content Include="cypress\fixtures\Cypress.png" />
+    <Content Include="cypress\fixtures\Logitude.jpg" />
     <Content Include="cypress\integration\examples\Prod.spec.js" />
     <Content Include="cypress\integration\examples\test.spec.js" />
     <Content Include="cypress\plugins\index.js" />
@@ -984,6 +987,24 @@
     <TypeScriptCompile Include="Accounting\Services\StandardLists\VatReportStatusListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\TaxReportPMService.ts" />
     <TypeScriptCompile Include="Controls\Pipes\DateToMonthPipe.ts" />
+    <TypeScriptCompile Include="cypress\Login\Login.e2e-spec.ts" />
+    <TypeScriptCompile Include="cypress\Login\Login.po.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\Agent-Spec.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\Agent.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\AgentScenario.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\BuildShipmentDocsIn.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\BuildShipmentDocsOut.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\BuildShipmentDocsOutx200.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\CreateEditShipment.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\DocOutSenario.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\DocsOut.e2e-spec.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\DocsOutTab.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\Maintenance\CompanyAdressSetting.spec.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\Maintenance\OpenUser.spec.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\Maintenance\Shipper.spec.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\PrintDocOut.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\Report\Report.spec.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\ShimentView\ShipmentView.spec.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule-spec.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule.ts" />
     <TypeScriptCompile Include="e2e\Accounting\New\APPayment.ts" />
@@ -7721,6 +7742,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="cypress\fixtures\example.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="cypress\fixtures\PlainPaperAWB.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="cypress\fixtures\dummy.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="cypress\fixtures\pdf-test.pdf" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

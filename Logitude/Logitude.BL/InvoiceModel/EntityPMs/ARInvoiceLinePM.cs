@@ -89,6 +89,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsExpense { get; set; }
 
         public bool IsRegionalTax { get; set; }
+        public double? InvoiceCurrencyExchangeRate { get; set; }
 
     }
 }

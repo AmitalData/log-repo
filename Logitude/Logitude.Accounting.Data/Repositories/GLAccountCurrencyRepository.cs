@@ -72,6 +72,16 @@ namespace Logitude.Accounting.Data.Repositories
 
                     select a).FirstOrDefault();
         }
+
+
+        public GLAccountCurrency GetEntityByGLAccountId(string accountId,  int tenant)
+        {
+
+            return (from a in context.GLAccountCurrencies
+                    where a.GLAccountId == accountId &&  a.Tenant == tenant
+
+                    select a).FirstOrDefault();
+        }
     }
 
 }

@@ -60,7 +60,7 @@ namespace CargoTrackingService.Helper
         private void UpdateCargoDataBase(CargoTable table)
         {
             //cargoTrackingMainService.UpdateLineByLine(new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString });
-            cargoTrackingMainService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString });
+            cargoTrackingMainService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },1000);
         }
 
 

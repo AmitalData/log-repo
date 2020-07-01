@@ -21,6 +21,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Logitude.Server.Tools.StorageService;
 using Logitude.TariffModule.Data;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.Helpers;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 
 namespace Logitude.TariffModule.BL.Helpers
 {
@@ -72,6 +77,7 @@ namespace Logitude.TariffModule.BL.Helpers
         private string sellerName;
         private SurchargeSummary SurchargeItem;
         private Tariff CurrentSurcharge;
+        private string freightTariffId;
         public PriceCheckManager(TariffSearchArgs args, int tenant)
         {
             this.tenant = tenant;
@@ -84,6 +90,40 @@ namespace Logitude.TariffModule.BL.Helpers
             this.tariffContext = TariffModuleContext.GetContext(tenant);
             this.tariffRepository = new TariffRepository(tenant);
             this.SetSearchProperties();
+        }
+
+        public PriceCheckManager(string freightTariffId, string shipmentId, string tariffType, int tenant)
+        {
+            this.tenant = tenant;            
+            this.commonContext = CommonDataContext.GetContext(tenant);
+            this.airlineRepository = new AirlineRepository(commonContext);
+            this.shippingLineRepository = new ShippingLineRepository(commonContext);
+            this.airlineQuery = new AirlineQuery(airlineRepository);
+            this.shippingLineQuery = new ShippingLineQuery(shippingLineRepository);
+            this.tariffContext = TariffModuleContext.GetContext(tenant);
+            this.tariffRepository = new TariffRepository(tenant);
+            this.freightTariffId = freightTariffId;
+
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            ShipmentPM shipment = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
+
+            if (shipment != null)
+            {
+                betweenDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                if (shipment.MainCarriageATD != null)
+                {
+                    betweenDate = shipment.MainCarriageATD;
+                }
+                else if (shipment.MainCarriageETD != null)
+                {
+                    betweenDate = shipment.MainCarriageETD;
+                }
+                
+                fromPort = shipment.FromPortId;
+                toPort = shipment.ToPortId;
+            }
+
+            this.tariffType = tariffType;
         }
 
         private void SetSearchProperties()
@@ -111,23 +151,42 @@ namespace Logitude.TariffModule.BL.Helpers
         {
             List<TariffSearchSummary> myResult = new List<TariffSearchSummary>();
 
+            IQueryable<TariffLine> iQueryable = this.tariffRepository.GetAllTariffLines(tenant);
+
             if (tariffType == "OFC")
             {
-                myResult = this.GetTariffSearchSummary_FCL();
+                myResult = this.GetTariffSearchSummary_FCL(iQueryable);
             }
             else
             {
-                myResult = this.GetTariffSearchSummary();
+                myResult = this.GetTariffSearchSummary(iQueryable);
             }            
 
             return myResult;
         }
-
-        private List<TariffSearchSummary> GetTariffSearchSummary()
+        public List<TariffSearchSummary> GetSummaryForExistedTariff()
         {
-            List<TariffSearchSummary> tariffSearchSummaries = new List<TariffSearchSummary>();
-            IQueryable<TariffLine> iQueryable = this.tariffRepository.GetAllTariffLines(tenant);
-            iQueryable = iQueryable.Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= betweenDate && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= betweenDate) : true));
+            List<TariffSearchSummary> myResult = new List<TariffSearchSummary>();
+
+            IQueryable<TariffLine> iQueryable = this.tariffRepository.GetAllTariffLinesByTariffId(freightTariffId, tenant);
+            int count = iQueryable.Count();
+
+            if (tariffType == "OFC")
+            {
+                myResult = this.GetTariffSearchSummary_FCL(iQueryable);
+            }
+            else
+            {
+                myResult = this.GetTariffSearchSummary(iQueryable);
+            }
+
+            return myResult;
+        }
+        
+        private List<TariffSearchSummary> GetTariffSearchSummary(IQueryable<TariffLine> iQueryable)
+        {
+            List<TariffSearchSummary> tariffSearchSummaries = new List<TariffSearchSummary>();            
+            iQueryable = iQueryable.Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(betweenDate) && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true));            
             List<string> tariffids = iQueryable.Select(p => p.TariffId).Distinct().ToList();
             TariffSettingRepository tariffSettingRepository = new TariffSettingRepository(tenant);
             List<TariffSetting> setting = tariffSettingRepository.GetAll(tenant).ToList();
@@ -175,6 +234,14 @@ namespace Logitude.TariffModule.BL.Helpers
             }
 
             List<Tariff> TariffListTemp = this.tariffRepository.GetAllTariff(tariffids.ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == tariffType).ToList();
+
+            if (TariffListTemp.Count > 0)
+            {
+                if (string.IsNullOrEmpty(currencyId))
+                {
+                    currencyId = TariffListTemp.FirstOrDefault().CurrencyId;
+                }
+            }
 
             if (!string.IsNullOrEmpty(product) && tariffType == "AFC")
             {
@@ -395,7 +462,7 @@ namespace Logitude.TariffModule.BL.Helpers
             List<TariffVersion> TariffVersionList = tariffRepository.GetAllTariffVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), tenant).ToList();
             List<int> VersionIds = TariffVersionList.Select(a => a.Version).ToList();
 
-            Dictionary<string, List<TariffLine>> TariffLines = tariffRepository.GetAllTariffLinesByTariffIds(TariffList.Select(p => p.Id).ToArray(), tenant).Where(p => VersionIds.Contains(p.Version)).Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= betweenDate && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= betweenDate) : true).GroupBy(p => p.TariffId).ToDictionary(o => o.Key, o => o.ToList());
+            Dictionary<string, List<TariffLine>> TariffLines = tariffRepository.GetAllTariffLinesByTariffIds(TariffList.Select(p => p.Id).ToArray(), tenant).Where(p => VersionIds.Contains(p.Version)).Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(betweenDate) && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true).GroupBy(p => p.TariffId).ToDictionary(o => o.Key, o => o.ToList());
             Dictionary<string, List<TariffLine>> TariffLinesFiltered = new Dictionary<string, List<TariffLine>>();
 
             foreach (KeyValuePair<string, List<TariffLine>> entry in TariffLines)
@@ -429,7 +496,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
             List<TariffVersion> TariffSurchargeVersionList = tariffRepository.GetAllTariffVersionsByTariffIds(SurchargeTariffList.Select(p => p.Id).ToArray(), tenant).ToList();
             List<int> VersionsSurchargeIds = TariffSurchargeVersionList.Select(a => a.Version).ToList();
-            Dictionary<string, List<TariffLine>> SurchargeTariffLines = tariffRepository.GetAllTariffLinesByTariffIds(SurchargeTariffList.Select(p => p.Id).ToArray(), tenant).Where(p => VersionsSurchargeIds.Contains(p.Version)).Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= betweenDate && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= betweenDate) : true).GroupBy(p => p.TariffId).ToDictionary(o => o.Key, o => o.ToList());
+            Dictionary<string, List<TariffLine>> SurchargeTariffLines = tariffRepository.GetAllTariffLinesByTariffIds(SurchargeTariffList.Select(p => p.Id).ToArray(), tenant).Where(p => VersionsSurchargeIds.Contains(p.Version)).Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(betweenDate) && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true).GroupBy(p => p.TariffId).ToDictionary(o => o.Key, o => o.ToList());
             Dictionary<string, List<TariffLine>> SurchargeTariffLinesFiltered = new Dictionary<string, List<TariffLine>>();
 
             foreach (KeyValuePair<string, List<TariffLine>> entry in SurchargeTariffLines)
@@ -694,7 +761,12 @@ namespace Logitude.TariffModule.BL.Helpers
                         }
                     }
 
-                    tariffsSummary.Remarks = result.Notes + ", "+ CurrentSurcharge.Notes;
+                    tariffsSummary.Remarks = result.Notes;
+                    if(CurrentSurcharge != null)
+                    {
+                        tariffsSummary.Remarks = tariffsSummary.Remarks + ", " + CurrentSurcharge.Notes;
+                    }
+
                     var calculatedLocalAmount = item.Price != null ? CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId) : 0;
                     tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
                     tariffsSummary.VersionId = item.TariffVersion + "";
@@ -781,9 +853,9 @@ namespace Logitude.TariffModule.BL.Helpers
             return sign;
         }
 
-        private List<TariffSearchSummary> GetTariffSearchSummary_FCL()
+        private List<TariffSearchSummary> GetTariffSearchSummary_FCL(IQueryable<TariffLine> iQueryable)
         {
-            this.Initialization(args);
+            this.Initialization(args, iQueryable);
             this.FillSurchargeTariffLinesFiltered();
             foreach (Tariff trariff in tariffList)
             {
@@ -831,7 +903,12 @@ namespace Logitude.TariffModule.BL.Helpers
                         }
                     }
 
-                    tariffsSummary.Remarks = trariff.Notes + ", " + CurrentSurcharge.Notes;
+                    tariffsSummary.Remarks = trariff.Notes;
+                    if (CurrentSurcharge != null)
+                    {
+                        tariffsSummary.Remarks = tariffsSummary.Remarks + ", " + CurrentSurcharge.Notes;
+                    }
+
                     var calculatedLocalAmount = CalculateLocalAmount(price, currencyId, trariff.CurrencyId, tenant);
                     tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
                     tariffsSummary.VersionId = tariffLine.Version + "";
@@ -890,10 +967,10 @@ namespace Logitude.TariffModule.BL.Helpers
             return tariffSearchSummaries;
         }
 
-        private void Initialization(TariffSearchArgs args)
+        private void Initialization(TariffSearchArgs args, IQueryable<TariffLine> iQueryable)
         {
             this.tariffSearchSummaries = new List<TariffSearchSummary>();
-            this.tariffLines_IQueryable = this.tariffRepository.GetAllTariffLines(tenant).Where(p => p.OriginPortId ==  fromPort && p.DestinationPortId == toPort && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <=  betweenDate && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >=  betweenDate) : true));
+            this.tariffLines_IQueryable = iQueryable.Where(p => p.OriginPortId ==  fromPort && p.DestinationPortId == toPort && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(betweenDate) && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true));
             this.tariffids = tariffLines_IQueryable.Select(p => p.TariffId).Distinct().ToList();
 
             this.tariffLinesContainersPrices = (from d in this.tariffContext.TariffLinesContainersPrices
@@ -901,7 +978,15 @@ namespace Logitude.TariffModule.BL.Helpers
                                                 select d).ToList();
 
             List<Tariff> TariffListTemp = this.tariffRepository.GetAllTariff(tariffids.ToArray(), tenant).Where(p => !p.InActive && p.TypeCode ==  tariffType).ToList();
-            
+
+            if (TariffListTemp.Count > 0)
+            {
+                if (string.IsNullOrEmpty(currencyId))
+                {
+                    currencyId = TariffListTemp.FirstOrDefault().CurrencyId;
+                }
+            }
+
             this.tariffList = FilterTariffsByContainers(TariffListTemp, args);
 
             List<string> tempTariffIds = tariffList.Select(a => a.Id).ToList();
@@ -920,7 +1005,7 @@ namespace Logitude.TariffModule.BL.Helpers
             this.chargesTypes = commonContext.ChargesTypes.Where(p => p.Tenant == tenant).ToList();
             List<TariffVersion> TariffSurchargeVersionList = this.tariffRepository.GetAllTariffVersionsByTariffIds(surchargeTariffList.Select(p => p.Id).ToArray(), tenant).ToList();
             List<int> VersionsSurchargeIds = TariffSurchargeVersionList.Select(a => a.Version).ToList();
-            this.surchargeTariffLines = this.tariffRepository.GetAllTariffLinesByTariffIds(surchargeTariffList.Select(p => p.Id).ToArray(), tenant).Where(p => VersionsSurchargeIds.Contains(p.Version)).Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <=  betweenDate && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >=  betweenDate) : true).GroupBy(p => p.TariffId).ToDictionary(o => o.Key, o => o.ToList());
+            this.surchargeTariffLines = this.tariffRepository.GetAllTariffLinesByTariffIds(surchargeTariffList.Select(p => p.Id).ToArray(), tenant).Where(p => VersionsSurchargeIds.Contains(p.Version)).Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(betweenDate) && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true).GroupBy(p => p.TariffId).ToDictionary(o => o.Key, o => o.ToList());
             this.surchargeTariffLinesFiltered = new Dictionary<string, List<TariffLine>>();
         }
         private void FillSurchargeData(TariffSearchArgs args, Tariff trariff, TariffLine tariffLine)

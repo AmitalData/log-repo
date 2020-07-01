@@ -242,11 +242,21 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                 let isEditComponentSaved = false;
                 cmpRef.instance.BackCompleted.subscribe(bk => {
                     if (isEditComponentSaved) {
-                        this.entityArgs.EditComponent.ReloadEntityPM();
+                        if (item.ObjectTableName == "WarehouseRelease" || item.ObjectTableName == "WarehouseEntry") {
+                            this.EntityPM.IsDirty = true;
+                            this.CurrentSession.CurrentEditComponent.SaveChanges();
+                        }
+                        else
+                            this.entityArgs.EditComponent.ReloadEntityPM();
                     }
                 });
 
                 cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
+                cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         isEditComponentSaved = true;
                     }
@@ -308,6 +318,8 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "Refresh") {
                 this.LoadData();
+                this.EntityPM.IsDirty = true;
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
             this.IsOpenWarehouseReleaseScreen = false;
             this.IsOpenWarehouseEntryScreen = false;

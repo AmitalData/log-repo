@@ -28,15 +28,15 @@ namespace Logitude.HybridTest.ServicesTest
                 Tenant = EnvironmentGlobalParams.MainTenant,
                 DocumentFilingInbox = "HybridInbox"
             };
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(userPM);
-            if (serviceResponse.HasError && serviceResponse.ErrorMessage.Contains("Sorry You reached the maximum number of users!"))
+            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(userPM);
+            if (serviceOutcome.Response.HasError && serviceOutcome.Response.ErrorMessage.Contains("Sorry You reached the maximum number of users!"))
             {
                 Assert.Inconclusive("Sorry You reached the maximum number of users!");
             }
             else
             {
-                Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+                Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+                Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
             }
         }
 

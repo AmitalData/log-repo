@@ -266,6 +266,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.CargoTracking.BL",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.CargoTracking.Def", "Logitude.CargoTracking.Def\Logitude.CargoTracking.Def.csproj", "{1602A405-278E-4FF9-B7B5-DFC6E525B497}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.LogboxIntegrationTest", "Logitude.LogBoxIntegrationTest\Logitude.LogboxIntegrationTest.csproj", "{3DD19857-5B09-4F68-91C3-D9267EF4FEFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoTrackingShipmentSearch", "CargoTrackingShipmentSearch\CargoTrackingShipmentSearch.csproj", "{4D8752FD-0002-4750-8549-7527BC3DAF7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All Projects|Any CPU = All Projects|Any CPU
@@ -4048,6 +4052,8 @@ Global
 		{7281A115-2213-41A3-A39A-22476F5A8DB8} = {CD80E994-DF78-4461-A05A-618059A25313}
 		{6B7FB227-28D2-45B8-B079-2E2F4251510D} = {CD80E994-DF78-4461-A05A-618059A25313}
 		{1602A405-278E-4FF9-B7B5-DFC6E525B497} = {CD80E994-DF78-4461-A05A-618059A25313}
+		{3DD19857-5B09-4F68-91C3-D9267EF4FEFB} = {61E75C12-A7AA-4E3A-B459-985D04E42F84}
+		{4D8752FD-0002-4750-8549-7527BC3DAF7E} = {58E37D00-6FB5-45D6-89A8-93AC4C73B5E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {200673A7-D16A-4B01-A6B6-BEE63415EBD0}

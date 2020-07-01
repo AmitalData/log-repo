@@ -20,6 +20,7 @@ namespace CargoTracking.Forms
     {
         private string LocalConectionstring = "Logitude2-5_Main,sa,Saas256,.";
         private string TestConectionstring =  "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
+        private string CloudConectionstring = "Main,sa,Saas256,amitaldata.cloudapp.net";
         private string dbSourceConnection  ; 
         private string dbDestinationConnection;
         private CargoTrackingMainService cargoTrackingService;
@@ -29,6 +30,7 @@ namespace CargoTracking.Forms
         private int TableCellMrginHight = 10;
         private int TotalIncreasing = 0;
         private bool FirstInit = true;
+        private int NumberOfBulkPerTime = 1000;
         public CargoTrackingForm()
         {
             InitializeComponent();
@@ -109,15 +111,9 @@ namespace CargoTracking.Forms
         }
         private void UpdateCargoDataBase(CargoTable table)
         {
-            if (checkBox1.Checked == false)
-            {
-                NumberOfCoulmnUpdated = cargoTrackingService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection });
-            }
-            else
-            {
-                NumberOfCoulmnUpdated = cargoTrackingService.UpdateLineByLine(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection });
-
-            }
+ 
+           NumberOfCoulmnUpdated = cargoTrackingService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection }, NumberOfBulkPerTime);
+  
         }
 
 
@@ -203,7 +199,8 @@ namespace CargoTracking.Forms
             foreach (CargoTable table in CargoTableLists)
             {
                 table.Labels = new List<Label>();
-                AddLabelToGrid(table.CT_TableName, 1, 0, 1, table);
+                string TableNameLabe = table.CT_TableName.Length <23 ? table.CT_TableName : table.CT_TableName.Substring(0,17)+" ...";
+                AddLabelToGrid(TableNameLabe, 1, 0, 1, table);
                 AddLabelToGrid( "In Progress...", 1, 0, 2, table);
                 AddLabelToGrid( "Remaining ...", 0, 1, 3, table);
                 this.Table_X = 0;
@@ -424,6 +421,33 @@ namespace CargoTracking.Forms
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void radioButton7_CheckedChanged(object sender, EventArgs e)
+        {
+            this.NumberOfBulkPerTime = 1000;
+        }
+
+        private void radioButton8_CheckedChanged(object sender, EventArgs e)
+        {
+            this.NumberOfBulkPerTime = 5000;
+        }
+
+        private void radioButton9_CheckedChanged(object sender, EventArgs e)
+        {
+            this.NumberOfBulkPerTime = 10000;
+        }
+
+        private void radioButton10_CheckedChanged(object sender, EventArgs e)
+        {
+            SourceConnectionlTextBox.Enabled = false;
+            this.SourceConnectionlTextBox.Text = CloudConectionstring;
+        }
+
+        private void radioButton11_CheckedChanged(object sender, EventArgs e)
+        {
+            DestinationConnectionlTextBox.Enabled = false;
+            this.DestinationConnectionlTextBox.Text = CloudConectionstring;
         }
     }
 }

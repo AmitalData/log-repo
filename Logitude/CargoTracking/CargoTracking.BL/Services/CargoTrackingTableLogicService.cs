@@ -12,11 +12,11 @@ namespace CargoTracking.CargoTracking.BL.Services
     public class CargoTrackingTableLogicService
     {
 
-        public static  void SetTableLogic(DataRow TableRow,string TableName)
+        public static void SetTableLogic(DataRow TableRow, string TableName)
         {
             if (TableName == "CargoTrackingPorts")
             {
-                if ( TableRow["Code"].Equals("MUT"))
+                if (TableRow["Code"].Equals("MUT"))
                 {
                     TableRow.SetField("EnglishName", "Cargo_Test");
                 }
@@ -25,9 +25,62 @@ namespace CargoTracking.CargoTracking.BL.Services
 
             if (TableName == "CargoTrackingShipments")
             {
+                CompareNullabelFirstPickupETADateTime(TableRow);
                 TableRow.SetField("Master", TableRow["MasterShipmentDataId"]);
                 TableRow.SetField("PickupDate", TableRow["FirstPickupETA"]);
-                CompareNullabelFirstPickupETADateTime(TableRow);
+                TableRow.SetField("ClearanceDate", TableRow["CustomsClearanceDate"]);
+
+                if (!TableRow["CustomsClearanceDate"].Equals(null) && TableRow["CustomsClearanceDate"].GetType().Name != "DBNull")
+                {
+                    TableRow.SetField("ClearanceDone", true);
+                }
+                else
+                {
+                    TableRow.SetField("ClearanceDone", false);
+
+                }
+
+                if (TableRow["ShipmentLevelCode"].Equals("D") || TableRow["ShipmentLevelCode"].Equals("H"))
+                {
+                    TableRow.SetField("EntityType", "F");
+                    TableRow.SetField("EntityId", TableRow["Id"]);
+
+                    if (!TableRow["CustomFileId"].Equals(null) && !TableRow["CustomFileId"].Equals("") &&  TableRow["CustomFileId"].GetType().Name != "DBNull")
+                    {
+                        TableRow.SetField("CustomsShipmentHeaderId", TableRow["Id"]);
+
+                    }
+                }
+                else if (TableRow["ShipmentLevelCode"].Equals("A"))
+                {
+                    TableRow.SetField("EntityType", "C");
+                    TableRow.SetField("EntityId", TableRow["Id"]);
+
+
+
+                }
+
+                if (!TableRow["ClearanceDone"].Equals(null) && TableRow["ClearanceDone"].GetType().Name != "DBNull" && !TableRow["ClearanceDone"].Equals("False"))
+                {
+                    TableRow.SetField("CurrentMilestoneCode", "9");
+                    TableRow.SetField("CurrentMilestoneDate", TableRow["CustomsClearanceDate"]);
+
+                }
+                else if (!TableRow["PickupDone"].Equals(null) && TableRow["PickupDone"].GetType().Name != "DBNull" && !TableRow["PickupDone"].Equals("False"))
+                {
+                    TableRow.SetField("CurrentMilestoneCode", "2");
+                    TableRow.SetField("CurrentMilestoneDate", TableRow["PickupDate"]);
+
+                }
+
+            }
+
+            if (TableName == "CargoTrackingShipmentSearchFields")
+            {
+                TableRow.SetField("ShipmentDate", TableRow["CreateDateTime"]);
+                string Id = (string)TableRow["Id"];
+                string[] SplittedId = Id.Split('_');
+                TableRow.SetField("ShipmentId", SplittedId[0]);
             }
 
         }
@@ -56,10 +109,10 @@ namespace CargoTracking.CargoTracking.BL.Services
 
                 }
             }
-          
+
         }
 
 
     }
- 
+
 }

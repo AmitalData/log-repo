@@ -155,10 +155,10 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     SetRecepientsDetails(isReloaded) {
-        if (this.PageChild_PRREP.IsPartnersChanged("3"))
+        if (this.PageChild_PRREP.IsPartnersChanged("3")) {
             this.PageChild_OPEMA.CleanRecepientsLists();
-        else
-            this.PageChild_PRREP.PrepareContactList();
+        }
+        this.PageChild_PRREP.PrepareContactList();
         var windowArgs: any = {};
         var recepients: ReportSchedulerRecepients = this.PageChild_RETASK.DataContext.SchedulerDetails.ReportDetails.Recepients;
         windowArgs.ToEmail = this.SavedRecepients ? "" : recepients.To;

@@ -97,21 +97,29 @@ namespace WebFreight.Web.Helpers
             IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
             IWorksheet sheet = workbook.Worksheets[0];
 
-            List<TariffLinePM> tariffLinesResult = new List<TariffLinePM>();
-            List<ExcelSheetLine> excelSheetLines = new List<ExcelSheetLine>();
-            if (tariffType == "AFC" || tariffType == "OLC")
+            if (sheet.UsedRange.Rows.Count() - 1 > 1000)
             {
-                excelSheetLines = this.ReadExcelSheetData_LCL(sheet);
-                tariffLinesResult = this.BuildTariffLines_LCL(excelSheetLines);
+                throw new ApplicationException("Can't upload this excel as it exceeds tariff lines limitation of 1000");
             }
 
-            else if (tariffType == "OFC")
+            else
             {
-                excelSheetLines = this.ReadExcelSheetData_FCL(sheet);
-                tariffLinesResult = this.BuildTariffLines_FCL(excelSheetLines);
-            }
+                List<TariffLinePM> tariffLinesResult = new List<TariffLinePM>();
+                List<ExcelSheetLine> excelSheetLines = new List<ExcelSheetLine>();
+                if (tariffType == "AFC" || tariffType == "OLC")
+                {
+                    excelSheetLines = this.ReadExcelSheetData_LCL(sheet);
+                    tariffLinesResult = this.BuildTariffLines_LCL(excelSheetLines);
+                }
 
-            this.SaveTariff(tariffLinesResult);
+                else if (tariffType == "OFC")
+                {
+                    excelSheetLines = this.ReadExcelSheetData_FCL(sheet);
+                    tariffLinesResult = this.BuildTariffLines_FCL(excelSheetLines);
+                }
+
+                this.SaveTariff(tariffLinesResult);
+            }
         }
 
         private List<ExcelSheetLine> ReadExcelSheetData_LCL(IWorksheet sheet)

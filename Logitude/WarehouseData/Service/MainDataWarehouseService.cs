@@ -233,6 +233,7 @@ namespace WarehouseData.Helper
                 var dWHSettingsTable = privateTenantDataWarehouse.GetPrivateTenant(sourceConnectionString);
 
                 if (type == "Build") CreateWaterMarksTable("PrivateWaterMarks", sourceConnectionString, true);
+                FeatureDataWarehouseService featureDataWarehouseService = new FeatureDataWarehouseService(sourceConnectionString.Replace("Main" ,"Global"), sourceConnectionString);
 
                 foreach (DataRow row in dWHSettingsTable.Rows)
                 {
@@ -242,12 +243,15 @@ namespace WarehouseData.Helper
                     string password = row["Password"].ToString();
                     string server = row["Server"].ToString();
 
-                    string destinationConnectionString = BuildConnectionString(catalog, userName, password, server);
-                    List<int> relatedTenants = privateTenantDataWarehouse.GetPrivateRelatedTenants(sourceConnectionString, tenant);
-                    if (!relatedTenants.Contains(tenant)) relatedTenants.Add(tenant);
-                    string tenants = privateTenantDataWarehouse.ConvertIntgerListToString(relatedTenants);
-                    if (type == "Build") BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
-                    else UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                    if (featureDataWarehouseService.CheckFeature("PrivateDB", tenant))
+                    {
+                        string destinationConnectionString = BuildConnectionString(catalog, userName, password, server);
+                        List<int> relatedTenants = privateTenantDataWarehouse.GetPrivateRelatedTenants(sourceConnectionString, tenant);
+                        if (!relatedTenants.Contains(tenant)) relatedTenants.Add(tenant);
+                        string tenants = privateTenantDataWarehouse.ConvertIntgerListToString(relatedTenants);
+                        if (type == "Build") BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                        else UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                    }
                 }
             }
             else if (ApplicationName != "Service") MessageBox.Show("Connection Problem");

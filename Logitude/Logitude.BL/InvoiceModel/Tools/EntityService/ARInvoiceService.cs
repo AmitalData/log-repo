@@ -541,6 +541,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     this.UpdateInvoicePayments(invoicePaymentsChangeSet);
                     this.UpdateInvoiceAmountDue();
+                    this.UpdatePaidDate();
                 }
 
                 this.BuildSearchFields();
@@ -1297,6 +1298,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     if (!entityPM.IsInvoiceNumberFromStock)
                     {
+                       
                         if (string.IsNullOrEmpty(entityPM.InvoiceNumber) || entityPM.InvoiceNumber == entityPM.Id)
                         {
                             if (entityPM.IsConstituentInvoice)
@@ -1310,7 +1312,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             }
 
                             else
-                            {
+                            { 
                                 entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", entityPM.ARInvoiceTypeCode, null);
                             }
                         }
@@ -3305,6 +3307,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
+
+        private void UpdatePaidDate()
+        {
+            if (entityPM.AmountDue != 0)
+            {
+                entityPM.PaidDate = null;
+            }
+
+            else
+            {
+                ARInvoicePaymentPM itemPM = invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).FirstOrDefault();
+                if(itemPM != null)
+                {
+                    entityPM.PaidDate = (from d in objectContext.ARPayments where d.Id == itemPM.ARPaymentId select d.ValueDate).FirstOrDefault();
+                }
+            }
+
+            invoice.PaidDate = entityPM.PaidDate;
+        }
+
         #endregion
 
         #region SearchField

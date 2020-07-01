@@ -162,7 +162,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
                     if(!interestTransactionPM.IsCancelled 
                         && !interestTransactionPM.IsClosed 
-                        && interestTransactionGetParameters.GLAccountId == interestTransactionPM.GLAccountId
+                        && interestTransactionGetParameters.GLAccountIds.Contains( interestTransactionPM.GLAccountId)
                         && interestTransactionPM.InterestValueDate <= interestTransactionGetParameters.InterestCalculationDate)
                             interestTransactionPMs.Add(interestTransactionPM);
                 }

@@ -217,15 +217,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
         public IQueryable<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType, string chartOfAccountsId, 
-    bool IncludeChildAccounts,string ChartOfAccountsTypeCode)
+    bool IncludeChildAccounts,string ChartOfAccountsTypeCode, string salesmanId)
         {
            // List<String> allIdAccounts = new List<string>() { GLAccountId };
             IQueryable<string> allIdAccounts = repository.GetQId(new List<string>() { GLAccountId }, tenant);
             if (!String.IsNullOrWhiteSpace(cat1) || !String.IsNullOrWhiteSpace(cat2) || !String.IsNullOrWhiteSpace(cat3) || !String.IsNullOrWhiteSpace(cat4)
                 || !String.IsNullOrWhiteSpace(cat5) || !String.IsNullOrWhiteSpace(gLAccountType) || !String.IsNullOrWhiteSpace(chartOfAccountsId)
-                || !String.IsNullOrWhiteSpace(ChartOfAccountsTypeCode))
+                || !String.IsNullOrWhiteSpace(ChartOfAccountsTypeCode)
+                || !String.IsNullOrWhiteSpace(salesmanId)
+                )
             {
-                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode);
+                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId);
                  //   .ToList();
             }
 
@@ -589,6 +591,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                    
                                                };
             return Accounts;
+        }
+        public List<string> GetSplittedByCurrencyGLAccountIds(string accountId, int tenant)
+        {
+
+            return (from a in context.GLAccounts
+                                                join
+                   c in context.GLAccountCurrencies on a.Id equals c.GLAccountId
+                                                where c.MainGLAccountId == accountId && a.Tenant == tenant && a.ActiveForInterest ==true
+                                                select a.Id).ToList();
+           
         }
 
         public IQueryable<GLAccountPM> GetChildrenGLAccounts(string accountId, int tenant)

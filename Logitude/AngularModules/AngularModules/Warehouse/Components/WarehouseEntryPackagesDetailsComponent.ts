@@ -422,7 +422,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
             //SetDefultPackage
 
-            if (this.warehouseEntryPM.WarehouseEntryPackages.length == 0) {
+            if (this.warehouseEntryPM.WarehouseEntryPackages.length == 0 && this.warehouseEntryPM.DirectionId != 'I') {
                 var i = 0;
                 while (i < 5) {
                     var warehouseEntryPackagePM = new WarehouseEntryPackagePM(null);

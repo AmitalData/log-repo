@@ -33,7 +33,7 @@ namespace Logitude.HybridTest.ServicesTest
             //Response serviceResponse = new Response();
             //object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", EnvironmentGlobalParams.MainTenant, serviceResponse };
             //ActivityPM[] activities = (ActivityPM[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            //Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
+            //Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
             //Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
             //Assert.AreEqual(activities[0].Subject, HybridData.ContactCode, "Get Hybrid Contact From Contacts Failed!");
         }
@@ -57,8 +57,8 @@ namespace Logitude.HybridTest.ServicesTest
                 //Response serviceResponse = new Response();
                 //object[] serviceParameters = new object[] { HybridData.ActivityId, "Hybrid Update", EnvironmentGlobalParams.MainTenant };
                 //serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-                //Assert.IsFalse(serviceResponse.HasError, "Update Outlook ID Failed! " + serviceResponse.ErrorMessage);
-                //Assert.IsNull(serviceResponse.Result, "Update Outlook ID Failed! " + serviceResponse.Result);
+                //Assert.IsFalse(serviceResponse.HasError, "Update Outlook ID Failed! " + serviceOutcome.Response.ErrorMessage);
+                //Assert.IsNull(serviceOutcome.Response.Result, "Update Outlook ID Failed! " + serviceResponse.Result);
             }
             else
                 Assert.IsTrue(false, "Upsert Activity Failed!");
@@ -83,7 +83,7 @@ namespace Logitude.HybridTest.ServicesTest
                 //Response serviceResponse = new Response();
                 //object[] serviceParameters = new object[] { HybridData.ActivityId, "Hybrid@fnarsoft.com", EnvironmentGlobalParams.MainTenant };
                 //serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-                //Assert.IsFalse(serviceResponse.HasError, "Set As Synchronized Failed! " + serviceResponse.ErrorMessage);
+                //Assert.IsFalse(serviceResponse.HasError, "Set As Synchronized Failed! " + serviceOutcome.Response.ErrorMessage);
                 //Assert.IsNull(serviceResponse.Result, "Set As Synchronized Failed! " + serviceResponse.Result);
             }
             else
@@ -102,8 +102,8 @@ namespace Logitude.HybridTest.ServicesTest
         //    {
         //        System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.Token);
         //        Response serviceResponse = serviceClient.Delete("?", EnvironmentGlobalParams.Tenant);
-        //        Assert.IsFalse(serviceResponse.HasError, "Delete Failed! " + serviceResponse.ErrorMessage);
-        //        Assert.IsNull(serviceResponse.Result, "Delete Failed! " + serviceResponse.ErrorMessage);
+        //        Assert.IsFalse(serviceResponse.HasError, "Delete Failed! " + serviceOutcome.Response.ErrorMessage);
+        //        Assert.IsNull(serviceResponse.Result, "Delete Failed! " + serviceOutcome.Response.ErrorMessage);
         //    }
         }
 
@@ -118,8 +118,8 @@ namespace Logitude.HybridTest.ServicesTest
             //{
             //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.Token);
             //    Response serviceResponse = serviceClient.isOnline();
-            //    Assert.IsFalse(serviceResponse.HasError, "is Online Failed! " + serviceResponse.ErrorMessage);
-            //    Assert.IsNull(serviceResponse.Result, "is Online Failed! " + serviceResponse.ErrorMessage);
+            //    Assert.IsFalse(serviceResponse.HasError, "is Online Failed! " + serviceOutcome.Response.ErrorMessage);
+            //    Assert.IsNull(serviceResponse.Result, "is Online Failed! " + serviceOutcome.Response.ErrorMessage);
             //}
         }
 
@@ -136,8 +136,8 @@ namespace Logitude.HybridTest.ServicesTest
             //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.Token);
             //    Response serviceResponse = new Response();
             //    ActivityServiceReference.ActivityPM entityPM = serviceClient.GetActivityPM("?", EnvironmentGlobalParams.Tenant, ref serviceResponse);
-            //    Assert.IsFalse(serviceResponse.HasError, "Get Activity PM Failed! " + serviceResponse.ErrorMessage);
-            //    Assert.IsNull(serviceResponse.Result, "Get Activity PM Failed! " + serviceResponse.ErrorMessage);
+            //    Assert.IsFalse(serviceResponse.HasError, "Get Activity PM Failed! " + serviceOutcome.Response.ErrorMessage);
+            //    Assert.IsNull(serviceResponse.Result, "Get Activity PM Failed! " + serviceOutcome.Response.ErrorMessage);
             //    if (entityPM != null)
             //    {
             //        string activitySubject = entityPM.Subject;

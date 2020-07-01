@@ -24,10 +24,10 @@ namespace Logitude.HybridTest.ServicesTest
                 CardId = HybridData.CustomerCodeHCustomer,
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(addressPM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            HybridData.AddressIdHA = serviceResponse.Result;
+            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(addressPM);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+            HybridData.AddressIdHA = serviceOutcome.Response.Result;
         }
 
         [TestMethod]

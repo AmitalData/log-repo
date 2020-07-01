@@ -33,6 +33,7 @@ import { QuotePM } from '../../../../Quote/EntityPMs/QuotePM';
 import { QuotePMService } from '../../../../Quote/Services/StandardPMs/QuotePMService';
 import { CardList } from '../../../../Common/EntityLists/CardList';
 import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
+import { TariffDomainService, TariffSearchSummary, SurchargeSummary } from '../../../../TariffModule/Services/TariffDomainService';
 
 
 @Component({
@@ -707,14 +708,43 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginShipmentId)) {
                     if (this.OriginShipment) {
                         var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
-                        Generator.GeneratePayablesFromOriginShipment(this.OriginShipment);
-                        this.OnEntityDataGenerated();
 
-                        this.ItemsSource.Collection.forEach((item: ShipmentPayableItem) => {
-                            item.Rate = this.GetCurrencyRate(item.CurrencyId);
-                            item.SetQuantity();
-                            item.ComputeTotalAmount();
-                        });
+                        if (this.OriginShipment.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && !AppTool.IsNullOrEmpty(d.TariffId)).length > 0) {
+                            var freightTariffId: string = this.OriginShipment.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && !AppTool.IsNullOrEmpty(d.TariffId))[0].TariffId;
+
+                            var tariffType: string = "";
+                            if (this.EntityPM.TransportModeId == "A") {
+                                tariffType = "AFC";
+                            }
+                            else if (this.EntityPM.ShipmentTypeId == "LCL" || this.EntityPM.ShipmentTypeId == "LCLD") {
+                                tariffType = "OLC";
+                            }
+                            else if (AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId)) {
+                                tariffType = "OFC";
+                            }
+
+                            var myDomainService: TariffDomainService = new TariffDomainService();
+                            myDomainService.GetTariffsPricesConnectedToPayables(freightTariffId, this.EntityPM.Id, tariffType).subscribe((res: any) => {
+                                if (!res.HasError) {
+                                    if (res.Result) {
+                                        var loadedResults: Array<TariffSearchSummary> = res.Result;
+                                        Generator.GeneratePayablesFromOriginShipment(this.OriginShipment);
+                                        this.OpenSummaryWindow(loadedResults[0], this.OriginShipment.ShipmentPayables, tariffType);
+                                    }
+                                }
+                            });
+                        }
+
+                        else {
+                            Generator.GeneratePayablesFromOriginShipment(this.OriginShipment);
+                            this.OnEntityDataGenerated();
+
+                            this.ItemsSource.Collection.forEach((item: ShipmentPayableItem) => {
+                                item.Rate = this.GetCurrencyRate(item.CurrencyId);
+                                item.SetQuantity();
+                                item.ComputeTotalAmount();
+                            });
+                        }
                     }
 
                     else {
@@ -728,14 +758,43 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                                 this.CurrentSession.FireEvent("OriginShipmentLoaded");
 
                                 var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
-                                Generator.GeneratePayablesFromOriginShipment(this.OriginShipment);
-                                this.OnEntityDataGenerated();
 
-                                this.ItemsSource.Collection.forEach((item: ShipmentPayableItem) => {
-                                    item.Rate = this.GetCurrencyRate(item.CurrencyId);
-                                    item.SetQuantity();
-                                    item.ComputeTotalAmount();
-                                });
+                                if (this.OriginShipment.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && !AppTool.IsNullOrEmpty(d.TariffId)).length > 0) {
+                                    var freightTariffId: string = this.OriginShipment.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && !AppTool.IsNullOrEmpty(d.TariffId))[0].TariffId;
+
+                                    var tariffType: string = "";
+                                    if (this.EntityPM.TransportModeId == "A") {
+                                        tariffType = "AFC";
+                                    }
+                                    else if (this.EntityPM.ShipmentTypeId == "LCL" || this.EntityPM.ShipmentTypeId == "LCLD") {
+                                        tariffType = "OLC";
+                                    }
+                                    else if (AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId)) {
+                                        tariffType = "OFC";
+                                    }
+
+                                    var myDomainService: TariffDomainService = new TariffDomainService();
+                                    myDomainService.GetTariffsPricesConnectedToPayables(freightTariffId, this.EntityPM.Id, tariffType).subscribe((res: any) => {
+                                        if (!res.HasError) {
+                                            if (res.Result) {
+                                                var loadedResults: Array<TariffSearchSummary> = res.Result;
+                                                Generator.GeneratePayablesFromOriginShipment(this.OriginShipment);
+                                                this.OpenSummaryWindow(loadedResults[0], this.OriginShipment.ShipmentPayables, tariffType);
+                                            }
+                                        }
+                                    });
+                                }
+
+                                else {
+                                    Generator.GeneratePayablesFromOriginShipment(this.OriginShipment);
+                                    this.OnEntityDataGenerated();
+
+                                    this.ItemsSource.Collection.forEach((item: ShipmentPayableItem) => {
+                                        item.Rate = this.GetCurrencyRate(item.CurrencyId);
+                                        item.SetQuantity();
+                                        item.ComputeTotalAmount();
+                                    });
+                                }
                             }
 
                             this.entityArgs.EditComponent.StopBusyIndicator();
@@ -748,6 +807,112 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
         }
     }
+
+    private OpenSummaryWindow(loadedResult: TariffSearchSummary, originalPayables: ShipmentPayablePM[], tariffType: string) {
+        var message: string = "";
+
+        if (loadedResult == null) {
+            message = "No rates found";
+        }
+
+        else {
+            if (AppTool.IsNullOrEmpty(loadedResult.TariffId)) {
+                if (this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT").length > 0) {
+
+                    var codes: string = "";
+                    this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT").forEach((item: ShipmentPayablePM) => {
+                        if (AppTool.IsNullOrEmpty(codes)) {
+                            codes = item.ChargesTypeCode;
+                        }
+                        else {
+                            codes = codes + ", " + item.ChargesTypeCode;
+                        }
+                    });
+
+                    message = "No rate for this date for the following lines: " + codes;
+                }
+            }
+
+            else {
+                var codes: string = "";
+
+                var feightPayable: ShipmentPayablePM = this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT")[0];
+                if (feightPayable) {
+                    feightPayable.TariffId = loadedResult.TariffId;
+                    feightPayable.TariffNumber = loadedResult.TariffNumber;
+                    feightPayable.TariffVersion = +loadedResult.VersionId;
+
+                    if (feightPayable.UnitPrice != loadedResult.ActualPrice) {                        
+                        feightPayable.UnitPrice = loadedResult.ActualPrice;
+
+                        if (AppTool.IsNullOrEmpty(codes)) {
+                            codes = feightPayable.ChargesTypeCode;
+                        }
+                        else {
+                            codes = codes + ", " + feightPayable.ChargesTypeCode;
+                        }
+                    }
+                }
+
+                if (loadedResult.SurchargesWithoutAllIn.length == 0) {
+                    var codes1: string = "";
+                    this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode != "FRT").forEach((item: ShipmentPayablePM) => {
+                        if (originalPayables.filter(d => d.ChargesTypeCode == item.ChargesTypeCode).length > 0) {
+
+                            if (AppTool.IsNullOrEmpty(codes1)) {
+                                codes1 = item.ChargesTypeCode;
+                            }
+                            else {
+                                codes1 = codes1 + ", " + item.ChargesTypeCode;
+                            }
+                        }
+                    });
+
+                    message = "No rate for this date for the following lines: " + codes1;
+                }
+
+                else {
+                    loadedResult.SurchargesWithoutAllIn.forEach((item: SurchargeSummary) => {
+                        var surchargePayable: ShipmentPayablePM = this.EntityPM.ShipmentPayables.filter(d => d.ChargesTypeCode == item.Code)[0];
+                        if (surchargePayable) {
+                            surchargePayable.TariffId = item.TariffId;
+                            surchargePayable.TariffNumber = item.TariffNumber;
+
+                            if (surchargePayable.UnitPrice != item.ActualPrice) {
+                                surchargePayable.TariffVersion = +item.VersionId;
+                                surchargePayable.UnitPrice = item.ActualPrice;
+
+                                if (AppTool.IsNullOrEmpty(codes)) {
+                                    codes = surchargePayable.ChargesTypeCode;
+                                }
+                                else {
+                                    codes = codes + ", " + surchargePayable.ChargesTypeCode;
+                                }
+                            }
+                        }                        
+                    });
+                }
+
+                if (!AppTool.IsNullOrEmpty(codes)) {
+                    message = "Rate from the tariff changed for the following lines: " + codes;
+                }
+            }
+        }
+
+        this.OnEntityDataGenerated();
+
+        this.ItemsSource.Collection.forEach((item: ShipmentPayableItem) => {
+            item.Rate = this.GetCurrencyRate(item.CurrencyId);
+            item.SetQuantity();
+            item.ComputeTotalAmount();
+        });
+
+        if (!AppTool.IsNullOrEmpty(message)) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show(message);
+        }
+    }
+
     OnEntityDataGenerated() {
         this.BuildItemsSource();
         this.ComputeShipmentFields();

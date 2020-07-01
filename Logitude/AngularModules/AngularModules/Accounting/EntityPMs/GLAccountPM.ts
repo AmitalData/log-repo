@@ -634,6 +634,11 @@ export class GLAccountPM {
     public set MinimumInterestInvoiceBilling(newValue: number) { if (this.minimumInterestInvoiceBilling != newValue) { this.minimumInterestInvoiceBilling = newValue; this.MarkAsDirty("MinimumInterestInvoiceBilling"); } }
        
 	 
+    private isSplitted: boolean;
+    public get IsSplitted() { return this.isSplitted; }
+    public set IsSplitted(newValue: boolean) { if (this.isSplitted != newValue) { this.isSplitted = newValue; this.MarkAsDirty("IsSplitted"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

@@ -33,7 +33,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             return this.GetAll(interestTransactionGetParameters.Tenant)
                 .Where(d =>d.Tenant== interestTransactionGetParameters.Tenant 
-                && d.GLAccountId == interestTransactionGetParameters.GLAccountId 
+                && interestTransactionGetParameters.GLAccountIds.Contains(d.GLAccountId)
                 && !d.IsClosed
                 && !d.IsCancelled
                 && d.InterestValueDate <= interestTransactionGetParameters.InterestCalculationDate

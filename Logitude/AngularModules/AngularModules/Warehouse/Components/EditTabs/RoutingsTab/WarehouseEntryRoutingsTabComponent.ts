@@ -83,7 +83,9 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
 
                 }
             }
-            
+            if (this.EntityPM.StatusCode == "CAEA") {
+                this.DisableEditing();
+            }
 
         }
     }
@@ -92,6 +94,9 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
             this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    if (this.EntityPM.StatusCode == "CAEA") {
+                        this.DisableEditing();
+                    }
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                   
                 }
@@ -100,21 +105,24 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
             this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    if (this.EntityPM.StatusCode == "CAEA") {
+                        this.DisableEditing();
+                    }
 
                 }
             });
 
-            if (this.EntityPM.StatusCode == "CAEA") {
-                this.IsEnableEdit = false;
-
-                this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, this.IsEnableEdit);
-                this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, this.IsEnableEdit);
-                this.UIProperties.SetEnabled("FromCountryId", this.ObjectTableName, this.IsEnableEdit);
-                this.UIProperties.SetEnabled("ToCountryId", this.ObjectTableName, this.IsEnableEdit);
-                this.UIProperties.SetEnabled("TruckerId", this.ObjectTableName, this.IsEnableEdit);
-                this.UIProperties.SetEnabled("TruckerReference", this.ObjectTableName, this.IsEnableEdit);
-            }
         }
+    }
+
+    private DisableEditing() {
+        this.IsEnableEdit = false;
+        this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, this.IsEnableEdit);
+        this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, this.IsEnableEdit);
+        this.UIProperties.SetEnabled("FromCountryId", this.ObjectTableName, this.IsEnableEdit);
+        this.UIProperties.SetEnabled("ToCountryId", this.ObjectTableName, this.IsEnableEdit);
+        this.UIProperties.SetEnabled("TruckerId", this.ObjectTableName, this.IsEnableEdit);
+        this.UIProperties.SetEnabled("TruckerReference", this.ObjectTableName, this.IsEnableEdit);
     }
 
     IsInlandDomesticWarehouse(entityPM: WarehouseEntryPM) {

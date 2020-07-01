@@ -106,9 +106,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                   );
         }
 
-        public IQueryable<DWObjectFieldPM> GetDWObjectFieldPMsByDWObjectTabelAndTenant(int tenant,string dwotCode)
+        public List<DWObjectFieldPM> GetDWObjectFieldPMsByDWObjectTabelAndTenant(int tenant,string dwotCode)
         {
-            return (from a in repository.webFreightContext.DWObjectFields
+            List<DWObjectFieldPM> result = (from a in repository.webFreightContext.DWObjectFields
                     where a.Tenant == tenant && a.DWObjectTableCode == dwotCode
                     select new DWObjectFieldPM()
                     {
@@ -136,7 +136,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         OriginalObjectFieldCode = a.OriginalObjectFieldCode,
 
                     }
-                  );
+                  ).ToList();
+
+            return SetDWFullNameTextCode(tenant, result);
+
         }
 
         public List<DWObjectFieldPM> GetDWObjectFieldWithChildrenFieldsPMsByDWObjectTabelAndTenant(int tenant, string dwotCode)

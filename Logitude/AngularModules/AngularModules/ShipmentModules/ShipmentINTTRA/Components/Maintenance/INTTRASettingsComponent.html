@@ -31,7 +31,7 @@
                                                             <LogLabel [ObjectFieldName]="'INTTRASettingModeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
-                                                        <td style="width: 300px;">
+                                                        <td style="width: 280px;">
                                                             <table>
                                                                 <tr>
                                                                     <td>
@@ -62,8 +62,9 @@
 
                                                         <td style="padding-left: 5px;">
                                                             <div>
-                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditFTPClicked('Out')" [IsEnabled]="OutSettingsId != null"></IconButton>
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditFTPClicked('Out')" [IsEnabled]="OutSettingsId"></IconButton>
                                                                 <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddFTPClicked('Out')"></IconButton>
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteFTPClicked('Out')" [IsEnabled]="OutSettingsId"></IconButton>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -80,8 +81,9 @@
 
                                                         <td style="padding-left: 5px;">
                                                             <div>
-                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditFTPClicked('In')" [IsEnabled]="InSettingsId != null"></IconButton>
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditFTPClicked('In')" [IsEnabled]="InSettingsId"></IconButton>
                                                                 <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddFTPClicked('In')"></IconButton>
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteFTPClicked('In')" [IsEnabled]="InSettingsId"></IconButton>
                                                             </div>
                                                         </td>
                                                     </tr>

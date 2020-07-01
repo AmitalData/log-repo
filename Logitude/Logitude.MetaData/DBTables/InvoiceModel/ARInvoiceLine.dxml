@@ -219,6 +219,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="InvoiceCurrencyExchangeRate"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ARInvoiceId"
     ReferencedTable="ARInvoices"

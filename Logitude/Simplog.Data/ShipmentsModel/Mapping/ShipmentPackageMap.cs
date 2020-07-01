@@ -155,8 +155,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.RegistrationNumber).HasColumnName("RegistrationNumber");
             this.Property(t => t.CountryId).HasColumnName("CountryId");
             this.Property(t => t.WarehouseReleaseNumber).HasColumnName("WarehouseReleaseNumber");
+            this.Property(t => t.InUse).HasColumnName("InUse");
 
-            
+
 
             this.HasOptional(t => t.Shipment).WithMany().HasForeignKey(d => d.ShipmentId);
             this.HasOptional(t => t.PackageType).WithMany().HasForeignKey(d => d.PackageTypeId);

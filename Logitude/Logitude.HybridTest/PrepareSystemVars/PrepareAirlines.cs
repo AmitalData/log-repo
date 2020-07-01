@@ -43,10 +43,10 @@ namespace Logitude.HybridTest.WcfCallers
         }
         private static Response AssertResponse<T>(T entityPM)
         {
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(entityPM);
-            Assert.IsFalse(serviceResponse.HasError, "Prepare Airlines Vars Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Prepare Airlines Vars Failed! " + serviceResponse.ErrorMessage);
-            return serviceResponse;
+            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(entityPM);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Prepare Airlines Vars Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "Prepare Airlines Vars Failed! " + serviceOutcome.Response.ErrorMessage);
+            return serviceOutcome.Response;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Logitude.HybridTest.ServicesTest
             //LoginService.GetLoginTokenByCredentials();
             //Response serviceResponse = DepositionRequestWcfCaller.CallDepositionRequestUpsert();
             //Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
-            //Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            //Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
         }
     }
 }

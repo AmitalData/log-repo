@@ -30,6 +30,8 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -225,6 +227,22 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             {
                 CommonDataDomainService service = new CommonDataDomainService();
                 currentTenant.ProfitCurrencyId = service.GetTenantCurrency(currentTenant.ProfitCurrencyId, currentTenant.Id);
+
+                TariffSettingRepository tariffSettingRepository = new TariffSettingRepository(currentTenant.Id);
+                IQueryable<TariffSetting> tariffSettings = tariffSettingRepository.GetAll(currentTenant.Id);
+                if(tariffSettings != null && tariffSettings.Count() > 0)
+                {
+                    TariffSetting myTariffSetting = tariffSettings.FirstOrDefault();
+                    if(myTariffSetting != null)
+                    {
+                        if (string.IsNullOrEmpty(myTariffSetting.DefaultCurrencyId))
+                        {
+                            myTariffSetting.DefaultCurrencyId = currentTenant.ProfitCurrencyId;
+                            tariffSettingRepository.Update(myTariffSetting);
+                            tariffSettingRepository.SubmitChanges();
+                        }
+                    }
+                }
             }
 
             AddressPM address = null;

@@ -16,6 +16,8 @@ import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExec
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+ 
+ 
 
 
 
@@ -24,7 +26,7 @@ import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
     providers: [EntityListService],
   templateUrl: './BatchInvoicesComponent.html',
 })
-export class BatchInvoicesComponent extends BaseComponent {
+export class BatchInvoicesComponent extends BaseComponent implements AfterViewInit, OnInit{
     entityListService = new EntityListService();
     DataContext: any = this;
     LoadGrids: boolean = false;
@@ -39,6 +41,7 @@ export class BatchInvoicesComponent extends BaseComponent {
     public bteList: BatchTaskExecutionList;
     public timer: any;
     public timerInterval: number = 1000;
+    public ObjectTableName: string = "InterestReport";
     public CreateInvoiceText: string = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
     constructor(private CD: ChangeDetectorRef) {
     super();
@@ -53,6 +56,7 @@ export class BatchInvoicesComponent extends BaseComponent {
   //public MarkIsChecked: EventEmitter<any> = new EventEmitter();
     public ColumnsReady: EventEmitter<any> = new EventEmitter();
   ngOnInit() {
+    this.InitializeDate();
     this.BuildColumns();
     this.ReloadData();
 
@@ -171,24 +175,29 @@ export class BatchInvoicesComponent extends BaseComponent {
         });
 
     }
-
+    private timerToken: any;
     ValidateDate(fieldName: any) {
         this.ValidationErrorsList = [];
         if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate, true)) {
             if (fieldName == null) {
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
             }
-            this.UIProperties.SetValidity("ToDate", null, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
-            this.UIProperties.SetValidity("FromDate", null, false, TextCodeTranslator.Translate("Accounting.General.FromDateMustBeLTT"));
-            //  this.CD.detectChanges();
-
-        } else {
+            this.timerToken = setTimeout(() => {
+                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.FromDateMustBeLTT"));
+                this.CD.detectChanges();
+            }, 200);
+        }
+         else {
+            this.timerToken = setTimeout(() => {
 
             this.UIProperties.SetValidity("ToDate", null, true, "");
             this.UIProperties.SetValidity("FromDate", null, true, "");
-            this.ReloadData();
+            }, 200);
+                this.ReloadData();
         }
-
+           
+        
     }
   public DataCount: number;
   private EnabledDataCount: number;
@@ -202,17 +211,17 @@ export class BatchInvoicesComponent extends BaseComponent {
      today: Date = new Date();
      lastmonth:any = this.today.setDate(this.today.getDay() - 30);
   
-  private fromDate: Date = DateTool.NextDay(DateTool.GetCurrentDateTimeAsUtc(), -30);
+  private fromDate: Date;
     public get FromDate() { return this.fromDate; }
     public set FromDate(value: Date) {
         if (this.fromDate != value) {
             this.fromDate = value;
             this.ValidateDate("FromDate");
-         
+
         }
     }
 
-  private toDate: Date = new Date();
+  private toDate: Date;
     public get ToDate() { return this.toDate; }
     public set ToDate(value: Date) {
         if (this.toDate != value) {
@@ -280,9 +289,12 @@ export class BatchInvoicesComponent extends BaseComponent {
     filters.PageIndex = skip + 1; // decremented 1 in the service
     filters.GetAll = true;
     filters.GetCount = true;
-    var fromDate = new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0);
-    var toDate = new Date(this.ToDate.getFullYear(), this.ToDate.getMonth(), this.ToDate.getDate(), 0, 0, 0);
-    filters.addAdditionalFilter("InterestCalculationDate", fromDate, toDate, null, "Between", false, false, false, "DateTime"); 
+    // var fromDate = new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0);
+    // var toDate = new Date(this.ToDate.getFullYear(), this.ToDate.getMonth(), this.ToDate.getDate(), 0, 0, 0);
+    // console.log(fromDate);
+    // console.log(toDate);
+
+    filters.addAdditionalFilter("InterestCalculationDate", this.fromDate, this.toDate, null, "Between", false, false, false, "DateTime"); 
     if (this.ShowInProgressReports) {
       filters.addAdditionalFilter("InterestReportStatusCode", "1,9,8", null, null, "InList", false, false, false, "string"); 
     }
@@ -304,11 +316,14 @@ export class BatchInvoicesComponent extends BaseComponent {
     private selectedItems: ObservableCollection;
   public SelectedItemsCount: number=0;
     onCheckBoxChecked($event:any)
-  {
-        if ($event.IsChecked) {
+    {
+        var isChecked: boolean = $event.IsChecked == undefined ? $event.isChecked : $event.IsChecked;
 
-            if (!this.selectedItems.Collection.includes($event.rowData)) {
-                this.selectedItems.Insert($event.rowData);
+        var rowData = $event.rowData == undefined ? $event.line : $event.rowData;
+        if (isChecked) {
+
+            if (!this.selectedItems.Collection.includes(rowData)) {
+                this.selectedItems.Insert(rowData);
 
               this.SelectedItemsCount += 1;
               this.DataCount = this.DataSource.rowCount;
@@ -318,8 +333,8 @@ export class BatchInvoicesComponent extends BaseComponent {
               }
 
               if (this.AllSelected) {
-                  if (this.ExcludedItems.Collection.includes($event.rowData.Id)) {
-                      this.ExcludedItems.Remove($event.rowData.Id);
+                  if (this.ExcludedItems.Collection.includes(rowData.Id)) {
+                      this.ExcludedItems.Remove(rowData.Id);
                   }
               }
           }
@@ -327,7 +342,7 @@ export class BatchInvoicesComponent extends BaseComponent {
     
     else {
   
-            this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == $event.rowData.Id));
+            this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == rowData.Id));
       this.SelectedItemsCount -= 1;
 
       if (this.DataCount != null) {
@@ -335,8 +350,8 @@ export class BatchInvoicesComponent extends BaseComponent {
 
       }
         if (this.AllSelected) {
-            if (!this.ExcludedItems.Collection.includes($event.rowData.Id)) {
-                this.ExcludedItems.Insert($event.rowData.Id);
+            if (!this.ExcludedItems.Collection.includes(rowData.Id)) {
+                this.ExcludedItems.Insert(rowData.Id);
           }
         }
       if (this.SelectedItemsCount == 0) {
@@ -391,8 +406,29 @@ export class BatchInvoicesComponent extends BaseComponent {
     }
 
   }
+  InitializeDate(){
+  
+  var month = new Date().getMonth();
+  var Year = new Date().getFullYear();
+  var Day = new Date().getDate();
+  this.ToDate = this.SetDate(Year, month, Day);
+  this.FromDate = this.SetDate(Year, month, Day);
+  this.FromDate.setUTCDate(this.ToDate.getDate() - 30);
+}
 
  
+  SetDate(year: number, month: number, day: number) {
+    var date = new Date();
+    date.setUTCFullYear(year);
+    date.setUTCMonth(month);
+    date.setUTCDate(day);
+    date.setUTCHours(0);
+    date.setUTCMinutes(0);
+    date.setUTCSeconds(0);
+    date.setUTCMilliseconds(0);
+
+    return date;
+}
 ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices:number,interestReportArgs: InterestReportArguments) {
       var confirmWindow = new ConfirmWindow();
       confirmWindow.Width = 390;
@@ -403,7 +439,7 @@ ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices:number,int
       else{
           NumberIdsSelected = interestReportArgs.SelectedIds.length;
       }
-      confirmWindow.Show(  NumberOfReportsWithoutInvoices+" "+TextCodeTranslator.Translate("InterestReport.O.OutOf")+" " + NumberIdsSelected + " " +TextCodeTranslator.Translate("InterestReport.O.SelectedReportsWillNotHaveAnInvoice"));
+      confirmWindow.Show(  NumberOfReportsWithoutInvoices+" "+TextCodeTranslator.Translate("InterestReport.O.OutOf")+" " + this.SelectedItemsCount + " " +TextCodeTranslator.Translate("InterestReport.O.SelectedReportsWillNotHaveAnInvoice"));
       confirmWindow.WindowClosed.subscribe((event: any) => {
           if (confirmWindow.Yes) {
              this.CreateInvoiceButtonClicked();

@@ -1214,6 +1214,16 @@ namespace WebFreight.Web
                 bool isReleasingAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsReleasingAgentShared;
                 bool isIssuingCarrierAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsIssuingCarrierAgentShared;
 
+                #region Referent
+                if (!string.IsNullOrEmpty(shipment.AccountManagerUserId))
+                {
+                    ReferentPartnerService referentPartnerService = new ReferentPartnerService();
+                    result.Add(referentPartnerService.GetReferentPartner(shipment.AccountManagerUserId, shipment.Tenant));
+                }
+                #endregion
+
+
+
                 if (!string.IsNullOrEmpty(shipment.ShipperId) && isShipperShared)
                 {
                     #region Shipper
@@ -1246,7 +1256,7 @@ namespace WebFreight.Web
                         item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
                         item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
 
-                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant,true);
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
                         if (country != null)
                         {
                             item.CountryName = country.EnglishName;

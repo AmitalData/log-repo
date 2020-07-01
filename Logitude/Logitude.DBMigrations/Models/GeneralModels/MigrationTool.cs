@@ -415,7 +415,7 @@ namespace Logitude.DBMigrations.Models
         {
             if (!String.IsNullOrEmpty(script))
             {
-                Console.WriteLine("Executing Script On " + dbType + " Database ...");
+                Console.WriteLine("Executing Scripts On " + dbType + " Database ...\n");
                 string result = ExecuteScriptOnDatabase(script, dbType);
                 if (!String.IsNullOrEmpty(result))
                 {
@@ -620,6 +620,7 @@ namespace Logitude.DBMigrations.Models
                         {
                             oracleCommand.CommandText = (command.ToUpper().EndsWith(" END") || command.ToUpper().EndsWith("\nEND")) ? (command + ";") : command;
                             currentCommandText = oracleCommand.CommandText;
+                            PrintExecutingScript(currentCommandText);
                             oracleCommand.ExecuteNonQuery();
                         }
                     }
@@ -655,6 +656,7 @@ namespace Logitude.DBMigrations.Models
                             sqlCommand.CommandText = command;
                             sqlCommand.CommandTimeout = 3600;
                             currentCommandText = sqlCommand.CommandText;
+                            PrintExecutingScript(currentCommandText);
                             sqlCommand.ExecuteNonQuery();
                         }
                     }
@@ -2000,6 +2002,14 @@ namespace Logitude.DBMigrations.Models
                 return (string)AssemblyVersion.ConstructorArguments[0].Value;
             }
             return "0.0";
+        }
+
+        private void PrintExecutingScript(string script)
+        {
+            if (!(script.ToLower().Contains("INSERT INTO".ToLower()) && script.ToLower().Contains("DBMigrationsHistory".ToLower())))
+            {
+                Console.WriteLine("Executing Script:\n" + script.TrimStart('\n').TrimEnd('\n') + "\n");
+            }
         }
 
         private void ExitTool(string message)

@@ -89,7 +89,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return (from a in context.InterestReports
                     where
-                     a.Tenant == interestReportArgs.Tenant && (!interestReportArgs.AllSelected ? interestReportArgs.SelectedIds.Contains(a.Id) : !interestReportArgs.ExcludedIds.Contains(a.Id) )&& (a.TotalAmount ==null || (a.TotalAmount == null && a.GLAccount.MinimumInterestInvoiceBilling==null) || a.TotalAmount <= a.GLAccount.MinimumInterestInvoiceBilling)
+                     a.Tenant == interestReportArgs.Tenant && (a.InterestReportStatusCode =="1" || a.InterestReportStatusCode == "9") && (interestReportArgs.FromDate != null ? a.InterestCalculationDate>= interestReportArgs.FromDate: a.InterestCalculationDate!=null) && (interestReportArgs.ToDate != null ? a.InterestCalculationDate <= interestReportArgs.ToDate : a.InterestCalculationDate != null) && (!interestReportArgs.AllSelected ? interestReportArgs.SelectedIds.Contains(a.Id) : !interestReportArgs.ExcludedIds.Contains(a.Id) )&& (a.TotalAmount ==null || (a.TotalAmount == null && a.GLAccount.MinimumInterestInvoiceBilling==null) || a.TotalAmount <= a.GLAccount.MinimumInterestInvoiceBilling)
 
                     select new InterestReportPM()
                     {

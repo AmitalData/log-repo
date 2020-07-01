@@ -74,9 +74,9 @@ namespace Logitude.HybridTest.WcfCallers
         }
         private static void AssertResponse<T>(T entityPM)
         {
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(entityPM);
-            Assert.IsFalse(serviceResponse.HasError, "Prepare Port Vars Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Prepare Port Vars Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(entityPM);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Prepare Port Vars Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "Prepare Port Vars Failed! " + serviceOutcome.Response.ErrorMessage);
         }
     }
 }

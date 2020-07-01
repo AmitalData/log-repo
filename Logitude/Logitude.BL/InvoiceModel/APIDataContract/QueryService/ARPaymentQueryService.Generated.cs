@@ -138,13 +138,9 @@ using Simplog.Data.InvoiceModel;
 				}
 
 							 
-
-
-				   temp.BankAccountNumber = MyEntityPM.BankAccountNumber;			  
-
+				   temp.BankAccountNumber = MyEntityPM.BankAccountNumber;
 				   temp.CancelationNotes = MyEntityPM.CancelationNotes;
-				   temp.AccountingCancelationDate = MyEntityPM.AccountingCancelationDate;					
-
+				   temp.AccountingCancelationDate = MyEntityPM.AccountingCancelationDate;			  
 				   if(MyEntityPM.StatusCode != null)
 				   {
 					   ARPaymentStatusQueryService ARPaymentStatusService6 = new ARPaymentStatusQueryService(Tenant);
@@ -152,7 +148,6 @@ using Simplog.Data.InvoiceModel;
 			       
 					   				   }
 				   					
-
 				   return temp;
 			}
             catch (Exception ex)
@@ -295,10 +290,8 @@ using Simplog.Data.InvoiceModel;
 
 								 
 					temp.BankAccountNumber = MyEntity.BankAccountNumber;
-
 					temp.CancelationNotes = MyEntity.CancelationNotes;
-					temp.AccountingCancelationDate = MyEntity.AccountingCancelationDate;					   
-
+					temp.AccountingCancelationDate = MyEntity.AccountingCancelationDate;
 					ARPaymentStatusQueryService StatusARPaymentStatusService = new ARPaymentStatusQueryService(Tenant);
 					if(MyEntity.Status != null)
 					{
@@ -311,7 +304,6 @@ using Simplog.Data.InvoiceModel;
 					}
 			
 										   
-
 					   return temp;
 		    }
             catch (Exception ex)
@@ -322,4 +314,4 @@ using Simplog.Data.InvoiceModel;
         }
 		 
    }
-}
+}

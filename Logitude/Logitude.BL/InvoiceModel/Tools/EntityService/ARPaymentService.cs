@@ -866,11 +866,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             throw new Exception("The Amount due is not suitable to the total amount paid!!");
                         }
-
+                        
+                        this.UpdateInvoicePaidDate(invoice, allConnectedItems);
                         invoiceRepository.Update(invoice);
                         #endregion
                     }
                 }
+            }
+        }
+
+        private void UpdateInvoicePaidDate(ARInvoice invoice, List<ARInvoicePayment> allConnectedItems)
+        {
+            if (invoice.AmountDue != 0)
+            {
+                invoice.PaidDate = null;
+            }
+
+            else
+            {
+                invoice.PaidDate = this.entityPM.ValueDate;
             }
         }
         #endregion
@@ -2189,7 +2203,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 _payment.OpenAmount = 0;
             }
 
-            if (amount2reconcile > (decimal)_payment.OpenAmount)
+            if (amount2reconcile > (decimal)_payment.OpenAmountInLocalCurrency)
                 throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.paymentAmount2reconcileMSG", _payment.Tenant, showLocal));
         }
 
@@ -2198,10 +2212,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             bool useLocalRecoMethod = _payment.GLAccountRecoMethodCode == "0";
             decimal amount2reconcile = 0;
 
-            if (useLocalRecoMethod)
-                amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.LocalAmount);   // amount to reconcile = Local Amount
+            if (_payment.PaymentInvoices.Count > 0)
+            {
+
+                if (useLocalRecoMethod)
+                    amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.LocalAmount);   // amount to reconcile = Local Amount
+                else
+                    amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.ForeignAmount); // amount to reconcile = Foreign Amount
+            }
             else
-                amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.ForeignAmount); // amount to reconcile = Foreign Amount
+            {
+                    amount2reconcile = (decimal)_payment.InvoicesLedgerTransactions.Sum(d => d.AmountToReconcile);   // amount to reconcile = Local Amount
+            }
+
             return amount2reconcile;
         }
 

@@ -434,8 +434,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.To = entityPM.To;
             entityPoco.Origin = entityPM.Origin;
             entityPoco.ComputedShipmentNumber = entityPM.ComputedShipmentNumber;
+            entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
 
-            MapShipmentSubType(entityPM, entityPoco);            
+            //MapShipmentSubType(entityPM, entityPoco);            
 
             //entityPoco.ContainersNumbers = entityPM.ContainersNumbers;
             //entityPoco.FirstPickupLocation = entityPM.FirstPickupLocation;
@@ -460,63 +461,63 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             ValidateMAWBStackField(entityPoco, entityMasterData);
         }
 
-        private static void MapShipmentSubType(ShipmentPM entityPM, Shipment entityPoco)
-        {
-            if(entityPM.TransportModeId == "A")
-            {
-                entityPM.ShipmentTypeId = "Air";
-                entityPoco.ShipmentTypeId = "Air";
-            }
+        //private static void MapShipmentSubType(ShipmentPM entityPM, Shipment entityPoco)
+        //{
+        //    if(entityPM.TransportModeId == "A")
+        //    {
+        //        entityPM.ShipmentTypeId = "Air";
+        //        entityPoco.ShipmentTypeId = "Air";
+        //    }
 
-            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
-            {
-                ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
+        //    if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
+        //    {
+        //        ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
 
-                string code = null;
-                if (entityPM.TransportModeId == "A")
-                {
-                    code = "Air";
-                }
+        //        string code = null;
+        //        if (entityPM.TransportModeId == "A")
+        //        {
+        //            code = "Air";
+        //        }
 
-                if (entityPM.TransportModeId == "I")
-                {
-                    if (entityPM.ShipmentTypeId == "FTL")
-                    {
-                        code = "FTL";
-                    }
+        //        if (entityPM.TransportModeId == "I")
+        //        {
+        //            if (entityPM.ShipmentTypeId == "FTL")
+        //            {
+        //                code = "FTL";
+        //            }
 
-                    else
-                    {
-                        code = "LTL";
-                    }
-                }
+        //            else
+        //            {
+        //                code = "LTL";
+        //            }
+        //        }
 
-                if (entityPM.TransportModeId == "O")
-                {
-                    if (entityPM.ShipmentTypeId == "FCLD")
-                    {
-                        code = "FCL";
-                    }
+        //        if (entityPM.TransportModeId == "O")
+        //        {
+        //            if (entityPM.ShipmentTypeId == "FCLD")
+        //            {
+        //                code = "FCL";
+        //            }
 
-                    else
-                    {
-                        code = "LCL";
-                    }
-                }
+        //            else
+        //            {
+        //                code = "LCL";
+        //            }
+        //        }
 
-                ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubTypeByCode(code, entityPM.Tenant);
-                if (subType != null)
-                {
-                    entityPM.ShipmentSubTypeId = subType.Id;
-                    entityPoco.ShipmentSubTypeId = subType.Id;
-                }
-            }
+        //        ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubTypeByCode(code, entityPM.Tenant);
+        //        if (subType != null)
+        //        {
+        //            entityPM.ShipmentSubTypeId = subType.Id;
+        //            entityPoco.ShipmentSubTypeId = subType.Id;
+        //        }
+        //    }
 
-            else
-            {
-                entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
-            }
-        }
+        //    else
+        //    {
+        //        entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
+        //    }
+        //}
 
         private static void ValidateMAWBStackField(Shipment entityPoco, ShipmentMasterData entityMasterData)
         {
