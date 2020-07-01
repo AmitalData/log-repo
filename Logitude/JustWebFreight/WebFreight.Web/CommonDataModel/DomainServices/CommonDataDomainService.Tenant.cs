@@ -197,7 +197,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 throw new ApplicationException("You are not authorized to do this operation");
             }
 
-            
+
 
             if (CacheManager.CacheWrapper.Get(entityName) != null)
             {
@@ -239,7 +239,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 addressRepository = new AddressRepository(objectContext);
                 addressQuery = new AddressQuery(addressRepository);
                 address = addressQuery.GetSinglePM(currentTenant.AddressId, currentTenant.Id);
-                if(address != null)
+                if (address != null)
                 {
                     currentTenant.CountryCode = address.CountryCode;
                     currentTenant.CountryName = address.CountryEnglishName;
@@ -297,7 +297,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     currentTenant.InvoiceSection2 = currentTenant.Company;
                 }
             }
-            
+
             TenantMapping.MapEntity(currentTenant, entity, false);
 
             if (entity.PasswordPolicyCode == null)
@@ -308,6 +308,9 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             tenantRepository.Update(entity);
             tenantRepository.SubmitChanges();
+
+            UpdateLogboxTenantSettings(currentTenant);
+
             using (TransactionScope scop = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
             {
                 GlobalTenantRepository globalTenantRep = new GlobalTenantRepository();
@@ -323,7 +326,16 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 tenantMngmentRep.SubmitChanges();
 
                 scop.Complete();
-            }           
+            }
+        }
+
+        private static void UpdateLogboxTenantSettings(TenantPM currentTenant)
+        {
+            LogBoxTenantSettingRepository logBoxTenantSettingRepository = new LogBoxTenantSettingRepository(currentTenant.Id);
+            LogBoxTenantSetting logBoxTenantSetting = logBoxTenantSettingRepository.GetSingleLogBoxTenantSetting(currentTenant.Id);
+            logBoxTenantSetting.CustomerTenantShareImportFile = currentTenant.CustomerTenantShareImportFile;
+            logBoxTenantSettingRepository.Update(logBoxTenantSetting);
+            logBoxTenantSettingRepository.SubmitChanges();
         }
 
         public void DeleteTenantPM(TenantPM tenant)
