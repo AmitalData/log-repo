@@ -204,7 +204,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         break;
                                 }
 
-                                if (availableStatus == "SMG" && declarationPM.TransportModeId == "O") availableStatus = "SST";
+                              //  if (availableStatus == "SMG" && declarationPM.TransportModeId == "O") availableStatus = "SST";
 
                                 LogMessagingUtil.Instance.AppendLine("HAWB Received");
 
@@ -229,7 +229,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         isAutoPayment = true;
                                     }
 
-                                    else if (availableStatus != "SST" &&  declarationPM.TransportModeId == "O")
+                                    else if ((availableStatus != "SST" && availableStatus != "SMG") &&  declarationPM.TransportModeId == "O")
                                     {
                                         RaiseStatus(declarationPM, "", "SST");
                                        // declarationPM.AvailabilityDate = DateTime.Now;
