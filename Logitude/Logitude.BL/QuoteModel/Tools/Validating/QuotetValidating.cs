@@ -459,9 +459,14 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 {
                     if (item.CostMeasurementCode == "PRFR" && !string.IsNullOrEmpty(item.CostCurrencyId) && !string.IsNullOrEmpty(freightLineCostCurrencyId))
                     {
-                        if (item.CostCurrencyId != freightLineCostCurrencyId)
+                        if ((item.CostAmountInSaleCurrency != null && item.CostAmountInSaleCurrency != 0)
+                            ||
+                            (item.SaleAmountInSaleCurrency != null && item.SaleAmountInSaleCurrency != 0))
                         {
-                            throw new ApplicationException("Charges Type " + item.ChargesTypeCode + " cost currency must be the same as the freight currency in the case of Percent of Freight");
+                            if (item.CostCurrencyId != freightLineCostCurrencyId)
+                            {
+                                throw new ApplicationException("Charges Type " + item.ChargesTypeCode + " cost currency must be the same as the freight currency in the case of Percent of Freight");
+                            }
                         }
                     }
                 }
