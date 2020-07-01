@@ -25,6 +25,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
         private string mainCarriageFromPortId = null;
         private string mainCarriageFinalDestinationPortId = null;
         private string clearingAgentId = null;
+        private string consigneeId = null;
         private PortRepository portRepository;
         private CardRepository cardRepository;
 
@@ -52,6 +53,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             QueryFilterItem filterItem_FromPortId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageFromPortId").FirstOrDefault();
             QueryFilterItem filterItem_FinalDestinationPortId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageFinalDestinationPortId").FirstOrDefault();
             QueryFilterItem filterItem_ClearingAgentId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ClearingAgentId").FirstOrDefault();
+            QueryFilterItem filterItem_ConsigneeId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ConsigneeId").FirstOrDefault();
 
             if (filterItem_FromDate != null)
             {
@@ -92,6 +94,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                 if (filterItem_ClearingAgentId.FieldValue != null)
                 {
                     clearingAgentId = filterItem_ClearingAgentId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_ConsigneeId != null)
+            {
+                if (filterItem_ConsigneeId.FieldValue != null)
+                {
+                    consigneeId = filterItem_ConsigneeId.FieldValue.ToString();
                 }
             }
         }
@@ -254,6 +264,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      ShipmentNumber = shipment.ShipmentNumber,
                      CreateDateTime = shipment.CreateDateTime,
                      ShipperName = shipment.ShipperName,
+                     ConsigneeId = shipment.ConsigneeId,
                      ConsigneeName = shipment.ConsigneeName,
                      CustomAgentImportId = shipment.CustomAgentImportId,
                      CustomAgentImportName = shipment.CustomAgentImportCard == null ? null : shipment.CustomAgentImportCard.EnglishName,
@@ -366,6 +377,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             if (!string.IsNullOrEmpty(flightNumber))
             {
                 shipmentPackageList = shipmentPackageList.Where(d => (d.MainCarriageCarrierCode + d.MainCarriageCarrierNumber) == flightNumber);
+            }
+
+            if (!string.IsNullOrEmpty(consigneeId))
+            {
+                shipmentPackageList = shipmentPackageList.Where(d => d.ConsigneeId == consigneeId);
             }
 
             return shipmentPackageList.ToList();
