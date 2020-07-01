@@ -19,4 +19,11 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="newfield"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

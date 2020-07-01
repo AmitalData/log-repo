@@ -408,6 +408,7 @@ namespace Logitude.DBMigrations.Models
                 ExecuteScript(generatedScript.GlobalScript, "Global");
                 ExecuteScript(generatedScript.MainScript, "Main");
                 ExecuteScript(generatedScript.SystemLogsScript, "SystemLogs");
+                ExecuteScript(generatedScript.CargoTrackingScript, "CargoTracking");
             }
         }
         
