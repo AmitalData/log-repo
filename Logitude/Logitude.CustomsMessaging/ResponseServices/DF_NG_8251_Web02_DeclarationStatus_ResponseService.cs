@@ -210,8 +210,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                 if (!string.IsNullOrWhiteSpace(availableStatus))
                                 {
-                                   
+                                    if (availableStatus == "SMG" && declarationPM.TransportModeId == "A")
+                                    {
                                         RaiseStatus(declarationPM, "", availableStatus);
+
+                                    }
+                                    else if (availableStatus == "SMG" && declarationPM.TransportModeId == "O")
+                                    {
+                                        RaiseStatus(declarationPM, "", "SST");
+
+                                    }
 
 
                                     if (availableStatus != "SMG" && declarationPM.TransportModeId=="A")
