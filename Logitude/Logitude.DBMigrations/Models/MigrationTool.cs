@@ -32,7 +32,7 @@ namespace Logitude.DBMigrations.Models
 
         public void RunTool()
         {
-            if(IsArgumentProvided("-exe") && IsArgumentProvided("-datatypechanges"))
+            if (IsArgumentProvided("-exe") && IsArgumentProvided("-datatypechanges"))
             {
                 ExitTool("Error: You Cannot Use -exe And -datatypechanges Arguments Together");
             }
@@ -333,7 +333,7 @@ namespace Logitude.DBMigrations.Models
             generatedScript = AppendRelationsScriptToGeneratedScript(generatedScript, relationsScript);
 
 
-            if(!IsArgumentProvided("-basic") && !IsArgumentProvided("-datatypechanges"))
+            if (!IsArgumentProvided("-basic") && !IsArgumentProvided("-datatypechanges"))
             {
                 foreach (var dxmlView in dxmlViews)
                 {
@@ -659,6 +659,7 @@ namespace Logitude.DBMigrations.Models
                         foreach (var command in commands)
                         {
                             oracleCommand.CommandText = (command.ToUpper().EndsWith(" END") || command.ToUpper().EndsWith("\nEND")) ? (command + ";") : command;
+                            oracleCommand.CommandTimeout = 3600;
                             currentCommandText = oracleCommand.CommandText;
                             oracleCommand.ExecuteNonQuery();
                         }
@@ -1290,6 +1291,7 @@ namespace Logitude.DBMigrations.Models
                         try
                         {
                             OracleCommand oracleCommand = new OracleCommand(script, oracleConnection);
+                            oracleCommand.CommandTimeout = 3600;
                             oracleCommand.Transaction = oracleTransaction;
                             oracleCommand.ExecuteNonQuery();
                             oracleTransaction.Commit();
@@ -1787,7 +1789,7 @@ namespace Logitude.DBMigrations.Models
 
         private void GetIncludedModulesFromDB()
         {
-            if(IncludedModules == null)
+            if (IncludedModules == null)
             {
                 string connectionString = GetConnectionString("Main");
 
