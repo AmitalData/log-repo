@@ -107,11 +107,27 @@
                                     <LogLabel [ObjectFieldName]="'CargoIdentifierKey2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width: 120px;">
-                                    <LogTextBox [ObjectFieldName]="'CargoIdentifierKey2'"
-                                                [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [HideColumns]="true"
-                                                [Text]="CargoIdentifierKey2"></LogTextBox>
+                                    <table>
+                                        <tr>
+
+                                            <td>
+                                                <IconButton style="float:left;" [IsSmall]="true" [Name]="'search'"
+                                                            [IsIconOnly]="true"
+                                                            (click)="SendCargoQueryRequest()"></IconButton>
+                                            </td>
+
+                                            <td>
+
+
+                                                <LogTextBox [ObjectFieldName]="'CargoIdentifierKey2'"
+                                                            [DataContext]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [HideColumns]="true"
+                                                            [Text]="CargoIdentifierKey2"></LogTextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                    
                                 </td>
 
                             </tr>
@@ -133,24 +149,31 @@
                                     <LogLabel [ObjectFieldName]="'CargoRowNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width: 120px;">
-                                    <LogTextBox [ObjectFieldName]="'CargoRowNumber'"
-                                                [InputType]="text"
-                                                [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [HideColumns]="true"
-                                                [Text]="CargoRowNumber"></LogTextBox>
+                                    <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 200px; cursor:pointer;" #selectControl  (change)="CargoRowNumber=selectControl.value">
+                                        <option *ngFor="let c of RowNumberslist .Collection" [value]="c" [selected]="c==CargoRowNumber">{{c}}</option>
+                                    </select>
+                                    <!--<LogTextBox [ObjectFieldName]="'CargoRowNumber'"
+                [InputType]="text"
+                [DataContext]="DataContext"
+                [ObjectTableName]="ObjectTableName"
+                [HideColumns]="true"
+                [Text]="CargoRowNumber"></LogTextBox>-->
                                 </td>
 
                                 <td style="width: 90px;">
                                     <LogLabel [ObjectFieldName]="'ContainerNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width: 120px;">
-                                    <LogTextBox [ObjectFieldName]="'ContainerNumber'"
-                                                [InputType]="text"
-                                                [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [HideColumns]="true"
-                                                [Text]="ContainerNumber"></LogTextBox>
+                                    <select  class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 200px; cursor:pointer;" #selectControl1 (change)="ContainerNumber=selectControl1.value">
+                                        <option *ngFor="let c of Containerslist.Collection" [value]="c" [selected]="c==ContainerNumber">{{c}}</option>
+                                    </select>
+                                    <!--<LogTextBox [ObjectFieldName]="'ContainerNumber'"
+                            (change)="ConnectedItemSelectionChanged(selectControl.value)
+    [InputType]="text"
+    [DataContext]="DataContext"
+    [ObjectTableName]="ObjectTableName"
+    [HideColumns]="true"
+    [Text]="ContainerNumber"></LogTextBox>-->
                                 </td>
                             </tr>
 
