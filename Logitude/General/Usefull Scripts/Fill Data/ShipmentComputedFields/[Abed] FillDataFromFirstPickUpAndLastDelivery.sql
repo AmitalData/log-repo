@@ -22,6 +22,9 @@ CREATE TABLE #temp_ShipmentComputedFields
 	   DeliveryDriver VARCHAR(40) NULL,
 	   DeliveryTrailerNumber VARCHAR(15) NULL,
 	   DeliveryNotes NVARCHAR(2000) NULL,
+	   DeliveryDate datetime null,
+	   OnHandDate datetime null,
+	   PODDate datetime null
 )
 
 select
@@ -31,11 +34,15 @@ ShipmentPickUps.CarrierNumber as PickupTruckerNumber,
 ShipmentPickUps.Driver as PickupDriver,
 ShipmentPickUps.TrailerNumber as PickupTrailerNumber,
 ShipmentPickUps.Notes as PickupNotes,
+shipmentPickUps.ATA as OnHandDate,
 ShipmentDeliveries.CarrierId as DeliveryTruckerId,
 ShipmentDeliveries.CarrierNumber as DeliveryTruckerNumber ,
 ShipmentDeliveries.Driver as DeliveryDriver,
 ShipmentDeliveries.TrailerNumber as DeliveryTrailerNumber,
-ShipmentDeliveries.Notes as DeliveryNotes
+ShipmentDeliveries.Notes as DeliveryNotes,
+ShipmentDeliveries.ATA as PODDate,
+FirstShipmentDeliveries.ATD as DeliveryDate
+
 into #temp
 
 from Shipments
@@ -55,6 +62,14 @@ on ShipmentDeliveries.Id =
 	and PickUpDeliveryTypeCode = 'DELV' 
 	order by PickUpDeliveryNumber desc
 )
+left outer join ShipmentPickUpDeliveries FirstShipmentDeliveries
+on FirstShipmentDeliveries.Id = 
+(
+	select top 1 Id from ShipmentPickUpDeliveries
+	where ShipmentPickUpDeliveries.ShipmentId = Shipments.Id 
+	and PickUpDeliveryTypeCode = 'DELV' 
+	order by PickUpDeliveryNumber
+)
 
 go
 
@@ -71,6 +86,9 @@ go
 	   declare @DeliveryDriver  as VARCHAR(40) 
 	   declare @DeliveryTrailerNumber  as VARCHAR(15) 
 	   declare @DeliveryNotes as NVARCHAR(2000) 
+	   declare @DeliveryDate  as DATETIME 
+	   declare @OnHandDate  as DATETIME
+	   declare @PODDate as DATETIME 
 
 
 
@@ -82,15 +100,15 @@ go
 
 	DECLARE DataCursor CURSOR READ_ONLY
 	FOR
-	SELECT Id, PickupTruckerId, PickupTruckerNumber, PickupDriver, PickupTrailerNumber, PickupNotes,  DeliveryTruckerId , DeliveryTruckerNumber, DeliveryDriver, DeliveryTrailerNumber, DeliveryNotes
+	SELECT Id, PickupTruckerId, PickupTruckerNumber, PickupDriver, PickupTrailerNumber, PickupNotes,  DeliveryTruckerId , DeliveryTruckerNumber, DeliveryDriver, DeliveryTrailerNumber, DeliveryNotes, DeliveryDate, OnHandDate, PODDate
 	FROM #temp	
-	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id,@PickupTruckerId, @PickupTruckerNumber, @PickupDriver, @PickupTrailerNumber, @PickupNotes,@DeliveryTruckerId, @DeliveryTruckerNumber, @DeliveryDriver, @DeliveryTrailerNumber, @DeliveryNotes
+	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id,@PickupTruckerId, @PickupTruckerNumber, @PickupDriver, @PickupTrailerNumber, @PickupNotes,@DeliveryTruckerId, @DeliveryTruckerNumber, @DeliveryDriver, @DeliveryTrailerNumber, @DeliveryNotes, @DeliveryDate, @OnHandDate, @PODDate
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
 		
 
-		insert into #temp_ShipmentComputedFields(Id, [PickupTruckerId] , [PickupTruckerNumber], [PickupDriver],[PickupTrailerNumber] , [PickupNotes], [DeliveryTruckerId] , [DeliveryTruckerNumber], [DeliveryDriver],[DeliveryTrailerNumber] , [DeliveryNotes]) values(@Id, @PickupTruckerId, @PickupTruckerNumber, @PickupDriver, @PickupTrailerNumber, @PickupNotes,@DeliveryTruckerId, @DeliveryTruckerNumber, @DeliveryDriver, @DeliveryTrailerNumber, @DeliveryNotes)
+		insert into #temp_ShipmentComputedFields(Id, [PickupTruckerId] , [PickupTruckerNumber], [PickupDriver],[PickupTrailerNumber] , [PickupNotes], [DeliveryTruckerId] , [DeliveryTruckerNumber], [DeliveryDriver],[DeliveryTrailerNumber] , [DeliveryNotes], [DeliveryDate], [OnHandDate], [PODDate]) values(@Id, @PickupTruckerId, @PickupTruckerNumber, @PickupDriver, @PickupTrailerNumber, @PickupNotes,@DeliveryTruckerId, @DeliveryTruckerNumber, @DeliveryDriver, @DeliveryTrailerNumber, @DeliveryNotes, @DeliveryDate, @OnHandDate, @PODDate)
 
 		set @Count = @Count + 1;
 		if(@Count = 1000)
@@ -106,7 +124,10 @@ go
 			DeliveryTruckerNumber = #temp_ShipmentComputedFields.DeliveryTruckerNumber,
 			DeliveryDriver = #temp_ShipmentComputedFields.DeliveryDriver,
 			DeliveryTrailerNumber = #temp_ShipmentComputedFields.DeliveryTrailerNumber,
-			DeliveryNotes = #temp_ShipmentComputedFields.DeliveryNotes
+			DeliveryNotes = #temp_ShipmentComputedFields.DeliveryNotes,
+			DeliveryDate = #temp_ShipmentComputedFields.DeliveryDate, 
+			OnHandDate = #temp_ShipmentComputedFields.OnHandDate, 
+			PODDate = #temp_ShipmentComputedFields.PODDate
 
 			FROM ShipmentComputedFields
 			INNER JOIN #temp_ShipmentComputedFields
@@ -115,7 +136,7 @@ go
 			truncate table #temp_ShipmentComputedFields
 			set @Count = 0
 		end
-	FETCH NEXT FROM DataCursor  INTO @Id,@PickupTruckerId, @PickupTruckerNumber, @PickupDriver, @PickupTrailerNumber, @PickupNotes,@DeliveryTruckerId, @DeliveryTruckerNumber, @DeliveryDriver, @DeliveryTrailerNumber, @DeliveryNotes
+	FETCH NEXT FROM DataCursor  INTO @Id,@PickupTruckerId, @PickupTruckerNumber, @PickupDriver, @PickupTrailerNumber, @PickupNotes,@DeliveryTruckerId, @DeliveryTruckerNumber, @DeliveryDriver, @DeliveryTrailerNumber, @DeliveryNotes, @DeliveryDate, @OnHandDate, @PODDate
 	END
 	CLOSE DataCursor
 	DEALLOCATE DataCursor
@@ -134,7 +155,10 @@ go
 			DeliveryTruckerNumber = #temp_ShipmentComputedFields.DeliveryTruckerNumber,
 			DeliveryDriver = #temp_ShipmentComputedFields.DeliveryDriver,
 			DeliveryTrailerNumber = #temp_ShipmentComputedFields.DeliveryTrailerNumber,
-			DeliveryNotes = #temp_ShipmentComputedFields.DeliveryNotes
+			DeliveryNotes = #temp_ShipmentComputedFields.DeliveryNotes,
+			DeliveryDate = #temp_ShipmentComputedFields.DeliveryDate, 
+			OnHandDate = #temp_ShipmentComputedFields.OnHandDate, 
+			PODDate = #temp_ShipmentComputedFields.PODDate
 
 			FROM ShipmentComputedFields
 			INNER JOIN #temp_ShipmentComputedFields

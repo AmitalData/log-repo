@@ -75,6 +75,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             MapFirstPickUp();
             MapLastPickUp();
             MapLastDelivery();
+            MapFirstDelivery();
             MapFieldsWhenChanged();
             MapOperationalClosed();
             MapCustomsClearance();
@@ -155,6 +156,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.PickupDriver = null;
                 entity.PickupTrailerNumber = null;
                 entity.PickupNotes = null;
+                entity.OnHandDate = null;
 
 
             }
@@ -169,7 +171,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.PickupDriver = firstPickUp.Driver;
                 entity.PickupTrailerNumber = firstPickUp.TrailerNumber;
                 entity.PickupNotes = firstPickUp.Notes;
-
+                entity.OnHandDate = firstPickUp.ATA;
 
                 if (firstPickUp.PickUpDeliveryToTypeCode == "PART")
                 {
@@ -239,7 +241,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.DeliveryDriver = null;
                 entity.DeliveryTrailerNumber = null;
                 entity.DeliveryNotes = null;
-
+                entity.DeliveryDate = null;
+                entity.PODDate = null;
             }
 
             else
@@ -254,7 +257,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.DeliveryDriver = finalDelivery.Driver;
                 entity.DeliveryTrailerNumber = finalDelivery.TrailerNumber;
                 entity.DeliveryNotes = finalDelivery.Notes;
-
+                entity.PODDate = finalDelivery.ATA;
 
 
                 if (finalDelivery.PickUpDeliveryToTypeCode == "PART")
@@ -290,6 +293,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 {
                     entity.DeliveryFrom = GetPortName(finalDelivery.FromPortId);
                 }
+            }
+        }
+        private void MapFirstDelivery()
+        {
+            ShipmentDeliveryPM firstDelivery = shipmentPM.ShipmentDeliveries.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+            if (firstDelivery == null)
+            {
+                entity.DeliveryDate = null;
+            }
+
+            else
+            {
+                entity.DeliveryDate = firstDelivery.ATA;
             }
         }
         private void MapFieldsWhenChanged()
