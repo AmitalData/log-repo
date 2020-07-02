@@ -14,6 +14,64 @@ namespace Logitude.Customs.BL.Messaging.Amital
     public class UnifreightQInvoiceList
     {
 
+        public Invoices GetInvoice(int tenant, string fileNo, out string ErrMessage)
+        {
+            ErrMessage = "";
+
+            string P_MESSAGE = "";
+            string xmlStatusList = "";
+
+
+            try
+            {
+
+                string statusList = "", Subject = " file "+ fileNo;
+                var myParams = new Hashtable();
+
+
+               
+
+                myParams.Add("componentname", "GDSHMAINXML");
+                myParams.Add("Operation", "GetQInvoice");
+                myParams.Add("Subject", "GetQInvoice:" + Subject);
+                myParams.Add("StatusList", statusList);
+                //if (!String.IsNullOrWhiteSpace(unifreigtUser))
+                //{
+                //    myParams.Add("$$GSC_USER_ID", unifreigtUser);
+                //}
+                myParams["CFIHMAIN:Xml"] = "";
+                myParams.Add("FileNo", fileNo);
+
+                string myParamsXML = UnifreightListsUtil.Serialize(myParams);
+                string UnifreightTester = "";
+                var resXML = SendMessageToUServerUtil.SendMessageToUServer(tenant, myParamsXML, out P_MESSAGE, out UnifreightTester);
+                Debug.WriteLine(UnifreightTester);
+                if (!String.IsNullOrWhiteSpace(resXML))
+                {
+                    //var response = UnifreightListsUtil.Deserialize(resXML);
+                    //xmlStatusList = UnifreightListsUtil.GetHtmlDecodeValue(ref response, "StatusList");
+                    string alexGiveBadXML = $"<Invoices>{resXML}</Invoices>";
+                    var StatusItemlist = LogitudeXmlSerializer.DeserializeObject<Invoices>(alexGiveBadXML);
+                    return StatusItemlist;
+
+
+                }
+                else
+                {
+                    ErrMessage = "UServer:Message =" + P_MESSAGE;
+                    return (null);
+                }
+            }
+            catch (Exception e)
+            {
+                ErrMessage = P_MESSAGE + e.ToString();
+
+                return (null);
+            }
+
+
+
+        }
 
         public Invoices GetInvoice()
         {

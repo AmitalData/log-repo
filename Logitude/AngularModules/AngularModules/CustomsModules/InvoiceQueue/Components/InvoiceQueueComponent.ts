@@ -14,6 +14,7 @@ import { DeclarationPMService } from "../../../Customs/Services/StandardPMs/Decl
 import { DeclarationPM } from "../../../Customs/EntityPMs/DeclarationPM";
 import { DropdownMenuFilterComponent } from '../../../CustomsModules/CustomsCourier/Components/CourierWorkSheet/DropdownMenuFilterComponent';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'InvoiceQueueComponent',
@@ -45,19 +46,25 @@ export class InvoiceQueueComponent
         });
     }
     private GetData() {
-        this._invoiceQueueWebService.GetInvoice().subscribe(data => {
+        this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
+            this.declaration = data.Result;
             SessionLocator.SelectedSession.StopBusyIndicator();
-            (data.Result.Invoice as Invoices).InvoiceLines.forEach(x => {
-                this.InvoiceLineList.Insert(x);
-            });
-            (data.Result.Invoice as Invoices).Statuses.forEach(x => {
-                this.StatusList.Insert(x);
-            });
-            (data.Result.Invoice as Invoices).IntegratedInvoices.forEach(x => {
-                this.IntegratedInvoiceList.Insert(x);
-            });
-            this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
-                this.declaration = data.Result;
+            if (this.declaration==null) {
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Show("declaration NOT FOUND");
+            }
+            this._invoiceQueueWebService.GetInvoice(this.declaration.Tenant, this.declaration.CustomFileNo).subscribe(data => {
+                
+                (data.Result.Invoice as Invoices).InvoiceLines.forEach(x => {
+                    this.InvoiceLineList.Insert(x);
+                });
+                (data.Result.Invoice as Invoices).Statuses.forEach(x => {
+                    this.StatusList.Insert(x);
+                });
+                (data.Result.Invoice as Invoices).IntegratedInvoices.forEach(x => {
+                    this.IntegratedInvoiceList.Insert(x);
+                });
+
             });
         });
     }

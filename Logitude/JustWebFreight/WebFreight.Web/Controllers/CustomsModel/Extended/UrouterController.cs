@@ -81,14 +81,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetInvoice()
+        public HttpResponseMessage GetInvoice(int tenant, string customFileNo)
         {
             try
             {
 
                 var UserverGetInvoiceList = new UnifreightQInvoiceList();
                 string ErrMessage = "";
-                var Invoice = UserverGetInvoiceList.GetInvoice();
+                var Invoice = UserverGetInvoiceList.//GetInvoice();
+                    GetInvoice(tenant, customFileNo, out ErrMessage);
                 return Request.CreateResponse(HttpStatusCode.OK, new { Invoice = Invoice, ErrMessage = ErrMessage });
             }
 
