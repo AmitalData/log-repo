@@ -38,6 +38,12 @@ namespace WebFreight.Web.DataProviders
         public string AccountCurrencyCode { get; set; }
         public string CurrencyCode { get; set; }
 
+        public string CustomerVatNumber { get; set; }
+        public string CustomerPaymentTerm { get; set; }
+        public decimal CustomerCreditLimit { get; set; }
+        public decimal GLAccountStandardInterestRate { get; set; }
+
+
     }
 
     public class AgingPeriodTotal

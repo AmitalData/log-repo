@@ -122,8 +122,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountCurrencyCode = d.Where(x => x.CurrencyCode != null).First().CurrencyCode,
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                 d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
+                    CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    CustomerVatNumber = d.First().CustomerVatNumber,
+                    CustomerPaymentTerm = d.First().AccountTermLocalName,
+                    GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
 
-                }).ToList();
+        }).ToList();
             else
                 groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
                 {
@@ -134,8 +138,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountEnglishName = d.First().AccountEnglishName,
                     AccountCurrencyCode = d.First().AccountCurrencyCode,
                     AccountDisplayNumber = d.First().AccountDisplayNumber,
+                    CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    CustomerVatNumber = d.First().CustomerVatNumber,
+                    CustomerPaymentTerm = d.First().AccountTermLocalName,
+                    GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
 
-                }).ToList();
+        }).ToList();
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
             
         }
@@ -156,6 +164,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountCurrencyCode = d.Where(x=>x.CurrencyCode != null).First().CurrencyCode,
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                 d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
+                    CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    CustomerVatNumber = d.First().CustomerVatNumber,
+                    CustomerPaymentTerm = d.First().AccountTermLocalName,
+                    GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
 
                 }).ToList();
             else
@@ -168,6 +180,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountEnglishName = d.First().AccountEnglishName ,
                     AccountCurrencyCode = d.First().AccountCurrencyCode,
                     AccountDisplayNumber = d.First().AccountDisplayNumber,
+                    CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    CustomerVatNumber = d.First().CustomerVatNumber,
+                    CustomerPaymentTerm = d.First().AccountTermLocalName,
+                    GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
 
                 }).ToList();
 
@@ -329,6 +345,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.CurrencyCode = item.CurrencyCode;
                     record.AccountDisplayNumber = item.AccountDisplayNumber;
                     record.AccountCurrencyCode = item.AccountCurrencyCode;
+                    record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
+                    record.CustomerVatNumber = item.CustomerVatNumber;
+                    record.CustomerPaymentTerm = item.AccountTermLocalName;
+                    record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
 
                     record.Total = item.Total;
 
@@ -347,6 +367,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.AccountLocalName = item.AccountLocalName;
                     record.AccountDisplayNumber = item.AccountDisplayNumber;
                     record.AccountCurrencyCode = item.AccountCurrencyCode;
+                    record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
+                    record.CustomerVatNumber = item.CustomerVatNumber;
+                    record.CustomerPaymentTerm = item.AccountTermLocalName;
+                    record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
 
                     record.Total = item.Total;
 
