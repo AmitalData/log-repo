@@ -1,0 +1,78 @@
+<div style="height:100%;width:100%">
+
+
+    <table style="height:100%;vertical-align:top" *ngIf="IsVisibile">
+
+
+        <tr style="height:20px;">
+            <td>
+                <div style="height:5px">
+                    <span style="vertical-align:central;text-align:left;margin-left:10px;font-size:16px;color:#1B90CB">Branding</span>
+
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height:10px"><td><div></div></td></tr>
+
+
+
+        <!--Fields Grid-->
+
+
+        <tr style="height:100%;vertical-align:top;">
+            <td>
+                <table>
+
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px"><div></div></td>
+                        <td style="width:200px;"><LogLabel [ObjectFieldName]="'EnableBranding'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
+                        <td style="width:230px;text-align:left"><LogCheckBox (ValueChanged)="EnableBrandingChange($event)" [LogitudeForm]="myForm" [ObjectFieldName]="'EnableBranding'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogCheckBox></td>
+                        <td><div></div></td>
+                    </tr>
+
+
+
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px"><div></div></td>
+                        <td style="width:200px;"><LogLabel [ObjectFieldName]="'HideSharedlogistics'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
+                        <td style="width:230px;text-align:left"><LogCheckBox [LogitudeForm]="myForm" [ObjectFieldName]="'HideSharedlogistics'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogCheckBox></td>
+                        <td><div></div></td>
+                    </tr>
+
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px"><div></div></td>
+                        <td style="width:200px;">  <LogLabel [ObjectFieldName]="'ContactEmail'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
+                        <td style="width:230px"><LogTextBox style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'ContactEmail'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogTextBox></td>
+                        <td><div></div></td>
+                    </tr>
+
+
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px"><div></div></td>
+                        <td style="width:200px;">  <LogLabel [ObjectFieldName]="'CustomerURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
+                        <td style="width:230px"><LogTextBox style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'CustomerURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogTextBox></td>
+                        <td><div></div></td>
+                    </tr>
+
+
+                    <tr><td colspan="4"></td></tr>
+                </table>
+
+            </td>
+
+        </tr>
+
+
+
+
+
+
+
+    </table>
+
+
+
+
+
+</div>
