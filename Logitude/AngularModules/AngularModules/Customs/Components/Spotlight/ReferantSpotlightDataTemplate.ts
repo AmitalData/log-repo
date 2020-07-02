@@ -137,8 +137,11 @@ export class ReferantSpotlightDataTemplate
 
     public get FollowUpDate() { return this.EntityPM.FollowUpDate; }
     public set FollowUpDate(newValue: Date) {
-        this.spotlightSharedDataService.IsDirty = true;
-        this.EntityPM.FollowUpDate = newValue;
+        if (newValue != null) {
+            newValue.setUTCHours(6);
+            this.EntityPM.FollowUpDate = newValue;
+            this.spotlightSharedDataService.IsDirty = true;
+        }
     }
 
     public get ExceptionReasonsList() { return this.EntityPM.ExceptionReasonsList; }
