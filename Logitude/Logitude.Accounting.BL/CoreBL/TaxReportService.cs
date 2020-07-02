@@ -242,7 +242,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 string transmitStatusCode = SetTransmitStatusByDocumentDate(a.ReferenceDate);
                 TaxReportLinePM taxReportLine = new TaxReportLinePM()
                 {
-
+                   
                     VatNumber = VatNumber,
                     Reference = reference,
                     OriginalReference = reference,
