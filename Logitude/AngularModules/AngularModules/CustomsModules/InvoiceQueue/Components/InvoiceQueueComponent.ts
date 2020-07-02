@@ -30,6 +30,7 @@ export class InvoiceQueueComponent
     public declaration: DeclarationPM;
     _invoiceQueueWebService: InvoiceQueueWebService = new InvoiceQueueWebService();
     RowIndex: any;
+    UnifreightMessage: any;
     constructor(private EntityResourceService: EntityResourceService, private _declarationPMService: DeclarationPMService) {
         super();
         this.InvoiceLineList = new ObservableCollection([]);
@@ -38,40 +39,34 @@ export class InvoiceQueueComponent
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                this._invoiceQueueWebService.GetInvoice().subscribe(data => {
-
-                    (data.Result.Invoice as Invoices).InvoiceLines.forEach(
-                        x => {
-                            this.InvoiceLineList.Insert(x);
-                        });
-
-                    (data.Result.Invoice as Invoices).Statuses.forEach(
-                        x => {
-                            this.StatusList.Insert(x);
-                        });
-
-
-                    (data.Result.Invoice as Invoices).IntegratedInvoices.forEach(
-                        x => {
-                            this.IntegratedInvoiceList.Insert(x);
-                        });
-
-
-                    this._declarationPMService.get("1-5347").subscribe(
-                        data => {
-                            this.declaration = data.Result;
-                        });
-
-
-                });
+               // this.GetData();
 
             });
         });
     }
+    private GetData() {
+        this._invoiceQueueWebService.GetInvoice().subscribe(data => {
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            (data.Result.Invoice as Invoices).InvoiceLines.forEach(x => {
+                this.InvoiceLineList.Insert(x);
+            });
+            (data.Result.Invoice as Invoices).Statuses.forEach(x => {
+                this.StatusList.Insert(x);
+            });
+            (data.Result.Invoice as Invoices).IntegratedInvoices.forEach(x => {
+                this.IntegratedInvoiceList.Insert(x);
+            });
+            this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
+                this.declaration = data.Result;
+            });
+        });
+    }
+
     SetWindowArgs(args: any) {
+        //var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "3000028" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-211622" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
 
-
-
+        this.UnifreightMessage = args.unifreightMessage;
+        this.GetData();
     }
 
 
