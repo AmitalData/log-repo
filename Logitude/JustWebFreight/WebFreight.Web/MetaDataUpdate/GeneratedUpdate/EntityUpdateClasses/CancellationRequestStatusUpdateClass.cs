@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CancellationRequestStatusUpdateClass
    {  		
-		public const string HashString = "697b099fccb058d296059c6d4b188a2f";
+		public const string HashString = "232396d26b44ef07d30f85ce44fcfc66";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סטטוס בקשת ביטול הצהרה",
 			      				    DefaultText =  "Cancellation Request Status",
-			      				    Code =  "3d20",
+			      				    Code =  "06c7",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -451,7 +451,50 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup CancellationRequestStatusQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "06c7", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CancellationRequestStatusQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ccb2", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable CancellationRequestStatusObjectTable = objectTables.ContainsKey("Customs.CancellationRequestStatus") ? objectTables["Customs.CancellationRequestStatus"] : null;
+            if (CancellationRequestStatusObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                CancellationRequestStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CancellationRequestStatus" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode CancellationRequestStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CancellationRequestStatus.Q.CancellationRequestStatus", DefaultText = @"Cancellation Request Statuses",LocalDefaultText = "סטטוסים ביטול הצהרה", ObjectTableId = CancellationRequestStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CancellationRequestStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancellationRequestStatus.Q.CancellationRequestStatus", ObjectTableId = CancellationRequestStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "CancellationRequestStatusFeatures.CancellationRequestStatus", NameTextCodeDefaultText = "CancellationRequestStatus", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CancellationRequestStatusObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query CancellationRequestStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CancellationRequestStatusTextCode_0.Id, NameTextCodeCode = CancellationRequestStatusTextCode_0.Code, ObjectTableName = "Customs.CancellationRequestStatus", Code = "CancellationRequestStatus",  QueryGroupCode = "06c7", IndexOrder = 0, Tenant = 0, ObjectTableId = CancellationRequestStatusObjectTable.Id, QuerySection = "Customs.CancellationRequestStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CancellationRequestStatusFeature_0.Id,FeatureUniqeCode= CancellationRequestStatusFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn CancellationRequestStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancellationRequestStatusQuery.Id,QueryCode = CancellationRequestStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CancellationRequestStatus.Code" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CancellationRequestStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancellationRequestStatusQuery.Id,QueryCode = CancellationRequestStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CancellationRequestStatus.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CancellationRequestStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancellationRequestStatusQuery.Id,QueryCode = CancellationRequestStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CancellationRequestStatus.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CancellationRequestStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancellationRequestStatusQuery.Id,QueryCode = CancellationRequestStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CancellationRequestStatus.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

@@ -78,6 +78,7 @@ import { AmountTypeListService } from '../../Customs/Services/StandardLists/Amou
 import { ClaimReasonTypeListService } from '../../Customs/Services/StandardLists/ClaimReasonTypeListService';
 import { ClassificationTypeListService } from '../../Customs/Services/StandardLists/ClassificationTypeListService';
 import { TransactionNatureTypeListService } from '../../Customs/Services/StandardLists/TransactionNatureTypeListService';
+//import { AutonomyRegionTypeListService } from '../../Customs/Services/StandardLists/AutonomyRegionTypeListService';
 
 // Business Process
 import {BusinessRoleListService} from '../Services/StandardLists/BusinessRoleListService'; 
@@ -106,6 +107,9 @@ import { SessionLocator } from './SessionLocator';
 import { ObjectsLocator } from '../Locators/ObjectsLocator';
 import { AppTool } from '../Tools';
 import { ExceptionReasonListService } from '../../Customs/Services/StandardLists/ExceptionReasonListService';
+import { CustomerRoleTypeListService } from '../../Customs/Services/StandardLists/CustomerRoleTypeListService';
+import { CancellationRequestStatusListService } from '../../Customs/Services/StandardLists/CancellationRequestStatusListService';
+import { CancellationReasonRequestTypeListService } from '../../Customs/Services/StandardLists/CancellationReasonRequestTypeListService';
 
 export class CachedDataManagerServices {
     public getAllFromCache(objectTableName: string, filters: ApiQueryFilters) {
@@ -220,6 +224,10 @@ export class CachedDataManagerServices {
             case "Customs.AmountTypeListService": { myResult = new AmountTypeListService(); break; }
             case "Customs.PartyRelationshipTypeListService": { myResult = new PartyRelationshipTypeListService(); break; }
             case "Customs.NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
+            case "Customs.CustomerRoleTypeListService": { myResult = new CustomerRoleTypeListService(); break; }
+         //   case "Customs.AutonomyRegionTypeListService ": { myResult = new AutonomyRegionTypeListService (); break; }
+            case "Customs.CancellationReasonRequestTypeListService ": { myResult = new CancellationReasonRequestTypeListService(); break; }
+            case "Customs.CancellationRequestStatusListService ": { myResult = new CancellationRequestStatusListService(); break; }
 
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }    
             case "TariffProductListService": { myResult = new TariffProductListService(); break; }    

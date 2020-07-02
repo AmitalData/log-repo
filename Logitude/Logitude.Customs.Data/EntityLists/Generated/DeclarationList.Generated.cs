@@ -346,6 +346,22 @@ namespace Logitude.Customs.Data.EntityLists
        public string ExportFile  { get; set; }
        [DataMember]
        public string DestinationCountryCode  { get; set; }
+       [DataMember]
+       public string CancelRequestReasonCode  { get; set; }
+       [DataMember]
+       public string CancelRequestReasonExplanation  { get; set; }
+       [DataMember]
+       public int? CancelRequestNumber  { get; set; }
+       [DataMember]
+       public string CustomCancelRequestRemarks  { get; set; }
+       [DataMember]
+       public string CancelRequestStatusCode  { get; set; }
+       [DataMember]
+       public string CancelRequestRejectionReason  { get; set; }
+       [DataMember]
+       public DateTime? CancelRequestApproveDate  { get; set; }
+       [DataMember]
+       public bool? IsClaimable  { get; set; }
    }
 
 }

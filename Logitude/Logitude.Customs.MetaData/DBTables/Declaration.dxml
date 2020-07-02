@@ -859,6 +859,53 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CancelRequestReasonCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CancelRequestReasonExplanation"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CancelRequestNumber"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomCancelRequestRemarks"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CancelRequestStatusCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CancelRequestRejectionReason"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsClaimable"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1032,6 +1079,16 @@
   <Relation
     ForeignKeyColumn="DestinationCountryCode"
     ReferencedTable="CustomsCountries"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CancelRequestReasonCode"
+    ReferencedTable="CancellationReasonRequestTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CancelRequestStatusCode"
+    ReferencedTable="CancellationRequestStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>
