@@ -1009,6 +1009,17 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(NbcDeclarationType, NbcDeclarationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(NbcDeclarationType);
 
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CancellationRequestStatus = closedSystemTables.Where(d => d.id == "1932").FirstOrDefault();
+            ObjectTable CancellationRequestStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CancellationRequestStatus", 0, false);
+            InsertClosedTableRecord(CancellationRequestStatus, CancellationRequestStatusObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(CancellationRequestStatus);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CancellationReasonRequestType = closedSystemTables.Where(d => d.id == "1906").FirstOrDefault();
+            ObjectTable CancellationReasonRequestTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CancellationReasonRequestType", 0, false);
+            InsertClosedTableRecord(CancellationReasonRequestType, CancellationReasonRequestTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(CancellationReasonRequestType);
+
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
             //InsertClosedTableRecord(collateralAnswerStatusTable, collateralAnswerStatusObjectTable, customsClosedTables, customsClosedTableRepository);

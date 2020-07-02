@@ -151,6 +151,8 @@
     <None Include="DBTables\AuthorizedSignerPermit.dxml" />
     <None Include="DBTables\AutonomyType.dxml" />
     <None Include="DBTables\Bank.dxml" />
+    <None Include="DBTables\CancellationReasonRequestType.dxml" />
+    <None Include="DBTables\CancellationRequestStatus.dxml" />
     <None Include="DBTables\CargoIdentifireType.dxml" />
     <None Include="DBTables\CargoIdentityQualifier.dxml" />
     <None Include="DBTables\CargoSplitRequestStatus.dxml" />
@@ -451,6 +453,8 @@
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
+    <None Include="EntityFiles\CancellationReasonRequestType.lxml" />
+    <None Include="EntityFiles\CancellationRequestStatus.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />
