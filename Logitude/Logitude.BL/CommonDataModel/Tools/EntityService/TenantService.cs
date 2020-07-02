@@ -199,6 +199,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.LBtenantsettingPoco = LBsettingentityRepository.GetSingleLBTenant(theEntityPm.Id);
             this.LBtenantsettingPoco.IsDocumentsArchive = theEntityPm.IsDocumentsArchive;
+            if (isNewEntity)
+            {
+                this.LBtenantsettingPoco.CustomerTenantShareImportFile = true;
+            }
             LBsettingentityRepository.Update(this.LBtenantsettingPoco);
             LBsettingentityRepository.SubmitChanges();
         }
