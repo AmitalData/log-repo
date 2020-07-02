@@ -11698,6 +11698,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
                                ShipmentSubTypeId = f.ShipmentSubTypeId,
                                ShipmentSubTypeName = f.ShipmentSubTypeName,
+                               ImportManifest = f.ImportManifest,
                            };
             return myResult;
         }
