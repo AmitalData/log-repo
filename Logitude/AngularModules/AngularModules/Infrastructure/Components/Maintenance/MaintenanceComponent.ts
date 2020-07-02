@@ -1487,7 +1487,7 @@ export class MaintenanceComponent {
                     //LogitudeViewModel = UnifreightMassageHandler·;
                     //LogitudeCommandId = CreateInvoiceCommand·;
                     //formtitle = הצהרת יבוא"
-                    var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "3000028" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
+                    var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "93320020" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
                     
                     var objParams = JSON.parse(json);
                     objParams.Requset = new Array();
