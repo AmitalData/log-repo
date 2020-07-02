@@ -365,6 +365,8 @@ import { RequestTypeListService } from './Services/StandardLists/RequestTypeList
 import { CustomsAutonomyKeywordPMService } from './Services/StandardPMs/CustomsAutonomyKeywordPMService';
 import { CurrencyTypePMService } from './Services/StandardPMs/CurrencyTypePMService';
 import { CustomsShipListService } from './Services/StandardLists/CustomsShipListService';
+import { CancellationReasonRequestTypeListService } from './Services/StandardLists/CancellationReasonRequestTypeListService';
+import { CancellationRequestStatusListService } from './Services/StandardLists/CancellationRequestStatusListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -608,7 +610,9 @@ export class ModuleProviders {
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
- 
+            case "CancellationReasonRequestTypeListService": { myResult = new CancellationReasonRequestTypeListService(); break; }
+            case "CancellationRequestStatusListService": { myResult = new CancellationRequestStatusListService(); break; }
+
              //#endregion                
 
             //#region StandardPMs
