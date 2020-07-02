@@ -1447,6 +1447,7 @@ namespace WebFreight.Web.InfrastructureModel
                 newTenant.AddressId = TenantAddress.Id;
                 newTenant.IsDocumentsArchive = true;
                 newTenant.CustomerId = customerPM.Id;
+                newTenant.CustomerTenantShareImportFile = true;
                 service.Update(newTenant);
             }
         }
