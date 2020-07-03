@@ -53,5 +53,8 @@ export class ShipmentComputedFieldsList {
 		PickupDriver: string;
 		PickupTrailerNumber: string;
 		PickupNotes: string;
+		DeliveryDate: Date;
+		OnHandDate: Date;
+		PODDate: Date;
 	
 }

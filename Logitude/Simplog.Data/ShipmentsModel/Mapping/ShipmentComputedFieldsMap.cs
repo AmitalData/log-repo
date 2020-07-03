@@ -50,6 +50,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DeliveryNotes).HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.PickupNotes).HasMaxLength(2000).IsUnicode(true);
 
+            this.Property(t => t.DeliveryDate).IsOptional();
+            this.Property(t => t.OnHandDate).IsOptional();
+            this.Property(t => t.PODDate).IsOptional();
+
 
 
 
@@ -118,6 +122,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PickupFrom).HasColumnName("PickupFrom");
             this.Property(t => t.PickupTo).HasColumnName("PickupTo");
             this.Property(t => t.OperationallyClosedByUserName).HasColumnName("OperationallyClosedByUserName");
+
+            this.Property(t => t.DeliveryDate).HasColumnName("DeliveryDate");
+            this.Property(t => t.OnHandDate).HasColumnName("OnHandDate");
+            this.Property(t => t.PODDate).HasColumnName("PODDate");
 
             this.HasRequired(t => t.Shipment);
             this.HasOptional(t => t.OperationallyClosedByUser).WithMany().HasForeignKey(d => d.OperationallyClosedByUserId);
