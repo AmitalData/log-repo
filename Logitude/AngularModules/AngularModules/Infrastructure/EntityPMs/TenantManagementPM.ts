@@ -694,11 +694,6 @@ export class TenantManagementPM {
     public set SecondaryColor(newValue: string) { if (this.secondaryColor != newValue) { this.secondaryColor = newValue; this.MarkAsDirty("SecondaryColor"); } }
        
 	 
-    private opacity: number;
-    public get Opacity() { return this.opacity; }
-    public set Opacity(newValue: number) { if (this.opacity != newValue) { this.opacity = newValue; this.MarkAsDirty("Opacity"); } }
-       
-	 
     private backgroundId: string;
     public get BackgroundId() { return this.backgroundId; }
     public set BackgroundId(newValue: string) { if (this.backgroundId != newValue) { this.backgroundId = newValue; this.MarkAsDirty("BackgroundId"); } }
@@ -805,9 +800,19 @@ export class TenantManagementPM {
     public set TotalPrice(newValue: number) { if (this.totalPrice != newValue) { this.totalPrice = newValue; this.MarkAsDirty("TotalPrice"); } }
        
 	 
+    private mainColorOpacity: string;
+    public get MainColorOpacity() { return this.mainColorOpacity; }
+    public set MainColorOpacity(newValue: string) { if (this.mainColorOpacity != newValue) { this.mainColorOpacity = newValue; this.MarkAsDirty("MainColorOpacity"); } }
+       
+	 
     private supportDomain: string;
     public get SupportDomain() { return this.supportDomain; }
     public set SupportDomain(newValue: string) { if (this.supportDomain != newValue) { this.supportDomain = newValue; this.MarkAsDirty("SupportDomain"); } }
+       
+	 
+    private secondaryColorOpacity: string;
+    public get SecondaryColorOpacity() { return this.secondaryColorOpacity; }
+    public set SecondaryColorOpacity(newValue: string) { if (this.secondaryColorOpacity != newValue) { this.secondaryColorOpacity = newValue; this.MarkAsDirty("SecondaryColorOpacity"); } }
        
 	 
     private totalNumberOfUsers: number;

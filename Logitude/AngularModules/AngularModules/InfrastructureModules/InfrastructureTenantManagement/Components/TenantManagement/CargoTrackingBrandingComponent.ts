@@ -47,13 +47,15 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     clickColor(color: any) {
          console.log('working.....'); 
     }
+    calculateOpacity: boolean = false;
     updateMainColor(event:  any) {
-    this.MainColor =  event.value;
-    
+         this.MainColor =  event.value;
+       
+        this.SliderValue = 0;
     }
     updateSecondaryColor(event: any) {
         this.SecondaryColor = event.value;
-
+        this.SecondarySliderValue = 0;
     }
     ngAfterViewInit() {
       
@@ -83,7 +85,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         return this.sliderValue;
     }
     set SliderValue(value: number) {
-        this.sliderValue = value;
+        this.sliderValue = value; this.calculateOpacity = true;
         this.CalculateOpacity(value, "Main");
 
     }
@@ -97,28 +99,39 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.CalculateOpacity(value, "Secondary");
 
     }
-    get Opacity() {
-        return this.EntityPM.Opacity;
-    }
-    set Opacity(value: number) {
-        if (this.EntityPM.Opacity != value) {
-         
-            this.EntityPM.Opacity = value;
-          
-        }
-    }
+    
+   
     get MainColor() {
-        return this.EntityPM.MainColor;
+        return (this.EntityPM.MainColor != null && this.EntityPM.MainColor.length>7) ?  "#"+this.EntityPM.MainColor.substring(3,9):this.EntityPM.MainColor;
     }
     set MainColor(value: string) {
         if (this.EntityPM.MainColor != value) {
+            
             this.ValidateHexCode(value, "MainColor");
             this.EntityPM.MainColor = value;
             this.colorpicker.value = value;
         }
     }
+    get MainColorOpacity() {
+        return this.EntityPM.MainColorOpacity;
+    }
+    set MainColorOpacity(value: string) {
+        if (this.EntityPM.MainColorOpacity != value) {          
+            this.EntityPM.MainColorOpacity = value;
+            
+        }
+    }
+    get SecondaryColorOpacity() {
+        return this.EntityPM.SecondaryColorOpacity;
+    }
+    set SecondaryColorOpacity(value: string) {
+        if (this.EntityPM.SecondaryColorOpacity != value) {
+            this.EntityPM.SecondaryColorOpacity = value;
+
+        }
+    }
     get SecondaryColor() {
-        return this.EntityPM.SecondaryColor;
+        return (this.EntityPM.SecondaryColor != null && this.EntityPM.SecondaryColor.length > 7) ? "#" + this.EntityPM.SecondaryColor.substring(3, 9) : this.EntityPM.SecondaryColor;
     }
     set SecondaryColor(value: string) {
         if (this.EntityPM.SecondaryColor != value) {
@@ -130,8 +143,8 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     }
     ValidateHexCode(value:string, fieldName:string) {
 
-        var valid: boolean = /^#[0-9A-F]{6}$/i.test(value);
-        if (!valid && value != null) {
+        var valid: boolean = /^#[0-9a-fA-F]*/i.test(value);
+        if ((!valid || value.length>9) && value != null) {
             this.UIProperties.SetValidity(fieldName, "TenantManagement", false, "this is not a valid hex code");
 
             return false;
@@ -146,16 +159,25 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     public colorPickerValue: string;
     public secondarycolorPickerValue: string;
     CalculateOpacity(value: number, field: string) {
-        var color;
-        if (field == "Main") {
-            color = this.colorpicker.value;
-        }
-        else color = this.secondarycolor.value;
-        var rgbaColor = 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + value + ')';
-        if (field == "Main") {
-            this.colorPickerValue = rgbaColor;
-        }
-        else { this.secondarycolorPickerValue = rgbaColor; }
+        
+            var color;
+            if (field == "Main") {
+                color = this.colorpicker.value;
+                value = Math.round(value * 255);
+                this.MainColorOpacity = value.toString(16);
+            }
+            else {
+                value = Math.round(value * 255);
+                this.SecondaryColorOpacity = value.toString(16);
+                color = this.secondarycolor.value;
+            }
+            var rgbaColor = 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + value + ')';
+          
+            if (field == "Main") {
+                this.colorPickerValue = rgbaColor;
+            }
+            else { this.secondarycolorPickerValue = rgbaColor; }
+        
     }
     ngOnInit() {
         this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response: any) => {

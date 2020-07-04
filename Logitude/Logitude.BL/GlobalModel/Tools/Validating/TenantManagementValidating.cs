@@ -35,15 +35,22 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
         private static void ValidateCargoTracking(TenantManagementPM tenantManagement){
             if(tenantManagement.MainColor != null)
             {
-                Regex regex = new Regex("^#[A-Za-z0-9]{6}$");
-                if (!regex.IsMatch(tenantManagement.MainColor))
-                {
-                    string msg = "this is not a valid hex code";
-                    throw new ApplicationException(msg);
-                }
+                ValidateHexCode(tenantManagement.MainColor);
+               
             }
-
+            if (tenantManagement.SecondaryColor != null) {
+                ValidateHexCode(tenantManagement.SecondaryColor);
+            }
          }
+        private static void ValidateHexCode(string color)
+        {
+            Regex regex = new Regex("^#[A-Fa-f0-9]*$");
+            if (!regex.IsMatch(color))
+            {
+                string msg = "This is not a valid hex code";
+                throw new ApplicationException(msg);
+            }
+        }
         private static void ValidateCCSParameter(TenantManagementPM entityPM, TenantManagementRepository entityRepository)
         {
             if (!string.IsNullOrEmpty(entityPM.TTY) || !string.IsNullOrEmpty(entityPM.PIMA))

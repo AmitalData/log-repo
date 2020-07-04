@@ -174,10 +174,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      TotalFreeUsers = a.TotalFreeUsers,
                                                      AveragePrice = a.AveragePrice,
                                                      TotalPaymentamount = a.TotalPaymentamount,
-                                                     MainColor= a.MainColor,
-                                                     SecondaryColor = a.SecondaryColor,
-                                                    
-                                                     BackgroundId= a.BackgroundId
+                                                     MainColor = a.MainColor,// != null && a.MainColor.Length > 7) ? "#" + a.MainColor.Substring(3, 6) : null,
+                                                     SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
+
+                                                     BackgroundId = a.BackgroundId
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -355,9 +355,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   TotalFreeUsers = a.TotalFreeUsers,
                                                   AveragePrice = a.AveragePrice,
                                                   TotalPaymentamount = a.TotalPaymentamount,
-                                                  MainColor = a.MainColor,
-                                                  SecondaryColor = a.SecondaryColor,
-                                                  
+                                                  MainColor = a.MainColor ,//!= null && a.MainColor.Length > 7) ? "#" + a.MainColor.Substring(3, 6) : null,
+                                                  SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
+
                                                   BackgroundId = a.BackgroundId
                                               }).FirstOrDefault();
 
