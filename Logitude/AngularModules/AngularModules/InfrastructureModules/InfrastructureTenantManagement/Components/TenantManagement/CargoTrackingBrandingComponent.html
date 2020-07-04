@@ -1,3 +1,24 @@
+<style>
+    .slider {
+        display: inline-block;
+        width: 80px;
+        height: 22px;
+      margin-top:5px;
+        cursor: default;
+        border-radius: 5px;
+    }
+        .slider input {
+            width: 80px;
+            border:thin;
+           
+            height:22px
+        }
+    .coloPicker input {
+        position: relative;
+        display: inline-block;
+    }
+</style>
+
 <div style="height:100%;width:100%">
 
 
@@ -27,23 +48,43 @@
                     <tr style="vertical-align:top;height:33px">
                         <td style="width:8px"><div></div></td>
                         <td style="width:200px;"><LogLabel [ObjectFieldName]="'EnableBranding'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
-                        <td style="width:230px;text-align:left"><LogCheckBox (ValueChanged)="EnableBrandingChange($event)" [LogitudeForm]="myForm" [ObjectFieldName]="'EnableBranding'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogCheckBox></td>
+                        <td style="text-align:left"><LogCheckBox (ValueChanged)="EnableBrandingChange($event)" [LogitudeForm]="myForm" [ObjectFieldName]="'EnableBranding'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogCheckBox></td>
                         <td><div></div></td>
                     </tr>
-
-
-
                     <tr style="vertical-align:top;height:33px">
                         <td style="width:8px"><div></div></td>
-                        <td style="width:200px;"><LogLabel [ObjectFieldName]="'HideSharedlogistics'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
-                        <td style="width:230px;text-align:left"><LogCheckBox [LogitudeForm]="myForm" [ObjectFieldName]="'HideSharedlogistics'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogCheckBox></td>
+                        <td style="width:200px;">  <LogLabel [ObjectFieldName]="'MainColor'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
+
+                        <td style="width:160px">
+                            <LogTextBox style="width:200px" [HideColumns]="true" [ObjectFieldName]="'MainColor'" [ObjectTableName]="'TenantManagement'" [Text]="MainColor" [InputType]="Text" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                        <td style="width:40px"> <input type="color" class="coloPicker" id="color" value="" style="width:30px;"> </td>
+
+                        <td [style.background-color]="colorPickerValue" style="border-radius:0.5px; "
+                            class="slider">
+                            <input [(ngModel)]="SliderValue" min="0" max="1" step="0.1" type="range" />
+                        </td>
                         <td><div></div></td>
                     </tr>
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px"><div></div></td>
+                        <td style="width:200px;">  <LogLabel [ObjectFieldName]="'SecondaryColor'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
+                        <td style="width:160px"><LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'SecondaryColor'" [Text]="SecondaryColor" [InputType]="Text" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox></td>
+                        <td style="width:40px"> <input type="color" class="coloPicker" id="secondarycolor" value="" style="width:30px;"> </td>
+
+                        <td [style.background-color]="secondarycolorPickerValue" style="border-radius:0.5px; "
+                            class="slider">
+                            <input [(ngModel)]="SecondarySliderValue" min="0" max="1" step="0.1" type="range" />
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+
+
 
                     <tr style="vertical-align:top;height:33px">
                         <td style="width:8px"><div></div></td>
                         <td style="width:200px;">  <LogLabel [ObjectFieldName]="'ContactEmail'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
-                        <td style="width:230px"><LogTextBox style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'ContactEmail'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogTextBox></td>
+                        <td style="width:160px"><LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'ContactEmail'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogTextBox></td>
                         <td><div></div></td>
                     </tr>
 
@@ -51,11 +92,23 @@
                     <tr style="vertical-align:top;height:33px">
                         <td style="width:8px"><div></div></td>
                         <td style="width:200px;">  <LogLabel [ObjectFieldName]="'CustomerURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
-                        <td style="width:230px"><LogTextBox style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'CustomerURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogTextBox></td>
+                        <td style="width:160px"><LogTextBox [HideColumns]="true" [ObjectFieldName]="'CustomerURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogTextBox></td>
                         <td><div></div></td>
                     </tr>
 
+                    <tr>
+                        <td style="width:8px"><div></div></td>
+                        <td style="width:180px; vertical-align:top">
+                            <LogLabel [ObjectFieldName]="'BackgroundId'" [ObjectTableName]="'TenantManagement'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
 
+                        <td style="vertical-align:top">
+                            <div style="width:200px;height:100px">
+                                <ImageComponent [WidthImage]="'200px'" [HeightImage]="'95px'" [ImageId]="ImageId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" (UploadCompleted)="ImageUploadedCompleted($event)" style="height:72px;width:72px"> </ImageComponent>
+                            </div>
+                        </td><td><div></div></td>
+                    </tr>
                     <tr><td colspan="4"></td></tr>
                 </table>
 

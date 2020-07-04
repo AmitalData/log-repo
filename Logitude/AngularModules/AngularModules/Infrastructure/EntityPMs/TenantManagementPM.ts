@@ -684,6 +684,26 @@ export class TenantManagementPM {
     public set PackageCodeSearchField(newValue: string) { if (this.packageCodeSearchField != newValue) { this.packageCodeSearchField = newValue; this.MarkAsDirty("PackageCodeSearchField"); } }
        
 	 
+    private mainColor: string;
+    public get MainColor() { return this.mainColor; }
+    public set MainColor(newValue: string) { if (this.mainColor != newValue) { this.mainColor = newValue; this.MarkAsDirty("MainColor"); } }
+       
+	 
+    private secondaryColor: string;
+    public get SecondaryColor() { return this.secondaryColor; }
+    public set SecondaryColor(newValue: string) { if (this.secondaryColor != newValue) { this.secondaryColor = newValue; this.MarkAsDirty("SecondaryColor"); } }
+       
+	 
+    private opacity: number;
+    public get Opacity() { return this.opacity; }
+    public set Opacity(newValue: number) { if (this.opacity != newValue) { this.opacity = newValue; this.MarkAsDirty("Opacity"); } }
+       
+	 
+    private backgroundId: string;
+    public get BackgroundId() { return this.backgroundId; }
+    public set BackgroundId(newValue: string) { if (this.backgroundId != newValue) { this.backgroundId = newValue; this.MarkAsDirty("BackgroundId"); } }
+       
+	 
     private privateLabelId: string;
     public get PrivateLabelId() { return this.privateLabelId; }
     public set PrivateLabelId(newValue: string) { if (this.privateLabelId != newValue) { this.privateLabelId = newValue; this.MarkAsDirty("PrivateLabelId"); } }

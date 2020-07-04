@@ -174,6 +174,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      TotalFreeUsers = a.TotalFreeUsers,
                                                      AveragePrice = a.AveragePrice,
                                                      TotalPaymentamount = a.TotalPaymentamount,
+                                                     MainColor= a.MainColor,
+                                                     SecondaryColor = a.SecondaryColor,
+                                                    
+                                                     BackgroundId= a.BackgroundId
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -351,6 +355,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   TotalFreeUsers = a.TotalFreeUsers,
                                                   AveragePrice = a.AveragePrice,
                                                   TotalPaymentamount = a.TotalPaymentamount,
+                                                  MainColor = a.MainColor,
+                                                  SecondaryColor = a.SecondaryColor,
+                                                  
+                                                  BackgroundId = a.BackgroundId
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)

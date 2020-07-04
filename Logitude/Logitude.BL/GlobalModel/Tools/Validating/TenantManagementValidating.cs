@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -29,8 +30,20 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
             ValidateNumberOfUsers(entityPM);
             ValidateConnectedAirline(entityPM, entityRepository);
             ValidateSupportEmail(entityPM, entityRepository);
+            ValidateCargoTracking(entityPM);
         }
+        private static void ValidateCargoTracking(TenantManagementPM tenantManagement){
+            if(tenantManagement.MainColor != null)
+            {
+                Regex regex = new Regex("^#[A-Za-z0-9]{6}$");
+                if (!regex.IsMatch(tenantManagement.MainColor))
+                {
+                    string msg = "this is not a valid hex code";
+                    throw new ApplicationException(msg);
+                }
+            }
 
+         }
         private static void ValidateCCSParameter(TenantManagementPM entityPM, TenantManagementRepository entityRepository)
         {
             if (!string.IsNullOrEmpty(entityPM.TTY) || !string.IsNullOrEmpty(entityPM.PIMA))

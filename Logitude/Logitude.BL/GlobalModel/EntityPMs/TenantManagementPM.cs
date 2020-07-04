@@ -245,9 +245,12 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public bool IsINTTRAStockPrepaid { get; set; }
         public bool IsINTTRAOnlyDemo { get; set; }
         public bool AutoArchiveOnInvoice { get; set; }
-
+        
         public string PackageCodeSearchField { get; set; }
-
+        public string MainColor { get; set; }
+        public string SecondaryColor { get; set; }
+        
+        public string BackgroundId { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public string PrivateLabelId { get; set; }

@@ -850,6 +850,21 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Opacity"
+    Type="decimal"
+    Precision="2"
+    Scale="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BackgroundId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"
