@@ -65,6 +65,8 @@ export class ShipmentList {
 		ToPortId: string;
 		ToPort: string;
 		ToPortName: string;
+		ToPortCode: string;
+		FromPortCode: string;
 		ToPortCountry: string;
 		AMSBL: string;
 		House: string;
@@ -441,9 +443,8 @@ export class ShipmentList {
 		CreatedByPartner: string;
 		FirstARInvoiceApprovalDate: Date;
 		SLAC: string;
-        ToPortCode: string;
-        FromPortCode: string;
 		CreatedFromDigital: boolean;
 		ShipmentSubTypeId: string;
 		ShipmentSubTypeName: string;
-}
+	
+}

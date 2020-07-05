@@ -317,6 +317,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ComputedShipmentNumber).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.SLAC).HasMaxLength(5).IsUnicode(false);
             this.Property(t => t.ShipmentSubTypeId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.WarehouseLegDateChangeManually).IsOptional();
 
             //    .HasColumnAnnotation(
             //IndexAnnotation.AnnotationName,
@@ -793,6 +794,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 this.Property(t => t.LocalCustomsTransmissionsStatusDate).HasColumnName("LocalCustomsTransmissionsStatusDate");
                 this.Property(t => t.ComputedForwarderShipmentNumber).HasColumnName("ComputedForwarderShipmentNumber");
                 this.Property(t => t.OnCarriageAdditionalTransportModeCode).HasColumnName("OnCarriageAdditionalTransportModeCode");
+                this.Property(t => t.WarehouseLegDateChangeManually).HasColumnName("WarehouseLegDateChangeManually");
             }
             
             // Relationships

@@ -308,7 +308,7 @@
   <Column
     Name="NumberOfInsidePackages"
     Type="int"
-    DefaultValue="0">i
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
@@ -591,10 +591,9 @@
   </Column>
   <Column
     Name="InUse"
-    Type="int"
-    DefaultValue="0">
+    Type="int">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"

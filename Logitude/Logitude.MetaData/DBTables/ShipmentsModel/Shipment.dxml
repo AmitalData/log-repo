@@ -2959,6 +2959,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="WarehouseLegDateChangeManually"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

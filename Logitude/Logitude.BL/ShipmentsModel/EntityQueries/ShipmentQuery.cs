@@ -1494,6 +1494,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.WarehouseLegTerminalCode = shipment.WarehouseLegTerminalCode;
             shipmentPM.WarehouseLegExpectedEntryDate = shipment.WarehouseLegExpectedEntryDate;
             shipmentPM.WarehouseLegActualEntryDate = shipment.WarehouseLegActualEntryDate;
+            shipmentPM.WarehouseLegDateChangeManually = shipment.WarehouseLegDateChangeManually;
             shipmentPM.WarehouseLegExpectedReleaseDate = shipment.WarehouseLegExpectedReleaseDate;
             shipmentPM.WarehouseLegActualReleaseDate = shipment.WarehouseLegActualReleaseDate;
             shipmentPM.WarehouseLegLastFreeDate = shipment.WarehouseLegLastFreeDate;

@@ -797,5 +797,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string ShipmentSubTypeId { get; set; }
         public virtual ShipmentSubType ShipmentSubType { get; set; }
+        public bool? WarehouseLegDateChangeManually { get; set; }
     }
 }
