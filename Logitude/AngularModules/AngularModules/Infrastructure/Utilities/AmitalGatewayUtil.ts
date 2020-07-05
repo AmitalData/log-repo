@@ -317,7 +317,7 @@ export class AmitalGatewayUtil {
                 showInvoiceFromUrouter.Run(myParam);
 
             }
-                
+                break; 
             case "ShowDeclarationByIdReturnCloseSave": {
                 //change2EditTab();
                 //if (AppTool.IsNullOrEmpty(myEditTab.SessionComponent)) {
