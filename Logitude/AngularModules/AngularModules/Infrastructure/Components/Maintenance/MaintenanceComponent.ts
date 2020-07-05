@@ -572,6 +572,15 @@ export class MaintenanceComponent {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
 
+        if (FeatureLocator.HasFeaturePermession("General", "UPLOADPARTNERS")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "OTH";
+            item.Icon = "Settings"
+            item.Code = "PAUP";
+            item.ObjectTableName = "Partners Upload";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        } 
+
         if (FeatureLocator.HasFeaturePermession("General", "CacheLogMenu")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "OTH";
@@ -1297,6 +1306,17 @@ export class MaintenanceComponent {
                         logWindow.Title = windowTitle;
                         logWindow.Show('./CRMModules/CRMOthers/Components/SupportMailBox/SupportMailBoxComponent');
                     });
+                    break;
+                }
+
+                case "PAUP": {
+                    var windowTitle = "Partners Upload";
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Width = 600;
+                    logWindow.Height = 400;
+                    logWindow.Title = windowTitle;
+                    logWindow.IsShowCloseButton = false;
+                    logWindow.Show('./CommonModules/CommonPartners/Components/Maintenance/UploadPartnersComponent');
                     break;
                 }
 
