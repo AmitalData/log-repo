@@ -1,0 +1,183 @@
+<div class="content-wrapper" *ngIf="Shipment">
+    <a [routerLink]="" (click)="goBack()">Back to search result</a>
+
+
+    <div class="box-header">
+        <div class="icon hide-mobile">
+            <div class="circle-image">
+                <img class="path " [attr.src]="GetModeIcon()" alt=" " />
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="label">Shipment ID</div>
+            <div class="value">{{ Shipment.ShipmentID }}</div>
+        </div>
+
+        <div class="field">
+            <div class="label">Booking ID</div>
+            <div class="value">{{ Shipment.BookingID }}</div>
+        </div>
+
+        <div class="field">
+            <div class="label">Origin Port</div>
+            <div class="value">{{ Shipment.OriginPort }}</div>
+        </div>
+
+        <div class="field">
+            <div class="label">Destination Port</div>
+            <div class="value">{{ Shipment.DestinationPort }}</div>
+        </div>
+
+        <img class="hide-tablet" src="./assets/images/misc/cargo.svg" alt="">
+    </div>
+
+    <div class="panel-container">
+        <div class="tab-selector" *ngIf="isTabletView">
+            <div [class.active]="SelectedTab=='steps'" (click)="TabToggleClicked('steps')">Shipment Steps</div>
+            <div [class.active]="SelectedTab=='details'" (click)="TabToggleClicked('details')">Shipment Details</div>
+        </div>
+
+        <div *ngIf="(isTabletView && SelectedTab=='steps') || !isTabletView" class="panel left">
+            <div class="steps-panel-body">
+                <div class="shipment-timeline">
+
+                    <div class="milestones">
+                        <div class="start">
+                            <img src="./assets/images/misc/calendar.svg" alt="">
+                            <div class="label">Booking</div>
+                            <div class="details">02-NOV-2019, 13:10</div>
+                        </div>
+                        <div class="middle">
+                            <img src="./assets/images/misc/Truck.svg" alt="">
+
+                            <div class="label">In Progress</div>
+                            <div class="details">last update 18-nov-2019, 18:00</div>
+                        </div>
+                        <div class="end">
+                            <img src="./assets/images/misc/gps-marker.svg" alt="">
+
+                            <div class="label dim">Delivered</div>
+                            <!-- <div class="details">details</div> -->
+                        </div>
+                    </div>
+
+                    <div class="line-progressbar">
+                        <div class="line blue-line"></div>
+                        <div class="line dim-line"></div>
+
+                        <div class="dot start"></div>
+                        <div class="dot outline"></div>
+                        <div class="dot gray end"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="title hide-mobile">Shipment Steps Details</div>
+
+                <div class="tag">Future steps</div>
+                <ul class="steps-list">
+                    <li class="dimmed">
+                        <div class="tick"> </div>
+                        <div class="date" style="width: 130px;">18-Nov-2019, 18:00</div>
+                        <div class="caption" style="width: 205px;">Shipment airport departed</div>
+                        <div class="desc" style="width: calc(100% - 450px); padding: 0;">Lorem ipsum dolor sit amet, consectetur adipiscing edivt. </div>
+                    </li>
+                </ul>
+
+                <div class="tag">Current step</div>
+                <ul class="steps-list">
+                    <li class="highlighted">
+                        <div class="tick"> </div>
+                        <div class="date" style="width: 130px;">18-Nov-2019, 18:00</div>
+                        <div class="caption" style="width: 205px;">Shipment airport departed</div>
+                        <div class="desc" style="width: calc(100% - 450px); padding: 0;">Lorem ipsum dolor sit amet, consectetur adipiscing edivt. </div>
+                    </li>
+                </ul>
+
+                <div class="tag">Completed Steps</div>
+                <ul class="steps-list">
+                    <li>
+                        <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
+                        <div class="date" style="width: 130px;">18-Nov-2019, 18:00</div>
+                        <div class="caption" style="width: 205px;">Shipment airport departed</div>
+                        <div class="desc" style="width: calc(100% - 450px); padding: 0;">Lorem ipsum dolor sit amet, consectetur adipiscing edivt. </div>
+                    </li>
+
+                    <li>
+                        <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
+                        <div class="date" style="width: 130px;">18-Nov-2019, 18:00</div>
+                        <div class="caption" style="width: 205px;">Destination airport arrive</div>
+                        <div class="desc" style="width: calc(100% - 450px); padding: 0;"> sit amet, consectetur adipiscing edivt. </div>
+                    </li>
+
+
+                    <li>
+                        <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
+                        <div class="date" style="width: 130px;">18-Nov-2019, 18:00</div>
+                        <div class="caption" style="width: 205px;">Customs Check</div>
+                        <div class="desc" style="width: calc(100% - 450px); padding: 0;">ipsum dolor sit amet, consectetur adipiscing edivt. </div>
+                    </li>
+
+
+                    <li>
+                        <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
+                        <div class="date" style="width: 130px;">18-Nov-2019, 18:00</div>
+                        <div class="caption" style="width: 205px;">Preparing shipment</div>
+                        <div class="desc" style="width: calc(100% - 450px); padding: 0;">amet consectetur Lorem ipsum dolor sit adipiscing edivt. </div>
+                    </li>
+
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div *ngIf="(isTabletView && SelectedTab=='details') || !isTabletView" class="panel right">
+            <div class="shipment-details">
+
+                <h2 class="hide-mobile hide-tablet">Shipment Details</h2>
+
+                <div class="field">
+                    <div class="label">Creation Date</div>
+                    <div class="value">{{ Shipment.CreationDate | date: "d-MMM-y, h:mm" }}</div>
+                </div>
+
+                <div class="field">
+                    <div class="label">Sender</div>
+                    <div class="value">{{ Shipment.Sender }}</div>
+                </div>
+
+                <div class="field">
+                    <div class="label">Requested Deleivery date</div>
+                    <div class="value">21-Mar-2020, 23:00</div>
+                </div>
+
+                <div class="field">
+                    <div class="label">Receiver</div>
+                    <div class="value">{{ Shipment.Receiver }}</div>
+                </div>
+
+
+                <div class="field">
+                    <div class="label">Transport By</div>
+                    <div class="value">{{ Shipment.Mode }}</div>
+                </div>
+
+
+                <div class="field">
+                    <div class="label">Deleivery</div>
+                    <div class="value">{{ Shipment.Delivery }}</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="clear: both"></div>
+
+    </div>
+
+
+
+</div>

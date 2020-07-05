@@ -1,0 +1,129 @@
+* {
+    font-family: 'Open Sans';
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background: #F5F6FF;
+    font-family: 'Open Sans';
+    font-size: 16px;
+    line-height: 22px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+}
+
+.app-content {
+    background-image: url("../images/misc/map-bg.svg");
+    height: 100vh;
+}
+
+
+/* Colors */
+
+.primary {
+    color: #002664;
+}
+
+.primary-light {
+    color: #EEF0F4;
+}
+
+.gray {
+    color: #797979;
+}
+
+.light-gray {
+    color: #D2D2D2;
+}
+
+.light-blue {
+    color: #DCEBFF;
+}
+
+.silver {
+    color: #F5F6FF;
+}
+
+
+/* EOF Colors */
+
+
+/* Typings */
+
+h1,
+h2,
+h3 {
+    font-family: 'Open Sans';
+    font-weight: bold;
+    color: #002664;
+}
+
+h1 {
+    font-size: 22px;
+}
+
+h2 {
+    font-size: 18px;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+.tag {
+    font-size: 12px;
+    line-height: 20px;
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.mobile-only {
+    display: none;
+}
+
+@media screen and (max-width: 479px) {
+    h1 {
+        font-size: 24px;
+    }
+    h2 {
+        font-size: 16px;
+    }
+    h3 {
+        font-size: 14px;
+    }
+    body {
+        line-height: 20px;
+        font-size: 14px;
+    }
+    .tag {
+        font-size: 12px;
+        font-weight: bold;
+        color: black;
+    }
+    .hide-mobile,
+    .hide-tablet {
+        display: none;
+    }
+    .mobile-only {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .hide-tablet {
+        display: none;
+    }
+    .tablet-only {
+        display: block;
+    }
+}
+
+
+/* EOF Typings */
