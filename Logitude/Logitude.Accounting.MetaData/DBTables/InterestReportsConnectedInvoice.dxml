@@ -33,5 +33,5 @@
       Nullable="true" />
   </Column>
   <UniqueConstraint
-  Columns="ReportId" />
+  Columns="ReportId,Tenant" />
 </Table>
