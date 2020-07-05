@@ -3265,9 +3265,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         code = "FTL";
                     }
 
-                    else
+                    else if (entityPM.ShipmentTypeId == "LTL")
                     {
                         code = "LTL";
+                    }
+
+                    else if (entityPM.ShipmentTypeId == "MyGI")
+                    {
+                        code = "MyGI";
                     }
                 }
 
@@ -3278,9 +3283,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         code = "FCL";
                     }
 
-                    else
+                    else if (entityPM.ShipmentTypeId == "LCLD")
                     {
                         code = "LCL";
+                    }
+
+                    else if (entityPM.ShipmentTypeId == "MyGO")
+                    {
+                        code = "MyGO";
                     }
                 }
 
