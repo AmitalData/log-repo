@@ -29,6 +29,18 @@ export class CommonDomainService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CommonDomain';
     }
 
+    DownloadUploadPartnersTemplate() {
+        var url = this._apiUrl + '/GetDownloadUploadPartnersTemplate';
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     InvokeUpdateAutoDisplay(chargeTypeId: string, propertyTypeCode: string, isAutoDisplay: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { BatchTaskExecutionPM } from '../../../../Infrastructure/EntityPMs/BatchTaskExecutionPM';
 import { BatchTaskExecutionListService } from '../../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from '../../../../Infrastructure/EntityLists/BatchTaskExecutionList';
@@ -25,9 +26,8 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
         this.CommonDomainService = new CommonDomainService();
     }
 
-
     // Commands
-    CloaseButtonClicked() {
+    CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 
@@ -46,7 +46,16 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
     }
 
     DownloadUploadPartnersTemplate() {
-
+        this.CommonDomainService.DownloadUploadPartnersTemplate().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var fileName = myResponse.Result;
+                var tempDate = new Date();
+                var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + fileName;
+                {
+                    window.open(url);
+                }
+            }
+        });
     }
 
     // Timer
