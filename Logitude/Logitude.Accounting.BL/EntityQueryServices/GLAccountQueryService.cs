@@ -568,6 +568,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                select new GLAccountPM()
                                                {
                                                    Id = a.Id,
+                                                   CreateDate = a.CreateDate,
                                                    CurrencyId = c.CurrencyId,
                                                    DisplayNumber = c.GLAccount != null ? c.GLAccount.DisplayNumber : null,
                                                    Inactive= a.Inactive,
