@@ -2,14 +2,14 @@
 
 
 
-import { Login } from './Login';
+import { LoginCloud } from './LoginCloud';
 import  { CreateRandom } from './CreateRandom';
 import { ARPayment } from './ARPayment';
 
 describe('New ARPayment ', () => {
 
  
-let l: Login= new Login();
+let l: LoginCloud= new LoginCloud();
 let R: CreateRandom= new CreateRandom();
 let AP: ARPayment= new ARPayment();
 

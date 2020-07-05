@@ -1,0 +1,34 @@
+
+import { Glaccount }  from './Glaccount'
+import { RandomGenerator } from './RandomGenerator'
+import { LoginCloud } from './LoginCloud';
+describe('GLAccount Module', function () {
+ 
+
+    let GL: Glaccount = new Glaccount();
+    let R: RandomGenerator = new RandomGenerator();
+    let log: LoginCloud = new LoginCloud();
+
+
+
+  it(' New GLAccount Was Created And Updated', function () {
+   
+
+   // cy.get('li[id=PAR]',{timeout: 60000})
+   log.dologin();
+   cy.get('li[id="GeneralMHFullAccounting"]').click();
+    cy.get('#FAGLAccouts').click();
+   
+
+  
+    var GlaccountNumber = R.RandomNum();
+    var name = 'My Auto GLAccount';
+
+   GL.CreateNewGLAccount(name+GlaccountNumber);
+   GL.EditGLAccount(name +GlaccountNumber);
+   
+
+
+
+  });
+});

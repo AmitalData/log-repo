@@ -1,14 +1,14 @@
 
 
 
-import { Login } from './Login';
+import { LoginCloud } from './LoginCloud';
 import { CreateRandom } from './CreateRandom';
 import { BankAccount } from './BankAccount';
 
 describe('New Bank Account ', () => {
 
     let B: BankAccount = new BankAccount();
-    let l: Login = new Login();
+    let l: LoginCloud = new LoginCloud();
     let R: CreateRandom = new CreateRandom();
 
 
