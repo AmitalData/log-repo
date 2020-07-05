@@ -411,7 +411,7 @@ namespace WebFreight.Web.Helpers
                         string nodename = TranslateTextsClass.Translate(node.Name, tenant);
                         nodename = nodename != null ? nodename : "";
                         nodename = nodename.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "");
-
+                        int start = 65;
                         string sheetColumn = "";
                         if (array[0, 0] <= 90 && array[0, 1] == 0)
                         {
@@ -423,7 +423,7 @@ namespace WebFreight.Web.Helpers
                         {
                             if (array[0, 1] == 0)
                             {
-                                array[0, 0] = 65;
+                                array[0, 0] = start;
                                 array[0, 1] = 65;
 
                                 sheet.Range["AA2:AZ2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
@@ -436,7 +436,16 @@ namespace WebFreight.Web.Helpers
                                 array[0, 1]++;
                             }
                             else
-                                break;
+                            {
+                                start += 1;
+                                array[0, 0] = start;
+                                array[0, 1] = 65;
+                                string a = sheetColumn = ((char)array[0, 0]).ToString() + ((char)array[0, 1]).ToString();
+                                array[0, 1]++;
+                                char startCharacter = Convert.ToChar(start);
+                                sheet.Range["AA2:" + startCharacter + "Z2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                                sheet.Range["AA3:" + startCharacter + "Z3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                            }
 
                         };
 

@@ -388,9 +388,11 @@
     <Compile Include="EntityDataMappings\Generated\InterestBasesPeriodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestBasesTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestEntityTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestLastBatchServiceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestReportDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestReportLineDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestReportLinesByDateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestReportsConnectInvoiceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestReportStatuseDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestTransactionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalActionTypeDataMapping.Generated.cs" />
@@ -443,9 +445,11 @@
     <Compile Include="EntityDataMappings\InterestBasesPeriodDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestBasesTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestEntityTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestLastBatchServiceDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestReportDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestReportLineDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestReportLinesByDateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestReportsConnectInvoiceDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestReportStatuseDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestTransactionDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalActionTypeDataMapping.cs" />
@@ -530,9 +534,11 @@
     <Compile Include="EntityQueryServices\Generated\InterestBasesPeriodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestBasesTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestEntityTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestLastBatchServiceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestReportLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestReportLinesByDateQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestReportQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestReportsConnectInvoiceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestReportStatuseQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestTransactionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalAdditionalDataQueryService.Generated.cs" />
@@ -599,6 +605,8 @@
     <Compile Include="EntityUpdateServices\AccountingNoteUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ARPaymentChequeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BankAccountTraceEventService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestLastBatchServiceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestReportsConnectInvoiceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BankDepositOnUpdatingService.cs" />
     <Compile Include="EntityUpdateServices\BankDepositOnCreatingService.cs" />

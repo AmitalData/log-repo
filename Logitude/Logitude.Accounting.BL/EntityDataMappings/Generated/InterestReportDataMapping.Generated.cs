@@ -39,7 +39,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         GLAccountInterestCreditLimit, 
 	         InterestReportStatusCode, 
 	         SearchFields, 
-	         CustomerId,
+	         CustomerId, 
+	         InvoiceFailureReason,
 	      }
 
 
@@ -75,7 +76,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         GLAccountMinimumInterest, 
 	         CustomerLocalName, 
 	         EnableInvoiceing, 
-	         IsFirstReport,
+	         IsFirstReport, 
+	         InvoiceFailureReason,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -167,6 +169,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerId))
             {
 				entityPOCO.CustomerId = entityPM.CustomerId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoiceFailureReason))
+            {
+				entityPOCO.InvoiceFailureReason = entityPM.InvoiceFailureReason;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -265,6 +272,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.CustomerId = entityPOCO.CustomerId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvoiceFailureReason))
+            {
+					entityPM.InvoiceFailureReason = entityPOCO.InvoiceFailureReason;
+            }
+
 		}
 
 		public void PMToOldPM(InterestReportPM entityPM, InterestReportPM oldEntityPM)
@@ -354,6 +366,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerId))
             {
                 oldEntityPM.CustomerId = entityPM.CustomerId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoiceFailureReason))
+            {
+                oldEntityPM.InvoiceFailureReason = entityPM.InvoiceFailureReason;
             }
 			
 		}

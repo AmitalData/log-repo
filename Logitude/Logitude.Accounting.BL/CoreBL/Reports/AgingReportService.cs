@@ -576,22 +576,24 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         private void RemoveDummies(ref List<PeriodM> reportList)
         {
-             reportList = (from a in reportList
-                          group a by new { a.AccountId, a.PeriodName } into g
+            reportList = (from a in reportList
+                          group a by new { a.AccountId, a.CurrencyId, a.OrderDateB4, a.OrderDate } into g
                           select new PeriodM()
                           {
                               OrderDateB4 = g.First().OrderDateB4,
-                               SplitAccountId = g.First().SplitAccountId,
+                              SplitAccountId = g.First().SplitAccountId,
                               OrderDate = g.First().OrderDate,
-                              AccountId = g.First().AccountId,
-                              CurrencyId = g.First().CurrencyId,
+                              AccountId = g.Key.AccountId,
+                              CurrencyId = g.Key.CurrencyId,
+
+
                               Total = g.Sum(r => r.Total),
                               OpenCredit = g.Sum(r => r.OpenCredit),
-                              OpenDebit =g.Sum(r => r.OpenDebit),
-                              
+                              OpenDebit = g.Sum(r => r.OpenDebit),
+
 
                           })
-                          .ToList();
+                         .ToList();
                           
 
 

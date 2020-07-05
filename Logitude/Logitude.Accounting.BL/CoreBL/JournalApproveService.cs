@@ -949,7 +949,8 @@ namespace Logitude.Accounting.BL.CoreBL
             private static DateTime _NextDueDoneAt = DateTime.MinValue;
             static JournalApproveWorker()
             {
-                _NextDueDoneAt = DateTime.UtcNow.Date.AddDays(1);//tomorrow at 00:00
+                //_NextDueDoneAt = DateTime.UtcNow.Date.AddDays(1);//tomorrow at 00:00
+                _NextDueDoneAt = DateTime.UtcNow.Date;//today already done - do next day =tomorrow at 00:00 ///
             }
             public Action LogDoneItemInMemoryAction { get; set; }
             public Action SetLastActivate { get; set; }
