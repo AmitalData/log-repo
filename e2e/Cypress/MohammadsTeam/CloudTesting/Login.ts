@@ -19,7 +19,7 @@ export class Login {
         cy.server();
         cy.route('**/GetLastTableUpdateDate/**').as('LoadDataCompleted');
 
-        cy.wait('@LoadDataCompleted', {timeout:80000});
+        cy.wait('@LoadDataCompleted');
     }
 
 }
