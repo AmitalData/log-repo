@@ -204,7 +204,7 @@
  declare @ExceptionResolvedDescription as nvarchar(500)
  declare @LastExceptionDescription as nvarchar(2000)
  declare @RegistryDate as datetime
- declare @GrossWeightPerTon as decimal
+ declare @GrossWeightPerTon as float
  declare @NextETA as datetime
  declare @NextETD as datetime
  declare @Commodity as nvarchar(15)
