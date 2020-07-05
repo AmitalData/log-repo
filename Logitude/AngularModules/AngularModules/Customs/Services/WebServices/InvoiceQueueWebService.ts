@@ -17,12 +17,12 @@ export class InvoiceQueueWebService {
     }
 
 
-    GetInvoice() {
+    GetInvoice(tenant: number, customFileNo: string) {
 
         var callTime = new Date();
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetInvoice?' , ServiceHelper.GetHttpFullHeaders())
+            return this._http.get(this._apiUrl + '/GetInvoice?' + 'tenant=' + tenant + '&customFileNo=' + customFileNo,  ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
                         var serviceResponse: ServiceResponse = new ServiceResponse();

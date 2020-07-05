@@ -15,6 +15,7 @@ import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/DeclarationRemarksService';
 import { DeclarationRemarks } from '../../../Customs/EntityPMs/Extended/DeclarationRemarks';
 import { SessionInfo } from '../../Utilities/SessionInfo';
+import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 
 @Component({
@@ -1475,6 +1476,28 @@ export class MaintenanceComponent {
     
     DoJoker(text: string) {
         switch (text) {
+            case "jokerinv":
+                {
+
+                        //$$GGG_IN = "UnifreightEntity=CFIFILEM;UnifreightEntityNumber=%%FILE_NO.CFIFILEM;LogitudeEntity=Customs.Declaration;LogitudeEntityNumber=%%LOGITUDE_FILE.CFIFILEM;LogitudeViewModel=UnifreightMassageHandler;LogitudeCommandId=CreateInvoiceCommand;formtitle=%%$text(IMP_DECLERATION)"
+                    ///"UnifreightEntity=CFIFILEM·;
+                    //UnifreightEntityNumber = 3000028·;
+                    //LogitudeEntity = Customs.Declaration·;
+                    //LogitudeEntityNumber = 1 - 211622·;
+                    //LogitudeViewModel = UnifreightMassageHandler·;
+                    //LogitudeCommandId = CreateInvoiceCommand·;
+                    //formtitle = הצהרת יבוא"
+                    var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "93320020" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
+                    
+                    var objParams = JSON.parse(json);
+                    objParams.Requset = new Array();
+                    //objParams.Requset.push(["Requset.JumpTo", "Payment"]);
+                    //objParams.Requset.push(["Requset.JumpTo", "RequestSheet"]);
+                    objParams.Requset.push(["Requset.JumpTo", "Answer"]);
+
+                    AmitalGatewayUtil.Instance.UnifaceRequest(objParams, null, null, null);
+                    
+                } break;
             case "jokeraccfunctionaltest": {
 
 

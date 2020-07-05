@@ -50,22 +50,28 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             DeclarationReferantDataUpdateService declarationReferantDataUpdateService = new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
 
             declarationReferantDataPM = declarationReferantDataQueryService.GetSingle(entityPM.DeclarationId, false, false);// 
-
-            List< ReferantExceptionPM> referantExceptionPMs = new List<ReferantExceptionPM>();
+            if(declarationReferantDataPM!= null)
+            {
+  List< ReferantExceptionPM> referantExceptionPMs = new List<ReferantExceptionPM>();
             ReferantExceptionQueryService referantExceptionQueryService = new ReferantExceptionQueryService(entityPM.Tenant);
             ReferantExceptionUpdateService referantExceptionUpdateService = new ReferantExceptionUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
             referantExceptionPMs = referantExceptionQueryService.GetByDecId(entityPM.DeclarationId);
-
-            string exceptions = "";
-            foreach (var item in referantExceptionPMs)
+            if (referantExceptionPMs!= null)
             {
-                if (item.Status == "A")
-                    exceptions += item.ExceptionReasonsCode + ",";
-            }
 
-            declarationReferantDataPM.ExceptionReasonsList = exceptions;
-            declarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Update;
-            declarationReferantDataUpdateService.Update(declarationReferantDataPM, true);
+                string exceptions = "";
+                foreach (var item in referantExceptionPMs)
+                {
+                    if (item.Status == "A")
+                        exceptions += item.ExceptionReasonsCode + ",";
+                }
+
+                declarationReferantDataPM.ExceptionReasonsList = exceptions;
+                declarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Update;
+                declarationReferantDataUpdateService.Update(declarationReferantDataPM, true);
+            }
+            }
+          
             base.AfterUpdating(entityPM, entityParentPM);
 
         }

@@ -14,6 +14,7 @@ import { DeclarationPMService } from "../../../Customs/Services/StandardPMs/Decl
 import { DeclarationPM } from "../../../Customs/EntityPMs/DeclarationPM";
 import { DropdownMenuFilterComponent } from '../../../CustomsModules/CustomsCourier/Components/CourierWorkSheet/DropdownMenuFilterComponent';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'InvoiceQueueComponent',
@@ -30,6 +31,7 @@ export class InvoiceQueueComponent
     public declaration: DeclarationPM;
     _invoiceQueueWebService: InvoiceQueueWebService = new InvoiceQueueWebService();
     RowIndex: any;
+    UnifreightMessage: any;
     constructor(private EntityResourceService: EntityResourceService, private _declarationPMService: DeclarationPMService) {
         super();
         this.InvoiceLineList = new ObservableCollection([]);
@@ -38,40 +40,40 @@ export class InvoiceQueueComponent
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                this._invoiceQueueWebService.GetInvoice().subscribe(data => {
+               // this.GetData();
 
-                    (data.Result.Invoice as Invoices).InvoiceLines.forEach(
-                        x => {
-                            this.InvoiceLineList.Insert(x);
-                        });
-
-                    (data.Result.Invoice as Invoices).Statuses.forEach(
-                        x => {
-                            this.StatusList.Insert(x);
-                        });
-
-
-                    (data.Result.Invoice as Invoices).IntegratedInvoices.forEach(
-                        x => {
-                            this.IntegratedInvoiceList.Insert(x);
-                        });
-
-
-                    this._declarationPMService.get("1-5347").subscribe(
-                        data => {
-                            this.declaration = data.Result;
-                        });
-
-
+            });
+        });
+    }
+    private GetData() {
+        this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
+            this.declaration = data.Result;
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            if (this.declaration==null) {
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Show("declaration NOT FOUND");
+            }
+            this._invoiceQueueWebService.GetInvoice(this.declaration.Tenant, this.declaration.CustomFileNo).subscribe(data => {
+                
+                (data.Result.Invoice as Invoices).InvoiceLines.forEach(x => {
+                    this.InvoiceLineList.Insert(x);
+                });
+                (data.Result.Invoice as Invoices).Statuses.forEach(x => {
+                    this.StatusList.Insert(x);
+                });
+                (data.Result.Invoice as Invoices).IntegratedInvoices.forEach(x => {
+                    this.IntegratedInvoiceList.Insert(x);
                 });
 
             });
         });
     }
+
     SetWindowArgs(args: any) {
+        //var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "3000028" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-211622" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
 
-
-
+        this.UnifreightMessage = args.unifreightMessage;
+        this.GetData();
     }
 
 
