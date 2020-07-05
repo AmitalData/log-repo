@@ -27,8 +27,8 @@ export const Components =
     SupplierInvoiceSelectionComponent,
     PointersFromInvoicesSelectionComponent,
     DeclarationQueryComponent,
-    SendManifestComponent
-
+    SendManifestComponent,
+    DeclarationCancellationComponent
     ];
 
 export class ModuleDeclarations {

@@ -439,6 +439,12 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         this.OpenPaymentOrderWindow();
                         break;
                     }
+                case "DeclarationCancellation":
+                    {
+                        this.OpenDeclarationCancellationWindow();
+                        break;
+                    }
+
                 case "PrintTzrufa":
                     {
                         this.PrintTzrufaMethod(false);
@@ -555,6 +561,21 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
             }
         }
+    }
+    OpenDeclarationCancellationWindow() {
+        var args: any = {
+            Declaration: this.EntityPM,
+        };
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1000;
+        logWindow.Height = 700;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.DeclarationCancellation");
+        logWindow.WindowArgs = args;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
     }
     SincroSendDeclarationDCA(): any {
         
