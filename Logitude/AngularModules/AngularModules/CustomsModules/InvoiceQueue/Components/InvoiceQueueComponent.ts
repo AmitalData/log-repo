@@ -101,7 +101,7 @@ export class InvoiceQueueComponent
                             SessionLocator.SelectedSession.StopBusyIndicator();
                             let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
                             SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.declaration.Id, { rowIndex: this.RowIndex });
-
+                            this.GetData();
                         }
                     }
                 );
@@ -143,7 +143,7 @@ export class InvoiceQueueComponent
                             SessionLocator.SelectedSession.StopBusyIndicator();
                             let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
                             SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.declaration.Id, { rowIndex: this.RowIndex });
-
+                            this.GetData();
                         }
                     }
                 );
@@ -184,6 +184,7 @@ export class InvoiceQueueComponent
                             SessionLocator.SelectedSession.StopBusyIndicator();
                             let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
                             SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.declaration.Id, { rowIndex: this.RowIndex });
+                            this.GetData();
 
                         }
                     }
@@ -208,6 +209,11 @@ export class InvoiceQueueComponent
             alert("ShowCustomFileOPCFromDeclaration");
         }
 
+    }
+
+
+    CreateQInvoice() {
+        SessionLocator.SelectedSession.CurrentWindow.Close("1");
     }
 
 }
