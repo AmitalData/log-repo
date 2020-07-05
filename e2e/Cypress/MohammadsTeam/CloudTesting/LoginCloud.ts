@@ -1,5 +1,5 @@
 
-export class Login {
+export class LoginCloud {
 
     constructor() {
 
@@ -9,17 +9,17 @@ export class Login {
 
     dologin() {
 
-        cy.visit('https://test.logitudeworld.com/TEST/')
+        cy.visit('https://pre.amital.co.il/')
         cy.get('input[id=Email]').clear();
-        cy.get('input[id=Email]').type("sg1209@test.com");
+        cy.get('input[id=Email]').type('sumaya@cloud.com');
         cy.get('input[id=Password]').clear();
-        cy.get('input[id=Password]').type('!Sg13579');
+        cy.get('input[id=Password]').type('Sg0592463934!');
 
         cy.get('#cmdLogin').click();
         cy.server();
         cy.route('**/GetLastTableUpdateDate/**').as('LoadDataCompleted');
 
-        cy.wait('@LoadDataCompleted', {timeout:80000});
+        cy.wait('@LoadDataCompleted');
     }
 
 }

@@ -2,13 +2,13 @@
 
 
 import { VendorGLAccount } from './Vendor';
-import { Login } from './Login';
+import { LoginCloud } from './LoginCloud';
 import  { CreateRandom } from './CreateRandom';
 
 describe('New Vendor GlAccount ', () => {
 
   let v: VendorGLAccount = new VendorGLAccount();
-let l: Login= new Login();
+let l: LoginCloud= new LoginCloud();
 let R: CreateRandom= new CreateRandom();
 
 
