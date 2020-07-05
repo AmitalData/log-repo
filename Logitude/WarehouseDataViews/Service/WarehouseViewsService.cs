@@ -143,6 +143,8 @@ namespace WarehouseDataViews
                 {
                     if (fieldCode == "[Notify 1]") fieldCode = "[Notify One]";
                     else if (fieldCode == "[Notify 2]") fieldCode = "[Notify Two]";
+                    else if (fieldCode == "[Source Tenant]") fieldCode = "[Tenant]";
+
                     string fieldName = GetFieldNameFromCode(fieldCode);
                     string viewName = GetViewName(fieldName, "Dim");
                     DropView(viewName, destinationConnectionString);
@@ -249,7 +251,7 @@ namespace WarehouseDataViews
         public void GrantView(string viewName,  string destinationConnectionString)
         {
             string sqlstring = "GRANT SELECT  ON [T570Unicargo].[dbo].[" + viewName + "] TO [U570gmxaU]";
-            ExecuteSql(sqlstring, destinationConnectionString);
+           // ExecuteSql(sqlstring, destinationConnectionString);
         }
         public void DropView(string viewName, string connectionString)
         {
