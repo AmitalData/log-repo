@@ -57,6 +57,8 @@ export class FlightBookingsManifestFilterComponent extends BaseComponent {
     public MainCarriageFromPortId: string;
     public MainCarriageFinalDestinationPortId: string;
     public ClearingAgentId: string;
+    public ConsigneeId: string;
+
     RunReport() {
         this.ValidationErrorsList = [];
         
@@ -117,6 +119,15 @@ export class FlightBookingsManifestFilterComponent extends BaseComponent {
                 this.queryFilterItem.DisplayInList = false;
                 this.queryFilterItem.FieldName = "ClearingAgentId";
                 this.queryFilterItem.FieldValue = this.ClearingAgentId;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.ConsigneeId)) {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "ConsigneeId";
+                this.queryFilterItem.FieldValue = this.ConsigneeId;
                 this.queryFilterItem.Operator = "Equals";
                 this.queryFilterItems.push(this.queryFilterItem);
             }
