@@ -134,6 +134,7 @@
     <None Include="DBScripts\Post\202006031027_AddReferantException901.sxml" />
     <None Include="DBScripts\Pre\202005261026_AddSpellCheckedTextCodes.sxml" />
     <None Include="DBScripts\Pre\202006031905_default0Isdiamond.sxml" />
+    <None Include="DBScripts\Pre\2020070502_ISVALIDTICKETSDIAMOND.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
