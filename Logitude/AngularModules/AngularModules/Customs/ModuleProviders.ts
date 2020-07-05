@@ -232,6 +232,7 @@ import { ClaimReasonTypeListService } from './Services/StandardLists/ClaimReason
 import { ClassificationTypeListService } from './Services/StandardLists/ClassificationTypeListService';
 import { TransactionNatureTypeListService } from './Services/StandardLists/TransactionNatureTypeListService';
 import { NbcDeclarationTypeListService } from './Services/StandardLists/NbcDeclarationTypeListService';
+import { AmendmentStatusListService } from './Services/StandardLists/AmendmentStatusListService';
 
 
 //#endregion
@@ -612,6 +613,7 @@ export class ModuleProviders {
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
             case "CancellationReasonRequestTypeListService": { myResult = new CancellationReasonRequestTypeListService(); break; }
             case "CancellationRequestStatusListService": { myResult = new CancellationRequestStatusListService(); break; }
+            case "AmendmentStatusListService": { myResult = new AmendmentStatusListService(); break; }
 
              //#endregion                
 

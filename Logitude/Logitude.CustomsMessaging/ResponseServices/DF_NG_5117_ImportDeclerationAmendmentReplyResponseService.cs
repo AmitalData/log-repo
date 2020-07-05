@@ -378,8 +378,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                         }
                     }
-                         if (fromMehes) _MyDeclarationPM.AmendmentCorrectedByUserId = loggingUserId;
+                    if (fromMehes)
+                    {
+                        _MyDeclarationPM.AmendmentCorrectedByUserId = loggingUserId;
+                        _MyDeclarationPM.AmendmentissueDate = DateTime.ParseExact(customResponse.Response.Declaration.IssueDateTime, "yyyy-MM-ddTHH:mm:ss", null);
 
+ 
+                    }
                     if(_MyDeclarationPM.AmendmentStatus == "3")
                     {
                         _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;

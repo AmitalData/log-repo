@@ -309,7 +309,7 @@ export class AmitalGatewayUtil {
             case "CreateInvoiceCommand": {
                     //$$GGG_IN = "UnifreightEntity=CFIFILEM;UnifreightEntityNumber=%%FILE_NO.CFIFILEM;LogitudeEntity=Customs.Declaration;LogitudeEntityNumber=%%LOGITUDE_FILE.CFIFILEM;LogitudeViewModel=UnifreightMassageHandler;LogitudeCommandId=CreateInvoiceCommand;formtitle=%%$text(IMP_DECLERATION)"
 
-                alert(myParam);
+                
                 SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                 this.SelectCustomsRequestMenu(MaintenanceMenu);
 
@@ -317,7 +317,7 @@ export class AmitalGatewayUtil {
                 showInvoiceFromUrouter.Run(myParam);
 
             }
-                
+                break; 
             case "ShowDeclarationByIdReturnCloseSave": {
                 //change2EditTab();
                 //if (AppTool.IsNullOrEmpty(myEditTab.SessionComponent)) {
@@ -548,6 +548,26 @@ export class AmitalGatewayUtil {
             "ShowClientReturnIfExistUnifreightCallBack",
             this._LastUnifreightMessageM,
                 "Task ???");
+
+        //CloseEditWindow(false, false);
+    }
+
+    CreateQInvoiceUnifreightCallBack(ptoCreateQInvoice: boolean) {
+
+        //Response.InvoiceAction
+        let toCreateQInvoice: string = ptoCreateQInvoice ? "1" : "0";
+         
+        this._LastUnifreightMessageM.Requset.push(["InvoiceAction", toCreateQInvoice]);
+        this._LastUnifreightMessageM.Response.push(["InvoiceAction", toCreateQInvoice]);
+        
+        
+
+        this.SendRequestToUnifreightAsync(
+            "UnifreightMassageHandler.CreateInvoiceCommandUnifreightCallBack",
+            "CFIHMAIN.LogitudeTask",
+            "CreateInvoiceCommand",
+            this._LastUnifreightMessageM,
+            "Task Feature 67646: תור חשבוניות - מסך הצגת נתוני חשבונית");
 
         //CloseEditWindow(false, false);
     }
@@ -1389,12 +1409,18 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
             './CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent'
         );
 
-        logWindow.WindowClosed.subscribe(($event1: any) => {
-            AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
+        logWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
+            //AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
             SessionLocator.SelectedSession.StopBusyIndicator();
+            
+
+            
+            AmitalGatewayUtil.Instance.CreateQInvoiceUnifreightCallBack(toCreateQInvoice);
+            
         });
 
     }
+   
 }
 
 
