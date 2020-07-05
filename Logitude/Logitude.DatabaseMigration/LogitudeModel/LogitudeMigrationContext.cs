@@ -3472,6 +3472,16 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get; set;
 
         }
+        public IDbSet<InterestLastBatchService> InterestLastBatchServices
+        {
+            get; set;
+
+        }
+        public IDbSet<InterestReportsConnectInvoice> InterestReportsConnectInvoices
+        {
+            get; set;
+
+        }
 
         public IDbSet<InterestReportStatuse> InterestReportStatuses
         {
@@ -4486,6 +4496,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new InterestTransactionMap());
             modelBuilder.Configurations.Add(new InterestEntityTypeMap());
             modelBuilder.Configurations.Add(new InterestReportMap());
+            modelBuilder.Configurations.Add(new InterestReportsConnectInvoiceMap());
+            modelBuilder.Configurations.Add(new InterestLastBatchServiceMap());
             modelBuilder.Configurations.Add(new InterestReportStatuseMap());
             modelBuilder.Configurations.Add(new InterestReportLineMap());
             #endregion

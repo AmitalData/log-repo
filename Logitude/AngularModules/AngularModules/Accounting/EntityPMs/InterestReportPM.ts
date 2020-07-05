@@ -209,6 +209,11 @@ export class InterestReportPM {
     public set IsFirstReport(newValue: boolean) { if (this.isFirstReport != newValue) { this.isFirstReport = newValue; this.MarkAsDirty("IsFirstReport"); } }
        
 	 
+    private invoiceFailureReason: string;
+    public get InvoiceFailureReason() { return this.invoiceFailureReason; }
+    public set InvoiceFailureReason(newValue: string) { if (this.invoiceFailureReason != newValue) { this.invoiceFailureReason = newValue; this.MarkAsDirty("InvoiceFailureReason"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		
