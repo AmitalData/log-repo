@@ -73,6 +73,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string CustomerId { get; set; }
 	      
         public virtual Card Card { get; set; }
+        [Column("InvoiceFailureReason")]
+	    public string InvoiceFailureReason { get; set; }
     }
 }
 	 

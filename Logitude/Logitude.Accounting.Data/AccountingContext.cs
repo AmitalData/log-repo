@@ -152,11 +152,15 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new InterestEntityTypeMap());
 	
+            modelBuilder.Configurations.Add(new InterestLastBatchServiceMap());
+	
             modelBuilder.Configurations.Add(new InterestReportMap());
 	
             modelBuilder.Configurations.Add(new InterestReportLineMap());
 	
             modelBuilder.Configurations.Add(new InterestReportLinesByDateMap());
+	
+            modelBuilder.Configurations.Add(new InterestReportsConnectInvoiceMap());
 	
             modelBuilder.Configurations.Add(new InterestReportStatuseMap());
 	
@@ -911,6 +915,12 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
+	 public IDbSet<InterestLastBatchService> InterestLastBatchServices 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<InterestReport> InterestReports 
 	 {
 	      get; set;
@@ -924,6 +934,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<InterestReportLinesByDate> InterestReportLinesByDates 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestReportsConnectInvoice> InterestReportsConnectInvoices 
 	 {
 	      get; set;
 	 

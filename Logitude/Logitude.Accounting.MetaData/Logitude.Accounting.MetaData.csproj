@@ -113,9 +113,11 @@
     <None Include="DBTables\InterestBasesPeriod.dxml" />
     <None Include="DBTables\InterestBasesType.dxml" />
     <None Include="DBTables\InterestEntityType.dxml" />
+    <None Include="DBTables\InterestLastBatchService.dxml" />
     <None Include="DBTables\InterestReport.dxml" />
     <None Include="DBTables\InterestReportLine.dxml" />
     <None Include="DBTables\InterestReportLinesByDate.dxml" />
+    <None Include="DBTables\InterestReportsConnectedInvoice.dxml" />
     <None Include="DBTables\InterestReportStatuse.dxml" />
     <None Include="DBTables\InterestTransaction.dxml" />
     <None Include="DBTables\Journal.dxml" />
@@ -175,9 +177,11 @@
     <None Include="EntityFiles\InterestBasesPeriod.lxml" />
     <None Include="EntityFiles\InterestBasesType.lxml" />
     <None Include="EntityFiles\InterestEntityType.lxml" />
+    <None Include="EntityFiles\InterestLastBatchService.lxml" />
     <None Include="EntityFiles\InterestReport.lxml" />
     <None Include="EntityFiles\InterestReportLine.lxml" />
     <None Include="EntityFiles\InterestReportLinesByDate.lxml" />
+    <None Include="EntityFiles\InterestReportsConnectInvoice.lxml" />
     <None Include="EntityFiles\InterestReportStatuse.lxml" />
     <None Include="EntityFiles\InterestTransaction.lxml" />
     <None Include="EntityFiles\JournalAdditionalData.lxml" />
