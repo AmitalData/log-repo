@@ -974,8 +974,8 @@ export class ARInvoiceMenuButtonsHandler {
         AutoCreditInvoice.PrepaidCollectId = this.EntityPM.PrepaidCollectId;
         AutoCreditInvoice.LocalCurrencyId = this.EntityPM.LocalCurrencyId;
         AutoCreditInvoice.VatNumber = this.EntityPM.VatNumber;
-        AutoCreditInvoice.CreatedByUserId = this.EntityPM.CreatedByUserId;
-        AutoCreditInvoice.IssuedByUserId = this.EntityPM.IssuedByUserId;
+        AutoCreditInvoice.CreatedByUserId = SessionLocator.LoggedUserId;
+        AutoCreditInvoice.IssuedByUserId = SessionLocator.LoggedUserId;
         AutoCreditInvoice.PrintByUserId = this.EntityPM.PrintByUserId;
         AutoCreditInvoice.InvoiceDate = this.AutoCreditDate != null ? this.AutoCreditDate : DateTool.GetCurrentDateAsUtc();
         AutoCreditInvoice.DueDate = this.EntityPM.DueDate;

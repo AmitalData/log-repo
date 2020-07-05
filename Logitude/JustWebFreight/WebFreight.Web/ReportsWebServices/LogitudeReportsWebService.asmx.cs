@@ -2868,16 +2868,15 @@ namespace WebFreight.Web.ReportsWebServices
                 acountsRecored.DaysPastDue91_105 = sum91_105;
                 acountsRecored.DaysPastDue106_120 = sum106_120;
 
-                if (cardId == "1-475474")
-                {
-
-                }
-
                 if (acountsRecored.CustomerTotals != 0)
                 {
+
                     dataProvider.AgedAccountsReceivableList.Add(acountsRecored);
+
                 }
             }
+              
+
 
             #endregion
 
