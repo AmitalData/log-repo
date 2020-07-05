@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "d0bbed0106597fb3ab58403238553aa4";
+		public const string HashString = "b19cbc80b9171170af8f6765a4b27ea5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2415,7 +2415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterestReportTextCode_InterestReportOBatchInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.BatchInvoice", DefaultText = "Batch Invoice",LocalDefaultText = @"הפקת חשבונית ריבית מרוכזת", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode InterestReportTextCode_InterestReportOCreateInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CreateInvoice", DefaultText = "Create ARInvoices",LocalDefaultText = @"צור חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode InterestReportTextCode_InterestReportOCreateInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CreateInvoice", DefaultText = "Create Invoice",LocalDefaultText = @"צור חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOSelectAtLeastOnLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.SelectAtLeastOnLine", DefaultText = "Please select at least one line",LocalDefaultText = @"אנא בחר שורה אחת לפחות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
