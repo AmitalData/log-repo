@@ -1,5 +1,5 @@
 {
-  "name": "Cypress",
+  "name": "cypress",
   "version": "4.9.0",
   "scripts": {
     "ng": "ng",
