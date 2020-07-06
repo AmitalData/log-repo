@@ -401,7 +401,7 @@
 				  End
 		 End
 	----------------------------------------------
-	if(@TransportModeId != 'I')
+	if(@DirectionId != 'I')
 	    BEGIN
             set @InWarehouseDate = null
         End
