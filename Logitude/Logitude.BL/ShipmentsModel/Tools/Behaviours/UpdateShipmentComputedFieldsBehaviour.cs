@@ -306,7 +306,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
             else
             {
-                entity.DeliveryDate = firstDelivery.ATA;
+                entity.DeliveryDate = firstDelivery.ATD;
             }
         }
         private void MapFieldsWhenChanged()
