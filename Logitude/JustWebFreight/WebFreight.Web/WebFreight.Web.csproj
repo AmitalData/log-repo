@@ -614,6 +614,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AmitalBrowserTester.html" />
     <Content Include="FileNotFound.aspx" />
     <Content Include="Errors\404.aspx" />
     <Content Include="AccountingWebServices\Testers\AccountingBalanceTester.aspx" />
