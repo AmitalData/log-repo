@@ -182,6 +182,7 @@ export class InvoiceQueueComponent
                             mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
                             mess.LogitudeEntityNumber == myDeclaration.Id &&
                             mess.LogitudeViewModel == myViewModelName);
+                        IsMatchUnifreightCallbackCommand = true;
                         if (IsMatchUnifreightCallbackCommand) {
                             sub.unsubscribe();
                             SessionLocator.SelectedSession.StopBusyIndicator();
