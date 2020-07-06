@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.DBMigrations.Models
 {
-    public class TablesGeneratedScript
+    public class DXMLGeneratedScript
     {
         public GeneratedScript GeneratedScript { get; set; }
         public GeneratedScript RelationsScript { get; set; }
