@@ -2870,9 +2870,13 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (acountsRecored.CustomerTotals != 0)
                 {
+
                     dataProvider.AgedAccountsReceivableList.Add(acountsRecored);
+
                 }
             }
+              
+
 
             #endregion
 

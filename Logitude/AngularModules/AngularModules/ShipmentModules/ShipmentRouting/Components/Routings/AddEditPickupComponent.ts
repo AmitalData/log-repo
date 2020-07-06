@@ -416,6 +416,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         windowArgs.EntityChildPM = this.EntityPM;
         windowArgs.PageRequest = "ShipmentPickUp";
         windowArgs.ConnectedTo = "PickUp";
+        windowArgs.ChildEntityReference = this.EntityPM.PickUpDeliveryNumber;
 
         var warehouseHelper: WarehouseHelper = new WarehouseHelper();
         warehouseHelper.ShowNewWarehouseEntryComponent(windowArgs);
