@@ -699,7 +699,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
     EditEntity(declarationError: DeclarationErrorView) {
 
-
+ 
         if (AppTool.IsNullOrEmpty(declarationError)) {
             console.warn("[!] There is no declaraion error for the constraint!");
         } else {
@@ -893,6 +893,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                     }
 
                 case "supplierinvioceitemscertificate":
+                case "supplierinvioceitemcertificat":
                     {
                         if (AppTool.IsNullOrEmpty(declarationError.LineNumber)) {
                             console.log("No line number", declarationError);
