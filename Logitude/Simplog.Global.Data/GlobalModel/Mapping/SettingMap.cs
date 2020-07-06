@@ -128,6 +128,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.QBOOAuthDefault).HasColumnName("QBOOAuthDefault");
             this.Property(t => t.QBOClientID).HasColumnName("QBOClientID");
             this.Property(t => t.QBOClientSecret).HasColumnName("QBOClientSecret");
+            this.Property(t => t.TMPersonalAccessExpirationDate).HasColumnName("TMPersonalAccessExpirationDate");
 
 
 
