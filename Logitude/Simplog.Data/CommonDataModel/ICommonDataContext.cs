@@ -225,7 +225,8 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get; set; }
         IDbSet<UserLastSettings> UserLastSettings { get; set; }
         IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
-        
+        IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get; set; }
+
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

@@ -344,6 +344,7 @@
     <None Include="DBOthers\ShipmentsModel\Views\MessagingStockDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentFollowUpDataView.dxml" />
+    <None Include="DBScripts\CommonModel\202007051545_SetVATUniquePartnerDefaultValue.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingMilestoneFillValues.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingHeaderEntityTypeFillValues.sxml" />
     <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />
@@ -581,6 +582,7 @@
     <None Include="DBTables\CommonDataModel\VatType.dxml" />
     <None Include="DBTables\CommonDataModel\VatTypePercentage.dxml" />
     <None Include="DBTables\CommonDataModel\VATTypesGroup.dxml" />
+    <None Include="DBTables\CommonDataModel\VatUniquePartnerType.dxml" />
     <None Include="DBTables\CommonDataModel\VatUniqueType.dxml" />
     <None Include="DBTables\CommonDataModel\Vendor.dxml" />
     <None Include="DBTables\CommonDataModel\Vessel.dxml" />
@@ -870,6 +872,7 @@
     <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\CommonDataModel\VatUniquePartnerType.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DescriptionOfGoods.lxml" />
     <None Include="EntityFiles\InfrastructureModel\WorkerRoleName.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesTotal.lxml" />

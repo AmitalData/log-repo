@@ -105,5 +105,6 @@ export class TenantList {
 		CheckDigitControlAlgorithmCode: string;
 		HideFCLAllIn: boolean;
 		AllowCustomersInAgentsLOV: boolean;
+		VatUniquePartnerTypeCode: string;
 	
 }

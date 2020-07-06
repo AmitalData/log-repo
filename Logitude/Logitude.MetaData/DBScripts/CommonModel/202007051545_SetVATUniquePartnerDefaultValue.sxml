@@ -1,0 +1,9 @@
+﻿<Script DBType="Main">
+  <Sql Version="1">
+    <![CDATA[
+
+     update Tenants set VatUniquePartnerTypeCode = 'CUS'
+     
+    ]]>
+  </Sql>
+</Script>

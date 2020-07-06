@@ -64,6 +64,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string VatMandatoryTypeCode { get; set; }
         public bool VatMandatoryForPotentialCustomers { get; set; }
         public bool AllowAgentInCustomersLOV { get; set; }
+        public string VatUniquePartnerTypeCode { get; set; }
 
         public virtual VatUniqueType VatUniqueType { get; set; }
         public virtual Country VatUniqueCountry { get; set; }
@@ -88,6 +89,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual WeightUnit ChargeableWeightUnit { get; set; }
         public virtual DimensionsUnit DimensionsUnit { get; set; }
         public virtual Currency ProfitCurrency { get; set; }
+        public virtual VatUniquePartnerType VatUniquePartnerType { get; set; }
 
         public string InvoiceSection1 { get; set; }
         public string InvoiceSection2 { get; set; }
