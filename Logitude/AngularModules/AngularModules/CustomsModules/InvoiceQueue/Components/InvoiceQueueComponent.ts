@@ -54,7 +54,10 @@ export class InvoiceQueueComponent
                 myMessageWindow.Show("declaration NOT FOUND");
             }
             this._invoiceQueueWebService.GetInvoice(this.declaration.Tenant, this.declaration.CustomFileNo).subscribe(data => {
-                
+                this.InvoiceLineList = new ObservableCollection([]);
+                this.IntegratedInvoiceList = new ObservableCollection([]);
+                this.StatusList = new ObservableCollection([]);
+
                 (data.Result.Invoice as Invoices).InvoiceLines.forEach(x => {
                     this.InvoiceLineList.Insert(x);
                 });
