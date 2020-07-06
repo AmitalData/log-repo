@@ -219,7 +219,67 @@
 
 
                             </tr>
+                            <tr style="height:10px"></tr>
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:10px"></td>
+                                            <td style="width:70px">{{'Accounting.O.Detailed' | TextCodeTranslationPipe}}</td>
 
+                                            <td style="width:20px">
+                                                <CheckBox [IsChecked]="DetailedForJobs" (Checked)="DetailedForJobs = $event" [IsEnabled]="IsDetailedCheckBoxEnabled"></CheckBox>
+                                            </td>
+                                            <td style="width:40px">{{'Accounting.O.Jobs' | TextCodeTranslationPipe}}</td>
+
+                                            <td style="width:20px">
+                                                <CheckBox [IsChecked]="DetailedForFiles" (Checked)="DetailedForFiles = $event" [IsEnabled]="IsDetailedCheckBoxEnabled"></CheckBox>
+                                            </td>
+                                            <td style="width:40px">{{'Accounting.O.Files' | TextCodeTranslationPipe}}</td>
+
+                                            <td style="width:20px">
+                                                <CheckBox [IsChecked]="DetailedForCustomers" (Checked)="DetailedForCustomers = $event" [IsEnabled]="IsDetailedCheckBoxEnabled"></CheckBox>
+                                            </td>
+                                            <td style="width:60px">{{'Accounting.O.Customers' | TextCodeTranslationPipe}}</td>
+                                           
+                                            <td style="width:20px">
+                                                <CheckBox [IsChecked]="DetailedForVendors" (Checked)="DetailedForVendors = $event" [IsEnabled]="IsDetailedCheckBoxEnabled"></CheckBox>
+                                            </td>
+                                            <td style="width:30px">{{'Accounting.O.Vendors' | TextCodeTranslationPipe}}</td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr style="height:10px"></tr>
+                            <tr>
+                                <td>
+                                    <table>
+
+
+                                        <tr style="height:20px">
+                                            <td style="width:10px"></td>
+                                            <td style="width:20px">
+                                                <CheckBox [IsChecked]="DontShowCardsWith0Balance" (Checked)="DontShowCardsWith0Balance = $event" [IsEnabled]="IsEditable">></CheckBox>
+
+                                            </td>
+
+                                            <td style="width:130px">{{'Accounting.O.DontShowCardsWith0' | TextCodeTranslationPipe}}</td>
+                                            <td style="width:42px"></td>
+
+                                            <td style="width:20px">
+                                                <CheckBox [IsChecked]="CurrencyFilter" (Checked)="CurrencyFilter = $event" [IsEnabled]="IsEditable">></CheckBox>
+
+                                            </td>
+                                          
+                                            <td style="width:100px">{{'Accounting.O.CurrencyDetailed' |TextCodeTranslationPipe }}</td>
+
+
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
                         </table>
 
 
@@ -227,38 +287,7 @@
                     </td>
                     <td style="width:250px">
                         <table>
-                            <tr style="height:20px">
-
-
-
-
-                                <td style="width:130px">{{'Accounting.General.O.WithZeroBalance' | TextCodeTranslationPipe}}</td>
-                                <td style="width:10px"></td>
-                                <td style="width:50px">
-                                    <CheckBox [IsChecked]="UseZeroBalanceFilter" (Checked)="UseBalanceFilter = $event" [IsEnabled]="!IsDisplayOnly">></CheckBox>
-
-                                </td>
-
-                            </tr>
-                            <tr style="height:10px"></tr>
-                            <tr style="height:20px">
-
-
-                                <td style="width:130px">{{'Accounting.O.CurrencyDetailed' |TextCodeTranslationPipe }}</td>
-                                <td style="width:10px"></td>
-                                <td style="width:50px">
-                                    <CheckBox [IsChecked]="CurrencyFilter" (Checked)="CurrencyFilter = $event" [IsEnabled]="!IsDisplayOnly">></CheckBox>
-
-                                </td>
-                                <td></td>
-                            </tr>
-
-
-
-
-
-
-
+                            <tr style="height:20px"></tr>
 
                             <tr></tr>
 
@@ -268,40 +297,7 @@
                     </td>
 
                     <td style="width:20px"></td>
-                    <td>
-                        <table>
-                            <tr style="height:20px">
-                                <td style="width:130px"> {{'Accounting.O.DetailedControlAccountForCustomer' | TextCodeTranslationPipe}} </td>
-                                <td style="width:100px">
-                                    <ComboBox [ItemsSource]="CustomerDetailedControlList" [Binding]="Name" [SelectedItem]="CustomerDetailedControlFilter" (SelectedItemChanged)="CustomerDetailedControlFilter = $event"></ComboBox>
-
-
-                                </td>
-                                <td></td>
-
-                            </tr>
-
-                            <tr style="width:20px">
-                                <td style="width:130px">{{'Accounting.O.DetailedControlAccountForVendor' | TextCodeTranslationPipe}}</td>
-                                <td style="width:100px">
-                                    <ComboBox [ItemsSource]="VendorDetailedControlList" [Binding]="Name" [SelectedItem]="VendorDetailedControlFilter" (SelectedItemChanged)="VendorDetailedControlFilter = $event"></ComboBox>
-
-
-                                </td>
-                                <td></td>
-
-
-                            </tr>
-
-                            <tr></tr>
-
-                        </table>
-
-
-
-
-
-                    </td>
+                   
 
                 </tr>
 
@@ -336,8 +332,4 @@
 
 
 </table>
-
-
-
-
 
