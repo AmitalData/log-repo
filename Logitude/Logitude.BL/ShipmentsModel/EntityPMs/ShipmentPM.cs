@@ -2464,6 +2464,5 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentSubTypeId { get; set; }
         public string ShipmentSubTypeName { get; set; }
-        public bool? WarehouseLegDateChangeManually { get; set; }
     }
 }

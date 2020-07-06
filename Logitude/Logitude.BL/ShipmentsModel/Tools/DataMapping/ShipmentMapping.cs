@@ -399,7 +399,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.WarehouseLegExpectedReleaseDate = entityPM.WarehouseLegExpectedReleaseDate;
             entityPoco.WarehouseLegActualReleaseDate = entityPM.WarehouseLegActualReleaseDate;
             entityPoco.WarehouseLegLastFreeDate = entityPM.WarehouseLegLastFreeDate;
-            entityPoco.WarehouseLegDateChangeManually = entityPM.WarehouseLegDateChangeManually;
             entityPoco.WarehouseLegRemarks = entityPM.WarehouseLegRemarks;
             entityPoco.WarehouseLegReference = entityPM.WarehouseLegReference;
             entityPoco.WarehouseLegCutOffDate = entityPM.WarehouseLegCutOffDate;

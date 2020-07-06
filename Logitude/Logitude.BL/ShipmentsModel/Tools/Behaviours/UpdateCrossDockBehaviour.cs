@@ -45,12 +45,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         }
         private void UpdateWarehouseLegDates()
         {
-            if (shipmentPM.WarehouseLegDateChangeManually != true)
-            {
-                UpdateActualExpectedWarehouseEntriesDates();
-                UpdateActualExpectedWarehouseReleasesDates();
-                UpdateActualExpectedShipmentWarehouseLegDates();
-            }
+            UpdateActualExpectedWarehouseEntriesDates();
+            UpdateActualExpectedWarehouseReleasesDates();
+            UpdateActualExpectedShipmentWarehouseLegDates();
         }
         private void SaveEntity()
         {
@@ -68,7 +65,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                     shipmentPM.WarehouseLegExpectedEntryDate = leastWarehouseEntry.ExpectedEntryDate;
                 }
             }
-            else
+            else if (warehouseEntries.Count() != 0)
             {
                 shipmentPM.WarehouseLegActualEntryDate = null;
                 shipmentPM.WarehouseLegExpectedEntryDate = null;
@@ -103,7 +100,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                     shipmentPM.WarehouseLegExpectedReleaseDate = greatestWarehouseRelease.ExpectedReleaseDate;
                 }
             }
-            else
+            else if (warehouseRelases.Count() != 0)
             {
                 shipmentPM.WarehouseLegActualReleaseDate = null;
                 shipmentPM.WarehouseLegExpectedReleaseDate = null;

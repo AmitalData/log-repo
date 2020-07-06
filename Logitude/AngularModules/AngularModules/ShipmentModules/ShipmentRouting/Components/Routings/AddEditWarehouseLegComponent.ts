@@ -283,7 +283,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     set WarehouseLegExpectedEntryDate(value: Date) {
         if (this.EntityPM.WarehouseLegExpectedEntryDate != value) {
             this.EntityPM.WarehouseLegExpectedEntryDate = value;
-            this.EntityPM.WarehouseLegDateChangeManually = true;
         }
     }
 
@@ -291,7 +290,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     set WarehouseLegExpectedReleaseDate(value: Date) {
         if (this.EntityPM.WarehouseLegExpectedReleaseDate != value) {
             this.EntityPM.WarehouseLegExpectedReleaseDate = value;
-            this.EntityPM.WarehouseLegDateChangeManually = true;
         }
     }
 
@@ -299,7 +297,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     set WarehouseLegActualEntryDate(value: Date) {
         if (this.EntityPM.WarehouseLegActualEntryDate != value) {
             this.EntityPM.WarehouseLegActualEntryDate = value;
-            this.EntityPM.WarehouseLegDateChangeManually = true;
             this.SetUIProperties_ValidateActualDates();
             if (value == null) {
                 this.WarehouseLegActualEntryDate == null;
@@ -318,7 +315,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     set WarehouseLegActualReleaseDate(value: Date) {
         if (this.EntityPM.WarehouseLegActualReleaseDate != value) {
             this.EntityPM.WarehouseLegActualReleaseDate = value;
-            this.EntityPM.WarehouseLegDateChangeManually = true;
             this.SetUIProperties_ValidateActualDates();
             if (value == null) {
                 this.WarehouseLegActualReleaseDate = null;

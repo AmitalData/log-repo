@@ -3973,10 +3973,6 @@ export class ShipmentPM {
     public get GrossWeightPerTon() { return this.grossWeightPerTon; }
     public set GrossWeightPerTon(newValue: number) { if (this.grossWeightPerTon != newValue) { this.grossWeightPerTon = newValue; this.MarkAsDirty("GrossWeightPerTon"); } }
 
-    private warehouseLegDateChangeManually: boolean;
-    public get WarehouseLegDateChangeManually() { return this.warehouseLegDateChangeManually; }
-    public set WarehouseLegDateChangeManually(newValue: boolean) { if (this.warehouseLegDateChangeManually != newValue) { this.warehouseLegDateChangeManually = newValue; this.MarkAsDirty("WarehouseLegDateChangeManually"); } }
-
 
     //Abed 
     //properties withOut MarkAsDirty()
