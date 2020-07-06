@@ -567,8 +567,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             Declaration: this.EntityPM,
         };
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1000;
-        logWindow.Height = 700;
+        logWindow.Width = 600;
+        logWindow.Height = 300;
         logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.DeclarationCancellation");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
@@ -582,7 +582,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         let windowArgs = { "SincroScreen": "SincroSendDeclarationDCA" };
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 600;
+        logWindow.Width =700;
         logWindow.Height = 400;
         logWindow.Title = "תרחשי הצהרה";
         logWindow.ShowCloseButton = false;
