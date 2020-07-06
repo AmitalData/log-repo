@@ -1,4 +1,5 @@
 ﻿using Logitude.CustomsMessaging.Common.RequestParams;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,21 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
     {
         public Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint(GenericRequestParams requestParams) : base(requestParams) { }
 
-        public ResponseHeader CallWS(out DF_NG_2754_MSG10004_ImportDeclarationResponse response)
+        public ResponseHeader CallWS(GenericRequestParams requestParams,out DF_NG_2754_MSG10004_ImportDeclarationResponse response)
         {
             UpdateDeclaration();
             UpdateStatus("12");
             UpdateFakeResponseContentHeader();
             AddSign();
             AddResponseHeader();
-            AddConstraints();
+            dynamic params1 = JObject.Parse(requestParams.TestCase.Param1);
+            string code = Convert.ToString(params1.code);
+            if (code != null) {
+                AddErrors(code);
+            } else
+            {
+                AddConstraints();
+            }
             response = fakeRespond;
             return _ResponseHeader;
 

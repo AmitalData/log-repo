@@ -259,7 +259,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 };
 
                                                 AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel2);
-
+                                            
 
                                                 break;
 
@@ -493,6 +493,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var DF_MSG10040_CollateralRequestMsgResponseService = new DF_8211_CollateralRequestMsgResponseService();
                             DF_MSG10040_CollateralRequestMsgResponseService.Update(ser, requestParams);
                         }
+
+                    }
+
+                    else
+                    {
+
+                        this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                        myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
                     }
                     if (customResponse.Response.Declaration != null)
