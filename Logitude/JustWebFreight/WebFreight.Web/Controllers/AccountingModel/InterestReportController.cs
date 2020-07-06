@@ -70,9 +70,25 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 string email = HttpContext.Current.User.Identity.Name;
                 interestReportArgs.Tenant = tenant;
                 interestReportArgs.Email = email;
-                CreateBatchTaskExecution(interestReportArgs, "Create Batch Invoice", "Logitude.Accounting.BL.CoreBL.Batch.BatchInterestReportInvoiceService,Logitude.Accounting.BL");
-                string BatchId = CreateBatchTaskExecution(interestReportArgs, "Update Interest Reports Status To Inprogress", "Logitude.Accounting.BL.CoreBL.Batch.BatchInterestReportInvoiceInProgressService,Logitude.Accounting.BL");
+                string BatchId = CreateBatchTaskExecution(interestReportArgs, "Create Batch Invoice", "Logitude.Accounting.BL.CoreBL.Batch.BatchInterestReportInvoiceService,Logitude.Accounting.BL");
                 return Request.CreateResponse(HttpStatusCode.OK, BatchId);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
+        public HttpResponseMessage GetInterestLastBatchServiceByTenant()
+        {
+            try
+            {
+                int tenant = AuthinticateTenant();
+                InterestLastBatchServiceQueryService interestLastBatchServiceQueryService = new InterestLastBatchServiceQueryService(tenant);
+                InterestLastBatchServicePM InterestLastBatchService = interestLastBatchServiceQueryService.CheckInterestLastBatchServicesByTenant(tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, InterestLastBatchService);
             }
             catch (Exception ex)
             {
