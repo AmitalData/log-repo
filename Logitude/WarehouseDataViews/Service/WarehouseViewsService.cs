@@ -250,8 +250,10 @@ namespace WarehouseDataViews
         
         public void GrantView(string viewName,  string destinationConnectionString)
         {
-            string sqlstring = "GRANT SELECT  ON [T570Unicargo].[dbo].[" + viewName + "] TO [U570gmxaU]";
-           // ExecuteSql(sqlstring, destinationConnectionString);
+            string sqlstring = "GRANT SELECT  ON [UnicargoDW].[dbo].[" + viewName + "] TO [UnicargoDBUser]"; // Pre
+
+           // string sqlstring = "GRANT SELECT  ON [T570Unicargo].[dbo].[" + viewName + "] TO [U570gmxaU]";   //Online 
+            ExecuteSql(sqlstring, destinationConnectionString);
         }
         public void DropView(string viewName, string connectionString)
         {
