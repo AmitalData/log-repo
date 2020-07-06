@@ -102,6 +102,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new BankMap());
 	
+            modelBuilder.Configurations.Add(new CancellationReasonRequestTypeMap());
+	
+            modelBuilder.Configurations.Add(new CancellationRequestStatusMap());
+	
             modelBuilder.Configurations.Add(new CargoIdentifireTypeMap());
 	
             modelBuilder.Configurations.Add(new CargoIdentityQualifierMap());
@@ -1309,6 +1313,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<Bank> Banks 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CancellationReasonRequestType> CancellationReasonRequestTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CancellationRequestStatus> CancellationRequestStatuses 
 	 {
 	      get; set;
 	 

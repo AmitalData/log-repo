@@ -70,6 +70,8 @@
     <Compile Include="Contracts\UnifreightGenericService.cs" />
     <Compile Include="EntityPMs\Generated\AmountTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AutonomyRegionTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CancellationReasonRequestTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CancellationRequestStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ClaimReasonTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ClassificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\CustomsShipPM.cs" />

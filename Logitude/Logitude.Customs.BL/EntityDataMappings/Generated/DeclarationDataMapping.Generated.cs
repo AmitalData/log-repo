@@ -149,6 +149,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DestinationCountryCode, 
 	         ExportAutonomyRegionTypeCode, 
 	         DeclarationTypeCode,
+	         CancelRequestReasonCode, 
+	         CancelRequestReasonExplanation, 
+	         CancelRequestNumber, 
+	         CustomCancelRequestRemarks, 
+	         CancelRequestStatusCode, 
+	         CancelRequestRejectionReason, 
+	         IsClaimable,
 	      }
 
 
@@ -356,6 +363,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DestinationCountryCode, 
 	         ExportAutonomyRegionTypeCode, 
 	         DeclarationTypeCode,
+	         CancelRequestReasonCode, 
+	         CancelRequestReasonExplanation, 
+	         CancelRequestNumber, 
+	         CustomCancelRequestRemarks, 
+	         CancelRequestStatusCode, 
+	         CancelRequestRejectionReason, 
+	         CancelRequestApproveDate, 
+	         IsClaimable,
+
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -994,6 +1010,41 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.DeclarationTypeCode = entityPM.DeclarationTypeCode;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestReasonCode))
+            {
+				entityPOCO.CancelRequestReasonCode = entityPM.CancelRequestReasonCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestReasonExplanation))
+            {
+				entityPOCO.CancelRequestReasonExplanation = entityPM.CancelRequestReasonExplanation;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestNumber))
+            {
+				entityPOCO.CancelRequestNumber = entityPM.CancelRequestNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomCancelRequestRemarks))
+            {
+				entityPOCO.CustomCancelRequestRemarks = entityPM.CustomCancelRequestRemarks;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestStatusCode))
+            {
+				entityPOCO.CancelRequestStatusCode = entityPM.CancelRequestStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestRejectionReason))
+            {
+				entityPOCO.CancelRequestRejectionReason = entityPM.CancelRequestRejectionReason;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClaimable))
+            {
+				entityPOCO.IsClaimable = entityPM.IsClaimable;
+			}
+			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -1625,17 +1676,55 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DestinationCountryCode = entityPOCO.DestinationCountryCode;
             }
 
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportAutonomyRegionTypeCode))
             {
 					entityPM.ExportAutonomyRegionTypeCode = entityPOCO.ExportAutonomyRegionTypeCode;
             }
+
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestReasonCode))
+            {
+					entityPM.CancelRequestReasonCode = entityPOCO.CancelRequestReasonCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestReasonExplanation))
+            {
+					entityPM.CancelRequestReasonExplanation = entityPOCO.CancelRequestReasonExplanation;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestNumber))
+            {
+					entityPM.CancelRequestNumber = entityPOCO.CancelRequestNumber;
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationTypeCode))
             {
 					entityPM.DeclarationTypeCode = entityPOCO.DeclarationTypeCode;
             }
 
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomCancelRequestRemarks))
+            {
+					entityPM.CustomCancelRequestRemarks = entityPOCO.CustomCancelRequestRemarks;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestStatusCode))
+            {
+					entityPM.CancelRequestStatusCode = entityPOCO.CancelRequestStatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestRejectionReason))
+            {
+					entityPM.CancelRequestRejectionReason = entityPOCO.CancelRequestRejectionReason;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsClaimable))
+            {
+					entityPM.IsClaimable = entityPOCO.IsClaimable;
+            }
+
 		}
+
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
         {
@@ -2261,6 +2350,20 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.DestinationCountryCode = entityPM.DestinationCountryCode;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestReasonCode))
+            {
+                oldEntityPM.CancelRequestReasonCode = entityPM.CancelRequestReasonCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestReasonExplanation))
+            {
+                oldEntityPM.CancelRequestReasonExplanation = entityPM.CancelRequestReasonExplanation;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestNumber))
+            {
+                oldEntityPM.CancelRequestNumber = entityPM.CancelRequestNumber;
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportAutonomyRegionTypeCode))
             {
                 oldEntityPM.ExportAutonomyRegionTypeCode = entityPM.ExportAutonomyRegionTypeCode;
@@ -2269,6 +2372,29 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
             {
                 oldEntityPM.DeclarationTypeCode = entityPM.DeclarationTypeCode;
+            }
+			
+		 
+
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomCancelRequestRemarks))
+            {
+                oldEntityPM.CustomCancelRequestRemarks = entityPM.CustomCancelRequestRemarks;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestStatusCode))
+            {
+                oldEntityPM.CancelRequestStatusCode = entityPM.CancelRequestStatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestRejectionReason))
+            {
+                oldEntityPM.CancelRequestRejectionReason = entityPM.CancelRequestRejectionReason;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClaimable))
+            {
+                oldEntityPM.IsClaimable = entityPM.IsClaimable;
             }
 			
 		}
@@ -2363,6 +2489,18 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.AmendmentRejectionReason)) //T4 find type == nText 
             {
                 entityPM.AmendmentRejectionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentRejectionReason));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CancelRequestReasonExplanation)) //T4 find type == nText 
+            {
+                entityPM.CancelRequestReasonExplanation = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CancelRequestReasonExplanation));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CustomCancelRequestRemarks)) //T4 find type == nText 
+            {
+                entityPM.CustomCancelRequestRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CustomCancelRequestRemarks));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CancelRequestRejectionReason)) //T4 find type == nText 
+            {
+                entityPM.CancelRequestRejectionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CancelRequestRejectionReason));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

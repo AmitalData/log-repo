@@ -374,6 +374,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DestinationCountryCode { get; set; }
 	      
         public virtual CustomsCountry CustomsCountry { get; set; }
+
         [ForeignKey("ExportAutonomyRegionType")]
         [Column("ExportAutonomyRegionTypeCode")]
 	    public string ExportAutonomyRegionTypeCode { get; set; }
@@ -384,6 +385,28 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DeclarationTypeCode { get; set; }
 	      
         public virtual LeadDocumentType DeclarationType { get; set; }
+
+        [ForeignKey("CancelRequestReason")]
+        [Column("CancelRequestReasonCode")]
+	    public string CancelRequestReasonCode { get; set; }
+	      
+        public virtual CancellationReasonRequestType CancelRequestReason { get; set; }
+        [Column("CancelRequestReasonExplanation")]
+	    public string CancelRequestReasonExplanation { get; set; }
+        [Column("CancelRequestNumber")]
+	    public int? CancelRequestNumber { get; set; }
+        [Column("CustomCancelRequestRemarks")]
+	    public string CustomCancelRequestRemarks { get; set; }
+        [ForeignKey("CancelRequestStatus")]
+        [Column("CancelRequestStatusCode")]
+	    public string CancelRequestStatusCode { get; set; }
+	      
+        public virtual CancellationRequestStatus CancelRequestStatus { get; set; }
+        [Column("CancelRequestRejectionReason")]
+	    public string CancelRequestRejectionReason { get; set; }
+        [Column("IsClaimable")]
+	    public bool? IsClaimable { get; set; }
+
     }
 }
 	 
