@@ -3,9 +3,9 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="1">
+  <Oracle Version="2">
     <![CDATA[
-update DECLARATIONS set ISVALIDTICKETSDIAMOND=0 where  ISVALIDTICKETSDIAMOND is null
+update DECLARATIONS set ISVALIDTICKETSDIAMOND=0 where  ISVALIDTICKETSDIAMOND is null;
 ]]>
   </Oracle>
 </Script>
