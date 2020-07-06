@@ -63,7 +63,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.RegistrationNumber).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.CountryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.WarehouseReleaseNumber).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.InUse);
 
 
 
