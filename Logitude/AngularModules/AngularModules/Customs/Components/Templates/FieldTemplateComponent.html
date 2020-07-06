@@ -20,6 +20,7 @@
                 background: #D3D3D3;
                 cursor: pointer;
             }
+
     .DimLI {
         opacity: 0.5;
         cursor: default
@@ -170,7 +171,11 @@
                                 <span style="font-weight: bold;">{{Entity[FieldName]}}</span>
                             </div>
                         </div>
-
+                        <div *ngIf="!IsHeaderScreenTemplate">
+                            <div class="TextTrimming" *ngIf="fieldName == 'LastStatusName'" style="text-align:right;">
+                                <span data-toggle="tooltip" data-placement="bottom" title="{{LastStatusNameToolTip}}">{{LastStatusNameText}}</span><!-- _CourierWorksheet.CourierPendingReasonList -->
+                            </div>
+                        </div>
 
                         <div *ngIf="IsHeaderScreenTemplate">
                             <div class="TextTrimming"
@@ -360,9 +365,9 @@
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMEnterRemarks();">
                                         <span>הזנת הערות לתור</span>
                                     </li>
-                                    <li >
+                                    <li>
                                         <span *ngIf="Entity['IsCustomerLogBoxActivated']== true" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowSharedDocuments();">שיתוף מסמכים</span>
-                                        <span *ngIf="Entity['IsCustomerLogBoxActivated']== false" class="DimLI" >שיתוף מסמכים</span>
+                                        <span *ngIf="Entity['IsCustomerLogBoxActivated']== false" class="DimLI">שיתוף מסמכים</span>
 
                                     </li>
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowMoneyOrder();">

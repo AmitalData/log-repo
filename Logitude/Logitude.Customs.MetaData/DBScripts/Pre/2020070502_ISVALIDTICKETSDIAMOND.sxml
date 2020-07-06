@@ -5,7 +5,7 @@
 
   <Oracle Version="1">
     <![CDATA[
-update DECLARATIONS set ISVALIDTICKETSDIAMOND=0 where  ISVALIDTICKETSDIAMOND is null
+update DECLARATIONS set ISVALIDTICKETSDIAMOND=0 where  ISVALIDTICKETSDIAMOND is null;
 ]]>
   </Oracle>
 </Script>

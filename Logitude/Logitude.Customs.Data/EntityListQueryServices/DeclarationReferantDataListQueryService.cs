@@ -81,7 +81,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  Favorite=a.Favorite,
                                                                  IsCustomerLogBoxActivated=e.Customer.LogBoxActivated,
                                                                  SortedColumns= (a.NewFile && a.Favorite ? 1 : ( a.NewFile ? 2 : ( a.Favorite ? 3 : 4 ))),
-                                                                 IsCancelled= d.IsCancelled
+                                                                 IsCancelled= d.IsCancelled,
+                                                                 LastStatusDate=a.LastStatusDate,
+                                                                 LastStatusName=a.LastStatusName,
 
                                                              });
             return query;
