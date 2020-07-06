@@ -25,13 +25,14 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             interestReportId = interestReportArgs.InterestReportId;
             tenant = interestReportArgs.Tenant;
             interestReportCalculationPreparations =  new InterestReportCalculationPreparations();
+            interestReportPM = interestReportArgs.InterestReport;
         }
 
         public void StartCalculations()
         {
             try
             {
-                interestReportPM = interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
+                interestReportPM = interestReportPM ?? interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
                 DateTime? interestCalculationStartDate = GetInterestCalculationStartDate();
                 List<string> glaccountIds = GetSplittedByCurrencyAcountsIds(interestReportPM.GLAccountId, tenant);
                 glaccountIds.Add(interestReportPM.GLAccountId);

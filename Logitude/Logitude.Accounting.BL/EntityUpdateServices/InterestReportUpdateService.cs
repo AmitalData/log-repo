@@ -32,8 +32,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnCreating(InterestReportPM entityPM, EntityPM entityParentPM)
         {
             MapInterestReport(entityPM);
-            CreateBatchTaskExecution(entityPM);
-          
+            if (!entityPM.IsCreatedFromBatch)
+            {
+                CreateBatchTaskExecution(entityPM);
+            }
         }
 
 

@@ -205,6 +205,7 @@
     <Compile Include="CoreBL\Batch\BatchInterestReportInvoiceEachLineService.cs" />
     <Compile Include="CoreBL\Batch\BatchInterestReportInvoiceService.cs" />
     <Compile Include="CoreBL\Batch\BatchInterestReportInvoiceInProgressService.cs" />
+    <Compile Include="CoreBL\Batch\BatchInterestReportsCreationForCustomers.cs" />
     <Compile Include="CoreBL\Batch\BatchInterestReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchOpenFormatReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchReconciliationStageBTask.cs" />
@@ -244,6 +245,8 @@
     <Compile Include="CoreBL\InterestReport\InterestReportLinesByDateCreationService.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportLinesByDateMappingParams.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportLinesCreationService.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportsCreationForCustomersArgs.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportsCreationForCustomersService.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportTestResultGetter.cs" />
     <Compile Include="CoreBL\InterestReport\InterestTransactionsGroupedByDate.cs" />
     <Compile Include="CoreBL\InterestTrans\RegularJournalInterestTransactionMapping.cs" />
@@ -311,6 +314,7 @@
     <Compile Include="CoreBL\YearTransferService.cs" />
     <Compile Include="DataContract\ARPaymentChequeFutureData.cs" />
     <Compile Include="DataContract\CashbookChequesCounter.cs" />
+    <Compile Include="DataContract\InterestReportCustomerPM.cs" />
     <Compile Include="DataContract\OpenFormatReportData.cs" />
     <Compile Include="DataContract\OpenFormatReportDataProvider.cs" />
     <Compile Include="DataContract\TaxDeductionReportData.cs" />
