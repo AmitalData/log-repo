@@ -47,7 +47,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
     private CheckExpirationDateTokenOfTimeManagement() {
         var days = DateTool.GetDaysBetweenDates(DateTool.GetCurrentDateAsUtc(), ObjectsLocator.GlobalSetting.TMPersonalAccessExpirationDate);
         if (days < 7) {
-            this.ExpirationDateTokenOfTimeManagement_Msg = "Your token will expire soon within (" + days +") days, you need to update it";
+            this.ExpirationDateTokenOfTimeManagement_Msg = "Azure DevOps token will expire withing " + days + " days, please renew it";
         }
     }
 
