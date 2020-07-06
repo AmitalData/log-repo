@@ -98,7 +98,7 @@ export class FieldTemplateComponent {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
-    get LastStatusNameText() {
+  /*  get LastStatusNameText() {
         if (AppTool.IsNullOrEmpty(this._CourierWorksheet.CourierPendingReasonList)) {
             return "";
         }
@@ -107,7 +107,7 @@ export class FieldTemplateComponent {
         }
         return "הצג רשימה";
 
-    }
+    }*/
     OpenCourierMaster() {
         //static entityResourceService: EntityResourceService = new EntityResourceService();
 
