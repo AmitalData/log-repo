@@ -591,9 +591,10 @@
   </Column>
   <Column
     Name="InUse"
-    Type="int">
+    Type="int"
+    DefaultValue="0">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
