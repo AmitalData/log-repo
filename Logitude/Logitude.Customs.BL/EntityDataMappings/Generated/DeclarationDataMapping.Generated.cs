@@ -1696,7 +1696,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestNumber))
             {
 					entityPM.CancelRequestNumber = entityPOCO.CancelRequestNumber;
-
+            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationTypeCode))
             {
 					entityPM.DeclarationTypeCode = entityPOCO.DeclarationTypeCode;
@@ -1724,7 +1724,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
 
 		}
-
+            
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
         {
@@ -2363,7 +2363,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestNumber))
             {
                 oldEntityPM.CancelRequestNumber = entityPM.CancelRequestNumber;
-
+                }
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportAutonomyRegionTypeCode))
             {
                 oldEntityPM.ExportAutonomyRegionTypeCode = entityPM.ExportAutonomyRegionTypeCode;
@@ -2374,9 +2374,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.DeclarationTypeCode = entityPM.DeclarationTypeCode;
             }
 			
-		 
-
-			
+	
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomCancelRequestRemarks))
             {
                 oldEntityPM.CustomCancelRequestRemarks = entityPM.CustomCancelRequestRemarks;
