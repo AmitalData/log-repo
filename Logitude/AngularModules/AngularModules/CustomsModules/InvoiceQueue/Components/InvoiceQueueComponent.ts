@@ -99,6 +99,7 @@ export class InvoiceQueueComponent
                             mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
                             mess.LogitudeEntityNumber == myDeclaration.Id &&
                             mess.LogitudeViewModel == myViewModelName);
+                        IsMatchUnifreightCallbackCommand = true;
                         if (IsMatchUnifreightCallbackCommand) {
                             sub.unsubscribe();
                             SessionLocator.SelectedSession.StopBusyIndicator();
@@ -141,6 +142,7 @@ export class InvoiceQueueComponent
                             mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
                             mess.LogitudeEntityNumber == myDeclaration.Id &&
                             mess.LogitudeViewModel == myViewModelName);
+                        IsMatchUnifreightCallbackCommand = true;
                         if (IsMatchUnifreightCallbackCommand) {
                             sub.unsubscribe();
                             SessionLocator.SelectedSession.StopBusyIndicator();
@@ -178,7 +180,7 @@ export class InvoiceQueueComponent
             let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
                 .subscribe(
                     (mess: UnifreightMessageM) => {
-                        alert(JSON.stringify(mess));
+                        //alert(JSON.stringify(mess));
                         var IsMatchUnifreightCallbackCommand = (
                             mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
                             mess.LogitudeEntityNumber == myDeclaration.Id &&
