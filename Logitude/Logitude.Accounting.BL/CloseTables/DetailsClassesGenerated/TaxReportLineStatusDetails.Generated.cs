@@ -76,6 +76,14 @@ namespace Logitude.Accounting.BL
                 LocalName = " חשבונית לא דווחה בדוח קודם", 
                 SearchFields = "7, חשבונית לא דווחה בדוח קודם,Invoice not previously reported", 
 			});
+			 
+            all.Add(new TaxReportLineStatusDetails()
+            {    
+                Code = "9", 
+                EnglishName = "The VAT amount in the record is higher than the percentage of VAT allowed", 
+                SearchFields = "9,The VAT amount in the record is higher than the percentage of VAT allowed,סכום המע''מ ברשומה גבוה מאחוז המע''מ המותר", 
+                LocalName = "סכום המע''מ ברשומה גבוה מאחוז המע''מ המותר", 
+			});
 			
             return all;
        }

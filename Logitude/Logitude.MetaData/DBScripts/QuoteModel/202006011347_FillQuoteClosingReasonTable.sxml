@@ -1,7 +1,9 @@
 ﻿<Script DBType="Main">
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
     
+     if exists (SELECT * FROM sys.tables WHERE name='QuoteClosingReasons')
+     begin
       declare @Tenant as int
       declare @TenantString as varchar(50)
       declare @EntityId as varchar(15)
@@ -80,6 +82,8 @@
 	      CLOSE TenantsCursor
 	      DEALLOCATE TenantsCursor
       END
+      
+      End
       
     ]]>
   </Sql>

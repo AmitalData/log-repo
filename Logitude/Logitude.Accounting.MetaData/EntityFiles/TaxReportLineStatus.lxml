@@ -4,7 +4,7 @@
   ObjectTableName="&quot;TaxReportLineStatus&quot;"
   IsNew="true"
   DBTableName="&quot;TaxReportLineStatuses&quot;"
-  OldDBTableName="&quot;TaxReportLineStatuses&quot;"
+  DBTableOldNames="TaxReportLineStatuses"
   ObjectTableSingular="&quot;Tax Report Line Status&quot;"
   ObjectTablePlural="&quot;Tax Report Line Statuses&quot;"
   HasCustomFilter="false"
@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Tax Report Line Status&quot;"
-  Code="&quot;8b9a&quot;"
+  Code="&quot;035b&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -66,7 +66,7 @@
   <field
     Id="&quot;e228bedd-b54f-4c97-b6c0-8048ab045ca5&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -114,6 +114,7 @@
     ListLableDefaultText="&quot;Code&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -127,6 +128,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -137,7 +139,7 @@
   <field
     Id="&quot;aef20f93-9411-421d-8777-a6acb1f5f919&quot;"
     FieldName="&quot;EnglishName&quot;"
-    OldFieldName="&quot;EnglishName&quot;"
+    OldNames="EnglishName"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -185,6 +187,7 @@
     ListLableDefaultText="&quot;Name&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -198,6 +201,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -208,7 +212,7 @@
   <field
     Id="&quot;258e9e2f-cf98-4eb2-ae68-752bd5cde77d&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -255,6 +259,7 @@
     ListLableDefaultText="&quot;Search ...&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -268,6 +273,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -278,7 +284,7 @@
   <field
     Id="&quot;b6709c20-3a04-4f5b-ab11-ece10fa6238a&quot;"
     FieldName="&quot;LocalName&quot;"
-    OldFieldName="&quot;LocalName&quot;"
+    OldNames="LocalName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -323,6 +329,7 @@
     FullLocalDefaultText="&quot;שם &quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -336,6 +343,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -346,7 +354,7 @@
   <field
     Id="&quot;afc69ef5-fd59-461c-ad30-ef90ee054110&quot;"
     FieldName="&quot;Inactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="Inactive"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -391,6 +399,7 @@
     FullLocalDefaultText="&quot;פעיל&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -404,6 +413,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -411,6 +421,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;TaxReportLineStatusHeaderScreen&quot;"
+    ObjectTableName="&quot;TaxReportLineStatus&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -475,6 +494,11 @@
       EnglishName="&quot;Invoice not previously reported&quot;"
       LocalName="&quot; חשבונית לא דווחה בדוח קודם&quot;"
       SearchFields="&quot;7, חשבונית לא דווחה בדוח קודם,Invoice not previously reported&quot;" />
+    <Record
+      Code="&quot;9&quot;"
+      EnglishName="&quot;The VAT amount in the record is higher than the percentage of VAT allowed&quot;"
+      SearchFields="&quot;9,The VAT amount in the record is higher than the percentage of VAT allowed,סכום המע&quot;מ ברשומה גבוה מאחוז המע&quot;מ המותר&quot;"
+      LocalName="&quot;סכום המע&quot;מ ברשומה גבוה מאחוז המע&quot;מ המותר&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

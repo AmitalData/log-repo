@@ -42,8 +42,11 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure.LogitudeCacheManager;
+using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -77,6 +80,143 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class CommonDomainController : ApiController
     {
+        public HttpResponseMessage GetDownloadUploadPartnersTemplate()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                string loggedUserEmail = authToken.Email;
+                byte[] data = ExportPartnersUploadTemplateToExcel(tenant) ;
+                string fileName = "Partners Upload Template";
+                if (data != null)
+                {
+                    BlobFileInfo fileInfo = new BlobFileInfo()
+                    {
+                        FileName = fileName,
+                        FolderName = "others",
+                        Extension = "xls",
+                        Tenant = tenant,
+                        FileSize = data.Length,
+                    };
+
+                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                    storageservice.Write(data, fileInfo);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, fileName);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        List<ExcelPackageType> partnersTypes_Sheet;
+        List<PartnerType> partnersTypes;
+        private byte[] ExportPartnersUploadTemplateToExcel(int tenant)
+        {
+            System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
+            IWorksheet sheet1 = workbook.Worksheets[0];
+            IWorksheet sheet2 = workbook.Worksheets[1];
+            this.FillPartnersTypes(tenant);
+            this.CreateSheet1Headers_UploadPartners(workbook, sheet1);
+            this.CreateSheet2Headers_UploadPartners(workbook, sheet2);
+            workbook.SaveAs(memory);
+            return memory.ToArray();
+        }
+
+        private void FillPartnersTypes(int tenant)
+        {
+            partnersTypes_Sheet = new List<ExcelPackageType>();
+            PartnerTypeRepository partnerTypeRepository = new PartnerTypeRepository(tenant);
+            partnersTypes = partnerTypeRepository.GetPartnerTypes().ToList();
+            if (partnersTypes != null && partnersTypes.Count > 0)
+            {
+                partnersTypes_Sheet = (from a in partnersTypes
+                                       select new ExcelPackageType()
+                                       {
+                                           Code = a.Id,
+                                       }).ToList();
+            }
+        }
+
+        private void CreateSheet2Headers_UploadPartners(IWorkbook workbook, IWorksheet sheet2)
+        {
+            // Build sheet 2 
+            sheet2.Name = "Partners Types";
+            sheet2.Range["A1"].CellStyle.Font.Bold = true;
+            sheet2.Range["A1"].CellStyle.Font.Size = 11;
+            sheet2.Range["A1"].CellStyle.Font.FontName = "Calibri";
+            sheet2.Range["A1"].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet2.Range["A1"].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet2.Range["A1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;   
+            DataTable dataTable2 = this.ConvertToDataTable(partnersTypes_Sheet);
+            sheet2.ImportDataTable(dataTable2, true, 1, 1);
+        }
+
+        private void CreateSheet1Headers_UploadPartners(IWorkbook workbook, IWorksheet sheet1)
+        {
+            // Build sheet 1
+            DataTable dataTable1 = new DataTable();
+            dataTable1.Columns.Add("Type");
+            dataTable1.Columns.Add("Unique Code");
+            dataTable1.Columns.Add("Name");
+            dataTable1.Columns.Add("Vat NO");
+            dataTable1.Columns.Add("Address1");
+            dataTable1.Columns.Add("Address2");
+            dataTable1.Columns.Add("Zip/Postal Code");
+            dataTable1.Columns.Add("City");
+            dataTable1.Columns.Add("State");
+            dataTable1.Columns.Add("Country Code");
+            dataTable1.Columns.Add("Phone Number");
+            dataTable1.Columns.Add("Fax Number");
+            dataTable1.Columns.Add("E-Mail");
+            dataTable1.Columns.Add("Contact Per.");
+            dataTable1.Columns.Add("Account ID = External ID");
+            dataTable1.Columns.Add("Code");
+            var range = "A1:P1";
+            sheet1.Range["A2:A1001"].DataValidation.ListOfValues = partnersTypes_Sheet.Select(s => s.Code).ToArray();
+            sheet1.Range["A2:A1001"].DataValidation.IsSuppressDropDownArrow = false;
+            sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet1.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+            sheet1.Columns[1].ColumnWidth = sheet1.Columns[6].ColumnWidth = sheet1.Columns[9].ColumnWidth = sheet1.Columns[10].ColumnWidth = sheet1.Columns[11].ColumnWidth = sheet1.Columns[13].ColumnWidth = 14;
+            sheet1.Columns[14].ColumnWidth = 20;
+            sheet1.ImportDataTable(dataTable1, true, 1, 1);
+        }
+
+        private DataTable ConvertToDataTable<T>(IList<T> data)
+        {
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
+            DataTable table = new DataTable();
+
+            foreach (PropertyDescriptor prop in properties)
+            {
+                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            }
+
+            foreach (T item in data)
+            {
+                DataRow row = table.NewRow();
+                foreach (PropertyDescriptor prop in properties)
+                {
+                    if (table.Columns.Contains(prop.Name))
+                    {
+                        row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                    }
+                }
+
+                table.Rows.Add(row);
+            }
+
+            return table;
+        }
+
         public HttpResponseMessage GetUpdateAutoDisplay(string myChargeTypeId, string myPropertyTypeCode, bool isAutoDisplay)
         {
             try
