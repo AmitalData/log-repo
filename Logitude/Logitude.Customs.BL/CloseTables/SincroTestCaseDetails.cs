@@ -38,7 +38,7 @@ namespace Logitude.Customs.BL.CloseTables
                     Code = "2754Constraint",
                     Name = "הצהרת יבוא אילוץ",
                     Entity="Declaration",
-                    Param1= @"{ """":""""}"
+                    Param1= @"{ ""code"":""4589""}",
                 },
 
                 new SincroTestCaseDetail()
