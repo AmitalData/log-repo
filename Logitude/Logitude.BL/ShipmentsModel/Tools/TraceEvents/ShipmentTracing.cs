@@ -1228,10 +1228,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             if (newEventType.EntityStatusId != null)
             {
+                args.StatusLocation = GetStatusLocation(args);
+
                 if (string.IsNullOrEmpty(args.OldStatusId))
                 {
-                    args.StatusLocation = GetStatusLocation(args);
-
                     entityPM.StatusId = newEventType.EntityStatusId;
                     entityPM.StatusDate = args.EventDateTime;
                     entityPM.StatusLocation = args.StatusLocation;
@@ -1257,8 +1257,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                     if (newEntityStatus.StatusWeight >= oldEntityStatus.StatusWeight)
                     {
-                        args.StatusLocation = GetStatusLocation(args);
-
                         entityPM.StatusId = newEventType.EntityStatusId;
                         entityPM.StatusDate = args.EventDateTime;
                         entityPM.StatusLocation = args.StatusLocation;
