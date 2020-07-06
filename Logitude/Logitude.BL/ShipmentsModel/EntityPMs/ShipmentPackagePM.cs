@@ -347,7 +347,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool IsMultiHarmonize { get; set; }
 
-        public int InUse { get; set; }
+        public int? InUse { get; set; }
 
         private List<ShipmentPackageHarmonizePM> shipmentPackageHarmonizes;
         [Composition]

@@ -159,9 +159,11 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
                 this.warehouseReleasePM.ShipmentTypeId = this.ShipmentPM.ShipmentTypeId;
                 this.warehouseReleasePM.DirectionId = this.ShipmentPM.DirectionId;
                 this.warehouseReleasePM.ConnectedTo = args.ConnectedTo;
+                this.warehouseReleasePM.ChildEntityReference = args.ChildEntityReference;
             } else {
                 this.warehouseReleasePM.ShipmentId = args.ShipmentId;
                 this.warehouseReleasePM.ConnectedTo = args.ConnectedTo;
+                this.warehouseReleasePM.ChildEntityReference = args.ChildEntityReference;
             }
 
 

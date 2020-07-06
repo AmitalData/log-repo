@@ -165,6 +165,8 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
         public virtual Card Trucker { get; set; }
         [Column("TruckerReference")]
 	    public string TruckerReference { get; set; }
+        [Column("ChildEntityReference")]
+	    public string ChildEntityReference { get; set; }
     }
 }
 	 

@@ -115,8 +115,8 @@ export class WarehouseHelper {
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./Warehouse/Components/NewWarehouseEntryComponent");
         logWindow.WindowClosed.subscribe((event: any) => {
-            if (event == "Refresh")
-                this.CurrentSession.FireEvent("Refresh");
+            //if (event == "Refresh")
+            //    this.CurrentSession.FireEvent("Refresh");
         });
     }
 

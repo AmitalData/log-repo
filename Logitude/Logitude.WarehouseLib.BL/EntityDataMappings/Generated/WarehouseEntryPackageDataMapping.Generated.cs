@@ -52,7 +52,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ChassisNumber, 
 	         RegistrationNumber, 
 	         CountryId, 
-	         CommodityNumber,
+	         CommodityNumber, 
+	         ShipmentPackageId,
 	      }
 
 
@@ -267,6 +268,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             {
 				entityPOCO.CommodityNumber = entityPM.CommodityNumber;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentPackageId))
+            {
+				entityPOCO.ShipmentPackageId = entityPM.ShipmentPackageId;
+			}
 			}
 
 		public void POCOToPM(WarehouseEntryPackagePM entityPM, WarehouseEntryPackage entityPOCO)
@@ -427,6 +433,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.CommodityNumber = entityPOCO.CommodityNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentPackageId))
+            {
+					entityPM.ShipmentPackageId = entityPOCO.ShipmentPackageId;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseEntryPackagePM entityPM, WarehouseEntryPackagePM oldEntityPM)
@@ -581,6 +592,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommodityNumber))
             {
                 oldEntityPM.CommodityNumber = entityPM.CommodityNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentPackageId))
+            {
+                oldEntityPM.ShipmentPackageId = entityPM.ShipmentPackageId;
             }
 			
 		}
