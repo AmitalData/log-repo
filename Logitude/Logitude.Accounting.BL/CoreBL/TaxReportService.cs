@@ -118,6 +118,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             if (!string.IsNullOrEmpty(invoice.VatNumber))
                             {
                                 vatNumber = invoice.VatNumber;
+                            vatNumber = ModifyVatNumber(vatNumber);
                             }
                       
                         TaxReportLinePM line = new TaxReportLinePM()
@@ -224,6 +225,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if(account.AccountTypeCode=="3" || account.AccountTypeCode == "2" || account.AccountTypeCode == "1")
                     {
                         VatNumber = card != null ? card.VatNumber : null;
+                        VatNumber = ModifyVatNumber(VatNumber);
                     }
                     if (account.IsEquipmentVendor)
                     {
@@ -345,6 +347,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         }
+
+        private static string ModifyVatNumber(string vatNumber)
+        {
+            return (vatNumber != null && vatNumber.Length >= 9) ? vatNumber.Substring(0, 9) : vatNumber;
+
+        }
+
         private static GLAccountPM  GetAccountByLedgerTransaction(TaxReportData transaction)
         {
             if (transaction.OppositGLAccount != null)
