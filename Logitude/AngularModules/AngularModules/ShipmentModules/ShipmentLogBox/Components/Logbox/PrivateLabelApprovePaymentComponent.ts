@@ -193,8 +193,8 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                     }
                     if (warningCode && warningCode != '0') {
                         var warningWindow = new LogitudeWindow();
-                        warningWindow.Width = 340;
-                        warningWindow.Height = 200;
+                        warningWindow.Width = 320;
+                        warningWindow.Height = 160;
                         warningWindow.RTL = this.RTL;
                         //warningWindow.Title
                         var windowArgs: any = {};
