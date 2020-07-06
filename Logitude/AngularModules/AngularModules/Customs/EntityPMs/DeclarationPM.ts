@@ -1238,7 +1238,7 @@ export class DeclarationPM {
     public get DestinationCountryCode() { return this.destinationCountryCode; }
     public set DestinationCountryCode(newValue: string) { if (this.destinationCountryCode != newValue) { this.destinationCountryCode = newValue; this.MarkAsDirty("DestinationCountryCode"); } }
        
-	 
+
     private exportAutonomyRegionTypeCode: string;
     public get ExportAutonomyRegionTypeCode() { return this.exportAutonomyRegionTypeCode; }
     public set ExportAutonomyRegionTypeCode(newValue: string) { if (this.exportAutonomyRegionTypeCode != newValue) { this.exportAutonomyRegionTypeCode = newValue; this.MarkAsDirty("ExportAutonomyRegionTypeCode"); } }
@@ -1247,8 +1247,44 @@ export class DeclarationPM {
     private declarationTypeCode: string;
     public get DeclarationTypeCode() { return this.declarationTypeCode; }
     public set DeclarationTypeCode(newValue: string) { if (this.declarationTypeCode != newValue) { this.declarationTypeCode = newValue; this.MarkAsDirty("DeclarationTypeCode"); } }
+    private cancelRequestReasonCode: string;
+    public get CancelRequestReasonCode() { return this.cancelRequestReasonCode; }
+    public set CancelRequestReasonCode(newValue: string) { if (this.cancelRequestReasonCode != newValue) { this.cancelRequestReasonCode = newValue; this.MarkAsDirty("CancelRequestReasonCode"); } }
        
 	 
+    private cancelRequestReasonExplanation: string;
+    public get CancelRequestReasonExplanation() { return this.cancelRequestReasonExplanation; }
+    public set CancelRequestReasonExplanation(newValue: string) { if (this.cancelRequestReasonExplanation != newValue) { this.cancelRequestReasonExplanation = newValue; this.MarkAsDirty("CancelRequestReasonExplanation"); } }
+       
+	 
+    private cancelRequestNumber: number;
+    public get CancelRequestNumber() { return this.cancelRequestNumber; }
+    public set CancelRequestNumber(newValue: number) { if (this.cancelRequestNumber != newValue) { this.cancelRequestNumber = newValue; this.MarkAsDirty("CancelRequestNumber"); } }
+       
+	 
+    private customCancelRequestRemarks: string;
+    public get CustomCancelRequestRemarks() { return this.customCancelRequestRemarks; }
+    public set CustomCancelRequestRemarks(newValue: string) { if (this.customCancelRequestRemarks != newValue) { this.customCancelRequestRemarks = newValue; this.MarkAsDirty("CustomCancelRequestRemarks"); } }
+       
+	 
+    private cancelRequestStatusCode: string;
+    public get CancelRequestStatusCode() { return this.cancelRequestStatusCode; }
+    public set CancelRequestStatusCode(newValue: string) { if (this.cancelRequestStatusCode != newValue) { this.cancelRequestStatusCode = newValue; this.MarkAsDirty("CancelRequestStatusCode"); } }
+       
+	 
+    private cancelRequestRejectionReason: string;
+    public get CancelRequestRejectionReason() { return this.cancelRequestRejectionReason; }
+    public set CancelRequestRejectionReason(newValue: string) { if (this.cancelRequestRejectionReason != newValue) { this.cancelRequestRejectionReason = newValue; this.MarkAsDirty("CancelRequestRejectionReason"); } }
+       
+	 
+    private cancelRequestApproveDate: Date;
+    public get CancelRequestApproveDate() { return this.cancelRequestApproveDate; }
+    public set CancelRequestApproveDate(newValue: Date) { if (this.cancelRequestApproveDate != newValue) { this.cancelRequestApproveDate = newValue; this.MarkAsDirty("CancelRequestApproveDate"); } }
+       
+	 
+    private isClaimable: boolean;
+    public get IsClaimable() { return this.isClaimable; }
+    public set IsClaimable(newValue: boolean) { if (this.isClaimable != newValue) { this.isClaimable = newValue; this.MarkAsDirty("IsClaimable"); } }
 
     public OldEntityPM: DeclarationPM;
 		
@@ -1273,4 +1309,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

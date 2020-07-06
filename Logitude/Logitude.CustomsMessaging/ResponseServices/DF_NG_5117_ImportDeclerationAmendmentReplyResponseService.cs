@@ -378,8 +378,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                         }
                     }
-                         if (fromMehes) _MyDeclarationPM.AmendmentCorrectedByUserId = loggingUserId;
+                    if (fromMehes)
+                    {
+                        _MyDeclarationPM.AmendmentCorrectedByUserId = loggingUserId;
+                        _MyDeclarationPM.AmendmentissueDate = DateTime.ParseExact(customResponse.Response.Declaration.IssueDateTime, "yyyy-MM-ddTHH:mm:ss", null);
 
+ 
+                    }
                     if(_MyDeclarationPM.AmendmentStatus == "3")
                     {
                         _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
@@ -454,17 +459,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-
-                        this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                        this.MyResponseData.Succeeded = true;
-                        this.MyResponseData.HasException = false;
-                        this.MyResponseData.UserMessage = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
-
-                        this.MyRequestSheetParam = new RequestSheetParam();
-                        this.MyRequestSheetParam.CustomFileNo = this._MyDeclarationPM.CustomFileNo;
-                        this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                        this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
-                        this.MyRequestSheetParam.RequestDescription = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
 
                         bool sendDeclarationPrintSync = false;
                         if (sendDeclarationPrintSync)
@@ -570,7 +564,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
 
-                requestParams.AppicationId = myDeclarationQueryService.GetIdByDeclarationNumber(_MyDeclarationPM.Id, requestParams.Tenant);
+                this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.HasException = false;
+                this.MyResponseData.UserMessage = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
+
+                this.MyRequestSheetParam = new RequestSheetParam();
+                this.MyRequestSheetParam.CustomFileNo = this._MyDeclarationPM.CustomFileNo;
+                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
+                this.MyRequestSheetParam.RequestDescription = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
+
+                requestParams.AppicationId = _MyDeclarationPM.Id;// myDeclarationQueryService.GetIdByDeclarationNumber(_MyDeclarationPM.Id, requestParams.Tenant);
                 //if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
                 //{
                 //     requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);

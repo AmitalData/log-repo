@@ -234,6 +234,8 @@ import { TransactionNatureTypeListService } from './Services/StandardLists/Trans
 import { NbcDeclarationTypeListService } from './Services/StandardLists/NbcDeclarationTypeListService';
 import { ExporterRoleTypeListService } from './Services/StandardLists/ExporterRoleTypeListService';
 import { AutonomyRegionTypeListService } from './Services/StandardLists/AutonomyRegionTypeListService';
+import { AmendmentStatusListService } from './Services/StandardLists/AmendmentStatusListService';
+
 
 
 //#endregion
@@ -367,6 +369,8 @@ import { RequestTypeListService } from './Services/StandardLists/RequestTypeList
 import { CustomsAutonomyKeywordPMService } from './Services/StandardPMs/CustomsAutonomyKeywordPMService';
 import { CurrencyTypePMService } from './Services/StandardPMs/CurrencyTypePMService';
 import { CustomsShipListService } from './Services/StandardLists/CustomsShipListService';
+import { CancellationReasonRequestTypeListService } from './Services/StandardLists/CancellationReasonRequestTypeListService';
+import { CancellationRequestStatusListService } from './Services/StandardLists/CancellationRequestStatusListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -612,6 +616,10 @@ export class ModuleProviders {
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
             case "ExporterRoleTypeListService": { myResult = new ExporterRoleTypeListService(); break; }
             case "AutonomyRegionTypeListService": { myResult = new AutonomyRegionTypeListService(); break; }
+
+            case "CancellationReasonRequestTypeListService": { myResult = new CancellationReasonRequestTypeListService(); break; }
+            case "CancellationRequestStatusListService": { myResult = new CancellationRequestStatusListService(); break; }
+            case "AmendmentStatusListService": { myResult = new AmendmentStatusListService(); break; }
 
              //#endregion                
 
