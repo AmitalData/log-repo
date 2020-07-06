@@ -1748,7 +1748,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     toDeclaration.ShipCode = fromDeclaration.ShipCode;
                 }
 
-                if ( toDeclaration.IsExporterConfirmation==null)
+                if ( toDeclaration.IsExporterConfirmation==false)
                 {
                     toDeclaration.IsExporterConfirmation = fromDeclaration.IsExporterConfirmation;
                 }
