@@ -5,6 +5,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -49,7 +50,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     TraceEventRepository traceEventsRepository = new TraceEventRepository(tenant);
                     TraceEventQuery traceEventQuery = new TraceEventQuery(traceEventsRepository);
                     IQueryable<TraceEventPM> myResult = traceEventQuery.GetTraceEventPMsByTenantByEntityId(tenant, entityId, objectTableId).OrderByDescending(s => s.LogDateTime);
-                  
+
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 }
@@ -106,19 +107,35 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     ObjectTable objectTable = objectTableRepository.GetSingleObjectTable(args.ObjectTableId, tenant, true);
                     if (objectTable != null)
                     {
+                        ShipmentPM shipmentPM = null;
                         if (objectTable.Name == "Shipment" || objectTable.Name == "Master")
                         {
-                            this.OnInsertTraceEventForShipment(args.EntityId, args.EventTypeId, newTraceEvent, tenant, webFreightContext, myResult);
+                            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                            shipmentPM = shipmentQuery.GetSinglePM(args.EntityId, tenant);
+                            this.OnInsertTraceEventForShipment(shipmentPM, args.EventTypeId, newTraceEvent, tenant, webFreightContext, myResult);
                         }
 
                         if (objectTable.AllowCustomFields)
                         {
-                            EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { EventTypeId = args.EventTypeId, EventDateTime = newTraceEvent.EventDateTime, EntityId = args.EntityId, ObjectTableName = objectTable != null ? objectTable.Name : null, Tenant = tenant });
+                            EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs()
+                            {
+                                EventTypeId =args.EventTypeId,
+                                Entity = shipmentPM,
+                                EventDateTime = newTraceEvent.EventDateTime,
+                                EntityId = args.EntityId,
+                                ObjectTableName = objectTable != null? objectTable.Name : null,
+                                Tenant = tenant
+                            });
+                        }
 
+                        if (shipmentPM != null)
+                        {
+                            ShipmentService shipmentService = new ShipmentService(ShipmentsContext.GetContext(tenant), shipmentPM, SecurityUtility.GetAuthenticatedUser());
+                            shipmentService.Update();
                         }
                     }
 
-              
+
 
 
                     scope.Complete();
@@ -189,13 +206,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        private void OnInsertTraceEventForShipment(string entityId, string eventTypeId, TraceEvent newTraceEvent, int tenant, IWebFreightContext webFreightContext, NewTraceEventResult myResult)
+        private void OnInsertTraceEventForShipment(ShipmentPM entityPM, string eventTypeId, TraceEvent newTraceEvent, int tenant, IWebFreightContext webFreightContext, NewTraceEventResult myResult)
         {
             IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(objectContext);
-            Shipment entityPOCO = shipmentRepository.GetSingleShipment(entityId, tenant);
-            
-            if (entityPOCO != null)
+            //ShipmentPM entityPOCO = shipmentRepository.GetSingleShipment(entityId, tenant);
+
+            if (entityPM != null)
             {
                 EventTypeRepository eventTypeRep = new EventTypeRepository(webFreightContext);
                 EventType eventType = eventTypeRep.GetSingleEventType(eventTypeId, tenant);
@@ -204,38 +221,39 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (!string.IsNullOrEmpty(eventType.EntityStatusId))
                     {
                         #region
-                        if (string.IsNullOrEmpty(entityPOCO.StatusId))
+                        if (string.IsNullOrEmpty(entityPM.StatusId))
                         {
                             EntityStatusRepository entityStatusRepository = new EntityStatusRepository(tenant);
                             EntityStatus newStatus = EntityStatusRepository.GetSingleEntityStatus(eventType.EntityStatusId, tenant, true);
 
-                            entityPOCO.StatusId = eventType.EntityStatusId;
-                            entityPOCO.StatusDate = newTraceEvent.EventDateTime;
-                            entityPOCO.StatusLocation = null;
-                            entityPOCO.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            entityPM.StatusId = eventType.EntityStatusId;
+                            entityPM.StatusDate = newTraceEvent.EventDateTime;
+                            entityPM.StatusLocation = null;
+                            entityPM.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            entityPM.IsStatusChange = true;
+                            //if (entityPOCO.ShipmentLevelCode == "D" || entityPOCO.ShipmentLevelCode == "C")
+                            //{
+                            //    ShipmentMasterDataRepository shipmentMasterDataRepository = new ShipmentMasterDataRepository(objectContext);
+                            //    ShipmentMasterData entityMasterData = shipmentMasterDataRepository.GetSingleMasterData
 
-                            if (entityPOCO.ShipmentLevelCode == "D" || entityPOCO.ShipmentLevelCode == "C")
-                            {
-                                ShipmentMasterDataRepository shipmentMasterDataRepository = new ShipmentMasterDataRepository(objectContext);
-                                ShipmentMasterData entityMasterData = shipmentMasterDataRepository.GetSingleMasterData(entityPOCO.MasterShipmentDataId);
-                                entityMasterData.StatusId = entityPOCO.StatusId;
-                                entityMasterData.StatusDate = entityPOCO.StatusDate;
-                                entityMasterData.StatusLocation = entityPOCO.StatusLocation;
-                                shipmentMasterDataRepository.Update(entityMasterData);
-                            }
-
+                            // if( entityPOCO.MasterShipmentDataId!=null){
+                            //    entityMasterData.StatusId = entityPOCO.StatusId;
+                            //    entityMasterData.StatusDate = entityPOCO.StatusDate;
+                            //    entityMasterData.StatusLocation = entityPOCO.StatusLocation;
+                            //    shipmentMasterDataRepository.Update(entityMasterData);
+                            //}
                             myResult.StatusChanged = true;
-                            myResult.EntityId = entityPOCO.Id;
-                            myResult.StatusId = entityPOCO.StatusId;
+                            myResult.EntityId = entityPM.Id;
+                            myResult.StatusId = entityPM.StatusId;
                             myResult.StatusName = newStatus.Name;
-                            myResult.StatusDate = entityPOCO.StatusDate;
-                            myResult.StatusLocation = entityPOCO.StatusLocation;
-                            myResult.LastStatusLogDate = entityPOCO.LastStatusLogDate;
+                            myResult.StatusDate = entityPM.StatusDate;
+                            myResult.StatusLocation = entityPM.StatusLocation;
+                            myResult.LastStatusLogDate = entityPM.LastStatusLogDate;
                         }
 
                         else
                         {
-                            string oldStatusId = entityPOCO.StatusId;
+                            string oldStatusId = entityPM.StatusId;
                             string newStatusId = eventType.EntityStatusId;
                             EntityStatusRepository entityStatusRepository = new EntityStatusRepository(tenant);
                             EntityStatus oldStatus = EntityStatusRepository.GetSingleEntityStatus(oldStatusId, tenant, true);
@@ -243,28 +261,31 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                             if (newStatus.StatusWeight >= oldStatus.StatusWeight)
                             {
-                                entityPOCO.StatusId = newStatusId;
-                                entityPOCO.StatusDate = newTraceEvent.EventDateTime;
-                                entityPOCO.StatusLocation = null;
-                                entityPOCO.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                                entityPM.StatusId = newStatusId;
+                                entityPM.StatusDate = newTraceEvent.EventDateTime;
+                                entityPM.StatusLocation = null;
+                                entityPM.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                                entityPM.IsStatusChange = true;
 
-                                if (entityPOCO.ShipmentLevelCode == "D" || entityPOCO.ShipmentLevelCode == "C")
-                                {
-                                    ShipmentMasterDataRepository shipmentMasterDataRepository = new ShipmentMasterDataRepository(objectContext);
-                                    ShipmentMasterData entityMasterData = shipmentMasterDataRepository.GetSingleMasterData(entityPOCO.MasterShipmentDataId);
-                                    entityMasterData.StatusId = entityPOCO.StatusId;
-                                    entityMasterData.StatusDate = entityPOCO.StatusDate;
-                                    entityMasterData.StatusLocation = entityPOCO.StatusLocation;
-                                    shipmentMasterDataRepository.Update(entityMasterData);
-                                }
+                                //if (entityPOCO.ShipmentLevelCode == "D" || entityPOCO.ShipmentLevelCode == "C")
+                                //{
+                                //    ShipmentMasterDataRepository shipmentMasterDataRepository = new ShipmentMasterDataRepository(objectContext);
+                                //    ShipmentMasterData entityMasterData = shipmentMasterDataRepository.GetSingleMasterData
+
+                                // if( entityPOCO.MasterShipmentDataId!=null){
+                                //    entityMasterData.StatusId = entityPOCO.StatusId;
+                                //    entityMasterData.StatusDate = entityPOCO.StatusDate;
+                                //    entityMasterData.StatusLocation = entityPOCO.StatusLocation;
+                                //    shipmentMasterDataRepository.Update(entityMasterData);
+                                //}
 
                                 myResult.StatusChanged = true;
-                                myResult.EntityId = entityPOCO.Id;
-                                myResult.StatusId = entityPOCO.StatusId;
+                                myResult.EntityId = entityPM.Id;
+                                myResult.StatusId = entityPM.StatusId;
                                 myResult.StatusName = newStatus.Name;
-                                myResult.StatusDate = entityPOCO.StatusDate;
-                                myResult.StatusLocation = entityPOCO.StatusLocation;
-                                myResult.LastStatusLogDate = entityPOCO.LastStatusLogDate;
+                                myResult.StatusDate = entityPM.StatusDate;
+                                myResult.StatusLocation = entityPM.StatusLocation;
+                                myResult.LastStatusLogDate = entityPM.LastStatusLogDate;
                             }
                         }
                         #endregion
@@ -274,21 +295,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         #region
                         ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(newTraceEvent.Id, tenant);
-                        entityPOCO.ExceptionDate = newTraceEvent.EventDateTime;
-                        entityPOCO.ExceptionDescription = entityPOCO.LastExceptionDescription = newTraceEvent.Notes;
-                        entityPOCO.HasException = true;
-                        entityPOCO.ExceptionResolvedDescription = null;
+                        entityPM.ExceptionDate = newTraceEvent.EventDateTime;
+                        entityPM.ExceptionDescription = entityPM.LastExceptionDescription = newTraceEvent.Notes;
+                        entityPM.HasException = true;
+                        entityPM.ExceptionResolvedDescription = null;
 
-                        if (entityPOCO.ShipmentLevelCode == "A")
+                        if (entityPM.ShipmentLevelCode == "A")
                         {
-                            List<Shipment> connectedShipments = shipmentRepository.GetConnectedCustomShipments(tenant, entityId).ToList();
+                            List<Shipment> connectedShipments = shipmentRepository.GetConnectedCustomShipments(tenant, entityPM.Id).ToList();
                             foreach (Shipment sh in connectedShipments)
                             {
-                                sh.HasException = entityPOCO.HasException;
-                                sh.ExceptionDate = entityPOCO.ExceptionDate;
-                                sh.ExceptionDescription = entityPOCO.ExceptionDescription;
-                                sh.ExceptionResolvedDescription = entityPOCO.ExceptionResolvedDescription;
-                                sh.LastExceptionDescription = entityPOCO.LastExceptionDescription;
+                                sh.HasException = entityPM.HasException;
+                                sh.ExceptionDate = entityPM.ExceptionDate;
+                                sh.ExceptionDescription = entityPM.ExceptionDescription;
+                                sh.ExceptionResolvedDescription = entityPM.ExceptionResolvedDescription;
+                                sh.LastExceptionDescription = entityPM.LastExceptionDescription;
                                 shipmentRepository.Update(sh);
                             }
                         }
@@ -298,22 +319,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     else if (eventType.Code == "EXRE")
                     {
                         #region
-                        entityPOCO.ExceptionResolvedDescription = newTraceEvent.Notes;
-                        entityPOCO.HasException = false;
-                        entityPOCO.ExceptionDescription = null;
-                        entityPOCO.ExceptionDate = null;
+                        entityPM.ExceptionResolvedDescription = newTraceEvent.Notes;
+                        entityPM.HasException = false;
+                        entityPM.ExceptionDescription = null;
+                        entityPM.ExceptionDate = null;
 
-                        if (entityPOCO.ShipmentLevelCode == "A")
+                        if (entityPM.ShipmentLevelCode == "A")
                         {
-                            List<Shipment> connectedShipments = shipmentRepository.GetConnectedCustomShipments(tenant, entityId).ToList();
+                            List<Shipment> connectedShipments = shipmentRepository.GetConnectedCustomShipments(tenant, entityPM.Id).ToList();
                             foreach (Shipment sh in connectedShipments)
                             {
-                                sh.ExceptionResolvedDescription = entityPOCO.ExceptionResolvedDescription;
-                                sh.HasException = entityPOCO.HasException;
-                                sh.ExceptionDescription = entityPOCO.ExceptionDescription;
-
-                                sh.LastExceptionDescription = entityPOCO.LastExceptionDescription;
-                                sh.ExceptionDate = entityPOCO.ExceptionDate;
+                                sh.ExceptionResolvedDescription = entityPM.ExceptionResolvedDescription;
+                                sh.HasException = entityPM.HasException;
+                                sh.ExceptionDescription = entityPM.ExceptionDescription;
+                                sh.LastExceptionDescription = entityPM.LastExceptionDescription;
+                                sh.ExceptionDate = entityPM.ExceptionDate;
                                 shipmentRepository.Update(sh);
                             }
                         }
@@ -322,28 +342,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     if (eventType.IsCustomerView)
                     {
-                        this.ComputeLastSharedEvent(entityPOCO, tenant);
+                        this.ComputeLastSharedEvent(entityPM, tenant);
 
-                        myResult.LastSharedEventId = entityPOCO.LastSharedEventId;
-                        myResult.LastSharedEventLocation = entityPOCO.LastSharedEventLocation;
-                        myResult.LastSharedEventNotes = entityPOCO.LastSharedEventNotes;
-                        myResult.LastSharedEventDate = entityPOCO.LastSharedEventDate;
+                        myResult.LastSharedEventId = entityPM.LastSharedEventId;
+                        myResult.LastSharedEventLocation = entityPM.LastSharedEventLocation;
+                        myResult.LastSharedEventNotes = entityPM.LastSharedEventNotes;
+                        myResult.LastSharedEventDate = entityPM.LastSharedEventDate;
                     }
 
-                    shipmentRepository.Update(entityPOCO);
                     shipmentRepository.SubmitChanges();
                 }
             }
         }
 
-        private void ComputeLastSharedEvent(Shipment entityPOCO, int tenant)
+        private void ComputeLastSharedEvent(ShipmentPM entityPM, int tenant)
         {
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Shipment", 0, true);
             string objectTableId = objectTable.Id;
 
             TraceEventRepository traceEventRep = new TraceEventRepository(tenant);
-            List<TraceEvent> myEventList = traceEventRep.GetTraceEvents(tenant, entityPOCO.Id, objectTableId).ToList();
+            List<TraceEvent> myEventList = traceEventRep.GetTraceEvents(tenant, entityPM.Id, objectTableId).ToList();
             myEventList = myEventList.Where(d => d.EventType.IsCustomerView && !d.Deleted).ToList();
 
             if (myEventList.Count > 0)
@@ -351,19 +370,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 TraceEvent myHigherEvent = myEventList.OrderByDescending(d => d.EventDateTime).FirstOrDefault();
                 if (myHigherEvent != null)
                 {
-                    entityPOCO.LastSharedEventId = myHigherEvent.EventTypeId;
-                    entityPOCO.LastSharedEventLocation = myHigherEvent.Location;
-                    entityPOCO.LastSharedEventNotes = myHigherEvent.Notes;
-                    entityPOCO.LastSharedEventDate = myHigherEvent.EventDateTime;
+                    entityPM.LastSharedEventId = myHigherEvent.EventTypeId;
+                    entityPM.LastSharedEventLocation = myHigherEvent.Location;
+                    entityPM.LastSharedEventNotes = myHigherEvent.Notes;
+                    entityPM.LastSharedEventDate = myHigherEvent.EventDateTime;
                 }
             }
 
             else
             {
-                entityPOCO.LastSharedEventId = null;
-                entityPOCO.LastSharedEventLocation = null;
-                entityPOCO.LastSharedEventNotes = null;
-                entityPOCO.LastSharedEventDate = null;
+                entityPM.LastSharedEventId = null;
+                entityPM.LastSharedEventLocation = null;
+                entityPM.LastSharedEventNotes = null;
+                entityPM.LastSharedEventDate = null;
             }
         }
     }

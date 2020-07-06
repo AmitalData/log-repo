@@ -192,16 +192,17 @@
   <Column
     Name="GLSHKURL"
     Type="varchar"
+    DefaultValue="'0'"
     Size="1000">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="GLSHKEnv"
     Type="varchar"
     Size="20">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="NotificationHubName"

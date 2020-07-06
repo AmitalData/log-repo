@@ -115,7 +115,7 @@ namespace Logitude.HybridTest.WcfCallers
             if (LDEIncoterm == null)
             {
                 serviceResponse = CreateIncotermCodeLDE();
-                Assert.IsFalse(serviceResponse.HasError, "Create Incoterm Failed! " + serviceResponse.ErrorMessage);
+                Assert.IsFalse(serviceResponse.HasError, "Create Incoterm Failed! " + serviceOutcome.Response.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Create Incoterm Failed! " + serviceResponse.Result);
             }
         }
@@ -267,10 +267,10 @@ namespace Logitude.HybridTest.WcfCallers
         }
         private static Response AssertResponse<T>(T entityPM)
         {
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(entityPM);
-            Assert.IsFalse(serviceResponse.HasError, "Prepare Shipment Vars Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Prepare Shipment Vars Failed! " + serviceResponse.ErrorMessage);
-            return serviceResponse;
+            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(entityPM);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Prepare Shipment Vars Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "Prepare Shipment Vars Failed! " + serviceOutcome.Response.ErrorMessage);
+            return serviceOutcome.Response;
         }
     }
 }

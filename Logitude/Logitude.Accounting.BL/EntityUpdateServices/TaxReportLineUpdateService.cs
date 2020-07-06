@@ -164,7 +164,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
 
                 }
-
+                if(entityPM.VatAmount > 16 && entityPM.VatableInvoiceAmount != null && entityPM.VatableInvoiceAmount != 0 )
+                {
+                    var percentage = entityPM.VatAmount / entityPM.VatableInvoiceAmount;
+                    var STDvatTypePercentage = GetSTDPercentage(entityPM.Tenant);
+                    if((double?)percentage*100 > STDvatTypePercentage + 0.5)
+                    {
+                        entityPM.StatusCode = "9";
+                    }
+                   
+                }
 
 
             }
@@ -234,6 +243,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
 
                 }
+                if (entityPM.VatAmount > 16 && entityPM.VatableInvoiceAmount != null && entityPM.VatableInvoiceAmount != 0 )
+                {
+                    var percentage = entityPM.VatAmount / entityPM.VatableInvoiceAmount;
+                    var STDvatTypePercentage = GetSTDPercentage(entityPM.Tenant);
+                    if ((double?)percentage > STDvatTypePercentage + 0.5)
+                    {
+                        entityPM.StatusCode = "9";
+                    }
+
+                }
             }
 
 
@@ -249,7 +268,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 
             }
         }
-
+        private double? GetSTDPercentage(int tenant)
+        {
+            VatTypeQuery vatTypeQuery = new VatTypeQuery(tenant);
+            VatTypePM vatType = vatTypeQuery.GetSinglePMByCode("STD", tenant);
+            VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(tenant);
+             return vatTypePercentageQuery.GetVatTypePercentagesForVatType( tenant, vatType.Id).First().Percentage;
+        }
 
         private string ModifyVatNumberToValidLength(string vatnumber)
         {

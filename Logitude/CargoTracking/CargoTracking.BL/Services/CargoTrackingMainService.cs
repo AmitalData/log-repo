@@ -24,6 +24,7 @@ namespace CargoTracking.CargoTracking.BL.Services
                 FieldsDBName = "Id,Code,CountryId,EnglishName,AutomaticLastUpdateDate",
                 CT_FieldsDBName = "Id,Code,EnglishName,CountryId",
                 KeyName = "Id",
+                ConditionKey = "Id",
                 DBTableName = "Ports",
                 CT_TableName = "CargoTrackingPorts"
             });
@@ -33,6 +34,7 @@ namespace CargoTracking.CargoTracking.BL.Services
                 TableName = "Card",
                 FieldsDBName = "Id,Code,LocalName,EnglishName,AutomaticLastUpdateDate",
                 KeyName = "Id",
+                ConditionKey = "Id",
                 CT_FieldsDBName = "Id,Code,EnglishName,LocalName",
                 DBTableName = "Cards",
                 CT_TableName = "CargoTrackingCards"
@@ -41,28 +43,30 @@ namespace CargoTracking.CargoTracking.BL.Services
             CargoTableLists.Add(new CargoTable()
             {
                 TableName = "Shipment",
-                FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,MasterShipmentDataId,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,AutomaticLastUpdateDate,ShipmentPickUpIndex,FirstPickupETA,ShipmentLevelCode,CustomsClearanceDate",
+                FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,MasterShipmentDataId,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,AutomaticLastUpdateDate,ShipmentPickUpIndex,FirstPickupETA,ShipmentLevelCode,CustomsClearanceDate,CustomFileId",
                 KeyName = "Id",
+                ConditionKey = "Id",
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipments",
                 CT_FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate"
             });
 
-            //CargoTableLists.Add(new CargoTable()
-            //{
-            //    TableName = "Shipments",
-            //    FieldsDBName = "Id,Tenant,SearchFields,CreateDateTime,AutomaticLastUpdateDate",
-            //    KeyName = "Id",
-            //    CT_FieldsDBName = "Id,Tenant,ShipmentId,SearchFields,ShipmentDate",
-            //    DBTableName = "Shipments",
-            //    CT_TableName = "CargoTrackingShipmentSearchFields"
-            //});
+            CargoTableLists.Add(new CargoTable()
+            {
+                TableName = "Shipments",
+                FieldsDBName = "Id,Tenant,ShipmentNumber,SearchFields,CreateDateTime,CustomerReference1,CustomerReference2,AutomaticLastUpdateDate",
+                KeyName = "Id",
+                ConditionKey= "ShipmentId",
+                CT_FieldsDBName = "Id,Tenant,ShipmentId,SearchFields,ShipmentDate",
+                DBTableName = "Shipments",
+                CT_TableName = "CargoTrackingShipmentSearchFields"
+            });
 
             return CargoTableLists;
 
         }
 
-        public int UpdateCTDataBase(CargoArgs buildCargoArgs, int NumberOfBulkPerTime)
+        public int UpdateCTDataBase(CargoArgs buildCargoArgs, int NumberOfBulkPerTime, bool? IsUpdateAfterFinished = null)
         {
 
             CargoTable table = buildCargoArgs.Table;
@@ -118,7 +122,7 @@ namespace CargoTracking.CargoTracking.BL.Services
 
                         table = PrepareTableParameters(buildCargoArgs, table, columns);
 
-                        automaticLastUpdateDate = UpdateBulkValues(buildCargoArgs, dataTable, table, automaticLastUpdateDate);
+                        automaticLastUpdateDate = UpdateBulkValues(buildCargoArgs, dataTable, table, automaticLastUpdateDate, IsUpdateAfterFinished);
 
                         if (NumberRecoredTake != MaxRecoredTakeEachTime)
                         {
@@ -131,12 +135,21 @@ namespace CargoTracking.CargoTracking.BL.Services
 
                 }
 
+
+
                 else
                 {
                     reader.Close();
                 }
+                if (IsUpdateAfterFinished == null)
+                {
+                    UpdateCTDataBase(buildCargoArgs, NumberOfBulkPerTime, true);
+                }
                 UpdateWaterMarkAfterFinishCheck(table, automaticLastUpdateDate, buildCargoArgs);
             }
+
+
+
 
             return NumberOfCoulmnsUpdated;
 
@@ -167,9 +180,9 @@ namespace CargoTracking.CargoTracking.BL.Services
             return column;
         }
 
-        private DataTable FillDataTableValues(List<DataColumn> listCols, SqlDataReader reader, DataTable dataTable ,string TableName)
+        private DataTable FillDataTableValues(List<DataColumn> listCols, SqlDataReader reader, DataTable dataTable, string TableName)
         {
-           bool IsRoWValid =  CargoTrackingBlockRecordsService.BlockRecords(TableName ,reader);
+            bool IsRoWValid = CargoTrackingBlockRecordsService.BlockRecords(TableName, reader);
             if (IsRoWValid)
             {
                 DataRow dataRow = dataTable.NewRow();
@@ -177,9 +190,10 @@ namespace CargoTracking.CargoTracking.BL.Services
                 {
                     dataRow[((DataColumn)listCols[i])] = reader[i];
                 }
+                CargoTrackingSearchService.SearchService(dataRow, dataTable, TableName);
                 dataTable.Rows.Add(dataRow);
             }
-          
+
 
             return dataTable;
         }
@@ -187,12 +201,12 @@ namespace CargoTracking.CargoTracking.BL.Services
         private CargoTable PrepareTableParameters(CargoArgs buildCargoArgs, CargoTable table, List<string> columns)
         {
             table.UpdatedCount = columns != null ? columns.Count() : 0;
-            table.RefreshIds = DeleteRowsFromCargoTables(new CargoDeleteRowsArgs() { TableName = table.CT_TableName, KeyName = table.KeyName, IdsList = columns, ConnectionString = buildCargoArgs.DestinationConnectionString, ReturnDeleteIdsAsString = true });
+            table.RefreshIds = DeleteRowsFromCargoTables(new CargoDeleteRowsArgs() { TableName = table.CT_TableName, KeyName = table.ConditionKey, IdsList = columns, ConnectionString = buildCargoArgs.DestinationConnectionString, ReturnDeleteIdsAsString = true });
 
             return table;
         }
 
-        private DateTime? UpdateBulkValues(CargoArgs buildCargoArgs, DataTable dataTable, CargoTable table, DateTime? automaticLastUpdateDate)
+        private DateTime? UpdateBulkValues(CargoArgs buildCargoArgs, DataTable dataTable, CargoTable table, DateTime? automaticLastUpdateDate, bool? IsUpdateAfterFinished)
         {
             if (!string.IsNullOrEmpty(table.RefreshIds))
             {
@@ -214,10 +228,26 @@ namespace CargoTracking.CargoTracking.BL.Services
                         {
                             AutoMapColumns(bulkCopy, dataTable, table);
 
+
                             foreach (DataRow dr in dataTable.Rows)
                             {
                                 CargoTrackingTableLogicService.SetTableLogic(dr, buildCargoArgs.Table.CT_TableName);
+                                if (IsUpdateAfterFinished == null || IsUpdateAfterFinished == false)
+                                {
+                                    CargoTrackingTableLogicAfterUpdating.SetTableLogic(dr, buildCargoArgs.Table.CT_TableName);
+                                }
                             }
+
+                            if (IsUpdateAfterFinished == true)
+                            {
+
+                                foreach (DataRow dr in dataTable.Rows)
+                                {
+                                    CargoTrackingUpdatedAfterFinishMapping.UpdatedAfterFinishMapping(dr, buildCargoArgs.Table.CT_TableName);
+                                }
+                            }
+
+
 
                             bulkCopy.EnableStreaming = true;
                             bulkCopy.BatchSize = 100000;

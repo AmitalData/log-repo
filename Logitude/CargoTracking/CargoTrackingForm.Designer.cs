@@ -50,6 +50,8 @@
             this.radioButton7 = new System.Windows.Forms.RadioButton();
             this.radioButton8 = new System.Windows.Forms.RadioButton();
             this.radioButton9 = new System.Windows.Forms.RadioButton();
+            this.radioButton10 = new System.Windows.Forms.RadioButton();
+            this.radioButton11 = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -92,8 +94,8 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(31, 226);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(453, 31);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(453, 32);
             this.tableLayoutPanel1.TabIndex = 9;
             // 
             // CheckLabel
@@ -138,7 +140,7 @@
             this.radioButton6.AutoSize = true;
             this.radioButton6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioButton6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.radioButton6.Location = new System.Drawing.Point(279, 101);
+            this.radioButton6.Location = new System.Drawing.Point(359, 101);
             this.radioButton6.Name = "radioButton6";
             this.radioButton6.Size = new System.Drawing.Size(60, 17);
             this.radioButton6.TabIndex = 18;
@@ -179,12 +181,13 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.radioButton10);
             this.panel1.Controls.Add(this.radioButton3);
             this.panel1.Controls.Add(this.radioButton2);
             this.panel1.Controls.Add(this.radioButton1);
             this.panel1.Location = new System.Drawing.Point(143, 46);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(221, 21);
+            this.panel1.Size = new System.Drawing.Size(313, 21);
             this.panel1.TabIndex = 20;
             // 
             // radioButton3
@@ -192,7 +195,7 @@
             this.radioButton3.AutoSize = true;
             this.radioButton3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioButton3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.radioButton3.Location = new System.Drawing.Point(136, 3);
+            this.radioButton3.Location = new System.Drawing.Point(216, 3);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(60, 17);
             this.radioButton3.TabIndex = 13;
@@ -239,6 +242,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.radioButton11);
             this.groupBox1.Controls.Add(this.SourceConnectionlTextBox);
             this.groupBox1.Controls.Add(this.radioButton6);
             this.groupBox1.Controls.Add(this.panel1);
@@ -305,6 +309,34 @@
             this.radioButton9.UseVisualStyleBackColor = true;
             this.radioButton9.CheckedChanged += new System.EventHandler(this.radioButton9_CheckedChanged);
             // 
+            // radioButton10
+            // 
+            this.radioButton10.AutoSize = true;
+            this.radioButton10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.radioButton10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.radioButton10.Location = new System.Drawing.Point(144, 3);
+            this.radioButton10.Name = "radioButton10";
+            this.radioButton10.Size = new System.Drawing.Size(52, 17);
+            this.radioButton10.TabIndex = 14;
+            this.radioButton10.TabStop = true;
+            this.radioButton10.Text = "Cloud";
+            this.radioButton10.UseVisualStyleBackColor = true;
+            this.radioButton10.CheckedChanged += new System.EventHandler(this.radioButton10_CheckedChanged);
+            // 
+            // radioButton11
+            // 
+            this.radioButton11.AutoSize = true;
+            this.radioButton11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.radioButton11.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.radioButton11.Location = new System.Drawing.Point(287, 101);
+            this.radioButton11.Name = "radioButton11";
+            this.radioButton11.Size = new System.Drawing.Size(52, 17);
+            this.radioButton11.TabIndex = 21;
+            this.radioButton11.TabStop = true;
+            this.radioButton11.Text = "Cloud";
+            this.radioButton11.UseVisualStyleBackColor = true;
+            this.radioButton11.CheckedChanged += new System.EventHandler(this.radioButton11_CheckedChanged);
+            // 
             // CargoTrackingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -358,6 +390,8 @@
         private System.Windows.Forms.RadioButton radioButton7;
         private System.Windows.Forms.RadioButton radioButton8;
         private System.Windows.Forms.RadioButton radioButton9;
+        private System.Windows.Forms.RadioButton radioButton10;
+        private System.Windows.Forms.RadioButton radioButton11;
     }
 }
 

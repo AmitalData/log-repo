@@ -30,6 +30,7 @@ export class AWBOverviewTabComponent {
     public IsFullWizard: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    public PackagesResourcesReady: boolean = false;
     constructor() {
 
     }

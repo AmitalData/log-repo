@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "06eb098b763746afb62ae0748193a1dc";
+		public const string HashString = "bb2e75636bc6648bea48e87212454554";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -21514,7 +21514,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
@@ -21545,6 +21545,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImportManifest",
 					  						DefaultText =  "Import Manifest",
+					  						ListFieldLable =  "ImportManifestListLable",
+					  						ListLableDefaultText =  "Import Manifest",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -40126,9 +40128,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentSubTypeId",
-					  						DefaultText =  "Shipment Sub Type",
+					  						DefaultText =  "Sub Type",
 					  						ListFieldLable =  "ShipmentSubTypeIdListLable",
-					  						ListLableDefaultText =  "Shipment Sub Type",
+					  						ListLableDefaultText =  "Sub Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -40185,9 +40187,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentSubTypeName",
-					  						DefaultText =  "Shipment Sub Type",
+					  						DefaultText =  "Sub Type",
 					  						ListFieldLable =  "ShipmentSubTypeNameListLable",
-					  						ListLableDefaultText =  "Shipment Sub Type",
+					  						ListLableDefaultText =  "Sub Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

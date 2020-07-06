@@ -2730,10 +2730,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             return shipmentChangeTracking;
         }
-
-
-
-
+        
         private void InitializeComponent()
         {
             entityPM.House = MethodHelper.Trim(entityPM.House);
@@ -2748,6 +2745,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             this.ComputeShipmentStatus();
             this.UpdateCustomerWorkingDates();
+            this.FillDefaultSubType();
 
             if (isNewEntity)
             {
@@ -3248,6 +3246,54 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
 
 
+        }
+
+        private void FillDefaultSubType()
+        {
+            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
+            {
+                string code = null;
+                if (entityPM.TransportModeId == "A")
+                {
+                    code = "Air";
+                }
+
+                else if (entityPM.TransportModeId == "I")
+                {
+                    if (entityPM.ShipmentTypeId == "FTL")
+                    {
+                        code = "FTL";
+                    }
+
+                    else
+                    {
+                        code = "LTL";
+                    }
+                }
+
+                else if (entityPM.TransportModeId == "O")
+                {
+                    if (entityPM.ShipmentTypeId == "FCLD")
+                    {
+                        code = "FCL";
+                    }
+
+                    else
+                    {
+                        code = "LCL";
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(code))
+                {
+                    ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
+                    ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubTypeByCode(code, entityPM.Tenant);
+                    if (subType != null)
+                    {
+                        entityPM.ShipmentSubTypeId = subType.Id;
+                    }
+                }
+            }
         }
 
         private void IntializeWarehouseStorageFreeDays()

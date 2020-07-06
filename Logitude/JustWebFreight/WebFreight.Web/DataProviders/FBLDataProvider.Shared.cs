@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class FBLDataProvider
+    public class FBLDataProvider:BaseDataProvider
     {
         public string ShipperAddress { get; set; }
         public string ShipperAddress_NoTel { get; set; }       
