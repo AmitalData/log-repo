@@ -51,10 +51,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityDataMappings\CargoTrackingPort2DataMapping.cs" />
-    <Compile Include="EntityDataMappings\Generated\CargoTrackingPort2DataMapping.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\CargoTrackingPort2QueryService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\CargoTrackingPort2UpdateService.Generated.cs" />
+    <Compile Include="EntityDataMappings\CargoTrackingCardDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CargoTrackingHeaderEntityTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CargoTrackingMilestoneDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CargoTrackingPortDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CargoTrackingShipmentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CargoTrackingShipmentSearchDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoTrackingCardDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoTrackingHeaderEntityTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoTrackingMilestoneDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoTrackingPortDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoTrackingShipmentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoTrackingShipmentSearchDataMapping.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoTrackingCardQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoTrackingHeaderEntityTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoTrackingMilestoneQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoTrackingPortQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoTrackingShipmentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoTrackingShipmentSearchQueryService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CargoTrackingCardUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CargoTrackingHeaderEntityTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CargoTrackingMilestoneUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CargoTrackingPortUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CargoTrackingShipmentSearchUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CargoTrackingShipmentUpdateService.Generated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
