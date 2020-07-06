@@ -3973,6 +3973,7 @@ export class ShipmentPM {
     public get GrossWeightPerTon() { return this.grossWeightPerTon; }
     public set GrossWeightPerTon(newValue: number) { if (this.grossWeightPerTon != newValue) { this.grossWeightPerTon = newValue; this.MarkAsDirty("GrossWeightPerTon"); } }
 
+
     //Abed 
     //properties withOut MarkAsDirty()
     //start
