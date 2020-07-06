@@ -810,59 +810,141 @@ namespace Logitude.XSD.INTTRA_Booking
         }
         private void BuildMessageDetails_EquipmentDetails()
         {
-            var groupedPackages = (from d in this.ShipmentOrderPackages
-                               group d by new { d.PackageTypeId } into g
-                               select new
-                               {
-                                   PackageTypeId = g.Key.PackageTypeId,
-                                   Quantity = g.Sum(s => s.Quantity),
-                               });
+            this.AllPackageTypes = (from d in CommonContext.PackageTypes
+                                    where d.Tenant == this.Tenant
+                                    select d).ToList();
 
-            if (ShipmentPackages != null && ShipmentPackages.Count() > 0)
+            if (ShipmentPackages.Count > 0)
             {
-                groupedPackages = (from d in this.ShipmentPackages
+                BuildMessageDetails_EquipmentDetails_ShipmentPackages();
+            }
+
+            else
+            {
+                BuildMessageDetails_EquipmentDetails_ShipmentOrderPackages();
+            }
+        }
+
+        private void BuildMessageDetails_EquipmentDetails_ShipmentPackages()
+        {
+            foreach (var item in ShipmentPackages)
+            {
+                PackageType packageType = this.AllPackageTypes.Where(a => a.Id == item.PackageTypeId).FirstOrDefault();
+
+                string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(packageType.Code, "G-INTTRA", "PackageType");
+                if (string.IsNullOrEmpty(myTranslatedCode))
+                {
+                    this.Errors.Add("Partner code is required for all Package Types");
+                }
+
+                else
+                {
+                    INTTRA_Booking.EquipmentDetailsType itemDetails = new INTTRA_Booking.EquipmentDetailsType()
+                    {
+                        EquipmentType = new EquipmentTypeType()
+                        {
+                            EquipmentTypeCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(packageType.Code, "G-INTTRA", "PackageType"),
+                        },
+
+                        NumberOfEquipment = item.Quantity + "",
+                        ImportExportHaulage = new ImportExportHaulageType()
+                        {
+                            HaulageArrangements = ImportExportHaulageTypeHaulageArrangements.MerchantExportHaulageMerchantImportHaulage,
+                            CargoMovementType = ImportExportHaulageTypeCargoMovementType.FCLFCL,
+                            CargoMovementTypeSpecified = true,
+                        }
+                    };
+
+                    if (packageType.IsRefrigerated)
+                    {
+                        itemDetails.EquipmentTemperature = new INTTRA_Booking.TemperatureType()
+                        {
+                            UOM = INTTRA_Booking.TemperatureUOMValues.CEL,
+                            Value = "999",
+                        };
+
+                        if (item.TemperatureUnitCode != "CEL")
+                        {
+                            itemDetails.EquipmentTemperature.UOM = INTTRA_Booking.TemperatureUOMValues.FAH;
+                        }
+                    }
+
+                    else if (item.Temperature != null)
+                    {
+                        item.Temperature = item.Temperature.Trim();
+
+                        if (!string.IsNullOrEmpty(item.Temperature))
+                        {
+                            if (!this.iNTTRAGeneralMethods.IsDecimalFormat(item.Temperature))
+                            {
+                                string msg = TranslateTextsClass.Translate("ShipmentPackage.F.Temperature", this.Tenant) + " invalid format";
+                                this.Errors.Add(msg);
+                            }
+                        }
+
+                        else
+                        {
+                            itemDetails.EquipmentTemperature = new INTTRA_Booking.TemperatureType()
+                            {
+                                UOM = INTTRA_Booking.TemperatureUOMValues.CEL,
+                                Value = item.Temperature,
+                            };
+
+                            if (item.TemperatureUnitCode != "CEL")
+                            {
+                                itemDetails.EquipmentTemperature.UOM = INTTRA_Booking.TemperatureUOMValues.FAH;
+                            }
+                        }
+                    }
+
+                    this.EquipmentDetails.Add(itemDetails);
+                }
+            }
+
+        }
+        private void BuildMessageDetails_EquipmentDetails_ShipmentOrderPackages()
+        {
+            var groupedPackages = (from d in this.ShipmentOrderPackages
                                    group d by new { d.PackageTypeId } into g
                                    select new
                                    {
                                        PackageTypeId = g.Key.PackageTypeId,
                                        Quantity = g.Sum(s => s.Quantity),
                                    });
-            }
- 
-            List<string> ids = groupedPackages.Select(s => s.PackageTypeId).ToList();
-            this.AllPackageTypes = (from d in CommonContext.PackageTypes
-                                    where d.Tenant == this.Tenant
-                                    && ids.Contains(d.Id)
-                                    select d).ToList();
 
-            foreach (var item in this.AllPackageTypes)
+            foreach (var item in groupedPackages)
             {
-                string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(item.Code, "G-INTTRA", "PackageType");
+                PackageType packageType = this.AllPackageTypes.Where(a => a.Id == item.PackageTypeId).FirstOrDefault();
+
+                string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(packageType.Code, "G-INTTRA", "PackageType");
                 if (string.IsNullOrEmpty(myTranslatedCode))
                 {
                     this.Errors.Add("Partner code is required for all Package Types");
                 }
-            }
 
-            foreach (var item in groupedPackages)
-            {
-                INTTRA_Booking.EquipmentDetailsType itemDetails = new INTTRA_Booking.EquipmentDetailsType()
+                else
                 {
-                    EquipmentType = new EquipmentTypeType()
+                    INTTRA_Booking.EquipmentDetailsType itemDetails = new INTTRA_Booking.EquipmentDetailsType()
                     {
-                        EquipmentTypeCode = computingPartnerHelper.GetComputingPartnerCodeTranslation( this.AllPackageTypes.Where(a=>a.Id == item.PackageTypeId).Select(d=>d.Code).FirstOrDefault(), "G-INTTRA", "PackageType"),
-                    },
-                    NumberOfEquipment = item.Quantity+ "",
-                    ImportExportHaulage = new ImportExportHaulageType()
-                    {
-                        HaulageArrangements = ImportExportHaulageTypeHaulageArrangements.MerchantExportHaulageMerchantImportHaulage,
-                        CargoMovementType = ImportExportHaulageTypeCargoMovementType.FCLFCL,
-                        CargoMovementTypeSpecified = true,
-                    }
-                };
-                this.EquipmentDetails.Add(itemDetails);
+                        EquipmentType = new EquipmentTypeType()
+                        {
+                            EquipmentTypeCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(packageType.Code, "G-INTTRA", "PackageType"),
+                        },
+
+                        NumberOfEquipment = item.Quantity + "",
+                        ImportExportHaulage = new ImportExportHaulageType()
+                        {
+                            HaulageArrangements = ImportExportHaulageTypeHaulageArrangements.MerchantExportHaulageMerchantImportHaulage,
+                            CargoMovementType = ImportExportHaulageTypeCargoMovementType.FCLFCL,
+                            CargoMovementTypeSpecified = true,
+                        }
+                    };
+
+                    this.EquipmentDetails.Add(itemDetails);
+                }
             }
         }
+
         private void BuildMessageDetails_GoodsDetails()
         {
             INTTRA_Booking.GoodsDetailsType itemDetails = new INTTRA_Booking.GoodsDetailsType()
