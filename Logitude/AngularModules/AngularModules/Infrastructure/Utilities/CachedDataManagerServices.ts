@@ -109,8 +109,7 @@ import { AppTool } from '../Tools';
 import { ExceptionReasonListService } from '../../Customs/Services/StandardLists/ExceptionReasonListService';
 import { CustomerRoleTypeListService } from '../../Customs/Services/StandardLists/CustomerRoleTypeListService';
 import { AutonomyRegionTypeListService } from '../../Customs/Services/StandardLists/AutonomyRegionTypeListService';
-import { CustomerRoleTypeListService } from '../../Customs/Services/StandardLists/CustomerRoleTypeListService';
-import { CancellationRequestStatusListService } from '../../Customs/Services/StandardLists/CancellationRequestStatusListService';
+ import { CancellationRequestStatusListService } from '../../Customs/Services/StandardLists/CancellationRequestStatusListService';
 import { CancellationReasonRequestTypeListService } from '../../Customs/Services/StandardLists/CancellationReasonRequestTypeListService';
 
 
