@@ -3,6 +3,9 @@ using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.WarehouseLib.Data;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.Repositories;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -28,20 +31,44 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
             warehouseContext = WarehouseContext.GetContext(tenant);
             warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);
-            warehouseReleaseRepository = new WarehouseReleaseRepository(warehouseContext); 
+            warehouseReleaseRepository = new WarehouseReleaseRepository(warehouseContext);
             warehouseEntries = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentPM.Id, tenant);
             warehouseRelases = warehouseReleaseRepository.GetWarehouseReleasesByshipmentId(shipmentPM.Id, tenant);
         }
 
         public void Handle()
         {
-            UpdateWarehouseLegDates(); 
+            UpdateShipmentWarehouseLegData();
+            UpdateWarehouseLegDates();
             UpdateDeliveryDepartureDates();
             UpdateCrossDockReleaseStatus();
-            UpdateWareHouseEntryPartners(); 
+            UpdateWareHouseEntryPartners();
             ConnectWarehouseReleaseToShipment();
 
             SaveEntity();
+        }
+        private void UpdateShipmentWarehouseLegData() 
+        {
+            if (shipmentPM.IsUpdateWarehouseLegData)
+            {
+                ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+                CardRepository cardRepository = new CardRepository(commonContext);
+                Card entityPoco = cardRepository.GetSingleCardByIdAndTenant(shipmentPM.WarehouseLegWarehouseId, tenant,true);
+
+                if (entityPoco != null)
+                {
+                    AddressRepository addressRepository = new AddressRepository(commonContext);              
+                    Address mainAddress = addressRepository.GetSingleAddressByCardIdAndTypeId(entityPoco.Id, "M", tenant);
+                    shipmentPM.WarehouseLegAddressId = mainAddress == null ? null : mainAddress.Id;
+                    shipmentPM.WarehouseLegTerminalName = entityPoco.EnglishName;
+                    shipmentPM.WarehouseLegTerminalCode = entityPoco.Warehouse != null ? entityPoco.Warehouse.FirmCode : null;
+
+                    //TenantQuery tenantQuery = new TenantQuery(tenant);
+                    //string countryCode = tenantQuery.GetTenantCountryCodeOnly(tenant);
+                    //bool usTenant = countryCode == null ? false : countryCode.ToUpper() == "US" ? true : false;
+                    //if(usTenant) shipmentPM.WarehouseLegTerminalCode = entityPoco.Warehouse != null ? entityPoco.Warehouse.FirmCode : null;
+                }
+            }
         }
         private void UpdateWarehouseLegDates()
         {
@@ -145,9 +172,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             List<WarehouseRelease> warehouseReleasesLists = warehouseRelases.Where(r => r.StatusCode == fromStatusCode).ToList();
             foreach (WarehouseRelease item in warehouseReleasesLists)
             {
-                item.StatusCode = toStatusCode;
-                warehouseReleaseRepository.Update(item);
+                if (IsUpdateWarehouseStatus(item, fromStatusCode)) 
+                {
+                    item.StatusCode = toStatusCode;
+                    warehouseReleaseRepository.Update(item); 
+                }
             }
+        }
+        private bool IsUpdateWarehouseStatus(WarehouseRelease warehouseRelease, string fromStatusCode)
+        {
+            return (fromStatusCode == "CREA" || (fromStatusCode == "RELE" && warehouseRelease.ActualReleaseDate == null));
         }
         private void UpdateWareHouseEntryPartners()
         {
