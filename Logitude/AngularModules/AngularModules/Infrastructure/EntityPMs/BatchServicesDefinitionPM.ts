@@ -100,6 +100,11 @@ export class BatchServicesDefinitionPM {
     public set QueueDefinitionCode(newValue: string) { if (this.queueDefinitionCode != newValue) { this.queueDefinitionCode = newValue; this.MarkAsDirty("QueueDefinitionCode"); } }
        
 	 
+    private maxWorkingTimeInMinutes: number;
+    public get MaxWorkingTimeInMinutes() { return this.maxWorkingTimeInMinutes; }
+    public set MaxWorkingTimeInMinutes(newValue: number) { if (this.maxWorkingTimeInMinutes != newValue) { this.maxWorkingTimeInMinutes = newValue; this.MarkAsDirty("MaxWorkingTimeInMinutes"); } }
+       
+	 
 
     public OldEntityPM: BatchServicesDefinitionPM;
 		
