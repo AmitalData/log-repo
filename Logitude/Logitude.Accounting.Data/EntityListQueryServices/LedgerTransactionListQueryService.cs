@@ -442,6 +442,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 ;
             return query2;
         }
+        private static IQueryable<LedgerTransactionList> FilterOpenTransactionsForExternalReconcile(string AccountId, IQueryable<LedgerTransactionList> query2)
+        {
+            query2 = query2
+                .Where(rec => rec.IsExternalReconcile == false)
+                .Where(rec => rec.InProgressExternalReconcile == false)
+                .Where(rec => rec.AccountId == AccountId)
+                ;
+            return query2;
+        }
 
         private static IQueryable<LedgerTransactionList> ReconciliationFilter(string AccountId, IQueryable<LedgerTransactionList> query2
             )
@@ -701,8 +710,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             IQueryable<LedgerTransactionList> query2 = GetFilteredList(queryOperations, tenant);
 
-            const int MaxTotal = 99001;
-            query2 = OpenReconciliationFilter(AccountId, query2, MaxTotal);
+            query2 = FilterOpenTransactionsForExternalReconcile(AccountId, query2);
             
             return query2;
         }
