@@ -155,7 +155,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
             return true;
         }
     }
-
+ 
     public colorPickerValue: string;
     public secondarycolorPickerValue: string;
     CalculateOpacity(value: number, field: string) {
@@ -163,20 +163,21 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
             var color;
             if (field == "Main") {
                 color = this.colorpicker.value;
-                value = Math.round(value * 255);
-                this.MainColorOpacity = value.toString(16);
+               // value = ;
+                this.MainColorOpacity = Math.round(value * 255).toString(16);
             }
             else {
-                value = Math.round(value * 255);
-                this.SecondaryColorOpacity = value.toString(16);
+               // value = Math.round(value * 255);
+                this.SecondaryColorOpacity = Math.round(value * 255).toString(16);
                 color = this.secondarycolor.value;
             }
             var rgbaColor = 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + value + ')';
           
             if (field == "Main") {
-                this.colorPickerValue = rgbaColor;
+                      document.documentElement.style.setProperty('--sliderBackground',rgbaColor);
+
             }
-            else { this.secondarycolorPickerValue = rgbaColor; }
+            else {     document.documentElement.style.setProperty('--sliderBackground2', rgbaColor);}
         
     }
     ngOnInit() {
