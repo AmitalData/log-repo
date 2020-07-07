@@ -49,9 +49,10 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
                 {
                     shipmentPackage.InUse += ChangedQuantity;
                     if (shipmentPackage.InUse > shipmentPackage.Quantity) shipmentPackage.InUse = shipmentPackage.Quantity == null ? 0 : shipmentPackage.Quantity.Value;
+
+                    shipmentPackageRepository.Update(shipmentPackage);
+                    shipmentPackageRepository.SubmitChanges();
                 }
-                shipmentPackageRepository.Update(shipmentPackage);
-                shipmentPackageRepository.SubmitChanges();
             }
         }
 
