@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingHeaderEntityType&quot;"
-  Code="&quot;4b60&quot;"
+  Code="&quot;92fa&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -60,7 +60,7 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseTypeCode="CargoTracking"
   DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;46f16a01-3b02-4742-a10a-277a62bb6ea5&quot;"

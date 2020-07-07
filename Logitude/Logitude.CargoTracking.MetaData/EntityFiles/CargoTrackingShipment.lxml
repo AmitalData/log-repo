@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingShipment&quot;"
-  Code="&quot;66c8&quot;"
+  Code="&quot;19ba&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;CargoTracking&quot;"
@@ -58,7 +58,7 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseTypeCode="CargoTracking"
   DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;869e56ce-85b4-476a-8710-0ca7f8e9abdd&quot;"

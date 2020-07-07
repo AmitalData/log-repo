@@ -75,7 +75,7 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
 
             }
 
-            if (TableName == "CargoTrackingShipmentSearchFields")
+            if (TableName == "CargoTrackingShipmentSearches")
             {
                 TableRow.SetField("ShipmentDate", TableRow["CreateDateTime"]);
                 string Id = (string)TableRow["Id"];

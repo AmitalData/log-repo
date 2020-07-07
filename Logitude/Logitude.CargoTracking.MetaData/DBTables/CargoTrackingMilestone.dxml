@@ -2,7 +2,7 @@
 <Table
   Name="CargoTrackingMilestones"
   Schema="dbo"
-  DBType="Main"
+  DBType="CargoTracking"
   Module="CargoTracking">
   <Column
     Name="Code"

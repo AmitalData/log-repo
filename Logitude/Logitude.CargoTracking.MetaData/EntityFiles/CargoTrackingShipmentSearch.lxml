@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingShipmentSearch&quot;"
-  Code="&quot;cedf&quot;"
+  Code="&quot;2728&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;CargoTracking&quot;"
@@ -58,7 +58,7 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseTypeCode="CargoTracking"
   DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;71453b37-a9ba-4bec-a29d-b451349b1783&quot;"
@@ -87,6 +87,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Id&quot;"
     ListPropertyPath="&quot;Id&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -158,6 +159,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -229,6 +231,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SearchFields&quot;"
     ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -300,6 +303,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ShipmentId&quot;"
     ListPropertyPath="&quot;ShipmentId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -368,6 +372,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ShipmentDate&quot;"
     ListPropertyPath="&quot;ShipmentDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -409,6 +414,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;CargoTrackingShipmentSearchHeaderScreen&quot;"
+    ObjectTableName="&quot;CargoTrackingShipmentSearch&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -437,6 +451,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

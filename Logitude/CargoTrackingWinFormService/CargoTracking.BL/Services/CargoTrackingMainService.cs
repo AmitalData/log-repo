@@ -59,7 +59,7 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                 ConditionKey= "ShipmentId",
                 CT_FieldsDBName = "Id,Tenant,ShipmentId,SearchFields,ShipmentDate",
                 DBTableName = "Shipments",
-                CT_TableName = "CargoTrackingShipmentSearchFields"
+                CT_TableName = "CargoTrackingShipmentSearches"
             });
 
             return CargoTableLists;

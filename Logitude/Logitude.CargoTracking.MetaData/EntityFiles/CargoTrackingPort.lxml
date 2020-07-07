@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingPort&quot;"
-  Code="&quot;3016&quot;"
+  Code="&quot;407f&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;CargoTracking&quot;"
@@ -58,7 +58,7 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseTypeCode="CargoTracking"
   DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;dd77bc7d-9c17-46c0-91ef-2bb42a9b595a&quot;"
@@ -87,6 +87,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Id&quot;"
     ListPropertyPath="&quot;Id&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -158,6 +159,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Code&quot;"
     ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -226,6 +228,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EnglishName&quot;"
     ListPropertyPath="&quot;EnglishName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -294,6 +297,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CountryId&quot;"
     ListPropertyPath="&quot;CountryId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -335,6 +339,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;CargoTrackingPortHeaderScreen&quot;"
+    ObjectTableName="&quot;CargoTrackingPort&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -363,6 +376,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

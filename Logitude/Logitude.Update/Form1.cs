@@ -4475,7 +4475,13 @@ User/Pass",
         private void CargoTrackingTestBtn_Click(object sender, EventArgs e)
         {
             ICargoTrackingContext cargoTrackingContext = CargoTrackingContext.GetContext(1);
-            CargoTrackingPort2 cargoTrackingPort2 = cargoTrackingContext.CargoTrackingPort2s.FirstOrDefault();
+         }
+
+        private void button50_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "CargoTracking", UpdateCargoTrackingLabel));
+            thread.IsBackground = true;
+            thread.Start();
         }
     }
 

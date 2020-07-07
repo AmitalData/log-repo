@@ -34,6 +34,7 @@
 
 this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 	
+	GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles","../../Logitude.CargoTracking.BL/CloseTables");
 GenerateIContext("../EntityFiles","../../Logitude.CargoTracking.Data/","CargoTrackingContext");
 GenerateContext("../EntityFiles","../../Logitude.CargoTracking.Data/","CargoTrackingContext");
 
@@ -54,7 +55,8 @@ GenerateAllListQueryServices("../EntityFiles","../../Logitude.CargoTracking.Data
 
 GenerateAllUpdateClasses("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","CargoTrackingModel");
 GenerateMetaDataUpdateClass("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","CargoTrackingUpdateClass");
-GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles","../../Logitude.CargoTracking.BL/CloseTables");
+
+
 GenerateAllDomainServices("../EntityFiles","../../JustWebFreight/WebFreight.Web/CargoTrackingModel","CargoTrackingContext","Logitude.CargoTracking","CargoTrackingDomainService");
 	 
 

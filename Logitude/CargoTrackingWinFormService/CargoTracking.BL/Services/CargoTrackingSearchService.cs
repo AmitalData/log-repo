@@ -14,7 +14,7 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
 
         public static void SearchService(DataRow TableRow, DataTable dataTable, string TableName)
         {
-            if (TableName == "CargoTrackingShipmentSearchFields")
+            if (TableName == "CargoTrackingShipmentSearches")
             {
                 string SearchField = null;
                 for (int i = 0; i < 2; i++)
