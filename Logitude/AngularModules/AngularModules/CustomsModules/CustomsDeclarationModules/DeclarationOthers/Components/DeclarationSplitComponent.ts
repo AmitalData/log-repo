@@ -120,18 +120,18 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
             });
 
 
-            this.DeclarationSplitDocumentItemSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentItemSelection.subscribe((data: any) => {
-                 this.invoiceItem = data;
-                if (AppTool.IsNullOrEmpty(this.RelatedDocuments)) {
-                    //ClassifcationComponent Build B4 This Component finish Load Document !!!
-                    this._DocumentFilingIdToSetWhileLoadDocument = this.invoiceItem.ClasifiedRemarks;
-                    return;
-                }
-                var document = this.RelatedDocuments.find(d => d.Id == this.invoiceItem.ClasifiedRemarks);
-                this.TicketItemClicked(document);
+            //this.DeclarationSplitDocumentItemSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentItemSelection.subscribe((data: any) => {
+            //     this.invoiceItem = data;
+            //    if (AppTool.IsNullOrEmpty(this.RelatedDocuments)) {
+            //        //ClassifcationComponent Build B4 This Component finish Load Document !!!
+            //        this._DocumentFilingIdToSetWhileLoadDocument = this.invoiceItem.ClasifiedRemarks;
+            //        return;
+            //    }
+            //    var document = this.RelatedDocuments.find(d => d.Id == this.invoiceItem.ClasifiedRemarks);
+            //    this.TicketItemClicked(document);
 
 
-            });
+            //});
         }
     }
 
