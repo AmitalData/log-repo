@@ -440,39 +440,43 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                         }
 
-                        //SupplierInvoicePaymentQueryService supplierInvoicePaymentQueryService = new SupplierInvoicePaymentQueryService(MyContext);
+                        SupplierInvoicePaymentQueryService supplierInvoicePaymentQueryService = new SupplierInvoicePaymentQueryService(MyContext);
 
-                        //List<SupplierInvoiceModificationPM> supplierInvoiceModificationsChangeset = supplierInvoicePaymentQueryService.get(entityPM.DeclarationId, entityPM.InvoiceCounterKey);//ChangeSet.GetAssociatedChanges(entityPM, d => d.SupplierInvoiceModifications).Cast<SupplierInvoiceModificationPM>().ToList();
-                        //foreach (SupplierInvoiceModificationPM item in supplierInvoiceModificationsChangeset)
-                        //{
-                        //    SupplierInvoiceModificationPM deletedItem = new SupplierInvoiceModificationPM()
-                        //    {
-                        //        InvoiceCounterKey = item.InvoiceCounterKey,
-                        //        DeclarationId = item.DeclarationId,
-                        //        ChangeSetOp = ChangeSetOperation.Delete,
-                        //        ModificationCounterKey = item.ModificationCounterKey,
-                        //        Tenant = item.Tenant,
-                        //    };
-                        //    entityPM.SupplierInvoiceModifications.Add(deletedItem);
+                        List<SupplierInvoicePaymentPM> supplierInvoicePaymentsChangeset = supplierInvoicePaymentQueryService.GetSupplierInvoicePaymentsForInvoice(entityPM.DeclarationId, entityPM.InvoiceCounterKey);//ChangeSet.GetAssociatedChanges(entityPM, d => d.SupplierInvoiceModifications).Cast<SupplierInvoiceModificationPM>().ToList();
+                        foreach (SupplierInvoicePaymentPM item in supplierInvoicePaymentsChangeset)
+                        {
+                            SupplierInvoicePaymentPM deletedItem = new SupplierInvoicePaymentPM()
+                            {
+                                InvoiceCounterKey = item.InvoiceCounterKey,
+                                DeclarationId = item.DeclarationId,
+                                ChangeSetOp = ChangeSetOperation.Delete,
+                                PaymentAmount = item.PaymentAmount,
+                                PaymentTypeCode = item.PaymentTypeCode,
+                                SequenceNumeric = item.SequenceNumeric,
+                                 Tenant = item.Tenant,
+                            };
+                            entityPM.DeletedSupplierInvoicePayments.Add(deletedItem);
 
-                        //}
+                        }
 
-                        //SupplierInvoiceUCRQueryService supplierInvoiceUCRQueryService = new SupplierInvoiceUCRQueryService(MyContext);
+                        SupplierInvoiceUCRQueryService supplierInvoiceUCRQueryService = new SupplierInvoiceUCRQueryService(MyContext);
 
-                        //List<SupplierInvoiceModificationPM> supplierInvoiceModificationsChangeset = supplierInvoiceUCRQueryService.get(entityPM.DeclarationId, entityPM.InvoiceCounterKey);//ChangeSet.GetAssociatedChanges(entityPM, d => d.SupplierInvoiceModifications).Cast<SupplierInvoiceModificationPM>().ToList();
-                        //foreach (SupplierInvoiceModificationPM item in supplierInvoiceModificationsChangeset)
-                        //{
-                        //    SupplierInvoiceModificationPM deletedItem = new SupplierInvoiceModificationPM()
-                        //    {
-                        //        InvoiceCounterKey = item.InvoiceCounterKey,
-                        //        DeclarationId = item.DeclarationId,
-                        //        ChangeSetOp = ChangeSetOperation.Delete,
-                        //        ModificationCounterKey = item.ModificationCounterKey,
-                        //        Tenant = item.Tenant,
-                        //    };
-                        //    entityPM.SupplierInvoiceModifications.Add(deletedItem);
+                        List<SupplierInvoiceUCRPM> supplierInvoiceUCRsChangeset = supplierInvoiceUCRQueryService.GetSupplierInvoiceUCRsForInvoice(entityPM.DeclarationId, entityPM.InvoiceCounterKey);//ChangeSet.GetAssociatedChanges(entityPM, d => d.SupplierInvoiceModifications).Cast<SupplierInvoiceModificationPM>().ToList();
+                        foreach (SupplierInvoiceUCRPM item in supplierInvoiceUCRsChangeset)
+                        {
+                            SupplierInvoiceUCRPM deletedItem = new SupplierInvoiceUCRPM()
+                            {
+                                InvoiceCounterKey = item.InvoiceCounterKey,
+                                DeclarationId = item.DeclarationId,
+                                ChangeSetOp = ChangeSetOperation.Delete,
+                                 Tenant = item.Tenant,
+                                 AgentChargeID= item.AgentChargeID,
+                                 SequenceNumeric= item.SequenceNumeric,
+                                 SupplierChargeID = item.SupplierChargeID
+                            };
+                            entityPM.DeletedSupplierInvoiceUCRs.Add(deletedItem);
 
-                        //}
+                        }
 
 
                         #endregion
