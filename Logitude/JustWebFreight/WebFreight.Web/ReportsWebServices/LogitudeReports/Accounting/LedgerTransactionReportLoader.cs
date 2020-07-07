@@ -285,6 +285,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 JournalNumber = transaction.JournalNumber,
                 TenantCurrencySign = GetTenantPM().CurrencySign,
 
+                OppositeAccountDisplayNumber = transaction.OppositeAccountDisplayNumber,
+                OppositeAccountEnglishName = transaction.OppositeAccountEnglishName,
+                OppositeAccountLocalName = transaction.OppositeAccountLocalName,
+
+
                 CumulativeForeignAmount = transaction.CumulativeForeignAmount,
                 CumulativeLocalAmount = transaction.CumulativeLocalAmount,
 

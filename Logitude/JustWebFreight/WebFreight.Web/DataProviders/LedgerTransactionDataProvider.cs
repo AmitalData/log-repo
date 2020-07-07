@@ -77,7 +77,9 @@ namespace WebFreight.Web.DataProviders
         public string ReconcileRemarks { get; set; }
         public decimal CumulativeLocalAmount { get; set; }
         public decimal CumulativeForeignAmount { get; set; }
-
+        public string OppositeAccountDisplayNumber { get; set; }
+        public string OppositeAccountLocalName { get; set; }
+        public string OppositeAccountEnglishName { get; set; }
 
         // foreign fields
         public string GLAccountRecoMethodCode { get; set; }
