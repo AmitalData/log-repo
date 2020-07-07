@@ -176,6 +176,7 @@
     <Compile Include="EntityQueryServicesExt\IJournalQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IPaymentChequeQueryServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IARPaymentChequeUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServicesExt\IInterestReportsConnectedInvoiceUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IInterestReportUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IBankCodeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\ICashBookLineUpdateServiceExt.cs" />

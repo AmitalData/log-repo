@@ -19,7 +19,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(InterestLastBatchServicePM entityPM, InterestLastBatchService entityPOCO)
         {
-            //throw new NotImplementedException();
+            AddPOCOPropertyName(POCOPropertyNames.Id);
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.Id = entityPM.Id;
+            }
         }
 
         public void CustomPOCOToPM(InterestLastBatchServicePM entityPM, InterestLastBatchService entityPOCO)
