@@ -49,9 +49,12 @@
   <router-outlet></router-outlet>
 
   <footer>
-      {{ currentDate | date:'y'}} {{companyLabel}} &copy; {{companyName}} &nbsp;
-      <img src="./assets/images/misc/poweredby.svg" alt="powered by">
-      <!-- <span style="color: black;">Powered By Aboood</span>   -->
+      {{ currentDate | date:'y'}} {{companyLabel}} &copy; &nbsp;
+      <span style="color: black;">Powered By</span>  &nbsp;
+      <img width="16" src="./assets/images/misc/poweredby.png" alt="powered by">
+      <span style="color: black;">{{companyName}}</span>  &nbsp;
+
+
   </footer>
 
 </div>

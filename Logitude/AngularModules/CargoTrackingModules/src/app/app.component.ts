@@ -13,7 +13,7 @@ export class AppComponent
     showBackButton: boolean = false;
     currentDate: Date = new Date();
     companyLabel: string = "DSV";
-    companyName: string = "Abdullah R. Dawoud";
+    companyName: string = "Unifreight Cloud Services";
 
     constructor(private _location: Location, private activerouter: ActivatedRoute, private router: Router)
     {
