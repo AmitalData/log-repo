@@ -22,10 +22,11 @@ namespace Logitude.Infrastructure.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public List<BIReportFolderList> GetFoldersByPermittedUser(string loggedUserId, List<string> permittedFolders, int tenant)
+        public List<BIReportFolderList> GetFoldersByPermittedUser(FoldersPermissionParams foldersPermissionParams)
         {
             List<BIReportFolderList> query = (from a in context.BIReportFolders
-                                                    where a.Tenant == tenant && (a.CreatedByUserId == loggedUserId || a.PermissionForAll || permittedFolders.Contains(a.Id))
+                                                    where a.Tenant == foldersPermissionParams.Tenant && 
+                                                    (a.CreatedByUserId == foldersPermissionParams.LoggedUserId || a.PermissionForAll || foldersPermissionParams.PermittedFolders.Contains(a.Id))
                                                     select new BIReportFolderList()
                                                     {
                                                         Id = a.Id,
@@ -44,6 +45,24 @@ namespace Logitude.Infrastructure.Data.Repsitories
             return query;
         }
 
+        public bool CheckIfUserHasFolderPermission(FoldersPermissionParams foldersPermissionParams)
+        {
+            string result = (from a in context.BIReportFolders
+                                              where a.Tenant == foldersPermissionParams.Tenant && a.Id == foldersPermissionParams.FolderId && 
+                                              (a.CreatedByUserId == foldersPermissionParams.LoggedUserId || a.PermissionForAll || foldersPermissionParams.PermittedFolders.Contains(a.Id))
+                                              select a.Id).FirstOrDefault();
+            bool isPermitted = result == null ? false : true;
+            
+            return isPermitted;
+        }
+    }
+
+    public class FoldersPermissionParams
+    {
+        public string LoggedUserId { get; set; }
+        public List<string> PermittedFolders { get; set; }
+        public int Tenant { get; set; }
+        public string FolderId { get; set; }
     }
 
 }
