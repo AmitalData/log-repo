@@ -1,3 +1,5 @@
+
+
 .nav-block {
     /* background-color: red; */
     height: 50px;
@@ -199,7 +201,8 @@ li a {
 }
 
 .search-button {
-    background: #002664;
+    background: var(--MianColor);
+   /* #002664;-->*/
     display: inline-block;
     color: white;
     height: 37px;

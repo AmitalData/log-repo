@@ -4,6 +4,7 @@ import { fromEvent } from 'rxjs';
 import { filter, debounceTime, distinctUntilChanged, tap, map } from 'rxjs/operators';
 import { FormBuilder } from '@angular/forms';
 import { db } from '../../../app/mem.data';
+import { CargoTrackingBrandingData } from '../../DataContracts/CargoTrackingBrandingData';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class SearchComponent implements AfterViewInit
     currentDate = new Date();
     FilteredItems: any[] = [];
     searchForm;
-
+    
 
     constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder)
     {
@@ -51,7 +52,7 @@ export class SearchComponent implements AfterViewInit
 
     ngAfterViewInit()
     {
-
+        document.documentElement.style.setProperty('--MianColor', CargoTrackingBrandingData.MainColor);
     }
 
     SubscribeInputTextChanges()

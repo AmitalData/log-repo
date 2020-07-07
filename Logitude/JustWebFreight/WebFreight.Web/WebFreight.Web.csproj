@@ -938,6 +938,8 @@
     <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BIReportFolderExtendedController.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
+    <Compile Include="Controllers\WebServices\CargoTrackingController.cs" />
+    <Compile Include="DataContracts\CargoTrackingBrandingData.cs" />
     <Compile Include="DataContracts\InterestReportArgs.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentSubTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentSubTypeController.Generated.cs" />
