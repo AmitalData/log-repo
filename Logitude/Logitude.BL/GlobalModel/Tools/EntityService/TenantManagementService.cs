@@ -94,13 +94,21 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             this.ClearAllUsersCache();
             this.BrandingEvent();
             this.CheckParentTenants();
-
+            this.UpdateCargoTrackingColors();
             TenantManagementTracing.Trace(entityPM, entityPoco, isNewEntity);
             TenantManagementMapping.MapEntity(entityPM, entityPoco, isNewEntity);
             entityRepository.Update(entityPoco);
             entityRepository.SubmitChanges();
         }
+        private void  UpdateCargoTrackingColors()
+        {
+            int index =  (entityPM.MainColor!= null && entityPM.MainColor.Length > 7) ? 3 : 1;
+            this.entityPM.MainColor= (this.entityPM.MainColor!= null && entityPM.MainColorOpacity != null) ? "#" +entityPM.MainColorOpacity + entityPM.MainColor.ToString().Substring(index, 6): entityPM.MainColor;
+            index =( entityPM.SecondaryColor!= null && entityPM.SecondaryColor.Length > 7) ? 3 : 1;
+            this.entityPM.SecondaryColor = (entityPM.SecondaryColor!= null && entityPM.SecondaryColorOpacity != null ) ? "#" + entityPM.SecondaryColorOpacity + entityPM.SecondaryColor.ToString().Substring(index, 6) : entityPM.SecondaryColor;
 
+
+        }
         private void BrandingEvent()
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())

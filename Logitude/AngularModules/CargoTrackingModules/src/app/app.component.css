@@ -149,6 +149,23 @@ li {
   transition: 2.5s all ease-in-out;
 }
 
+footer{
+    text-align: right;
+    max-width: 1400px;
+    margin: 20px auto;
+    width: calc(100% - 40px);
+    padding: 0 20px;
+    margin-bottom: 7px;
+    color: #888888;
+    font-size: 13px;
+    position: relative;
+    bottom: 0;
+}
+    footer img{
+        top: 3px;
+        position: relative;
+    }
+
 @media screen and (max-width: 479px) {
   .side-menu {
       display: block;

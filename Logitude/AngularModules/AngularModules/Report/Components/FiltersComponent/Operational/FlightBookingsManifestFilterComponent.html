@@ -108,6 +108,16 @@
                                     </LogLov>
                                 </td>
 
+                                <td style="width: 1px; padding-right: 5px;">Consignee:</td>
+                                <td style="width: 180px;">
+                                    <LogLov [ObjectFieldName]="'ConsigneeId'"
+                                            [NoObjectField]="true"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'"
+                                            [DependencyFilter1Value]="'CS'">
+                                    </LogLov>
+                                </td>
+
                                 <td>
                                     <div></div>
                                 </td>

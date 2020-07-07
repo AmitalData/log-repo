@@ -11,6 +11,9 @@ export class AppComponent
 {
     displayMenu: boolean = false;
     showBackButton: boolean = false;
+    currentDate: Date = new Date();
+    companyLabel: string = "DSV";
+    companyName: string = "Unifreight Cloud Services";
 
     constructor(private _location: Location, private activerouter: ActivatedRoute, private router: Router)
     {
