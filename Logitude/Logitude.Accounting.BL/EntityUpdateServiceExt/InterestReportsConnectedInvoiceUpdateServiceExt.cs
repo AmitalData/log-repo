@@ -29,8 +29,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServiceExt
             InterestReportsConnectInvoicePM.Tenant = Tenant;
             InterestReportsConnectInvoicePM.InvoiceId = ARInvoiceId;
             InterestReportsConnectInvoicePM.ReportId = ReportId;
+            InterestReportsConnectInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
             InterestReportsConnectInvoiceUpdateService interestLastBatchServiceUpdateService = new InterestReportsConnectInvoiceUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            interestLastBatchServiceUpdateService.Update(InterestReportsConnectInvoicePM,false);
+            interestLastBatchServiceUpdateService.Update(InterestReportsConnectInvoicePM,true);
         }
 
 

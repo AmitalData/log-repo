@@ -373,7 +373,12 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
            
         }
         else {
-
+          if(mm.ErrorsArray){
+            var msg = new MessageWindow();
+            msg.RTL = this.isRTL;
+            msg.Width = 400;
+            msg.Show(mm.ErrorsArray[0]);
+        }
         }
 
       });
@@ -398,7 +403,12 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
          }
         }
         else {
-          
+          if(mm.ErrorsArray){
+            var msg = new MessageWindow();
+            msg.RTL = this.isRTL;
+            msg.Width = 400;
+            msg.Show(mm.ErrorsArray[0]);
+        }
         }
 
       });
@@ -407,26 +417,31 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
 
   }
  
-  GetInterestLastBatchServiceByTenant(){
-    this.CurrentSession.StartBusyIndicatorLoading();
-    this.interestReportExtendedListService.GetInterestLastBatchServiceByTenant().subscribe((response: ServiceResponse) => {
-      this.CurrentSession.StopBusyIndicator();
-        var mm: ServiceResponse = response;
-        if (!mm.HasError) {
-         var InterestLastBatchService:InterestLastBatchServicePM  = mm.Result;
-         if(!InterestLastBatchService || (InterestLastBatchService  && !InterestLastBatchService.CreateInvoicesBatchId)){
-           this.CheckNumberOfInterestReportInvoicingWithoutInvoice();
-         }
-         else if(InterestLastBatchService && InterestLastBatchService.CreateInvoicesBatchId){
-          this.CheckBatchTaskExcecutingAndCreateInvoices(InterestLastBatchService.CreateInvoicesBatchId);
-         }
-        }
-        else {
+  // GetInterestLastBatchServiceByTenant(){
+  //   this.CurrentSession.StartBusyIndicatorLoading();
+  //   this.interestReportExtendedListService.GetInterestLastBatchServiceByTenant().subscribe((response: ServiceResponse) => {
+  //     this.CurrentSession.StopBusyIndicator();
+  //       var mm: ServiceResponse = response;
+  //       if (!mm.HasError) {
+  //       //  var InterestLastBatchService:InterestLastBatchServicePM  = mm.Result;
+  //       //  if(!InterestLastBatchService || (InterestLastBatchService  && !InterestLastBatchService.CreateInvoicesBatchId)){
+  //          this.CheckNumberOfInterestReportInvoicingWithoutInvoice();
+  //       //  }
+  //       //  else if(InterestLastBatchService && InterestLastBatchService.CreateInvoicesBatchId){
+  //       //   this.CheckBatchTaskExcecutingAndCreateInvoices(InterestLastBatchService.CreateInvoicesBatchId);
+  //       //  }
+  //       }
+  //       else {
+  //         if(mm.ErrorsArray){
+  //           var msg = new MessageWindow();
+  //           msg.RTL = this.isRTL;
+  //           msg.Width = 400;
+  //           msg.Show(mm.ErrorsArray[0]);
+  //       }
+  //       }
 
-        }
-
-      });
-  }
+  //     });
+  // }
 
 
 
@@ -515,9 +530,11 @@ CheckBatchTaskExcecutingAndCreateInvoices( BatchId:string) {
             this.CreateInvoiceButtonClicked();
           }
           else{
-            var confirmWindow = new ConfirmWindow();
-                confirmWindow.Width = 390;
-                confirmWindow.Show(TextCodeTranslator.Translate("InterestReport.O.AnotherBatchInvoiceStillInProgress"));
+            var msg = new MessageWindow();
+            msg.RTL = this.isRTL;
+            msg.Width = 400;
+            msg.Show(TextCodeTranslator.Translate("InterestReport.O.AnotherBatchInvoiceStillInProgress"));
+
           }
  
       }

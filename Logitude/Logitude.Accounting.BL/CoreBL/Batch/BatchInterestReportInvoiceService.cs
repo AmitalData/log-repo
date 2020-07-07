@@ -40,8 +40,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 {
     public class BatchInterestReportInvoiceService : BatchTaskExecutionsService
     {
-        private InterestReportPM interestReport;
-        private InterestReportQueryService interestReportQueryService;
+       private InterestReportQueryService interestReportQueryService;
         private UserPM userPM;
         private BatchTaskExecutionPM BatchTaskExecution;
         public BatchInterestReportInvoiceService(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
@@ -55,8 +54,10 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             try
             {
                 InterestReportArguments interestReportArgs = GetInterestReportArgs();
-                InterestReportQueryService interestReportQueryService = new InterestReportQueryService(interestReportArgs.Tenant);
-                CheckAndUpdateInterestLastBatchByTenant(interestReportArgs);
+                interestReportQueryService = new InterestReportQueryService(interestReportArgs.Tenant);
+                UserQuery userQuery = new UserQuery(interestReportArgs.Tenant);
+                userPM = userQuery.GetSinglePMByEmail(interestReportArgs.Email, interestReportArgs.Tenant);
+                //CheckAndUpdateInterestLastBatchByTenant(interestReportArgs);
                 CreateBatchesInvoice(interestReportArgs);
             }
             catch (Exception e)
@@ -111,10 +112,10 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     args.ReportNumber = report.ReportNumber;
                     args.InterestReportId = report.Id;
                     args.Tenant = interestReportArguments.Tenant;
-                    if (interestReport.InterestReportStatusCode=="1" || interestReport.InterestReportStatusCode =="9")
+                    if (report.InterestReportStatusCode=="1" || report.InterestReportStatusCode =="9")
                     {
-                        UpdateInterestReportsStatues(interestReport, interestReportArguments.Tenant, "8");
-                        UpdateAndCreateInvoiceForInterestReport(args);
+                        UpdateInterestReportsStatues(report, interestReportArguments.Tenant, "8");
+                        UpdateAndCreateInvoiceForInterestReport(args, report);
                     }
                    
                 }
@@ -130,7 +131,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     if (interestReport.InterestReportStatusCode == "1" || interestReport.InterestReportStatusCode == "9")
                     {
                         UpdateInterestReportsStatues(interestReport, interestReportArguments.Tenant, "8");
-                        UpdateAndCreateInvoiceForInterestReport(args);
+                        UpdateAndCreateInvoiceForInterestReport(args, interestReport);
                     }
               
 
@@ -138,14 +139,12 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
            
         }
-        private void UpdateAndCreateInvoiceForInterestReport(InterestReportArgs interestReportArgs)
+        private void UpdateAndCreateInvoiceForInterestReport(InterestReportArgs interestReportArgs, InterestReportPM interestReport)
         {
             try
             {
-                UserQuery userQuery = new UserQuery(interestReportArgs.Tenant);
                 interestReport = interestReportQueryService.GetSingle(interestReportArgs.InterestReportId, false, true);
-                userPM = userQuery.GetSinglePMByEmail(interestReportArgs.Email, interestReportArgs.Tenant);
-                CreateInvoiceForInterestReport(interestReportArgs);
+                CreateInvoiceForInterestReport(interestReportArgs, interestReport);
             }
 
             catch (Exception e)
@@ -164,7 +163,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             InterestReportArguments interestReportArgs = serializer.Deserialize(stringReader) as InterestReportArguments;
             return interestReportArgs;
         }
-        private void CreateInvoiceForInterestReport(InterestReportArgs interestReportArgs)
+        private void CreateInvoiceForInterestReport(InterestReportArgs interestReportArgs, InterestReportPM interestReport)
         {
             if (interestReport.TotalAmount == null || interestReport.TotalAmount <= interestReport.GLAccountMinimumInterest)
             {

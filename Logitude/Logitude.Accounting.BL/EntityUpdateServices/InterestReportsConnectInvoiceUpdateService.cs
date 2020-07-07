@@ -16,19 +16,19 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
-   public partial class InterestLastBatchServiceUpdateService
+   public partial class InterestReportsConnectInvoiceUpdateService
     {
 
-        protected override void OnCreating(InterestLastBatchServicePM entityPM, EntityPM entityParentPM)
+        protected override void OnCreating(InterestReportsConnectInvoicePM entityPM, EntityPM entityParentPM)
         {
 
-            entityPM.Id = IdCounter.GetNumber("InterestLastBatchService", entityPM.Tenant);
+            entityPM.Id = IdCounter.GetNumber("InterestReportsConnectInvoice", entityPM.Tenant);
 
         }
 
 
 
-        protected override void Trace(InterestLastBatchServicePM entityPM, InterestLastBatchService entityPOCO, string changesXml)
+        protected override void Trace(InterestReportsConnectInvoicePM entityPM, InterestReportsConnectInvoice entityPOCO, string changesXml)
         {
             
  

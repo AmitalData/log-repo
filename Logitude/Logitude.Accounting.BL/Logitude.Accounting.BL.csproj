@@ -667,6 +667,7 @@
     <Compile Include="EntityUpdateServices\Generated\WithholdingTaxDeductionTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountWithholdingTaxUpdateService.cs" />
     <Compile Include="EntityUpdateServices\IJournalUpdateServiceProvider.cs" />
+    <Compile Include="EntityUpdateServices\InterestReportsConnectInvoiceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\InterestReportLinesByDateUpdateService.cs" />
     <Compile Include="EntityUpdateServices\InterestReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\InterestBasesTypeUpdateService.cs" />

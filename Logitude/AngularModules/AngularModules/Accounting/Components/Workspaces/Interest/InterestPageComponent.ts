@@ -13,6 +13,7 @@ import { InterestReportExtendedListService } from 'Accounting/Services/ExtendedL
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExecutionList';
 import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 declare var window: any;
 @Component({
@@ -83,16 +84,22 @@ export class InterestPageComponent implements AfterViewInit {
               this.CurrentSession.StopBusyIndicator();
                 var mm: ServiceResponse = response;
                 if (!mm.HasError) {
-                 var InterestLastBatchService:InterestLastBatchServicePM  = mm.Result;
-                 if(!InterestLastBatchService || (InterestLastBatchService  && !InterestLastBatchService.CreateInvoicesBatchId)){
+                //  var InterestLastBatchService:InterestLastBatchServicePM  = mm.Result;
+                //  if(!InterestLastBatchService || (InterestLastBatchService  && !InterestLastBatchService.CreateInvoicesBatchId)){
                    this.OpenBatchInvoice();
-                 }
-                 else if(InterestLastBatchService && InterestLastBatchService.CreateInvoicesBatchId){
-                  this.CheckBatchTaskExcecutingAndRunBatchInvoicesWizard(InterestLastBatchService.CreateInvoicesBatchId);
-                 }
+                //  }
+                //  else if(InterestLastBatchService && InterestLastBatchService.CreateInvoicesBatchId){
+                //   this.CheckBatchTaskExcecutingAndRunBatchInvoicesWizard(InterestLastBatchService.CreateInvoicesBatchId);
+                //  }
                 }
                 else {
-        
+                    if(mm.ErrorsArray){
+                        var msg = new MessageWindow();
+                        msg.RTL = this.isRTL;
+                        msg.Width = 400;
+                        msg.Show(mm.ErrorsArray[0]);
+                    }
+                 
                 }
         
               });
@@ -125,9 +132,11 @@ CheckBatchTaskExcecutingAndRunBatchInvoicesWizard( BatchId:string) {
                     this.OpenBatchInvoice();
                 }
                 else{
-                  var confirmWindow = new ConfirmWindow();
-                      confirmWindow.Width = 390;
-                      confirmWindow.Show(TextCodeTranslator.Translate("InterestReport.O.AnotherBatchInvoiceStillInProgress"));
+                var msg = new MessageWindow();
+                msg.RTL = this.isRTL;
+                msg.Width = 400;
+                msg.Show(TextCodeTranslator.Translate("InterestReport.O.AnotherBatchInvoiceStillInProgress"));
+ 
                 }
        
             }
