@@ -405,7 +405,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         
         if (this.warehouseEntryPM) {
 
-            if (this.warehouseEntryPM.DirectionId == "I") {
+            if (this.warehouseEntryPM.DirectionId == "I" && !AppTool.IsNullOrEmpty(this.warehouseEntryPM.ConnectedTo)) {
                 this.DisableAddPackageButton = true;
             }
             if (this.warehouseEntryPM.Ratio == null) {
