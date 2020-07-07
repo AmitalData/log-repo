@@ -259,7 +259,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 };
 
                                                 AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel2);
-
+                                            
 
                                                 break;
 
@@ -460,17 +460,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-                        this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                        this.MyResponseData.Succeeded = true;
-                        this.MyResponseData.HasException = false;
-                        this.MyResponseData.UserMessage = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
-
-                        this.MyRequestSheetParam = new RequestSheetParam();
-                        this.MyRequestSheetParam.CustomFileNo = this._MyDeclarationPM.CustomFileNo;
-                        this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                        this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
-                        this.MyRequestSheetParam.RequestDescription = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
-
                         bool sendDeclarationPrintSync = false;
                         if (sendDeclarationPrintSync)
                         {
@@ -504,6 +493,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var DF_MSG10040_CollateralRequestMsgResponseService = new DF_8211_CollateralRequestMsgResponseService();
                             DF_MSG10040_CollateralRequestMsgResponseService.Update(ser, requestParams);
                         }
+
+                    }
+
+                    else
+                    {
+
+                        this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                        myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
                     }
                     if (customResponse.Response.Declaration != null)
@@ -575,7 +572,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
 
-                requestParams.AppicationId = myDeclarationQueryService.GetIdByDeclarationNumber(_MyDeclarationPM.Id, requestParams.Tenant);
+                this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.HasException = false;
+                this.MyResponseData.UserMessage = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
+
+                this.MyRequestSheetParam = new RequestSheetParam();
+                this.MyRequestSheetParam.CustomFileNo = this._MyDeclarationPM.CustomFileNo;
+                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
+                this.MyRequestSheetParam.RequestDescription = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
+
+                requestParams.AppicationId = _MyDeclarationPM.Id;// myDeclarationQueryService.GetIdByDeclarationNumber(_MyDeclarationPM.Id, requestParams.Tenant);
                 //if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
                 //{
                 //     requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);

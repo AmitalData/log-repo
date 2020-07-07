@@ -152,7 +152,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         break;
                     case "2754Constraint":
                         var Fake2754WithConstraintMsg = new Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint(requestParams);
-                        _ResponseHeader = Fake2754WithConstraintMsg.CallWS(out response);
+                        _ResponseHeader = Fake2754WithConstraintMsg.CallWS(requestParams, out response);
                         break;
                     case "2754Payment":
                         var Fake2754SumbitPayment = new Fake_2754_MSG10004_SumbitPayment(requestParams);

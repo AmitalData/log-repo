@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "6a3dbefebc94c98e763ff93954241acc";
+		public const string HashString = "c0b0d607c1f775656ae86157c8e18372";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -693,10 +693,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationOfficeCode",
 					  						DefaultText =  "Declaration Office",
-					  						FullLocalDefaultText =  "בימ מכס",
+					  						FullLocalDefaultText =  "בית מכס",
 					  						ListFieldLable =  "DeclarationOfficeCodeListLable",
 					  						ListLableDefaultText =  "Declaration Office",
-					  						ListLocalDefaultText =  "בימ מכס",
+					  						ListLocalDefaultText =  "בית מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2962,10 +2962,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationOfficeName",
 					  						DefaultText =  "Declaration Office ",
-					  						FullLocalDefaultText =  "בימ מכס",
+					  						FullLocalDefaultText =  "בית מכס",
 					  						ListFieldLable =  "DeclarationOfficeNameListLable",
 					  						ListLableDefaultText =  "Declaration Office Name",
-					  						ListLocalDefaultText =  "בימ מכס",
+					  						ListLocalDefaultText =  "בית מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
