@@ -20,6 +20,7 @@
                 background: #D3D3D3;
                 cursor: pointer;
             }
+
     .DimLI {
         opacity: 0.5;
         cursor: default
@@ -170,7 +171,7 @@
                                 <span style="font-weight: bold;">{{Entity[FieldName]}}</span>
                             </div>
                         </div>
-
+                    
 
                         <div *ngIf="IsHeaderScreenTemplate">
                             <div class="TextTrimming"
@@ -239,7 +240,7 @@
                             <img class="CenterCenter" style="width:40px;height:20px;margin-top:6px" src="./Images/process_failed_button@2x.png" />
                         </div>
                         <div *ngIf="Entity['ClassificationStatus']=='N'">
-                            <img class="CenterCenter" style="width:40px;height:20px;margin-top:6px" src="./Images/ShipmentArrow.png" />
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Referant/No-Sivug.png" />
                         </div>
 
                     </div>
@@ -254,7 +255,7 @@
                 <div *ngIf="FieldName == 'NewFile'" style="position:relative;width:100%; height: 100%;">
                     <div *ngIf="!IsHeaderScreenTemplate">
                         <div *ngIf="Entity['NewFile']== true">
-                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Manual_process@2x.png" />
+                            <img class="CenterCenter" style="width:50px;height:20px;margin-top:6px" src="./Images/Referant/New.png" />
                         </div>
                     </div>
                 </div>
@@ -287,12 +288,12 @@
                     </div>
                 </div>
                 <div *ngIf="FieldName == 'Favorite'" style="position:relative;width:100%; height: 100%;" (click)="EditFavorite()">
-                    <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 0px;">
+                    <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 50%;">
                         <div *ngIf="Entity['Favorite']==true">
-                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Successful_process@2x.png" />
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Referant/Active_Favorite.png" />
                         </div>
                         <div *ngIf="Entity['Favorite']==false">
-                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/in_progress@2x.png" />
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Referant/Unactive_Favorite.png" />
                         </div>
                     </div>
                 </div>
@@ -360,9 +361,9 @@
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMEnterRemarks();">
                                         <span>הזנת הערות לתור</span>
                                     </li>
-                                    <li >
+                                    <li>
                                         <span *ngIf="Entity['IsCustomerLogBoxActivated']== true" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowSharedDocuments();">שיתוף מסמכים</span>
-                                        <span *ngIf="Entity['IsCustomerLogBoxActivated']== false" class="DimLI" >שיתוף מסמכים</span>
+                                        <span *ngIf="Entity['IsCustomerLogBoxActivated']== false" class="DimLI">שיתוף מסמכים</span>
 
                                     </li>
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowMoneyOrder();">

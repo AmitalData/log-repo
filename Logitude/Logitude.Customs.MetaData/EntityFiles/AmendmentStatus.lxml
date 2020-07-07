@@ -4,7 +4,7 @@
   ObjectTableName="&quot;Customs.AmendmentStatus&quot;"
   IsNew="true"
   DBTableName="&quot;Customs.AmendmentStatuses&quot;"
-  OldDBTableName="&quot;Customs.AmendmentStatuses&quot;"
+  DBTableOldNames="Customs.AmendmentStatuses"
   ObjectTableSingular="&quot;Customs.AmendmentStatus&quot;"
   ObjectTablePlural="&quot;Customs.AmendmentStatuses&quot;"
   HasCustomFilter="false"
@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;סטטוס תיקון הצהרה&quot;"
-  Code="&quot;9d3c&quot;"
+  Code="&quot;52e6&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -67,7 +67,7 @@
   <field
     Id="&quot;c136c12c-f749-4cf5-9d88-13bd8dc049f7&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -114,6 +114,7 @@
     ListLableDefaultText="&quot;Code&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -127,6 +128,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -137,7 +139,7 @@
   <field
     Id="&quot;7acf4257-f916-458c-9db4-46e6c9b093cc&quot;"
     FieldName="&quot;Name&quot;"
-    OldFieldName="&quot;Name&quot;"
+    OldNames="Name"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -184,6 +186,7 @@
     ListLableDefaultText="&quot;Name&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -197,6 +200,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -207,7 +211,7 @@
   <field
     Id="&quot;bbd55ce1-eedb-487f-9cd3-7cb3e4ad9169&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -254,6 +258,7 @@
     ListLableDefaultText="&quot;Search ...&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -267,6 +272,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -274,18 +280,23 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <Screen
+    Name="&quot;Customs.AmendmentStatusHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.AmendmentStatus&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.AmendmentStatus&quot;"
-      ShortView="true"
-      IsManualEntry="false"
-      LocalName="&quot;Created&quot;"
       EnglishName="&quot;Created&quot;"
+      LocalName="&quot;Created&quot;"
+      IsManualEntry="false"
+      ShortView="true"
       EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
@@ -296,10 +307,10 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.AmendmentStatus&quot;"
-      ShortView="false"
-      IsManualEntry="false"
-      LocalName="&quot;Updated&quot;"
       EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
       EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
@@ -308,4 +319,27 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records>
+    <Record
+      Code="1"
+      Name="&quot;ממתין לאישור/דחיה&quot;" />
+    <Record
+      Code="2"
+      Name="&quot;שגוי&quot;" />
+    <Record
+      Code="3"
+      Name="&quot;תיקון אושר&quot;" />
+    <Record
+      Code="4"
+      Name="&quot;תיקון נדחה&quot;" />
+    <Record
+      Code="5"
+      Name="&quot;בוטל&quot;" />
+    <Record
+      Code="6"
+      Name="&quot;אושרה חלקית&quot;" />
+  </Records>
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

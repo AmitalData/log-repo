@@ -274,6 +274,23 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.DestinationCountryCode).HasColumnName("DestinationCountryCode").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.ExportAutonomyRegionTypeCode).HasColumnName("ExportAutonomyRegionTypeCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.DeclarationTypeCode).HasColumnName("DeclarationTypeCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.CancelRequestReasonCode).HasColumnName("CancelRequestReasonCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.CancelRequestReasonExplanation).HasColumnName("CancelRequestReasonExplanation").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.CancelRequestNumber).HasColumnName("CancelRequestNumber");
+
+            this.Property(t => t.CustomCancelRequestRemarks).HasColumnName("CustomCancelRequestRemarks").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.CancelRequestStatusCode).HasColumnName("CancelRequestStatusCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.CancelRequestRejectionReason).HasColumnName("CancelRequestRejectionReason").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.IsClaimable).HasColumnName("IsClaimable");
+
         }
     }
 }

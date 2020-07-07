@@ -132,7 +132,7 @@ export class ExporterInvoiceItemComponent extends BaseComponent
 
                         this.ClaimReasonCode = this.originalSupplierInvoiceItem.ClaimReasonCode;
                         this.TransactionNatureCode = this.originalSupplierInvoiceItem.TransactionNatureCode;
-                        this.ClassificationTypeCode = this.originalSupplierInvoiceItem.ClassificationTypeCode ? this.originalSupplierInvoiceItem.ClassificationTypeCode:"HS";
+                        this.ClassificationTypeCode = this.originalSupplierInvoiceItem.ClassificationTypeCode;//|| this.TransactionNatureCode ? this.originalSupplierInvoiceItem.ClassificationTypeCode:"HS";
  
                         if (args.SupplierInvoiceItem.SupplierInvoiceItemsPrices != null && args.SupplierInvoiceItem.SupplierInvoiceItemsPrices.length > 0) {
                             this.originalSupplierInvoiceItemsPrice = args.SupplierInvoiceItem.SupplierInvoiceItemsPrices[0];
@@ -256,15 +256,7 @@ export class ExporterInvoiceItemComponent extends BaseComponent
 
     OkButtonClicked() {
          var errors = [];
- 
-        //if (this.StatementInd == "1") {
-        //    this.StatementInd = "T";
-        //}
-
-        //if (this.StatementInd == "0") {
-        //    this.StatementInd = "F";
-        //}
-        if (this.originalSupplierInvoiceItemsPrice.IsDirty && this.originalSupplierInvoiceItemsPrice.DeclarationId == undefined && this.originalSupplierInvoiceItem != undefined) {
+         if (this.originalSupplierInvoiceItemsPrice.IsDirty && this.originalSupplierInvoiceItemsPrice.DeclarationId == undefined && this.originalSupplierInvoiceItem != undefined) {
             this.originalSupplierInvoiceItemsPrice.DeclarationId = this.originalSupplierInvoiceItem.DeclarationId;
             this.originalSupplierInvoiceItemsPrice.InvoiceCounterKey = this.originalSupplierInvoiceItem.CounterKey;
             this.originalSupplierInvoiceItemsPrice.LineNumber = 1;
@@ -310,14 +302,13 @@ export class ExporterInvoiceItemComponent extends BaseComponent
 
         var errors = [];
         Validator.TryValidateObject(this.originalSupplierInvoiceItem, this.ObjectTableName, errors);
-        Validator.TryValidateObject(this.originalSupplierInvoiceItemsPrice, this.ObjectTableNameSupplierInvoiceItemsPrice, errors);
+      //  Validator.TryValidateObject(this.originalSupplierInvoiceItemsPrice, this.ObjectTableNameSupplierInvoiceItemsPrice, errors);
     //    Validator.TryValidateObject(this.originalSupplierInvoiceItemVehicle, this.ObjectTableNameSupplierInvoiceItemVehicle, errors);
     //    Validator.TryValidateObject(this.originalSuppInvoiceItemsAbachStatement, this.ObjectTableNameSuppInvoiceItemsAbachStatement, errors);
 
         if (AppTool.IsNullOrEmpty(this.ClaimReasonCode)) errors.push("סיבת תביעה שדה חובה");
         if (AppTool.IsNullOrEmpty(this.TransactionNatureCode)) errors.push("אופי עסקה שדה חובה");
-         
-        if (errors.length > 0) {
+         if (errors.length > 0) {
             {
                 //this.ValidationErrorsList = errors;
                 //if (this.StatementInd == "T") {

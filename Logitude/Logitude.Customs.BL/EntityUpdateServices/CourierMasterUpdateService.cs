@@ -177,7 +177,7 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
             {
 
 
-                if (entityPM.IsCancelled == true)
+                if (entityPM.IsCancelled == true && entityPOCO.IsCancelled!=true)
                 {
 
                     entityPM.IsOpen = false;
@@ -189,7 +189,7 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
 
                 }
 
-                else
+                else if(entityPM.IsCancelled != true && entityPOCO.IsCancelled == true)
                 {
 
                     entityPM.IsOpen = true;

@@ -46,6 +46,9 @@ export class DeclarationReferantDataList {
 	Favorite: boolean;
 	SortedColumns: number;
 	IsCustomerLogBoxActivated: boolean;
+	IsCancelled: boolean;
+	LastStatusName: string;
+	LastStatusDate: string;
 	
 }
  

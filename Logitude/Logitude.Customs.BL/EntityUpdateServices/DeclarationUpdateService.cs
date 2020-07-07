@@ -208,7 +208,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             throw new Exception("סוג הובלה - שדה חובה ");
 
                         }
-                        if (string.IsNullOrEmpty(declarationPM.DeclarationDocumentTypeCode))
+                        if (string.IsNullOrEmpty(declarationPM.DeclarationTypeCode))
                         {
                             throw new Exception("סוג הצהרה - שדה חובה ");
 
@@ -1748,7 +1748,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     toDeclaration.ShipCode = fromDeclaration.ShipCode;
                 }
 
-                if ( toDeclaration.IsExporterConfirmation==null)
+                if ( toDeclaration.IsExporterConfirmation==false)
                 {
                     toDeclaration.IsExporterConfirmation = fromDeclaration.IsExporterConfirmation;
                 }

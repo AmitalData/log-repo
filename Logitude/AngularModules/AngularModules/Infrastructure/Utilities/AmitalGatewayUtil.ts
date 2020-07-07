@@ -306,7 +306,18 @@ export class AmitalGatewayUtil {
                 }
                 break;
             }
+            case "CreateInvoiceCommand": {
+                    //$$GGG_IN = "UnifreightEntity=CFIFILEM;UnifreightEntityNumber=%%FILE_NO.CFIFILEM;LogitudeEntity=Customs.Declaration;LogitudeEntityNumber=%%LOGITUDE_FILE.CFIFILEM;LogitudeViewModel=UnifreightMassageHandler;LogitudeCommandId=CreateInvoiceCommand;formtitle=%%$text(IMP_DECLERATION)"
+
                 
+                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                this.SelectCustomsRequestMenu(MaintenanceMenu);
+
+                let showInvoiceFromUrouter = new ShowInvoiceFromUrouterReturnCreateInvoiceCommand();
+                showInvoiceFromUrouter.Run(myParam);
+
+            }
+                break; 
             case "ShowDeclarationByIdReturnCloseSave": {
                 //change2EditTab();
                 //if (AppTool.IsNullOrEmpty(myEditTab.SessionComponent)) {
@@ -537,6 +548,26 @@ export class AmitalGatewayUtil {
             "ShowClientReturnIfExistUnifreightCallBack",
             this._LastUnifreightMessageM,
                 "Task ???");
+
+        //CloseEditWindow(false, false);
+    }
+
+    CreateQInvoiceUnifreightCallBack(ptoCreateQInvoice: boolean) {
+
+        //Response.InvoiceAction
+        let toCreateQInvoice: string = ptoCreateQInvoice ? "1" : "0";
+         
+        this._LastUnifreightMessageM.Requset.push(["InvoiceAction", toCreateQInvoice]);
+        this._LastUnifreightMessageM.Response.push(["InvoiceAction", toCreateQInvoice]);
+        
+        
+
+        this.SendRequestToUnifreightAsync(
+            "UnifreightMassageHandler.CreateInvoiceCommandUnifreightCallBack",
+            "CFIHMAIN.LogitudeTask",
+            "CreateInvoiceCommand",
+            this._LastUnifreightMessageM,
+            "Task Feature 67646: תור חשבוניות - מסך הצגת נתוני חשבונית");
 
         //CloseEditWindow(false, false);
     }
@@ -1350,6 +1381,46 @@ export class MapExceptionReasonCodeData {
 
     }
 
+}
+
+
+export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
+    private CurrentSession = SessionLocator.SelectedSession;
+    public Run(unifreightMessage: UnifreightMessageM) {
+        //"UnifreightEntity=GNDCARD·;UnifreightEntityNumber=10009065·;LogitudeEntity=Customs.Client·;LogitudeEntityNumber=049028392·;LogitudeViewModel=UnifreightMassageHandler·;LogitudeCommandId=ShowClientReturnIfExist·;formtitle=Client"
+        let UnifreightEntityNumber = unifreightMessage.UnifreightEntityNumber;
+        //let ImporterVat = unifreightMessage.LogitudeEntityNumber;
+        let UnifaceNAME_HEB: string
+            = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.UnifaceNAME_HEB");
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1600; 
+        logWindow.Height = 800;
+        logWindow.Title = 'תור חשבונית';//TextCodeTranslator.Translate("Customs.Client.O.EditClient");// "Edit Client";
+        logWindow.WindowArgs = {
+            "unifreightMessage": unifreightMessage,
+           
+
+        };
+        logWindow.ShowCloseButton = true;
+        logWindow.Show(
+            //'./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent'
+            //'./Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
+            //'./CustomsModules/CustomsMaintenance/Components/InvoiceQueueComponent'
+            './CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent'
+        );
+
+        logWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
+            //AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            
+
+            
+            AmitalGatewayUtil.Instance.CreateQInvoiceUnifreightCallBack(toCreateQInvoice);
+            
+        });
+
+    }
+   
 }
 
 

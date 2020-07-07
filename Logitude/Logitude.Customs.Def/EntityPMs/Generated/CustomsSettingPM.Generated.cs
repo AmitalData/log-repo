@@ -572,6 +572,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? isMessagesPending ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsMessagesPending  
+	   {
+	    
+	     get
+		{
+		   return isMessagesPending;
+		 }
+		 set
+		 {
+		   if(isMessagesPending != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsMessagesPending",OldValue=isMessagesPending,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isMessagesPending=value;
+		   }
+			
+		 }
+	   }
+	  private int? qtyFeedbackInPendingMessage ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? QtyFeedbackInPendingMessage  
+	   {
+	    
+	     get
+		{
+		   return qtyFeedbackInPendingMessage;
+		 }
+		 set
+		 {
+		   if(qtyFeedbackInPendingMessage != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QtyFeedbackInPendingMessage",OldValue=qtyFeedbackInPendingMessage,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   qtyFeedbackInPendingMessage=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

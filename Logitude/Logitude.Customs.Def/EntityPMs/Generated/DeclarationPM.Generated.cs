@@ -4871,6 +4871,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+
 	  private string exportAutonomyRegionTypeCode ;
 	  	  
        
@@ -4894,6 +4895,215 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string declarationTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationTypeCode  
+	   {
+	    
+	     get
+		{
+		   return declarationTypeCode;
+		 }
+		 set
+		 {
+		   if(declarationTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationTypeCode",OldValue=declarationTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationTypeCode=value;
+		   }
+			
+		 }
+	   }
+
+	  private string cancelRequestReasonCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CancelRequestReasonCode  
+	   {
+	    
+	     get
+		{
+		   return cancelRequestReasonCode;
+		 }
+		 set
+		 {
+		   if(cancelRequestReasonCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CancelRequestReasonCode",OldValue=cancelRequestReasonCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cancelRequestReasonCode=value;
+		   }
+			
+		 }
+	   }
+	  private string cancelRequestReasonExplanation ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CancelRequestReasonExplanation  
+	   {
+	    
+	     get
+		{
+		   return cancelRequestReasonExplanation;
+		 }
+		 set
+		 {
+		   if(cancelRequestReasonExplanation != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CancelRequestReasonExplanation",OldValue=cancelRequestReasonExplanation,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cancelRequestReasonExplanation=value;
+		   }
+			
+		 }
+	   }
+	  private int? cancelRequestNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? CancelRequestNumber  
+	   {
+	    
+	     get
+		{
+		   return cancelRequestNumber;
+		 }
+		 set
+		 {
+		   if(cancelRequestNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CancelRequestNumber",OldValue=cancelRequestNumber,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   cancelRequestNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string customCancelRequestRemarks ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomCancelRequestRemarks  
+	   {
+	    
+	     get
+		{
+		   return customCancelRequestRemarks;
+		 }
+		 set
+		 {
+		   if(customCancelRequestRemarks != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomCancelRequestRemarks",OldValue=customCancelRequestRemarks,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customCancelRequestRemarks=value;
+		   }
+			
+		 }
+	   }
+	  private string cancelRequestStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CancelRequestStatusCode  
+	   {
+	    
+	     get
+		{
+		   return cancelRequestStatusCode;
+		 }
+		 set
+		 {
+		   if(cancelRequestStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CancelRequestStatusCode",OldValue=cancelRequestStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cancelRequestStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string cancelRequestRejectionReason ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CancelRequestRejectionReason  
+	   {
+	    
+	     get
+		{
+		   return cancelRequestRejectionReason;
+		 }
+		 set
+		 {
+		   if(cancelRequestRejectionReason != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CancelRequestRejectionReason",OldValue=cancelRequestRejectionReason,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cancelRequestRejectionReason=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? cancelRequestApproveDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? CancelRequestApproveDate  
+	   {
+	    
+	     get
+		{
+		   return cancelRequestApproveDate;
+		 }
+		 set
+		 {
+		   if(cancelRequestApproveDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CancelRequestApproveDate",OldValue=cancelRequestApproveDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   cancelRequestApproveDate=value;
+		   }
+			
+		 }
+	   }
+	  private bool? isClaimable ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsClaimable  
+	   {
+	    
+	     get
+		{
+		   return isClaimable;
+		 }
+		 set
+		 {
+		   if(isClaimable != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsClaimable",OldValue=isClaimable,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isClaimable=value;
+		   }
+			
+		 }
+	   }
+
    }
    
 }

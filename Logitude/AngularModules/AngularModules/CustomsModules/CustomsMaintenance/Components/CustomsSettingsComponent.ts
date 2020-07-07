@@ -89,6 +89,7 @@ export class CustomsSettingsComponent
                                 this._CustomsSettingPMService.get(this._TenantCustomsSettingList.Id)
                                     .subscribe((myResponse: ServiceResponse) => {
                                         this.entityPM = myResponse.Result;
+                                        if (AppTool.IsNullOrEmpty(this.entityPM.QtyFeedbackInPendingMessage)) this.entityPM.QtyFeedbackInPendingMessage = 100;
                                         this.Loaded = true;
 
                                         this.ValidScreen()
@@ -140,6 +141,13 @@ export class CustomsSettingsComponent
 
     get PaymentOrderAccCard() { return this.entityPM != null ? this.entityPM.PaymentOrderAccCard : null; }
     set PaymentOrderAccCard(value: string) { this.entityPM.PaymentOrderAccCard = value; }
+
+    get QtyFeedbackInPendingMessage() { return this.entityPM != null ? this.entityPM.QtyFeedbackInPendingMessage : null; }
+    set QtyFeedbackInPendingMessage(value: number) {this.entityPM.QtyFeedbackInPendingMessage = value }
+        
+
+    get IsMessagesPending() { return this.entityPM != null ? this.entityPM.IsMessagesPending : null; }
+    set IsMessagesPending(value: boolean) { this.entityPM.IsMessagesPending = value; }
 
 
 
@@ -239,6 +247,8 @@ export class CustomsSettingsComponent
             console.error("New Setting Record !!!!!?!?!?!?")
             return;
         }
+        if (AppTool.IsNullOrEmpty(this.entityPM.QtyFeedbackInPendingMessage)) this.entityPM.QtyFeedbackInPendingMessage = 100;
+
         //let msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         //List < ValidationResult > errors = new List<ValidationResult>();
         //Validator.TryValidateObject(entityPM, new ValidationContext(entityPM, null, null), errors);

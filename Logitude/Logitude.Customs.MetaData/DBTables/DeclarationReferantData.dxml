@@ -161,6 +161,20 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="LastStatusName"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastStatusDate"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"

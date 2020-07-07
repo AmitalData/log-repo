@@ -59,7 +59,7 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
                     this.EntityPM.AgentId = customsSettingList.Result ? customsSettingList.Result.CustomsAgentId : null;
                 }
             });
-        this.EntityPM.DeclarationDocumentTypeCode = "2";
+        this.EntityPM.DeclarationTypeCode = "2";
         this.EntityPM.AgentRoleCode = "A";
     }
     SetWindowArgs(args: any) {
@@ -93,6 +93,7 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
 
  
     OkButtonClicked() {
+        debugger;
          var idIndex = this.CurrentSession.GetNewId("RadioButton");
         var errors: string[] = [];
         this.ValidationErrorsList = [];
