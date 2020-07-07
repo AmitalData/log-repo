@@ -318,8 +318,6 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "Refresh") {
                 this.LoadData();
-                this.EntityPM.IsDirty = true;
-                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
             this.IsOpenWarehouseReleaseScreen = false;
             this.IsOpenWarehouseEntryScreen = false;
