@@ -197,8 +197,8 @@ namespace Logitude.CustomsMessaging.RequestServices
           LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
            LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIAChangeDue = " + requestParams.RequestVIAChangeDue);
 
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(_context);
-            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context);
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(requestParams.Tenant);
 
             var dec = declarationQueryService.GetSingle(requestParams.AppicationId,false,false);
             if(dec==null)

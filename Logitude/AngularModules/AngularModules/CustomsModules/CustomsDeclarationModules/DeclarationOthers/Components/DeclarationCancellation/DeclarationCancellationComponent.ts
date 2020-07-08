@@ -17,7 +17,7 @@ import { GenericRequestParams } from '../../../../../Customs/DataContract/Reques
     selector: 'DeclarationCancellationComponent',
     
     templateUrl: './DeclarationCancellationComponent.html',
-    providers: [DeclarationPMService]
+    providers: [DeclarationPMService, DeclarationWebService]
 })
 
 export class DeclarationCancellationComponent extends BaseComponent implements OnInit {
@@ -99,7 +99,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
         var currRequestParams: GenericRequestParams = new GenericRequestParams();
         currRequestParams.InterfaceTypeCode = "5002";
-        currRequestParams.ForcePersonalSign = true;
+        currRequestParams.ForcePersonalSign = false;
         currRequestParams.IsAngularClient = true;
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
@@ -146,10 +146,11 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
             this.UIProperties.SetEnabled("CustomCancelRequestRemarks", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CancelRequestApproveDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CancelRequestRejectionReason", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("CancelRequestNumber", this.ObjectTableName, false);
+
             if (this.CancelRequestStatusCode == "5" || this.CancelRequestStatusCode == "2") {
                 this.UIProperties.SetEnabled("CancelRequestReasonExplanation", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("CancelRequestReasonCode", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("CancelRequestNumber", this.ObjectTableName, false);
                 this.readonly = true;
             }
         });

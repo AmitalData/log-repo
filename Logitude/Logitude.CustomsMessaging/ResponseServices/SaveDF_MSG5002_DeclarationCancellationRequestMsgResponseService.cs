@@ -79,8 +79,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
             this.MyResponseData.HasException = false;
 
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(dbContext);
-            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext);
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(requestParams.Tenant);
 
             var dec = declarationQueryService.GetSingle(requestParams.AppicationId, false, false);
 
