@@ -379,9 +379,11 @@ namespace Logitude.Server.Tools.QueueService
                                             Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
                                             response.MessageValues = messageValues;
                                         }
+
+                                        RunDebuggerBreak();
                                     }
 
-                                    RunDebuggerBreak();
+                                    
                                 }
 
                             }
@@ -441,9 +443,11 @@ namespace Logitude.Server.Tools.QueueService
                                         Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
                                         response.MessageValues = messageValues;
                                     }
+
+                                    RunDebuggerBreak();
                                 }
 
-                                RunDebuggerBreak();
+                                
                             }
 
                         }
@@ -464,10 +468,8 @@ namespace Logitude.Server.Tools.QueueService
         }
 
         private static void RunDebuggerBreak()
-        {   
-            string automaticBreakPoint = System.Configuration.ConfigurationManager.AppSettings.Get("AutomaticBreakPoint");
-
-            if (Debugger.IsAttached && automaticBreakPoint == "true")
+        {
+            if (Debugger.IsAttached && LogitudeSettings.RunWorkerRoleAutomaticBreakPoint)
                 Debugger.Break();
         }
 
@@ -550,9 +552,11 @@ namespace Logitude.Server.Tools.QueueService
                                             Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
                                             response.MessageValues = messageValues;
                                         }
+
+                                        RunDebuggerBreak();
                                     }
 
-                                    RunDebuggerBreak();
+                                    
                                 }
 
                             }
@@ -612,10 +616,12 @@ namespace Logitude.Server.Tools.QueueService
                                         Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
                                         response.MessageValues = messageValues;
                                     }
+
+                                    RunDebuggerBreak();
                                 }
                             }
 
-                            RunDebuggerBreak();
+                            
 
                         }
                     }
