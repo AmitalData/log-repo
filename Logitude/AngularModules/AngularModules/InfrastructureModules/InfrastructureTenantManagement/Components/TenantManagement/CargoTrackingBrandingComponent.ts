@@ -74,7 +74,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                       
+                        this.SetUIPropertiesEnabled(this.EntityPM.EnableBranding);
                     }
                 });
         
@@ -137,6 +137,24 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
             
         }
     }
+ get ContactEmail() {
+        return this.EntityPM.ContactEmail;
+    }
+    set ContactEmail(value: string) {
+        if (this.EntityPM.ContactEmail != value) {          
+            this.EntityPM.ContactEmail = value;
+            
+        }
+    }
+get CustomerURL() {
+        return this.EntityPM.CustomerURL;
+    }
+    set CustomerURL(value: string) {
+        if (this.EntityPM.CustomerURL != value) {          
+            this.EntityPM.CustomerURL = value;
+            
+        }
+    }
     get SecondaryColorOpacity() {
         return this.EntityPM.SecondaryColorOpacity;
     }
@@ -189,11 +207,11 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
             if (field == "Main") {
                 color = this.colorpicker.value;
                 // value = ;
-                this.MainColorOpacity = Math.round(value * 255).toString(16);
+                this.MainColorOpacity =value ==0?"00": Math.round(value * 255).toString(16);
             }
             else {
                 // value = Math.round(value * 255);
-                this.SecondaryColorOpacity = Math.round(value * 255).toString(16);
+                this.SecondaryColorOpacity = value ==0?"00":  Math.round(value * 255).toString(16);
                 color = this.secondarycolor.value;
             }
             var rgbaColor = 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + value + ')';

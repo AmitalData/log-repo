@@ -1,33 +1,30 @@
 <style>
-    .slider {
-        -webkit-appearance: none;
-        display: inline-block;
+    .slidecontainer {
         width: 80px;
         height: 28px;
-        margin-top: 5px;
-        cursor: default;
         background-color: var(--sliderBackground);
+    }
+    .slidecontainer2 {
+        width: 80px;
+        height: 28px;
+        background-color: var(--sliderBackground2);
+    }
+    .slider {
+       border:none;
+       
+        width: 80px;
+        height: 28px;
+        margin-top :5px;
+        cursor: default;
+       background :#c0c0c0;
     }
     .disabled {
         pointer-events: none;
         opacity: 0.7;
         cursor: default;
     }
-    .slider2 {
-        -webkit-appearance: none;
-        display: inline-block;
-        width: 80px;
-        height: 28px;
-        margin-top: 5px;
-        cursor: default;
+   
         
-        background-color: var(--sliderBackground2);
-    }
-        .slider input {
-            width: 80px;
-          
-            height:3px
-        }
     .coloPicker input {
         position: relative;
         display: inline-block;
@@ -79,9 +76,9 @@
                         <td style="width:40px"  [class.disabled]="!EnableBranding" > <input type="color" class="coloPicker" id="color" value="" style="width:30px;"> </td>
 
                         <td [class.disabled]="!EnableBranding"
-                            >
-                            <input [(ngModel)]="SliderValue" class="slider" id="slider"  min="0" max="1" step="0.1" type="range" />
-                        </td>
+                            ><div class="slidecontainer">
+    <input [(ngModel)]="SliderValue" class="slider" id="slider" min="0" max="1" step="0.1" type="range" />
+</div>   </td>
                         <td><div></div></td>
                     </tr>
                     <tr style="vertical-align:top;height:33px">
@@ -91,9 +88,9 @@
                         <td style="width:40px" [class.disabled]="!EnableBranding"> <input type="color"  class="coloPicker" id="secondarycolor" value="" style="width:30px;"> </td>
 
                         <td [class.disabled]="!EnableBranding" 
-                           >
-                            <input [(ngModel)]="SecondarySliderValue"  class="slider2"  id="slider" min="0" max="1" step="0.1" type="range" />
-                        </td>
+                           ><div class="slidecontainer2">
+    <input [(ngModel)]="SecondarySliderValue" class="slider" id="slider" min="0" max="1" step="0.1" type="range" />
+</div> </td>
                         <td><div></div></td>
                     </tr>
 
