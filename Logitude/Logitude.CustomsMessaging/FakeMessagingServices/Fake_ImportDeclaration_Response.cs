@@ -46,6 +46,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _dm.VersionID = new DeclarationDMExtensionsVersionID() { Value = "0.6" };
             _dm.CustomsValueComponent = _customsValueComponent;
             _dm.TaxationDateTime = XmlConvert.ToString(DateTime.Now);
+            _dm.AgentFileReferenceID = declaration.DMExtensions.AgentFileReferenceID;
 
             //DutyTaxFee
             taxFree[0] = new DeclarationDutyTaxFee
