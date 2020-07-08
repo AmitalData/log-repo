@@ -816,8 +816,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 ReloadGrid(System.Text.Encoding.UTF8.GetBytes(xml));
             }
-            catch
+            catch(Exception E)
             {
+                _LabelResult.Text = E.ToString();
                 myAgingReportParam = null;
                 throw;
             }
