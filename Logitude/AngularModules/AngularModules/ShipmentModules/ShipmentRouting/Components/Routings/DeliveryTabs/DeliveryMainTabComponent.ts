@@ -29,6 +29,7 @@ export class DeliveryMainTabComponent extends BaseComponent {
     public IsLCLEntity: boolean = false;
     public IsFCLEntity: boolean = false;
     public ObjectTableName: string = "ShipmentPickUpDelivery";
+    public RefreshDatePicker: boolean = false;
     constructor() {
         super();
         this.InitServices();
@@ -55,7 +56,7 @@ export class DeliveryMainTabComponent extends BaseComponent {
         this.IsLCLEntity = AppTool.IsLCLEntity(this.ShipmentPM.TransportModeId, this.ShipmentPM.ShipmentTypeId);
         this.IsFCLEntity = AppTool.IsFCLEntity(this.ShipmentPM.TransportModeId, this.ShipmentPM.ShipmentTypeId);
         this.FullResponsibilityHelp = TextCodeTranslator.Translate("ShipmentPickUpDelivery.FullResponsibilityHelpText");
-
+        //this.RefreshDatePicker = false;
         if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
 
         }
