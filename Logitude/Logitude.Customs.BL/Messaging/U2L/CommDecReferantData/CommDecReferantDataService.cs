@@ -149,8 +149,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
 
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.PreClassification)) _DeclarationReferantDataPM.PreClassification = _LogitudeDeclarationReferantData.PreClassification;
                 if (_DeclarationReferantDataPM.Tenant < 1) _DeclarationReferantDataPM.Tenant = ResolvedTenant();
-                //if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.ClassifiedUserId)) _DeclarationReferantDataPM.ClassifiedUserId = _LogitudeDeclarationReferantData.ClassifiedUserId;
-                //if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.ControllerUserId)) _DeclarationReferantDataPM.ControllerUserId = _LogitudeDeclarationReferantData.ControllerUserId;
+                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.ClassifiedUserId)) _DeclarationReferantDataPM.ClassifiedUserId = TranslateUser(_LogitudeDeclarationReferantData.ClassifiedUserId);
+                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.ControllerUserId)) _DeclarationReferantDataPM.ControllerUserId = TranslateUser(_LogitudeDeclarationReferantData.ControllerUserId);
                 if (_LogitudeDeclarationReferantData.FileStatus == "OPT") _DeclarationReferantDataPM.NewFile = false;
 
                 myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
@@ -180,6 +180,26 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                 return;
             }
 
+        }
+
+        private string TranslateUser(string userId)
+        {
+
+            if (String.IsNullOrWhiteSpace(userId))
+            {
+                AppendLogLine("amitalReferentUserId is null");
+                return null;
+            }
+            var repository = new UserRepository(ResolvedTenant());
+            var myUserCard = repository.GetSingleUserByCode(userId, ResolvedTenant(), false);  //TODO: this function include all 
+            if (myUserCard == null)
+            {
+                AppendLogLine("amitalReferentUserId = " + userId + " could not translate to Logitude Id");
+                return null;
+            }
+            var cardId = myUserCard.Id;
+            AppendLogLine("amitalReferentUserId = " + userId + " Translated to " + cardId);
+            return cardId;
         }
 
         void DeserilazeObject(string xmlLOGIDECREFERANTDATA)
