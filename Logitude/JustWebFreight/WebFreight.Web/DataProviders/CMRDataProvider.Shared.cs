@@ -130,6 +130,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? ETA { get; set; }
         public DateTime? ATA { get; set; }
         public string ProjectNumber { get; set; }
+        public string DescriptionOfGoods { get; set; }
     }
 
     public class ContainerData
