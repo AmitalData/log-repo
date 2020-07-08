@@ -19108,6 +19108,14 @@
         TextCodeCode="&quot;Customs.Declaration.B.DeclarationCustomsRequests&quot;"
         FeatureTextCodeCode="&quot;General.Features.DeclarationCustomsRequests&quot;"
         FeatureDefaultText="&quot;Declaration Customs Requests&quot;" />
+      <MenuItem
+        EventCode="&quot;DeclarationCancellation&quot;"
+        DefaultText="&quot;Declaration Cancellation&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="14"
+        LocalDefaultText="&quot;ביטול הצהרה&quot;"
+        IsPackagable="true"
+        HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent&quot;" />
     </MenuButton>
     <MenuButton
       EventCode="&quot;DocumentsPanel&quot;"
@@ -20870,6 +20878,12 @@
       DefaultText="&quot;Declaration&quot;"
       LocalDefaultText="&quot;הצהרה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.TH.DeclarationCancellation&quot;"
+      DefaultText="&quot;Declaration Cancellation&quot;"
+      LocalDefaultText="&quot;ביטול הצהרה במכס&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
