@@ -3,15 +3,10 @@ import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeCo
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
-import { CustomSendOptionsArgs, RequestParamsBase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
-import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import { CustomMessageProgressComponent } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
-import { GenericRequestParams } from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
-
 
 @Component({
     selector: 'DeclarationCancellationComponent',
@@ -84,7 +79,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
             this.EntityPM.CancelRequestRejectionReason = value;
         }
     }
-    constructor(private EntityResourceService: EntityResourceService, private _declarationPMService: DeclarationPMService, private _DeclarationWebService: DeclarationWebService) {
+    constructor(private EntityResourceService: EntityResourceService,private _declarationPMService: DeclarationPMService) {
         super();
       
 
@@ -96,35 +91,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         }
         this.ValidationErrorsList = null;
         SessionLocator.SelectedSession.StartBusyIndicator("");
-
-        var currRequestParams: GenericRequestParams = new GenericRequestParams();
-        currRequestParams.InterfaceTypeCode = "5002";
-        currRequestParams.ForcePersonalSign = true;
-        currRequestParams.IsAngularClient = true;
-        currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-        currRequestParams.LoggingEntityId = this.EntityPM.Id;
-        currRequestParams.AppicationId = this.EntityPM.Id;
         this._declarationPMService.update(this.EntityPM).subscribe(x => {
-            CustomMessageProgressComponent
-                .ShowProgressBar(currRequestParams.PBId, "שליחת מסר ביטול הצהרה", true)
-                .then((res) => {
-                    //this.ResponseData = res;
-                    //this.IsResponseMessageVisibility = true;
-                    //this.OnMassageDisplayMethod();
-                    //this.InitScreen(this.CargoSealIdentifierId);
-
-                }
-                ).catch((err) => {
-                    //this.IsResponseMessageVisibility = true;
-                    //this.ResponseMessage = err;
-                    this.ValidationErrorsList.push(err);
-                });
-
-            this._DeclarationWebService.PostSendDeclarationCancellation(currRequestParams)
-                .subscribe((myServiceResponse: ServiceResponse) => {
-                    
-                });
             SessionLocator.SelectedSession.StopBusyIndicator();
         });
     }

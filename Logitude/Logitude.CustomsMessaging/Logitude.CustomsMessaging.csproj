@@ -123,8 +123,7 @@
       <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\TFS2013\UniServer\UIIGSrvr\UnifreightIIG.ServerTester\bin\Debug\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.25\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UnifreightIIG.3.1803.25\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
@@ -218,7 +217,6 @@
     <Compile Include="MessagingServices\DCAInUniDebug01_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInVAL_NG_8228_RequiredDocumentVerificationDecisionMassagingService.cs" />
     <Compile Include="MessagingServices\DF_9070_ExportDeclarationDataMessagingService.cs" />
-    <Compile Include="MessagingServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgService.cs" />
     <Compile Include="MessagingServices\DF_NG_2751_MSG10000_ExportDeclarationMessagingService.cs" />
     <Compile Include="MessagingServices\DF_MSG2892_ImportDeclarationAmendmentMessagingService.cs" />
     <Compile Include="FakeMessagingServices\Fake_TSH_MSG6_AgentPaymentMessageService.cs" />
@@ -285,7 +283,6 @@
     <Compile Include="RequestServices\CL_MSG100_AddClientRequestService.cs" />
     <Compile Include="RequestServices\CL_NG_8343_ClientSearchByIDRequestService.cs" />
     <Compile Include="RequestServices\DF_9070_ExportDeclarationDataRequestService.cs" />
-    <Compile Include="RequestServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgRequestService.cs" />
     <Compile Include="RequestServices\DF_NG_2751_MSG10000_ExportDeclarationRequestService.cs" />
     <Compile Include="RequestServices\DF_MSG2892_ImportDeclarationAmendmentRequestService.cs" />
     <Compile Include="RequestServices\GP_1030_GatepassRequestMessageRequestService.cs" />
@@ -327,7 +324,6 @@
     <Compile Include="ResponseServices\CL_MSG100_AddClientResponseService.cs" />
     <Compile Include="ResponseServices\CL_NG_8344_ClientSearchByIDResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportDeclarationResponseService.cs" />
-    <Compile Include="ResponseServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCustomBatchSend2715Bonded_MsgResponseService.cs" />
     <Compile Include="ResponseServices\DeclarationErrorPointer\DeclarationCorrectionsPointerService.cs" />
     <Compile Include="ResponseServices\DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestResponseService.cs" />
