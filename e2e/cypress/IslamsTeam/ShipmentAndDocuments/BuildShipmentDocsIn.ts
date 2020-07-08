@@ -1,7 +1,7 @@
 // @ts-nocheck
 /// <reference types="cypress" />
 
-import { LoginComp } from ".././login/Login.po";
+import { LoginComp } from "../../login/Login.po";
 import { CreateEditShipment } from './CreateEditShipment';
 export class NewAgentScenario {
 
