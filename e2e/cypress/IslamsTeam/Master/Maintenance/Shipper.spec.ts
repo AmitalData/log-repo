@@ -5,7 +5,7 @@
   //login
 
   
-import { LoginComp } from '../../Login/Login.po';
+  import { LoginComp } from '../../../Login/Login.po';
 
 export class CreateNewShipper  {
 
