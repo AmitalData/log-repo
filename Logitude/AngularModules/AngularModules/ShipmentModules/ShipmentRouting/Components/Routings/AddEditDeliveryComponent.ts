@@ -544,7 +544,6 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
             }
 
             if (this.PageChild_MAIN) {
-                this.PageChild_MAIN.RefreshDatePicker = true;
                 this.PageChild_MAIN.InitTab(this.EntityPM, this.ShipmentPM);
             }
 
