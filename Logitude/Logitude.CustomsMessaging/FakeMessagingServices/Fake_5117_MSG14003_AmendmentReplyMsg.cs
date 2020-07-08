@@ -18,11 +18,11 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         public Fake_5117_MSG14003_AmendmentReplyMsg(GenericRequestParams requestParams) : base(requestParams) { }
 
         // return ??? 
-        public void CallWS(out DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg response)
+        public void CallWS(out DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg response, GenericRequestParams requestParams)
         {
             _header = new ResponseContentHeader();
             response = new DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg();
-            UpdateDeclaration();
+            UpdateDeclaration(requestParams);
             AddResponseHeader();
             dec = new Declaration();
             CastDeclaration();
