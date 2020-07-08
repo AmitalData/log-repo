@@ -163,7 +163,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB8212",/// Batch Send Collateral
 
 "2892",
-
+"5002",
 "UCBNDCD",///  Send bonded filing
 "8302", //בקשה לטופס הצהרה
 
@@ -264,6 +264,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
  "UCB8212"
  ,"2892" ,
+ "5002",
 "UCB9999",
 "2751",
 "2757",
