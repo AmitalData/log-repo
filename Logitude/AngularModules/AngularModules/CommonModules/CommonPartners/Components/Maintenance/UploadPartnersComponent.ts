@@ -6,8 +6,11 @@ import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelpe
 import { BatchTaskExecutionPM } from '../../../../Infrastructure/EntityPMs/BatchTaskExecutionPM';
 import { BatchTaskExecutionListService } from '../../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from '../../../../Infrastructure/EntityLists/BatchTaskExecutionList';
-import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { CommonDomainService, PartnersUploadExcelParameter } from '../../../../Common/Services/CommonDomainService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+
+declare var ResultAsArray: any;
 
 @Component({
     selector: 'UploadPartnersComponent',
@@ -26,23 +29,12 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
         this.CommonDomainService = new CommonDomainService();
     }
 
+    ngOnDestroy() {
+        this.StopTimer();
+    }
     // Commands
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
-    }
-
-    private batchEntity: BatchTaskExecutionPM;
-    public IsResponseProgressVisible: boolean = false;
-    UploadPartnersClicked() {
-
-        var errors: string[] = [];
-
-        this.ValidationErrorsList = errors;
-
-        if (this.ValidationErrorsList.length == 0) {
-            this.Retries = 0;
-
-        }
     }
 
     DownloadUploadPartnersTemplate() {
@@ -58,85 +50,122 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
         });
     }
 
-    // Timer
-    private timerSeconds: number = 10;
-    timer: any;
-    private Retries: number = 0;
-    private IncreaseTimer() {
-        clearTimeout(this.timer);
-        this.timer = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
-    }
-    private AdjustTimerSpeed() {
-        if (this.Retries <= 60) {
-            if (this.timerSeconds != 1) {
-                this.timerSeconds = 1;
-                this.IncreaseTimer();
-            }
-        }
+    OnFileChanged(fileEvent) {
+        var file = fileEvent.target.files[0];
 
-        else if (this.Retries <= 120) {
-            if (this.timerSeconds != 5) {
-                this.timerSeconds = 5;
-                this.IncreaseTimer();
-            }
-        }
+        if (file) {
+            var extension: string = file.name.split('.')[1];
 
-        else if (this.Retries <= 180) {
-            if (this.timerSeconds != 60) {
-                this.timerSeconds = 60;
-                this.IncreaseTimer();
-            }
-        }
-
-        else {
-            this.StopTimer();
-        }
-    }
-    private RunTimerFunction() {
-        this.Retries++;
-        this.GetBTE();
-
-    }
-    public StopTimer() {
-        if (this.timer) {
-            clearTimeout(this.timer);
-        }
-        this.IsResponseProgressVisible = false;
-    }
-    ngOnDestroy() {
-        this.StopTimer();
-    }
-
-    private bteList: BatchTaskExecutionList;
-    GetBTE() {
-        var batchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-        batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe((myResponse: ServiceResponse) => {
-
-            if (myResponse.HasError) {
-                this.StopTimer();
-                this.ValidationErrorsList = myResponse.ErrorsArray;
+            if (extension.includes("xls")) {
+                this.SelectExcelFile(fileEvent);
             }
 
             else {
-                this.bteList = myResponse.Result;
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show("You have to upload excel files only");
+            }
+        }
+    }
+    SelectExcelFile(fileEvent) {
 
-                if (this.bteList.StatusCode == "D") // D- Done
-                {
-                    this.StopTimer();
-                    var window: MessageWindow = new MessageWindow();
-                    window.Show("Get TM Projects Completed Succesfully");
+        var file = fileEvent.target.files[0];
+
+        if (file && file.size > 0) {
+            var documentExtendedService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+            documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    var myResult = response.Result;
+                    if (myResult) {
+                        this.StartUploadingExcelFile(file);
+                    }
                 }
+            });
+        }
+    }
+    StartUploadingExcelFile(file: any) {
+        if (file && file.size > 0) {
+            var filebuffer = file.slice(0, file.size);
+            this.ConvertArrayBufferToBase64(filebuffer, this);
+        }
+    }
+    ConvertArrayBufferToBase64(file: any, context: any) {
+        var reader: FileReader = new FileReader();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var binary = '';
+            var bytes = new Uint8Array(ResultAsArray(e));
+            var len = bytes.byteLength;
 
-                else if (this.bteList.StatusCode == "F") // F- Failed
-                {
-                    this.StopTimer();
-                    var window: MessageWindow = new MessageWindow();
-                    window.Show("Faild: " + this.bteList.ErrorLog);
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+
+            var filter = new PartnersUploadExcelParameter();
+            filter.FileData = window.btoa(binary);
+            context.SendExcelToServer(filter);
+        };
+
+        reader.onerror = function (e) {
+            console.log(e);
+        };
+        reader.readAsArrayBuffer(file);
+    }
+    SendExcelToServer(filter: any) {
+        this.CommonDomainService.PostUploadPartnersExcelFile(filter).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.batchEntity = myResponse.Result;
+                if (this.batchEntity != null) {
+                    this.IsResponseProgressVisible = true;
+                    this.CheckBatchTaskExecution(this.batchEntity.Id);
                 }
-
-                this.AdjustTimerSpeed();
+            }
+            else {
+                this.StopTimer();
+                var window = new MessageWindow();
+                window.Show(myResponse.ErrorsArray[0]);
             }
         });
+    }
+
+    // Timer
+    private batchEntity: BatchTaskExecutionPM;
+    private timer: any;
+    public IsResponseProgressVisible: boolean = false;
+    CheckBatchTaskExecution(BatchTaskExecutionId: string) {
+        var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+        iBatchService.getSingle(BatchTaskExecutionId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: BatchTaskExecutionList = myResponse.Result;
+
+                if (list.StatusCode == "D") {
+                    this.StopTimer();
+                    var window = new MessageWindow();
+                    window.Show("File uploaded successfully");
+                }
+
+                else if (list.StatusCode == "F") {
+                    this.StopTimer();
+                    var window = new MessageWindow();
+                    window.Show("There was an error uploading excel file. Please try again later");
+                }
+
+                else {
+                    this.CheckBatchTaskExecution(BatchTaskExecutionId);
+                }
+            }
+
+            else {
+                this.StopTimer();
+                var window = new MessageWindow();
+                window.Show(myResponse.ErrorsArray[0]);
+            }
+        });
+    }
+    StopTimer() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+        this.IsResponseProgressVisible = false;
     }
 
     CloseResponseProgressClicked() {
