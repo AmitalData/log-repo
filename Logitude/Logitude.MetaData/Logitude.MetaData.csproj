@@ -365,13 +365,7 @@
     <None Include="DBScripts\ShipmentModel\202006111515_AddShipmentSubTypesToTenants.sxml" />
     <None Include="DBScripts\ShipmentModel\202006140958_FillAirShipmentShipmentTypeField.sxml" />
     <None Include="DBScripts\ShipmentModel\202006141227_FillShipmentSubTypeBackward.sxml" />
-    <None Include="DBTables\CommonDataModel\CargoTrackingCard.dxml" />
-    <None Include="DBTables\CommonDataModel\CargoTrackingShipmentSearchField.dxml" />
-    <None Include="DBTables\CommonDataModel\CargoTrackingMilestone.dxml" />
-    <None Include="DBTables\CommonDataModel\CargoTrackingPort.dxml" />
-    <None Include="DBTables\CommonDataModel\CargoTrackingShipment.dxml" />
     <None Include="DBScripts\202005311656_DeleteDuplicatedQueuesWR Batch Definition.sxml" />
-    <None Include="DBTables\CommonDataModel\CargoTrackingHeaderEntityType.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingPartner.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingSetting.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingSystem.dxml" />
