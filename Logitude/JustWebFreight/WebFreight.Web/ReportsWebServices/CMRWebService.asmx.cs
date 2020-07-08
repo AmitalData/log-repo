@@ -166,6 +166,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 cmrDataProvider.ShipmentNumber = shipment.ShipmentNumber ;
                 cmrDataProvider.HAWBNumber = shipment.House;
+                cmrDataProvider.DescriptionOfGoods = shipment.DescriptionOfGoods;
 
                 ShipmentMasterData masterData = (from a in shipmentsContext.ShipmentMasterDatas
                                                  where a.Id == shipment.MasterShipmentDataId
