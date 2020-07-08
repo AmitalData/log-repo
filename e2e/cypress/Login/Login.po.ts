@@ -12,11 +12,33 @@ export class LoginComp {
  //cy.visit('http://localhost:4200/')
  
   //cy.visit('https://test.logitudeworld.com/test')
-  cy.visit(Cypress.env("URL"))
+  var Email = Cypress.env("TestEmail");
+  var Password = Cypress.env("TestPassword");
+  var URL = Cypress.env("TestURL");
+  var Env = Cypress.env("Env");
 
-  cy.get('#Email').type(Cypress.env("Email"), { delay: 50 }).should('have.value', Cypress.env("Email"))
+  if(Env == 'staging'){
+    URL = Cypress.env("ProdStagingURL");
+    Email = Cypress.env("ProdStagingEmail");
+    Password = Cypress.env("ProdStagingPassword");
+  }
+  else if(Env == 'cloudStaging'){
+    URL = Cypress.env("CloudStagingURL");
+    Email = Cypress.env("CloudStagingEmail");
+    Password = Cypress.env("CloudStagingPassword");
+  }
+  else //test_staging
+  {
+    //URL = Cypress.env("TestURL");
+    //Email = Cypress.env("TestEmail");
+    //Password = Cypress.env("TestPassword");
+  }
 
-  cy.get('#Password').type(Cypress.env("Password"))
+  cy.visit(URL)
+
+  cy.get('#Email').type(Email, { delay: 50 });//.should('have.value', 'protractor2@test.com')
+
+  cy.get('#Password').type(Password)
   cy.get('#cmdLogin').click()
 
 
