@@ -60,6 +60,29 @@ namespace WebFreight.Web.CustomModel.DomainServices
             return queryService.GetListCount(queryOperations, tenant);
         }
 
+        public List<DeclarationReferantDataList> GetDeclarationReferantDataFilters(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            ////SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
+
+            customContext = CustomContext.GetContext(tenant);
+            DeclarationReferantDataListQueryService listService = new DeclarationReferantDataListQueryService(customContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return listService.GetList(queryOperations, tenant);
+
+
+        }
+
+        public int GetDeclarationReferantDataFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            //SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
+            customContext = CustomContext.GetContext(tenant);
+            DeclarationReferantDataListQueryService queryService = new DeclarationReferantDataListQueryService(customContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return queryService.GetListCount(queryOperations, tenant);
+        }
+
 
         public List<CourierMasterList> GetCourierMasterFilters(byte[] xmlFilters, int tenant)
         {
