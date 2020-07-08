@@ -109,7 +109,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                           select jline);
 
             IQueryable<JournalLineLedgerTransactionAccDTO> q = (from jl in q1
-                         .Where(rec => rec.ExternalReconcileNumber != null)
                                                                 join trans in (context as AccountingContext).LedgerTransactions.Where(r => r.Tenant == tenant && ltIdsList.Contains(r.Id))
                                                                 on new { jl.JournalId, jl.Line }
                                                                 equals new { trans.JournalId, Line = trans.JournalLineNumber }
@@ -119,7 +118,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                                 {
                                                                     JournalLine = jl,
                                                                     LedgerTransaction = joinr,
-                                                                    AccId = jl.ActionCode == "1" ? jl.CreditAccountId : jl.DebitAccountId,
+                                                                    AccId = jl.ActionCode == "1" ? jl.CreditAccountId : (jl.ActionCode == "2" ? jl.DebitAccountId : joinr.AccountId),
                                                                 });
             return q;
         }

@@ -164,6 +164,9 @@ export class NewBIReport extends BaseComponent {
         this.folderListService.GetPermittedFolders().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.BIReportFolders = myResponse.Result;
+                var selectedBIReport: string = myResponse.Result.filter(bi => bi.Id == this.EntityPM.BIReportFolderId)[0];
+                if (!AppTool.IsNullOrEmpty(selectedBIReport)) this.BIReportFolderSelectionChanged(selectedBIReport);
+
             }
         });
     }

@@ -65,7 +65,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.WarehouseReleaseNumber).HasMaxLength(15).IsUnicode(false);
 
 
-    
+
             // Table & Column Mappings
             this.ToTable("ShipmentPackages");
             this.Property(t => t.Id).HasColumnName("Id");

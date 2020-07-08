@@ -141,6 +141,8 @@ namespace Logitude.BL.CommonDataModel.CodePropertiesMapping
                     AddedManually = false,
                     InActive = false,
                     CountryId = country.Id,
+                    CountryCode = country.Code,
+                    CountryName = country.EnglishName,
                     IsAir = port.IsAir,
                     IsInland = port.IsInland,
                     IsOcean = port.IsOcean,

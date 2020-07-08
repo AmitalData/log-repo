@@ -514,7 +514,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ComputeIsAssemblyField();
                     this.ComputeFinalDestination();
                     this.CheckUpdatingMasterHouses();
-                    this.UpdateCrossDockRelease();
 
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                     shipmentBehaviourFacade.Handle();
@@ -522,7 +521,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
                     this.UpdateShipmentFollowUpsCollection();
 
-                    UpdateWarehouseLegDates();
 
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
 
@@ -579,7 +577,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.RefreshFollowUpDate();
                 this.UpdateExtendedTasksDueDate();
 
-                UpdateWareHouseEntry();
                 scope.Complete();
                 #endregion
             }
@@ -600,39 +597,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-
-        #region UpdateCrossDockRelease
-        private void UpdateCrossDockRelease()
-        {
-            if (entityPM.MainCarriageATD == null) ChangeCrossDockReleaseStatus("RELE", "CREA");
-            else if (entityPM.MainCarriageATD != null)
-            {
-                EntityStatus departedStatus = EntityStatusRepository.GetSingleEntityStatusByCode("SDEP", entityPM.Tenant, true);
-                if (departedStatus != null)
-                {
-                    EntityStatus entityStatus = EntityStatusRepository.GetSingleEntityStatus(entityPM.StatusId, entityPM.Tenant, true);
-                    if (entityStatus != null && entityStatus.StatusWeight >= departedStatus.StatusWeight) ChangeCrossDockReleaseStatus("CREA", "RELE");
-                }
-            }
-        }
-        private void ChangeCrossDockReleaseStatus(string fromStatusCode, string toStatusCode)
-        {
-            bool isWarehouseReleaseStatusHasChange = false;
-            WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(entityPM.Tenant);
-            List<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetAll(entityPM.Tenant).Where(d => d.ShipmentId == entityPM.Id && d.StatusCode == fromStatusCode).ToList();
-            foreach (WarehouseRelease item in warehouseReleases)
-            {
-                item.StatusCode = toStatusCode;
-                warehouseReleaseRepository.Update(item);
-                isWarehouseReleaseStatusHasChange = true;
-            }
-            if (isWarehouseReleaseStatusHasChange) warehouseReleaseRepository.SubmitChanges();
-
-        }
-        #endregion
-
-
-
 
 
         private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
@@ -660,139 +624,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
 
                 }
-            }
-        }
-
-        private void UpdateWareHouseEntry()
-        {
-            List<WarehouseEntry> warehouseEntryLists = null;
-            string fromPortId = String.Empty;
-            string toPortId = String.Empty;
-
-            if (entityPM != null)
-            {
-                WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(entityPM.Tenant);
-
-                IQueryable<WarehouseEntry> allWarehouseEntryList = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(entityPM.Id, entityPM.Tenant);
-
-                if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
-                {
-                    warehouseEntryLists = allWarehouseEntryList.Where(d => d.FromAddressId != this.entityPM.MainCarriageFromAddressId || d.ToAddressId != this.entityPM.MainCarriageToAddressId || d.FromPartnerId != this.entityPM.MainCarriageFromPartnerId || d.ToAddressId != this.entityPM.MainCarriageToPartnerId).ToList();
-                }
-                else
-                {
-                    fromPortId = !string.IsNullOrEmpty(this.entityPM.MainCarriageFromPortId) ? this.entityPM.MainCarriageFromPortId : this.entityPM.FromPortId;
-                    toPortId = this.entityPM.ShipmentLevelCode == "H" ? this.entityPM.MainCarriageFinalDestinationPortId : this.entityPM.FinalDistenationPortId;
-                    warehouseEntryLists = allWarehouseEntryList.Where(d => d.FromPortId != fromPortId || d.ToPortId != toPortId).ToList();
-                }
-
-                if (warehouseEntryLists != null && warehouseEntryLists.Count > 0)
-                {
-                    foreach (WarehouseEntry warehouseEntry in warehouseEntryLists)
-                    {
-                        if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
-                        {
-                            warehouseEntry.FromAddressId = this.entityPM.MainCarriageFromAddressId;
-                            warehouseEntry.ToAddressId = this.entityPM.MainCarriageToAddressId;
-                            warehouseEntry.FromPartnerId = this.entityPM.MainCarriageFromPartnerId;
-                            warehouseEntry.ToPartnerId = this.entityPM.MainCarriageToPartnerId;
-                        }
-                        else
-                        {
-                            warehouseEntry.FromPortId = fromPortId;
-                            warehouseEntry.ToPortId = toPortId;
-                        }
-
-                        warehouseEntryRepository.Update(warehouseEntry);
-                    }
-
-                    warehouseEntryRepository.SubmitChanges();
-                }
-
-
-            }
-        }
-
-        private void UpdateWarehouseLegDates()
-        {
-            UpdateActualExpectedWarehouseReleasesDates();
-            UpdateActualExpectedWarehouseEntriesDates();
-        }
-
-        private void UpdateActualExpectedWarehouseEntriesDates()
-        {
-            WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(entityPM.Tenant);
-            IQueryable<WarehouseEntry> connectedWarehouseEntries = warehouseEntryRepository.GetActiveWarehouseEntriesByshipmentId(entityPM.Id, entityPM.Tenant);
-            if (connectedWarehouseEntries.Count() != 0)
-            {
-                WarehouseEntry leastWarehouseEntry = connectedWarehouseEntries.OrderBy(e => e.ActualEntryDate).FirstOrDefault();
-                if (leastWarehouseEntry != null)
-                {
-                    entityPM.WarehouseLegActualEntryDate = leastWarehouseEntry.ActualEntryDate;
-                    entityPM.WarehouseLegExpectedEntryDate = leastWarehouseEntry.ExpectedEntryDate;
-                }
-            }
-            else
-            {
-                entityPM.WarehouseLegActualEntryDate = null;
-                entityPM.WarehouseLegExpectedEntryDate = null;
-            }
-        }
-
-        private void UpdateActualExpectedWarehouseReleasesDates()
-        {
-            WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(entityPM.Tenant);
-            IQueryable<WarehouseRelease> connectedWarehouseRelases = warehouseReleaseRepository.GetActiveWarehouseReleasesByshipmentId(entityPM.Id, entityPM.Tenant);
-            if (connectedWarehouseRelases.Count() == 1)
-            {
-                WarehouseRelease warehouseRelease = connectedWarehouseRelases.FirstOrDefault();
-                if (entityPM.WarehouseLegActualReleaseDate != null && warehouseRelease.ActualReleaseDate == null)
-                {
-                    warehouseRelease.ActualReleaseDate = entityPM.WarehouseLegActualReleaseDate;
-                }
-                if (entityPM.WarehouseLegExpectedReleaseDate != null && warehouseRelease.ExpectedReleaseDate == null)
-                {
-                    warehouseRelease.ExpectedReleaseDate = entityPM.WarehouseLegExpectedReleaseDate;
-                }
-                warehouseReleaseRepository.Update(warehouseRelease);
-                warehouseReleaseRepository.SubmitChanges();
-                UpdateDeliveryDepartureDates(warehouseRelease);
-            }
-            if (connectedWarehouseRelases.Count() != 0)
-            {
-                WarehouseRelease greatestWarehouseRelease = connectedWarehouseRelases.Where(r => r.ActualReleaseDate != null).OrderByDescending(r => r.ActualReleaseDate).FirstOrDefault();
-                if (greatestWarehouseRelease != null)
-                {
-                    entityPM.WarehouseLegActualReleaseDate = greatestWarehouseRelease.ActualReleaseDate;
-                    entityPM.WarehouseLegExpectedReleaseDate = greatestWarehouseRelease.ExpectedReleaseDate;
-                }
-            }
-            else
-            {
-                entityPM.WarehouseLegActualReleaseDate = null;
-                entityPM.WarehouseLegExpectedReleaseDate = null;
-                UpdateDeliveryDepartureDates(null);
-            }
-        }
-
-        private void UpdateDeliveryDepartureDates(WarehouseRelease warehouseRelease)
-        {
-            ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(entityPM.Tenant);
-            List<ShipmentPickUpDelivery> shipmentPickUpDeliveries = shipmentPickUpDeliveryRepository.GetShipmentDeliveryByShipmentId(entityPM.Id, entityPM.Tenant);
-            if (shipmentPickUpDeliveries.Count == 1)
-            {
-                if (warehouseRelease != null)
-                {
-                    shipmentPickUpDeliveries[0].ATD = warehouseRelease.ActualReleaseDate;
-                    shipmentPickUpDeliveries[0].ETD = warehouseRelease.ExpectedReleaseDate;
-                }
-                else
-                {
-                    shipmentPickUpDeliveries[0].ATD = null;
-                    shipmentPickUpDeliveries[0].ETD = null;
-                }
-                shipmentPickUpDeliveryRepository.Update(shipmentPickUpDeliveries[0]);
-                shipmentPickUpDeliveryRepository.SubmitChanges();
             }
         }
 
@@ -1811,7 +1642,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         default: { break; }
                     }
                 }
-                this.UpdateIsUsedPackagesFromWarehouseReleases();
             }
         }
         private void UpdateShipmentPickUpsCollection()
@@ -5202,27 +5032,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private void UpdateIsUsedPackagesFromWarehouseReleases()
-        {
-            if (!string.IsNullOrEmpty(entityPM.WarehouseReleasesIds))
-            {
-                List<string> warehouseReleasesIdLists = entityPM.WarehouseReleasesIds.Split(',').ToList();
-                if (warehouseReleasesIdLists.Count > 0)
-                {
-                    WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(entityPM.Tenant);
-                    List<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetAll(entityPM.Tenant).Where(d => warehouseReleasesIdLists.Contains(d.Id)).ToList();
-                    foreach (WarehouseRelease item in warehouseReleases)
-                    {
-                        item.IsUsed = true;
-                        if (string.IsNullOrEmpty(item.ShipmentId)) item.ShipmentId = entityPM.Id;
-                        warehouseReleaseRepository.Update(item);
-                    }
-                    warehouseReleaseRepository.SubmitChanges();
-                }
-            }
-            entityPM.WarehouseReleasesIds = null;
-        }
-
         private void UpdateShipmentPackage(ShipmentPackagePM itemPM)
         {
             ShipmentPackage itemPoco = shipmentPackageRepository.GetSingleShipmentPackage(itemPM.Id, tenant);
@@ -5354,7 +5163,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
 
-            UpdateIsUsedPackagesFromWarehouseReleases();
             calculateProfit = true;
             calculatePayables = true;
             calculateReceivables = true;

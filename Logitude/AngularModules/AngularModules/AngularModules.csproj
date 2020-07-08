@@ -160,6 +160,7 @@
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\AccountingPartner\AccountingPartnerDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\Maintenance\UploadPartnersComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\NewEntity\NewAccountingPartnerComponent.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_Branch.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_ChargesType.html" />
@@ -517,6 +518,7 @@
     <TypeScriptCompile Include="Accounting\EntityPMs\IntegrityCheckStatusPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\InterestBasesPeriodPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\InterestBasesTypePM.ts" />
+    <TypeScriptCompile Include="Accounting\EntityPMs\InterestLastBatchServicePM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\InterestReportLinesByDatePM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\InterestReportPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\InterestTransactionPM.ts" />
@@ -599,6 +601,7 @@
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\AccountingPartner\AccountingPartnerDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\Maintenance\UploadPartnersComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\NewEntity\NewAccountingPartnerComponent.ts" />
     <TypeScriptCompile Include="Common\Components\AccountingTab\GLAccountSelectWindow\GLAccountSelectComponent.ts" />
     <TypeScriptCompile Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.ts" />

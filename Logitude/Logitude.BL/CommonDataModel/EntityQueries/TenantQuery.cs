@@ -1796,5 +1796,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 }
             }
         }
+
+        public string GetTenantCountryCodeOnly(int id)
+        {
+            Tenant tenant = (from a in repository.context.Tenants.Include("Address").Include("Address.Country")
+                         where a.Id == id
+                         select a).FirstOrDefault();
+
+            string countryCode = tenant.Address != null ? (tenant.Address.Country != null ? tenant.Address.Country.Code : null) : null;
+            return countryCode;
+        }
     }
 }

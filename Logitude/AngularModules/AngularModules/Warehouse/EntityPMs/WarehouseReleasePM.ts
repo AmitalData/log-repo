@@ -339,6 +339,11 @@ export class WarehouseReleasePM {
     public set TruckerReference(newValue: string) { if (this.truckerReference != newValue) { this.truckerReference = newValue; this.MarkAsDirty("TruckerReference"); } }
        
 	 
+    private childEntityReference: string;
+    public get ChildEntityReference() { return this.childEntityReference; }
+    public set ChildEntityReference(newValue: string) { if (this.childEntityReference != newValue) { this.childEntityReference = newValue; this.MarkAsDirty("ChildEntityReference"); } }
+       
+	 
 
     public OldEntityPM: WarehouseReleasePM;
 		

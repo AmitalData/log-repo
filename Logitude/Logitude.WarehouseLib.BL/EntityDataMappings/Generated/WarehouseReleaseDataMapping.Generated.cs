@@ -70,7 +70,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ToAddressCountryId, 
 	         IsUsed, 
 	         TruckerId, 
-	         TruckerReference,
+	         TruckerReference, 
+	         ChildEntityReference,
 	      }
 
 
@@ -132,7 +133,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         IsUsed, 
 	         Destination, 
 	         TruckerId, 
-	         TruckerReference,
+	         TruckerReference, 
+	         ChildEntityReference,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -379,6 +381,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerReference))
             {
 				entityPOCO.TruckerReference = entityPM.TruckerReference;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChildEntityReference))
+            {
+				entityPOCO.ChildEntityReference = entityPM.ChildEntityReference;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -632,6 +639,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.TruckerReference = entityPOCO.TruckerReference;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChildEntityReference))
+            {
+					entityPM.ChildEntityReference = entityPOCO.ChildEntityReference;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseReleasePM entityPM, WarehouseReleasePM oldEntityPM)
@@ -876,6 +888,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerReference))
             {
                 oldEntityPM.TruckerReference = entityPM.TruckerReference;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChildEntityReference))
+            {
+                oldEntityPM.ChildEntityReference = entityPM.ChildEntityReference;
             }
 			
 		}
