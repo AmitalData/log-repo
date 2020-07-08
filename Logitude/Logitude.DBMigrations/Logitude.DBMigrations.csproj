@@ -51,7 +51,7 @@
     <Compile Include="Models\DefinitionModels\ColumnDefinition.cs" />
     <Compile Include="Models\GeneralModels\DatabaseMigrationsResult.cs" />
     <Compile Include="Models\GeneralModels\ToolArguments.cs" />
-    <Compile Include="Models\GeneralModels\TablesGeneratedScript.cs" />
+    <Compile Include="Models\DXMLModels\DXMLGeneratedScript.cs" />
     <Compile Include="Models\GeneralModels\ColumnMigration.cs" />
     <Compile Include="Models\DefinitionModels\ColumnMigrationDefinition.cs" />
     <Compile Include="Models\DefinitionModels\ConstraintsDefinition.cs" />
