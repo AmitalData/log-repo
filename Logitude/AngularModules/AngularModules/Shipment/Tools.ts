@@ -5075,13 +5075,13 @@ export class RoutingHelper {
 
                     // Previous
                     if (isWarehouseDeliveriesLegExists) {
-                        if (this.IsDateSeriesSmallerNotEqual(ETD, WarehouseLegERD)) {
-                            allDeliveriesErrors.push("Delivery expected departure must be bigger than or equal Warehouse expected release");
-                        }
+                        //if (this.IsDateSeriesSmallerNotEqual(ETD, WarehouseLegERD)) {
+                        //    allDeliveriesErrors.push("Delivery expected departure must be bigger than or equal Warehouse expected release");
+                        //}
 
-                        if (this.IsDateSeriesSmallerNotEqual(ATD, WarehouseLegARD)) {
-                            allDeliveriesErrors.push("Delivery actual departure must be bigger than or equal Warehouse actual release");
-                        }
+                        //if (this.IsDateSeriesSmallerNotEqual(ATD, WarehouseLegARD)) {
+                        //    allDeliveriesErrors.push("Delivery actual departure must be bigger than or equal Warehouse actual release");
+                        //}
                     }
 
                     else if (isOnCarriageExists) {
@@ -5646,13 +5646,13 @@ export class RoutingHelper {
 
                     // Next
                     if (isDeliveriesExists) {
-                        if (this.IsDateSeriesBiggerNotEqual(WarehouseLegERD, allDeliveriesETD)) {
-                            WarehouseLegErrors.push("Warehouse expected release must be less than or equal all deliveries expected departure");
-                        }
+                        //if (this.IsDateSeriesBiggerNotEqual(WarehouseLegERD, allDeliveriesETD)) {
+                        //    WarehouseLegErrors.push("Warehouse expected release must be less than or equal all deliveries expected departure");
+                        //}
 
-                        if (this.IsDateSeriesBiggerNotEqual(WarehouseLegARD, allDeliveriesATD)) {
-                            WarehouseLegErrors.push("Warehouse actual release must be less than or equal all deliveries actual departure");
-                        }
+                        //if (this.IsDateSeriesBiggerNotEqual(WarehouseLegARD, allDeliveriesATD)) {
+                        //    WarehouseLegErrors.push("Warehouse actual release must be less than or equal all deliveries actual departure");
+                        //}
                     }
                 }
 
