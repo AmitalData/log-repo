@@ -2,7 +2,7 @@
     "viewportWidth": 2000,
     "viewportHeight": 1000,
     "projectId": "b2kqc4",
-    "integrationFolder": "cypress",
+    "integrationFolder": "cypress/IslamsTeam",
     "screenshotsFolder": "cypress/results/html/screenshots",
     "scripts": {
         "cypressRun": "cypress run",
@@ -12,8 +12,8 @@
     },
     "env": {
         "URL": "https://test.logitudeworld.com/test",
-        "Email": "protractor2@test.com",
-        "Password": "!P123p456"
+        "Email": "cypress@test.com",
+        "Password": "!C123c456"
 
     },
 
