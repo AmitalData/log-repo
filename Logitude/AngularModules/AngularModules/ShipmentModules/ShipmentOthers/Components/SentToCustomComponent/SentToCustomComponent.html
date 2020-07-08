@@ -433,7 +433,7 @@
                     </td>
                 </tr>
 
-                <tr *ngIf="!IsABMVisible && !IsATMSVisible_VOG && !IsATMSVisible_BOL && !IsAESVisible">
+                <tr *ngIf="!IsABMVisible && !IsATMSVisible_VOG && !IsATMSVisible_BOL && !IsAESVisible && !IsAMANACVisible">
                     <td style="font-size:14px;">
                         No Customs Interface selected, you can enable from
                         <Hyperlink [FontSize]="14" (click)="ViewCustomsSettings()" [Text]="'Customs Interface Settings'"></Hyperlink>
