@@ -485,6 +485,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new SE_6001_SealUpdateMessagingService()).MainInterfaceCode);
 
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                SaveDF_MSG5002_DeclarationCancellationRequestMsgService>
+                ((new SaveDF_MSG5002_DeclarationCancellationRequestMsgService()).MainInterfaceCode);
+
+
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
 
