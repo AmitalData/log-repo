@@ -28,8 +28,11 @@ namespace Logitude.Accounting.BL.Utils
         //private List<string> _WrongSum;
         private List<string> _WrongSumToMatch;
         long _counter = 0;
-        public const int LT_LinesMaximum_MIN = 5;
-        public const int LT_LinesMaximum_MAX = 20;
+        public const int LT_LinesMaximum_MIN = 2;
+        public const int LT_LinesMaximum_MAX = 40;
+        private List<string> badList;
+        private List<string> goodList;
+        private List<string> madeList;
 
         public ReconciliationStageCBatch()
         {
@@ -52,8 +55,17 @@ namespace Logitude.Accounting.BL.Utils
             {
                 DateTime fromDate = DateTime.MinValue;
                 DateTime oldDate = DateTime.MinValue;
+                decimal oldAmount = Decimal.MaxValue;
                 int tenant = reconciliationStageCArg.Tenant;
                 string myGLAccountId = reconciliationStageCArg.GLAccountId;
+                badList = new List<string>();
+                goodList = new List<string>();
+                madeList = new List<string>();
+                _NoLines = new List<string>();
+                _WrongAction = new List<string>();
+                //   _WrongSum = new List<string>();
+                _WrongSumToMatch = new List<string>();
+
                 DateTime myUpToAccountingDate = reconciliationStageCArg.UpToAccountingDate;
                 BatchTaskExecutionPM batchTaskExecutionPM = reconciliationStageCArg.BatchTask;
                 BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = null;
@@ -91,6 +103,7 @@ namespace Logitude.Accounting.BL.Utils
                     RunReconciliationStageC_OneAccount(reconciliationStageCArg);
                 }
 
+                _ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
 
             }
 
@@ -105,10 +118,11 @@ namespace Logitude.Accounting.BL.Utils
         {
             try
             {
-                DateTime fromDate = DateTime.MinValue;
-                string fromId = "";
+               // DateTime fromDate = DateTime.MinValue;
+               // string fromId = "";
                 DateTime oldDate = DateTime.MinValue;
                 string oldId = "";
+                decimal oldAmount = Decimal.MaxValue;
                 bool runAgain = false;
                 int tenant = reconciliationStageCArg.Tenant;
                 string myGLAccountId = reconciliationStageCArg.GLAccountId;
@@ -120,9 +134,13 @@ namespace Logitude.Accounting.BL.Utils
                 }
                 else
                 {
+                    bool success = false;
                     bool toContinue = true;
+                    bool moveOn = false;
+                    bool runOnPairs = true;
                     do
                     {
+                        success = false;
                         GetNextGroupArgs getNextGroupArgs = new GetNextGroupArgs
                         {
                             Tenant = tenant,
@@ -130,30 +148,60 @@ namespace Logitude.Accounting.BL.Utils
                             MIN = LT_LinesMaximum_MIN,
                             LT_LinesMaximum = reconciliationStageCArg.LT_LinesMaximum > LT_LinesMaximum_MAX ? LT_LinesMaximum_MAX : reconciliationStageCArg.LT_LinesMaximum,
                             RunAgain = runAgain,
+                            MoveOn = moveOn,
+                            RunOnPairs = runOnPairs,
                             OldDate = oldDate,
                             OldId = oldId,
-                            FromDate = fromDate,
-                            FromId = fromId,
+                            OldAmount = oldAmount,
+                         //   FromDate = fromDate,
+                         //   FromId = fromId,
                             MaximalDifference = reconciliationStageCArg.MaximalDifference,
                             UpToAccountingDate = reconciliationStageCArg.UpToAccountingDate,
+                            Stop = false,
                         };
+                        runAgain = false;
+                        moveOn = false;
                         List<LedgerTransaction> reconciableLT_List = GetNextReconciableLT_List(ref getNextGroupArgs);
-                        if (reconciableLT_List == null || (reconciableLT_List.Count == 0 && getNextGroupArgs.OldDate == DateTime.MinValue))
+                        if (getNextGroupArgs.Stop) // Nothing retrieved from the DB 
                         {
                             toContinue = false;
                         }
-                        if (reconciableLT_List.Count == 0)
+                        oldDate = getNextGroupArgs.OldDate;
+                        oldId = getNextGroupArgs.OldId;
+                        oldAmount = getNextGroupArgs.OldAmount;
+                        if (reconciableLT_List.Count == 0) // Some records retrieved but no sum<=MaxDiff
                         {
-                            fromDate = getNextGroupArgs.OldDate;
-                            fromId = getNextGroupArgs.OldId;
                             runAgain = false;
-                            oldDate = DateTime.MinValue;
-                            oldId = "0";
+                            //  oldDate = DateTime.MinValue;
+                            //  oldId = "0";
+                            if (runOnPairs && !getNextGroupArgs.RunOnPairs)//Return to regular run
+                            {
+                                runOnPairs = false;
+                            }
+                            else if (!runOnPairs)
+                            {
+                                moveOn = true;
+                            }
+                            else // questionable if could get here
+                                runOnPairs = false;
                         }
                         else
                         {
-                            ProcessOneReconciableLT_List(tenant, myGLAccountId, reconciableLT_List, reconciliationStageCArg.MaximalDifference);
+                            decimal actualDifference = getNextGroupArgs.ActualDifference;
+                            success = ProcessOneReconciableLT_List(tenant, myGLAccountId, reconciableLT_List, reconciliationStageCArg.MaximalDifference, actualDifference);
+                            if (success)
+                            {
+                                if (runOnPairs)
+                                    moveOn = true;
+                                else
+                                    runAgain = true; // try more from the oldData, oldId
+                            }
+                            else
+                            {
+                                moveOn = true;
+                            }
                         }
+
                     } while (toContinue);
 
                 }
@@ -165,8 +213,10 @@ namespace Logitude.Accounting.BL.Utils
                 throw e;
             }
         }
-        private void ProcessOneReconciableLT_List(int tenant, string myGLAccountId, List<LedgerTransaction> reconciableLT_List, decimal maximalDifference)
+        private bool ProcessOneReconciableLT_List(int tenant, string myGLAccountId, List<LedgerTransaction> reconciableLT_List, 
+            decimal maximalDifference, decimal actualDifference)
         {
+            bool rv = false;
             try
             {
                 IAccountingContext context = AccountingContext.GetContext(tenant);
@@ -179,13 +229,7 @@ namespace Logitude.Accounting.BL.Utils
                 // IQueryable<IGrouping<String, JournalLineLedgerTransactionDTO>> journalLineGroups = journalLineQueryService.GetQGJournalLinesByExternalRecoFromTo(tenant, fromExtNum, toExtNum);
                 LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(context);
                 List<ReconciableGroup> reconciableGroupList = new List<ReconciableGroup>();
-                List<string> badList = new List<string>();
-                List<string> goodList = new List<string>();
-                List<string> madeList = new List<string>();
-                _NoLines = new List<string>();
-                _WrongAction = new List<string>();
-                //   _WrongSum = new List<string>();
-                _WrongSumToMatch = new List<string>();
+
 
                 foreach (IGrouping<String, JournalLineLedgerTransactionAccDTO> group in journalLineGroups)
                 {
@@ -195,9 +239,34 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         journalLineList.Add(new JournalLineReco(journalLineLedgerTransactionDTO.JournalLine, journalLineLedgerTransactionDTO.LedgerTransaction));
                     }
-                    if (IsGroupReconciable(journalLineList, groupKey, maximalDifference, context, tenant))
+                    List<JournalLineReco> jLL = journalLineList.OrderByDescending(rec => rec._oneLineLedger.AccountingDate).ThenByDescending(rec => Math.Abs(rec._oneLineLedger.AmountToReconcile)).ToList();
+                    if (actualDifference != 0m)
                     {
-                        ReconciableGroup recoGroup = new ReconciableGroup(groupKey, journalLineList);
+                        jLL.ForEach(item =>
+                        {
+                            if (actualDifference != 0m)
+                            {
+                                if (item._oneLineLedger.AmountToReconcile > actualDifference && actualDifference > 0)
+                                {
+                                    item._oneLineLedger.AmountToReconcile -= actualDifference;
+                                    actualDifference = 0m; //break
+                                }
+                                else if (item._oneLineLedger.AmountToReconcile < actualDifference && actualDifference < 0)
+                                {
+                                    item._oneLineLedger.AmountToReconcile -= actualDifference;
+                                    actualDifference = 0m; //break 
+                                }
+                            }
+    
+                        });
+                    }
+                    if (actualDifference != 0m)
+                    {
+                        _WrongSumToMatch.Add(groupKey);
+                    }
+                    else if (IsGroupReconciable(jLL, groupKey, maximalDifference, context, tenant))
+                    {
+                        ReconciableGroup recoGroup = new ReconciableGroup(groupKey, jLL);
                         reconciableGroupList.Add(recoGroup);
                         goodList.Add(groupKey);
                     }
@@ -216,17 +285,25 @@ namespace Logitude.Accounting.BL.Utils
                     }
                     if (!String.IsNullOrWhiteSpace(gLAccountId))
                     {
-                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                        try
                         {
-                            ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
-                            _counter++;
-                            scope.Complete();
+                            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                            {
+                                ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
+                                _counter++;
+                                scope.Complete();
+                                rv = true;
+                            }
+                            madeList.Add(recoGroup._Acc);
                         }
-                        madeList.Add(recoGroup._Acc);
+                        catch (Exception e)
+                        {
+                            badList.Add(gLAccountId);
+                        }
                     }
                 });
-                //   _ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum: {String.Join(", ", _WrongSum.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
-                _ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
+                //_ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
+                return rv;
             }
             catch (Exception e)
             {
@@ -238,7 +315,11 @@ namespace Logitude.Accounting.BL.Utils
         {
             IAccountingContext context = AccountingContext.GetContext(getNextGroupArgs.Tenant);
             LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
-            List<LedgerTransaction> LT_List = ledgerTransactionListQueryService.GetLedgerTransactionsByAcc_NotReconciled(ref getNextGroupArgs);
+            List<LedgerTransaction> LT_List;
+            if (getNextGroupArgs.RunOnPairs)
+                LT_List = ledgerTransactionListQueryService.GetLedgerTransactionsByAcc_RunOnPairs(ref getNextGroupArgs);
+            else
+                LT_List = ledgerTransactionListQueryService.GetLedgerTransactionsByAcc_NotReconciled(ref getNextGroupArgs);
             return LT_List;
         }
 
@@ -257,27 +338,36 @@ namespace Logitude.Accounting.BL.Utils
         {
 
             string rv = "";
-            JournalLineReco creditLine = journalLineRecoList.Where(line => line._journalLine.ActionCode == "1").FirstOrDefault();
-            if (creditLine != null)
+            JournalLineReco otherLine = journalLineRecoList.Where(line => line._journalLine.ActionCode != "1" && line._journalLine.ActionCode != "2").FirstOrDefault();
+            if (otherLine != null)
             {
-                rv = creditLine._journalLine.CreditAccountId;
+                rv = otherLine._oneLineLedger.AccountId;
             }
-            else
+            if (String.IsNullOrEmpty(rv))
             {
-                JournalLineReco debitLine = journalLineRecoList.Where(line => line._journalLine.ActionCode == "2").FirstOrDefault();
-                if (debitLine != null)
+                JournalLineReco creditLine = journalLineRecoList.Where(line => line._journalLine.ActionCode == "1").FirstOrDefault();
+                if (creditLine != null)
                 {
-                    rv = debitLine._journalLine.DebitAccountId;
+                    rv = creditLine._journalLine.CreditAccountId;
+                }
+                else
+                {
+                    JournalLineReco debitLine = journalLineRecoList.Where(line => line._journalLine.ActionCode == "2").FirstOrDefault();
+                    if (debitLine != null)
+                    {
+                        rv = debitLine._journalLine.DebitAccountId;
+                    }
+                }
+                if (!String.IsNullOrWhiteSpace(rv) && journalLineRecoList.Exists(line => line._journalLine.ActionCode == "1" && line._journalLine.CreditAccountId != rv))
+                {
+                    rv = "";
+                }
+                if (!String.IsNullOrWhiteSpace(rv) && journalLineRecoList.Exists(line => line._journalLine.ActionCode == "2" && line._journalLine.DebitAccountId != rv))
+                {
+                    rv = "";
                 }
             }
-            if (!String.IsNullOrWhiteSpace(rv) && journalLineRecoList.Exists(line => line._journalLine.ActionCode == "1" && line._journalLine.CreditAccountId != rv))
-            {
-                rv = "";
-            }
-            if (!String.IsNullOrWhiteSpace(rv) && journalLineRecoList.Exists(line => line._journalLine.ActionCode == "2" && line._journalLine.DebitAccountId != rv))
-            {
-                rv = "";
-            }
+            
             return rv;
         }
 
@@ -295,17 +385,17 @@ namespace Logitude.Accounting.BL.Utils
                 GLAccountListQueryService glaQuery = new GLAccountListQueryService(context);
                 GLAccountList gla = glaQuery.GetByAccountId(gLAccountId, tenant);
 
-                List<JournalLineReco> creditLines = journalLineRecoList.Where(line => line._journalLine.ActionCode == "1").ToList<JournalLineReco>();
+                List<JournalLineReco> creditLines = journalLineRecoList.Where(line => line._journalLine.ActionCode != "2").ToList<JournalLineReco>();
                 decimal credit_sum = 0m;
                 if (gla.ReconcileMethodCode == "1") // Foreign Currency
-                    if (creditLines != null) credit_sum = creditLines.Sum(line => line._journalLine.LocalAmount + (line._journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
+                    if (creditLines != null) credit_sum = creditLines.Sum(line => line._journalLine.ForeignAmount + (line._journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
                 else
                     if (creditLines != null) credit_sum = creditLines.Sum(line => line._journalLine.LocalAmount + (line._journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
 
-                List<JournalLineReco> debitLines = journalLineRecoList.Where(line => line._journalLine.ActionCode == "2").ToList<JournalLineReco>();
+                List<JournalLineReco> debitLines = journalLineRecoList.Where(line => line._journalLine.ActionCode != "1").ToList<JournalLineReco>();
                 decimal debit_sum = 0m;
                 if (gla.ReconcileMethodCode == "1") // Foreign Currency
-                    if (debitLines != null) debit_sum = debitLines.Sum(line => line._journalLine.LocalAmount - (line._journalLine.ExternalOpenAmount ?? 0m));
+                    if (debitLines != null) debit_sum = debitLines.Sum(line => line._journalLine.ForeignAmount - (line._journalLine.ExternalOpenAmount ?? 0m));
                 else
                     if (debitLines != null) debit_sum = debitLines.Sum(line => line._journalLine.LocalAmount - (line._journalLine.ExternalOpenAmount ?? 0m));
 
@@ -320,11 +410,11 @@ namespace Logitude.Accounting.BL.Utils
                     _WrongSumToMatch.Add(groupKey);
                     rv = false;
                 }
-                else if (journalLineRecoList.Exists(line => line._journalLine.ActionCode != "1" && line._journalLine.ActionCode != "2"))
-                {
-                    _WrongAction.Add(groupKey);
-                    rv = false;
-                }
+                //else if (journalLineRecoList.Exists(line => line._journalLine.ActionCode != "1" && line._journalLine.ActionCode != "2"))
+                //{
+                //    _WrongAction.Add(groupKey);
+                //    rv = false;
+                //}
                 // else if (credit_sum - debit_sum != 0m)
                 else if (Math.Abs(credit_sum - debit_sum) > maximalDifference)
                 {
@@ -395,7 +485,7 @@ namespace Logitude.Accounting.BL.Utils
             public Decimal _valueToMatch { get; set; }
             public JournalLine _journalLine { get; set; }
             public LedgerTransaction _oneLineLedger { get; set; }
-            public JournalLineReco(JournalLine journalLine, LedgerTransaction ledgerTransaction) // LedgerTransactionQueryService ledgerTransactionQueryService)
+            public JournalLineReco(JournalLine journalLine, LedgerTransaction ledgerTransaction) //, decimal actualDifference)
             {
                 this._journalLine = journalLine;
                 this._valueToMatch = 0m;
@@ -410,6 +500,10 @@ namespace Logitude.Accounting.BL.Utils
                     // this._valueToMatch = -(journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m));
                     //       this._valueToMatch = journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m);
                     this._valueToMatch = ledgerTransaction.OpenAmount; //+ (journalLine.ExternalOpenAmount ?? 0m); // because in credit lines the ExternalOpenAmount is negative 
+                }
+                else
+                {
+                    this._valueToMatch = ledgerTransaction.OpenAmount;
                 }
                 this._oneLineLedger = ledgerTransaction; // ledgerTransactionQueryService.GetByJournalLineIdAndLine(journalLine.JournalId, journalLine.Line, journalLine.Tenant);
                 this._oneLineLedger.AmountToReconcile = _valueToMatch;
