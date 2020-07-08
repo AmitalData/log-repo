@@ -18753,7 +18753,7 @@
     <EventType
       Code="&quot;CWR&quot;"
       ObjectTableName="&quot;Customs.Declaration&quot;"
-      EnglishName="&quot;Declaration Cancel Waiting for customs response&quot;"
+      EnglishName="&quot;Declaration Cancel Waiting for customs&quot;"
       LocalName="&quot;ביטול הצהרה ממתין לטיפול המכס&quot;"
       IsManualEntry="false"
       ShortView="false"
