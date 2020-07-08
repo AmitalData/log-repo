@@ -48,14 +48,18 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
          console.log('working.....'); 
     }
     calculateOpacity: boolean = false;
-    updateMainColor(event:  any) {
-         this.MainColor =  event.value;
-       
-        this.SliderValue = 0;
+    updateMainColor(event: any) {
+        if (this.EnableBranding) {
+            this.MainColor = event.value;
+
+            this.SliderValue = 0;
+        }
     }
     updateSecondaryColor(event: any) {
-        this.SecondaryColor = event.value;
-        this.SecondarySliderValue = 0;
+        if (this.EnableBranding) {
+            this.SecondaryColor = event.value;
+            this.SecondarySliderValue = 0;
+        }
     }
     ngAfterViewInit() {
       
@@ -63,7 +67,19 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     }
     colorpicker: any;
     secondarycolor: any;
+    private SaveCompletedEvent: any = null;
+    private CurrentSession = SessionLocator.SelectedSession;
     Listen() {
+         if (this.SaveCompletedEvent == null) {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                       
+                    }
+                });
+        
+        
+        }
         this.colorpicker = document.getElementById("color");
         this.secondarycolor = document.getElementById("secondarycolor");
 
@@ -130,6 +146,15 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
 
         }
     }
+   public get EnableBranding() {
+        return this.EntityPM.EnableBranding;
+    }
+  public  set EnableBranding(value: boolean) {
+        if (this.EntityPM.EnableBranding != value) {
+            this.EntityPM.EnableBranding = value;
+            this.EnableBrandingChange(value);
+        }
+    }
     get SecondaryColor() {
         return (this.EntityPM.SecondaryColor != null && this.EntityPM.SecondaryColor.length > 7) ? "#" + this.EntityPM.SecondaryColor.substring(3, 9) : this.EntityPM.SecondaryColor;
     }
@@ -159,26 +184,26 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     public colorPickerValue: string;
     public secondarycolorPickerValue: string;
     CalculateOpacity(value: number, field: string) {
-        
+        if (this.EnableBranding) {
             var color;
             if (field == "Main") {
                 color = this.colorpicker.value;
-               // value = ;
+                // value = ;
                 this.MainColorOpacity = Math.round(value * 255).toString(16);
             }
             else {
-               // value = Math.round(value * 255);
+                // value = Math.round(value * 255);
                 this.SecondaryColorOpacity = Math.round(value * 255).toString(16);
                 color = this.secondarycolor.value;
             }
             var rgbaColor = 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + value + ')';
-          
+
             if (field == "Main") {
-                      document.documentElement.style.setProperty('--sliderBackground',rgbaColor);
+                document.documentElement.style.setProperty('--sliderBackground', rgbaColor);
 
             }
-            else {     document.documentElement.style.setProperty('--sliderBackground2', rgbaColor);}
-        
+            else { document.documentElement.style.setProperty('--sliderBackground2', rgbaColor); }
+        }
     }
     ngOnInit() {
         this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response: any) => {
@@ -203,16 +228,19 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     EnableBrandingChange(value: any) {
 
         this.EntityPM.UpdateByUserId = SessionInfo.LoggedUserId + "^" + SessionInfo.LoggedUserTenant.toString();
-
+        this.EnableBranding = value;
         this.SetUIPropertiesEnabled(value);
 
     }
 
     SetUIPropertiesEnabled(value: boolean) {
+      
+        this.UIProperties.SetEnabled("MainColor", "TenantManagement", value);
+        this.UIProperties.SetEnabled("SecondaryColor", "TenantManagement", value);
 
-        this.EntityPM.UIProperties.SetEnabled("CustomerURL", "TenantManagement", value);
-        this.EntityPM.UIProperties.SetEnabled("ContactEmail", "TenantManagement", value);
-        this.EntityPM.UIProperties.SetEnabled("HideSharedlogistics", "TenantManagement", value);
+        this.UIProperties.SetEnabled("CustomerURL", "TenantManagement", value);
+        this.UIProperties.SetEnabled("ContactEmail", "TenantManagement", value);
+        this.UIProperties.SetEnabled("HideSharedlogistics", "TenantManagement", value);
     }
 
 
