@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
   
-import { LoginComp } from '../../Login/Login.po';
+import { LoginComp } from '../../../Login/Login.po';
 
 export class CompanyAddressSetting  {
 

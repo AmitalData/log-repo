@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { LoginComp } from "../../login/Login.po";
+import { LoginComp } from "../../../login/Login.po";
 
     export class NewAgentScenario {
 
