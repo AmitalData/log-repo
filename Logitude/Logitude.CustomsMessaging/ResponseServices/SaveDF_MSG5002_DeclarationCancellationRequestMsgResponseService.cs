@@ -93,6 +93,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 dec.CancelRequestStatusCode = "2";
                 dec.ChangeSetOp = ChangeSetOperation.Update;
+                var amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+                    Tenant = _MyDeclarationPM.Tenant,
+                    objectTableName = "Customs.Declaration",
+                    EventCode = "CWR",
+                    notes = null,
+                    CommunicationLoggingEntityReference = dec.DeclarationNumber,
+                    EntityId =   dec.Id,
+                    UserId = requestParams.LoggingUserId,
+
+                    CommunicationSubject = "FU Status CWR from logitude ",
+                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                    {
+                        entname = "CFIFILEM",
+                        primary_number = _MyDeclarationPM.CustomFileNo,
+                        status = "new",
+                        xml_status = "new",
+                        status_id = "CWR",
+                        status_DateTime = DateTime.Now,
+                        comments = null,
+                    }
+                };
+                AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
+
                 declarationUpdateService.Update(dec, true);
                 this.MyResponseData.UserMessage = "ההצהרה בוטלה בהצלחה.";
             }
