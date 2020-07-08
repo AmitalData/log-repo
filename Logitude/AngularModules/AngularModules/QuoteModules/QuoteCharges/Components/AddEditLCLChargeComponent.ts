@@ -298,18 +298,22 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
     }
 
     if (!AppTool.IsNullOrEmpty(this.EntityPM.CostMeasurementCode)) {
-      if (this.EntityPM.CostMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.CostCurrencyId) && !AppTool.IsNullOrEmpty(freightLineCostCurrencyId)) {
-        if (this.EntityPM.CostCurrencyId != freightLineCostCurrencyId) {
-          errors.push("Cost currency must be the same as the freight currency in the case of Percent of Freight");
-        }
+        if (this.EntityPM.CostMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.CostCurrencyId) && !AppTool.IsNullOrEmpty(freightLineCostCurrencyId)) {
+            if (!AppTool.IsNullOrZero(this.EntityPM.CostTotalAmount)) {
+                if (this.EntityPM.CostCurrencyId != freightLineCostCurrencyId) {
+                    errors.push("Cost currency must be the same as the freight currency in the case of Percent of Freight");
+                }
+            }
       }
     }
 
     if (!AppTool.IsNullOrEmpty(this.EntityPM.SaleMeasurementCode)) {
-      if (this.EntityPM.SaleMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.SaleCurrencyId) && !AppTool.IsNullOrEmpty(freightLineSaleCurrencyId)) {
-        if (this.EntityPM.SaleCurrencyId != freightLineSaleCurrencyId) {
-          errors.push("Sale currency must be the same as the freight currency in the case of Percent of Freight");
-        }
+        if (this.EntityPM.SaleMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.SaleCurrencyId) && !AppTool.IsNullOrEmpty(freightLineSaleCurrencyId)) {
+            if (!AppTool.IsNullOrZero(this.EntityPM.SaleTotalAmount)) {
+                if (this.EntityPM.SaleCurrencyId != freightLineSaleCurrencyId) {
+                    errors.push("Sale currency must be the same as the freight currency in the case of Percent of Freight");
+                }
+            }
       }
     }
 
