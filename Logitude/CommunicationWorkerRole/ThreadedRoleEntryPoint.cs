@@ -281,6 +281,23 @@ namespace CommunicationWorkerRole
             XElement workerRoleNameElement = XElement.Load(filePath);
             var nameElement = workerRoleNameElement.Element("WorkerName");
             LogitudeSettings.WorkerRoleName = nameElement.Value;
+
+            var automaticBreakPointElement = workerRoleNameElement.Element("AutomaticBreakPoint");
+            bool automaticBreakPoint = false;
+            if (automaticBreakPointElement != null)
+                bool.TryParse(automaticBreakPointElement.Value, out automaticBreakPoint);
+            else
+            {
+                string automaticBreakPointStr = System.Configuration.ConfigurationManager.AppSettings.Get("AutomaticBreakPoint");
+                bool.TryParse(automaticBreakPointStr, out automaticBreakPoint);
+            }
+
+            LogitudeSettings.RunWorkerRoleAutomaticBreakPoint = automaticBreakPoint;
+
+            if (Debugger.IsAttached && LogitudeSettings.WorkerRoleName == "production")
+            {
+                throw new Exception("Production worker role should not be run in Debug mode! To debug the worker role in production please use a custom worker name");// 
+            }
         }
 
         private void TestBatch()

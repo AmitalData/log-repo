@@ -233,11 +233,11 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         logWindow.Title = "New Cross Dock Release";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./Warehouse/Components/NewWarehouseReleaseComponent");
-        logWindow.WindowClosed.subscribe((event: any) => {
-            if (event == "Refresh")
-                this.ShipmentPM.IsDirty = true;
-                this.CurrentSession.CurrentEditComponent.SaveChanges();
-        });
+        //logWindow.WindowClosed.subscribe((event: any) => {
+        //    if (event == "Refresh")
+        //        this.ShipmentPM.IsDirty = true;
+        //        this.CurrentSession.CurrentEditComponent.SaveChanges();
+        //});
 
     }
 
@@ -544,6 +544,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
             }
 
             if (this.PageChild_MAIN) {
+                this.PageChild_MAIN.RefreshDatePicker = true;
                 this.PageChild_MAIN.InitTab(this.EntityPM, this.ShipmentPM);
             }
 
