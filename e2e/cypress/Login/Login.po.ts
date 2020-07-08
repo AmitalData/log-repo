@@ -14,7 +14,7 @@ export class LoginComp {
   //cy.visit('https://test.logitudeworld.com/test')
   cy.visit(Cypress.env("URL"))
 
-  cy.get('#Email').type(Cypress.env("Email"), { delay: 50 }).should('have.value', 'protractor2@test.com')
+  cy.get('#Email').type(Cypress.env("Email"), { delay: 50 }).should('have.value', Cypress.env("Email"))
 
   cy.get('#Password').type(Cypress.env("Password"))
   cy.get('#cmdLogin').click()
