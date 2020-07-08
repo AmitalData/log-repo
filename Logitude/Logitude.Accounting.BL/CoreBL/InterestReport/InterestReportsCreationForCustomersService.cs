@@ -17,21 +17,22 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 {
     public class InterestReportsCreationForCustomersService
     {
-        private DateTime interestCalculationDate;
+        
         private int tenant;
-        private List<InterestReportCustomerPM> eligibleCustomers;
+        private IInterestReportsCreationForCustomerDataPreparation interestReportsCreationForCustomerDataPreparation;
+        private DateTime interestCalculationDate;
         public InterestReportsCreationForCustomersService(InterestReportsCreationForCustomersArgs args)
         {
-            interestCalculationDate = args.InterestCalculationDate;
             tenant = args.Tenant;
-            eligibleCustomers = args.EligibleCustomers;
+            interestCalculationDate = args.InterestCalculationDate;
+            interestReportsCreationForCustomerDataPreparation = args.InterestReportsCreationForCustomerDataPreparation;
         }
 
-        public string CreateReportsForCustomersByCalculationStartDateAndCalculateData()
+        public string CreateReportsIfNotExistWithDataCalculationsForCustomers()
         {
             string log = "";
-            
-            
+            List<InterestReportCustomerPM> eligibleCustomers = interestReportsCreationForCustomerDataPreparation.GetEligibleCustomersForInterestReports(tenant);
+
             for (int i = 0; i < eligibleCustomers.Count; i++) 
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -39,13 +40,15 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     InterestReportPM interestReportPM = null;
                     try
                     {
-                        interestReportPM = CreateInterestReportForCustomerGlAccount(eligibleCustomers[i]);
+                        interestReportPM = interestReportsCreationForCustomerDataPreparation.GetDraftInterestReportForCustomer(eligibleCustomers[i]);
+                        interestReportPM.InterestCalculationDate = interestCalculationDate;
+                        interestReportPM = interestReportPM ?? interestReportsCreationForCustomerDataPreparation.CreateInterestReportForCustomerGlAccount(eligibleCustomers[i]);
                         CalculateDataForInterestReport(interestReportPM);
                         scope.Complete();
                     }
                     catch(Exception ex)
                     {
-                        string errorMessage = GetErrorMessage(ex);
+                        string errorMessage = interestReportsCreationForCustomerDataPreparation.GetErrorMessage(ex);
                         log = log + Environment.NewLine + "Error in report for customer: " 
                             + eligibleCustomers[i].EnglishName+Environment.NewLine+"Error: "+ errorMessage;
                     }
@@ -53,48 +56,6 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             }
             return log;
         }
-
-        private string GetErrorMessage(Exception exception)
-        {
-            string errorMessage = "";
-            errorMessage += exception.Message;
-
-            if (exception.InnerException != null)
-            {
-                errorMessage += Environment.NewLine + exception.InnerException.Message;
-
-                if (exception.InnerException.InnerException != null)
-                {
-                    errorMessage += Environment.NewLine + exception.InnerException.InnerException.Message;
-
-                    if (exception.InnerException.InnerException.InnerException != null)
-                    {
-                        errorMessage += Environment.NewLine + exception.InnerException.InnerException.InnerException.Message;
-                    }
-                }
-            }
-            return errorMessage;
-        }
-        private InterestReportPM CreateInterestReportForCustomerGlAccount(InterestReportCustomerPM interestReportCustomerPM)
-        {
-            DateTime createDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            InterestReportPM interestReportPM = new InterestReportPM()
-            {
-                IsCreatedFromBatch = true,
-                Tenant = tenant,
-                CreateDateTime = createDate,
-                CustomerId = interestReportCustomerPM.CustomerId,
-                GLAccountId = interestReportCustomerPM.GLAccountId,
-                InterestCalculationDate = interestCalculationDate,
-                InterestReportStatusCode = "5",
-                ChangeSetOp=Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-            };
-            IAccountingContext context = AccountingContext.GetContext(tenant);
-            InterestReportUpdateService interestReportUpdateService = new InterestReportUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
-            interestReportUpdateService.Update(interestReportPM, true);
-            return interestReportPM;
-        }
-
         private void CalculateDataForInterestReport(InterestReportPM interestReportPM) 
         {
             InterestReportArgs interestReportArgs = new InterestReportArgs()
@@ -107,11 +68,6 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             InterestReportDataCalculations interestReportDataCalculation = new InterestReportDataCalculations(interestReportArgs);
             interestReportDataCalculation.StartCalculations();
         }
-        private List<InterestReportCustomerPM> GetEligibleCustomersForInterestReports(int tenant)
-        {
-            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
-            List<InterestReportCustomerPM> eligibleCustomers= gLAccountQueryService.GetEligibleCustomersForInterestReports(tenant);
-            return eligibleCustomers;
-        }
+      
     }
 }

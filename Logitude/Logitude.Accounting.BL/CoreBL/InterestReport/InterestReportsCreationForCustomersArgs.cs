@@ -12,7 +12,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         public DateTime InterestCalculationDate { get; set; }
         public int Tenant { get; set; }
 
-        public List<InterestReportCustomerPM> EligibleCustomers { get; set; }
+        public IInterestReportsCreationForCustomerDataPreparation InterestReportsCreationForCustomerDataPreparation { get; set; }
 
     }
 }
