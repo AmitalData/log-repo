@@ -22,7 +22,8 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
                 queryOperations.SortDirectin = "Ascending";
-                if (LogitudeSettings.WorkEnvironment == "customs")
+                bool isTextAlphaNumeric = System.Text.RegularExpressions.Regex.IsMatch(compactSeachvalue.ToString(), @"^[a-zA-Z0-9]+$");
+                if (LogitudeSettings.WorkEnvironment == "customs"|| !isTextAlphaNumeric)
                 {
                     listQueryOperation.SetFilter("LocalName", compactSeachvalue, false, "StartsWith", null, false);
                     nameQueryResult = filter.GetFilteredQuery<CardList>(listQueryOperation, entityLists).Take(queryOperations.PageSize);
