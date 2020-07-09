@@ -101,48 +101,41 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                 if (!string.IsNullOrEmpty(entityPM.VatNumber))
                 {
                     List<Card> allMatchedCards
-                        = (from a in myContext.Cards
+                        = (from a in myContext.Cards.Include("Customer")
                            where a.Tenant == entityPM.Tenant
                            && a.VatNumber == entityPM.VatNumber
                            && (a.PartnerTypeId == "CS" || a.PartnerTypeId == "PO")
                            && !a.InActive
-                           && a.Customer.CustomerStatusCode != "INA"
+                           && a.Customer != null && a.Customer.CustomerStatusCode != "INA"
                            select a).ToList();
                     
                     if (allMatchedCards != null)
                     {
                         if(myTenant.VatUniqueTypeCode != "UNT")
                         {
-                            bool compareWithAll = false;
-
-                            if (myTenant.VatUniquePartnerTypeCode  == "POT" && entityPM.PartnerTypeId == "PO")
+                            bool doValidation = false;
+                            if ((myTenant.VatUniquePartnerTypeCode  == "POT" && entityPM.PartnerTypeId == "PO") || myTenant.VatUniquePartnerTypeCode == "ALL")
                             {
-                                compareWithAll = true;                               
+                                doValidation = true;
                             }
 
                             else if (myTenant.VatUniquePartnerTypeCode == "CUS" && entityPM.PartnerTypeId == "CS")
                             {
-                                compareWithAll = false;                            
-                            }
-
-                            else if(myTenant.VatUniquePartnerTypeCode == "ALL")
+                                allMatchedCards = allMatchedCards.Where(d => d.PartnerTypeId == "CS" && d.Customer != null && d.Customer.CustomerStatusCode == "ACT").ToList();
+                                doValidation = true;
+                            }  
+                            
+                            if(doValidation)
                             {
-                                compareWithAll = true;                                
+                                ValidateVAT_UniqueCountry(entityPM, allMatchedCards, myTenant, isNewEntity, myContext);
                             }
-
-                            ValidateVAT_UniqueCountry(entityPM, allMatchedCards, myTenant, isNewEntity, compareWithAll, myContext);
                         } 
                     }
                 }
             }
         }
-        private static void ValidateVAT_UniqueCountry(CustomerPM entityPM, List<Card> allMatchedCards, Tenant myTenant, bool isNewEntity, bool compareWithAll, ICommonDataContext myContext)
+        private static void ValidateVAT_UniqueCountry(CustomerPM entityPM, List<Card> allMatchedCards, Tenant myTenant, bool isNewEntity, ICommonDataContext myContext)
         {
-            if(!compareWithAll)
-            {
-                allMatchedCards = allMatchedCards.Where(a => a.PartnerTypeId == "CS").ToList();
-            }
-
             if (myTenant.VatUniqueTypeCode == "UFA")
             {
                 bool isAlreadyExists = false;

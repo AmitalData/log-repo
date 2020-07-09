@@ -668,24 +668,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     if (myTenant.VatUniqueTypeCode != "UNT")
                     {
-                        bool compareWithAll = false;
+                        bool doValidation = false;
 
-                        if (myTenant.VatUniquePartnerTypeCode == "POT" && partnerTypeId == "PO")
+                        if ((myTenant.VatUniquePartnerTypeCode == "POT" && partnerTypeId == "PO") || myTenant.VatUniquePartnerTypeCode == "ALL")
                         {
-                            compareWithAll = true;
+                            doValidation = true;
                         }
 
                         else if (myTenant.VatUniquePartnerTypeCode == "CUS" && partnerTypeId == "CS")
                         {
-                            compareWithAll = false;
+                            allMatchedCards = allMatchedCards.Where(d => d.PartnerTypeId == "CS" && d.Customer.CustomerStatusCode == "ACT");
+                            doValidation = true;
                         }
 
-                        else if (myTenant.VatUniquePartnerTypeCode == "ALL")
+                        if (doValidation)
                         {
-                            compareWithAll = true;
+                            isAlreadyExists = this.ValidateVAT_UniqueCountry(customerId, countryId, allMatchedCards, myTenant, isNewEntity, addressRepository);
                         }
-
-                        isAlreadyExists = this.ValidateVAT_UniqueCountry(customerId, countryId, allMatchedCards, myTenant, isNewEntity, compareWithAll, addressRepository);
                     }
                 }
 
@@ -697,13 +696,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private bool ValidateVAT_UniqueCountry(string customerId, string countryId, IQueryable<Card> allMatchedCards, Tenant myTenant, bool isNewEntity, bool compareWithAll, AddressRepository addressRepository)
+        private bool ValidateVAT_UniqueCountry(string customerId, string countryId, IQueryable<Card> allMatchedCards, Tenant myTenant, bool isNewEntity, AddressRepository addressRepository)
         {
-            if (!compareWithAll)
-            {
-                allMatchedCards = allMatchedCards.Where(a => a.PartnerTypeId == "CS");
-            }
-
             bool isAlreadyExists = false;
 
             if (myTenant.VatUniqueTypeCode == "UFA")
