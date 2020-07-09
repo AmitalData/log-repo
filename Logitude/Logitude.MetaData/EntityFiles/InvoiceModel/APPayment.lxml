@@ -8551,6 +8551,12 @@
       LocalDefaultText="&quot; “לא הוגדר מדינה בכרטיס הספק התפעולי , לא ניתן להשלים את הוראת התשלום ללא ערך זה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APPayment.M.CheckPaymentChequesBeforeCancel&quot;"
+      DefaultText="&quot;The payment cheque that connected to the APPayment is redeemed, you should cancel the external reconciliation in order to update the status of the payment cheque&quot;"
+      LocalDefaultText="&quot;לא ניתן לבטל את התשלום לספק, משום שהתשלום בוצע ע”י המחאה שנפרעה כבר, יש לבטל את ההתאמה החיצונית ע”מ לעדכן את הסטטוס של ההמחאה&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
