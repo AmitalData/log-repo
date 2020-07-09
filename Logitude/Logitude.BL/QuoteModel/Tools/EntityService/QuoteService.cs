@@ -555,8 +555,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             InitializePickupDelivery();
             SetCustomerDateFields(entityPM, entityPoco);
             ComputeChargesSaleFieldsInSaleCurrency();
-            ComputeCountryForStatisticsId();
-            this.FillDefaultSubType();
+            ComputeCountryForStatisticsId();            
 
             if (!entityPM.IsHybrid)
             {
@@ -620,11 +619,12 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             this.ComputeExpectedProfit();
             this.ComputeProfit();
+            this.FillDefaultSubType();
         }
 
         private void FillDefaultSubType()
         {
-            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
+            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId) || entityPM.ConvertToFCL || entityPM.ConvertToLCL)
             {
                 string code = null;
                 if (entityPM.TransportModeId == "A")

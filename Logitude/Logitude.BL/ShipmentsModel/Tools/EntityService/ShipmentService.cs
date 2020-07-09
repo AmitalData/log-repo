@@ -2744,8 +2744,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.CalculateStatus = false;
 
             this.ComputeShipmentStatus();
-            this.UpdateCustomerWorkingDates();
-            this.FillDefaultSubType();
+            this.UpdateCustomerWorkingDates();            
 
             if (isNewEntity)
             {
@@ -3102,6 +3101,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         }
                     }
                 }
+
                 bool IsImporterApprovalRequiredOldValue = false;
                 if (entityPM.IsHybrid || loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                 {
@@ -3242,15 +3242,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.InitializePrintingFields();
                 this.ComputeTEU();
                 this.UpdateQuoteUsage();
-                //this.InitializeBookingData();
+                this.FillDefaultSubType();
             }
-
-
         }
 
         private void FillDefaultSubType()
         {
-            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
+            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId) || entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
             {
                 string code = null;
                 if (entityPM.TransportModeId == "A")
