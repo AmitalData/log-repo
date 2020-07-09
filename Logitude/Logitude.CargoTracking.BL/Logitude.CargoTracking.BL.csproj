@@ -67,6 +67,7 @@
     <Compile Include="EntityDataMappings\Generated\CargoTrackingPortDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingShipmentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingShipmentSearchDataMapping.Generated.cs" />
+    <Compile Include="EntityQueryServices\CargoTrackingShipmentSearchQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingCardQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingHeaderEntityTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingMilestoneQueryService.Generated.cs" />

@@ -21,6 +21,21 @@ namespace Logitude.CargoTracking.Data.Repositories
 			throw new NotImplementedException();
         }
 
+        public IQueryable<CargoTrackingShipmentSearch> GetShipmentSearchEntities(string searchField, int tenant)
+        {
+            IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntities = (from searchEntity in currentContext.CargoTrackingShipmentSearches
+                         where 
+                            searchEntity.SearchFields == searchField
+                            && searchEntity.Tenant == tenant
+                            orderby searchEntity.ShipmentDate descending
+                            select searchEntity
+                            
+                            ).Take(20);
+
+            return shipmentsSearchEntities;
+        }
+
+
    }
 
 }

@@ -13,7 +13,7 @@ namespace CargoTrackingSearchWinForm
 {
     public partial class CargoTrackingShipmentSearchForm : Form
     {
-        private string LocalConectionstring = "Logitude2-5_Main,sa,Saas256,.";
+        private string LocalConectionstring = "CargoTracking,sa,Saas256,.";
         private string TestConectionstring = "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
         private string CloudConectionstring = "Main,sa,Saas256,amitaldata.cloudapp.net";
         private string CurrentConectionstring;
@@ -37,7 +37,7 @@ namespace CargoTrackingSearchWinForm
         {
             if (!string.IsNullOrEmpty(textBox1.Text))
             {
-                string sqlQueryStr = "SELECT top 10 * FROM ( SELECT  Id, Tenant, SearchFields, ShipmentId, ShipmentDate, ROW_NUMBER() OVER(PARTITION BY ShipmentId ORDER BY ID DESC) rn FROM CargoTrackingShipmentSearchFields WHERE SearchFields = '"+ textBox1.Text + "' ) a WHERE rn = 1 Order by ShipmentDate DESC";
+                string sqlQueryStr = "SELECT top 10 * FROM ( SELECT  Id, Tenant, SearchFields, ShipmentId, ShipmentDate, ROW_NUMBER() OVER(PARTITION BY ShipmentId ORDER BY ID DESC) rn FROM CargoTrackingShipmentSearches WHERE SearchFields = '" + textBox1.Text + "' ) a WHERE rn = 1 Order by ShipmentDate DESC";
  
                 SqlConnection conn = new SqlConnection();
                 try
