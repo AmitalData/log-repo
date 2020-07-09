@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+  
+  <Oracle Version="2">
+    <![CDATA[
+     declare
+ n int := 0;
+begin
+  select count(*) into n
+  from PACKAGES 
+ where code='DEAM';
+ if n = 0 then
+Insert into PACKAGES (CODE,NAME,SEARCHFIELDS,INACTIVE,FEATUREPACKAGETYPECODE) values ('DEAM','Declaration Amendment','DEAM,Declaration Amendment',0,'BS');
+Insert into PACKAGES (CODE,NAME,SEARCHFIELDS,INACTIVE,FEATUREPACKAGETYPECODE) values ('DEAMA','Declaration Amendment','DEAMA,Declaration Amendment ',0,'AD');
+Insert into PACKAGECONNECTEDPACKAGES (ID,PACKAGECODE,CONNECTEDPACKAGECODE) values ('G-25','DEAMA','DEAM');
+
+ 
+commit;
+  end if;
+end;
+
+
+
+]]>
+  </Oracle>
+</Script>

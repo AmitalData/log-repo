@@ -1118,6 +1118,7 @@ export class DeclarationWebService {
         });
     }
 
+
     PostSendCargoSealsRequest(requestParams: CargoSealsRequestParams) {
         return defer(() => {
 
@@ -1130,6 +1131,27 @@ export class DeclarationWebService {
             var params = JSON.stringify(requestParams);
             return this._http.post(
                 this._apiUrl + '/PostSendCargoSealsRequest/',
+                JSON.stringify(requestParams),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
+                    return serviceResponse;
+
+                }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    PostSendDeclarationCancellation(requestParams: any) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            var params = JSON.stringify(requestParams);
+            return this._http.post(
+                this._apiUrl + '/PostSendDeclarationCancellation/',
                 JSON.stringify(requestParams),
                 ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;

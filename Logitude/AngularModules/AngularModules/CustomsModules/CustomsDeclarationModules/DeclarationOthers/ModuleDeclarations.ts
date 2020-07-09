@@ -11,6 +11,7 @@ import { SendDeclarationComponent } from './Components/SendDeclaration/SendDecla
 import { SupplierInvoiceSelectionComponent } from './Components/DeclarationPayment/SupplierInvoiceSelectionComponent';
 import { PointersFromInvoicesSelectionComponent } from './Components/Documents/PointersFromInvoicesSelectionComponent';
 import { DeclarationQueryComponent } from './Components/DeclarationQueryComponent';
+import { DeclarationCancellationComponent } from './Components/DeclarationCancellation/DeclarationCancellationComponent';
 
 
 
@@ -26,8 +27,8 @@ export const Components =
     SupplierInvoiceSelectionComponent,
     PointersFromInvoicesSelectionComponent,
     DeclarationQueryComponent,
-    SendManifestComponent
-
+    SendManifestComponent,
+    DeclarationCancellationComponent
     ];
 
 export class ModuleDeclarations {
@@ -47,7 +48,8 @@ export class ModuleDeclarations {
           case "PointersFromInvoicesSelectionComponent": { myResult = PointersFromInvoicesSelectionComponent; break; }
           case "DeclarationQueryComponent": { myResult = DeclarationQueryComponent; break; }
           case "SendManifestComponent": { myResult = SendManifestComponent; break; }
-        
+           case "DeclarationCancellationComponent": { myResult = DeclarationCancellationComponent; break; }
+
         }
 
         return myResult;

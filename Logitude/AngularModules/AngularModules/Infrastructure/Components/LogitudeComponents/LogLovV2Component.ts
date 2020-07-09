@@ -1,6 +1,6 @@
 declare var window: any;
 declare var System: any;
-import { Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, Injector, EventEmitter, AfterViewInit, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, Injector, EventEmitter, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from './BaseComponent';
 import { EntityListService } from '../../Services/EntityListService';
 import { ServiceArgs } from '../../DataContracts/ServiceArgs';
@@ -222,7 +222,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     LovPartnerTypes: Array<PartnerTypeList> = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityListService: EntityListService, private entityPMService: EntityPMService,
-        private _entityResourceService: EntityResourceService) {
+        private _entityResourceService: EntityResourceService, private CD: ChangeDetectorRef) {
         this.show = false;
         this.TenantPM = InfraSettings.TenantPM;
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -2924,6 +2924,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     this.HighlightSelectedValue();
                     this.isLoading = false;
                 }
+                this.CD.detectChanges();
+
             });
         });
     }
