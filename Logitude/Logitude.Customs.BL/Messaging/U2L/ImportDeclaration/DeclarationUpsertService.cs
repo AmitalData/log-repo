@@ -861,7 +861,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
             if (_AmitalCustomsFile.FileStatus == "OPT" && isNew)
             {
-                this._DeclarationReferantDataPM = myDeclarationReferantDataQueryService.GetSingle(this._MyDeclarationPM.Id, true, false);
+                this._DeclarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Update;
                 _DeclarationReferantDataPM.NewFile = false;
                 myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
             }
