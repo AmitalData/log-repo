@@ -1,3 +1,4 @@
+import { CargoTrackingSearchService } from './../CargoTracking/Services/Others/CargoTrackingSearchService';
 import { SearchComponent } from './../CargoTracking/Components/Search/search.component';
 import { ShipmentComponent } from './../CargoTracking/Components/Shipment/shipment.component';
 
@@ -7,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -16,11 +18,14 @@ import { AppComponent } from './app.component';
     ],
     imports: [
         BrowserModule,
+        HttpClientModule,
         AppRoutingModule,
         ReactiveFormsModule,
         FormsModule
     ],
-    providers: [],
+    providers: [
+        CargoTrackingSearchService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

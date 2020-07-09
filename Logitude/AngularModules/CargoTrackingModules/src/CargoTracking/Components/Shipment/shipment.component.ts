@@ -1,3 +1,5 @@
+import { CargoTrackingShipmentList } from './../../EntityLists/CargoTrackingShipmentList';
+import { CargoTrackingSearchService } from './../../Services/Others/CargoTrackingSearchService';
 import { Component, AfterViewInit, HostListener, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -11,15 +13,19 @@ import { db } from '../../../app/mem.data';
 export class ShipmentComponent implements OnInit
 {
     ShipmentId: string = "";
-    Shipment;
+    Shipment: CargoTrackingShipmentList = null;
     innerWidth: number;
+    isLoading: boolean = false;
     isMobileView: boolean = false;
     isTabletView: boolean = false;
 
-    constructor(private route: ActivatedRoute,private router: Router, private location: Location) {
+    constructor(private route: ActivatedRoute,
+        private router: Router,
+         private location: Location,
+         private searchService: CargoTrackingSearchService) {
         this.GetIdFromURI();
 
-        this.GetShipmentFromDB();
+        this.LoadShipment();
 
     }
 
@@ -39,10 +45,10 @@ export class ShipmentComponent implements OnInit
         this.isTabletView = this.innerWidth <= 1000;
     }
 
-    private GetShipmentFromDB()
-    {
-        this.Shipment = db.Shipments.find(d => d.Id == this.ShipmentId);
-    }
+    // private GetShipmentFromDB()
+    // {
+    //     this.Shipment = db.Shipments.find(d => d.Id == this.ShipmentId);
+    // }
 
     private GetIdFromURI()
     {
@@ -62,17 +68,17 @@ export class ShipmentComponent implements OnInit
     GetModeIcon()
     {
         var iconPath = "";
-        switch (this.Shipment.Mode) {
-            case 'Air':
+        switch (this.Shipment.TransportModeId) {
+            case 'A':
                 iconPath = "./assets/images/misc/plane.svg";
                 break;
 
-            case 'Ocean':
+            case 'O':
                 iconPath = "./assets/images/misc/ship.svg";
             break;
 
             default:
-                case 'Land':
+                case 'L':
                 iconPath = "./assets/images/misc/Truck.svg";
                 break;
 
@@ -85,5 +91,16 @@ export class ShipmentComponent implements OnInit
     TabToggleClicked(tabName: string)
     {
         this.SelectedTab = tabName;
+    }
+
+    LoadShipment(){
+        this.isLoading = true;
+        this.searchService.getShipment(this.ShipmentId, 1).subscribe((result: any) =>
+        {
+            this.isLoading = false;
+            console.log("[getShipment]", result);
+            this.Shipment = result;
+
+        });
     }
 }

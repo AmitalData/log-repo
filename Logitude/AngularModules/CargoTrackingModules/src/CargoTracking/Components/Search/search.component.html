@@ -1,5 +1,5 @@
-<div class="search-wrapper" [style.height]="FilteredItems.length>0 ? '100%' : ''">
-    <div class="vertical-center" [class.vertical-center-withdata]="FilteredItems.length>0">
+<div class="search-wrapper" [style.height]="Shipments.length>0 ? '100%' : ''">
+    <div class="vertical-center" [class.vertical-center-withdata]="Shipments.length>0">
         <h1 class="page-title">Track Shipment</h1>
         <div class=" ">
             <div>
@@ -24,13 +24,13 @@
 
         <div class="container ">
 
-            <div class="info-text " *ngIf="FilteredItems.length==0 && !noResult">
+            <div class="info-text " *ngIf="Shipments.length==0 && !noResult">
                 <p>
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
                     survived not only five centuries.
                 </p>
             </div>
-            <div class="path-image hide-mobile " *ngIf="FilteredItems.length==0  && !noResult">
+            <div class="path-image hide-mobile " *ngIf="Shipments.length==0  && !noResult">
                 <img class="path " src="./assets/images/misc/dot-path.svg " alt=" " />
                 <img class="end " src="./assets/images/misc/path-end.svg " alt=" " />
                 <img class="start " src="./assets/images/misc/path-start.svg " alt=" " />
@@ -39,7 +39,7 @@
 
 
 
-            <div class="result-count dark-gray" *ngIf="FilteredItems.length>0">{{FilteredItems.length}} results</div>
+            <div class="result-count dark-gray" *ngIf="Shipments.length>0">{{Shipments.length}} results</div>
 
 
 
@@ -56,7 +56,7 @@
 
 
 
-            <div *ngIf="FilteredItems.length>0" class="scrollable-table">
+            <div *ngIf="Shipments.length>0" class="scrollable-table">
 
                 <div class="table">
 
@@ -85,10 +85,10 @@
                     </div> -->
 
 
-                    <div *ngFor="let item of FilteredItems" class="row record-row" (click)="ItemClicked(item)" style="cursor: pointer;">
+                    <div *ngFor="let shipment of Shipments" class="row record-row" (click)="ItemClicked(shipment)" style="cursor: pointer;">
                         <div class="column mode-icon" style="width: 8%;">
                             <div class="circle-image">
-                                <img class="path " [attr.src]="GetModeIcon(item.Mode)" alt=" " />
+                                <img class="path " [attr.src]="GetModeIcon(shipment.TransportModeId)" alt=" " />
                             </div>
                         </div>
 
@@ -96,10 +96,10 @@
                         <div class="column col-md-2 reference" style="width: 14%;">
                             <div>
                                 <div class="subtitle">Reference NO.</div>
-                                <div>{{ item.Reference }}</div>
-                                <div>{{ item.Reference }}</div>
-                                <div class="hide-mobile">{{ item.Reference }}</div>
-                                <div class="hide-mobile">{{ item.Reference }}</div>
+                                <div>{{ shipment.ShipmentNumber }}</div>
+                                <div>{{ shipment.ShipmentNumber }}</div>
+                                <div class="hide-mobile">{{ shipment.ShipmentNumber }}</div>
+                                <div class="hide-mobile">{{ shipment.ShipmentNumber }}</div>
 
                             </div>
                         </div>
@@ -111,13 +111,13 @@
                             <div>
                                 <div class="subtitle">Sender</div>
                                 <div class="value uppercase">
-                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ item.Sender }}
+                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.ShipperId }}
                                 </div>
 
 
                                 <div class="subtitle">Receiver</div>
                                 <div class="value uppercase">
-                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ item.Receiver }}
+                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.CustomerId }}
                                 </div>
 
                             </div>
@@ -128,12 +128,12 @@
                             <div>
                                 <div class="subtitle">Pickup</div>
                                 <div class="value uppercase">
-                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ item.Pickup }}
+                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.PickupDone }}
                                 </div>
 
                                 <div class="subtitle">Delivery Location</div>
                                 <div class="value uppercase">
-                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ item.Delivery }}
+                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.Delivery }}
                                 </div>
 
                             </div>
@@ -143,7 +143,7 @@
                         <div class="column col-md-2 hide-mobile" style="width: 12%;">
                             <div>
                                 <div class="subtitle">Shipment ID</div>
-                                <div class="value uppercase">{{ item.ShipmentID }}</div>
+                                <div class="value uppercase">{{ shipment.ShipmentNumber }}</div>
 
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                         <!-- <div class="column col-md-2">
                             <div>
                                 <div class="header subtitle">From</div>
-                                {{ item.From | date: " MMMM d, y, h:mm" }}
+                                {{ shipment.From | date: " MMMM d, y, h:mm" }}
                             </div>
                         </div> -->
 
@@ -162,7 +162,7 @@
                         <!-- <div class="column col-md-2">
                             <div>
                                 <div class="header subtitle">To</div>
-                                {{ item.To | date: " MMMM d, y, h:mm" }}
+                                {{ shipment.To | date: " MMMM d, y, h:mm" }}
                             </div>
                         </div> -->
 
@@ -170,11 +170,11 @@
                         <div class="column col-md-1 status" style="width: 17%;">
                             <div>
                                 <div class="subtitle">Status</div>
-                                <div class="value">{{ item.Status }}</div>
+                                <div class="value">{{ shipment.CurrentMilestoneCode }}</div>
 
 
                                 <div class="subtitle">Last Updated</div>
-                                <div class="value">{{ item.To | date: "d-MMM-y, h:mm" }}</div>
+                                <div class="value">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm" }}</div>
                             </div>
                         </div>
                     </div>

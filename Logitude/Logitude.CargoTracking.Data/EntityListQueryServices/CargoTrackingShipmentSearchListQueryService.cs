@@ -13,42 +13,56 @@ using System.Xml.Serialization;
 
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Data.EntityLists;
+using Logitude.CargoTracking.Data.Repositories;
 
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
-{ 
+{
 
     public partial class CargoTrackingShipmentSearchListQueryService
     {
-	    private IQueryable<CargoTrackingShipmentSearchList> GetIqueryableList(IQueryable<CargoTrackingShipmentSearch> iQueryable)
+        private IQueryable<CargoTrackingShipmentSearchList> GetIqueryableList(IQueryable<CargoTrackingShipmentSearch> iQueryable)
         {
-		IQueryable<CargoTrackingShipmentSearchList> query = (from a in iQueryable
-                                            select new CargoTrackingShipmentSearchList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          SearchFields = a.SearchFields,
-					
-					                          ShipmentId = a.ShipmentId,
-					
-					                          ShipmentDate = a.ShipmentDate,
-					
-		                    	            });
-            return query;
-		}
+            IQueryable<CargoTrackingShipmentSearchList> query = (from a in iQueryable
+                                                                 select new CargoTrackingShipmentSearchList()
+                                                                 {
 
-		private IQueryable<CargoTrackingShipmentSearch> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CargoTrackingShipmentSearch> iQueryable, int tenant)
+                                                                     Id = a.Id,
+
+                                                                     Tenant = a.Tenant,
+
+                                                                     SearchFields = a.SearchFields,
+
+                                                                     ShipmentId = a.ShipmentId,
+
+                                                                     ShipmentDate = a.ShipmentDate,
+
+                                                                 });
+            return query;
+        }
+
+        private IQueryable<CargoTrackingShipmentSearch> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<CargoTrackingShipmentSearch> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<CargoTrackingShipmentSearch> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<CargoTrackingShipmentSearch> iQueryable, int tenant)
+            return iQueryable;
+        }
+        private IQueryable<CargoTrackingShipmentSearch> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<CargoTrackingShipmentSearch> iQueryable, int tenant)
         {
-			return iQueryable;
-		}
-		
-			}
+            return iQueryable;
+        }
+
+        public List<CargoTrackingShipmentList> GetShipments(string searchText, int tenant)
+        {
+            CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
+            IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntities = repo.GetShipmentSearchEntities(searchText, tenant);
+
+            List<string> shipmentsIds = shipmentsSearchEntities.Select(d => d.ShipmentId).ToList();
+
+            CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
+            List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetShipments(shipmentsIds, tenant);
+
+            return shipments;
+        }
+
+    }
 
 
 }

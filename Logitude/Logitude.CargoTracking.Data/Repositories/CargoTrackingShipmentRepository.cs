@@ -21,7 +21,28 @@ namespace Logitude.CargoTracking.Data.Repositories
 			throw new NotImplementedException();
         }
 
-   }
+        public IQueryable<CargoTrackingShipment> GetByIds(List<string> shipmentsIds, int tenant)
+        {
+            IQueryable<CargoTrackingShipment> shipments = (from shipment in currentContext.CargoTrackingShipments
+                                                                 where
+                                                                    shipmentsIds.Contains(shipment.Id)
+                                                                    && shipment.Tenant == tenant
+                                                                 select shipment);
+
+            return shipments;
+        }
+
+        public CargoTrackingShipment GetById(string shipmentId, int tenant)
+        {
+            CargoTrackingShipment shipment = (from _shipment in currentContext.CargoTrackingShipments
+                                                           where
+                                                              _shipment.Id == shipmentId
+                                                              && _shipment.Tenant == tenant
+                                                           select _shipment).FirstOrDefault();
+
+            return shipment;
+        }
+    }
 
 }
    

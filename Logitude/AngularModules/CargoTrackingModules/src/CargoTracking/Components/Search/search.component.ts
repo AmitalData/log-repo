@@ -1,3 +1,5 @@
+import { CargoTrackingShipmentList } from './../../EntityLists/CargoTrackingShipmentList';
+import { CargoTrackingSearchService } from './../../Services/Others/CargoTrackingSearchService';
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute, Event, RoutesRecognized } from '@angular/router';
 import { fromEvent } from 'rxjs';
@@ -20,9 +22,13 @@ export class SearchComponent implements AfterViewInit
     currentDate = new Date();
     FilteredItems: any[] = [];
     searchForm;
+    Shipments: CargoTrackingShipmentList[] = [];
 
 
-    constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder)
+    constructor(private router: Router,
+        private route: ActivatedRoute,
+        private formBuilder: FormBuilder,
+        private searchService: CargoTrackingSearchService)
     {
         this.listenToRouterEvents();
 
@@ -138,7 +144,8 @@ export class SearchComponent implements AfterViewInit
     Search()
     {
         this.router.navigate(['/search', this.SearchText]);
-        this.FilterItems();
+        // this.FilterItems();
+        this.LoadShipments();
     }
     FilterItems()
     {
@@ -172,20 +179,40 @@ export class SearchComponent implements AfterViewInit
         this.router.navigate(['/shipment', id]);
 
     }
+    LoadShipments()
+    {
+
+        this.noResult = false;
+        var searchText = this._SearchText.trim().toLowerCase();
+        if (searchText) {
+            this.isLoading = true;
+            this.searchService.getShipments(searchText, 1).subscribe((result: any) =>
+            {
+                this.isLoading = false;
+                console.log("[getShipments]", result);
+                this.Shipments = result;
+                this.noResult = this.Shipments.length == 0 && !!this.SearchText;
+
+            });
+        }else{
+            this.Shipments = [];
+        }
+
+    }
 
     GetModeIcon(mode: string)
     {
         var iconPath = "";
         switch (mode) {
-            case 'Air':
+            case 'A':
                 iconPath = "./assets/images/misc/plane.svg";
                 break;
 
-            case 'Ocean':
+            case 'O':
                 iconPath = "./assets/images/misc/ship.svg";
                 break;
 
-            case 'Land':
+            case 'I':
                 iconPath = "./assets/images/misc/Truck.svg";
                 break;
 

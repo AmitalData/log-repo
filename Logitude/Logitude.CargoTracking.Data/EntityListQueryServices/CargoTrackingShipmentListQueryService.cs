@@ -13,78 +13,156 @@ using System.Xml.Serialization;
 
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Data.EntityLists;
+using Logitude.CargoTracking.Data.Repositories;
 
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
-{ 
+{
 
     public partial class CargoTrackingShipmentListQueryService
     {
-	    private IQueryable<CargoTrackingShipmentList> GetIqueryableList(IQueryable<CargoTrackingShipment> iQueryable)
+        private IQueryable<CargoTrackingShipmentList> GetIqueryableList(IQueryable<CargoTrackingShipment> iQueryable)
         {
-		IQueryable<CargoTrackingShipmentList> query = (from a in iQueryable
-                                            select new CargoTrackingShipmentList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          EntityId = a.EntityId,
-					
-					                          ForwardingShipmentHeaderId = a.ForwardingShipmentHeaderId,
-					
-					                          CustomsShipmentHeaderId = a.CustomsShipmentHeaderId,
-					
-					                          EntityType = a.EntityType,
-					
-					                          CurrentMilestoneCode = a.CurrentMilestoneCode,
-					
-					                          CurrentMilestoneDate = a.CurrentMilestoneDate,
-					
-					                          CustomerId = a.CustomerId,
-					
-					                          TransportModeId = a.TransportModeId,
-					
-					                          Master = a.Master,
-					
-					                          House = a.House,
-					
-					                          ShipmentNumber = a.ShipmentNumber,
-					
-					                          FromPortId = a.FromPortId,
-					
-					                          ToPortId = a.ToPortId,
-					
-					                          ShipperId = a.ShipperId,
-					
-					                          ConsigneeId = a.ConsigneeId,
-					
-					                          GrossWeight = a.GrossWeight,
-					
-					                          Volume = a.Volume,
-					
-					                          PickupDone = a.PickupDone,
-					
-					                          ClearanceDone = a.ClearanceDone,
-					
-					                          PickupDate = a.PickupDate,
-					
-					                          ClearanceDate = a.ClearanceDate,
-					
-		                    	            });
-            return query;
-		}
+            IQueryable<CargoTrackingShipmentList> query = (from a in iQueryable
+                                                           select new CargoTrackingShipmentList()
+                                                           {
 
-		private IQueryable<CargoTrackingShipment> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CargoTrackingShipment> iQueryable, int tenant)
+                                                               Id = a.Id,
+
+                                                               Tenant = a.Tenant,
+
+                                                               EntityId = a.EntityId,
+
+                                                               ForwardingShipmentHeaderId = a.ForwardingShipmentHeaderId,
+
+                                                               CustomsShipmentHeaderId = a.CustomsShipmentHeaderId,
+
+                                                               EntityType = a.EntityType,
+
+                                                               CurrentMilestoneCode = a.CurrentMilestoneCode,
+
+                                                               CurrentMilestoneDate = a.CurrentMilestoneDate,
+
+                                                               CustomerId = a.CustomerId,
+
+                                                               TransportModeId = a.TransportModeId,
+
+                                                               Master = a.Master,
+
+                                                               House = a.House,
+
+                                                               ShipmentNumber = a.ShipmentNumber,
+
+                                                               FromPortId = a.FromPortId,
+
+                                                               ToPortId = a.ToPortId,
+
+                                                               ShipperId = a.ShipperId,
+
+                                                               ConsigneeId = a.ConsigneeId,
+
+                                                               GrossWeight = a.GrossWeight,
+
+                                                               Volume = a.Volume,
+
+                                                               PickupDone = a.PickupDone,
+
+                                                               ClearanceDone = a.ClearanceDone,
+
+                                                               PickupDate = a.PickupDate,
+
+                                                               ClearanceDate = a.ClearanceDate,
+
+                                                           });
+            return query;
+        }
+
+        public CargoTrackingShipmentList GetEntityList(CargoTrackingShipment poco)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<CargoTrackingShipment> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<CargoTrackingShipment> iQueryable, int tenant)
+            CargoTrackingShipmentList list = null;
+            if (poco != null)
+                list = new CargoTrackingShipmentList()
+                {
+
+                    Id = poco.Id,
+
+                    Tenant = poco.Tenant,
+
+                    EntityId = poco.EntityId,
+
+                    ForwardingShipmentHeaderId = poco.ForwardingShipmentHeaderId,
+
+                    CustomsShipmentHeaderId = poco.CustomsShipmentHeaderId,
+
+                    EntityType = poco.EntityType,
+
+                    CurrentMilestoneCode = poco.CurrentMilestoneCode,
+
+                    CurrentMilestoneDate = poco.CurrentMilestoneDate,
+
+                    CustomerId = poco.CustomerId,
+
+                    TransportModeId = poco.TransportModeId,
+
+                    Master = poco.Master,
+
+                    House = poco.House,
+
+                    ShipmentNumber = poco.ShipmentNumber,
+
+                    FromPortId = poco.FromPortId,
+
+                    ToPortId = poco.ToPortId,
+
+                    ShipperId = poco.ShipperId,
+
+                    ConsigneeId = poco.ConsigneeId,
+
+                    GrossWeight = poco.GrossWeight,
+
+                    Volume = poco.Volume,
+
+                    PickupDone = poco.PickupDone,
+
+                    ClearanceDone = poco.ClearanceDone,
+
+                    PickupDate = poco.PickupDate,
+
+                    ClearanceDate = poco.ClearanceDate,
+
+                };
+
+            return list;
+        }
+
+        private IQueryable<CargoTrackingShipment> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<CargoTrackingShipment> iQueryable, int tenant)
         {
-			return iQueryable;
-		}
-		
-			}
+            return iQueryable;
+        }
+        private IQueryable<CargoTrackingShipment> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<CargoTrackingShipment> iQueryable, int tenant)
+        {
+            return iQueryable;
+        }
+
+        public List<CargoTrackingShipmentList> GetShipments(List<string> shipmentsIds, int tenant)
+        {
+            CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(tenant);
+            IQueryable<CargoTrackingShipment> shipments = repo.GetByIds(shipmentsIds, tenant);
+
+            IQueryable<CargoTrackingShipmentList> shipmetsLists = GetIqueryableList(shipments);
+
+            return shipmetsLists.ToList();
+        }
+        public CargoTrackingShipmentList GetShipment(string shipmentId, int tenant)
+        {
+            CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(tenant);
+            CargoTrackingShipment shipment = repo.GetById(shipmentId, tenant);
+
+            CargoTrackingShipmentList shipmentList = GetEntityList(shipment);
+
+            return shipmentList;
+        }
+
+    }
 
 
 }
