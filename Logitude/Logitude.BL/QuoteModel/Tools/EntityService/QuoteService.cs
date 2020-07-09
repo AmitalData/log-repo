@@ -474,6 +474,11 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.isAdhoc = entityPM.QuoteTypeCode == "A" ? true : false;
             this.isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");
 
+            if (string.IsNullOrEmpty(entityPM.ShipmentTypeId) && entityPM.TransportModeId == "A")
+            {
+                entityPM.ShipmentTypeId = "Air";
+            }
+
             this.isLCLQuote = false;
             if (entityPM.TransportModeId.ToUpper() == "A")
             {
