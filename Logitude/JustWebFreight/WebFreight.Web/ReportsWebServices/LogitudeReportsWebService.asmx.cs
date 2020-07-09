@@ -11806,7 +11806,7 @@ namespace WebFreight.Web.ReportsWebServices
                 DetailedControlVendors = vendor,
                 DetailedControlClients = customer,
                 DetailedControlFile = files,
-                DetailedControlJob= jobs,
+                DetailedControlJob = jobs,
                 Category1 = category1,
                 Category2 = category2,
                 Category3 = category3,
@@ -11816,6 +11816,7 @@ namespace WebFreight.Web.ReportsWebServices
                 IsRevenueExpenseReport = false,
                 //  Skip = true
                 Suppress_DoNotShowCardWithoutActivity =false,
+
 
             };
 
