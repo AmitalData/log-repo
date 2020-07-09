@@ -5,6 +5,8 @@ import { DateTool, AppTool } from 'Infrastructure/Tools';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { CargoTrackingExtendedPMService, CargoTrackingArgs } from 'Accounting/Services/ExtendedPMs/CargoTrackingExtendedPMService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
  
 
 @Component({
@@ -17,6 +19,7 @@ export class CargoTrackingBuildShipmentComponent extends BaseComponent implement
   private CurrentSession = SessionLocator.SelectedSession;
   public ValidationErrorsList: string[] = [];
   public ObjectTableName: string = "CargoTrackingShipments";
+  public iCargoTrackingExtendedPMService:CargoTrackingExtendedPMService = new CargoTrackingExtendedPMService();
   DataContext: any = this;
   constructor() {
        super();
@@ -50,7 +53,7 @@ if(this.SelectedValue ==="S"){
       confirmWindow.Show(MessageText);
       confirmWindow.WindowClosed.subscribe((event: any) => {
           if (confirmWindow.Yes) {
-              
+            this.CargoTrackingBuilder();
           } else if (confirmWindow.No) {
 
           }
@@ -121,6 +124,26 @@ if(this.SelectedValue ==="S"){
        
     
 }
+
+CargoTrackingBuilder() {
+    var iCargoTrackingArgs:CargoTrackingArgs=  new CargoTrackingArgs();  
+    iCargoTrackingArgs.FromDate = this.fromDate;
+    iCargoTrackingArgs.ToDate = this.toDate;
+    iCargoTrackingArgs.Tenant = this.Tenant;
+    this.CurrentSession.StartBusyIndicatorLoading();
+    this.iCargoTrackingExtendedPMService.PostCargoTrackingBuilder(iCargoTrackingArgs).subscribe((response: ServiceResponse) => {
+    this.CurrentSession.StopBusyIndicator();
+      var mm: ServiceResponse = response;
+      if (!mm.HasError) {
+          
+      }
+      else {
+
+      }
+
+    });
+}
+
 InitializeDate(){
   
     var month = new Date().getMonth();
@@ -144,5 +167,7 @@ InitializeDate(){
     return date;
 }
 }
+
+
 
  
