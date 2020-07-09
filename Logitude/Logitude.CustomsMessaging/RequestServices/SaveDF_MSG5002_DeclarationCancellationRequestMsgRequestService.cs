@@ -192,13 +192,13 @@ namespace Logitude.CustomsMessaging.RequestServices
  
         public override DF_NG_5002_MSG14001_DeclarationCancellationRequestMsg GetRequest(GenericRequestParams requestParams)
         {
- 
 
-          LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
+            _context = CustomContext.GetContext(requestParams.Tenant);
+            LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
            LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIAChangeDue = " + requestParams.RequestVIAChangeDue);
 
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
-            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(requestParams.Tenant);
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), requestParams.Tenant);
 
             var dec = declarationQueryService.GetSingle(requestParams.AppicationId,false,false);
             if(dec==null)
@@ -218,7 +218,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             req.GeneralData.DeclarationType = 1;
             req.GeneralData.CancellationReasonTypeId = Convert.ToInt32(dec.CancelRequestReasonCode);
             req.GeneralData.AgentCancellationRemarks = dec.CancelRequestReasonExplanation;
-
+            req.Attachment = new Attachment[1];
+            req.Attachment[0] = new Attachment() { IsAttachment = "false" , externalAttachmentID= "IIG-227-1" };
+            dec.ChangeSetOp = ChangeSetOperation.Update;
             declarationUpdateService.Update(dec, true);
 
             _context = null;

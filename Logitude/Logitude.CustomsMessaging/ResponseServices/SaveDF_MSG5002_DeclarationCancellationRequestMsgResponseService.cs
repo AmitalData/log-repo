@@ -80,7 +80,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.HasException = false;
 
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
-            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(requestParams.Tenant);
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
 
             var dec = declarationQueryService.GetSingle(requestParams.AppicationId, false, false);
 

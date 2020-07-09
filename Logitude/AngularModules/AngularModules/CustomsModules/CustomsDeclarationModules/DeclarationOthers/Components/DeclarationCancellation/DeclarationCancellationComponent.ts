@@ -3,7 +3,7 @@ import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeCo
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
-import { CustomSendOptionsArgs, RequestParamsBase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs, RequestParamsBase, SendRequestVIA } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -12,6 +12,7 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
 import { CustomMessageProgressComponent } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 import { GenericRequestParams } from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
 
+declare var window: any;
 
 @Component({
     selector: 'DeclarationCancellationComponent',
@@ -24,6 +25,9 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
     public ObjectTableName: string = "Customs.Declaration";
     public DataContext: DeclarationCancellationComponent = this;
     private CurrentSession = SessionLocator.SelectedSession;
+    ForcePersonalSign: boolean;
+    RequestVIA: SendRequestVIA;
+
     ValidationErrorsList: string[];
     readonly: boolean = false;
      get CancelRequestNumber() { return this.EntityPM.CancelRequestNumber; }
@@ -90,6 +94,10 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
     }
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
+        this.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
+        this.RequestVIA = customSendOptionsArgs.RequestVIA;
+
+
         this.FillErrors();
         if (this.ValidationErrorsList.length > 0) {
             return;
@@ -105,6 +113,13 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.LoggingEntityId = this.EntityPM.Id;
         currRequestParams.AppicationId = this.EntityPM.Id;
+        currRequestParams.LoggingEntityReference = this.EntityPM.DeclarationNumber;
+         currRequestParams.LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0].Id;
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.RequestName = "Declaration Cancellation Request";
+        currRequestParams.ResponseName = "Declaration Cancellation Response";
+        currRequestParams.RequestVIA = this.RequestVIA;
+
         this._declarationPMService.update(this.EntityPM).subscribe(x => {
             CustomMessageProgressComponent
                 .ShowProgressBar(currRequestParams.PBId, "שליחת מסר ביטול הצהרה", true)
