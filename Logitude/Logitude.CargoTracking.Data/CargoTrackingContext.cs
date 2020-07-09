@@ -66,7 +66,17 @@ namespace Logitude.CargoTracking.Data
             Database.SetInitializer<CargoTrackingContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 			
-            modelBuilder.Configurations.Add(new CargoTrackingPort2Map());
+            modelBuilder.Configurations.Add(new CargoTrackingCardMap());
+	
+            modelBuilder.Configurations.Add(new CargoTrackingHeaderEntityTypeMap());
+	
+            modelBuilder.Configurations.Add(new CargoTrackingMilestoneMap());
+	
+            modelBuilder.Configurations.Add(new CargoTrackingPortMap());
+	
+            modelBuilder.Configurations.Add(new CargoTrackingShipmentMap());
+	
+            modelBuilder.Configurations.Add(new CargoTrackingShipmentSearchMap());
 				
 						 
             #region
@@ -348,7 +358,37 @@ namespace Logitude.CargoTracking.Data
 		}
  
 
-	 public IDbSet<CargoTrackingPort2> CargoTrackingPort2s 
+	 public IDbSet<CargoTrackingCard> CargoTrackingCards 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoTrackingHeaderEntityType> CargoTrackingHeaderEntityTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoTrackingMilestone> CargoTrackingMilestones 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoTrackingPort> CargoTrackingPorts 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoTrackingShipment> CargoTrackingShipments 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoTrackingShipmentSearch> CargoTrackingShipmentSearches 
 	 {
 	      get; set;
 	 

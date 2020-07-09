@@ -109,6 +109,7 @@
     <Content Include="Accounting\Components\Others\DropdownButtonComponent.html" />
     <Content Include="Accounting\Components\Others\ExtReconcileAdjustBankFeeComponent.html" />
     <Content Include="Accounting\Components\Others\BatchInvoicesComponent.html" />
+    <Content Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingServiceComponent.html" />
     <Content Include="Accounting\Components\Others\JournalReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ExternalReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ReconcileComponent.html" />
@@ -461,6 +462,7 @@
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\AddEditPrivateLabelsComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\CargoTrackingBrandingComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelLoadComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureUser\Components\EditTabs\UserDistributorComponent.html" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\AccountingIntegrityCheck\IntegrityCheckTabComponent.ts" />
@@ -497,6 +499,7 @@
     <TypeScriptCompile Include="Accounting\Components\Others\AccountingNoteComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\BatchInvoicesComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ExtReconcileAdjustBankFeeComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingServiceComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ReconcileExternalPage\ManageExternalReconciliationTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\ShortTitles\InterestReportShortTitleComponent.ts" />
@@ -1142,6 +1145,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\PriceSteps\PriceStepsGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\CargoTrackingBrandingComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\CustomControls\RatioBoxComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\ExportBI2ExcelControl\ExportBI2ExcelControl.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWDateComponent.ts" />

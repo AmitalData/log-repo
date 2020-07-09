@@ -16,8 +16,11 @@ export class AppComponent
     IsBrandingDataLoaded: boolean = false;
     displayMenu: boolean = false;
     showBackButton: boolean = false;
-   // cargoTrackingBrandingData: CargoTrackingBrandingData;
-    constructor(private _location: Location, private activerouter: ActivatedRoute, private router: Router, private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService )
+    currentDate: Date = new Date();
+    companyLabel: string = "DSV";
+    companyName: string = "Unifreight Cloud Services";
+
+    constructor(private _location: Location, private activerouter: ActivatedRoute, private router: Router)
     {
         this.cargoTrackingDataExtendedService.get().subscribe((response: ServiceResponse) => {
            

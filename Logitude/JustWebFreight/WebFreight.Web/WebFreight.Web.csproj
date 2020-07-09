@@ -930,8 +930,8 @@
     <Content Include="App_Code\AngularJS_App_Code\Common\CommunicationLogStepController.cs" />
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
-    <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingPort2ViewsController.Generated.cs" />
-    <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingPort2Controller.Generated.cs" />
+    <Compile Include="Controllers\CargoTrackingModel\CargoTrackingSearchController.cs" />
+    <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingShipmentSearchViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\HelpResourceController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\InterestReportController.cs" />
@@ -2535,6 +2535,7 @@
     <Compile Include="MetaDataUpdate\DetailClasses\TaxWithholdingAssessOfficeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\WarehouseTypeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\UsoCFDIDetails.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CargoTrackingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\CommonDataModelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AccountingPartnerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AccountingSettingUpdateClass.cs" />
@@ -2723,6 +2724,12 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BusinessRoleUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoSplitRequestStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTrackingCardUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTrackingHeaderEntityTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTrackingMilestoneUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTrackingPortUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTrackingShipmentSearchUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTrackingShipmentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CashBookLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CashBookTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CashBookUpdateClass.cs" />
@@ -6554,6 +6561,7 @@
   <ItemGroup>
     <Folder Include="BookingModel\DomainServices\Generated\" />
     <Folder Include="CargoTrackingModel\" />
+    <Folder Include="Controllers\CargoTrackingModel\Generated\PMControllers\" />
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />

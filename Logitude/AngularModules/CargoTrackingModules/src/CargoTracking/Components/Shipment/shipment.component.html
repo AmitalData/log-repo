@@ -1,3 +1,7 @@
+
+<div *ngIf="!isLoading && !Shipment" class="no-result">
+    <h2>    Sorry, Can't find this shipment </h2>
+</div>
 <div class="content-wrapper" *ngIf="Shipment">
     <a [routerLink]="" (click)="goBack()">Back to search result</a>
 
@@ -11,22 +15,22 @@
 
         <div class="field">
             <div class="label">Shipment ID</div>
-            <div class="value">{{ Shipment.ShipmentID }}</div>
+            <div class="value">{{ Shipment.ShipmentNumber }}</div>
         </div>
 
         <div class="field">
             <div class="label">Booking ID</div>
-            <div class="value">{{ Shipment.BookingID }}</div>
+            <div class="value">{{ Shipment.ShipmentNumber }}</div>
         </div>
 
         <div class="field">
             <div class="label">Origin Port</div>
-            <div class="value">{{ Shipment.OriginPort }}</div>
+            <div class="value">{{ Shipment.FromPortId }}</div>
         </div>
 
         <div class="field">
             <div class="label">Destination Port</div>
-            <div class="value">{{ Shipment.DestinationPort }}</div>
+            <div class="value">{{ Shipment.ToPortId }}</div>
         </div>
 
         <img class="hide-tablet" src="./assets/images/misc/cargo.svg" alt="">
@@ -141,12 +145,12 @@
 
                 <div class="field">
                     <div class="label">Creation Date</div>
-                    <div class="value">{{ Shipment.CreationDate | date: "d-MMM-y, h:mm" }}</div>
+                    <div class="value">{{ Shipment.PickupDate | date: "d-MMM-y, h:mm" }}</div>
                 </div>
 
                 <div class="field">
                     <div class="label">Sender</div>
-                    <div class="value">{{ Shipment.Sender }}</div>
+                    <div class="value">{{ Shipment.ShipperId }}</div>
                 </div>
 
                 <div class="field">
@@ -156,19 +160,19 @@
 
                 <div class="field">
                     <div class="label">Receiver</div>
-                    <div class="value">{{ Shipment.Receiver }}</div>
+                    <div class="value">{{ Shipment.ShipperId }}</div>
                 </div>
 
 
                 <div class="field">
                     <div class="label">Transport By</div>
-                    <div class="value">{{ Shipment.Mode }}</div>
+                    <div class="value">{{ Shipment.TransportModeId }}</div>
                 </div>
 
 
                 <div class="field">
                     <div class="label">Deleivery</div>
-                    <div class="value">{{ Shipment.Delivery }}</div>
+                    <div class="value">{{ Shipment.ShipperId }}</div>
                 </div>
             </div>
 

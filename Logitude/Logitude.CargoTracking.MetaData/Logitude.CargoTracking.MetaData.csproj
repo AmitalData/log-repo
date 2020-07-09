@@ -91,12 +91,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="EntityFiles\CargoTrackingPort2.lxml" />
+    <None Include="DBTables\CargoTrackingCard.dxml" />
+    <None Include="DBTables\CargoTrackingHeaderEntityType.dxml" />
+    <None Include="DBTables\CargoTrackingMilestone.dxml" />
+    <None Include="DBTables\CargoTrackingPort.dxml" />
+    <None Include="DBTables\CargoTrackingShipment.dxml" />
+    <None Include="DBTables\CargoTrackingShipmentSearch.dxml" />
+    <None Include="EntityFiles\CargoTrackingCard.lxml" />
+    <None Include="EntityFiles\CargoTrackingHeaderEntityType.lxml" />
+    <None Include="EntityFiles\CargoTrackingMilestone.lxml" />
+    <None Include="EntityFiles\CargoTrackingPort.lxml" />
+    <None Include="EntityFiles\CargoTrackingShipment.lxml" />
+    <None Include="EntityFiles\CargoTrackingShipmentSearch.lxml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DBScripts\" />
-    <Folder Include="DBTables\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

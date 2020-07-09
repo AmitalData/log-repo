@@ -120,7 +120,9 @@ li a {
 }
 
 .search-wrapper {
-    height: calc(80vh - 70px);
+    /* height: calc(80vh - 70px); */
+    height: calc(100vh - 110px);
+    min-height: calc(100vh - 110px);
     position: relative;
 }
 
@@ -129,8 +131,8 @@ li a {
     margin: 0 auto;
     position: absolute;
     top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+    -ms-transform: translateY(-75%);
+    transform: translateY(-75%);
     max-width: 1100px;
     position: relative;
 }
@@ -223,7 +225,7 @@ li a {
 .scrollable-table {
     max-width: 1600px;
     margin: 0 auto;
-    height: 68vh;
+    /* height: 68vh; */
 }
 
 .scrollable-table>.table {

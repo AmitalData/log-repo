@@ -35,9 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-
-  Code="&quot;e167&quot;"
-
+  Code="&quot;644a&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -6966,7 +6964,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
     <Feature
       Code="&quot;BICentralDWH &quot;"
       FeatureTypeCode="&quot;OTH&quot;"
@@ -6976,7 +6973,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
     <Feature
       Code="&quot;PrivateDB&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
@@ -6986,6 +6982,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
+    <Feature
+      Code="&quot;CARGOTRACKING&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CARGOTRACKING&quot;"
+      FeatureDefaultText="&quot;CargoTracking&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
