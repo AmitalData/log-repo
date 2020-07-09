@@ -847,6 +847,7 @@ namespace Logitude.XSD.INTTRA_Booking
                         },
 
                         NumberOfEquipment = item.Quantity + "",
+
                         ImportExportHaulage = new ImportExportHaulageType()
                         {
                             HaulageArrangements = ImportExportHaulageTypeHaulageArrangements.MerchantExportHaulageMerchantImportHaulage,
@@ -855,7 +856,7 @@ namespace Logitude.XSD.INTTRA_Booking
                         }
                     };
 
-                    if (packageType.IsRefrigerated)
+                    if (item.NonActiveContainer)
                     {
                         itemDetails.EquipmentTemperature = new INTTRA_Booking.TemperatureType()
                         {
@@ -880,19 +881,19 @@ namespace Logitude.XSD.INTTRA_Booking
                                 string msg = TranslateTextsClass.Translate("ShipmentPackage.F.Temperature", this.Tenant) + " invalid format";
                                 this.Errors.Add(msg);
                             }
-                        }
 
-                        else
-                        {
-                            itemDetails.EquipmentTemperature = new INTTRA_Booking.TemperatureType()
+                            else
                             {
-                                UOM = INTTRA_Booking.TemperatureUOMValues.CEL,
-                                Value = item.Temperature,
-                            };
+                                itemDetails.EquipmentTemperature = new INTTRA_Booking.TemperatureType()
+                                {
+                                    UOM = INTTRA_Booking.TemperatureUOMValues.CEL,
+                                    Value = item.Temperature,
+                                };
 
-                            if (item.TemperatureUnitCode != "CEL")
-                            {
-                                itemDetails.EquipmentTemperature.UOM = INTTRA_Booking.TemperatureUOMValues.FAH;
+                                if (item.TemperatureUnitCode != "CEL")
+                                {
+                                    itemDetails.EquipmentTemperature.UOM = INTTRA_Booking.TemperatureUOMValues.FAH;
+                                }
                             }
                         }
                     }
