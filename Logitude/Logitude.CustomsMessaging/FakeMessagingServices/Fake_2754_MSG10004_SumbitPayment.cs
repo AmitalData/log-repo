@@ -8,9 +8,9 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
     public class Fake_2754_MSG10004_SumbitPayment : Fake_ImportDeclaration_Response
     {
         public Fake_2754_MSG10004_SumbitPayment(GenericRequestParams requestParams) : base(requestParams) { }
-    public ResponseHeader CallWS(out DF_NG_2754_MSG10004_ImportDeclarationResponse response)
+    public ResponseHeader CallWS(out DF_NG_2754_MSG10004_ImportDeclarationResponse response, GenericRequestParams requestParams)
         {
-            UpdateDeclaration();
+            UpdateDeclaration(requestParams);
             UpdateStatus("5");
             response = fakeRespond;
             UpdateFakeResponseContentHeader();

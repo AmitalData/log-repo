@@ -111,6 +111,7 @@
     <None Include="DBScripts\Post\202005210125_BeforeUpdateDeleteAllMetadata.sxml" />
     <None Include="DBScripts\Post\202005270157_SetNullableForCDROPColumns_Global.sxml" />
     <None Include="DBScripts\Post\202005270158_SetNullableForCDROPColumns_Main.sxml" />
+    <None Include="DBScripts\Post\202007031145_DeclarationCancellationAddOn.sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
     <None Include="DBScripts\Pre\202005210106_DropUnneededTables_SystemLogs.sxml" />
@@ -136,6 +137,8 @@
     <None Include="DBScripts\Pre\202006031905_default0Isdiamond.sxml" />
     <None Include="DBScripts\Pre\2020070502_ISVALIDTICKETSDIAMOND.sxml" />
     <None Include="DBScripts\Pre\2020070560750_UQ_CARDS_TENANT_CODE_PAR_CXQOV.sxml" />
+    <None Include="DBScripts\Pre\202007091941_AddONDeclarationCancellationAndAmendment.sxml" />
+    <None Include="DBScripts\Pre\202007091441_FixFKCliam.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />

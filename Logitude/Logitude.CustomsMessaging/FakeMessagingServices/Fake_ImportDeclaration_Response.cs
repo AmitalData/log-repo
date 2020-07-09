@@ -30,7 +30,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             fakeRespond = new DF_NG_2754_MSG10004_ImportDeclarationResponse();
             _ResponseHeader = new ResponseHeader();
         }
-        public void UpdateDeclaration()
+        public void UpdateDeclaration(GenericRequestParams requestParams)
         {
             fakeRespond.Response = new Response();
             DeclarationDMExtensions _dm = new DeclarationDMExtensions();
@@ -46,6 +46,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _dm.VersionID = new DeclarationDMExtensionsVersionID() { Value = "0.6" };
             _dm.CustomsValueComponent = _customsValueComponent;
             _dm.TaxationDateTime = XmlConvert.ToString(DateTime.Now);
+            _dm.AgentFileReferenceID = declaration.DMExtensions.AgentFileReferenceID;
 
             //DutyTaxFee
             taxFree[0] = new DeclarationDutyTaxFee
@@ -75,7 +76,13 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _dm.ExpenseLoadingFactor = new DeclarationDMExtensionsExpenseLoadingFactor() { Value = 99 };
             declaration.DMExtensions = _dm;
             declaration.AcceptanceDateTime = DateTime.Now.ToString();
-            declaration.IssueDateTime = DateTime.Now.ToString();
+            if (requestParams.InterfaceTypeCode == "5117")
+            {
+                declaration.IssueDateTime = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+            }
+            else {
+                declaration.IssueDateTime = DateTime.Now.ToString();
+            }
             declaration.TypeCode = new DeclarationTypeCodeType();
             fakeRespond.Response.Declaration = declaration;
         }

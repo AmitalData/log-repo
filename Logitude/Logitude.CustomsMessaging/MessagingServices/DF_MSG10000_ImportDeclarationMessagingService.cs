@@ -148,7 +148,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     case "2754Valid":
                         var Fake2754ValidMsg = new Fake_2754_MSG10004_ImportDeclarationResponse(requestParams);
-                        _ResponseHeader = Fake2754ValidMsg.CallWS(out response);
+                        _ResponseHeader = Fake2754ValidMsg.CallWS(requestParams,out response);
                         break;
                     case "2754Constraint":
                         var Fake2754WithConstraintMsg = new Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint(requestParams);
@@ -156,7 +156,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         break;
                     case "2754Payment":
                         var Fake2754SumbitPayment = new Fake_2754_MSG10004_SumbitPayment(requestParams);
-                        _ResponseHeader = Fake2754SumbitPayment.CallWS(out response);
+                        _ResponseHeader = Fake2754SumbitPayment.CallWS(out response, requestParams);
                         break;
                 }
                 exceptionMessage = null;
