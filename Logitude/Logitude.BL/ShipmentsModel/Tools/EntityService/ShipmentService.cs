@@ -2577,6 +2577,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.UpdateCustomerWorkingDates();
             this.FillDefaultSubType();
 
+            if(string.IsNullOrEmpty(entityPM.ShipmentTypeId) && entityPM.TransportModeId == "A")
+            {
+                entityPM.ShipmentTypeId = "Air";
+            }
+
             if (isNewEntity)
             {
                 #region
