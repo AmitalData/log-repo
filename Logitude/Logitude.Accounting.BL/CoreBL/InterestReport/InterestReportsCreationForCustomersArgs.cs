@@ -9,6 +9,11 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 {
     public class InterestReportsCreationForCustomersArgs
     {
+        public InterestReportsCreationForCustomersArgs(DateTime interestCalculationDate, int tenant)
+        {
+            InterestCalculationDate = interestCalculationDate;
+            Tenant = tenant;
+        }
         public DateTime InterestCalculationDate { get; set; }
         public int Tenant { get; set; }
 

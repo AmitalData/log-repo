@@ -28,11 +28,11 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             interestReportsCreationForCustomerDataPreparation = args.InterestReportsCreationForCustomerDataPreparation;
         }
 
-        public string CreateReportsIfNotExistWithDataCalculationsForCustomers()
+        public string CreateReportsIfNotExistAndCalculateReportsDataForCustomers()
         {
             string log = "";
             List<InterestReportCustomerPM> eligibleCustomers = interestReportsCreationForCustomerDataPreparation.GetEligibleCustomersForInterestReports(tenant);
-
+            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
             for (int i = 0; i < eligibleCustomers.Count; i++) 
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -40,6 +40,11 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     InterestReportPM interestReportPM = null;
                     try
                     {
+                        bool hasRecentReport = interestReportQueryService.CheckRecentCustomerReports(tenant, interestCalculationDate, eligibleCustomers[i].CustomerId);
+                        if (hasRecentReport)
+                        {
+
+                        }
                         interestReportPM = interestReportsCreationForCustomerDataPreparation.GetDraftInterestReportForCustomer(eligibleCustomers[i]);
                         interestReportPM.InterestCalculationDate = interestCalculationDate;
                         interestReportPM = interestReportPM ?? interestReportsCreationForCustomerDataPreparation.CreateInterestReportForCustomerGlAccount(eligibleCustomers[i]);

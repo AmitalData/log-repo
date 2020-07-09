@@ -207,6 +207,7 @@
     <Compile Include="CoreBL\Batch\BatchInterestReportInvoiceInProgressService.cs" />
     <Compile Include="CoreBL\Batch\BatchInterestReportsCreationForCustomers.cs" />
     <Compile Include="CoreBL\Batch\BatchInterestReportService.cs" />
+    <Compile Include="CoreBL\Batch\BatchInterestReportsForEligibleCustomersCreationService.cs" />
     <Compile Include="CoreBL\Batch\BatchOpenFormatReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchReconciliationStageBTask.cs" />
     <Compile Include="CoreBL\Batch\BatchReconciliationStageCTask.cs" />
