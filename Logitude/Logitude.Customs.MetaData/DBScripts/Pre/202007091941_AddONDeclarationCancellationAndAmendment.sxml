@@ -3,7 +3,8 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="1">
+  
+  <Oracle Version="2">
     <![CDATA[
      declare
  n int := 0;
