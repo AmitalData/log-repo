@@ -734,11 +734,11 @@ export class MaintenanceComponent {
                
                         var windowTitle = "Cargo Tracking";
                         var logWindow = new LogitudeWindow();
-                        logWindow.Width = 750;
+                        logWindow.Width = 950;
                         logWindow.Height = 500;
                         logWindow.Title = windowTitle;
                         logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/LocalSettings/LocalSettingsComponent');
+                        logWindow.Show('./Accounting/Components/Others/CargoTrackingService/CargoTrackingServiceComponent');
                    
                     break;
                 }
