@@ -187,7 +187,7 @@ get CustomerURL() {
     ValidateHexCode(value:string, fieldName:string) {
 
         var valid: boolean = /^#[0-9a-fA-F]*/i.test(value);
-        if ((!valid || value.length>9) && value != null) {
+        if ((!valid || value.length>9 || value.length<7) && value != null) {
             this.UIProperties.SetValidity(fieldName, "TenantManagement", false, "this is not a valid hex code");
 
             return false;

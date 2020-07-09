@@ -45,7 +45,7 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
         private static void ValidateHexCode(string color)
         {
             Regex regex = new Regex("^#[A-Fa-f0-9]*$");
-            if (!regex.IsMatch(color))
+            if (!regex.IsMatch(color) || color.Length>9 || color.Length <7)
             {
                 string msg = "This is not a valid hex code";
                 throw new ApplicationException(msg);
