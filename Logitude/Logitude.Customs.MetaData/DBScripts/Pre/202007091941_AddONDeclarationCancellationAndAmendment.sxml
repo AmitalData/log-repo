@@ -3,7 +3,8 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="1">
+  
+  <Oracle Version="2">
     <![CDATA[
      declare
  n int := 0;
@@ -14,12 +15,9 @@ begin
  if n = 0 then
 Insert into PACKAGES (CODE,NAME,SEARCHFIELDS,INACTIVE,FEATUREPACKAGETYPECODE) values ('DEAM','Declaration Amendment','DEAM,Declaration Amendment',0,'BS');
 Insert into PACKAGES (CODE,NAME,SEARCHFIELDS,INACTIVE,FEATUREPACKAGETYPECODE) values ('DEAMA','Declaration Amendment','DEAMA,Declaration Amendment ',0,'AD');
-Insert into PACKAGECONNECTEDPACKAGES (ID,PACKAGECODE,CONNECTEDPACKAGECODE) values ('G-23','DEAMA','DEAM');
+Insert into PACKAGECONNECTEDPACKAGES (ID,PACKAGECODE,CONNECTEDPACKAGECODE) values ('G-25','DEAMA','DEAM');
 
-
-Insert into PACKAGES (CODE,NAME,SEARCHFIELDS,INACTIVE,FEATUREPACKAGETYPECODE) values ('DECA','Declaration Cancellation','DECA,Declaration Cancellation',0,'BS');
-Insert into PACKAGES (CODE,NAME,SEARCHFIELDS,INACTIVE,FEATUREPACKAGETYPECODE) values ('DECAA','Declaration Cancellation AddOn','DECAA,Declaration Cancellation AddOn',0,'AD');
-Insert into PACKAGECONNECTEDPACKAGES (ID,PACKAGECODE,CONNECTEDPACKAGECODE) values ('G-24','DECAA','DECA');
+ 
 commit;
   end if;
 end;
