@@ -11802,7 +11802,7 @@ namespace WebFreight.Web.ReportsWebServices
                 DetailedControlVendors = vendor,
                 DetailedControlClients = customer,
                 DetailedControlFile = files,
-                DetailedControlJob= jobs,
+                DetailedControlJob = jobs,
                 Category1 = category1,
                 Category2 = category2,
                 Category3 = category3,
@@ -11811,7 +11811,7 @@ namespace WebFreight.Web.ReportsWebServices
                 DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance,
                 IsRevenueExpenseReport = false,
                 //  Skip = true
-
+                Suppress_DoNotShowCardWithoutActivity = false,
 
             };
 
@@ -12377,6 +12377,7 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.Category4 = category4;
                 trailReportParam.Category5 = category5;
                 trailReportParam.MyTrailReportLevel = ReportLevel.GLAccount;
+                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero =dontShowCardsWith0Balance;
                 var servce = TrailReportFactory.CreateNew(trailReportParam);
 
