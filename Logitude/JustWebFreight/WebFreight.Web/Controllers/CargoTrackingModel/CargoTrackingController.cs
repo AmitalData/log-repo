@@ -11,7 +11,7 @@ using System.Web.Http;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 
-namespace WebFreight.Web.Controllers.WebServices
+namespace WebFreight.Web.Controllers.CargoTrackingModel
 {
     public class CargoTrackingController: ApiController
     {
@@ -22,7 +22,7 @@ namespace WebFreight.Web.Controllers.WebServices
             {
                 TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(1);
                 TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(1);
-                CargoTrackingBrandingData data = new CargoTrackingBrandingData { Tenant = 1, MainColor = "#c0c0c0", SecondaryColor = "#FF0000", BackgroundId = "1-30" };
+                CargoTrackingBrandingData data = new CargoTrackingBrandingData { Tenant = 1, MainColor =tenantManagementPM.MainColor , SecondaryColor = tenantManagementPM.SecondaryColor, BackgroundId = tenantManagementPM.BackgroundId };
                 ServiceResponse response = new ServiceResponse();
                 response.Result = data;
                 return Request.CreateResponse(HttpStatusCode.OK, response);

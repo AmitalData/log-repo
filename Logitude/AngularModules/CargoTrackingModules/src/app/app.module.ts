@@ -1,7 +1,6 @@
 import { CargoTrackingSearchService } from './../CargoTracking/Services/Others/CargoTrackingSearchService';
 import { SearchComponent } from './../CargoTracking/Components/Search/search.component';
 import { ShipmentComponent } from './../CargoTracking/Components/Shipment/shipment.component';
-import { HttpClientModule } from '@angular/common/http';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule  } from '@angular/core';

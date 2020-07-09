@@ -4,7 +4,6 @@ import { Router, ActivatedRoute, Event, NavigationStart, NavigationEnd, Navigati
 import { CargoTrackingBrandingDataExtendedService } from '../CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';// '../../../../../Services/Others/CargoTrackingDataExtendedService';
 import { ServiceResponse } from '../CargoTracking/DataContracts/ServiceResponse';
 import { CargoTrackingBrandingData } from '../CargoTracking/DataContracts/CargoTrackingBrandingData';
-
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -19,8 +18,8 @@ export class AppComponent
     currentDate: Date = new Date();
     companyLabel: string = "DSV";
     companyName: string = "Unifreight Cloud Services";
-
-    constructor(private _location: Location, private activerouter: ActivatedRoute, private router: Router)
+   // cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService = new CargoTrackingBrandingDataExtendedService();
+    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,private _location: Location, private activerouter: ActivatedRoute, private router: Router)
     {
         this.cargoTrackingDataExtendedService.get().subscribe((response: ServiceResponse) => {
            
