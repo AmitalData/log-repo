@@ -4560,5 +4560,197 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
            
         }
 
+        public CustomerPM GetSinglePMByExternalId(string externalId, int tenant)
+        {
+            CustomerPM entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
+                                 where a.Card.ReceivablesAccountingCard == externalId && a.Tenant == tenant
+                                 select new CustomerPM()
+                                 {
+                                     BillToId = a.BillToId,
+                                     BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                                     Id = a.Id,
+                                     RankId = a.RankId,
+                                     AccountManagerUserId = a.AccountManagerUserId,
+                                     SalesmanUserId = a.SalesmanUserId,
+                                     Tenant = a.Tenant,
+                                     Website = a.Card.Website,
+                                     Code = a.Card.Code,
+                                     LocalName = a.Card.LocalName,
+                                     EnglishName = a.Card.EnglishName,
+                                     CardPMId = a.Id,
+                                     ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                     PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                     AccountingVATSplit = a.Card.AccountingVATSplit,
+                                     CreateDate = a.Card.CreateDate,
+                                     UpdateDate = a.Card.UpdateDate,
+                                     CreatedByUserId = a.Card.CreatedByUserId,
+                                     UpdatedByUserId = a.Card.UpdatedByUserId,
+                                     InActive = a.Card.InActive,
+                                     Notes = a.Card.Notes,
+                                     SupportNotes = a.Card.SupportNotes,
+                                     PartnerTypeId = a.Card.PartnerTypeId,
+                                     PaymentTermId = a.Card.PaymentTermId,
+                                     VatNumber = a.Card.VatNumber,
+                                     InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
+                                     ComputedLocalName = string.IsNullOrEmpty(a.Card.LocalName) ? a.Card.EnglishName : a.Card.LocalName,
+                                     CityName = a.Card.CityName,
+                                     RankCode = a.Rank != null ? a.Rank.Code : null,
+                                     RankName = a.Rank != null ? a.Rank.Name : null,
+                                     VatTypeId = a.Card.VatTypeId,
+                                     ImageDetailId = a.Card.ImageDetailId,
+                                     BankName = a.Card.BankName,
+                                     BankAddress = a.Card.BankAddress,
+                                     IBANNumber = a.Card.IBANNumber,
+                                     Swift = a.Card.Swift,
+                                     AccountNumber = a.Card.AccountNumber,
+                                     SharedLogisticsInvitationStatusName = a.Card.SharedLogisticsInvitationStatus != null ? a.Card.SharedLogisticsInvitationStatus.Name : null,
+                                     IsActiveForMobile = a.Card.IsActiveForMobile,
+                                     LastLoginDate = a.Card.LastLoginDate,
+                                     InvitationDate = a.Card.InvitationDate,
+                                     LeadSourceId = a.LeadSourceId,
+                                     IndustryId = a.IndustryId,
+                                     ClassifierId = a.ClassifierId,
+                                     CollectorId = a.CollectorId,
+                                     LeadSourceName = a.LeadSource != null ? a.LeadSource.Name : null,
+                                     IndustryName = a.Industry != null ? a.Industry.Name : null,
+                                     CreditLimit = a.CreditLimit,
+                                     LeadDescription = a.LeadDescription,
+                                     IsCustomer = a.IsCustomer,
+                                     FreelancerId = a.FreelancerId,
+                                     CustomerStatusCode = a.CustomerStatusCode,
+                                     ForwarderId = a.ForwarderId,
+                                     CustomsAgentId = a.CustomsAgentId,
+                                     MediatorId = a.MediatorId,
+                                     BeforeDeactiveStatusCode = a.BeforeDeactiveStatusCode,
+                                     CodeMyCustomer = a.IsCustomer ? a.Card.Code + " (Customer)" : a.Card.Code,
+                                     CustomerStatusName = a.CustomerStatus != null ? a.CustomerStatus.Name : null,
+                                     PrimaryContactId = a.Card.PrimaryContactId,
+                                     ReadyForActivationDate = a.ReadyForActivationDate,
+                                     RegionId = a.RegionId,
+                                     RegionName = a.Region != null ? a.Region.Name : null,
+                                     CustomerSizeId = a.CustomerSizeId,
+                                     LastCallDate = a.LastCallDate,
+                                     LastMeetingDate = a.LastMeetingDate,
+                                     LastOpportunityDate = a.LastOpportunityDate,
+                                     LastOpportunityStatus = a.LastOpportunityStatus,
+                                     LastOpportunitySubject = a.LastOpportunitySubject,
+                                     FirstInvoiceDate = a.FirstInvoiceDate,
+                                     FirstShipmentDate = a.FirstShipmentDate,
+                                     LastShipmentDate = a.LastShipmentDate,
+                                     StartWorkingDate = a.StartWorkingDate,
+                                     StartWorkingManuallySet = a.StartWorkingManuallySet,
+                                     LastQuoteDate = a.LastQuoteDate,
+                                     LastInteractionDate = a.LastInteractionDate,
+                                     EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
+                                     ActivityWatch = a.ActivityWatch,
+                                     KnownConsignor = a.KnownConsignor,
+                                     KCExpirationDate = a.KCExpirationDate,
+                                     LogBoxActivated = a.LogBoxActivated,
+                                     IRSNumber = a.Card.IRSNumber,
+                                     IRSPlace = a.Card.IRSPlace,
+                                     IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
+                                     IsCreditLimitEnabled = a.IsCreditLimitEnabled,
+                                     CreditLimitAmount = a.CreditLimitAmount,
+                                     CreditLimitOpenBalance = a.CreditLimitOpenBalance,
+                                     CreditLimitWarningPercentage = a.CreditLimitWarningPercentage,
+                                     ExternalId2 = a.Card.ExternalId2,
+                                     SATForeignRFC = a.Card.SATForeignRFC,
+                                     MetodoPagoCode = a.Card.MetodoPagoCode,
+                                     UsoCFDICode = a.Card.UsoCFDICode,
+                                     CreatedByPartner = a.Card.CreatedByPartner,
+                                     Card = new CardPM()
+                                     {
+                                         Id = a.Id,
+                                         Tenant = a.Tenant,
+                                         EnglishName = a.Card.EnglishName,
+                                         CityName = a.Card.CityName,
+                                         CountryId = a.Card.CountryId,
+                                         CountryName = a.Card.CountryName,
+                                         PrimaryContactId = a.Card.PrimaryContactId,
+                                         ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                         PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                         AccountingVATSplit = a.Card.AccountingVATSplit,
+                                     },
+
+                                 }).FirstOrDefault();
+
+            if (entity != null)
+            {
+                this.SetCustomerAddressData(entity);
+            }
+
+            if (entity != null)
+            {
+                CustomerProductRepository customerProductRepository = new CustomerProductRepository(repository.context);
+                CustomerCompetitorRepository customerCompetitorRepository = new CustomerCompetitorRepository(repository.context);
+                CustomerAdditionalServiceRepository customerAdditionalServiceRepository = new CustomerAdditionalServiceRepository(repository.context);
+                CustomerSalesmanByProductRepository customerSalesmanByProductRepository = new CustomerSalesmanByProductRepository(repository.context);
+                CustomerAccountManagerByProductRepository customerAccountManagerByProductRepository = new CustomerAccountManagerByProductRepository(repository.context);
+                CustomerForwarderByProductRepository customerForwarderByProductRepository = new CustomerForwarderByProductRepository(repository.context);
+                CustomerCustomsAgentByProductRepository customerCustomsAgentByProductRepository = new CustomerCustomsAgentByProductRepository(repository.context);
+                CustomerMediatorByProductRepository customerMediatorByProductRepository = new CustomerMediatorByProductRepository(repository.context);
+
+                CustomerProductQuery customerProductQuery = new CustomerProductQuery(customerProductRepository);
+                CustomerCompetitorQuery customerCompetitorQuery = new CustomerCompetitorQuery(customerCompetitorRepository);
+                CustomerAdditionalServiceQuery customerAdditionalServiceQuery = new CustomerAdditionalServiceQuery(customerAdditionalServiceRepository);
+                CustomerSalesmanByProductQuery customerSalesmanByProductQuery = new CustomerSalesmanByProductQuery(customerSalesmanByProductRepository);
+                CustomerAccountManagerByProductQuery customerAccountManagerByProductQuery = new CustomerAccountManagerByProductQuery(customerAccountManagerByProductRepository);
+                CustomerForwarderByProductQuery customerForwarderByProductQuery = new CustomerForwarderByProductQuery(customerForwarderByProductRepository);
+                CustomerCustomsAgentByProductQuery customerCustomsAgentByProductQuery = new CustomerCustomsAgentByProductQuery(customerCustomsAgentByProductRepository);
+                CustomerMediatorByProductQuery customerMediatorByProductQuery = new CustomerMediatorByProductQuery(customerMediatorByProductRepository);
+
+                entity.CustomerProducts = customerProductQuery.GetCustomerProductPMsByCustomerId(entity.Id, entity.Tenant).ToList();
+                entity.CustomerCompetitors = customerCompetitorQuery.GetCustomerCompetitorsByCustomerId(entity.Id, entity.Tenant).ToList();
+                entity.CustomerAdditionalServices = customerAdditionalServiceQuery.GetCustomerAdditionalServicesByCustomerId(entity.Id, entity.Tenant).ToList();
+                entity.CustomerSalesmanByProducts = customerSalesmanByProductQuery.GetCustomerSalesmanByProductPMs(entity.Tenant, entity.Id);
+                entity.CustomerAccountManagerByProducts = customerAccountManagerByProductQuery.GetCustomerAccountManagerByProductPMs(entity.Tenant, entity.Id);
+                entity.CustomerForwarderByProducts = customerForwarderByProductQuery.GetCustomerForwarderByProductPMs(entity.Tenant, entity.Id);
+                entity.CustomerCustomsAgentByProducts = customerCustomsAgentByProductQuery.GetCustomerCustomsAgentByProductPMs(entity.Tenant, entity.Id);
+                entity.CustomerMediatorByProducts = customerMediatorByProductQuery.GetCustomerMediatorByProductPMs(entity.Tenant, entity.Id);
+
+                CustomerSalesNoteRepository salesNoteRepository = new CustomerSalesNoteRepository(repository.context);
+                CustomerSalesNoteQuery salesNoteQuery = new CustomerSalesNoteQuery(salesNoteRepository);
+                entity.SalesNotes = salesNoteQuery.GetSalesNotesByCustomerId(entity.Id, entity.Tenant).ToList();
+                if (entity != null)
+                {
+                    entity.IsExternal = false;
+
+                    AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                    AccountingSystemPM accountingSystem = accountingSystemHelper.GetAccountingSystem(tenant);
+                    if (accountingSystem != null)
+                    {
+                        if (accountingSystem.IsExternalCodesFromTable)
+                        {
+                            entity.IsExternal = true;
+                        }
+                    }
+                }
+
+                CustomerPM securedPm = new CustomerPM();
+                SecuredMapping.GetMappedPM(entity, securedPm, "Customer", tenant);
+
+                if (securedPm != null && entity != null)
+                {
+                    Customer entityPOC = (from s in repository.context.Customers
+                                          where s.Id == securedPm.Id
+                                          select s).FirstOrDefault();
+
+                    securedPm.Field1 = new CustomFieldClass("Field1", "Customer", entityPOC.Field1);
+                    securedPm.Field2 = new CustomFieldClass("Field2", "Customer", entityPOC.Field2);
+                    securedPm.Field3 = new CustomFieldClass("Field3", "Customer", entityPOC.Field3);
+                    securedPm.Field4 = new CustomFieldClass("Field4", "Customer", entityPOC.Field4);
+                    securedPm.Field5 = new CustomFieldClass("Field5", "Customer", entityPOC.Field5);
+                    securedPm.Field6 = new CustomFieldClass("Field6", "Customer", entityPOC.Field6);
+                    securedPm.Field7 = new CustomFieldClass("Field7", "Customer", entityPOC.Field7);
+                    securedPm.Field8 = new CustomFieldClass("Field8", "Customer", entityPOC.Field8);
+                    securedPm.Field9 = new CustomFieldClass("Field9", "Customer", entityPOC.Field9);
+                    securedPm.Field10 = new CustomFieldClass("Field10", "Customer", entityPOC.Field10);
+                }
+
+                return securedPm;
+            }
+
+            return entity;
+        }
     }
 }

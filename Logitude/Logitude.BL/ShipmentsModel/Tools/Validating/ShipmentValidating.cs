@@ -1132,7 +1132,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                     case "A":
                         {
-                            if (!string.IsNullOrEmpty(entityPM.ShipmentTypeId))
+                            if (string.IsNullOrEmpty(entityPM.ShipmentTypeId) || entityPM.ShipmentTypeId != "Air")
                             {
                                 throw new ApplicationException("Shipment type is not allowed for air transport mode");
                             }

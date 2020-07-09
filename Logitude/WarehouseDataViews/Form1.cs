@@ -23,14 +23,22 @@ namespace WarehouseDataViews
         // logitudedw-shared,logitudeep,!LO852456,logitude-ep.database.windows.net
 
 
+        //Locally PrivateDB
         //private int? tenant = 1;
-        //string dbSourceConnection = "2020R2_Main,sa,Saas256,.";
-        //string dbDestinationConnection = "2020R2_Global,sa,Saas256,.";
+        //string dbSourceConnection = "2020R3_Main,sa,Saas256,.";
+        //string dbDestinationConnection = "2020R3_Global,sa,Saas256,.";
 
+
+        //Pre Private DB
         private int? tenant = 570;
-        string dbSourceConnection = "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
-        string dbDestinationConnection = "T570Unicargo,Admin1423,London2015!London2015!,logitudedw1.database.windows.net";
+        string dbSourceConnection = "LogitudeMain_PreR3,logitudemanager,!LO009008,logitudetest.database.windows.net";
+        string dbDestinationConnection = "UnicargoDW,logitudeep,!LO852456,logitude-ep.database.windows.net";
 
+
+        //Online PrivateDB
+        //private int? tenant = 570;
+        //string dbSourceConnection = "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
+        //string dbDestinationConnection = "T570Unicargo,Admin1423,London2015!London2015!,logitudedw1.database.windows.net";
 
         public Form1()
         {

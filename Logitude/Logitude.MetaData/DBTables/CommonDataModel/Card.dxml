@@ -418,6 +418,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="UploadingUniqueKey"
+    Type="varchar"
+    Size="70">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="InvoiceCurrencyId"
     ReferencedTable="Currencies"

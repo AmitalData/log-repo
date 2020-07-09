@@ -17,7 +17,7 @@ namespace WebFreight.Web.Helpers
         private ShipmentPartnerPM shipmentPartnerPM = null;
         public ShipmentPartnerPM GetReferentPartner(string accountManagerId, int tenant)
         {
-            shipmentPartnerPM  = new ShipmentPartnerPM() { PartnerType = "Referent" };
+            shipmentPartnerPM  = new ShipmentPartnerPM() { PartnerType = "Account Manager" }; 
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact accountManagerContact = contactRepository.GetSingleContactByIdAndTenant(accountManagerId, tenant, true);
             if (accountManagerContact != null)

@@ -1,31 +1,25 @@
-/// <reference types="cypress"/>
 
 export class Login {
-      constructor() {
+
+    constructor() {
 
 
- 
-  }
-  login(url: string, email: string, password: string) {
- {
- cy.visit(url);
-    cy.get('input[id=Email]').clear().type(email)
-    cy.get('input[id=Password]').clear().type(password)
-    cy.get('input[id=cmdLogin]').click()
+    }
 
 
-cy.server();
-   cy.route('**/ObjectTableLastUpdate/**').as('LoadDataCompleted');
+    dologin() {
 
- 
+        cy.visit('https://test.logitudeworld.com/TEST/')
+        cy.get('input[id=Email]').clear();
+        cy.get('input[id=Email]').type("sg1209@test.com");
+        cy.get('input[id=Password]').clear();
+        cy.get('input[id=Password]').type('!Sg13579');
 
- cy.wait('@LoadDataCompleted');
+        cy.get('#cmdLogin').click();
+        cy.server();
+        cy.route('**/GetLastTableUpdateDate/**').as('LoadDataCompleted');
 
+        cy.wait('@LoadDataCompleted', {timeout:80000});
+    }
 
-
-
- }
-
-  }
 }
-

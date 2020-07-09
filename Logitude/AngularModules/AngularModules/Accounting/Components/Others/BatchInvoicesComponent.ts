@@ -16,6 +16,7 @@ import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExec
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { InterestLastBatchServicePM } from 'Accounting/EntityPMs/InterestLastBatchServicePM';
  
  
 
@@ -365,15 +366,19 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
       var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
       this.CurrentSession.StartBusyIndicatorLoading();
       this.interestReportExtendedListService.PutInterestReortStatus(interestReportArgs).subscribe((response: ServiceResponse) => {
+      this.CurrentSession.StopBusyIndicator();
         var mm: ServiceResponse = response;
         if (!mm.HasError) {
             this.BatchId= mm.Result;
-            this.timer = setInterval(() => {
-              this.GetBTE();
-          }, this.timerInterval);
+           
         }
         else {
-
+          if(mm.ErrorsArray){
+            var msg = new MessageWindow();
+            msg.RTL = this.isRTL;
+            msg.Width = 400;
+            msg.Show(mm.ErrorsArray[0]);
+        }
         }
 
       });
@@ -398,7 +403,12 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
          }
         }
         else {
-
+          if(mm.ErrorsArray){
+            var msg = new MessageWindow();
+            msg.RTL = this.isRTL;
+            msg.Width = 400;
+            msg.Show(mm.ErrorsArray[0]);
+        }
         }
 
       });
@@ -406,6 +416,35 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     }
 
   }
+ 
+  // GetInterestLastBatchServiceByTenant(){
+  //   this.CurrentSession.StartBusyIndicatorLoading();
+  //   this.interestReportExtendedListService.GetInterestLastBatchServiceByTenant().subscribe((response: ServiceResponse) => {
+  //     this.CurrentSession.StopBusyIndicator();
+  //       var mm: ServiceResponse = response;
+  //       if (!mm.HasError) {
+  //       //  var InterestLastBatchService:InterestLastBatchServicePM  = mm.Result;
+  //       //  if(!InterestLastBatchService || (InterestLastBatchService  && !InterestLastBatchService.CreateInvoicesBatchId)){
+  //          this.CheckNumberOfInterestReportInvoicingWithoutInvoice();
+  //       //  }
+  //       //  else if(InterestLastBatchService && InterestLastBatchService.CreateInvoicesBatchId){
+  //       //   this.CheckBatchTaskExcecutingAndCreateInvoices(InterestLastBatchService.CreateInvoicesBatchId);
+  //       //  }
+  //       }
+  //       else {
+  //         if(mm.ErrorsArray){
+  //           var msg = new MessageWindow();
+  //           msg.RTL = this.isRTL;
+  //           msg.Width = 400;
+  //           msg.Show(mm.ErrorsArray[0]);
+  //       }
+  //       }
+
+  //     });
+  // }
+
+
+
   InitializeDate(){
   
   var month = new Date().getMonth();
@@ -480,31 +519,24 @@ this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateIn
 }
 
 
-GetBTE() {
-  this._BatchTaskExecutionListService.getSingle(this.BatchId).subscribe((myResult:any) => {
+CheckBatchTaskExcecutingAndCreateInvoices( BatchId:string) {
+  this._BatchTaskExecutionListService.getSingle( BatchId).subscribe((myResult:any) => {
       console.log("[_BatchTaskExecutionListService.getSingle]", myResult);
       var mm: ServiceResponse = myResult;
       if (!mm.HasError) {
           this.bteList = mm.Result;
-          if (this.bteList.StatusCode == "D") // D- Done
-          {
-              //stop timer
-              if (this.timer) {
-                  clearInterval(this.timer);
-               }
-               this.SelectedItemsCount=0;
-               this.SetCreateInvoiceButtonText();
-               this.ReloadData();
-               this.AllSelected = false;
-               this.CurrentSession.StopBusyIndicator();
+          if (this.bteList.StatusCode == "D" || this.bteList.StatusCode == "F") // D- Done
+          {  
+            this.CreateInvoiceButtonClicked();
           }
-          else if (this.bteList.StatusCode == "F") // F- Failed
-          {
-               this.CurrentSession.StopBusyIndicator();
-              if (this.timer) {
-                  clearInterval(this.timer);
-              }
+          else{
+            var msg = new MessageWindow();
+            msg.RTL = this.isRTL;
+            msg.Width = 400;
+            msg.Show(TextCodeTranslator.Translate("InterestReport.O.AnotherBatchInvoiceStillInProgress"));
+
           }
+ 
       }
       else {
       }

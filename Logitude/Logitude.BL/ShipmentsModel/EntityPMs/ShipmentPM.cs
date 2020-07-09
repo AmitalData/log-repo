@@ -2371,6 +2371,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ImporterDepositionRequestDetails { get; set; }
         public bool IsShipmentComputedFieldChange { get; set; }
         public bool IsShipmentAdditionalCloudDataChange { get; set; }
+        public bool IsStatusChange { get; set; }
 
 
         public string PackagesTypesNames { get; set; }
@@ -2463,5 +2464,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentSubTypeId { get; set; }
         public string ShipmentSubTypeName { get; set; }
+        public bool IsUpdateWarehouseLegData { get; set; }
     }
 }

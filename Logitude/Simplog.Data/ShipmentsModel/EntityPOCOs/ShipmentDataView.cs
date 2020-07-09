@@ -743,5 +743,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string SLAC { get; set; }
         public string ShipmentSubTypeId { get; set; }
         public string ShipmentSubTypeName { get; set; }
+        public string ImportManifest { get; set; }
     }
 }

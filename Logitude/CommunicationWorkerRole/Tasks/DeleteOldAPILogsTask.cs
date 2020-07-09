@@ -22,41 +22,17 @@ namespace CommunicationWorkerRole.Tasks
             string strConnString = TenantServerConfigration.GetDbConnection(0);
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
 
-            #region APILogsData
-            int numberOfExecuteRows = 1000;
-            int numberOfRecords = 0;
-            while (numberOfExecuteRows == 1000 && numberOfRecords < 500000)
-            {
-                using (SqlConnection cn = new SqlConnection(strConnString))
-                {
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    {
-                        string sql = "delete top(1000) from APILogsData where id in (select id from APILogs where CreateDate < GETDATE() - 90 )";
-                        SqlCommand cmd = new SqlCommand(sql, cn);
-                        cmd.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
-                        cn.Open();
-                        numberOfExecuteRows = cmd.ExecuteNonQuery();
-                        numberOfRecords += numberOfExecuteRows;
-                        cn.Close();
-                        scope.Complete();
-                    }
-                }
-                Thread.Sleep(1000);
-            }
-            #endregion
-
-
             #region APILogs
-            numberOfExecuteRows = 1000;
-            numberOfRecords = 0;
-            while (numberOfExecuteRows == 1000 && numberOfRecords < 500000)
+            int numberOfExecuteRows = 3000;
+            int numberOfRecords = 0;
+            while (numberOfExecuteRows == 3000 && numberOfRecords < 1500000)
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        string sql = "delete top(1000) from APILogs where CreateDate < GETDATE() - 90";
-                        SqlCommand cmd = new SqlCommand(sql, cn);
+                        SqlCommand cmd = new SqlCommand("[dbo].[DeleteOldAPILogs]", cn);
+                        cmd.CommandType = CommandType.StoredProcedure;
                         cmd.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
                         cn.Open();
                         numberOfExecuteRows = cmd.ExecuteNonQuery();
@@ -68,7 +44,6 @@ namespace CommunicationWorkerRole.Tasks
 
                 Thread.Sleep(1000);
             }
-
             #endregion
 
         }

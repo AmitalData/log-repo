@@ -388,9 +388,11 @@
     <Compile Include="EntityDataMappings\Generated\InterestBasesPeriodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestBasesTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestEntityTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestLastBatchServiceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestReportDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestReportLineDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestReportLinesByDateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterestReportsConnectInvoiceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestReportStatuseDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestTransactionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalActionTypeDataMapping.Generated.cs" />
@@ -443,9 +445,11 @@
     <Compile Include="EntityDataMappings\InterestBasesPeriodDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestBasesTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestEntityTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestLastBatchServiceDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestReportDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestReportLineDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestReportLinesByDateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterestReportsConnectInvoiceDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestReportStatuseDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestTransactionDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalActionTypeDataMapping.cs" />
@@ -530,9 +534,11 @@
     <Compile Include="EntityQueryServices\Generated\InterestBasesPeriodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestBasesTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestEntityTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestLastBatchServiceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestReportLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestReportLinesByDateQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestReportQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterestReportsConnectInvoiceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestReportStatuseQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestTransactionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalAdditionalDataQueryService.Generated.cs" />
@@ -565,6 +571,7 @@
     <Compile Include="EntityQueryServices\GLAccountTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountWithholdingTaxQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestBasesPeriodQueryService.cs" />
+    <Compile Include="EntityQueryServices\InterestLastBatchServiceQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestReportQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestTransactionQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionAccDTO.cs" />
@@ -586,6 +593,7 @@
     <Compile Include="EntityQueryServices\TaxWithholdingAssessOfficeQueryService.cs" />
     <Compile Include="EntityQueryServices\WithholdingTaxDeductionTypeQueryService.cs" />
     <Compile Include="EntityUpdateServiceExt\ARPaymentChequeUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServiceExt\InterestReportsConnectedInvoiceUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\InterestReportUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\BankCodeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\CashBookLineUpdateServiceExt.cs" />
@@ -599,6 +607,8 @@
     <Compile Include="EntityUpdateServices\AccountingNoteUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ARPaymentChequeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BankAccountTraceEventService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestLastBatchServiceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterestReportsConnectInvoiceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BankDepositOnUpdatingService.cs" />
     <Compile Include="EntityUpdateServices\BankDepositOnCreatingService.cs" />
@@ -657,6 +667,7 @@
     <Compile Include="EntityUpdateServices\Generated\WithholdingTaxDeductionTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountWithholdingTaxUpdateService.cs" />
     <Compile Include="EntityUpdateServices\IJournalUpdateServiceProvider.cs" />
+    <Compile Include="EntityUpdateServices\InterestReportsConnectInvoiceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\InterestReportLinesByDateUpdateService.cs" />
     <Compile Include="EntityUpdateServices\InterestReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\InterestBasesTypeUpdateService.cs" />
@@ -674,6 +685,7 @@
     <Compile Include="EntityUpdateServices\TaxReportLineUpdateService.cs" />
     <Compile Include="CoreBL\TaxReportService.cs" />
     <Compile Include="EntityUpdateServices\TaxReportUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\InterestLastBatchServiceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TaxWithholdingAssessOfficeUpdateService.cs" />
     <Compile Include="InterestEntityQueryServices\IInterestEntityQueryService.cs" />
     <Compile Include="InterestEntityQueryServices\InterestEntityResult\InterestEntityResult.cs" />

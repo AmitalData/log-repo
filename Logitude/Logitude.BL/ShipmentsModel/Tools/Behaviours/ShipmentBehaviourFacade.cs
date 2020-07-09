@@ -13,15 +13,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
     public class ShipmentBehaviourFacade
     {
         private IShipmentBehaviour updateShipmentComputedFields;
+        private IShipmentBehaviour updateCrossDocks;
+
 
         public ShipmentBehaviourFacade(ShipmentPM shipmentPM, IShipmentsContext context, ShipmentComputedFields updatedShipmentComputedFields, bool isNewEntity)
         {
             updateShipmentComputedFields = new UpdateShipmentComputedFieldsBehaviour(shipmentPM, context, updatedShipmentComputedFields, isNewEntity);
+            updateCrossDocks = new UpdateCrossDockBehaviour(shipmentPM);
         }
 
         public void Handle()
         {
             updateShipmentComputedFields.Handle();
+            updateCrossDocks.Handle();
         }
     }
 }

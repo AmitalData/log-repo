@@ -22,6 +22,7 @@ using System.Data.Entity.SqlServer;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.BL.CoreBL.Reports
 {
@@ -452,7 +453,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 TenantQuery tenantQuery = new TenantQuery(_Param.Tenant);
                 var tenant = tenantQuery.GetSinglePM(_Param.Tenant);
 
-                List<PeriodMExtended> periodMExtendeds =
+                DateTime currentDate = TenantServerConfigration.GetCurrentDateTime(_Param.Tenant);
+              
+            List<PeriodMExtended> periodMExtendeds =
                     (from acc in accountsList
                      join moredata in _AccountingContext.GLAccountMoreDatas.Where(r => r.Tenant == _Param.Tenant)
                      on acc.Id equals moredata.AccountId into moredataJoinT
@@ -470,11 +473,19 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      on card.Id equals custOFiles.CustomerId into custOFilesJoinT
                      from custOFiles in custOFilesJoinT.DefaultIfEmpty()
 
+                     let glaPeriod = _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant &&r.GLAccountId == acc.Id && r.PeriodStartDate <= currentDate)
+                     .OrderByDescending(d=>d.PeriodStartDate).FirstOrDefault()
+                     let basePeriod= _AccountingContext.InterestBasesPeriods.Where(d=>d.InterestBaseTypeId==glaPeriod.StandardInterestRateBaseId).FirstOrDefault()
+                     //join accIntrestPeriods in _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant && r.PeriodStartDate <= currentDate)
+                     //on acc.Id equals accIntrestPeriods.GLAccountId into intrestPeriodsJoin
+                     //from accIntrestPeriods in intrestPeriodsJoin.DefaultIfEmpty()
+
                      select new PeriodMExtended()
                      {
                          AccountId = acc.Id,
                          AccountDisplayNumber = acc.DisplayNumber,
                          AccountTermName = card.PaymentTerm.EnglishName,
+                         AccountTermLocalName = card.PaymentTerm.LocalName,
 
                          CurrencyCode = acc.CurrencyCode,
                          CreditLimitAmount =
@@ -483,15 +494,20 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                          CreditStatusAmount_AsIs = cust != null ? (cust.CreditLimitAmount != null ? (double)cust.CreditLimitAmount : 0) : 0,
                          BalanceInLocalCurrency = moredata != null ? (decimal)moredata.BalanceInLocalCurrency : 0.00m,
-                         //CreditStatusAmount= 
-                         //((decimal)(cust.CreditLimitAmount.GetValueOrDefault())
-                         //- (
-                         //moredata.BalanceInLocalCurrency.GetValueOrDefault()
-                         //+ moredata.TotalOpenChequesInLocalCur.GetValueOrDefault()
-                         //+ moredata.TotFutureOpenChequesInLocalCur.GetValueOrDefault()
-                         //+ custOFiles.TotalOpenFilesAmount//entityList.OpenShipments= SetCustomerOpenShipments(entityList);
-                         //)
-                         //),
+                         
+                         CustomerVatNumber = card.VatNumber,
+                         GLAccountStandardInterestRate = (decimal)(glaPeriod.StandardAddInterestPercent == null ? 0 : glaPeriod.StandardAddInterestPercent+basePeriod.InterestRate),
+
+
+                            //CreditStatusAmount= 
+                            //((decimal)(cust.CreditLimitAmount.GetValueOrDefault())
+                            //- (
+                            //moredata.BalanceInLocalCurrency.GetValueOrDefault()
+                            //+ moredata.TotalOpenChequesInLocalCur.GetValueOrDefault()
+                            //+ moredata.TotFutureOpenChequesInLocalCur.GetValueOrDefault()
+                            //+ custOFiles.TotalOpenFilesAmount//entityList.OpenShipments= SetCustomerOpenShipments(entityList);
+                            //)
+                            //),
 
                          TotalOpenShipments = custOFiles != null ? custOFiles.TotalOpenFilesAmount : 0,
                          TotalFutureOpenCheques = moredata != null ? (decimal)moredata.TotFutureOpenChequesInLocalCur : 0,
@@ -505,6 +521,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      }
 
                  ).ToList();
+
+                
+
 
                 ///var list1=periodMExtendeds.ToList();
                 bool checkIt = false;
@@ -557,7 +576,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         BalanceInLocalCurrency = r.BalanceInLocalCurrency,
                         TotalOpenShipments = r.TotalOpenShipments,
                         TotalFutureOpenCheques = r.TotalFutureOpenCheques,
-                        TotalOpenCheques = r.TotalOpenCheques
+                        TotalOpenCheques = r.TotalOpenCheques,
+                        GLAccountStandardInterestRate=r.GLAccountStandardInterestRate,
+                        AccountTermLocalName = r.AccountTermLocalName,
+                        CustomerVatNumber = r.CustomerVatNumber,
+                        
                     }
                     ).ToList();
 
@@ -576,22 +599,24 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         private void RemoveDummies(ref List<PeriodM> reportList)
         {
-             reportList = (from a in reportList
-                          group a by new { a.AccountId, a.PeriodName } into g
+            reportList = (from a in reportList
+                          group a by new { a.AccountId, a.CurrencyId, a.OrderDateB4, a.OrderDate } into g
                           select new PeriodM()
                           {
                               OrderDateB4 = g.First().OrderDateB4,
-                               SplitAccountId = g.First().SplitAccountId,
+                              SplitAccountId = g.First().SplitAccountId,
                               OrderDate = g.First().OrderDate,
-                              AccountId = g.First().AccountId,
-                              CurrencyId = g.First().CurrencyId,
+                              AccountId = g.Key.AccountId,
+                              CurrencyId = g.Key.CurrencyId,
+
+
                               Total = g.Sum(r => r.Total),
                               OpenCredit = g.Sum(r => r.OpenCredit),
-                              OpenDebit =g.Sum(r => r.OpenDebit),
-                              
+                              OpenDebit = g.Sum(r => r.OpenDebit),
+
 
                           })
-                          .ToList();
+                         .ToList();
                           
 
 
@@ -635,7 +660,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                       TotalOpenCheques = account.TotalOpenCheques,
                                                       OpenCredit = line.OpenCredit,
                                                       OpenDebit = line.OpenDebit,
-                                                      CreditStatusAmount = account.CreditStatusAmount
+                                                      CreditStatusAmount = account.CreditStatusAmount,
+                                                       GLAccountStandardInterestRate=account.GLAccountStandardInterestRate,
+                                                       CustomerVatNumber = account.CustomerVatNumber,
+                                                       AccountTermLocalName = account.AccountTermLocalName,
+                                                       
 
                                                   }).ToList();
             return namedPeriods;
@@ -1287,7 +1316,11 @@ Period	Acc	Currency	Total
         public string AccountCurrencyCode { get; set; }
         //accountCardlist.Payment Term: //PaymentTermName = card.PaymentTerm == null ? null : card.PaymentTerm.EnglishName,
         public string AccountTermName { get; set; }
+        public string AccountTermLocalName { get; set; }
         public string CurrencyCode { get; set; }
+        public string CustomerVatNumber { get; set; }
+
+        public decimal GLAccountStandardInterestRate { get; set; }
 
         /*
         var percentage = 0;

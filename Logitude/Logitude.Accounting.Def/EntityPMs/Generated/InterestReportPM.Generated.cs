@@ -745,6 +745,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string invoiceFailureReason ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InvoiceFailureReason  
+	   {
+	    
+	     get
+		{
+		   return invoiceFailureReason;
+		 }
+		 set
+		 {
+		   if(invoiceFailureReason != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceFailureReason",OldValue=invoiceFailureReason,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   invoiceFailureReason=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

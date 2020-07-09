@@ -132,6 +132,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="InvoiceFailureReason"
+    Type="varchar"
+    Size="1024">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

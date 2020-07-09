@@ -455,5 +455,10 @@ namespace WebFreight.Web.DataProviders
         public DateTime? Transhipment1ETD { get; set; }
         public DateTime? Transhipment3ETD { get; set; }
         public string ShipmentSubTypeName { get; set; }
+
+        public string Transshipment1FromPortName { get; set; }
+        public string Transshipment2FromPortName { get; set; }
+        public string Transshipment3FromPortName { get; set; }
+        public string Notify1ReferenceNumber { get; set; }
     }
 }

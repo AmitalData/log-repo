@@ -786,7 +786,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 Category5Id = "",
                 CollectorId = "",
                 SalesmanId = "",
-                AgingMethod = AgingReportParam.MethodEnum.TotalByMonthMethod.ToString(),
+                AgingMethod = AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString(),
                 AgingMethod_Options = Enum.GetNames(typeof(AgingReportParam.MethodEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
                 GroupByDate = AgingReportParam.DateEnum.DueDate,
                 GroupByDate_Options = Enum.GetNames(typeof(AgingReportParam.DateEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),

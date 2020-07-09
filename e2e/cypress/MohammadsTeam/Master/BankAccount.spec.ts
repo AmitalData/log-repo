@@ -3,19 +3,19 @@
 
 import { Login } from './Login';
 import { CreateRandom } from './CreateRandom';
-import { NewBankAccount } from './BankAccount';
+import { BankAccount } from './BankAccount';
 
 describe('New Bank Account ', () => {
 
-    let B: BankAccount = new NewBankAccount();
+    let B: BankAccount = new BankAccount();
     let l: Login = new Login();
-    let R: Random = new CreateRandom();
+    let R: CreateRandom = new CreateRandom();
 
 
     it('New Bank Account Created Successfully', function () {
 
         var str = R.createrandomnum();
-        l.login("https://test.logitudeworld.com/test/", "sg1209@test.com", "!Sg13579")
+        l.dologin();
         cy.get('li[id=GeneralMHMaintenance]').click()
 
         cy.get('li[id=PAR]')

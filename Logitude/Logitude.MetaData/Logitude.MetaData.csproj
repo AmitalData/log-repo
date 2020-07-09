@@ -181,6 +181,7 @@
     </Content>
     <None Include="DBOthers\CommonDataModel\Procedures\ChangeVendorToTrucker.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldAuthenticationTokens.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldAPILogs.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldCommunicationLogs.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldFilingInboxes.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteTenantFromGlobalDB.dxml" />
@@ -344,6 +345,7 @@
     <None Include="DBOthers\ShipmentsModel\Views\MessagingStockDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentFollowUpDataView.dxml" />
+    <None Include="DBScripts\CommonModel\202007061105_FillMissingPortCountryCode.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingMilestoneFillValues.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingHeaderEntityTypeFillValues.sxml" />
     <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />
