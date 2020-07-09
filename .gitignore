@@ -412,3 +412,6 @@ __pycache__/
 /Logitude/AngularModules/AngularModules/cypress/screenshots/examples/test.spec.js
 /Logitude/AngularModules/AngularModules/cypress/videos/examples
 /Logitude/AngularModules/CargoTrackingModules/dist
+/e2e/cypress/results/html
+/e2e/cypress/videos/AymensTeam
+/e2e/Cypress/videos/integration/examples/Prod.spec.js.mp4
