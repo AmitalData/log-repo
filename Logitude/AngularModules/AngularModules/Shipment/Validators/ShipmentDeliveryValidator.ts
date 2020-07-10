@@ -153,13 +153,13 @@ export class ShipmentDeliveryValidator {
 
         // Previous
         if (isWarehouseLegExists) {
-            if (RoutingHelper.IsDateSeriesSmallerNotEqual(ETD, WarehouseLegERD)) {
-                this.errors.push("Delivery expected departure must be bigger than or equal Warehouse expected release");
-            }
+            //if (RoutingHelper.IsDateSeriesSmallerNotEqual(ETD, WarehouseLegERD)) {
+            //    this.errors.push("Delivery expected departure must be bigger than or equal Warehouse expected release");
+            //}
 
-            if (RoutingHelper.IsDateSeriesSmallerNotEqual(ATD, WarehouseLegARD)) {
-                this.errors.push("Delivery actual departure must be bigger than or equal Warehouse actual release");
-            }
+            //if (RoutingHelper.IsDateSeriesSmallerNotEqual(ATD, WarehouseLegARD)) {
+            //    this.errors.push("Delivery actual departure must be bigger than or equal Warehouse actual release");
+            //}
         }
 
         else if (isOnCarriageExists) {

@@ -76,7 +76,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "18302f05d765a4a72862815efbe16025";
+		public const string HashString = "20cbb1152e2b4b31452f8e3dacc2b6ec";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -115,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "0d9e",
+			      				    Code =  "e167",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2374,7 +2375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralORestore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Restore", DefaultText = "Restore",LocalDefaultText = @"שחזר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralORestoreIsNotPossible = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.RestoreIsNotPossible", DefaultText = "Restore is not possible , there are approved bank pages with a later date",LocalDefaultText = @"לא ניתן לבטל את ביטול דף הבנק , ישנם דפי בנק מאושרים עם תאריך מאוחר יותר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralORestoreIsNotPossible = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.RestoreIsNotPossible", DefaultText = "UNcancel is Not possible , there are approved bank pages with a higher line number",LocalDefaultText = @"לא ניתן לשחזר את דף הבנק, ישנם דפי בנק מאושרים עם תאריך מאוחר יותר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOTrue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.True", DefaultText = "True",LocalDefaultText = @"נכון", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

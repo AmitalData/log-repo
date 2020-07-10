@@ -257,6 +257,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 if (iAddress != null)
                                 {
                                     invoiceDataProvider.ShipperAddress = DataProviders.General.GetAddress(iAddress);
+                                    invoiceDataProvider.ShipperPhoneNumber = iAddress.PhoneNumber;
                                 }
                             }
                         }
@@ -275,6 +276,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 if (iAddress != null)
                                 {
                                     invoiceDataProvider.ConsigneeAddress = DataProviders.General.GetAddress(iAddress);
+                                    invoiceDataProvider.ConsigneePhoneNumber = iAddress.PhoneNumber;
                                 }
                             }
                         }
@@ -493,10 +495,34 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
                     #endregion
+
+                    #region FirstPickup
+                    ShipmentPickUpDelivery myFirstPickup = (from d in shipmentsContext.ShipmentPickUpDeliveries
+                                                            where d.ShipmentId == shipment.Id && d.PickUpDeliveryTypeCode == "PICK"
+                                                            select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+                    if(myFirstPickup != null)
+                    {
+                        invoiceDataProvider.FirstPickupETA = myFirstPickup.ETA;
+                        invoiceDataProvider.FirstPickupETD = myFirstPickup.ETD;
+                        invoiceDataProvider.FirstPickupTrucker = myFirstPickup.TruckNumber;
+                    }
+                    #endregion
+
+                    #region LastDelivery
+                    ShipmentPickUpDelivery myLastDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
+                                                             where d.ShipmentId == shipment.Id && d.PickUpDeliveryTypeCode == "DELV"
+                                                             select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+                    if (myFirstPickup != null)
+                    {
+                        invoiceDataProvider.LastDeliveryETA = myLastDelivery.ETA;
+                        invoiceDataProvider.LastDeliveryETD = myLastDelivery.ETD;
+                        invoiceDataProvider.LastDeliveryTrucker = myLastDelivery.TruckNumber;
+                    }
+                    #endregion 
                 }
                 #endregion
-
-
 
                 #region InvoiceLines
 
@@ -584,7 +610,6 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
                 #endregion
-
             }
 
             return invoiceDataProvider;

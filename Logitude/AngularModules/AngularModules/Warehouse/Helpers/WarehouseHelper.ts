@@ -218,7 +218,7 @@ export class WarehouseHelper {
                                     this.SetShipmentWarehouseLeg(viewModel.ShipmentPM, entityPM, "Entry");
                                 }
 
-                                if (viewModel.IsFromShipment) {
+                                if (viewModel.IsFromShipment && viewModel.ShipmentPM) {
                                     var IsRefreshWareHouseLeg = viewModel.ShipmentPM.IsUpdateWarehouseLegData;
                                     this.SaveChanges();
                                     if (IsRefreshWareHouseLeg) this.CurrentSession.FireEvent("RefreshWareHouseLeg");
@@ -336,10 +336,12 @@ export class WarehouseHelper {
                         if (myResult) {
                             if (viewModel.IsFromShipment) {
                                 this.SetShipmentWarehouseLeg(viewModel.ShipmentPM, entityPM, "Release");
-                                var IsRefreshWareHouseLeg = viewModel.ShipmentPM.IsUpdateWarehouseLegData;
-                                viewModel.ShipmentPM.IsDirty = true;
-                                this.SaveChanges();
-                                if (IsRefreshWareHouseLeg) this.CurrentSession.FireEvent("RefreshWareHouseLeg");
+                                if (viewModel.ShipmentPM) {
+                                    var IsRefreshWareHouseLeg = viewModel.ShipmentPM.IsUpdateWarehouseLegData;
+                                    viewModel.ShipmentPM.IsDirty = true;
+                                    this.SaveChanges();
+                                    if (IsRefreshWareHouseLeg) this.CurrentSession.FireEvent("RefreshWareHouseLeg");
+                                }
                             }
                             this.CurrentSession.CurrentWindow.Close("Refresh");
                         }

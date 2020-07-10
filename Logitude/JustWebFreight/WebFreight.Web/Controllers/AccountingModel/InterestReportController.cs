@@ -100,7 +100,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 if (batchTaskExecutionPM.StatusCode == "D" || batchTaskExecutionPM.StatusCode == "F")
                 {
                     BatchId = CreateBatchInvoice(interestReportArgs, tenant, email);
-
+                    InterestLastBatchService.CreateInvoicesBatchId = BatchId;
+                    InterestLastBatchService.ChangeSetOp = ChangeSetOperation.Update;
+                    interestLastBatchServiceUpdateService.Update(InterestLastBatchService, true);
                 }
                 else
                 {
@@ -132,6 +134,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
             return BatchId;
 
         }
+
+
+
 
         public string CreateBatchInvoice(InterestReportArguments interestReportArgs, int tenant, string email)
         {
