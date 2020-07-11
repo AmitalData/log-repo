@@ -13,7 +13,7 @@ using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.Controllers.CargoTrackingModel
 {
-    public class CargoTrackingController: ApiController
+    public class CargoTrackingBrandingController: ApiController
     {
         [HttpGet]
         public HttpResponseMessage GetCargoTrackingBrandingData()

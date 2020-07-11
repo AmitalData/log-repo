@@ -18,14 +18,17 @@ export class AppComponent
     currentDate: Date = new Date();
     companyLabel: string = "DSV";
     companyName: string = "Unifreight Cloud Services";
-   // cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService = new CargoTrackingBrandingDataExtendedService();
     constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,private _location: Location, private activerouter: ActivatedRoute, private router: Router)
     {
         this.cargoTrackingDataExtendedService.get().subscribe((response: ServiceResponse) => {
            
-         //   var mm: ServiceResponse = response;
+        
             CargoTrackingBrandingData.MainColor = response.Result.MainColor;
             this.IsBrandingDataLoaded = true;
+            document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
+            document.documentElement.style.setProperty('--CircleImageColor', CargoTrackingBrandingData.MainColor);
+            document.documentElement.style.setProperty('--TitleColor', CargoTrackingBrandingData.MainColor);
+
             this.listenToRouterEvents();
         });
 

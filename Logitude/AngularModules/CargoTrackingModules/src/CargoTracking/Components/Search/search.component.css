@@ -20,7 +20,7 @@ li {
     border: 1px solid #fff;
     cursor: pointer;
     margin: 0 5px;
-    color: #002664;
+    color:var(--MainColor); /*#002664;*/
 }
 
 li:hover {
@@ -113,6 +113,7 @@ li a {
     .page-title {
         margin-top: 70px !important;
         text-align: left;
+       
     }
     .column {
         display: block;
@@ -203,8 +204,8 @@ li a {
 }
 
 .search-button {
-    background: var(--MianColor);
-   /* #002664;-->*/
+    background: var(--MainColor);
+    /* #002664;-->*/
     display: inline-block;
     color: white;
     height: 37px;
@@ -218,9 +219,9 @@ li a {
     cursor: pointer;
 }
 
-.search-button:hover {
-    background: #042e70;
-}
+    .search-button:hover {
+        background: var(--MainColor); /*#042e70;*/
+    }
 
 .scrollable-table {
     max-width: 1600px;
@@ -271,7 +272,7 @@ li a {
 }
 
 .circle-image {
-    background: #F2F4F7;
+    background: var(--CircleImageColor); /*#F2F4F7;*/
     border-radius: 50%;
     width: 60px !important;
     height: 60px;
@@ -427,7 +428,7 @@ li a {
 }
 
 .record-row .subtitle {
-    color: #002664;
+    color:var(--MainColor); /*#002664;*/
     padding-top: 5px;
     font-size: 11px;
     font-weight: bold;

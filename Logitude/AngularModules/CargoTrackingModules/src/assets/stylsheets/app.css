@@ -1,3 +1,9 @@
+:root {
+    --MainColor: #002664;
+    --CircleImageColor: #F2F4F7;
+    --TitleColor:#000;
+}
+
 * {
     font-family: 'Open Sans';
     -webkit-font-smoothing: antialiased;
@@ -62,7 +68,7 @@ h2,
 h3 {
     font-family: 'Open Sans';
     font-weight: bold;
-    color: #002664;
+    color:var(--MainColor); /*#002664;*/
 }
 
 h1 {
@@ -80,7 +86,7 @@ h3 {
 .tag {
     font-size: 12px;
     line-height: 20px;
-    color: black;
+    color: var(--MainColor); /*black;*/
     font-weight: bold;
     text-transform: uppercase;
 }
@@ -106,7 +112,7 @@ h3 {
     .tag {
         font-size: 12px;
         font-weight: bold;
-        color: black;
+        color:var(--MainColor); /*black;*/
     }
     .hide-mobile,
     .hide-tablet {

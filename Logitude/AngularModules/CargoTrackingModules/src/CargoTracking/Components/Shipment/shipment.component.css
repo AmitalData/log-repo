@@ -7,7 +7,7 @@
 
 a {
     color: black;
-    ;
+    
 }
 
 .box-header {
@@ -31,7 +31,7 @@ a {
 }
 
 .box-header .field .label {
-    color: #002664;
+    color:var(--MainColor); /*#002664;*/
     font-weight: bold;
 }
 
@@ -43,7 +43,7 @@ a {
 }
 
 .circle-image {
-    background: #E0E3F2;
+    background: var(--CircleImageColor); /*#E0E3F2;*/
     border-radius: 50%;
     width: 60px !important;
     height: 60px;
@@ -88,7 +88,7 @@ a {
 }
 
 .panel .title {
-    color: #002664;
+    color:var(--MainColor); /*#002664;*/
     font-weight: bold;
     font-size: 16px;
     margin: 40px 0;
@@ -106,7 +106,7 @@ a {
 }
 
 .shipment-details .field .label {
-    color: #000;
+    color:var(--TitleColor); /*#000;*/
     font-weight: bold;
     font-size: 12px;
     text-transform: uppercase;
@@ -155,7 +155,7 @@ ul.line-list li.tick {
 
 .steps-list li:hover:not(.dimmed),
 .steps-list li.highlighted {
-    background: #002664;
+    background:var(--MainColor); /*#002664;*/
     color: white;
     font-weight: 600;
 }
@@ -290,7 +290,7 @@ ul.line-list li.tick {
 }
 
 .milestones .label {
-    color: #002664;
+    color:var(--MainColor); /*#002664;*/
     text-transform: capitalize;
     font-weight: bold;
 }

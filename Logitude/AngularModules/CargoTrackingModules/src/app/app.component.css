@@ -21,18 +21,18 @@ a:focus {
 }
 
 .web-header-wrapper {
-  width: 100%;
-  background: white;
-  box-shadow: 0 1px 6px 2px #f5f5f5;
+    width: 100%;
+    background: white;
+    box-shadow: 0 1px 6px 2px #f5f5f5;
 }
 
 .web-header {
-  /* border-bottom: 1px solid #ececec; */
-  max-width: 1300px;
-  margin: 0 auto;
-  height: 60px;
-  user-select: none;
-  background: white;
+    /* border-bottom: 1px solid #ececec; */
+    max-width: 1300px;
+    margin: 0 auto;
+    height: 60px;
+    user-select: none;
+    background: white;
 }
 
 .web-header .logo {
@@ -60,7 +60,7 @@ a:focus {
 
 .web-header .nav ul>li:hover {
   border-radius: 0;
-  background-color: #c0c0c0;
+  background-color:#c0c0c0;
 }
 
 .web-header .nav ul>li.active {
@@ -134,7 +134,7 @@ li {
   border: 1px solid #fff;
   cursor: pointer;
   margin: 0 5px;
-  color: #002664;
+  color: var(--MainColor); /*#002664;*/
   user-select: none;
 }
 

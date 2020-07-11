@@ -58,7 +58,7 @@ export class SearchComponent implements AfterViewInit
 
     ngAfterViewInit()
     {
-        document.documentElement.style.setProperty('--MianColor', CargoTrackingBrandingData.MainColor);
+     //   document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
     }
 
     SubscribeInputTextChanges()
