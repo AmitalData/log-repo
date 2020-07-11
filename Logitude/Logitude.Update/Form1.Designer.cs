@@ -74,6 +74,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.conStrLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.button12 = new System.Windows.Forms.Button();
             this.button13 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
@@ -159,6 +160,8 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.UpdateCargoTrackingLabel = new System.Windows.Forms.Label();
+            this.button50 = new System.Windows.Forms.Button();
             this.cbxOldUpdateCode = new System.Windows.Forms.CheckBox();
             this.button49 = new System.Windows.Forms.Button();
             this.btnCallOldUpdate = new System.Windows.Forms.Button();
@@ -176,6 +179,7 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.CargoTrackingTestBtn = new System.Windows.Forms.Button();
             this.uploadMexicoCitiesBtn = new System.Windows.Forms.Button();
             this.button47 = new System.Windows.Forms.Button();
             this.button44 = new System.Windows.Forms.Button();
@@ -195,7 +199,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
-            this.conStrLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -404,7 +407,6 @@
             // 
             // toolStripTextBoxFilePath
             // 
-            this.toolStripTextBoxFilePath.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxFilePath.Name = "toolStripTextBoxFilePath";
             this.toolStripTextBoxFilePath.Size = new System.Drawing.Size(100, 23);
             this.toolStripTextBoxFilePath.Text = "c:\\TextCode.xml";
@@ -533,7 +535,6 @@
             // 
             // tenantTxtBox
             // 
-            this.tenantTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tenantTxtBox.Name = "tenantTxtBox";
             this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
             this.tenantTxtBox.Text = "1";
@@ -588,6 +589,11 @@
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
+            // conStrLabel
+            // 
+            this.conStrLabel.Name = "conStrLabel";
+            this.conStrLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // button12
             // 
@@ -862,7 +868,7 @@
             // 
             // button29
             // 
-            this.button29.Location = new System.Drawing.Point(373, 398);
+            this.button29.Location = new System.Drawing.Point(373, 405);
             this.button29.Name = "button29";
             this.button29.Size = new System.Drawing.Size(184, 25);
             this.button29.TabIndex = 48;
@@ -874,7 +880,7 @@
             // 
             // button30
             // 
-            this.button30.Location = new System.Drawing.Point(373, 429);
+            this.button30.Location = new System.Drawing.Point(373, 436);
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(184, 25);
             this.button30.TabIndex = 49;
@@ -1433,6 +1439,8 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.UpdateCargoTrackingLabel);
+            this.tabPage1.Controls.Add(this.button50);
             this.tabPage1.Controls.Add(this.cbxOldUpdateCode);
             this.tabPage1.Controls.Add(this.button49);
             this.tabPage1.Controls.Add(this.btnCallOldUpdate);
@@ -1496,6 +1504,27 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // UpdateCargoTrackingLabel
+            // 
+            this.UpdateCargoTrackingLabel.AutoSize = true;
+            this.UpdateCargoTrackingLabel.Location = new System.Drawing.Point(437, 378);
+            this.UpdateCargoTrackingLabel.MinimumSize = new System.Drawing.Size(100, 0);
+            this.UpdateCargoTrackingLabel.Name = "UpdateCargoTrackingLabel";
+            this.UpdateCargoTrackingLabel.Size = new System.Drawing.Size(100, 13);
+            this.UpdateCargoTrackingLabel.TabIndex = 101;
+            this.UpdateCargoTrackingLabel.Text = "...";
+            this.UpdateCargoTrackingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // button50
+            // 
+            this.button50.Location = new System.Drawing.Point(543, 373);
+            this.button50.Name = "button50";
+            this.button50.Size = new System.Drawing.Size(184, 22);
+            this.button50.TabIndex = 100;
+            this.button50.Text = "Update CargoTracking";
+            this.button50.UseVisualStyleBackColor = true;
+            this.button50.Click += new System.EventHandler(this.button50_Click);
             // 
             // cbxOldUpdateCode
             // 
@@ -1664,6 +1693,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.CargoTrackingTestBtn);
             this.tabPage2.Controls.Add(this.uploadMexicoCitiesBtn);
             this.tabPage2.Controls.Add(this.button47);
             this.tabPage2.Controls.Add(this.button44);
@@ -1724,6 +1754,16 @@
             this.tabPage2.Size = new System.Drawing.Size(743, 558);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
+            // 
+            // CargoTrackingTestBtn
+            // 
+            this.CargoTrackingTestBtn.Location = new System.Drawing.Point(497, 529);
+            this.CargoTrackingTestBtn.Name = "CargoTrackingTestBtn";
+            this.CargoTrackingTestBtn.Size = new System.Drawing.Size(135, 23);
+            this.CargoTrackingTestBtn.TabIndex = 99;
+            this.CargoTrackingTestBtn.Text = "CargoTrackingTest";
+            this.CargoTrackingTestBtn.UseVisualStyleBackColor = true;
+            this.CargoTrackingTestBtn.Click += new System.EventHandler(this.CargoTrackingTestBtn_Click);
             // 
             // uploadMexicoCitiesBtn
             // 
@@ -1909,11 +1949,6 @@
             this.button46.Text = "Update Logos";
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
-            // 
-            // conStrLabel
-            // 
-            this.conStrLabel.Name = "conStrLabel";
-            this.conStrLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // Form1
             // 
@@ -2130,6 +2165,9 @@
         private System.Windows.Forms.CheckBox AirlineLogosCheckBox;
         private System.Windows.Forms.Button uploadMexicoCitiesBtn;
         private System.Windows.Forms.ToolStripStatusLabel conStrLabel;
+        private System.Windows.Forms.Button CargoTrackingTestBtn;
+        private System.Windows.Forms.Button button50;
+        private System.Windows.Forms.Label UpdateCargoTrackingLabel;
     }
 }
 
