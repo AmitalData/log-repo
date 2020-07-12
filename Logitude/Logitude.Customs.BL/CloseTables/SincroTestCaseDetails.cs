@@ -55,7 +55,7 @@ MainInterfaceCode ="2892"
                 {
                     Code = "5002",
                     Name = "(5002)ביטול הצהרה",
-                    Entity="Declaration",
+                    Entity="DeclarationCancellation",
                     Param1= @"{ ""Error"":""false""}",
 MainInterfaceCode ="5002"
                 },

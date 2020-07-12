@@ -95,7 +95,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 dec.ChangeSetOp = ChangeSetOperation.Update;
                 var amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
-                    Tenant = _MyDeclarationPM.Tenant,
+                    Tenant = dec.Tenant,
                     objectTableName = "Customs.Declaration",
                     EventCode = "CWR",
                     notes = null,
@@ -107,7 +107,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
                     {
                         entname = "CFIFILEM",
-                        primary_number = _MyDeclarationPM.CustomFileNo,
+                        primary_number = dec.CustomFileNo,
                         status = "new",
                         xml_status = "new",
                         status_id = "CWR",

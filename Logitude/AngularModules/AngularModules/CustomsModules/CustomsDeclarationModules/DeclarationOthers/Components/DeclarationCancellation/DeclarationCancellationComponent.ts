@@ -3,7 +3,7 @@ import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeCo
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
-import { CustomSendOptionsArgs, RequestParamsBase, SendRequestVIA } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs, RequestParamsBase, SendRequestVIA, TestCase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -11,6 +11,8 @@ import { DeclarationWebService } from '../../../../../Customs/Services/WebServic
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CustomMessageProgressComponent } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 import { GenericRequestParams } from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { SendDeclarationService } from '../SendDeclaration/SendDeclarationComponent';
 
 declare var window: any;
 
@@ -93,15 +95,16 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
       
 
     }
+
+ 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
+
+
+
         this.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
         this.RequestVIA = customSendOptionsArgs.RequestVIA;
 
 
-        this.FillErrors();
-        if (this.ValidationErrorsList.length > 0) {
-            return;
-        }
         this.ValidationErrorsList = null;
         SessionLocator.SelectedSession.StartBusyIndicator("");
 
@@ -121,25 +124,83 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         currRequestParams.RequestVIA = this.RequestVIA;
 
         this._declarationPMService.update(this.EntityPM).subscribe(x => {
-            CustomMessageProgressComponent
-                .ShowProgressBar(currRequestParams.PBId, "שליחת מסר ביטול הצהרה", true)
-                .then((res) => {
-                    //this.ResponseData = res;
-                    //this.IsResponseMessageVisibility = true;
-                    //this.OnMassageDisplayMethod();
-                    //this.InitScreen(this.CargoSealIdentifierId);
+       
 
-                }
-                ).catch((err) => {
-                    //this.IsResponseMessageVisibility = true;
-                    //this.ResponseMessage = err;
-                    this.ValidationErrorsList.push(err);
+            if (customSendOptionsArgs.TestCase) {
+
+                let windowArgs = { "SincroScreen": "SincroSendDeclarationCancellation" };
+
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 600;
+                logWindow.Height = 400;
+                logWindow.Title = "תרחשי הצהרה";
+                logWindow.ShowCloseButton = false;
+                logWindow.WindowArgs = windowArgs;
+
+                logWindow.ComponentLoaded.subscribe(comp => {
+                    logWindow.WindowClosed.subscribe(res => {
+                        if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
+                            currRequestParams.TestCase = new TestCase();
+                            currRequestParams.TestCase.Code = comp._ScenarioCode;
+                            currRequestParams.TestCase.Param1 = comp.Param1;
+                            currRequestParams.TestCase.Param2 = comp.Param2;
+
+                            CustomMessageProgressComponent
+                                .ShowProgressBar(currRequestParams.PBId, "שליחת מסר ביטול הצהרה", true)
+                                .then((res) => {
+                                    //this.ResponseData = res;
+                                    //this.IsResponseMessageVisibility = true;
+                                    //this.OnMassageDisplayMethod();
+                                    //this.InitScreen(this.CargoSealIdentifierId);
+
+                                }
+                                ).catch((err) => {
+                                    //this.IsResponseMessageVisibility = true;
+                                    //this.ResponseMessage = err;
+                                    this.ValidationErrorsList.push(err);
+                                });
+                            this._DeclarationWebService.PostSendDeclarationCancellation(currRequestParams)
+                                .subscribe((myServiceResponse: ServiceResponse) => {
+
+                                });
+
+                        }
+                    });
                 });
 
-            this._DeclarationWebService.PostSendDeclarationCancellation(currRequestParams)
-                .subscribe((myServiceResponse: ServiceResponse) => {
-                    
-                });
+                logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
+                ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
+
+                return;
+            }
+            else {
+
+
+        this.FillErrors();
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
+                CustomMessageProgressComponent
+                    .ShowProgressBar(currRequestParams.PBId, "שליחת מסר ביטול הצהרה", true)
+                    .then((res) => {
+                        //this.ResponseData = res;
+                        //this.IsResponseMessageVisibility = true;
+                        //this.OnMassageDisplayMethod();
+                        //this.InitScreen(this.CargoSealIdentifierId);
+
+                    }
+                    ).catch((err) => {
+                        //this.IsResponseMessageVisibility = true;
+                        //this.ResponseMessage = err;
+                        this.ValidationErrorsList.push(err);
+                    });
+                this._DeclarationWebService.PostSendDeclarationCancellation(currRequestParams)
+                    .subscribe((myServiceResponse: ServiceResponse) => {
+
+                    });
+            }
+       
             SessionLocator.SelectedSession.StopBusyIndicator();
         });
     }
