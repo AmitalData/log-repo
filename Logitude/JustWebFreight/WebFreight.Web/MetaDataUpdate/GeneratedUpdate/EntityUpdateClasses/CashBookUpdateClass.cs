@@ -1887,6 +1887,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
     
 			   Feature CashBookFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DPSTCASHBOOK", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Deposite", NameTextCodeDefaultText = "Deposite", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable);
 
+      
+    
+			   Feature CashBookFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MORECASHBOOK", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.More", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable);
+
 			   Feature CashBookFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACITVE", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable);
               
 
@@ -1921,7 +1925,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton CashBookMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 100, 
+						Index = 1, 
 						IsActive = false,
 						LabelTextCodeCode = "CashBook.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -1929,10 +1933,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = CashBookMenuButtonGroup.Id,
 						ObjectTableId = CashBookObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = null,
+						FeatureId = CashBookFeature_MB1.Id,
 						Style = null,
 						LocalDefaultText = "נוספים",
-						FeatureUniqeCode = null,
+						FeatureUniqeCode = CashBookFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton CashBookMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
