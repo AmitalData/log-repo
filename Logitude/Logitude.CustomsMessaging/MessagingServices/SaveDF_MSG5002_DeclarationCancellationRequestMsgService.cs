@@ -147,19 +147,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             exceptionMessage = null;
             var response = new INF_MSG_Generic();
-            //if (requestParams.TestCase != null)
-            //{
-            //    BuildRequestContentHeaderB4Sign(customRequest);
-                 
+            if (requestParams.TestCase != null)
+            {
+                BuildRequestContentHeaderB4Sign(customRequest);
 
-            //            var Fake2892 = new Fake_DF_NG_2892_MSG14000_ImportDeclarationResponseService(requestParams);
-            //    _ResponseHeader= Fake2892.CallWS(out response);
 
-           
-            //exceptionMessage = null;
-            //return response;
-         
-            //}
+                var Fake5002 = new Fake_SaveDF_MSG5002_DeclarationCancellationRequestMsg(requestParams);
+                _ResponseHeader = Fake5002.CallWS(out response);
+
+
+                exceptionMessage = null;
+                return response;
+
+            }
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
             BuildRequestContentHeaderB4Sign(customRequest);
 

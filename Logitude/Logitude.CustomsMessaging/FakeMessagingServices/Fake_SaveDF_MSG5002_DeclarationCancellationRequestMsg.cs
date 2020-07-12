@@ -3,8 +3,9 @@ using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.RequestServices;
 using Newtonsoft.Json.Linq;
 using System;
-using UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference;
-using Exception = UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.Exception;
+ 
+ using UnifreightIIG.Common.DeclarationCancellationRequestMsgServiceReference;
+using Exception = UnifreightIIG.Common.DeclarationCancellationRequestMsgServiceReference.Exception;
 
 namespace Logitude.CustomsMessaging.FakeMessagingServices
 {
@@ -14,7 +15,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         public Fake_SaveDF_MSG5002_DeclarationCancellationRequestMsg(GenericRequestParams requestParams)  {
             genericRequestParams = requestParams;
         }
-    public ResponseHeader CallWS(out DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg response)
+    public ResponseHeader CallWS(out INF_MSG_Generic response)
         {
             //  UpdateDeclaration();
             //  UpdateStatus("5");
@@ -26,7 +27,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
             string Error = data.Error;
             ResponseHeader responseHeader = new ResponseHeader();
-                          response = new DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg();
+                          response = new INF_MSG_Generic();
             response.ResponseContentHeader = new ResponseContentHeader();
             if (Error == "true")
             {
