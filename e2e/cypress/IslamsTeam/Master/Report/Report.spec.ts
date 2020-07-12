@@ -23,7 +23,7 @@ constructor() {
 
 
 it('Search For Report', () => {
-    //cy.wait(10000)
+    cy.wait(10000)
     cy.get('#GeneralMHReports').click();
     cy.get('#null_Search').type('Automation test report')
     cy.get('#ReportID').click()
