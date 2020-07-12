@@ -50,6 +50,8 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
     private ContactListService: ContactListService; 
     EntityId: string;
     private CurrentSession = SessionLocator.SelectedSession;
+    private IsSendButoonClicked = false;
+
     constructor(public entityArgs: EntityArgs, public  _entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -82,6 +84,11 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
                     if (this.IsReload) {
                         this.IsReload = false;
                         this.entityArgs.EditComponent.ReloadEntityPM();
+                    }
+                    if (this.IsSendButoonClicked) {
+                        this.IsSendButoonClicked = false;
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                        this.SendEmail();
                     }
                     this.ReloadhData();
                 }
@@ -509,8 +516,10 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
     // Send Email Command 
     private code = ""; 
     SendEmailCommand(code: string) {
+        this.IsSendButoonClicked = true;
         this.code = code;
-        this.SendEmail();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
+        //this.SendEmail();
     }
     SendEmail() {
         var validator: TicketValidator = new TicketValidator();
