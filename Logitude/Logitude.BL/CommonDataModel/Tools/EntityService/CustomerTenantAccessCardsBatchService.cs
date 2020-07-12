@@ -64,7 +64,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.SubmitChanges();
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ImporterShipmentsQueueBuilderQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CustomerId", Poco.CustomerId.ToString() }, { "CustomerTenantAccessId", Poco.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", Poco.BatchNumber }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CustomerId", Poco.CustomerId.ToString() }, { "CustomerTenantAccessId", Poco.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", Poco.BatchNumber } }, tenant);
 
                 scope.Complete();
             }
@@ -86,7 +86,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.SubmitChanges();
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ImporterShipmentsQueueBuilderQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CustomerId", Poco.CustomerId.ToString() }, { "CustomerTenantAccessId", Poco.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", Poco.BatchNumber }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CustomerId", Poco.CustomerId.ToString() }, { "CustomerTenantAccessId", Poco.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", Poco.BatchNumber } }, tenant);
 
                 scope.Complete();
             }

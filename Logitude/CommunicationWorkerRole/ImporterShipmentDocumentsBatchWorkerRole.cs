@@ -145,7 +145,7 @@ namespace CommunicationWorkerRole
                                 string CustomerId = response.MessageValues["CustomerId"].ToString();
                                 string BatchNumber = response.MessageValues["BatchNumber"].ToString();
                                 int.TryParse(response.MessageValues["Tenant"], out tenant);
-                                string CorrelationId = response.MessageValues["CorrelationId"].ToString();
+                                string CorrelationId = response.MessageId;
                                 ContactRepository contactRepository = new ContactRepository(tenant);
                                 User = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant, true);
                                 #region API Initialization

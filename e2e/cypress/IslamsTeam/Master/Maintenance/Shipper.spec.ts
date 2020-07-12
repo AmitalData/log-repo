@@ -35,7 +35,7 @@ it('Create New Shipper', () => {
   })
 
 it('Search For Shipper', () => {
-
+  cy.get('#BusyIndicator_0').should('not.be.visible')
    cy.get('#SearchFieldsId_0_0').type("CypressShipper" + timeStamp)
    cy.get('#BusyIndicator_0').should('not.be.visible')
    cy.get("#LogGrid_0_0row0").click()

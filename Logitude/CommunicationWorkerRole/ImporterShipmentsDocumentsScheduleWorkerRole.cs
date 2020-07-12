@@ -137,7 +137,7 @@ namespace CommunicationWorkerRole
                             int.TryParse(response.MessageValues["Tenant"], out Tenant);
                             tenant = Tenant;
 
-                            string TempCorrelationId = response.MessageValues["CorrelationId"].ToString();
+                            string TempCorrelationId = response.MessageId;
                             if (string.IsNullOrEmpty(CorrelationId))
                             {
                                 CorrelationId = TempCorrelationId;
