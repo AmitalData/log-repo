@@ -205,7 +205,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                                     DocumentsFilingPM DocumentFilingPM = documentsFilingQuery.GetSinglePM(DocumentFilingPMId, ImporterShipment.Tenant);
                                     IQueueService queueservice = new DbQueueService();
                                     queueservice.InitializeQueue("ForwardersShipmentDocumentsQueue", 0);
-                                    queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", ImporterShipment.Id }, { "DocumentFilingId", DocumentFilingPMId }, { "Tenant", ImporterShipment.Tenant.ToString() }, ImporterShipment.Tenant);
+                                    queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", ImporterShipment.Id }, { "DocumentFilingId", DocumentFilingPMId }, { "Tenant", ImporterShipment.Tenant.ToString() } }, ImporterShipment.Tenant);
                                 }
                             }
                         }
