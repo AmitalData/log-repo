@@ -409,7 +409,9 @@ __pycache__/
 /Logitude/Logitude.HybridTest/Properties/DataSources
 /Logitude/AngularModules/AngularModules/node_modules.rar
 /Logitude/Logitude.Update/performancelog.csv
-/Logitude/AngularModules/AngularModules/cypress/videos/examples
 /Logitude/AngularModules/AngularModules/cypress/screenshots/examples/test.spec.js
-/Logitude/Logitude.DBMigrations/GeneratedScript
+/Logitude/AngularModules/AngularModules/cypress/videos/examples
 /Logitude/AngularModules/CargoTrackingModules/dist
+/e2e/cypress/results/html
+/e2e/cypress/videos/AymensTeam
+/e2e/Cypress/videos/integration/examples/Prod.spec.js.mp4
