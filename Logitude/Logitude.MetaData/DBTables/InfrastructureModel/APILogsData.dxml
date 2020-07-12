@@ -50,5 +50,6 @@
     ForeignKeyColumn="Id"
     ReferencedTable="APILogs"
     ReferencedColumn="Id"
+    Ignore="true"
     ReferencedTableSchema="dbo" />
 </Table>

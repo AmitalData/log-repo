@@ -151,6 +151,7 @@ namespace Simplog.Server.Infrastructure
         public static string SMSServicePhoneNumber { get; set; }
 
         public static string WorkerRoleName { get; set; }
+        public static bool RunWorkerRoleAutomaticBreakPoint { get; set; }
     }
 
     public class LogitudeCustomsSettingsM

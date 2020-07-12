@@ -1,4 +1,7 @@
-﻿using Logitude.BL.GlobalModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.Tools.DataMapping;
 using Logitude.BL.GlobalModel.Tools.TraceEvents;
 using Logitude.BL.GlobalModel.Tools.Validating;
@@ -14,6 +17,7 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -93,12 +97,49 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             this.UpdateAddOns();
             this.ClearAllUsersCache();
             this.BrandingEvent();
-            this.CheckParentTenants();
+            this.CheckParentTenants();         
+            this.UpdateCargoTrackingColors();
+            if (entityPM.Id == 341)
+            {
+                this.UpdateCustomer();
+            }
 
             TenantManagementTracing.Trace(entityPM, entityPoco, isNewEntity);
             TenantManagementMapping.MapEntity(entityPM, entityPoco, isNewEntity);
             entityRepository.Update(entityPoco);
             entityRepository.SubmitChanges();
+        }
+        private void  UpdateCargoTrackingColors()
+        {
+            int index =  (entityPM.MainColor!= null && entityPM.MainColor.Length > 7) ? 3 : 1;
+            this.entityPM.MainColor= (this.entityPM.MainColor!= null && entityPM.MainColorOpacity != null) ? "#" +entityPM.MainColorOpacity + entityPM.MainColor.ToString().Substring(index, 6): entityPM.MainColor;
+            index =( entityPM.SecondaryColor!= null && entityPM.SecondaryColor.Length > 7) ? 3 : 1;
+            this.entityPM.SecondaryColor = (entityPM.SecondaryColor!= null && entityPM.SecondaryColorOpacity != null ) ? "#" + entityPM.SecondaryColorOpacity + entityPM.SecondaryColor.ToString().Substring(index, 6) : entityPM.SecondaryColor;
+
+
+        }
+        private void UpdateCustomer()
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                CustomerQuery customerQuery = new CustomerQuery(entityPM.Id);
+                CustomerPM customer = customerQuery.GetSinglePMByExternalId(entityPM.Id.ToString(), entityPM.Id);
+                if (customer != null)
+                {
+                    string numberOfUsers = null;
+                    if (entityPM.TotalNumberOfUsers != null)
+                    {
+                        numberOfUsers = entityPM.TotalNumberOfUsers.ToString();
+                    }
+
+                    customer.Field1 = new CustomFieldClass("Field1", "Customer", numberOfUsers);
+                    ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Id);
+                    CustomerService service = new CustomerService(MyContext, customer);
+                    service.Update();
+                }
+
+                scope.Complete();
+            }
         }
 
         private void BrandingEvent()

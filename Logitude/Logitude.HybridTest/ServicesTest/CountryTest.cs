@@ -22,9 +22,9 @@ namespace Logitude.HybridTest.ServicesTest
                 AddedManually = true,
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(countryPM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(countryPM);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
          }
 
         [TestMethod]

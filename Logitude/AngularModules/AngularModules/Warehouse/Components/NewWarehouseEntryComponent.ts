@@ -80,8 +80,8 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
         this.RunComponent();
         this.ShipmentPM = args.ShipmentPM;
         this.ValidationErrorsList = [];
-
-        if (args.WarehouseEntryPackagesLists.length == 0 && this.ShipmentPM.DirectionId == "I") {
+        var emptyWarehouseEntryPackagesLists: boolean = args.WarehouseEntryPackagesLists == null ? true : args.WarehouseEntryPackagesLists.length == 0 ? true : false;
+        if (this.ShipmentPM.DirectionId == "I" && emptyWarehouseEntryPackagesLists) {
             this.IsNoPackagesAvaliable = true;
             this.ValidationErrorsList.push("You are not allowed to create a new cross dock entry! Please add at least one shipment package.");
         }

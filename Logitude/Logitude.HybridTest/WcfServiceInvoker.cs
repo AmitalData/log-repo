@@ -1,5 +1,6 @@
 ﻿
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.HybridTest
 {
-    class WcfServiceInvoker
+    public class WcfServiceInvoker
     {
         public static ServiceOutcome InvokeServiceMethod(InvokedProperties serviceProperties,object[] serviceParameters)
         {
@@ -34,9 +35,11 @@ namespace Logitude.HybridTest
                         serviceOutcome.Response = (Response)serviceOutcome.Result;
                     else
                     {
-                        if(serviceProperties.ServiceResponseIndex != -1)
+                        if (serviceProperties.ServiceResponseIndex != -1)
                             serviceOutcome.Response = (Response)serviceParameters[serviceProperties.ServiceResponseIndex];
                     }
+                    
+                    serviceOutcome.QueueMessagesDetails = GetQueueMessagesDetailsFromIncomingResponse();
                     return serviceOutcome;
                 }
             }
@@ -47,7 +50,18 @@ namespace Logitude.HybridTest
                 return serviceOutcome;
             }
         }
-        
+
+        private static Dictionary<string, string> GetQueueMessagesDetailsFromIncomingResponse()
+        {
+            Dictionary<string, string> queueMessagesDetails = null;
+            string headers = System.ServiceModel.Web.WebOperationContext.Current.IncomingResponse.Headers["SentQueueMessages"];
+            if (headers != null)
+            {
+                queueMessagesDetails = headers.FromJsonToDictionary();
+            }
+            return queueMessagesDetails;
+        }
+
         private static object ResolveServiceClient(InvokedProperties serviceProperties)
         {
             WsdlImporter importer = ImportContractsAndEndPoints(serviceProperties);
@@ -115,7 +129,11 @@ namespace Logitude.HybridTest
 
         private static string GetURI(InvokedProperties serviceProperties)
         {
-            string uri = EnvironmentGlobalParams.ServerURL + "/WcfApi/" + serviceProperties.ServiceName;
+            string uri;
+            if (EnvironmentGlobalParams.ServerURL != null)
+                uri = EnvironmentGlobalParams.ServerURL + "/WcfApi/" + serviceProperties.ServiceName;
+            else
+                uri = serviceProperties.IncludedData.URL + "/WcfApi/" + serviceProperties.ServiceName;
             if (serviceProperties.ServiceName == "ContactPassword")
                 uri += "Service.svc?wsdl";
             else if (serviceProperties.ServiceName == "Vessel")
@@ -179,10 +197,15 @@ namespace Logitude.HybridTest
 
         private static void SetHeader(InvokedProperties serviceProperties)
         {
-            if (serviceProperties.SecondaryToken == null)
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.MainTenantToken);
+            if (serviceProperties.IncludedData == null)
+            {
+                if (serviceProperties.SecondaryToken == null)
+                    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.MainTenantToken);
+                else
+                    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.SecondaryTenantToken);
+            }
             else
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.SecondaryTenantToken);
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", serviceProperties.IncludedData.Token);
         }
 
     }
@@ -194,11 +217,18 @@ namespace Logitude.HybridTest
         public Type ServiceType { get; set; }
         public Type ServiceFilterType { get; set; }
         public string SecondaryToken { get; set; }
+        public AdditionalIncludedData IncludedData { get; set; }
     }
 
+    public class AdditionalIncludedData
+    {
+        public string URL { get; set; }
+        public string Token { get; set; }
+    }
     public class ServiceOutcome
     {
         public object Result { get; set; }
         public Response Response { get; set; }
+        public Dictionary<string, string> QueueMessagesDetails { get; set; }
     }
 }

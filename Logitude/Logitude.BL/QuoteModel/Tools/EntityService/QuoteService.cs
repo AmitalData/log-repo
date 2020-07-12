@@ -34,6 +34,8 @@ using Logitude.BL.QuoteModel.APIDataContract;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.Server.Tools;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Logitude.BL.QuoteModel.Tools.EntityService
 {
@@ -472,6 +474,11 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.isAdhoc = entityPM.QuoteTypeCode == "A" ? true : false;
             this.isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");
 
+            if (string.IsNullOrEmpty(entityPM.ShipmentTypeId) && entityPM.TransportModeId == "A")
+            {
+                entityPM.ShipmentTypeId = "Air";
+            }
+
             this.isLCLQuote = false;
             if (entityPM.TransportModeId.ToUpper() == "A")
             {
@@ -554,6 +561,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             SetCustomerDateFields(entityPM, entityPoco);
             ComputeChargesSaleFieldsInSaleCurrency();
             ComputeCountryForStatisticsId();
+            this.FillDefaultSubType();
 
             if (!entityPM.IsHybrid)
             {
@@ -617,6 +625,54 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             this.ComputeExpectedProfit();
             this.ComputeProfit();
+        }
+
+        private void FillDefaultSubType()
+        {
+            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
+            {
+                string code = null;
+                if (entityPM.TransportModeId == "A")
+                {
+                    code = "Air";
+                }
+
+                else if (entityPM.TransportModeId == "I")
+                {
+                    if (entityPM.ShipmentTypeId == "FTL")
+                    {
+                        code = "FTL";
+                    }
+
+                    else
+                    {
+                        code = "LTL";
+                    }
+                }
+
+                else if (entityPM.TransportModeId == "O")
+                {
+                    if (entityPM.ShipmentTypeId == "FCLD")
+                    {
+                        code = "FCL";
+                    }
+
+                    else
+                    {
+                        code = "LCL";
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(code))
+                {
+                    ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
+                    ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubTypeByCode(code, entityPM.Tenant);
+                    if (subType != null)
+                    {
+                        entityPM.ShipmentSubTypeId = subType.Id;
+                    }
+                }
+            }
         }
 
         private bool isEnableMultiPercentageVATTypes;

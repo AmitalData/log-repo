@@ -1,6 +1,6 @@
 {
-  "name": "angularmodules",
-  "version": "0.0.0",
+  "name": "cypress",
+  "version": "4.9.0",
   "scripts": {
     "ng": "ng",
     "test": "ng test",
@@ -27,7 +27,8 @@
     "report:merge": "mochawesome-merge --reportDir cypress/results/json > cypress/results/mochawesome-bundle.json",
     "report:generate": "marge cypress/results/mochawesome-bundle.json -o cypress/reports/html",
     "report:copyScreenshots": "cp -r cypress/screenshots cypress/results/html/screenshots",
-    "CypressSupport":"npm install --save-dev cypress-file-upload || npm i --save-dev cypress-localstorage-commands"
+    "CypressSupport": "npm install --save-dev cypress-file-upload || npm i --save-dev cypress-localstorage-commands",
+    "cypressopenlocal": "cypress open --env Env=local"
   },
   "private": true,
   "dependencies": {

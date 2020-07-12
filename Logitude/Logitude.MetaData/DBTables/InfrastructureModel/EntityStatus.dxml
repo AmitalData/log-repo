@@ -79,6 +79,6 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="AutomaticLastUpdateDate" />
-  <UniqueConstraint
-    Columns="Code,Tenant" />
+ <!--<UniqueConstraint
+    Columns="Code,Tenant" />-->
 </Table>

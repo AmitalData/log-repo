@@ -23,7 +23,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = entityPM.Tenant,
-                    EventTypeCode = "CARM",
+                    EventTypeCode = "CREV",
                     UserId = loggedContact.Id,
                     EntityId = entityPM.Id,
                     ObjectTableName = "PaymentMethod",
@@ -46,7 +46,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = entityPM.Tenant,
-                    EventTypeCode = "UARM",
+                    EventTypeCode = "UPEV",
                     UserId = loggedContact.Id,
                     EntityId = entityPM.Id,
                     ObjectTableName = "PaymentMethod",

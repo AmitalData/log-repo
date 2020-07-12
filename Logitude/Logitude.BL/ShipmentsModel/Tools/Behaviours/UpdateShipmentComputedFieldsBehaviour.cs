@@ -75,6 +75,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             MapFirstPickUp();
             MapLastPickUp();
             MapLastDelivery();
+            MapFirstDelivery();
             MapFieldsWhenChanged();
             MapOperationalClosed();
             MapCustomsClearance();
@@ -155,6 +156,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.PickupDriver = null;
                 entity.PickupTrailerNumber = null;
                 entity.PickupNotes = null;
+                entity.OnHandDate = null;
 
 
             }
@@ -169,7 +171,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.PickupDriver = firstPickUp.Driver;
                 entity.PickupTrailerNumber = firstPickUp.TrailerNumber;
                 entity.PickupNotes = firstPickUp.Notes;
-
+                entity.OnHandDate = firstPickUp.ATA;
 
                 if (firstPickUp.PickUpDeliveryToTypeCode == "PART")
                 {
@@ -220,6 +222,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         }
         private void MapLastDelivery()
         {
+
             ShipmentDeliveryPM finalDelivery = shipmentPM.ShipmentDeliveries.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
             if (finalDelivery == null)
@@ -228,10 +231,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 //entity.DeliveryToCity = null;
                 entity.DeliveryToPortId = null;
                 entity.DeliveryFrom = null;
-                entity.FinalDeliveryATA = null;
-                entity.FinalDeliveryATD = null;
-                entity.FinalDeliveryETA = null;
-                entity.FinalDeliveryETD = null;
+                entity.FinalDeliveryATA = shipmentPM.FinalDeliveryATA = null;
+                entity.FinalDeliveryATD = shipmentPM.FinalDeliveryATD = null;
+                entity.FinalDeliveryETA = shipmentPM.FinalDeliveryETA = null;
+                entity.FinalDeliveryETD = shipmentPM.FinalDeliveryETD = null;
 
 
                 entity.DeliveryTruckerId = null;
@@ -239,21 +242,30 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.DeliveryDriver = null;
                 entity.DeliveryTrailerNumber = null;
                 entity.DeliveryNotes = null;
-
+                entity.DeliveryDate = null;
+                entity.PODDate = null;
             }
 
             else
             {
-                entity.FinalDeliveryATA = finalDelivery.ATA;
-                entity.FinalDeliveryATD = finalDelivery.ATD;
-                entity.FinalDeliveryETA = finalDelivery.ETA;
-                entity.FinalDeliveryETD = finalDelivery.ETD;
+                entity.FinalDeliveryATA = shipmentPM.FinalDeliveryATA= finalDelivery.ATA;
+                entity.FinalDeliveryATD = shipmentPM.FinalDeliveryATD= finalDelivery.ATD;
+                entity.FinalDeliveryETA = shipmentPM.FinalDeliveryETA =  finalDelivery.ETA;
+                entity.FinalDeliveryETD = shipmentPM.FinalDeliveryETD = finalDelivery.ETD;
+
+
+      
 
                 entity.DeliveryTruckerId = finalDelivery.CarrierId;
                 entity.DeliveryTruckerNumber = finalDelivery.CarrierNumber;
                 entity.DeliveryDriver = finalDelivery.Driver;
                 entity.DeliveryTrailerNumber = finalDelivery.TrailerNumber;
                 entity.DeliveryNotes = finalDelivery.Notes;
+                entity.PODDate = finalDelivery.ATA;
+
+
+
+
 
 
 
@@ -290,6 +302,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 {
                     entity.DeliveryFrom = GetPortName(finalDelivery.FromPortId);
                 }
+            }
+        }
+        private void MapFirstDelivery()
+        {
+            ShipmentDeliveryPM firstDelivery = shipmentPM.ShipmentDeliveries.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+            if (firstDelivery == null)
+            {
+                entity.DeliveryDate = null;
+            }
+
+            else
+            {
+                entity.DeliveryDate = firstDelivery.ATD;
             }
         }
         private void MapFieldsWhenChanged()

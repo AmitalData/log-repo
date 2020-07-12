@@ -1781,6 +1781,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     FieldCode = item.Code,
                                 });
                             }
+                            else
+                            {
+                                if (queryColumn.FieldCode != item.Code)
+                                {
+                                    queryColumn.FieldCode = item.Code;
+                                    isUpdated = true;
+
+
+                                }
+                            }
                         }
 
                         QueryData.BITabularViewSettings = bITabularViewSettings;

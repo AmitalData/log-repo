@@ -278,7 +278,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             SetSatStatus();
 
-            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice  , EntityPM = entityPM , ChangeTrackingPM = new ARInvoicePM(),  AutomationType = "OnCreate", ObjectTableName = "ARInvoice" ,  Tenant =entityPM.Tenant});
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice  , EntityPM = entityPM , OldEntityPM = new ARInvoicePM(),  AutomationType = "OnCreate", ObjectTableName = "ARInvoice" ,  Tenant =entityPM.Tenant});
             entityAutomationService.RunAutomation();
 
 
@@ -302,8 +302,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (entityPM.ARInvoiceTypeCode == "IT")
             {
                 this.UpdateInterestReportFields(entityPM);
+                this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
 
+
+        }
+
+
+        private void UpdateInterestReportsConnectedInvoice()
+        {
 
         }
 
@@ -319,8 +326,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             IInterestReportUpdateServiceExt InterestReportUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportUpdateServiceExt), "InterestReportUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportUpdateServiceExt;
             InterestReportUpdate.UpdateConfirmCreateInvoice(null, tenant, null, theEntityPM.Id, theEntityPM.InvoiceNumber, theEntityPM.AmountInLocalCurrency , theEntityPM.InvoiceEntities[0].EntityId);
+ 
         }
 
+        private void UpdateInterestReportsConnectedInvoice(ARInvoicePM theEntityPM)
+        {
+            IInterestReportsConnectedInvoiceUpdateServiceExt InterestReportsConnectedInvoiceUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportsConnectedInvoiceUpdateServiceExt), "InterestReportsConnectedInvoiceUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportsConnectedInvoiceUpdateServiceExt;
+            InterestReportsConnectedInvoiceUpdate.UpdateInterestLastBatchService(theEntityPM.InvoiceEntities[0].EntityId, tenant, null, theEntityPM.Id);
+        }
         private void ValidateInvoiceConnected()
         {
             if (!entityPM.IsConsolidationInvoice && !entityPM.IsGeneralInvoice)
@@ -514,8 +527,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
 
-                EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, ChangeTrackingPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant });
-                entityAutomationService.RunAutomation();
+                EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant });
 
                 ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
                 invoiceRepository.Update(invoice);
@@ -541,12 +553,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     this.UpdateInvoicePayments(invoicePaymentsChangeSet);
                     this.UpdateInvoiceAmountDue();
+                    this.UpdatePaidDate();
                 }
 
                 this.BuildSearchFields();
 
+                entityAutomationService.RunAutomation();
 
             }
+
 
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
@@ -3306,6 +3321,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
+
+        private void UpdatePaidDate()
+        {
+            if (entityPM.AmountDue != 0)
+            {
+                entityPM.PaidDate = null;
+            }
+
+            else
+            {
+                ARInvoicePaymentPM itemPM = invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).FirstOrDefault();
+                if(itemPM != null)
+                {
+                    entityPM.PaidDate = (from d in objectContext.ARPayments where d.Id == itemPM.ARPaymentId select d.ValueDate).FirstOrDefault();
+                }
+            }
+
+            invoice.PaidDate = entityPM.PaidDate;
+        }
+
         #endregion
 
         #region SearchField

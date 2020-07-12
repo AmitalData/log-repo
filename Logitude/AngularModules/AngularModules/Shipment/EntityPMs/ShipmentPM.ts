@@ -3921,6 +3921,10 @@ export class ShipmentPM {
     public get WarehouseLegWarehouseId() { return this.warehouseLegWarehouseId; }
     public set WarehouseLegWarehouseId(newValue: string) { this.warehouseLegWarehouseId = newValue; this.MarkAsDirty(); }
 
+    private isUpdateWarehouseLegData: boolean;
+    public get IsUpdateWarehouseLegData() { return this.isUpdateWarehouseLegData; }
+    public set IsUpdateWarehouseLegData(newValue: boolean) { this.isUpdateWarehouseLegData = newValue; this.MarkAsDirty("IsUpdateWarehouseLegData"); }
+
     private warehouseLegAddressId: string;
     public get WarehouseLegAddressId() { return this.warehouseLegAddressId; }
     public set WarehouseLegAddressId(newValue: string) { this.warehouseLegAddressId = newValue; this.MarkAsDirty(); }
@@ -3972,6 +3976,7 @@ export class ShipmentPM {
     private grossWeightPerTon: number;
     public get GrossWeightPerTon() { return this.grossWeightPerTon; }
     public set GrossWeightPerTon(newValue: number) { if (this.grossWeightPerTon != newValue) { this.grossWeightPerTon = newValue; this.MarkAsDirty("GrossWeightPerTon"); } }
+
 
     //Abed 
     //properties withOut MarkAsDirty()

@@ -72,6 +72,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CustomerLocalName  { get; set; }
        [DataMember]
        public bool EnableInvoiceing  { get; set; }
+       [DataMember]
+       public string InvoiceFailureReason  { get; set; }
    }
 
 }

@@ -686,6 +686,8 @@ namespace WebFreight.Web.WebServices
 
                     if (!string.IsNullOrEmpty(shipment.Notify1ContactId))
                     {
+                        myDataProvider.Notify1ReferenceNumber = shipment.Notify1Reference;
+
                         Contact myContact = contactRepository.GetSingleContact(shipment.Notify1ContactId, tenant);
 
                         if (myContact != null)
@@ -1635,6 +1637,7 @@ namespace WebFreight.Web.WebServices
                 if (!string.IsNullOrEmpty(shipment.Transshipment1FromPortId))
                 {
                     myDataProvider.Transshipment1FromPortCode = shipment.Transshipment1FromPortCode;
+                    myDataProvider.Transshipment1FromPortName = shipment.Transshipment1FromPortName;
                 }
 
                 if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
@@ -1645,11 +1648,17 @@ namespace WebFreight.Web.WebServices
                 if (!string.IsNullOrEmpty(shipment.Transshipment2FromPortId))
                 {
                     myDataProvider.Transshipment2FromPortCode = shipment.Transshipment2FromPortCode;
+                    myDataProvider.Transshipment2FromPortName = shipment.Transshipment2FromPortName;
                 }
 
                 if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
                 {
                     myDataProvider.Transshipment2ToPortCode = shipment.Transshipment2ToPortCode;
+                }
+
+                if (!string.IsNullOrEmpty(shipment.Transshipment3FromPortId))
+                {
+                    myDataProvider.Transshipment3FromPortName = shipment.Transshipment3FromPortName;
                 }
 
                 //Discharge port

@@ -19,6 +19,8 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using System.Data.Entity.Core;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Logitude.BL.QuoteModel.Tools.Validating
 {
@@ -61,6 +63,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
             ValidateFCLDuplicatedPackages(entityPM);
             ValidateDomesticQuote(entityPM);
             ValidateQuoteCharges(entityPM);
+            ValidateShipmentSubType(entityPM);
         }
 
         private static void ValidateConvertQuote(QuotePM entityPM)
@@ -480,9 +483,69 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                                     throw new ApplicationException("Tenant other Charges currency is required");
                                 }
                             }
-                            
+
                             break;
                         }
+                }
+            }
+        }
+        private static void ValidateShipmentSubType(QuotePM entityPM)
+        {
+            if (!entityPM.IsHybrid)
+            {
+                if (!string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
+                {
+                    ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
+                    ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubType(entityPM.ShipmentSubTypeId, entityPM.Tenant);
+
+                    if (subType != null)
+                    {
+                        if (entityPM.TransportModeId == "A")
+                        {
+                            if (subType.Code != "Air")
+                            {
+                                throw new ApplicationException("Sub Type should be Air when Shipment Transport Mode is Airline");
+                            }
+                        }
+
+                        else if (entityPM.TransportModeId == "I")
+                        {
+                            if (entityPM.ShipmentTypeId == "FTL")
+                            {
+                                if (subType.Code != "FTL")
+                                {
+                                    throw new ApplicationException("Sub Type should be FTL when Shipment Type is FTL");
+                                }
+                            }
+
+                            else
+                            {
+                                if (subType.Code != "LTL")
+                                {
+                                    throw new ApplicationException("Sub Type should be LTL when Shipment Type is LTL");
+                                }
+                            }
+                        }
+
+                        else if (entityPM.TransportModeId == "O")
+                        {
+                            if (entityPM.ShipmentTypeId == "FCLD")
+                            {
+                                if (subType.Code != "FCL")
+                                {
+                                    throw new ApplicationException("Sub Type should be FCL when Shipment Type is FCL");
+                                }
+                            }
+
+                            else
+                            {
+                                if (subType.Code != "LCL")
+                                {
+                                    throw new ApplicationException("Sub Type should be LCL when Shipment Type is LCL");
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

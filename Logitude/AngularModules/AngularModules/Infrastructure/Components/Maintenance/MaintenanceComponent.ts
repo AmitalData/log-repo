@@ -380,7 +380,7 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Quote Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
-
+         
             var item1 = new MenusTablePM();
             item1.CategoryTypeCode = "CMS";
             item1.Icon = "Settings"
@@ -572,6 +572,15 @@ export class MaintenanceComponent {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
 
+        if (FeatureLocator.HasFeaturePermession("General", "UPLOADPARTNERS")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "OTH";
+            item.Icon = "Settings"
+            item.Code = "PAUP";
+            item.ObjectTableName = "Partners Upload";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        } 
+
         if (FeatureLocator.HasFeaturePermession("General", "CacheLogMenu")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "OTH";
@@ -580,7 +589,14 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Cache Log";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-
+        if (FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "OTH";
+            item.Icon = "Settings"
+            item.Code = "CARGO";
+            item.ObjectTableName = "Cargo Tracking";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "CMS";
@@ -621,7 +637,7 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "BatchServicesLog")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-
+           
         }
 
         else {
@@ -721,6 +737,18 @@ export class MaintenanceComponent {
                         logWindow.IsShowCloseButton = true;
                         logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/LocalSettings/LocalSettingsComponent');
                     });
+                    break;
+                }
+                case "CARGO": {
+               
+                        var windowTitle = "Cargo Tracking";
+                        var logWindow = new LogitudeWindow();
+                        logWindow.Width = 950;
+                        logWindow.Height = 500;
+                        logWindow.Title = windowTitle;
+                        logWindow.IsShowCloseButton = true;
+                        logWindow.Show('./Accounting/Components/Others/CargoTrackingService/CargoTrackingServiceComponent');
+                   
                     break;
                 }
                 case "MTCE": {
@@ -1300,6 +1328,17 @@ export class MaintenanceComponent {
                     break;
                 }
 
+                case "PAUP": {
+                    var windowTitle = "Partners Upload";
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Width = 600;
+                    logWindow.Height = 400;
+                    logWindow.Title = windowTitle;
+                    logWindow.IsShowCloseButton = false;
+                    logWindow.Show('./CommonModules/CommonPartners/Components/Maintenance/UploadPartnersComponent');
+                    break;
+                }
+
                 default: {
                     if (item.ObjectTableId) {
                         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === item.ObjectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
@@ -1547,6 +1586,7 @@ class MaintenanceMenuItem {
             switch (this.Code) {
                 case "SIGN": { myResult = "Set Signature Settings"; break; }
                 case "CHPA": { myResult = "Change Password"; break; }
+                case "CARGO": { myResult = "Cargo Tracking"; break; }
                 case "COAD": { myResult = "Company Address Settings"; break; }
                 case "PAGD": { myResult = "Payment Gateway Definition"; break; }
                 case "CODE": { myResult = "System Defaults"; break; }

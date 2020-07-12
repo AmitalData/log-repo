@@ -40,6 +40,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(120)
                 .IsUnicode(true);
 
+            this.Property(t => t.MarkForDelete).IsOptional();
 
             // Table & Column Mappings
             this.ToTable("Documents");

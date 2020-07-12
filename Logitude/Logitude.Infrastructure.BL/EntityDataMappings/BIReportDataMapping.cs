@@ -12,6 +12,7 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Infrastructure.BL.EntityQueryServices;
 
 namespace Logitude.Infrastructure.BL.EntityDataMappings
 {
@@ -32,6 +33,18 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
             BuildSearchFields(entityPM, entityPOCO);
+
+            if (entityPM.BIReportFolderId != entityPOCO.BIReportFolderId)
+            {
+                CheckIfUserHasPermissionOnBIFolder(entityPM.BIReportFolderId, entityPOCO.Tenant);
+            }
+        }
+
+        private void CheckIfUserHasPermissionOnBIFolder(string biReportFolderId, int tenant)
+        {
+            BIReportFolderQueryService bIReportFolderQuery = new BIReportFolderQueryService(tenant);
+            bool isPermittedUser = bIReportFolderQuery.CheckIfUserHasFolderPermission(tenant, biReportFolderId);
+            if (!isPermittedUser) throw new Exception("Sorry! you have no permission to do this operation.");
         }
 
         public void CustomPOCOToPM(BIReportPM entityPM, BIReport entityPOCO)

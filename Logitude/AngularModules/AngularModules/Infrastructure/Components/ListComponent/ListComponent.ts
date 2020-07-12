@@ -1261,6 +1261,24 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
             },
         };
+          if (this.FiltersMenu) {
+                this.FiltersMenu.AdditionalFilters.forEach((filter, key) => {
+                    if (Args.Filters && filter.IgnoreFilter) {
+                        Args.Filters.AdditionalFilters = Args.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
+                    }
+                    else {
+                        if (Args.Filters == null) {
+                            Args.Filters = new ApiQueryFilters();
+                        }
+                        if (Args.Filters.AdditionalFilters.filter(a => a.FieldName == filter.FieldName).length > 0) {
+                            Args.Filters.AdditionalFilters = Args.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
+                        }
+                        Args.Filters.AdditionalFilters.push(filter);
+                        //this.Filters.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, null, filter.Operator, false, filter.DisplayInList, false, filter.FieldDataType);
+                    }
+                });
+
+            }
         this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: Args.Filters, Reload: true });
         this.SetNewEntityButton();
         this.SetAddButton();

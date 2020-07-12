@@ -91,6 +91,16 @@ namespace WebFreight.Web.DataProviders
         public string APInvoiceField8 { get; set; }
         public string APInvoiceField9 { get; set; }
         public string APInvoiceField10 { get; set; }
+
+        public DateTime? FirstPickupETD { get; set; }
+        public DateTime? FirstPickupETA { get; set; }
+        public DateTime? LastDeliveryETD { get; set; }
+        public DateTime? LastDeliveryETA { get; set; }
+        public string ShipperPhoneNumber { get; set; }
+        public string ConsigneePhoneNumber { get; set; }
+        public string FirstPickupTrucker{ get; set; }
+        public string LastDeliveryTrucker{ get; set; }
+
         public List<APReportInvoiceLine> APInvoiceLinesList { get; set; }
         public List<APTotalVat> APTotalVatList { get; set; }
         public List<APInvoiceMultipleEntity> APInvoiceMultipleEntityList { get; set; }

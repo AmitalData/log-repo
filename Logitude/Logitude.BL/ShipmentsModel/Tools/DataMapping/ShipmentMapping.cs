@@ -188,6 +188,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.ToPortId = entityPM.ToPortId;
             }
 
+            if (entityPM.IsStatusChange)
+            {
+                MapShipmentStatus(entityPM, entityPoco, entityMasterData);
+            }
+       
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
             Tenant currentTenant = tenantRepository.GetSingleTenant(entityPM.Tenant);
 
@@ -434,8 +439,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.To = entityPM.To;
             entityPoco.Origin = entityPM.Origin;
             entityPoco.ComputedShipmentNumber = entityPM.ComputedShipmentNumber;
+            entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
 
-            MapShipmentSubType(entityPM, entityPoco);            
+            //MapShipmentSubType(entityPM, entityPoco);            
 
             //entityPoco.ContainersNumbers = entityPM.ContainersNumbers;
             //entityPoco.FirstPickupLocation = entityPM.FirstPickupLocation;
@@ -460,63 +466,82 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             ValidateMAWBStackField(entityPoco, entityMasterData);
         }
 
-        private static void MapShipmentSubType(ShipmentPM entityPM, Shipment entityPoco)
+        private static void MapShipmentStatus(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
         {
-            if(entityPM.TransportModeId == "A")
+            entityPoco.StatusId = entityPM.StatusId;
+            entityPoco.StatusDate = entityPM.StatusDate;
+            entityPoco.StatusLocation = entityPM.StatusLocation;
+            entityPoco.LastStatusLogDate = entityPM.LastStatusLogDate;
+            if (entityMasterData != null)
             {
-                entityPM.ShipmentTypeId = "Air";
-                entityPoco.ShipmentTypeId = "Air";
-            }
-
-            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
-            {
-                ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
-
-                string code = null;
-                if (entityPM.TransportModeId == "A")
+                if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
                 {
-                    code = "Air";
-                }
-
-                if (entityPM.TransportModeId == "I")
-                {
-                    if (entityPM.ShipmentTypeId == "FTL")
-                    {
-                        code = "FTL";
-                    }
-
-                    else
-                    {
-                        code = "LTL";
-                    }
-                }
-
-                if (entityPM.TransportModeId == "O")
-                {
-                    if (entityPM.ShipmentTypeId == "FCLD")
-                    {
-                        code = "FCL";
-                    }
-
-                    else
-                    {
-                        code = "LCL";
-                    }
-                }
-
-                ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubTypeByCode(code, entityPM.Tenant);
-                if (subType != null)
-                {
-                    entityPM.ShipmentSubTypeId = subType.Id;
-                    entityPoco.ShipmentSubTypeId = subType.Id;
+                        entityMasterData.StatusId = entityPM.StatusId;
+                        entityMasterData.StatusDate = entityPM.StatusDate;
+                        entityMasterData.StatusLocation = entityPM.StatusLocation;
                 }
             }
 
-            else
-            {
-                entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
-            }
+            entityPM.IsStatusChange = false;
         }
+
+        //private static void MapShipmentSubType(ShipmentPM entityPM, Shipment entityPoco)
+        //{
+        //    if(entityPM.TransportModeId == "A")
+        //    {
+        //        entityPM.ShipmentTypeId = "Air";
+        //        entityPoco.ShipmentTypeId = "Air";
+        //    }
+
+        //    if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
+        //    {
+        //        ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
+
+        //        string code = null;
+        //        if (entityPM.TransportModeId == "A")
+        //        {
+        //            code = "Air";
+        //        }
+
+        //        if (entityPM.TransportModeId == "I")
+        //        {
+        //            if (entityPM.ShipmentTypeId == "FTL")
+        //            {
+        //                code = "FTL";
+        //            }
+
+        //            else
+        //            {
+        //                code = "LTL";
+        //            }
+        //        }
+
+        //        if (entityPM.TransportModeId == "O")
+        //        {
+        //            if (entityPM.ShipmentTypeId == "FCLD")
+        //            {
+        //                code = "FCL";
+        //            }
+
+        //            else
+        //            {
+        //                code = "LCL";
+        //            }
+        //        }
+
+        //        ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubTypeByCode(code, entityPM.Tenant);
+        //        if (subType != null)
+        //        {
+        //            entityPM.ShipmentSubTypeId = subType.Id;
+        //            entityPoco.ShipmentSubTypeId = subType.Id;
+        //        }
+        //    }
+
+        //    else
+        //    {
+        //        entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
+        //    }
+        //}
 
         private static void ValidateMAWBStackField(Shipment entityPoco, ShipmentMasterData entityMasterData)
         {
@@ -1558,7 +1583,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.BookingConfirmationNotes = entityPM.BookingConfirmationNotes;
 
                     entityMasterData.MainCarriageCarrierId = entityPM.MainCarriageCarrierId;
-               
+
                     entityMasterData.ManifestReason = entityPM.ManifestReason;
                     entityMasterData.ManifestStatusCode = entityPM.ManifestStatusCode;
                     entityMasterData.AirlinePrefix = entityPM.AirlinePrefix;
@@ -1571,7 +1596,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
                     entityMasterData.MainCarriageVesselId = entityPM.MainCarriageVesselId;
                     entityMasterData.MainCarriageIsFromStack = entityPM.MainCarriageIsFromStack;
-                   
+
                     entityMasterData.Transshipment1FromPortId = entityPM.Transshipment1FromPortId;
                     entityMasterData.Transshipment1CarrierId = entityPM.Transshipment1CarrierId;
                     entityMasterData.Transshipment1CarrierNumber = entityPM.Transshipment1CarrierNumber;
@@ -1629,8 +1654,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     ComputeMainCarriageFinalDestinationDates(entityMasterData, entityPM);
 
                     entityPM.OriginMainCarriageFromPortId = entityMasterData.MainCarriageFromPortId;
-                    entityPM.OriginFinalDestinationPortId = entityMasterData.MainCarriageFinalDestinationPortId;
-                }
+                    entityPM.OriginFinalDestinationPortId = entityMasterData.MainCarriageFinalDestinationPortId;                  
+                }          
             }
         }
         private static void ComputeDepartureArrivalDates(ShipmentMasterData entityMasterData, ShipmentPM entityPM)

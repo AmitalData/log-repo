@@ -113,7 +113,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.SubmitChanges();
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("DocumentFilingBackupQueueBuilderQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "BatchId", Poco.Id.ToString() }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "BatchId", Poco.Id.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
 
                 scope.Complete();
             }

@@ -931,12 +931,23 @@
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
 
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestLastBatchServiceViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestReportsConnectInvoiceViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestLastBatchServiceController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestReportsConnectInvoiceController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
+
+    <Compile Include="Controllers\AccountingModel\CargoTrackingController.cs" />
+    <Compile Include="Controllers\CargoTrackingModel\CargoTrackingSearchController.cs" />
+    <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingShipmentSearchViewsController.Generated.cs" />
+
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\HelpResourceController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\InterestReportController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BIReportFolderExtendedController.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
+    <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
+    <Compile Include="DataContracts\CargoTrackingBrandingData.cs" />
     <Compile Include="DataContracts\InterestReportArgs.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentSubTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentSubTypeController.Generated.cs" />
@@ -2532,6 +2543,7 @@
     <Compile Include="MetaDataUpdate\DetailClasses\TaxWithholdingAssessOfficeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\WarehouseTypeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\UsoCFDIDetails.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CargoTrackingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\CommonDataModelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AccountingPartnerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AccountingSettingUpdateClass.cs" />
@@ -2720,6 +2732,12 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BusinessRoleUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoSplitRequestStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTrackingCardUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTrackingHeaderEntityTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTrackingMilestoneUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTrackingPortUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTrackingShipmentSearchUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTrackingShipmentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CashBookLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CashBookTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CashBookUpdateClass.cs" />
@@ -2771,8 +2789,10 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestBasesPeriodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestBasesTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestEntityTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestLastBatchServiceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestReportLinesByDateUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestReportLineUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestReportsConnectInvoiceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestReportStatuseUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestReportUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestTransactionUpdateClass.cs" />
@@ -6550,6 +6570,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BookingModel\DomainServices\Generated\" />
+    <Folder Include="CargoTrackingModel\" />
+    <Folder Include="Controllers\CargoTrackingModel\Generated\PMControllers\" />
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
@@ -6616,6 +6638,18 @@
     <ProjectReference Include="..\..\Logitude.BookingLib.Data\Logitude.BookingLib.Data.csproj">
       <Project>{147a706d-221a-4fd1-8f27-c12e4ab276cf}</Project>
       <Name>Logitude.BookingLib.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.CargoTracking.BL\Logitude.CargoTracking.BL.csproj">
+      <Project>{6b7fb227-28d2-45b8-b079-2e2f4251510d}</Project>
+      <Name>Logitude.CargoTracking.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.CargoTracking.Data\Logitude.CargoTracking.Data.csproj">
+      <Project>{7281a115-2213-41a3-a39a-22476f5a8db8}</Project>
+      <Name>Logitude.CargoTracking.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.CargoTracking.Def\Logitude.CargoTracking.Def.csproj">
+      <Project>{1602a405-278e-4ff9-b7b5-dfc6e525b497}</Project>
+      <Name>Logitude.CargoTracking.Def</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logitude.CRM.BL\Logitude.CRM.BL.csproj">
       <Project>{40502295-5a7f-4a20-91d2-768ca7cd35ec}</Project>

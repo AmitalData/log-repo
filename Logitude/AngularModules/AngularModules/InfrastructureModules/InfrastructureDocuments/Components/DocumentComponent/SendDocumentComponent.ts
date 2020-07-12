@@ -665,16 +665,23 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
                     if (this.ReportTemplates.length > 0) {
 
-                        if (selectId) {
-                            this.SelectedDocumentTypeTemplateViewModel = this.ReportTemplates.filter(r => r.Id == selectId)[0];
+                        //if (selectId) {
+                        //    this.SelectedDocumentTypeTemplateViewModel = this.ReportTemplates.filter(r => r.Id == selectId)[0];
 
-                        }
+                        //}
 
-                        if (!this.SelectedDocumentTypeTemplateViewModel) {
+                        //if (!this.SelectedDocumentTypeTemplateViewModel) {
 
-                            this.SelectedDocumentTypeTemplateViewModel = this.ReportTemplates[0];
-                        }
+                        //    this.SelectedDocumentTypeTemplateViewModel = this.ReportTemplates[0];
+                        //}
+                        this.SelectedDocumentTypeTemplateViewModel = this.ReportTemplates.filter(r => r.IsDefault)[0];
+
+
                     }
+
+
+
+
 
 
                     if (this.SelectedDocumentTypeTemplateViewModel != null) {
@@ -1639,25 +1646,25 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 if (!this.IsTemplateDefualt(selectitem)) {
 
 
-                    if (!this.IsSend) {
-                        if (this.CurrentDocumentType.TemplateFormatCode == "P" && selectitem.TemplateType == "P") {
-                            this.CurrentDocumentType.DocumentTypeDefaultReportTemplateId = selectitem.Id;
-                            this.CurrentDocumentType.DocumentTypeDefaultEditorTool = selectitem.EditorTool;
-                        }
-                        else if (this.CurrentDocumentType.TemplateFormatCode == "M" && selectitem.TemplateType == "M") {
+                    //if (!this.IsSend) {
+                    //    if (this.CurrentDocumentType.TemplateFormatCode == "P" && selectitem.TemplateType == "P") {
+                    //        this.CurrentDocumentType.DocumentTypeDefaultReportTemplateId = selectitem.Id;
+                    //        this.CurrentDocumentType.DocumentTypeDefaultEditorTool = selectitem.EditorTool;
+                    //    }
+                    //    else if (this.CurrentDocumentType.TemplateFormatCode == "M" && selectitem.TemplateType == "M") {
 
-                            this.CurrentDocumentType.DocumentTypeDefaultHTMLTemplateId = selectitem.Id;
-                            this.CurrentDocumentType.DocumentTypeDefaultEditorTool = selectitem.EditorTool;
-                        }
-                    }
-                    else {
+                    //        this.CurrentDocumentType.DocumentTypeDefaultHTMLTemplateId = selectitem.Id;
+                    //        this.CurrentDocumentType.DocumentTypeDefaultEditorTool = selectitem.EditorTool;
+                    //    }
+                    //}
+                    //else {
 
                         if (selectitem.TemplateType == "M") {
                             this.CurrentDocumentType.DocumentTypeDefaultHTMLTemplateId = selectitem.Id;
                             this.CurrentDocumentType.DocumentTypeDefaultEditorTool = selectitem.EditorTool;
                         }
 
-                    }
+                    //}
 
 
                     this.ReportTemplates.forEach((template) => {

@@ -37,6 +37,7 @@ export class InterestReportList {
 	GLAccountMinimumInterest: number;
 	CustomerLocalName: string;
 	EnableInvoiceing: boolean;
+	InvoiceFailureReason: string;
 	
 }
  

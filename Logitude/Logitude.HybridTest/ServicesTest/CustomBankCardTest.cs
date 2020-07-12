@@ -30,8 +30,8 @@ namespace Logitude.HybridTest.ServicesTest
             //Response serviceResponse = new Response();
             //object[] serviceParameters = new object[] { "?", "?", EnvironmentGlobalParams.MainTenant };
             //WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            //Assert.IsFalse(serviceResponse.HasError, "Delete Failed! " + serviceResponse.ErrorMessage);
-            //Assert.IsNotNull(serviceResponse.Result, "Delete Failed! " + serviceResponse.ErrorMessage);
+            //Assert.IsFalse(serviceResponse.HasError, "Delete Failed! " + serviceOutcome.Response.ErrorMessage);
+            //Assert.IsNotNull(serviceResponse.Result, "Delete Failed! " + serviceOutcome.Response.ErrorMessage);
         }
     }
 }

@@ -72,6 +72,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 ValidateMasterTypeDueToTransportMode(entityPM);
                 ValidateMainCarriageCarrierDueToTransportMode(entityPM);
                 ValidatePartnerTypes(entityPM);
+                ValidateShipmentSubType(entityPM);
             }
 
             //List<IEntityValidator> validators = new List<IEntityValidator>();
@@ -1131,7 +1132,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                     case "A":
                         {
-                            if (!string.IsNullOrEmpty(entityPM.ShipmentTypeId))
+                            if (string.IsNullOrEmpty(entityPM.ShipmentTypeId) || entityPM.ShipmentTypeId != "Air")
                             {
                                 throw new ApplicationException("Shipment type is not allowed for air transport mode");
                             }
@@ -1509,6 +1510,64 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     if (IsDuplicate)
                     {
                         throw new ApplicationException("Cannot have 2 containers with the same number, you can use inside packages to add detailed packages");
+                    }
+                }
+            }
+        }
+
+        private static void ValidateShipmentSubType(ShipmentPM entityPM)
+        {
+            if(!string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
+            {
+                ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
+                ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubType(entityPM.ShipmentSubTypeId, entityPM.Tenant);
+
+                if (subType != null)
+                {
+                    if (entityPM.TransportModeId == "A")
+                    {
+                        if (subType.Code != "Air")
+                        {
+                            throw new ApplicationException("Sub Type should be Air when Shipment Transport Mode is Airline");
+                        }
+                    }
+
+                    else if (entityPM.TransportModeId == "I")
+                    {
+                        if (entityPM.ShipmentTypeId == "FTL")
+                        {
+                            if (subType.Code != "FTL")
+                            {
+                                throw new ApplicationException("Sub Type should be FTL when Shipment Type is FTL");
+                            }
+                        }
+
+                        else
+                        {
+                            if (subType.Code != "LTL")
+                            {
+                                throw new ApplicationException("Sub Type should be LTL when Shipment Type is LTL");
+                            }
+                        }
+                    }
+
+                    else if (entityPM.TransportModeId == "O")
+                    {
+                        if (entityPM.ShipmentTypeId == "FCLD")
+                        {
+                            if (subType.Code != "FCL")
+                            {
+                                throw new ApplicationException("Sub Type should be FCL when Shipment Type is FCL");
+                            }
+                        }
+
+                        else
+                        {
+                            if (subType.Code != "LCL")
+                            {
+                                throw new ApplicationException("Sub Type should be LCL when Shipment Type is LCL");
+                            }
+                        }
                     }
                 }
             }

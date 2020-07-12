@@ -1,8 +1,7 @@
 ﻿<Script DBType="Main">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
     
-      
 declare @Tenant as int
       declare @TenantString as varchar(50)
       declare @EntityId as varchar(15)
@@ -65,6 +64,22 @@ declare @Tenant as int
 			      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
                   insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
                   values(@EntityId, @Tenant,  'LTL', 'LTL', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'LTL,LTL')                            
+              end
+
+			   if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = 'MyGI')
+              begin
+		          set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = 'MyGI')
+			      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
+                  insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+                  values(@EntityId, @Tenant,  'MyGI', 'My Groupage Inland', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'MyGI,My Groupage Inland')                            
+              end
+
+			   if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = 'MyGO')
+              begin
+		          set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = 'MyGO')
+			      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
+                  insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+                  values(@EntityId, @Tenant,  'MyGO', 'My Groupage Ocean', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'MyGO,My Groupage Ocean')                            
               end
               
 		  end

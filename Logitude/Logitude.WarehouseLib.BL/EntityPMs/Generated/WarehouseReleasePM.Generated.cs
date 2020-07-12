@@ -1343,6 +1343,29 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string childEntityReference ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChildEntityReference  
+	   {
+	    
+	     get
+		{
+		   return childEntityReference;
+		 }
+		 set
+		 {
+		   if(childEntityReference != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChildEntityReference",OldValue=childEntityReference,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   childEntityReference=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

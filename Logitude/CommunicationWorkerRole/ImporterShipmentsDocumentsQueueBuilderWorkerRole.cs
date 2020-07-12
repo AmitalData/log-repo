@@ -113,7 +113,7 @@ namespace CommunicationWorkerRole
                                 //int.TryParse(response.MessageValues["ImporterTenant"], out importerTenant);
                                 int.TryParse(response.MessageValues["Tenant"], out Tenant);
                                 tenant = Tenant;
-                                string TempCorrelationId = response.MessageValues["CorrelationId"].ToString();
+                                string TempCorrelationId = response.MessageId;
                                 if (string.IsNullOrEmpty(CorrelationId))
                                 {
                                     CorrelationId = TempCorrelationId;
@@ -194,7 +194,7 @@ namespace CommunicationWorkerRole
                                             if (DocumentFilingPM.IsSharedWithCustomer)
                                             {
                                                 queueservice.InitializeQueue("ImportersShipmentDocumentsBatchQueue", 0);
-                                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", ShipmentId }, { "DocumentFilingId", DocumentFilingPMId }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", CustomerId }, { "BatchNumber", BatchNumber } }, tenant, null, CustomerId, BatchNumber);
+                                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", ShipmentId }, { "DocumentFilingId", DocumentFilingPMId }, { "Tenant", tenant.ToString() }, { "CustomerId", CustomerId }, { "BatchNumber", BatchNumber } }, tenant, null, CustomerId, BatchNumber);
 
                                             }
 

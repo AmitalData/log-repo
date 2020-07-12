@@ -138,8 +138,10 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public bool IsTestTenant { get; set; }
         public bool MainAdditionalPackageApplied { get; set; }
         public double? TotalPrice { get; set; }
-
-
+        public string MainColor { get; set; }
+        public string SecondaryColor { get; set; }
+        public decimal Opacity { get; set; }
+        public string BackgroundId { get; set; }
         public int? TotalNumberOfUsers { get; set; }
         public int? TotalFreeUsers { get; set; }
         public double? AveragePrice { get; set; }

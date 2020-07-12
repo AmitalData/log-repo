@@ -181,6 +181,7 @@
     </Content>
     <None Include="DBOthers\CommonDataModel\Procedures\ChangeVendorToTrucker.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldAuthenticationTokens.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldAPILogs.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldCommunicationLogs.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldFilingInboxes.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteTenantFromGlobalDB.dxml" />
@@ -344,14 +345,14 @@
     <None Include="DBOthers\ShipmentsModel\Views\MessagingStockDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentFollowUpDataView.dxml" />
-    <None Include="DBScripts\CommonModel\CargoTrackingMilestoneFillValues.sxml" />
-    <None Include="DBScripts\CommonModel\CargoTrackingHeaderEntityTypeFillValues.sxml" />
+    <None Include="DBScripts\CommonModel\202007061105_FillMissingPortCountryCode.sxml" />
     <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />
     <None Include="DBScripts\GlobalModel\202006102217_FillSettingsDemoTenants.sxml" />
     <None Include="DBScripts\InfrastructureModel\202006011050_UpdateAllowedInTicketFieldValueOfObjectTable.sxml" />
     <None Include="DBScripts\InfrastructureModel\202006171015_TruncateErrorLogs.sxml" />
     <None Include="DBScripts\InfrastructureModel\202006171200_ModifyAnalyzeQueueIdOfInboundEmailTable.sxml" />
     <None Include="DBScripts\InvoiceModel\202006151350_DeleteOldPaymentMethodsMetadata.sxml" />
+    <None Include="DBScripts\InvoiceModel\202006291330_FillPaidDateOfInvoices.sxml" />
     <None Include="DBScripts\QuoteModel\202006132005_AddDepartureFrequencyToQuoteDetails.sxml" />
     <None Include="DBScripts\QuoteModel\202006011340_DropQuoteClosingReason.sxml" />
     <None Include="DBScripts\QuoteModel\202006011347_FillQuoteClosingReasonTable.sxml" />
@@ -364,13 +365,7 @@
     <None Include="DBScripts\ShipmentModel\202006111515_AddShipmentSubTypesToTenants.sxml" />
     <None Include="DBScripts\ShipmentModel\202006140958_FillAirShipmentShipmentTypeField.sxml" />
     <None Include="DBScripts\ShipmentModel\202006141227_FillShipmentSubTypeBackward.sxml" />
-    <None Include="DBTables\CommonDataModel\CargoTrackingCard.dxml" />
-    <None Include="DBTables\CommonDataModel\CargoTrackingShipmentSearchField.dxml" />
-    <None Include="DBTables\CommonDataModel\CargoTrackingMilestone.dxml" />
-    <None Include="DBTables\CommonDataModel\CargoTrackingPort.dxml" />
-    <None Include="DBTables\CommonDataModel\CargoTrackingShipment.dxml" />
     <None Include="DBScripts\202005311656_DeleteDuplicatedQueuesWR Batch Definition.sxml" />
-    <None Include="DBTables\CommonDataModel\CargoTrackingHeaderEntityType.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingPartner.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingSetting.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingSystem.dxml" />

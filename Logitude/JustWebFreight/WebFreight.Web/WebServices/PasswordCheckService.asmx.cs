@@ -205,7 +205,8 @@ namespace WebFreight.Web.WebServices
                 string siteUri = "www." + LogitudeSettings.DomainName;
                 string siteLogin = LogitudeSettings.LogitudeURL;
                 bool isLogBox = false;
-                string senderEmail = "no-reply@" + LogitudeSettings.DomainName;
+                string senderEmail = "no-reply@" + (LogitudeSettings.WorkEnvironment == "cloud" ? "amital.co.il" : "LogitudeWorld.com");
+
                 TenantManagmentPrivateLabelsPM privatelabel = null;
                 if (LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
                 {
@@ -264,10 +265,10 @@ namespace WebFreight.Web.WebServices
                 HtmlTemplate.Append("<a href='http://" + siteUri + "'>" + siteUri + "<a>");
                 HtmlTemplate.Append("<br /><span  style='font-size:13px;text-align:left'>Please do not reply directly to this message</span>");
                 HtmlTemplate.Append("</P>");
-                if (!isLogBox)
-                {
-                    HtmlTemplate.Append("<p style='font-size:14px;text-align:left'>Logitude is the first true online Freight Forwarding software solution developed specifically for the cloud<br/> <img width='258' height='101' src='cid:logo0' /></p>");
-                }
+                //if (!isLogBox)
+                //{
+                //    HtmlTemplate.Append("<p style='font-size:14px;text-align:left'>Logitude is the first true online Freight Forwarding software solution developed specifically for the cloud<br/> <img width='258' height='101' src='cid:logo0' /></p>");
+                //}
 
                 HtmlTemplate.Append("");
                          
