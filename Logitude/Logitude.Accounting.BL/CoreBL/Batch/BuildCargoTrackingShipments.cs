@@ -97,8 +97,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
         private void BuildConnectionString()
         {
-            string[] sourceConnectionArray = "Logitude2-5_Main,sa,Saas256,.".Split(',');
-            string[] destinationConnectionArray = "CargoTracking,sa,Saas256,.".Split(',');
+            string[] sourceConnectionArray = "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com,.".Split(',');
+            string[] destinationConnectionArray = "CargoTracking,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com".Split(',');
             sourceConnectionString = cargoTrackingServiceHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
             destinationConnectionString = cargoTrackingServiceHelper.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
         }
