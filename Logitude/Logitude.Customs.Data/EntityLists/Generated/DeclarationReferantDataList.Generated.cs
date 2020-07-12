@@ -77,12 +77,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public DateTime? AvailabilityDate  { get; set; }
        [DataMember]
-       public string ClassifiedUserId  { get; set; }
-       [DataMember]
-       public string ControllerUserId  { get; set; }
-       [DataMember]
-       public string CollectorUserId  { get; set; }
-       [DataMember]
        public bool NewFile  { get; set; }
        [DataMember]
        public bool Favorite  { get; set; }
@@ -98,6 +92,12 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? LastStatusDate  { get; set; }
        [DataMember]
        public bool OrderMoney  { get; set; }
+       [DataMember]
+       public string ClassifiedUserName  { get; set; }
+       [DataMember]
+       public string ControllerUserName  { get; set; }
+       [DataMember]
+       public string CollectorUserName  { get; set; }
    }
 
 }

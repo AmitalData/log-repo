@@ -159,6 +159,21 @@ export class DeclarationReferantDataPM {
     public set OrderMoney(newValue: boolean) { if (this.orderMoney != newValue) { this.orderMoney = newValue; this.MarkAsDirty("OrderMoney"); } }
        
 	 
+    private classifiedUserName: string;
+    public get ClassifiedUserName() { return this.classifiedUserName; }
+    public set ClassifiedUserName(newValue: string) { if (this.classifiedUserName != newValue) { this.classifiedUserName = newValue; this.MarkAsDirty("ClassifiedUserName"); } }
+       
+	 
+    private controllerUserName: string;
+    public get ControllerUserName() { return this.controllerUserName; }
+    public set ControllerUserName(newValue: string) { if (this.controllerUserName != newValue) { this.controllerUserName = newValue; this.MarkAsDirty("ControllerUserName"); } }
+       
+	 
+    private collectorUserName: string;
+    public get CollectorUserName() { return this.collectorUserName; }
+    public set CollectorUserName(newValue: string) { if (this.collectorUserName != newValue) { this.collectorUserName = newValue; this.MarkAsDirty("CollectorUserName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		
