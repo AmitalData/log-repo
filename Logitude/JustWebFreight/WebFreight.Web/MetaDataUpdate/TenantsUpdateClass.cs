@@ -289,9 +289,9 @@ namespace WebFreight.Web.MetaDataUpdate
                         }
 
 
-                    case "accounting":
+                    case "cargotracking":
                         {
-                            UpdateAccountingModule(context, true);
+                            UpdateCargoTrackingModule(context, true);
 
                             break;
                         }
@@ -786,6 +786,16 @@ namespace WebFreight.Web.MetaDataUpdate
                 modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
 
             performanceTimerLogger.LogMessage("Generated" + ",InvoiceModelUpdateClass");
+        }
+        private static void UpdateCargoTrackingModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            CargoTrackingUpdateClass modelUpdateClass = new CargoTrackingUpdateClass();
+            //if (runOldUpdateCode)
+            //    modelUpdateClass.LoadObjectsTenantZero(context);
+            //else
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",CargoTrackingModelUpdateClass");
         }
 
         private static void UpdateQuoteModule(IWebFreightContext context, bool runPostDeleteProcedure)

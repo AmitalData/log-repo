@@ -305,7 +305,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     myAccountingIntegrityResult.BalanceInLocalCurrencyResult = myAccountingIntegrityResult.BalanceInLocalCurrencyResult ?? new List<GLAccountBalanceDTO>();
                     myAccountingIntegrityResult.BalanceInLocalCurrencyResult.AddRange(ReverseEngineerGLAccountBalance.CompareReport.GLAccountBalanceList);
                     badRows = ReverseEngineerGLAccountBalance.CompareReport.GLAccountBalanceList.Count();
-
+                    myAccountingIntegrityResult.TotalOpenReconciliationResult = new List<GLAccountBalanceDTO>();
                     myAccountingIntegrityResult.TotalOpenReconciliationResult.AddRange(ReverseEngineerGLAccountBalance.CompareReport.TotalOpenReconciliation);
 
                 }

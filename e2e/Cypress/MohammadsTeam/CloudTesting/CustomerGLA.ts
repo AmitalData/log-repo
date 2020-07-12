@@ -27,12 +27,13 @@ export class CustomerGLA {
         cy.get('#SearchFieldsId_0_0').type(name);
         cy.get('div[id=ListDataLoaded]').should('exist');
         cy.get('#LogGrid_0_0row0').click();
+        cy.get('#CustomerTHGeneral').click();
         cy.get('#Customer_EnglishName');
         // cy.get('#Customer.TH.Accounting').click(); didnt work  ???? should talk with moh about it 
         cy.get('.TextTrimming').contains('Accounting').click(); // took me a year to work 
         cy.get('#Activate').click();
         cy.get('#GLAccount_ChartOfAccountsId').type('cust');
-        cy.get('.DropDownListItem').contains(' customer ').click(); 
+        cy.get('.DropDownListItem').contains('Customer').click(); 
         cy.get('#GLAccount_CurrencyId').type('Nis');
         cy.get('.DropDownListItem').contains(' NIS ').click(); 
         cy.get('#Ok-AddGLAccount').click();

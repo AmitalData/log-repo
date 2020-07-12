@@ -1,32 +1,48 @@
 {
-    "viewportWidth": 2000,
-    "viewportHeight": 1000,
+    "viewportWidth": 1440,
+    "viewportHeight": 900,
     "projectId": "b2kqc4",
     "integrationFolder": "cypress",
     "screenshotsFolder": "cypress/results/html/screenshots",
-    "scripts": {
-        "cypressRun": "cypress run",
-        "runtests": "npm run cypressRun -- BuildShipmentDocsIn.ts",
-        "cypressopen": "node_modules\\.bin\\cypress open"
+  "scripts": {
+    "cypressopenlocal": "cypress run --env Env=local",
+    "cypressRun": "cypress run",
+    "runtests": "npm run cypressRun -- BuildShipmentDocsIn.ts",
+    "cypressopen": "node_modules\\.bin\\cypress open"
 
-    },
-    "env": {
-        "URL": "https://test.logitudeworld.com/test",
-        "Email": "protractor2@test.com",
-        "Password": "!P123p456"
+  },
+  "env": {
+    "TestURL": "https://test.logitudeworld.com/test/",
+    "TestEmail": "protractor2@test.com",
+    "TestPassword": "!P123p456",
+    "TestStagingURL": "https://test.logitudeworld.com/staging/",
+    "TestStagingEmail": "protractor2@test.com",
+    "TestStagingPassword": "!P123p456",
+    "ProdStagingURL": "https://staging.logitudeworld.com/",
+    "ProdStagingEmail": "protractor@test.com",
+    "ProdStagingPassword": "!P123t456",
+    "CloudStagingURL": "https://staging.amital.co.il/",
+    "CloudStagingEmail": "protractor@test.com",
+    "CloudStagingPassword": "!P123t456",
 
-    },
+    "LocalURL": "http://localhost:4200/",
+    "LocalEmail": "angular@fnarsoft.com",
+    "LocalPassword": "1"
+
+
+  },
 
     
     "chromeWebSecurity": false,
     "defaultCommandTimeout": 120000,
     "responseTimeout": 120000,
     "requestTimeout": 120000,
-    "video": true,
+    "video": false,
     "screenshotOnRunFailure": true,
     "screenshots": true,
-
-    "reporter": "cypress-mochawesome-reporter",
+    "trashAssetsBeforeRuns":false,
+    
+    "reporter": "cypress-multi-reporters",
     "reporterOptions": {
         "reporterEnabled": "mochawesome",
         "mochawesomeReporterOptions": {

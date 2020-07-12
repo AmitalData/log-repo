@@ -1,0 +1,146 @@
+<style>
+    .slidecontainer {
+        width: 80px;
+        height: 28px;
+        background-color: var(--sliderBackground);
+    }
+    .slidecontainer2 {
+        width: 80px;
+        height: 28px;
+        background-color: var(--sliderBackground2);
+    }
+    .slider {
+       border:none;
+       
+        width: 80px;
+        height: 28px;
+        margin-top :5px;
+        cursor: default;
+       background :#c0c0c0;
+    }
+    .disabled {
+        pointer-events: none;
+        opacity: 0.7;
+        cursor: default;
+    }
+   
+        
+    .coloPicker input {
+        position: relative;
+        display: inline-block;
+    }
+    
+</style>
+
+<div style="height:100%;width:100%">
+
+
+    <table style="height:100%;vertical-align:top" *ngIf="IsVisibile">
+
+
+        <tr style="height:20px;">
+            <td>
+                <div style="height:5px">
+                    <span style="vertical-align:central;text-align:left;margin-left:10px;font-size:16px;color:#1B90CB">Cargo Tracking Branding</span>
+
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height:10px"><td><div></div></td></tr>
+
+
+
+        <!--Fields Grid-->
+
+
+        <tr style="height:100%;vertical-align:top;">
+            <td>
+                <table>
+
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px"><div></div></td>
+                        <td style="width:200px;"><LogLabel [ObjectFieldName]="'EnableBranding'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
+                        <td style="text-align:left">
+                            <CheckBox [IsEnabled]="true" (Checked)="EnableBrandingChange($event)" [IsChecked]="EnableBranding"></CheckBox>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px"><div></div></td>
+                        <td style="width:200px;">  <LogLabel [ObjectFieldName]="'MainColor'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
+
+                        <td style="width:160px">
+                            <LogTextBox style="width:200px" [HideColumns]="true" [ObjectFieldName]="'MainColor'" [ObjectTableName]="'TenantManagement'" [Text]="MainColor"  [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                        <td style="width:40px"  [class.disabled]="!EnableBranding" > <input type="color" class="coloPicker" id="color" value="" style="width:30px;"> </td>
+
+                        <td [class.disabled]="!EnableBranding"
+                            ><div class="slidecontainer">
+    <input [(ngModel)]="SliderValue" class="slider" id="slider" min="0" max="1" step="0.1" type="range" />
+</div>   </td>
+                        <td><div></div></td>
+                    </tr>
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px"><div></div></td>
+                        <td style="width:200px;">  <LogLabel [ObjectFieldName]="'SecondaryColor'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
+                        <td style="width:160px"><LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'SecondaryColor'" [Text]="SecondaryColor"  [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox></td>
+                        <td style="width:40px" [class.disabled]="!EnableBranding"> <input type="color"  class="coloPicker" id="secondarycolor" value="" style="width:30px;"> </td>
+
+                        <td [class.disabled]="!EnableBranding" 
+                           ><div class="slidecontainer2">
+    <input [(ngModel)]="SecondarySliderValue" class="slider" id="slider" min="0" max="1" step="0.1" type="range" />
+</div> </td>
+                        <td><div></div></td>
+                    </tr>
+
+
+
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px"><div></div></td>
+                        <td style="width:200px;">  <LogLabel [ObjectFieldName]="'ContactEmail'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
+                        <td style="width:160px"><LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'ContactEmail'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox></td>
+                        <td><div></div></td>
+                    </tr>
+
+
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px"><div></div></td>
+                        <td style="width:200px;">  <LogLabel [ObjectFieldName]="'CustomerURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
+                        <td style="width:160px"><LogTextBox [HideColumns]="true" [ObjectFieldName]="'CustomerURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox></td>
+                        <td><div></div></td>
+                    </tr>
+
+                    <tr>
+                        <td style="width:8px"><div></div></td>
+                        <td style="width:180px;height:22px; vertical-align:top">
+                            <LogLabel [ObjectFieldName]="'BackgroundId'" [ObjectTableName]="'TenantManagement'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="vertical-align:top">
+                            <div style="width:200px;height:100px">
+                                <ImageComponent [WidthImage]="'200px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="ImageId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" (UploadCompleted)="ImageUploadedCompleted($event)" style="height:72px;width:72px"> </ImageComponent>
+                            </div>
+                        </td><td><div></div></td>
+                    </tr>
+                    <tr><td colspan="4"></td></tr>
+                </table>
+
+            </td>
+
+        </tr>
+
+
+
+
+
+
+
+    </table>
+
+
+
+
+
+</div>

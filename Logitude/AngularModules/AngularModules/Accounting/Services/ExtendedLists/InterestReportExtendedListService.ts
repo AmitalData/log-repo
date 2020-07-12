@@ -74,6 +74,19 @@ export class InterestReportExtendedListService {
             }),
             catchError(ServiceHelper.HandleServiceError));
     }
+
+    GetInterestLastBatchServiceByTenant() {
+      return this.httpClient.get(this._apiUrl + "/GetInterestLastBatchServiceByTenant",ServiceHelper.GetHttpHeaders()).pipe(
+          map(res => {
+              var serviceResponse: ServiceResponse;
+              serviceResponse = new ServiceResponse();
+              var result = res;
+              serviceResponse.Result = result;
+
+              return serviceResponse;
+          }),
+          catchError(ServiceHelper.HandleServiceError));
+  }
     
     CheckNumberOfInterestReportInvoicingWithoutInvoice(interestReportArgs: InterestReportArguments) {
       return this.httpClient.put(this._apiUrl + "/PutCheckNumberOfInterestReportInvoicingWithoutInvoice", JSON.stringify(interestReportArgs), ServiceHelper.GetHttpHeaders()).pipe(

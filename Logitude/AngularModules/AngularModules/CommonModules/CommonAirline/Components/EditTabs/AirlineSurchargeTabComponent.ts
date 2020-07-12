@@ -74,7 +74,6 @@ export class AirlineSurchargeTabComponent extends BaseComponent implements OnIni
        this.TarrifHeaderFromLocation = TextCodeTranslator.Translate('TarrifHeader.O.FromLocation');
        this.TarrifHeaderToLocation = TextCodeTranslator.Translate('TarrifHeader.O.ToLocation');
        this.TarrifHeaderNotes = TextCodeTranslator.Translate('TarrifHeader.O.Notes');
-       var test = TextCodeTranslator.Translate('TarrifHeader.F.MeasurementId');
 
 
     }

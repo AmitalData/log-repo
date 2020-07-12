@@ -28,69 +28,22 @@ export class WarehouseHelper {
     }
 
     SetShipmentWarehouseLeg(shipmentPM: ShipmentPM, warehouseEntity: any, type: string) {
-
         if (shipmentPM && warehouseEntity && !AppTool.IsNullOrEmpty(type)) {
-            var isShipmentDirty: boolean = shipmentPM.IsDirty;
 
             if (AppTool.IsNullOrEmpty(shipmentPM.WarehouseLegWarehouseId)) {
                 if (shipmentPM.DirectionId != "C" && (shipmentPM.ShipmentLevelCode == "D" || shipmentPM.ShipmentLevelCode == "H")) {
-                    var myService = new CardListService();
-                    myService.getSingle(warehouseEntity.WarehouseId).subscribe((myResponse: ServiceResponse) => {
-                        if (myResponse != null) {
-
-
-                            shipmentPM.WarehouseLegWarehouseId = warehouseEntity.WarehouseId;
-
-                            if (type == "Release") {
-                                shipmentPM.WarehouseLegActualReleaseDate = warehouseEntity.ActualReleaseDate;
-                                shipmentPM.WarehouseLegExpectedReleaseDate = warehouseEntity.ExpectedReleaseDate;
-                            } else {
-                                shipmentPM.WarehouseLegActualEntryDate = warehouseEntity.ActualEntryDate;
-                                shipmentPM.WarehouseLegExpectedEntryDate = warehouseEntity.ExpectedEntryDate;
-
-                            }
-
-                            if (!myResponse.HasError) {
-                                var result = myResponse.Result;
-                                if (result) {
-                                    var isFirmCodeVisible: boolean = false;
-                                    if (!AppTool.IsNullOrEmpty(SessionLocator.TenantPM.CountryCode)) {
-                                        isFirmCodeVisible = (SessionLocator.TenantPM.CountryCode.toUpperCase()) == "US" ? true : false;
-                                    }
-
-                                    shipmentPM.WarehouseLegAddressId = result.MainAddressId;
-                                    shipmentPM.WarehouseLegTerminalName = result.EnglishName;
-                                    shipmentPM.WarehouseLegTerminalCode = result.FirmCode;
-                                    if (isFirmCodeVisible) {
-                                        shipmentPM.WarehouseLegTerminalCode = result.FirmCode;
-                                    }
-
-
-                                    if (this.CurrentSession.CurrentEditComponent) {
-                                        this.CurrentSession.CurrentEditComponent.SaveChanges();
-                                    }
-
-                                    if (!isShipmentDirty) shipmentPM.IsDirty = false;
-
-                              
-                                    this.CurrentSession.FireEvent("RefreshWareHouseLeg");
-
-                                }
-                            }
-                        }
-
-                        
-
-
-                    });
+                    shipmentPM.WarehouseLegWarehouseId = warehouseEntity.WarehouseId;
+                    shipmentPM.IsUpdateWarehouseLegData = true;
                 }
             }
-
-
-           
         }
     }
-    
+
+    SaveChanges() {
+        if (this.CurrentSession.CurrentEditComponent) {
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
+    }
 
     ShowNewWarehouseEntryComponent(windowArgs: any) {
 
@@ -264,6 +217,13 @@ export class WarehouseHelper {
                                 if (viewModel.IsFromShipment && !viewModel.IsNotSetWarehouseIdForWarehouseLegShipment) {
                                     this.SetShipmentWarehouseLeg(viewModel.ShipmentPM, entityPM, "Entry");
                                 }
+
+                                if (viewModel.IsFromShipment && viewModel.ShipmentPM) {
+                                    var IsRefreshWareHouseLeg = viewModel.ShipmentPM.IsUpdateWarehouseLegData;
+                                    this.SaveChanges();
+                                    if (IsRefreshWareHouseLeg) this.CurrentSession.FireEvent("RefreshWareHouseLeg");
+                                }
+
                                 this.CurrentSession.StopBusyIndicator();
                                 this.CurrentSession.CurrentWindow.Close("Refresh");
                             }
@@ -375,8 +335,13 @@ export class WarehouseHelper {
                         var myResult = pmResponse.Result;
                         if (myResult) {
                             if (viewModel.IsFromShipment) {
-                              
                                 this.SetShipmentWarehouseLeg(viewModel.ShipmentPM, entityPM, "Release");
+                                if (viewModel.ShipmentPM) {
+                                    var IsRefreshWareHouseLeg = viewModel.ShipmentPM.IsUpdateWarehouseLegData;
+                                    viewModel.ShipmentPM.IsDirty = true;
+                                    this.SaveChanges();
+                                    if (IsRefreshWareHouseLeg) this.CurrentSession.FireEvent("RefreshWareHouseLeg");
+                                }
                             }
                             this.CurrentSession.CurrentWindow.Close("Refresh");
                         }

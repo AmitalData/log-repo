@@ -476,7 +476,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                 }
             }
             else {
-                this.Step1PriceLabel = this.PriceSteps;
+                this.Step1PriceLabel = this.PriceSteps + " KG";
                 this.Step1PriceVisibility = true;
             }
         }

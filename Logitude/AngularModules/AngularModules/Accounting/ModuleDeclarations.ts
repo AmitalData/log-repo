@@ -116,6 +116,8 @@ import { InterestReportLinesByDateListTemplate } from './Components/ListTemplate
 import { InterestReportShortTitleComponent } from './Components/ShortTiTles/InterestReportShortTitleComponent';
 import { ConnectWithGLAccountComponent } from './Components/EditTabs/GLAccount/ConnectWithGLAccountComponent';
 import { InterestReportEditOpenBalanceComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportEditOpenBalance/InterestReportEditOpenBalanceComponent';
+import { CargoTrackingServiceComponent } from './Components/Others/CargoTrackingService/CargoTrackingServiceComponent';
+import { CargoTrackingBuildShipmentComponent } from './Components/Others/CargoTrackingService/CargoTrackingBuildShipmentComponent';
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
 
@@ -234,11 +236,13 @@ export const Components =
         InterestBasesTypeShortTitleComponent,
         ExtReconcileAdjustBankFeeComponent,
         NewInterestReportComponent,
+        CargoTrackingServiceComponent,
         InterestReportGeneralTabComponent,
         InterestReportLineByDateDetailsComponent,
         InterestReportLinesByDateListTemplate,
         InterestReportShortTitleComponent,
-        InterestReportEditOpenBalanceComponent
+        InterestReportEditOpenBalanceComponent,
+        CargoTrackingBuildShipmentComponent
     ];
 
 export class ModuleDeclarations {
@@ -337,6 +341,8 @@ export class ModuleDeclarations {
             case "InterestReportLinesByDateListTemplate": { myResult = InterestReportLinesByDateListTemplate; break; }
             case "InterestReportListTemplate": { myResult = InterestReportListTemplate; break;}
             //Others
+            case "CargoTrackingBuildShipmentComponent" :{myResult =CargoTrackingBuildShipmentComponent; break;}
+            case "CargoTrackingServiceComponent": { myResult = CargoTrackingServiceComponent; break; }
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }
             case "ReconciledMessage": { myResult = ReconciledMessage; break; }
             case "OutOfDepositMessage": { myResult = OutOfDepositMessage; break; }

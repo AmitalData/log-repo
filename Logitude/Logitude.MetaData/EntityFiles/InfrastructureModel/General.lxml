@@ -35,7 +35,9 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;0d9e&quot;"
+
+  Code="&quot;644a&quot;"
+
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -4960,8 +4962,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.RestoreIsNotPossible&quot;"
-      DefaultText="&quot;Restore is not possible , there are approved bank pages with a later date&quot;"
-      LocalDefaultText="&quot;לא ניתן לבטל את ביטול דף הבנק , ישנם דפי בנק מאושרים עם תאריך מאוחר יותר&quot;"
+      DefaultText="&quot;UNcancel is Not possible , there are approved bank pages with a higher line number&quot;"
+      LocalDefaultText="&quot;לא ניתן לשחזר את דף הבנק, ישנם דפי בנק מאושרים עם תאריך מאוחר יותר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -6982,6 +6984,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+
     <Feature
       Code="&quot;UPLOADPARTNERS&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
@@ -6991,5 +6994,16 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+
+    <Feature
+      Code="&quot;CARGOTRACKING&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CARGOTRACKING&quot;"
+      FeatureDefaultText="&quot;CargoTracking&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+
   </AdditionalFeatures>
 </entity>
