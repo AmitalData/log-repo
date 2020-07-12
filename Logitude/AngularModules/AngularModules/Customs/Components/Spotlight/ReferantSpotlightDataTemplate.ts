@@ -140,8 +140,10 @@ export class ReferantSpotlightDataTemplate
         if (newValue != null) {
             newValue.setUTCHours(6);
             this.EntityPM.FollowUpDate = newValue;
-            this.spotlightSharedDataService.IsDirty = true;
+        } else {
+            this.EntityPM.FollowUpDate = newValue;
         }
+        this.spotlightSharedDataService.IsDirty = true;
     }
 
     public get ExceptionReasonsList() { return this.EntityPM.ExceptionReasonsList; }
