@@ -74,7 +74,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CollectorUserId, 
 	         NewFile, 
 	         Favorite, 
-	         IsCancelled,
+	         IsCancelled, 
+	         ClassifiedUserName, 
+	         ControllerUserName, 
+	         CollectorUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
