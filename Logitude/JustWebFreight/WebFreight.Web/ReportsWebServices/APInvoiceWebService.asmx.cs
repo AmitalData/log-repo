@@ -505,7 +505,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         invoiceDataProvider.FirstPickupETA = myFirstPickup.ETA;
                         invoiceDataProvider.FirstPickupETD = myFirstPickup.ETD;
-                        invoiceDataProvider.FirstPickupTrucker = myFirstPickup.TruckNumber;
+                        invoiceDataProvider.FirstPickupTrucker = myFirstPickup.CarrierNumber;
                     }
                     #endregion
 
@@ -518,7 +518,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         invoiceDataProvider.LastDeliveryETA = myLastDelivery.ETA;
                         invoiceDataProvider.LastDeliveryETD = myLastDelivery.ETD;
-                        invoiceDataProvider.LastDeliveryTrucker = myLastDelivery.TruckNumber;
+                        invoiceDataProvider.LastDeliveryTrucker = myLastDelivery.CarrierNumber;
                     }
                     #endregion 
                 }
