@@ -352,14 +352,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
 
-                                                    CommunicationSubject = "FU Status DPR from logitude ",
+                                                    CommunicationSubject = "FU Status DWR from logitude ",
                                                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
                                                     {
                                                         entname = "CFIFILEM",
                                                         primary_number = _MyDeclarationPM.CustomFileNo,
                                                         status = "new",
                                                         xml_status = "new",
-                                                        status_id = "DPR",
+                                                        status_id = "DWR",
                                                         status_DateTime = DateTime.Now,
                                                         comments = null,
                                                     }

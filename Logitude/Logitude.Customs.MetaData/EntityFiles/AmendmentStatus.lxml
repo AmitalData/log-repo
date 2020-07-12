@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;סטטוס תיקון הצהרה&quot;"
-  Code="&quot;52e6&quot;"
+  Code="&quot;26dd&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -319,26 +319,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records>
-    <Record
-      Code="1"
-      Name="&quot;ממתין לאישור/דחיה&quot;" />
-    <Record
-      Code="2"
-      Name="&quot;שגוי&quot;" />
-    <Record
-      Code="3"
-      Name="&quot;תיקון אושר&quot;" />
-    <Record
-      Code="4"
-      Name="&quot;תיקון נדחה&quot;" />
-    <Record
-      Code="5"
-      Name="&quot;בוטל&quot;" />
-    <Record
-      Code="6"
-      Name="&quot;אושרה חלקית&quot;" />
-  </Records>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

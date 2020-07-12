@@ -89,7 +89,8 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
              response.Response.AdditionalInformation = AdditionalInformation.ToArray();
             response.Response.FunctionCode = new ResponseFunctionCodeType() { Value = "Amendment" };
-            response.Response.IssueDateTime = XmlConvert.ToString(DateTime.Now);
+            DateTime date = DateTime.ParseExact(DateTime.Now.ToString(), "yyyy-MM-ddTHH:mm:ss", null);
+            response.Response.IssueDateTime = XmlConvert.ToString(date);
             //response.Response.Amendment = new ResponseAmendment[1]; // reason to change?
             //response.Response.Amendment[0] = new ResponseAmendment
             //{

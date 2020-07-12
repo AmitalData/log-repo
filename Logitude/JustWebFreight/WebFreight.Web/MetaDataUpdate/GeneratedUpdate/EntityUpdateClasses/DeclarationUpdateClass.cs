@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "df7dd36d2e9b0e0816138163a8e0e163";
+		public const string HashString = "0eaf576941f3c80d655cfa1e88fb7a3d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -312,10 +312,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterId",
 					  						DefaultText =  "Importer Id",
-					  						FullLocalDefaultText =  "מספך יבואן",
+					  						FullLocalDefaultText =  "מספר יבואן",
 					  						ListFieldLable =  "ImporterIdListLable",
 					  						ListLableDefaultText =  "Importer",
-					  						ListLocalDefaultText =  "מספך יבואן",
+					  						ListLocalDefaultText =  "מספר יבואן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1265,10 +1265,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransferImporterId",
 					  						DefaultText =  "Transfer Importer Id",
-					  						FullLocalDefaultText =  "מספך יבואן מעביר",
+					  						FullLocalDefaultText =  "מספר יבואן מעביר",
 					  						ListFieldLable =  "TransferImporterIdListLable",
 					  						ListLableDefaultText =  "Transfer Importer ",
-					  						ListLocalDefaultText =  "מספך יבואן מעביר",
+					  						ListLocalDefaultText =  "מספר יבואן מעביר",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1455,10 +1455,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntitleImporterId",
 					  						DefaultText =  "Entitle Importer Id",
-					  						FullLocalDefaultText =  "מספך יבואן זכאי",
+					  						FullLocalDefaultText =  "מספר יבואן זכאי",
 					  						ListFieldLable =  "EntitleImporterIdListLable",
 					  						ListLableDefaultText =  "Entitle Importer ",
-					  						ListLocalDefaultText =  "מספך יבואן זכאי",
+					  						ListLocalDefaultText =  "מספר יבואן זכאי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3766,10 +3766,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntitleImporterName",
 					  						DefaultText =  "Entitle Importer Name",
-					  						FullLocalDefaultText =  "מספך יבואן זכאי",
+					  						FullLocalDefaultText =  "מספר יבואן זכאי",
 					  						ListFieldLable =  "EntitleImporterNameListLable",
 					  						ListLableDefaultText =  "Entitle Importer Name",
-					  						ListLocalDefaultText =  "מספך יבואן זכאי",
+					  						ListLocalDefaultText =  "מספר יבואן זכאי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4012,10 +4012,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterCode",
 					  						DefaultText =  "Importer ",
-					  						FullLocalDefaultText =  "מספך יבואן",
+					  						FullLocalDefaultText =  "מספר יבואן",
 					  						ListFieldLable =  "ImporterCodeListLable",
 					  						ListLableDefaultText =  "Importer",
-					  						ListLocalDefaultText =  "מספך יבואן",
+					  						ListLocalDefaultText =  "מספר יבואן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4074,10 +4074,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransferImporterCode",
 					  						DefaultText =  "Transfer Importer ",
-					  						FullLocalDefaultText =  "מספך יבואן מעביר",
+					  						FullLocalDefaultText =  "מספר יבואן מעביר",
 					  						ListFieldLable =  "TransferImporterCodeListLable",
 					  						ListLableDefaultText =  "Transfer Importer",
-					  						ListLocalDefaultText =  "מספך יבואן מעביר",
+					  						ListLocalDefaultText =  "מספר יבואן מעביר",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4136,10 +4136,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntitleImporterCode",
 					  						DefaultText =  "Entitle Importer ",
-					  						FullLocalDefaultText =  "מספך יבואן זכאי",
+					  						FullLocalDefaultText =  "מספר יבואן זכאי",
 					  						ListFieldLable =  "EntitleImporterCodeListLable",
 					  						ListLableDefaultText =  "Entitle Importer",
-					  						ListLocalDefaultText =  "מספך יבואן זכאי",
+					  						ListLocalDefaultText =  "מספר יבואן זכאי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -13845,7 +13845,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query ExportDeclarationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_14.Id, NameTextCodeCode = DeclarationTextCode_14.Code, ObjectTableName = "Customs.Declaration", Code = "ExportDeclaration",  QueryGroupCode = "DECL", IndexOrder = 14, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationFeature_14.Id,FeatureUniqeCode= DeclarationFeature_14.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query ExportDeclarationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_14.Id, NameTextCodeCode = DeclarationTextCode_14.Code, ObjectTableName = "Customs.Declaration", Code = "ExportDeclaration",  QueryGroupCode = "DECL", IndexOrder = 14, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_14.Id,FeatureUniqeCode= DeclarationFeature_14.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn ExportDeclarationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.TaxationDateTime" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -15381,6 +15381,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              			   Feature DeclarationFeature_MB49 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationClosure", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.DeclarationClosure", NameTextCodeDefaultText = "Declaration Closure", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
              			   Feature DeclarationFeature_MB410 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Cancel Declaration Closure", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.CancelDeclarationClosure", NameTextCodeDefaultText = "Cancel Declaration Closure", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
              			   Feature DeclarationFeature_MB411 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCustomsRequests", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DeclarationCustomsRequests", NameTextCodeDefaultText = "Declaration Customs Requests", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB412 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCancellation", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.DeclarationCancellation", NameTextCodeDefaultText = "Declaration Cancellation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
                    
     
 			   Feature DeclarationFeature_MB5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTSPANEL", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DocumentsPanel", NameTextCodeDefaultText = "Declaration Documents Panel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
@@ -15814,6 +15815,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB411.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton DeclarationMenuButton412 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "DeclarationCancellation",
+						Index = 14, 
+						IsActive = true,
+						LabelTextCodeCode = "Declaration.B.DeclarationCancellation",
+						LabelTextCodeDefaultText = "Declaration Cancellation",
+						Tenant = 0,
+						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
+						ParentMenuButtonId = DeclarationMenuButton4.Id,
+						ObjectTableId = DeclarationObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  DeclarationFeature_MB412.Id,
+						Style = null,
+						LocalDefaultText = "ביטול הצהרה",
+                        HtmlComponentPath="./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent",
+                        Width=0,
+						FeatureUniqeCode=  DeclarationFeature_MB412.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	          
    
@@ -16426,6 +16447,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationTHMore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.More", DefaultText = "More",LocalDefaultText = @"נוספים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsImporterDeclarationQueryODeclarationConectDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ImporterDeclarationQuery.O.DeclarationConect.Declaration", DefaultText = "Declaration",LocalDefaultText = @"הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationTHDeclarationCancellation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DeclarationCancellation", DefaultText = "Declaration Cancellation",LocalDefaultText = @"ביטול הצהרה במכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

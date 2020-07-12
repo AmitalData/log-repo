@@ -345,6 +345,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
                 cmpRef.instance.Run({
                     EntityId: id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "תיקוני הצהרה" });
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                    DeclarationEventManager.DeclarationAmendmentCancelled.emit(null);
                     if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
                         SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
                     }

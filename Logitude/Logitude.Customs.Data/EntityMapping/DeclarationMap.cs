@@ -290,7 +290,6 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.CancelRequestRejectionReason).HasColumnName("CancelRequestRejectionReason").HasMaxLength(512).IsUnicode(true);
 
             this.Property(t => t.IsClaimable).HasColumnName("IsClaimable");
-
         }
     }
 }

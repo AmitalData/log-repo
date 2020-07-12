@@ -948,6 +948,8 @@
     <Compile Include="EntityQueryServices\Generated\ExporterRoleTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationReasonRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationRequestStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SupplierInvoiceUCRQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\SupplierInvoicePaymentQueryService.cs" />
     <Compile Include="EntityQueryServices\SuppInvoiceItemsAbachStatementQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceItemsPriceQueryService.cs" />
     <Compile Include="EntityQueryServices\CargoSealIdentifierQueryService.cs" />

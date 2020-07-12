@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "53f37a191b1d3d1495bac270e4038ac9";
+		public const string HashString = "2d394e9817433163f67a022236177c25";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -219,7 +219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2097,10 +2097,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClassifiedUserId",
-					  						DefaultText =  "מסווג",
+					  						DefaultText =  "שם מסווג",
+					  						FullLocalDefaultText =  "שם מסווג",
 					  						ListFieldLable =  "ClassifiedUserIdListLable",
 					  						ListLableDefaultText =  "ClassifiedUserId",
-					  						ListLocalDefaultText =  "מסווג",
+					  						ListLocalDefaultText =  "שם מסווג",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2159,11 +2160,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ControllerUserId",
-					  						DefaultText =  "מבקר",
-					  						FullLocalDefaultText =  "מבקר",
+					  						DefaultText =  "שם מבקר",
+					  						FullLocalDefaultText =  "שם מבקר",
 					  						ListFieldLable =  "ControllerUserIdListLable",
 					  						ListLableDefaultText =  "ControllerUserId",
-					  						ListLocalDefaultText =  "מבקר",
+					  						ListLocalDefaultText =  "שם מבקר",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
