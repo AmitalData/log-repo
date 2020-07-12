@@ -16,6 +16,12 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
 using Syncfusion.XlsIO;
 using Microsoft.Practices.Unity;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.Data.EntityPOCOs;
 
 namespace WebFreight.Web.Helpers.APIHelpers
 {
@@ -29,38 +35,88 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private DocumentRepository documentRepository;
         private CountryCityRepository countryCityRepository;
         private CountryRepository countryRepository;
-        private  StateRepository stateRepository;
+        private StateRepository stateRepository;
+        private string errorMsg;
+        private BatchTaskExecutionRepository batchTaskExecutionRepository;
+        private BatchTaskExecutionQueryService batchTaskExecutionQueryService;
+        private BatchTaskExecutionUpdateService batchTaskExecutionUpdateService;
+        private BatchTaskExecutionPM batchTaskExecutionPM;
+        private BatchTaskExecution batchTaskExecution;
+        private List<PartnerExcel> PartnerExcelList;
+        private ICommonDataContext commonDataContext;
+        private IInfrastructureContext infrastructureContext;
+        private ContactRepository contactRep;
+        private Contact systemContact;
+        private List<ContactPM> contacts;
+        private ContactQuery contactQuery;
+        private int duplicateLinesCount;
+        private CardRepository cardRepository;
+        private AddressQuery addressQuery;
+        private bool IsConfirmationDuplicateByUser;
+
         public PartnersUploadHelper(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
-
+            this.batchTaskExecutionPM = batchTaskExecution;
         }
 
         public override void RunCode()
         {
-            using (TransactionScope scope = TransactionFactory.GetTransaction(new TimeSpan(3, 0, 0)))
-            {
-                //this.RunPartnersGenerator(); 
-                this.Initizlization();
-                this.ReadExcelFile_Sheet();
-                this.BuildPartnersFromExcelSheet();
-                scope.Complete();
-            }
 
+            this.Initizlization();
+            this.FillDefaultValues();
+            this.ReadExcelFile_Sheet();
+            this.BuildPartnersFromExcelSheet();
         }
 
         private void Initizlization()
         {
-            string xmlParameters = BatchTaskExecution.PrametersXml;
+            commonDataContext = CommonDataContext.GetContext(tenant);
+            infrastructureContext = InfrastructureContext.GetContext(tenant);
+            string xmlParameters = batchTaskExecutionPM.PrametersXml;
             System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
             XmlSerializer serializer = new XmlSerializer(typeof(PartnersUploadExcelParameter));
             parameterArgs = serializer.Deserialize(stringReader) as PartnersUploadExcelParameter;
             tenant = parameterArgs.Tenant;
             loggedUserEmail = parameterArgs.LoggedUserEmail;
-            partnerTypeRepository = new PartnerTypeRepository(tenant);
-            documentRepository = new DocumentRepository(tenant);
-            countryCityRepository = new CountryCityRepository(tenant);
-            countryRepository = new CountryRepository(tenant);
-            stateRepository = new StateRepository(tenant);
+            IsConfirmationDuplicateByUser = parameterArgs.IsConfirmationDuplicateByUser;
+            partnerTypeRepository = new PartnerTypeRepository(commonDataContext);
+            documentRepository = new DocumentRepository(commonDataContext);
+            countryCityRepository = new CountryCityRepository(commonDataContext);
+            countryRepository = new CountryRepository(commonDataContext);
+            stateRepository = new StateRepository(commonDataContext);
+            contactRep = new ContactRepository(commonDataContext);
+            contactQuery = new ContactQuery(contactRep);
+            cardRepository = new CardRepository(commonDataContext);
+            addressQuery = new AddressQuery(tenant);
+            batchTaskExecutionRepository = new BatchTaskExecutionRepository(infrastructureContext);
+            batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(batchTaskExecutionRepository);
+            batchTaskExecutionUpdateService = new BatchTaskExecutionUpdateService(infrastructureContext);
+        }
+
+        private void FillDefaultValues()
+        {
+            contacts = contactQuery.GetContactPMsWithoutPassWordsByTenant(tenant);
+            systemContact = contactRep.GetSingleContactByEmail(loggedUserEmail, tenant);
+            this.FillDefaultValues_Partner();
+        }
+
+        private List<string> partnersCodesDect;
+       
+        private void FillDefaultValues_Partner()
+        {
+            partnersCodesDect = new List<string>();
+            var query = (from card in commonDataContext.Cards
+                         where card.Tenant == tenant
+                         select new
+                         {
+                             UploadingUniqueKey = card.UploadingUniqueKey,
+                         }
+                         );
+
+            foreach (var rec in query)
+            {
+                partnersCodesDect.Add(rec.UploadingUniqueKey);
+            }
         }
 
         private void ReadExcelFile_Sheet()
@@ -87,11 +143,13 @@ namespace WebFreight.Web.Helpers.APIHelpers
             IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
             partnersUploadExcelSheet = workbook.Worksheets[0];
         }
+
         private void BuildPartnersFromExcelSheet()
         {
-            List<PartnerExcel> myResult = new List<PartnerExcel>();
+            PartnerExcelList = new List<PartnerExcel>();
+            this.errorMsg = "";
 
-            if (partnersUploadExcelSheet != null)
+            if (partnersUploadExcelSheet != null && (partnersUploadExcelSheet.Rows != null && partnersUploadExcelSheet.Rows.Count() < 1002))
             {
                 foreach (IRange row in partnersUploadExcelSheet.UsedRange.Rows.Skip(1))
                 {
@@ -104,7 +162,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
                     // Full Column 
                     partnerExcel.RowIndex = row.Row;
-                    partnerExcel.errorMsg = new List<string>();
 
                     if (rowData.Length > 0)
                     {
@@ -119,13 +176,13 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             }
                             else
                             {
-                                partnerExcel.errorMsg.Add("Partner Type is invalid");
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Partner Type is invalid" + ",";
                             }
                         }
 
                         else
                         {
-                            partnerExcel.errorMsg.Add("Partner Type is missing");
+                            this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Partner Type is missing" + ",";
                         }
                     }
 
@@ -133,11 +190,11 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (!string.IsNullOrEmpty(rowData[1]))
                         {
-                            partnerExcel.UniqueCode = rowData[1].Trim(); 
+                            partnerExcel.UniqueCode = rowData[1].Trim();
                         }
                         else
                         {
-                            partnerExcel.errorMsg.Add("Unique Code is missing");
+                            this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Unique Code is missing" + ",";
                         }
                     }
 
@@ -145,11 +202,11 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (!string.IsNullOrEmpty(rowData[2]))
                         {
-                            partnerExcel.UniqueCode = rowData[2].Trim();
+                            partnerExcel.Name = rowData[2].Trim();
                         }
                         else
                         {
-                            partnerExcel.errorMsg.Add("Name is missing");
+                            this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Name is missing" + ",";
                         }
                     }
 
@@ -185,7 +242,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (string.IsNullOrEmpty(rowData[7]))
                         {
-                            partnerExcel.errorMsg.Add("City is missing");
+                            this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "City is missing" + ",";
                         }
                     }
                     if (rowData.Length > 8)
@@ -207,14 +264,14 @@ namespace WebFreight.Web.Helpers.APIHelpers
                                 partnerExcel.CountryId = country.Id;
 
                                 string cityCode = rowData[7].Trim();
-                                CountryCity countryCity = countryCityRepository.GetSingleCountryCityByCodeAndCountry(cityCode, country.Id,tenant);
+                                CountryCity countryCity = countryCityRepository.GetSingleCountryCityByCodeAndCountry(cityCode, country.Id, tenant);
                                 if (countryCity != null)
                                 {
                                     partnerExcel.City = countryCity.Id;
                                 }
                                 else
                                 {
-                                    partnerExcel.errorMsg.Add("City is invalid");
+                                    this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "City is invalid" + ",";
                                 }
 
                                 if (partnerExcel.State != null)
@@ -228,12 +285,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             }
                             else
                             {
-                                partnerExcel.errorMsg.Add("Country is invalid");
+                                this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Country is invalid" + ",";
                             }
                         }
                         else
                         {
-                            partnerExcel.errorMsg.Add("Country is missing");
+                            this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Country is missing" + ",";
                         }
                     }
                     if (rowData.Length > 10)
@@ -278,97 +335,473 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             partnerExcel.Code = rowData[15].Trim();
                         }
                     }
+
+                    this.PartnerExcelList.Add(partnerExcel);
+                }
+            }
+            else
+            {
+                errorMsg = "You can't upload more than 1000 Partners,";
+            }
+
+            if (!string.IsNullOrEmpty(errorMsg))
+            {
+
+                errorMsg = errorMsg.Length > 120 ? errorMsg.Substring(0, 120) : errorMsg;
+                this.batchTaskExecutionPM.StatusCode = "F";
+                this.batchTaskExecutionPM.ProgressMessage = errorMsg;
+            }
+            else
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction(new TimeSpan(3, 0, 0)))
+                {
+                    RunPartnersGenerator();
+                    scope.Complete();
                 }
             }
         }
 
-
-
+        Dictionary<string, State> statesDictionary;
+        Dictionary<string, Country> countriesDictionary;
         private void RunPartnersGenerator()
         {
-            string xmlParameters = BatchTaskExecution.PrametersXml;
-            System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
-            XmlSerializer serializer = new XmlSerializer(typeof(GenerateTariffsArgs));
-            GenerateTariffsArgs parameterArgs = serializer.Deserialize(stringReader) as GenerateTariffsArgs;
-            int tenant = parameterArgs.Tenant;
-            var LoggedUserEmail = parameterArgs.LoggedUserEmail;
-            ContactRepository contactRep = new ContactRepository(tenant);
+            var checkDuplicates = from x in PartnerExcelList
+                                  group x by x.UniqueCode into g
+                                  let count = g.Count()
+                                  orderby count descending
+                                  select new { Value = g.Key, Count = count };
 
-            Contact systemContact = contactRep.GetSingleContactByEmail(LoggedUserEmail, tenant);
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-            CountryRepository countryRep = new CountryRepository(commonDataContext);
-            StateRepository stateRep = new StateRepository(commonDataContext);
-            Dictionary<string, State> statesDictionary = stateRep.GetStates(tenant).ToDictionary(d => d.Code + ',' + d.CountryId, o => o);
-            Dictionary<string, Country> countrieysDictionary = countryRep.GetCountries(tenant).ToDictionary(d => d.Code, o => o);
-
-            Country country = null;
-            if (countrieysDictionary.Keys.Contains("MX"))
+            int checkDuplicates_Count = checkDuplicates.Where(a => a.Count > 1).Count();
+            this.duplicateLinesCount = duplicateLinesCount + checkDuplicates_Count;
+            if (!IsConfirmationDuplicateByUser && checkDuplicates_Count > 0)
             {
-                country = countrieysDictionary["MX"];
+                this.batchTaskExecutionPM.StatusCode = "D";
+                this.batchTaskExecutionPM.ProgressMessage = checkDuplicates_Count + " duplicate lines were found in Excel. Do you want to continue?";
             }
-
-            State state = null;
-            if (country != null)
+            else
             {
-
-                if (statesDictionary.Keys.Contains("JAL" + ',' + country.Id))
+                statesDictionary = stateRepository.GetStates(tenant).ToDictionary(d => d.Id, o => o);
+                countriesDictionary = countryRepository.GetCountries(tenant).ToDictionary(d => d.Id, o => o);
+                var currentItem = 0;
+                foreach (var item in PartnerExcelList)
                 {
-                    state = statesDictionary["JAL" + ',' + country.Id];
+                    currentItem = currentItem + 1;
+                    var checkIfCardExist = this.partnersCodesDect.Where(a => a == item.UniqueCode).FirstOrDefault();
+                    if (checkIfCardExist == null)
+                    {
+                        switch (item.Type)
+                        {
+                            case "AG":
+                                {
+                                    this.CreateAgentPartner(item);
+                                    break;
+                                }
+
+                            case "CS":
+                            case "PO":
+                                {
+                                    this.CreateCustomerPartner(item);
+                                    break;
+                                }
+
+                            case "CG":
+                                {
+                                    this.CreateCustomAgentPartner(item);
+                                    break;
+                                }
+
+                            case "SG":
+                                {
+                                    this.CreateShippingAgentPartner(item);
+                                    break;
+                                }
+
+                            case "VD":
+                                {
+                                    this.CreateVendorPartner(item);
+                                    break;
+                                }
+
+                            case "WH":
+                                {
+                                    this.CreateWarehousePartner(item);
+                                    break;
+                                }
+
+                            case "AL":
+                                {
+                                    this.CreateAirlinePartner(item);
+                                    break;
+                                }
+
+                            case "SL":
+                                {
+                                    this.CreateShippingLinePartner(item);
+                                    break;
+                                }
+
+                            case "TR":
+                                {
+                                    this.CreateTruckerPartner(item);
+                                    break;
+                                }
+
+                            case "CO":
+                                {
+                                    this.CreateContactPartner(item);
+                                    break;
+                                }
+                            case "AC"://Accounting Partner
+                                {
+                                    this.CreateAccountingPartnerPartner(item);
+                                    break;
+                                }
+                        }
+                        this.partnersCodesDect.Add(item.UniqueCode);
+                    }
+                    else
+                    {
+                        this.duplicateLinesCount = duplicateLinesCount + 1;
+                    }
+
+                    this.UpdateProcessPercentage(PartnerExcelList.Count(), currentItem);
                 }
-            }
 
-            AddressPM address = new AddressPM()
-            {
-                Name = "Main Address",
-                Description = "Main Address",
-                Address1 = "address1",
-                Address2 = "address2",
-                ZipCode = "zip",
-                FaxNumber = "fax",
-                AddressTypeId = "M",
-                Tenant = tenant,
-                StateId = state != null ? state.Id : null,
-                CountryId = country != null ? country.Id : null,
-                City = "city",
-                PhoneNumber = "phoneNumber",
-                ContactFax = "fax",
-
-            };
-            ContactPM contactPM = new ContactPM()
-            {
-                Email = "contact@email.com",
-                EnglishName = "test contact",
-                Tenant = tenant,
-                CardId = "newCard",
-                IsHybrid = true,
-                IsCreatedWithPartner = true,
-            };
-
-            for (int i = 1; i <= 1000; i++)
-            {
-                CustomerPM customer = new CustomerPM()
-                {
-                    EnglishName = "customer " + i,
-                    VatNumber = "customervat " + i,
-                    Tenant = tenant,
-                    IsHybrid = true,
-                    Code = CodeCounter.GetNumber("Customer", tenant).ToString(),
-                    PartnerTypeId = "CS",
-                    CustomerStatusCode = "ACT",
-                    IsCustomer = true,
-                };
-                customer.Addresses.Add(address);
-                customer.Contacts.Add(contactPM);
-                CustomerService service = new CustomerService(commonDataContext, customer, systemContact.Id);
-                service.Create();
+                this.batchTaskExecutionPM.StatusCode = "D";
+                this.batchTaskExecutionPM.ProgressMessage = "Successfully Uploaded " + (PartnerExcelList.Count() - duplicateLinesCount) + " out of " + PartnerExcelList.Count() + " Partners. " +
+                                                           duplicateLinesCount + " duplicate lines were found.";
             }
         }
-    }
 
+        private void UpdateProcessPercentage(int maximum, int current)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                batchTaskExecution = batchTaskExecutionRepository.GetSingle(batchTaskExecutionPM.Id, tenant);
+                this.batchTaskExecutionPM.ProgressPercentage = (current / maximum) * 100;
+                batchTaskExecutionRepository.Update(batchTaskExecution);
+                batchTaskExecutionRepository.SubmitChanges();
+                scope.Complete();
+            }
+        }
+
+        private void CreateVendorPartner(PartnerExcel item)
+        {
+            VendorPM vendor = new VendorPM()
+            {
+                Id = IdCounter.GetNumber("Card", tenant).ToString(),
+                EnglishName = item.Name,
+                VatNumber = item.VatNO,
+                Tenant = tenant,
+                IsHybrid = true,
+                Code = CodeCounter.GetNumber("Vendor", tenant).ToString(),
+                PartnerTypeId = item.Type,
+                UploadingUniqueKey = item.UniqueCode,
+            };
+
+            var address = CreateAddress(item, vendor.Id);
+            vendor.Addresses.Add(address);
+            var contactPM = CreatContact(item);
+            if (contactPM != null)
+            {
+                vendor.Contacts.Add(contactPM);
+            }
+            VendorService service = new VendorService(commonDataContext, vendor, systemContact.Id);
+            service.Create(vendor);
+        }
+
+        private void CreateAccountingPartnerPartner(PartnerExcel item)
+        {
+            AccountingPartnerPM accountingPartner = new AccountingPartnerPM()
+            {
+                Id = IdCounter.GetNumber("Card", tenant).ToString(),
+                EnglishName = item.Name,
+                VatNumber = item.VatNO,
+                Tenant = tenant,
+                IsHybrid = true,
+                Code = CodeCounter.GetNumber("AccountingPartner", tenant).ToString(),
+                PartnerTypeId = item.Type,
+                UploadingUniqueKey = item.UniqueCode,
+            };
+
+            var address = CreateAddress(item, accountingPartner.Id);
+            accountingPartner.Addresses.Add(address);
+            var contactPM = CreatContact(item);
+            if (contactPM != null)
+            {
+                accountingPartner.Contacts.Add(contactPM);
+            }
+           
+            AccountingPartnerService service = new AccountingPartnerService(commonDataContext, accountingPartner, systemContact.Id);
+            service.Create(accountingPartner);
+        }
+
+        private void CreateContactPartner(PartnerExcel item)
+        {
+            
+        }
+
+        private void CreateTruckerPartner(PartnerExcel item)
+        {
+            TruckerPM trucker = new TruckerPM()
+            {
+                Id = IdCounter.GetNumber("Card", tenant).ToString(),
+                EnglishName = item.Name,
+                VatNumber = item.VatNO,
+                Tenant = tenant,
+                IsHybrid = true,
+                Code = item.Code != null? item.Code : CodeCounter.GetNumber("Trucker", tenant).ToString(),
+                CarrierTypeId = item.Type,
+                UploadingUniqueKey = item.UniqueCode,
+            };
+
+            var address = CreateAddress(item, trucker.Id);
+            trucker.Addresses.Add(address);
+            var contactPM = CreatContact(item);
+            if (contactPM != null)
+            {
+                trucker.Contacts.Add(contactPM);
+            }
+            
+            TruckerService service = new TruckerService(commonDataContext, trucker, systemContact.Id);
+            service.Create(trucker);
+        }
+
+        private void CreateShippingLinePartner(PartnerExcel item)
+        {
+            ShippingLinePM shippingLine = new ShippingLinePM()
+            {
+                EnglishName = item.Name,
+                VatNumber = item.VatNO,
+                Tenant = tenant,
+                IsHybrid = true,
+                Code = CodeCounter.GetNumber("ShippingLine", tenant).ToString(),
+                CarrierTypeId = item.Type,
+                UploadingUniqueKey = item.UniqueCode,
+            };
+
+            ShippingLineService service = new ShippingLineService(commonDataContext, shippingLine, systemContact.Id);
+            service.Create(shippingLine);
+        }
+
+        private void CreateAirlinePartner(PartnerExcel item)
+        {
+            AirlinePM airline = new AirlinePM()
+            {
+                EnglishName = item.Name,
+                VatNumber = item.VatNO,
+                Tenant = tenant,
+                IsHybrid = true,
+                Code = CodeCounter.GetNumber("Airline", tenant).ToString(),
+                CarrierTypeId = item.Type,
+                UploadingUniqueKey = item.UniqueCode,
+            };
+
+            AirlineService service = new AirlineService(commonDataContext, airline, systemContact.Id);
+            service.Create(airline);
+        }
+
+        private void CreateWarehousePartner(PartnerExcel item)
+        {
+            WarehousePM warehouse = new WarehousePM()
+            {
+                Id = IdCounter.GetNumber("Card", tenant).ToString(),
+                EnglishName = item.Name,
+                VatNumber = item.VatNO,
+                Tenant = tenant,
+                IsHybrid = true,
+                Code = item.Code != null ? item.Code : CodeCounter.GetNumber("Warehouse", tenant).ToString(),
+                PartnerTypeId = item.Type,
+                UploadingUniqueKey = item.UniqueCode,
+            };
+
+            var address = CreateAddress(item, warehouse.Id);
+            warehouse.Addresses.Add(address);
+            var contactPM = CreatContact(item);
+            if (contactPM != null)
+            {
+                warehouse.Contacts.Add(contactPM);
+            }
+   
+            WarehouseService service = new WarehouseService(commonDataContext, warehouse, systemContact.Id);
+            service.Create(warehouse);
+        }
+
+        private void CreateShippingAgentPartner(PartnerExcel item)
+        {
+            ShippingAgentPM shippingAgent = new ShippingAgentPM()
+            {
+                Id = IdCounter.GetNumber("Card", tenant).ToString(),
+                EnglishName = item.Name,
+                VatNumber = item.VatNO,
+                Tenant = tenant,
+                IsHybrid = true,
+                Code = CodeCounter.GetNumber("ShippingAgent", tenant).ToString(),
+                PartnerTypeId = item.Type,
+                UploadingUniqueKey = item.UniqueCode,
+            };
+
+            var address = CreateAddress(item, shippingAgent.Id);
+            shippingAgent.Addresses.Add(address);
+            var contactPM = CreatContact(item);
+            if (contactPM != null)
+            {
+                shippingAgent.Contacts.Add(contactPM);
+            }
+            ShippingAgentService service = new ShippingAgentService(commonDataContext, shippingAgent, systemContact.Id);
+            service.Create(shippingAgent);
+        }
+
+        private void CreateCustomAgentPartner(PartnerExcel item)
+        {
+            CustomAgentPM customAgent = new CustomAgentPM()
+            {
+                Id = IdCounter.GetNumber("Card", tenant).ToString(),
+                EnglishName = item.Name,
+                VatNumber = item.VatNO,
+                Tenant = tenant,
+                IsHybrid = true,
+                Code = CodeCounter.GetNumber("CustomAgent", tenant).ToString(),
+                PartnerTypeId = item.Type,
+                UploadingUniqueKey = item.UniqueCode,
+            };
+
+            var address = CreateAddress(item, customAgent.Id);
+            customAgent.Addresses.Add(address);
+            var contactPM = CreatContact(item);
+            if (contactPM != null)
+            {
+                customAgent.Contacts.Add(contactPM);
+            }
+            
+            CustomAgentService service = new CustomAgentService(commonDataContext, customAgent, systemContact.Id);
+            service.Create(customAgent);
+        }
+
+        private void CreateCustomerPartner(PartnerExcel item)
+        {
+            CustomerPM customer = new CustomerPM()
+            {
+                Id = IdCounter.GetNumber("Card", tenant).ToString(),
+                EnglishName = item.Name,
+                VatNumber = item.VatNO,
+                Tenant = tenant,
+                IsHybrid = true,
+                Code = CodeCounter.GetNumber("Customer", tenant).ToString(),
+                PartnerTypeId = item.Type,
+                CustomerStatusCode = "ACT",
+                IsCustomer = true,
+                UploadingUniqueKey = item.UniqueCode,
+            };
+            var address = CreateAddress(item, customer.Id);
+            customer.Addresses.Add(address);
+            var contactPM = CreatContact(item);
+            if (contactPM != null)
+            {
+                customer.Contacts.Add(contactPM);
+            }
+           
+            CustomerService service = new CustomerService(commonDataContext, customer, systemContact.Id);
+            service.Create();
+        }
+
+        private void CreateAgentPartner(PartnerExcel item)
+        {
+            AgentPM agent = new AgentPM()
+            {
+                Id = IdCounter.GetNumber("Card", tenant).ToString(),
+                EnglishName = item.Name,
+                VatNumber = item.VatNO,
+                Tenant = tenant,
+                IsHybrid = true,
+                Code = CodeCounter.GetNumber("Agent", tenant).ToString(),
+                PartnerTypeId = item.Type,
+                UploadingUniqueKey = item.UniqueCode,
+            };
+
+            var address = CreateAddress(item, agent.Id);
+            agent.Addresses.Add(address);
+            var contactPM = CreatContact(item);
+            if (contactPM != null)
+            {
+                agent.Contacts.Add(contactPM);
+            }
+     
+            AgentService service = new AgentService(commonDataContext, agent, systemContact.Id);
+            service.Create(agent);
+        }
+
+        private AddressPM CreateAddress(PartnerExcel item, string partnerId)
+        {
+            Country country = null;
+            State state = null;
+            if (item.CountryId != null && countriesDictionary.Keys.Contains(item.CountryId))
+            {
+                country = countriesDictionary[item.CountryId];
+            }
+            if (item.StateId != null && statesDictionary.Keys.Contains(item.StateId))
+            {
+                state = statesDictionary[item.StateId];
+            }
+            AddressPM address = new AddressPM()
+            {
+                Name = item.Name,
+                Description = "Main Address",
+                Address1 = item.Address1,
+                Address2 = item.Address2,
+                ZipCode = item.ZipCode,
+                StateId = state != null ? state.Id : null,
+                CountryId = country != null ? country.Id : null,
+                City = item.CityId,
+                PhoneNumber = item.PhoneNumber != null ? (item.PhoneNumber.Length > 39 ? item.PhoneNumber.Substring(0, 39) : item.PhoneNumber) : null,
+                FaxNumber = item.FaxNumber,
+                AddressTypeId = "M",
+                Tenant = tenant,
+            };
+            return address;
+        }
+        private ContactPM CreatContact(PartnerExcel item)
+        {
+            if (!string.IsNullOrEmpty(item.EMail) || !string.IsNullOrEmpty(item.ContactName))
+            {
+                ContactPM contactPM = null;
+                string contactEnglishName = item.ContactName;
+                if (string.IsNullOrEmpty(item.ContactName))
+                {
+                    contactEnglishName = item.EMail.Split('@')[0];
+                }
+
+                if (!string.IsNullOrEmpty(item.EMail))
+                {
+                    contactPM = contacts.Where(d => d.Email == item.EMail).FirstOrDefault();
+                }
+                else if (!string.IsNullOrEmpty(item.ContactName))
+                {
+                    contactPM = contacts.Where(d => d.EnglishName == item.ContactName).FirstOrDefault();
+                }
+                if (contactPM == null)
+                {
+                    contactPM = new ContactPM()
+                    {
+                        Email = item.EMail,
+                        EnglishName = contactEnglishName,
+                        Tenant = tenant,
+                        CardId = "newCard",
+                        IsHybrid = true,
+                        IsCreatedWithPartner = true,
+                    };
+                    contacts.Add(contactPM);
+                    commonDataContext.SaveChanges();
+                }
+                return contactPM;
+            }
+            else
+                return null;
+        }
+    }
     public class PartnerExcel
     {
         public int RowIndex { get; set; }
-        public List <string> errorMsg { get; set; }
         public string Type { get; set; }
         public string UniqueCode { get; set; }
         public string Name { get; set; }

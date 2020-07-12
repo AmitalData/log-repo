@@ -9,6 +9,7 @@ import { BatchTaskExecutionList } from '../../../../Infrastructure/EntityLists/B
 import { CommonDomainService, PartnersUploadExcelParameter } from '../../../../Common/Services/CommonDomainService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 declare var ResultAsArray: any;
 
@@ -21,8 +22,9 @@ declare var ResultAsArray: any;
 export class UploadPartnersComponent extends BaseComponent implements OnDestroy {
     public DataContext = this;
     private CommonDomainService: CommonDomainService;
-    ValidationErrorsList = [];
+    public ValidationErrorsList = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    public ErrorsList = [];
 
     constructor() {
         super();
@@ -88,6 +90,7 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
             this.ConvertArrayBufferToBase64(filebuffer, this);
         }
     }
+    public partnersUploadExcelParameter: PartnersUploadExcelParameter;
     ConvertArrayBufferToBase64(file: any, context: any) {
         var reader: FileReader = new FileReader();
         var reader = new FileReader();
@@ -100,9 +103,9 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
                 binary += String.fromCharCode(bytes[i]);
             }
 
-            var filter = new PartnersUploadExcelParameter();
-            filter.FileData = window.btoa(binary);
-            context.SendExcelToServer(filter);
+            context.partnersUploadExcelParameter = new PartnersUploadExcelParameter();
+            context.partnersUploadExcelParameter.FileData = window.btoa(binary);
+            context.SendExcelToServer(context.partnersUploadExcelParameter);
         };
 
         reader.onerror = function (e) {
@@ -113,10 +116,11 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
     SendExcelToServer(filter: any) {
         this.CommonDomainService.PostUploadPartnersExcelFile(filter).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.batchEntity = myResponse.Result;
-                if (this.batchEntity != null) {
+               var batchEntity = myResponse.Result;
+                if (batchEntity != null) {
+                    this.CurrentSession.StartBusyIndicator("Uploading Partners... " + batchEntity.ProgressPercentage + "%");
                     this.IsResponseProgressVisible = true;
-                    this.CheckBatchTaskExecution(this.batchEntity.Id);
+                    this.CheckBatchTaskExecution(batchEntity.Id);
                 }
             }
             else {
@@ -128,25 +132,48 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
     }
 
     // Timer
-    private batchEntity: BatchTaskExecutionPM;
+    public batchEntity: BatchTaskExecutionList;
     private timer: any;
     public IsResponseProgressVisible: boolean = false;
+    public DoneMsg: string;
+    public IsDone = false;
     CheckBatchTaskExecution(BatchTaskExecutionId: string) {
+        this.ValidationErrorsList = [];
+        this.ErrorsList = [];
+        this.DoneMsg = "";
+        this.IsDone = false;
         var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
         iBatchService.getSingle(BatchTaskExecutionId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var list: BatchTaskExecutionList = myResponse.Result;
-
+                this.batchEntity = list;
                 if (list.StatusCode == "D") {
                     this.StopTimer();
-                    var window = new MessageWindow();
-                    window.Show("File uploaded successfully");
+                    if (list.ProgressMessage != null && list.ProgressMessage.indexOf(',') > -1) {
+                        this.ErrorsList = list.ProgressMessage.split(',');
+                    }
+                    else if (list.ProgressMessage != null && list.ProgressMessage.indexOf("continue?") > -1) {
+                        var myConfirmWindow = new ConfirmWindow();
+                        myConfirmWindow.Width = 400;
+                        myConfirmWindow.Show(list.ProgressMessage);
+                        myConfirmWindow.WindowClosed.subscribe(s => {
+                            if (myConfirmWindow.Yes) {
+                                this.partnersUploadExcelParameter.IsConfirmationDuplicateByUser = true;
+                                this.SendExcelToServer(this.partnersUploadExcelParameter);
+                            }
+                        });
+                    }
+                    else {
+                        this.DoneMsg = list.ProgressMessage;
+                        this.IsDone = true;
+                    }
                 }
 
                 else if (list.StatusCode == "F") {
                     this.StopTimer();
-                    var window = new MessageWindow();
-                    window.Show("There was an error uploading excel file. Please try again later");
+                    var errors: string[] = [];
+                    errors.push(list.ErrorLog);
+                    this.ValidationErrorsList = errors;
                 }
 
                 else {
@@ -166,6 +193,7 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
             clearInterval(this.timer);
         }
         this.IsResponseProgressVisible = false;
+        this.CurrentSession.StopBusyIndicator();
     }
 
     CloseResponseProgressClicked() {

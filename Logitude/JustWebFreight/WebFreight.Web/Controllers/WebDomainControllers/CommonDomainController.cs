@@ -203,20 +203,29 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     int tenant = authToken.Tenant;
                     string loggedUserEmail = authToken.Email;
                     byte[] fileData = Convert.FromBase64String(filter.FileData);
+
+                    string taskId = IdCounter.GetNumber("BatchTaskExecution", tenant);
                     PartnersUploadExcelParameter args = new PartnersUploadExcelParameter()
                     {
                         LoggedUserEmail = loggedUserEmail,
                         Tenant = authToken.Tenant,
+                        BatchTaskId = taskId,
+                        IsConfirmationDuplicateByUser = filter.IsConfirmationDuplicateByUser,
+                        DocumentId = filter.DocumentId,
                     };
+                    
+                    var documentId = this.UploadExcelFileToStorage(fileData, args, authToken.Tenant);
+                    args.DocumentId = documentId;
+
                     var stringwriter = new System.IO.StringWriter();
                     var serializer = new XmlSerializer(typeof(PartnersUploadExcelParameter));
                     serializer.Serialize(stringwriter, args);
                     string xmlParameters = stringwriter.ToString();
 
-                    this.UploadExcelFileToStorage(fileData, args, authToken.Tenant);
 
                     BatchTaskExecutionPM taskExe = new BatchTaskExecutionPM()
                     {
+                        Id = taskId,
                         Subject = "Partners Upload",
                         Tenant = tenant,
                         ChangeSetOp = ChangeSetOperation.Insert,
@@ -254,7 +263,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private void UploadExcelFileToStorage(byte[] fileData, PartnersUploadExcelParameter args, int tenant)
+        private string UploadExcelFileToStorage(byte[] fileData, PartnersUploadExcelParameter args, int tenant)
         {
             string extension = "";
             Document document = null;
@@ -291,7 +300,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 documentRepository.Add(document);
                 documentRepository.SubmitChanges();
-                args.DocumentId = document.Id;
+                
                 fileInfo = new BlobFileInfo()
                 {
                     FileName = document.Id,
@@ -303,6 +312,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 };
                 storageservice.Write(ByteData, fileInfo);
             }
+
+            return document != null ? document.Id : null;
         }
         private DataTable ConvertToDataTable<T>(IList<T> data)
         {
@@ -2893,4 +2904,6 @@ public class PartnersUploadExcelParameter
     public string FileData { get; set; }
     public string DocumentId { get; set; }
     public string LoggedUserEmail { get; set; }
+    public string BatchTaskId { get; set; }
+    public bool IsConfirmationDuplicateByUser { get; set; }
 }
