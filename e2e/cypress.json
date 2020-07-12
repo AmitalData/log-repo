@@ -50,7 +50,12 @@
             "quite": true,
             "overwrite": false,
             "html": true,
-            "json": false
+            "json": false,
+            "timestamp": "ddmmyyyy_HHMM",
+            "reportFilename":"Report"
+            
+            
+
         }
     }
 
