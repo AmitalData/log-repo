@@ -1828,7 +1828,7 @@ namespace Logitude.XSD.INTTRA.BL
                 {
                     itemDetails.EquipmentTemperature = new INTTRA_Out.EquipmentTemperature()
                     {
-                        UOM = INTTRA_Out.EquipmentTemperatureUOM.CEL,
+                        UOM = INTTRA_Out.EquipmentTemperatureUOM.CEL, 
                         Value = "999",
                     };
 

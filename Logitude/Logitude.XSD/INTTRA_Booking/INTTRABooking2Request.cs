@@ -1401,7 +1401,7 @@ namespace Logitude.XSD.INTTRA_Booking {
         
         private TemperatureUOMValues uOMField;
         
-        private decimal valueField;
+        private string valueField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
@@ -1416,7 +1416,7 @@ namespace Logitude.XSD.INTTRA_Booking {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public decimal Value {
+        public string Value {
             get {
                 return this.valueField;
             }
