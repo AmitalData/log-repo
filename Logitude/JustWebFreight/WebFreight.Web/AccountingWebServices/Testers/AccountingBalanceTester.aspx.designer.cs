@@ -60,6 +60,24 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         protected global::System.Web.UI.WebControls.Button _ButtonReverseGLBalance;
 
         /// <summary>
+        /// _ButtonReverseTotal0 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button _ButtonReverseTotal0;
+
+        /// <summary>
+        /// _ButtonReverseTotalControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button _ButtonReverseTotalControl;
+
+        /// <summary>
         /// _AccountingIntegrityService control.
         /// </summary>
         /// <remarks>
@@ -139,6 +157,15 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonReverseGLBalanceFIX;
+
+        /// <summary>
+        /// _ButtonReverseTotalFIXControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button _ButtonReverseTotalFIXControl;
 
         /// <summary>
         /// _ButtonJournalApproveQueue control.
