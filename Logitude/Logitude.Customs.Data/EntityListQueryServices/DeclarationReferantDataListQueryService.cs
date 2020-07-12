@@ -77,15 +77,16 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ReferentUserId = d.ReferentUserId,
                                                                  DepartmentId = d.DepartmentId,
                                                                  AvailabilityDate = d.AvailabilityDate,
-                                                                 NewFile=a.NewFile,
-                                                                 Favorite=a.Favorite,
-                                                                 IsCustomerLogBoxActivated=e.Customer.LogBoxActivated,
-                                                                 SortedColumns= (a.NewFile && a.Favorite ? 1 : ( a.NewFile ? 2 : ( a.Favorite ? 3 : 4 ))),
-                                                                 IsCancelled= d.IsCancelled,
-                                                                 ClassifiedUserId=a.ClassifiedUserId,
-                                                                 CollectorUserId=a.CollectorUserId,
-                                                                 ControllerUserId=a.ControllerUserId,
-                                                             });
+                                                                 NewFile = a.NewFile,
+                                                                 Favorite = a.Favorite,
+                                                                 IsCustomerLogBoxActivated = e.Customer.LogBoxActivated,
+                                                                 SortedColumns = (a.NewFile && a.Favorite ? 1 : (a.NewFile ? 2 : (a.Favorite ? 3 : 4))),
+                                                                 IsCancelled = d.IsCancelled,
+                                                                 ClassifiedUserName = a.ClassifiedUser.Contact.LocalName,
+                                                                 CollectorUserName = a.CollectorUser.Contact.LocalName,
+                                                                 ControllerUserName= a.ControllerUser.Contact.LocalName,
+                                                              
+                                                             }) ;
             return query;
         }
 
