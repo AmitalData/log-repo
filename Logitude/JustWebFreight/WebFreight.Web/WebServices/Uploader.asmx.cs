@@ -1282,7 +1282,7 @@ namespace WebFreight.Web.WebServices
                     LoggingEntityReference = entityPM.Code,
                 };
 
-                //logParams.QueueParameters = new Dictionary<string, string>() { { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } };
+                //logParams.QueueParameters = new Dictionary<string, string>() { { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() } };
                 Communications.AddCommunicationLog(logParams);
 
                 //DocumentsFiling documentFilingPOCO = externalDocumentRepository.GetSingleDocumentsFiling(entityPM.Id);
