@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 using UnifreightIIG.Common.ImportDeclarationServiceReference;
 using Exception = UnifreightIIG.Common.ImportDeclarationServiceReference.Exception;
 
@@ -80,7 +81,8 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             {
                 declaration.IssueDateTime = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
             }
-            else {
+            else
+            {
                 declaration.IssueDateTime = DateTime.Now.ToString();
             }
             declaration.TypeCode = new DeclarationTypeCodeType();
@@ -107,7 +109,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                 TransmitionDateTime = DateTime.Now,
                 Remark = "",
                 Exception = null,
-                ApplicationID=0,
+                ApplicationID = 0,
             };
         }
         public void AddSign()
@@ -122,10 +124,10 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _ResponseHeader.Status = "Success";
             _ResponseHeader.ErrorDescription = "";
             _ResponseHeader.ErrorCode = "None";
-           
+
         }
 
-     
+
         public DeclarationGoodsShipmentGovernmentAgencyGoodsItem[] AddGovernmentAgencyGoodsItem(DeclarationGoodsShipmentGovernmentAgencyGoodsItem[] _governmentAgencyGoodsItem)
         {
             foreach (DeclarationGoodsShipmentGovernmentAgencyGoodsItem item in _governmentAgencyGoodsItem)
@@ -135,9 +137,9 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                 taxFree[0].AdValoremTaxBaseAmount = new DutyTaxFeeAdValoremTaxBaseAmountType
                 {
                     currencyID = ISO3AlphaCurrencyCodeContentType.ILS,
-                    Value=99
+                    Value = 99
                 };
-               taxFree[0].TypeCode = new DutyTaxFeeTypeCodeType
+                taxFree[0].TypeCode = new DutyTaxFeeTypeCodeType
                 {
                     Value = "15",
                 };
@@ -160,7 +162,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         public void AddConstraints()
         {
             _Constraints = new ResponseError[1];
-            _Constraints[0] = new ResponseError() { ValidationCode = new ErrorValidationCodeType() {  name = "2685-fake contraint" , listName="105"} };
+            _Constraints[0] = new ResponseError() { ValidationCode = new ErrorValidationCodeType() { name = "2685-fake contraint", listName = "105" } };
             //DocumentSection
             _Constraints[0].Pointer = new ResponseErrorPointer[4];
 
@@ -200,7 +202,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         public void AddErrors(string code)
         {
             _Errors = new ResponseError[1];
-            _Errors[0] = new ResponseError() { ValidationCode = new ErrorValidationCodeType() { name = "תשאל את סוהיב", listVersionID = "1",Value=code} };
+            _Errors[0] = new ResponseError() { ValidationCode = new ErrorValidationCodeType() { name = "תשאל את סוהיב", listVersionID = "1", Value = code } };
             _Errors[0].Pointer = new ResponseErrorPointer[4];
 
             _Errors[0].Pointer[0] = new ResponseErrorPointer();
@@ -230,6 +232,17 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             fakeRespond.Response.Error = _Errors;
 
         }
+        public void CastDeclaration()
+        {
+            string DeclarationString;
+            using (var stringwriter = new System.IO.StringWriter())
+            {
+                var serializer = new XmlSerializer(fakeRespond.Response.Declaration.GetType());
+                serializer.Serialize(stringwriter, fakeRespond.Response.Declaration);
+                DeclarationString = stringwriter.ToString();
+            }
 
+
+        }
     }
 }

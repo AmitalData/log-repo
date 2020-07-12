@@ -23,7 +23,9 @@ namespace Logitude.Customs.BL.CloseTables
                 {
                     Code = "2754Payment",
                     Name = "  הגשת תשלום",
-                    Entity="Declaration",
+                    Entity="DeclarationPayment",
+                    AvoidSign= true
+
                 },
                 new SincroTestCaseDetail()
                 {
