@@ -2574,8 +2574,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.CalculateStatus = false;
 
             this.ComputeShipmentStatus();
-            this.UpdateCustomerWorkingDates();
-            this.FillDefaultSubType();
+            this.UpdateCustomerWorkingDates();            
 
             if(string.IsNullOrEmpty(entityPM.ShipmentTypeId) && entityPM.TransportModeId == "A")
             {
@@ -2937,6 +2936,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         }
                     }
                 }
+
                 bool IsImporterApprovalRequiredOldValue = false;
                 if (entityPM.IsHybrid || loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                 {
@@ -3077,15 +3077,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.InitializePrintingFields();
                 this.ComputeTEU();
                 this.UpdateQuoteUsage();
-                //this.InitializeBookingData();
+                this.FillDefaultSubType();
             }
-
-
         }
 
         private void FillDefaultSubType()
         {
-            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
+            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId) || entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
             {
                 string code = null;
                 if (entityPM.TransportModeId == "A")
@@ -3100,9 +3098,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         code = "FTL";
                     }
 
-                    else
+                    else if (entityPM.ShipmentTypeId == "LTL")
                     {
                         code = "LTL";
+                    }
+
+                    else if (entityPM.ShipmentTypeId == "MyGI")
+                    {
+                        code = "MyGI";
                     }
                 }
 
@@ -3113,9 +3116,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         code = "FCL";
                     }
 
-                    else
+                    else if (entityPM.ShipmentTypeId == "LCLD")
                     {
                         code = "LCL";
+                    }
+
+                    else if (entityPM.ShipmentTypeId == "MyGO")
+                    {
+                        code = "MyGO";
                     }
                 }
 
