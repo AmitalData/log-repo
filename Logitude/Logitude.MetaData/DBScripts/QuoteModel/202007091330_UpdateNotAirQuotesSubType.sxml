@@ -1,0 +1,102 @@
+﻿<Script DBType="Main">
+  <Sql Version="1">
+    <![CDATA[
+    
+      If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
+      Begin
+        Drop Table #tempTable
+      End
+
+      If(OBJECT_ID('tempdb..#temp_Quotes') Is Not Null)
+      Begin
+        Drop Table #temp_Quotes
+      End
+
+CREATE TABLE #temp_Quotes (
+	Id varchar(15) not null ,
+    ShipmentSubTypeId varchar(15)  null,
+	ShipmentTypeId varchar(15)  null
+    )
+	
+	select 
+	Id, 
+	Tenant,
+	TransportModeId,
+	ShipmentTypeId,
+	(
+		CASE
+			WHEN TransportModeId = 'O' and ShipmentTypeId = 'FCLD' THEN (select top 1 Id from ShipmentSubTypes where Code = 'FCL' and Tenant = Quotes.Tenant)
+			WHEN TransportModeId = 'O' and ShipmentTypeId = 'LCLD' THEN (select top 1 Id from ShipmentSubTypes where Code = 'LCL' and Tenant = Quotes.Tenant)
+			WHEN TransportModeId = 'I' and ShipmentTypeId = 'FTL' THEN (select top 1 Id from ShipmentSubTypes where Code = 'FTL' and Tenant = Quotes.Tenant)
+			WHEN TransportModeId = 'I' and ShipmentTypeId = 'LTL' THEN (select top 1 Id from ShipmentSubTypes where Code = 'LTL' and Tenant = Quotes.Tenant)
+		END	 
+	 ) as ShipmentSubTypeId
+
+	into #tempTable
+	FROM Quotes where TransportModeId <> 'A'
+		
+	  declare @Tenant as int
+      declare @EntityId as varchar(15)
+	  declare @ShipmentTypeId as varchar(4)
+	  declare @TransportModeId as varchar(4)
+	  declare @ShipmentSubTypeId as varchar(15)
+	  declare @Count as int
+      set @Count = 0;
+    BEGIN
+       DECLARE DataCursor CURSOR READ_ONLY
+       FOR
+       SELECT Id, Tenant, TransportModeId, ShipmentTypeId, ShipmentSubTypeId
+       FROM #tempTable
+       OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
+       WHILE @@FETCH_STATUS = 0
+       BEGIN
+       		
+       		insert into #temp_Quotes(Id, ShipmentSubTypeId, ShipmentTypeId) values (@EntityId, @ShipmentSubTypeId, @ShipmentTypeId)
+       			
+			set @Count = @Count + 1;
+			if(@Count = 4000)
+			begin 
+
+				update Quotes
+				set
+				ShipmentSubTypeId = #temp_Quotes.ShipmentSubTypeId,
+				ShipmentTypeId = #temp_Quotes.ShipmentTypeId
+				FROM Quotes
+				INNER JOIN #temp_Quotes
+				on Shipments.Id = #temp_Quotes.Id
+
+				truncate table #temp_Quotes
+				set @Count = 0
+			end
+
+		
+       FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
+       END
+       CLOSE DataCursor
+       DEALLOCATE DataCursor
+    END
+		
+
+	if (@Count > 0)
+	begin
+				update Quotes
+				set
+				ShipmentSubTypeId = #temp_Quotes.ShipmentSubTypeId,
+				ShipmentTypeId = #temp_Quotes.ShipmentTypeId
+				FROM Quotes
+				INNER JOIN #temp_Quotes
+				on Quotes.Id = #temp_Quotes.Id
+	end
+
+	
+	  drop table #tempTable
+    drop table #temp_Quotes
+
+      
+    ]]>
+  </Sql>
+</Script>
+
+
+
+

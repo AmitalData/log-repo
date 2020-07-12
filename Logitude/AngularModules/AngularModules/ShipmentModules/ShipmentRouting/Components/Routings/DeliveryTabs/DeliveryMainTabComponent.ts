@@ -661,7 +661,7 @@ export class DeliveryMainTabComponent extends BaseComponent {
         }
     }
 
-    get ETD() { return this.EntityPM.ETD; }
+    get ETD() { return DateTool.GetDateParts(this.EntityPM.ETD).DateObject; }
     set ETD(value: Date) {
         if (this.EntityPM.ETD != value) {
             this.EntityPM.ETD = value;
@@ -675,7 +675,7 @@ export class DeliveryMainTabComponent extends BaseComponent {
         }
     }
 
-    get ATD() { return this.EntityPM.ATD; }
+    get ATD() { return DateTool.GetDateParts(this.EntityPM.ATD).DateObject; }
     set ATD(value: Date) {
         if (this.EntityPM.ATD != value) {
             this.EntityPM.ATD = value;

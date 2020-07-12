@@ -1,0 +1,16 @@
+﻿<Script DBType="Main">
+  <Sql Version="1">
+    <![CDATA[
+    
+      update Shipments
+      set
+      ShipmentTypeId = 'Air',
+      ShipmentSubTypeId = (select top 1 Id from ShipmentSubTypes where Code = 'Air' and Tenant = Shipments.Tenant)
+      where TransportModeId = 'A'
+      
+    ]]>
+  </Sql>
+</Script>
+
+
+
