@@ -148,7 +148,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportFile, 
 	         DestinationCountryCode, 
 	         ExportAutonomyRegionTypeCode, 
-	         DeclarationTypeCode,
+	         DeclarationTypeCode, 
 	         CancelRequestReasonCode, 
 	         CancelRequestReasonExplanation, 
 	         CancelRequestNumber, 
@@ -362,7 +362,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportFile, 
 	         DestinationCountryCode, 
 	         ExportAutonomyRegionTypeCode, 
-	         DeclarationTypeCode,
+	         DeclarationTypeCode, 
 	         CancelRequestReasonCode, 
 	         CancelRequestReasonExplanation, 
 	         CancelRequestNumber, 
@@ -371,7 +371,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CancelRequestRejectionReason, 
 	         CancelRequestApproveDate, 
 	         IsClaimable,
-
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1676,12 +1675,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DestinationCountryCode = entityPOCO.DestinationCountryCode;
             }
 
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportAutonomyRegionTypeCode))
             {
 					entityPM.ExportAutonomyRegionTypeCode = entityPOCO.ExportAutonomyRegionTypeCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationTypeCode))
+            {
+					entityPM.DeclarationTypeCode = entityPOCO.DeclarationTypeCode;
+            }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestReasonCode))
             {
@@ -1697,11 +1699,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 					entityPM.CancelRequestNumber = entityPOCO.CancelRequestNumber;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationTypeCode))
-            {
-					entityPM.DeclarationTypeCode = entityPOCO.DeclarationTypeCode;
-            }
-
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomCancelRequestRemarks))
             {
@@ -1724,7 +1721,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
 
 		}
-            
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
         {
@@ -2350,6 +2346,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.DestinationCountryCode = entityPM.DestinationCountryCode;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportAutonomyRegionTypeCode))
+            {
+                oldEntityPM.ExportAutonomyRegionTypeCode = entityPM.ExportAutonomyRegionTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
+            {
+                oldEntityPM.DeclarationTypeCode = entityPM.DeclarationTypeCode;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestReasonCode))
             {
                 oldEntityPM.CancelRequestReasonCode = entityPM.CancelRequestReasonCode;
@@ -2363,18 +2369,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestNumber))
             {
                 oldEntityPM.CancelRequestNumber = entityPM.CancelRequestNumber;
-                }
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportAutonomyRegionTypeCode))
-            {
-                oldEntityPM.ExportAutonomyRegionTypeCode = entityPM.ExportAutonomyRegionTypeCode;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
-            {
-                oldEntityPM.DeclarationTypeCode = entityPM.DeclarationTypeCode;
-            }
-			
-	
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomCancelRequestRemarks))
             {
                 oldEntityPM.CustomCancelRequestRemarks = entityPM.CustomCancelRequestRemarks;

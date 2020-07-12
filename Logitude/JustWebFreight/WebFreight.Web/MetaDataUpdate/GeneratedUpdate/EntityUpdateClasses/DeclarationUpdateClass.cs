@@ -76,9 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-
-		public const string HashString = "170fa1c03f3b8cff04771ad092a15e51";
-
+		public const string HashString = "0eaf576941f3c80d655cfa1e88fb7a3d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13847,7 +13845,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query ExportDeclarationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_14.Id, NameTextCodeCode = DeclarationTextCode_14.Code, ObjectTableName = "Customs.Declaration", Code = "ExportDeclaration",  QueryGroupCode = "DECL", IndexOrder = 14, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationFeature_14.Id,FeatureUniqeCode= DeclarationFeature_14.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query ExportDeclarationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_14.Id, NameTextCodeCode = DeclarationTextCode_14.Code, ObjectTableName = "Customs.Declaration", Code = "ExportDeclaration",  QueryGroupCode = "DECL", IndexOrder = 14, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_14.Id,FeatureUniqeCode= DeclarationFeature_14.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn ExportDeclarationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.TaxationDateTime" , ColumnWidth = 100 }, addedQueryColumns);
 

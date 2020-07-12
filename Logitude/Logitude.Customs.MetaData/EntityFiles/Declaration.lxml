@@ -17481,7 +17481,7 @@
     ObjectTableName="&quot;Customs.Declaration&quot;"
     QuerySection="&quot;Customs.Declaration&quot;"
     SystemLevel="true"
-    IsAddNewEntity="false"
+    IsAddNewEntity="true"
     IsPackagable="true"
     DefaultSortName="&quot;TaxationDateTime&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
