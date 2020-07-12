@@ -959,6 +959,86 @@ on record.JournalId equals j.Id
 
         }
 
+
+        public IQueryable<GLAccountTotalByMonthsDTO> GetQueryableGLAccountTotalByMonthByDateTypeCodeFromControlAccount(
+            string DateTypeCode,
+            DateTime fromDate, DateTime toDate, int tenant)
+        {
+            var fromDateOnlyDate = fromDate.Date;
+            var toDateOnlyDate = toDate.Date;
+            var ledgerTransactionsByAccountingDate = (from rec in context.LedgerTransactions
+                                                          //where EntityFunctions.TruncateTime(rec.AccountingDate) >= fromDateOnlyDate //fromDate.Date
+                                                          //where EntityFunctions.TruncateTime(rec.AccountingDate) <= toDateOnlyDate //toDate.Date
+                                                      where rec.Tenant == tenant
+                                                      select rec);
+
+
+            ledgerTransactionsByAccountingDate = QFilterByDateTruncateTimeInclusive(DateTypeCode, fromDate, toDate, ledgerTransactionsByAccountingDate);
+            ledgerTransactionsByAccountingDate = ledgerTransactionsByAccountingDate
+                .Where(r =>
+                r.ControlAccountId != null && r.ControlAccountId.Trim() != string.Empty
+                    );
+            var lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate;
+
+
+            
+            var myGroupBy = lTransByAccountingDateFilterByListOfAccId.GroupBy(rec => new
+            {
+                rec.ControlAccountId,
+                rec.CurrencyId,
+                rec.AccountingDate.Year,
+                rec.AccountingDate.Month,
+            });
+            switch (DateTypeCode)
+            {
+                case "2"://GLAccountTotalDateTypeValues.DueDate:
+                    {
+                        myGroupBy = lTransByAccountingDateFilterByListOfAccId.GroupBy(rec => new
+                        {
+                            rec.ControlAccountId,
+                            rec.CurrencyId,
+                            rec.DueDate.Year,
+                            rec.DueDate.Month,
+                        });
+                    }
+                    break;
+                case "3":// GLAccountTotalDateTypeValues.DocumentDate:
+                    {
+                        //return null;
+                        myGroupBy = lTransByAccountingDateFilterByListOfAccId.GroupBy(rec => new
+                        {
+                            rec.ControlAccountId,
+                            rec.CurrencyId,
+                            rec.DocumentDate.Year,
+                            rec.DocumentDate.Month,
+                        });
+                        break;
+
+                    }
+            }
+            var myCalcGLAccountTotalByMonth = myGroupBy.Select(groupByAccountCurrency =>
+            new //GLAccountTotalByMonth//The entity or complex type 'Logitude.Accounting.Data.GLAccountTotalByMonth' cannot be constructed in a 
+                                               GLAccountTotalByMonthsDTO()
+            {
+                Tenant = tenant,
+                AccountId = groupByAccountCurrency.Key.ControlAccountId,
+                CurrencyId = groupByAccountCurrency.Key.CurrencyId,
+
+                Year = groupByAccountCurrency.Key.Year,
+                Month = groupByAccountCurrency.Key.Month,
+
+                LocalAmountCredit = groupByAccountCurrency.Sum(x => x.LocalAmountCredit),
+                LocalAmountDebit = groupByAccountCurrency.Sum(x => x.LocalAmountDebit),
+                ForeignAmountCredit = groupByAccountCurrency.Sum(x => x.ForeignAmountCredit),
+                ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.ForeignAmountDebit),
+                CHANGE_TYPE = ""
+            });
+            return myCalcGLAccountTotalByMonth;
+
+
+
+
+        }
         public List<CurrencySum> GetLedgerTransactionTotalLocalAmountFromTo(string accountId, DateTime fromDate, DateTime toDate, int tenant)
         {
 
