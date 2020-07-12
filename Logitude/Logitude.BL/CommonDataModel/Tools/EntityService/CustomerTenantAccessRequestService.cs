@@ -67,7 +67,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 IQueueService queue = new DbQueueService();
                 queue.InitializeQueue("CustomerTenantAccessRequestQueue", 0);
-                queue.Send(new Dictionary<string, string>() { { "RequestId", entityPM.Id }, { "Tenant", entityPM.Tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
+                queue.Send(new Dictionary<string, string>() { { "RequestId", entityPM.Id }, { "Tenant", entityPM.Tenant.ToString() }}, tenant);
             }
             catch (Exception ex)
             {

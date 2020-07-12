@@ -113,7 +113,7 @@ namespace CommunicationWorkerRole
                             string Id = response.MessageValues["Id"].ToString();
                             int.TryParse(response.MessageValues["Tenant"], out tenant);
                             int.TryParse(response.MessageValues["CustomerTenant"], out CustomerTenant);
-                            string CorrelationId = response.MessageValues["CorrelationId"].ToString();
+                            string CorrelationId = response.MessageId;
                             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
                             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                             APILogsService apiLogsService = new APILogsService(webFreightContext, tenant);

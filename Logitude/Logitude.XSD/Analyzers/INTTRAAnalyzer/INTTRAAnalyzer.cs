@@ -921,7 +921,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
                 From = from,
                 InOut = "I",
-                Subject = this.Subject,
+                Subject = this.Subject == "Booking" ? "e-Booking" : this.Subject,
                 Tenant = this.Tenant,
                 CommunicationLogTypeCode = "T",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),

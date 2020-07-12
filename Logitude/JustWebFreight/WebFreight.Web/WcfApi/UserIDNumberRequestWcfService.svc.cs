@@ -77,7 +77,7 @@ namespace WebFreight.Web.WcfApi
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("DeclarationApprovalRequestQueue", 0);
             
-            queueservice.Send(new Dictionary<string, string>() { { "Id", shipmentAdditionalDataId }, { "Tenant", tenant.ToString() }, { "ImporterTenant", importerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "Id", shipmentAdditionalDataId }, { "Tenant", tenant.ToString() }, { "ImporterTenant", importerTenant.ToString() } }, tenant);
         }
 
         private string UpdateShipmentAdditionalDataFromIncomingUserIdNumberRequest(UserIdNumberRequestPM userIdNumberRequestPM, int tenant)

@@ -156,7 +156,7 @@ namespace CommunicationWorkerRole
                                 string CustomerId = response.MessageValues["CustomerId"];
                                 string CustomerTenantAccessId = response.MessageValues["CustomerTenantAccessId"];
                                 string BatchNumber = response.MessageValues["BatchNumber"];
-                                string TempCorrelationId = response.MessageValues["CorrelationId"].ToString();
+                                string TempCorrelationId = response.MessageId;
 
 
                                 webFreightContext = WebFreightContext.GetContext(tenant);
@@ -374,14 +374,14 @@ namespace CommunicationWorkerRole
                                                 if (IsImporterTenantHasExportFeatureForExportShipments(importerTenant, Shipment))
                                                 { 
                                                     queueservice.InitializeQueue("ImportersShipmentsBatchQueue", 0);
-                                                    queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "ImporterTenant", importerTenant.ToString() }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "BatchNumber", BatchNumber } }, tenant, null, CustomerId, BatchNumber);
+                                                    queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "ImporterTenant", importerTenant.ToString() }, { "Tenant", tenant.ToString() }, { "BatchNumber", BatchNumber } }, tenant, null, CustomerId, BatchNumber);
                                                 }
 
                                             }
                                             foreach (var ImportId in ImportIdsList)
                                             {
                                                 queueservice.InitializeQueue("ImportersShipmentsDocsQueueBuilderQueue", 0);
-                                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", ImportId }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", customerTenantAccessCardsBatch.CustomerId }, { "BatchNumber", customerTenantAccessCardsBatch.BatchNumber } }, tenant, null, customerTenantAccessCardsBatch.CustomerId, customerTenantAccessCardsBatch.BatchNumber);
+                                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", ImportId }, { "Tenant", tenant.ToString() }, { "CustomerId", customerTenantAccessCardsBatch.CustomerId }, { "BatchNumber", customerTenantAccessCardsBatch.BatchNumber } }, tenant, null, customerTenantAccessCardsBatch.CustomerId, customerTenantAccessCardsBatch.BatchNumber);
                                             }
                                             var TempLog = aPILogsRepository.GetSingleAPILogsByCorrelationId(StartLogCorrelationId, tenant);
                                             APILogsPM TempLogPM;

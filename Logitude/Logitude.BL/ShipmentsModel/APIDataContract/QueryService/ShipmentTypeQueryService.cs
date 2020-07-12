@@ -40,6 +40,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             }
             else
             {
+                if (MyEntityPM.Id == "Air") return null;
                 temp.Code = MyEntityPM.Id;
             }
 
