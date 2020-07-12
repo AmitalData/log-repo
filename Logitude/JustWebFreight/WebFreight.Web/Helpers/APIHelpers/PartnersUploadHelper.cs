@@ -157,7 +157,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     String[] rowData = new String[partnersUploadExcelSheet.Columns.Count()];
                     for (int i = 0; i < partnersUploadExcelSheet.Columns.Count(); i++)
                     {
-                        rowData[i] = row.Cells[i].Value2.ToString();
+                        rowData[i] = row.Cells[i].Value2 != null ? row.Cells[i].Value2.ToString() : "";
                     }
 
                     // Full Column 
@@ -371,7 +371,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                                   orderby count descending
                                   select new { Value = g.Key, Count = count };
 
-            int checkDuplicates_Count = checkDuplicates.Where(a => a.Count > 1).Count();
+            int checkDuplicates_Count = checkDuplicates.Where(a => a.Count > 1).Where(a=>a.Count > 1).Sum(a=>a.Count);
             this.duplicateLinesCount = duplicateLinesCount + checkDuplicates_Count;
             if (!IsConfirmationDuplicateByUser && checkDuplicates_Count > 0)
             {
@@ -473,12 +473,14 @@ namespace WebFreight.Web.Helpers.APIHelpers
             }
         }
 
-        private void UpdateProcessPercentage(int maximum, int current)
+        private void UpdateProcessPercentage(decimal maximum, decimal current)
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 batchTaskExecution = batchTaskExecutionRepository.GetSingle(batchTaskExecutionPM.Id, tenant);
-                this.batchTaskExecutionPM.ProgressPercentage = (current / maximum) * 100;
+                decimal percentage = (current / maximum) * 100; ;
+                this.batchTaskExecution.ProgressPercentage = Convert.ToInt32(percentage);
+                this.batchTaskExecutionPM.ProgressPercentage = Convert.ToInt32(percentage);
                 batchTaskExecutionRepository.Update(batchTaskExecution);
                 batchTaskExecutionRepository.SubmitChanges();
                 scope.Complete();

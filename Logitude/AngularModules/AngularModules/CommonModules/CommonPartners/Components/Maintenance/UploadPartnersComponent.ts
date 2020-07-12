@@ -118,7 +118,7 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
             if (!myResponse.HasError) {
                var batchEntity = myResponse.Result;
                 if (batchEntity != null) {
-                    this.CurrentSession.StartBusyIndicator("Uploading Partners... " + batchEntity.ProgressPercentage + "%");
+                   
                     this.IsResponseProgressVisible = true;
                     this.CheckBatchTaskExecution(batchEntity.Id);
                 }
@@ -177,6 +177,7 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
                 }
 
                 else {
+                    this.CurrentSession.StartBusyIndicator("Uploading Partners... " + list.ProgressPercentage + "%");
                     this.CheckBatchTaskExecution(BatchTaskExecutionId);
                 }
             }
