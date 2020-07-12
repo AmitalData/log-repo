@@ -17,7 +17,7 @@ namespace CargoTrackingWinService
         {
 
 
-#if DEBUG
+#if RELEASE
             ApplicationInfo.Mode = "Release";
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
@@ -27,16 +27,15 @@ namespace CargoTrackingWinService
             ServiceBase.Run(ServicesToRun);
 #else
 
-            ServiceBase.Run(ServicesToRun);
             ApplicationInfo.Mode = "Debug";
             Service1 myService = new Service1();
             myService.OnDebug();
-            System.Threading.Thread.Sleep(System.Threading.Timeout.Infinite);
-
-               
+            System.Threading.Thread.Sleep(System.Threading.Timeout.Infinite);               
             
 #endif
 
+
+ 
 
         }
     }
