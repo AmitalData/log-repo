@@ -71,6 +71,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CAAT).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.CheckDigitControlAlgorithmCode).HasMaxLength(4).IsRequired().IsUnicode(false);
             this.Property(t => t.AllowCustomersInAgentsLOV).IsRequired();
+            this.Property(t => t.VatUniquePartnerTypeCode).HasMaxLength(3).IsUnicode(false);
 
             this.ToTable("Tenants");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -194,6 +195,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.RegulatedAgentNumber).HasColumnName("RegulatedAgentNumber");
             this.Property(t => t.RegulatedAgentRegimeActivated).HasColumnName("RegulatedAgentRegimeActivated");
             this.Property(t => t.TenantEmailSendingQuota).HasColumnName("TenantEmailSendingQuota");
+            this.Property(t => t.VatUniquePartnerTypeCode).HasColumnName("VatUniquePartnerTypeCode");
 
             this.HasRequired(t => t.LogBoxTenantSetting).WithRequiredPrincipal(d => d.Tenant);
             this.HasOptional(t => t.Address).WithMany().HasForeignKey(d => d.AddressId);
@@ -221,8 +223,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.TemperatureUnit).WithMany().HasForeignKey(d => d.TemperatureUnitCode);
             this.HasOptional(t => t.NumberFormat).WithMany().HasForeignKey(d => d.NumberFormatCode);
             this.HasOptional(t => t.WeightUnit).WithMany().HasForeignKey(d => d.ChargeableWeightUnitCode);
-
-
+            this.HasOptional(t => t.VatUniquePartnerType).WithMany().HasForeignKey(d => d.VatUniquePartnerTypeCode);
         }
     }
 }

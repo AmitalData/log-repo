@@ -1,0 +1,9 @@
+﻿<Script DBType="Main">
+  <Sql Version="2">
+    <![CDATA[
+
+     update Tenants set VatUniquePartnerTypeCode = 'ALL'
+     
+    ]]>
+  </Sql>
+</Script>

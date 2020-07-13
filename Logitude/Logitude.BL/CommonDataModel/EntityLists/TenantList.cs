@@ -107,5 +107,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string CheckDigitControlAlgorithmCode { get; set; }
         public bool HideFCLAllIn { get; set; }
         public bool AllowCustomersInAgentsLOV { get; set; }
+        public string VatUniquePartnerTypeCode { get; set; }
     }
 }
