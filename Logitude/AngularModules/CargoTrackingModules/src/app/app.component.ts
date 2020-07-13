@@ -25,6 +25,8 @@ export class AppComponent
         
             CargoTrackingBrandingData.MainColor = response.Result.MainColor;
             this.IsBrandingDataLoaded = true;
+            CargoTrackingBrandingData.MainColor=  this.ConvertHexaToRGBA(CargoTrackingBrandingData.MainColor);
+
             document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
             document.documentElement.style.setProperty('--CircleImageColor', CargoTrackingBrandingData.MainColor);
             document.documentElement.style.setProperty('--TitleColor', CargoTrackingBrandingData.MainColor);
@@ -34,7 +36,11 @@ export class AppComponent
 
        
     }
+    private ConvertHexaToRGBA(color: string) {
+        var alpha = parseInt(color.slice(1,3), 16)/255;
+        return 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + alpha + ')';
 
+    }
     private listenToRouterEvents()
     {
         this.router.events.subscribe((event: Event) =>
