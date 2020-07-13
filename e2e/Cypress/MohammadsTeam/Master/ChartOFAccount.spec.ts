@@ -3,6 +3,13 @@ import { RandomGenerator } from './RandomGenerator'
 import { ChartOfAccount } from './ChartOfAccount'
 import { Login } from './Login';
 
+import { LoginComp } from "../../login/Login.po";
+
+export class ChartSpec {
+
+  private login: LoginComp = new LoginComp();
+}
+
 describe('ChartOfAccount Module', function () {
 
 

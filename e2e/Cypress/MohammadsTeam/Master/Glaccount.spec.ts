@@ -2,6 +2,12 @@
 import { Glaccount }  from './Glaccount'
 import { RandomGenerator } from './RandomGenerator'
 import { Login } from './Login';
+import { LoginComp } from "../../login/Login.po";
+
+export class GLASpec {
+
+  private login: LoginComp = new LoginComp();
+}
 describe('GLAccount Module', function () {
  
 
@@ -10,6 +16,8 @@ describe('GLAccount Module', function () {
     let log: Login = new Login();
 
 
+
+    
 
   it(' New GLAccount Was Created And Updated', function () {
    

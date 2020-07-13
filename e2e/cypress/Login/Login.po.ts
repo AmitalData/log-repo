@@ -33,6 +33,18 @@ it('Login Successfully', () => {
         Password = Cypress.env("LocalPassword");
     }
 
+    else if ( Env == 'FATest'){
+        Email = Cypress.env("FATestEmail");
+        Password = Cypress.env("FATestPassword");
+       }
+       else if ( Env == 'FACloud'){
+         URL = Cypress.env("CloudStagingURL");
+         Email = Cypress.env("FACloudEmail");
+         Password = Cypress.env("FACloudPassword");
+       }
+   
+   
+
     else //test_staging
     {
         //URL = Cypress.env("TestURL");

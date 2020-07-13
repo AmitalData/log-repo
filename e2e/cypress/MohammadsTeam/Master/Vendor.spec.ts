@@ -4,7 +4,12 @@
 import { VendorGLAccount } from './Vendor';
 import { Login } from './Login';
 import  { CreateRandom } from './CreateRandom';
+import { LoginComp } from "../../login/Login.po";
 
+export class GLASpec {
+
+  private login: LoginComp = new LoginComp();
+}
 describe('New Vendor GlAccount ', () => {
 
   let v: VendorGLAccount = new VendorGLAccount();

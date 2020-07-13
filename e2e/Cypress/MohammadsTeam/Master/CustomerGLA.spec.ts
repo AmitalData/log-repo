@@ -9,6 +9,13 @@ import { Login } from './Login';
 
 import { RandomGenerator } from './RandomGenerator'
 
+import { LoginComp } from "../../login/Login.po";
+
+export class CustomerSpec {
+
+  private login: LoginComp = new LoginComp();
+}
+
 describe('CustomerGlAccount Module', function () {
 
     let R: RandomGenerator = new RandomGenerator();
