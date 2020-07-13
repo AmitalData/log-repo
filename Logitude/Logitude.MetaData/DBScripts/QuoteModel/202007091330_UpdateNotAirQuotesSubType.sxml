@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
     
       If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
@@ -63,7 +63,7 @@ CREATE TABLE #temp_Quotes (
 				ShipmentTypeId = #temp_Quotes.ShipmentTypeId
 				FROM Quotes
 				INNER JOIN #temp_Quotes
-				on Shipments.Id = #temp_Quotes.Id
+				on Quotes.Id = #temp_Quotes.Id
 
 				truncate table #temp_Quotes
 				set @Count = 0
