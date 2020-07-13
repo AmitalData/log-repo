@@ -90,7 +90,6 @@ namespace Logitude.Customs.Data.EntityLists
        public string LastStatusName  { get; set; }
        [DataMember]
        public string LastStatusDate  { get; set; }
-
        [DataMember]
        public string ClassifiedUserName  { get; set; }
        [DataMember]
