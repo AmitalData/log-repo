@@ -475,7 +475,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                      let glaPeriod = _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant &&r.GLAccountId == acc.Id && r.PeriodStartDate <= currentDate)
                      .OrderByDescending(d=>d.PeriodStartDate).FirstOrDefault()
-                     let basePeriod= _AccountingContext.InterestBasesPeriods.Where(d=>d.InterestBaseTypeId==glaPeriod.StandardInterestRateBaseId).FirstOrDefault()
+                     let basePeriod= _AccountingContext.InterestBasesPeriods.Where(d=>d.InterestBaseTypeId==glaPeriod.StandardInterestRateBaseId)
+                     .OrderByDescending(d=>d.InterestBaseStartDate).FirstOrDefault()
                      //join accIntrestPeriods in _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant && r.PeriodStartDate <= currentDate)
                      //on acc.Id equals accIntrestPeriods.GLAccountId into intrestPeriodsJoin
                      //from accIntrestPeriods in intrestPeriodsJoin.DefaultIfEmpty()
