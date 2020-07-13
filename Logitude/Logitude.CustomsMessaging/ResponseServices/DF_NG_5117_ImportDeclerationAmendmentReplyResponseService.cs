@@ -42,7 +42,8 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
-    public class DF_NG_5117_ImportDeclerationAmendmentReplyResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg, GenericRequestParams>
+    public class DF_NG_5117_ImportDeclerationAmendmentReplyResponseService : 
+        ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg, GenericRequestParams>
     {
         DeclarationPM _MyDeclarationPM;
         DeclarationPM _MyDeclarationPMOrg;
