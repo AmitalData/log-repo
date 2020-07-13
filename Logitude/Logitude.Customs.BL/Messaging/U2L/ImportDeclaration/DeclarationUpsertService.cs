@@ -856,15 +856,19 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             {
                 this._DeclarationReferantDataPM.WithPaper = true;
             }
-            if (_AmitalCustomsFile.FileStatus == "OPT" && !isNew) _DeclarationReferantDataPM.NewFile = false;
+            if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.NewFile) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.NewFile) && _AmitalCustomsFile.NewFile.ToLower() != "true"))
+            {
+                this._DeclarationReferantDataPM.NewFile = false;
+
+            }
+            else
+            {
+                this._DeclarationReferantDataPM.NewFile = true;
+            }
+            
             this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
-            if (_AmitalCustomsFile.FileStatus == "OPT" && isNew)
-            {
-                this._DeclarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Update;
-                _DeclarationReferantDataPM.NewFile = false;
-                myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
-            }
+            
         }
 
         private string TranslateVendor(string amitalvendorId)
