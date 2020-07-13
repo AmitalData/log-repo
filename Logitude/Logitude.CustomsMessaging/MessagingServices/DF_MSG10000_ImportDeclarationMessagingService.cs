@@ -118,7 +118,21 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var response = new DF_NG_2754_MSG10004_ImportDeclarationResponse();
 
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
-            
+            if (requestParams.TestCase != null)
+            {
+                switch (requestParams.TestCase.Code)
+                {
+                    case "2755Payment":
+                        var Fake2754WithConstraintMsg = new Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint(requestParams);
+                        break;
+                    case "2754Payment":
+                        var Fake2754SumbitPayment = new Fake_2754_MSG10004_SumbitPayment(requestParams);
+                        _ResponseHeader = Fake2754SumbitPayment.CallWS(out response, requestParams);
+                        break;
+                }
+                exceptionMessage = null;
+                return response;
+            }
 
             using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
             {
@@ -148,16 +162,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     case "2754Valid":
                         var Fake2754ValidMsg = new Fake_2754_MSG10004_ImportDeclarationResponse(requestParams);
-                        _ResponseHeader = Fake2754ValidMsg.CallWS(out response);
+                        _ResponseHeader = Fake2754ValidMsg.CallWS(requestParams,out response);
                         break;
                     case "2754Constraint":
                         var Fake2754WithConstraintMsg = new Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint(requestParams);
                         _ResponseHeader = Fake2754WithConstraintMsg.CallWS(requestParams, out response);
                         break;
-                    case "2754Payment":
+                   /* case "2754Payment":
                         var Fake2754SumbitPayment = new Fake_2754_MSG10004_SumbitPayment(requestParams);
-                        _ResponseHeader = Fake2754SumbitPayment.CallWS(out response);
-                        break;
+                        _ResponseHeader = Fake2754SumbitPayment.CallWS(out response, requestParams);
+                        break;*/
                 }
                 exceptionMessage = null;
                 return response;

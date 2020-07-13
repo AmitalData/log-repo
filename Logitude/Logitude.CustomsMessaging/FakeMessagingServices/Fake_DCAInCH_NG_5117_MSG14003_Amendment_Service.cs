@@ -31,7 +31,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
             _header = new ResponseContentHeader();
             DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg response = new DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg();
-            UpdateDeclaration();
+            UpdateDeclaration(requestParamsData);
             AddResponseHeader();
             dec = new Declaration();
 
@@ -89,8 +89,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
              response.Response.AdditionalInformation = AdditionalInformation.ToArray();
             response.Response.FunctionCode = new ResponseFunctionCodeType() { Value = "Amendment" };
-            DateTime date = DateTime.ParseExact(DateTime.Now.ToString(), "yyyy-MM-ddTHH:mm:ss", null);
-            response.Response.IssueDateTime = XmlConvert.ToString(date);
+            response.Response.IssueDateTime = XmlConvert.ToString(DateTime.Now);
             //response.Response.Amendment = new ResponseAmendment[1]; // reason to change?
             //response.Response.Amendment[0] = new ResponseAmendment
             //{

@@ -79,6 +79,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsCancelled, 
 	         LastStatusName, 
 	         LastStatusDate,
+	         ClassifiedUserName, 
+	         ControllerUserName, 
+	         CollectorUserName,
+ 
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
