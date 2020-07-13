@@ -100,26 +100,29 @@ namespace WebFreight.Web.CRMModel.DomainServices
                 foreach (CorrespondencesAttachment attach in myCorrespondence)
                 {
                     DocumentsFilingPM doc = docsIn.Where(a => a.Id == attach.DocumentFilingId).FirstOrDefault();
-                    DocumentDataPM datapm = new DocumentDataPM()
+                    if (doc != null)
                     {
-                        Id = doc.Id,
-                        EntityId = doc.EntityId,
-                        DocumentTypeId = doc.DocumentTypeId,
-                        Code = doc.Code,
-                        ReceivedDate = doc.CreateDate,
-                        Tenant = doc.Tenant,
-                        DocumentId = doc.DocumentId,
-                        DocumentTypeName = doc.CustomsDocumentTypeName,
-                        FileName = doc.FileName != null && doc.FileExtension != null ? doc.FileName + "." + doc.FileExtension : null,
-                        SecurityId = doc.SecurityId,
-                        CorrespondenceId = attach.CorrespondenceId,
-                        FileExtension = doc.FileExtension != null ? doc.FileExtension : null,
-                        FileSize = doc.FileSize,
-                        CreateDate = doc.CreateDate,
-                        UpdateDate = doc.UpdateDate,
-                    };
+                        DocumentDataPM datapm = new DocumentDataPM()
+                        {
+                            Id = doc.Id,
+                            EntityId = doc.EntityId,
+                            DocumentTypeId = doc.DocumentTypeId,
+                            Code = doc.Code,
+                            ReceivedDate = doc.CreateDate,
+                            Tenant = doc.Tenant,
+                            DocumentId = doc.DocumentId,
+                            DocumentTypeName = doc.CustomsDocumentTypeName,
+                            FileName = doc.FileName != null && doc.FileExtension != null ? doc.FileName + "." + doc.FileExtension : null,
+                            SecurityId = doc.SecurityId,
+                            CorrespondenceId = attach.CorrespondenceId,
+                            FileExtension = doc.FileExtension != null ? doc.FileExtension : null,
+                            FileSize = doc.FileSize,
+                            CreateDate = doc.CreateDate,
+                            UpdateDate = doc.UpdateDate,
+                        };
 
-                    entityPM.TicketDocumentData.Add(datapm);
+                        entityPM.TicketDocumentData.Add(datapm);
+                    }
 
                 }
             }
