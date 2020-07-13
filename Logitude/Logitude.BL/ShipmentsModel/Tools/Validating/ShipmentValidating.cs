@@ -1524,50 +1524,72 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                 if (subType != null)
                 {
-                    if (entityPM.TransportModeId == "A")
+                    switch (entityPM.TransportModeId)
                     {
-                        if (subType.Code != "Air")
-                        {
-                            throw new ApplicationException("Sub Type should be Air when Shipment Transport Mode is Airline");
-                        }
-                    }
-
-                    else if (entityPM.TransportModeId == "I")
-                    {
-                        if (entityPM.ShipmentTypeId == "FTL")
-                        {
-                            if (subType.Code != "FTL")
+                        case "A":
                             {
-                                throw new ApplicationException("Sub Type should be FTL when Shipment Type is FTL");
+                                if (subType.Code != "Air")
+                                {
+                                    throw new ApplicationException("Sub Type should be Air when Shipment Transport Mode is Airline");
+                                }
+                                break;
                             }
-                        }
 
-                        else
-                        {
-                            if (subType.Code != "LTL")
+                        case "I":
                             {
-                                throw new ApplicationException("Sub Type should be LTL when Shipment Type is LTL");
-                            }
-                        }
-                    }
+                                if (entityPM.ShipmentTypeId == "FTL")
+                                {
+                                    if (subType.Code != "FTL")
+                                    {
+                                        throw new ApplicationException("Sub Type should be FTL when Shipment Type is FTL");
+                                    }
+                                }
 
-                    else if (entityPM.TransportModeId == "O")
-                    {
-                        if (entityPM.ShipmentTypeId == "FCLD")
-                        {
-                            if (subType.Code != "FCL")
-                            {
-                                throw new ApplicationException("Sub Type should be FCL when Shipment Type is FCL");
-                            }
-                        }
+                                else if (entityPM.ShipmentTypeId == "LTL")
+                                {
+                                    if (subType.Code != "LTL")
+                                    {
+                                        throw new ApplicationException("Sub Type should be LTL when Shipment Type is LTL");
+                                    }
+                                }
 
-                        else
-                        {
-                            if (subType.Code != "LCL")
-                            {
-                                throw new ApplicationException("Sub Type should be LCL when Shipment Type is LCL");
+                                else if (entityPM.ShipmentTypeId == "MyGI")
+                                {
+                                    if (subType.Code != "MyGI")
+                                    {
+                                        throw new ApplicationException("Sub Type should be Groupage when Shipment Type is Groupage");
+                                    }
+                                }
+                                break;
                             }
-                        }
+
+                        case "O":
+                            {
+                                if (entityPM.ShipmentTypeId == "FCLD")
+                                {
+                                    if (subType.Code != "FCL")
+                                    {
+                                        throw new ApplicationException("Sub Type should be FCL when Shipment Type is FCL");
+                                    }
+                                }
+
+                                else if (entityPM.ShipmentTypeId == "LCLD")
+                                {
+                                    if (subType.Code != "LCL")
+                                    {
+                                        throw new ApplicationException("Sub Type should be LCL when Shipment Type is LCL");
+                                    }
+                                }
+
+                                else if (entityPM.ShipmentTypeId == "MyGO")
+                                {
+                                    if (subType.Code != "MyGO")
+                                    {
+                                        throw new ApplicationException("Sub Type should be Groupage when Shipment Type is Groupage");
+                                    }
+                                }
+                                break;
+                            }
                     }
                 }
             }

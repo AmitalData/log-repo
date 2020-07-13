@@ -1,37 +1,9 @@
 ﻿<Script DBType="Main">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
     
       
-	  declare @Tenant as int
-    declare @EntityId as varchar(15)
-	  declare @ShipmentTypeId as varchar(4)
-	  declare @TransportModeId as varchar(4)
-	  declare @ShipmentSubTypeId as varchar(15)
-
-      BEGIN 
-	      DECLARE QuotesCursor CURSOR READ_ONLY
-	      FOR
-	      SELECT Id, Tenant, TransportModeId, ShipmentTypeId
-	      FROM Quotes
-		    Where ShipmentTypeId is null
-	      OPEN QuotesCursor FETCH NEXT FROM QuotesCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId       
-	      WHILE @@FETCH_STATUS = 0
-		      BEGIN
-          
-				if(@TransportModeId = 'A')
-				begin
-					set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'Air' and Tenant = @Tenant)
-				end
-
-				update Quotes set ShipmentSubTypeId = @ShipmentSubTypeId where Id = @EntityId and Tenant = @Tenant
-        update Quotes set ShipmentTypeId = 'Air' where Id = @EntityId and Tenant = @Tenant and TransportModeId = 'A'
-
-                 FETCH NEXT FROM QuotesCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId  
-              END
-	      CLOSE QuotesCursor
-	      DEALLOCATE QuotesCursor
-      END
+	  
       
     ]]>
   </Sql>
