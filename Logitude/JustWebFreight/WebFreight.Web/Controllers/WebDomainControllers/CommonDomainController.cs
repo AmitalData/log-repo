@@ -209,6 +209,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         LoggedUserEmail = loggedUserEmail,
                         Tenant = authToken.Tenant,
                         IsConfirmationDuplicateByUser = filter.IsConfirmationDuplicateByUser,
+                        FileName = filter.FileName,
                     };
                     
                     var documentId = this.UploadExcelFileToStorage(fileData, args, authToken.Tenant);
@@ -263,7 +264,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             string extension = "";
             Document document = null;
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            string fileName = "Partners Upload Excel File";
+            string fileName = args.FileName;
 
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
@@ -2900,4 +2901,5 @@ public class PartnersUploadExcelParameter
     public string DocumentId { get; set; }
     public string LoggedUserEmail { get; set; }
     public bool IsConfirmationDuplicateByUser { get; set; }
+    public string FileName { get; set; }
 }

@@ -10,6 +10,7 @@ import { CommonDomainService, PartnersUploadExcelParameter } from '../../../../C
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 declare var ResultAsArray: any;
 
@@ -68,10 +69,16 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
             }
         }
     }
+    FileName: string;
     SelectExcelFile(fileEvent) {
-
         var file = fileEvent.target.files[0];
-
+        this.FileName = null;
+        if (!AppTool.IsNullOrEmpty(file.name)) {
+            var name = file.name.split('.');
+            if (name.length == 2) {
+                this.FileName = name[0];
+            }
+        }
         if (file && file.size > 0) {
             var documentExtendedService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
             documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
@@ -105,6 +112,7 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
 
             context.partnersUploadExcelParameter = new PartnersUploadExcelParameter();
             context.partnersUploadExcelParameter.FileData = window.btoa(binary);
+            context.partnersUploadExcelParameter.FileName = context.FileName;
             context.SendExcelToServer(context.partnersUploadExcelParameter);
         };
 
@@ -161,6 +169,7 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
                                 var parameter = new PartnersUploadExcelParameter();
                                 parameter.FileData = this.partnersUploadExcelParameter.FileData;
                                 parameter.IsConfirmationDuplicateByUser = true;
+                                parameter.FileName = this.partnersUploadExcelParameter.FileName;
                                 this.SendExcelToServer(parameter);
                             }
                         });
