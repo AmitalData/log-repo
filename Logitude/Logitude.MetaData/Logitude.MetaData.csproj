@@ -320,6 +320,7 @@
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentProfitFunction.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentRegistryDate.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentsSearchFields.dxml" />
+    <None Include="DBOthers\ShipmentsModel\SearchFields\FillShipmentSearchFields.sxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentComputedFields.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentLevels.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentMasterData.dxml" />
