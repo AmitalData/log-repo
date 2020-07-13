@@ -153,15 +153,16 @@ namespace WebFreight.Web.Helpers.APIHelpers
             {
                 foreach (IRange row in partnersUploadExcelSheet.UsedRange.Rows.Skip(1))
                 {
+
                     PartnerExcel partnerExcel = new PartnerExcel();
+                    // Full Column 
+                    partnerExcel.RowIndex = row.Row;
+
                     String[] rowData = new String[partnersUploadExcelSheet.Columns.Count()];
                     for (int i = 0; i < partnersUploadExcelSheet.Columns.Count(); i++)
                     {
                         rowData[i] = row.Cells[i].Value2 != null ? row.Cells[i].Value2.ToString() : "";
                     }
-
-                    // Full Column 
-                    partnerExcel.RowIndex = row.Row;
 
                     if (rowData.Length > 0)
                     {
@@ -371,8 +372,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                                   orderby count descending
                                   select new { Value = g.Key, Count = count };
 
-            int checkDuplicates_Count = checkDuplicates.Where(a => a.Count > 1).Where(a=>a.Count > 1).Sum(a=>a.Count);
-            this.duplicateLinesCount = duplicateLinesCount + checkDuplicates_Count;
+            int checkDuplicates_Count = checkDuplicates.Where(a => a.Count > 1).Count();
+            this.duplicateLinesCount = duplicateLinesCount + checkDuplicates.Where(a => a.Count > 1).Sum(a => a.Count);
             if (!IsConfirmationDuplicateByUser && checkDuplicates_Count > 0)
             {
                 this.batchTaskExecutionPM.StatusCode = "D";
