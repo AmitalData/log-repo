@@ -38,8 +38,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private StateRepository stateRepository;
         private string errorMsg;
         private BatchTaskExecutionRepository batchTaskExecutionRepository;
-        private BatchTaskExecutionQueryService batchTaskExecutionQueryService;
-        private BatchTaskExecutionUpdateService batchTaskExecutionUpdateService;
         private BatchTaskExecutionPM batchTaskExecutionPM;
         private BatchTaskExecution batchTaskExecution;
         private List<PartnerExcel> PartnerExcelList;
@@ -89,8 +87,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
             cardRepository = new CardRepository(commonDataContext);
             addressQuery = new AddressQuery(tenant);
             batchTaskExecutionRepository = new BatchTaskExecutionRepository(infrastructureContext);
-            batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(batchTaskExecutionRepository);
-            batchTaskExecutionUpdateService = new BatchTaskExecutionUpdateService(infrastructureContext);
         }
 
         private void FillDefaultValues()
@@ -169,8 +165,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         {
                             rowData[i] = row.Cells[i].Value2.ToString();
                         }
-
-                        //rowData[i] = row.Cells[i].Value2 != null ? row.Cells[i].Value2.ToString() : "";
                     }
 
                     if (rowData.Length > 0)
