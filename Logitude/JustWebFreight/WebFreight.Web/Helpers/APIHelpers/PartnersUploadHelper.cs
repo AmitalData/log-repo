@@ -161,7 +161,16 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     String[] rowData = new String[partnersUploadExcelSheet.Columns.Count()];
                     for (int i = 0; i < partnersUploadExcelSheet.Columns.Count(); i++)
                     {
-                        rowData[i] = row.Cells[i].Value2 != null ? row.Cells[i].Value2.ToString() : "";
+                        if (row.Cells[i].HasFormula)
+                        {
+                            rowData[i] = row.Cells[i].FormulaNumberValue.ToString();
+                        }
+                        else
+                        {
+                            rowData[i] = row.Cells[i].Value2.ToString();
+                        }
+
+                        //rowData[i] = row.Cells[i].Value2 != null ? row.Cells[i].Value2.ToString() : "";
                     }
 
                     if (rowData.Length > 0)
