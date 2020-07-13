@@ -38,16 +38,19 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
             for (int i = 0; i < eligibleCustomers.Count; i++)
             {
+                InterestReportPM interestReportPM = null;
+                interestReportPM = interestReportsCreationForCustomerDataPreparation.GetDraftInterestReportForCustomer(eligibleCustomers[i]);
+                if (interestReportPM!=null && interestReportPM.InterestReportStatusCode == "1")
+                {
+                    SetInterestReportStatusInProgress(interestReportPM);
+                }
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    InterestReportPM interestReportPM = null;
+                    
                     try
                     {
-                        interestReportPM = interestReportsCreationForCustomerDataPreparation.GetDraftInterestReportForCustomer(eligibleCustomers[i]);
                         interestReportPM = interestReportPM ?? interestReportsCreationForCustomerDataPreparation.CreateInterestReportForCustomerGlAccount(eligibleCustomers[i]);
                         interestReportPM.InterestCalculationDate = interestCalculationDate;
-                        interestReportPM.IsCreatedFromBatch = true;
-                        interestReportPM.BatchReportUserEmail = loggedEmail;
                         CalculateDataForInterestReport(interestReportPM);
                         scope.Complete();
                     }
@@ -73,6 +76,24 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             InterestReportDataCalculations interestReportDataCalculation = new InterestReportDataCalculations(interestReportArgs);
             interestReportDataCalculation.StartCalculations();
         }
-      
+
+        private void SetInterestReportStatusInProgress(InterestReportPM interestReportPM)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                interestReportPM.InterestReportStatusCode = "5";
+                SubmitChangesToInterestReport(interestReportPM);
+                scope.Complete();
+            }
+        }
+
+        private void SubmitChangesToInterestReport(InterestReportPM interestReportPM)
+        {
+            interestReportPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            InterestReportUpdateService interestReportUpdateService = new InterestReportUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+            interestReportUpdateService.Update(interestReportPM, true);
+        }
+
     }
 }

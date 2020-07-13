@@ -20,7 +20,6 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         private string interestReportId;
         private int tenant;
         IInterestReportCalculationPreparations interestReportCalculationPreparations;
-        private const string draft = "1";
         public InterestReportDataCalculations(InterestReportArgs interestReportArgs)
         {
             interestReportId = interestReportArgs.InterestReportId;
@@ -40,17 +39,11 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 InterestTransactionGetParameters interestTransactionGetParameters = new InterestTransactionGetParameters(interestReportPM.InterestCalculationDate,
                     tenant, glaccountIds, interestCalculationStartDate);
                 interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(interestTransactionGetParameters);
+
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    if (interestReportPM.InterestReportStatusCode == draft)
-                    {
-                        ClearOldDataForInterestReport();
-                        CalculateDataForInterestReport();
-                    }
-                    else
-                    {
-                        CalculateDataForInterestReport();
-                    }
+                    ClearOldDataForInterestReport();
+                    CalculateDataForInterestReport();
                     scope.Complete();
                 }
             }
@@ -147,6 +140,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 scope.Complete();
             }
         }
+
+      
 
         private void SubmitChangesToInterestReport()
         {
