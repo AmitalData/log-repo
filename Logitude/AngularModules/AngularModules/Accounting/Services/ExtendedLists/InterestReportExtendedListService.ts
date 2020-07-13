@@ -101,4 +101,18 @@ export class InterestReportExtendedListService {
           catchError(ServiceHelper.HandleServiceError));
   }
 
+  PostInterestReportsForEligibleCustomerCreationInBatch(interestCalculationDate:Date) {
+    let postUrl:string=ServiceHelper.GetLogitudeURL() + 'api/interestreportsforeligiblecustomercreation';
+    return this.httpClient.put(postUrl + "/PutInterestReportsForEligibleCustomerCreationInBatch", interestCalculationDate, ServiceHelper.GetHttpHeaders()).pipe(
+        map(res => {
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            var result = res;
+            serviceResponse.Result = result;
+
+            return serviceResponse;
+        }),
+        catchError(ServiceHelper.HandleServiceError));
+}
+
 }

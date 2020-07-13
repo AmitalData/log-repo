@@ -792,7 +792,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 
             }
         }
-    }
+        private string batchReportUserEmail;
+
+
+        [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+        [DataMember]
+        public string BatchReportUserEmail
+        {
+
+            get
+            {
+                return batchReportUserEmail;
+            }
+            set
+            {
+                if (batchReportUserEmail != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "BatchReportUserEmail", OldValue = batchReportUserEmail, NewValue = value, PropertyType = "string" };
+                    NotifyPropertyChanged(values);
+                    batchReportUserEmail = value;
+                }
+
+            }
+        }
    
 }
 	 

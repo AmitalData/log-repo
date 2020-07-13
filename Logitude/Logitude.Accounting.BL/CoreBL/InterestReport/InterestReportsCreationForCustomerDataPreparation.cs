@@ -16,10 +16,12 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
     {
         private DateTime interestCalculationDate;
         private int tenant;
-        public InterestReportsCreationForCustomerDataPreparation(DateTime interestCalculationDate,int tenant)
+        private string email;
+        public InterestReportsCreationForCustomerDataPreparation(InterestReportsCreationForCustomersBatchArgs args)
         {
-            this.tenant = tenant;
-            this.interestCalculationDate = interestCalculationDate;
+            tenant = args.Tenant;
+            interestCalculationDate = args.InterestCalculationDate;
+            email = args.Email;
         }
         public InterestReportPM CreateInterestReportForCustomerGlAccount(InterestReportCustomerPM interestReportCustomerPM)
         {
@@ -34,6 +36,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 InterestCalculationDate = interestCalculationDate,
                 InterestReportStatusCode = "5",
                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                BatchReportUserEmail = email,
+             
             };
             IAccountingContext context = AccountingContext.GetContext(tenant);
             InterestReportUpdateService interestReportUpdateService = new InterestReportUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);

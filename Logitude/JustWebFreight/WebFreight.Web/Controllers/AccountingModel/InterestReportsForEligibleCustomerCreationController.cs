@@ -21,17 +21,22 @@ namespace WebFreight.Web.Controllers.AccountingModel
 {
     public class InterestReportsForEligibleCustomerCreationController : ApiController
     {
-        public HttpResponseMessage PostInterestReportsForEligibleCustomerCreationInBatch(DateTime interestCalculationDate)
+        public HttpResponseMessage PutInterestReportsForEligibleCustomerCreationInBatch([FromBody]DateTime interestCalculationDate)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
                 int tenant = authToken.Tenant;
-                InterestReportsCreationForCustomersArgs interestReportsCreationForCustomersArgs = new InterestReportsCreationForCustomersArgs(interestCalculationDate, tenant);
-                string batchTaskId = CreateBatchTaskExecution(interestReportsCreationForCustomersArgs);
+                string email = authToken.Email;
+
+                InterestReportsForCustomersBatchCreator interestReportsForCustomersBatchCreator = new InterestReportsForCustomersBatchCreator();
+                InterestReportsCreationForCustomersBatchArgs interestReportsCreationForCustomersBatchArgs = new InterestReportsCreationForCustomersBatchArgs();
+                interestReportsCreationForCustomersBatchArgs.Tenant = tenant;
+                interestReportsCreationForCustomersBatchArgs.InterestCalculationDate = interestCalculationDate;
+                interestReportsCreationForCustomersBatchArgs.Email = email;
+                string batchTaskId = interestReportsForCustomersBatchCreator.CreateBatchTaskExecution(interestReportsCreationForCustomersBatchArgs);
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, batchTaskId);
@@ -43,46 +48,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
-        private string CreateBatchTaskExecution(InterestReportsCreationForCustomersArgs args)
-        {
-            // 1- create BTE record
-            BatchTaskExecutionPM taskExe;
-
-            var stringwriter = new System.IO.StringWriter();
-            var serializer = new XmlSerializer(typeof(InterestReportsCreationForCustomersArgs));
-            serializer.Serialize(stringwriter, args);
-            string xmlParameters = stringwriter.ToString();
-
-
-            taskExe = new BatchTaskExecutionPM()
-            {
-                Subject = "Interest Reports Creation In Batch",
-                Tenant = args.Tenant,
-                ChangeSetOp = ChangeSetOperation.Insert,
-                ClassName = "Logitude.Accounting.BL.CoreBL.Batch.BatchInterestReportsForEligibleCustomersCreationService,Logitude.Accounting.BL",
-                CreateDate = DateTime.Now,
-                PrametersXml = xmlParameters,
-                StatusCode = "C",
-
-            };
-
-
-            IInfrastructureContext MyContext = InfrastructureContext.GetContext(args.Tenant);
-            BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), args.Tenant);
-            bteUpdateService.Update(taskExe, true);
-
-            // 2- Send to queue
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
-            queueservice.Send(new Dictionary<string, string>()
-                {
-                    { "BatchTaskExecutionId", taskExe.Id },
-                    { "Tenant",  args.Tenant.ToString() }
-                }, args.Tenant);
-
-
-            return taskExe.Id;
-        }
+        
 
     }
 }

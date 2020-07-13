@@ -24,6 +24,7 @@ using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.InvoiceModel;
 using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.BL.Validators;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -31,7 +32,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         protected override void OnCreating(InterestReportPM entityPM, EntityPM entityParentPM)
         {
-            MapInterestReport(entityPM);
+            MapInterestReportDefaultsOnCreating(entityPM);
             if (!entityPM.IsCreatedFromBatch)
             {
                 CreateBatchTaskExecution(entityPM);
@@ -39,12 +40,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
 
-        private void MapInterestReport(InterestReportPM entityPM)
+        private void MapInterestReportDefaultsOnCreating(InterestReportPM entityPM)
         {
-           
-            entityPM.CreateDateTime = DateTime.UtcNow;
-            entityPM.InterestReportStatusCode = "5";
-            entityPM.ReportNumber = CodeCounter.GetNumber("InterestReport", entityPM.Tenant).ToString();
+
            
         }
 
@@ -73,14 +71,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             });
         }
 
- 
+
         protected override void OnUpdating(InterestReportPM entityPM, InterestReport entityPOCO)
         {
             entityPM.UpdateDateTime = DateTime.UtcNow;
-            if(entityPM.InterestReportStatusCode == "3" && (entityPM.InterestReportStatusCode != entityPOCO.InterestReportStatusCode))
+            if (entityPM.InterestReportStatusCode == "3" && (entityPM.InterestReportStatusCode != entityPOCO.InterestReportStatusCode))
             {
-                CancelInterestReport(entityPOCO,  entityPM);
+                CancelInterestReport(entityPOCO, entityPM);
             }
+            
         }
 
         protected override void Trace(InterestReportPM entityPM, InterestReport entityPOCO, string changesXml)

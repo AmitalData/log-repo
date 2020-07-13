@@ -40,7 +40,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 InterestTransactionGetParameters interestTransactionGetParameters = new InterestTransactionGetParameters(interestReportPM.InterestCalculationDate,
                     tenant, glaccountIds, interestCalculationStartDate);
                 interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(interestTransactionGetParameters);
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
                     if (interestReportPM.InterestReportStatusCode == draft)
                     {

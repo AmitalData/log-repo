@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.Web;
 
 namespace Logitude.Accounting.BL.CoreBL.InterestReport
 {
@@ -21,10 +22,12 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         private int tenant;
         private IInterestReportsCreationForCustomerDataPreparation interestReportsCreationForCustomerDataPreparation;
         private DateTime interestCalculationDate;
+        private string loggedEmail;
         public InterestReportsCreationForCustomersService(InterestReportsCreationForCustomersArgs args)
         {
             tenant = args.Tenant;
             interestCalculationDate = args.InterestCalculationDate;
+            loggedEmail = args.Email;
             interestReportsCreationForCustomerDataPreparation = args.InterestReportsCreationForCustomerDataPreparation;
         }
 
@@ -32,30 +35,27 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         {
             string log = "";
             List<InterestReportCustomerPM> eligibleCustomers = interestReportsCreationForCustomerDataPreparation.GetEligibleCustomersForInterestReports(tenant);
-            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-            for (int i = 0; i < eligibleCustomers.Count; i++) 
+
+            for (int i = 0; i < eligibleCustomers.Count; i++)
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
                     InterestReportPM interestReportPM = null;
                     try
                     {
-                        bool hasRecentReport = interestReportQueryService.CheckRecentCustomerReports(tenant, interestCalculationDate, eligibleCustomers[i].CustomerId);
-                        if (hasRecentReport)
-                        {
-
-                        }
                         interestReportPM = interestReportsCreationForCustomerDataPreparation.GetDraftInterestReportForCustomer(eligibleCustomers[i]);
-                        interestReportPM.InterestCalculationDate = interestCalculationDate;
                         interestReportPM = interestReportPM ?? interestReportsCreationForCustomerDataPreparation.CreateInterestReportForCustomerGlAccount(eligibleCustomers[i]);
+                        interestReportPM.InterestCalculationDate = interestCalculationDate;
+                        interestReportPM.IsCreatedFromBatch = true;
+                        interestReportPM.BatchReportUserEmail = loggedEmail;
                         CalculateDataForInterestReport(interestReportPM);
                         scope.Complete();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         string errorMessage = interestReportsCreationForCustomerDataPreparation.GetErrorMessage(ex);
-                        log = log + Environment.NewLine + "Error in report for customer: " 
-                            + eligibleCustomers[i].EnglishName+Environment.NewLine+"Error: "+ errorMessage;
+                        log = log + Environment.NewLine + "Error in report for customer: "
+                            + eligibleCustomers[i].EnglishName + Environment.NewLine + "Error: " + errorMessage;
                     }
                 }
             }

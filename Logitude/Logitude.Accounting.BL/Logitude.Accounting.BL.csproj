@@ -249,7 +249,9 @@
     <Compile Include="CoreBL\InterestReport\InterestReportLinesCreationService.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportsCreationForCustomerDataPreparation.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportsCreationForCustomersArgs.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportsCreationForCustomersBatchArgs.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportsCreationForCustomersService.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportsForCustomersBatchCreator.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportTestResultGetter.cs" />
     <Compile Include="CoreBL\InterestReport\InterestTransactionsGroupedByDate.cs" />
     <Compile Include="CoreBL\InterestTrans\RegularJournalInterestTransactionMapping.cs" />
