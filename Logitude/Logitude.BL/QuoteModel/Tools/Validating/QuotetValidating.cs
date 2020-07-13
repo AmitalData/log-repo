@@ -447,10 +447,12 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
         private static void ValidateQuoteCharges(QuotePM entityPM)
         {
             string freightLineCostCurrencyId = null;
+            string freightLineSaleCurrencyId = null;
             QuoteChargePM freightCharge = entityPM.QuoteCharges.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && d.ChargesGroupCode == "FRT").FirstOrDefault();
             if (freightCharge != null)
             {
                 freightLineCostCurrencyId = freightCharge.CostCurrencyId;
+                freightLineSaleCurrencyId = freightCharge.SaleCurrencyId;
             }
 
             foreach (QuoteChargePM item in entityPM.QuoteCharges)
@@ -459,9 +461,26 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 {
                     if (item.CostMeasurementCode == "PRFR" && !string.IsNullOrEmpty(item.CostCurrencyId) && !string.IsNullOrEmpty(freightLineCostCurrencyId))
                     {
-                        if (item.CostCurrencyId != freightLineCostCurrencyId)
+                        if (item.CostTotalAmount != null && item.CostTotalAmount != 0)
                         {
-                            throw new ApplicationException("Charges Type " + item.ChargesTypeCode + " cost currency must be the same as the freight currency in the case of Percent of Freight");
+                            if (item.CostCurrencyId != freightLineCostCurrencyId)
+                            {
+                                throw new ApplicationException("Charges Type " + item.ChargesTypeCode + " cost currency must be the same as the freight currency in the case of Percent of Freight");
+                            }
+                        }
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(item.SaleMeasurementCode))
+                {
+                    if (item.SaleMeasurementCode == "PRFR" && !string.IsNullOrEmpty(item.SaleCurrencyId) && !string.IsNullOrEmpty(freightLineSaleCurrencyId))
+                    {
+                        if (item.SaleTotalAmount != null && item.SaleTotalAmount != 0)
+                        {
+                            if (item.SaleCurrencyId != freightLineSaleCurrencyId)
+                            {
+                                throw new ApplicationException("Charges Type " + item.ChargesTypeCode + " sale currency must be the same as the freight currency in the case of Percent of Freight");
+                            }
                         }
                     }
                 }
