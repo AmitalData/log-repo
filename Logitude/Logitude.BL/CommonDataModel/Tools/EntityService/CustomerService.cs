@@ -155,13 +155,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void Create()
         {
             this.isNewEntity = true;
-            this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
+            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
 
             this.entityCard = new Card()
             {
                 Id = entityPM.Id,
                 Tenant = tenant,
-                SharedLogisticsInvitationStatusCode = 1
+                SharedLogisticsInvitationStatusCode = 1,
+                UploadingUniqueKey = entityPM.UploadingUniqueKey,
             };
 
             this.entityPOCO = new Customer()

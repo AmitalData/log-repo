@@ -936,6 +936,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestLastBatchServiceController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestReportsConnectInvoiceController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
 
     <Compile Include="Controllers\AccountingModel\CargoTrackingController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingSearchController.cs" />
@@ -2414,6 +2415,7 @@
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ConsolidationServiceBatch.cs" />
     <Compile Include="Helpers\APIHelpers\GenerateTariffsHelper.cs" />
+    <Compile Include="Helpers\APIHelpers\PartnersUploadHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TariffGeneratorFromExcel.cs" />
     <Compile Include="Helpers\APIHelpers\TMMBProjectsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
