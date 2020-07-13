@@ -114,7 +114,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 partnersUniqueKeys.Add(rec.UploadingUniqueKey);
             }
         }
-
+        ExcelEngine excelEngine;
+        IWorkbook workbook;
         private void ReadExcelFile_Sheet()
         {
             byte[] fileData = null;
@@ -131,13 +132,15 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     FileSize = document.FileSize,
                 };
                 fileData = storageservice.Read(fileInfo);
-            }
 
-            System.IO.MemoryStream stream = new System.IO.MemoryStream(fileData);
-            ExcelEngine excelEngine = new ExcelEngine();
-            IApplication application = excelEngine.Excel;
-            IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
-            partnersUploadExcelSheet = workbook.Worksheets[0];
+
+                System.IO.MemoryStream stream = new System.IO.MemoryStream(fileData);
+                excelEngine = new ExcelEngine();
+                IApplication application = excelEngine.Excel;
+                workbook = excelEngine.Excel.Workbooks.Open(stream);
+                partnersUploadExcelSheet = workbook.Worksheets[0];
+
+            }
         }
 
         private void BuildPartnersFromExcelSheet()
@@ -491,6 +494,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
             this.batchTaskExecutionPM.ProgressMessage = "Successfully Uploaded " + (PartnerExcelList.Count() - duplicateLinesCount) + " out of " + PartnerExcelList.Count() + " Partners. " +
                                                        duplicateLinesCount + " duplicate lines were found.";
 
+
+
+            workbook.Close();
+            excelEngine.Dispose();
         }
 
         private void SendDuplicateMessage(int checkDuplicates_Count)
