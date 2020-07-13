@@ -20,7 +20,7 @@ let R: CreateRandom= new CreateRandom();
   it('New Vendor GlAccount Created Successfully', function () {
 
       var str = R.createrandomnum();
-      l.dologin();
+ 
      cy.get('li[id=GeneralMHMaintenance]').click()
    
 cy.get('li[id=PAR]')
