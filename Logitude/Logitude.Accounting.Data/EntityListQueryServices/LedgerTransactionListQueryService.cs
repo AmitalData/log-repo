@@ -837,6 +837,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         getNextGroupArgs.OldAmount = Math.Abs(arr[j + 1].OpenAmount);
                         getNextGroupArgs.OldDate = arr[j + 1].AccountingDate;
                         getNextGroupArgs.OldId = arr[j + 1].Id;
+                        getNextGroupArgs.ActualDifference = sum;
                         break;
                     }
                     else 
