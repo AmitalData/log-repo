@@ -6,7 +6,7 @@ export  class ServiceHelper{
         if (window.location.origin.indexOf('localhost') > -1)
             return 'http://localhost:9996/';
         else
-            return window.location.origin + "/";
+            return window.location.origin + "/test/";
     }
     public static GetHeaders(){
 
