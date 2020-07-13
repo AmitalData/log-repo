@@ -284,19 +284,22 @@ export class ActivityInputTemplate extends BaseComponent implements AfterViewIni
     private GeneratedComponent: any;
 
     LoadChildComponent() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
-            .then(cmpRef => {
-                this.GeneratedComponent = cmpRef.instance;
-                cmpRef.instance.LoadCompleted.subscribe(s => {
-                    this.SetUIProperties_GeneratedComponent();
+
+        if (this.viewContainerRef) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+                .then(cmpRef => {
+                    this.GeneratedComponent = cmpRef.instance;
+                    cmpRef.instance.LoadCompleted.subscribe(s => {
+                        this.SetUIProperties_GeneratedComponent();
+                    });
+                    if (this.TypeCode == "AP") {
+                        cmpRef.instance.LabelWidth = 120;
+                    } else {
+                        cmpRef.instance.LabelWidth = 110;
+                    }
+                    cmpRef.instance.Run(this.entityPM, this.ObjectTableName, "Activity.AdditionalFields");
                 });
-                if (this.TypeCode == "AP") {
-                    cmpRef.instance.LabelWidth = 120;
-                } else {
-                    cmpRef.instance.LabelWidth = 110;
-                }
-                cmpRef.instance.Run(this.entityPM, this.ObjectTableName, "Activity.AdditionalFields");
-            });
+        }
     }   
     SetUIProperties_GeneratedComponent() {
         if (this.GeneratedComponent) {
