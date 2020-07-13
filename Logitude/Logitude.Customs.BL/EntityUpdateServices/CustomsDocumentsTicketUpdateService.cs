@@ -479,6 +479,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
 
+                    else
+                    {
+                        var myQueryService = new CustomsDocumentQueryService(context);
+                        var customsDocumentPM = myQueryService.GetSingle(entityPM.DocumentsFilingId, false, true);
+                        if (customsDocumentPM != null)
+                        {
+                            LogMessagingUtil.Instance.AppendLine("customsDocumentPM DocumentStatusCode: " + customsDocumentPM.DocumentStatusCode);
+                            if (customsDocumentPM.DocumentStatusCode != "2")
+                            {
+                                status = "V";
+                            }
+                        }
+                        }
+
                 }
             }
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
