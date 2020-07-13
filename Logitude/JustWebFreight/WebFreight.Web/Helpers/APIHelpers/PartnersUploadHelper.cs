@@ -96,11 +96,11 @@ namespace WebFreight.Web.Helpers.APIHelpers
             this.FillDefaultValues_Partner();
         }
 
-        private List<string> partnersCodesDect;
+        private List<string> partnersUniqueKeys;
        
         private void FillDefaultValues_Partner()
         {
-            partnersCodesDect = new List<string>();
+            partnersUniqueKeys = new List<string>();
             var query = (from card in commonDataContext.Cards
                          where card.Tenant == tenant
                          select new
@@ -111,7 +111,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             foreach (var rec in query)
             {
-                partnersCodesDect.Add(rec.UploadingUniqueKey);
+                partnersUniqueKeys.Add(rec.UploadingUniqueKey);
             }
         }
 
@@ -390,7 +390,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 foreach (var item in PartnerExcelList)
                 {
                     currentItem = currentItem + 1;
-                    var checkIfCardExist = this.partnersCodesDect.Where(a => a == item.UniqueCode).FirstOrDefault();
+                    var checkIfCardExist = this.partnersUniqueKeys.Where(a => a == item.UniqueCode).FirstOrDefault();
                     if (checkIfCardExist == null)
                     {
                         switch (item.Type)
@@ -461,7 +461,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                                     break;
                                 }
                         }
-                        this.partnersCodesDect.Add(item.UniqueCode);
+                        this.partnersUniqueKeys.Add(item.UniqueCode);
                     }
                     else
                     {
