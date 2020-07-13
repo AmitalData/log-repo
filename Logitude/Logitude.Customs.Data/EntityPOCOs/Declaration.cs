@@ -374,7 +374,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DestinationCountryCode { get; set; }
 	      
         public virtual CustomsCountry CustomsCountry { get; set; }
-
         [ForeignKey("ExportAutonomyRegionType")]
         [Column("ExportAutonomyRegionTypeCode")]
 	    public string ExportAutonomyRegionTypeCode { get; set; }
@@ -385,7 +384,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DeclarationTypeCode { get; set; }
 	      
         public virtual LeadDocumentType DeclarationType { get; set; }
-
         [ForeignKey("CancelRequestReason")]
         [Column("CancelRequestReasonCode")]
 	    public string CancelRequestReasonCode { get; set; }
@@ -406,7 +404,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CancelRequestRejectionReason { get; set; }
         [Column("IsClaimable")]
 	    public bool? IsClaimable { get; set; }
-
     }
 }
 	 

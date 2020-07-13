@@ -60,11 +60,11 @@
                                     [binding]="'StatusComment'" [width]="'300'" [Alignment]="'right'">
                             <ng-template let-item>
 <log-cell-template  #logcelltemplate>
-                                <div class="TextTrimming"  style="text-align:right">
+                                <div class="TextTrimming"  *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
                                     <span>{{item.StatusComment}}</span>
                                 </div>
-                                <div style="height: 100%; width: 100%;">
-                                    <LogTextBox [ObjectFieldName]="'StatusComment'" [InputType]="'ntext'" [DataContext]="item"
+                                <div *ngIf="logcelltemplate.IsEditMode"  style="height: 90%; width: 90%;" >
+                                    <LogTextBox [ObjectFieldName]="'StatusComment'" [InputType]="'text'" [DataContext]="item"
                                                 [HideColumns]="true"
                                                 [IsMultiline]="true" [NoObjectField]="true"></LogTextBox>
                                 </div>

@@ -4871,7 +4871,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private string exportAutonomyRegionTypeCode ;
 	  	  
        
@@ -4918,7 +4917,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private string cancelRequestReasonCode ;
 	  	  
        
@@ -5103,7 +5101,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
    }
    
 }

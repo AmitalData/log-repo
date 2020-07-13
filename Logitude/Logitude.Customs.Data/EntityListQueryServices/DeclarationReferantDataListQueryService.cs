@@ -84,11 +84,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  IsCancelled= d.IsCancelled,
                                                                  LastStatusDate=a.LastStatusDate,
                                                                  LastStatusName=a.LastStatusName,
-                                                                 ClassifiedUserId=a.ClassifiedUserId,
-                                                                 CollectorUserId=a.CollectorUserId,
-                                                                 ControllerUserId=a.ControllerUserId,
+                                                                 ClassifiedUserName = a.ClassifiedUser.Contact.LocalName,
+                                                                 CollectorUserName = a.CollectorUser.Contact.LocalName,
+                                                                 ControllerUserName= a.ControllerUser.Contact.LocalName,
 
                                                              });
+                                                                
             return query;
         }
 
