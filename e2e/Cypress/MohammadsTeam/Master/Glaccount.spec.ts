@@ -23,7 +23,7 @@ describe('GLAccount Module', function () {
    
 
    // cy.get('li[id=PAR]',{timeout: 60000})
-   log.dologin();
+  
    cy.get('li[id="GeneralMHFullAccounting"]').click();
     cy.get('#FAGLAccouts').click();
    

@@ -23,7 +23,7 @@ describe('CustomerGlAccount Module', function () {
     let log: Login = new Login();
     it(' New Customer GLAccount Was Created', function () {
 
-        log.dologin();
+  
        // cy.get('li[id=GeneralMHMaintenance]', { timeout: 60000 })
         // this was the only way that worked well :/
         var code = R.GenerateRandomNumberACC();
