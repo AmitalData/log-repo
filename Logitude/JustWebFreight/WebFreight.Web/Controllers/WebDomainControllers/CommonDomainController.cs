@@ -265,18 +265,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             Document document = null;
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             string fileName = args.FileName;
-
-            BlobFileInfo fileInfo = new BlobFileInfo()
-            {
-                FileName = fileName,
-                FolderName = "others",
-                Extension = "xlsx",
-                Tenant = tenant,
-            };
-
-            byte[] result = storageservice.Read(fileInfo);
             System.IO.MemoryStream memoryStream = new System.IO.MemoryStream(fileData);
-            ExcelEngine excelEngine = new ExcelEngine();
 
             if (memoryStream != null)
             {
@@ -296,8 +285,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 documentRepository.Add(document);
                 documentRepository.SubmitChanges();
-                
-                fileInfo = new BlobFileInfo()
+
+                BlobFileInfo fileInfo = new BlobFileInfo()
                 {
                     FileName = document.Id,
                     FolderName = "others",
@@ -307,8 +296,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 };
                 storageservice.Write(ByteData, fileInfo);
+
+                System.IO.File.WriteAllBytes("C:\\Log\\"+ Guid.NewGuid() + ".xls", ByteData);
             }
 
+            
             return document != null ? document.Id : null;
         }
         private DataTable ConvertToDataTable<T>(IList<T> data)
