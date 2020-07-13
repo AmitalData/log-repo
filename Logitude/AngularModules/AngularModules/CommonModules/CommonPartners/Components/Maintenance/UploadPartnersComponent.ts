@@ -158,8 +158,10 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
                         myConfirmWindow.Show(list.ProgressMessage);
                         myConfirmWindow.WindowClosed.subscribe(s => {
                             if (myConfirmWindow.Yes) {
-                                this.partnersUploadExcelParameter.IsConfirmationDuplicateByUser = true;
-                                this.SendExcelToServer(this.partnersUploadExcelParameter);
+                                var parameter = new PartnersUploadExcelParameter();
+                                parameter.FileData = this.partnersUploadExcelParameter.FileData;
+                                parameter.IsConfirmationDuplicateByUser = true;
+                                this.SendExcelToServer(parameter);
                             }
                         });
                     }

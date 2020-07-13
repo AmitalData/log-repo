@@ -204,14 +204,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
                     byte[] fileData = Convert.FromBase64String(filter.FileData);
 
-                    string taskId = IdCounter.GetNumber("BatchTaskExecution", tenant);
                     PartnersUploadExcelParameter args = new PartnersUploadExcelParameter()
                     {
                         LoggedUserEmail = loggedUserEmail,
                         Tenant = authToken.Tenant,
-                        BatchTaskId = taskId,
                         IsConfirmationDuplicateByUser = filter.IsConfirmationDuplicateByUser,
-                        DocumentId = filter.DocumentId,
                     };
                     
                     var documentId = this.UploadExcelFileToStorage(fileData, args, authToken.Tenant);
@@ -222,10 +219,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     serializer.Serialize(stringwriter, args);
                     string xmlParameters = stringwriter.ToString();
 
-
                     BatchTaskExecutionPM taskExe = new BatchTaskExecutionPM()
                     {
-                        Id = taskId,
                         Subject = "Partners Upload",
                         Tenant = tenant,
                         ChangeSetOp = ChangeSetOperation.Insert,
@@ -2904,6 +2899,5 @@ public class PartnersUploadExcelParameter
     public string FileData { get; set; }
     public string DocumentId { get; set; }
     public string LoggedUserEmail { get; set; }
-    public string BatchTaskId { get; set; }
     public bool IsConfirmationDuplicateByUser { get; set; }
 }
