@@ -370,7 +370,7 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
         var mm: ServiceResponse = response;
         if (!mm.HasError) {
             this.BatchId= mm.Result;
-           
+            this.CancelButtonClicked();
         }
         else {
           if(mm.ErrorsArray){

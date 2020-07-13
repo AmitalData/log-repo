@@ -128,7 +128,7 @@ namespace CommunicationWorkerRole
                                 string ShipmentId = response.MessageValues["ShipmentId"].ToString();
                                 int.TryParse(response.MessageValues["Tenant"], out tenant);
                                 int.TryParse(response.MessageValues["ImporterTenant"], out importerTenant);
-                                string CorrelationId = response.MessageValues["CorrelationId"].ToString();
+                                string CorrelationId = response.MessageId;
                                 string CustomerId = response.MessageValues["CustomerId"].ToString();
                                 string CustomerChanged = response.MessageValues.ContainsKey("CustomerChanged") ? response.MessageValues["CustomerChanged"].ToString() : "false";
                                 webFreightContext = WebFreightContext.GetContext(tenant);

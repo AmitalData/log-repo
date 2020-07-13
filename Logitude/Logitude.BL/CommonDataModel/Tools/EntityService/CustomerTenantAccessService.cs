@@ -146,7 +146,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
             //IQueueService queueservice = new DbQueueService();
             //queueservice.InitializeQueue("CustomerTenantAccessQueue", 0);
-            //queueservice.Send(new Dictionary<string, string>() { { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+            //queueservice.Send(new Dictionary<string, string>() { { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() } });
             SetChangeSet(entityPM.CustomerTenantAccessCards);
             this.CustomerTenantAccessCardsCollection();
 
@@ -250,7 +250,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     //IQueueService queueservice = new DbQueueService();
                     queueservice.InitializeQueue("CustomerTenantAccessQueue", 0);
-                    queueservice.Send(new Dictionary<string, string>() { { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
+                    queueservice.Send(new Dictionary<string, string>() { { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
 
                 }
 
@@ -273,7 +273,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     customerTenantAccessCardsBatchService.Create();
 
                     //queueservice.InitializeQueue("ImporterShipmentsQueueBuilderQueue", 0);
-                    //queueservice.Send(new Dictionary<string, string>() { { "CustomerId", CustomerTenantAccessCardsBatchPM.CustomerId.ToString() }, { "CustomerTenantAccessId", CustomerTenantAccessCardsBatchPM.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", CustomerTenantAccessCardsBatchPM.BatchNumber }, { "CorrelationId", Guid.NewGuid().ToString() } });
+                    //queueservice.Send(new Dictionary<string, string>() { { "CustomerId", CustomerTenantAccessCardsBatchPM.CustomerId.ToString() }, { "CustomerTenantAccessId", CustomerTenantAccessCardsBatchPM.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", CustomerTenantAccessCardsBatchPM.BatchNumber } });
 
                 }
             }
@@ -364,7 +364,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             //    customerTenantAccessCardsBatchService.Create();
             //    IQueueService queueservice = new DbQueueService();
             //    queueservice.InitializeQueue("ImporterShipmentsQueueBuilderQueue", 0);
-            //    queueservice.Send(new Dictionary<string, string>() { { "CustomerId", CustomerTenantAccessCardsBatchPM.CustomerId.ToString() }, { "CustomerTenantAccessId", CustomerTenantAccessCardsBatchPM.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", CustomerTenantAccessCardsBatchPM.BatchNumber }, { "CorrelationId", Guid.NewGuid().ToString() } });
+            //    queueservice.Send(new Dictionary<string, string>() { { "CustomerId", CustomerTenantAccessCardsBatchPM.CustomerId.ToString() }, { "CustomerTenantAccessId", CustomerTenantAccessCardsBatchPM.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", CustomerTenantAccessCardsBatchPM.BatchNumber } });
 
             //}
 
