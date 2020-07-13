@@ -297,7 +297,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 };
                 storageservice.Write(ByteData, fileInfo);
 
-                System.IO.File.WriteAllBytes("C:\\Log\\"+ Guid.NewGuid() + ".xls", ByteData);
             }
 
             
