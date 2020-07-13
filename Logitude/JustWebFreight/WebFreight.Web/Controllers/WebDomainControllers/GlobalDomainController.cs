@@ -369,9 +369,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             var FaildDataTable = new DataTable();
             var WaitingDataTable = new DataTable();
 
-
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if(dbms == "oracle")
+            if (dbms == "oracle")
             {
                 using (OracleConnection DBConnection = new OracleConnection(connectionString))
                 {
