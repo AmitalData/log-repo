@@ -57,7 +57,7 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                 FieldsDBName = "Id,Tenant,ShipmentNumber,SearchFields,CreateDateTime,CustomerReference1,CustomerReference2,AutomaticLastUpdateDate",
                 KeyName = "Id",
                 ConditionKey= "ShipmentId",
-                CT_FieldsDBName = "Id,Tenant,ShipmentId,SearchFields,ShipmentDate",
+                CT_FieldsDBName = "Tenant,ShipmentId,SearchFields,ShipmentDate",
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipmentSearches"
             });
@@ -92,7 +92,11 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                         {
                             DataColumn column = GetCoulmnFromDataRow(drow);
                             listCols.Add(column);
-                            dataTable.Columns.Add(column);
+                            if (column.ColumnName!="IDE")
+                            {
+                                dataTable.Columns.Add(column);
+
+                            }
                         }
                     }
 
@@ -217,7 +221,7 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                     destinationConnection.Open();
 
                     using (SqlBulkCopy bulkCopy =
-                               new SqlBulkCopy(destinationConnection))
+                               new SqlBulkCopy(buildCargoArgs.DestinationConnectionString, SqlBulkCopyOptions.KeepIdentity))
                     {
                         bulkCopy.DestinationTableName =
                             "dbo." + table.CT_TableName;
@@ -329,7 +333,7 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
             {
                 if (!CompareDB.Contains(DB_columns))
                 {
-                    CargoTrackingCustomMappingService.MappingDB_CTDB(dt, sbc, DB_columns);
+                    CargoTrackingCustomMappingService.MappingDB_CTDB(dt, sbc, DB_columns, Table.CT_TableName);
                 }
             }
 
