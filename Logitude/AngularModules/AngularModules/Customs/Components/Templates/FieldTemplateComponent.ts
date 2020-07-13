@@ -98,16 +98,12 @@ export class FieldTemplateComponent {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
-  /*  get LastStatusNameText() {
-        if (AppTool.IsNullOrEmpty(this._CourierWorksheet.CourierPendingReasonList)) {
+    get LastStatusNameText() {
+        if (AppTool.IsNullOrEmpty(this.Entity.LastStatusName)) {
             return "";
         }
-        if (this._CourierWorksheet.CourierPendingReasonList.indexOf(',') < 0) {
-            return this._CourierWorksheet.CourierPendingReasonName;
-        }
-        return "הצג רשימה";
-
-    }*/
+        return this.Entity.LastStatusName;
+    }
     OpenCourierMaster() {
         //static entityResourceService: EntityResourceService = new EntityResourceService();
 

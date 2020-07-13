@@ -17,9 +17,9 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
     {
         public Fake_2754_MSG10004_ImportDeclarationResponse(GenericRequestParams requestParams) : base(requestParams) { }
       
-        public ResponseHeader CallWS( out DF_NG_2754_MSG10004_ImportDeclarationResponse response)
+        public ResponseHeader CallWS(GenericRequestParams requestParams,out DF_NG_2754_MSG10004_ImportDeclarationResponse response)
         {
-            UpdateDeclaration();
+            UpdateDeclaration(requestParams);
             UpdateStatus("13");
             response = fakeRespond;
             UpdateFakeResponseContentHeader();

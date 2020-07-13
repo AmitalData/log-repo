@@ -4014,6 +4014,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
     
 			   Feature ClaimFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDCLAIM", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Claim.Features.SendClaim", NameTextCodeDefaultText = "Send Claim", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ClaimObjectTable);
 
+      
+    
+			   Feature ClaimFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLAIMACTIONS", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Claim.Features.Actions", NameTextCodeDefaultText = "Actions", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ClaimObjectTable);
+
 			   Feature ClaimFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSECLAIM", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Claim.Features.CloseClaim", NameTextCodeDefaultText = "Close Claim", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ClaimObjectTable);
              			   Feature ClaimFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CANCELCLOSECLAIM", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Claim.Features.CancelCloseClaim", NameTextCodeDefaultText = "Cancel Close Claim", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ClaimObjectTable);
               
@@ -4059,10 +4063,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = ClaimMenuButtonGroup.Id,
 						ObjectTableId = ClaimObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = null,
+						FeatureId = ClaimFeature_MB1.Id,
 						Style = null,
 						LocalDefaultText = "פעולות",
-						FeatureUniqeCode = null,
+						FeatureUniqeCode = ClaimFeature_MB1.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);

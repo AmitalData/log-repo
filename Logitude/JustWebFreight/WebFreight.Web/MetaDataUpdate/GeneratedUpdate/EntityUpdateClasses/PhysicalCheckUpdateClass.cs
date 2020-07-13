@@ -3226,7 +3226,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable PhysicalCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PhysicalCheck" && d.Tenant == 0).FirstOrDefault(); 			   Feature PhysicalCheckFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEPHYSICALCHECK", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.ClosePhysicalCheck", NameTextCodeDefaultText = "Close Check", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable);
+		   ObjectTable PhysicalCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PhysicalCheck" && d.Tenant == 0).FirstOrDefault();       
+    
+			   Feature PhysicalCheckFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PHYSICALCHECKACTIONS", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.Actions", NameTextCodeDefaultText = "Actions", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable);
+
+			   Feature PhysicalCheckFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEPHYSICALCHECK", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.ClosePhysicalCheck", NameTextCodeDefaultText = "Close Check", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -3250,10 +3254,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = PhysicalCheckMenuButtonGroup.Id,
 						ObjectTableId = PhysicalCheckObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = null,
+						FeatureId = PhysicalCheckFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = "פעולות",
-						FeatureUniqeCode = null,
+						FeatureUniqeCode = PhysicalCheckFeature_MB0.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);

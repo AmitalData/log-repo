@@ -880,9 +880,9 @@ private void WriteAddMenuButtonsFeaturesMethod(XElement MButtonAtt,string TblNam
 
       
 	string feaureItemName =TblName.Trim('"')+"Feature_MB"+index.ToString();
-	if(!AddedMenuButtonsFeatures.Keys.Contains(EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')) && MenuButtonTypeAtt.Trim('"') != "dropdownbutton")
+	if(!AddedMenuButtonsFeatures.Keys.Contains(EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')) && MenuButtonTypeAtt.Trim('"') != "dropdownbutton" || !string.IsNullOrEmpty(FeatureCode))
 		{AddedMenuButtonsFeatures.Add(EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"') ,feaureItemName);}
-        if(MenuButtonTypeAtt.Trim('"') != "dropdownbutton"){
+        if(MenuButtonTypeAtt.Trim('"') != "dropdownbutton" || !string.IsNullOrEmpty(FeatureCode)){
 #>      
     
 			   Feature <#= feaureItemName #> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = <#= FeatureCode #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= TextCodeCode #>", NameTextCodeDefaultText = "<#= DefaultText #>", FeatureTypeCode = "ACT", Packagable = <#= Packagable.ToLower() #> }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,<#= TblName.Trim('"') #>ObjectTable);
@@ -982,7 +982,7 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 	    string featureClassName = "null";
 		string featureCodeClassName = "null";
         
-        if (MenuButtonType.Trim('"') != "dropdownbutton")
+        if (MenuButtonType.Trim('"') != "dropdownbutton" || !string.IsNullOrEmpty(FeatureCode))
         {
                         featureClassName = AddedMenuButtonsFeatures[EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')] + ".Id";
                         featureCodeClassName = AddedMenuButtonsFeatures[EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')] + ".FeatureUniqeCode";

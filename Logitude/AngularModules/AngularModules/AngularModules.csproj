@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <SSDTUnitTestPath Condition="'$(SSDTUnitTestPath)' == ''">$(VsInstallRoot)\Common7\IDE\Extensions\Microsoft\SQLDB</SSDTUnitTestPath>
@@ -301,7 +301,6 @@
     <Content Include="CustomsModules\CustomsMaintenance\Components\DocumentTypeCustomsDataComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\GeneralLOVComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\InterfaceManagementComponent.html" />
-    <Content Include="CustomsModules\CustomsMaintenance\Components\DeclarationRemarksComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\LoadTestComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\AddEditRequiredFieldsComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\RequiredFieldsComponent.html" />
@@ -1128,7 +1127,6 @@
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\DocumentTypeCustomsDataComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\GeneralLOVComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\InterfaceManagementComponent.ts" />
-    <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\DeclarationRemarksComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\LoadTestComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\AddEditRequiredFieldsComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\RequiredFieldsComponent.ts" />
