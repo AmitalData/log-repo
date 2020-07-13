@@ -379,102 +379,118 @@ namespace WebFreight.Web.Helpers.APIHelpers
             this.duplicateLinesCount = duplicateLinesCount + checkDuplicates.Where(a => a.Count > 1).Sum(a => a.Count);
             if (!IsConfirmationDuplicateByUser && checkDuplicates_Count > 0)
             {
-                this.batchTaskExecutionPM.StatusCode = "D";
-                this.batchTaskExecutionPM.ProgressMessage = checkDuplicates_Count + " duplicate lines were found in Excel. Do you want to continue?";
+                this.SendDuplicateMessage(checkDuplicates_Count);
             }
+
             else
             {
-                statesDictionary = stateRepository.GetStates(tenant).ToDictionary(d => d.Id, o => o);
-                countriesDictionary = countryRepository.GetCountries(tenant).ToDictionary(d => d.Id, o => o);
-                var currentItem = 0;
-                foreach (var item in PartnerExcelList)
+                var excelIds = PartnerExcelList.Select(a => a.UniqueCode).ToList();
+                int intersectionBetweenExcelAndDB = this.partnersUniqueKeys.Intersect(excelIds).ToList().Count();
+
+                if (!IsConfirmationDuplicateByUser && intersectionBetweenExcelAndDB > 0)
                 {
-                    currentItem = currentItem + 1;
-                    var checkIfCardExist = this.partnersUniqueKeys.Where(a => a == item.UniqueCode).FirstOrDefault();
-                    if (checkIfCardExist == null)
-                    {
-                        switch (item.Type)
-                        {
-                            case "AG":
-                                {
-                                    this.CreateAgentPartner(item);
-                                    break;
-                                }
-
-                            case "CS":
-                            case "PO":
-                                {
-                                    this.CreateCustomerPartner(item);
-                                    break;
-                                }
-
-                            case "CG":
-                                {
-                                    this.CreateCustomAgentPartner(item);
-                                    break;
-                                }
-
-                            case "SG":
-                                {
-                                    this.CreateShippingAgentPartner(item);
-                                    break;
-                                }
-
-                            case "VD":
-                                {
-                                    this.CreateVendorPartner(item);
-                                    break;
-                                }
-
-                            case "WH":
-                                {
-                                    this.CreateWarehousePartner(item);
-                                    break;
-                                }
-
-                            case "AL":
-                                {
-                                    this.CreateAirlinePartner(item);
-                                    break;
-                                }
-
-                            case "SL":
-                                {
-                                    this.CreateShippingLinePartner(item);
-                                    break;
-                                }
-
-                            case "TR":
-                                {
-                                    this.CreateTruckerPartner(item);
-                                    break;
-                                }
-
-                            case "CO":
-                                {
-                                    this.CreateContactPartner(item);
-                                    break;
-                                }
-                            case "AC"://Accounting Partner
-                                {
-                                    this.CreateAccountingPartnerPartner(item);
-                                    break;
-                                }
-                        }
-                        this.partnersUniqueKeys.Add(item.UniqueCode);
-                    }
-                    else
-                    {
-                        this.duplicateLinesCount = duplicateLinesCount + 1;
-                    }
-
-                    this.UpdateProcessPercentage(PartnerExcelList.Count(), currentItem);
+                    this.SendDuplicateMessage(intersectionBetweenExcelAndDB);
                 }
+                else
+                {
+                    statesDictionary = stateRepository.GetStates(tenant).ToDictionary(d => d.Id, o => o);
+                    countriesDictionary = countryRepository.GetCountries(tenant).ToDictionary(d => d.Id, o => o);
+                    var currentItem = 0;
+                    foreach (var item in PartnerExcelList)
+                    {
+                        currentItem = currentItem + 1;
+                        var checkIfCardExist = this.partnersUniqueKeys.Where(a => a == item.UniqueCode).FirstOrDefault();
+                        if (checkIfCardExist == null)
+                        {
+                            switch (item.Type)
+                            {
+                                case "AG":
+                                    {
+                                        this.CreateAgentPartner(item);
+                                        break;
+                                    }
 
-                this.batchTaskExecutionPM.StatusCode = "D";
-                this.batchTaskExecutionPM.ProgressMessage = "Successfully Uploaded " + (PartnerExcelList.Count() - duplicateLinesCount) + " out of " + PartnerExcelList.Count() + " Partners. " +
-                                                           duplicateLinesCount + " duplicate lines were found.";
+                                case "CS":
+                                case "PO":
+                                    {
+                                        this.CreateCustomerPartner(item);
+                                        break;
+                                    }
+
+                                case "CG":
+                                    {
+                                        this.CreateCustomAgentPartner(item);
+                                        break;
+                                    }
+
+                                case "SG":
+                                    {
+                                        this.CreateShippingAgentPartner(item);
+                                        break;
+                                    }
+
+                                case "VD":
+                                    {
+                                        this.CreateVendorPartner(item);
+                                        break;
+                                    }
+
+                                case "WH":
+                                    {
+                                        this.CreateWarehousePartner(item);
+                                        break;
+                                    }
+
+                                case "AL":
+                                    {
+                                        this.CreateAirlinePartner(item);
+                                        break;
+                                    }
+
+                                case "SL":
+                                    {
+                                        this.CreateShippingLinePartner(item);
+                                        break;
+                                    }
+
+                                case "TR":
+                                    {
+                                        this.CreateTruckerPartner(item);
+                                        break;
+                                    }
+
+                                case "CO":
+                                    {
+                                        this.CreateContactPartner(item);
+                                        break;
+                                    }
+                                case "AC"://Accounting Partner
+                                    {
+                                        this.CreateAccountingPartnerPartner(item);
+                                        break;
+                                    }
+                            }
+                            this.partnersUniqueKeys.Add(item.UniqueCode);
+                        }
+                        else
+                        {
+                            this.duplicateLinesCount = duplicateLinesCount + 1;
+                        }
+
+                        this.UpdateProcessPercentage(PartnerExcelList.Count(), currentItem);
+                    }
+
+                    this.batchTaskExecutionPM.StatusCode = "D";
+                    this.batchTaskExecutionPM.ProgressMessage = "Successfully Uploaded " + (PartnerExcelList.Count() - duplicateLinesCount) + " out of " + PartnerExcelList.Count() + " Partners. " +
+                                                               duplicateLinesCount + " duplicate lines were found.";
+                }
             }
+        }
+
+        private void SendDuplicateMessage(int checkDuplicates_Count)
+        {
+            this.batchTaskExecutionPM.StatusCode = "D";
+            this.batchTaskExecutionPM.ProgressMessage = checkDuplicates_Count + " duplicate lines were found in Excel. Do you want to continue?";
         }
 
         private void UpdateProcessPercentage(decimal maximum, decimal current)
