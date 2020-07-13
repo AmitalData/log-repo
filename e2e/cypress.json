@@ -27,8 +27,13 @@
 
     "LocalURL": "http://localhost:4200/",
     "LocalEmail": "angular@fnarsoft.com",
-    "LocalPassword": "1"
+    "LocalPassword": "1",
 
+
+  "FATestEmail": "sg1209@test.com",
+    "FATestPassword": "!Sg13579",
+    "FACloudEmail": "sumaya@cloud.com",
+    "FACloudPassword": "Sg0592463934!"
 
   },
 

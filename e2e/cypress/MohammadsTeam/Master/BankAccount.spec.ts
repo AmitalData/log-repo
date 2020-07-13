@@ -4,7 +4,12 @@
 import { Login } from './Login';
 import { CreateRandom } from './CreateRandom';
 import { BankAccount } from './BankAccount';
+import { LoginComp } from "../../login/Login.po";
 
+export class BankSpec {
+
+    private login: LoginComp = new LoginComp();
+  }
 describe('New Bank Account ', () => {
 
     let B: BankAccount = new BankAccount();
@@ -15,7 +20,7 @@ describe('New Bank Account ', () => {
     it('New Bank Account Created Successfully', function () {
 
         var str = R.createrandomnum();
-        l.dologin();
+      
         cy.get('li[id=GeneralMHMaintenance]').click()
 
         cy.get('li[id=PAR]')
