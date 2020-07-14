@@ -469,6 +469,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.UIProperties.SetEnabled("SaleCurrencyId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ExchangeRate", this.ObjectTableName, isExchangeRateEnabled);
         this.UIProperties.SetEnabled("IsFixedPrice", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("TotalPerContainer", this.ObjectTableName, this.IsEditingEnabled);
     }
 
     public IsCostQuantityVisible: boolean = false;
