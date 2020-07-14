@@ -72,7 +72,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.AllInMatchText = TextCodeTranslator.Translate("Quote.M.UnableToDoAllIn") + "\n" + TextCodeTranslator.Translate("Quote.M.IfMatchesFrieghtCharge");
         this.HideFCLAllIn = SessionLocator.TenantPM.HideFCLAllIn;
 
-       if( !FeatureLocator.HasFeaturePermession("Quote", "TOTALPERCONTAINER")) {
+       if( FeatureLocator.HasFeaturePermession("Quote", "TOTALPERCONTAINER")) {
             this.IsShowTotalPerContainer = true;
         }
 
