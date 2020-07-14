@@ -137,7 +137,7 @@
                     </td>
                     <td>
                         <div *ngIf="!readonly">
-                            <custom-send-options #MyCustomSendOptionsComponent
+                            <custom-send-options #MyCustomSendOptionsComponent   [HaveTestCase]="'true'"
                                                  (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"
                                                  [CustomSendOptionsButtonCanForcePersonalSign]="'true'"></custom-send-options>
                             

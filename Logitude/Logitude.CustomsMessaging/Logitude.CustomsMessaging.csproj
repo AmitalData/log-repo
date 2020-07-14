@@ -145,6 +145,8 @@
     <Compile Include="FakeMessagingServices\DCASincroService.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponse.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
+    <Compile Include="FakeMessagingServices\Fake_SaveDF_MSG5002_DeclarationCancellationRequestMsg.cs" />
     <Compile Include="FakeMessagingServices\Fake_DF_NG_2892_MSG14000_ImportDeclarationResponseService.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_SumbitPayment.cs" />
     <Compile Include="FakeMessagingServices\Fake_5117_MSG14003_AmendmentReplyMsg.cs" />
@@ -161,6 +163,7 @@
     <Compile Include="FakeMessagingServices\Fake_DCA_NG_5110_DepositRequestFulfillednfoMsgMessagingService.cs" />
     <Compile Include="FakeMessagingServices\Courier\FAKE_CourierMasterDeclarations.cs" />
     <Compile Include="Helpers\ClosedTable\Update1308CustomsShip.cs" />
+    <Compile Include="MessagingServices\DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
     <Compile Include="MessagingServices\DCAInUCSBondedDocument_MessagingService.cs" />
     <Compile Include="MessagingServices\DCAInDE_NG_5108_DecisionMessageMessagingService.cs" />
     <Compile Include="Dca\DCAMoveIncomeFileToDirService.cs" />
@@ -324,6 +327,9 @@
     <Compile Include="ResponseServices\CL_MSG100_AddClientResponseService.cs" />
     <Compile Include="ResponseServices\CL_NG_8344_ClientSearchByIDResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportDeclarationResponseService.cs" />
+
+    <Compile Include="ResponseServices\DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsgResponseService.cs" />
+    <Compile Include="ResponseServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCustomBatchSend2715Bonded_MsgResponseService.cs" />
     <Compile Include="ResponseServices\DeclarationErrorPointer\DeclarationCorrectionsPointerService.cs" />
     <Compile Include="ResponseServices\DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestResponseService.cs" />
