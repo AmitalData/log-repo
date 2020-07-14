@@ -1857,9 +1857,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 INF_MSG_GenericResponseData responseData = null;
 
                 // use messageing service
- 
-                var service = new SaveDF_MSG5002_DeclarationCancellationRequestMsgService();
-                responseData = service.Send(requestParamsData); 
+                //var service = new SE_6001_SealUpdateMessagingService();
+               // responseData = service.Send(requestParamsData);
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);
             }
 

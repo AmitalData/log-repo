@@ -274,11 +274,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new DCAInDF_NG_5117_ImportDeclerationAmendmentReplyMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-              DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg>
-              ((new DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg()).MainInterfaceCode);
-
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 TPG_8304_DeficitFileFilterParamMessagingService>
                 ((new TPG_8304_DeficitFileFilterParamMessagingService()).MainInterfaceCode);
 
