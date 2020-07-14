@@ -1,4 +1,5 @@
-﻿using Logitude.CustomsMessaging.Common.RequestParams;
+﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.CustomsMessaging.Common.RequestParams;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -14,249 +15,99 @@ using Exception = UnifreightIIG.Common.MessageLib.ID.Exception;
 
 namespace Logitude.CustomsMessaging.FakeMessagingServices
 {
-   public class Fake_DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg : Fake_ImportDeclaration_Response
+   public class Fake_DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg 
     {
         //Declaration dec;
         //ResponseContentHeader _header;
 
-        public Fake_DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg(GenericRequestParams requestParams) : base(requestParams) { }
+        public Fake_DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg(GenericRequestParams requestParams)
+            
+            {
 
-        public DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg GetFakeCustomsResponse(GenericRequestParams requestParamsData)
+        }
+
+        public DF_NG_5118_MSG14004_DeclarationCancellationReplyMsg GetFakeCustomsResponse(GenericRequestParams requestParamsData)
         {
 
             
-//             dynamic data = JObject.Parse(requestParamsData.TestCase.Param1);
+             dynamic data = JObject.Parse(requestParamsData.TestCase.Param1);
 
-//             string requestNumber = data.RequestNumber;
-
-//            _header = new ResponseContentHeader();
-//            DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg response = new DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg();
-//            UpdateDeclaration();
-//            AddResponseHeader();
-//            dec = new Declaration();
-
-           
-
-//              CastObject(fakeRespond.Response.Declaration, dec);
-//            response.Response = new Response
-//            {
-//                Declaration = dec
-           
-//            };
-
-//             response.ResponseContentHeader = new ResponseContentHeader();
-//            AddResponseContentHeader();
-//            response.ResponseContentHeader = _header;
-//            List<ResponseAdditionalInformation> AdditionalInformation = new List< ResponseAdditionalInformation>();
-
-//            if (!string.IsNullOrEmpty(data.Content29.ToString()))
-//            {
-//                AdditionalInformation.Add(new ResponseAdditionalInformation
-//                {
-//                    StatementTypeCode = new AdditionalInformationStatementTypeCodeType()
-//                    {
-//                        Value = "29"
-//                    },
-//                    Content = new AdditionalInformationContentTextType() { Value = data.Content29 }
-//                }
-//            );
-//}
-
-//            if (!string.IsNullOrEmpty(data.Content27.ToString()))
-//            {
-//                AdditionalInformation.Add(new ResponseAdditionalInformation
-//                {
-//                    StatementTypeCode = new AdditionalInformationStatementTypeCodeType()
-//                    {
-//                        Value = "27"
-//                    },
-//                    Content = new AdditionalInformationContentTextType() { Value = data.Content27 }
-//                });
-//            }
-
-//            if (!string.IsNullOrEmpty(data.Content32.ToString()))
-//            {
-//                AdditionalInformation.Add(new ResponseAdditionalInformation
-//                {
-//                    StatementTypeCode = new AdditionalInformationStatementTypeCodeType()
-//                    {
-//                        Value = "32"
-//                    },
-//                    Content = new AdditionalInformationContentTextType() { Value = data.Content32 }
-//                });
-                
-//            }
-
-//             response.Response.AdditionalInformation = AdditionalInformation.ToArray();
-//            response.Response.FunctionCode = new ResponseFunctionCodeType() { Value = "Amendment" };
-//            response.Response.IssueDateTime = XmlConvert.ToString(DateTime.Now);
-//            //response.Response.Amendment = new ResponseAmendment[1]; // reason to change?
-//            //response.Response.Amendment[0] = new ResponseAmendment
-//            //{
-
-//            //}
-//            response.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType() { Value = requestNumber };
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParamsData.Tenant);
 
 
-//            if (data.error == "true")
-//            {
-//                response.Response.Error = new ResponseError[1];
-//                response.Response.Error[0] = new ResponseError
-//                {
-//                    ValidationCode = new ErrorValidationCodeType { name = "test error", listVersionID = "4", Value = "2584" },
-//                    Pointer = new ResponseErrorPointer[1]
-//                    { new ResponseErrorPointer {
-//                    DocumentSectionCode = new PointerDocumentSectionCodeType { Value = "42A" },
-//                  SequenceNumeric = 0}
-
-//                    }
+          var dec=   declarationQueryService.GetSingleDeclarationById(requestParamsData.LoggingEntityId, requestParamsData.Tenant);
 
 
-//                };
-
-//            }
-
-
-//            if (data.constrain == "true")
-//            {
-
-//                AddConstraints();
-//                response.Response.Error = CastError(fakeRespond.Response.Error);
-//            }
-
-
-//            if(data.amendmentDocumentDetails=="true")
-//            {
-//                response.AmendmentDocumentDetails = new UnifreightIIG.Common.MessageLib.ID.AmendmentDocumentDetails[1]
-//                {
-//                    new UnifreightIIG.Common.MessageLib.ID.AmendmentDocumentDetails()
-//                    {
-//                        RequiredDocumentDetails= new UnifreightIIG.Common.MessageLib.ID.RequiredDocumentDetails()
-//                        {
-//                            documentID = 646626900,
-//                            requiredDocumentMessageType=  1 ,
-//                            typeID="IL_81" ,
-//                            remarks="test נא לצרף קטלוג"
-
-//                        },
-//                        ConnectedEntity = new UnifreightIIG.Common.MessageLib.ID.ConnectedEntity[]
-//                        {
-//                            new UnifreightIIG.Common.MessageLib.ID.ConnectedEntity()
-//                            {
-//                                entityIdKey1=dec.ID.Value.ToString(),
-//                                entityType=11157,
-
-//                            }
-//                        }
-
-//                    }
-//                };
-//            }
-//            response.Response.Status = new ResponseStatus() { EffectiveDateTime = DateTime.Now.ToString() };
-//            response.Response.Status.NameCode = new StatusNameCodeType() { Value = data.status };
+            string requestNumber = data.RequestNumber;
+            DF_NG_5118_MSG14004_DeclarationCancellationReplyMsg response = new DF_NG_5118_MSG14004_DeclarationCancellationReplyMsg();
 
 
 
- 
+            response.CancellationResponse = new DF_NG_5118_MSG14004_DeclarationCancellationReplyMsgCancellationResponse()
+            {
+                DeclarationID = dec.DeclarationNumber,
+                DeclarationStatusID = data.DeclarationStatusID,
+                FunctionalReferenceID = Convert.ToInt32(requestNumber),
+                FunctionalReferenceIDSpecified = true,
+
+            };
+
+            List<DF_NG_5118_MSG14004_DeclarationCancellationReplyMsgAdditionalInformation> AdditionalInformation = new List<DF_NG_5118_MSG14004_DeclarationCancellationReplyMsgAdditionalInformation>();
+
+            if (!string.IsNullOrEmpty(data.Content33.ToString()))
+            {
+                AdditionalInformation.Add(new DF_NG_5118_MSG14004_DeclarationCancellationReplyMsgAdditionalInformation
+                {
+                    StatementTypeCode = 33,
+                    Content = data.Content33
+                }
+            );
+            }
+                if (!string.IsNullOrEmpty(data.Content22.ToString()))
+                {
+                    AdditionalInformation.Add(new DF_NG_5118_MSG14004_DeclarationCancellationReplyMsgAdditionalInformation
+                    {
+                        StatementTypeCode = 22,
+                        Content = data.Content22
+                    }
+                );
+
+                }
+                    if (!string.IsNullOrEmpty(data.Content36.ToString()))
+                    {
+                        AdditionalInformation.Add(new DF_NG_5118_MSG14004_DeclarationCancellationReplyMsgAdditionalInformation
+                        {
+                            StatementTypeCode = 36,
+                            Content = data.Content36
+                        }
+                    );
+                    }
+                        if (!string.IsNullOrEmpty(data.Content37.ToString()))
+                        {
+                            AdditionalInformation.Add(new DF_NG_5118_MSG14004_DeclarationCancellationReplyMsgAdditionalInformation
+                            {
+                                StatementTypeCode = 37,
+                                Content = data.Content37
+                            }
+                        );
+
+                        }
+
+            response.AdditionalInformation = AdditionalInformation.ToArray();
+            response.AmendmentDocumentDetails = null;
+            response.ProceduralFaultMsg = null;
+            response.ResponseContentHeader = new ResponseContentHeader()
+            {
+                ApplicationID = 0,
+                Exception = null,
+                Remark = "",
+                TransmitionDateTime = DateTime.Now
+        };
+
 
             return null;
-        }
+                        }
 
 
-    
-
-        public UnifreightIIG.Common.MessageLib.ID.ResponseError[] CastError(UnifreightIIG.Common.ImportDeclarationServiceReference.ResponseError[] responseError)
-        {
-
-
-            string ErrorString;
-            using (var stringwriter = new System.IO.StringWriter())
-            {
-                var serializer = new XmlSerializer(responseError.GetType());
-                serializer.Serialize(stringwriter, responseError);
-                ErrorString = stringwriter.ToString();
-            }
-
-
-
-            using (var stringReader = new System.IO.StringReader(ErrorString))
-            {
-                var serializer = new XmlSerializer(typeof(UnifreightIIG.Common.MessageLib.ID.ResponseError[]));
-                return serializer.Deserialize(stringReader) as UnifreightIIG.Common.MessageLib.ID.ResponseError[];
-            }
-        }
-
-
-
-        public void CastObject(object originObject , object targetObject)
-        {
-
-
-            string DeclarationString;
-            using (var stringwriter = new System.IO.StringWriter())
-            {
-                var serializer = new XmlSerializer(fakeRespond.Response.Declaration.GetType());
-                serializer.Serialize(stringwriter, fakeRespond.Response.Declaration);
-                DeclarationString = stringwriter.ToString();
-            }
-
-
-
-            //using (var stringReader = new System.IO.StringReader(DeclarationString))
-            //{
-            //    var serializer = new XmlSerializer(dec.GetType());
-            //    dec = serializer.Deserialize(stringReader) as UnifreightIIG.Common.MessageLib.ID.Declaration;
-            //}
-
-            //Type objectType = originObject.GetType();
-            //Type target = targetObject.GetType();
-            //var x = Activator.CreateInstance(target, false);
-            //var z = from source in objectType.GetMembers().ToList()
-            //        where source.MemberType == MemberTypes.Property
-            //        select source;
-            //var d = from source in target.GetMembers().ToList()
-            //        where source.MemberType == MemberTypes.Property
-            //        select source;
-            //List<MemberInfo> members = d.Where(memberInfo => d.Select(c => c.Name)
-            //   .ToList().Contains(memberInfo.Name)).ToList();
-            //PropertyInfo propertyInfo;
-            //object value;
-            //foreach (var memberInfo in members)
-            //{
-            //    propertyInfo = targetObject.GetType().GetProperty(memberInfo.Name);
-            //    if (propertyInfo.PropertyType.Name == "String")
-            //    {
-            //        value = originObject.GetType().GetProperty(memberInfo.Name).GetValue(originObject, null);
-
-            //        propertyInfo.SetValue(x, value, null);
-            //    }
-
-            //    else
-            //    {
-            //        value = originObject.GetType().GetProperty(memberInfo.Name).GetValue(originObject, null);
-            //        var test = Activator.CreateInstance(originObject.GetType().GetProperty(memberInfo.Name).GetType());
-            //        CastObject(value,test);
-            //    }
-            //}
-        }
-
-
-        public void AddResponseContentHeader()
-        {
-            //Exception[] exception = new Exception[1];
-            //exception[0] = new Exception // שגיאות
-            //{
-            //    ExeptionDescription = "testing"
-            //};
-            //_header = new ResponseContentHeader()
-            //{
-
-            //    TransmitionDateTime = DateTime.Now,
-            //    Remark = "",
-            //    Exception = null,
-            //};
-        }
-
-
-    }
+                    }
 }
