@@ -680,6 +680,11 @@ export class TenantPM {
     public set ShowTaxAmountWarning(newValue: boolean) { if (this.showTaxAmountWarning != newValue) { this.showTaxAmountWarning = newValue; this.MarkAsDirty("ShowTaxAmountWarning"); } }
        
 	 
+    private vatUniquePartnerTypeCode: string;
+    public get VatUniquePartnerTypeCode() { return this.vatUniquePartnerTypeCode; }
+    public set VatUniquePartnerTypeCode(newValue: string) { if (this.vatUniquePartnerTypeCode != newValue) { this.vatUniquePartnerTypeCode = newValue; this.MarkAsDirty("VatUniquePartnerTypeCode"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

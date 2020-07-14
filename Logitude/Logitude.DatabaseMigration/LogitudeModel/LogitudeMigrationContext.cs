@@ -265,14 +265,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
-
         public IDbSet<CarrierArea> CarrierAreas
         {
             get;
             set;
         }
-
-
         public IDbSet<CarrierAreasPort> CarrierAreasPorts
         {
             get;
@@ -428,7 +425,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
-
         public IDbSet<NumberFormat> NumberFormats
         {
             get;
@@ -967,7 +963,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
         public IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
         public IDbSet<UserLastSettings> UserLastSettings { get; set; }
-
+        public IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get; set; }
 
 
         #endregion
@@ -5116,7 +5112,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SchedulerProcedureMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
             modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
-
+            modelBuilder.Configurations.Add(new VatUniquePartnerTypeMap());
 
             #region Missing Maps For DBMigrations
             modelBuilder.Configurations.Add(new TenantAdditionalDataMap());

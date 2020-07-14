@@ -597,11 +597,11 @@ export class PartnersDomainService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetIsVATUniqueForCustomer(vatNumber: string, customerId: string, countryId: string) {
+    GetIsVATUniqueForCustomer(vatNumber: string, customerId: string, countryId: string, partnerTypeId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetIsVATUniqueForCustomer?vatNumber=' + vatNumber + '&customerId=' + customerId + '&countryId=' + countryId;
+        var url = this._apiUrl + '/GetIsVATUniqueForCustomer?vatNumber=' + vatNumber + '&customerId=' + customerId + '&countryId=' + partnerTypeId + '&partnerTypeId=' + countryId;
 
         return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
