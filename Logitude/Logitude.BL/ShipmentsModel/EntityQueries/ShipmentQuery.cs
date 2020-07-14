@@ -11151,7 +11151,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          FirstPickupETD = s.FirstPickupETD,
                                                          From = s.From,
                                                          To = s.To,
-                                                         Origin = s.Origin
+                                                         Origin = s.Origin,
+                                                         LongMaster = s.TransportModeId == "A" ? (m.AirlinePrefix != null && m.Master != null ? m.AirlinePrefix + "-" + m.Master : m.Master) : m.Master,
                                                      };
 
             return shipmentsList;
