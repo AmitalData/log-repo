@@ -885,6 +885,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.SLAC).HasColumnName("SLAC");
             this.Property(t => t.ShipmentSubTypeId).HasColumnName("ShipmentSubTypeId");
             this.Property(t => t.ShipmentSubTypeName).HasColumnName("ShipmentSubTypeName");
+            this.Property(t => t.WarehouseStorageFreeDays).HasColumnName("WarehouseStorageFreeDays");
         }
     }
 }
