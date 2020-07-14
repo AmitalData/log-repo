@@ -47,6 +47,8 @@ export class DeclarationReferantDataList {
 	SortedColumns: number;
 	IsCustomerLogBoxActivated: boolean;
 	IsCancelled: boolean;
+	LastStatusName: string;
+	LastStatusDate: string;
 	
 }
  
