@@ -55,7 +55,12 @@ export class DeclarationReferantDataFiltersMenuComponent
     OnChosenListItemsChanged() {
         this.SelectedValueChangedEmitUser();
     }
-
+    //public LoadingContactFilterItems: ApiQueryFilters;
+    //InitLOVFilters() {//38388
+   //     this.LoadingContactFilterItems.removeAdditionalFilter("InActive");
+ //       this.LoadingContactFilterItems.addAdditionalFilter("InActive","True", null, null, "Equals", false, false, false, "Boolean", false, true);
+     //   ("ReferentUserId", UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
+  //  }
     ngAfterViewInit() {
         this.ApplyTransportSelectedStyle();
         //
