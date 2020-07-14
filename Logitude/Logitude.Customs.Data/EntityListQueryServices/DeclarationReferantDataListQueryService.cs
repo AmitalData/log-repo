@@ -84,10 +84,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  IsCancelled = d.IsCancelled,
                                                                  ClassifiedUserName = a.ClassifiedUser.Contact.LocalName,
                                                                  CollectorUserName = a.CollectorUser.Contact.LocalName,
-                                                                 ControllerUserName= a.ControllerUser.Contact.LocalName,
+                                                                 ControllerUserName= a.ControllerUser.Contact.LocalName, 
+                                                                 LastStatusDate = a.LastStatusDate,
+                                                                 LastStatusName = a.LastStatusName,
                                                               
                                                              }) ;
-            return query;
+                                                                            return query;
         }
 
         private IQueryable<DeclarationReferantData> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<DeclarationReferantData> iQueryable, int tenant)
