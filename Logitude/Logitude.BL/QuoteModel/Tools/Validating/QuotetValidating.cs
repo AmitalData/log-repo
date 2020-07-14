@@ -301,10 +301,10 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 entityPM.TransportModeId = entityPM.TransportModeId.ToUpper();
             }
 
-            if (entityPM.ShipmentTypeId != null)
-            {
-                entityPM.ShipmentTypeId = entityPM.ShipmentTypeId.ToUpper();
-            }
+            //if (entityPM.ShipmentTypeId != null)
+            //{
+            //    entityPM.ShipmentTypeId = entityPM.ShipmentTypeId.ToUpper();
+            //}
 
             if (entityPM.TransportModeId == "O" && (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "MYGO"))
             {
