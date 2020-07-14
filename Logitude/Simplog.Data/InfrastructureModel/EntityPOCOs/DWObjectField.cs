@@ -33,6 +33,9 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string HelpText { get; set; }
         public bool IsCustom { get; set; }
         public string OriginalObjectFieldCode { get; set; }
+        public string ViewFieldDisplayName { get; set; }
+        public bool DontDisplayInView { get; set; }
+        public string DimensionDataViewName { get; set; }
 
 
         [ForeignKey("DWObjectTableCode")]

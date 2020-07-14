@@ -14,5 +14,6 @@ export class DWObjectTableList {
 		TypeCode: string;
 		IsClosed: boolean;
 		DefaultFilterBy: string;
+		DataViewName: string;
 	
 }

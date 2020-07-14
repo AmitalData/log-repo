@@ -5,14 +5,6 @@
   DBType="Main"
   Module="Infrastructure">
   <Column
-    Name="Code"
-    Type="varchar"
-    Size="50">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Id"
     Type="varchar"
     Size="15">
@@ -33,6 +25,14 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="Code"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
     Name="TypeCode"
     Type="varchar"
     Size="15">
@@ -49,6 +49,14 @@
     Name="DefaultFilterBy"
     Type="varchar"
     Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DataViewName"
+    OldNames="ViewName"
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>

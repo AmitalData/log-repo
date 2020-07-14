@@ -57,6 +57,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         HelpText = a.HelpText,
                         IsCustom = a.IsCustom,
                         OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+                        ViewFieldDisplayName = a.ViewFieldDisplayName,
+                        DontDisplayInView = a.DontDisplayInView,
+                        DimensionDataViewName  = a.DimensionDataViewName,
                     }).FirstOrDefault();
 
 
@@ -101,6 +104,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         HelpText = a.HelpText,
                         IsCustom = a.IsCustom,
                         OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+                        ViewFieldDisplayName = a.ViewFieldDisplayName,
+                        DontDisplayInView = a.DontDisplayInView,
+                        DimensionDataViewName = a.DimensionDataViewName,
+
 
                     }
                   );
@@ -134,6 +141,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         HelpText = a.HelpText,
                         IsCustom = a.IsCustom,
                         OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+                        ViewFieldDisplayName = a.ViewFieldDisplayName,
+                        DontDisplayInView = a.DontDisplayInView,
+                        DimensionDataViewName = a.DimensionDataViewName,
+
 
                     }
                   ).ToList();
@@ -202,6 +213,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                 HelpText = a.HelpText,
                                 IsCustom = a.IsCustom,
                                 OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+                                ViewFieldDisplayName = a.ViewFieldDisplayName,
+                                DontDisplayInView = a.DontDisplayInView,
+                                DimensionDataViewName = a.DimensionDataViewName,
+
 
 
                             }
@@ -236,6 +251,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 OriginalObjectFieldCode = item.OriginalObjectFieldCode,
                 PartnerOriginalObjectFieldCode = parent.OriginalObjectFieldCode,
                 DisplayName = item.Name,
+                ViewFieldDisplayName = item.ViewFieldDisplayName,
+                DontDisplayInView = item.DontDisplayInView,
+                DimensionDataViewName = item.DimensionDataViewName,
+
             };
         }
 
@@ -265,6 +284,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                                                   HelpText = a.HelpText,
                                                                                                   IsCustom = a.IsCustom,
                                                                                                   OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+                                                                                                  ViewFieldDisplayName = a.ViewFieldDisplayName,
+                                                                                                  DontDisplayInView = a.DontDisplayInView,
+                                                                                                  DimensionDataViewName = a.DimensionDataViewName,
+
 
                                                                                               }
                    ).ToList().GroupBy(d => d.DWObjectTableCode);
@@ -299,6 +322,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         HelpText = a.HelpText,
                         IsCustom = a.IsCustom,
                         OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+                        ViewFieldDisplayName = a.ViewFieldDisplayName,
+                        DontDisplayInView = a.DontDisplayInView,
+                        DimensionDataViewName = a.DimensionDataViewName,
+
 
                     }).FirstOrDefault();
         }
@@ -331,6 +358,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         HelpText = a.HelpText,
                         IsCustom = a.IsCustom,
                         OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+                        ViewFieldDisplayName = a.ViewFieldDisplayName,
+                        DontDisplayInView = a.DontDisplayInView,
+                        DimensionDataViewName = a.DimensionDataViewName,
+
 
                     });
         }
@@ -361,6 +392,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        HelpText = a.HelpText,
                                                        IsCustom = a.IsCustom,
                                                        OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+                                                       ViewFieldDisplayName = a.ViewFieldDisplayName,
+                                                       DontDisplayInView = a.DontDisplayInView,
+                                                       DimensionDataViewName = a.DimensionDataViewName,
+
 
                                                    };
 
@@ -402,6 +437,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         HelpText = a.HelpText,
                         IsCustom = a.IsCustom,
                         OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+                        ViewFieldDisplayName = a.ViewFieldDisplayName,
+                        DontDisplayInView = a.DontDisplayInView,
+                        DimensionDataViewName = a.DimensionDataViewName,
+
 
                     }).FirstOrDefault();
         }
@@ -446,6 +485,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         HelpText = a.HelpText,
                         IsCustom = a.IsCustom,
                         OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+                        ViewFieldDisplayName = a.ViewFieldDisplayName,
+                        DontDisplayInView = a.DontDisplayInView,
+                        DimensionDataViewName = a.DimensionDataViewName,
+
 
                     }).FirstOrDefault();
         }
@@ -484,6 +527,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  HelpText = a.HelpText,
                                                  IsCustom = a.IsCustom,
                                                  OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+                                                 ViewFieldDisplayName = a.ViewFieldDisplayName,
+                                                 DontDisplayInView = a.DontDisplayInView,
+                                                 DimensionDataViewName = a.DimensionDataViewName,
+
                                              }
                   ).ToList();
 
