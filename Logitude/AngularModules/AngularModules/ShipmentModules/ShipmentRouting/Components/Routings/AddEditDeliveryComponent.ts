@@ -48,7 +48,6 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private entityResourceService: EntityResourceService) {
         this.myCardListService = new CardListService();
-        this.BuildTabs();
     }
 
     SavedEntityId: string;
@@ -98,6 +97,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
     }
     LoadTemplate() {
         if (this.isViewInited && this.IsResourcesReady) {
+            this.BuildTabs();
             this.SelectionChanged();
         }
     }
