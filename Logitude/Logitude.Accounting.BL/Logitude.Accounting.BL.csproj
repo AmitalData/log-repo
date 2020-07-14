@@ -868,6 +868,10 @@
       <Project>{4733F914-0E16-4412-84DF-D98232DD43E9}</Project>
       <Name>Logitude.CRM.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
+      <Project>{D2951C0F-8A2B-4EE2-933A-8B6B4134F766}</Project>
+      <Name>Logitude.Customs.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.CustomsMessaging.Common\Logitude.CustomsMessaging.Common.csproj">
       <Project>{F0039DBE-4A1A-4755-8F37-E4005EA74746}</Project>
       <Name>Logitude.CustomsMessaging.Common</Name>
