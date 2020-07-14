@@ -51,17 +51,6 @@ namespace Logitude.Customs.BL.CloseTables
                     Param1= @"{ ""Error"":""false""}",
 MainInterfaceCode ="2892"
                 },
-
-
-                new SincroTestCaseDetail()
-                {
-                    Code = "5002",
-                    Name = "(5002)ביטול הצהרה",
-                    Entity="DeclarationCancellation",
-                    Param1= @"{ ""Error"":""false""}",
-MainInterfaceCode ="5002"
-                },
-
                  new SincroTestCaseDetail()
                 {
                     Code = "5117",
@@ -74,21 +63,6 @@ MainInterfaceCode ="5002"
                                                    
                                                
                     MainInterfaceCode="5117",
-                },
-
-                    new SincroTestCaseDetail()
-                {
-                    Code = "5118",
-                    Name = "(מענה לביטול הצהרה (5118 ",
-                    IsDCA= true,
-                    Entity="Declaration",
-                    Param1= @"{ ""RequestNumber"" :""1"" ,  ""Content33"" :""6"" , 
-                              ""Content22"" :""test 22"" , ""Content36"" :""test 36"" , ""Content37"" :""today"",
-                                 ""DeclarationStatusID"" :""13"" , ""ProceduralFaultMsg "" :""false"" ,
-                              ""RequiredDocumentDetails "" :""false""  }",
-
-
-                    MainInterfaceCode="5118",
                 },
                 new SincroTestCaseDetail()
                 {
