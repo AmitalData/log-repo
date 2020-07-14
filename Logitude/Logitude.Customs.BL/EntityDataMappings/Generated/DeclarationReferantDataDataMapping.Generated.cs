@@ -77,6 +77,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         NewFile, 
 	         Favorite, 
 	         IsCancelled, 
+	         ClassifiedUserName, 
+	         ControllerUserName, 
+	         CollectorUserName, 
 	         LastStatusName, 
 	         LastStatusDate,
 	      }

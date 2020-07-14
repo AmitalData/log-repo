@@ -159,6 +159,16 @@ export class DeclarationReferantDataPM {
     public set CollectorUserName(newValue: string) { if (this.collectorUserName != newValue) { this.collectorUserName = newValue; this.MarkAsDirty("CollectorUserName"); } }
        
 	 
+    private lastStatusName: string;
+    public get LastStatusName() { return this.lastStatusName; }
+    public set LastStatusName(newValue: string) { if (this.lastStatusName != newValue) { this.lastStatusName = newValue; this.MarkAsDirty("LastStatusName"); } }
+       
+	 
+    private lastStatusDate: string;
+    public get LastStatusDate() { return this.lastStatusDate; }
+    public set LastStatusDate(newValue: string) { if (this.lastStatusDate != newValue) { this.lastStatusDate = newValue; this.MarkAsDirty("LastStatusDate"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

@@ -89,7 +89,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  LastStatusName = a.LastStatusName,
                                                               
                                                              }) ;
-                                                                            return query;
+            return query;
+
         }
 
         private IQueryable<DeclarationReferantData> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<DeclarationReferantData> iQueryable, int tenant)
