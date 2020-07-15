@@ -47,6 +47,7 @@ declare @BookingConfirmationNumber as varchar(25)
 declare @CarrierTransportDocumentNumber as varchar(50)
 declare @ProjectNumber as varchar(100)
 declare @AMSBL as nvarchar(17)
+declare @WarehouseLegReference as nvarchar(50)
 END
 
 -- Ports Firlds
@@ -178,7 +179,7 @@ BEGIN
 		Field1, Field2, Field3, Field4, Field5, Field6, Field7, Field8, Field9, Field10,
 		CustomsDeclarationNumber, ForwarderShipmentNumber, TransportDocumentNumber,
 		ReleasingAgentId, ReleasingAgentReference1 , ReleasingAgentReference2,ProjectNumber,
-		AMSBL
+		AMSBL, WarehouseLegReference
 		
 		FROM Shipments --where Tenant = 1435
 
@@ -206,7 +207,8 @@ BEGIN
 		@Field1, @Field2, @Field3, @Field4, @Field5, @Field6, @Field7, @Field8, @Field9, @Field10,
 		@CustomsDeclarationNumber, @ForwarderShipmentNumber, @TransportDocumentNumber,
 		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber,
-		@AMSBL
+		@AMSBL, @WarehouseLegReference
+
 		
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
@@ -446,6 +448,12 @@ BEGIN
 			begin
 				if (@MySearchFields = '') set @MySearchFields = @AMSBL
 				else set @MySearchFields = @MySearchFields + ',' + @AMSBL	
+			end
+
+			if (@WarehouseLegReference is not null AND @WarehouseLegReference <> '')
+			begin
+				if (@MySearchFields = '') set @MySearchFields = @WarehouseLegReference
+				else set @MySearchFields = @MySearchFields + ',' + @WarehouseLegReference	
 			end
 
 			END
@@ -1799,7 +1807,7 @@ BEGIN
 		@Field1, @Field2, @Field3, @Field4, @Field5, @Field6, @Field7, @Field8, @Field9, @Field10,
 		@CustomsDeclarationNumber, @ForwarderShipmentNumber, @TransportDocumentNumber,
 		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber,
-		@AMSBL
+		@AMSBL, @WarehouseLegReference
 		END				
 		CLOSE ShipmentsCursor
 		DEALLOCATE ShipmentsCursor

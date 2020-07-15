@@ -26,6 +26,8 @@ it('Search For Report', () => {
     cy.wait(10000)
     cy.get('#GeneralMHReports').click();
     cy.get('#null_Search').type('Automation test report')
+    cy.get('#BI').click()
+    cy.get('#Report').click()
     cy.get('#ReportID').click()
 
   })

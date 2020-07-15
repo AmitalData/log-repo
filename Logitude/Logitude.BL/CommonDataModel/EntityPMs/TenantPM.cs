@@ -388,5 +388,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public bool DisplayDocumentsAndEvents { get; set; }
         public bool ShowTaxAmountWarning { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string VatUniquePartnerTypeCode { get; set; }
     }
 }

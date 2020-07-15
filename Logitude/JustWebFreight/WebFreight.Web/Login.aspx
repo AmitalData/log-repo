@@ -1728,10 +1728,10 @@
             }
 
             if(document.location.href.indexOf('?Menu=protractor')>0){
-			    document.location.href = document.location.href.replace("?Menu=protractor", "").replace("/Login.aspx", "/") + angularUrl;
+			    document.location.href = document.location.href.replace("?Menu=protractor", "").replace("/Login.aspx", "/").replace("/login.aspx", "/") + angularUrl;
 			}
 			else{
-                document.location.href = document.location.href.replace("/Login.aspx", "/") + angularUrl;
+                document.location.href = document.location.href.replace("/Login.aspx", "/").replace("/login.aspx", "/") + angularUrl;
 			}
 
             $("#loginBusyindicator").hide();

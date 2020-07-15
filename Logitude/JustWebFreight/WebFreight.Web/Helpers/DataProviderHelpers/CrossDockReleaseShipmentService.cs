@@ -18,10 +18,11 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
     public class CrossDockReleaseShipmentService
     {
         private int tenant;
-        private ShipmentDataView shipmentDataView = null;
+        private ShipmentDataView shipmentDataView = null; 
+        private ShipmentDataView masterShipmentDataView = null;
         private CrossDockReleaseDataProvider crossDockReleaseDataProvider;
         private CustomFieldResolver customFieldResolver;
-
+        
         public CrossDockReleaseDataProvider FullCrossDockReleaseProviderFromShipment(string shipmentId ,CrossDockReleaseDataProvider dataProvider, int tenant)
         {
             crossDockReleaseDataProvider = dataProvider;
@@ -29,38 +30,33 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             if (!string.IsNullOrEmpty(shipmentId))
             {
                 ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                 shipmentDataView = shipmentRepository.GetSingleShipmentDataView(shipmentId, tenant);
+                shipmentDataView = shipmentRepository.GetSingleShipmentDataView(shipmentId, tenant);
                 if (shipmentDataView != null)
                 {
+                    if (!string.IsNullOrEmpty(shipmentDataView.MasterShipmentDataId))
+                    {
+                        masterShipmentDataView = shipmentRepository.GetSingleShipmentDataView(shipmentDataView.MasterShipmentDataId, tenant);
+                        SetConnectedMasterShipmentGeneralFields();
+                    }
                     SetShipmentGeneralFields();
                     SetOriginAndDestinationtShipmenFields();
                     SetShipmentPartnersFields();
                     SetShipmentCustomFields();
                     SetStorageDaysShipmenField();
+                    SetProjectNumberField();
                 }
             }
 
             return crossDockReleaseDataProvider;
         }
 
-
-     
-
-        private void SetStorageDaysShipmenField()
+        private void SetConnectedMasterShipmentGeneralFields()
         {
-            int storageDays = 0;
-            if (shipmentDataView.WarehouseLegActualReleaseDate != null && shipmentDataView.WarehouseLegActualEntryDate != null)
+            if (masterShipmentDataView != null)
             {
-                if (shipmentDataView.WarehouseLegActualReleaseDate >= shipmentDataView.WarehouseLegActualEntryDate)
-                {
-                    DateTime warehouseLegActualReleaseDate = (DateTime)shipmentDataView.WarehouseLegActualReleaseDate;
-                    DateTime warehouseLegActualEntryDate = (DateTime)shipmentDataView.WarehouseLegActualEntryDate;
-                    TimeSpan span = warehouseLegActualReleaseDate.Subtract(warehouseLegActualEntryDate);
-
-                    storageDays = (int)Math.Round(span.TotalDays);
-                }
+                crossDockReleaseDataProvider.ImportManifest = masterShipmentDataView.ImportManifest;
+                crossDockReleaseDataProvider.MasterImportManifest = masterShipmentDataView.ImportManifest;
             }
-            crossDockReleaseDataProvider.StorageDays = storageDays;
         }
 
         private void SetShipmentGeneralFields()
@@ -76,6 +72,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             crossDockReleaseDataProvider.IncotermName = GetIncotermNameById(shipmentDataView.IncotermId, shipmentDataView.Tenant);
             crossDockReleaseDataProvider.ConnectedShipmentTransportMode = shipmentDataView.TransportModeName;
             crossDockReleaseDataProvider.Trailer = shipmentDataView.TrailerNumber;
+            crossDockReleaseDataProvider.StorageFreeDays = shipmentDataView.WarehouseStorageFreeDays;
         }
 
 
@@ -213,6 +210,33 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             }
             return result;
 
+        }
+
+        private void SetStorageDaysShipmenField()
+        {
+            int storageDays = 0;
+            if (shipmentDataView.WarehouseLegActualReleaseDate != null && shipmentDataView.WarehouseLegActualEntryDate != null)
+            {
+                if (shipmentDataView.WarehouseLegActualReleaseDate >= shipmentDataView.WarehouseLegActualEntryDate)
+                {
+                    DateTime warehouseLegActualReleaseDate = (DateTime)shipmentDataView.WarehouseLegActualReleaseDate;
+                    DateTime warehouseLegActualEntryDate = (DateTime)shipmentDataView.WarehouseLegActualEntryDate;
+                    TimeSpan span = warehouseLegActualReleaseDate.Subtract(warehouseLegActualEntryDate);
+
+                    storageDays = (int)Math.Round(span.TotalDays);
+                }
+            }
+            crossDockReleaseDataProvider.StorageDays = storageDays;
+        }
+
+        private void SetProjectNumberField()
+        {
+            if (shipmentDataView.ShipmentLevelCode == "D") crossDockReleaseDataProvider.ProjectNumber = shipmentDataView.ProjectNumber;
+            else if (shipmentDataView.ShipmentLevelCode == "H")
+            {
+                if (!string.IsNullOrEmpty(shipmentDataView.ProjectNumber)) crossDockReleaseDataProvider.ProjectNumber = shipmentDataView.ProjectNumber;
+                else if (masterShipmentDataView != null) crossDockReleaseDataProvider.ProjectNumber = masterShipmentDataView.ProjectNumber;
+            }
         }
     }
 

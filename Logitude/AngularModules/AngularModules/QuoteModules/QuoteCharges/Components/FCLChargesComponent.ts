@@ -33,6 +33,7 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalFormatter';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { QuoteTool } from '../../../Quote/Tools';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
     selector: 'FCLChargesComponent',
@@ -469,6 +470,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.UIProperties.SetEnabled("SaleCurrencyId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ExchangeRate", this.ObjectTableName, isExchangeRateEnabled);
         this.UIProperties.SetEnabled("IsFixedPrice", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("TotalPerContainer", this.ObjectTableName, this.IsEditingEnabled);
     }
 
     public IsCostQuantityVisible: boolean = false;
@@ -711,6 +713,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     }
     PriceCheck() {
         this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+            ServiceLocator.SendTotangoUserActivity("Tariff", "Generate from Quote");
+
             var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
 
             if (this.EntityPM.DirectionId == "I") {
