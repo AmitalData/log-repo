@@ -72,6 +72,7 @@
     <Compile Include="Models\DefinitionModels\ProcedureDefinition.cs" />
     <Compile Include="Models\GeneralModels\RelationsScript.cs" />
     <Compile Include="Models\GeneralModels\GeneratedScript.cs" />
+    <Compile Include="Models\GeneralModels\ZeroTimeMigrationTool.cs" />
     <Compile Include="Models\OracleModels\OracleDatabaseMigrations.cs" />
     <Compile Include="Models\DefinitionModels\RelationDefinition.cs" />
     <Compile Include="Models\SQLModels\SQLDatabaseMigrations.cs" />

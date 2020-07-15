@@ -1,4 +1,5 @@
 ﻿using Logitude.DBMigrations.Models;
+using System;
 
 namespace Logitude.DBMigrations
 {
@@ -17,8 +18,18 @@ namespace Logitude.DBMigrations
                 SpecificSxmlFile = null
             };
 
-            MigrationTool migrationTool = new MigrationTool(args, runSettings);
-            migrationTool.RunTool();
+            bool isZeroDownTimeArgumentProvided = Array.IndexOf((Array.ConvertAll(args, a => a.ToLower())), ToolArguments.ZERODOWNTIME) != -1;
+
+            if (!isZeroDownTimeArgumentProvided)
+            {
+                MigrationTool migrationTool = new MigrationTool(args, runSettings);
+                migrationTool.RunTool();
+            }
+            else
+            {
+                ZeroTimeMigrationTool zeroTimeMigrationTool = new ZeroTimeMigrationTool(args, runSettings);
+                zeroTimeMigrationTool.RunTool();
+            }
         }
     }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DBMigrationsUpdates" Schema="dbo" DBType="Main" Module="Infrastructure">
+
+  <Column Name="Counter" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+
+  <Column Name="TableName" Type="varchar" Size="500">
+    <Constraints Nullable="false" />
+  </Column>
+
+  <Column Name="MigrationUpdate" Type="varchar" Size="500">
+    <Constraints Nullable="false" />
+  </Column>
+
+</Table>

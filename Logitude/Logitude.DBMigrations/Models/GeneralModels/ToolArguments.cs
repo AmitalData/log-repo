@@ -14,5 +14,6 @@ namespace Logitude.DBMigrations.Models
         public const string BASIC = "-basic";
         public const string IGNOREHASH = "-ignorehash";
         public const string IGNORESETTINGSCHECK = "-ignoresettingscheck";
+        public const string ZERODOWNTIME = "-zerodowntime";
     }
 }
