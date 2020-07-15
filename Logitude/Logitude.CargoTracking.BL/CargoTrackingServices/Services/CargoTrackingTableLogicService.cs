@@ -11,6 +11,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 {
     public class CargoTrackingTableLogicService
     {
+        public static Dictionary<string, string> ForwardingShipments = new Dictionary<string, string>();
+
 
         public static void SetTableLogic(DataRow TableRow, string TableName)
         {
@@ -48,15 +50,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     if (!TableRow["CustomFileId"].Equals(null) && !TableRow["CustomFileId"].Equals("") &&  TableRow["CustomFileId"].GetType().Name != "DBNull")
                     {
                         TableRow.SetField("CustomsShipmentHeaderId", TableRow["Id"]);
-
+                        ForwardingShipments.Add((string)TableRow["Id"], (string)TableRow["CustomFileId"]);
                     }
                 }
                 else if (TableRow["ShipmentLevelCode"].Equals("A"))
                 {
                     TableRow.SetField("EntityType", "C");
                     TableRow.SetField("EntityId", TableRow["Id"]);
-
-
 
                 }
 
@@ -73,6 +73,24 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
                 }
 
+
+                if (ForwardingShipments.Count() > 0)
+                {
+                    string TargetKey = null;
+                    foreach (KeyValuePair<string, string> entry in ForwardingShipments)
+                    {
+                        if (entry.Value.Equals(TableRow["Id"]))
+                        {
+                            TableRow.SetField("ForwardingShipmentHeaderId", entry.Key);
+                            TargetKey = entry.Key;
+                            break;
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(TargetKey))
+                    {
+                        ForwardingShipments.Remove(TargetKey);
+                    }
+                }
             }
 
             if (TableName == "CargoTrackingShipmentSearches")

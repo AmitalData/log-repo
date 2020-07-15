@@ -18,6 +18,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public string RefreshIds { get; set; }
         public bool IsUpdated { get; set; }
         public int UpdatedCount { get; set; }
+        public string Condition1 { get; set; }
+        public string Condition2 { get; set; }
+        public string Condition3 { get; set; }
+        public int ConditionsNumber { get; set; }
         public List<object> Labels { get; set; }
     }
 }
