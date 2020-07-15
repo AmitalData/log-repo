@@ -2758,6 +2758,8 @@ namespace Simplog.Data.CommonDataModel.Mocks
 
         public IDbSet<TariffCarrierTranslation> TariffCarrierTranslations => throw new NotImplementedException();
 
+        public IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         //public IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         //public IDbSet<UsersReleaseNotesDisplay>  { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

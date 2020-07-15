@@ -32,9 +32,21 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ContactRepository contactRepository;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
 
-        public ShippingLineService(ICommonDataContext objectContext,int tenant)
+        public ShippingLineService(ICommonDataContext objectContext, ShippingLinePM entityPM, string loggedContactId)
         {
-            
+            this.entityPM = entityPM;
+            this.tenant = entityPM.Tenant;
+            this.objectContext = objectContext;
+            this.entityRepository = new ShippingLineRepository(objectContext);
+            this.cardRepository = new CardRepository(objectContext);
+            this.contactRepository = new ContactRepository(objectContext);
+            this.cardQuery = new CardQuery(cardRepository);
+            this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
+            this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
+        }
+        public ShippingLineService(ICommonDataContext objectContext, int tenant)
+        {
+
             this.tenant = tenant;
             this.objectContext = objectContext;
             this.entityRepository = new ShippingLineRepository(objectContext);
@@ -70,6 +82,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 Id = entityPM.Id,
                 Tenant = tenant,
                 PartnerTypeId = "SL",
+                UploadingUniqueKey = entityPM.UploadingUniqueKey,
             };
 
             this.entityPOCO = new ShippingLine()

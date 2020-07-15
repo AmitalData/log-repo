@@ -22,9 +22,13 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.Data.EntityLists;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
@@ -63,6 +67,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
 using System.Xml;
+using System.Xml.Serialization;
 using WebFreight.Web.AccountingModel.DomainServices;
 using WebFreight.Web.BookingModel.DomainServices;
 using WebFreight.Web.CommonDataModel.DomainServices;
@@ -129,7 +134,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             workbook.SaveAs(memory);
             return memory.ToArray();
         }
-
         private void FillPartnersTypes(int tenant)
         {
             partnersTypes_Sheet = new List<ExcelPackageType>();
@@ -144,7 +148,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                        }).ToList();
             }
         }
-
         private void CreateSheet2Headers_UploadPartners(IWorkbook workbook, IWorksheet sheet2)
         {
             // Build sheet 2 
@@ -158,7 +161,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             DataTable dataTable2 = this.ConvertToDataTable(partnersTypes_Sheet);
             sheet2.ImportDataTable(dataTable2, true, 1, 1);
         }
-
         private void CreateSheet1Headers_UploadPartners(IWorkbook workbook, IWorksheet sheet1)
         {
             // Build sheet 1
@@ -189,7 +191,117 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             sheet1.Columns[14].ColumnWidth = 20;
             sheet1.ImportDataTable(dataTable1, true, 1, 1);
         }
+        [ActionName("PostUploadPartnersExcelFile")]
+        public HttpResponseMessage PostUploadPartnersExcelFile(PartnersUploadExcelParameter filter)
+        {
+            try
+            {
+                try
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+                    string loggedUserEmail = authToken.Email;
+                    byte[] fileData = Convert.FromBase64String(filter.FileData);
 
+                    PartnersUploadExcelParameter args = new PartnersUploadExcelParameter()
+                    {
+                        LoggedUserEmail = loggedUserEmail,
+                        Tenant = authToken.Tenant,
+                        IsConfirmationDuplicateByUser = filter.IsConfirmationDuplicateByUser,
+                        FileName = filter.FileName,
+                    };
+                    
+                    var documentId = this.UploadExcelFileToStorage(fileData, args, authToken.Tenant);
+                    args.DocumentId = documentId;
+
+                    var stringwriter = new System.IO.StringWriter();
+                    var serializer = new XmlSerializer(typeof(PartnersUploadExcelParameter));
+                    serializer.Serialize(stringwriter, args);
+                    string xmlParameters = stringwriter.ToString();
+
+                    BatchTaskExecutionPM taskExe = new BatchTaskExecutionPM()
+                    {
+                        Subject = "Partners Upload",
+                        Tenant = tenant,
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                        ClassName = "WebFreight.Web.Helpers.APIHelpers.PartnersUploadHelper,WebFreight.Web",
+                        CreateDate = DateTime.Now,
+                        PrametersXml = xmlParameters,
+                        StatusCode = "C",
+                    };
+
+                    IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
+                    BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                    bteUpdateService.Update(taskExe, true);
+
+                    // 2- Send to queue
+                    IQueueService queueservice = new DbQueueService();
+                    queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+                    queueservice.Send(new Dictionary<string, string>()
+                                    {
+                                        { "BatchTaskExecutionId", taskExe.Id },
+                                        { "Tenant", tenant.ToString() }
+                                    }
+                    , tenant);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, taskExe);
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private string UploadExcelFileToStorage(byte[] fileData, PartnersUploadExcelParameter args, int tenant)
+        {
+            string extension = "";
+            Document document = null;
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            string fileName = args.FileName;
+            System.IO.MemoryStream memoryStream = new System.IO.MemoryStream(fileData);
+
+            if (memoryStream != null)
+            {
+                byte[] ByteData = memoryStream.ToArray();
+                DocumentRepository documentRepository = new DocumentRepository(tenant);
+                document = new Document()
+                {
+                    FileName = fileName,
+                    CreateDate = DateTime.Now,
+                    Extension = extension,
+                    FileSize = ByteData.Length,
+                    Tenant = tenant,
+                    Id = IdCounter.GetNumber("Document", tenant),
+                    HasFile = true,
+                    Folder = "others",
+                };
+
+                documentRepository.Add(document);
+                documentRepository.SubmitChanges();
+
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = "others",
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = document.FileSize,
+
+                };
+                storageservice.Write(ByteData, fileInfo);
+
+            }
+
+            
+            return document != null ? document.Id : null;
+        }
         private DataTable ConvertToDataTable<T>(IList<T> data)
         {
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
@@ -2773,4 +2885,12 @@ public class FilingInboxAttachItem
     public bool IsDigitallySign { get; set; }
 }
 
-
+public class PartnersUploadExcelParameter
+{
+    public int Tenant { get; set; }
+    public string FileData { get; set; }
+    public string DocumentId { get; set; }
+    public string LoggedUserEmail { get; set; }
+    public bool IsConfirmationDuplicateByUser { get; set; }
+    public string FileName { get; set; }
+}

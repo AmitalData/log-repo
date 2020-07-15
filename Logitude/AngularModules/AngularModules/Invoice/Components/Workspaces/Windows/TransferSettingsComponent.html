@@ -206,7 +206,7 @@
                                                             <div></div>
                                                         </td>
 
-                                                        <td style="width:100px;" *ngIf="SelectedExternalTransmission.Code != 'NON'">
+                                                        <td style="width:100px;" *ngIf="SelectedExternalTransmission != null && SelectedExternalTransmission.Code != 'NON'">
                                                             <span (click)="ExternalTransmissionSettingsClicked()" style="font-size:12px;" class="hyperlink">Settings</span>
                                                         </td>
 

@@ -589,14 +589,14 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Cache Log";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-        if (FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
-            var item = new MenusTablePM();
-            item.CategoryTypeCode = "OTH";
-            item.Icon = "Settings"
-            item.Code = "CARGO";
-            item.ObjectTableName = "Cargo Tracking";
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        }
+        // if (FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
+        //     var item = new MenusTablePM();
+        //     item.CategoryTypeCode = "OTH";
+        //     item.Icon = "Settings"
+        //     item.Code = "CARGO";
+        //     item.ObjectTableName = "Cargo Tracking";
+        //     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        // }
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "CMS";
@@ -628,6 +628,14 @@ export class MaintenanceComponent {
             item.ObjectTableName = "ErrorLog";
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "ErrorLog")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+
+             var item = new MenusTablePM();
+            item.CategoryTypeCode = "OTH";
+            item.Icon = "Settings"
+            item.Code = "CARGO";
+            item.ObjectTableName = "Cargo Tracking";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+       
 
             var item = new MenusTablePM();
             item.CategoryTypeCode = "MNG";

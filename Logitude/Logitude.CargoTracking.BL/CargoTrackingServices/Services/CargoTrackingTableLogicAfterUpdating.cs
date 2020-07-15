@@ -1,4 +1,4 @@
-﻿using CargoTrackingWinFormService.CargoTracking.BL.HelperClasses;
+﻿ 
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CargoTrackingWinFormService.CargoTracking.BL.Services
+namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 {
     public class CargoTrackingTableLogicAfterUpdating
     {

@@ -1,4 +1,5 @@
-﻿using CargoTrackingWinFormService.CargoTracking.BL.HelperClasses;
+﻿
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,9 +7,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+ 
 
-namespace CargoTrackingWinFormService.CargoTracking.BL.Services
+namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 {
     public class CargoTrackingMainService
     {
@@ -57,7 +58,7 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                 FieldsDBName = "Id,Tenant,ShipmentNumber,SearchFields,CreateDateTime,CustomerReference1,CustomerReference2,AutomaticLastUpdateDate",
                 KeyName = "Id",
                 ConditionKey= "ShipmentId",
-                CT_FieldsDBName = "Id,Tenant,ShipmentId,SearchFields,ShipmentDate",
+                CT_FieldsDBName = "Tenant,ShipmentId,SearchFields,ShipmentDate",
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipmentSearches"
             });
@@ -92,7 +93,11 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                         {
                             DataColumn column = GetCoulmnFromDataRow(drow);
                             listCols.Add(column);
-                            dataTable.Columns.Add(column);
+                            if (column.ColumnName!="IDE")
+                            {
+                                dataTable.Columns.Add(column);
+
+                            }
                         }
                     }
 
@@ -217,7 +222,7 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                     destinationConnection.Open();
 
                     using (SqlBulkCopy bulkCopy =
-                               new SqlBulkCopy(destinationConnection))
+                               new SqlBulkCopy(buildCargoArgs.DestinationConnectionString, SqlBulkCopyOptions.KeepIdentity))
                     {
                         bulkCopy.DestinationTableName =
                             "dbo." + table.CT_TableName;
@@ -329,7 +334,7 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
             {
                 if (!CompareDB.Contains(DB_columns))
                 {
-                    CargoTrackingCustomMappingService.MappingDB_CTDB(dt, sbc, DB_columns);
+                    CargoTrackingCustomMappingService.MappingDB_CTDB(dt, sbc, DB_columns, Table.CT_TableName);
                 }
             }
 

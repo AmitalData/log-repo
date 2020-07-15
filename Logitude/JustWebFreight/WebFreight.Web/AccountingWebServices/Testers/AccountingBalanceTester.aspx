@@ -1363,6 +1363,8 @@ div#two {
                         <asp:Button ID="_ButtonReverseTotal" runat="server" Text="Reverse from Total to Ledger" OnClick="_ButtonReverseTotal_Click" />
                         <asp:Button ID="_ButtonReverseTrans" runat="server" Text="Reverse from Ledger to journal line" OnClick="_ButtonReverseTrans_Click" />
                         <asp:Button ID="_ButtonReverseGLBalance" runat="server" Text="ReverseGLBalance" OnClick="_ButtonReverseGLBalance_Click" />
+                        <asp:Button ID="_ButtonReverseTotal0" runat="server" Text="Reverse from Total to Ledger" OnClick="_ButtonReverseTotal_Click" />
+                        <asp:Button ID="_ButtonReverseTotalControl" runat="server" Text="***Control***Reverse from Total to Ledger" OnClick="_ButtonReverseTotalControl_Click" />
                     </li>
                     <li>
                         SysCheck
@@ -1384,6 +1386,7 @@ div#two {
                     FIX PRA PRA 
                     <asp:Button ID="_ButtonReverseTotalFIX" runat="server" Text="FIX TOTAL from  Ledger " OnClick="_ButtonReverseTotalFIX_Click" />
                     <asp:Button ID="_ButtonReverseGLBalanceFIX" runat="server" Text="FIX ReverseGLBalance" OnClick="_ButtonReverseGLBalanceFIX_Click" />
+                    <asp:Button ID="_ButtonReverseTotalFIXControl" runat="server" Text="FIX TOTAL from  Ledger ***control**" OnClick="_ButtonReverseTotalFIXControl_Click" />
                 </li>
                     
                 </ul>

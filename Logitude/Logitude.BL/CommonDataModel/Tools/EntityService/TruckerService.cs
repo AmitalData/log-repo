@@ -82,13 +82,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.entityPM = entityPM;
             this.isNewEntity = true;
-            this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
+            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
 
             this.entityCard = new Card()
             {
                 Id = entityPM.Id,
                 Tenant = tenant,
-                PartnerTypeId = "TR",                
+                PartnerTypeId = "TR",
+                UploadingUniqueKey = entityPM.UploadingUniqueKey,
             };
 
             this.entityPOCO = new Trucker()

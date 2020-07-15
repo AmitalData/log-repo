@@ -1,6 +1,6 @@
-﻿ 
-using CargoTrackingWinFormService.CargoTracking.BL.HelperClasses;
-using CargoTrackingWinFormService.CargoTracking.BL.Services;
+﻿
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;

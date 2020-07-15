@@ -73,9 +73,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CargoTrackingWinFormService\CargoTrackingWinFormService.csproj">
-      <Project>{8108DD79-196B-4C2C-82A9-F995877723B1}</Project>
-      <Name>CargoTrackingWinFormService</Name>
+    <ProjectReference Include="..\Logitude.CargoTracking.BL\Logitude.CargoTracking.BL.csproj">
+      <Project>{6b7fb227-28d2-45b8-b079-2e2f4251510d}</Project>
+      <Name>Logitude.CargoTracking.BL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

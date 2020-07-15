@@ -100,83 +100,106 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
             {
                 if (!string.IsNullOrEmpty(entityPM.VatNumber))
                 {
-                    AddressRepository addressRepository = new AddressRepository(myContext);
-
                     List<Card> allMatchedCards
-                        = (from a in myContext.Cards
+                        = (from a in myContext.Cards.Include("Customer")
                            where a.Tenant == entityPM.Tenant
-                           && (a.PartnerTypeId == "CS" || a.PartnerTypeId == "PO")
                            && a.VatNumber == entityPM.VatNumber
+                           && (a.PartnerTypeId == "CS" || a.PartnerTypeId == "PO")
+                           && !a.InActive
+                           && a.Customer != null && a.Customer.CustomerStatusCode != "INA"
                            select a).ToList();
-
+                    
                     if (allMatchedCards != null)
                     {
-                        if (myTenant.VatUniqueTypeCode == "UFA")
+                        if(myTenant.VatUniqueTypeCode != "UNT")
                         {
-                            bool isAlreadyExists = false;
-
-                            if (isNewEntity)
+                            bool doValidation = false;
+                            if ((myTenant.VatUniquePartnerTypeCode  == "POT" && entityPM.PartnerTypeId == "PO") || myTenant.VatUniquePartnerTypeCode == "ALL")
                             {
-                                if (allMatchedCards.Count > 0)
-                                {
-                                    isAlreadyExists = true;
-                                }
+                                doValidation = true;
                             }
 
-                            else
+                            else if (myTenant.VatUniquePartnerTypeCode == "CUS" && entityPM.PartnerTypeId == "CS")
                             {
-                                if (allMatchedCards.Where(d => d.Id != entityPM.Id).Any())
+                                allMatchedCards = allMatchedCards.Where(d => d.PartnerTypeId == "CS" && d.Customer != null && d.Customer.CustomerStatusCode == "ACT").ToList();
+                                doValidation = true;
+                            }  
+                            
+                            if(doValidation)
+                            {
+                                ValidateVAT_UniqueCountry(entityPM, allMatchedCards, myTenant, isNewEntity, myContext);
+                            }
+                        } 
+                    }
+                }
+            }
+        }
+        private static void ValidateVAT_UniqueCountry(CustomerPM entityPM, List<Card> allMatchedCards, Tenant myTenant, bool isNewEntity, ICommonDataContext myContext)
+        {
+            if (myTenant.VatUniqueTypeCode == "UFA")
+            {
+                bool isAlreadyExists = false;
+
+                if (isNewEntity)
+                {
+                    if (allMatchedCards.Count > 0)
+                    {
+                        isAlreadyExists = true;
+                    }
+                }
+
+                else
+                {
+                    if (allMatchedCards.Where(d => d.Id != entityPM.Id).Any())
+                    {
+                        isAlreadyExists = true;
+                    }
+                }
+
+                if (isAlreadyExists)
+                {
+                    string msg = "VAT Number already exists";
+                    throw new ApplicationException(msg);
+                }
+            }
+
+            else if (myTenant.VatUniqueTypeCode == "USC")
+            {
+                if (!isNewEntity)
+                {
+                    allMatchedCards = allMatchedCards.Where(d => d.Id != entityPM.Id).ToList();
+                }
+
+                if (allMatchedCards != null)
+                {
+                    int tenant = entityPM.Tenant;
+                    string entityCountryId = entityPM.CountryId;
+                    string entityCountryName = entityPM.CountryName;
+
+                    if (!string.IsNullOrEmpty(entityCountryId))
+                    {
+                        if (entityCountryId == myTenant.VatUniqueCountryId)
+                        {
+                            bool isAlreadyExists = false;
+                            AddressRepository addressRepository = new AddressRepository(myContext);
+
+                            foreach (Card item in allMatchedCards)
+                            {
+                                Address address = addressRepository.GetMainAddressByCardId(item.Id, tenant);
+                                if (address != null)
                                 {
-                                    isAlreadyExists = true;
+                                    if (address.CountryId == entityCountryId)
+                                    {
+                                        isAlreadyExists = true;
+                                        break;
+                                    }
                                 }
                             }
 
                             if (isAlreadyExists)
                             {
-                                string msg = "VAT Number already exists";
+                                string msg = "VAT Number already exists for " + entityCountryName;
                                 throw new ApplicationException(msg);
-                            }
-                        }
-
-                        else if (myTenant.VatUniqueTypeCode == "USC")
-                        {
-                            if (!isNewEntity)
-                            {
-                                allMatchedCards = allMatchedCards.Where(d => d.Id != entityPM.Id).ToList();
-                            }
-
-                            if (allMatchedCards != null)
-                            {
-                                int tenant = entityPM.Tenant;
-                                string entityCountryId = entityPM.CountryId;
-                                string entityCountryName = entityPM.CountryName;
-
-                                if (!string.IsNullOrEmpty(entityCountryId))
-                                {
-                                    if (entityCountryId == myTenant.VatUniqueCountryId)
-                                    {
-                                        bool isAlreadyExists = false;
-
-                                        foreach (Card item in allMatchedCards)
-                                        {
-                                            Address address = addressRepository.GetMainAddressByCardId(item.Id, tenant);
-                                            if (address != null)
-                                            {
-                                                if (address.CountryId == entityCountryId)
-                                                {
-                                                    isAlreadyExists = true;
-                                                    break;
-                                                }
-                                            }
-                                        }
-
-                                        if (isAlreadyExists)
-                                        {
-                                            string msg = "VAT Number already exists for " + entityCountryName;
-                                            throw new ApplicationException(msg);
-                                        }
-                                    }
-                                }
                             }
                         }
                     }
@@ -308,6 +331,5 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                 }
             }
         }
-
     }
 }

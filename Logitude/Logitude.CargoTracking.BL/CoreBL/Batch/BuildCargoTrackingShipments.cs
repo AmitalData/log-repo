@@ -1,23 +1,9 @@
-﻿using CargoTrackingWinFormService.CargoTracking.BL.HelperClasses;
-using CargoTrackingWinFormService.CargoTracking.BL.Services;
-using CargoTrackingWinService.Helper;
-using Logitude.Accounting.BL.CoreBL;
-using Logitude.Accounting.BL.CoreBL.InterestReport;
-using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.BL.InterestService.HelperClasses;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityPMs;
+﻿  
+ 
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using Logitude.Infrastructure.BL.EntityPMs;
-using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.BL.ExtendedServices;
-using Logitude.Infrastructure.Data;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.QueueService;
-using Logitude.SystemLogs;
-using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,24 +12,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Logitude.Accounting.BL.CoreBL.Batch
+namespace Logitude.CargoTracking.BL.CoreBL.Batch
 {
     public class BuildCargoTrackingShipments : BatchTaskExecutionsService
     {
         string sourceConnectionString = string.Empty;
         string destinationConnectionString = string.Empty;
-
-        CargoTrackingServiceHelper cargoTrackingServiceHelper;
         CargoTrackingMainService cargoTrackingMainService;
         CargoTrackingArgs CargoTrackingArguments;
 
         public BuildCargoTrackingShipments(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
             cargoTrackingMainService = new CargoTrackingMainService();
-            cargoTrackingServiceHelper = new CargoTrackingServiceHelper();
             BuildConnectionString();
-
-
         }
 
         public override void RunCode()
@@ -97,10 +78,10 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
         private void BuildConnectionString()
         {
-            string[] sourceConnectionArray = "Logitude2-5_Main,sa,Saas256,.".Split(',');
-            string[] destinationConnectionArray = "CargoTracking,sa,Saas256,.".Split(',');
-            sourceConnectionString = cargoTrackingServiceHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
-            destinationConnectionString = cargoTrackingServiceHelper.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+            string[] sourceConnectionArray = "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com,.".Split(',');
+            string[] destinationConnectionArray = "CargoTracking,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com".Split(',');
+            sourceConnectionString =  BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+            destinationConnectionString =  BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
         }
 
         private string GetUpdateDataBaseCondition(CargoArgs buildCargoArgs)
@@ -108,6 +89,12 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + buildCargoArgs.Table.CT_TableName + "')";
             return condition;
+        }
+
+        private string BuildConnectionString(string catalog, string userName, string password, string server)
+        {
+            string result = "Data Source=" + server + ";Initial Catalog=" + catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + userName + ";Password= " + password + ";MultipleActiveResultSets=True;Connect Timeout=60";
+            return result;
         }
     }
 

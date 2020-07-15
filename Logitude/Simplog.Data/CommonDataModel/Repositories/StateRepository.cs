@@ -37,6 +37,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from record in context.States.Include("Country") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
+        public State GetSingleStateByCodeAndCountry(string id,string country, int tenant)
+        {
+            return (from record in context.States where record.Id == id && record.CountryId == country && record.Tenant == tenant select record).FirstOrDefault();
+        }
+
+
         public State GetSingleStateByCode(string code, int tenant)
         {
             return (from record in context.States.Include("Country") where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();

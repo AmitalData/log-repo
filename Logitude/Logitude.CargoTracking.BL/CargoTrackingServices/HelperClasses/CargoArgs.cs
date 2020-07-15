@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CargoTrackingWinFormService.CargoTracking.BL.HelperClasses
+namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
 {
     public class CargoArgs
     {

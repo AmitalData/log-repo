@@ -320,6 +320,7 @@
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentProfitFunction.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentRegistryDate.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentsSearchFields.dxml" />
+    <None Include="DBOthers\ShipmentsModel\SearchFields\FillShipmentSearchFields.sxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentComputedFields.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentLevels.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentMasterData.dxml" />
@@ -346,8 +347,12 @@
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentFollowUpDataView.dxml" />
     <None Include="DBScripts\CommonModel\202007061105_FillMissingPortCountryCode.sxml" />
+    <None Include="DBScripts\CommonModel\202007051545_SetVATUniquePartnerDefaultValue.sxml" />
+    <None Include="DBScripts\CommonModel\CargoTrackingMilestoneFillValues.sxml" />
+    <None Include="DBScripts\CommonModel\CargoTrackingHeaderEntityTypeFillValues.sxml" />
     <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />
     <None Include="DBScripts\GlobalModel\202006102217_FillSettingsDemoTenants.sxml" />
+    <None Include="DBScripts\GlobalModel\202007061138_FillSettingsTMExpirationDate.sxml" />
     <None Include="DBScripts\InfrastructureModel\202006011050_UpdateAllowedInTicketFieldValueOfObjectTable.sxml" />
     <None Include="DBScripts\InfrastructureModel\202006171015_TruncateErrorLogs.sxml" />
     <None Include="DBScripts\InfrastructureModel\202006171200_ModifyAnalyzeQueueIdOfInboundEmailTable.sxml" />
@@ -361,10 +366,19 @@
     <None Include="DBScripts\QuoteModel\202006151400_AddAirShipmentType_V2.sxml" />
     <None Include="DBScripts\QuoteModel\202006151500_FillAirQuoteShipmentTypeField.sxml" />
     <None Include="DBScripts\QuoteModel\202006151503_FillQuoteShipmentSubTypeBackward.sxml" />
+    <None Include="DBScripts\QuoteModel\202007091327_UpdateAirQuotesSubType.sxml" />
+    <None Include="DBScripts\QuoteModel\202007091330_UpdateNotAirQuotesSubType.sxml" />
     <None Include="DBScripts\ShipmentModel\202006111511_AddAirShipmentType.sxml" />
     <None Include="DBScripts\ShipmentModel\202006111515_AddShipmentSubTypesToTenants.sxml" />
     <None Include="DBScripts\ShipmentModel\202006140958_FillAirShipmentShipmentTypeField.sxml" />
     <None Include="DBScripts\ShipmentModel\202006141227_FillShipmentSubTypeBackward.sxml" />
+    <None Include="DBScripts\ShipmentModel\202007051320_UpdateAirShipmentSubType.sxml" />
+    <None Include="DBScripts\ShipmentModel\202007051322_UpdateNotAirShipmentsSubType.sxml" />
+    <None Include="DBTables\CommonDataModel\CargoTrackingCard.dxml" />
+    <None Include="DBTables\CommonDataModel\CargoTrackingShipmentSearchField.dxml" />
+    <None Include="DBTables\CommonDataModel\CargoTrackingMilestone.dxml" />
+    <None Include="DBTables\CommonDataModel\CargoTrackingPort.dxml" />
+    <None Include="DBTables\CommonDataModel\CargoTrackingShipment.dxml" />
     <None Include="DBScripts\202005311656_DeleteDuplicatedQueuesWR Batch Definition.sxml" />
     <None Include="DBTables\CommonDataModel\AccountingPartner.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingSetting.dxml" />
@@ -575,6 +589,7 @@
     <None Include="DBTables\CommonDataModel\VatType.dxml" />
     <None Include="DBTables\CommonDataModel\VatTypePercentage.dxml" />
     <None Include="DBTables\CommonDataModel\VATTypesGroup.dxml" />
+    <None Include="DBTables\CommonDataModel\VatUniquePartnerType.dxml" />
     <None Include="DBTables\CommonDataModel\VatUniqueType.dxml" />
     <None Include="DBTables\CommonDataModel\Vendor.dxml" />
     <None Include="DBTables\CommonDataModel\Vessel.dxml" />
@@ -864,6 +879,7 @@
     <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\CommonDataModel\VatUniquePartnerType.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DescriptionOfGoods.lxml" />
     <None Include="EntityFiles\InfrastructureModel\WorkerRoleName.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesTotal.lxml" />

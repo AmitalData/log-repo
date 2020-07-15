@@ -505,7 +505,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         invoiceDataProvider.FirstPickupETA = myFirstPickup.ETA;
                         invoiceDataProvider.FirstPickupETD = myFirstPickup.ETD;
-                        invoiceDataProvider.FirstPickupTrucker = myFirstPickup.TruckNumber;
+                        invoiceDataProvider.FirstPickupTrucker = myFirstPickup.CarrierNumber;
                     }
                     #endregion
 
@@ -514,11 +514,11 @@ namespace WebFreight.Web.ReportsWebServices
                                                              where d.ShipmentId == shipment.Id && d.PickUpDeliveryTypeCode == "DELV"
                                                              select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
-                    if (myFirstPickup != null)
+                    if (myLastDelivery != null)
                     {
                         invoiceDataProvider.LastDeliveryETA = myLastDelivery.ETA;
                         invoiceDataProvider.LastDeliveryETD = myLastDelivery.ETD;
-                        invoiceDataProvider.LastDeliveryTrucker = myLastDelivery.TruckNumber;
+                        invoiceDataProvider.LastDeliveryTrucker = myLastDelivery.CarrierNumber;
                     }
                     #endregion 
                 }

@@ -496,10 +496,16 @@
     <Constraints
       Nullable="true" />
   </Column>
- <Column
+  <Column
     Name="LogitudeDemoTenants"
     Type="varchar"
     Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TMPersonalAccessExpirationDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>

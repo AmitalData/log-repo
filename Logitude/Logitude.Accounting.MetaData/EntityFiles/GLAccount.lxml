@@ -8648,6 +8648,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsSplitted&quot;"
     ListPropertyPath="&quot;IsSplitted&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -10791,7 +10792,7 @@
       IndexOrder="1"
       LocalDefaultText="&quot;נוספים&quot;"
       FeatureCode="&quot;MOREGLACCOUNT&quot;"
-      IsPackagable="false"
+      IsPackagable="true"
       TextCodeCode="&quot;GLAccount.B.More&quot;"
       FeatureTextCodeCode="&quot;GLAccount.Features.More&quot;"
       FeatureDefaultText="&quot;More Buttons&quot;">
@@ -13096,15 +13097,6 @@
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;GLAccount.Features.Reconcile&quot;"
       FeatureDefaultText="&quot;Reconcile&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;MOREGLACCOUNT&quot;"
-      FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;GLAccount.Features.More&quot;"
-      FeatureDefaultText="&quot;More Buttons&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

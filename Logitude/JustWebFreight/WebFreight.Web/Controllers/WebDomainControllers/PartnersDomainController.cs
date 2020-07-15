@@ -640,7 +640,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetIsVATUniqueForCustomer(string vatNumber, string customerId, string countryId)
+        public HttpResponseMessage GetIsVATUniqueForCustomer(string vatNumber, string customerId, string countryId, string partnerTypeId)
         {
             try
             {
@@ -660,56 +660,30 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                        where a.Tenant == tenant
                        && (a.PartnerTypeId == "CS" || a.PartnerTypeId == "PO")
                        && a.VatNumber == vatNumber
+                       && !a.InActive
+                       && a.Customer.CustomerStatusCode != "INA"
                        select a);
 
                 if (allMatchedCards != null)
                 {
-                    if (myTenant.VatUniqueTypeCode == "UFA")
+                    if (myTenant.VatUniqueTypeCode != "UNT")
                     {
-                        if (isNewEntity)
+                        bool doValidation = false;
+
+                        if ((myTenant.VatUniquePartnerTypeCode == "POT" && partnerTypeId == "PO") || myTenant.VatUniquePartnerTypeCode == "ALL")
                         {
-                            if (allMatchedCards.Count() > 0)
-                            {
-                                isAlreadyExists = true;
-                            }
+                            doValidation = true;
                         }
 
-                        else
+                        else if (myTenant.VatUniquePartnerTypeCode == "CUS" && partnerTypeId == "CS")
                         {
-                            if (allMatchedCards.Where(d => d.Id != customerId).Any())
-                            {
-                                isAlreadyExists = true;
-                            }
-                        }
-                    }
-
-                    else if (myTenant.VatUniqueTypeCode == "USC")
-                    {
-                        if (!isNewEntity)
-                        {
-                            allMatchedCards = allMatchedCards.Where(d => d.Id != customerId);
+                            allMatchedCards = allMatchedCards.Where(d => d.PartnerTypeId == "CS" && d.Customer.CustomerStatusCode == "ACT");
+                            doValidation = true;
                         }
 
-                        if (allMatchedCards != null)
+                        if (doValidation)
                         {
-                            if (!string.IsNullOrEmpty(countryId))
-                            {
-                                if (countryId == myTenant.VatUniqueCountryId)
-                                {
-                                    foreach (Card item in allMatchedCards)
-                                    {
-                                        Address address = addressRepository.GetMainAddressByCardId(item.Id, tenant);
-                                        if (address != null)
-                                        {
-                                            if (address.CountryId == countryId)
-                                            {
-                                                isAlreadyExists = true;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                            isAlreadyExists = this.ValidateVAT_UniqueCountry(customerId, countryId, allMatchedCards, myTenant, isNewEntity, addressRepository);
                         }
                     }
                 }
@@ -722,6 +696,62 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        private bool ValidateVAT_UniqueCountry(string customerId, string countryId, IQueryable<Card> allMatchedCards, Tenant myTenant, bool isNewEntity, AddressRepository addressRepository)
+        {
+            bool isAlreadyExists = false;
+
+            if (myTenant.VatUniqueTypeCode == "UFA")
+            {
+                if (isNewEntity)
+                {
+                    if (allMatchedCards.Count() > 0)
+                    {
+                        isAlreadyExists = true;
+                    }
+                }
+
+                else
+                {
+                    if (allMatchedCards.Where(d => d.Id != customerId).Any())
+                    {
+                        isAlreadyExists = true;
+                    }
+                }
+            }
+
+            else if (myTenant.VatUniqueTypeCode == "USC")
+            {
+                if (!isNewEntity)
+                {
+                    allMatchedCards = allMatchedCards.Where(d => d.Id != customerId);
+                }
+
+                if (allMatchedCards != null)
+                {
+                    if (!string.IsNullOrEmpty(countryId))
+                    {
+                        if (countryId == myTenant.VatUniqueCountryId)
+                        {
+                            foreach (Card item in allMatchedCards)
+                            {
+                                Address address = addressRepository.GetMainAddressByCardId(item.Id, myTenant.Id);
+                                if (address != null)
+                                {
+                                    if (address.CountryId == countryId)
+                                    {
+                                        isAlreadyExists = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return isAlreadyExists;
+        }
+
         public HttpResponseMessage GetCardExternalAccountsByProducts(string myCardId)
         {
             try

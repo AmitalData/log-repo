@@ -31,6 +31,7 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalFormatter';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { QuoteTool } from '../../../Quote/Tools';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
     selector: 'LCLChargesComponent',
@@ -450,6 +451,8 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
     PriceCheck() {
         this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+            ServiceLocator.SendTotangoUserActivity("Tariff", "Generate from Quote");
+
             var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
 
             if (this.EntityPM.DirectionId == "I") {
