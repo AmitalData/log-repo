@@ -8,44 +8,33 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WarehouseData.Service;
+using WarehouseDataViews.Service;
 
 namespace WarehouseDataViews
 {
     public partial class Form1 : Form
     {
 
-
-        // string dbSourceConnection = "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
-        // string dbDestinationConnection = "DWPrivate,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
-        //  private string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";
-        //  private string dbDestinationConnection = "2019R1_Global,sa,Saas256,.";
-        //"UnicargoDW,UnicargoDBUser,Y&P95et1,logitude-ep.database.windows.net";
-        // logitudedw-shared,logitudeep,!LO852456,logitude-ep.database.windows.net
-
-
-        //Locally PrivateDB
-        //private int? tenant = 1;
-        //string dbSourceConnection = "2020R3_Main,sa,Saas256,.";
-        //string dbDestinationConnection = "2020R3_Global,sa,Saas256,.";
-
-
         //Pre Private DB
-        private int? tenant = 570;
-        string dbSourceConnection = "LogitudeMain_PreR3,logitudemanager,!LO009008,logitudetest.database.windows.net";
-        string dbDestinationConnection = "UnicargoDW,logitudeep,!LO852456,logitude-ep.database.windows.net";
-
+        //private int? tenant = 570;
+        //string dbSourceConnection = "LogitudeMain_PreR3,logitudemanager,!LO009008,logitudetest.database.windows.net";
+        //string dbDestinationConnection = "UnicargoDW,logitudeep,!LO852456,logitude-ep.database.windows.net";
 
         //Online PrivateDB
         //private int? tenant = 570;
         //string dbSourceConnection = "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
         //string dbDestinationConnection = "T570Unicargo,Admin1423,London2015!London2015!,logitudedw1.database.windows.net";
 
+
+
+        string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";
+        bool ApplyGrantOnViews = false;
         public Form1()
         {
             InitializeComponent();
             this.SourceConnectionTextBox.Text = dbSourceConnection;
-            this.DestinationConnectionTextBox.Text = dbDestinationConnection;
-            this.TenantTextBox.Text = tenant.ToString() ;
+
         }
 
         private void CreateViewsButton_Click(object sender, EventArgs e)
@@ -57,24 +46,45 @@ namespace WarehouseDataViews
             try
             {
                 ResultLabel.Text = "";
-                if (!string.IsNullOrEmpty(dbSourceConnection) && !string.IsNullOrEmpty(dbDestinationConnection) && tenant !=null)
+                string[] sourceConnectionArray = dbSourceConnection.Split(',');
+                string connectionString = BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+                PrivateDataWarehouseViewService privateDataWarehouseViewService = new PrivateDataWarehouseViewService(connectionString);
+                var dWHSettingsTable = privateDataWarehouseViewService.GetDataTableFromSql(connectionString, "SELECT  * from  DWHSettings where PrivateUserName is not null");
+                FeatureDataWarehouseService featureDataWarehouseService = new FeatureDataWarehouseService(connectionString.Replace("Main", "Global"), connectionString);
+                foreach (DataRow row in dWHSettingsTable.Rows)
                 {
-                    WarehouseViewsService warehouseViewsService = new WarehouseViewsService((int)tenant);
-                    string sourceConnectionString = warehouseViewsService.BuildConnectionString(dbSourceConnection);
-                    string destinationConnectionString = warehouseViewsService.BuildConnectionString(dbDestinationConnection);
-                    warehouseViewsService.CreateAllDimensionViews(sourceConnectionString, destinationConnectionString);
-                    warehouseViewsService.CreateFactShipmentView(sourceConnectionString, destinationConnectionString);
-                    SetResultLable(true);
+                    int tenant = Int32.Parse(row["Tenant"].ToString());
+                    string catalog = row["Catalog"].ToString();
+                    string userName = row["UserName"].ToString();
+                    string password = row["Password"].ToString();
+                    string server = row["Server"].ToString();
+                    string privateUserName = row["PrivateUserName"].ToString();
+                    if (featureDataWarehouseService.CheckFeature("PrivateDB", tenant))
+                    {
+                        string destinationConnectionString = BuildConnectionString(catalog, userName, password, server);
+                        privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = ApplyGrantOnViews });
+                    }
                 }
-                else MessageBox.Show("Connection Problem");
+                SetResultLable(true);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 DisplayExceptionMessage(ex);
             }
         }
 
-       
+
+
+
+        public string BuildConnectionString(string catalog, string userName, string password, string server)
+        {
+            string result = "Data Source=" + server + ";Initial Catalog=" + catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + userName + ";Password= " + password + ";MultipleActiveResultSets=True;Connect Timeout=60";
+            return result;
+        }
+
+
+
+
         private void DeleteViewsButton_Click(object sender, EventArgs e)
         {
 
@@ -85,16 +95,24 @@ namespace WarehouseDataViews
             try
             {
                 ResultLabel.Text = "";
-                if (!string.IsNullOrEmpty(dbSourceConnection) && !string.IsNullOrEmpty(dbDestinationConnection) && tenant!=null)
+                string[] sourceConnectionArray = dbSourceConnection.Split(',');
+                string connectionString = BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+                GeneralDataWarehouseViewsService generalDataWarehouseViewsService = new GeneralDataWarehouseViewsService();
+                var dWHSettingsTable = generalDataWarehouseViewsService.GetDataTableFromSql(connectionString, "SELECT  * from  DWHSettings where PrivateUserName is not null");
+                foreach (DataRow row in dWHSettingsTable.Rows)
                 {
-                    WarehouseViewsService warehouseViewsService = new WarehouseViewsService((int)tenant);
-                    string sourceConnectionString = warehouseViewsService.BuildConnectionString(dbSourceConnection);
-                    string destinationConnectionString = warehouseViewsService.BuildConnectionString(dbDestinationConnection);
-                    warehouseViewsService.DeleteDimensionViews(sourceConnectionString, destinationConnectionString);
-                    warehouseViewsService.DropView("factShipments", destinationConnectionString);
-                    SetResultLable(true);
+                    int tenant = Int32.Parse(row["Tenant"].ToString());
+                    string catalog = row["Catalog"].ToString();
+                    string userName = row["UserName"].ToString();
+                    string password = row["Password"].ToString();
+                    string server = row["Server"].ToString();
+                    string destinationConnectionString = BuildConnectionString(catalog, userName, password, server);
+                    string deleteViewsSql = "DECLARE @sql VARCHAR(MAX) = '', @crlf VARCHAR(2) = CHAR(13) + CHAR(10); SELECT @sql = @sql + 'DROP VIEW ' + QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(v.name) + ';' + @crlf FROM sys.views v PRINT @sql;EXEC(@sql); ";
+                    generalDataWarehouseViewsService.RunSql(destinationConnectionString, deleteViewsSql);
                 }
-                else MessageBox.Show("Connection Problem");
+                SetResultLable(true);
+
+
             }
 
             catch (Exception ex)
@@ -103,7 +121,7 @@ namespace WarehouseDataViews
             }
 
         }
-      
+
 
         private void DisplayExceptionMessage(Exception ex)
         {
@@ -123,19 +141,11 @@ namespace WarehouseDataViews
             this.dbSourceConnection = sourceConnectionTextBox.Text;
 
         }
-        private void DestinationConnectionTextBox_TextChanged(object sender, EventArgs e)
-        {
-            TextBox destinationConnectionTextBox = sender as TextBox;
-            this.dbDestinationConnection = destinationConnectionTextBox.Text;
-        }
 
-        private void TenantTextBox_TextChanged(object sender, EventArgs e)
+        private void ApplyGrantonViewsCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            TextBox destinationConnectionTextBox = sender as TextBox;
-            if (!string.IsNullOrEmpty(destinationConnectionTextBox.Text))
-            {
-                this.tenant = Int32.Parse(destinationConnectionTextBox.Text);
-            }
+            CheckBox applyGrantOnViewsCheckBox = sender as CheckBox;
+            this.ApplyGrantOnViews = applyGrantOnViewsCheckBox.Checked;
         }
     }
 }
