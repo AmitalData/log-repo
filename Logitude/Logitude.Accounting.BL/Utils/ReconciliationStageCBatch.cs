@@ -137,7 +137,7 @@ namespace Logitude.Accounting.BL.Utils
                     bool success = false;
                     bool toContinue = true;
                     bool moveOn = false;
-                    bool runOnPairs = true;
+                    bool runOnPairs = false; // true;
                     do
                     {
                         success = false;
