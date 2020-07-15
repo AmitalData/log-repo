@@ -17,13 +17,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
     public class DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg : MessagingServiceBase<
         GenericRequestParams, INF_MSG_GenericResponseData,
         DCAInCustomRequest, //DF_NG_2754_MSG10004_ImportDeclarationResponse
-        DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg,
+        DF_NG_5118_MSG14004_DeclarationCancellationReplyMsg,
         DCAInCustomRequestService, DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsgResponseService,
         DCAInRequestHeader>
     {
 
 
-         protected override DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg GetFakeCustomsResponse(GenericRequestParams requestParamsData)
+         protected override DF_NG_5118_MSG14004_DeclarationCancellationReplyMsg GetFakeCustomsResponse(GenericRequestParams requestParamsData)
         {
 
             var fake = new Fake_DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg(requestParamsData);
@@ -31,7 +31,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             
         }
-        protected override DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg CallWS(DCAInCustomRequest customRequest, GenericRequestParams requestParams, out string exceptionMessage)
+        protected override DF_NG_5118_MSG14004_DeclarationCancellationReplyMsg CallWS(DCAInCustomRequest customRequest, GenericRequestParams requestParams, out string exceptionMessage)
         {
             throw new NotImplementedException();
         }
@@ -41,7 +41,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             get { return "5118"; }
         }
 
-        protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg customsResponse)
+        protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DF_NG_5118_MSG14004_DeclarationCancellationReplyMsg customsResponse)
         {
             var tableName = "Customs.Declaration";
 

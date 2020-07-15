@@ -43,16 +43,15 @@ using UnifreightIIG.Common.MessageLib.DeclarationCancel;
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsgResponseService : 
-        ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg, GenericRequestParams>
+        ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_5118_MSG14004_DeclarationCancellationReplyMsg, GenericRequestParams>
     {
         DeclarationPM _MyDeclarationPM;
-        DeclarationPM _MyDeclarationPMOrg;
-
+ 
         private DeclarationPrintResponseData _SendDeclarationPrintResponse;
  
 
       
-        public override void Update(DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg customResponse, GenericRequestParams requestParams)
+        public override void Update(DF_NG_5118_MSG14004_DeclarationCancellationReplyMsg customResponse, GenericRequestParams requestParams)
         {
             var context = CustomContext.GetContext(requestParams.Tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
@@ -60,19 +59,198 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData = new INF_MSG_GenericResponseData();
             DeclarationCorrectionsPointerService myDeclarationCorrectionsPointerService = new DeclarationCorrectionsPointerService();
             string error = "";
+            this.MyResponseData = new INF_MSG_GenericResponseData();
 
 
+          
 
+            if (customResponse.CancellationResponse== null  )
+            {
+                this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.UserMessage = "CancellationResponse  is null";
+                this.MyResponseData.HasException = false;
 
+                return;
+            }
             FeatureQuery featureQuery = new FeatureQuery();
-
+            bool bFromMehes = false;
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
 
-            var feature = features.Features.FirstOrDefault(x => x.Code == "DECLARATIONAMENDMENT");
+            var feature = features.Features.FirstOrDefault(x => x.Code == "DeclarationCancellation");
             if (feature != null)
             {
-                 
+                _MyDeclarationPM = myDeclarationQueryService.GetSingleDeclarationByNumber(customResponse.CancellationResponse.DeclarationID, requestParams.Tenant);
+                if (_MyDeclarationPM == null)
+                {
+                    this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                    this.MyResponseData.Succeeded = true;
+                    this.MyResponseData.UserMessage = "לא נמצאה הצהרה מתאימה.";
+                    this.MyResponseData.HasException = false;
 
+                    return;
+                }
+
+                string loggingUserId = "";
+                UserRepository userRepository = new UserRepository(_MyDeclarationPM.Tenant);
+                var user = userRepository.GetSingleUserByCode("MEHES", _MyDeclarationPM.Tenant, true);
+                if (user != null)
+                {
+                    loggingUserId = user.Id;
+                }
+                if (customResponse.CancellationResponse.FunctionalReferenceID ==null)
+                {
+                    bFromMehes = true;
+                }
+
+
+                _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.CancellationResponse.DeclarationStatusID.ToString();
+
+                if (customResponse.AdditionalInformation!= null && customResponse.AdditionalInformation.Count()>0)
+                {
+                    foreach (var item in customResponse.AdditionalInformation)
+                    {
+                        switch(item.StatementTypeCode)
+                        {
+                            case  30:
+                                {
+                                    if(bFromMehes)
+                                    _MyDeclarationPM.CancelRequestReasonCode = item.Content;
+                                    break;
+                                }
+
+                            case 33:
+                                {
+                                    _MyDeclarationPM.CancelRequestStatusCode= item.Content;
+
+                              
+                                    break;
+                                }
+
+
+                            case 22:
+                                {
+                                    _MyDeclarationPM.CustomCancelRequestRemarks = item.Content;
+                                    break;
+                                }
+
+
+                            case 36:
+                                {
+                                    _MyDeclarationPM.CancelRequestRejectionReason = item.Content;
+                                    break;
+                                }
+
+
+                            case 37:
+                                {
+                                     _MyDeclarationPM.CancelRequestApproveDate = DateTime.ParseExact(item.Content, "yyyy-MM-ddTHH:mm:ss", null);
+                                    break;
+                                }
+
+                            case 31:
+                                {
+                                    _MyDeclarationPM.IsClaimable = Convert.ToBoolean( item.Content);
+                                    break;
+                                }
+                        }
+                    }
+                }
+
+
+                switch (_MyDeclarationPM.CancelRequestStatusCode)
+                {
+                    case "6":
+                        {
+                            var amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                            {
+                                Tenant = _MyDeclarationPM.Tenant,
+                                objectTableName = "Customs.Declaration",
+                                EventCode = "CRJ",
+                                notes = "סיבת הדחיה: " + _MyDeclarationPM.CancelRequestRejectionReason
+                                    + +'\n' + "הערות המכס לביטול: " + _MyDeclarationPM.CustomCancelRequestRemarks,
+                                CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+                                EntityId = _MyDeclarationPM.Id,
+                                UserId = requestParams.LoggingUserId,
+
+                                CommunicationSubject = "FU Status CRJ from logitude ",
+                                MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                                {
+                                    entname = "CFIFILEM",
+                                    primary_number = _MyDeclarationPM.CustomFileNo,
+                                    status = "new",
+                                    xml_status = "new",
+                                    status_id = "CRJ",
+                                    status_DateTime = Convert.ToDateTime(_MyDeclarationPM.CancelRequestApproveDate),
+                                    comments = "סיבת הדחיה: " + _MyDeclarationPM.CancelRequestRejectionReason
+                                    + +'\n' + "הערות המכס לביטול: " + _MyDeclarationPM.CustomCancelRequestRemarks
+ 
+ 
+                                }
+                            };
+                            AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
+
+                            break;
+                        }
+                    case "5":
+                        {
+
+                            var amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                            {
+                                Tenant = _MyDeclarationPM.Tenant,
+                                objectTableName = "Customs.Declaration",
+                                EventCode = "CAP",
+                                notes = "הערות המכס לביטול: " + _MyDeclarationPM.CustomCancelRequestRemarks,
+                                CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+                                EntityId = _MyDeclarationPM.Id,
+                                UserId =bFromMehes? loggingUserId : requestParams.LoggingUserId,
+
+                                CommunicationSubject = "FU Status CAP from logitude ",
+                                MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                                {
+                                    entname = "CFIFILEM",
+                                    primary_number = _MyDeclarationPM.CustomFileNo,
+                                    status = "new",
+                                    xml_status = "new",
+                                    status_id = "CAP",
+                                    status_DateTime = Convert.ToDateTime(_MyDeclarationPM.CancelRequestApproveDate),
+                                    comments ="הערות המכס לביטול: " + _MyDeclarationPM.CustomCancelRequestRemarks
+
+
+                                }
+                            };
+                            AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
+
+                            break;
+                        }
+                }
+
+                this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
+
+                this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.HasException = false;
+                this.MyResponseData.UserMessage = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
+
+                this.MyRequestSheetParam = new RequestSheetParam();
+                this.MyRequestSheetParam.CustomFileNo = this._MyDeclarationPM.CustomFileNo;
+                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
+                this.MyRequestSheetParam.RequestDescription = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
+
+
+
+            }
+
+            else
+            {
+                this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.UserMessage = "אין הרשאה לביטול הצהרה.";
+                this.MyResponseData.HasException = false;
+
+                return;
             }
 
 
@@ -145,7 +323,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
  
-        public override INF_MSG_GenericResponseData GetResponse(DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg customResponse, GenericRequestParams requestParams)
+        public override INF_MSG_GenericResponseData GetResponse(DF_NG_5118_MSG14004_DeclarationCancellationReplyMsg customResponse, GenericRequestParams requestParams)
         {
             return this.MyResponseData;
         }
