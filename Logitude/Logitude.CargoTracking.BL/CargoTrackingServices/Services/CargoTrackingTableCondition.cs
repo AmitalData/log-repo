@@ -1,4 +1,4 @@
-﻿using CargoTrackingWinFormService.CargoTracking.BL.HelperClasses;
+﻿ 
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,14 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CargoTrackingWinFormService.CargoTracking.BL.Services
+namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 {
     public class CargoTrackingTableCondition
     {
 
-        public static string Condition(string TableName, CargoTrackingArguments CargoTrackingArguments = null)
+        public static string Condition(string TableName, CargoTrackingArguments CargoTrackingArguments = null, string Condition = null)
         {
             string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + TableName + "')";
+            if (Condition!=null)
+            {
+                condition = Condition;
+            }
             if (CargoTrackingArguments != null)
             {
                 if(TableName== "CargoTrackingShipments" || TableName == "CargoTrackingShipmentSearches")
@@ -26,7 +30,7 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                     }
                     else
                     {
-                        condition = " where CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and CreateDateTime <= '" + CargoTrackingArguments.ToDate+"'";
+                        condition += " and CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and CreateDateTime <= '" + CargoTrackingArguments.ToDate+"'";
 
                     }
 

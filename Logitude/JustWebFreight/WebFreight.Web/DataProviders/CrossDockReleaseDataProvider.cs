@@ -89,6 +89,8 @@ namespace WebFreight.Web.DataProviders
         public string ConnectedShipmentTransportMode { get; set; }
         public string Trailer { get; set; }
         public int StorageDays { get; set; }
+        public string ProjectNumber { get; set; }
+        public int? StorageFreeDays { get; set; }
 
     }
 

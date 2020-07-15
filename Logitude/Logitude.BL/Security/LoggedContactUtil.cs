@@ -17,7 +17,14 @@ namespace Logitude.BL.Security
 
         public ContactPM GetLoggedContact(int tenant)
         {
-            string userIdentityName = AuthenticationUtil.ResolveUserIdentityName(tenant);// fix by Islam for 69295 Wrong user name recorded in events of AR invoices
+            string userIdentityName;
+
+            string userEmailSetByReportWR = AuthenticationUtil.AuthenticatedUserEmail;
+            if (userEmailSetByReportWR != null)
+                userIdentityName = userEmailSetByReportWR;
+            else
+                userIdentityName = AuthenticationUtil.ResolveUserIdentityName(tenant); // fix by Islam for 69295 Wrong user name recorded in events of AR invoices
+
             string key = $"GetLoggedContact({userIdentityName}{tenant})";
             var loggedContact = CacheManager.GetOrInsertNewObject<ContactPM>(key, () =>
             {

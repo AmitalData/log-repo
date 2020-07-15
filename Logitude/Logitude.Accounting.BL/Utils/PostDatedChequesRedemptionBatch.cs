@@ -15,6 +15,12 @@ using System.Net;
 using System.Transactions;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.Helpers;
+using System.Text;
+using Logitude.Customs.BL.Messaging.Customs;
+
 
 //using AmitalCustomsWindowsService.Utils;
 
@@ -24,6 +30,8 @@ namespace Logitude.Accounting.BL.Utils
     {
         private string _ResponseText;
         private HttpStatusCode _StatusCode;
+        private string _AggregateKey;
+        private StringBuilder _logger;
 
         public PostDatedChequesRedemptionBatch()
         {
@@ -77,6 +85,23 @@ namespace Logitude.Accounting.BL.Utils
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(3)))
                 {
+                    try
+                    {
+                        _AggregateKey = "ARPaymentChequeRedemption-" + id; // VarChar 128 
+                        LockIt(tenant);
+                    }
+                    catch (Exception eee)
+                    {
+                        AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Information);
+
+                        if (eee.ToString().Contains("ORA-00054"))
+                        {
+                            throw new CustomsRequestsSheetDomainModelServiceException(CustomsRequestsSheetDomainModelServiceException.WhereEnum.AggregateDCAAnalyzerLockIt, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.RetryQueue, "GeneralLock is locked in another thread", eee);
+                        }
+                        //ActivityLogger
+                        throw;
+                    }
+
                     if (!String.IsNullOrEmpty(id))
                     {
                         ARPaymentChequeListQueryService aRPaymentChequeListQueryService = new ARPaymentChequeListQueryService(context);
@@ -175,7 +200,10 @@ namespace Logitude.Accounting.BL.Utils
                         }
                     }
                     UpdateARPaymentChequeStatus(id, tenant, "3", context);
-
+                    if (!String.IsNullOrEmpty(_AggregateKey))
+                    {
+                        TryDeleteLockRow(tenant);
+                    }
                     scope.Complete();
                 }//using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
             }
@@ -189,12 +217,71 @@ namespace Logitude.Accounting.BL.Utils
                         _StatusCode = HttpStatusCode.InternalServerError;
                  //       UpdateARPaymentChequeStatus(id, tenant, "2", context);
                     }
+                    if (!String.IsNullOrEmpty(_AggregateKey))
+                    { 
+                        TryDeleteLockRow(tenant);
+                    }
                     excScope.Complete();
                 }
 
             }
 
         }
+
+
+        private void TryDeleteLockRow(int tenant)
+        {
+            //GeneralLock
+            {
+                try
+                {
+
+                    var repo = new GeneralLockRepository(tenant);
+
+                    repo.FastDelete(_AggregateKey, tenant);
+                    _AggregateKey = "";
+                }
+                catch (Exception e)
+                {
+                    throw (e);
+                }
+            }
+        }
+
+        private void LockIt(int tenant)
+        {
+            var repo = new GeneralLockRepository(tenant);
+            
+            var lockPoco = repo.GetSingleGeneralLockNOWAIT(_AggregateKey, tenant);
+            if (lockPoco == null)
+            {
+                using (var scope = TransactionFactory.GetNewTransaction())
+                {
+                    repo.Add(new GeneralLock()
+                    {
+                        Tenant = tenant,
+                        GeneralKey = _AggregateKey,
+                        CreatedAt = TenantServerConfigration.GetCurrentDateTime(tenant)
+                    });
+                    _logger.AppendLine("add GeneralLock");
+                    repo.SubmitChanges();
+                    scope.Complete();
+                }
+                lockPoco = repo.GetSingleGeneralLockNOWAIT(_AggregateKey, tenant);
+            }
+
+            if (lockPoco == null)
+            {
+                throw new Exception("lockPoco ==null");
+            }
+            else
+            {
+                _logger.AppendLine("Lock it ");
+            }
+
+        }
+
+
 
         private static void UpdateARPaymentChequeStatus(string id, int tenant, string status, IAccountingContext context)
         {

@@ -22,13 +22,14 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        public HttpResponseMessage GetReconciliationStageC(int tenant, string gLAccountId, string accountTypeCode, string upToAccountingDate, int lT_LinesMaximum, decimal maximalDifference)
+        public HttpResponseMessage GetReconciliationStageC(int tenant, string gLAccountId, string accountTypeCode, string upToAccountingDate, int lT_LinesMaximum) //, decimal maximalDifference)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 ReconciliationStageCArg args = null;
                 string message = "";
+                decimal maximalDifference = Decimal.MaxValue;
                 bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, upToAccountingDate, lT_LinesMaximum, maximalDifference, ref args, message);
                 if (!isSuccess)
                 {
@@ -119,13 +120,15 @@ namespace WebFreight.Web.Controllers.AccountingModel
         }
 
 
-        public HttpResponseMessage GetReconciliationStageCNoBatch(int tenant, string gLAccountId, string accountTypeCode, string upToAccountingDate, int lT_LinesMaximum, decimal maximalDifference, int noBatch)
+       // public HttpResponseMessage GetReconciliationStageCNoBatch(int tenant, string gLAccountId, string accountTypeCode, string upToAccountingDate, int lT_LinesMaximum, decimal maximalDifference, int noBatch)
+        public HttpResponseMessage GetReconciliationStageCNoBatch(int tenant, string gLAccountId, string accountTypeCode, string upToAccountingDate, int lT_LinesMaximum, int noBatch) // penultimate parameter was decimal maximalDifference 
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 ReconciliationStageCArg args = null;
                 string message = "";
+                decimal maximalDifference = Decimal.MaxValue;
                 bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, upToAccountingDate, lT_LinesMaximum, maximalDifference, ref args, message);
                 if (!isSuccess)
                 {

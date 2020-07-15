@@ -133,22 +133,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 {
                     CrossDockReleaseShipmentService crossDockReleaseShipmentService = new CrossDockReleaseShipmentService();
                     dataProvider = crossDockReleaseShipmentService.FullCrossDockReleaseProviderFromShipment(warehouseReleasePM.ShipmentId, dataProvider, warehouseReleasePM.Tenant);
-
-                    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                    Shipment shipment = shipmentRepository.GetSingleShipment(warehouseReleasePM.ShipmentId, tenant);
-
-                    if (!string.IsNullOrEmpty(shipment.MasterShipmentDataId))
-                    {
-                        ShipmentMasterData masterData = (from a in shipmentRepository.context.ShipmentMasterDatas
-                                                         where a.Id == shipment.MasterShipmentDataId
-                                                         select a).FirstOrDefault();
-
-                        if (masterData != null)
-                        {
-                            dataProvider.ImportManifest = masterData.ImportManifest;
-                            dataProvider.MasterImportManifest = masterData.ImportManifest;
-                        }
-                    }
                 }
             }
 

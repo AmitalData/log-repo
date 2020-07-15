@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace CargoTrackingWinFormService.CargoTracking.BL.HelperClasses
+ 
+namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
 {
     public class CargoTable
     {
@@ -19,6 +18,10 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.HelperClasses
         public string RefreshIds { get; set; }
         public bool IsUpdated { get; set; }
         public int UpdatedCount { get; set; }
-         public List<Label> Labels { get; set; }
+        public string Condition1 { get; set; }
+        public string Condition2 { get; set; }
+        public string Condition3 { get; set; }
+        public int ConditionsNumber { get; set; }
+        public List<object> Labels { get; set; }
     }
 }

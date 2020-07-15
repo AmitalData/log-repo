@@ -1,4 +1,5 @@
-﻿using CargoTrackingWinFormService.CargoTracking.BL.HelperClasses;
+﻿
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,9 +7,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+ 
 
-namespace CargoTrackingWinFormService.CargoTracking.BL.Services
+namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 {
     public class CargoTrackingMainService
     {
@@ -26,7 +27,8 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                 KeyName = "Id",
                 ConditionKey = "Id",
                 DBTableName = "Ports",
-                CT_TableName = "CargoTrackingPorts"
+                CT_TableName = "CargoTrackingPorts",
+                ConditionsNumber = 1,
             });
 
             CargoTableLists.Add(new CargoTable()
@@ -37,7 +39,8 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                 ConditionKey = "Id",
                 CT_FieldsDBName = "Id,Code,EnglishName,LocalName",
                 DBTableName = "Cards",
-                CT_TableName = "CargoTrackingCards"
+                CT_TableName = "CargoTrackingCards",
+                ConditionsNumber = 1,
             });
 
             CargoTableLists.Add(new CargoTable()
@@ -48,7 +51,10 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                 ConditionKey = "Id",
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipments",
-                CT_FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate"
+                CT_FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate",
+                Condition1 = " where ((AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName =  'CargoTrackingShipments')) and ((ShipmentLevelCode ='D' or ShipmentLevelCode ='H') and CustomFileId is not null))",
+                Condition2 = " where ((AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName =  'CargoTrackingShipments')) and (((ShipmentLevelCode !='D' and ShipmentLevelCode !='H') or CustomFileId is null)))",
+                ConditionsNumber = 2,
             });
 
             CargoTableLists.Add(new CargoTable()
@@ -59,14 +65,48 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                 ConditionKey= "ShipmentId",
                 CT_FieldsDBName = "Tenant,ShipmentId,SearchFields,ShipmentDate",
                 DBTableName = "Shipments",
-                CT_TableName = "CargoTrackingShipmentSearches"
+                CT_TableName = "CargoTrackingShipmentSearches",
+                ConditionsNumber = 1,
             });
 
             return CargoTableLists;
 
         }
 
+
         public int UpdateCTDataBase(CargoArgs buildCargoArgs, int NumberOfBulkPerTime, bool? IsUpdateAfterFinished = null, CargoTrackingArguments CargoTrackingArguments = null)
+        {
+            int NumberRecordUpdated = 0;
+            bool IsUpadteWaterMark = false;
+            if (buildCargoArgs.Table.Condition1 == null)
+            {
+                IsUpadteWaterMark = true;
+                NumberRecordUpdated += UpdateCTService(buildCargoArgs, NumberOfBulkPerTime, IsUpdateAfterFinished, CargoTrackingArguments,null, IsUpadteWaterMark);
+            }
+            if (buildCargoArgs.Table.Condition1!=null)
+            {
+                if (buildCargoArgs.Table.Condition2 == null)
+                {
+                    IsUpadteWaterMark = true;
+                }
+                NumberRecordUpdated += UpdateCTService(buildCargoArgs, NumberOfBulkPerTime, IsUpdateAfterFinished, CargoTrackingArguments, buildCargoArgs.Table.Condition1, IsUpadteWaterMark);
+            }
+            if (buildCargoArgs.Table.Condition2 != null)
+            {
+                if (buildCargoArgs.Table.Condition3 == null)
+                {
+                    IsUpadteWaterMark = true;
+                }
+                NumberRecordUpdated += UpdateCTService(buildCargoArgs, NumberOfBulkPerTime, IsUpdateAfterFinished, CargoTrackingArguments, buildCargoArgs.Table.Condition2, IsUpadteWaterMark);
+            }
+            if (buildCargoArgs.Table.Condition3 != null)
+            {
+                IsUpadteWaterMark = true;
+                NumberRecordUpdated += UpdateCTService(buildCargoArgs, NumberOfBulkPerTime, IsUpdateAfterFinished, CargoTrackingArguments, buildCargoArgs.Table.Condition3, IsUpadteWaterMark);
+            }
+            return NumberRecordUpdated;
+        }
+        private  int UpdateCTService(CargoArgs buildCargoArgs, int NumberOfBulkPerTime, bool? IsUpdateAfterFinished = null, CargoTrackingArguments CargoTrackingArguments = null,string Condition =null, bool IsUpadteWaterMark=false)
         {
 
             CargoTable table = buildCargoArgs.Table;
@@ -79,7 +119,7 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                        new SqlConnection(buildCargoArgs.SourceConnectionString))
             {
                 sourceConnection.Open();
-                SqlDataReader reader = GetSqlDataReader(buildCargoArgs, table, sourceConnection, CargoTrackingArguments);
+                SqlDataReader reader = GetSqlDataReader(buildCargoArgs, table, sourceConnection, CargoTrackingArguments, Condition);
                 DataTable dtSchema = reader.GetSchemaTable();
                 List<DataColumn> listCols = new List<DataColumn>();
                 dataTable = new DataTable();
@@ -145,11 +185,15 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                 {
                     reader.Close();
                 }
-                if (IsUpdateAfterFinished == null)
+                //if (IsUpdateAfterFinished == null)
+                //{
+                //    UpdateCTDataBase(buildCargoArgs, NumberOfBulkPerTime, true,CargoTrackingArguments);
+                //}
+                if (IsUpadteWaterMark)
                 {
-                    UpdateCTDataBase(buildCargoArgs, NumberOfBulkPerTime, true,CargoTrackingArguments);
+                    UpdateWaterMarkAfterFinishCheck(table, automaticLastUpdateDate, buildCargoArgs);
+
                 }
-                UpdateWaterMarkAfterFinishCheck(table, automaticLastUpdateDate, buildCargoArgs);
             }
 
 
@@ -159,10 +203,10 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
 
         }
 
-        private SqlDataReader GetSqlDataReader(CargoArgs buildCargoArgs, CargoTable table, SqlConnection sourceConnection, CargoTrackingArguments CargoTrackingArguments = null)
+        private SqlDataReader GetSqlDataReader(CargoArgs buildCargoArgs, CargoTable table, SqlConnection sourceConnection, CargoTrackingArguments CargoTrackingArguments = null, string Condition=null)
         {
             string fieldName = !string.IsNullOrEmpty(buildCargoArgs.Table.FieldsDBName) ? buildCargoArgs.Table.FieldsDBName : "*";
-            string condition = GetUpdateDataBaseCondition(buildCargoArgs, CargoTrackingArguments);
+            string condition = GetUpdateDataBaseCondition(buildCargoArgs, CargoTrackingArguments, Condition);
 
             SqlCommand commandSourceData = new SqlCommand(
                            "SELECT " + fieldName + " " +
@@ -236,20 +280,20 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
                             foreach (DataRow dr in dataTable.Rows)
                             {
                                 CargoTrackingTableLogicService.SetTableLogic(dr, buildCargoArgs.Table.CT_TableName);
-                                if (IsUpdateAfterFinished == null || IsUpdateAfterFinished == false)
-                                {
-                                    CargoTrackingTableLogicAfterUpdating.SetTableLogic(dr, buildCargoArgs.Table.CT_TableName);
-                                }
+                                //if (IsUpdateAfterFinished == null || IsUpdateAfterFinished == false)
+                                //{
+                                //    CargoTrackingTableLogicAfterUpdating.SetTableLogic(dr, buildCargoArgs.Table.CT_TableName);
+                                //}
                             }
 
-                            if (IsUpdateAfterFinished == true)
-                            {
+                            //if (IsUpdateAfterFinished == true)
+                            //{
 
-                                foreach (DataRow dr in dataTable.Rows)
-                                {
-                                    CargoTrackingUpdatedAfterFinishMapping.UpdatedAfterFinishMapping(dr, buildCargoArgs.Table.CT_TableName);
-                                }
-                            }
+                            //    foreach (DataRow dr in dataTable.Rows)
+                            //    {
+                            //        CargoTrackingUpdatedAfterFinishMapping.UpdatedAfterFinishMapping(dr, buildCargoArgs.Table.CT_TableName);
+                            //    }
+                            //}
 
 
 
@@ -440,9 +484,9 @@ namespace CargoTrackingWinFormService.CargoTracking.BL.Services
             return result;
         }
 
-        private string GetUpdateDataBaseCondition(CargoArgs buildCargoArgs, CargoTrackingArguments CargoTrackingArguments = null)
+        private string GetUpdateDataBaseCondition(CargoArgs buildCargoArgs, CargoTrackingArguments CargoTrackingArguments = null, string Condition=null)
         {
-            string condition = CargoTrackingTableCondition.Condition(buildCargoArgs.Table.CT_TableName, CargoTrackingArguments);
+            string condition = CargoTrackingTableCondition.Condition(buildCargoArgs.Table.CT_TableName, CargoTrackingArguments, Condition);
             //string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + buildCargoArgs.Table.CT_TableName + "')";
             return condition;
         }

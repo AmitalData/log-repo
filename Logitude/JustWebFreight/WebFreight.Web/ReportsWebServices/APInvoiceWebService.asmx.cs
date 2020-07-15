@@ -514,7 +514,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                              where d.ShipmentId == shipment.Id && d.PickUpDeliveryTypeCode == "DELV"
                                                              select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
-                    if (myFirstPickup != null)
+                    if (myLastDelivery != null)
                     {
                         invoiceDataProvider.LastDeliveryETA = myLastDelivery.ETA;
                         invoiceDataProvider.LastDeliveryETD = myLastDelivery.ETD;

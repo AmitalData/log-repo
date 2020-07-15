@@ -672,13 +672,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="true"
     ObjectFieldNotRequired="true"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;GreaterThanOrEqual&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -692,6 +693,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;InterestReport&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -703,6 +705,9 @@
     FullFieldLable="&quot;InterestCalculationDate&quot;"
     DefaultText="&quot;Calculation Date&quot;"
     FullLocalDefaultText="&quot;תאריך חישוב ריבית&quot;"
+    ListFieldLable="&quot;InterestCalculationDateListLable&quot;"
+    ListLableDefaultText="&quot;Calculation Date&quot;"
+    ListLocalDefaultText="&quot;תאריך חישוב ריבית&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -2466,6 +2471,11 @@
         QueryCode="&quot;Interest Report&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;InvoiceAmount&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Interest Report&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;InterestCalculationDate&quot;"
         ColumnWidth="130" />
     </QueryColumns>
     <QueryFilters />

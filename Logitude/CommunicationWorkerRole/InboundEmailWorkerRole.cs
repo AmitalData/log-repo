@@ -857,10 +857,15 @@ namespace CommunicationWorkerRole
 
                         List<string> docIds = myCorrespondencesAttachments.Where(a => a.CorrespondenceId == item.EntityLineId && a.Tenant == item.Tenant).Select(d => d.DocumentFilingId).ToList();
                         myResult += @"<nav>";
+                        DocumentsFilingQuery docQuery = new DocumentsFilingQuery(tenant);
 
                         foreach (string id in docIds)
                         {
                             DocumentsFilingPM myDoc = DocumentsFilings.Where(a => a.Id == id).FirstOrDefault();
+                            if (myDoc == null)
+                            {
+                                myDoc = docQuery.GetSinglePM(id, tenant);
+                            }
                             string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
                             myResult += @"<a href=" + uri + "><span style=';font-family:Lucida Sans Unicode;font-size:12px;'>" + myDoc.FileName + "</span></a> |";
                         }
@@ -997,9 +1002,14 @@ namespace CommunicationWorkerRole
 
                         List<string> docIds = myCorrespondencesAttachments.Where(a => a.CorrespondenceId == item.EntityLineId && a.Tenant == item.Tenant).Select(d => d.DocumentFilingId).ToList();
                         myResult += @"<nav>";
+                        DocumentsFilingQuery docQuery = new DocumentsFilingQuery(tenant);
                         foreach (string id in docIds)
                         {
                             DocumentsFilingPM myDoc = DocumentsFilings.Where(a => a.Id == id).FirstOrDefault();
+                            if (myDoc == null)
+                            {
+                                myDoc = docQuery.GetSinglePM(id, tenant);
+                            }
                             string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant; 
                             myResult += @"<a href=" + uri + "><span style=';font-family:Lucida Sans Unicode;font-size:12px;'>" + myDoc.FileName + "</span></a> |";
                         }
@@ -1095,9 +1105,14 @@ namespace CommunicationWorkerRole
 
                             List<string> docIds = myCorrespondencesAttachments.Where(a => a.CorrespondenceId == item.EntityLineId && a.Tenant == item.Tenant).Select(d => d.DocumentFilingId).ToList();
                             myResult += @"<nav>";
+                            DocumentsFilingQuery docQuery = new DocumentsFilingQuery(tenant);
                             foreach (string id in docIds)
                             {
                                 DocumentsFilingPM myDoc = DocumentsFilings.Where(a => a.Id == id).FirstOrDefault();
+                                if (myDoc == null)
+                                {
+                                    myDoc = docQuery.GetSinglePM(id, tenant);
+                                }
                                 string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
                                 myResult += @"<a href=" + uri + "><span style=';font-family:Lucida Sans Unicode;font-size:12px;'>" + myDoc.FileName + "</span></a> |";
                             }
@@ -1246,10 +1261,16 @@ namespace CommunicationWorkerRole
                     myResult += @"<p style='width:100%!important;direction:" + textDirection + ";font-family:Lucida Sans Unicode;font-size:12px'>" + htmlbody + "</p>";
 
                     List<string> docIds = myCorrespondencesAttachments.Where(a => a.CorrespondenceId == item.EntityLineId && a.Tenant == item.Tenant).Select(d => d.DocumentFilingId).ToList();
+                    DocumentsFilingQuery docQuery = new DocumentsFilingQuery(tenant);
+
                     myResult += @"<nav>";
                     foreach (string id in docIds)
                     {
                         DocumentsFilingPM myDoc = DocumentsFilings.Where(a => a.Id == id).FirstOrDefault();
+                        if (myDoc == null)
+                        {
+                            myDoc = docQuery.GetSinglePM(id, tenant);
+                        }
                         string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
                         myResult += @"<a href=" + uri + "><span style=';font-family:Lucida Sans Unicode;font-size:12px;'>" + myDoc.FileName + "</span></a> |";
                     }

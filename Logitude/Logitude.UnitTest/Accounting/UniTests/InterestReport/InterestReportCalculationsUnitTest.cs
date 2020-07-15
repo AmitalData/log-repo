@@ -30,7 +30,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.InterestReport
             InterestReportTestResultGetter interestReportTestResultGetter = new InterestReportTestResultGetter();
             InterestReportPM interestReportPM = interestReportCalculationPreparations.GetInterestReportPM("", 1);
             GLAccountPM gLAccountPM = interestReportCalculationPreparations.GetGLAccount("", 1);
-            InterestTransactionGetParameters interestTransactionGetParameters = new InterestTransactionGetParameters(interestReportPM.InterestCalculationDate, 1, interestReportPM.GLAccountId, gLAccountPM.InterestCalculationStartDate);
+            InterestTransactionGetParameters interestTransactionGetParameters = new InterestTransactionGetParameters(interestReportPM.InterestCalculationDate, 1, /*interestReportPM.GLAccountId*/null, gLAccountPM.InterestCalculationStartDate);
             List<InterestTransactionPM> interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(interestTransactionGetParameters);
             List<GLAccountInterestPeriodPM> gLAccountInterestPeriodPMs = interestReportCalculationPreparations.GetGlaccountInterestPeriods(interestReportPM);
             List<InterestBasesPeriodPM> interestBasesPeriodPMs = interestReportCalculationPreparations.GetAllInterestBasesPeriodPMs(1);
@@ -77,7 +77,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.InterestReport
             InterestReportTestResultGetter interestReportTestResultGetter = new InterestReportTestResultGetter();
             InterestReportPM interestReportPM = interestReportCalculationPreparations.GetInterestReportPM("", 1);
             GLAccountPM gLAccountPM = interestReportCalculationPreparations.GetGLAccount("", 1);
-            InterestTransactionGetParameters interestTransactionGetParameters = new InterestTransactionGetParameters(interestReportPM.InterestCalculationDate, 1, interestReportPM.GLAccountId, gLAccountPM.InterestCalculationStartDate);
+            InterestTransactionGetParameters interestTransactionGetParameters = new InterestTransactionGetParameters(interestReportPM.InterestCalculationDate, 1, /*interestReportPM.GLAccountId*/null, gLAccountPM.InterestCalculationStartDate);
             List<InterestTransactionPM> interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(interestTransactionGetParameters);
             List<GLAccountInterestPeriodPM> gLAccountInterestPeriodPMs = new List<GLAccountInterestPeriodPM>(); //interestReportCalculationPreparations.GetGlaccountInterestPeriods(interestReportPM);
             List<InterestBasesPeriodPM> interestBasesPeriodPMs = interestReportCalculationPreparations.GetAllInterestBasesPeriodPMs(1);
