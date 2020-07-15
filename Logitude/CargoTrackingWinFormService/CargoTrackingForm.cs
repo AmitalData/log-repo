@@ -1,5 +1,5 @@
-﻿using CargoTrackingWinFormService.CargoTracking.BL.HelperClasses;
-using CargoTrackingWinFormService.CargoTracking.BL.Services;
+﻿using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -119,7 +119,7 @@ namespace CargoTrackingWinFormService.Forms
 
 
 
-        private void AddLabelToTable( TableLayoutPanel tableLayoutPanel, string Dw_TableName, int x, int y,int AccessLevel=0, CargoTable table=null)
+        private void AddLabelToTable( TableLayoutPanel tableLayoutPanel, string Dw_TableName, int x, int y,int AccessLevel=0, CargoTable table=null, List<Label> CargoLabels=null)
         {
  
 
@@ -134,7 +134,7 @@ namespace CargoTrackingWinFormService.Forms
 
             if (table!=null)
             {
-                table.Labels.Add(Label);
+                CargoLabels.Add(Label);
             }
  
              SetLabelStyleOnGRID(Label, AccessLevel);
@@ -179,13 +179,13 @@ namespace CargoTrackingWinFormService.Forms
 
 
 
-        private void AddLabelToGrid(string Dw_TableName,int X ,int Y,int AccessLevel=0, CargoTable table=null)
+        private void AddLabelToGrid(string Dw_TableName,int X ,int Y,int AccessLevel=0, CargoTable table=null, List<Label> CargoLabels=null)
         {
             this.Height = this.Height + TableCellMrginHight;
             this.TotalIncreasing += TableCellMrginHight;
             tableLayoutPanel1.Size = new Size(tableLayoutPanel1.Size.Width, tableLayoutPanel1.Size.Height + TableCellMrginHight);
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 0.5f));
-            AddLabelToTable( tableLayoutPanel1,  Dw_TableName, Table_X, Table_Y, AccessLevel, table);
+            AddLabelToTable( tableLayoutPanel1,  Dw_TableName, Table_X, Table_Y, AccessLevel, table, CargoLabels);
             this.Table_X += X;
             this.Table_Y += Y;
         }
@@ -195,60 +195,61 @@ namespace CargoTrackingWinFormService.Forms
 
         private void UpdateCargoTables()
         {
+            List<Label> CargoLabels =   new List<Label>();
 
             List<CargoTable> CargoTableLists = cargoTrackingService.FillCargoTableList();
             foreach (CargoTable table in CargoTableLists)
             {
-                table.Labels = new List<Label>();
+                CargoLabels = new List<Label>();
                 string TableNameLabe = table.CT_TableName.Length <23 ? table.CT_TableName : table.CT_TableName.Substring(0,17)+" ...";
-                AddLabelToGrid(TableNameLabe, 1, 0, 1, table);
-                AddLabelToGrid( "In Progress...", 1, 0, 2, table);
-                AddLabelToGrid( "Remaining ...", 0, 1, 3, table);
+                AddLabelToGrid(TableNameLabe, 1, 0, 1, table, CargoLabels);
+                AddLabelToGrid( "In Progress...", 1, 0, 2, table, CargoLabels);
+                AddLabelToGrid( "Remaining ...", 0, 1, 3, table, CargoLabels);
                 this.Table_X = 0;
             }
             InitFirstChecking();
-            Thread thread = new Thread(() => {  AddAllTablesToThread(CargoTableLists); });
+            Thread thread = new Thread(() => {  AddAllTablesToThread(CargoTableLists, CargoLabels); });
             thread.IsBackground = true;
             thread.Start();
          
         }
 
-        private void AddAllTablesToThread(List<CargoTable> CargoTableLists)
+        private void AddAllTablesToThread(List<CargoTable> CargoTableLists, List<Label> CargoLabels)
         {
             foreach (CargoTable table in CargoTableLists)
             {
 
-                SetLabelValueAndUpdateTable(table);
+                SetLabelValueAndUpdateTable(table, CargoLabels);
 
             }
         }
 
 
-        private void SetLabelValueAndUpdateTable(CargoTable table)
+        private void SetLabelValueAndUpdateTable(CargoTable table, List<Label> CargoLabels)
         {
 
-            SetControlPropertyValue(table.Labels[2], "Text", "Updating...");
-            SetControlPropertyValue(table.Labels[2], "ForeColor", Color.Black);
+            SetControlPropertyValue(CargoLabels[2], "Text", "Updating...");
+            SetControlPropertyValue(CargoLabels[2], "ForeColor", Color.Black);
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             globalStopwatch = stopWatch;
-            generalLabel = table.Labels[2];
+            generalLabel = CargoLabels[2];
             timer1.Enabled = true;
             timer1.Start();
             UpdateCargoDataBase(table);
  
-            SetControlPropertyValue(table.Labels[1], "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
-            SetControlPropertyValue(table.Labels[1], "Text", "( " + NumberOfCoulmnUpdated + " )");
-            SetControlPropertyValue(table.Labels[1], "ForeColor", Color.Red);
+            SetControlPropertyValue(CargoLabels[1], "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
+            SetControlPropertyValue(CargoLabels[1], "Text", "( " + NumberOfCoulmnUpdated + " )");
+            SetControlPropertyValue(CargoLabels[1], "ForeColor", Color.Red);
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
             globalStopwatch = null;
             generalLabel = null;
             timer1.Start();
-            SetControlPropertyValue(table.Labels[2], "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
-            SetControlPropertyValue(table.Labels[2], "ForeColor", Color.Green); // timer
-            SetControlPropertyValue(table.Labels[2], "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+            SetControlPropertyValue(CargoLabels[2], "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
+            SetControlPropertyValue(CargoLabels[2], "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(CargoLabels[2], "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
         }
 
         private void InitFirstChecking()

@@ -19,7 +19,7 @@ export class CargoTrackingExtendedPMService {
     constructor() {
    
         this.httpClient = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CargoTracking';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CargoTrackingBuildTables';
     }
 
     PostCargoTrackingBuilder( Args:CargoTrackingArgs) {
