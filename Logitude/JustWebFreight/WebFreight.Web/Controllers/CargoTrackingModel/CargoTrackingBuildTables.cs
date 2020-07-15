@@ -1,19 +1,11 @@
-﻿using Logitude.Accounting.BL.CoreBL.Batch;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.BL.InterestService.HelperClasses;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Def.EntityPMs;
+﻿ 
+using Logitude.CargoTracking.BL.CoreBL.Batch;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -34,7 +26,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 {
 
 
-    public class CargoTrackingController : ApiController
+    public class CargoTrackingBuildTables : ApiController
     {
         public HttpResponseMessage PostCargoTrackingBuilder(CargoTrackingArgs Args)
         {
@@ -44,7 +36,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
-                CreateBatchTaskExecution(Args, "Build Cargo Tracking Shipments", "Logitude.Accounting.BL.CoreBL.Batch.BuildCargoTrackingShipments,Logitude.Accounting.BL", tenant);
+                CreateBatchTaskExecution(Args, "Build Cargo Tracking Shipments", "Logitude.CargoTracking.BL.CoreBL.Batch.BuildCargoTrackingShipments,Logitude.Accounting.BL", tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, Args);
             }
 

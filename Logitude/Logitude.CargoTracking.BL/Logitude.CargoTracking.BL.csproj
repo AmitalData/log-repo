@@ -51,10 +51,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CargoTrackingServices\HelperClasses\CargoArgs.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\CargoDeleteRowsArgs.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\CargoTable.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingBlockRecordsService.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingCustomMappingService.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingMainService.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingSearchService.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingTableCondition.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingTableLogicAfterUpdating.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingTableLogicService.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingUpdatedAfterFinishMapping.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTrackingHeaderEntityTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTrackingMilestoneDetails.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CargoTrackingHeaderEntityTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CargoTrackingMilestoneStruct.Generated.cs" />
+    <Compile Include="CoreBL\Batch\BuildCargoTrackingShipments.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingCardDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingHeaderEntityTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingMilestoneDataMapping.cs" />
@@ -93,6 +105,10 @@
     <ProjectReference Include="..\Logitude.CargoTracking.Def\Logitude.CargoTracking.Def.csproj">
       <Project>{1602a405-278e-4ff9-b7b5-dfc6e525b497}</Project>
       <Name>Logitude.CargoTracking.Def</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
+      <Project>{BD959AB6-4476-48B3-AA4D-CFD7ED120E55}</Project>
+      <Name>Logitude.Infrastructure.BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
