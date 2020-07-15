@@ -487,6 +487,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          AccountDisplayNumber = acc.DisplayNumber,
                          AccountTermName = card.PaymentTerm.EnglishName,
 
+                         CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
+
                          AccountTermLocalName = card.PaymentTerm.LocalName,
 
 
