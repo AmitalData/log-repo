@@ -438,25 +438,25 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                 GLAccountListQueryService accountQS = new GLAccountListQueryService(_AccountingContext);
 
-                IQueryable<GLAccountList> accountsList = accountQS.GetByIds(accountsIds, _Param.Tenant);
+                IQueryable<GLAccountList> q_accountsList = accountQS.GetByIds(accountsIds, _Param.Tenant);
                 bool blanceCureency4SplitIsNeeded = true;
                 if (!blanceCureency4SplitIsNeeded)
                 {
                     if (_AccountListRelatedCurrenciesAccount_List2Discard != null)
                     {
-                        accountsList = accountsList.Where(r => !_AccountListRelatedCurrenciesAccount_List2Discard.Contains(r.Id));
+                        q_accountsList = q_accountsList.Where(r => !_AccountListRelatedCurrenciesAccount_List2Discard.Contains(r.Id));
 
                     }
                 }
-               
 
+                var myaccountsList = q_accountsList.ToList();
                 TenantQuery tenantQuery = new TenantQuery(_Param.Tenant);
                 var tenant = tenantQuery.GetSinglePM(_Param.Tenant);
 
                 DateTime currentDate = TenantServerConfigration.GetCurrentDateTime(_Param.Tenant);
               
             List<PeriodMExtended> periodMExtendeds =
-                    (from acc in accountsList
+                    (from acc in q_accountsList
                      join moredata in _AccountingContext.GLAccountMoreDatas.Where(r => r.Tenant == _Param.Tenant)
                      on acc.Id equals moredata.AccountId into moredataJoinT
                      from moredata in moredataJoinT.DefaultIfEmpty()
@@ -486,6 +486,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          AccountId = acc.Id,
                          AccountDisplayNumber = acc.DisplayNumber,
                          AccountTermName = card.PaymentTerm.EnglishName,
+
+                         CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
+
                          AccountTermLocalName = card.PaymentTerm.LocalName,
 
                          CurrencyCode = acc.CurrencyCode,
@@ -537,7 +540,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                     }
                 }
-                RemoveDummies(ref reportList);
+                RemoveDummies(ref reportList, myaccountsList, tenant);
                 CurrencyQuery _CurrencyQuery = new CurrencyQuery(_Param.Tenant);
                 var currencies = _CurrencyQuery.GetCurrenciesByTenantPM(_Param.Tenant);
                 List<PeriodMExtended> namedPeriods = MapExtended(reportList, periodMExtendeds, currencies);
@@ -598,8 +601,21 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
         }
 
-        private void RemoveDummies(ref List<PeriodM> reportList)
+        private void RemoveDummies(ref List<PeriodM> reportList, List<GLAccountList> myaccountsList, Logitude.BL.CommonDataModel.EntityPMs.TenantPM tenant)
         {
+            if (!this._Param.AggregateByGLAccountCurrencies)
+            {
+                
+                reportList.Where(r=>r.CurrencyId==null).ToList()
+                    .ForEach(r =>
+                {
+
+                    var acc = myaccountsList.First(m => m.Id == r.AccountId);
+                    r.CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId;
+                });
+                
+            }
+
             reportList = (from a in reportList
                           group a by new { a.AccountId, a.CurrencyId, a.OrderDateB4, a.OrderDate } into g
                           select new PeriodM()

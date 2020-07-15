@@ -37,7 +37,15 @@ namespace Logitude.Accounting.Def.EntityPMs
                 bool dueActionTypeCodeIsNull = true;//on onsert is null !!
                 if (dueActionTypeCodeIsNull)
                 {
-                    Enum.TryParse<MyJournalActionTypeEnum>(this.ActionCode, out codeEnum);
+                    if (!string.IsNullOrWhiteSpace(this.ActionCode))
+                    {
+                        Enum.TryParse<MyJournalActionTypeEnum>(this.ActionCode, out codeEnum);
+                    }
+                    else 
+                    {
+                        Enum.TryParse<MyJournalActionTypeEnum>(this.ActionTypeCode, out codeEnum);
+                    }
+                    
                 }
                 else
                 {
