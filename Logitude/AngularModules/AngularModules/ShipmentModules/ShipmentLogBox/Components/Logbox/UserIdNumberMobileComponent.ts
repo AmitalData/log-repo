@@ -38,14 +38,14 @@ import { DatePipe } from '@angular/common';
 
 
 @Component({
-    
+
     templateUrl: './UserIdNumberMobileComponent.html'
 })
 
 export class UserIdNumberMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
 
     DataContext: UserIdNumberMobileComponent = this;
-   // private messageWindow: MessageWindow = new MessageWindow();
+    // private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
     AdditionalData: any = {};
     externalDocs: any[] = [];
@@ -79,8 +79,12 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     IsAcceptedChanged($event) {
         this.IsAccepted = $event;
     }
-    ngOnInit() {
 
+    private ScreenWidth: number;
+    private MaxScreenWidth: number = 600;
+
+    ngOnInit() {
+        this.ScreenWidth = window.innerWidth > this.MaxScreenWidth ? this.MaxScreenWidth : window.innerWidth;
     }
     ngAfterViewInit() {
 
@@ -117,7 +121,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
             if (entity && entity.IsUserIDNumberRequired == false) {
                 var myMessage = "הפרטים נשמרו בהצלחה";
                 if (entity.UserIdNumberUpdateDate != null) {
-               
+
                     //var myDateParts = DateTool.GetDateParts(entity.UserIdNumberUpdateDate);
                     //var LocalDateString = myDateParts.DateObject.toLocaleDateString();
 
@@ -131,9 +135,9 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
             else {
                 this._ShipmentPMService.getUserIdDetailsByShipmentSecurityKeyWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
                     if (MyResult.Result) {
-                       
+
                         this.AdditionalData = MyResult.Result;//AdditionalResult.Result
- 
+
                         var service = new CommonDomainService();
                         service.GetTenantLogoUri(this.Tenant).subscribe((myLogoResult: any) => {
 
@@ -141,7 +145,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                             this.StopBusyIndicator();
 
                         });
-                 
+
                     }
                     else {
                         this.FinalMessage = "התיק לם קיים בסביבה הזו";
@@ -151,7 +155,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                 });
             }
         });
-        
+
 
     }
 
@@ -226,7 +230,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     ValidationErrorsList: any[];
     MyAdditionalData: any = null;
 
-    
+
 
     SendButtonClicked() {
         this.ValidationList = [];
@@ -241,7 +245,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                 }
                 this.FinalMessage == myMessage;
                 this.ShowFinalMessage = true;
-               
+
             }
             else {
                 if (!AppTool.IsNullOrEmpty(this.UserIdNumber)) {
@@ -250,24 +254,28 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                     entity.UserIdNumber = this.UserIdNumber;
                     if (this.IsValidIsraeliID(this.UserIdNumber)) {
                         this._ShipmentAdditionalCloudDataService.updateUserID(entity).subscribe((AdditionalResult:any) => {
-
-                            this.FinalMessage == "זיהוי משתמש נשלח בהצלחה ";
-                            this.ShowFinalMessage = true;
+                            if (!AdditionalResult.HasError) {
+                                this.FinalMessage == "זיהוי משתמש נשלח בהצלחה ";
+                                this.ShowFinalMessage = true;
+                            }
+                            else {
+                                this.ValidationList.push("Error");
+                            }
 
                         });
                     }
                     else {
-                        this.ValidationList.push("נם להקליד ת.ז תקנית בעלת 9 ספרות");
+                        this.ValidationList.push("נא להקליד ת.ז תקנית בעלת 9 ספרות");
                     }
                 }
                 else {
-                    this.ValidationList.push("נם להקליד ת.ז תקנית בעלת 9 ספרות");
+                    this.ValidationList.push("נא להקליד ת.ז תקנית בעלת 9 ספרות");
                 }
             }
 
 
         });
-      
+
 
     }
 
