@@ -492,7 +492,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          AccountTermLocalName = card.PaymentTerm.LocalName,
 
 
-                         CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
+                         //CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
 
                          CurrencyCode = acc.CurrencyCode,
                          CreditLimitAmount =
