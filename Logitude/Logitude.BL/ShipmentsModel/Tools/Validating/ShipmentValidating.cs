@@ -1524,7 +1524,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                 if (subType != null)
                 {
-                    if(entityPM.ShipmentTypeId != subType.ShipmentTypeCode)
+                    if(entityPM.ShipmentTypeId.ToLower() != subType.ShipmentTypeCode.ToLower())
                     {
                         throw new ApplicationException("Sub Type is not allowed with this shipment type");
                     }
