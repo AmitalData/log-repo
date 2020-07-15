@@ -80,7 +80,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
         this.IsAccepted = $event;
     }
 
-    private ScreenWidth: number;
+    public ScreenWidth: number;
     private MaxScreenWidth: number = 600;
 
     ngOnInit() {
