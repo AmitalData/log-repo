@@ -12,9 +12,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
     public class CargoTrackingTableCondition
     {
 
-        public static string Condition(string TableName, CargoTrackingArguments CargoTrackingArguments = null)
+        public static string Condition(string TableName, CargoTrackingArguments CargoTrackingArguments = null, string Condition = null)
         {
             string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + TableName + "')";
+            if (Condition!=null)
+            {
+                condition = Condition;
+            }
             if (CargoTrackingArguments != null)
             {
                 if(TableName== "CargoTrackingShipments" || TableName == "CargoTrackingShipmentSearches")
@@ -26,7 +30,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     }
                     else
                     {
-                        condition = " where CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and CreateDateTime <= '" + CargoTrackingArguments.ToDate+"'";
+                        condition += " and CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and CreateDateTime <= '" + CargoTrackingArguments.ToDate+"'";
 
                     }
 
