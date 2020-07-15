@@ -116,8 +116,6 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
             }
         }
         this.StartBusyIndicator("Loading ...");
-        //Conflict Test 1
-        //Conflict Test 2
         this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe((myAdditionalResult:any) => {
             var entity = myAdditionalResult.Result;//AdditionalResult.Result
             if (entity && entity.IsUserIDNumberRequired == false) {
@@ -267,11 +265,11 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                         });
                     }
                     else {
-                        this.ValidationList.push("נם להקליד ת.ז תקנית בעלת 9 ספרות");
+                        this.ValidationList.push("נא להקליד ת.ז תקנית בעלת 9 ספרות");
                     }
                 }
                 else {
-                    this.ValidationList.push("נם להקליד ת.ז תקנית בעלת 9 ספרות");
+                    this.ValidationList.push("נא להקליד ת.ז תקנית בעלת 9 ספרות");
                 }
             }
 
