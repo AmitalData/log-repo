@@ -16,7 +16,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnCreating(DeclarationReferantDataPM entityPM, EntityPM entityParentPM)
         {
-            entityPM.NewFile=true;
             base.OnCreating(entityPM, entityParentPM);
         }
 
