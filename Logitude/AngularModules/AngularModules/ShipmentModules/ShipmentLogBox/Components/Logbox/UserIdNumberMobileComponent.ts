@@ -117,6 +117,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
         }
         this.StartBusyIndicator("Loading ...");
         //Conflict Test 1
+        //Conflict Test 1+
         this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe((myAdditionalResult:any) => {
             var entity = myAdditionalResult.Result;//AdditionalResult.Result
             if (entity && entity.IsUserIDNumberRequired == false) {
