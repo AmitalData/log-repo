@@ -45,8 +45,6 @@
     }
 
     .ValidationSummary {
-        width: 35%;
-        overflow: hidden;
         padding: 5px;
         height: 100%;
         margin: auto;
@@ -122,52 +120,54 @@
                                     <td>
                                         <table style="height:60px;border-bottom:1px solid #BCBEC0;">
                                             <tr>
-                                                <td style="height: 22px;width:40%;">
+                                                <td [style.width]="(ScreenWidth-178).toString() + 'px'" style="height: 22px;">
                                                     <table>
                                                         <tr>
                                                             <td>
-                                                                <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">הזנת פרטים למשלוח </span>
+                                                                <span [style.width]="(ScreenWidth-178).toString() + 'px'" style="font-size:20px;color:#1B90CB;float:left;font-family:sans-serif;padding-right:10px;">הזנת פרטים למשלוח </span>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">{{Hawb}}</span>
+                                                                <span [style.width]="(ScreenWidth-178).toString() + 'px'" style="font-size:20px;color:#1B90CB;float:left;font-family:sans-serif;padding-right:10px;">{{Hawb}}</span>
                                                             </td>
                                                         </tr>
                                                     </table>
 
                                                 </td>
-                                                <td style="height: 55px;width:20px;">
-                                                    <!--<img [attr.src]="CompanyLogo" style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;" />-->
-                                                </td>
-                                                <td style="height: 55px;">
-                                                    <img [attr.src]="CompanyLogo" style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;" />
+                                                <td style="height: 55px;width:10px;"></td>
+                                                <td style="height: 55px;width:150px;">
+                                                    <img [attr.src]="CompanyLogo" style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;width:150px;" />
                                                 </td>
                                             </tr>
                                         </table>
                                         <table style="height:70px;margin-right:5px;">
+                                            <tr style="height:7px"><td colspan="3"></td></tr>
                                             <tr>
-                                                <td style="height: 22px;width:40%;">
-                                                    <label class="MyLabel">
+                                                <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height: 22px">
+                                                    <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
                                                         לכבוד
-                                                    </label>
+                                                    </div>
                                                 </td>
-                                                <td style="height: 22px;">
-                                                    <label class="MyLabel">
+                                                <td style="width:10px;"><span></span></td>
+                                                <td [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'" style="height: 22px;">
+                                                    <div class="MyLabel" style="word-wrap: break-word;white-space:normal;line-height:25px" [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'">
                                                         {{CustomerName}}
-                                                    </label>
+                                                    </div>
                                                 </td>
                                             </tr>
+                                            <tr style="height:7px"><td colspan="3"></td></tr>
                                             <tr>
-                                                <td style="height: 22px;width:40%;">
-                                                    <label class="MyLabel">
+                                                <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height:22px;">
+                                                    <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
                                                         כתובת
-                                                    </label>
+                                                    </div>
                                                 </td>
-                                                <td style="height: 22px;">
-                                                    <label class="MyLabel">
+                                                <td style="width:10px"><span></span></td>
+                                                <td [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'" style="height: 22px;">
+                                                    <div class="MyLabel" style="word-wrap: break-word;white-space:normal;line-height:25px" [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'">
                                                         {{CustomerAddress}}
-                                                    </label>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </table>
@@ -177,28 +177,32 @@
                                             </tr>
                                         </table>
                                         <table style="height:70px;margin-right:5px;">
+                                            <tr style="height:7px"><td colspan="3"></td></tr>
                                             <tr>
-                                                <td style="height: 22px;width:40%;">
-                                                    <label class="MyLabel">
+                                                <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height: 22px">
+                                                    <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
                                                         פרטי השולח
-                                                    </label>
+                                                    </div>
                                                 </td>
-                                                <td style="height: 22px;">
-                                                    <label class="MyLabel">
+                                                <td style="width:10px;"><span></span></td>
+                                                <td [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'" style="height: 22px;">
+                                                    <div class="MyLabel" style="word-wrap: break-word;white-space:normal;line-height:25px" [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'">
                                                         {{SenderDetails}}
-                                                    </label>
+                                                    </div>
                                                 </td>
                                             </tr>
+                                            <tr style="height:7px"><td colspan="3"></td></tr>
                                             <tr>
-                                                <td style="height: 22px;width:40%;">
-                                                    <label class="MyLabel">
+                                                <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height:22px;">
+                                                    <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
                                                         תיאור טובין
-                                                    </label>
+                                                    </div>
                                                 </td>
-                                                <td style="height: 22px;">
-                                                    <label class="MyLabel" style="word-wrap: break-word;white-space: normal;">
+                                                <td style="width:10px"><span></span></td>
+                                                <td [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'" style="height: 22px;">
+                                                    <div class="MyLabel" style="word-wrap: break-word;white-space:normal;line-height:25px" [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'">
                                                         {{GoodsDescritpion}}
-                                                    </label>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </table>
@@ -209,39 +213,42 @@
                                         </table>
                                         <table style="height:130px;margin-right:5px;">
                                             <tr>
-                                                <td style="height: 22px;width:40%;">
-                                                    <label class="MyLabel">
+                                                <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height: 22px">
+                                                    <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
                                                         ערך משלוח בש"ח
-                                                    </label>
+                                                    </div>
                                                 </td>
-                                                <td style="height: 22px;">
-                                                    <label class="MyLabel">
+                                                <td style="width:10px"><span></span></td>
+                                                <td [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'" style="height: 22px;">
+                                                    <div class="MyLabel">
                                                         {{ShipmentValueInNIS}}
-                                                    </label>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="height: 22px;width:40%;">
-                                                    <label class="MyLabel">
+                                                <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height: 22px">
+                                                    <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
                                                         כמות
-                                                    </label>
+                                                    </div>
                                                 </td>
-                                                <td style="height: 22px;">
-                                                    <label class="MyLabel">
+                                                <td style="width:10px"><span></span></td>
+                                                <td [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'" style="height: 22px;">
+                                                    <div class="MyLabel">
                                                         {{Quantity}}
-                                                    </label>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="height: 22px;width:40%;">
-                                                    <label class="MyLabel">
+                                                <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height: 22px">
+                                                    <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
                                                         משקל
-                                                    </label>
+                                                    </div>
                                                 </td>
-                                                <td style="height: 22px;">
-                                                    <label class="MyLabel">
+                                                <td style="width:10px"><span></span></td>
+                                                <td [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'" style="height: 22px;">
+                                                    <div class="MyLabel">
                                                         {{Weight}}
-                                                    </label>
+                                                    </div>
                                                 </td>
                                             </tr>
 
@@ -286,7 +293,7 @@
                                             </tr>
                                             <tr *ngIf="ValidationList != null && ValidationList.length != 0" style="height:1px;">
                                                 <td>
-                                                    <div class="ValidationSummary" style="margin-bottom: 3px;font-size: 16px;">{{ValidationList}}</div>
+                                                    <div class="ValidationSummary" style="text-align:center;margin-bottom: 3px;font-size: 16px;">{{ValidationList}}</div>
                                                 </td>
                                             </tr>
                                         </table>
@@ -333,7 +340,3 @@
     </tr>
 
 </table>
-
-
-
-

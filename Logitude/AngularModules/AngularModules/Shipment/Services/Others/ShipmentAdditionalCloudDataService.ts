@@ -115,7 +115,7 @@ export class ShipmentAdditionalCloudDataService {
 
             shipString = JSON.stringify(entityPM);
             //console.log(shipString);
-            return this._httpClient.put(this._apiUrl + '/PutUserId', shipString, ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+            return this._httpClient.put(this._apiUrl + '/PutUserId', shipString, ServiceHelper.GetHttpHeadersWithoutToken()).pipe(map((res) => {
                     var pm = res;
                     response.Result = pm;
                     return response;
