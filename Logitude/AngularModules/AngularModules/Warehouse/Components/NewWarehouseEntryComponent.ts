@@ -127,7 +127,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
                 this.warehouseEntryPM.ConsigneeName = this.ShipmentPM.ConsigneeName;
                 this.warehouseEntryPM.ConsigneeReference1 = this.ShipmentPM.ConsigneeReference1;
                 this.warehouseEntryPM.ConsigneeReference2 = this.ShipmentPM.ConsigneeReference2;
-
+                this.SetChargeableWeightUnit();
 
                 if (this.warehouseEntryPM.DirectionId == "D" && this.warehouseEntryPM.TransportModeId == "I") {
                     this.warehouseEntryPM.FromAddressId = this.ShipmentPM.MainCarriageFromAddressId;
@@ -306,5 +306,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
         this.ActualEntryDate = DateTool.GetDateParts(this.warehouseEntryPM.ExpectedEntryDate).DateObject;
     }
 
-
+    SetChargeableWeightUnit() {
+        this.warehouseEntryPM.ChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.warehouseEntryPM.TransportModeId);
+    }
 }
