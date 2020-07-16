@@ -18,20 +18,36 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         }
         private static void AddCustomColumn(DataTable dataTable, SqlBulkCopy sbc, string ColumnName,string TableName)
         {
-            if (TableName == "CargoTrackingShipmentSearches" && ColumnName == "Id")
+            if (TableName == "CargoTrackingShipmentSearches"  )
             {
-
+                if (ColumnName != "Id")
+                {
+                    AutoCoulmnMap(dataTable, sbc, ColumnName);
+                }
+            }
+            else if (TableName == "CargoTrackingShipments")
+            {
+                if (ColumnName != "Id")
+                {
+                    AutoCoulmnMap(dataTable, sbc, ColumnName);
+                }
             }
             else
             {
-                if (!dataTable.Columns.Contains(ColumnName))
-                {
-                    dataTable.Columns.Add(ColumnName);
-                }
-                sbc.ColumnMappings.Add(ColumnName, ColumnName);
+                AutoCoulmnMap(dataTable, sbc, ColumnName);
             }
            
 
+        }
+
+
+        private static void AutoCoulmnMap(DataTable dataTable, SqlBulkCopy sbc, string ColumnName)
+        {
+            if (!dataTable.Columns.Contains(ColumnName))
+            {
+                dataTable.Columns.Add(ColumnName);
+            }
+            sbc.ColumnMappings.Add(ColumnName, ColumnName);
         }
 
 

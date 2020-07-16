@@ -6,8 +6,8 @@
   Module="CargoTracking">
   <Column
     Name="Id"
-    Type="varchar"
-    Size="15">
+    Type="int"
+    Identity="true">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -158,4 +158,16 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Relation
+    ForeignKeyColumn="EntityType"
+    ReferencedTable="CargoTrackingHeaderEntityTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CurrentMilestoneCode"
+    ReferencedTable="CargoTrackingMilestones"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="EntityType,EntityId,Tenant" />
 </Table>
