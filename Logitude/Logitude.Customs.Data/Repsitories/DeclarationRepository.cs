@@ -599,6 +599,10 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<Declaration> GetDeclarationAmendmentsById(int tenant, string id)
         {
+
+            if (String.IsNullOrWhiteSpace(id)) return null;
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             Declaration declaration = GetSingleDeclarationById( id  , tenant);
            
             if (declaration.IsAmendment== true)
