@@ -41,7 +41,7 @@ namespace CargoTrackingWinService.Helper
                     {
                         if (!cargoTrackingServiceHelper.CheckIsUpgradingSystem(sourceConnectionString))
                         {
-                            cargoTrackingMainService.CheckAndUpdateWaterMark(sourceConnectionString);
+                            cargoTrackingMainService.CheckAndUpdateWaterMark(destinationConnectionString,sourceConnectionString);
                             AddAllTablesToThread(cargoTrackingMainService.FillCargoTableList());
                             Thread.Sleep(ApplicationInfo.UpdateCargoTrackingSleepTime);
                         }

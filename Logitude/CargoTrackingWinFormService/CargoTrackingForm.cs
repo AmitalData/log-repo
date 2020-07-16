@@ -286,7 +286,7 @@ namespace CargoTrackingWinFormService.Forms
        
 
             if (name == "CheckAndUpdateWaterMark")
-                cargoTrackingService.CheckAndUpdateWaterMark(dbSourceConnection);
+                cargoTrackingService.CheckAndUpdateWaterMark(dbDestinationConnection,dbSourceConnection);
             if (name == "UpdateCargoTables")
             {
 

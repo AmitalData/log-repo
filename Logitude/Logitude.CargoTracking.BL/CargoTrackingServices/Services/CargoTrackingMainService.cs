@@ -46,14 +46,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             CargoTableLists.Add(new CargoTable()
             {
                 TableName = "Shipment",
-                FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,MasterShipmentDataId,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,AutomaticLastUpdateDate,ShipmentPickUpIndex,FirstPickupETA,ShipmentLevelCode,CustomsClearanceDate,CustomFileId,CreateDateTime",
+                FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,MasterShipmentDataId,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,AutomaticLastUpdateDate,ShipmentPickUpIndex,FirstPickupETA,ShipmentLevelCode,CustomsClearanceDate,CustomFileId,CreateDateTime,SecurityKey,ConsigneeName,ShipperName,CustomerReference1,CustomerReference2",
                 KeyName = "Id",
                 ConditionKey = "EntityId",
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipments",
-                CT_FieldsDBName = "Tenant,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate",
-                Condition1 = " where ((AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName =  'CargoTrackingShipments')) and ((ShipmentLevelCode ='D' or ShipmentLevelCode ='H') and CustomFileId is not null))",
-                Condition2 = " where ((AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName =  'CargoTrackingShipments')) and (((ShipmentLevelCode !='D' and ShipmentLevelCode !='H') or CustomFileId is null)))",
+                CT_FieldsDBName = "Tenant,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate,CreateDate,SecurityKey,ConsigneeName,ShipperName,CustomerReference",
+                Condition1 = " ((ShipmentLevelCode ='D' or ShipmentLevelCode ='H') and CustomFileId is not null)",
+                Condition2 = " ((ShipmentLevelCode !='D' and ShipmentLevelCode !='H') or CustomFileId is null)",
                 ConditionsNumber = 2,
             });
 
@@ -144,7 +144,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             int MaxRecoredTakeEachTime = NumberOfBulkPerTime;
             int NumberRecoredTake = 0;
             using (SqlConnection sourceConnection =
-                       new SqlConnection(buildCargoArgs.SourceConnectionString))
+                                  new SqlConnection(buildCargoArgs.SourceConnectionString))
             {
                 sourceConnection.Open();
                 SqlDataReader reader = GetSqlDataReader(buildCargoArgs, table, sourceConnection, CargoTrackingArguments, Condition);
@@ -160,14 +160,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                         {
                             DataColumn column = GetCoulmnFromDataRow(drow);
                             listCols.Add(column);
-                            if (column.ColumnName!="IDE")
+                            if (column.ColumnName != "IDE")
                             {
                                 dataTable.Columns.Add(column);
 
                             }
                         }
                     }
-
                     while (true)
                     {
 
@@ -194,7 +193,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
                         table = PrepareTableParameters(buildCargoArgs, table, columns);
 
-                        automaticLastUpdateDate = UpdateBulkValues(buildCargoArgs, dataTable, table, automaticLastUpdateDate, IsUpdateAfterFinished,   CargoTrackingArguments);
+                        automaticLastUpdateDate = UpdateBulkValues(buildCargoArgs, dataTable, table, automaticLastUpdateDate, IsUpdateAfterFinished, CargoTrackingArguments);
 
                         if (NumberRecoredTake != MaxRecoredTakeEachTime)
                         {
@@ -206,33 +205,25 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     }
 
                 }
-
-
-
                 else
                 {
                     reader.Close();
                 }
-                //if (IsUpdateAfterFinished == null)
-                //{
-                //    UpdateCTDataBase(buildCargoArgs, NumberOfBulkPerTime, true,CargoTrackingArguments);
-                //}
+
                 if (IsUpadteWaterMark)
                 {
                     UpdateWaterMarkAfterFinishCheck(table, automaticLastUpdateDate, buildCargoArgs);
 
                 }
+
             }
-
-
-
-
             return NumberOfCoulmnsUpdated;
 
         }
 
         private SqlDataReader GetSqlDataReader(CargoArgs buildCargoArgs, CargoTable table, SqlConnection sourceConnection, CargoTrackingArguments CargoTrackingArguments = null, string Condition=null)
         {
+            
             string fieldName = !string.IsNullOrEmpty(buildCargoArgs.Table.FieldsDBName) ? buildCargoArgs.Table.FieldsDBName : "*";
             string condition = GetUpdateDataBaseCondition(buildCargoArgs, CargoTrackingArguments, Condition);
 
@@ -308,23 +299,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             foreach (DataRow dr in dataTable.Rows)
                             {
                                 CargoTrackingTableLogicService.SetTableLogic(dr, buildCargoArgs.Table.CT_TableName);
-                                //if (IsUpdateAfterFinished == null || IsUpdateAfterFinished == false)
-                                //{
-                                //    CargoTrackingTableLogicAfterUpdating.SetTableLogic(dr, buildCargoArgs.Table.CT_TableName);
-                                //}
+
                             }
-
-                            //if (IsUpdateAfterFinished == true)
-                            //{
-
-                            //    foreach (DataRow dr in dataTable.Rows)
-                            //    {
-                            //        CargoTrackingUpdatedAfterFinishMapping.UpdatedAfterFinishMapping(dr, buildCargoArgs.Table.CT_TableName);
-                            //    }
-                            //}
-
-
-
+ 
                             bulkCopy.EnableStreaming = true;
                             bulkCopy.BatchSize = 100000;
                             bulkCopy.WriteToServer(dataTable);
@@ -374,13 +351,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private void UpdateWaterMarkAfterFinishCheck(CargoTable table, DateTime? automaticLastUpdateDate, CargoArgs buildCargoArgs)
         {
-            if (table != null && table.DBTableName != "WaterMarks")
+            if (table != null && table.DBTableName != "CargoTrackingWatermarks")
             {
                
                 var lastUpdateDate = string.Empty;
                 if (automaticLastUpdateDate != null) lastUpdateDate = automaticLastUpdateDate.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
                 else lastUpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
-                UpdateWaterMarksTable(table, lastUpdateDate, buildCargoArgs.SourceConnectionString);
+                UpdateWaterMarksTable(table, lastUpdateDate, buildCargoArgs.DestinationConnectionString);
                 table.IsUpdated = true;
 
             }
@@ -423,13 +400,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
         }
 
-        public void CheckAndUpdateWaterMark(string dbSourceConnection)
+        public void CheckAndUpdateWaterMark(string dbSourceConnection, string dbDestenationConnection)
         {
 
             List<CargoTable> CargoTableLists = FillCargoTableList();
             foreach (CargoTable table in CargoTableLists)
             {
-                if (table.DBTableName != "WaterMarks")
+                if (table.DBTableName != "CargoTrackingWatermarks")
                 {
                     using (SqlConnection SourceConnection =
                          new SqlConnection(dbSourceConnection))
@@ -438,12 +415,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
                         SqlCommand commandSourceData = new SqlCommand(
                        "SELECT  TableName" +
-                       " FROM dbo.WaterMarks WHERE TableName = '" + table.CT_TableName + "'", SourceConnection);
+                       " FROM dbo.CargoTrackingWatermarks WHERE TableName = '" + table.CT_TableName + "'", SourceConnection);
 
                         SqlDataReader reader = commandSourceData.ExecuteReader();
                         if (!reader.HasRows)
                         {
-                            string lastUpdateDate = GetAutomaticLastUpdateDate(table.DBTableName, dbSourceConnection);
+                            string lastUpdateDate = GetAutomaticLastUpdateDate(table.DBTableName, dbDestenationConnection);
                             if (string.IsNullOrEmpty(lastUpdateDate)) lastUpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
                             AddWaterMarksRecord(table, lastUpdateDate, dbSourceConnection);
 
@@ -461,14 +438,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         public void UpdateWaterMarksTable(CargoTable table, string date, string connectionString)
         {
-            string cmd = "update  WaterMarks set LastUpdateDate = '" + date + "' where tableName = '" + table.CT_TableName + "'";
+            string cmd = "update  CargoTrackingWatermarks set LastUpdateDate = '" + date + "' where tableName = '" + table.CT_TableName + "'";
             ExecuteSql(cmd, connectionString);
 
         }
 
         public void AddWaterMarksRecord(CargoTable table, string date, string connectionString)
         {
-            string cmd = "insert into WaterMarks  values('" + table.CT_TableName + "' , '" + date + "')";
+            string cmd = "insert into CargoTrackingWatermarks  values('" + table.CT_TableName + "' , '" + date + "')";
             ExecuteSql(cmd, connectionString);
         }
 
@@ -519,9 +496,51 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private string GetUpdateDataBaseCondition(CargoArgs buildCargoArgs, CargoTrackingArguments CargoTrackingArguments = null, string Condition=null)
         {
-            string condition = CargoTrackingTableCondition.Condition(buildCargoArgs.Table.CT_TableName, CargoTrackingArguments, Condition);
-            //string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + buildCargoArgs.Table.CT_TableName + "')";
+            string LastUpdate = null;
+            if (CargoTrackingArguments == null)
+            {
+                  LastUpdate = GetTableLastUpdate(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);
+            }
+            string condition = CargoTrackingTableCondition.Condition(buildCargoArgs.Table.CT_TableName, LastUpdate, CargoTrackingArguments, Condition);
             return condition;
+        }
+
+
+        public string GetTableLastUpdate(string tableName, string connectionString)
+        {
+
+ 
+            string result = null;
+
+            SqlConnection con = new SqlConnection(connectionString);
+
+            SqlCommand com = new SqlCommand(
+               "Select top 1 LastUpdateDate from CargoTrackingWatermarks where TableName = '" + tableName + "';", con);
+            try
+            {
+                com.CommandTimeout = (int)timeOut;
+                con.Open();
+                using (SqlDataReader reader = com.ExecuteReader())
+                {
+                    reader.Read();
+                    DateTime? datetime = null;
+                    var value = reader["LastUpdateDate"];
+                    if (value != null)
+                    {
+                        if (!string.IsNullOrEmpty(value.ToString()))
+                        {
+                            datetime = (DateTime?)(value);
+                            if (datetime != null) result = datetime.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                        }
+
+                    }
+                }
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
         }
 
         public string GetAutomaticLastUpdateDate(string tableName, string connectionString)

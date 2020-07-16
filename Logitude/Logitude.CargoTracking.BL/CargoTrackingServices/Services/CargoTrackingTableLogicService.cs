@@ -31,6 +31,22 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 TableRow.SetField("Master", TableRow["MasterShipmentDataId"]);
                 TableRow.SetField("PickupDate", TableRow["FirstPickupETA"]);
                 TableRow.SetField("ClearanceDate", TableRow["CustomsClearanceDate"]);
+                TableRow.SetField("CreateDate", TableRow["CreateDateTime"]);
+ 
+                if (!TableRow["CustomerReference1"].Equals(null) && TableRow["CustomerReference1"].GetType().Name != "DBNull" && !TableRow["CustomerReference2"].Equals(null) && TableRow["CustomerReference2"].GetType().Name != "DBNull")
+                {
+                    TableRow.SetField("CustomerReference", TableRow["CustomerReference1"] + "," + TableRow["CustomerReference2"]);
+                }
+                else if(!TableRow["CustomerReference1"].Equals(null) && TableRow["CustomerReference1"].GetType().Name != "DBNull")
+                {
+                    TableRow.SetField("CustomerReference", TableRow["CustomerReference1"] );
+
+                }
+                else if (!TableRow["CustomerReference2"].Equals(null) && TableRow["CustomerReference2"].GetType().Name != "DBNull")
+                {
+                    TableRow.SetField("CustomerReference", TableRow["CustomerReference2"]);
+
+                }
                 //TableRow.SetField("ShipmentId", TableRow["Id"]);
 
                 if (!TableRow["CustomsClearanceDate"].Equals(null) && TableRow["CustomsClearanceDate"].GetType().Name != "DBNull")
