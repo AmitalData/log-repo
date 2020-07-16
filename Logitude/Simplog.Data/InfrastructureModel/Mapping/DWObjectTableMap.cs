@@ -20,6 +20,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.TypeCode).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DefaultFilterBy).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.DataViewName).HasMaxLength(200).IsUnicode(true);
+            this.Property(t => t.PivotFieldCode).HasMaxLength(50).IsUnicode(false);
 
             this.ToTable("DWObjectTables");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -30,6 +31,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
             this.Property(t => t.DefaultFilterBy).HasColumnName("DefaultFilterBy");
             this.Property(t => t.DataViewName).HasColumnName("DataViewName");
+            this.Property(t => t.HasPivotColumn).HasColumnName("HasPivotColumn");
+            this.Property(t => t.PivotFieldCode).HasColumnName("PivotFieldCode");
 
 
         }

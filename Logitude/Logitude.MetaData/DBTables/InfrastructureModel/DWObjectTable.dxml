@@ -60,4 +60,17 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="HasPivotColumn"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PivotFieldCode"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

@@ -36,6 +36,8 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("IsClosed", tableViewModel.IsClosed.ToString().ToLower(), entityElement);
                 SetAttribute("DefaultFilterBy", GetStringValue(tableViewModel.DefaultFilterBy), entityElement);
                 SetAttribute("DataViewName", GetStringValue(tableViewModel.DataViewName), entityElement);
+                SetAttribute("HasPivotColumn", tableViewModel.HasPivotColumn.ToString().ToLower(), entityElement);
+                SetAttribute("PivotFieldCode", GetStringValue(tableViewModel.PivotFieldCode), entityElement);
 
 
 
@@ -135,6 +137,8 @@ namespace DW_Editor_Tool.Helpers
                         tableViewModel.IsClosed = GetAttributeBoolValue(entity.Attributes["IsClosed"]);
                         tableViewModel.DefaultFilterBy = GetAttributeStringValue(entity.Attributes["DefaultFilterBy"]);
                         tableViewModel.DataViewName = GetAttributeStringValue(entity.Attributes["DataViewName"]);
+                        tableViewModel.HasPivotColumn = GetAttributeBoolValue(entity.Attributes["HasPivotColumn"]);
+                        tableViewModel.PivotFieldCode = GetAttributeStringValue(entity.Attributes["PivotFieldCode"]);
 
                         List<DWObjectFieldViewModel> fieldsList = new List<DWObjectFieldViewModel>();
                         foreach (XmlNode childNode in entity.ChildNodes)

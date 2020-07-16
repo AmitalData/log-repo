@@ -42,6 +42,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsClosed=  a.IsClosed,
                         DefaultFilterBy = a.DefaultFilterBy,
                         DataViewName = a.DataViewName,
+                        HasPivotColumn = a.HasPivotColumn,
+                        PivotFieldCode = a.PivotFieldCode
                     }).FirstOrDefault();
         }
 
@@ -60,9 +62,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsClosed = a.IsClosed,
                         DefaultFilterBy = a.DefaultFilterBy,
                         DataViewName = a.DataViewName,
-
-                    }
-                  );
+                        HasPivotColumn = a.HasPivotColumn,
+                        PivotFieldCode = a.PivotFieldCode
+                    });
         }
 
         public DWObjectTablePM GetSinglePM(string id, int tenant)
@@ -79,7 +81,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsClosed = a.IsClosed,
                         DefaultFilterBy = a.DefaultFilterBy,
                         DataViewName = a.DataViewName,
-
+                        HasPivotColumn = a.HasPivotColumn,
+                        PivotFieldCode = a.PivotFieldCode
                     }).FirstOrDefault();
         }
 
@@ -97,7 +100,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsClosed = a.IsClosed,
                         DefaultFilterBy = a.DefaultFilterBy,
                         DataViewName = a.DataViewName,
-
+                        HasPivotColumn = a.HasPivotColumn,
+                        PivotFieldCode = a.PivotFieldCode
                     });
         }
 
@@ -114,7 +118,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   IsClosed = a.IsClosed,
                                                   DefaultFilterBy = a.DefaultFilterBy,
                                                   DataViewName = a.DataViewName,
-
+                                                  HasPivotColumn = a.HasPivotColumn,
+                                                  PivotFieldCode = a.PivotFieldCode
                                               };
 
             return result;
