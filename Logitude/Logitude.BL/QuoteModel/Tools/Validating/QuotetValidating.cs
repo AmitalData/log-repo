@@ -301,10 +301,10 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 entityPM.TransportModeId = entityPM.TransportModeId.ToUpper();
             }
 
-            if (entityPM.ShipmentTypeId != null)
-            {
-                entityPM.ShipmentTypeId = entityPM.ShipmentTypeId.ToUpper();
-            }
+            //if (entityPM.ShipmentTypeId != null)
+            //{
+            //    entityPM.ShipmentTypeId = entityPM.ShipmentTypeId.ToUpper();
+            //}
 
             if (entityPM.TransportModeId == "O" && (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "MYGO"))
             {
@@ -447,10 +447,12 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
         private static void ValidateQuoteCharges(QuotePM entityPM)
         {
             string freightLineCostCurrencyId = null;
+            string freightLineSaleCurrencyId = null;
             QuoteChargePM freightCharge = entityPM.QuoteCharges.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && d.ChargesGroupCode == "FRT").FirstOrDefault();
             if (freightCharge != null)
             {
                 freightLineCostCurrencyId = freightCharge.CostCurrencyId;
+                freightLineSaleCurrencyId = freightCharge.SaleCurrencyId;
             }
 
             foreach (QuoteChargePM item in entityPM.QuoteCharges)
@@ -459,9 +461,26 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 {
                     if (item.CostMeasurementCode == "PRFR" && !string.IsNullOrEmpty(item.CostCurrencyId) && !string.IsNullOrEmpty(freightLineCostCurrencyId))
                     {
-                        if (item.CostCurrencyId != freightLineCostCurrencyId)
+                        if (item.CostTotalAmount != null && item.CostTotalAmount != 0)
                         {
-                            throw new ApplicationException("Charges Type " + item.ChargesTypeCode + " cost currency must be the same as the freight currency in the case of Percent of Freight");
+                            if (item.CostCurrencyId != freightLineCostCurrencyId)
+                            {
+                                throw new ApplicationException("Charges Type " + item.ChargesTypeCode + " cost currency must be the same as the freight currency in the case of Percent of Freight");
+                            }
+                        }
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(item.SaleMeasurementCode))
+                {
+                    if (item.SaleMeasurementCode == "PRFR" && !string.IsNullOrEmpty(item.SaleCurrencyId) && !string.IsNullOrEmpty(freightLineSaleCurrencyId))
+                    {
+                        if (item.SaleTotalAmount != null && item.SaleTotalAmount != 0)
+                        {
+                            if (item.SaleCurrencyId != freightLineSaleCurrencyId)
+                            {
+                                throw new ApplicationException("Charges Type " + item.ChargesTypeCode + " sale currency must be the same as the freight currency in the case of Percent of Freight");
+                            }
                         }
                     }
                 }
@@ -500,50 +519,9 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
 
                     if (subType != null)
                     {
-                        if (entityPM.TransportModeId == "A")
+                        if (entityPM.ShipmentTypeId.ToLower() != subType.ShipmentTypeCode.ToLower())
                         {
-                            if (subType.Code != "Air")
-                            {
-                                throw new ApplicationException("Sub Type should be Air when Shipment Transport Mode is Airline");
-                            }
-                        }
-
-                        else if (entityPM.TransportModeId == "I")
-                        {
-                            if (entityPM.ShipmentTypeId == "FTL")
-                            {
-                                if (subType.Code != "FTL")
-                                {
-                                    throw new ApplicationException("Sub Type should be FTL when Shipment Type is FTL");
-                                }
-                            }
-
-                            else
-                            {
-                                if (subType.Code != "LTL")
-                                {
-                                    throw new ApplicationException("Sub Type should be LTL when Shipment Type is LTL");
-                                }
-                            }
-                        }
-
-                        else if (entityPM.TransportModeId == "O")
-                        {
-                            if (entityPM.ShipmentTypeId == "FCLD")
-                            {
-                                if (subType.Code != "FCL")
-                                {
-                                    throw new ApplicationException("Sub Type should be FCL when Shipment Type is FCL");
-                                }
-                            }
-
-                            else
-                            {
-                                if (subType.Code != "LCL")
-                                {
-                                    throw new ApplicationException("Sub Type should be LCL when Shipment Type is LCL");
-                                }
-                            }
+                            throw new ApplicationException("Sub Type is not allowed with this shipment type");
                         }
                     }
                 }

@@ -48,7 +48,6 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private entityResourceService: EntityResourceService) {
         this.myCardListService = new CardListService();
-        this.BuildTabs();
     }
 
     SavedEntityId: string;
@@ -98,6 +97,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
     }
     LoadTemplate() {
         if (this.isViewInited && this.IsResourcesReady) {
+            this.BuildTabs();
             this.SelectionChanged();
         }
     }
@@ -225,6 +225,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         windowArgs.ActualReleaseDate = this.EntityPM.ATA;
         windowArgs.ShipmentPM = this.ShipmentPM;
         windowArgs.ConnectedTo = "Delivery";
+        windowArgs.ChildEntityReference = this.EntityPM.PickUpDeliveryNumber;
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 960;
@@ -232,6 +233,11 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         logWindow.Title = "New Cross Dock Release";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./Warehouse/Components/NewWarehouseReleaseComponent");
+        //logWindow.WindowClosed.subscribe((event: any) => {
+        //    if (event == "Refresh")
+        //        this.ShipmentPM.IsDirty = true;
+        //        this.CurrentSession.CurrentEditComponent.SaveChanges();
+        //});
 
     }
 

@@ -292,6 +292,7 @@
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\UsoCFDIDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\VatFormatTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\VatMandatoryTypeDetails.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\VatUniquePartnerTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\VatUniqueTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\WarehouseTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\WeightUnitDetails.Generated.cs" />
@@ -322,6 +323,7 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\UsoCFDIStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\VatFormatTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\VatMandatoryTypeStruct.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\EnumGenerated\VatUniquePartnerTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\VatUniqueTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\WarehouseTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\WeightUnitStruct.Generated.cs" />
@@ -340,6 +342,7 @@
     <Compile Include="CommonDataModel\EntityLists\TariffCarrierTranslationList.cs" />
     <Compile Include="CommonDataModel\EntityLists\TenantAdditionalDataList.cs" />
     <Compile Include="CommonDataModel\EntityLists\AccountingPartnerList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\VatUniquePartnerTypeList.cs" />
     <Compile Include="CommonDataModel\EntityOtherServices\MexicanCountryCities.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CarrierAreasPortPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CarrierAreaPM.cs" />
@@ -366,6 +369,7 @@
     <Compile Include="CommonDataModel\EntityQueries\TenantAdditionalDataQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\AccountingPartnerQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\UserLastSettingsQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\VatUniquePartnerTypeQuery.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreasPortMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreaMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardContactAdditionalServiceMapping.cs" />
@@ -2639,6 +2643,7 @@
     <Compile Include="ShipmentsModel\Testing\General.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\IShipmentBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviourFacade.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateCrossDockBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateShipmentComputedFieldsBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\AWBSpecialHandlingCodeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\CustomsTransferHeaderMapping.cs" />

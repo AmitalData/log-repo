@@ -95,6 +95,9 @@ export class WarehouseEntryMenuButtonsHandler {
                 if (confirmWindow.Yes) {
                     this.CurrentSession.StartBusyIndicator("Cancel Entry");
                     var warehouseEntryPMExtendedService: WarehouseEntryPMExtendedService = new WarehouseEntryPMExtendedService();
+                    this.EntityPM.WarehouseEntryPackages.forEach(entryPackage => {
+                        entryPackage.Quantity = 0;
+                    });
                     warehouseEntryPMExtendedService.CancelEntry(this.EntityPM).subscribe((response: ServiceResponse) => {
                         var pmResponse: ServiceResponse = response;
 

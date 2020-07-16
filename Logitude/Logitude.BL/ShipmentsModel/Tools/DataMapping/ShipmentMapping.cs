@@ -2211,6 +2211,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ProjectNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.AMSBL);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.WarehouseLegReference);
 
             if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
             {

@@ -96,6 +96,8 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
         public virtual Country Country { get; set; }
         [Column("CommodityNumber")]
 	    public string CommodityNumber { get; set; }
+        [Column("ShipmentPackageId")]
+	    public string ShipmentPackageId { get; set; }
     }
 }
 	 

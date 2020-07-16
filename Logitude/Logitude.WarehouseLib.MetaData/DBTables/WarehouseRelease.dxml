@@ -347,6 +347,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ChildEntityReference"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

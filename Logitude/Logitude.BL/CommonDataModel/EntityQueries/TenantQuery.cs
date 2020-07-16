@@ -163,6 +163,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 ShowTaxAmountWarning = a.LogBoxTenantSetting.ShowTaxAmountWarning,
                                                 HideFCLAllIn = a.HideFCLAllIn,
                                                 AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
+                                                VatUniquePartnerTypeCode = a.VatUniquePartnerTypeCode,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -273,6 +274,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         VatUniqueTypeCode = tt.VatUniqueTypeCode,
                         VatMandatoryTypeCode = tt.VatMandatoryTypeCode,
                         VatUniqueCountryId = tt.VatUniqueCountryId,
+                        VatUniquePartnerTypeCode = tt.VatUniquePartnerTypeCode,
                         VatMandatoryCountryId = tt.VatMandatoryCountryId,
                         IsCustomerTelRequired = tt.IsCustomerTelRequired,
                         IsCustomerFaxRequired = tt.IsCustomerFaxRequired,
@@ -431,6 +433,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     VatUniqueTypeCode = tt.VatUniqueTypeCode,
                     VatMandatoryTypeCode = tt.VatMandatoryTypeCode,
                     VatUniqueCountryId = tt.VatUniqueCountryId,
+                    VatUniquePartnerTypeCode = tt.VatUniquePartnerTypeCode,
                     VatMandatoryCountryId = tt.VatMandatoryCountryId,
                     IsCustomerTelRequired = tt.IsCustomerTelRequired,
                     IsCustomerFaxRequired = tt.IsCustomerFaxRequired,
@@ -581,6 +584,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            VatUniqueTypeCode = a.VatUniqueTypeCode,
                                            VatMandatoryTypeCode = a.VatMandatoryTypeCode,
                                            VatUniqueCountryId = a.VatUniqueCountryId,
+                                           VatUniquePartnerTypeCode = a.VatUniquePartnerTypeCode,
                                            VatMandatoryCountryId = a.VatMandatoryCountryId,
                                            IsCustomerTelRequired = a.IsCustomerTelRequired,
                                            IsCustomerFaxRequired = a.IsCustomerFaxRequired,
@@ -718,6 +722,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        VatUniqueTypeCode = a.VatUniqueTypeCode,
                                        VatMandatoryTypeCode = a.VatMandatoryTypeCode,
                                        VatUniqueCountryId = a.VatUniqueCountryId,
+                                       VatUniquePartnerTypeCode = a.VatUniquePartnerTypeCode,
                                        VatMandatoryCountryId = a.VatMandatoryCountryId,
                                        IsCustomerTelRequired = a.IsCustomerTelRequired,
                                        IsCustomerFaxRequired = a.IsCustomerFaxRequired,
@@ -858,6 +863,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                VatUniqueTypeCode = a.VatUniqueTypeCode,
                                                VatMandatoryTypeCode = a.VatMandatoryTypeCode,
                                                VatUniqueCountryId = a.VatUniqueCountryId,
+                                               VatUniquePartnerTypeCode = a.VatUniquePartnerTypeCode,
                                                VatMandatoryCountryId = a.VatMandatoryCountryId,
                                                IsCustomerTelRequired = a.IsCustomerTelRequired,
                                                IsCustomerFaxRequired = a.IsCustomerFaxRequired,
@@ -1008,6 +1014,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            VatUniqueTypeCode = a.VatUniqueTypeCode,
                                            VatMandatoryTypeCode = a.VatMandatoryTypeCode,
                                            VatUniqueCountryId = a.VatUniqueCountryId,
+                                           VatUniquePartnerTypeCode = a.VatUniquePartnerTypeCode,
                                            VatMandatoryCountryId = a.VatMandatoryCountryId,
                                            IsCustomerTelRequired = a.IsCustomerTelRequired,
                                            IsCustomerFaxRequired = a.IsCustomerFaxRequired,
@@ -1148,6 +1155,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        VatUniqueTypeCode = a.VatUniqueTypeCode,
                                        VatMandatoryTypeCode = a.VatMandatoryTypeCode,
                                        VatUniqueCountryId = a.VatUniqueCountryId,
+                                       VatUniquePartnerTypeCode = a.VatUniquePartnerTypeCode,
                                        VatMandatoryCountryId = a.VatMandatoryCountryId,
                                        IsCustomerTelRequired = a.IsCustomerTelRequired,
                                        IsCustomerFaxRequired = a.IsCustomerFaxRequired,
@@ -1306,6 +1314,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     VatUniqueTypeCode = myPOCO.VatUniqueTypeCode,
                     VatMandatoryTypeCode = myPOCO.VatMandatoryTypeCode,
                     VatUniqueCountryId = myPOCO.VatUniqueCountryId,
+                    VatUniquePartnerTypeCode = myPOCO.VatUniquePartnerTypeCode,
                     VatMandatoryCountryId = myPOCO.VatMandatoryCountryId,
                     IsCustomerTelRequired = myPOCO.IsCustomerTelRequired,
                     IsCustomerFaxRequired = myPOCO.IsCustomerFaxRequired,
@@ -1448,6 +1457,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 VatUniqueTypeCode = a.VatUniqueTypeCode,
                                                 VatMandatoryTypeCode = a.VatMandatoryTypeCode,
                                                 VatUniqueCountryId = a.VatUniqueCountryId,
+                                                VatUniquePartnerTypeCode = a.VatUniquePartnerTypeCode,
                                                 VatMandatoryCountryId = a.VatMandatoryCountryId,
                                                 VatMandatoryForPotentialCustomers = a.VatMandatoryForPotentialCustomers,
                                                 DefaultQuestionnaireId = a.DefaultQuestionnaireId,
@@ -1795,6 +1805,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     entityPM.CompanyAddress = address.Name;
                 }
             }
+        }
+
+        public string GetTenantCountryCodeOnly(int id)
+        {
+            Tenant tenant = (from a in repository.context.Tenants.Include("Address").Include("Address.Country")
+                         where a.Id == id
+                         select a).FirstOrDefault();
+
+            string countryCode = tenant.Address != null ? (tenant.Address.Country != null ? tenant.Address.Country.Code : null) : null;
+            return countryCode;
         }
     }
 }

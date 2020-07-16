@@ -115,7 +115,7 @@
 
     <!-- Buttons -->
     <div *ngIf="fieldName == 'Buttons'" class="TextTrimming" style="padding: 3px 3px;">
-        <IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditLine()"></IconButton>
+        <IconButton [IsEnabled]="!rowData['IsExternalLine'] && (taxReportStatusCode == 'E' || taxReportStatusCode == 'D')" [IsSmall]="true" [Name]="'Edit'" (click)="EditLine()"></IconButton>
     </div>
 
 </div>

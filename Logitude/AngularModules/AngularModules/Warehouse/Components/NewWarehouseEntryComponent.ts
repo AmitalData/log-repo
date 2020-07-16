@@ -80,8 +80,8 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
         this.RunComponent();
         this.ShipmentPM = args.ShipmentPM;
         this.ValidationErrorsList = [];
-
-        if (args.WarehouseEntryPackagesLists.length == 0 && this.ShipmentPM.DirectionId == "I") {
+        var emptyWarehouseEntryPackagesLists: boolean = args.WarehouseEntryPackagesLists == null ? true : args.WarehouseEntryPackagesLists.length == 0 ? true : false;
+        if (this.ShipmentPM.DirectionId == "I" && emptyWarehouseEntryPackagesLists) {
             this.IsNoPackagesAvaliable = true;
             this.ValidationErrorsList.push("You are not allowed to create a new cross dock entry! Please add at least one shipment package.");
         }
@@ -127,7 +127,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
                 this.warehouseEntryPM.ConsigneeName = this.ShipmentPM.ConsigneeName;
                 this.warehouseEntryPM.ConsigneeReference1 = this.ShipmentPM.ConsigneeReference1;
                 this.warehouseEntryPM.ConsigneeReference2 = this.ShipmentPM.ConsigneeReference2;
-
+                this.SetChargeableWeightUnit();
 
                 if (this.warehouseEntryPM.DirectionId == "D" && this.warehouseEntryPM.TransportModeId == "I") {
                     this.warehouseEntryPM.FromAddressId = this.ShipmentPM.MainCarriageFromAddressId;
@@ -306,5 +306,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
         this.ActualEntryDate = DateTool.GetDateParts(this.warehouseEntryPM.ExpectedEntryDate).DateObject;
     }
 
-
+    SetChargeableWeightUnit() {
+        this.warehouseEntryPM.ChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.warehouseEntryPM.TransportModeId);
+    }
 }

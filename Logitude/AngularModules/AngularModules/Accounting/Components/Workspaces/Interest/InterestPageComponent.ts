@@ -7,6 +7,13 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMService';
+import { InterestLastBatchServicePM } from 'Accounting/EntityPMs/InterestLastBatchServicePM';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { InterestReportExtendedListService } from 'Accounting/Services/ExtendedLists/InterestReportExtendedListService';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExecutionList';
+import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 declare var window: any;
 @Component({
@@ -22,7 +29,10 @@ export class InterestPageComponent implements AfterViewInit {
     @Output() ReloadUserQueries = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
     public isRTL: boolean = false;
+    private interestReportExtendedListService: InterestReportExtendedListService = new InterestReportExtendedListService();
+    public _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
     public ObjectTableName = "InterestBasesType";
+    public bteList: BatchTaskExecutionList;
     constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
@@ -69,21 +79,73 @@ export class InterestPageComponent implements AfterViewInit {
         logWindow.Show('./Accounting/Components/NewEntity/NewInterestReportComponent');
     }
     RunBatchInvoicesWizard() {
-        this._entityResourceService.getEntityResourceByTableName("InterestReport", 0).subscribe((response: any) => {
-
-            var windowArgs: any = {};
-            windowArgs.IsNew = true;
-            var windowTitle = TextCodeTranslator.Translate("InterestReport.O.BatchInvoice");
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 800;
-            logWindow.Height = 1000;
-            logWindow.WindowArgs = windowArgs;
-            logWindow.Title = windowTitle;
-            //logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
-            logWindow.Show('./Accounting/Components/Others/BatchInvoicesComponent');
-        });
+       this.CurrentSession.StartBusyIndicatorLoading();
+            this.interestReportExtendedListService.GetInterestLastBatchServiceByTenant().subscribe((response: ServiceResponse) => {
+              this.CurrentSession.StopBusyIndicator();
+                var mm: ServiceResponse = response;
+                if (!mm.HasError) {
+                //  var InterestLastBatchService:InterestLastBatchServicePM  = mm.Result;
+                //  if(!InterestLastBatchService || (InterestLastBatchService  && !InterestLastBatchService.CreateInvoicesBatchId)){
+                   this.OpenBatchInvoice();
+                //  }
+                //  else if(InterestLastBatchService && InterestLastBatchService.CreateInvoicesBatchId){
+                //   this.CheckBatchTaskExcecutingAndRunBatchInvoicesWizard(InterestLastBatchService.CreateInvoicesBatchId);
+                //  }
+                }
+                else {
+                    if(mm.ErrorsArray){
+                        var msg = new MessageWindow();
+                        msg.RTL = this.isRTL;
+                        msg.Width = 400;
+                        msg.Show(mm.ErrorsArray[0]);
+                    }
+                 
+                }
+        
+              });
 
     }
+OpenBatchInvoice(){
+    this._entityResourceService.getEntityResourceByTableName("InterestReport", 0).subscribe((response: any) => {
+
+        var windowArgs: any = {};
+        windowArgs.IsNew = true;
+        var windowTitle = TextCodeTranslator.Translate("InterestReport.O.BatchInvoice");
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 800;
+        logWindow.Height = 1000;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = windowTitle;
+        //logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+        logWindow.Show('./Accounting/Components/Others/BatchInvoicesComponent');
+    });
+}
+ 
+CheckBatchTaskExcecutingAndRunBatchInvoicesWizard( BatchId:string) {
+        this._BatchTaskExecutionListService.getSingle( BatchId).subscribe((myResult:any) => {
+            console.log("[_BatchTaskExecutionListService.getSingle]", myResult);
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                this.bteList = mm.Result;
+                if (this.bteList.StatusCode == "D" || this.bteList.StatusCode == "F") // D- Done
+                {  
+                    this.OpenBatchInvoice();
+                }
+                else{
+                var msg = new MessageWindow();
+                msg.RTL = this.isRTL;
+                msg.Width = 400;
+                msg.Show(TextCodeTranslator.Translate("InterestReport.O.AnotherBatchInvoiceStillInProgress"));
+ 
+                }
+       
+            }
+            else {
+            }
+        });
+      
+      
+  }
         ViewAccountingQuery(myQueryCode: string) {
         if (myQueryCode != null) {
 

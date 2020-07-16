@@ -514,7 +514,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ComputeIsAssemblyField();
                     this.ComputeFinalDestination();
                     this.CheckUpdatingMasterHouses();
-                    this.UpdateCrossDockRelease();
 
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                     shipmentBehaviourFacade.Handle();
@@ -522,7 +521,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
                     this.UpdateShipmentFollowUpsCollection();
 
-                    UpdateWarehouseLegDates();
 
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
 
@@ -579,7 +577,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.RefreshFollowUpDate();
                 this.UpdateExtendedTasksDueDate();
 
-                UpdateWareHouseEntry();
                 scope.Complete();
                 #endregion
             }
@@ -600,39 +597,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-
-        #region UpdateCrossDockRelease
-        private void UpdateCrossDockRelease()
-        {
-            if (entityPM.MainCarriageATD == null) ChangeCrossDockReleaseStatus("RELE", "CREA");
-            else if (entityPM.MainCarriageATD != null)
-            {
-                EntityStatus departedStatus = EntityStatusRepository.GetSingleEntityStatusByCode("SDEP", entityPM.Tenant, true);
-                if (departedStatus != null)
-                {
-                    EntityStatus entityStatus = EntityStatusRepository.GetSingleEntityStatus(entityPM.StatusId, entityPM.Tenant, true);
-                    if (entityStatus != null && entityStatus.StatusWeight >= departedStatus.StatusWeight) ChangeCrossDockReleaseStatus("CREA", "RELE");
-                }
-            }
-        }
-        private void ChangeCrossDockReleaseStatus(string fromStatusCode, string toStatusCode)
-        {
-            bool isWarehouseReleaseStatusHasChange = false;
-            WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(entityPM.Tenant);
-            List<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetAll(entityPM.Tenant).Where(d => d.ShipmentId == entityPM.Id && d.StatusCode == fromStatusCode).ToList();
-            foreach (WarehouseRelease item in warehouseReleases)
-            {
-                item.StatusCode = toStatusCode;
-                warehouseReleaseRepository.Update(item);
-                isWarehouseReleaseStatusHasChange = true;
-            }
-            if (isWarehouseReleaseStatusHasChange) warehouseReleaseRepository.SubmitChanges();
-
-        }
-        #endregion
-
-
-
 
 
         private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
@@ -660,139 +624,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
 
                 }
-            }
-        }
-
-        private void UpdateWareHouseEntry()
-        {
-            List<WarehouseEntry> warehouseEntryLists = null;
-            string fromPortId = String.Empty;
-            string toPortId = String.Empty;
-
-            if (entityPM != null)
-            {
-                WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(entityPM.Tenant);
-
-                IQueryable<WarehouseEntry> allWarehouseEntryList = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(entityPM.Id, entityPM.Tenant);
-
-                if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
-                {
-                    warehouseEntryLists = allWarehouseEntryList.Where(d => d.FromAddressId != this.entityPM.MainCarriageFromAddressId || d.ToAddressId != this.entityPM.MainCarriageToAddressId || d.FromPartnerId != this.entityPM.MainCarriageFromPartnerId || d.ToAddressId != this.entityPM.MainCarriageToPartnerId).ToList();
-                }
-                else
-                {
-                    fromPortId = !string.IsNullOrEmpty(this.entityPM.MainCarriageFromPortId) ? this.entityPM.MainCarriageFromPortId : this.entityPM.FromPortId;
-                    toPortId = this.entityPM.ShipmentLevelCode == "H" ? this.entityPM.MainCarriageFinalDestinationPortId : this.entityPM.FinalDistenationPortId;
-                    warehouseEntryLists = allWarehouseEntryList.Where(d => d.FromPortId != fromPortId || d.ToPortId != toPortId).ToList();
-                }
-
-                if (warehouseEntryLists != null && warehouseEntryLists.Count > 0)
-                {
-                    foreach (WarehouseEntry warehouseEntry in warehouseEntryLists)
-                    {
-                        if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
-                        {
-                            warehouseEntry.FromAddressId = this.entityPM.MainCarriageFromAddressId;
-                            warehouseEntry.ToAddressId = this.entityPM.MainCarriageToAddressId;
-                            warehouseEntry.FromPartnerId = this.entityPM.MainCarriageFromPartnerId;
-                            warehouseEntry.ToPartnerId = this.entityPM.MainCarriageToPartnerId;
-                        }
-                        else
-                        {
-                            warehouseEntry.FromPortId = fromPortId;
-                            warehouseEntry.ToPortId = toPortId;
-                        }
-
-                        warehouseEntryRepository.Update(warehouseEntry);
-                    }
-
-                    warehouseEntryRepository.SubmitChanges();
-                }
-
-
-            }
-        }
-
-        private void UpdateWarehouseLegDates()
-        {
-            UpdateActualExpectedWarehouseReleasesDates();
-            UpdateActualExpectedWarehouseEntriesDates();
-        }
-
-        private void UpdateActualExpectedWarehouseEntriesDates()
-        {
-            WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(entityPM.Tenant);
-            IQueryable<WarehouseEntry> connectedWarehouseEntries = warehouseEntryRepository.GetActiveWarehouseEntriesByshipmentId(entityPM.Id, entityPM.Tenant);
-            if (connectedWarehouseEntries.Count() != 0)
-            {
-                WarehouseEntry leastWarehouseEntry = connectedWarehouseEntries.OrderBy(e => e.ActualEntryDate).FirstOrDefault();
-                if (leastWarehouseEntry != null)
-                {
-                    entityPM.WarehouseLegActualEntryDate = leastWarehouseEntry.ActualEntryDate;
-                    entityPM.WarehouseLegExpectedEntryDate = leastWarehouseEntry.ExpectedEntryDate;
-                }
-            }
-            else
-            {
-                entityPM.WarehouseLegActualEntryDate = null;
-                entityPM.WarehouseLegExpectedEntryDate = null;
-            }
-        }
-
-        private void UpdateActualExpectedWarehouseReleasesDates()
-        {
-            WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(entityPM.Tenant);
-            IQueryable<WarehouseRelease> connectedWarehouseRelases = warehouseReleaseRepository.GetActiveWarehouseReleasesByshipmentId(entityPM.Id, entityPM.Tenant);
-            if (connectedWarehouseRelases.Count() == 1)
-            {
-                WarehouseRelease warehouseRelease = connectedWarehouseRelases.FirstOrDefault();
-                if (entityPM.WarehouseLegActualReleaseDate != null && warehouseRelease.ActualReleaseDate == null)
-                {
-                    warehouseRelease.ActualReleaseDate = entityPM.WarehouseLegActualReleaseDate;
-                }
-                if (entityPM.WarehouseLegExpectedReleaseDate != null && warehouseRelease.ExpectedReleaseDate == null)
-                {
-                    warehouseRelease.ExpectedReleaseDate = entityPM.WarehouseLegExpectedReleaseDate;
-                }
-                warehouseReleaseRepository.Update(warehouseRelease);
-                warehouseReleaseRepository.SubmitChanges();
-                UpdateDeliveryDepartureDates(warehouseRelease);
-            }
-            if (connectedWarehouseRelases.Count() != 0)
-            {
-                WarehouseRelease greatestWarehouseRelease = connectedWarehouseRelases.Where(r => r.ActualReleaseDate != null).OrderByDescending(r => r.ActualReleaseDate).FirstOrDefault();
-                if (greatestWarehouseRelease != null)
-                {
-                    entityPM.WarehouseLegActualReleaseDate = greatestWarehouseRelease.ActualReleaseDate;
-                    entityPM.WarehouseLegExpectedReleaseDate = greatestWarehouseRelease.ExpectedReleaseDate;
-                }
-            }
-            else
-            {
-                entityPM.WarehouseLegActualReleaseDate = null;
-                entityPM.WarehouseLegExpectedReleaseDate = null;
-                UpdateDeliveryDepartureDates(null);
-            }
-        }
-
-        private void UpdateDeliveryDepartureDates(WarehouseRelease warehouseRelease)
-        {
-            ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(entityPM.Tenant);
-            List<ShipmentPickUpDelivery> shipmentPickUpDeliveries = shipmentPickUpDeliveryRepository.GetShipmentDeliveryByShipmentId(entityPM.Id, entityPM.Tenant);
-            if (shipmentPickUpDeliveries.Count == 1)
-            {
-                if (warehouseRelease != null)
-                {
-                    shipmentPickUpDeliveries[0].ATD = warehouseRelease.ActualReleaseDate;
-                    shipmentPickUpDeliveries[0].ETD = warehouseRelease.ExpectedReleaseDate;
-                }
-                else
-                {
-                    shipmentPickUpDeliveries[0].ATD = null;
-                    shipmentPickUpDeliveries[0].ETD = null;
-                }
-                shipmentPickUpDeliveryRepository.Update(shipmentPickUpDeliveries[0]);
-                shipmentPickUpDeliveryRepository.SubmitChanges();
             }
         }
 
@@ -1260,7 +1091,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             {
                                 queueservice.InitializeQueue("ImportersShipmentQueue", 0);
                             }
-                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", entityPM.CustomerId } }, tenant, null, entityPM.CustomerId);
+                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CustomerId", entityPM.CustomerId } }, tenant, null, entityPM.CustomerId);
                         }
                     }
                 }
@@ -1303,7 +1134,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             {
                                 queueservice.InitializeQueue("ImportersShipmentQueue", 0);
                             }
-                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
+                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
                         }
                         else if ((customerTenantAccessInfo == null || customerTenantAccessInfo.HasAccess == false) && !string.IsNullOrEmpty(entityPoco.CustomerShipmentNumber) && !string.IsNullOrEmpty(OldCustomerId))
                         {
@@ -1319,7 +1150,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 {
                                     queueservice.InitializeQueue("ImportersShipmentQueue", 0);
                                 }
-                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", entityPoco.CustomerTenantNumber.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
+                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", entityPoco.CustomerTenantNumber.ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
 
                             }
                         }
@@ -1335,7 +1166,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             {
                                 queueservice.InitializeQueue("ImportersShipmentQueue", 0);
                             }
-                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
+                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
                         }
                     }
                     EntityStatusRepository entityStatusRep = new EntityStatusRepository(tenant);
@@ -1346,7 +1177,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             IQueueService queueservice = new DbQueueService();
                             queueservice.InitializeQueue("ForwarderShipmentQueue", 0);
-                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
+                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() },  }, tenant);
                         }
                        
                     }
@@ -1811,7 +1642,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         default: { break; }
                     }
                 }
-                this.UpdateIsUsedPackagesFromWarehouseReleases();
             }
         }
         private void UpdateShipmentPickUpsCollection()
@@ -2744,8 +2574,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.CalculateStatus = false;
 
             this.ComputeShipmentStatus();
-            this.UpdateCustomerWorkingDates();
-            this.FillDefaultSubType();
+            this.UpdateCustomerWorkingDates();            
+
+            if(string.IsNullOrEmpty(entityPM.ShipmentTypeId) && entityPM.TransportModeId == "A")
+            {
+                entityPM.ShipmentTypeId = "Air";
+            }
 
             if (isNewEntity)
             {
@@ -3102,6 +2936,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         }
                     }
                 }
+
                 bool IsImporterApprovalRequiredOldValue = false;
                 if (entityPM.IsHybrid || loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                 {
@@ -3242,15 +3077,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.InitializePrintingFields();
                 this.ComputeTEU();
                 this.UpdateQuoteUsage();
-                //this.InitializeBookingData();
+                this.FillDefaultSubType();
             }
-
-
         }
 
         private void FillDefaultSubType()
         {
-            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
+            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId) || entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
             {
                 string code = null;
                 if (entityPM.TransportModeId == "A")
@@ -3265,9 +3098,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         code = "FTL";
                     }
 
-                    else
+                    else if (entityPM.ShipmentTypeId == "LTL")
                     {
                         code = "LTL";
+                    }
+
+                    else if (entityPM.ShipmentTypeId == "MyGI")
+                    {
+                        code = "MyGI";
                     }
                 }
 
@@ -3278,9 +3116,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         code = "FCL";
                     }
 
-                    else
+                    else if (entityPM.ShipmentTypeId == "LCLD")
                     {
                         code = "LCL";
+                    }
+
+                    else if (entityPM.ShipmentTypeId == "MyGO")
+                    {
+                        code = "MyGO";
                     }
                 }
 
@@ -3370,7 +3213,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("ImporterApprovalReceivedQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant, null, null);
+            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() },  }, tenant, null, null);
         }
 
         private void AddPaymentReceivedToQueue()
@@ -5202,27 +5045,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private void UpdateIsUsedPackagesFromWarehouseReleases()
-        {
-            if (!string.IsNullOrEmpty(entityPM.WarehouseReleasesIds))
-            {
-                List<string> warehouseReleasesIdLists = entityPM.WarehouseReleasesIds.Split(',').ToList();
-                if (warehouseReleasesIdLists.Count > 0)
-                {
-                    WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(entityPM.Tenant);
-                    List<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetAll(entityPM.Tenant).Where(d => warehouseReleasesIdLists.Contains(d.Id)).ToList();
-                    foreach (WarehouseRelease item in warehouseReleases)
-                    {
-                        item.IsUsed = true;
-                        if (string.IsNullOrEmpty(item.ShipmentId)) item.ShipmentId = entityPM.Id;
-                        warehouseReleaseRepository.Update(item);
-                    }
-                    warehouseReleaseRepository.SubmitChanges();
-                }
-            }
-            entityPM.WarehouseReleasesIds = null;
-        }
-
         private void UpdateShipmentPackage(ShipmentPackagePM itemPM)
         {
             ShipmentPackage itemPoco = shipmentPackageRepository.GetSingleShipmentPackage(itemPM.Id, tenant);
@@ -5354,7 +5176,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
 
-            UpdateIsUsedPackagesFromWarehouseReleases();
             calculateProfit = true;
             calculatePayables = true;
             calculateReceivables = true;

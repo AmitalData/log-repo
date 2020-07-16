@@ -94,6 +94,8 @@
     <Content Include="WarehouseViewsScript\DIM_MoveTypes.sql" />
     <Content Include="WarehouseViewsScript\DIM_Partners.sql" />
     <Content Include="WarehouseViewsScript\DIM_Ports.sql" />
+    <Content Include="WarehouseViewsScript\DIM_ShipmentPayableStatuses.sql" />
+    <Content Include="WarehouseViewsScript\DIM_ShipmentReceivableStatuses.sql" />
     <Content Include="WarehouseViewsScript\DIM_ShipmentStatuses.sql" />
     <Content Include="WarehouseViewsScript\DIM_SpecialServicesTypes.sql" />
     <Content Include="WarehouseViewsScript\DIM_Tenants.sql" />

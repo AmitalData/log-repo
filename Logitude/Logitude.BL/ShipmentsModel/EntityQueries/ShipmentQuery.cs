@@ -11151,7 +11151,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          FirstPickupETD = s.FirstPickupETD,
                                                          From = s.From,
                                                          To = s.To,
-                                                         Origin = s.Origin
+                                                         Origin = s.Origin,
+                                                         LongMaster = s.TransportModeId == "A" ? (m.AirlinePrefix != null && m.Master != null ? m.AirlinePrefix + "-" + m.Master : m.Master) : m.Master,
                                                      };
 
             return shipmentsList;
@@ -11698,6 +11699,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
                                ShipmentSubTypeId = f.ShipmentSubTypeId,
                                ShipmentSubTypeName = f.ShipmentSubTypeName,
+                               ImportManifest = f.ImportManifest,
                            };
             return myResult;
         }
@@ -12048,7 +12050,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CreatedByPartner= f.CreatedByPartner,
                     MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
                     MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
-                    CreatedFromDigital = f.CreatedFromDigital
+                    CreatedFromDigital = f.CreatedFromDigital,
+                    ShipmentSubTypeId = f.ShipmentSubTypeId,
+                    ShipmentSubTypeName = f.ShipmentSubTypeName,
+                    ImportManifest = f.ImportManifest,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

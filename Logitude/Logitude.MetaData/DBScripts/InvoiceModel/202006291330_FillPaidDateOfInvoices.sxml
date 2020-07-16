@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Pre="false">
-  <Sql Version="2">
+  <Sql Version="4">
     <![CDATA[
 		-- not used, run manually 
     ]]>

@@ -168,7 +168,7 @@ export class ReadyForActivationComponent extends BaseComponent {
     private CheckIfVatUnique() {
         if (this.EntityPM.IsCustomer) {
             if (!AppTool.IsNullOrEmpty(this.VatNumber)) {
-                this.partnersDomainService.GetIsVATUniqueForCustomer(this.VatNumber, this.EntityPM.Id, this.CountryId_Potential).subscribe((myResponse: ServiceResponse) => {
+                this.partnersDomainService.GetIsVATUniqueForCustomer(this.VatNumber, this.EntityPM.Id, this.CountryId_Potential, this.EntityPM.PartnerTypeId).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         this.vatTypeNotUnique = myResponse.Result;
                     }

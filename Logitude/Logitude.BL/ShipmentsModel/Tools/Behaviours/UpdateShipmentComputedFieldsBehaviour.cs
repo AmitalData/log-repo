@@ -222,6 +222,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         }
         private void MapLastDelivery()
         {
+
             ShipmentDeliveryPM finalDelivery = shipmentPM.ShipmentDeliveries.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
             if (finalDelivery == null)
@@ -230,10 +231,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 //entity.DeliveryToCity = null;
                 entity.DeliveryToPortId = null;
                 entity.DeliveryFrom = null;
-                entity.FinalDeliveryATA = null;
-                entity.FinalDeliveryATD = null;
-                entity.FinalDeliveryETA = null;
-                entity.FinalDeliveryETD = null;
+                entity.FinalDeliveryATA = shipmentPM.FinalDeliveryATA = null;
+                entity.FinalDeliveryATD = shipmentPM.FinalDeliveryATD = null;
+                entity.FinalDeliveryETA = shipmentPM.FinalDeliveryETA = null;
+                entity.FinalDeliveryETD = shipmentPM.FinalDeliveryETD = null;
 
 
                 entity.DeliveryTruckerId = null;
@@ -247,10 +248,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
             else
             {
-                entity.FinalDeliveryATA = finalDelivery.ATA;
-                entity.FinalDeliveryATD = finalDelivery.ATD;
-                entity.FinalDeliveryETA = finalDelivery.ETA;
-                entity.FinalDeliveryETD = finalDelivery.ETD;
+                entity.FinalDeliveryATA = shipmentPM.FinalDeliveryATA= finalDelivery.ATA;
+                entity.FinalDeliveryATD = shipmentPM.FinalDeliveryATD= finalDelivery.ATD;
+                entity.FinalDeliveryETA = shipmentPM.FinalDeliveryETA =  finalDelivery.ETA;
+                entity.FinalDeliveryETD = shipmentPM.FinalDeliveryETD = finalDelivery.ETD;
+
+
+      
 
                 entity.DeliveryTruckerId = finalDelivery.CarrierId;
                 entity.DeliveryTruckerNumber = finalDelivery.CarrierNumber;
@@ -258,6 +262,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.DeliveryTrailerNumber = finalDelivery.TrailerNumber;
                 entity.DeliveryNotes = finalDelivery.Notes;
                 entity.PODDate = finalDelivery.ATA;
+
+
+
+
+
 
 
                 if (finalDelivery.PickUpDeliveryToTypeCode == "PART")
@@ -306,7 +315,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
             else
             {
-                entity.DeliveryDate = firstDelivery.ATA;
+                entity.DeliveryDate = firstDelivery.ATD;
             }
         }
         private void MapFieldsWhenChanged()

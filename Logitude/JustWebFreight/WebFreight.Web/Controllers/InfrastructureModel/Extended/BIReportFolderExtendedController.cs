@@ -1,15 +1,9 @@
-﻿using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.Infrastructure.BL.EntityQueryServices;
+﻿using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data;
-using Logitude.Infrastructure.Data.EntityListQueryServices;
 using Logitude.Infrastructure.Data.EntityLists;
-using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,16 +31,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("BIReportFolder", "READ", authToken.Tenant);
                 SecurityUtility.CheckContactFeature("BIReportFolder", "UPDATE", authToken.Tenant);
-
-                ContactQuery contactQuery = new ContactQuery(authToken.Tenant);
-                string loggedCotactId = contactQuery.GetContactIdByLoggedEmail(authToken.Tenant);
-
-                BIFoldersPermissionQueryService biFoldersPermissionQueryService = new BIFoldersPermissionQueryService(authToken.Tenant);
-                List<string> permittedFolders = biFoldersPermissionQueryService.GetFoldersIdsByPermittedUserId(loggedCotactId);
-
+                
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(authToken.Tenant);
                 BIReportFolderQueryService bIReportFolderQuery = new BIReportFolderQueryService(MyContext);
-                List<BIReportFolderList> result = bIReportFolderQuery.GetFoldersByPermittedUser(loggedCotactId, permittedFolders, authToken.Tenant);
+                List<BIReportFolderList> result = bIReportFolderQuery.GetPermittedFoldersList(authToken.Tenant);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

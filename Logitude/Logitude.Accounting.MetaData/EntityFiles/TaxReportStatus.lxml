@@ -4,7 +4,7 @@
   ObjectTableName="&quot;TaxReportStatus&quot;"
   IsNew="true"
   DBTableName="&quot;TaxReportStatuses&quot;"
-  OldDBTableName="&quot;TaxReportStatuses&quot;"
+  DBTableOldNames="TaxReportStatuses"
   ObjectTableSingular="&quot;Tax Report Status&quot;"
   ObjectTablePlural="&quot;Tax Report Statuses&quot;"
   HasCustomFilter="false"
@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Tax Report Status&quot;"
-  Code="&quot;93c7&quot;"
+  Code="&quot;6b71&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -49,6 +49,7 @@
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
+  NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
@@ -61,12 +62,13 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
+  IsTabsHidden="false"
   DxmlDatabaseTypeCode="Main"
   DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;2b0daafe-a7bd-479e-a6d4-a632ca2a834c&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -75,7 +77,9 @@
     MinLength="0"
     MaxLength="1"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -111,6 +115,7 @@
     ListLableDefaultText="&quot;Code&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -124,16 +129,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;5b2c1d08-2d87-47d9-b8f6-4929d6b9cb0e&quot;"
     FieldName="&quot;Name&quot;"
-    OldFieldName="&quot;Name&quot;"
+    OldNames="Name"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -142,7 +149,9 @@
     MinLength="0"
     MaxLength="100"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -178,6 +187,7 @@
     ListLableDefaultText="&quot;Name&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -191,16 +201,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;23500a41-9ad4-4783-942e-44ab6b1f659d&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -209,7 +221,9 @@
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -245,6 +259,7 @@
     ListLableDefaultText="&quot;Search ...&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -258,16 +273,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;e7ccb8e5-498a-488c-8093-30fdf1c087a3&quot;"
     FieldName="&quot;LocalName&quot;"
-    OldFieldName="&quot;LocalName&quot;"
+    OldNames="LocalName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -276,7 +293,9 @@
     MinLength="0"
     MaxLength="100"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -309,6 +328,7 @@
     DefaultText="&quot;Local Name&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -322,16 +342,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;f57ec20e-16be-4e06-a2cd-e8197c5a7432&quot;"
     FieldName="&quot;Inactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="Inactive"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -340,7 +362,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -373,6 +397,7 @@
     DefaultText="&quot;Inactive&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -386,12 +411,23 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;TaxReportStatusHeaderScreen&quot;"
+    ObjectTableName="&quot;TaxReportStatus&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -438,6 +474,6 @@
       SearchFields="&quot;3,Not sent,לא דווח&quot;" />
   </Records>
   <DataContracts />
-  <AdditionalFeatures />
   <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

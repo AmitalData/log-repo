@@ -41,8 +41,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
-        this.myCardListService = new CardListService();
-        this.BuildTabs();
+        this.myCardListService = new CardListService();        
     }
 
     SavedEntityId: string;
@@ -85,6 +84,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
     }
     LoadTemplate() {
         if (this.isViewInited && this.IsResourcesReady) {
+            this.BuildTabs();
             this.SelectionChanged();
         }
     }
@@ -416,6 +416,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         windowArgs.EntityChildPM = this.EntityPM;
         windowArgs.PageRequest = "ShipmentPickUp";
         windowArgs.ConnectedTo = "PickUp";
+        windowArgs.ChildEntityReference = this.EntityPM.PickUpDeliveryNumber;
 
         var warehouseHelper: WarehouseHelper = new WarehouseHelper();
         warehouseHelper.ShowNewWarehouseEntryComponent(windowArgs);

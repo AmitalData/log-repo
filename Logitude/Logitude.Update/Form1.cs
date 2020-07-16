@@ -3749,7 +3749,7 @@ User/Pass",
                             select a).FirstOrDefault();
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", item.EntityId }, { "DocumentFilingId", item.Id }, { "Tenant", item.Tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, item.Tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", item.EntityId }, { "DocumentFilingId", item.Id }, { "Tenant", item.Tenant.ToString() },  }, item.Tenant);
             }
         }
 

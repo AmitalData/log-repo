@@ -434,10 +434,20 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             query2 = query2
                 .Where(rec => rec.IsReconciled == false)
+                .Where(rec => rec.IsExternalReconcile == false)
                 .Where(rec => rec.InReconcileProgress == false)// Seee CreateJournalReconcileService!!!
                 .Where(rec => rec.AccountId == AccountId)
                 //.OrderBy(rec => rec.AccountingDate)
                 //.Take(MaxTotal);
+                ;
+            return query2;
+        }
+        private static IQueryable<LedgerTransactionList> FilterOpenTransactionsForExternalReconcile(string AccountId, IQueryable<LedgerTransactionList> query2)
+        {
+            query2 = query2
+                .Where(rec => rec.IsExternalReconcile == false)
+                .Where(rec => rec.InProgressExternalReconcile == false)
+                .Where(rec => rec.AccountId == AccountId)
                 ;
             return query2;
         }
@@ -700,8 +710,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             IQueryable<LedgerTransactionList> query2 = GetFilteredList(queryOperations, tenant);
 
-            const int MaxTotal = 99001;
-            query2 = OpenReconciliationFilter(AccountId, query2, MaxTotal);
+            query2 = FilterOpenTransactionsForExternalReconcile(AccountId, query2);
             
             return query2;
         }
@@ -766,71 +775,501 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return result;
         }
 
-        public List<LedgerTransaction> GetLedgerTransactionsByAcc_NotReconciled(ref GetNextGroupArgs getNextGroupArgs)
+        public List<LedgerTransaction> GetLedgerTransactionsByAcc_RunOnPairs(ref GetNextGroupArgs getNextGroupArgs)
         {
+            getNextGroupArgs.ActualDifference = 0m;
+            string old_id_saved = getNextGroupArgs.OldId;
+            IQueryable<LedgerTransaction> query;
             int myMAX = getNextGroupArgs.LT_LinesMaximum;
             GetNextGroupArgs args = getNextGroupArgs;
             LedgerTransactionRepository repo = new LedgerTransactionRepository(this.context);
             List<LedgerTransaction> q;
-            if (getNextGroupArgs.RunAgain)
+            if (getNextGroupArgs.MoveOn)
             {
-                myMAX = getNextGroupArgs.MIN * getNextGroupArgs.LT_LinesMaximum;
-                q = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
-                    && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m) && rec.AccountingDate >= args.OldDate
-                    && rec.AccountingDate < args.UpToAccountingDate).OrderBy(r => r.AccountingDate).Where(rid => String.Compare(rid.Id, args.OldId) >= 0).OrderBy(r1 => r1.Id).Take(myMAX).ToList();
-
+                query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
+                    && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m) && (Math.Abs(rec.OpenAmount) < args.OldAmount || (Math.Abs(rec.OpenAmount) == args.OldAmount
+                    && (rec.AccountingDate > args.OldDate || (rec.AccountingDate == args.OldDate && String.Compare(rec.Id, args.OldId) > 0))))
+                    && rec.AccountingDate < args.UpToAccountingDate).OrderByDescending(r0 => Math.Abs(r0.OpenAmount)).ThenBy(r => r.AccountingDate).ThenBy(r1 => r1.Id);//.Take(myMAX);
             }
             else
             {
-                q = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
-                    && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m) && rec.AccountingDate >= args.FromDate
-                    && rec.AccountingDate < args.UpToAccountingDate).OrderBy(r => r.AccountingDate).Where(rid => String.Compare(rid.Id, args.FromId) >= 0).OrderBy(r1 => r1.Id).Take(myMAX).ToList();
+                query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
+                    && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m)
+                    && (rec.AccountingDate > args.OldDate || (rec.AccountingDate == args.OldDate && String.Compare(rec.Id, args.OldId) > 0))
+                    && rec.AccountingDate < args.UpToAccountingDate).OrderByDescending(r0 => Math.Abs(r0.OpenAmount)).ThenBy(r => r.AccountingDate).ThenBy(r1 => r1.Id);//.Take(myMAX);
 
             }
+            q = query.ToList<LedgerTransaction>();
+            string long_text = "";
+            q.ForEach(item => long_text += item.OpenAmount.ToString() + "   ");
             List<LedgerTransaction> result = new List<LedgerTransaction>();
-            if (q != null && q.Count > 0)
+
+            if (q == null || q.Count <= 1)
             {
+                if (!getNextGroupArgs.MoveOn)
+                //Nothing retrieved. Stop here!
+                    getNextGroupArgs.Stop = true;
+                else
+                {
+                    //Return to regular run
+                    getNextGroupArgs.RunOnPairs = false;
+                    getNextGroupArgs.MoveOn = false;
+                    getNextGroupArgs.OldId = "";
+                    getNextGroupArgs.OldDate = DateTime.MinValue;
+                    getNextGroupArgs.OldAmount = Decimal.MaxValue;
+                }
+            }
+            else
+            {
+                //getNextGroupArgs.OldDate = q.FirstOrDefault().AccountingDate;
+                //getNextGroupArgs.OldId = q.FirstOrDefault().Id;
                 LedgerTransaction[] arr = q.ToArray();
                 int count = q.Count;
                 decimal sum = 0.00m;
                 int j = 0;
 
-                // init = sum getNexrGroupArgs.MIN first elements
-                while (j < getNextGroupArgs.MIN)
+                while (j < count - 1)
                 {
-                    if (j < count)
+                    sum = arr[j].OpenAmount + arr[j + 1].OpenAmount;
+                    if (((arr[j].OpenAmount > 0 && arr[j + 1].OpenAmount < 0) || (arr[j].OpenAmount < 0 && arr[j + 1].OpenAmount > 0))
+                        && (sum == 0.00m || Math.Abs(sum) <= getNextGroupArgs.MaximalDifference))
                     {
-                        sum += arr[j].OpenAmount;
+                        result.Add(arr[j]);
+                        result.Add(arr[j + 1]);
+                        getNextGroupArgs.OldAmount = Math.Abs(arr[j + 1].OpenAmount);
+                        getNextGroupArgs.OldDate = arr[j + 1].AccountingDate;
+                        getNextGroupArgs.OldId = arr[j + 1].Id;
+                        getNextGroupArgs.ActualDifference = sum;
+                        break;
+                    }
+                    else 
+                    {
                         j++;
                     }
                 }
-                // now j==getNexrGroupArgs.MIN
 
-                while (j <= getNextGroupArgs.LT_LinesMaximum)
+                if (result.Count == 0)
                 {
-                    if (sum == 0.00m || Math.Abs(sum) <= getNextGroupArgs.MaximalDifference)
+                    getNextGroupArgs.RunOnPairs = false;
+                    getNextGroupArgs.MoveOn = false;
+                    getNextGroupArgs.OldId = "";
+                    getNextGroupArgs.OldDate = DateTime.MinValue;
+                    getNextGroupArgs.OldAmount = Decimal.MaxValue;
+                }
+                
+            }
+
+            return result;
+        }
+
+
+
+        public List<LedgerTransaction> GetLedgerTransactionsByAcc_NotReconciled(ref GetNextGroupArgs getNextGroupArgs)
+        {
+            getNextGroupArgs.ActualDifference = 0m;
+            string old_id_saved = getNextGroupArgs.OldId;
+            IQueryable<LedgerTransaction> query;
+            int myMAX = getNextGroupArgs.LT_LinesMaximum;
+            GetNextGroupArgs args = getNextGroupArgs;
+            LedgerTransactionRepository repo = new LedgerTransactionRepository(this.context);
+            List<LedgerTransaction> q;
+            if (getNextGroupArgs.MoveOn)
+            {
+                query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
+                    && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m)
+                    && (rec.AccountingDate > args.OldDate || (rec.AccountingDate == args.OldDate && String.Compare(rec.Id, args.OldId) > 0))
+                    && rec.AccountingDate < args.UpToAccountingDate).OrderBy(r => r.AccountingDate).ThenBy(r1 => r1.Id).Take(myMAX);//.ToList();
+            }
+            else if (getNextGroupArgs.RunAgain)
+            {
+                myMAX = getNextGroupArgs.LT_LinesMaximum;// was * 2;
+                query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
+                    && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m)
+                    && (rec.AccountingDate > args.OldDate || (rec.AccountingDate == args.OldDate && String.Compare(rec.Id, args.OldId) >= 0))
+                    && rec.AccountingDate < args.UpToAccountingDate).OrderBy(r => r.AccountingDate).ThenBy(r1 => r1.Id).Take(myMAX);//.ToList();
+
+            }
+            else
+            {
+                query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
+                    && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m)
+                    && (rec.AccountingDate > args.OldDate || (rec.AccountingDate == args.OldDate && String.Compare(rec.Id, args.OldId) > 0))
+                    && rec.AccountingDate < args.UpToAccountingDate).OrderBy(r => r.AccountingDate).ThenBy(r1 => r1.Id).Take(myMAX);//.ToList();
+
+            }
+            q = query.ToList<LedgerTransaction>();
+            string long_text = "";
+            q.ForEach(item => long_text += item.OpenAmount.ToString() + "   ");
+            List<LedgerTransaction> result = new List<LedgerTransaction>();
+            bool next_set = false;
+
+            if (q == null || q.Count <= 1)
+            {
+                //Nothing retrieved. Stop here!
+                getNextGroupArgs.Stop = true;
+            }
+            else
+            {
+                getNextGroupArgs.OldDate = q.FirstOrDefault().AccountingDate;
+                getNextGroupArgs.OldId = q.FirstOrDefault().Id;
+                List<LedgerTransaction> q1 = q;//.OrderByDescending(rec => Math.Abs(rec.OpenAmount)).ToList();
+                LedgerTransaction[] arr = q1.ToArray();
+                int count = q.Count;
+                int lineCount = 0;
+                int positiveCount = 0;
+                int negativeCount = 0;
+                decimal maxPositive = 0m;
+                decimal maxNegative = 0m;
+                decimal sum = 0.00m;
+                int j = 0;
+                List<int> goodList = new List<int>(); 
+                // init = sum getNexrGroupArgs.MIN first elements
+                //while (j < getNextGroupArgs.MIN && j < count)
+                while (j < getNextGroupArgs.LT_LinesMaximum && j < count)
+                {
+                    sum += arr[j].OpenAmount;
+                    lineCount++;
+                    if (arr[j].OpenAmount > 0m)
+                    {
+                        positiveCount++;
+                        if (arr[j].OpenAmount > maxPositive)
+                            maxPositive = arr[j].OpenAmount;
+                    }
+                    if (arr[j].OpenAmount < 0m)
+                    {
+                        negativeCount++;
+                        if (arr[j].OpenAmount < maxNegative)
+                            maxNegative = arr[j].OpenAmount;
+                    }
+                    if (lineCount > 1 && positiveCount > 0 && negativeCount > 0)
+                    {
+                        if ((sum > 0m && sum < maxPositive) || (sum < 0m && sum > maxNegative) || (sum == 0m))
+                        {
+                            goodList.Add(j);
+                        }
+                    }
+                    j++;
+                }
+
+                // New Portion 1.
+                if (goodList.Count > 0)
+                {
+                    j = goodList.Max();
+                    // Exit
+                    for (int k = 0; k <= j; k++)
+                    {
+                        if (k < count)
+                        {
+                            result.Add(arr[k]);
+                            //q.RemoveAll(rec => rec.Id == arr[k].Id);
+                        }
+
+                    }
+                    // now, we took some records from the very beginning.
+                    // next time we will try from the same point
+                    //getNextGroupArgs.OldDate = q.FirstOrDefault().AccountingDate;
+                    //getNextGroupArgs.OldId = q.FirstOrDefault().Id;
+                    getNextGroupArgs.ActualDifference = sum;
+                    next_set = true;
+                }
+
+
+
+                //// now j==getNexrGroupArgs.MIN, let's take morefrom the head
+                /// {
+                //while (j <= getNextGroupArgs.LT_LinesMaximum && j < count)
+                //{
+                //    if (lineCount > 1 && positiveCount > 0 && negativeCount > 0 && (sum == 0.00m || Math.Abs(sum) <= getNextGroupArgs.MaximalDifference))
+                //    {
+                //        // Exit 1
+                //        for (int k = 0; k < j; k++)
+                //        {
+                //            if (k < count)
+                //            {
+                //                result.Add(arr[k]);
+                //                //q.RemoveAll(rec => rec.Id == arr[k].Id);
+                //            }
+
+                //        }
+                //        // now, we took some records from the very beginning.
+                //        // next time we will try from the same point
+                //        //getNextGroupArgs.OldDate = q.FirstOrDefault().AccountingDate;
+                //        //getNextGroupArgs.OldId = q.FirstOrDefault().Id;
+                //        getNextGroupArgs.ActualDifference = sum;
+                //        next_set = true;
+                //        break;
+                //    }
+                //    else
+                //    {
+                //        sum += arr[j].OpenAmount;
+                //        lineCount++;
+                //        if (arr[j].OpenAmount > 0)
+                //            positiveCount++;
+                //        if (arr[j].OpenAmount < 0)
+                //            negativeCount++;
+                //        j++;
+                //    }
+                //}
+
+                //// now, we'll shorten the tail
+                //int i = 0;
+                //if (result.Count == 0)
+                //{
+                //    //now j==getNexrGroupArgs.LT_LinesMaximum + 1
+                //    while (i < getNextGroupArgs.LT_LinesMaximum - getNextGroupArgs.MIN && i < count)
+                //    {
+                //        sum -= arr[i].OpenAmount;
+                //        lineCount--;
+                //        if (arr[i].OpenAmount > 0)
+                //            positiveCount--;
+                //        if (arr[i].OpenAmount < 0)
+                //            negativeCount--;
+                //        if (lineCount > 1 && positiveCount > 0 && negativeCount > 0 && (sum == 0.00m || Math.Abs(sum) <= getNextGroupArgs.MaximalDifference))
+                //        {
+                //            // Exit 2
+                //            for (int k = i + 1; k < j; k++)
+                //            {
+                //                if (k < count)
+                //                {
+                //                    result.Add(arr[k]);
+                //                    //q.RemoveAll(rec => rec.Id == arr[k].Id);
+                //                }
+
+                //            }
+                //            // next time we will try from the very beginning
+                //            //getNextGroupArgs.OldDate = q.FirstOrDefault().AccountingDate;
+                //            //getNextGroupArgs.OldId = q.FirstOrDefault().Id;
+                //            getNextGroupArgs.ActualDifference = sum;
+                //            next_set = true;
+                //            break;
+                //        }
+                //        else
+                //        {
+                //            i++;
+                //        }
+                //    }
+
+                //}
+                //if (result.Count == 0 && getNextGroupArgs.RunAgain)
+                //{
+                //    //now i==(getNexrGroupArgs.LT_LinesMaximum - getNexrGroupArgs.MIN); still holds j==getNexrGroupArgs.LT_LinesMaximum + 1
+                //    // moving to head
+                //    while (j <= myMAX && j < count)
+                //    {
+                //        sum += arr[j].OpenAmount;
+                //        lineCount++;
+                //        if (arr[j].OpenAmount > 0)
+                //            positiveCount++;
+                //        if (arr[j].OpenAmount < 0)
+                //            negativeCount++;
+                //        if (lineCount > 1 && positiveCount > 0 && negativeCount > 0 && (sum == 0.00m || Math.Abs(sum) <= getNextGroupArgs.MaximalDifference))
+                //        {
+                //            // Exit 3
+                //            for (int k = i; k <= j; k++)
+                //            {
+                //                if (k < count)
+                //                {
+                //                    result.Add(arr[k]);
+                //                    //q.RemoveAll(rec => rec.Id == arr[k].Id);
+                //                }
+
+                //            }
+                //            // next time we will try from the very beginning
+                //            //getNextGroupArgs.OldDate = q.FirstOrDefault().AccountingDate;
+                //            //getNextGroupArgs.OldId = q.FirstOrDefault().Id;
+                //            getNextGroupArgs.ActualDifference = sum;
+                //            next_set = true;
+                //            break;
+                //        }
+                //        else
+                //        {
+
+                //            j++;
+                //        }
+                //    }
+                //    if (result.Count == 0)
+                //    {
+                //        while (i < myMAX - getNextGroupArgs.MIN && i < count)
+                //        {
+                //            sum -= arr[i].OpenAmount;
+                //            lineCount--;
+                //            if (arr[i].OpenAmount > 0)
+                //                positiveCount--;
+                //            if (arr[i].OpenAmount < 0)
+                //                negativeCount--;
+                //            if (lineCount > 1 && positiveCount > 0 && negativeCount > 0 && (sum == 0.00m || Math.Abs(sum) <= getNextGroupArgs.MaximalDifference))
+                //            {
+                //                // Exit 4
+                //                for (int k = i + 1; k <= j; k++)
+                //                {
+                //                    if (k < count)
+                //                    {
+                //                        result.Add(arr[k]);
+                //                        //q.RemoveAll(rec => rec.Id == arr[k].Id);
+                //                    }
+                //                }
+                //                // next time we will try from the very beginning
+                //                //getNextGroupArgs.OldDate = q.FirstOrDefault().AccountingDate;
+                //                //getNextGroupArgs.OldId = q.FirstOrDefault().Id;
+                //                getNextGroupArgs.ActualDifference = sum;
+                //                next_set = true;
+                //                break;
+
+                //            }
+                //            else
+                //            {
+                //                i++;
+                //            }
+                //        }
+
+                //    }
+
+                //}
+                //}
+
+                if (!next_set)
+                {
+                    if (result.Count == 0)
+                    {
+                        //if (getNextGroupArgs.RunAgain)
+                        //{
+                        //    int half_way = (q.Count / 2) - 1; // Attention! integer division's there
+                        //    getNextGroupArgs.OldDate = q.ElementAtOrDefault(half_way).AccountingDate;
+                        //    getNextGroupArgs.OldId = q.ElementAtOrDefault(half_way).Id;
+                        //}
+                        //else
+
+                        //{
+                            if (q.Count > 1 && q.ElementAt(0).Id == old_id_saved)
+                            {
+                                getNextGroupArgs.OldDate = q.ElementAt(1).AccountingDate;
+                                getNextGroupArgs.OldId = q.ElementAt(1).Id;
+                            }
+                            else if (getNextGroupArgs.MoveOn && q.Count > 0)
+                            {
+                                getNextGroupArgs.OldDate = q.ElementAt(0).AccountingDate;
+                                getNextGroupArgs.OldId = q.ElementAt(0).Id;
+                            }
+
+                        //}
+                    }
+
+                    else
+                    {
+                        getNextGroupArgs.OldDate = q.FirstOrDefault().AccountingDate;
+                        getNextGroupArgs.OldId = q.FirstOrDefault().Id;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+
+        public List<LedgerTransaction> OLD_GetLedgerTransactionsByAcc_NotReconciled(ref GetNextGroupArgs getNextGroupArgs)
+        {
+            getNextGroupArgs.ActualDifference = 0m;
+            string old_id_saved = getNextGroupArgs.OldId;
+            IQueryable<LedgerTransaction> query;
+            int myMAX = getNextGroupArgs.LT_LinesMaximum;
+            GetNextGroupArgs args = getNextGroupArgs;
+            LedgerTransactionRepository repo = new LedgerTransactionRepository(this.context);
+            List<LedgerTransaction> q;
+            if (getNextGroupArgs.MoveOn)
+            {
+                query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
+                    && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m)
+                    && (rec.AccountingDate > args.OldDate || (rec.AccountingDate == args.OldDate && String.Compare(rec.Id, args.OldId) > 0))
+                    && rec.AccountingDate < args.UpToAccountingDate).OrderBy(r => r.AccountingDate).ThenBy(r1 => r1.Id).Take(myMAX);//.ToList();
+            }
+            else if (getNextGroupArgs.RunAgain)
+            {
+                myMAX = getNextGroupArgs.LT_LinesMaximum * 2;
+                query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
+                    && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m)
+                    && (rec.AccountingDate > args.OldDate || (rec.AccountingDate == args.OldDate && String.Compare(rec.Id, args.OldId) >= 0))
+                    && rec.AccountingDate < args.UpToAccountingDate).OrderBy(r => r.AccountingDate).ThenBy(r1 => r1.Id).Take(myMAX);//.ToList();
+
+            }
+            else
+            {
+                query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
+                    && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m)
+                    && (rec.AccountingDate > args.OldDate || (rec.AccountingDate == args.OldDate && String.Compare(rec.Id, args.OldId) > 0))
+                    && rec.AccountingDate < args.UpToAccountingDate).OrderBy(r => r.AccountingDate).ThenBy(r1 => r1.Id).Take(myMAX);//.ToList();
+
+            }
+            q = query.ToList<LedgerTransaction>();
+            string long_text = "";
+            q.ForEach(item => long_text += item.OpenAmount.ToString() + "   ");
+            List<LedgerTransaction> result = new List<LedgerTransaction>();
+            bool next_set = false;
+
+            if (q == null || q.Count <= 1)
+            {
+                //Nothing retrieved. Stop here!
+                getNextGroupArgs.Stop = true;
+            }
+            else
+            {
+                getNextGroupArgs.OldDate = q.FirstOrDefault().AccountingDate;
+                getNextGroupArgs.OldId = q.FirstOrDefault().Id;
+                List<LedgerTransaction> q1 = q.OrderByDescending(rec => Math.Abs(rec.OpenAmount)).ToList();
+                LedgerTransaction[] arr = q1.ToArray();
+                int count = q.Count;
+                int lineCount = 0;
+                int positiveCount = 0;
+                int negativeCount = 0;
+                decimal sum = 0.00m;
+                int j = 0;
+                // init = sum getNexrGroupArgs.MIN first elements
+                while (j < getNextGroupArgs.MIN && j < count)
+                {
+                    sum += arr[j].OpenAmount;
+                    lineCount++;
+                    if (arr[j].OpenAmount > 0)
+                        positiveCount++;
+                    if (arr[j].OpenAmount < 0)
+                        negativeCount++;
+                    j++;
+                }
+
+                // now j==getNexrGroupArgs.MIN, let's take morefrom the head
+                while (j <= getNextGroupArgs.LT_LinesMaximum && j < count)
+                {
+                    if (lineCount > 1 && positiveCount > 0 && negativeCount > 0 && (sum == 0.00m || Math.Abs(sum) <= getNextGroupArgs.MaximalDifference))
                     {
                         // Exit 1
                         for (int k = 0; k < j; k++)
                         {
                             if (k < count)
+                            {
                                 result.Add(arr[k]);
+                                //q.RemoveAll(rec => rec.Id == arr[k].Id);
+                            }
 
                         }
-                        getNextGroupArgs.OldDate = arr[0].AccountingDate;
-                        getNextGroupArgs.OldId = arr[0].Id;
+                        // now, we took some records from the very beginning.
+                        // next time we will try from the same point
+                        //getNextGroupArgs.OldDate = q.FirstOrDefault().AccountingDate;
+                        //getNextGroupArgs.OldId = q.FirstOrDefault().Id;
+                        getNextGroupArgs.ActualDifference = sum;
+                        next_set = true;
                         break;
                     }
                     else
                     {
-                        if (j < count)
-                        {
-                            sum += arr[j].OpenAmount;
-                            j++;
-                        }
+                        sum += arr[j].OpenAmount;
+                        lineCount++;
+                        if (arr[j].OpenAmount > 0)
+                            positiveCount++;
+                        if (arr[j].OpenAmount < 0)
+                            negativeCount++;
+                        j++;
                     }
                 }
 
+                // now, we'll shorten the tail
                 int i = 0;
                 if (result.Count == 0)
                 {
@@ -838,26 +1277,29 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                     while (i < getNextGroupArgs.LT_LinesMaximum - getNextGroupArgs.MIN && i < count)
                     {
                         sum -= arr[i].OpenAmount;
-                        if (sum == 0.00m || Math.Abs(sum) <= getNextGroupArgs.MaximalDifference)
+                        lineCount--;
+                        if (arr[i].OpenAmount > 0)
+                            positiveCount--;
+                        if (arr[i].OpenAmount < 0)
+                            negativeCount--;
+                        if (lineCount > 1 && positiveCount > 0 && negativeCount > 0 && (sum == 0.00m || Math.Abs(sum) <= getNextGroupArgs.MaximalDifference))
                         {
                             // Exit 2
                             for (int k = i + 1; k < j; k++)
                             {
                                 if (k < count)
+                                {
                                     result.Add(arr[k]);
-                            }
-                            if (i + 1 < count)
-                            {
-                                getNextGroupArgs.OldDate = arr[i + 1].AccountingDate;
-                                getNextGroupArgs.OldId = arr[i + 1].Id;
-                            }
-                            else
-                            {
-                                getNextGroupArgs.OldDate = arr[i].AccountingDate;
-                                getNextGroupArgs.OldId = arr[i].Id;
-                            }
-                            break;
+                                    //q.RemoveAll(rec => rec.Id == arr[k].Id);
+                                }
 
+                            }
+                            // next time we will try from the very beginning
+                            //getNextGroupArgs.OldDate = q.FirstOrDefault().AccountingDate;
+                            //getNextGroupArgs.OldId = q.FirstOrDefault().Id;
+                            getNextGroupArgs.ActualDifference = sum;
+                            next_set = true;
+                            break;
                         }
                         else
                         {
@@ -868,21 +1310,33 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 }
                 if (result.Count == 0 && getNextGroupArgs.RunAgain)
                 {
-                    //now i==(getNexrGroupArgs.LT_LinesMaximum - getNexrGroupArgs.MIN); still j==getNexrGroupArgs.LT_LinesMaximum + 1
+                    //now i==(getNexrGroupArgs.LT_LinesMaximum - getNexrGroupArgs.MIN); still holds j==getNexrGroupArgs.LT_LinesMaximum + 1
+                    // moving to head
                     while (j <= myMAX && j < count)
                     {
                         sum += arr[j].OpenAmount;
-                        if (sum == 0.00m || Math.Abs(sum) <= getNextGroupArgs.MaximalDifference)
+                        lineCount++;
+                        if (arr[j].OpenAmount > 0)
+                            positiveCount++;
+                        if (arr[j].OpenAmount < 0)
+                            negativeCount++;
+                        if (lineCount > 1 && positiveCount > 0 && negativeCount > 0 && (sum == 0.00m || Math.Abs(sum) <= getNextGroupArgs.MaximalDifference))
                         {
                             // Exit 3
                             for (int k = i; k <= j; k++)
                             {
                                 if (k < count)
+                                {
                                     result.Add(arr[k]);
+                                    //q.RemoveAll(rec => rec.Id == arr[k].Id);
+                                }
 
                             }
-                            getNextGroupArgs.OldDate = arr[0].AccountingDate;
-                            getNextGroupArgs.OldId = arr[0].Id;
+                            // next time we will try from the very beginning
+                            //getNextGroupArgs.OldDate = q.FirstOrDefault().AccountingDate;
+                            //getNextGroupArgs.OldId = q.FirstOrDefault().Id;
+                            getNextGroupArgs.ActualDifference = sum;
+                            next_set = true;
                             break;
                         }
                         else
@@ -893,19 +1347,30 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                     }
                     if (result.Count == 0)
                     {
-                        while (i < myMAX - getNextGroupArgs.MIN)
+                        while (i < myMAX - getNextGroupArgs.MIN && i < count)
                         {
                             sum -= arr[i].OpenAmount;
-                            if (sum == 0.00m || Math.Abs(sum) <= getNextGroupArgs.MaximalDifference)
+                            lineCount--;
+                            if (arr[i].OpenAmount > 0)
+                                positiveCount--;
+                            if (arr[i].OpenAmount < 0)
+                                negativeCount--;
+                            if (lineCount > 1 && positiveCount > 0 && negativeCount > 0 && (sum == 0.00m || Math.Abs(sum) <= getNextGroupArgs.MaximalDifference))
                             {
                                 // Exit 4
                                 for (int k = i + 1; k <= j; k++)
                                 {
                                     if (k < count)
+                                    {
                                         result.Add(arr[k]);
+                                        //q.RemoveAll(rec => rec.Id == arr[k].Id);
+                                    }
                                 }
-                                getNextGroupArgs.OldDate = arr[i + 1].AccountingDate;
-                                getNextGroupArgs.OldId = arr[i + 1].Id;
+                                // next time we will try from the very beginning
+                                //getNextGroupArgs.OldDate = q.FirstOrDefault().AccountingDate;
+                                //getNextGroupArgs.OldId = q.FirstOrDefault().Id;
+                                getNextGroupArgs.ActualDifference = sum;
+                                next_set = true;
                                 break;
 
                             }
@@ -918,19 +1383,41 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                     }
 
                 }
-                if (result.Count == 0)
+                if (!next_set)
                 {
-                    getNextGroupArgs.OldDate = arr[i].AccountingDate;
-                    getNextGroupArgs.OldId = arr[i].Id;
+                    if (result.Count == 0)
+                    {
+                        if (getNextGroupArgs.RunAgain)
+                        {
+                            int half_way = (q.Count / 2) - 1; // Attention! integer division's there
+                            getNextGroupArgs.OldDate = q.ElementAtOrDefault(half_way).AccountingDate;
+                            getNextGroupArgs.OldId = q.ElementAtOrDefault(half_way).Id;
+                        }
+                        else
 
+                        {
+                            if (q.Count > 1 && q.ElementAt(0).Id == old_id_saved)
+                            {
+                                getNextGroupArgs.OldDate = q.ElementAt(1).AccountingDate;
+                                getNextGroupArgs.OldId = q.ElementAt(1).Id;
+                            }
+                            else if (getNextGroupArgs.MoveOn && q.Count > 0)
+                            {
+                                getNextGroupArgs.OldDate = q.ElementAt(0).AccountingDate;
+                                getNextGroupArgs.OldId = q.ElementAt(0).Id;
+                            }
+
+                        }
+                    }
+
+                    else
+                    {
+                        getNextGroupArgs.OldDate = q.FirstOrDefault().AccountingDate;
+                        getNextGroupArgs.OldId = q.FirstOrDefault().Id;
+                    }
                 }
             }
-            else
-            {
-                getNextGroupArgs.OldDate = DateTime.MinValue;
-                getNextGroupArgs.OldId = "0";
 
-            }
             return result;
         }
 
@@ -1240,15 +1727,20 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public int Tenant { get; set; }
         public string GLAccountId { get; set; }
         public int MIN { get; set; }
+        public decimal OldAmount { get; set; }
         public DateTime OldDate { get; set; }
         public string OldId { get; set; }
         public DateTime FromDate { get; set; }
         public string FromId { get; set; }
         public DateTime UpToAccountingDate { get; set; }
         public string ToId { get; set; }
+        public bool RunOnPairs { get; set; }
         public bool RunAgain { get; set; }
+        public bool MoveOn { get; set; }
+        public bool Stop { get; set; }
         public int LT_LinesMaximum { get; set; }
         public decimal MaximalDifference { get; set; }
+        public decimal ActualDifference { get; set; }
     }
 
     public class GetAllAccountArgs

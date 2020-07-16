@@ -167,16 +167,21 @@ namespace WebFreight.Web.Helpers
                         Notes = oldCountry.Notes,
                         LocalName = oldCountry.LocalName,
                         SearchFields = oldCountry.SearchFields,
+                        IsNorthAmerica = oldCountry.IsNorthAmerica,
+                        HasCitiesList = oldCountry.HasCitiesList,
                     };
 
                     countryRepository.Add(country);
                     countryRepository.SubmitChanges();
+
+
                 }
 
                 newPort = new Port()
                 {
                     Id = IdCounter.GetNumber("Port", tenant).ToString(),
                     Code = port.Code,
+                    CombinedCode = port.CombinedCode,
                     EnglishName = port.EnglishName,
                     LocalName = port.LocalName,
                     Tenant = tenant,
@@ -190,6 +195,11 @@ namespace WebFreight.Web.Helpers
                     Longtitude = port.Longtitude,
                     SearchFields = port.SearchFields,
                     Notes = port.Notes,
+                    CountryCode = port.CountryCode,
+                    CountryName = port.CountryName,
+                    StateCode = port.StateCode,
+                    StateName = port.StateName,
+
                 };
 
                 portRepository.Add(newPort);

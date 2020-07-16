@@ -56,6 +56,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         {
             none,
             _ButtonReverseTotal_Click,
+            _ButtonReverseTotalControl_Click,
             _ButtonReverseTrans_Click,
             _ButtonJournalApprove_Click,
             _ButtonJournalApproveQueue_Click,
@@ -79,6 +80,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _WorkWithoutQueueStatus4_Click,
             _ButtonIsApprovedJournalTOTZero_Click,
             _ButtonReverseTotalFIX_Click,
+            _ButtonReverseTotalFIXControl_Click,
             _ButtonReverseGLBalanceFIX_Click,
             _AccountingIntegrityService_Click,
             _ButtonBalanceByCollector_Click,
@@ -511,6 +513,55 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 _LabelLog.Text = LogMessagingUtil.Instance.ToString();
             }
         }
+
+        protected void _ButtonReverseTotalFIXControl_Click(object sender, EventArgs e)
+        {
+
+            ParamBasic param = null;
+            ParamBasic paramDefault = new ParamBasic()
+            {
+                MyTenant = 989,
+                MyDate = DateTime.Now.AddMonths(-1),
+                MyGLAccId = "1-131321",
+
+            };
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonReverseTotalFIXControl_Click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                param = LogitudeXmlSerializer.DeserializeObject<ParamBasic>(_TextBoxParam.Text);
+                var s = new ReverseEngineerTotalByMonth_ControlAccountService(param.MyDate, param.MyTenant, param.MyGLAccId);
+                s.FixDbIntegrityFromLedgeToTotal();
+
+                var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
+                ReloadGrid(SerializeObjectByte);
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonReverseTotalFIXControl_Click.ToString();
+                if (param == null)
+                {
+                    param = paramDefault;
+                }
+                var SerializeObjectByteParam = LogitudeXmlSerializer.SerializeObject<ParamBasic>(param);
+                _TextBoxParam.Text = System.Text.Encoding.UTF8.GetString(SerializeObjectByteParam);
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+            }
+        }
         protected void _ButtonReverseTotal_Click(object sender, EventArgs e)
         {
 
@@ -559,6 +610,55 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 _LabelLog.Text = LogMessagingUtil.Instance.ToString();
             }
         }
+        protected void _ButtonReverseTotalControl_Click(object sender, EventArgs e)
+        {
+
+            ParamBasic param = null;
+            ParamBasic paramDefault = new ParamBasic()
+            {
+                MyTenant = 18,
+                MyDate = DateTime.Now.AddMonths(-1),
+                MyGLAccId = "1-131321",
+
+            };
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonReverseTotalControl_Click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                param = LogitudeXmlSerializer.DeserializeObject<ParamBasic>(_TextBoxParam.Text);
+                var s = new ReverseEngineerTotalByMonth_ControlAccountService(param.MyDate, param.MyTenant, param.MyGLAccId);
+                s.CheckDbIntegrity();
+
+                var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
+                ReloadGrid(SerializeObjectByte);
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonReverseTotalControl_Click.ToString();
+                if (param == null)
+                {
+                    param = paramDefault;
+                }
+                var SerializeObjectByteParam = LogitudeXmlSerializer.SerializeObject<ParamBasic>(param);
+                _TextBoxParam.Text = System.Text.Encoding.UTF8.GetString(SerializeObjectByteParam);
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+            }
+        }
+
 
         protected void _ButtonReverseTrans_Click(object sender, EventArgs e)
         {
@@ -786,7 +886,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 Category5Id = "",
                 CollectorId = "",
                 SalesmanId = "",
-                AgingMethod = AgingReportParam.MethodEnum.TotalByMonthMethod.ToString(),
+                AgingMethod = AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString(),
                 AgingMethod_Options = Enum.GetNames(typeof(AgingReportParam.MethodEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
                 GroupByDate = AgingReportParam.DateEnum.DueDate,
                 GroupByDate_Options = Enum.GetNames(typeof(AgingReportParam.DateEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
@@ -816,8 +916,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 ReloadGrid(System.Text.Encoding.UTF8.GetBytes(xml));
             }
-            catch
+            catch(Exception E)
             {
+                _LabelResult.Text = E.ToString();
                 myAgingReportParam = null;
                 throw;
             }

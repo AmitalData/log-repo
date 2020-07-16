@@ -1965,6 +1965,8 @@ namespace MeatadataGeneratorTool
                     List<XElement> indexElements = new List<XElement>();
                     List<XElement> uniqueConstraintElements = new List<XElement>();
                     List<XElement> columnWithDefaultValueElements = new List<XElement>();
+                    List<XElement> columnWithIdentityElements = new List<XElement>();
+                    List<XElement> columnWithInitialValueScriptElements = new List<XElement>();
 
                     if (File.Exists(dxmlFilePath))
                     {
@@ -1982,6 +1984,16 @@ namespace MeatadataGeneratorTool
                         foreach (var columnWithDefaultValueElement in oldDoc.Descendants("Column").Where(x => x.Attribute("DefaultValue") != null).ToList())
                         {
                             columnWithDefaultValueElements.Add(columnWithDefaultValueElement);
+                        }
+
+                        foreach (var columnWithIdentityElement in oldDoc.Descendants("Column").Where(x => x.Attribute("Identity") != null).ToList())
+                        {
+                            columnWithIdentityElements.Add(columnWithIdentityElement);
+                        }
+
+                        foreach (var columnWithInitialValueScriptElement in oldDoc.Descendants("Column").Where(x => x.Attribute("InitialValueScript") != null).ToList())
+                        {
+                            columnWithInitialValueScriptElements.Add(columnWithInitialValueScriptElement);
                         }
                     }
 
@@ -2117,6 +2129,18 @@ namespace MeatadataGeneratorTool
                         if (columnWithDefaultValueElement != null)
                         {
                             columnElement.SetAttribute("DefaultValue", columnWithDefaultValueElement.Attribute("DefaultValue").Value);
+                        }
+
+                        XElement columnWithIdentityElement = columnWithIdentityElements.Where(x => (!columnNames.Contains(",") && x.Attribute("Name").Value == columnNames) || (columnNames.Contains(",") && columnNames.Split(',').Contains(x.Attribute("Name").Value))).FirstOrDefault();
+                        if (columnWithIdentityElement != null)
+                        {
+                            columnElement.SetAttribute("Identity", columnWithIdentityElement.Attribute("Identity").Value);
+                        }
+
+                        XElement columnWithInitialValueScriptElement = columnWithInitialValueScriptElements.Where(x => (!columnNames.Contains(",") && x.Attribute("Name").Value == columnNames) || (columnNames.Contains(",") && columnNames.Split(',').Contains(x.Attribute("Name").Value))).FirstOrDefault();
+                        if (columnWithInitialValueScriptElement != null)
+                        {
+                            columnElement.SetAttribute("InitialValueScript", columnWithInitialValueScriptElement.Attribute("InitialValueScript").Value);
                         }
 
                         XmlElement constraintsElement = doc.CreateElement("Constraints");

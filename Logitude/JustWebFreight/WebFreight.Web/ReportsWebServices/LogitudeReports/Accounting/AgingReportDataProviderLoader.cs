@@ -114,7 +114,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             if (showDetailedCurrencyAccounts)
                 groupedPeriodsByAccount = result.Where(d=> true || d.CurrencyCode != totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "סיכום במט''ז" : "Total Foreign Balance",
+                    PeriodName = showLocals ? "יתרה במט''ז" : "Foreign",
                     Total = d.Sum(x => x.Total),
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
@@ -122,20 +122,28 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountCurrencyCode = d.Where(x => x.CurrencyCode != null).First().CurrencyCode,
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                 d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
+                    CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    CustomerVatNumber = d.First().CustomerVatNumber,
+                    CustomerPaymentTerm = d.First().AccountTermLocalName,
+                    GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
 
-                }).ToList();
+        }).ToList();
             else
                 groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "סיכום במט''ז" : "Total Foreign Balance",
+                    PeriodName = showLocals ? "יתרה במט''ז" : "Foreign",
                     Total = d.Sum(x => x.Total),
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
                     AccountEnglishName = d.First().AccountEnglishName,
                     AccountCurrencyCode = d.First().AccountCurrencyCode,
                     AccountDisplayNumber = d.First().AccountDisplayNumber,
+                    CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    CustomerVatNumber = d.First().CustomerVatNumber,
+                    CustomerPaymentTerm = d.First().AccountTermLocalName,
+                    GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
 
-                }).ToList();
+        }).ToList();
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
             
         }
@@ -148,7 +156,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             if (showDetailedCurrencyAccounts) { 
                 groupedPeriodsByAccount = result.Where(d => d.Total != null && d.CurrencyCode == totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Distinct().Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "סיכום בש''ח" : "Total Local Balance",
+                    PeriodName = showLocals ? "יתרה בשח" : "Local",
                     Total = d.Sum(x => x.Total),
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
@@ -156,12 +164,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountCurrencyCode = d.Where(x => x.CurrencyCode != null).First().CurrencyCode,
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                   d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
+                    CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    CustomerVatNumber = d.First().CustomerVatNumber,
+                    CustomerPaymentTerm = d.First().AccountTermLocalName,
+                    GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
 
                 }).ToList();
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
                 groupedPeriodsByAccount = result.Where(d => d.Total != null && d.CurrencyCode != totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Distinct().Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "סיכום בש''ח" : "Total Local Balance",
+                    PeriodName = showLocals ? "יתרה בשח" : "Local",
                     Total = d.First().BalanceInLocalCurrency,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
@@ -169,20 +181,28 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountCurrencyCode = d.Where(x => x.CurrencyCode != null).First().CurrencyCode,
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                   d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
+                    CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    CustomerVatNumber = d.First().CustomerVatNumber,
+                    CustomerPaymentTerm = d.First().AccountTermLocalName,
+                    GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
 
                 }).ToList();
             }
             else
                 groupedPeriodsByAccount = result.Where(d => d.Total != null).GroupBy(d => d.AccountId).Distinct().Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "סיכום בש''ח" : "Total Local Balance",
+                    PeriodName = showLocals ? "יתרה בשח" : "Local",
                     Total = d.FirstOrDefault() == null ? 0 : d.FirstOrDefault().BalanceInLocalCurrency,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
                     AccountEnglishName = d.First().AccountEnglishName ,
                     AccountCurrencyCode = d.First().AccountCurrencyCode,
                     AccountDisplayNumber = d.First().AccountDisplayNumber,
-
+                    CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    CustomerVatNumber = d.First().CustomerVatNumber,
+                    CustomerPaymentTerm = d.First().AccountTermLocalName,
+                    GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
+                    
                 }).ToList();
 
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
@@ -190,7 +210,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         private void AddTotalSummationFooterPeriod(List<PeriodMExtended> result, AccountingAgingDataProvider totalData)
         {
-            string pname = showLocals ? "סיכום בש''ח" : "Total Local Balance";
+            string pname = showLocals ? "יתרה בשח" : "Local";
             decimal? summation = totalData.AgingPeriods.Where(d=>d.PeriodName == pname).Sum(d => d.Total);
 
             string totalLabel = showLocals ? "Local Total" : "Totals";
@@ -207,7 +227,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         private void CalculateReportLocalBalanceTotal (AccountingAgingDataProvider totalData)
         {
-            string pname = showLocals ? "סיכום בש''ח" : "Total Local Balance";
+            string pname = showLocals ? "יתרה בשח" : "Local";
             decimal? summation = totalData.AgingPeriods.Where(d => d.PeriodName == pname).Sum(d => d.Total);
 
             totalData.ReportLocalBalanceTotal = summation ?? 0;
@@ -227,7 +247,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private static List<AgingPeriod> GetTotalBalancePeriods(AccountingAgingDataProvider totalData, bool showLocals)
         {
-            var balancePeriod = showLocals ? "סיכום במט''ז" : "Total Foreign Balance";
+            var balancePeriod = showLocals ? "יתרה במט''ז" : "Foreign";
             List<AgingPeriod> totalBalances = totalData.AgingPeriods.Where(d => d.PeriodName == balancePeriod).ToList();
             return totalBalances;
         }
@@ -343,6 +363,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.CurrencyCode = item.CurrencyCode;
                     record.AccountDisplayNumber = item.AccountDisplayNumber;
                     record.AccountCurrencyCode = item.AccountCurrencyCode;
+                    record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
+                    record.CustomerVatNumber = item.CustomerVatNumber;
+                    record.CustomerPaymentTerm = item.AccountTermLocalName;
+                    record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
 
                     record.Total = item.Total;
 
@@ -361,6 +385,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.AccountLocalName = item.AccountLocalName;
                     record.AccountDisplayNumber = item.AccountDisplayNumber;
                     record.AccountCurrencyCode = item.AccountCurrencyCode;
+                    record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
+                    record.CustomerVatNumber = item.CustomerVatNumber;
+                    record.CustomerPaymentTerm = item.AccountTermLocalName;
+                    record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
 
                     record.Total = item.Total;
 

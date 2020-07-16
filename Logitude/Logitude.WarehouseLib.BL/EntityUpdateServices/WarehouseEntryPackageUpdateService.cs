@@ -37,6 +37,7 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
             {
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             }
+
         }
 
 

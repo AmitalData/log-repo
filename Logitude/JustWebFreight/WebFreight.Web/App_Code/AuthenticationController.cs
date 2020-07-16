@@ -64,7 +64,7 @@ namespace WebFreight.Web
     {
         public AuthenticationController()
         {
-
+             
         }
         private static readonly string SimplogGuid = Guid.NewGuid().ToString("N");
 

@@ -454,6 +454,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new UserLastSettingsMap());
             modelBuilder.Configurations.Add(new CustomerOpenFilesAmountMap());
             modelBuilder.Configurations.Add(new TariffCarrierTranslationMap());
+            modelBuilder.Configurations.Add(new VatUniquePartnerTypeMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -1011,7 +1012,8 @@ namespace Simplog.Data.CommonDataModel
 
         public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins { get; set; }
         public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
-        
+        public IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get; set; }
+
         public DbConnection GetConnection()
         {
             return this.Database.Connection;

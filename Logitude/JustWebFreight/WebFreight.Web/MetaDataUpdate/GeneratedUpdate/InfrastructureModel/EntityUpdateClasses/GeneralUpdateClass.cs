@@ -76,8 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-
-		public const string HashString = "42f0196ac5a1379c840c06e4d7fd1c47";
+		public const string HashString = "6af5f117bda018e769403d5cb3f98440";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -116,7 +115,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-
 			      				    Code =  "e167",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
@@ -607,6 +605,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_BICentralDWH  = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BICentralDWH ", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.BICentralDWH ", NameTextCodeDefaultText = @"BI Central DWH " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_PrivateDB = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PrivateDB", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.PrivateDB", NameTextCodeDefaultText = @"Private DB" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_UPLOADPARTNERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPLOADPARTNERS", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.UPLOADPARTNERS", NameTextCodeDefaultText = @"Partners Upload" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    
@@ -2374,7 +2374,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralORestore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Restore", DefaultText = "Restore",LocalDefaultText = @"שחזר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralORestoreIsNotPossible = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.RestoreIsNotPossible", DefaultText = "Restore is not possible , there are approved bank pages with a later date",LocalDefaultText = @"לא ניתן לבטל את ביטול דף הבנק , ישנם דפי בנק מאושרים עם תאריך מאוחר יותר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralORestoreIsNotPossible = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.RestoreIsNotPossible", DefaultText = "UNcancel is Not possible , there are approved bank pages with a higher line number",LocalDefaultText = @"לא ניתן לשחזר את דף הבנק, ישנם דפי בנק מאושרים עם תאריך מאוחר יותר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOTrue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.True", DefaultText = "True",LocalDefaultText = @"נכון", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

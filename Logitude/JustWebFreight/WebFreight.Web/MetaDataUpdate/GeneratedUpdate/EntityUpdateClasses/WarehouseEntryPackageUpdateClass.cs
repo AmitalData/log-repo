@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WarehouseEntryPackageUpdateClass
    {  		
-		public const string HashString = "13e2c5def4c0ffc13740757e9b62b255";
+		public const string HashString = "3107ddcfd5625352f53a977e31e6d734";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Warehouse Entry Packages",
-			      				    Code =  "faa3",
+			      				    Code =  "63a8",
 			      				    Name =  "WarehouseEntryPackage Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Warehouse",

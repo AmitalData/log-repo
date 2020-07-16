@@ -686,6 +686,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="VatUniquePartnerTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="AddressId"
     ReferencedTable="Addresses"
@@ -849,6 +856,11 @@
   <Relation
     ForeignKeyColumn="CheckDigitControlAlgorithmCode"
     ReferencedTable="CheckDigitControlAlgorithms"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="VatUniquePartnerTypeCode"
+    ReferencedTable="VatUniquePartnerTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
