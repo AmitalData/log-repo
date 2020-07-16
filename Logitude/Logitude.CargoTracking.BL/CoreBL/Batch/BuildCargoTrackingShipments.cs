@@ -32,7 +32,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             CargoTrackingArguments = GetCargoTrackingArgs();
             try
             {
-                cargoTrackingMainService.CheckAndUpdateWaterMark(sourceConnectionString);
+                cargoTrackingMainService.CheckAndUpdateWaterMark(destinationConnectionString,sourceConnectionString);
                 AddAllTablesToThread(cargoTrackingMainService.FillCargoTableList());
             }
 

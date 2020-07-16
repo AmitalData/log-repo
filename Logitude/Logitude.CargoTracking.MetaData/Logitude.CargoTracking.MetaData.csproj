@@ -92,17 +92,29 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="DBTables\CargoTrackingCard.dxml" />
+    <None Include="DBTables\CargoTrackingCountry.dxml" />
     <None Include="DBTables\CargoTrackingHeaderEntityType.dxml" />
     <None Include="DBTables\CargoTrackingMilestone.dxml" />
     <None Include="DBTables\CargoTrackingPort.dxml" />
     <None Include="DBTables\CargoTrackingShipment.dxml" />
     <None Include="DBTables\CargoTrackingShipmentSearch.dxml" />
+    <None Include="DBTables\CargoTrackingTransportMode.dxml" />
+    <None Include="DBTables\CargoTrackingWatermark.dxml" />
     <None Include="EntityFiles\CargoTrackingCard.lxml" />
     <None Include="EntityFiles\CargoTrackingHeaderEntityType.lxml" />
     <None Include="EntityFiles\CargoTrackingMilestone.lxml" />
     <None Include="EntityFiles\CargoTrackingPort.lxml" />
     <None Include="EntityFiles\CargoTrackingShipment.lxml" />
-    <None Include="EntityFiles\CargoTrackingShipmentSearch.lxml" />
+    <None Include="EntityFiles\CargoTrackingShipmentSearch.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CargoTrackingWatermark.lxml" />
+    <None Include="EntityFiles\CargoTrackingTransportMode.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CargoTrackingCountry.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

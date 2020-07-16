@@ -21,6 +21,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public string Condition1 { get; set; }
         public string Condition2 { get; set; }
         public string Condition3 { get; set; }
+        public bool IsClosedTable { get; set; }
         public int ConditionsNumber { get; set; }
         public List<object> Labels { get; set; }
     }

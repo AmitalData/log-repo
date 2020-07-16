@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTracking Card&quot;"
-  Code="&quot;1c0f&quot;"
+  Code="&quot;e6d9&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;CargoTracking&quot;"
