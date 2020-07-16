@@ -21,6 +21,14 @@ namespace Logitude.Accounting.Data.Repositories
             return (from a in context.InterestReportLinesByDates where a.InterestReportId == myEntityKeys.Id select a).ToList();
         }
 
+
+        public IQueryable<InterestReportLinesByDate> GetInterestReportLinesByDatePMsForInterestReport(string interestReportId,int tenant)
+        {
+            IQueryable<InterestReportLinesByDate> interestReportLinesByDates = from a in context.InterestReportLinesByDates
+                                                                               where a.InterestReportId == interestReportId && a.Tenant == tenant
+                                                                               select a;
+            return interestReportLinesByDates;
+        }
    }
 
 }

@@ -26,6 +26,8 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.CommonDataModel.CloseTables;
 using Logitude.BL.Resolvers;
+using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Accounting.Data.DataContract;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -1145,7 +1147,27 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             DateTime? interestCalculationStartDate = gLAccountRepository.GetInterestCalculationStartDate(glaccountId, tenant);
             return interestCalculationStartDate;
         }
-        
+
+        public List<InterestReportCustomerPM> GetEligibleCustomersForInterestReports(int tenant)
+        {
+            GLAccountRepository gLAccountRepository = new GLAccountRepository(tenant);
+            IQueryable<InterestReportCustomerData> interestReportCustomerDatas = gLAccountRepository.GetEligibleCustomersForInterestReports(tenant);
+            List<InterestReportCustomerPM> gLAccountPMs = (from a in interestReportCustomerDatas
+                                                           select new InterestReportCustomerPM()
+                                                           {
+                                                               GLAccountId = a.GLAccountId,
+                                                               ActiveForInterest = a.ActiveForInterest,
+                                                               InterestCalculationStartDate = a.InterestCalculationStartDate,
+                                                               InterestCreditLimit = a.InterestCreditLimit,
+                                                               MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
+                                                               EnglishName = a.EnglishName,
+                                                               LocalName = a.LocalName,
+                                                               Tenant = a.Tenant,
+                                                               CustomerId = a.CustomerId,
+
+                                                           }).ToList();
+            return gLAccountPMs;
+        }
     }
     public class GLAccountCurrencyBalance
     {
