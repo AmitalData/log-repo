@@ -3,7 +3,7 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="2">
+  <Oracle Version="3">
     <![CDATA[
  declare
  n int := 0;
@@ -13,7 +13,7 @@ begin
  where code='901';
  if n = 0 then
  INSERT INTO EXCEPTIONREASONS VALUES (
-'901',1,'','נדרש תצהיר יבואן',1,null, 'נדרש תצהיר יבואן,901'
+'1',901,'','נדרש תצהיר יבואן',1,null, 'נדרש תצהיר יבואן,901'
 );commit;
   end if;
 end;
