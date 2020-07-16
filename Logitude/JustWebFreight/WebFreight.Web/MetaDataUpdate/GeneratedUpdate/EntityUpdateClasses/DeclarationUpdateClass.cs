@@ -15230,6 +15230,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 				 
             }, EventTypeRepository, tenantEventTypes);
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "CPO",
+                EnglishName = "Declaration Canceled",
+                LocalName = "Declaration Canceled Sent",
+                IsManualEntry = false,
+                ShortView = false,
+                IsAgentView = false,
+                IsCustomerView = false,
+                IsSharedLogisticsEnabled = false,
+                AllowedInAutomation = false,
+                ManualActivatedFollowUp = false,
+                IsFollowUp = false,
+                ObjectTableId = DeclarationObjectTable.Id,
+
+            }, EventTypeRepository, tenantEventTypes);
+
+
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {

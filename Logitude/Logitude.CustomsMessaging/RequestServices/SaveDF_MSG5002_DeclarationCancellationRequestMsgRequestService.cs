@@ -223,6 +223,33 @@ namespace Logitude.CustomsMessaging.RequestServices
             dec.ChangeSetOp = ChangeSetOperation.Update;
             declarationUpdateService.Update(dec, true);
 
+            var amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+            {
+                Tenant = dec.Tenant,
+                objectTableName = "Customs.Declaration",
+                EventCode = "CPO",
+                notes = null,
+                CommunicationLoggingEntityReference = dec.DeclarationNumber,
+                EntityId = dec.Id,
+                UserId = requestParams.LoggingUserId,
+
+                CommunicationSubject = "FU Status CPO from logitude ",
+                MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                {
+                    entname = "CFIFILEM",
+                    primary_number = dec.CustomFileNo,
+                    status = "new",
+                    xml_status = "new",
+                    status_id = "CPO",
+                    status_DateTime = Convert.ToDateTime(dec.CancelRequestApproveDate),
+                    comments = null
+
+
+                }
+            };
+            AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
+
+
             _context = null;
             return req;
         }

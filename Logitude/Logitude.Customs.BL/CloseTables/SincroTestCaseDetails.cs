@@ -80,8 +80,8 @@ MainInterfaceCode ="5002"
                     Name = "(מענה לביטול הצהרה (5118 ",
                     IsDCA= true,
                     Entity="Declaration",
-                    Param1= @"{ ""RequestNumber"" :""1"" ,  ""Content33"" :""6"" , 
-                              ""Content22"" :""test 22"" , ""Content36"" :""test 36"" , ""Content37"" :""today"",
+                    Param1= @"{ ""RequestNumber"" :""1"" ,  ""Content33"" :""5"" , 
+                              ""Content22"" :""test 22"" , ""Content36"" :""test 36"" , ""Content37"" :""2020-07-13T07:15:56.514148+03:00"",
                                  ""DeclarationStatusID"" :""13"" , ""ProceduralFaultMsg "" :""false"" ,
                               ""RequiredDocumentDetails "" :""false""  }",
 
