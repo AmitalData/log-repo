@@ -70,8 +70,32 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 ConditionsNumber = 1,
 
             });
-        
-         
+
+            CargoTableLists.Add(new CargoTable()
+            {
+                TableName = "TransportModes",
+                FieldsDBName = "Id,Name,SearchFields,AutomaticLastUpdateDate",
+                KeyName = "Id",
+                ConditionKey = "Id",
+                CT_FieldsDBName = "Id,Name,SearchFields",
+                DBTableName = "TransportModes",
+                CT_TableName = "CargoTrackingTransportModes",
+                ConditionsNumber = 1,
+ 
+            });
+
+            CargoTableLists.Add(new CargoTable()
+            {
+                TableName = "Countries",
+                FieldsDBName = "Id,Tenant,LocalName,AddedManually,InActive,EC,Notes,HasStates,IsStateRequired,HasCitiesList,SearchFields,Code,EnglishName,IsNorthAmerica,AutomaticLastUpdateDate",
+                KeyName = "Id",
+                ConditionKey = "Id",
+                CT_FieldsDBName = "Id,Tenant,LocalName,AddedManually,InActive,EC,Notes,HasStates,IsStateRequired,HasCitiesList,SearchFields,Code,EnglishName,IsNorthAmerica",
+                DBTableName = "Countries",
+                CT_TableName = "CargoTrackingCountries",
+                ConditionsNumber = 1,
+
+            });
 
             return CargoTableLists;
 
@@ -311,7 +335,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                         {
                             if (  CargoTrackingArguments ==null )
                             {
-                                automaticLastUpdateDate = GetAutomaticLastUpdateDate(automaticLastUpdateDate, dataTable);
+                                automaticLastUpdateDate = GetAutomaticLastUpdateDate(automaticLastUpdateDate, dataTable, table.IsClosedTable);
 
                             }
                             else
@@ -327,18 +351,23 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             return automaticLastUpdateDate;
         }
 
-        private DateTime? GetAutomaticLastUpdateDate(DateTime? automaticLastUpdateDate, DataTable dataTable)
+        private DateTime? GetAutomaticLastUpdateDate(DateTime? automaticLastUpdateDate, DataTable dataTable,bool IsClosed)
         {
-            var MaxUpdate = (DateTime)dataTable.Rows
-                                   .Cast<DataRow>()
-                                   .Max(d => d["AutomaticLastUpdateDate"]);
 
-            if (MaxUpdate > automaticLastUpdateDate || automaticLastUpdateDate == null)
+            if (!IsClosed)
             {
-                automaticLastUpdateDate = (DateTime)dataTable.Rows
-               .Cast<DataRow>()
-               .Max(d => d["AutomaticLastUpdateDate"]);
+                var MaxUpdate = (DateTime)dataTable.Rows
+                                                  .Cast<DataRow>()
+                                                  .Max(d => d["AutomaticLastUpdateDate"]);
+
+                if (MaxUpdate > automaticLastUpdateDate || automaticLastUpdateDate == null)
+                {
+                    automaticLastUpdateDate = (DateTime)dataTable.Rows
+                   .Cast<DataRow>()
+                   .Max(d => d["AutomaticLastUpdateDate"]);
+                }
             }
+           
 
             return automaticLastUpdateDate;
         }
