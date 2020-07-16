@@ -48,26 +48,30 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 TableName = "Shipment",
                 FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,MasterShipmentDataId,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,AutomaticLastUpdateDate,ShipmentPickUpIndex,FirstPickupETA,ShipmentLevelCode,CustomsClearanceDate,CustomFileId,CreateDateTime",
                 KeyName = "Id",
-                ConditionKey = "Id",
+                ConditionKey = "EntityId",
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipments",
-                CT_FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate",
+                CT_FieldsDBName = "Tenant,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate",
                 Condition1 = " where ((AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName =  'CargoTrackingShipments')) and ((ShipmentLevelCode ='D' or ShipmentLevelCode ='H') and CustomFileId is not null))",
                 Condition2 = " where ((AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName =  'CargoTrackingShipments')) and (((ShipmentLevelCode !='D' and ShipmentLevelCode !='H') or CustomFileId is null)))",
                 ConditionsNumber = 2,
             });
+
 
             CargoTableLists.Add(new CargoTable()
             {
                 TableName = "Shipments",
                 FieldsDBName = "Id,Tenant,ShipmentNumber,SearchFields,CreateDateTime,CustomerReference1,CustomerReference2,AutomaticLastUpdateDate",
                 KeyName = "Id",
-                ConditionKey= "ShipmentId",
+                ConditionKey = "ShipmentId",
                 CT_FieldsDBName = "Tenant,ShipmentId,SearchFields,ShipmentDate",
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipmentSearches",
                 ConditionsNumber = 1,
+
             });
+        
+         
 
             return CargoTableLists;
 

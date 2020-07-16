@@ -31,6 +31,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 TableRow.SetField("Master", TableRow["MasterShipmentDataId"]);
                 TableRow.SetField("PickupDate", TableRow["FirstPickupETA"]);
                 TableRow.SetField("ClearanceDate", TableRow["CustomsClearanceDate"]);
+                //TableRow.SetField("ShipmentId", TableRow["Id"]);
 
                 if (!TableRow["CustomsClearanceDate"].Equals(null) && TableRow["CustomsClearanceDate"].GetType().Name != "DBNull")
                 {
