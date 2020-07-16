@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2be8ec1e-8e80-410d-af2d-346f7fa16b2c",
+		"_postman_id": "6c49ffad-eb24-4f67-96e8-adcb524e9ebd",
 		"name": "SecurityTests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,18 +11,18 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4255caed-e5ed-416a-acd6-4a1b2bc06f7a",
+						"id": "aee83870-8f24-4039-993a-528906803f8e",
 						"exec": [
 							"pm.test(\"AuthenticationOnMyTenant\", function () {",
 							"    pm.response.to.have.status(200);",
-							"    var idvalue1 = (pm.response.json().Token);",
-							"    var idvalue2 = (pm.response.json().DocumentDownloadToken);",
-							"    var id1exist = idvalue1 !== null;",
-							"    var id2exist = idvalue2 !== null;",
-							"",
+							"     var idvalue1 = (pm.response.json().Token);",
+							"     var idvalue2 = (pm.response.json().DocumentDownloadToken);",
+							"     var id1exist = idvalue1 !== null;",
+							"     var id2exist = idvalue2 !== null;",
+							"     ",
 							"    pm.globals.set(\"Token\", idvalue1);",
 							"    pm.globals.set(\"DocumentDownloadToken\", idvalue2);",
-							"",
+							"    ",
 							"    var expected = \"ahmadb@test.com\"",
 							"    tests[\"Body cointains Email: \" + expected] = responseBody.has(expected);",
 							"});"
@@ -33,7 +33,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "ae6126b1-74ff-414b-860a-a6a6dd1c27e8",
+						"id": "ede32ea3-3a4b-4c35-a96f-b18652ad5206",
 						"exec": [
 							""
 						],
@@ -78,7 +78,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4920ea14-b99c-407f-9682-a626c98d1e74",
+						"id": "2701d126-6025-43fb-b59f-fd7032070a89",
 						"exec": [
 							"pm.test(\"AuthenticationOnNotMyTenant\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -100,7 +100,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "80382ca3-511a-4d54-8c44-3148e0f553f8",
+						"id": "c713b3e4-7a12-4ed4-b190-92239f42a101",
 						"exec": [
 							""
 						],
@@ -145,7 +145,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "ca293280-1f19-4657-acbe-799fd4cb86bf",
+						"id": "998d1880-c945-4d28-bb42-2d254584e864",
 						"exec": [
 							"pm.test(\"GetFirstShipmentIdFromNotMyTenant\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -204,7 +204,7 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "{{URL}}/api/shipmentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=10",
+					"raw": "{{URL}}/api/shipmentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=10&&",
 					"host": [
 						"{{URL}}"
 					],
@@ -253,7 +253,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3fe94742-db45-4727-8f52-8c74c8264208",
+						"id": "f480f379-0ec6-4254-bb7e-1233a11b012b",
 						"exec": [
 							"pm.test(\"GetNotMyShipmentIdFromMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -313,7 +313,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b7402e55-677a-4006-abe0-5805e0872aa4",
+						"id": "76698742-42af-4434-b86d-6f8fcfc042a9",
 						"exec": [
 							"pm.test(\"UpdateNotMyShipmentFromMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(400);",
@@ -369,7 +369,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "31489843-8300-48ac-9410-1eb34ea5937b",
+						"id": "fafdef4e-ff08-42cb-a9df-f645d0b1e086",
 						"exec": [
 							"pm.test(\"GetCompanyAddressSettingsFromMyTenant\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -448,7 +448,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "31489843-8300-48ac-9410-1eb34ea5937b",
+						"id": "6f3b3c6d-a449-43c1-963a-fb12fc716037",
 						"exec": [
 							"pm.test(\"GetCompanyAddressSettingsFromNotMyTenant Fail\" , function () {",
 							"     pm.response.to.have.status(400);",
@@ -570,7 +570,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "189ddb2b-ff69-43ee-967c-ac75e9a81cd3",
+						"id": "7214adcf-1446-40af-b9c7-d98f011f444a",
 						"exec": [
 							"pm.test(\"GetFirstARInvoiceIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -620,7 +620,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/arinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22&SortDirection=Descending",
+					"raw": "{{URL}}/api/arinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22&SortDirection=Descending&&",
 					"host": [
 						"{{URL}}"
 					],
@@ -681,7 +681,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "169c934b-6c52-4a37-8e99-c521f97890d5",
+						"id": "cadd8930-62ca-4cc8-be11-946f087b7342",
 						"exec": [
 							"pm.test(\"GetARInvoiceIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -755,7 +755,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "169c934b-6c52-4a37-8e99-c521f97890d5",
+						"id": "b62e8685-1e9e-4169-932e-56c3d38c7c53",
 						"exec": [
 							"pm.test(\"GetARInvoiceIdFromMyTenant Fail\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -826,7 +826,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "ffc0ea86-8a37-4c04-9356-0178ed806028",
+						"id": "93244c07-915b-4e91-b5f7-538c19bfbae0",
 						"exec": [
 							"pm.test(\"GetFirstARPaymentIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -876,7 +876,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/arpaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22&SortDirection=Descending",
+					"raw": "{{URL}}/api/arpaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22&SortDirection=Descending&&",
 					"host": [
 						"{{URL}}"
 					],
@@ -937,7 +937,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a8f8cb48-d1f2-40d0-b115-5552df1a2ed0",
+						"id": "1513fc90-155a-4cbd-afbe-8ca9b19dd9dd",
 						"exec": [
 							"pm.test(\"GetARPaymentIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1011,7 +1011,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "9c3d58fa-a725-4429-9c84-ac178e79ba71",
+						"id": "33abd854-e90c-4a96-8b0b-0e5a648bf376",
 						"exec": [
 							"pm.test(\"GetARPaymentIdFromNotMyTenant Fail\", function () {",
 							"   pm.response.to.have.status(400);",
@@ -1082,7 +1082,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a52347d6-6b52-4f1b-ada3-eaee1c9e00a7",
+						"id": "1dc7a825-167d-4802-bc5e-b3ba25f2cc56",
 						"exec": [
 							"pm.test(\"GetFirstAPInvoiceIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1132,7 +1132,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/apinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22",
+					"raw": "{{URL}}/api/apinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22&&",
 					"host": [
 						"{{URL}}"
 					],
@@ -1189,7 +1189,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "973d52aa-dfbf-4346-a12f-623785b2c091",
+						"id": "1de1fcd4-2534-48bc-b10c-d94250a64fba",
 						"exec": [
 							"pm.test(\"GetAPInvoiceIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1263,7 +1263,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "7b463e6b-ac84-4ef8-805f-91a9fff49a07",
+						"id": "1c68011b-2267-4bed-a381-5c82c2f488bb",
 						"exec": [
 							"pm.test(\"GetAPInvoiceIdFromNotMyTenant Fail\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1334,7 +1334,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "7e9a8527-55cc-4245-97da-b5355d3279fa",
+						"id": "108b6643-3019-41b9-b0cf-58c3f346f962",
 						"exec": [
 							"pm.test(\"GetFirstAPPaymentIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1384,7 +1384,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/appaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22",
+					"raw": "{{URL}}/api/appaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22&&",
 					"host": [
 						"{{URL}}"
 					],
@@ -1441,7 +1441,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b1bb4aa5-503f-40fa-9d32-3788e5ae2a38",
+						"id": "1d1cab4f-5830-4eb9-9726-d11deea7b643",
 						"exec": [
 							"pm.test(\"GetAPPaymentIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1515,7 +1515,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "d3092b22-f724-4492-94c2-31ed170d0f13",
+						"id": "8acfbea9-8bc1-42c5-aaa4-9443370ba7eb",
 						"exec": [
 							"pm.test(\"GetAPPaymentIdFromNotMyTenant Fail\", function () {",
 							"   pm.response.to.have.status(400);",
@@ -1586,7 +1586,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "bdb027bd-5c3c-4987-977d-5ab34186cb41",
+						"id": "0d73f0db-1bac-4bf8-a124-9c2076a50ae1",
 						"exec": [
 							"pm.test(\"GetContactFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1641,7 +1641,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/contactviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{Email}}&PageSize=22",
+					"raw": "{{URL}}/api/contactviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{Email}}&PageSize=22&&",
 					"host": [
 						"{{URL}}"
 					],
@@ -1694,7 +1694,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "bdb027bd-5c3c-4987-977d-5ab34186cb41",
+						"id": "7f8ff01a-0199-4fd5-92fb-1856cf9fb172",
 						"exec": [
 							"pm.test(\"GetContactFromMyTenantNotMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1749,7 +1749,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/contactviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{Email}}&PageSize=22&Tenant={{Tenant2}}",
+					"raw": "{{URL}}/api/contactviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{Email}}&PageSize=22&Tenant={{Tenant2}}&&",
 					"host": [
 						"{{URL}}"
 					],
@@ -1806,7 +1806,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "98c20003-9d37-4976-bb78-c88a43b2b37b",
+						"id": "18deee12-76d2-4593-9135-a14b61a236e9",
 						"exec": [
 							"pm.test(\"GetContactLoggedUserFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1902,7 +1902,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "98c20003-9d37-4976-bb78-c88a43b2b37b",
+						"id": "622ce1f9-abea-4ff1-abb7-74c6724fdc29",
 						"exec": [
 							"pm.test(\"GetContactLoggedUserFromNotMyTenant Fail\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1993,12 +1993,169 @@
 			"response": []
 		},
 		{
+			"name": "GetAccoutingSettingsFromMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "56f0cbc2-3813-43ad-b80e-97970fb3ca53",
+						"exec": [
+							"pm.test(\"GetAccoutingSettingsFromMyTenant\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"\r",
+							"    var idvalue = (pm.response.json().TransferFTPDetailId);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    pm.environment.set(\"MyTenantTransferFTPDetailId\", idvalue);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/accountingsettings/getsingle?id={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingsettings",
+						"getsingle"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetFTPSettingsFromMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cb776d97-9e8f-44ec-80aa-2b54152a5918",
+						"exec": [
+							"pm.test(\"GetFTPSettingsFromMyTenant\", function () {\r",
+							"      pm.response.to.have.status(200);\r",
+							"\r",
+							"\r",
+							"\r",
+							"}\r",
+							"\r",
+							");\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/ftpdetails/getsingle?id={{MyTenantTransferFTPDetailId}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"ftpdetails",
+						"getsingle"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{MyTenantTransferFTPDetailId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetFTPSettingsFromNOTMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bdb53ed0-9fc0-4a93-a1ee-cfb0b2b1598f",
+						"exec": [
+							"pm.test(\"GetFTPSettingsFromNOTMyTenant Fail\", function () {\r",
+							"      pm.response.to.have.status(200);\r",
+							"\r",
+							"      var idvalue = pm.response.json();\r",
+							"      pm.expect(idvalue).to.eql(null);\r",
+							"\r",
+							"\r",
+							"\r",
+							"}\r",
+							"\r",
+							");\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token2}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/ftpdetails/getsingle?id={{MyTenantTransferFTPDetailId}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"ftpdetails",
+						"getsingle"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{MyTenantTransferFTPDetailId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "CheckLogitudeHeaders",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "7064a3f0-6e0b-4fda-8e51-2e66ca9f4be7",
+						"id": "a28ac79b-7bb2-4f0c-a02e-3670b15824a4",
 						"exec": [
 							"pm.test(\"AuthSuccessfullOnTenant1150\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
