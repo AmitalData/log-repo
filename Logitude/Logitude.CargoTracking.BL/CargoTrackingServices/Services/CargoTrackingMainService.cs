@@ -45,6 +45,32 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             CargoTableLists.Add(new CargoTable()
             {
+                TableName = "TransportModes",
+                FieldsDBName = "Id,Name,SearchFields,AutomaticLastUpdateDate",
+                KeyName = "Id",
+                ConditionKey = "Id",
+                CT_FieldsDBName = "Id,Name,SearchFields",
+                DBTableName = "TransportModes",
+                CT_TableName = "CargoTrackingTransportModes",
+                ConditionsNumber = 1,
+
+            });
+
+            CargoTableLists.Add(new CargoTable()
+            {
+                TableName = "Countries",
+                FieldsDBName = "Id,LocalName,Code,EnglishName,AutomaticLastUpdateDate",
+                KeyName = "Id",
+                ConditionKey = "Id",
+                CT_FieldsDBName = "Id,LocalName,Code,EnglishName",
+                DBTableName = "Countries",
+                CT_TableName = "CargoTrackingCountries",
+                ConditionsNumber = 1,
+
+            });
+
+            CargoTableLists.Add(new CargoTable()
+            {
                 TableName = "Shipment",
                 FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,MasterShipmentDataId,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,AutomaticLastUpdateDate,ShipmentPickUpIndex,FirstPickupETA,ShipmentLevelCode,CustomsClearanceDate,CustomFileId,CreateDateTime,SecurityKey,ConsigneeName,ShipperName,CustomerReference1,CustomerReference2",
                 KeyName = "Id",
@@ -71,31 +97,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             });
 
-            CargoTableLists.Add(new CargoTable()
-            {
-                TableName = "TransportModes",
-                FieldsDBName = "Id,Name,SearchFields,AutomaticLastUpdateDate",
-                KeyName = "Id",
-                ConditionKey = "Id",
-                CT_FieldsDBName = "Id,Name,SearchFields",
-                DBTableName = "TransportModes",
-                CT_TableName = "CargoTrackingTransportModes",
-                ConditionsNumber = 1,
- 
-            });
-
-            CargoTableLists.Add(new CargoTable()
-            {
-                TableName = "Countries",
-                FieldsDBName = "Id,Tenant,LocalName,AddedManually,InActive,EC,Notes,HasStates,IsStateRequired,HasCitiesList,SearchFields,Code,EnglishName,IsNorthAmerica,AutomaticLastUpdateDate",
-                KeyName = "Id",
-                ConditionKey = "Id",
-                CT_FieldsDBName = "Id,Tenant,LocalName,AddedManually,InActive,EC,Notes,HasStates,IsStateRequired,HasCitiesList,SearchFields,Code,EnglishName,IsNorthAmerica",
-                DBTableName = "Countries",
-                CT_TableName = "CargoTrackingCountries",
-                ConditionsNumber = 1,
-
-            });
+  
 
             return CargoTableLists;
 

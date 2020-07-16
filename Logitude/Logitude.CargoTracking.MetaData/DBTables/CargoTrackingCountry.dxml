@@ -14,65 +14,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="LocalName"
     Type="nvarchar"
     Size="120">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AddedManually"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="InActive"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="EC"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="HasStates"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsStateRequired"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="HasCitiesList"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -87,12 +31,6 @@
     Name="EnglishName"
     Type="varchar"
     Size="120">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsNorthAmerica"
-    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
