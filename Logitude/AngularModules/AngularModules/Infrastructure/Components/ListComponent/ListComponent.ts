@@ -3281,8 +3281,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     HasActionBar() {//ADD TO LXML\METADATA OBJECTTABLE- to be continue 
         switch (this.ObjectTable.Name) {
             case "DECLARATIONREFERANTDATAS":
-                //return true;
-                return false;
+                return true;
+                //return false;
                 break;
             default:
                 return false;

@@ -1,0 +1,59 @@
+<style>
+    .P-button-drop-menu {
+        text-align: center;
+        font-size: 15px;
+        list-style: none;
+    }
+
+        .P-button-drop-menu li span {
+            text-align: right;
+            display: block;
+            clear: both;
+            font-family: arial;
+            color: #444;
+            text-decoration: none;
+            height: 22px;
+            line-height: 23px; /*make text center*/
+            padding-right: 10px;
+            padding-left: 5px;
+            /*
+                margin: 5px;
+                text-align: center;
+            */
+        }
+
+            .P-button-drop-menu li span:hover {
+                background: #D3D3D3;
+                cursor: pointer;
+            }
+</style>
+<table>
+    <tr>
+     
+        
+        <td>
+            <!--(click)="ButtonClick($event)"-->
+            <courier-filter-button #MyDropdownMenuFilterComponent>
+                <div class="class-filter-content">
+                    <div>
+                        <img style="width: 14px; height: 14px; position: center;" src="./Images/Icons/Actions.png" />
+                    </div>
+                </div>
+
+                <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose()">
+                    <ul class="P-button-drop-menu" style="text-align:right">
+
+                        <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowQueueManagmentAQ1();">
+                            <span> ניהול תורים </span>
+                        </li>
+
+                        <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowOCRQuery();">
+                            <span> שאילתא ל-OCR </span>
+                        </li>
+
+                    </ul>
+                </div>
+            </courier-filter-button>
+        </td>
+    </tr>
+</table>
