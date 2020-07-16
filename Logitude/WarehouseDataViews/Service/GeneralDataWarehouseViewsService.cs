@@ -10,8 +10,6 @@ namespace WarehouseDataViews.Service
 {
     public class GeneralDataWarehouseViewsService
     {
-
-
         public string GetViewName(string fieldName, string viewType)
         {
             string viewName = viewType == "Dim" ? "dim" : viewType == "Fact" ? "fact" : viewType == "Custom" ? "c_dim" : "";
@@ -33,24 +31,6 @@ namespace WarehouseDataViews.Service
                 else if (lastOneCharacter == "f" && lastTwoCharcter == "fe") result = lastOneCharacter == "f" ? viewName.Substring(0, viewName.Length - 1) + "ves" : viewName.Substring(0, viewName.Length - 2) + "ves";
                 else if (lastOneCharacter == "o" && !"a,3,i,o,u".Split(',').Contains(lastSecondCharacter)) result = viewName + "es";
                 else result = viewName + "s";
-
-                //if (viewName.ToLower() == "dimcreatedby" || viewName.ToLower() == "dimoperationalclosedby" || viewName.ToLower() == "dimdirecthouse" || viewName.ToLower() == "dimnotifyone" || viewName.ToLower() == "dimnotifytwo" || viewName.ToLower() == "dimspecialservices")
-                //{
-                //    result = viewName;
-                //}
-                ////else if (viewName.ToLower() == "dimsalesman") result = "dimSalesmen";
-                //else if (viewName.ToLower() == "dimconsigneenotimporter")
-                //{
-
-                //    result = "dimConsigneesNotImportes";
-                //}
-
-
-                //else if (viewName.ToLower() == "dimshippernotexporter")
-                //{
-                //    result = "dimShippersNotExporters";
-                //}
-
             }
 
             return result;
@@ -75,8 +55,6 @@ namespace WarehouseDataViews.Service
             string result = string.Empty;
             if (!string.IsNullOrEmpty(value))
             {
-                //TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-                // result = textInfo.ToTitleCase(value.ToLower());
                 result = value.Replace(" ", "");
             }
             return result;
@@ -108,7 +86,7 @@ namespace WarehouseDataViews.Service
             }
         }
 
-        public string GetDataWarehouseSqlFieldType(DataRow field)
+        public string GetSqlFieldDataType(DataRow field)
         {
             string sqlFieldtype = string.Empty;
             string dataTypeCode = field["DataTypeCode"].ToString();
@@ -124,25 +102,6 @@ namespace WarehouseDataViews.Service
             else if (dataTypeCode == "PickList") sqlFieldtype += " varchar(15)";
             return sqlFieldtype;
         }
-
-        public string BuildConnectionString(string dbSourceConnection)
-        {
-            var connectionStringArray = dbSourceConnection.Split(',');
-            string catalog = connectionStringArray[0];
-            string userName = connectionStringArray[1];
-            string password = connectionStringArray[2];
-            string server = connectionStringArray[3];
-            string result = "Data Source=" + server + ";Initial Catalog=" + catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + userName + ";Password= " + password + ";MultipleActiveResultSets=True;Connect Timeout=60";
-            return result;
-        }
-
-        public string BuildConnectionString(string catalog, string userName, string password, string server)
-        {
-            string result = "Data Source=" + server + ";Initial Catalog=" + catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + userName + ";Password= " + password + ";MultipleActiveResultSets=True;Connect Timeout=60";
-            return result;
-        }
-
-
 
     }
 }

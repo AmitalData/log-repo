@@ -71,8 +71,8 @@ namespace WarehouseDataViews.Service
                 {
                     warehouseView.SqlString += " " + dwObjectFieldDB.FieldCode + " as ";
                     if (dwObjectFieldDB.IsPrimaryKey) warehouseView.SqlString += (parentfieldName + "Key");
+                    else if (dwObjectFieldDB.FieldCode == "[Code]" || dwObjectFieldDB.FieldCode == "[Email]" ||  dwObjectFieldDB.FieldCode == "[Source Tenant]") warehouseView.SqlString += parentfieldName + (!string.IsNullOrEmpty(dwObjectFieldDB.ViewFieldDisplayName) ? dwObjectFieldDB.ViewFieldDisplayName : GetFieldNameFromCode(dwObjectFieldDB.FieldCode));
                     else if (!string.IsNullOrEmpty(dwObjectFieldDB.ViewFieldDisplayName)) warehouseView.SqlString += dwObjectFieldDB.ViewFieldDisplayName;
-                    else if (dwObjectFieldDB.FieldCode == "[Code]" || dwObjectFieldDB.FieldCode == "[Email]") warehouseView.SqlString += parentfieldName + GetFieldNameFromCode(dwObjectFieldDB.FieldCode);
                     else warehouseView.SqlString += ConvertStringToCamelCase(GetFieldNameFromCode(dwObjectFieldDB.FieldCode)).Replace("(", "In").Replace(")", "");
                     warehouseView.SqlString += ",";
                 }

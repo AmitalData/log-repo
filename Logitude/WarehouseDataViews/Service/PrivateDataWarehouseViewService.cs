@@ -26,7 +26,7 @@ namespace WarehouseDataViews.Service
                 string viewscript = view.SqlString;
                 if (view.IsFactView && view.IsHaveCustomFields)
                 {
-                    string customFieldScript = customFieldViewDataWarehouseService.GetCustomFieldsAsSql();
+                    string customFieldScript = customFieldViewDataWarehouseService.GetCustomFieldsAsSqlString();
                     viewscript = view.SqlString.Replace(",@CustomFields", customFieldScript);
                 }
                 DropView(view.ViewName, privateViewArgs.ConnectionString);

@@ -33,7 +33,6 @@
             this.CreateViewsButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.SourceConnectionTextBox = new System.Windows.Forms.TextBox();
-            this.ApplyGrantonViewsCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // ResultLabel
@@ -81,23 +80,11 @@
             this.SourceConnectionTextBox.TabIndex = 7;
             this.SourceConnectionTextBox.TextChanged += new System.EventHandler(this.SourceConnectionTextBox_TextChanged);
             // 
-            // ApplyGrantonViewsCheckBox
-            // 
-            this.ApplyGrantonViewsCheckBox.AutoSize = true;
-            this.ApplyGrantonViewsCheckBox.Location = new System.Drawing.Point(141, 47);
-            this.ApplyGrantonViewsCheckBox.Name = "ApplyGrantonViewsCheckBox";
-            this.ApplyGrantonViewsCheckBox.Size = new System.Drawing.Size(127, 17);
-            this.ApplyGrantonViewsCheckBox.TabIndex = 14;
-            this.ApplyGrantonViewsCheckBox.Text = "Apply Grant on Views";
-            this.ApplyGrantonViewsCheckBox.UseVisualStyleBackColor = true;
-            this.ApplyGrantonViewsCheckBox.CheckedChanged += new System.EventHandler(this.ApplyGrantonViewsCheckBox_CheckedChanged);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(534, 241);
-            this.Controls.Add(this.ApplyGrantonViewsCheckBox);
             this.Controls.Add(this.ResultLabel);
             this.Controls.Add(this.DeleteViewsButton);
             this.Controls.Add(this.CreateViewsButton);
@@ -117,7 +104,6 @@
         private System.Windows.Forms.Button CreateViewsButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox SourceConnectionTextBox;
-        private System.Windows.Forms.CheckBox ApplyGrantonViewsCheckBox;
     }
 }
 

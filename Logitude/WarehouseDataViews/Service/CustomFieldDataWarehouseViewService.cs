@@ -62,7 +62,8 @@ namespace WarehouseDataViews.Service
             warehouseView.SqlString += (" FROM DIM_CustomPickLists where [Code] ='" + customPickListCode + "' or [Code] = '-1'");
             return warehouseView;
         }
-        public string GetCustomFieldsAsSql()
+
+        public string GetCustomFieldsAsSqlString()
         {
             string result = string.Empty;
             foreach (var customField in customObjectFieldLists.AsEnumerable().ToList())
@@ -76,16 +77,17 @@ namespace WarehouseDataViews.Service
                     if (dataTypeCode == "PickList") fieldDisplay = fieldDisplay + "Key";
                     if (dataTypeCode == "Date")
                     {
-                        result += ",CASE WHEN CONVERT(date," + fieldCode + ")  ='1-1-1' or  CONVERT(date," + fieldCode + ") ='2-2-2' or  CONVERT(date," + fieldCode + ") ='3-3-3'  THEN null ELSE CONVERT(" + GetDataWarehouseSqlFieldType(customField) + "," + fieldCode + ")" + " END as " + "[c_" + fieldDisplay + "]";
+                        result += ",CASE WHEN CONVERT(date," + fieldCode + ")  ='1-1-1' or  CONVERT(date," + fieldCode + ") ='2-2-2' or  CONVERT(date," + fieldCode + ") ='3-3-3'  THEN null ELSE CONVERT(" + GetSqlFieldDataType(customField) + "," + fieldCode + ")" + " END as " + "[c_" + fieldDisplay + "]";
                     }
                     else
                     {
-                        result += ",CONVERT(" + GetDataWarehouseSqlFieldType(customField) + "," + fieldCode + ") as " + "[c_" + fieldDisplay + "]";
+                        result += ",CONVERT(" + GetSqlFieldDataType(customField) + "," + fieldCode + ") as " + "[c_" + fieldDisplay + "]";
                     }
                 }
             }
             return result;
         }
+
         private DataTable GetCustomObjectFields(int tenant )
         {
             string sql = "SELECT  MaxLength ,FieldName,  DataTypeCode,TextCodes.DefaultText,CustomPickListCode from  ObjectFields inner join TextCodes on ObjectFields.FullNameTextCodeCode = TextCodes.Code and ObjectFields.tenant = TextCodes.Tenant where ObjectFields.IsCustom = 1 and ObjectFields.Tenant =" + tenant + " and ObjectFields.ObjectTableId =(select id from ObjectTables where Name = 'Shipment')";
