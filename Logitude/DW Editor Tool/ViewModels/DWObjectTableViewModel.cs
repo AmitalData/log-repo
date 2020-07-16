@@ -33,7 +33,9 @@ namespace DW_Editor_Tool.ViewModels
 
         private string defaultFilterBy;
         public string DefaultFilterBy { get { return defaultFilterBy; } set { defaultFilterBy = value; FirePropertyChanged("DefaultFilterBy"); } }
-        
+
+        private string dataViewName;
+        public string DataViewName { get { return dataViewName; } set { dataViewName = value; FirePropertyChanged("DataViewName"); } }
 
         public List<DWTableType> DWTableTypes { get { return new List<DWTableType> { new DWTableType("Fact", "Fact"), new DWTableType("Dimension", "Dimension") }; } }
 

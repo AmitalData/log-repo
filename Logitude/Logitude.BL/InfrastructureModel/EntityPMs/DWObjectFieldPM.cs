@@ -38,7 +38,9 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string FullNameTextCodeCode { get; set; }
         public string PartnerFullNameTextCodeCode { get; set; }
         public string PartnerOriginalObjectFieldCode { get; set; }
-
+        public string ViewFieldDisplayName { get; set; }
+        public bool DontDisplayInView { get; set; }
+        public string DimensionDataViewName { get; set; }
 
 
 

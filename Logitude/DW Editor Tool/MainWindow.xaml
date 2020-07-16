@@ -96,6 +96,11 @@
                                         <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Default Filter By:" />
                                         <TextBox Grid.Row="4" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding DefaultFilterBy, Mode=TwoWay}" />
 
+                                        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Data View Name" />
+                                        <TextBox Grid.Row="5" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding DataViewName, Mode=TwoWay}" />
+
+
+
                                     </Grid>
 
 

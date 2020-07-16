@@ -175,6 +175,21 @@ export class DWObjectFieldPM {
     public set PartnerOriginalObjectFieldCode(newValue: string) { if (this.partnerOriginalObjectFieldCode != newValue) { this.partnerOriginalObjectFieldCode = newValue; this.MarkAsDirty("PartnerOriginalObjectFieldCode"); } }
        
 	 
+    private viewFieldDisplayName: string;
+    public get ViewFieldDisplayName() { return this.viewFieldDisplayName; }
+    public set ViewFieldDisplayName(newValue: string) { if (this.viewFieldDisplayName != newValue) { this.viewFieldDisplayName = newValue; this.MarkAsDirty("ViewFieldDisplayName"); } }
+       
+	 
+    private dontDisplayInView: boolean;
+    public get DontDisplayInView() { return this.dontDisplayInView; }
+    public set DontDisplayInView(newValue: boolean) { if (this.dontDisplayInView != newValue) { this.dontDisplayInView = newValue; this.MarkAsDirty("DontDisplayInView"); } }
+       
+	 
+    private dimensionDataViewName: string;
+    public get DimensionDataViewName() { return this.dimensionDataViewName; }
+    public set DimensionDataViewName(newValue: string) { if (this.dimensionDataViewName != newValue) { this.dimensionDataViewName = newValue; this.MarkAsDirty("DimensionDataViewName"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		

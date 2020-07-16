@@ -10,18 +10,18 @@ using WarehouseDataViews.Service;
 
 namespace WarehouseDataViews
 {
-    public class WarehouseViewsService: GeneralWarehouseViewsService
+    public class WarehouseViewsService : GeneralWarehouseViewsService
     {
-       
+
         private int tenant;
         private DataTable customObjectFields = null;
         DataTable dimensionDWobjectFieldOnFact = null;
 
-        public WarehouseViewsService(int tenant )
+        public WarehouseViewsService(int tenant)
         {
             this.tenant = tenant;
         }
-        
+
         public DataTable GetDimensionDWobjectFieldOnFactShipment(string connectionString)
         {
             var dataTable = new DataTable();
@@ -42,15 +42,15 @@ namespace WarehouseDataViews
             return dataTable;
         }
 
-     
-        
+
+
         public void CreateAllDimensionViews(string sourceConnectionString, string destinationConnectionString)
         {
-             dimensionDWobjectFieldOnFact = GetDimensionDWobjectFieldOnFactShipment(sourceConnectionString);
+            dimensionDWobjectFieldOnFact = GetDimensionDWobjectFieldOnFactShipment(sourceConnectionString);
             foreach (DataRow row in dimensionDWobjectFieldOnFact.Rows)
             {
                 string fieldCode = row["Code"].ToString();
-                string tableCode = fieldCode  != "[Customer]" ? row["DimensionTableCode"].ToString(): "DIM_Customer";
+                string tableCode = fieldCode != "[Customer]" ? row["DimensionTableCode"].ToString() : "DIM_Customer";
                 if (!string.IsNullOrEmpty(fieldCode) && fieldCode != "[Parent Tenant]" && !string.IsNullOrEmpty(tableCode))
                 {
                     if (tableCode != "DIM_Dates")
@@ -66,15 +66,15 @@ namespace WarehouseDataViews
 
                         string scriptView = GenerateScriptView(viewName, fieldName, tableCode);
                         scriptView = ConvertFieldsNameToCamelCase(scriptView);
-                        ExecuteSql(scriptView, destinationConnectionString); 
+                        ExecuteSql(scriptView, destinationConnectionString);
                         GrantView(viewName, destinationConnectionString);
                     }
                 }
             }
 
-            CreateCustomFieldsDimensionViews(sourceConnectionString , destinationConnectionString);
+            CreateCustomFieldsDimensionViews(sourceConnectionString, destinationConnectionString);
         }
-        private void CreateCustomFieldsDimensionViews( string sourceConnectionString, string destinationConnectionString)
+        private void CreateCustomFieldsDimensionViews(string sourceConnectionString, string destinationConnectionString)
         {
             customObjectFields = GetCustomObjectFields(sourceConnectionString);
             var result = customObjectFields.Rows
@@ -87,11 +87,11 @@ namespace WarehouseDataViews
                 string fieldName = GetFieldNameFromCode(customField["DefaultText"].ToString());
 
 
-                string viewName = GetViewName(fieldName , "Custom");
+                string viewName = GetViewName(fieldName, "Custom");
                 DropView(viewName, destinationConnectionString);
                 string scriptView = GenerateScriptView(viewName, fieldName, "DIM_CustomPickLists");
                 scriptView = scriptView.Replace("@CustomPickListCode", "'" + customPickListCode + "'");
-                scriptView = scriptView.Replace("[Value]", "[Value] as ["+ fieldName + "Value]");
+                scriptView = scriptView.Replace("[Value]", "[Value] as [" + fieldName + "Value]");
                 scriptView = ConvertFieldsNameToCamelCase(scriptView);
                 ExecuteSql(scriptView, destinationConnectionString);
                 GrantView(viewName, destinationConnectionString);
@@ -165,18 +165,18 @@ namespace WarehouseDataViews
             foreach (DataRow customField in result)
             {
                 string fieldCode = customField["DefaultText"] != null ? ConvertStringToCamelCase(customField["DefaultText"].ToString()) : "";
-                if (!string.IsNullOrEmpty(fieldCode)) DropView(GetViewName(fieldCode,"Custom"), destinationConnectionString);
+                if (!string.IsNullOrEmpty(fieldCode)) DropView(GetViewName(fieldCode, "Custom"), destinationConnectionString);
             }
         }
 
-    
+
         private string GetCustomFieldsSql()
         {
             string result = string.Empty;
             foreach (var customField in customObjectFields.AsEnumerable().ToList())
             {
-                string fieldDisplay = ConvertStringToCamelCase (customField["DefaultText"].ToString());
-                string fieldCode ="["+ customField["FieldName"].ToString() + "]";
+                string fieldDisplay = ConvertStringToCamelCase(customField["DefaultText"].ToString());
+                string fieldCode = "[" + customField["FieldName"].ToString() + "]";
 
                 string dataTypeCode = customField["DataTypeCode"].ToString();
                 if (dataTypeCode != "LookUp")
@@ -191,7 +191,7 @@ namespace WarehouseDataViews
                         result += ",CONVERT(" + GetDataWarehouseSqlFieldType(customField) + "," + fieldCode + ") as " + "[c_" + fieldDisplay + "]";
                     }
                 }
-         
+
 
             }
             return result;
@@ -200,9 +200,9 @@ namespace WarehouseDataViews
         {
             string sqlFieldtype = string.Empty;
             string dataTypeCode = field["DataTypeCode"].ToString();
-            int maxLength = field["MaxLength"]!=null ? int.Parse(field["MaxLength"].ToString()) :0;
+            int maxLength = field["MaxLength"] != null ? int.Parse(field["MaxLength"].ToString()) : 0;
 
-            if((dataTypeCode == "nText" || dataTypeCode == "Text") && maxLength == 0)
+            if ((dataTypeCode == "nText" || dataTypeCode == "Text") && maxLength == 0)
             {
                 maxLength = 100;
             }
@@ -234,7 +234,7 @@ namespace WarehouseDataViews
 
         }
 
-        public string GenerateScriptView(string viewName, string fieldCode,string tableCode)
+        public string GenerateScriptView(string viewName, string fieldCode, string tableCode)
         {
             string scriptView = string.Empty;
             string scriptstring = ReadScriptFile(tableCode);
@@ -247,19 +247,19 @@ namespace WarehouseDataViews
 
             return scriptView;
         }
-        
-        public void GrantView(string viewName,  string destinationConnectionString)
+
+        public void GrantView(string viewName, string destinationConnectionString)
         {
             string sqlstring = "GRANT SELECT  ON [UnicargoDW].[dbo].[" + viewName + "] TO [UnicargoDBUser]"; // Pre
 
-           // string sqlstring = "GRANT SELECT  ON [T570Unicargo].[dbo].[" + viewName + "] TO [U570gmxaU]";   //Online 
-            ExecuteSql(sqlstring, destinationConnectionString);
+            // string sqlstring = "GRANT SELECT  ON [T570Unicargo].[dbo].[" + viewName + "] TO [U570gmxaU]";   //Online 
+           // ExecuteSql(sqlstring, destinationConnectionString);
         }
         public void DropView(string viewName, string connectionString)
         {
             string sqlstring = "if exists(select 1 from sys.views where name='" + viewName + "' and type='v') begin drop view " + viewName + ";end";
             ExecuteSql(sqlstring, connectionString);
         }
-     
+
     }
 }

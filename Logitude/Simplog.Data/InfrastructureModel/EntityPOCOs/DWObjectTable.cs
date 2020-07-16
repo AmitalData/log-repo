@@ -17,5 +17,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string TypeCode { get; set; }
         public bool IsClosed { get; set; }
         public string DefaultFilterBy { get; set; }
+        public string DataViewName { get; set; }
+
     }
 }

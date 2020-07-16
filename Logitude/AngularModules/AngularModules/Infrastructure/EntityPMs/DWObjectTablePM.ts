@@ -60,6 +60,11 @@ export class DWObjectTablePM {
     public set DefaultFilterBy(newValue: string) { if (this.defaultFilterBy != newValue) { this.defaultFilterBy = newValue; this.MarkAsDirty("DefaultFilterBy"); } }
        
 	 
+    private dataViewName: string;
+    public get DataViewName() { return this.dataViewName; }
+    public set DataViewName(newValue: string) { if (this.dataViewName != newValue) { this.dataViewName = newValue; this.MarkAsDirty("DataViewName"); } }
+       
+	 
 
     public OldEntityPM: DWObjectTablePM;
 		

@@ -40,7 +40,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode =a.TypeCode,
                         Code = a.Code,
                         IsClosed=  a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy
+                        DefaultFilterBy = a.DefaultFilterBy,
+                        DataViewName = a.DataViewName,
                     }).FirstOrDefault();
         }
 
@@ -57,7 +58,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode = a.TypeCode,
                         Code = a.Code,
                         IsClosed = a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy
+                        DefaultFilterBy = a.DefaultFilterBy,
+                        DataViewName = a.DataViewName,
+
                     }
                   );
         }
@@ -74,7 +77,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode = a.TypeCode,
                         Code = a.Code,
                         IsClosed = a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy
+                        DefaultFilterBy = a.DefaultFilterBy,
+                        DataViewName = a.DataViewName,
+
                     }).FirstOrDefault();
         }
 
@@ -90,7 +95,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode = a.TypeCode,
                         Code = a.Code,
                         IsClosed = a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy
+                        DefaultFilterBy = a.DefaultFilterBy,
+                        DataViewName = a.DataViewName,
+
                     });
         }
 
@@ -105,7 +112,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   TypeCode = a.TypeCode,
                                                   Code = a.Code,
                                                   IsClosed = a.IsClosed,
-                                                  DefaultFilterBy = a.DefaultFilterBy
+                                                  DefaultFilterBy = a.DefaultFilterBy,
+                                                  DataViewName = a.DataViewName,
+
                                               };
 
             return result;
