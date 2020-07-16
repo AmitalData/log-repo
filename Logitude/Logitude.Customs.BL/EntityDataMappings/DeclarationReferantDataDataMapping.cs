@@ -36,11 +36,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
         private static void BuildSearchFields(DeclarationReferantDataPM entityPM, DeclarationReferantData poco, bool isNewEntity)
         {
             string result = "";
-
-            if (!string.IsNullOrEmpty(entityPM.OrderNumber))
-            {
-                result = string.IsNullOrEmpty(result) ? entityPM.OrderNumber : result + "," + entityPM.OrderNumber;
-            }
             DeclarationQueryService declarationQuery = new DeclarationQueryService(poco.Tenant);
             DeclarationPM declaration = declarationQuery.GetSingle(entityPM.DeclarationId, false, false);
             if (declaration != null)
@@ -53,6 +48,24 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 if (!string.IsNullOrEmpty(declaration.CustomFileNo))
                 {
                     result = string.IsNullOrEmpty(result) ? declaration.CustomFileNo : result + "," + declaration.CustomFileNo;
+                }
+                if (!string.IsNullOrEmpty(declaration.CustomerId))
+                {
+                    result = string.IsNullOrEmpty(result) ? declaration.CustomerId : result + "," + declaration.CustomerId;
+                }
+                ConsignmentQueryService cosigmentQuery = new ConsignmentQueryService(poco.Tenant);
+                ConsignmentPM consignment = cosigmentQuery.GetSingle(entityPM.DeclarationId,1, false, false);
+                if (!string.IsNullOrEmpty(consignment.ManifestNumber))
+                {
+                    result = string.IsNullOrEmpty(result) ? consignment.ManifestNumber : result + "," + consignment.ManifestNumber;
+                }
+                if (!string.IsNullOrEmpty(consignment.SecondCargoID))
+                {
+                    result = string.IsNullOrEmpty(result) ? consignment.SecondCargoID : result + "," + consignment.SecondCargoID;
+                }
+                if (!string.IsNullOrEmpty(consignment.ThirdCargoID))
+                {
+                    result = string.IsNullOrEmpty(result) ? consignment.ThirdCargoID : result + "," + consignment.ThirdCargoID;
                 }
             }
             entityPM.SearchFields = result.ToLower();
