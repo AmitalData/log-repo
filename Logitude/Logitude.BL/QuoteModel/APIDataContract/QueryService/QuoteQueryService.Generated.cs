@@ -399,7 +399,25 @@ using Simplog.Data.QuoteModel;
 
 							 
 				   temp.StageDate = MyEntityPM.LastStageDate;
-				   temp.SameOrFixed = MyEntityPM.SameOrFixed;					
+				   temp.SameOrFixed = MyEntityPM.SameOrFixed;
+				   temp.PickupCity = MyEntityPM.PickupCity;			  
+				   if(MyEntityPM.PickupCountryId != null)
+				   {
+					   CountryQueryService CountryService36 = new CountryQueryService(Tenant);
+					   					   temp.PickupCountry = CountryService36.GetCountryById(MyEntityPM.PickupCountryId,Tenant); 
+			       
+					   				   }
+				   
+				   temp.PickupZipCode = MyEntityPM.PickupZipCode;
+				   temp.DeliveryCity = MyEntityPM.DeliveryCity;			  
+				   if(MyEntityPM.DeliveryCountryId != null)
+				   {
+					   CountryQueryService CountryService37 = new CountryQueryService(Tenant);
+					   					   temp.DeliveryCountry = CountryService37.GetCountryById(MyEntityPM.DeliveryCountryId,Tenant); 
+			       
+					   				   }
+				   
+				   temp.DeliveryZipCode = MyEntityPM.DeliveryZipCode;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -856,8 +874,8 @@ using Simplog.Data.QuoteModel;
 
 					if(MyEntity.QuoteCharges != null && MyEntity.QuoteCharges.Count > 0)
 					{
-						QuoteChargeQueryService QuoteChargeService36 = new QuoteChargeQueryService(Tenant);
-						temp.QuoteCharges = QuoteChargeService36.QuoteChargeDataMappingAndValidatin(MyEntity.QuoteCharges,Tenant,ComputingPartnerName);
+						QuoteChargeQueryService QuoteChargeService38 = new QuoteChargeQueryService(Tenant);
+						temp.QuoteCharges = QuoteChargeService38.QuoteChargeDataMappingAndValidatin(MyEntity.QuoteCharges,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -931,13 +949,41 @@ using Simplog.Data.QuoteModel;
 
 					if(MyEntity.QuotePackages != null && MyEntity.QuotePackages.Count > 0)
 					{
-						QuotePackageQueryService QuotePackageService36 = new QuotePackageQueryService(Tenant);
-						temp.QuotePackages = QuotePackageService36.QuotePackageDataMappingAndValidatin(MyEntity.QuotePackages,Tenant,ComputingPartnerName);
+						QuotePackageQueryService QuotePackageService38 = new QuotePackageQueryService(Tenant);
+						temp.QuotePackages = QuotePackageService38.QuotePackageDataMappingAndValidatin(MyEntity.QuotePackages,Tenant,ComputingPartnerName);
 					}
 
 								 
 					temp.LastStageDate = MyEntity.StageDate;
-					temp.SameOrFixed = MyEntity.SameOrFixed;					   
+					temp.SameOrFixed = MyEntity.SameOrFixed;
+					temp.PickupCity = MyEntity.PickupCity;
+					CountryQueryService PickupCountryCountryService = new CountryQueryService(Tenant);
+					if(MyEntity.PickupCountry != null)
+					{
+						var myPickupCountryPM = PickupCountryCountryService.CountryDataMappingAndValidatin(MyEntity.PickupCountry,Tenant,ComputingPartnerName);
+												if(myPickupCountryPM != null)
+						{
+							temp.PickupCountryId = myPickupCountryPM.Id;
+						}
+						 
+					}
+			
+					
+					temp.PickupZipCode = MyEntity.PickupZipCode;
+					temp.DeliveryCity = MyEntity.DeliveryCity;
+					CountryQueryService DeliveryCountryCountryService = new CountryQueryService(Tenant);
+					if(MyEntity.DeliveryCountry != null)
+					{
+						var myDeliveryCountryPM = DeliveryCountryCountryService.CountryDataMappingAndValidatin(MyEntity.DeliveryCountry,Tenant,ComputingPartnerName);
+												if(myDeliveryCountryPM != null)
+						{
+							temp.DeliveryCountryId = myDeliveryCountryPM.Id;
+						}
+						 
+					}
+			
+					
+					temp.DeliveryZipCode = MyEntity.DeliveryZipCode;					   
 					   return temp;
 		    }
             catch (Exception ex)
