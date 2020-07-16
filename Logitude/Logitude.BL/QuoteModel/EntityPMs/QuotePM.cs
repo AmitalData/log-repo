@@ -676,5 +676,11 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentSubTypeId { get; set; }
         public string ShipmentSubTypeName { get; set; }
+        public string PickupCity { get; set; }
+        public string PickupCountryId { get; set; }
+        public string PickupZipCode { get; set; }
+        public string DeliveryCity { get; set; }
+        public string DeliveryCountryId { get; set; }
+        public string DeliveryZipCode { get; set; }
     }
 }
