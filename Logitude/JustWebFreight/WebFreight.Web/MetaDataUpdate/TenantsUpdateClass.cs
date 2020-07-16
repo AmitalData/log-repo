@@ -1976,7 +1976,7 @@ namespace WebFreight.Web.MetaDataUpdate
                                 DocumentTypeDefaultReportTemplateId = docType.DocumentTypeDefaultReportTemplateId,
                                 IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
                                 PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
-
+                                OrderBy = docType.OrderBy
                             };
                             documentTypeRepository.Add(newDocType);
 
