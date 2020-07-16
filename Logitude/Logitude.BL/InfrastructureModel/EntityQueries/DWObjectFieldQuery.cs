@@ -60,6 +60,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ViewFieldDisplayName = a.ViewFieldDisplayName,
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName  = a.DimensionDataViewName,
+                        IsMultipleSelection = a.IsMultipleSelection
                     }).FirstOrDefault();
 
 
@@ -107,10 +108,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ViewFieldDisplayName = a.ViewFieldDisplayName,
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
+                        IsMultipleSelection = a.IsMultipleSelection
 
-
-                    }
-                  );
+                    });
         }
 
         public List<DWObjectFieldPM> GetDWObjectFieldPMsByDWObjectTabelAndTenant(int tenant,string dwotCode)
@@ -144,10 +144,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ViewFieldDisplayName = a.ViewFieldDisplayName,
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
+                        IsMultipleSelection = a.IsMultipleSelection
 
-
-                    }
-                  ).ToList();
+                    }).ToList();
 
             return SetDWFullNameTextCode(tenant, result);
 
@@ -216,11 +215,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                 ViewFieldDisplayName = a.ViewFieldDisplayName,
                                 DontDisplayInView = a.DontDisplayInView,
                                 DimensionDataViewName = a.DimensionDataViewName,
+                                IsMultipleSelection = a.IsMultipleSelection
 
-
-
-                            }
-                  );
+                            });
             return TempList;
         }
 
@@ -254,6 +251,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 ViewFieldDisplayName = item.ViewFieldDisplayName,
                 DontDisplayInView = item.DontDisplayInView,
                 DimensionDataViewName = item.DimensionDataViewName,
+                IsMultipleSelection = item.IsMultipleSelection
 
             };
         }
@@ -287,6 +285,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                                                   ViewFieldDisplayName = a.ViewFieldDisplayName,
                                                                                                   DontDisplayInView = a.DontDisplayInView,
                                                                                                   DimensionDataViewName = a.DimensionDataViewName,
+                                                                                                  IsMultipleSelection = a.IsMultipleSelection
 
 
                                                                                               }
@@ -325,6 +324,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ViewFieldDisplayName = a.ViewFieldDisplayName,
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
+                        IsMultipleSelection = a.IsMultipleSelection
 
 
                     }).FirstOrDefault();
@@ -361,6 +361,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ViewFieldDisplayName = a.ViewFieldDisplayName,
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
+                        IsMultipleSelection = a.IsMultipleSelection
 
 
                     });
@@ -395,6 +396,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        ViewFieldDisplayName = a.ViewFieldDisplayName,
                                                        DontDisplayInView = a.DontDisplayInView,
                                                        DimensionDataViewName = a.DimensionDataViewName,
+                                                       IsMultipleSelection = a.IsMultipleSelection
 
 
                                                    };
@@ -440,6 +442,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ViewFieldDisplayName = a.ViewFieldDisplayName,
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
+                        IsMultipleSelection = a.IsMultipleSelection
 
 
                     }).FirstOrDefault();
@@ -488,6 +491,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ViewFieldDisplayName = a.ViewFieldDisplayName,
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
+                        IsMultipleSelection = a.IsMultipleSelection
 
 
                     }).FirstOrDefault();
@@ -530,6 +534,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  ViewFieldDisplayName = a.ViewFieldDisplayName,
                                                  DontDisplayInView = a.DontDisplayInView,
                                                  DimensionDataViewName = a.DimensionDataViewName,
+                                                 IsMultipleSelection = a.IsMultipleSelection
 
                                              }
                   ).ToList();

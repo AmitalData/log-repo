@@ -190,6 +190,11 @@ export class DWObjectFieldPM {
     public set DimensionDataViewName(newValue: string) { if (this.dimensionDataViewName != newValue) { this.dimensionDataViewName = newValue; this.MarkAsDirty("DimensionDataViewName"); } }
        
 	 
+    private isMultipleSelection: boolean;
+    public get IsMultipleSelection() { return this.isMultipleSelection; }
+    public set IsMultipleSelection(newValue: boolean) { if (this.isMultipleSelection != newValue) { this.isMultipleSelection = newValue; this.MarkAsDirty("IsMultipleSelection"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		

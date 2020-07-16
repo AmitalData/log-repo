@@ -64,6 +64,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ViewFieldDisplayName).HasColumnName("ViewFieldDisplayName");
             this.Property(t => t.DontDisplayInView).HasColumnName("DontDisplayInView ");
             this.Property(t => t.DimensionDataViewName).HasColumnName("DimensionDataViewName ");
+            this.Property(t => t.IsMultipleSelection).HasColumnName("IsMultipleSelection ");
 
 
             this.HasRequired(t => t.DWObjectTable).WithMany().HasForeignKey(d => d.DWObjectTableCode);

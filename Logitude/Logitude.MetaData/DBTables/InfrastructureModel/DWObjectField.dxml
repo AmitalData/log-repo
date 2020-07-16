@@ -170,6 +170,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsMultipleSelection"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DWObjectTableCode"
     ReferencedTable="DWObjectTables"
