@@ -92,6 +92,8 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         this.UIProperties.SetEnabled("AWBPrintDescription", this.ObjectTableName, awbFieldsEnabled);
         this.UIProperties.SetEnabled("SATExternalId", this.ObjectTableName, fieldsEnabled);
         this.UIProperties.SetEnabled("ApplyRegionalTax", this.ObjectTableName, fieldsEnabled);
+        this.UIProperties.SetEnabled("HasPickup", this.ObjectTableName, fieldsEnabled);
+        this.UIProperties.SetEnabled("HasDelivery", this.ObjectTableName, fieldsEnabled);
         //if (this.IsBackToBack) {
         //    this.UIProperties.SetEnabled("IsReceivable", this.ObjectTableName, false);
         //}
@@ -375,4 +377,17 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         }
     }
 
+    get HasPickup() { return this.EntityPM.HasPickup; }
+    set HasPickup(newValue: boolean) {
+        if (this.EntityPM.HasPickup != newValue) {
+            this.EntityPM.HasPickup = newValue;
+        }
+    }
+
+    get HasDelivery() { return this.EntityPM.HasDelivery; }
+    set HasDelivery(newValue: boolean) {
+        if (this.EntityPM.HasDelivery != newValue) {
+            this.EntityPM.HasDelivery = newValue;
+        }
+    }
 }

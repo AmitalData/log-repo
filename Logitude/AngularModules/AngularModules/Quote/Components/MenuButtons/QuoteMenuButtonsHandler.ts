@@ -23,20 +23,21 @@ import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainSe
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {QuoteDomainService} from '../../../Quote/Services/QuoteDomainService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { ChargesTypeListService } from '../../../Common/Services/StandardLists/ChargesTypeListService';
 
 export class QuoteMenuButtonsHandler {
     public EntityPM: QuotePM;
     public entityArgs: EntityArgs
     private CurrentSession = SessionLocator.SelectedSession;
     private isLCL: boolean = false;
-
+    private myChargesTypeService: ChargesTypeListService;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
         this.myQuoteStageListService = new QuoteStageListService();
         this.myPartnersDomainService = new PartnersDomainService();
         this.entityResourceService = new EntityResourceService();
-
+        this.myChargesTypeService = new ChargesTypeListService();
         this.Listen();
     }
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
@@ -879,32 +880,44 @@ export class QuoteMenuButtonsHandler {
 
     private IsRunQuotation: boolean = false;
     private RunQuotationScreen() {
-        if (this.EntityPM.QuoteTypeCode == "A") {
-            this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
-            this.CheckUpdateQuantities();
+        var quoteCharges = this.EntityPM.QuoteCharges.filter(a => a.SaleAmountInSaleCurrency != null && a.CostAmountInSaleCurrency != null
+            && ((a.HasPickup && this.EntityPM.IncludePickUp == false) || (a.HasDelivery && this.EntityPM.IncludeDelivery == false)));
+
+        if (quoteCharges != null && quoteCharges.length > 0) {
+            var msg = "Can't have charges marked for pickup/delivery without having pickup/delivery defined in the quote";
+            var window = new MessageWindow();
+            window.Width = 400;
+            window.Height = 150;
+            window.ShowErrorIcon = true;
+            this.isButtonClicked = false;
+            window.Show(msg);
         }
-        if (this.IsUpdateQuantitiesVisible) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Width = 400;
-            messageWindow.Height = 150;
-            messageWindow.Title = "Message";
-            messageWindow.Show(this.UpdateQuantitiesMessage);
-            messageWindow.WindowClosed.subscribe(s => {
-                this.isButtonClicked = false;
-            });
-        } else {
-            if (this.EntityPM && this.EntityPM.IsDirty) {
-                this.Validate();
-                if (this.isValid) {
-                    this.IsRunQuotation = true;
-                    this.entityArgs.EditComponent.SaveChanges();
-                }
+        else {
+            if (this.EntityPM.QuoteTypeCode == "A") {
+                this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
+                this.CheckUpdateQuantities();
+            }
+            if (this.IsUpdateQuantitiesVisible) {
+                var messageWindow = new MessageWindow();
+                messageWindow.Width = 400;
+                messageWindow.Height = 150;
+                messageWindow.Title = "Message";
+                messageWindow.Show(this.UpdateQuantitiesMessage);
+                messageWindow.WindowClosed.subscribe(s => {
+                    this.isButtonClicked = false;
+                });
             } else {
-                this.OpenQuotationWindow(); 
+                if (this.EntityPM && this.EntityPM.IsDirty) {
+                    this.Validate();
+                    if (this.isValid) {
+                        this.IsRunQuotation = true;
+                        this.entityArgs.EditComponent.SaveChanges();
+                    }
+                } else {
+                    this.OpenQuotationWindow();
+                }
             }
         }
-        
-
     }
 
     public UpdateQuantitiesMessage: string;
