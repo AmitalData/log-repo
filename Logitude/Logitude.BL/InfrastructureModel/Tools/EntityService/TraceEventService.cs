@@ -91,6 +91,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 {
                     shipmentPM.LastExceptionDescription = Poco.Notes;
                     shipmentPM.ExceptionDescription = Poco.Notes;
+                    shipmentPM.IsUpdateEntityException = true;
+
                 }
             }
 
@@ -107,6 +109,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                         shipmentPM.LastSharedEventLocation = theEntityPm.Location;
                         shipmentPM.LastSharedEventNotes = theEntityPm.Notes;
                         shipmentPM.LastSharedEventDate = theEntityPm.EventDateTime;
+
                     }
                 }
             }
