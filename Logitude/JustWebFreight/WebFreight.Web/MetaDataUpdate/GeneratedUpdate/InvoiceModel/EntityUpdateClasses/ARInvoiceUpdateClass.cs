@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "a4fe1dc37d4749e6d7937d3c4bc16ea9";
+		public const string HashString = "c202147ec302c88e65bee69938db7cf8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -8198,7 +8198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  true,
+					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -9582,7 +9582,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_ARInvoiceMDeletedSuccessfully = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.DeletedSuccessfully", DefaultText = "Invoice Deleted Successfully",LocalDefaultText = @"החשבונית נמחקה בהצלחה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARInvoiceTextCode_ARInvoiceMConfirmAutoCredit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.ConfirmAutoCredit", DefaultText = "This action will create a credit note, it will credit the client with the full amount of the invoice and cancel it",LocalDefaultText = @"פעולה זו תיצור חשבונית זיכוי, תזכה את הלקוח בסכום החשבונית המלא ותסמן את החשבונית כמבטלת אותה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ARInvoiceTextCode_ARInvoiceMConfirmAutoCredit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.ConfirmAutoCredit", DefaultText = "Canceling a credit note will debit the customer and mark the credit note as canceled , do you want to continue?",LocalDefaultText = @"ביטול של חשבונית זיכוי מחייב את הלקוח ומסמן את חשבונית הזיכוי כמבוטלת, האם להמשיך?", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceMCreatingAutoCredit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.CreatingAutoCredit", DefaultText = "Creating Auto Credit Invoice ...",LocalDefaultText = @"יוצר חשבונית זיכוי חדשה....", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
