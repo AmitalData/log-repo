@@ -51,7 +51,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
                 if (!string.IsNullOrEmpty(declaration.CustomerId))
                 {
-                    result = string.IsNullOrEmpty(result) ? declaration.CustomerId : result + "," + declaration.CustomerId;
+                    result = string.IsNullOrEmpty(result) ? declaration.CustomerId : result + "," + declaration.CustomerName;
                 }
                 ConsignmentQueryService cosigmentQuery = new ConsignmentQueryService(poco.Tenant);
                 ConsignmentPM consignment = cosigmentQuery.GetSingle(entityPM.DeclarationId,1, false, false);
