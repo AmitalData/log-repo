@@ -113,7 +113,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
             InterestLastBatchServiceUpdateService interestLastBatchServiceUpdateService = new InterestLastBatchServiceUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
 
-            if (interestLastBatchService != null && !string.IsNullOrEmpty(interestLastBatchService.CreateReportsBatchId))
+            if (interestLastBatchService != null)
             {
                 interestLastBatchService.CreateReportsBatchId = batchTaskId;
                 interestLastBatchService.ChangeSetOp = ChangeSetOperation.Update;
