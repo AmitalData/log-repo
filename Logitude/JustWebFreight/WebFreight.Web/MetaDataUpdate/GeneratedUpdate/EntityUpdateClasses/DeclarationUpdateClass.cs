@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "52086c6f9a0edcfdec24e0ca83af4907";
+		public const string HashString = "c68fbdd8a1ea689a432bc0609ba9d8f0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15272,6 +15272,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 Code =  "CWR",
                 EnglishName =  "Declaration Cancel Waiting for customs",
                 LocalName =  "ביטול הצהרה ממתין לטיפול המכס",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DeclarationObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CPO",
+                EnglishName =  "Declaration Cancel Sent",
+                LocalName =  "נשלחה בקשה לביטול הצהרה",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
