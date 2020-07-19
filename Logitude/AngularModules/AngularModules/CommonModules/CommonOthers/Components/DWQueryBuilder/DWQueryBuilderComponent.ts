@@ -20,6 +20,7 @@ import { DWQueryPMService } from '../../../../Infrastructure/Services/StandardPM
 import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import { CustomEntityArgs } from '../../../../Infrastructure/Components/LogitudeComponents/DWLogSearchWindowComponent';
 
 
 @Component({
@@ -388,6 +389,35 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.IsbtnRemoveEnabled = false;
     }
 
+    SelectChargesClicked(item) {
+        var args = new CustomEntityArgs();
+
+        args.ObjectTableName = "DIM_ChargesTypes";
+        args.DisplayFieldsFromList = "Code";
+        args.LOVAdditionalColumns = "[English Name],[Local Name]";
+        args.DataContext = item;
+        args.IsMultipleSelection = item.IsMultipleSelection;
+        args.DisplayName = item.DisplayName;
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 900;
+        logitudeWindow.Height = 600;
+        logitudeWindow.WindowArgs = args;
+
+        logitudeWindow.Title = "Create Group of Charge Types";
+        logitudeWindow.Show('./Infrastructure/Components/LogitudeComponents/DWLogSearchWindowComponent');
+
+        logitudeWindow.WindowClosed.subscribe((event) => {
+            if (event != "Cancel") {
+                this.OnGroupChargsClosed(item, event);
+            }
+        });
+    }
+
+    private OnGroupChargsClosed(item, columnName) {
+        item.DisplayName = columnName;
+    }
+
     private notes: string;
     public get Notes() { return this.notes; }
     public set Notes(newValue: string) {
@@ -565,8 +595,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
     btnAdd_Click(item) {
 
         this.SelectedItem = item;
+        if (this.SelectedItem.IsMultipleSelection) {
+            this.SelectedItem = new DWObjectFieldsDetails(item);
+        }
         var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
-        if (this.SelectedItem && myCurrentItem && myCurrentItem.length == 0) {
+        if (this.SelectedItem && myCurrentItem && (myCurrentItem.length == 0 || this.SelectedItem.IsMultipleSelection)) {
                 if (this.SelectedItem.Code == '[Full Date]' || this.SelectedItem.Code == '[Full Date US]') {
                 this.SelectedItem.ParentDataTypeCode = "LookUp";
                 this.SelectedItem.DataTypeCode = "Date";
@@ -578,6 +611,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
             var tempData = this.SelectedFieldsDataSource;
             tempData.push(this.SelectedItem);
             this.SelectedFieldsDataSource = this.ResetIndexes(tempData);
+            if (this.SelectedItem.IsMultipleSelection) {
+                this.SelectedItem.DisplayName += this.selectedItem.IndexOrder;
+            }
             //this.SampleData = [];
             //this.Notes = "";
             //this.SaveChanges();
@@ -1253,7 +1289,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 view.ParentDataTypeCode = field.ParentDataTypeCode;
                 view.DisplayName = field.DisplayName;
                 view.DimensionTableDisplayName = field.DimensionTableDisplayName;
-
+                view.IsMultipleSelection = field.IsMultipleSelection;
+                view.MultiSelectedValueLists = field.MultiSelectedValueLists;
+                
                 view.ParentCode = field.ParentCode;
                 view.ParentDimTabelName = field.ParentDimTabelName;
 
@@ -1413,6 +1451,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.CustomPickListCode = DWObjectField.CustomPickListCode;
             this.HideTree = DWObjectField.HideTree;
             this.LOVAdditionalColumns = DWObjectField.LOVAdditionalColumns;
+            
             if (!this.LOVAdditionalColumns && ParentClass && ParentClass.AllFieldsDataSource) {
                 var field = ParentClass.AllFieldsDataSource.filter(a => a.DWObjectTableCode == DWObjectField.DWObjectTableCode && a.Code == DWObjectField.Code && a.Name == DWObjectField.Name)[0];
                 if (field) {
@@ -1434,8 +1473,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.DimensionTableCode = DWObjectField.DimensionTableCode;
             this.FullNameTextCodeCode = DWObjectField.FullNameTextCodeCode;
             this.PartnerFullNameTextCodeCode = DWObjectField.PartnerFullNameTextCodeCode;
-
-            
+            this.IsMultipleSelection = DWObjectField.IsMultipleSelection;
+            this.ColumnName = DWObjectField.ColumnName;
+            if (this.IsMultipleSelection)
+                this.MultiSelectedValueLists = DWObjectField.MultiSelectedValueLists;
+            this.ParentDataTypeCode = DWObjectField.ParentDataTypeCode;
             this.DataTypeCode = DWObjectField.DataTypeCode;
             //if (DWObjectField.FilterItems && DWObjectField.FilterItems.length == 0) {
             this.TranslationText = this.GetTranslationText(DWObjectField); 
@@ -1596,6 +1638,10 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
         this.displayname = newValue;
     }
+
+    private isMultipleSelection: boolean;
+    public get IsMultipleSelection() { return this.isMultipleSelection; }
+    public set IsMultipleSelection(newValue: boolean) { this.isMultipleSelection = newValue; }
 
     private dimensionTableDisplayName: string;
     public get DimensionTableDisplayName() { return this.dimensionTableDisplayName; }
@@ -1769,7 +1815,9 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     }
 
-
+    private columnName: string;
+    public get ColumnName() { return this.columnName; }
+    public set ColumnName(value: string) { this.columnName = value; }
 
     private operationName: string;
     public get OperationName() { return this.operationName; }
