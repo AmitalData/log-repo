@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarehouseData.Service;
+using WarehouseDataViews.Service;
 
 namespace WarehouseData.Helper
 {
@@ -231,8 +232,12 @@ namespace WarehouseData.Helper
 
 
                 var dWHSettingsTable = privateTenantDataWarehouse.GetPrivateTenant(sourceConnectionString);
-
-                if (type == "Build") CreateWaterMarksTable("PrivateWaterMarks", sourceConnectionString, true);
+                PrivateDataWarehouseViewService privateDataWarehouseViewService = null ;
+                if (type == "Build")
+                {
+                    CreateWaterMarksTable("PrivateWaterMarks", sourceConnectionString, true);
+                    privateDataWarehouseViewService = new PrivateDataWarehouseViewService(sourceConnectionString);
+                }
                 FeatureDataWarehouseService featureDataWarehouseService = new FeatureDataWarehouseService(sourceConnectionString.Replace("Main" ,"Global"), sourceConnectionString);
 
                 foreach (DataRow row in dWHSettingsTable.Rows)
@@ -242,6 +247,7 @@ namespace WarehouseData.Helper
                     string userName = row["UserName"].ToString();
                     string password = row["Password"].ToString();
                     string server = row["Server"].ToString();
+                    string privateUserName = row["PrivateUserName"].ToString();
 
                     if (featureDataWarehouseService.CheckFeature("PrivateDB", tenant))
                     {
@@ -249,7 +255,12 @@ namespace WarehouseData.Helper
                         List<int> relatedTenants = privateTenantDataWarehouse.GetPrivateRelatedTenants(sourceConnectionString, tenant);
                         if (!relatedTenants.Contains(tenant)) relatedTenants.Add(tenant);
                         string tenants = privateTenantDataWarehouse.ConvertIntgerListToString(relatedTenants);
-                        if (type == "Build") BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                        if (type == "Build")
+                        {
+                            BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                            privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false });
+
+                        }
                         else UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
                     }
                 }

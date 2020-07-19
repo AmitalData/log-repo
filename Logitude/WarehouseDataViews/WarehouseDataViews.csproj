@@ -83,11 +83,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WarehouseData\WarehouseData.csproj">
-      <Project>{41EC268D-2956-43B6-9F68-B3FDB4041EBD}</Project>
-      <Name>WarehouseData</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

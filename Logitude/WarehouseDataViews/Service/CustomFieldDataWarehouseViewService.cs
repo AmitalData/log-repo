@@ -11,11 +11,11 @@ namespace WarehouseDataViews.Service
     {
 
         private string connectionString;
-        private List<DWObjectFieldDB> dwObjectFieldLists;
+        private List<DWObjectFieldItem> dwObjectFieldLists;
         private DataTable customObjectFieldLists;
         int tenant;
 
-        public CustomFieldDataWarehouseViewService(string connectionString ,List<DWObjectFieldDB> dwObjectFieldLists, int tenant)
+        public CustomFieldDataWarehouseViewService(string connectionString ,List<DWObjectFieldItem> dwObjectFieldLists, int tenant)
         {
             this.connectionString = connectionString;
             this.dwObjectFieldLists = dwObjectFieldLists;
@@ -23,6 +23,7 @@ namespace WarehouseDataViews.Service
             customObjectFieldLists = GetCustomObjectFields(tenant);
 
         }
+
         public List<WarehouseView> GetCustomFieldViewLists()
         {
             var customFieldViewLists = new List<WarehouseView>();
@@ -48,7 +49,7 @@ namespace WarehouseDataViews.Service
             string viewName = GetViewName(fieldName, "Custom");
 
             var warehouseView = new WarehouseView() { ViewName = viewName, SqlString = " CREATE VIEW " + viewName + " AS SELECT " };
-            foreach (DWObjectFieldDB dwObjectFieldDB in dwObjectFieldLists.Where(d => d.DWObjectTableCode == "DIM_CustomPickLists").ToList())
+            foreach (DWObjectFieldItem dwObjectFieldDB in dwObjectFieldLists.Where(d => d.DWObjectTableCode == "DIM_CustomPickLists").ToList())
             {
                 warehouseView.SqlString += " " + dwObjectFieldDB.FieldCode + " as ";
                 if (dwObjectFieldDB.IsPrimaryKey) warehouseView.SqlString += ("c_" + fieldName + "Key");
@@ -62,7 +63,8 @@ namespace WarehouseDataViews.Service
             warehouseView.SqlString += (" FROM DIM_CustomPickLists where [Code] ='" + customPickListCode + "' or [Code] = '-1'");
             return warehouseView;
         }
-        public string GetCustomFieldsAsSql()
+
+        public string GetCustomFieldsAsSqlString()
         {
             string result = string.Empty;
             foreach (var customField in customObjectFieldLists.AsEnumerable().ToList())
@@ -76,16 +78,17 @@ namespace WarehouseDataViews.Service
                     if (dataTypeCode == "PickList") fieldDisplay = fieldDisplay + "Key";
                     if (dataTypeCode == "Date")
                     {
-                        result += ",CASE WHEN CONVERT(date," + fieldCode + ")  ='1-1-1' or  CONVERT(date," + fieldCode + ") ='2-2-2' or  CONVERT(date," + fieldCode + ") ='3-3-3'  THEN null ELSE CONVERT(" + GetDataWarehouseSqlFieldType(customField) + "," + fieldCode + ")" + " END as " + "[c_" + fieldDisplay + "]";
+                        result += ",CASE WHEN CONVERT(date," + fieldCode + ")  ='1-1-1' or  CONVERT(date," + fieldCode + ") ='2-2-2' or  CONVERT(date," + fieldCode + ") ='3-3-3'  THEN null ELSE CONVERT(" + GetSqlFieldDataType(customField) + "," + fieldCode + ")" + " END as " + "[c_" + fieldDisplay + "]";
                     }
                     else
                     {
-                        result += ",CONVERT(" + GetDataWarehouseSqlFieldType(customField) + "," + fieldCode + ") as " + "[c_" + fieldDisplay + "]";
+                        result += ",CONVERT(" + GetSqlFieldDataType(customField) + "," + fieldCode + ") as " + "[c_" + fieldDisplay + "]";
                     }
                 }
             }
             return result;
         }
+
         private DataTable GetCustomObjectFields(int tenant )
         {
             string sql = "SELECT  MaxLength ,FieldName,  DataTypeCode,TextCodes.DefaultText,CustomPickListCode from  ObjectFields inner join TextCodes on ObjectFields.FullNameTextCodeCode = TextCodes.Code and ObjectFields.tenant = TextCodes.Tenant where ObjectFields.IsCustom = 1 and ObjectFields.Tenant =" + tenant + " and ObjectFields.ObjectTableId =(select id from ObjectTables where Name = 'Shipment')";

@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WarehouseData.Service;
 using WarehouseDataViews.Service;
 
 namespace WarehouseDataViews
@@ -29,7 +28,6 @@ namespace WarehouseDataViews
 
 
         string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";
-        bool ApplyGrantOnViews = false;
         public Form1()
         {
             InitializeComponent();
@@ -49,8 +47,7 @@ namespace WarehouseDataViews
                 string[] sourceConnectionArray = dbSourceConnection.Split(',');
                 string connectionString = BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
                 PrivateDataWarehouseViewService privateDataWarehouseViewService = new PrivateDataWarehouseViewService(connectionString);
-                var dWHSettingsTable = privateDataWarehouseViewService.GetDataTableFromSql(connectionString, "SELECT  * from  DWHSettings where PrivateUserName is not null");
-                FeatureDataWarehouseService featureDataWarehouseService = new FeatureDataWarehouseService(connectionString.Replace("Main", "Global"), connectionString);
+                var dWHSettingsTable = privateDataWarehouseViewService.GetDataTableFromSql(connectionString, "SELECT  * from  DWHSettings where Catalog is not null");
                 foreach (DataRow row in dWHSettingsTable.Rows)
                 {
                     int tenant = Int32.Parse(row["Tenant"].ToString());
@@ -59,11 +56,9 @@ namespace WarehouseDataViews
                     string password = row["Password"].ToString();
                     string server = row["Server"].ToString();
                     string privateUserName = row["PrivateUserName"].ToString();
-                    if (featureDataWarehouseService.CheckFeature("PrivateDB", tenant))
-                    {
-                        string destinationConnectionString = BuildConnectionString(catalog, userName, password, server);
-                        privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = ApplyGrantOnViews });
-                    }
+                    string destinationConnectionString = BuildConnectionString(catalog, userName, password, server);
+                    privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = (!string.IsNullOrEmpty(privateUserName)?true:false) });
+                    
                 }
                 SetResultLable(true);
             }
@@ -98,7 +93,7 @@ namespace WarehouseDataViews
                 string[] sourceConnectionArray = dbSourceConnection.Split(',');
                 string connectionString = BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
                 GeneralDataWarehouseViewsService generalDataWarehouseViewsService = new GeneralDataWarehouseViewsService();
-                var dWHSettingsTable = generalDataWarehouseViewsService.GetDataTableFromSql(connectionString, "SELECT  * from  DWHSettings where PrivateUserName is not null");
+                var dWHSettingsTable = generalDataWarehouseViewsService.GetDataTableFromSql(connectionString, "SELECT  * from  DWHSettings where Catalog is not null");
                 foreach (DataRow row in dWHSettingsTable.Rows)
                 {
                     int tenant = Int32.Parse(row["Tenant"].ToString());
@@ -142,10 +137,6 @@ namespace WarehouseDataViews
 
         }
 
-        private void ApplyGrantonViewsCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox applyGrantOnViewsCheckBox = sender as CheckBox;
-            this.ApplyGrantOnViews = applyGrantOnViewsCheckBox.Checked;
-        }
+       
     }
 }

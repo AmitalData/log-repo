@@ -10,13 +10,15 @@ namespace WarehouseDataViews.Service
 {
     public class DataWarehouseViewsService: GeneralDataWarehouseViewsService
     {
-        public List<WarehouseView> DataWarehouseViewLists = new List<WarehouseView>();
-        public List<DWObjectFieldDB> DwObjectFieldLists = new List<DWObjectFieldDB>();
+        public List<WarehouseView> DataWarehouseViewLists = null;
+        public List<DWObjectFieldItem> DwObjectFieldLists = null;
         private string connectionString = string.Empty;
         public DataWarehouseViewsService(string connectionString)
         {
             this.connectionString = connectionString;
+            DataWarehouseViewLists = new List<WarehouseView>();
             DwObjectFieldLists = GetDwObjectFieldLists();
+
             BuildDataWarehouseViewLists();
         }
 
@@ -29,7 +31,7 @@ namespace WarehouseDataViews.Service
                 string viewName = row["DataViewName"] != null ? row["DataViewName"].ToString() : "";
                 if (!string.IsNullOrEmpty(viewName))
                 {
-                    foreach (DWObjectFieldDB field in DwObjectFieldLists.Where(d => d.DWObjectTableCode == factCode && d.DataTypeCode == "Dimension" && d.DimensionTableCode != "DIM_Dates").ToList())
+                    foreach (DWObjectFieldItem field in DwObjectFieldLists.Where(d => d.DWObjectTableCode == factCode && d.DataTypeCode == "Dimension" && d.DimensionTableCode != "DIM_Dates").ToList())
                     {
                         CreateDimensionDataView(field);
                     }
@@ -42,7 +44,7 @@ namespace WarehouseDataViews.Service
         private void CreateFactDataView(string factCode, string viewName)
         {
             var warehouseView = new WarehouseView() { ViewName = viewName, IsFactView = true,SqlString = " CREATE VIEW " + viewName + " AS SELECT " };
-            foreach (DWObjectFieldDB dwObjectFieldDB in DwObjectFieldLists.Where(d => d.DWObjectTableCode == factCode).ToList())
+            foreach (DWObjectFieldItem dwObjectFieldDB in DwObjectFieldLists.Where(d => d.DWObjectTableCode == factCode).ToList())
             {
                 if (dwObjectFieldDB.DimensionTableCode == "DIM_Dates")
                 {
@@ -60,19 +62,19 @@ namespace WarehouseDataViews.Service
             DataWarehouseViewLists.Add(warehouseView);
         }
 
-        private void CreateDimensionDataView(DWObjectFieldDB field)
+        private void CreateDimensionDataView(DWObjectFieldItem field)
         {
             string parentfieldName = !string.IsNullOrEmpty(field.ViewFieldDisplayName) ? field.ViewFieldDisplayName : GetFieldNameFromCode(field.FieldCode);
             string viewName = !string.IsNullOrEmpty(field.DimensionDataViewName) ?  field.DimensionDataViewName: GetViewName(parentfieldName, "Dim");
             if (DataWarehouseViewLists.Where(d => d.ViewName == viewName).FirstOrDefault() == null)
             {
                 var warehouseView = new WarehouseView() {ViewName = viewName , SqlString  = " CREATE VIEW " + viewName + " AS SELECT " };
-                foreach (DWObjectFieldDB dwObjectFieldDB in DwObjectFieldLists.Where(d => d.DWObjectTableCode == field.DimensionTableCode).ToList())
+                foreach (DWObjectFieldItem dwObjectFieldDB in DwObjectFieldLists.Where(d => d.DWObjectTableCode == field.DimensionTableCode).ToList())
                 {
                     warehouseView.SqlString += " " + dwObjectFieldDB.FieldCode + " as ";
                     if (dwObjectFieldDB.IsPrimaryKey) warehouseView.SqlString += (parentfieldName + "Key");
+                    else if (dwObjectFieldDB.FieldCode == "[Code]" || dwObjectFieldDB.FieldCode == "[Email]" ||  dwObjectFieldDB.FieldCode == "[Source Tenant]") warehouseView.SqlString += parentfieldName + (!string.IsNullOrEmpty(dwObjectFieldDB.ViewFieldDisplayName) ? dwObjectFieldDB.ViewFieldDisplayName : GetFieldNameFromCode(dwObjectFieldDB.FieldCode));
                     else if (!string.IsNullOrEmpty(dwObjectFieldDB.ViewFieldDisplayName)) warehouseView.SqlString += dwObjectFieldDB.ViewFieldDisplayName;
-                    else if (dwObjectFieldDB.FieldCode == "[Code]" || dwObjectFieldDB.FieldCode == "[Email]") warehouseView.SqlString += parentfieldName + GetFieldNameFromCode(dwObjectFieldDB.FieldCode);
                     else warehouseView.SqlString += ConvertStringToCamelCase(GetFieldNameFromCode(dwObjectFieldDB.FieldCode)).Replace("(", "In").Replace(")", "");
                     warehouseView.SqlString += ",";
                 }
@@ -111,13 +113,13 @@ namespace WarehouseDataViews.Service
             return result;
         }
 
-        private List<DWObjectFieldDB> GetDwObjectFieldLists()
+        private List<DWObjectFieldItem> GetDwObjectFieldLists()
         {
-            var result = new List<DWObjectFieldDB>();
+            var result = new List<DWObjectFieldItem>();
             DataTable dWObjectFieldsMetaData = GetDataTableFromSql(connectionString, "SELECT  Code,IsCustom, IsPrimaryKey, DWObjectTableCode,ViewFieldDisplayName,DimensionDataViewName, DataTypeCode ,DimensionTableCode from DWObjectFields where DontDisplayInView =0 and IsCustom=0");
             foreach (DataRow row in dWObjectFieldsMetaData.AsEnumerable())
             {
-                var fieldDB = new DWObjectFieldDB();
+                var fieldDB = new DWObjectFieldItem();
                 fieldDB.FieldCode = row.Table.Columns.Contains("Code") ? row["Code"].ToString() : "";
                 fieldDB.DataTypeCode = row.Table.Columns.Contains("DataTypeCode") ? row["DataTypeCode"].ToString() : "";
                 fieldDB.DimensionTableCode = row.Table.Columns.Contains("DimensionTableCode") ? row["DimensionTableCode"].ToString() : "";
@@ -141,7 +143,7 @@ namespace WarehouseDataViews.Service
 
     }
 
-    public class DWObjectFieldDB
+    public class DWObjectFieldItem
     {
         public string FieldCode { get; set; }
         public string DataTypeCode { get; set; }
