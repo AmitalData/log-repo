@@ -505,7 +505,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          BalanceInLocalCurrency = moredata != null ? (decimal)moredata.BalanceInLocalCurrency : 0.00m,
                          
                          CustomerVatNumber = card.VatNumber,
-                         GLAccountStandardInterestRate = (decimal)(glaPeriod.StandardAddInterestPercent == null ? 0 : glaPeriod.StandardAddInterestPercent+basePeriod.InterestRate),
+                         GLAccountStandardInterestRate = (decimal)(glaPeriod.StandardAddInterestPercent == null ? 0  : basePeriod.InterestRate ==null? glaPeriod.StandardAddInterestPercent : glaPeriod.StandardAddInterestPercent+basePeriod.InterestRate),
 
 
                             //CreditStatusAmount= 

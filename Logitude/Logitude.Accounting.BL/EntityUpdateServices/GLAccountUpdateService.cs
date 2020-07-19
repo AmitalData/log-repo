@@ -887,7 +887,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             }
                             if (line.StandardInterestRateBaseId != gLAccountInterestPeriodPM.StandardInterestRateBaseId)
                             {
-                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.StandardInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.StandardInterestRateBaseName.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.StandardInterestRateBaseName.ToString() + "\n";
+                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.StandardInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.StandardInterestRateBaseName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.StandardInterestRateBaseName  + "\n";
                             }
                             if (line.StandardAddInterestPercent != gLAccountInterestPeriodPM.StandardAddInterestPercent)
                             {
@@ -895,7 +895,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             }
                             if (line.ExceptionalInterestRateBaseId != gLAccountInterestPeriodPM.ExceptionalInterestRateBaseId)
                             {
-                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.ExceptionalInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.ExceptionalInterestRateName.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.ExceptionalInterestRateName.ToString() + "\n";
+                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.ExceptionalInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.ExceptionalInterestRateName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.ExceptionalInterestRateName  + "\n";
                             }
                             if (line.ExceptionalAddInterestPercent != gLAccountInterestPeriodPM.ExceptionalAddInterestPercent)
                             {
@@ -903,7 +903,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             }
                             if (line.CreditInterestRateBaseId != gLAccountInterestPeriodPM.CreditInterestRateBaseId)
                             {
-                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.CreditInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.CreditInterestRateBaseName.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.CreditInterestRateBaseName.ToString() + "\n";
+                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.CreditInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.CreditInterestRateBaseName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.CreditInterestRateBaseName  + "\n";
                             }
                             if (line.CreditAddInterestPercent != gLAccountInterestPeriodPM.CreditAddInterestPercent)
                             {
