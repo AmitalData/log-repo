@@ -11,11 +11,11 @@ namespace WarehouseDataViews.Service
     {
 
         private string connectionString;
-        private List<DWObjectFieldDB> dwObjectFieldLists;
+        private List<DWObjectFieldItem> dwObjectFieldLists;
         private DataTable customObjectFieldLists;
         int tenant;
 
-        public CustomFieldDataWarehouseViewService(string connectionString ,List<DWObjectFieldDB> dwObjectFieldLists, int tenant)
+        public CustomFieldDataWarehouseViewService(string connectionString ,List<DWObjectFieldItem> dwObjectFieldLists, int tenant)
         {
             this.connectionString = connectionString;
             this.dwObjectFieldLists = dwObjectFieldLists;
@@ -23,6 +23,7 @@ namespace WarehouseDataViews.Service
             customObjectFieldLists = GetCustomObjectFields(tenant);
 
         }
+
         public List<WarehouseView> GetCustomFieldViewLists()
         {
             var customFieldViewLists = new List<WarehouseView>();
@@ -48,7 +49,7 @@ namespace WarehouseDataViews.Service
             string viewName = GetViewName(fieldName, "Custom");
 
             var warehouseView = new WarehouseView() { ViewName = viewName, SqlString = " CREATE VIEW " + viewName + " AS SELECT " };
-            foreach (DWObjectFieldDB dwObjectFieldDB in dwObjectFieldLists.Where(d => d.DWObjectTableCode == "DIM_CustomPickLists").ToList())
+            foreach (DWObjectFieldItem dwObjectFieldDB in dwObjectFieldLists.Where(d => d.DWObjectTableCode == "DIM_CustomPickLists").ToList())
             {
                 warehouseView.SqlString += " " + dwObjectFieldDB.FieldCode + " as ";
                 if (dwObjectFieldDB.IsPrimaryKey) warehouseView.SqlString += ("c_" + fieldName + "Key");
