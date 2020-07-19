@@ -817,6 +817,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
             .subscribe(
                 (response: ServiceResponse) => {
+                    debugger;
+
                     let obj = response.Result;
                     if (obj) {
                         let DefaultValue = obj['DefaultValue'];
@@ -827,6 +829,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                 this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_AMT_RNG", "NON", "NON", SessionLocator.Tenant)
                                     .subscribe(
                                         (response: ServiceResponse) => {
+debugger;
                                             let obj = response.Result;
                                             if (obj) {
                                                 var CGG_PAY_AMT_RNGDefault: string = obj['DefaultValue'];
@@ -883,6 +886,13 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
                     method.MethodTypeName = response.Result.LocalName;
                 });
+                if (this.BetweenMinAndMax && method.PayerActivityTypeCode == "3") {
+                    method.MethodTypeCode = "2";
+                    method.InternalBankId = "";
+                    this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                        method.MethodTypeName = response.Result.LocalName;
+                    });
+                } 
             }
         }
 
