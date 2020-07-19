@@ -124,6 +124,7 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.ChargeableWeightEdited = shipmentPM.ChargeableWeightEdited;
                 awbDp.MainCarriageLeg2_MAWB = shipmentPM.Transshipment1AdditionalMAWBOBLBL;
                 awbDp.AirlineLogo = DataProviders.General.GetCarrierLogo(shipmentPM.MainCarriageCarrierId, tenant);
+                awbDp.CustomerLogo = DataProviders.General.GetCarrierLogo(shipmentPM.CustomerId, tenant);
                 if (shipmentPM.BranchId != null)
                 {
                     Branch myBranch = (from d in myCommonContext.Branches where d.Tenant == tenant && d.Id == shipmentPM.BranchId select d).FirstOrDefault();
