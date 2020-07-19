@@ -26,6 +26,7 @@ import {DeclarationShortTitleComponent} from './Components/ShortTitles/Declarati
 import {CustomsSpotlightComponent} from './Components/Spotlight/CustomsSpotlightComponent';
 import { DeclarationReferantDataFiltersMenuComponent } from './Components/FiltersMenu/DeclarationReferantDataFiltersMenuComponent';
 import { ReferantSpotlightDataTemplate } from './Components/Spotlight/ReferantSpotlightDataTemplate';
+import { DeclarationReferantDataListActionBarComponent } from './Components/ListActionBar/DeclarationReferantDataListActionBarComponent';
 
 export const CustomsControlsComponents =
     [
@@ -69,6 +70,7 @@ export const Components =
 
         ReferantSpotlightDataTemplate,
         DeclarationReferantDataFiltersMenuComponent,
+        DeclarationReferantDataListActionBarComponent,
     ];
 
 export class ModuleDeclarations {
@@ -97,7 +99,7 @@ export class ModuleDeclarations {
             case "ReferantSpotlightDataTemplate": { myResult = ReferantSpotlightDataTemplate; break; }
             case "DeclarationReferantDataFiltersMenuComponent": { myResult = DeclarationReferantDataFiltersMenuComponent; break; }
 
-                
+            case "DeclarationReferantDataListActionBarComponent": { myResult = DeclarationReferantDataListActionBarComponent; break; }
         }
 
         return myResult;
