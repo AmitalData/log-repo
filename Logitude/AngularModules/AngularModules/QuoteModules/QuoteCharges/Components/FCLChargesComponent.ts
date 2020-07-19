@@ -1188,6 +1188,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             item.SetCostQuantity();
             item.SetSaleQuantity();
         })
+
+        this.CurrentSession.SessionEvent.emit("QuantitiesUpdated");
         //this.SetUIProperties_UpdateCharges();
     }
     UpdateCharges() {
