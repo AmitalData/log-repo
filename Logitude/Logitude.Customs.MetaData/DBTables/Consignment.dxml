@@ -142,7 +142,6 @@
   </Column>
   <Column
     Name="ExportRecieverWareHouseCode"
-    OldNames="RecieverWareHouseCode"
     Type="varchar"
     Size="20">
     <Constraints
@@ -162,6 +161,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+  
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"
