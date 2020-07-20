@@ -89,6 +89,8 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     SecondListHeaderItems: string[] = [];
     SecondListValueItems: MultiSelectedValue[] = [];
     MultiSelectedValueLists: MultiSelectedValue[] = [];
+    private SelectedFieldsDataSource: any;
+    private SelectedIndexOrder: string;
     private ViewModel: any;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -180,6 +182,8 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     private SetChargesGroupArgs(args: CustomEntityArgs) {
         this.IsMultipleSelection = args.IsMultipleSelection;
         this.ColumnName = args.DisplayName;
+        this.SelectedFieldsDataSource = args.SelectedFieldsDataSource;
+        this.SelectedIndexOrder = args.SelectedIndexOrder;
         this.FirstListTitle = "All Charge Types";
         this.SecondListTitle = "Selected Charge Types";
         this.DWLogHelpText = "In this screen you choose which charge types their amounts will be summed in one group";
@@ -341,16 +345,33 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
         if (AppTool.IsNullOrEmpty(this.ColumnName) && this.IsMultipleSelection) {
             this.ValidationErrorsList.push("Column Name is required");
-            return;
         }
-        var textValue = this.GetTextValue(this.SecondListValueItems);
-    
-        if (this.ViewModel) {
-            this.ViewModel.MultiSelectedValueLists = this.SecondListValueItems;
-        }
-        if (this.IsMultipleSelection) this.CurrentSession.CloseCurrentWindowEmit(this.ColumnName);
-        else this.CurrentSession.CloseCurrentWindowEmit(textValue);
 
+        if (this.IsExistColumnName()) {
+            this.ValidationErrorsList.push("You should have different column name");
+        }
+
+        if (this.ValidationErrorsList.length == 0) {
+            var textValue = this.GetTextValue(this.SecondListValueItems);
+
+            if (this.ViewModel) {
+                this.ViewModel.MultiSelectedValueLists = this.SecondListValueItems;
+            }
+            if (this.IsMultipleSelection) this.CurrentSession.CloseCurrentWindowEmit(this.ColumnName);
+            else this.CurrentSession.CloseCurrentWindowEmit(textValue);
+        }
+    }
+
+    IsExistColumnName() {
+        var isExist = false;
+        if (this.SelectedFieldsDataSource) {
+            this.SelectedFieldsDataSource.forEach(field => {
+                if (field.DisplayName == this.columnName && field.indexOrder != this.SelectedIndexOrder) {
+                    isExist = true;
+                }
+            });
+        }
+        return isExist;
     }
 
     BuildSecondListHeader() {
@@ -492,6 +513,8 @@ export class CustomEntityArgs {
     public DataContext: any;
     public IsMultipleSelection: boolean;
     public DisplayName: string;
+    public SelectedFieldsDataSource: any;
+    public SelectedIndexOrder: string;
 }
 export class AddEntityArgs {
     public EntityPM: any;
