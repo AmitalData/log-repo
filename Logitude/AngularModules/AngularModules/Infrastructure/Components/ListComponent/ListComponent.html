@@ -183,7 +183,9 @@
                         </td>
 
                         <td>
-                            <div></div>
+                            <div *ngIf="HasActionBar()" style="width: 5px;"></div>
+                            <div *ngIf="HasActionBar()" id="ActionBar"  LocationDirective Code="MNA" ></div>
+                            <div *ngIf="!HasActionBar()" ></div>
                         </td>
 
                         <td style="width: 480px;">
