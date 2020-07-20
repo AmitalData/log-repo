@@ -22,13 +22,23 @@ namespace DW_Editor_Tool.ViewModels
         public string Name { get { return name; } set { name = value; FirePropertyChanged("Name"); } }
 
         private string typeCode;
-        public string TypeCode { get { return typeCode; } set { typeCode = value; FirePropertyChanged("TypeCode"); } }
+        public string TypeCode { get { return typeCode; } set { typeCode = value; IsFactTable = ((value == "Fact") ? Visibility.Visible : Visibility.Collapsed); FirePropertyChanged("TypeCode"); } }
+        
+        private string pivotFieldCode;
+        public string PivotFieldCode { get { return pivotFieldCode; } set { pivotFieldCode = value; FirePropertyChanged("PivotFieldCode"); } }
 
         bool isClosed;
         public bool IsClosed
         {
             get { return isClosed; }
             set { isClosed = value; FirePropertyChanged("IsClosed"); }
+        }
+
+        bool hasPivotColumn;
+        public bool HasPivotColumn
+        {
+            get { return hasPivotColumn; }
+            set { hasPivotColumn = value; PivotFieldCodeVisisbilty = (value ? Visibility.Visible : Visibility.Collapsed); FirePropertyChanged("HasPivotColumn"); }
         }
 
         private string defaultFilterBy;
@@ -81,6 +91,34 @@ namespace DW_Editor_Tool.ViewModels
                 selectedObjectField = value;
                 // FieldLength = value.Length;
                 FirePropertyChanged("SelectedObjectField");
+            }
+        }
+
+        public Visibility isFactTable = Visibility.Collapsed;
+        public Visibility IsFactTable
+        {
+            get
+            {
+                return isFactTable;
+            }
+            set
+            {
+                isFactTable = value;
+                FirePropertyChanged("IsFactTable");
+            }
+        }
+
+        public Visibility pivotFieldCodeVisisbilty = Visibility.Collapsed;
+        public Visibility PivotFieldCodeVisisbilty
+        {
+            get
+            {
+                return pivotFieldCodeVisisbilty;
+            }
+            set
+            {
+                pivotFieldCodeVisisbilty = value;
+                FirePropertyChanged("PivotFieldCodeVisisbilty");
             }
         }
 

@@ -99,7 +99,11 @@
                                         <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Data View Name" />
                                         <TextBox Grid.Row="5" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding DataViewName, Mode=TwoWay}" />
 
-
+                                        <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Has Pivot:" Visibility="{Binding IsFactTable}" />
+                                        <CheckBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasPivotColumn}" IsThreeState="False" Visibility="{Binding IsFactTable}" />
+                                       
+                                        <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Pivot Field:" Visibility="{Binding PivotFieldCodeVisisbilty}" />
+                                        <TextBox Grid.Row="7" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding PivotFieldCode, Mode=TwoWay}" Visibility="{Binding PivotFieldCodeVisisbilty}" />
 
                                     </Grid>
 

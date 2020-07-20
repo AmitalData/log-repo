@@ -65,6 +65,16 @@ export class DWObjectTablePM {
     public set DataViewName(newValue: string) { if (this.dataViewName != newValue) { this.dataViewName = newValue; this.MarkAsDirty("DataViewName"); } }
        
 	 
+    private hasPivotColumn: boolean;
+    public get HasPivotColumn() { return this.hasPivotColumn; }
+    public set HasPivotColumn(newValue: boolean) { if (this.hasPivotColumn != newValue) { this.hasPivotColumn = newValue; this.MarkAsDirty("HasPivotColumn"); } }
+       
+	 
+    private pivotFieldCode: string;
+    public get PivotFieldCode() { return this.pivotFieldCode; }
+    public set PivotFieldCode(newValue: string) { if (this.pivotFieldCode != newValue) { this.pivotFieldCode = newValue; this.MarkAsDirty("PivotFieldCode"); } }
+       
+	 
 
     public OldEntityPM: DWObjectTablePM;
 		

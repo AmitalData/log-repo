@@ -168,6 +168,13 @@ namespace DW_Editor_Tool.ViewModels
             set { dontDisplayInView = value; FirePropertyChanged("DontDisplayInView"); }
         }
 
+        bool isMultipleSelection;
+        public bool IsMultipleSelection
+        {
+            get { return isMultipleSelection; }
+            set { isMultipleSelection = value; FirePropertyChanged("IsMultipleSelection"); }
+        }
+
         string dimensionDataViewName;
         public string DimensionDataViewName
         {

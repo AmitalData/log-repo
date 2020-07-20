@@ -23,6 +23,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.TypeCode = entityPM.TypeCode;
             entityPOCO.DefaultFilterBy = entityPM.DefaultFilterBy;
             entityPOCO.DataViewName = entityPM.DataViewName;
+            entityPOCO.HasPivotColumn = entityPM.HasPivotColumn;
+            entityPOCO.PivotFieldCode = entityPM.PivotFieldCode;
 
         }
     }

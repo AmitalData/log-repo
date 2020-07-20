@@ -18,6 +18,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool IsClosed { get; set; }
         public string DefaultFilterBy { get; set; }
         public string DataViewName { get; set; }
+        public bool HasPivotColumn { get; set; }
+        public string PivotFieldCode { get; set; }
 
     }
 }
