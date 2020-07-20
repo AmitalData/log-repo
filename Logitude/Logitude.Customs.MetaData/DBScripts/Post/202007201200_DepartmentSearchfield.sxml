@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+  <Sql Version="2">
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+update departments set
+departments.searchfields=
+(select r.CODE ||',' || r.ENGLISHNAME ||',' ||  r.LOCALNAME 
+as SEARCHFIELDS
+from departments r
+where  r.id= departments.id);
+    ]]>
+  </Oracle>
+</Script>
