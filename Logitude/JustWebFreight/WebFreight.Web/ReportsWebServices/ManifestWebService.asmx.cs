@@ -107,7 +107,7 @@ namespace WebFreight.Web.ReportsWebServices
                 IncotermQuery incotermQuery = new IncotermQuery(tenant);
                 WebServiceHelper myServiceHelper = new WebServiceHelper(tenant);
                 CustomerQuery customerQuery = new CustomerQuery(tenant);
-
+                manifestDataProvider.ShipmentType = master.ShipmentTypeName != null ? master.ShipmentTypeName : "";
                 manifestDataProvider.MasterNumber = master.ShipmentNumber;
                 manifestDataProvider.Notes = master.Notes;
                 manifestDataProvider.BookingNumber = master.BookingConfirmationNumber;
@@ -129,6 +129,7 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.ProjectNumber = master.ProjectNumber;
                 manifestDataProvider.MasterPreCarriageCarrierNumber = master.MasterPreCarriageCarrierNumber;
                 manifestDataProvider.MasterPreCarriageVesselName = master.MasterPreCarriageVesselName;
+                manifestDataProvider.MasterPreCarriageFromPortName = master.MasterPreCarriageFromPortName;
 
                 if (master.BranchId != null)
                 {
@@ -587,6 +588,7 @@ namespace WebFreight.Web.ReportsWebServices
                         if (consignee != null)
                         {
                             detail.ConsigneeVAT = newDetail.ConsigneeVAT = consignee.VatNumber;
+                            detail.ConsigneeVATNumber = newDetail.ConsigneeVATNumber = consignee.VatNumber;
                             detail.ConsigneeName = newDetail.ConsigneeName = consignee.EnglishName;
                             Address consigneeAdderss = addressRepository.GetSingleAddress(shipmentView.ConsigneeAddressId, tenant);
 
@@ -621,7 +623,9 @@ namespace WebFreight.Web.ReportsWebServices
                                 Contact contact = ContactRepository.GetSingleContact(consignee.PrimaryContactId, tenant, true);
                                 if (contact != null)
                                 {
-                                    detail.ConsigneeContactName = contact.EnglishName;
+                                    detail.ConsigneeContactName = newDetail.ConsigneeContactName = contact.EnglishName;
+                                    detail.ConsigneeContactEmail = newDetail.ConsigneeContactEmail = contact.Email;
+                                    detail.ConsigneePhoneNumber = newDetail.ConsigneePhoneNumber = contact.BusinessPhone;
                                 }
                             }
                         }

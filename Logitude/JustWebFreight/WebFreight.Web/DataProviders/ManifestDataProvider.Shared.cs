@@ -130,8 +130,10 @@ namespace WebFreight.Web.DataProviders
         public string ProjectNumber { get; set; }
         public string MasterPreCarriageCarrierNumber { get; set; }
         public string MasterPreCarriageVesselName { get; set; }
+        public string MasterPreCarriageFromPortName { get; set; }
         #endregion
 
+        public string ShipmentType { get; set; }
         public List<ManifestDetailsClass> ManifestDetails { get; set; }
         public List<NewManifestDetailsClass> NewManifestDetails { get; set; }
         public List<GroupedContainersClass> GroupedManifestDetailsList { get; set; }
@@ -231,6 +233,9 @@ namespace WebFreight.Web.DataProviders
 
         public string ShipperContactName { get; set; } // (main contact English name for the shipper) 
         public string ConsigneeContactName { get; set; }// (main contact English name for the consignee ) 
+        public string ConsigneeContactEmail { get; set; }
+        public string ConsigneePhoneNumber { get; set; }
+        public string ConsigneeVATNumber { get; set; }
         public string ITNumber { get; set; } //(from the house\customs tab ) 
         public string QuoteNumberConnectedToHouse { get; set; }
         public double? ValueOfGoods { get; set; }
@@ -249,6 +254,10 @@ namespace WebFreight.Web.DataProviders
         public string ShipperAddress { get; set; }
         public string ConsigneeName { get; set; }
         public string ConsigneeAddress { get; set; }
+        public string ConsigneeContactName { get; set; }
+        public string ConsigneeContactEmail { get; set; }
+        public string ConsigneePhoneNumber { get; set; }
+        public string ConsigneeVATNumber { get; set; }
         public string DestinationPortCode { get; set; }
         public string PortOfDischarge { get; set; }
         public string ChargeableWeight { get; set; }
