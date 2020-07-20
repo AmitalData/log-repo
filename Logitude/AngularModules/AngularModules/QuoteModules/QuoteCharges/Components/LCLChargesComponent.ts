@@ -998,6 +998,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 item.SetSaleQuantity();
             })
 
+            this.CurrentSession.SessionEvent.emit("QuantitiesUpdated");
             this.CheckUpdateQuantities();
         }
     }

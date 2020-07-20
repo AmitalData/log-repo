@@ -23,6 +23,7 @@ import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainSe
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {QuoteDomainService} from '../../../Quote/Services/QuoteDomainService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { QuoteTool } from '../../Tools';
 
 export class QuoteMenuButtonsHandler {
     public EntityPM: QuotePM;
@@ -39,7 +40,11 @@ export class QuoteMenuButtonsHandler {
 
         this.Listen();
     }
+
+    private allMenuButtons: MenuButtonPM[] = [];
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
+        this.allMenuButtons = menuButtons;
+
         if (this.EntityPM != null) {
             this.allStages = [];
             this.myQuoteStageListService.getAllFromCache().subscribe((resp: any) => {
@@ -88,6 +93,8 @@ export class QuoteMenuButtonsHandler {
                         var mySentStageId = null;
                         var mySentStage: QuoteStageList = this.allStages.filter(d => d.Code == "QTST")[0];
 
+                        var isShowingUpdateMessage: boolean = QuoteTool.CheckUpdateQuantities(this.EntityPM);
+
                         if (mySentStage != null) {
                             mySentStageId = mySentStage.Id;
                         }
@@ -97,7 +104,13 @@ export class QuoteMenuButtonsHandler {
                         }
 
                         else {
-                            button.IsDisabled = false;
+                            if (isShowingUpdateMessage) {
+                                button.IsDisabled = true;
+                            }
+
+                            else {
+                                button.IsDisabled = false;
+                            }
                         }
                     }
 
@@ -494,6 +507,21 @@ export class QuoteMenuButtonsHandler {
                 this.StopFlags();
             });
         }
+
+        this.CurrentSession.SessionEvent.subscribe((res) => {
+            if (res == "QuantitiesUpdated") {
+                this.CheckButtonState(this.allMenuButtons);
+            }
+        });
+
+        this.EntityPM.PropertyChanged.subscribe(s => {
+            if (s) {
+                if (s.PropertyName == "GrossWeight" || s.PropertyName == "ChargeableWeight" || s.PropertyName == "Volume" || s.PropertyName == "TEU"
+                    || s.PropertyName == "NumberOfPackages" || s.PropertyName == "ValueOfGoods") {
+                    this.CheckButtonState(this.allMenuButtons);
+                }
+            }
+        });
     }   
 
     private isBuildingShipment: boolean = false;
@@ -674,10 +702,6 @@ export class QuoteMenuButtonsHandler {
         });
     }
 
-
-
-
-
     IsSetAsSentQuote: boolean = false;
     private SetAsSentToCustomer() {
         this.Validate();
@@ -709,7 +733,6 @@ export class QuoteMenuButtonsHandler {
         });
 
     }
-
 
     private CancelQuote() {
         this.Validate();
