@@ -346,6 +346,7 @@
     <None Include="DBOthers\ShipmentsModel\Views\MessagingStockDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentFollowUpDataView.dxml" />
+    <None Include="DBScripts\CommonModel\202007051540_AddVATUniquePartnerValues.sxml" />
     <None Include="DBScripts\CommonModel\202007061105_FillMissingPortCountryCode.sxml" />
     <None Include="DBScripts\CommonModel\202007051545_SetVATUniquePartnerDefaultValue.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingMilestoneFillValues.sxml" />
