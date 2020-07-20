@@ -162,6 +162,12 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="OrderMoney"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="LastStatusName"
     Type="nvarchar"
     Size="30">
