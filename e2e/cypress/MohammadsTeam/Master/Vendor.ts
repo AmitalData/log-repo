@@ -23,7 +23,7 @@ export class VendorGLAccount {
             cy.get('button[id=Ok-AddVendor]').click()
             cy.get('input[id=SearchFieldsId_0_0]').type(Name).should("have.value", Name)
             cy.get('div[id=ListDataLoaded]').should('exist');
-            cy.get('#row0col0').click();
+            cy.get('div[id=LogGrid_0_0row0]').click();
             cy.log('Createing new vendor is done');
 
         }
