@@ -2508,6 +2508,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;BatchReportUserEmail&quot;"
     ListPropertyPath="&quot;BatchReportUserEmail&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3002,7 +3003,7 @@
     <TextCode
       Code="&quot;InterestReport.O.BatchReport&quot;"
       DefaultText="&quot;Batch Report&quot;"
-      LocalDefaultText="&quot;דו&quot;ח ברקע&quot;"
+      LocalDefaultText="&quot;הפקת דוחות ריבית מרוכזת &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
