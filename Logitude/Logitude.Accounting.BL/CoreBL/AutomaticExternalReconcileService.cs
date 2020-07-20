@@ -160,19 +160,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 MyLedgerTransaction matchedTransaction;
                 if (pageLine.CreditAmount != 0)
                 {
-                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref1, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference));
+                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref1, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference.TrimStart('0')));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref2, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref2, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference.TrimStart('0')));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref3, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref3, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference.TrimStart('0')));
                 }
                 else
                 {
-                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref1, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference));
+                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref1, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference.TrimStart('0')));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref2, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref2, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference.TrimStart('0')));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref3, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref3, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference.TrimStart('0')));
                 }
 
                 if (matchedTransaction != null)
@@ -200,19 +200,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 MyLedgerTransaction matchedTransaction;
                 if (pageLine.CreditAmount != 0)
                 {
-                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref1, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference, pageLine.ReferenceDate));
+                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref1, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference.TrimStart('0'), pageLine.ReferenceDate));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref2, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference, pageLine.ReferenceDate));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref2, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference.TrimStart('0'), pageLine.ReferenceDate));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref3, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference, pageLine.ReferenceDate));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref3, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference.TrimStart('0'), pageLine.ReferenceDate));
                 }
                 else
                 {
-                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref1, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference, pageLine.ReferenceDate));
+                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref1, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference.TrimStart('0'), pageLine.ReferenceDate));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref2, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference, pageLine.ReferenceDate));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref2, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference.TrimStart('0'), pageLine.ReferenceDate));
                     if (matchedTransaction == null)
-                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref3, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference, pageLine.ReferenceDate));
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref3, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference.TrimStart('0'), pageLine.ReferenceDate));
                 }
                 if (matchedTransaction != null)
                 {
@@ -230,11 +230,11 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             List<IGrouping<AmountRefKey, MyLedgerTransaction>> groupedTransactions_ref3 = new List<IGrouping<AmountRefKey, MyLedgerTransaction>>();
             if (refNumber == 1)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference1)).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference1?.TrimStart('0'))).ToList();
             else if (refNumber == 2)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference2)).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference2?.TrimStart('0'))).ToList();
             else if (refNumber == 3)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference3)).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference3?.TrimStart('0'))).ToList();
 
             var groupedTransactionsDictionary_ref3 = groupedTransactions_ref3.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
             return groupedTransactionsDictionary_ref3;
@@ -244,11 +244,11 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             List<IGrouping<AmountRefRefDateKey, MyLedgerTransaction>> groupedTransactions_ref3 = new List<IGrouping<AmountRefRefDateKey, MyLedgerTransaction>>();
             if (refNumber == 1)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference1, x.DocumentDate)).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference1?.TrimStart('0'), x.DocumentDate)).ToList();
             else if (refNumber == 2)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference2, x.DocumentDate)).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference2?.TrimStart('0'), x.DocumentDate)).ToList();
             else if (refNumber == 3)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference3, x.DocumentDate)).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference3?.TrimStart('0'), x.DocumentDate)).ToList();
 
             var groupedTransactionsDictionary_ref3 = groupedTransactions_ref3.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
             return groupedTransactionsDictionary_ref3;
