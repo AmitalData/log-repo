@@ -33,6 +33,10 @@ using System.Xml;
 using System.Text;
 using System.Web;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Def.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -335,6 +339,10 @@ namespace WebFreight.Web.ReportsWebServices
                             paymentDataProvider.Branch = "Cash";
                             paymentDataProvider.Account = "Cash";
                         }
+                        else if (currentPayment.AccountingPaymentMethod.Name.ToLower() == "bank transfer")
+                        {
+                            paymentDataProvider = SetBankData(currentPayment, paymentDataProvider);
+                        }
                         else
                         {
                             paymentDataProvider.ChequeOrPaymentRef = currentPayment.ChequeOrPaymentRef != null ? currentPayment.ChequeOrPaymentRef : "";
@@ -469,6 +477,24 @@ namespace WebFreight.Web.ReportsWebServices
             customFieldResolver.SetDataProviderCustomFieldsValues("ARPayment", tenant, currentPayment, paymentDataProvider);
 
             return paymentDataProvider;
+        }
+
+        private PaymentDataProvider SetBankData(ARPayment payment, PaymentDataProvider paymentDataProvider)
+        {
+            BankAccountQueryService bankAccountRepository = new BankAccountQueryService(payment.Tenant);
+            BankAccountPM bankAccount = bankAccountRepository.GetSingle(payment.BankAccountId, false, false);
+            paymentDataProvider.Branch = bankAccount.BranchNumber;
+            paymentDataProvider.Account = bankAccount.AccountNumber;
+            paymentDataProvider.Bank = GetBankName(bankAccount.BankId, bankAccount.Tenant);
+            return paymentDataProvider;
+
+        }
+        private string GetBankName(string id , int tenant)
+        {
+            BankCodeQueryService bankCodeQueryService = new BankCodeQueryService(tenant);
+            BankCodePM bankCode = bankCodeQueryService.GetSingle(id, false, false);
+            return bankCode != null ? bankCode.LocalName : null;
+
         }
         private Contact GetLoggedContact(int tenant)
         {
