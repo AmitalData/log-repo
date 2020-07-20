@@ -2465,5 +2465,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipmentSubTypeId { get; set; }
         public string ShipmentSubTypeName { get; set; }
         public bool IsUpdateWarehouseLegData { get; set; }
+        public string MasterHousesNumbers { get; set; }
+        public string HousesDescriptionofGoods { get; set; }
     }
 }
