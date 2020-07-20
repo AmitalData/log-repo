@@ -81,6 +81,9 @@ namespace WebFreight.Web.DataProviders
         public string IncotermCode { get; set; }
         public string OperationalClosingDate { get; set; }
         public string AccountingClosingDate { get; set; }
+        public string ShipperReference { get; set; }
+        public string ConsigneeReference { get; set; }
+        public string CustomerReference { get; set; }
         public string Shipper { get; set; }
         public string Consignee { get; set; }
         public string Containers { get; set; }
@@ -179,6 +182,8 @@ namespace WebFreight.Web.DataProviders
         public string InvoicesNumbers { get; set; } //It should show the number of the invoices connected to receivables separated by commas like 10001, 1002. If there is only one invoice, it should display as 1000
         public string CustomerPrimaryContactName { get; set; }
         public string CustomerName { get; set; }
+        public string CustomerAddress { get; set; }
+
         public string AgentName { get; set; }
         public string AgentPrimaryContactName { get; set; }        
         public int? TotalQuantity { get; set; } //  It must display the total number of packages in a certain shipment.
@@ -278,6 +283,7 @@ namespace WebFreight.Web.DataProviders
     {
         public string FileNumber { get; set; } // shipment number.
         public string HAWB { get; set; }
+     
         public string ShipperName { get; set; }
         public string ShipperAddress { get; set; }
         public string ConsigneeName { get; set; }
