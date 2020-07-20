@@ -26,9 +26,10 @@ namespace WarehouseData
 {
     public partial class UpdateWarehouseForm : Form
     {
-        string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
+        string dbSourceConnection = "2020R3_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
 
-        string dbDestinationConnection = "Logitude2-5_Global,sa,Saas256,.";
+        string dbDestinationConnection = "2020R3_Global,sa,Saas256,.";
+
 
         public UpdateWarehouseForm()
         {
