@@ -23,21 +23,18 @@ import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainSe
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {QuoteDomainService} from '../../../Quote/Services/QuoteDomainService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
-import { ChargesTypeListService } from '../../../Common/Services/StandardLists/ChargesTypeListService';
 
 export class QuoteMenuButtonsHandler {
     public EntityPM: QuotePM;
     public entityArgs: EntityArgs
     private CurrentSession = SessionLocator.SelectedSession;
     private isLCL: boolean = false;
-    private myChargesTypeService: ChargesTypeListService;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
         this.myQuoteStageListService = new QuoteStageListService();
         this.myPartnersDomainService = new PartnersDomainService();
         this.entityResourceService = new EntityResourceService();
-        this.myChargesTypeService = new ChargesTypeListService();
         this.Listen();
     }
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
@@ -880,7 +877,7 @@ export class QuoteMenuButtonsHandler {
 
     private IsRunQuotation: boolean = false;
     private RunQuotationScreen() {
-        var quoteCharges = this.EntityPM.QuoteCharges.filter(a => a.SaleAmountInSaleCurrency != null && a.CostAmountInSaleCurrency != null
+        var quoteCharges = this.EntityPM.QuoteCharges.filter(a => (!AppTool.IsNullOrZero(a.SaleAmountInSaleCurrency) || !AppTool.IsNullOrZero(a.CostAmountInSaleCurrency))
             && ((a.HasPickup && this.EntityPM.IncludePickUp == false) || (a.HasDelivery && this.EntityPM.IncludeDelivery == false)));
 
         if (quoteCharges != null && quoteCharges.length > 0) {
