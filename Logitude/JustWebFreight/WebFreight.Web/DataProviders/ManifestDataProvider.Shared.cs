@@ -134,6 +134,11 @@ namespace WebFreight.Web.DataProviders
         #endregion
 
         public string ShipmentType { get; set; }
+        public string ConsigneeName { get; set; }
+        public string ConsigneeContactName { get; set; }
+        public string ConsigneeContactEmail { get; set; }
+        public string ConsigneePhoneNumber { get; set; }
+        public string ConsigneeVATNumber { get; set; }
         public List<ManifestDetailsClass> ManifestDetails { get; set; }
         public List<NewManifestDetailsClass> NewManifestDetails { get; set; }
         public List<GroupedContainersClass> GroupedManifestDetailsList { get; set; }

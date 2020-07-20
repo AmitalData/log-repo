@@ -108,6 +108,31 @@ namespace WebFreight.Web.ReportsWebServices
                 WebServiceHelper myServiceHelper = new WebServiceHelper(tenant);
                 CustomerQuery customerQuery = new CustomerQuery(tenant);
                 manifestDataProvider.ShipmentType = master.ShipmentTypeName != null ? master.ShipmentTypeName : "";
+
+                #region Master Consignee
+                if (!string.IsNullOrEmpty(master.ConsigneeId))
+                {
+                    CardPM consignee = cardQuery.GetSinglePM(master.ConsigneeId, tenant);
+                    CustomerPM consigneePM = customerQuery.GetSinglePM(master.ConsigneeId, tenant);
+                    if (consignee != null)
+                    {
+                        manifestDataProvider.ConsigneeVATNumber =  consignee.VatNumber;
+                        manifestDataProvider.ConsigneeName = consignee.EnglishName;                       
+                        if (!string.IsNullOrEmpty(consignee.PrimaryContactId))
+                        {
+                            Contact contact = ContactRepository.GetSingleContact(consignee.PrimaryContactId, tenant, true);
+                            if (contact != null)
+                            {
+                                manifestDataProvider.ConsigneeContactName =  contact.EnglishName;
+                                manifestDataProvider.ConsigneeContactEmail =  contact.Email;
+                                manifestDataProvider.ConsigneePhoneNumber =  contact.BusinessPhone;
+                            }
+                        }
+                    }
+                   
+                }
+                #endregion
+
                 manifestDataProvider.MasterNumber = master.ShipmentNumber;
                 manifestDataProvider.Notes = master.Notes;
                 manifestDataProvider.BookingNumber = master.BookingConfirmationNumber;
