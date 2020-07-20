@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {WarehousePM} from '../../../../../Common/EntityPMs/WarehousePM';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -77,5 +77,9 @@ export class WarehouseGeneralTabComponent extends BaseComponent {
         if (this.EntityPM.FirmCode != newValue) {
             this.EntityPM.FirmCode = newValue;
         }
+    }
+
+    StorageDefaultsClicked() {
+
     }
 }

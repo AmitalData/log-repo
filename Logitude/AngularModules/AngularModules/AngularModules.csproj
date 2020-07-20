@@ -633,6 +633,8 @@
     <TypeScriptCompile Include="Common\EntityLists\NumberFormatList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\TariffCarrierTranslationList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\VatUniquePartnerTypeList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\WarehouseWeightMeasurementList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\WarehouseWeightRoundingList.ts" />
     <TypeScriptCompile Include="Common\EntityPMCustomCode\CustomerPMCustomCode.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\AccountingPartnerPM.ts" />
@@ -674,6 +676,8 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\TenantAdditionalDataListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\TermsofUseSignatureListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\VatUniquePartnerTypeListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\WarehouseWeightMeasurementListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\WarehouseWeightRoundingListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\AccountingPartnerPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CarrierAreaPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />

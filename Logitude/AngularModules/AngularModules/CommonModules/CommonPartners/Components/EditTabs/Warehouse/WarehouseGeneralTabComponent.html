@@ -69,16 +69,42 @@
                             <LogLabel [ObjectFieldName]="'TypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
-                        <td>
-                            <LogLov [ObjectFieldName]="'TypeCode'"
-                                    [SelectedValue]="TypeCode"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext"
-                                    [LookUpTableName]="'WarehouseType'">
-                            </LogLov>
-                        </td>
-                        <td>
-                            <div></div>
+                        <td colspan="2">
+                            <table class="FixedTable">
+                                <tr>
+                                    <td style="width: 165px;">
+                                        <LogLov [ObjectFieldName]="'TypeCode'"
+                                                [SelectedValue]="TypeCode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'WarehouseType'"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td style="width: 2px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 18px;vertical-align:central;">
+                                        <HelpIcon style="width: 18px;height:18px;" [HideHeader]="true" [Text]="'Bonded means one entry and one release'"></HelpIcon>
+                                    </td>
+
+                                    <td style="width: 2px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 40px;vertical-align:central;">
+                                        <div>
+                                            <span *ngIf="TypeCode == 'BO'" class="hyperlink" (click)="StorageDefaultsClicked()">Storage Defaults</span>
+                                        </div>                                        
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
 
@@ -139,12 +165,13 @@
                             <div></div>
                         </td>
                     </tr>
-
                 </table>
             </td>
-            <td style="width:20px;">
+
+            <td style="width:70px;">
                 <div></div>
             </td>
+
             <td style="width: 330px;">
                 <table>
                     <!-- Notes -->
@@ -174,10 +201,12 @@
                     </tr>
                 </table>
             </td>
+
             <td>
                 <div></div>
             </td>
         </tr>
+
         <tr>
             <td colspan="4">
                 <div></div>

@@ -295,6 +295,8 @@
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\VatUniquePartnerTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\VatUniqueTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\WarehouseTypeDetails.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\WarehouseWeightMeasurementDetails.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\WarehouseWeightRoundingDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\WeightUnitDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\AccountingSystemStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\CommunicationLogTypeStruct.Generated.cs" />
@@ -326,6 +328,8 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\VatUniquePartnerTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\VatUniqueTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\WarehouseTypeStruct.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\EnumGenerated\WarehouseWeightMeasurementStruct.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\EnumGenerated\WarehouseWeightRoundingStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\WeightUnitStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CodePropertiesMapping\IncotermCodePropertiesMapping.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AgentSharedManifestCustomFilter.cs" />
@@ -343,6 +347,8 @@
     <Compile Include="CommonDataModel\EntityLists\TenantAdditionalDataList.cs" />
     <Compile Include="CommonDataModel\EntityLists\AccountingPartnerList.cs" />
     <Compile Include="CommonDataModel\EntityLists\VatUniquePartnerTypeList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\WarehouseWeightMeasurementList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\WarehouseWeightRoundingList.cs" />
     <Compile Include="CommonDataModel\EntityOtherServices\MexicanCountryCities.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CarrierAreasPortPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CarrierAreaPM.cs" />
@@ -356,6 +362,7 @@
     <Compile Include="CommonDataModel\EntityPMs\TenantAdditionalDataPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AccountingPartnerPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\UserLastSettingsPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\WarehouseStoragePricingPM.cs" />
     <Compile Include="CommonDataModel\EntityQueries\AddressTypeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CarrierAreasPortQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CarrierAreaQuery.cs" />
@@ -370,6 +377,9 @@
     <Compile Include="CommonDataModel\EntityQueries\AccountingPartnerQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\UserLastSettingsQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\VatUniquePartnerTypeQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\WarehouseStoragePricingQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\WarehouseWeightMeasurementQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\WarehouseWeightRoundingQuery.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreasPortMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreaMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardContactAdditionalServiceMapping.cs" />
@@ -381,6 +391,7 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\TenantAdditionalDataMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\AccountingPartnerMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\UserLastSettingsMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\WarehouseStoragePricingMapping.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CarrierAreaService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerOpenFilesAmountService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />

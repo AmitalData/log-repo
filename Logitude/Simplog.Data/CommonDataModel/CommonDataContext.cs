@@ -455,6 +455,9 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new CustomerOpenFilesAmountMap());
             modelBuilder.Configurations.Add(new TariffCarrierTranslationMap());
             modelBuilder.Configurations.Add(new VatUniquePartnerTypeMap());
+            modelBuilder.Configurations.Add(new WarehouseWeightMeasurementMap());
+            modelBuilder.Configurations.Add(new WarehouseWeightRoundingMap());
+            modelBuilder.Configurations.Add(new WarehouseStoragePricingMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -525,7 +528,9 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
         public IDbSet<DWHBuildStatus> DWHBuildStatus { get; set; }
         public IDbSet<UserLastSettings> UserLastSettings { get; set; }
-
+        public IDbSet<WarehouseWeightMeasurement> WarehouseWeightMeasurements { get; set; }
+        public IDbSet<WarehouseWeightRounding> WarehouseWeightRoundings { get; set; }
+        public IDbSet<WarehouseStoragePricing> WarehouseStoragePricings { get; set; }
 
         public IDbSet<Warehouse> Warehouses
         {
