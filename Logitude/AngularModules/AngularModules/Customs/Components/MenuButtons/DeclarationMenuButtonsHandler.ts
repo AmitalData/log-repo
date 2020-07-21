@@ -227,7 +227,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             button.IsHidden = false;
                             if (!this.IsDisplayOnly) {
                                 if (!((this.EntityPM.CourierPaymentStatusCode != 'P' || this.EntityPM.CourierPaymentStatusCode == null  ) &&
-                                    (this.EntityPM.CourierManifestStatusCode == 'V' || this.EntityPM.CourierManifestStatusCode == 'R')
+                                    (this.EntityPM.CourierManifestStatusCode == 'V' || this.EntityPM.CourierManifestStatusCode == 'R' || this.EntityPM.CourierManifestStatusCode == 'X'  )
                                 )){
 
                                     button.IsDisabled = true;
