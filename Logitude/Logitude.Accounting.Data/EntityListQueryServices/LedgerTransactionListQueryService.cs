@@ -954,6 +954,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 // New Portion 1.
                 if (goodList.Count > 0)
                 {
+                    sum = 0m;
                     j = goodList.Max();
                     // Exit
                     for (int k = 0; k <= j; k++)
@@ -961,7 +962,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         if (k < count)
                         {
                             result.Add(arr[k]);
-                            //q.RemoveAll(rec => rec.Id == arr[k].Id);
+                            sum += arr[k].OpenAmount;
                         }
 
                     }
