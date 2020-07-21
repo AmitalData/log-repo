@@ -32,14 +32,15 @@ namespace Logitude.DBMigrations.Models
             RunSettings = runSettings;
 
             ValidateToolVersion();
+            ValidateToolArguments();
             ValidateToolSettings();
             ValidateAndReadRoot();
             DisplayToolSettings();
 
-            DatabaseType = ConfigurationManager.AppSettings["DatabaseType"];
+            DatabaseType = ToolConfigurations.DatabaseType;
         }
 
-        public virtual void RunTool()
+        public void RunTool()
         {
             string[] dxmlFiles = GetDXMLFilesFromRoot(Root);
             string[] sxmlFiles = GetSXMLFilesFromRoot(Root);
@@ -50,6 +51,8 @@ namespace Logitude.DBMigrations.Models
             GeneratedScript scriptsToSave = GenerateAndExecuteDBScripts(dxmlFiles, sxmlFiles);
             SaveScripts(scriptsToSave);
             ExportMissingIndexesWarnings();
+
+            StartZeroDownTimeMigrations();
         }
 
         protected void ValidateDBFiles(string[] dxmlFiles, string[] sxmlFiles)
@@ -521,34 +524,6 @@ namespace Logitude.DBMigrations.Models
             File.WriteAllText(missingIndexesWarningsFilePath, missingIndexesWarningsToExport);
         }
 
-        protected string GetConnectionString(string dbType)
-        {
-            string connectionString;
-
-            if (dbType == "Global")
-            {
-                connectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
-            }
-            else if (dbType == "Main")
-            {
-                connectionString = ConfigurationManager.AppSettings["MainConnectionString"];
-            }
-            else if (dbType == "SystemLogs")
-            {
-                connectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
-            }
-            else if (dbType == "CargoTracking")
-            {
-                connectionString = ConfigurationManager.AppSettings["CargoTrackingConnectionString"];
-            }
-            else
-            {
-                connectionString = null;
-            }
-
-            return connectionString;
-        }
-
         protected GeneratedScript AppendToGeneratedScript(GeneratedScript generatedScript, string dbType, string script)
         {
             if (!String.IsNullOrEmpty(script))
@@ -594,22 +569,33 @@ namespace Logitude.DBMigrations.Models
 
         protected DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTableDefinition, string dxmlFileName)
         {
-            string connectonString = GetConnectionString(dxmlTableDefinition.DBType);
+            string dxmlTableConnectionString = ToolConfigurations.GetConnectionString(dxmlTableDefinition.DBType);
             bool isBasicArgumentProvided = IsArgumentProvided(ToolArguments.BASIC);
+            bool isZeroDownTimeArgumentProvided = IsArgumentProvided(ToolArguments.ZERODOWNTIME);
+
+            DatabaseMigrationSettings databaseMigrationSettings = new DatabaseMigrationSettings
+            {
+                DxmlTableDefinition = dxmlTableDefinition,
+                DxmlTableConnectionString = dxmlTableConnectionString,
+                DxmlFileName = dxmlFileName,
+                DxmlTablesDefinitions = DXMLTablesDefinitions,
+                IsBasicArgumentProvided = isBasicArgumentProvided,
+                IsZeroDownTimeArgumentProvided = isZeroDownTimeArgumentProvided
+            };
 
             if (DatabaseType.ToLower() == "oracle")
             {
-                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTablesDefinitions, dxmlFileName, isBasicArgumentProvided);
+                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(databaseMigrationSettings);
                 return oracleDatabaseMigrations;
             }
 
-            DatabaseMigrations sqlDatabaseMigrations = new SQLDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTablesDefinitions, dxmlFileName, isBasicArgumentProvided);
+            DatabaseMigrations sqlDatabaseMigrations = new SQLDatabaseMigrations(databaseMigrationSettings);
             return sqlDatabaseMigrations;
         }
 
         protected string ExecuteScriptOnDatabase(string script, string dbType)
         {
-            string connectionString = GetConnectionString(dbType);
+            string connectionString = ToolConfigurations.GetConnectionString(dbType);
 
             if (DatabaseType.ToLower() == "oracle")
             {
@@ -1034,7 +1020,7 @@ namespace Logitude.DBMigrations.Models
 
         protected void GetDXMLHashesFromDB()
         {
-            string connectionString = GetConnectionString("Main");
+            string connectionString = ToolConfigurations.GetConnectionString("Main");
 
             if (DatabaseType.ToLower() == "oracle")
             {
@@ -1118,7 +1104,7 @@ namespace Logitude.DBMigrations.Models
 
         protected void SaveDXMLHashesOnDB(string[] dxmlFiles)
         {
-            string connectionString = GetConnectionString("Main");
+            string connectionString = ToolConfigurations.GetConnectionString("Main");
 
             foreach (var dxmlFile in dxmlFiles)
             {
@@ -1249,7 +1235,7 @@ namespace Logitude.DBMigrations.Models
 
         protected string ExecuteGeneralScript(string script, string dbType)
         {
-            string connectionString = GetConnectionString(dbType);
+            string connectionString = ToolConfigurations.GetConnectionString(dbType);
 
             if (DatabaseType.ToLower() == "oracle")
             {
@@ -1555,7 +1541,7 @@ namespace Logitude.DBMigrations.Models
 
             foreach (var dbType in dbTypes)
             {
-                string connectionString = GetConnectionString(dbType);
+                string connectionString = ToolConfigurations.GetConnectionString(dbType);
 
                 if (DatabaseType.ToLower() == "oracle")
                 {
@@ -1704,7 +1690,7 @@ namespace Logitude.DBMigrations.Models
 
         protected void GetIncludedModulesFromDB()
         {
-            string connectionString = GetConnectionString("Main");
+            string connectionString = ToolConfigurations.GetConnectionString("Main");
 
             if (DatabaseType.ToLower() == "oracle")
             {
@@ -1822,7 +1808,10 @@ namespace Logitude.DBMigrations.Models
                 "DBMigrationsHistory.dxml".ToLower(),
                 "DBScriptsHistory.dxml".ToLower(),
                 "DXMLMigrationHashes.dxml".ToLower(),
-                "DBMigrationSettings.dxml".ToLower()
+                "DBMigrationSettings.dxml".ToLower(),
+
+                "DBMigrationsSetDefaultValues.dxml".ToLower(),
+                "DBMigrationsSetValueCounters.dxml".ToLower()
             };
 
             return toolDxmlFilesNames;
@@ -1871,12 +1860,20 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
+        protected void ValidateToolArguments()
+        {
+            if (IsArgumentProvided(ToolArguments.ZERODOWNTIME) && !IsArgumentProvided(ToolArguments.EXE))
+            {
+                ExitTool("Error: Cannot Use Zero Down Time Mode Without -exe Argument");
+            }
+        }
+
         protected void ValidateToolSettings()
         {
-            string databaseType = ConfigurationManager.AppSettings["DatabaseType"];
-            string globalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
-            string mainConnectionString = ConfigurationManager.AppSettings["MainConnectionString"];
-            string systemLogsConnectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
+            string databaseType = ToolConfigurations.DatabaseType;
+            string globalConnectionString = ToolConfigurations.GlobalConnectionString;
+            string mainConnectionString = ToolConfigurations.MainConnectionString;
+            string systemLogsConnectionString = ToolConfigurations.SystemLogsConnectionString;
 
             if (String.IsNullOrEmpty(databaseType))
             {
@@ -1902,11 +1899,11 @@ namespace Logitude.DBMigrations.Models
 
         protected void DisplayToolSettings()
         {
-            string databaseType = ConfigurationManager.AppSettings["DatabaseType"];
-            string globalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
-            string mainConnectionString = ConfigurationManager.AppSettings["MainConnectionString"];
-            string systemLogsConnectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
-            string cargoTrackingConnectionString = ConfigurationManager.AppSettings["CargoTrackingConnectionString"];
+            string databaseType = ToolConfigurations.DatabaseType;
+            string globalConnectionString = ToolConfigurations.GlobalConnectionString;
+            string mainConnectionString = ToolConfigurations.MainConnectionString;
+            string systemLogsConnectionString = ToolConfigurations.SystemLogsConnectionString;
+            string cargoTrackingConnectionString = ToolConfigurations.CargoTrackingConnectionString;
             string globalDB, globalSource, mainDB, mainSource, systemLogsDB, systemLogsSource, databaseTypeMessage, databaseNameMessage;
             string cargoTrackingDB = null, cargoTrackingSource = null;
 
@@ -2025,6 +2022,28 @@ namespace Logitude.DBMigrations.Models
             {
                 Console.WriteLine("Executing Script:\n" + script.TrimStart('\n').TrimEnd('\n') + "\n");
             }
+        }
+
+        protected void StartZeroDownTimeMigrations()
+        {
+            if (IsArgumentProvided(ToolArguments.ZERODOWNTIME))
+            {
+                Console.WriteLine("Zero Down Time Migrations Started");
+                ZeroDownTimeMigrations zeroDownTimeMigrations  = CreateZeroDownTimeMigrations();
+                zeroDownTimeMigrations.Start();
+                Console.WriteLine("Zero Down Time Migrations Finished");
+            }
+        }
+
+        protected ZeroDownTimeMigrations CreateZeroDownTimeMigrations()
+        {
+            if (DatabaseType.ToLower() == "oracle")
+            {
+                return null;
+            }
+
+            ZeroDownTimeMigrations sqlZeroDownTimeMigrations = new SQLZeroDownTimeMigrations();
+            return sqlZeroDownTimeMigrations;
         }
 
         protected void ExitTool(string message)

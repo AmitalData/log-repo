@@ -2960,12 +2960,22 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DBMigrationLastUpdate"
+    Name="DBMigrationsLastDefaultValue"
     Type="int"
     DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
+
+  <Column
+    Name="TestColumn"
+    Type="varchar"
+    Size="10"
+    DefaultValue="'AM'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -3684,6 +3694,8 @@
     Columns="Tenant,ShipmentNumber" />
   <Index
     Columns="AutomaticLastUpdateDate" />
+  <Index
+    Columns="DBMigrationsLastDefaultValue" />
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
 </Table>

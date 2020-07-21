@@ -18,18 +18,8 @@ namespace Logitude.DBMigrations
                 SpecificSxmlFile = null
             };
 
-            bool isZeroDownTimeArgumentProvided = Array.IndexOf((Array.ConvertAll(args, a => a.ToLower())), ToolArguments.ZERODOWNTIME) != -1;
-
-            if (!isZeroDownTimeArgumentProvided)
-            {
-                MigrationTool migrationTool = new MigrationTool(args, runSettings);
-                migrationTool.RunTool();
-            }
-            else
-            {
-                ZeroTimeMigrationTool zeroTimeMigrationTool = new ZeroTimeMigrationTool(args, runSettings);
-                zeroTimeMigrationTool.RunTool();
-            }
+            MigrationTool migrationTool = new MigrationTool(args, runSettings);
+            migrationTool.RunTool();
         }
     }
 }

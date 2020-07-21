@@ -23,8 +23,9 @@ namespace Logitude.DBMigrations.Models
         protected string MissingIndexesWarnings = "";
 
         protected bool IsBasicArgumentProvided;
+        protected bool IsZeroDownTimeArgumentProvided;
 
-
+        
         public string GetScript()
         {
             CurrentTable = GetCurrentTableDefinitionFromDB();

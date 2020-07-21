@@ -7,13 +7,14 @@ namespace Logitude.DBMigrations.Models
 {
     public class SQLDatabaseMigrations : DatabaseMigrations
     {
-        public SQLDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables, string dxmlFileName, bool isBasicArgumentProvided)
+        public SQLDatabaseMigrations(DatabaseMigrationSettings databaseMigrationSettings)
         {
-            ConnectionString = connectionString;
-            DXMLTable = dxmlTable;
-            DXMLTables = dxmlTables;
-            DXMLFileName = dxmlFileName;
-            IsBasicArgumentProvided = isBasicArgumentProvided;
+            ConnectionString = databaseMigrationSettings.DxmlTableConnectionString;
+            DXMLTable = databaseMigrationSettings.DxmlTableDefinition;
+            DXMLTables = databaseMigrationSettings.DxmlTablesDefinitions;
+            DXMLFileName = databaseMigrationSettings.DxmlFileName;
+            IsBasicArgumentProvided = databaseMigrationSettings.IsBasicArgumentProvided;
+            IsZeroDownTimeArgumentProvided = databaseMigrationSettings.IsZeroDownTimeArgumentProvided;
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
@@ -689,25 +690,41 @@ namespace Logitude.DBMigrations.Models
             addScript += "ALTER TABLE " + tableNameWithSchema + " ";
             addScript += "ADD " + "[" + columnName + "]" + " ";
             addScript += columnDataTypeScript;
-            addScript += GetDefaultValueScript(columnMigration.NewColumn.Constraints.Nullable, columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
 
-            string initialValueScript = columnMigration.NewColumn.InitialValueScript;
-            if (String.IsNullOrEmpty(initialValueScript))
+            if (!IsZeroDownTimeArgumentProvided || (IsZeroDownTimeArgumentProvided && columnMigration.NewColumn.Constraints.Nullable))
             {
-                addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
-                addScript += ";\n\n";
+                addScript += GetDefaultValueScript(columnMigration.NewColumn.Constraints.Nullable, columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
+
+                string initialValueScript = columnMigration.NewColumn.InitialValueScript;
+                if (String.IsNullOrEmpty(initialValueScript))
+                {
+                    addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
+                    addScript += ";\n\n";
+                }
+                else
+                {
+                    addScript += " NULL;\n";
+                    addScript += (initialValueScript.EndsWith(";") ? initialValueScript : initialValueScript + ";") + "\n";
+                    if (!columnMigration.NewColumn.Constraints.Nullable)
+                    {
+                        addScript += "ALTER TABLE " + tableNameWithSchema + " ALTER COLUMN " + "[" + columnName + "] " + columnDataTypeScript + " NOT NULL;\n";
+                    }
+                    addScript += "\n";
+                }
             }
             else
             {
-                addScript += " NULL;\n";
-                addScript += (initialValueScript.EndsWith(";") ? initialValueScript : initialValueScript + ";") + "\n";
-                if (!columnMigration.NewColumn.Constraints.Nullable)
+                string defaultValue = GetDefaultValue(columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
+                if (String.IsNullOrEmpty(defaultValue))
                 {
-                    addScript += "ALTER TABLE " + tableNameWithSchema + " ALTER COLUMN " + "[" + columnName + "] " + columnDataTypeScript + " NOT NULL;\n";
+                    ExitDatabaseMigrations("Cannot Use Zero Down Time Mode To Add Not Null Column Without Default Value, The Issue In Column [" + columnName + "] Inside [" + DXMLFileName + "]");
                 }
-                addScript += "\n";
-            }
 
+                addScript += " NULL;\n";
+
+                InsertIntoDBMigrationsSetDefaultValues(columnName, defaultValue);
+            }
+            
             string addWithHistoryScript = addScript + GetInsertScriptForMigrationsHistory("Add Column", TableMigrations.DxmlTableName, columnName, addScript);
 
             return addWithHistoryScript;
@@ -1223,5 +1240,136 @@ namespace Logitude.DBMigrations.Models
                          r.ReferencedTable.ToLower() == relation.ReferencedTable.ToLower() &&
                          r.ReferencedColumn.ToLower() == relation.ReferencedColumn.ToLower());
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        protected string GetDefaultValue(string type, string defaultValue)
+        {
+            if (type == "bit" && String.IsNullOrEmpty(defaultValue))
+            {
+                return "0";
+            }
+
+            if (!String.IsNullOrEmpty(defaultValue))
+            {
+                return defaultValue.Replace("'", String.Empty);
+            }
+
+            return null;
+        }
+
+        protected void InsertIntoDBMigrationsSetDefaultValues(string columnName, string defaultValue)
+        {
+            UpdateLastDefaultValueCounter();
+            int updateNumber = GetLastDefaultValueCounter();
+            string databaseType = DXMLTable.DBType;
+            string schemaName = TableMigrations.DxmlTableSchema;
+            string tableName = TableMigrations.DxmlTableName;
+
+            string queryString = "INSERT INTO [dbo].[DBMigrationsSetDefaultValues]([Id], [DatabaseType], [SchemaName], [TableName], [ColumnName], [Status], [DefaultValue], [UpdateNumber], " +
+                "[DoneRecordsCount], [StartDate], [EndDate], [LastBatchElapsedTime]) " +
+                "VALUES('" + Guid.NewGuid().ToString() + "', '" + databaseType + "', '" + schemaName + "', '" + tableName + "', '" + columnName + "', 'Waiting', " +
+                "'" + defaultValue + "', " + updateNumber + ", 0, NULL, NULL, 0);";
+
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+
+            try
+            {
+                sqlConnection.Open();
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.Connection = sqlConnection;
+                sqlCommand.CommandText = queryString;
+                sqlCommand.ExecuteNonQuery();
+                sqlConnection.Close();
+            }
+            catch (Exception exception)
+            {
+                sqlConnection.Close();
+                ExitDatabaseMigrations(exception.Message);
+            }
+        }
+
+        protected void UpdateLastDefaultValueCounter()
+        {
+            string tableName = TableMigrations.DxmlTableName;
+
+            string queryString = "EXEC('IF (SELECT COUNT(*) FROM [dbo].[DBMigrationsSetValueCounters] WHERE [TableName] = ''" + tableName + "'') = 0 " +
+                                 "INSERT INTO [dbo].[DBMigrationsSetValueCounters]([TableName], [LastCounter]) VALUES(''" + tableName + "'', 1); " +
+                                 "ELSE " +
+                                 "UPDATE [dbo].[DBMigrationsSetValueCounters] SET [LastCounter] = [LastCounter] + 1 WHERE [TableName] = ''" + tableName + "''');";
+
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+
+            try
+            {
+                sqlConnection.Open();
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.Connection = sqlConnection;
+                sqlCommand.CommandText = queryString;
+                sqlCommand.ExecuteNonQuery();
+                sqlConnection.Close();
+            }
+            catch (Exception exception)
+            {
+                sqlConnection.Close();
+                ExitDatabaseMigrations(exception.Message);
+            }
+        }
+
+        protected int GetLastDefaultValueCounter()
+        {
+            string tableName = TableMigrations.DxmlTableName;
+
+            int lastCounter = 0;
+            string queryString = "SELECT [LastCounter] FROM [dbo].[DBMigrationsSetValueCounters] WHERE [TableName] = '" + tableName + "'";
+
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                reader.Read();
+
+                if (reader.HasRows)
+                {
+                    lastCounter = Convert.ToInt32(reader["LastCounter"].ToString());
+                }
+
+                reader.Close();
+                connection.Close();
+            }
+            catch (Exception exception)
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                connection.Close();
+                ExitDatabaseMigrations(exception.Message);
+            }
+
+            return lastCounter;
+        }
+
     }
 }

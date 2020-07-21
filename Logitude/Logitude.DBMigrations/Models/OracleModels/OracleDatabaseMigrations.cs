@@ -7,13 +7,14 @@ namespace Logitude.DBMigrations.Models
 {
     public class OracleDatabaseMigrations : DatabaseMigrations
     {
-        public OracleDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables, string dxmlFileName, bool isBasicArgumentProvided)
+        public OracleDatabaseMigrations(DatabaseMigrationSettings databaseMigrationSettings)
         {
-            ConnectionString = connectionString;
-            DXMLTable = FormatCaseSensitiveNames(dxmlTable);
-            DXMLTables = dxmlTables;
-            DXMLFileName = dxmlFileName;
-            IsBasicArgumentProvided = isBasicArgumentProvided;
+            ConnectionString = databaseMigrationSettings.DxmlTableConnectionString;
+            DXMLTable = FormatCaseSensitiveNames(databaseMigrationSettings.DxmlTableDefinition);
+            DXMLTables = databaseMigrationSettings.DxmlTablesDefinitions;
+            DXMLFileName = databaseMigrationSettings.DxmlFileName;
+            IsBasicArgumentProvided = databaseMigrationSettings.IsBasicArgumentProvided;
+            IsZeroDownTimeArgumentProvided = databaseMigrationSettings.IsZeroDownTimeArgumentProvided;
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
