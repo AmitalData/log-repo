@@ -354,7 +354,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.OrderMoney = entityPOCO.OrderMoney;
             }
 
-		}
+	 
  
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastStatusDate))
@@ -493,8 +493,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 oldEntityPM.OrderMoney = entityPM.OrderMoney;
             }
-			
-		}
+		 
 
 			
 		}
