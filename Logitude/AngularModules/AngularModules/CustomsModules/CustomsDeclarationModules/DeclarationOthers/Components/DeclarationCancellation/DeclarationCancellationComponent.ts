@@ -238,6 +238,27 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
     }
 
+
+    ViewDocumentsComponent() {
+        debugger;
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.ObjectTableName =   this.ObjectTableName +".DeclarationCancellation";
+       // windowArgs.ParentEntityCode = "Customs.DeclarationCancellation";
+        var windowTitle = "Customs.Declaration.TH.Documents";
+
+        var logWindow = new LogitudeWindow();
+        logWindow.IsHideHeader = true;
+        logWindow.Width = 1000;
+        logWindow.Height = 700;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+       // logWindow.WindowClosed.subscribe(($event: any) => this.OnDocumentsWindowClosed($event));
+        //this.entityArgs.SkipCtor = true;
+        logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
+    }
+
     ngOnInit() {
 
     }

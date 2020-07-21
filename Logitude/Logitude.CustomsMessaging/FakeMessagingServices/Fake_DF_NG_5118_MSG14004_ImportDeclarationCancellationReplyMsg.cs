@@ -47,10 +47,16 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             {
                 DeclarationID = dec.DeclarationNumber,
                 DeclarationStatusID = data.DeclarationStatusID,
-                FunctionalReferenceID = Convert.ToInt32(requestNumber),
-                FunctionalReferenceIDSpecified = true,
+        
 
             };
+
+            if(!string.IsNullOrEmpty(requestNumber))
+            {
+
+                response.CancellationResponse.FunctionalReferenceID = Convert.ToInt32(requestNumber);
+                response.CancellationResponse.FunctionalReferenceIDSpecified = true;
+            }
 
             List<DF_NG_5118_MSG14004_DeclarationCancellationReplyMsgAdditionalInformation> AdditionalInformation = new List<DF_NG_5118_MSG14004_DeclarationCancellationReplyMsgAdditionalInformation>();
 
@@ -95,7 +101,51 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
             response.AdditionalInformation = AdditionalInformation.ToArray();
             response.AmendmentDocumentDetails = null;
-            response.ProceduralFaultMsg = null;
+            response.ProceduralFaultMsg = new ProceduralFaultDetails[1];
+            response.ProceduralFaultMsg[0]= new ProceduralFaultDetails
+            {
+                createDate= DateTime.Now,
+                inputType=1,
+                inspectionType= 2,
+                proceduralFaultCode=12,
+                proceduralFaultInputProcess=3,
+                proceduralFaultNumber= 642511,
+                proceduralFaultStatus=3,
+                ransomViolationSum= 0,
+                remarks="FAKE",
+                isCustomerResponsibility=false,
+                isCustomerProceduralFaultCountable= false,
+                isAgentResponsibility= true,
+                isAgentProceduralFaultCountable=true,
+                leadingDocumentVersion="1.0",
+                ConnectedEntity= new UnifreightIIG.Common.MessageLib.DeclarationCancel.ConnectedEntity[1]
+                { new UnifreightIIG.Common.MessageLib.DeclarationCancel.ConnectedEntity
+                      {
+                    entityIdKey1 = dec.DeclarationNumber,
+                    entityType= 1055,
+                    entityPath= "הצהרה",
+                    entityIdExternalReferenceID= "642511"
+
+
+                }
+                },
+                FaultUpdateWorker= new Worker()
+                {
+                    organizationUnitType=38,
+                    customsHouse=4,
+                    workerName="FAKE"
+                }
+                ,
+                FaultDiscovererWorker= new Worker()
+                {
+                    organizationUnitType = 38,
+                    customsHouse = 4,
+                    workerName = "FAKE"
+                }
+
+
+
+            };
             response.ResponseContentHeader = new ResponseContentHeader()
             {
                 ApplicationID = 0,

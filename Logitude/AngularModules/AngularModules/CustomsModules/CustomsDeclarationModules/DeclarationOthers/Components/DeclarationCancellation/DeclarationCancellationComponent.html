@@ -132,18 +132,22 @@
         <td colspan="4" style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
+                     <td style="width:57px;">
+                        <button class="Button" (click)="ViewDocumentsComponent()" style="margin-right:10px;">{{'Customs.Declaration.TH.Documents' |TextCodeTranslationPipe}}</button>
+
+                    </td>
                     <td>
                         <div></div>
                     </td>
                     <td>
                         <div *ngIf="!readonly">
-                            <custom-send-options #MyCustomSendOptionsComponent   [HaveTestCase]="'true'"
+                            <custom-send-options #MyCustomSendOptionsComponent [HaveTestCase]="'true'"
                                                  (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"
                                                  [CustomSendOptionsButtonCanForcePersonalSign]="'true'"></custom-send-options>
-                            
+
                         </div>
                     </td>
-                
+
                     <!--<td style="width: 57px;">
         <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
     </td>

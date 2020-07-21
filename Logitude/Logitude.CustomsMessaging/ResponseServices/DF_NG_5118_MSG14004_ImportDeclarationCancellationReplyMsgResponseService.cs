@@ -225,19 +225,71 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                 }
 
+
+                if (customResponse.ProceduralFaultMsg != null)
+                {
+                    var ProceduralFaultDetailsXml_5118 = XmlGenericUtil<UnifreightIIG.Common.MessageLib.DeclarationCancel.ProceduralFaultDetails[]>
+                       .SerializeObject(customResponse.ProceduralFaultMsg);
+
+                    var customResponse_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsg() { };
+                    customResponse_8218.ProceduralFaultDetails = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Fault.ProceduralFaultDetails[]>
+                        .DeSerializeObject(ProceduralFaultDetailsXml_5118);
+
+                    var ResponseService_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsgResponseService();
+                    ResponseService_8218.Update(customResponse_8218, requestParams);
+                }
+
+
+                if (customResponse.AmendmentDocumentDetails != null) // Create Document 
+                {
+                    LogMessagingUtil.Instance.AppendLine("ConstraintApprovalDecision: Create Document");
+
+                    foreach (var documentItem in customResponse.AmendmentDocumentDetails)
+                    {
+
+                        //Get Document Detail
+                        var documentXml = new UnifreightIIG.Common.MessageLib.Ransom.RequiredDocumentDetails();
+                        documentXml.documentID = documentItem.RequiredDocumentDetails.documentID;
+                        documentXml.remarks = documentItem.RequiredDocumentDetails.remarks;
+                        documentXml.requiredDocumentMessageType = documentItem.RequiredDocumentDetails.requiredDocumentMessageType;
+                        documentXml.typeID = documentItem.RequiredDocumentDetails.typeID.ToString();
+                        //Get Entity Details
+                        RequiredDocumentRequestParams documentRequestParams = new RequiredDocumentRequestParams();
+                        documentRequestParams.Tenant = requestParams.Tenant;
+                        documentRequestParams.ParentEntityCode = "Declaration";
+                        documentRequestParams.ParentEntityId = _MyDeclarationPM.Id;
+
+                        var listConnectedEntity = new List<UnifreightIIG.Common.MessageLib.Ransom.ConnectedEntity>();
+                        var entityXml = new UnifreightIIG.Common.MessageLib.Ransom.ConnectedEntity();
+                        entityXml.entityType = 1055;
+                        //    entityXml.entityIdKey1 = customResponse..LeadDocumentIDNum;
+                        listConnectedEntity.Add(entityXml);
+
+                        VAL_NG_8227_MSG_520_RequiredDocumentMessage myVAL_NG_8227_MSG_520_RequiredDocumentMessage = new VAL_NG_8227_MSG_520_RequiredDocumentMessage();
+                        myVAL_NG_8227_MSG_520_RequiredDocumentMessage.RequiredDocumentDetails = documentXml;
+
+                        myVAL_NG_8227_MSG_520_RequiredDocumentMessage.RelatedEntity = listConnectedEntity.ToArray();
+                        var xml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Ransom.VAL_NG_8227_MSG_520_RequiredDocumentMessage>
+                           .SerializeObject(myVAL_NG_8227_MSG_520_RequiredDocumentMessage);
+
+                        var ser = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Ransom.VAL_NG_8227_MSG_520_RequiredDocumentMessage>.DeSerializeObject(xml);
+                        var myVAL_NG_8227_MSG_520_RequiredDocumentMessageResponseService = new VAL_NG_8227_MSG_520_RequiredDocumentMessageResponseService();
+                        myVAL_NG_8227_MSG_520_RequiredDocumentMessageResponseService.Update(ser, documentRequestParams);
+                    }
+                }
                 this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.HasException = false;
-                this.MyResponseData.UserMessage = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
+                this.MyResponseData.UserMessage = "מענה לביטול הצהרה  " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
 
                 this.MyRequestSheetParam = new RequestSheetParam();
                 this.MyRequestSheetParam.CustomFileNo = this._MyDeclarationPM.CustomFileNo;
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
-                this.MyRequestSheetParam.RequestDescription = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
+                this.MyRequestSheetParam.RequestDescription = "מענה לביטול הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
 
 
 

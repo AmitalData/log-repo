@@ -84,10 +84,15 @@ export class CustomsDocumentsComponent
     IsDocumentRequestCodeButton: boolean = false;
     IsDocumentRequestCodeSendDigital: boolean = false;
     DocumentRequestCodeText: string = "";
+    ParentEntityCode_args: string="";
     //*************************************//
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
-      super();
+        super();
+        if (entityArgs.ObjectTableName.split('.').length > 2) {
+            this.ParentEntityCode_args = entityArgs.ObjectTableName.split('.')[2];
+            entityArgs.ObjectTableName = entityArgs.ObjectTableName.split('.')[0] + "." + entityArgs.ObjectTableName.split('.')[1];
+        }
       if (entityArgs.EntityPM && !entityArgs.SkipCtor) {
             this.Start(entityArgs.EntityPM, entityArgs.ObjectTableName);
         }
@@ -100,9 +105,20 @@ export class CustomsDocumentsComponent
         this.CustomsDocumentsTicketViewModels = null;
     }
     Start(entityPM: any, objectTableName: string) {
+        debugger;
+        if (objectTableName.split('.').length > 2) {
+            this.ParentEntityCode_args = objectTableName.split('.')[2];
+            objectTableName = objectTableName.split('.')[0] + "." + objectTableName.split('.')[1];
+        }
         this.EntityPM = entityPM;
         this.ObjectTableName = objectTableName;
-        this.ParentEntityCode = this.ObjectTableName.split('.')[1];
+        if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args)) {
+            this.ParentEntityCode = this.ParentEntityCode_args;
+        }
+        else {
+            this.ParentEntityCode = this.ObjectTableName.split('.')[1];
+
+        }
         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocument").subscribe((response:any) => {
             this.EntityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response:any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentsTicket").subscribe((response:any) => {
