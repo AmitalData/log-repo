@@ -817,7 +817,6 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
             .subscribe(
                 (response: ServiceResponse) => {
-                    debugger;
 
                     let obj = response.Result;
                     if (obj) {
@@ -829,12 +828,10 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                 this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_AMT_RNG", "NON", "NON", SessionLocator.Tenant)
                                     .subscribe(
                                         (response: ServiceResponse) => {
-debugger;
                                             let obj = response.Result;
                                             if (obj) {
                                                 var CGG_PAY_AMT_RNGDefault: string = obj['DefaultValue'];
                                                 if (CGG_PAY_AMT_RNGDefault != "" && CGG_PAY_AMT_RNGDefault != null) {
-                                                    debugger;
                                                     let MinAndMax = CGG_PAY_AMT_RNGDefault.split("-");
                                                     let min = Number(MinAndMax[0].replace(",", ""));
                                                     let max = Number(MinAndMax[1].replace(",", ""));
@@ -854,15 +851,18 @@ debugger;
     }
 
     JustAutoFillPaymentScreen() {
-
         if (this.sumBtl != null && this.sumBtl > 0) {
             for (let method of this.PaymentMethodsList.Collection) {
                 method.Amount = this.DeclarationPM.TotalTax - this.sumBtl;
                 if (this.BetweenMinAndMax && method.PayerActivityTypeCode == "3") {
                     method.MethodTypeCode = "2";
                     method.InternalBankId = "";
+                    method.PayerActivityTypeCode = "3";
                     this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
                         method.MethodTypeName = response.Result.LocalName;
+                    });
+                    this.customerActivityTypeListService.getSingleFromCache("3").subscribe((response: ServiceResponse) => {
+                        method.PayerActivityTypeName = response.Result.LocalName;
                     });
                 } else {
                     method.MethodTypeCode = "1";
@@ -882,17 +882,22 @@ debugger;
         else {
             for (let method of this.PaymentMethodsList.Collection) {
                 method.Amount = this.DeclarationPM.TotalTax;
-                method.MethodTypeCode = "1";
-                this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
-                    method.MethodTypeName = response.Result.LocalName;
-                });
                 if (this.BetweenMinAndMax && method.PayerActivityTypeCode == "3") {
                     method.MethodTypeCode = "2";
                     method.InternalBankId = "";
+                    method.PayerActivityTypeCode = "3";
                     this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
                         method.MethodTypeName = response.Result.LocalName;
                     });
-                } 
+                    this.customerActivityTypeListService.getSingleFromCache("3").subscribe((response: ServiceResponse) => {
+                        method.PayerActivityTypeName = response.Result.LocalName;
+                    });
+                } else {
+                    method.MethodTypeCode = "1";
+                    this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
+                        method.MethodTypeName = response.Result.LocalName;
+                    });
+                }
             }
         }
 
