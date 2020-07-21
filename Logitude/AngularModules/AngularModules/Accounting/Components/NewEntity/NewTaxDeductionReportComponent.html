@@ -11,7 +11,7 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
         </td>
     </tr>
-    <tr><td colspan="2">
+    <!--<tr><td colspan="2">
     <ul class="FiltersMenu">
         <li (click)="FilterItemClicked('Month')" style="width: 105px; height: 22px;"
             [class.SelectedFilter]="FilterSelectedValue === 'Month'">
@@ -23,7 +23,7 @@
         </li>
 
     </ul>
-</td>   </tr>
+</td>   </tr>-->
     <tr style="height:32px" *ngIf="!ByMonth">
         <td style="width:100px">
             <LogLabel [ObjectFieldName]="'TaxYear'" [ObjectTableName]="ObjectTableName"
