@@ -140,8 +140,9 @@ export class ApplicationTimersManager {
 
     private CheckApplicationLocalStorage() {
         try {
+            const isCypress = window.sessionStorage.getItem('ControlledByCypress');
             var isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;//MAC//WIN32
-            if (window.localStorage.length === 0 && !isMac) {
+            if (window.localStorage.length === 0 && !isMac && !isCypress) {
                 var messageWindow: MessageWindow = new MessageWindow();
 
                 messageWindow.Width = 450;

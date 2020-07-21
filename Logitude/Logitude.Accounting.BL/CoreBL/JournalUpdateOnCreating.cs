@@ -173,7 +173,7 @@ namespace Logitude.Accounting.BL.CoreBL
                      Notes = LinePM.Notes,
                      ActionId = LinePM.ActionId ,
                      CurrentContextTag = LinePM.CurrentContextTag,
-                     //CreditAccountId = LinePM.CreditAccountId,
+                     CreditAccountId = LinePM.CreditAccountId,
                      DebitAccountId = LinePM.DebitAccountId,
                      DebitControlAccountId = LinePM.DebitControlAccountId,
                      //CreditControlAccountId = LinePM.CreditControlAccountId,
@@ -195,7 +195,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
               };
                 LinePM.ActionCode = "1";
-                LinePM.DebitAccountId = null;
+                LinePM.DebitAccountId = LinePM.DebitAccountId;
                 SplitiedJournals.Add(newLine);
             }
 
