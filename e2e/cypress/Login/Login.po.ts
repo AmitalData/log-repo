@@ -69,7 +69,7 @@ it('Login Successfully', () => {
 
     cy.window().then(win => { win.sessionStorage.setItem('ControlledByCypress', 'true') });
 
-    cy.wait('@LoadDataCompleted');
+    cy.wait('@LoadDataCompleted'); 
 
 
 
