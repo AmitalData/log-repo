@@ -451,6 +451,14 @@ namespace CommunicationWorkerRole
             {
                 BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "ReportExecutionLogWorkerRole").ToList();
             }
+
+            if(Debugger.IsAttached && LogitudeSettings.WorkerRoleName.ToLower() != "development")
+            {
+                var schedularWorkerRole = BatchServicesDefinitions.FirstOrDefault(b => b.ClassName == "SchedularWorkerRole");
+                if (schedularWorkerRole != null)
+                    BatchServicesDefinitions.Remove(schedularWorkerRole);
+            }
+
             foreach (var Service in BatchServicesDefinitions)
             {
                 for (int i = 0; i < Service.NumberOfThreads; i++)
