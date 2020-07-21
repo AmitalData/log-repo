@@ -47,6 +47,7 @@ export class DeclarationReferantDataList {
 	SortedColumns: number;
 	IsCustomerLogBoxActivated: boolean;
 	IsCancelled: boolean;
+	OrderMoney: boolean;
 	
 }
  

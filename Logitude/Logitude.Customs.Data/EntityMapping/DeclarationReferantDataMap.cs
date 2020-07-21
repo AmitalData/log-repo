@@ -68,6 +68,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.NewFile).HasColumnName("NewFile");
 
             this.Property(t => t.Favorite).HasColumnName("Favorite");
+
+            this.Property(t => t.OrderMoney).HasColumnName("OrderMoney");
         }
     }
 }

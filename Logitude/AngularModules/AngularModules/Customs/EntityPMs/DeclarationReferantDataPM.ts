@@ -144,6 +144,11 @@ export class DeclarationReferantDataPM {
     public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
        
 	 
+    private orderMoney: boolean;
+    public get OrderMoney() { return this.orderMoney; }
+    public set OrderMoney(newValue: boolean) { if (this.orderMoney != newValue) { this.orderMoney = newValue; this.MarkAsDirty("OrderMoney"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

@@ -572,6 +572,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool orderMoney ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool OrderMoney  
+	   {
+	    
+	     get
+		{
+		   return orderMoney;
+		 }
+		 set
+		 {
+		   if(orderMoney != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OrderMoney",OldValue=orderMoney,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   orderMoney=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

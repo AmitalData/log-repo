@@ -77,6 +77,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool NewFile { get; set; }
         [Column("Favorite")]
 	    public bool Favorite { get; set; }
+        [Column("OrderMoney")]
+	    public bool OrderMoney { get; set; }
     }
 }
 	 
