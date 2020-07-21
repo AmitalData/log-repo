@@ -94,13 +94,22 @@ namespace Logitude.Accounting.BL.Utils
                         {
                             ReconciliationStageCArg innerArgs = reconciliationStageCArg;
                             innerArgs.GLAccountId = accId;
-                            RunReconciliationStageC_OneAccount(innerArgs);
+                            bool one_made = true;
+                            while (one_made)
+                            {
+                                one_made = RunReconciliationStageC_OneAccount(innerArgs);
+                            } 
+                           
                         });
                     }
                 }
                 else
                 {
-                    RunReconciliationStageC_OneAccount(reconciliationStageCArg);
+                    bool one_made = true;
+                    while (one_made)
+                    {
+                        one_made = RunReconciliationStageC_OneAccount(reconciliationStageCArg);
+                    }
                 }
 
                 _ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
@@ -114,8 +123,9 @@ namespace Logitude.Accounting.BL.Utils
         }
 
 
-        private void RunReconciliationStageC_OneAccount(ReconciliationStageCArg reconciliationStageCArg)
+        private bool RunReconciliationStageC_OneAccount(ReconciliationStageCArg reconciliationStageCArg)
         {
+            bool rv_success = false;
             try
             {
                // DateTime fromDate = DateTime.MinValue;
@@ -191,6 +201,7 @@ namespace Logitude.Accounting.BL.Utils
                             success = ProcessOneReconciableLT_List(tenant, myGLAccountId, reconciableLT_List, reconciliationStageCArg.MaximalDifference, actualDifference);
                             if (success)
                             {
+                                rv_success = true;
                                 if (runOnPairs)
                                     moveOn = true;
                                 else
@@ -205,6 +216,7 @@ namespace Logitude.Accounting.BL.Utils
                     } while (toContinue);
 
                 }
+                return rv_success;
 
             }
 
