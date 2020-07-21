@@ -54,11 +54,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityPMs\Generated\CargoTrackingCardPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CargoTrackingCountryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingHeaderEntityTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CargoTrackingIncrementalStatPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingMilestonePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingPortPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingShipmentPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingShipmentSearchPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CargoTrackingTransportModePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CargoTrackingWatermarkPM.Generated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\CargoTrackingClassLevelValidator.cs" />
     <Compile Include="Validators\CargoTrackingClassLevelValidator.Shared.cs" />

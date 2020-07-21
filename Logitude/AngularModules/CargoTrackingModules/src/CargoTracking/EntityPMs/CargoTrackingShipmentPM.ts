@@ -24,9 +24,9 @@ export class CargoTrackingShipmentPM {
       }
  	 
     
-    private id: string;
+    private id: number;
     public get Id() { return this.id; }
-    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+    public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
     private tenant: number;
@@ -137,6 +137,31 @@ export class CargoTrackingShipmentPM {
     private clearanceDate: Date;
     public get ClearanceDate() { return this.clearanceDate; }
     public set ClearanceDate(newValue: Date) { if (this.clearanceDate != newValue) { this.clearanceDate = newValue; this.MarkAsDirty("ClearanceDate"); } }
+       
+	 
+    private createDate: Date;
+    public get CreateDate() { return this.createDate; }
+    public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
+       
+	 
+    private securityKey: string;
+    public get SecurityKey() { return this.securityKey; }
+    public set SecurityKey(newValue: string) { if (this.securityKey != newValue) { this.securityKey = newValue; this.MarkAsDirty("SecurityKey"); } }
+       
+	 
+    private consigneeName: string;
+    public get ConsigneeName() { return this.consigneeName; }
+    public set ConsigneeName(newValue: string) { if (this.consigneeName != newValue) { this.consigneeName = newValue; this.MarkAsDirty("ConsigneeName"); } }
+       
+	 
+    private shipperName: string;
+    public get ShipperName() { return this.shipperName; }
+    public set ShipperName(newValue: string) { if (this.shipperName != newValue) { this.shipperName = newValue; this.MarkAsDirty("ShipperName"); } }
+       
+	 
+    private customerReference: string;
+    public get CustomerReference() { return this.customerReference; }
+    public set CustomerReference(newValue: string) { if (this.customerReference != newValue) { this.customerReference = newValue; this.MarkAsDirty("CustomerReference"); } }
        
 	 
 

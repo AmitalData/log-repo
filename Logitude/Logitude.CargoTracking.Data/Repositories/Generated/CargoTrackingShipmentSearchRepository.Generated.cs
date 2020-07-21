@@ -28,7 +28,7 @@ namespace Logitude.CargoTracking.Data.Repositories
 
 		 
 		
-		public  CargoTrackingShipmentSearch GetSingle(string id, int tenant)
+		public  CargoTrackingShipmentSearch GetSingle(int id, int tenant)
         {
             return (from a in context.CargoTrackingShipmentSearches
                     where a.Id == id && a.Tenant == tenant

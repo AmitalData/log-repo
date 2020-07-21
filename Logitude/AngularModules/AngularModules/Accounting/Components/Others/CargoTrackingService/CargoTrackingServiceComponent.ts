@@ -29,10 +29,15 @@ export class CargoTrackingServiceComponent {
         item1.TranslatedName = "Build Cargo Tracking Shipments";
         item1.ImageIconSource = this.SetImageIconSource("Settings");
         item1.Code ="CargoShipment";
-        // item1.DescriptionText = "Cargo Tracking";
+        //item1.DescriptionText = "Cargo Tracking";
         this.ItemsSource.push(item1);
   
-
+        var item2 = new CargoTrackingMenuItem();
+        item2.TranslatedName = "Incremental Statistics";
+        item2.ImageIconSource = this.SetImageIconSource("Settings");
+        item2.Code ="IncrementalStatistics";
+        //item1.DescriptionText = "Cargo Tracking";
+        this.ItemsSource.push(item2);
 }
 
 
@@ -47,6 +52,17 @@ ItemClicked(item:CargoTrackingMenuItem){
       logWindow.Title = windowTitle;
       logWindow.IsShowCloseButton = true;
       logWindow.Show('./Accounting/Components/Others/CargoTrackingService/CargoTrackingBuildShipmentComponent');
+    
+      break;
+    }
+    case "IncrementalStatistics":{
+      var windowTitle = "Incremental Statistics";
+      var logWindow = new LogitudeWindow();
+      logWindow.Width = 950;
+      logWindow.Height = 500;
+      logWindow.Title = windowTitle;
+      logWindow.IsShowCloseButton = true;
+      logWindow.Show('./Accounting/Components/Others/CargoTrackingService/CargoTrackingIncrementalStatistics');
     
       break;
     }

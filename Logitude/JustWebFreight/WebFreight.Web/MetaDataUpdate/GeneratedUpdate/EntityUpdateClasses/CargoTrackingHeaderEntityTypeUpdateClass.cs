@@ -72,14 +72,14 @@ using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.EntityPOCOs;
-using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.Repositories;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CargoTrackingHeaderEntityTypeUpdateClass
    {  		
-		public const string HashString = "f0b14ddae02822780b220ff36a7417f6";
+		public const string HashString = "c08c6246d510f2b92c653ceabeb8d442";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CargoTrackingHeaderEntityType",
-			      				    Code =  "92fa",
+			      				    Code =  "72f9",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "EnglishName",

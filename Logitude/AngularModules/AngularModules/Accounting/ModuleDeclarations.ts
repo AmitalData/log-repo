@@ -119,6 +119,8 @@ import { ConnectWithGLAccountComponent } from './Components/EditTabs/GLAccount/C
 import { InterestReportEditOpenBalanceComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportEditOpenBalance/InterestReportEditOpenBalanceComponent';
 import { CargoTrackingServiceComponent } from './Components/Others/CargoTrackingService/CargoTrackingServiceComponent';
 import { CargoTrackingBuildShipmentComponent } from './Components/Others/CargoTrackingService/CargoTrackingBuildShipmentComponent';
+import { CargoTrackingIncrementalStatistics } from './Components/Others/CargoTrackingService/CargoTrackingIncrementalStatistics';
+
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
 
@@ -244,6 +246,7 @@ export const Components =
         InterestReportShortTitleComponent,
         InterestReportEditOpenBalanceComponent,
         CargoTrackingBuildShipmentComponent,
+        CargoTrackingIncrementalStatistics,
         CreateInterestReportsForCustomersComponent,
     ];
 
@@ -345,6 +348,7 @@ export class ModuleDeclarations {
             case "InterestReportListTemplate": { myResult = InterestReportListTemplate; break;}
             //Others
             case "CargoTrackingBuildShipmentComponent" :{myResult =CargoTrackingBuildShipmentComponent; break;}
+            case "CargoTrackingIncrementalStatistics" :{myResult =CargoTrackingIncrementalStatistics; break;}
             case "CargoTrackingServiceComponent": { myResult = CargoTrackingServiceComponent; break; }
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }
             case "ReconciledMessage": { myResult = ReconciledMessage; break; }

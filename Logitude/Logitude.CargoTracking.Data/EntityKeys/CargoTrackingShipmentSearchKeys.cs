@@ -12,7 +12,7 @@ namespace Logitude.CargoTracking.Data.EntityKeys
 {
    public partial class CargoTrackingShipmentSearchKeys : EntityKeyFields
    {
-   	  public string Id  { get; set; }
+   	  public int Id  { get; set; }
 	  
 				 
 	    			   
@@ -20,7 +20,7 @@ namespace Logitude.CargoTracking.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return Id;
+          return Id.ToString();
       }
 
       public override string GetEntityPMName()
