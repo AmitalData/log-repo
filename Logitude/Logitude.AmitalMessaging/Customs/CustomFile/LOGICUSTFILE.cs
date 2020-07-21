@@ -168,6 +168,8 @@ public partial class LogitudeCustomsFile
 
     private string fileStatusField;
 
+    private string newFileField;
+
     /// <remarks/>
     public string CustomFileNo
     {
@@ -919,6 +921,19 @@ public partial class LogitudeCustomsFile
         set
         {
             this.fileStatusField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string NewFile
+    {
+        get
+        {
+            return this.newFileField;
+        }
+        set
+        {
+            this.newFileField = value;
         }
     }
 }

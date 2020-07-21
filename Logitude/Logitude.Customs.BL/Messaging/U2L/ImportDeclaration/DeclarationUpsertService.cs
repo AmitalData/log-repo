@@ -823,11 +823,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             MyGenericResponseObj.Stage = "GetSingle DeclarationReferantData";
             this._DeclarationReferantDataPM = myDeclarationReferantDataQueryService.GetSingle(this._MyDeclarationPM.Id, true, false);
             /// Exist
+            bool isNew = false; 
             if (_DeclarationReferantDataPM == null)
             {
                 this._DeclarationReferantDataPM = new Def.EntityPMs.DeclarationReferantDataPM();
                 this._DeclarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Insert;
                 this._DeclarationReferantDataPM.DeclarationId = this._MyDeclarationPM.Id;
+                isNew = true;
             }
             else
             {
@@ -854,9 +856,19 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             {
                 this._DeclarationReferantDataPM.WithPaper = true;
             }
-            if (_AmitalCustomsFile.FileStatus == "OPT") _DeclarationReferantDataPM.NewFile = false;
+            if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.NewFile) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.NewFile) && _AmitalCustomsFile.NewFile.ToLower() != "true"))
+            {
+                this._DeclarationReferantDataPM.NewFile = false;
+
+            }
+            else
+            {
+                this._DeclarationReferantDataPM.NewFile = true;
+            }
+            
             this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
+            
         }
 
         private string TranslateVendor(string amitalvendorId)
