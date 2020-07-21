@@ -22,6 +22,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.StepTo = entityPM.StepTo;
             poco.Days = entityPM.Days;
             poco.SalePrice = entityPM.SalePrice;
+            poco.LineNumber = entityPM.LineNumber;
         }
     }
 }

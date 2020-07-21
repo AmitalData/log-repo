@@ -378,7 +378,12 @@ export class WarehousePM {
     public get AccountingVATSplit() { return this.accountingVATSplit; }
     public set AccountingVATSplit(newValue: boolean) { if (this.accountingVATSplit != newValue) { this.accountingVATSplit = newValue; this.MarkAsDirty("AccountingVATSplit"); } }
        
-	
+	 
+    private uploadingUniqueKey: string;
+    public get UploadingUniqueKey() { return this.uploadingUniqueKey; }
+    public set UploadingUniqueKey(newValue: string) { if (this.uploadingUniqueKey != newValue) { this.uploadingUniqueKey = newValue; this.MarkAsDirty("UploadingUniqueKey"); } }
+       
+	 
     private chargeStorage: boolean;
     public get ChargeStorage() { return this.chargeStorage; }
     public set ChargeStorage(newValue: boolean) { if (this.chargeStorage != newValue) { this.chargeStorage = newValue; this.MarkAsDirty("ChargeStorage"); } }

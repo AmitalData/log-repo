@@ -160,6 +160,7 @@
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\TruckerDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\AccountingPartner\AccountingPartnerDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\StorageDefaultsComponents.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\Maintenance\UploadPartnersComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\NewEntity\NewAccountingPartnerComponent.html" />
@@ -603,6 +604,7 @@
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\TruckerDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\AccountingPartner\AccountingPartnerDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\StorageDefaultsComponents.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\Maintenance\UploadPartnersComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\NewEntity\NewAccountingPartnerComponent.ts" />

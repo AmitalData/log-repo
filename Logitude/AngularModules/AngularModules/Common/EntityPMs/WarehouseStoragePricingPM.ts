@@ -63,6 +63,11 @@ export class WarehouseStoragePricingPM {
     public set SalePrice(newValue: number) { if (this.salePrice != newValue) { this.salePrice = newValue; this.MarkAsDirty("SalePrice"); } }
        
 	 
+    private lineNumber: number;
+    public get LineNumber() { return this.lineNumber; }
+    public set LineNumber(newValue: number) { if (this.lineNumber != newValue) { this.lineNumber = newValue; this.MarkAsDirty("LineNumber"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }

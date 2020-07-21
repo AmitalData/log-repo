@@ -96,6 +96,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             warehouse.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(warehouse.Id, warehouse.Tenant);
 
+            WarehouseStoragePricingRepository warehouseStoragePricingRepository = new WarehouseStoragePricingRepository(repository.context);
+            WarehouseStoragePricingQuery warehouseStoragePricingQuery = new WarehouseStoragePricingQuery(warehouseStoragePricingRepository);
+            warehouse.WarehouseStoragePricings = warehouseStoragePricingQuery.GetWarehouseStoragePricingPMsByWarehouseId(warehouse.Id, warehouse.Tenant);
+
             if (warehouse != null)
             {
                 warehouse.IsExternal = false;

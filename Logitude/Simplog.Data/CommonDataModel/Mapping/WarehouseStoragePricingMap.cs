@@ -35,6 +35,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.StepTo).HasColumnName("StepTo");
             this.Property(t => t.Days).HasColumnName("Days");
             this.Property(t => t.SalePrice).HasColumnName("SalePrice");
+            this.Property(t => t.LineNumber).HasColumnName("LineNumber");
 
             // Relationships
             this.HasRequired(t => t.Warehouse).WithMany().HasForeignKey(d => d.WarehouseId);

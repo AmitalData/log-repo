@@ -40,6 +40,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  StepTo = a.StepTo,
                                                  Days = a.Days,
                                                  SalePrice = a.SalePrice,
+                                                 LineNumber = a.LineNumber,
                                              }).FirstOrDefault();
 
             return entity;
@@ -58,11 +59,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                            StepTo = a.StepTo,
                                                                            Days = a.Days,
                                                                            SalePrice = a.SalePrice,
+                                                                           LineNumber = a.LineNumber,
                                                                        };
             return WarehouseStoragePricings;
         }
 
-        public IQueryable<WarehouseStoragePricingPM> GetWarehouseStoragePricingPMsByWarehouseId(string warehouseId, int tenant)
+        public List<WarehouseStoragePricingPM> GetWarehouseStoragePricingPMsByWarehouseId(string warehouseId, int tenant)
         {
             IQueryable<WarehouseStoragePricingPM> WarehouseStoragePricings = from a in repository.context.WarehouseStoragePricings
                                                                              where a.Tenant == tenant && a.WarehouseId == warehouseId
@@ -75,8 +77,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                  StepTo = a.StepTo,
                                                                                  Days = a.Days,
                                                                                  SalePrice = a.SalePrice,
+                                                                                 LineNumber = a.LineNumber,
                                                                              };
-            return WarehouseStoragePricings;
+            return WarehouseStoragePricings.ToList();
         }
     }
 }

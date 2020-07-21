@@ -3,9 +3,9 @@ import {WarehousePM} from '../../../../../Common/EntityPMs/WarehousePM';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 
-@Component({
-    
+@Component({    
     templateUrl: './WarehouseGeneralTabComponent.html',
 })
 
@@ -80,6 +80,9 @@ export class WarehouseGeneralTabComponent extends BaseComponent {
     }
 
     StorageDefaultsClicked() {
-
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = "Storage Defaults";
+        logitudeWindow.WindowArgs = this.EntityPM;
+        logitudeWindow.Show("./CommonModules/CommonPartners/Components/EditTabs/Warehouse/StorageDefaultsComponents");
     }
 }

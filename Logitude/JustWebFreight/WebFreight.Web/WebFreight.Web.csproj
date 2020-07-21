@@ -930,6 +930,8 @@
     <Content Include="App_Code\AngularJS_App_Code\Common\CommunicationLogStepController.cs" />
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
+    <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.WarehouseWeightMeasurement.cs" />
+    <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.WarehouseWeightRounding.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\VatUniquePartnerTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\InterestReportsForEligibleCustomerCreationController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestLastBatchServiceViewsController.Generated.cs" />
