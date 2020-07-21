@@ -471,6 +471,7 @@
     <None Include="EntityFiles\SuppInvoiceItemsAbachStatement.lxml" />
     <None Include="EntityFiles\SupplierInvoicePayment.lxml" />
     <None Include="EntityFiles\SupplierInvoiceUCR.lxml" />
+    <None Include="EntityFiles\Team.lxml" />
     <None Include="EntityFiles\TransactionNatureType.lxml" />
     <None Include="EntityFiles\ClaimReasonType.lxml" />
     <None Include="EntityFiles\ContinuousRequestType.lxml" />
