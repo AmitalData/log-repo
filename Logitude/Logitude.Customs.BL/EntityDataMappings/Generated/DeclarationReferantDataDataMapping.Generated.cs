@@ -47,6 +47,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Favorite, 
 	         LastStatusName, 
 	         LastStatusDate,
+	         OrderMoney,
 	      }
 
 
@@ -77,11 +78,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         NewFile, 
 	         Favorite, 
 	         IsCancelled, 
+ 
 	         ClassifiedUserName, 
 	         ControllerUserName, 
 	         CollectorUserName, 
 	         LastStatusName, 
 	         LastStatusDate,
+
+	         OrderMoney,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -199,11 +203,19 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 				entityPOCO.Favorite = entityPM.Favorite;
 			}
+ 
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusName))
             {
 				entityPOCO.LastStatusName = entityPM.LastStatusName;
 			}
+
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OrderMoney))
+            {
+				entityPOCO.OrderMoney = entityPM.OrderMoney;
+			}
+ 
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusDate))
             {
@@ -334,7 +346,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastStatusName))
             {
 					entityPM.LastStatusName = entityPOCO.LastStatusName;
+ 
             }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OrderMoney))
+            {
+					entityPM.OrderMoney = entityPOCO.OrderMoney;
+            }
+
+		}
+ 
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastStatusDate))
             {
@@ -465,7 +486,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusDate))
             {
                 oldEntityPM.LastStatusDate = entityPM.LastStatusDate;
+ 
             }
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OrderMoney))
+            {
+                oldEntityPM.OrderMoney = entityPM.OrderMoney;
+            }
+			
+		}
+
 			
 		}
 
