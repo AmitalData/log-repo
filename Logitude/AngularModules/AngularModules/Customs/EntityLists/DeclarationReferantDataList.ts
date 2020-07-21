@@ -49,6 +49,10 @@ export class DeclarationReferantDataList {
 	ClassifiedUserName: string;
 	ControllerUserName: string;
 	CollectorUserName: string;
+	LastStatusName: string;
+	LastStatusDate: string;
+
+	OrderMoney: boolean;
 	
 }
  

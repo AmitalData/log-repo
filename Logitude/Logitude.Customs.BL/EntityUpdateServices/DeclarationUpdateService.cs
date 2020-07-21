@@ -1129,6 +1129,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
             }
+            if (entityPM.ReferentUserId != null)
+            {
+                ICustomContext context = MainContext as CustomContext;
+                DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
+                DeclarationReferantDataPM referant = declarationReferantDataQueryService.GetSingle(entityPM.Id, false, true);
+                if (referant != null)
+                {
+                    referant.ChangeSetOp = ChangeSetOperation.Update;
+                    DeclarationReferantDataUpdateService service = new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    service.Update(referant, true);
+                }
+            }
         }
 
 
