@@ -2306,7 +2306,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipmentPM.ShipmentConsoleShipments != null)
             {
                 this.ComputeHousesNumbersField(shipmentPM);
+
             }
+
+            this.ComputeHousesDescriptionofGoodsField(shipmentPM);
 
             shipmentPM.TEU = shipment.TEU;
             shipmentPM.SecurityKey = shipment.SecurityKey;
@@ -2385,6 +2388,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private void ComputeHousesNumbersField(ShipmentPM shipmentPM)
         {
             var myHousesNumbers = "";
+            var myMasterHousesNumbers = "";
+            
             foreach (ConsoleShipmentPM console in shipmentPM.ShipmentConsoleShipments)
             {
                 if (string.IsNullOrEmpty(myHousesNumbers))
@@ -2395,6 +2400,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     myHousesNumbers += ", " + console.ShipmentNumber;
                 }
+
+                if (string.IsNullOrEmpty(myMasterHousesNumbers))
+                {
+                    myMasterHousesNumbers = console.House;
+                }
+                else
+                {
+                    myMasterHousesNumbers += ", " + console.House;
+                }
+
             }
 
             if (!string.IsNullOrEmpty(myHousesNumbers) && myHousesNumbers.Length > 1000)
@@ -2402,7 +2417,44 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 myHousesNumbers = myHousesNumbers.Substring(0, 1000);
             }
 
+            if (!string.IsNullOrEmpty(myMasterHousesNumbers) && myMasterHousesNumbers.Length > 1000)
+            {
+                myMasterHousesNumbers = myMasterHousesNumbers.Substring(0, 1000);
+            }
+
             shipmentPM.HousesNumbers = myHousesNumbers;
+            shipmentPM.MasterHousesNumbers = myMasterHousesNumbers;
+        }
+        private void ComputeHousesDescriptionofGoodsField(ShipmentPM shipmentPM)
+        {
+            var myHousesDescriptionofGoods = "";
+
+            if (shipmentPM.ShipmentLevelCode == "C")
+            {
+                foreach (ConsoleShipmentPM console in shipmentPM.ShipmentConsoleShipments)
+                {
+                    if (string.IsNullOrEmpty(myHousesDescriptionofGoods))
+                    {
+                        myHousesDescriptionofGoods = console.DescriptionOfGoods;
+                    }
+                    else
+                    {
+                        myHousesDescriptionofGoods += ", " + console.DescriptionOfGoods;
+                    }
+
+                }
+
+                if (!string.IsNullOrEmpty(myHousesDescriptionofGoods) && myHousesDescriptionofGoods.Length > 1000)
+                {
+                    myHousesDescriptionofGoods = myHousesDescriptionofGoods.Substring(0, 1000);
+                }
+            }
+            else
+            {
+                myHousesDescriptionofGoods = shipmentPM.DescriptionOfGoods;
+            }
+
+            shipmentPM.HousesDescriptionofGoods = myHousesDescriptionofGoods;
         }
 
         private void MapAnalyzerConcurrencyFields(ShipmentPM shipmentPM)
