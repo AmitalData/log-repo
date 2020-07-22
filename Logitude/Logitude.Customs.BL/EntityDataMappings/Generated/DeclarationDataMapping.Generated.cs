@@ -366,7 +366,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CancelRequestStatusCode, 
 	         CancelRequestRejectionReason, 
 	         CancelRequestApproveDate, 
-	         IsClaimable,
+	         IsClaimable, 
+	         CancelRequestStatusName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
