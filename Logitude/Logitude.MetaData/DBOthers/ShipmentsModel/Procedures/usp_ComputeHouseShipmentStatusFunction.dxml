@@ -7,7 +7,7 @@
   <SqlScript>
     <![CDATA[
 
-ALTER PROCEDURE [dbo].[usp_ComputeHouseShipmentStatusFunction]
+Create PROCEDURE [dbo].[usp_ComputeHouseShipmentStatusFunction]
 (
 	
 	@ShipmentId varchar(15)
