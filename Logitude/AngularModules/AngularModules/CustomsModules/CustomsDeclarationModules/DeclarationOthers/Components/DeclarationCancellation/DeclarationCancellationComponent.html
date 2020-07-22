@@ -18,7 +18,7 @@
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td><div></div></td>
-                                <td style="width: 200px; " >
+                                <td style="width:180px; " >
                                     <LogTextBox [ObjectFieldName]="'CancelRequestNumber'" [InputType]="'integertext'" [DataContext]="DataContext"
                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                 </td>
@@ -37,14 +37,17 @@
                                 </td>
                                 <td><div></div></td>
                                 <td style="width: 200px;">
-                                    <LogLov [ObjectFieldName]="'CancelRequestReasonCode'"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [SelectedValue]="CancelRequestReasonCode"
-                                            [HideAddLink]="true"
-                                            [LookUpTableName]="'Customs.CancellationReasonRequestType'"
-                                            [DisplayFieldsFromList]="'Code,LocalName'">
-                                    </LogLov>
+                                    <div style="width: 200px;">
+                                        <LogLov [ObjectFieldName]="'CancelRequestReasonCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [SelectedValue]="CancelRequestReasonCode"
+                                                [HideAddLink]="true"
+                                                [LookUpTableName]="'Customs.CancellationReasonRequestType'"
+                                                [DisplayFieldsFromList]="'Code,LocalName'">
+                                        </LogLov>
+                                    </div>
+                                
                                 </td>
                                 <td><div></div></td>
                                 <td style="width: 120px">
@@ -98,7 +101,7 @@
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td><div></div></td>
-                                <td style="width: 150px; ">
+                                <td style="width: 200px; ">
                                     <LogTextBox [ObjectFieldName]="'CancelRequestApproveDate'" [ObjectTableName]="ObjectTableName" [Text]="CancelRequestApproveDate"
                                                 [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
                                 </td>
@@ -136,10 +139,10 @@
                         <button class="Button" (click)="ViewDocumentsComponent()" style="margin-right:10px;">{{'Customs.Declaration.TH.Documents' |TextCodeTranslationPipe}}</button>
 
                     </td>
-                    <td>
+                    <td style="width:400px">
                         <div></div>
                     </td>
-                    <td>
+                    <td style="margin-left:5px">
                         <div *ngIf="!readonly">
                             <custom-send-options #MyCustomSendOptionsComponent [HaveTestCase]="'true'"
                                                  (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"

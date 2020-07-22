@@ -64,6 +64,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
     get CancelRequestStatusCode() { return this.EntityPM.CancelRequestStatusCode; }
     set CancelRequestStatusCode(value: string) {
+        debugger;
         if (this.EntityPM.CancelRequestStatusCode != value) {
             this.EntityPM.CancelRequestStatusCode = value;
         }
@@ -223,7 +224,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
            
             this.EntityPM = args.Declaration as DeclarationPM;
-            this.UIProperties.SetEnabled("CancelRequestStatusCode", this.ObjectTableName, false);
+            //this.UIProperties.SetEnabled("CancelRequestStatusCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CustomCancelRequestRemarks", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CancelRequestApproveDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CancelRequestRejectionReason", this.ObjectTableName, false);
