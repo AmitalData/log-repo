@@ -2188,6 +2188,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cards.ToList();
         }
 
+
+        public IQueryable<Card> GetAllCards()
+        {
+            IQueryable<Card> cards = (from a in repository.context.Cards select a);
+                                       
+
+            return cards ;
+        }
+
         public IQueryable<CardList> GetCardsByTenant(int tenant)
         {
             IQueryable<CardList> cards = from a in repository.context.Cards

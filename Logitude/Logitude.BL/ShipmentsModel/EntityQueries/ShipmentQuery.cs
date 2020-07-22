@@ -56,7 +56,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             this.repository = repository;
         }
-
+        
         public ShipmentPM GetSinglePMByShipmentNumber(string shipmentNumber, int tenant, bool withComposition = true)
         {
             if (!string.IsNullOrEmpty(shipmentNumber))
@@ -12691,7 +12691,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return result;
 
         }
-
+        public IQueryable<Shipment> GetAllShipments()
+        {
+            return (from d in repository.context.Shipments  select d);
+        }
         public IQueryable<ShipmentList> GetAllShipmentListTenant(int tenant)
         {
             IQueryable<ShipmentList> shipmentsList = from s in repository.context.Shipments.Include("ShipmentType").Include("ShipmentLevel")

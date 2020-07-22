@@ -77,6 +77,10 @@
       <Project>{6b7fb227-28d2-45b8-b079-2e2f4251510d}</Project>
       <Name>Logitude.CargoTracking.BL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78EC8434-E6AD-4E93-9B17-C746F5403F7B}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

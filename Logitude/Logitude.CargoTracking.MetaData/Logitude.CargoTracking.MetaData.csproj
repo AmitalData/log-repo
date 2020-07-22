@@ -94,6 +94,7 @@
     <None Include="DBTables\CargoTrackingCard.dxml" />
     <None Include="DBTables\CargoTrackingCountry.dxml" />
     <None Include="DBTables\CargoTrackingHeaderEntityType.dxml" />
+    <None Include="DBTables\CargoTrackingIncrementalStat.dxml" />
     <None Include="DBTables\CargoTrackingMilestone.dxml" />
     <None Include="DBTables\CargoTrackingPort.dxml" />
     <None Include="DBTables\CargoTrackingShipment.dxml" />
@@ -102,6 +103,7 @@
     <None Include="DBTables\CargoTrackingWatermark.dxml" />
     <None Include="EntityFiles\CargoTrackingCard.lxml" />
     <None Include="EntityFiles\CargoTrackingHeaderEntityType.lxml" />
+    <None Include="EntityFiles\CargoTrackingIncrementalStat.lxml" />
     <None Include="EntityFiles\CargoTrackingMilestone.lxml" />
     <None Include="EntityFiles\CargoTrackingPort.lxml" />
     <None Include="EntityFiles\CargoTrackingShipment.lxml" />

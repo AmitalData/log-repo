@@ -1,0 +1,24 @@
+<style>
+  
+  
+
+</style>
+<div>
+    <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'Id'">{{ rowData[fieldName]}}</div>
+
+    <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'StartDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+
+    <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'EndDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+
+    <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'Shipments'">{{ rowData[fieldName] }}</div>
+
+    <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'Cards'">{{ rowData[fieldName] }}</div>
+
+    <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'Ports'">{{ rowData[fieldName] }}</div>
+
+    <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'Countries'">{{ rowData[fieldName] }}</div>
+
+    <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'TransportModes'">{{ rowData[fieldName] }}</div>
+
+
+</div>

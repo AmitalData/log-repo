@@ -15,7 +15,7 @@ namespace Logitude.CargoTracking.Data.EntityLists
    
        [Key]
        [DataMember]
-       public string Id  { get; set; }
+       public int Id  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
@@ -60,6 +60,16 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public DateTime? PickupDate  { get; set; }
        [DataMember]
        public DateTime? ClearanceDate  { get; set; }
+       [DataMember]
+       public DateTime CreateDate  { get; set; }
+       [DataMember]
+       public string SecurityKey  { get; set; }
+       [DataMember]
+       public string ConsigneeName  { get; set; }
+       [DataMember]
+       public string ShipperName  { get; set; }
+       [DataMember]
+       public string CustomerReference  { get; set; }
    }
 
 }

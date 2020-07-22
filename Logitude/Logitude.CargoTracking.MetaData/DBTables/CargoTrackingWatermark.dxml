@@ -18,4 +18,10 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="LastRun"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

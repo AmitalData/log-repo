@@ -106,6 +106,8 @@
     <Content Include="Accounting\Components\Others\Aging4CustomerChartWindowComponent.html" />
     <Content Include="Accounting\Components\Others\AccountingFlatFileDownloadComponent.html" />
     <Content Include="Accounting\Components\Others\CancelChequeComponent.html" />
+    <Content Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingBuildShipmentComponent.html" />
+    <Content Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingIncrementalStatistics.html" />
     <Content Include="Accounting\Components\Others\DropdownButtonComponent.html" />
     <Content Include="Accounting\Components\Others\ExtReconcileAdjustBankFeeComponent.html" />
     <Content Include="Accounting\Components\Others\BatchInvoicesComponent.html" />
@@ -306,6 +308,8 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\SInvoiceClassificationTabComponent.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierDeclarationWorkspaceListTemplate.html" />
+    <TypeScriptCompile Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingBuildShipmentComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingIncrementalStatistics.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsCustoms.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\ChargesTypeByProductsService.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\DeclarationListTemplate.ts" />
