@@ -16,7 +16,7 @@ namespace Logitude.Accounting.BL.DataContract
         public string SettingDeductionFileNumber { get; set; }
         public string TenantVatNumber { get; set; }
         public string Phone {get; set;}
-        public int? TaxYear { get; set; }
+        public string TaxYear { get; set; }
         public List<ByMonthList> ByMonthList { get; set; }
         public List<ByVendorList> ByVendorList { get; set; }
         public List<TotalForCompany> TotalForCompany { get; set; }
