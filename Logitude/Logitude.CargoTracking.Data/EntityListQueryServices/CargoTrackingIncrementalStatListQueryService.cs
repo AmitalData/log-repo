@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Data.EntityLists;
+using System.Data.Entity;
 
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
 { 
@@ -47,8 +48,27 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
 		private IQueryable<CargoTrackingIncrementalStat> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CargoTrackingIncrementalStat> iQueryable)
         {
-			throw new NotImplementedException();
-		}
+            List<QueryFilterItem> queryFilters = queryOperations.QueryFilterItems;
+
+            foreach (QueryFilterItem item in queryFilters)
+            {
+                if (item.IsCustom)
+                {
+                    if (item.FieldName == "Start_End_Date" && item.FieldValue!=null && item.FieldValue2!=null)
+                    {
+                        DateTime FromDate = Convert.ToDateTime(item.FieldValue);
+                        DateTime ToDate = Convert.ToDateTime(item.FieldValue2);
+ 
+                        if (FromDate != null && ToDate!=null)
+                        {
+                            iQueryable = iQueryable.Where(d => d.StartDate >= DbFunctions.TruncateTime(FromDate) && d.EndDate <= DbFunctions.TruncateTime(ToDate));
+                        }
+                    }
+                }
+            }
+
+            return iQueryable;
+        }
 				private IQueryable<CargoTrackingIncrementalStat> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<CargoTrackingIncrementalStat> iQueryable)
         {
 			return iQueryable;

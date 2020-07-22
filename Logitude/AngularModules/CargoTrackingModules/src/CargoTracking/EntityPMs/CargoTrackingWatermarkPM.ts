@@ -34,6 +34,11 @@ export class CargoTrackingWatermarkPM {
     public set LastUpdateDate(newValue: Date) { if (this.lastUpdateDate != newValue) { this.lastUpdateDate = newValue; this.MarkAsDirty("LastUpdateDate"); } }
        
 	 
+    private lastRun: Date;
+    public get LastRun() { return this.lastRun; }
+    public set LastRun(newValue: Date) { if (this.lastRun != newValue) { this.lastRun = newValue; this.MarkAsDirty("LastRun"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingWatermarkPM;
 		

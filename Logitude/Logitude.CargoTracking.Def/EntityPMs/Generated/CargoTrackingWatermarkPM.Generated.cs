@@ -66,6 +66,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? lastRun ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LastRun  
+	   {
+	    
+	     get
+		{
+		   return lastRun;
+		 }
+		 set
+		 {
+		   if(lastRun != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRun",OldValue=lastRun,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   lastRun=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

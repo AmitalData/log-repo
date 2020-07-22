@@ -23,6 +23,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string TableName { get; set; }
         [Column("LastUpdateDate")]
 	    public DateTime? LastUpdateDate { get; set; }
+        [Column("LastRun")]
+	    public DateTime? LastRun { get; set; }
     }
 }
 	 

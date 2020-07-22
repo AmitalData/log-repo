@@ -71,9 +71,9 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
-using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {

@@ -120,6 +120,7 @@ import { InterestReportEditOpenBalanceComponent } from './Components/EditTabs/In
 import { CargoTrackingServiceComponent } from './Components/Others/CargoTrackingService/CargoTrackingServiceComponent';
 import { CargoTrackingBuildShipmentComponent } from './Components/Others/CargoTrackingService/CargoTrackingBuildShipmentComponent';
 import { CargoTrackingIncrementalStatistics } from './Components/Others/CargoTrackingService/CargoTrackingIncrementalStatistics';
+import { CargoTrackingIncrementalStatListTemplate } from './Components/ListTemplates/CargoTrackingIncrementalStatListTemplate';
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
@@ -248,6 +249,7 @@ export const Components =
         CargoTrackingBuildShipmentComponent,
         CargoTrackingIncrementalStatistics,
         CreateInterestReportsForCustomersComponent,
+        CargoTrackingIncrementalStatListTemplate,
     ];
 
 export class ModuleDeclarations {
@@ -346,6 +348,8 @@ export class ModuleDeclarations {
             case "CashBookLineListTemplate": { myResult = CashBookLineListTemplate; break; }
             case "InterestReportLinesByDateListTemplate": { myResult = InterestReportLinesByDateListTemplate; break; }
             case "InterestReportListTemplate": { myResult = InterestReportListTemplate; break;}
+            case "CargoTrackingIncrementalStatListTemplate": { myResult = CargoTrackingIncrementalStatListTemplate; break;}
+
             //Others
             case "CargoTrackingBuildShipmentComponent" :{myResult =CargoTrackingBuildShipmentComponent; break;}
             case "CargoTrackingIncrementalStatistics" :{myResult =CargoTrackingIncrementalStatistics; break;}

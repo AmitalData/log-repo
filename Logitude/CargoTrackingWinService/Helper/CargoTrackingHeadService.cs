@@ -1,6 +1,7 @@
 ﻿
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
+using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -41,8 +42,24 @@ namespace CargoTrackingWinService.Helper
                     {
                         if (!cargoTrackingServiceHelper.CheckIsUpgradingSystem(sourceConnectionString))
                         {
+                            if (ApplicationInfo.UpdateCounter == 0)
+                            {
+                                ApplicationInfo.StartDate = TenantServerConfigration.GetCurrentDateTime(0);
+                                ApplicationInfo.Ports = 0;
+                                ApplicationInfo.Shipments = 0;
+                                ApplicationInfo.TransportModes = 0;
+                                ApplicationInfo.Cards = 0;
+                                ApplicationInfo.Countries = 0;
+                            }
                             cargoTrackingMainService.CheckAndUpdateWaterMark(destinationConnectionString,sourceConnectionString);
                             AddAllTablesToThread(cargoTrackingMainService.FillCargoTableList());
+                            ApplicationInfo.UpdateCounter++;
+                            if (ApplicationInfo.UpdateCounter==10)
+                            {
+                                ApplicationInfo.UpdateCounter = 0;
+                                ApplicationInfo.EndDate = TenantServerConfigration.GetCurrentDateTime(0);
+                                CargoTrackingServiceHelper.AddRecordToCargoTrackingIncrementalStats(destinationConnectionString);
+                            }
                             Thread.Sleep(ApplicationInfo.UpdateCargoTrackingSleepTime);
                         }
                         else Thread.Sleep(new TimeSpan(0, 5, 0));
@@ -57,19 +74,55 @@ namespace CargoTrackingWinService.Helper
             }
         }
 
-        private void UpdateCargoDataBase(CargoTable table)
+        private int UpdateCargoDataBase(CargoTable table)
         {
-            //cargoTrackingMainService.UpdateLineByLine(new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString });
-            cargoTrackingMainService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },1000);
+           int RecordUpdatedNumber = cargoTrackingMainService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },1000);
+            return RecordUpdatedNumber;
         }
 
 
         private void AddAllTablesToThread(List<CargoTable> CargoTableLists)
         {
+            int RecordUpdatedNumber = 0;
             foreach (CargoTable table in CargoTableLists)
             {
 
-                UpdateCargoDataBase(table);
+                RecordUpdatedNumber = UpdateCargoDataBase(table);
+                UpdaeNumberOfRecordsUpdated(table.CT_TableName, RecordUpdatedNumber);
+
+            }
+        }
+
+
+        private void UpdaeNumberOfRecordsUpdated(string TableName, int RecordUpdatedNumber)
+        {
+            switch (TableName)
+            {
+                case "CargoTrackingShipments":
+                    {
+                        ApplicationInfo.Shipments+= RecordUpdatedNumber;
+                        break;
+                    }
+                case "CargoTrackingCards":
+                    {
+                        ApplicationInfo.Cards+= RecordUpdatedNumber;
+                        break;
+                    }
+                case "CargoTrackingPorts":
+                    {
+                        ApplicationInfo.Ports+= RecordUpdatedNumber;
+                        break;
+                    }
+                case "CargoTrackingCountries":
+                    {
+                        ApplicationInfo.Countries+= RecordUpdatedNumber;
+                        break;
+                    }
+                case "CargoTrackingTransportModes":
+                    {
+                        ApplicationInfo.TransportModes+= RecordUpdatedNumber;
+                        break;
+                    }
 
             }
         }

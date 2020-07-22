@@ -153,6 +153,16 @@ export class CargoTrackingIncrementalStatExtendedListService {
 		});        
 	}
 
+
+	getByFiltersForVirtualization(filters: ApiQueryFilters) {
+        var servicelink = './Accounting/Services/ExtendedLists/CargoTrackingIncrementalStatExtendedListService';
+        return new Promise((resolve, reject) => {
+            SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
+                resolve(service.getByFilters(filters));
+            });
+        });
+    }
+
 	
 	    MapJsonToEntityList(jsonList: any) {
        

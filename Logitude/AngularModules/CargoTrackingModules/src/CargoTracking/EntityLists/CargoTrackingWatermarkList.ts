@@ -10,6 +10,7 @@ export class CargoTrackingWatermarkList {
    
 	TableName: string;
 	LastUpdateDate: Date;
+	LastRun: Date;
 	
 }
  

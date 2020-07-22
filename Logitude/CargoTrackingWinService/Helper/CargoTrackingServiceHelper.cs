@@ -11,7 +11,7 @@ namespace CargoTrackingWinService.Helper
 {
     public class CargoTrackingServiceHelper
     {
-        int timeOut = 0;
+        public static int timeOut = 0;
  
 
 
@@ -49,7 +49,15 @@ namespace CargoTrackingWinService.Helper
             return result;
         }
  
-        private void RunScript(string sql , string connection)
+
+        public static void AddRecordToCargoTrackingIncrementalStats(string destinationConnectionString)
+        {
+            string cmd = "Insert Into [dbo].[CargoTrackingIncrementalStats] (StartDate,EndDate,Shipments,Cards,Ports,Countries,TransportModes) values ('"+ ApplicationInfo.StartDate+ "','"+ ApplicationInfo.EndDate+ "',"+ ApplicationInfo.Shipments+ ","+ ApplicationInfo .Cards+ ","+ ApplicationInfo .Ports+ ","+ ApplicationInfo .Countries+ ","+ ApplicationInfo .TransportModes+ ");";
+            RunScript(cmd, destinationConnectionString);
+        }
+
+
+        public static void RunScript(string sql , string connection)
         {
             using (SqlConnection cn = new SqlConnection(connection))
             {

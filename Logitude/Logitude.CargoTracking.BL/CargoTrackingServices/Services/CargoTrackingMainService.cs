@@ -440,14 +440,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         public void UpdateWaterMarksTable(CargoTable table, string date, string connectionString)
         {
-            string cmd = "update  CargoTrackingWatermarks set LastUpdateDate = '" + date + "' where tableName = '" + table.CT_TableName + "'";
+            var TodayDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+            string cmd = "update  CargoTrackingWatermarks set LastUpdateDate = '" + date + "',LastRun = '"+ TodayDate + "' where tableName = '" + table.CT_TableName + "'";
             ExecuteSql(cmd, connectionString);
 
         }
 
         public void AddWaterMarksRecord(CargoTable table, string date, string connectionString)
         {
-            string cmd = "insert into CargoTrackingWatermarks  values('" + table.CT_TableName + "' , '" + date + "')";
+            string cmd = "insert into CargoTrackingWatermarks  values('" + table.CT_TableName + "' , NULL,NULL)";
             ExecuteSql(cmd, connectionString);
         }
 

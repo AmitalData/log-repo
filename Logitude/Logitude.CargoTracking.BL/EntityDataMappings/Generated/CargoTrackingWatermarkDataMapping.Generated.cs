@@ -23,7 +23,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
           { 
 		     None,  
 	         TableName, 
-	         LastUpdateDate,
+	         LastUpdateDate, 
+	         LastRun,
 	      }
 
 
@@ -31,7 +32,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
           { 
 		     None,  
 	         TableName, 
-	         LastUpdateDate,
+	         LastUpdateDate, 
+	         LastRun,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -43,6 +45,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastUpdateDate))
             {
 				entityPOCO.LastUpdateDate = entityPM.LastUpdateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRun))
+            {
+				entityPOCO.LastRun = entityPM.LastRun;
 			}
 			}
 
@@ -59,6 +66,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.LastUpdateDate = entityPOCO.LastUpdateDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastRun))
+            {
+					entityPM.LastRun = entityPOCO.LastRun;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingWatermarkPM entityPM, CargoTrackingWatermarkPM oldEntityPM)
@@ -68,6 +80,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastUpdateDate))
             {
                 oldEntityPM.LastUpdateDate = entityPM.LastUpdateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRun))
+            {
+                oldEntityPM.LastRun = entityPM.LastRun;
             }
 			
 		}

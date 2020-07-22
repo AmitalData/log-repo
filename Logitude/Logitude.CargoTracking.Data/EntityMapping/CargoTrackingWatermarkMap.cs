@@ -26,6 +26,8 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.TableName).HasColumnName("TableName").IsRequired().HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.LastUpdateDate).HasColumnName("LastUpdateDate");
+
+            this.Property(t => t.LastRun).HasColumnName("LastRun");
         }
     }
 }

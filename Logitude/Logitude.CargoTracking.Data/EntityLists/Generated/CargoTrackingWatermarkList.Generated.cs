@@ -18,6 +18,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string TableName  { get; set; }
        [DataMember]
        public DateTime? LastUpdateDate  { get; set; }
+       [DataMember]
+       public DateTime? LastRun  { get; set; }
    }
 
 }
