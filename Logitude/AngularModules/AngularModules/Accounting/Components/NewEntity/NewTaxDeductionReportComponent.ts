@@ -67,7 +67,8 @@ private selectedMonth: CodeNameClass;
             if (value != null) {
                 this.UIProperties.SetRequired("Month", this.ObjectTableName, false);
                 this.entityPM.Month = new Date();
-             //   this.entityPM.Month.setMonth(value);
+              //  this.entityPM.Month.setMonth(value);
+
                 
             }
             else {
