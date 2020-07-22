@@ -590,6 +590,15 @@ namespace WebFreight.Web.WebServices
                 //}
             }
             context.SaveChanges();
+
+            foreach (Shipment shipment in shipments)
+            {
+                RunStoredProcedureClass.UpdateShipmentStatus(shipment.Id, shipment.Tenant);
+            }
+
+
+
+
         }
 
         public void CheckNextETAAndETDAndStatus(Shipment shipment, ShipmentRepository shipmentRep)

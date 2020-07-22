@@ -17,6 +17,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 {
@@ -1630,6 +1631,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 shipmentRepository.Update(shipment);
                 shipmentRepository.SubmitChanges();
+                RunStoredProcedureClass.UpdateShipmentStatus(shipment.Id, shipment.Tenant);
+
+
+
             }
         }
         public static void DeleteShipmentTraceEventForHybrid(ShipmentPM entityPM, string traceEventId, int tenant)
@@ -1749,6 +1754,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 shipmentRepository.Update(shipment);
                 shipmentRepository.SubmitChanges();
+                RunStoredProcedureClass.UpdateShipmentStatus(shipment.Id, shipment.Tenant);
+
+
             }
         }
         private void TraceTerminalData()
