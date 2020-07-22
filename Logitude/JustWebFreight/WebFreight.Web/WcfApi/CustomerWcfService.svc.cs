@@ -491,6 +491,15 @@ namespace WebFreight.Web.WcfApi
                             entityPM.CreditLimitAmount = entity.CreditLimitAmount;  
                         }
 
+
+                        if (LogitudeSettings.WorkEnvironment == "cloud" && (entity.LogBoxActivated != entityPM.LogBoxActivated))
+                        {
+                            response.HasError = true;
+                            response.ErrorMessage = "can't update LogBoxActivated field";
+                            return response;
+                        }
+
+
                         CustomerFieldsUpdateSettingQuery customerFieldsUpdateSettingQuery = new CustomerFieldsUpdateSettingQuery(entityPM.Tenant);
                         List<CustomerFieldsUpdateSettingPM> settings = customerFieldsUpdateSettingQuery.GetCustomerFieldsUpdateSettingPMsByTenant(entityPM.Tenant).ToList();
                         var salesManSettings = settings.FirstOrDefault(s => s.ObjectFieldName == "SalesmanUserId");
@@ -596,7 +605,6 @@ namespace WebFreight.Web.WcfApi
             }
 
         }
-
 
 
         public List<CustomerList> GetCustomerList(string searchText, string email, bool myCustomer, int tenant, int skip, int take, ref Response response)
