@@ -2585,6 +2585,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReceivableLineStatusPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReceivablePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReceivableStatusPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ShipmentStoragePricingPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentSubTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\SpecialServicesTypePM.cs" />
@@ -2648,6 +2649,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReceivableLineStatusQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReceivableQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReceivableStatusQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ShipmentStoragePricingQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentSubTypeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentTypeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\SpecialServicesTypeQuery.cs" />
@@ -2662,6 +2664,7 @@
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsRequestsCountMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Concurrency.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentCustomsTransmission.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentStoragePricing.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentSubType.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentTypeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\FBLStockMapping.cs" />

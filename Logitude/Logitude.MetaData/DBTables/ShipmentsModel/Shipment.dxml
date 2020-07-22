@@ -2959,6 +2959,33 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ChargeStorage"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ChargeStorageCurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WeightMeasurementCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WeightRoundingCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -3643,6 +3670,21 @@
     ForeignKeyColumn="ShipmentSubTypeId"
     ReferencedTable="ShipmentSubTypes"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ChargeStorageCurrencyId"
+    ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="WeightMeasurementCode"
+    ReferencedTable="WarehouseWeightMeasurements"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="WeightRoundingCode"
+    ReferencedTable="WarehouseWeightRoundings"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,CustomFileNumber" />
