@@ -70,7 +70,6 @@
   <ItemGroup>
     <Content Include="2015.R4\10 - 2015\Day 20 [Samar] update booking levels.sql" />
     <Content Include="2015.R4\10 - 2015\Day 29[Islam] fix for duplicated contact emails on database.sql" />
-    <Content Include="2015.R4\10 - 2015\Day 30 [Abed] UpdateComputeStatusIdAndComputeStatusDateInAllShipments.sql" />
     <Content Include="2015.R4\11 - 2015\Day 03 [Samar] Delete Master queryr column from booking queries.sql" />
     <Content Include="2016.R2\May - 2016\Day 15 [Samar] set prepaid collect to Both.sql" />
     <Content Include="2016.R2\May - 2016\Day 16 [Samar] set Messaging status for airline statistics.sql" />
