@@ -1,21 +1,29 @@
 
 import { Glaccount }  from './Glaccount'
 import { RandomGenerator } from './RandomGenerator'
-import { LoginCloud } from './LoginCloud';
+import { Login } from './Login';
+import { LoginComp } from "../../login/Login.po";
+
+export class GLASpec {
+
+  private login: LoginComp = new LoginComp();
+}
 describe('GLAccount Module', function () {
  
 
     let GL: Glaccount = new Glaccount();
     let R: RandomGenerator = new RandomGenerator();
-    let log: LoginCloud = new LoginCloud();
+    let log: Login = new Login();
 
 
+
+    
 
   it(' New GLAccount Was Created And Updated', function () {
    
 
    // cy.get('li[id=PAR]',{timeout: 60000})
-   log.dologin();
+  
    cy.get('li[id="GeneralMHFullAccounting"]').click();
     cy.get('#FAGLAccouts').click();
    

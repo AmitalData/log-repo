@@ -1,5 +1,5 @@
 
-export class Login {
+export class LoginCloud {
 
     constructor() {
 
@@ -19,7 +19,7 @@ export class Login {
         cy.server();
         cy.route('**/GetLastTableUpdateDate/**').as('LoadDataCompleted');
 
-        cy.wait('@LoadDataCompleted');
+        cy.wait('@LoadDataCompleted', {timeout:80000});
     }
 
 }
