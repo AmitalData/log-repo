@@ -86,7 +86,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 GetQAllCardsAndDetailsAccType(_TrailReportParam.Tenant,
                 GetClientContolAcc(_FullAccountingSetting),
                 GetVendorContolAcc(_FullAccountingSetting),
-                "",
+                GetJobContolAcc(_FullAccountingSetting),
                 GetFileContolAcc(_FullAccountingSetting))
                 //.Where(a => !a.Inactive)
                 ;
@@ -501,7 +501,32 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             return vendorControlAccountId;
         }
 
+        protected List<string> GetJobContolAcc(FullAccountingSettingPM fullAccountingSetting)
+        {
+            List<string> controlAccountId_list = new List<string>();
+            if (_TrailReportParam.DetailedControlJob)
+            {
+                if (!String.IsNullOrWhiteSpace(fullAccountingSetting.AirExportJobControlAccountId))
+                {
+                    controlAccountId_list.Add(fullAccountingSetting.AirExportJobControlAccountId);
+                }
+                if (!String.IsNullOrWhiteSpace(fullAccountingSetting.AirImportJobControlAccountId))
+                {
+                    controlAccountId_list.Add(fullAccountingSetting.AirImportJobControlAccountId);
+                }
+                if (!String.IsNullOrWhiteSpace(fullAccountingSetting.OceanExportJobControlAccountId))
+                {
+                    controlAccountId_list.Add(fullAccountingSetting.OceanExportJobControlAccountId);
+                }
 
+                if (!String.IsNullOrWhiteSpace(fullAccountingSetting.OceanImportJobControlAccountId))
+                {
+                    controlAccountId_list.Add(fullAccountingSetting.OceanImportJobControlAccountId);
+                }
+
+            }
+            return controlAccountId_list;
+        }
         private string GetFileContolAcc(FullAccountingSettingPM fullAccountingSetting)
         {
             string controlAccountId = "";
