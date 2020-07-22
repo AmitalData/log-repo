@@ -697,7 +697,7 @@ namespace Logitude.Accounting.Data.Repositories
        public IQueryable<GLAccount> GetQAllCardsAndDetailsAccType(int Tenant
            , string clientControlAccountId
            , string vendorControlAccountId
-           , string jobControlAccountId
+           , List<string> jobControlAccountId_list
            , string fileControlAccountId
            )
        {
@@ -744,13 +744,14 @@ namespace Logitude.Accounting.Data.Repositories
             
            }
 
-           
 
-           if (!string.IsNullOrWhiteSpace(jobControlAccountId))
-           {
+
+            //if (!string.IsNullOrWhiteSpace(jobControlAccountId_list))
+            if (jobControlAccountId_list!=null && jobControlAccountId_list.Count>0)
+            {
                //exclude jobControlAccountId
                //qCardTenant=qCardTenant.Where(a => a.Id != jobControlAccountId);
-               excludelist.Add(jobControlAccountId);
+               excludelist.AddRange(jobControlAccountId_list);
 
                //include All AccountTypeCode  Job
                qJobTenant =
