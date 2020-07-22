@@ -162,12 +162,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="OrderMoney"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="LastStatusName"
     Type="nvarchar"
     Size="30">
@@ -181,7 +175,12 @@
     <Constraints
       Nullable="true" />
   </Column>
-
+  <Column
+    Name="OrderMoney"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"

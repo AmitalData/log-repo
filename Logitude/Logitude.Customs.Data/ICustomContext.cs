@@ -271,6 +271,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<PropertiesDetailsHistory> PropertiesDetailsHistorys { get; }
 		 IDbSet<RansomViolationType> RansomViolationTypes { get; }
 		 IDbSet<ReferantException> ReferantExceptions { get; }
+		 IDbSet<ReferantTeam> ReferantTeam { get; }
 		 IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes { get; }
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
 		 IDbSet<RequestStatus> RequestStatuses { get; }
