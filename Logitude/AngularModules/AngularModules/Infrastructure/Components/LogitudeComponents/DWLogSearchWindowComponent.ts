@@ -350,6 +350,9 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         if (this.IsExistColumnName()) {
             this.ValidationErrorsList.push("You should have different column name");
         }
+        if (!this.SecondListValueItems || (this.SecondListValueItems && this.SecondListValueItems.length == 0)) {
+            this.ValidationErrorsList.push("You should select at least one charge type");
+        }
 
         if (this.ValidationErrorsList.length == 0) {
             var textValue = this.GetTextValue(this.SecondListValueItems);
