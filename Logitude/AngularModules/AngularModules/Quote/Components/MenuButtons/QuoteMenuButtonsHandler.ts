@@ -877,44 +877,31 @@ export class QuoteMenuButtonsHandler {
 
     private IsRunQuotation: boolean = false;
     private RunQuotationScreen() {
-        var quoteCharges = this.EntityPM.QuoteCharges.filter(a => (!AppTool.IsNullOrZero(a.SaleAmountInSaleCurrency) || !AppTool.IsNullOrZero(a.CostAmountInSaleCurrency))
-            && ((a.HasPickup && this.EntityPM.IncludePickUp == false) || (a.HasDelivery && this.EntityPM.IncludeDelivery == false)));
-
-        if (quoteCharges != null && quoteCharges.length > 0) {
-            var msg = "Can't have charges marked for pickup/delivery without having pickup/delivery defined in the quote";
-            var window = new MessageWindow();
-            window.Width = 400;
-            window.Height = 150;
-            window.ShowErrorIcon = true;
-            this.isButtonClicked = false;
-            window.Show(msg);
+        if (this.EntityPM.QuoteTypeCode == "A") {
+            this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
+            this.CheckUpdateQuantities();
         }
-        else {
-            if (this.EntityPM.QuoteTypeCode == "A") {
-                this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
-                this.CheckUpdateQuantities();
-            }
-            if (this.IsUpdateQuantitiesVisible) {
-                var messageWindow = new MessageWindow();
-                messageWindow.Width = 400;
-                messageWindow.Height = 150;
-                messageWindow.Title = "Message";
-                messageWindow.Show(this.UpdateQuantitiesMessage);
-                messageWindow.WindowClosed.subscribe(s => {
-                    this.isButtonClicked = false;
-                });
-            } else {
-                if (this.EntityPM && this.EntityPM.IsDirty) {
-                    this.Validate();
-                    if (this.isValid) {
-                        this.IsRunQuotation = true;
-                        this.entityArgs.EditComponent.SaveChanges();
-                    }
-                } else {
-                    this.OpenQuotationWindow();
+        if (this.IsUpdateQuantitiesVisible) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Width = 400;
+            messageWindow.Height = 150;
+            messageWindow.Title = "Message";
+            messageWindow.Show(this.UpdateQuantitiesMessage);
+            messageWindow.WindowClosed.subscribe(s => {
+                this.isButtonClicked = false;
+            });
+        } else {
+            if (this.EntityPM && this.EntityPM.IsDirty) {
+                this.Validate();
+                if (this.isValid) {
+                    this.IsRunQuotation = true;
+                    this.entityArgs.EditComponent.SaveChanges();
                 }
+            } else {
+                this.OpenQuotationWindow();
             }
         }
+
     }
 
     public UpdateQuantitiesMessage: string;
@@ -1094,21 +1081,34 @@ export class QuoteMenuButtonsHandler {
     }
 
     private OpenQuotationWindow() {
-        var windowArgs: any = {};
-        windowArgs.QuotePM = this.EntityPM;
-       
-        var logWindow = new LogitudeWindow();
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Width = window.innerWidth - 150;
-        logWindow.Height = window.innerHeight - 150;
-        logWindow.IsShowCloseButton = true;
-        windowArgs.QuotationWindow = logWindow;
-        logWindow.Title = TextCodeTranslator.Translate("Quote.B.Quotation");
-        logWindow.Show('./QuoteModules/QuoteOthers/Components/Quotation/QuotationComponent');
- 
-        logWindow.WindowClosed.subscribe(s => {
+        var quoteCharges = this.EntityPM.QuoteCharges.filter(a => (!AppTool.IsNullOrZero(a.SaleAmountInSaleCurrency) || !AppTool.IsNullOrZero(a.CostAmountInSaleCurrency))
+            && ((a.HasPickup && this.EntityPM.IncludePickUp == false) || (a.HasDelivery && this.EntityPM.IncludeDelivery == false)));
+
+        if (quoteCharges != null && quoteCharges.length > 0) {
+            var msg = "Can't have charges marked for pickup/delivery without having pickup/delivery defined in the quote";
+            var msgwindow = new MessageWindow();
+            msgwindow.Width = 400;
+            msgwindow.Height = 150;
+            msgwindow.ShowErrorIcon = true;
             this.isButtonClicked = false;
-        });
+            msgwindow.Show(msg);
+        }
+        else {
+            var windowArgs: any = {};
+            windowArgs.QuotePM = this.EntityPM;
+            var logWindow = new LogitudeWindow();
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Width = window.innerWidth - 150;
+            logWindow.Height = window.innerHeight - 150;
+            logWindow.IsShowCloseButton = true;
+            windowArgs.QuotationWindow = logWindow;
+            logWindow.Title = TextCodeTranslator.Translate("Quote.B.Quotation");
+            logWindow.Show('./QuoteModules/QuoteOthers/Components/Quotation/QuotationComponent');
+
+            logWindow.WindowClosed.subscribe(s => {
+                this.isButtonClicked = false;
+            });
+        }
     }
 
     private OnNotesWindowClosed(actionType: string) {
