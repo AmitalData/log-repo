@@ -2088,6 +2088,9 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
                     shipmentRepository.Update(entityPOCO);
                     shipmentRepository.SubmitChanges();
+                    RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
+
+
                 }
             }
 

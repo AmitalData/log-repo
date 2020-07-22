@@ -1,10 +1,3 @@
-USE [Logitude2-5_Main]
-GO
-/****** Object:  StoredProcedure [dbo].[usp_ComputeHouseShipmentStatusFunction]    Script Date: 04/27/2016 14:59:30 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 
 ALTER PROCEDURE [dbo].[usp_ComputeHouseShipmentStatusFunction]
 (
@@ -26,6 +19,14 @@ declare @ComputedStatusDate as datetime
 declare @MasterStatusWeight as int
 declare @MasterStatusId as varchar(15)
 declare @Tenant as int
+
+declare @MasterStatusDate as datetime
+declare @CustomFileStatusDate as datetime
+
+
+
+
+
 
 declare @CustomStatusWeight as int
 declare @CustomStatusId as varchar(15)
@@ -55,7 +56,7 @@ set @ShipmentStatusWeight = (select StatusWeight from EntityStatus where Id = @S
 	Begin 
 
 
-	 select @MasterStatusId = StatusId  from Shipments  where  Id = @MasterDataId AND Tenant = @Tenant
+	 select @MasterStatusId = StatusId, @MasterStatusDate = StatusDate  from ShipmentMasterDatas  where  Id = @MasterDataId AND Tenant = @Tenant
     
 	 set @MasterStatusWeight = (select StatusWeight from EntityStatus where Id = @MasterStatusId AND Tenant = @Tenant)
 	  if(@MasterStatusWeight > @ShipmentStatusWeight)
@@ -63,7 +64,7 @@ set @ShipmentStatusWeight = (select StatusWeight from EntityStatus where Id = @S
 	   begin 
 	      set @ShipmentStatusWeight = @MasterStatusWeight
 	      set @ComputedStatusId = @MasterStatusId
-	      set @ComputedStatusDate = ( select StatusDate from Shipments where Id = @MasterStatusId AND Tenant = @Tenant)
+	      set @ComputedStatusDate = @MasterStatusDate
 	   end
 
 	 End
@@ -74,7 +75,7 @@ set @ShipmentStatusWeight = (select StatusWeight from EntityStatus where Id = @S
 	Begin
 	 
 
-  select @CustomsDeclarationNumber = CustomsDeclarationNumber ,@CustomStatusId = StatusId from Shipments where Id = @CustomFileId AND Tenant = @Tenant
+  select @CustomsDeclarationNumber = CustomsDeclarationNumber ,@CustomStatusId = StatusId , @CustomFileStatusDate = StatusDate from Shipments where Id = @CustomFileId AND Tenant = @Tenant
   set @CustomStatusWeight = (select StatusWeight from EntityStatus where Id = @CustomStatusId AND Tenant = @Tenant)  
 
 		if(@CustomStatusWeight > @ShipmentStatusWeight)
@@ -83,8 +84,8 @@ set @ShipmentStatusWeight = (select StatusWeight from EntityStatus where Id = @S
 	
 		 set @ShipmentStatusWeight = @CustomStatusWeight
 		 set @ComputedStatusId = @CustomStatusId
-		
-		 set @ComputedStatusDate = ( select StatusDate from Shipments where Id = @CustomFileId AND Tenant = @Tenant)
+		 set @ComputedStatusDate = @CustomFileStatusDate
+
 	     end
 
 
