@@ -495,7 +495,7 @@ namespace WebFreight.Web.WcfApi
                         if (LogitudeSettings.WorkEnvironment == "cloud" && (entity.LogBoxActivated != entityPM.LogBoxActivated))
                         {
                             response.HasError = true;
-                            response.ErrorMessage = "can't update LogBoxActivated field";
+                            response.ErrorMessage = "Sorry you can't update LogBoxActivated field";
                             return response;
                         }
 
