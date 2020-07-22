@@ -2460,6 +2460,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public string MasterPreCarriageCarrierNumber { get; set; }
         public string MasterPreCarriageVesselName { get; set; }
+        public string MasterPreCarriageFromPortName { get; set; }
+        public string MasterProjectNumber { get; set; }
+
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentSubTypeId { get; set; }

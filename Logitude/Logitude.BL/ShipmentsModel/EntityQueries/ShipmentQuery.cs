@@ -189,6 +189,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.ShipmentLevelCode == "C")
             {
                 shipmentPM.MasterPreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
+                shipmentPM.MasterProjectNumber = shipment.ProjectNumber;
 
                 if (!string.IsNullOrEmpty(shipment.PreCarriageVesselId))
                 {
@@ -196,6 +197,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (vesselEntity != null)
                     {
                         shipmentPM.MasterPreCarriageVesselName = vesselEntity.EnglishName;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(shipment.PreCarriageFromPortId))
+                {
+                    Port portEntity = portsRep.GetSinglePort(shipment.PreCarriageFromPortId, tenant);
+                    if (portEntity != null)
+                    {
+                        shipmentPM.MasterPreCarriageFromPortName = portEntity.EnglishName;
                     }
                 }
             }
@@ -209,12 +219,20 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 if (masterShipment != null)
                 {
                     shipmentPM.MasterPreCarriageCarrierNumber = masterShipment.PreCarriageCarrierNumber;
+                    shipmentPM.MasterProjectNumber = masterShipment.ProjectNumber;
 
                     if (!string.IsNullOrEmpty(masterShipment.PreCarriageVesselId))
                     {
                         Vessel vessel = vesselRep.GetSingleVessel(masterShipment.PreCarriageVesselId, tenant);
 
                         shipmentPM.MasterPreCarriageVesselName = vessel != null ? vessel.EnglishName : null;
+                    }
+
+                    if (!string.IsNullOrEmpty(masterShipment.PreCarriageFromPortId))
+                    {
+                        Port port = portsRep.GetSinglePort(masterShipment.PreCarriageFromPortId, tenant);
+
+                        shipmentPM.MasterPreCarriageFromPortName = port != null ? port.EnglishName : null;
                     }
                 }
             }
