@@ -50,7 +50,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
       
     this.AgingMethodsList=[];
     this.AgingMethodsList.push(new CodeNameClass("1", "Open Balance", "יתרת פתיחה"));
-    this.AgingMethodsList.push(new CodeNameClass("2", "Total By Month FIFO", "FIFO סכומים חודשים לפי "));
+    this.AgingMethodsList.push(new CodeNameClass("2", "Total By Month FIFO", "סכומים חודשים לפי FIFO"));
      this.SelectedAgingMethod= this.AgingMethodsList[0];
    }
     ngOnInit() {
