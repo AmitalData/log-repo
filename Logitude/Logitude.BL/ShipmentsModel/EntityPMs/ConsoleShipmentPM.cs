@@ -49,6 +49,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public int? NumberOfPackages { get; set; }
         public int? NumberOfContainers { get; set; }
 
+        public string House { get; set; }
+        public string DescriptionOfGoods { get; set; }
+
         [Include]
         [Association("ConsoleShipmentContainerPackage", "Id", "ConsoleId")]
         public List<HouseContainerPackage> FCLDataList { get; set; }

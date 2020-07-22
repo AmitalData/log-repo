@@ -410,11 +410,19 @@ export class EditComponent implements OnDestroy {
         if (this.ObjectTableName == "Shipment") {
             if (this.EntityPM.ShipmentLevelCode == "C") {
                 this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe((response:any) => {
-                    var myObjectTable = window.ObjectTables.filter(x => x.Name === "Master")[0];
-                    var myObjectTableId = myObjectTable.Id;
 
-                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code.indexOf("HeaderScreen") != -1)[0];
-                    myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
+                    
+                    const masterObjectTable = window.ObjectTables.filter(x => x.Name === "Master")[0];
+                    const shipmentObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
+
+                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === masterObjectTable.Id && d.Code.indexOf("HeaderScreen") != -1)[0];
+
+                    const masterFields = window.ObjectFields.filter(d => d.ObjectTableId === masterObjectTable.Id);
+                    const shipmentFields = window.ObjectFields.filter(d => d.ObjectTableId === shipmentObjectTable.Id);
+
+                    myObjectFields = [...masterFields, ...shipmentFields];
+                   
+
                     this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
                 });
             }
@@ -579,7 +587,7 @@ export class EditComponent implements OnDestroy {
                     this.HeaderScreenRowHeight = 25;
                 }
 
-                else if (HeaderScreen.NumberOfRows == 3) {
+                else if (HeaderScreen.NumberOfRows >= 3) {
                     this.HeaderScreenHeight = 75;
                     this.HeaderScreenRowHeight = 20;
                 }
