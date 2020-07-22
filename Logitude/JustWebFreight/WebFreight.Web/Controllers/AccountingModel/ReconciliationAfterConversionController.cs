@@ -92,9 +92,12 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
+
+
                 string _myfromExtNum = "";
                 if (String.IsNullOrWhiteSpace(fromExtNum) || fromExtNum == "undefined")
                 {
+                    fromExtNum = "1";
                     _myfromExtNum = "000000000000001";
                 }
                 else
@@ -105,6 +108,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 string _mytoExtNum = "";
                 if (String.IsNullOrWhiteSpace(toExtNum) || toExtNum == "undefined")
                 {
+                    toExtNum = "999999999999999";
                     _mytoExtNum = "999999999999999";
                 }
                 else
@@ -119,20 +123,74 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 bool batchIt = true;
                 if (batchIt)
                 {
-                    var accountingContext = AccountingContext.GetContext(tenant);
+                    int SUB_BATCH_SIZE = 50;
+                    long fromExt_long = Convert.ToInt64(fromExtNum);
+                    long toExt_long = Convert.ToInt64(toExtNum);
+                    int count = 0;
+                    string firstSubj = ""; 
+                    string lastSubj = "";
 
-                    var myBatchReconciliationAfterConversionTask = new BatchReconciliationAfterConversionTask(null);
-                    string subj = $"Reconciliation After Conversion({_myfromExtNum}- {_mytoExtNum})";
-                    var batchTaskId = myBatchReconciliationAfterConversionTask.CreateQBatchTaskExecution<ReconciliationAfterConversionArg>(
-                        new ReconciliationAfterConversionArg()
+
+                    for (long lower = fromExt_long; ;)
+                    {
+
+                        long upper = lower + SUB_BATCH_SIZE - 1;
+                        if (upper > toExt_long)
                         {
-                            Tenant = tenant,
-                            FromExtNum = _myfromExtNum,
-                            ToExtNum = _mytoExtNum
-                        }, tenant, subj, false);
+                            upper = toExt_long;
+                        }
+                        string lower_str = "";
+                        if (lower <= 0)
+                        {
+                            lower_str = "000000000000001";
+                        }
+                        else
+                        {
+                            lower_str = Regex.Replace(lower.ToString(), @"\d+", n => n.Value.PadLeft(15, '0'));
+                        }
+
+                        string upper_str = "";
+                        upper_str = Regex.Replace(upper.ToString(), @"\d+", n => n.Value.PadLeft(15, '0'));
+
+                        var accountingContext = AccountingContext.GetContext(tenant);
+
+                        var myBatchReconciliationAfterConversionTask = new BatchReconciliationAfterConversionTask(null);
+                        string subj = $"Reconciliation After Conversion({lower_str}- {upper_str})";
+                        if (String.IsNullOrEmpty(firstSubj))
+                            firstSubj = subj;
+                        lastSubj = $" to ({lower_str}- {upper_str})";
+                        var batchTaskId = myBatchReconciliationAfterConversionTask.CreateQBatchTaskExecution<ReconciliationAfterConversionArg>(
+                            new ReconciliationAfterConversionArg()
+                            {
+                                Tenant = tenant,
+                                FromExtNum = lower_str,
+                                ToExtNum = upper_str,
+                            }, tenant, subj, false);
+                        count++;
 
 
-                    var res1 = new { Success = true, Message = $"Send to Batch Task {batchTaskId}" };
+                        if (lower + SUB_BATCH_SIZE - 1 >= toExt_long)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            lower += SUB_BATCH_SIZE;
+                            if (lower > toExt_long)
+                            {
+                                lower = toExt_long;
+                            }
+                        }
+                    }
+
+
+
+                    string message = $"Send to {count} Batch Tasks {firstSubj}";
+                    if (count > 1)
+                        message = message + lastSubj;
+
+
+                    var res1 = new { Success = true, Message = message };
                     return Request.CreateResponse(HttpStatusCode.Accepted, res1);
                 }
                 else
@@ -198,20 +256,77 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 if (noBatch == 1) batchIt = false;
                 if (batchIt)
                 {
-                    var accountingContext = AccountingContext.GetContext(tenant);
 
-                    var myBatchReconciliationAfterConversionTask = new BatchReconciliationAfterConversionTask(null);
-                    string subj = $"Reconciliation After Conversion({_myfromExtNum}- {_mytoExtNum})";
-                    var batchTaskId = myBatchReconciliationAfterConversionTask.CreateQBatchTaskExecution<ReconciliationAfterConversionArg>(
-                        new ReconciliationAfterConversionArg()
+                    int SUB_BATCH_SIZE = 50;
+                    long fromExt_long = Convert.ToInt64(fromExtNum);
+                    long toExt_long = Convert.ToInt64(toExtNum);
+                    int count = 0;
+                    string firstSubj = "";
+                    string lastSubj = "";
+
+
+                    for (long lower = fromExt_long; ;)
+                    {
+
+                        long upper = lower + SUB_BATCH_SIZE - 1;
+                        if (upper > toExt_long)
                         {
-                            Tenant = tenant,
-                            FromExtNum = _myfromExtNum,
-                            ToExtNum = _mytoExtNum
-                        }, tenant, subj, false);
+                            upper = toExt_long;
+                        }
+                        string lower_str = "";
+                        if (lower <= 0)
+                        {
+                            lower_str = "000000000000001";
+                        }
+                        else
+                        {
+                            lower_str = Regex.Replace(lower.ToString(), @"\d+", n => n.Value.PadLeft(15, '0'));
+                        }
+
+                        string upper_str = "";
+                        upper_str = Regex.Replace(upper.ToString(), @"\d+", n => n.Value.PadLeft(15, '0'));
+
+                        var accountingContext = AccountingContext.GetContext(tenant);
+
+                        var myBatchReconciliationAfterConversionTask = new BatchReconciliationAfterConversionTask(null);
+                        string subj = $"Reconciliation After Conversion({lower_str}- {upper_str})";
+                        if (String.IsNullOrEmpty(firstSubj))
+                            firstSubj = subj;
+                        lastSubj = $" to ({lower_str}- {upper_str})";
+                        var batchTaskId = myBatchReconciliationAfterConversionTask.CreateQBatchTaskExecution<ReconciliationAfterConversionArg>(
+                            new ReconciliationAfterConversionArg()
+                            {
+                                Tenant = tenant,
+                                FromExtNum = lower_str,
+                                ToExtNum = upper_str,
+                            }, tenant, subj, false);
+                        count++;
 
 
-                    var res1 = new { Success = true, Message = $"Send to Batch Task {batchTaskId}" };
+                        if (lower + SUB_BATCH_SIZE - 1 >= toExt_long)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            lower += SUB_BATCH_SIZE;
+                            if (lower > toExt_long)
+                            {
+                                lower = toExt_long;
+                            }
+                        }
+                    }
+
+
+
+                    string message = $"Send to {count} Batch Tasks {firstSubj}";
+                    if (count > 1)
+                        message = message + lastSubj;
+
+
+                    var res1 = new { Success = true, Message = message };
+
+
                     return Request.CreateResponse(HttpStatusCode.Accepted, res1);
                 }
                 else
