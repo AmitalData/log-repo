@@ -41,6 +41,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     public ScreenRows: Array<ScreenRowDetails> = [];
     private myGeneralService: GeneralDomainService;
     loginService: LoginService;
+    private ObjectTable: ObjectTablePM;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -92,6 +93,7 @@ export class ScreenLayoutComponent extends BaseComponent {
 
     SetWindowArgs(windowArgs: any) {
         this.ObjecttableId = windowArgs.ObjectTableID;
+        this.ObjectTable = window.ObjectTables.filter(x => x.Id === this.ObjecttableId)[0];
         this.FillTableScreensCollection();
     }
 
@@ -142,8 +144,17 @@ export class ScreenLayoutComponent extends BaseComponent {
     FillbanckStackFields() {
         this.banckStackFields = [];
         this.AllbanckStackFields = [];
-        var table = window.ObjectTables.filter(d => d.Id == this.ObjecttableId)[0];
-        this.currentObjectFields = window.ObjectFields.filter(d => d.ObjectTableId == this.ObjecttableId && !d.IsCustomFilter && d.PMPropertyPath != null && d.DataTypeCode != null && !d.IsMulti);//.Where(o => !d.IsCustomFilter && d.PMPropertyPath != null).OrderBy(f => f.FullNameTextCodeDefaultText).ToList();
+        const table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.ObjecttableId)[0];
+        if (table.Name === "Master") {
+            const shipmentObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
+            this.currentObjectFields = window.ObjectFields.filter(d => d.ObjectTableId == shipmentObjectTable.Id && !d.IsCustomFilter && d.PMPropertyPath != null && d.DataTypeCode != null && !d.IsMulti);//.Where(o => !d.IsCustomFilter && d.PMPropertyPath != null).OrderBy(f => f.FullNameTextCodeDefaultText).ToList();
+
+        }
+        else {
+
+            this.currentObjectFields = window.ObjectFields.filter(d => d.ObjectTableId == this.ObjecttableId && !d.IsCustomFilter && d.PMPropertyPath != null && d.DataTypeCode != null && !d.IsMulti);//.Where(o => !d.IsCustomFilter && d.PMPropertyPath != null).OrderBy(f => f.FullNameTextCodeDefaultText).ToList();
+
+        }
         this.currentObjectFields = this.currentObjectFields.sort((a, b) => { return (a.FullNameTextCodeDefaultText.toLowerCase() === b.FullNameTextCodeDefaultText.toLowerCase()) ? 0 : (a.FullNameTextCodeDefaultText.toLowerCase() < b.FullNameTextCodeDefaultText.toLowerCase()) ? -1 : 1 });//.OrderBy(f => f.FullNameTextCodeDefaultText).ToList();
         if (this.SelectedItem) {
             this.currentScreenFields = window.ScreenFields.filter(sf => sf.Tenant == SessionLocator.Tenant && sf.ScreenCode == this.SelectedItem.ScreenPM.Code);
