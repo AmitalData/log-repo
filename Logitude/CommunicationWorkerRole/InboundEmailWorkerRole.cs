@@ -213,12 +213,12 @@ namespace CommunicationWorkerRole
                             this.SendEmailCc(internals_Emails, tenant, bytearray, true);
                         }
 
-                        if (myCorrespondenceLine.NotifyMe)
+                        if (myCorrespondenceLine.NotifyMe & !string.IsNullOrEmpty(loggedUserEmail))
                         {
                             this.SendEmailTo(loggedUserEmail, tenant, bytearray, true);
                         }
 
-                        if (myCorrespondenceLine.NotifyOwner)
+                        if (myCorrespondenceLine.NotifyOwner && !string.IsNullOrEmpty(ownerEmail))
                         {
                             this.SendEmailTo(ownerEmail, tenant, bytearray, true);
                         }
@@ -250,14 +250,14 @@ namespace CommunicationWorkerRole
                             this.SendEmailCc(internals_Emails, tenant, bytearray, true);
                         }
 
-                        if (myCorrespondenceLine.NotifyMe)
+                        if (myCorrespondenceLine.NotifyMe && !string.IsNullOrEmpty(loggedUserEmail))
                         {
                             this.SendEmailTo(loggedUserEmail, tenant, bytearray, false);
                         }
 
                         myHTMLBody = this.BuildHTMLBody(oldLines, ticketNumber, false, true);
                         bytearray = enc.GetBytes(myHTMLBody);
-                        if (myCorrespondenceLine.NotifyOwner)
+                        if (myCorrespondenceLine.NotifyOwner && !string.IsNullOrEmpty(ownerEmail))
                         {
                             this.SendEmailTo(ownerEmail, tenant, bytearray, false);
                         }

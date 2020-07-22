@@ -210,8 +210,11 @@ namespace CommunicationWorkerRole
 
         private void SendEmailAlerts(TicketEscalation myCurrentTicket, TicketPM myTicket)
         {
-            this.CreateCommunicationLog(myCurrentTicket, myTicket);
-            this.AddEscalationEvent(myCurrentTicket, myTicket);
+            if (!string.IsNullOrEmpty(myCurrentTicket.Recepients))
+            {
+                this.CreateCommunicationLog(myCurrentTicket, myTicket);
+                this.AddEscalationEvent(myCurrentTicket, myTicket);
+            }
         }
 
         private void CreateCommunicationLog(TicketEscalation myCurrentTicket, TicketPM myTicket)
