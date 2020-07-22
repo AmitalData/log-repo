@@ -54,6 +54,10 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string Email { get; set; }
         [Column("ErrorMessage")]
 	    public string ErrorMessage { get; set; }
+        [Column("ByMonth")]
+	    public bool ByMonth { get; set; }
+        [Column("Month")]
+	    public DateTime? Month { get; set; }
     }
 }
 	 

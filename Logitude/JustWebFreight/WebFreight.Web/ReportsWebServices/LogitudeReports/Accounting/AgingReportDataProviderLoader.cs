@@ -462,9 +462,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             reportParameters.CollectorId = GetFilterValue<string>("CollectorId");
             reportParameters.SalesmanId = GetFilterValue<string>("SalesmanId");
             reportParameters.AggregateByGLAccountCurrencies = GetFilterValue<bool>("Detailed");
-
+         
             reportParameters.GroupByDate = GetFilterValue<string>("GroupByDate") == "filter_Due" ? AgingReportParam.DateEnum.DueDate : AgingReportParam.DateEnum.AccountingDate;
-            reportParameters.AgingMethod = AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString();
+            reportParameters.AgingMethod = GetFilterValue<string>("AgingMethod") == "Open Balance" ? AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString() : AgingReportParam.MethodEnum.TotalByMonthFIFOMethod.ToString();
             reportParameters.Aging4AccountTypeCode = (GetFilterValue<string>("GLAccountType") == "2") ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3;
 
             SetReportCategoryParameters(reportParameters);
