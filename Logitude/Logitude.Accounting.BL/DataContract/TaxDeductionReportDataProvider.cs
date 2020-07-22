@@ -65,7 +65,7 @@ namespace Logitude.Accounting.BL.DataContract
         public TaxDeductionReportData GetTaxDeductionReportData()
         {            
             TaxDeductionReportData taxDeductionReport = new TaxDeductionReportData();
-            taxDeductionReport.TaxYear = ReportYear;
+            taxDeductionReport.TaxYear = ReportYear.ToString(); 
             
             taxDeductionReport.deductionLines = GetTaxReportDeductionLines();
             

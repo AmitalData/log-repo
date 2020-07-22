@@ -677,7 +677,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             Simplog.Data.CommonDataModel.ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
             IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
             taxDeduction = new TaxDeductionReportData();
-            taxDeduction.TaxYear = reportYear;
+        //    taxDeduction.TaxYear = reportYear;
             // 1- get ap payments by year and status ad
             // 2- group appayments by vendorId and percentage
             // 3- Get Cards by list of vendorids from step 2
