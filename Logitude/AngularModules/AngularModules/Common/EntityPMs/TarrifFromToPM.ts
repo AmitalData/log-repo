@@ -68,9 +68,9 @@ export class TarrifFromToPM {
     public set CountryCode(newValue: string) { if (this.countryCode != newValue) { this.countryCode = newValue; this.MarkAsDirty("CountryCode"); } }
        
 	 
-    private changeOp: string;
-    public get ChangeOp() { return this.changeOp; }
-    public set ChangeOp(newValue: string) { if (this.changeOp != newValue) { this.changeOp = newValue; this.MarkAsDirty("ChangeOp"); } }
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
 

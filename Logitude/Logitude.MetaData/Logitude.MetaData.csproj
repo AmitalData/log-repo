@@ -868,6 +868,8 @@
     <None Include="DBTables\ShipmentsModel\ShipmentReceivable.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentReceivableLineStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentReceivableStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentStoragePricing.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentSubType.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentType.dxml" />
     <None Include="DBTables\ShipmentsModel\SpecialServicesType.dxml" />
     <None Include="DBTables\SystemLogsModel\BatchServicesLog.dxml" />
@@ -1429,6 +1431,7 @@
     </None>
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivable.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivableStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentStoragePricing.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentSubType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\SpecialServicesType.lxml" />
