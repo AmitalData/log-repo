@@ -1,21 +1,26 @@
 
 
 
-import { LoginCloud } from './LoginCloud';
+import { Login } from './Login';
 import { CreateRandom } from './CreateRandom';
 import { BankAccount } from './BankAccount';
+import { LoginComp } from "../../login/Login.po";
 
+export class BankSpec {
+
+    private login: LoginComp = new LoginComp();
+  }
 describe('New Bank Account ', () => {
 
     let B: BankAccount = new BankAccount();
-    let l: LoginCloud = new LoginCloud();
+    let l: Login = new Login();
     let R: CreateRandom = new CreateRandom();
 
 
     it('New Bank Account Created Successfully', function () {
 
         var str = R.createrandomnum();
-        l.dologin();
+      
         cy.get('li[id=GeneralMHMaintenance]').click()
 
         cy.get('li[id=PAR]')

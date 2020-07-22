@@ -31,8 +31,10 @@ export class ChartOfAccount {
 
     EditChartOFAccount(ChartOfAccountNo:string) {
         cy.get('input[id=SearchFieldsId_0_0]').type(ChartOfAccountNo);
-        cy.get('div[id=ListDataLoaded]').should('exist');
-        cy.get('#row0col0').click();
+        cy.get('div[id=ListDataLoaded]').then( a=> {
+            cy.get('div[id=LogGrid_0_0row0]').click();
+        })
+      
       //  cy.get('#BusyIndicator_0').should('not.be.visible');
         cy.get('input[id=ChartOfAccount_EnglishName]').type('English Name Modified');
         cy.get('input[id=ChartOfAccount_LocalName]').type('Local Name Modified');
