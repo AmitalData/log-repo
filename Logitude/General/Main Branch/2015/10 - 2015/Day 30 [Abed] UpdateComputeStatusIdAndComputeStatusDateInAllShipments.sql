@@ -18,6 +18,18 @@ WHERE  Shipments.ComputedStatusId!= CASE
 			 
 			 ELSE dbo.EntityStatus.Id 
 			 END 
+			 and  Shipments.ComputedStatusDate!= CASE 
+   WHEN (MasterShipmentDataId IS NOT NULL) THEN 
+      CASE 
+        WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN dbo.ShipmentMasterDatas.StatusDate 
+ELSE dbo.Shipments.StatusDate 
+END 
+
+ELSE dbo.Shipments.StatusDate 
+END 
+
+
+
 	OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO @ShipmentId
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
