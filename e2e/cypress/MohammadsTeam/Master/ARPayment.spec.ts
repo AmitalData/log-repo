@@ -25,7 +25,7 @@ let AP: ARPayment= new ARPayment();
    
       cy.get('li[id=PAR]')
       cy.get('li[id=GeneralMHFullAccounting]').click();
-      AP.CreateNewARPayment("Test Customer ")
+      AP.CreateNewARPayment("Test Customer GLAccountWX56347MT")
 
     });
       
