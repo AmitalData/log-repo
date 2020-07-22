@@ -411,10 +411,12 @@ export class EditComponent implements OnDestroy {
             if (this.EntityPM.ShipmentLevelCode == "C") {
                 this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe((response:any) => {
 
-                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === masterObjectTable.Id && d.Code.indexOf("HeaderScreen") != -1)[0];
-
+                    
                     const masterObjectTable = window.ObjectTables.filter(x => x.Name === "Master")[0];
                     const shipmentObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
+
+                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === masterObjectTable.Id && d.Code.indexOf("HeaderScreen") != -1)[0];
+
                     const masterFields = window.ObjectFields.filter(d => d.ObjectTableId === masterObjectTable.Id);
                     const shipmentFields = window.ObjectFields.filter(d => d.ObjectTableId === shipmentObjectTable.Id);
 
