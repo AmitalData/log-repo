@@ -27,7 +27,7 @@ END
 
 ELSE dbo.Shipments.StatusDate 
 END )
-
+ 
 
 
 	OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO @ShipmentId
