@@ -1068,6 +1068,7 @@ namespace Logitude.Accounting.Data.Repositories
             IQueryable<InterestReportCustomerData> gLAccounts = (from a in context.GLAccounts
                                                                  where a.Tenant == tenant && a.ActiveForInterest == true
                                                                  join csJoin in context.Cards on a.Id equals csJoin.GLAccountId
+                                                                 where csJoin.PartnerTypeId=="CS"
                                                                  select new InterestReportCustomerData()
                                                                  {
                                                                      GLAccountId = a.Id,
