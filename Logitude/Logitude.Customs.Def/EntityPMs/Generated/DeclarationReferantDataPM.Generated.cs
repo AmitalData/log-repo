@@ -687,7 +687,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private bool orderMoney ;
 	  	  
        

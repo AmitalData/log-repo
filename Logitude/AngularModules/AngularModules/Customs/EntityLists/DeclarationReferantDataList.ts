@@ -49,7 +49,6 @@ export class DeclarationReferantDataList {
 	CollectorUserName: string;
 	LastStatusName: string;
 	LastStatusDate: string;
-
 	OrderMoney: boolean;
 	
 }
