@@ -269,17 +269,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             {
                                 partnerExcel.CountryCode = countryCode;
                                 partnerExcel.CountryId = country.Id;
-
-                                string cityCode = rowData[7].Trim();
-                                CountryCity countryCity = countryCityRepository.GetSingleCountryCityByCodeAndCountry(cityCode, country.Id, tenant);
-                                if (countryCity != null)
-                                {
-                                    partnerExcel.City = countryCity.Id;
-                                }
-                                else
-                                {
-                                    this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "City is invalid" + ",";
-                                }
+                                partnerExcel.City = rowData[7].Trim();
 
                                 if (partnerExcel.State != null)
                                 {

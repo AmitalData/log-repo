@@ -81,7 +81,7 @@
   <Column
     Name="ProgressMessage"
     Type="nvarchar"
-    Size="120">
+    Size="4000">
     <Constraints
       Nullable="true" />
   </Column>
