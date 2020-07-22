@@ -1007,8 +1007,8 @@ export class PartnersDomainService {
             if (mapParent) {
                 newTarrifFromToPM.OldEntityPM = this.clone(newTarrifFromToPM);
                 newTarrifFromToPM.UniqueKey = Guid.newGuid();
-                newTarrifFromToPM.ChangeOp = "None";
-                jItem.ChangeOp = "None";
+                newTarrifFromToPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
 
             }
             else {
@@ -1016,10 +1016,10 @@ export class PartnersDomainService {
                 if (newTarrifFromToPM.UniqueKey) {
 
                     if (jItem.IsDirty)
-                        newTarrifFromToPM.ChangeOp = "Update";
+                        newTarrifFromToPM.ChangeSetOp = "Update";
                 }
                 else {
-                    newTarrifFromToPM.ChangeOp = "Insert";
+                    newTarrifFromToPM.ChangeSetOp = "Insert";
                 }
 
                 newTarrifFromToPM.OldEntityPM = null;
@@ -1036,7 +1036,7 @@ export class PartnersDomainService {
                 if (entityPM.TarrifFromToes.filter(p => p.UniqueKey === oldTarrifFromToes[itemKey].UniqueKey).length === 0) {
 
                     if (oldTarrifFromToes[itemKey]) {
-                        oldTarrifFromToes[itemKey].ChangeOp = "Delete";
+                        oldTarrifFromToes[itemKey].ChangeSetOp = "Delete";
                         entityPM.TarrifFromToes.push(oldTarrifFromToes[itemKey]);
                     }
                 }
