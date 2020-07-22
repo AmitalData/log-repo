@@ -15,7 +15,7 @@ WHERE CustomFileId is null and ( Shipments.ComputedStatusId!= CASE
         WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Id 
 ELSE dbo.EntityStatus.Id 
 END 
-
+ 
 ELSE dbo.EntityStatus.Id 
 END 
 or  Shipments.ComputedStatusDate!= CASE 
