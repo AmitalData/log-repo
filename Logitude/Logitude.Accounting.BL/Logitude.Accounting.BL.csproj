@@ -205,7 +205,9 @@
     <Compile Include="CoreBL\Batch\BatchInterestReportInvoiceEachLineService.cs" />
     <Compile Include="CoreBL\Batch\BatchInterestReportInvoiceService.cs" />
     <Compile Include="CoreBL\Batch\BatchInterestReportInvoiceInProgressService.cs" />
+    <Compile Include="CoreBL\Batch\BatchInterestReportsCreationForCustomers.cs" />
     <Compile Include="CoreBL\Batch\BatchInterestReportService.cs" />
+    <Compile Include="CoreBL\Batch\BatchInterestReportsForEligibleCustomersCreationService.cs" />
     <Compile Include="CoreBL\Batch\BatchOpenFormatReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchReconciliationStageBTask.cs" />
     <Compile Include="CoreBL\Batch\BatchReconciliationStageCTask.cs" />
@@ -234,6 +236,7 @@
     <Compile Include="CoreBL\FunctionalTests\JournalToGLAccountMoreData.cs" />
     <Compile Include="CoreBL\InterestReport\CSVStringLinesGetter.cs" />
     <Compile Include="CoreBL\InterestReport\IInterestReportCalculationPreparations.cs" />
+    <Compile Include="CoreBL\InterestReport\IInterestReportsCreationForCustomerDataPreparation.cs" />
     <Compile Include="CoreBL\InterestReport\InterestCalculationDetails.cs" />
     <Compile Include="CoreBL\InterestReport\InterestPercentageForDateParams.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportArgs.cs" />
@@ -244,6 +247,11 @@
     <Compile Include="CoreBL\InterestReport\InterestReportLinesByDateCreationService.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportLinesByDateMappingParams.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportLinesCreationService.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportsCreationForCustomerDataPreparation.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportsCreationForCustomersArgs.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportsCreationForCustomersBatchArgs.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportsCreationForCustomersService.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportsForCustomersBatchCreator.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportTestResultGetter.cs" />
     <Compile Include="CoreBL\InterestReport\InterestTransactionsGroupedByDate.cs" />
     <Compile Include="CoreBL\InterestTrans\RegularJournalInterestTransactionMapping.cs" />
@@ -311,6 +319,7 @@
     <Compile Include="CoreBL\YearTransferService.cs" />
     <Compile Include="DataContract\ARPaymentChequeFutureData.cs" />
     <Compile Include="DataContract\CashbookChequesCounter.cs" />
+    <Compile Include="DataContract\InterestReportCustomerPM.cs" />
     <Compile Include="DataContract\OpenFormatReportData.cs" />
     <Compile Include="DataContract\OpenFormatReportDataProvider.cs" />
     <Compile Include="DataContract\TaxDeductionReportData.cs" />
@@ -573,6 +582,8 @@
     <Compile Include="EntityQueryServices\GLAccountWithholdingTaxQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestBasesPeriodQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestLastBatchServiceQueryService.cs" />
+    <Compile Include="EntityQueryServices\InterestReportLineQueryService.cs" />
+    <Compile Include="EntityQueryServices\InterestReportLinesByDateQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestReportQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestTransactionQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionAccDTO.cs" />

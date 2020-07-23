@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.InterestService.HelperClasses;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityKeys;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Server.Infrastructure;
@@ -164,6 +165,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                     }).ToList();
         }
-
+        public InterestReportPM GetDraftInterestReportForCustomer(string customerId, string glaccountId, int tenant)
+        {
+            InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
+            InterestReport interestReport = interestReportRepository.GetDraftInterestReportForCustomer(customerId, glaccountId, tenant);
+            InterestReportPM interestReportPM = this.GetEntityPM(interestReport);
+            
+            return interestReportPM;
+        }
     }
 }

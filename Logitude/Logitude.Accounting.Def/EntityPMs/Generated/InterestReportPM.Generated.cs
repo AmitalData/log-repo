@@ -768,6 +768,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isCreatedFromBatch ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCreatedFromBatch  
+	   {
+	    
+	     get
+		{
+		   return isCreatedFromBatch;
+		 }
+		 set
+		 {
+		   if(isCreatedFromBatch != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCreatedFromBatch",OldValue=isCreatedFromBatch,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCreatedFromBatch=value;
+		   }
+			
+		 }
+	   }
+	  private string batchReportUserEmail ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BatchReportUserEmail  
+	   {
+	    
+	     get
+		{
+		   return batchReportUserEmail;
+		 }
+		 set
+		 {
+		   if(batchReportUserEmail != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BatchReportUserEmail",OldValue=batchReportUserEmail,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   batchReportUserEmail=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

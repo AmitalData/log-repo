@@ -83,7 +83,6 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
-
         private string CheckLastBatchAndCreateInvoiceBatch(InterestReportArguments interestReportArgs,int tenant, string email)
         {
             string BatchId=null;

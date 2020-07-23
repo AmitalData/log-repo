@@ -192,4 +192,19 @@ CheckBatchTaskExcecutingAndRunBatchInvoicesWizard( BatchId:string) {
         }
     }
 
+    OpenBatchReportWindow(){
+        this._entityResourceService.getEntityResourceByTableName("InterestReport", 0).subscribe((response: any) => {
+        var windowArgs: any = {};
+        windowArgs.IsNew = true;
+        var windowTitle = TextCodeTranslator.Translate("InterestReport.O.BatchReport");
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 400;
+        logWindow.Height = 200;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = windowTitle;
+        //logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+        logWindow.Show('./Accounting/Components/Others/CreateInterestReportsForCustomersComponent');
+        });
+    }
+
 }

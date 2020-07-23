@@ -18,6 +18,8 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.Helpers;
+using Logitude.Server.Tools.Counters;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -28,10 +30,36 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         public void CustomPMToPOCO(InterestReportPM entityPM, InterestReport entityPOCO)
         {
             AddPOCOPropertyName(POCOPropertyNames.Id);
+            AddPOCOPropertyName(POCOPropertyNames.CreateDateTime);
+            AddPOCOPropertyName(POCOPropertyNames.UpdateDateTime);
+            AddPOCOPropertyName(POCOPropertyNames.CreatedByUserId);
+            AddPOCOPropertyName(POCOPropertyNames.UpdatedByUserId);
+            
+            AddPOCOPropertyName(POCOPropertyNames.ReportNumber);
+
+            string loggedContactId = GetLoggedContactId(entityPM);
+            entityPM.UpdateDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            entityPM.UpdatedByUserId = loggedContactId;
+
+            entityPOCO.UpdateDateTime = entityPM.UpdateDateTime;
+            entityPOCO.UpdatedByUserId = entityPM.UpdatedByUserId;
+            
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
                 entityPOCO.Id = entityPM.Id;
+                entityPM.CreateDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                entityPM.InterestReportStatusCode = "5";
+                entityPM.ReportNumber = CodeCounter.GetNumber("InterestReport", entityPM.Tenant).ToString();
+                entityPM.CreatedByUserId = loggedContactId;
+
+                entityPOCO.CreateDateTime = entityPM.CreateDateTime;
+                entityPOCO.ReportNumber = entityPM.ReportNumber;
+                entityPOCO.InterestReportStatusCode = entityPM.InterestReportStatusCode;
+                entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
             }
+           
+
+           
         }
 
         public void CustomPOCOToPM(InterestReportPM entityPM, InterestReport entityPOCO)
@@ -119,6 +147,25 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
 
         }
+        private static string GetLoggedContactId(InterestReportPM entityPM)
+        {
+            ContactPM loggedContact = null;
+            string loggedContactId = null;
+            // commented for future use
+            //if (!entityPM.IsCreatedFromBatch)
+            //{
+                loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
+                loggedContactId = loggedContact.Id;
+            //}
+            //else
+            //{
+            //    ContactQuery contactQuery = new ContactQuery(entityPM.Tenant);
+            //    loggedContactId = contactQuery.GetContactIdByEmail(entityPM.BatchReportUserEmail, entityPM.Tenant);
+            //}
+
+            return loggedContactId;
+        }
+
         private static ContactPM GetLoggedContact(int tenant)
         {
             if (OverrideGetLoggedContactFunc != null)

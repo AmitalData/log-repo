@@ -95,6 +95,7 @@ import { TaxDeductionReportLogTabComponent } from './Components/EditTabs/TaxDedu
 import { NewTaxDeductionReportComponent } from './Components/NewEntity/NewTaxDeductionReportComponent';
 import { AddEditInterestBasesPeriodComponent } from './Components/EditTabs/Interest/DetailsTab/AddEditInterestBasesPeriod/AddEditInterestBasesPeriodComponent';
 import { ExtReconcileAdjustBankFeeComponent } from './Components/Others/ExtReconcileAdjustBankFeeComponent';
+import { CreateInterestReportsForCustomersComponent } from './Components/Others/CreateInterestReportsForCustomersComponent';
 
 // Short Titles
 import {GLAccountShortTitleComponent} from './Components/ShortTitles/GLAccountShortTitleComponent';
@@ -238,6 +239,7 @@ export const Components =
         InterestReportLineByDateDetailsComponent,
         InterestReportLinesByDateListTemplate,
         InterestReportShortTitleComponent,
+        CreateInterestReportsForCustomersComponent,
         InterestReportEditOpenBalanceComponent
     ];
 
@@ -276,6 +278,7 @@ export class ModuleDeclarations {
             case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
             case "LoadRecoExPageComponent": { myResult = LoadRecoExPageComponent; break; }
             case "NewInterestReportComponent": { myResult = NewInterestReportComponent; break; }
+            case "CreateInterestReportsForCustomersComponent": { myResult = CreateInterestReportsForCustomersComponent; break; }
 
             //Maintenance
             case "NewCategory1Component": { myResult = NewCategory1Component; break; }
