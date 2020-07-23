@@ -79,7 +79,7 @@ export class CustomsDocumentsComponent
     DontLoadTickets: boolean = false;
     PreventEdit: boolean = false;
     public SelectedDocumentId: string = null;
-
+    public EntityParentPM: any;
     DocumentRequestCodeIcon: string = "";
     IsDocumentRequestCodeButton: boolean = false;
     IsDocumentRequestCodeSendDigital: boolean = false;
@@ -89,12 +89,12 @@ export class CustomsDocumentsComponent
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
-        if (entityArgs.ObjectTableName.split('.').length > 2) {
-            this.ParentEntityCode_args = entityArgs.ObjectTableName.split('.')[2];
-            entityArgs.ObjectTableName = entityArgs.ObjectTableName.split('.')[0] + "." + entityArgs.ObjectTableName.split('.')[1];
+        if (entityArgs.ObjectTableName != null && entityArgs.ObjectTableName == "Customs.Declaration" && entityArgs.EntityParentPM =="DeclarationCancellation") {
+            this.ParentEntityCode_args = "DeclarationCancellation";
+            entityArgs.ObjectTableName = "Customs.Declaration";
         }
       if (entityArgs.EntityPM && !entityArgs.SkipCtor) {
-            this.Start(entityArgs.EntityPM, entityArgs.ObjectTableName);
+          this.Start(entityArgs.EntityPM, entityArgs.ObjectTableName, entityArgs.EntityParentPM);
         }
     }
     ngOnDestroy() {
@@ -104,10 +104,10 @@ export class CustomsDocumentsComponent
         this.CustomsDocumentsTicketViewModels.forEach((item) => { item.DataContext = null; })
         this.CustomsDocumentsTicketViewModels = null;
     }
-    Start(entityPM: any, objectTableName: string) {
-         if (objectTableName.split('.').length > 2) {
-            this.ParentEntityCode_args = objectTableName.split('.')[2];
-            objectTableName = objectTableName.split('.')[0] + "." + objectTableName.split('.')[1];
+    Start(entityPM: any, objectTableName: string, entityParentPM:string) {
+        if (objectTableName != null && objectTableName == "Customs.Declaration" && entityParentPM == "DeclarationCancellation") {
+            this.ParentEntityCode_args = "DeclarationCancellation";
+            objectTableName = "Customs.Declaration";
         }
         this.EntityPM = entityPM;
         this.ObjectTableName = objectTableName;
@@ -191,7 +191,7 @@ export class CustomsDocumentsComponent
     }
     InsureCustomsDocumentsController() {
         if (AppTool.IsNullOrEmpty(this.customsDocumentsDataProvider)) {
-            this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM);
+            this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM, null, null, this.ParentEntityCode);
         }
         if (AppTool.IsNullOrEmpty(this.iCustomsDocumentsController)) {
             this.iCustomsDocumentsController = this.customsDocumentsDataProvider.GetCustomsDocumentsController();
@@ -672,7 +672,7 @@ export class CustomsDocumentsComponent
 
     SetWindowArgs(windowArgs) {
         this.IsWindowMode = true;
-        this.Start(windowArgs.EntityPM, windowArgs.ObjectTableName);
+        this.Start(windowArgs.EntityPM, windowArgs.ObjectTableName, windowArgs.EntityParentPM);
     }
 
     CloseButtonClicked() {

@@ -8,6 +8,10 @@ import { DeclarationPMService } from '../../../../../Customs/Services/StandardPM
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { GenericRequestParams } from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
+import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
+import { CustomMessageProgressComponent } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 
 declare var window: any;
 
@@ -245,12 +249,14 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
 
     ViewDocumentsComponent() {
+         
+       
          var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
-        windowArgs.ObjectTableName =   this.ObjectTableName +".DeclarationCancellation";
-       // windowArgs.ParentEntityCode = "Customs.DeclarationCancellation";
+        windowArgs.ObjectTableName = "Customs.DeclarationCancellation";// this.ObjectTableName;
+        windowArgs.EntityParentPM = "DeclarationCancellation";
         var windowTitle = "Customs.Declaration.TH.Documents";
-
+    //    windowArgs.ParentEntityCode = "DeclarationCancellation";
         var logWindow = new LogitudeWindow();
         logWindow.IsHideHeader = true;
         logWindow.Width = 1000;
