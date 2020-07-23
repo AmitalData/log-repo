@@ -103,7 +103,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         public string WarehouseTypeCode { get; set; }
         public bool ChargeStorage { get; set; }
-        public string CurrencyId { get; set; }
+        public string ChargeStorageCurrencyId { get; set; }
         public string AirWeightMeasurementCode { get; set; }
         public string OceanWeightMeasurementCode { get; set; }
         public string InlandWeightMeasurementCode { get; set; }

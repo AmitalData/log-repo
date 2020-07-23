@@ -4604,9 +4604,9 @@ export class ShipmentPM {
     public get ShipmentSubTypeName() { return this.shipmentSubTypeName; }
     public set ShipmentSubTypeName(newValue: string) { if (this.shipmentSubTypeName != newValue) { this.shipmentSubTypeName = newValue; this.MarkAsDirty("ShipmentSubTypeName"); } }
 
-    private chargeStorage: string;
+    private chargeStorage: boolean;
     public get ChargeStorage() { return this.chargeStorage; }
-    public set ChargeStorage(newValue: string) { if (this.chargeStorage != newValue) { this.chargeStorage = newValue; this.MarkAsDirty("ChargeStorage"); } }
+    public set ChargeStorage(newValue: boolean) { if (this.chargeStorage != newValue) { this.chargeStorage = newValue; this.MarkAsDirty("ChargeStorage"); } }
 
     private chargeStorageCurrencyId: string;
     public get ChargeStorageCurrencyId() { return this.chargeStorageCurrencyId; }

@@ -1901,7 +1901,6 @@ export class PartnersDomainService {
                 for (var itemJeson in listJason) {
                     var itemMapped: WarehouseStoragePricingPM = this.MapWarehouseStoragePricingPM(listJason[itemJeson]);
                     listMapped.push(itemMapped);
-
                 }
 
                 var myResponse: ServiceResponse;

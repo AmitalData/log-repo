@@ -18,6 +18,10 @@ import {WarehouseHelper} from '../../../../Warehouse/Helpers/WarehouseHelper';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ShipmentPickUpPM} from '../../../../Shipment/EntityPMs/ShipmentPickUpPM';
 import { CardPMService } from '../../../../Common/Services/StandardPMs/CardPMService';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { WarehouseStoragePricingPM } from '../../../../Common/EntityPMs/WarehouseStoragePricingPM';
+import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
+import { ShipmentStoragePricingPM } from '../../../../Shipment/EntityPMs/ShipmentStoragePricingPM';
 
 @Component({
     moduleId: './ShipmentModules/ShipmentRouting/Components/Routings/',
@@ -25,7 +29,6 @@ import { CardPMService } from '../../../../Common/Services/StandardPMs/CardPMSer
 })
 
 export class AddEditWarehouseLegComponent extends BaseComponent {
-
     public EntityPM: ShipmentPM;
     public TenantPM: TenantPM;
     public ObjectTableName: string;
@@ -39,6 +42,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     public IsImportShipment: boolean = false;
     IsShowNewWarehouseEntryButton: Boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public StoragePricingEnabled: boolean = false;
+    public StoragePricingMessageVisible: boolean = false; 
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -53,9 +58,11 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
     private myAddressListService: AddressListService;
     private cardService: CardPMService;
+    private cardListService: CardListService;
     InitServices() {
         this.myAddressListService = new AddressListService();
         this.cardService = new CardPMService();
+        this.cardListService = new CardListService();
     }
 
     GetShipmentDirection() {
@@ -115,6 +122,28 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.GetShipmentDirection();
             this.InitFreeDaysStorage();
         }
+
+        if (!AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId)) {
+            this.cardListService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        var result: CardList = myResponse.Result;
+                        if (result) {
+                            if (result.WarehouseTypeCode == "BO") {
+                                this.StoragePricingEnabled = true;
+                                this.StoragePricingMessageVisible = false;
+                            }
+                            else {
+                                this.StoragePricingEnabled = false;
+                                this.StoragePricingMessageVisible = true;
+                            }
+
+                            this.SetUIProperties_Storage();
+                        }
+                    }
+                }
+            });
+        }
     }
 
     public IsEditingEnabled: boolean = true;
@@ -124,6 +153,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.IsEditingEnabled = isEditingEnabled;
         this.IsFirmCodeVisible = (this.TenantPM.CountryCode.toUpperCase()) == "US" ? true : false;
 
+        this.UIProperties.SetEnabled("ChargeStorage", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("WarehouseLegWarehouseId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("WarehouseLegAddressId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("WarehouseLegTerminalCode", this.ObjectTableName, isEditingEnabled);
@@ -136,7 +166,9 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.UIProperties.SetEnabled("WarehouseLegReference", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("TerminalAvailable", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetRequired("WarehouseLegWarehouseId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId) ? true : false);
+
         this.SetUIProperties_ValidateActualDates();
+        this.SetUIProperties_Storage();
     }
     SetUIProperties_ValidateActualDates() {
 
@@ -168,6 +200,9 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.UIProperties.SetValidity("WarehouseLegActualReleaseDate", this.ObjectTableName, false, errorMessage);
             }
         }
+    }
+    SetUIProperties_Storage() {
+        this.UIProperties.SetEnabled("ChargeStorage", this.ObjectTableName, this.StoragePricingEnabled);
     }
 
     private IsDateBigger(date1: any, date2: any) {
@@ -203,9 +238,9 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.SetUIProperties();
         }         
     }
-    GetAddress() {
-        var myService = new CardListService();
-        myService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
+
+    GetAddress() {        
+        this.cardListService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     var result: CardList = myResponse.Result;
@@ -215,12 +250,76 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                         this.WarehouseLegTerminalCode = result.FirmCode;
 
                         if (result.WarehouseTypeCode == "BO") {
+                            this.StoragePricingEnabled = true;
+                            this.StoragePricingMessageVisible = false;
 
+                            this.LoadWarehouseStoragePricing(); 
                         }
+
+                        else {
+                            this.StoragePricingEnabled = false;
+                            this.StoragePricingMessageVisible = true;
+                        }
+
+                        this.SetUIProperties_Storage();
+                        this.SetStorageDefaults(result);                                               
                     }
                 }
             }
         });
+    }
+
+    private warehouseStoragePricings: WarehouseStoragePricingPM[];
+    private LoadWarehouseStoragePricing() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        var myService: PartnersDomainService = new PartnersDomainService();
+        myService.GetWarehouseStoragePricingForWarehouse(this.EntityPM.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    this.warehouseStoragePricings = myResponse.Result;                    
+                }
+
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
+    private SetStorageDefaults(myWarehouse: CardList) {
+        if (myWarehouse.WarehouseTypeCode == "BO") {
+            this.ChargeStorage = myWarehouse.ChargeStorage;
+            this.EntityPM.ChargeStorageCurrencyId = myWarehouse.ChargeStorageCurrencyId;
+
+            switch (this.EntityPM.TransportModeId) {
+                case "A":
+                    {
+                        this.EntityPM.WeightMeasurementCode = myWarehouse.AirWeightMeasurementCode;
+                        this.EntityPM.WeightRoundingCode = myWarehouse.AirWeightRoundingCode;
+                        break;
+                    }
+
+                case "O":
+                    {
+                        this.EntityPM.WeightMeasurementCode = myWarehouse.OceanWeightMeasurementCode;
+                        this.EntityPM.WeightRoundingCode = myWarehouse.OceanWeightRoundingCode;
+                        break;
+                    }
+
+                case "I":
+                    {
+                        this.EntityPM.WeightMeasurementCode = myWarehouse.InlandWeightMeasurementCode;
+                        this.EntityPM.WeightRoundingCode = myWarehouse.InlandWeightRoundingCode;
+                        break;
+                    }
+            }
+        }
+
+        else {
+            this.ChargeStorage = false;
+            this.EntityPM.ChargeStorageCurrencyId = null;
+            this.EntityPM.WeightMeasurementCode = null;
+            this.EntityPM.WeightRoundingCode = null;
+            this.EntityPM.ShipmentStoragePricings = [];
+        }
     }
 
     private myWarehouseAddressList: AddressList;
@@ -371,7 +470,21 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             }
         }
     }
-    
+
+    get ChargeStorage() { return this.EntityPM.ChargeStorage; }
+    set ChargeStorage(value: boolean) {
+        if (this.EntityPM.ChargeStorage != value) {
+            this.EntityPM.ChargeStorage = value;            
+        }
+    }
+
+    StoragePricingClicked() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = "Storage Pricing";
+        logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, DefaultPricings: this.warehouseStoragePricings };
+        logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
+    }
+
     private SetLastFreeDate() {
         if (this.WarehouseLegActualEntryDate != null && this.WarehouseStorageFreeDays != null) {
             var date = DateTool.AddDays(this.WarehouseLegActualEntryDate, this.WarehouseStorageFreeDays);
@@ -403,6 +516,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     }
 
     public StorageDays: number;
+    public StorageFee: number;
     public Days: string;
     private SetStorageDays() {
         if (this.WarehouseLegActualEntryDate != null && this.WarehouseLegActualReleaseDate != null) {
@@ -417,7 +531,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
     }
     
-
     NewWarehouseEntryButtonClicked() {
         var windowArgs: any = {};
         windowArgs.ExpectedEntryDate = this.WarehouseLegExpectedEntryDate;

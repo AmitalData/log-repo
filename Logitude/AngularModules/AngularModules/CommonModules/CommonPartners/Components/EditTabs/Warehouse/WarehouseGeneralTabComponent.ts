@@ -69,6 +69,16 @@ export class WarehouseGeneralTabComponent extends BaseComponent {
     set TypeCode(newValue: string) {
         if (this.EntityPM.TypeCode != newValue) {
             this.EntityPM.TypeCode = newValue;
+
+            if (newValue == "BO") {
+                this.EntityPM.AirWeightMeasurementCode = "GRWT";
+                this.EntityPM.OceanWeightMeasurementCode = "GRWT";
+                this.EntityPM.InlandWeightMeasurementCode = "GRWT";
+
+                this.EntityPM.AirWeightRoundingCode = "NON";
+                this.EntityPM.OceanWeightRoundingCode = "NON";
+                this.EntityPM.InlandWeightRoundingCode = "NON";
+            }
         }
     }
 

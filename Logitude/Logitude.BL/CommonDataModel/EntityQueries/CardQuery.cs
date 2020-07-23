@@ -947,7 +947,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     entityList.FirmCode = entityPOCO.Warehouse.FirmCode;
                     entityList.WarehouseTypeCode = entityPOCO.Warehouse.TypeCode;
                     entityList.ChargeStorage = entityPOCO.Warehouse.ChargeStorage;
-                    entityList.CurrencyId = entityPOCO.Warehouse.CurrencyId;
+                    entityList.ChargeStorageCurrencyId = entityPOCO.Warehouse.CurrencyId;
                     entityList.AirWeightMeasurementCode = entityPOCO.Warehouse.AirWeightMeasurementCode;
                     entityList.OceanWeightMeasurementCode = entityPOCO.Warehouse.OceanWeightMeasurementCode;
                     entityList.InlandWeightMeasurementCode = entityPOCO.Warehouse.InlandWeightMeasurementCode;

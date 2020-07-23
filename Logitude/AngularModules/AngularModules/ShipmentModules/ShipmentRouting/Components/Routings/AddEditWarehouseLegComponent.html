@@ -372,6 +372,14 @@
                                                                 </td>
                                                             </tr>
 
+                                                            <tr style="height:25px;" *ngIf="StoragePricingMessageVisible">
+                                                                <td colspan="3">
+                                                                    <div class="OrangeInfo" style="margin: 5px;">
+                                                                        <label>Active for bonded warehouse only</label>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+
                                                             <tr class="FormFieldRow">
                                                                 <td colspan="3">
                                                                     <table>
@@ -381,12 +389,12 @@
                                                                             </td>
 
                                                                             <td style="width:120px;">
-                                                                                <LogCheckBox [ObjectFieldName]="'ChargeStorage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Charge Storage'"></LogCheckBox>
+                                                                                <LogCheckBox [Checked]="ChargeStorage" [ObjectFieldName]="'ChargeStorage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Charge Storage'"></LogCheckBox>
                                                                             </td>
 
                                                                             <td style="width: 40px;vertical-align:central;">
                                                                                 <div>
-                                                                                    <span style="float:left" class="hyperlink" (click)="StoragePricingClicked()">Storage Pricing</span>
+                                                                                    <span style="float:left" class="hyperlink" [class.HyperlinkDisabled]="!StoragePricingEnabled" (click)="StoragePricingClicked()">Storage Pricing</span>
                                                                                 </div>
                                                                             </td>
 
