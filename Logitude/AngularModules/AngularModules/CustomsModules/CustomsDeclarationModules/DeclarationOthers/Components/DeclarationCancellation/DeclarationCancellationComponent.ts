@@ -7,6 +7,7 @@ import { CustomSendOptionsArgs } from '../../../../../Customs/DataContract/Reque
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'DeclarationCancellationComponent',
