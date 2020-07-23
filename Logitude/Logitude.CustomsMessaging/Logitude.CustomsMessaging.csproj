@@ -123,7 +123,6 @@
       <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-
       <HintPath>..\packages\UnifreightIIG.3.1803.27\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -157,11 +156,14 @@
     <Compile Include="FakeMessagingServices\Fake_DCAInDF_8211_CollateralRequestMsgMessagingServices.cs" />
     <Compile Include="FakeMessagingServices\Fake_DCAInDF_NG_2470_MSG16001_ReleaseGoodsMessagingService.cs" />
     <Compile Include="FakeMessagingServices\Fake_DCAInTSH_MSG2_3050_PaymentOrderReplyMessagingService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
     <Compile Include="FakeMessagingServices\Fake_ImportDeclaration_Response.cs" />
     <Compile Include="FakeMessagingServices\FakeDCA_MSG2030_DepositRequestCreatedInfoMessagingServices.cs" />
     <Compile Include="FakeMessagingServices\Fake_DCA_NG_5110_DepositRequestFulfillednfoMsgMessagingService.cs" />
     <Compile Include="FakeMessagingServices\Courier\FAKE_CourierMasterDeclarations.cs" />
+    <Compile Include="FakeMessagingServices\Fake_SaveDF_MSG5002_DeclarationCancellationRequestMsg.cs" />
     <Compile Include="Helpers\ClosedTable\Update1308CustomsShip.cs" />
+    <Compile Include="MessagingServices\DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
     <Compile Include="MessagingServices\DCAInUCSBondedDocument_MessagingService.cs" />
     <Compile Include="MessagingServices\DCAInDE_NG_5108_DecisionMessageMessagingService.cs" />
     <Compile Include="Dca\DCAMoveIncomeFileToDirService.cs" />
@@ -224,6 +226,7 @@
     <Compile Include="MessagingServices\GP_1030_GatepassRequestMessageMessagingService.cs" />
     <Compile Include="MessagingServices\MN_MSG8370_CargoSplitMessagingService.cs" />
     <Compile Include="MessagingServices\MN_NG_9022_CourierBOLQueryMessagingService.cs" />
+    <Compile Include="MessagingServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgService.cs" />
     <Compile Include="MessagingServices\SE_6001_SealUpdateMessagingService.cs" />
     <Compile Include="MessagingServices\ST_MSG05_StorageEntranceUnloadingMassagingService.cs" />
     <Compile Include="MessagingServices\TPG_NG_8244_ClaimFileFilterParamMessagingService.cs" />
@@ -289,6 +292,7 @@
     <Compile Include="RequestServices\GP_1030_GatepassRequestMessageRequestService.cs" />
     <Compile Include="RequestServices\MN_MSG8370_CargoSplitRequestService.cs" />
     <Compile Include="RequestServices\MN_NG_9022_CourierBOLQueryRequestService.cs" />
+    <Compile Include="RequestServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgRequestService.cs" />
     <Compile Include="RequestServices\SE_6001_SealUpdateRequestService.cs" />
     <Compile Include="RequestServices\ST_MSG05_StorageEntranceUnloadingRequestService.cs" />
     <Compile Include="RequestServices\TPG_NG_8244_ClaimFileFilterParamRequestService.cs" />
@@ -325,6 +329,8 @@
     <Compile Include="ResponseServices\CL_MSG100_AddClientResponseService.cs" />
     <Compile Include="ResponseServices\CL_NG_8344_ClientSearchByIDResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportDeclarationResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsgResponseService.cs" />
+    <Compile Include="ResponseServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCustomBatchSend2715Bonded_MsgResponseService.cs" />
     <Compile Include="ResponseServices\DeclarationErrorPointer\DeclarationCorrectionsPointerService.cs" />
     <Compile Include="ResponseServices\DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestResponseService.cs" />
