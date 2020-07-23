@@ -49,7 +49,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
      this.Name = this.showLocal?  "LocalName":"Name";
       
     this.AgingMethodsList=[];
-    this.AgingMethodsList.push(new CodeNameClass("1", "Open Balance", "יתרת פתיחה"));
+    this.AgingMethodsList.push(new CodeNameClass("1", "Open Transaction", "תנועות פתוחות"));
     this.AgingMethodsList.push(new CodeNameClass("2", "Total By Month FIFO", "סכומים חודשים לפי FIFO"));
      this.SelectedAgingMethod= this.AgingMethodsList[0];
    }
