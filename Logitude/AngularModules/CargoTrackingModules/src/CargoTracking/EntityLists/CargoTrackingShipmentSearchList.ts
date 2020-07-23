@@ -8,11 +8,11 @@
 
 export class CargoTrackingShipmentSearchList {
    
-	Id: string;
 	Tenant: number;
 	SearchFields: string;
 	ShipmentId: string;
 	ShipmentDate: Date;
+	Id: number;
 	
 }
  

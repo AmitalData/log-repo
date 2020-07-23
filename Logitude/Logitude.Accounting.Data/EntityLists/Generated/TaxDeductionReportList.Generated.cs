@@ -46,6 +46,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string Status  { get; set; }
        [DataMember]
        public string StatusLocalName  { get; set; }
+       [DataMember]
+       public bool ByMonth  { get; set; }
    }
 
 }

@@ -158,15 +158,15 @@ export class ARInvoiceMenuButtonsHandler {
 
                         case "AutoCredit": {
                             if (this.EntityPM.ARInvoiceTypeCode == 'IT') {
-                                myButtonIsDisabled = true;
+                                  myButtonIsDisabled = true;
                             }
                             else {
                                 if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                    myButtonIsDisabled = true;
+                                     myButtonIsDisabled = true;
                                 }
 
                                 else if (this.EntityPM.StatusCode == "LL" || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR") {
-                                    myButtonIsDisabled = true;
+                                      myButtonIsDisabled = true;
                                 }
 
                                 else if (this.EntityPM.ARInvoiceTypeCode == "IN") {
@@ -186,16 +186,17 @@ export class ARInvoiceMenuButtonsHandler {
                                         }
                                     }
 
-                                    myButtonIsDisabled = !isEnabled;
+                                     myButtonIsDisabled = !isEnabled;
+                                   
                                 }
 
                                 else if (this.EntityPM.ARInvoiceTypeCode == "CC") {
-                                    myButtonIsDisabled = true;
+                                     myButtonIsDisabled = true;
                                 }
 
                                 if (SessionLocator.TenantPM.AccountingActivated == true) {
                                     if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
-                                        myButtonIsDisabled = true;
+                                         myButtonIsDisabled = true;
                                     }
                                 }
                             }
@@ -650,7 +651,11 @@ export class ARInvoiceMenuButtonsHandler {
         if (this.EntityPM.IsAutoCredit) {
             var myConfirmWindow = new ConfirmWindow();
             myConfirmWindow.Width = 400;
-            myConfirmWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCredit"));
+            var Text=TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCredit");
+            if(this.EntityPM.AutoCreditedByInvoiceTypeCode =="CD" || this.EntityPM.AutoCreditedByInvoiceTypeCode =="CC"){
+               Text=TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCreditForAutoCredit");
+            }
+            myConfirmWindow.Show(Text);
             myConfirmWindow.WindowClosed.subscribe(s => {
                 if (myConfirmWindow.Yes) {
                     this.ProceedToApprove(TextCodeTranslator.Translate("ARInvoice.M.CreatingAutoCredit"));                    
@@ -1009,7 +1014,7 @@ export class ARInvoiceMenuButtonsHandler {
         AutoCreditInvoice.MetodoPagoCode = this.EntityPM.MetodoPagoCode;
         AutoCreditInvoice.IsInvoiceNumberFromStock = this.EntityPM.IsInvoiceNumberFromStock;
         AutoCreditInvoice.IsInvoiceNumberManuallySet = this.EntityPM.IsInvoiceNumberManuallySet;
-
+        AutoCreditInvoice.AutoCreditedByInvoiceTypeCode=this.EntityPM.ARInvoiceTypeCode ;
         this.CreateAutoCreditInvoiceLines(AutoCreditInvoice);        
         return AutoCreditInvoice;
     }

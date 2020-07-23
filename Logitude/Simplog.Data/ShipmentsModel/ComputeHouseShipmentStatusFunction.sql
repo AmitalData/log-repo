@@ -1,9 +1,15 @@
 
-ALTER PROCEDURE [dbo].[usp_ComputeHouseShipmentStatusFunction]
-(
-	
-	@ShipmentId varchar(15)
 
+
+
+IF OBJECT_ID('[dbo].[usp_ComputeHouseShipmentStatusFunction]', 'P') IS NOT NULL
+drop PROCEDURE [dbo].[usp_ComputeHouseShipmentStatusFunction]
+GO
+
+
+Create PROCEDURE [dbo].[usp_ComputeHouseShipmentStatusFunction]
+(
+	@ShipmentId varchar(15)
 )
 AS
 

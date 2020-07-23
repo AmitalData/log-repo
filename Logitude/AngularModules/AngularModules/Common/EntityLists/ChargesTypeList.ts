@@ -63,5 +63,7 @@ export class ChargesTypeList {
 		ReceivablesDefaultCurrencyId: string;
 		PayablesDefaultCurrencyId: string;
 		ApplyRegionalTax: boolean;
+		HasPickup: boolean;
+		HasDelivery: boolean;
 	
 }

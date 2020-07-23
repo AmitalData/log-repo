@@ -23,7 +23,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasDatabaseGeneratedOption(null);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
@@ -68,6 +68,16 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.PickupDate).HasColumnName("PickupDate");
 
             this.Property(t => t.ClearanceDate).HasColumnName("ClearanceDate");
+
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+
+            this.Property(t => t.SecurityKey).HasColumnName("SecurityKey").HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.ConsigneeName).HasColumnName("ConsigneeName").HasMaxLength(70).IsUnicode(false);
+
+            this.Property(t => t.ShipperName).HasColumnName("ShipperName").HasMaxLength(70).IsUnicode(false);
+
+            this.Property(t => t.CustomerReference).HasColumnName("CustomerReference").HasMaxLength(101).IsUnicode(false);
         }
     }
 }

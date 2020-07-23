@@ -3571,7 +3571,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
              counter = 1;
             List<JournalLinePM> journalLines = (from d in invoice.InvoiceLines
-                                                group d by new { d.ForiegnCurrencyId, d.ForiegnExchangeRate } into g
+                                                group d by new { d.ForiegnCurrencyId } into g
                                                 select new JournalLinePM()
                                                 {
                                                     Tenant = tenant,
@@ -3585,7 +3585,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                     LocalAmount = (decimal)g.Sum(a => a.LocalCurrencyAmount),
                                                     CurrencyId = g.Key.ForiegnCurrencyId,
                                                     ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
-                                                    ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
+                                                    ExchangeRate = (decimal?) g.Sum(a=> a.ForiegnExchangeRate)/g.Count(),//(decimal)g.Key.ForiegnExchangeRate,
                                                     Reference1 = invoice.InvoiceNumber,
                                                     Reference2 = invoice.MainEntityReference,
                                                     Reference3 = !string.IsNullOrEmpty(invoice.HouseNumber) ? invoice.HouseNumber : invoice.MasterNumber,

@@ -44,13 +44,14 @@ namespace Logitude.Accounting.BL.DataContract
         List<CardList> transactionsVendors;
         List<Address> addresses;
         List<GLAccountList> transactionsOppositGLAccounts;
-        
-        public TaxDeductionReportDataProvider(int? reportYear,int tenant)
+        DateTime? reportMonth;
+        public TaxDeductionReportDataProvider(int? taxYear,int tenant)
         {
             Tenant = tenant;
-            ReportYear = reportYear;
-            startDate = new DateTime((int)reportYear, 1, 1);
-            endDate = new DateTime((int)reportYear, 12, 31);
+            ReportYear = taxYear;
+            startDate = new DateTime((int)taxYear, 1, 1);
+            endDate = new DateTime((int)taxYear , 12, 31);
+            
             invoiceContext = InvoiceContext.GetContext(tenant);
             commoncontext = CommonDataContext.GetContext(tenant);
             accountingContext = AccountingContext.GetContext(tenant);

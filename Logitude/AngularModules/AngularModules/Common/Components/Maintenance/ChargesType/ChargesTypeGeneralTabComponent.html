@@ -113,7 +113,7 @@
                                                     <LogLov [ObjectFieldName]="'VatTypeId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'VatType'"  [DependencyFilter2Value]="false">
+                                                            [LookUpTableName]="'VatType'" [DependencyFilter2Value]="false">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -243,6 +243,28 @@
 
                                                 <td>
                                                     <LogCheckBox [ObjectFieldName]="'ApplyRegionalTax'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr class="FormFieldRow" >
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'HasPickup'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'HasPickup'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'HasDelivery'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'HasDelivery'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                 </td>
                                             </tr>
 

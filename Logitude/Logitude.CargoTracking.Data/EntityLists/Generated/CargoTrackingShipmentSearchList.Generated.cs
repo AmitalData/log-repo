@@ -12,11 +12,7 @@ namespace Logitude.CargoTracking.Data.EntityLists
    [DataContract]
    public partial class CargoTrackingShipmentSearchList
    {
-   
-       [Key]
-       [DataMember]
-       public string Id  { get; set; }
-       [DataMember]
+          [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
@@ -24,6 +20,10 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string ShipmentId  { get; set; }
        [DataMember]
        public DateTime ShipmentDate  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int Id  { get; set; }
    }
 
 }

@@ -20,7 +20,7 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 
         [Key]
         [Column("Id")]
-	    public string Id { get; set; }
+	    public int Id { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("EntityId")]
@@ -29,10 +29,16 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string ForwardingShipmentHeaderId { get; set; }
         [Column("CustomsShipmentHeaderId")]
 	    public string CustomsShipmentHeaderId { get; set; }
+        [ForeignKey("CargoTrackingHeaderEntityType")]
         [Column("EntityType")]
 	    public string EntityType { get; set; }
+	      
+        public virtual CargoTrackingHeaderEntityType CargoTrackingHeaderEntityType { get; set; }
+        [ForeignKey("CargoTrackingMilestone")]
         [Column("CurrentMilestoneCode")]
 	    public string CurrentMilestoneCode { get; set; }
+	      
+        public virtual CargoTrackingMilestone CargoTrackingMilestone { get; set; }
         [Column("CurrentMilestoneDate")]
 	    public DateTime? CurrentMilestoneDate { get; set; }
         [Column("CustomerId")]
@@ -65,6 +71,16 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public DateTime? PickupDate { get; set; }
         [Column("ClearanceDate")]
 	    public DateTime? ClearanceDate { get; set; }
+        [Column("CreateDate")]
+	    public DateTime CreateDate { get; set; }
+        [Column("SecurityKey")]
+	    public string SecurityKey { get; set; }
+        [Column("ConsigneeName")]
+	    public string ConsigneeName { get; set; }
+        [Column("ShipperName")]
+	    public string ShipperName { get; set; }
+        [Column("CustomerReference")]
+	    public string CustomerReference { get; set; }
     }
 }
 	 

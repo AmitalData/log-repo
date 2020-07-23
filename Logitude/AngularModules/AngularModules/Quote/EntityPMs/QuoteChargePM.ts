@@ -578,6 +578,16 @@ export class QuoteChargePM {
     public set TariffVersion(newValue: number) { if (this.tariffVersion != newValue) { this.tariffVersion = newValue; this.MarkAsDirty("TariffVersion"); } }
        
 	 
+    private hasPickup: boolean;
+    public get HasPickup() { return this.hasPickup; }
+    public set HasPickup(newValue: boolean) { if (this.hasPickup != newValue) { this.hasPickup = newValue; this.MarkAsDirty("HasPickup"); } }
+       
+	 
+    private hasDelivery: boolean;
+    public get HasDelivery() { return this.hasDelivery; }
+    public set HasDelivery(newValue: boolean) { if (this.hasDelivery != newValue) { this.hasDelivery = newValue; this.MarkAsDirty("HasDelivery"); } }
+       
+	 
 
     public OldEntityPM: QuoteChargePM;
 	    

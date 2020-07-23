@@ -34,7 +34,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsAdditionalReportExist, 
 	         TaxYear, 
 	         Email, 
-	         ErrorMessage,
+	         ErrorMessage, 
+	         ByMonth, 
+	         Month,
 	      }
 
 
@@ -56,7 +58,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ErrorMessage, 
 	         CreatedByUser, 
 	         Status, 
-	         StatusLocalName,
+	         StatusLocalName, 
+	         ByMonth, 
+	         Month,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -123,6 +127,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorMessage))
             {
 				entityPOCO.ErrorMessage = entityPM.ErrorMessage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ByMonth))
+            {
+				entityPOCO.ByMonth = entityPM.ByMonth;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Month))
+            {
+				entityPOCO.Month = entityPM.Month;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -196,6 +210,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ErrorMessage = entityPOCO.ErrorMessage;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ByMonth))
+            {
+					entityPM.ByMonth = entityPOCO.ByMonth;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Month))
+            {
+					entityPM.Month = entityPOCO.Month;
+            }
+
 		}
 
 		public void PMToOldPM(TaxDeductionReportPM entityPM, TaxDeductionReportPM oldEntityPM)
@@ -260,6 +284,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorMessage))
             {
                 oldEntityPM.ErrorMessage = entityPM.ErrorMessage;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ByMonth))
+            {
+                oldEntityPM.ByMonth = entityPM.ByMonth;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Month))
+            {
+                oldEntityPM.Month = entityPM.Month;
             }
 			
 		}

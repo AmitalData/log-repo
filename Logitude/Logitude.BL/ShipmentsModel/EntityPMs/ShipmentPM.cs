@@ -2464,6 +2464,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MasterProjectNumber { get; set; }
 
 
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentSubTypeId { get; set; }
         public string ShipmentSubTypeName { get; set; }

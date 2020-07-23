@@ -310,6 +310,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return ports;
         }
 
+
+        public IQueryable<Port> GetAllPorts()
+        {
+            IQueryable<Port> ports = (from a in repository.context.Ports select a);
+                                      
+            return ports;
+        }
+
+
         public IQueryable<PortPM> GetPortPMsByTenantAndCountry(int tenant, string country)
         {
             IQueryable<PortPM> ports = (from a in repository.context.Ports.Include("Country")

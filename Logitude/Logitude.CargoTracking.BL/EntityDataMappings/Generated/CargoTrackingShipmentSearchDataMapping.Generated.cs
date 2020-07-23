@@ -22,22 +22,22 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
-	         Id, 
 	         Tenant, 
 	         SearchFields, 
 	         ShipmentId, 
-	         ShipmentDate,
+	         ShipmentDate, 
+	         Id,
 	      }
 
 
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         Id, 
 	         Tenant, 
 	         SearchFields, 
 	         ShipmentId, 
-	         ShipmentDate,
+	         ShipmentDate, 
+	         Id,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -72,11 +72,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 		public void POCOToPM(CargoTrackingShipmentSearchPM entityPM, CargoTrackingShipmentSearch entityPOCO)
         {
 			 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
-            {
-					entityPM.Id = entityPOCO.Id;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
             {
 					entityPM.Tenant = entityPOCO.Tenant;
@@ -95,6 +90,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentDate))
             {
 					entityPM.ShipmentDate = entityPOCO.ShipmentDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
             }
 
 		}

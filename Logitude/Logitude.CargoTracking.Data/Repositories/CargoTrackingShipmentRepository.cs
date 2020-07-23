@@ -25,7 +25,7 @@ namespace Logitude.CargoTracking.Data.Repositories
         {
             IQueryable<CargoTrackingShipment> shipments = (from shipment in currentContext.CargoTrackingShipments
                                                                  where
-                                                                    shipmentsIds.Contains(shipment.Id)
+                                                                    shipmentsIds.Contains(shipment.EntityId)
                                                                     && shipment.Tenant == tenant
                                                                  select shipment);
 
@@ -36,7 +36,7 @@ namespace Logitude.CargoTracking.Data.Repositories
         {
             CargoTrackingShipment shipment = (from _shipment in currentContext.CargoTrackingShipments
                                                            where
-                                                              _shipment.Id == shipmentId
+                                                              _shipment.EntityId == shipmentId
                                                               && _shipment.Tenant == tenant
                                                            select _shipment).FirstOrDefault();
 

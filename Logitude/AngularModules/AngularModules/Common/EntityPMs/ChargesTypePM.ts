@@ -358,6 +358,16 @@ export class ChargesTypePM {
     public set ApplyRegionalTax(newValue: boolean) { if (this.applyRegionalTax != newValue) { this.applyRegionalTax = newValue; this.MarkAsDirty("ApplyRegionalTax"); } }
        
 	 
+    private hasPickup: boolean;
+    public get HasPickup() { return this.hasPickup; }
+    public set HasPickup(newValue: boolean) { if (this.hasPickup != newValue) { this.hasPickup = newValue; this.MarkAsDirty("HasPickup"); } }
+       
+	 
+    private hasDelivery: boolean;
+    public get HasDelivery() { return this.hasDelivery; }
+    public set HasDelivery(newValue: boolean) { if (this.hasDelivery != newValue) { this.hasDelivery = newValue; this.MarkAsDirty("HasDelivery"); } }
+       
+	 
 
     public OldEntityPM: ChargesTypePM;
 		
