@@ -180,6 +180,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
             args.PartnerTypeId = this.PartnerTypeId;
             args.CountryId = this.CountryId_Potential;
             args.CountryName = this.EntityPM.CountryName;
+            args.CountryEnglishName = this.EntityPM.CountryName;
             args.SetReady = false;
 
             VatNumberValidator.ValidateVatFormat(args);
@@ -354,7 +355,6 @@ export class NewPotentialCustomerComponent extends BaseComponent {
         if (this.EntityPM.CountryId_Potential != newValue) {
             this.EntityPM.CountryId_Potential = newValue;
             this.StateId_Potential = null;
-            this.SetUIProperties();
         }
     }
 
@@ -537,6 +537,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
             args.PartnerTypeId = this.PartnerTypeId;
             args.CountryId = this.CountryId_Potential;
             args.CountryName = this.EntityPM.CountryName;
+            args.CountryEnglishName = this.EntityPM.CountryName;
             args.SetReady = false;
 
             VatNumberValidator.ValidateVatFormat(args);
