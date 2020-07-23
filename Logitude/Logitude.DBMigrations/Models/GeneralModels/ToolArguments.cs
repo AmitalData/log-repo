@@ -15,5 +15,13 @@ namespace Logitude.DBMigrations.Models
         public const string IGNOREHASH = "-ignorehash";
         public const string IGNORESETTINGSCHECK = "-ignoresettingscheck";
         public const string ZERODOWNTIME = "-zerodowntime";
+
+        public static string[] Arguments;
+
+        public static bool IsArgumentProvided(string arg)
+        {
+            string[] arguments = Array.ConvertAll(Arguments, a => a.ToLower());
+            return (Array.IndexOf(arguments, arg) != -1);
+        }
     }
 }

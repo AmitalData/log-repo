@@ -1268,7 +1268,7 @@ namespace Logitude.DBMigrations.Models
 
             if (!String.IsNullOrEmpty(defaultValue))
             {
-                return defaultValue.Replace("'", String.Empty);
+                return defaultValue;
             }
 
             return null;
@@ -1285,7 +1285,7 @@ namespace Logitude.DBMigrations.Models
             string queryString = "INSERT INTO [dbo].[DBMigrationsSetDefaultValues]([Id], [DatabaseType], [SchemaName], [TableName], [ColumnName], [Status], [DefaultValue], [UpdateNumber], " +
                 "[DoneRecordsCount], [StartDate], [EndDate], [LastBatchElapsedTime]) " +
                 "VALUES('" + Guid.NewGuid().ToString() + "', '" + databaseType + "', '" + schemaName + "', '" + tableName + "', '" + columnName + "', 'Waiting', " +
-                "'" + defaultValue + "', " + updateNumber + ", 0, NULL, NULL, 0);";
+                "'" + defaultValue.Replace("'", "''") + "', " + updateNumber + ", 0, NULL, NULL, 0);";
 
             SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
 

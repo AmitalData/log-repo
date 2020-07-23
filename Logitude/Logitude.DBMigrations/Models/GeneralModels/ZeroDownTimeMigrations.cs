@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Logitude.DBMigrations.Models
 
             foreach(var defaultValueMigration in defaultValueMigrations)
             {
-                Console.WriteLine("Handle Default Value Migration For Column " + defaultValueMigration.ColumnName + " In Table " + defaultValueMigration.SchemaName + "." +  defaultValueMigration.TableName + " For " + defaultValueMigration.DatabaseType + " Database ...");
+                Console.WriteLine("Handle Default Value Migration For Column " + defaultValueMigration.ColumnName + " In Table " + defaultValueMigration.SchemaName + "." +  defaultValueMigration.TableName + " On " + defaultValueMigration.DatabaseType + " Database ...");
                 HandleDefaultValueMigration(defaultValueMigration);
             }
         }
@@ -25,6 +26,7 @@ namespace Logitude.DBMigrations.Models
             UpdateDefaultValueMigration(defaultValueMigration.Id, "StartDate", DateTime.Now.ToString());
             SetDefaultValues(defaultValueMigration);
             UnsetColumnNullable(defaultValueMigration);
+            AddColumnDefaultValue(defaultValueMigration);
             UpdateDefaultValueMigration(defaultValueMigration.Id, "EndDate", DateTime.Now.ToString());
             UpdateDefaultValueMigration(defaultValueMigration.Id, "Status", "Done");
         }
@@ -42,5 +44,9 @@ namespace Logitude.DBMigrations.Models
         protected abstract void UpdateDefaultValueMigration(string defaultValueMigrationId, string property, string value);
 
         protected abstract void UnsetColumnNullable(ZeroDownTimeDefaultValueMigration defaultValueMigration);
+
+        protected abstract void AddColumnDefaultValue(ZeroDownTimeDefaultValueMigration defaultValueMigration);
+
+        protected abstract string FormatDefaultValue(string defaultValue);
     }
 }

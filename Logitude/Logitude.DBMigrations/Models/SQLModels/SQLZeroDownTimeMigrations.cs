@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Logitude.DBMigrations.Models
@@ -53,33 +54,38 @@ namespace Logitude.DBMigrations.Models
                 ExitZeroDownTimeMigrations(exception.Message);
             }
 
-            return defaultValueMigrations;
+            return defaultValueMigrations.OrderBy(d => d.UpdateNumber).ToList();
         }
 
         protected override void SetDefaultValues(ZeroDownTimeDefaultValueMigration defaultValueMigration)
         {
-            string queryString = "UPDATE TOP(1000) [" + defaultValueMigration.SchemaName + "].[" + defaultValueMigration.TableName + "] SET [" + defaultValueMigration.ColumnName + "] = '" + defaultValueMigration.DefaultValue + "', " +
+            string queryString = "UPDATE TOP(1000) [" + defaultValueMigration.SchemaName + "].[" + defaultValueMigration.TableName + "] SET [" + defaultValueMigration.ColumnName + "] = " + FormatDefaultValue(defaultValueMigration.DefaultValue) + ", " +
                 "[DBMigrationsLastDefaultValue] = " + defaultValueMigration.UpdateNumber + " WHERE [DBMigrationsLastDefaultValue] = " + (defaultValueMigration.UpdateNumber - 1) + ";";
 
             SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(defaultValueMigration.DatabaseType));
-
+            
             try
             {
                 sqlConnection.Open();
                 SqlCommand sqlCommand = new SqlCommand();
                 sqlCommand.Connection = sqlConnection;
                 sqlCommand.CommandText = queryString;
-                DateTime startAt = DateTime.Now;
+                DateTime batchStartTime = DateTime.Now;
                 int updatedRows = sqlCommand.ExecuteNonQuery();
-                DateTime endAt = DateTime.Now;
+                DateTime batchEndTime = DateTime.Now;
                 sqlConnection.Close();
+
+                Thread.Sleep(1000);
 
                 if (updatedRows != 0)
                 {
-                    int elapsedTime = endAt.Subtract(startAt).Milliseconds;
+                    int elapsedTime = batchEndTime.Subtract(batchStartTime).Milliseconds;
                     defaultValueMigration.DoneRecordsCount += updatedRows;
                     UpdateDefaultValueMigration(defaultValueMigration.Id, "DoneRecordsCount", defaultValueMigration.DoneRecordsCount.ToString());
-                    UpdateDefaultValueMigration(defaultValueMigration.Id, "LastBatchElapsedTime", elapsedTime.ToString());
+                    if(updatedRows >= 1000)
+                    {
+                        UpdateDefaultValueMigration(defaultValueMigration.Id, "LastBatchElapsedTime", elapsedTime.ToString());
+                    }
                     SetDefaultValues(defaultValueMigration);
                 }
             }
@@ -146,6 +152,39 @@ namespace Logitude.DBMigrations.Models
                 sqlConnection.Close();
                 ExitZeroDownTimeMigrations(exception.Message);
             }
+        }
+        
+        protected override void AddColumnDefaultValue(ZeroDownTimeDefaultValueMigration defaultValueMigration)
+        {
+            string queryString = "ALTER TABLE [" + defaultValueMigration.SchemaName + "].[" + defaultValueMigration.TableName + "] ADD DEFAULT " +
+                                 FormatDefaultValue(defaultValueMigration.DefaultValue) + " FOR [" + defaultValueMigration.ColumnName + "];";
+
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(defaultValueMigration.DatabaseType));
+
+            try
+            {
+                sqlConnection.Open();
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.Connection = sqlConnection;
+                sqlCommand.CommandText = queryString;
+                sqlCommand.ExecuteNonQuery();
+                sqlConnection.Close();
+            }
+            catch (Exception exception)
+            {
+                sqlConnection.Close();
+                ExitZeroDownTimeMigrations(exception.Message);
+            }
+        }
+
+        protected override string FormatDefaultValue(string defaultValue)
+        {
+            if(defaultValue.ToLower() == "CurrentDate".ToLower())
+            {
+                return "GETDATE()";
+            }
+
+            return defaultValue;
         }
     }
 }

@@ -2968,14 +2968,48 @@
   </Column>
 
   <Column
-    Name="TestColumn"
+    Name="TestColumn1"
     Type="varchar"
     Size="10"
-    DefaultValue="'AM'">
+    DefaultValue="'Test'">
     <Constraints
       Nullable="false" />
   </Column>
-  
+  <Column
+    Name="TestColumn2"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TestColumn3"
+    Type="datetime"
+    DefaultValue="CurrentDate">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TestColumn4"
+    Type="datetime"
+    DefaultValue="'1900-01-01T00:00:00.000'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TestColumn5"
+    Type="bit"
+    DefaultValue="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TestColumn6"
+    Type="int"
+    DefaultValue="5">
+    <Constraints
+      Nullable="false" />
+  </Column>
+
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
