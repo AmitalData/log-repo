@@ -7,12 +7,7 @@ import { CustomSendOptionsArgs, RequestParamsBase, SendRequestVIA, TestCase } fr
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
-import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import { CustomMessageProgressComponent } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
-import { GenericRequestParams } from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
-import { SendDeclarationService } from '../SendDeclaration/SendDeclarationComponent';
 
 declare var window: any;
 
