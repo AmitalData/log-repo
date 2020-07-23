@@ -91,5 +91,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string PayablesDefaultCurrencyId { get; set; }
         public bool ApplyRegionalTax { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
+        public bool HasPickup { get; set; }
+        public bool HasDelivery { get; set; }
     }
 }

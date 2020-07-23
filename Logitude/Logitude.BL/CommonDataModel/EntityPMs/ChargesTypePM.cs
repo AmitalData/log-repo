@@ -179,5 +179,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string ReceivableCreditGLAcountNumber { get; set; }
         public bool ApplyRegionalTax { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool HasPickup { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool HasDelivery { get; set; }
+
     }
 }
