@@ -144,15 +144,7 @@ export class DeclarationReferantDataPM {
     public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
        
 	 
-    private lastStatusName: string;
-    public get LastStatusName() { return this.lastStatusName; }
-    public set LastStatusName(newValue: string) { if (this.lastStatusName != newValue) { this.lastStatusName = newValue; this.MarkAsDirty("LastStatusName"); } }
-       
-	 
-    private lastStatusDate: string;
-    public get LastStatusDate() { return this.lastStatusDate; }
-    public set LastStatusDate(newValue: string) { if (this.lastStatusDate != newValue) { this.lastStatusDate = newValue; this.MarkAsDirty("LastStatusDate"); } }
-       
+    
 	 
     private classifiedUserName: string;
     public get ClassifiedUserName() { return this.classifiedUserName; }
