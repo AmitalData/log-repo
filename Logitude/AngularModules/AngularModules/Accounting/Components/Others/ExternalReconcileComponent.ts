@@ -243,7 +243,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         // Local Validate
         if (this.totalDifference != 0) {
-            if (this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length == 0) {
+            if (this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length >= 0) {
                 //errors.push(TextCodeTranslator.Translate("Accounting.O.SelectTwoTransactionAtLeast"));
                 this.AdjustBankFeeWithNewJournalScreen();
                 return;
@@ -259,9 +259,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if (this.ValidationErrorsList.length == 0) {
             var entity = this.CreateReconciliation();
             this.SubmitChanges(entity);
-          
+
         }
-    
+
     }
 
     SaveAsDraftButton() {

@@ -227,12 +227,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.ExceptionDate = entityPM.ExceptionDate;
                 entityPoco.ExceptionDescription = entityPM.ExceptionDescription;
             }
+            else if (entityPM.IsUpdateEntityException)
+            {
+                entityPoco.HasException = entityPM.HasException;
+                entityPoco.ExceptionDate = entityPM.ExceptionDate;
+                entityPoco.ExceptionDescription = entityPM.ExceptionDescription;
+                entityPM.IsUpdateEntityException = false;
+            }
+
+
+
+
+
             if (!entityPM.IsHybrid || entityPM.DontAddToImportersQueue)
             {
                 entityPoco.ForwarderShipmentNumber = entityPM.ForwarderShipmentNumber;
                 entityPoco.CustomerShipmentNumber = entityPM.CustomerShipmentNumber;
                 entityPoco.CustomerTenantNumber = entityPM.CustomerTenantNumber;
             }
+
+
 
 
             entityPoco.OrderGrossWeightEdited = entityPM.OrderGrossWeightEdited;

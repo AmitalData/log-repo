@@ -1374,6 +1374,8 @@ namespace WebFreight.Web.WebServices
                 #region Customer
                 if (!string.IsNullOrEmpty(shipment.CustomerId))
                 {
+                    myDataProvider.CustomerLogo = DataProviders.General.GetCarrierLogo(shipment.CustomerId, tenant);
+
                     Card myPartnerCard = CardRepository.GetSingleCard(shipment.CustomerId, tenant, true);
                     if (myPartnerCard != null)
                     {

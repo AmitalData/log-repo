@@ -68,6 +68,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     IsFCL = ((item.TransportModeId == "O" && item.ShipmentTypeId == "FCLD") || (item.TransportModeId == "I" && item.ShipmentTypeId == "FTL")),
                     IsLCL = (item.TransportModeId == "A" || (item.TransportModeId == "O" && item.ShipmentTypeId == "LCLD") || (item.TransportModeId == "I" && item.ShipmentTypeId == "LTL")),
                     GrossWeightPerStorageDays = item.GrossWeightPerStorageDays,
+                    House = item.House,
+                    DescriptionOfGoods = item.DescriptionOfGoods,
                 };
 
                 if (consoleShipmentPM.IsFCL)

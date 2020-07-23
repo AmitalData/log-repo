@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "2145c3ae-45fd-439a-8dd8-d232d238a028",
-		"name": "PrepareFullAccountingVars copy",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"_postman_id": "963978bc-7c01-46ea-8113-1a2ec21cbb13",
+		"name": "PrepareFullAccountingVars",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -11,7 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a918d90f-384d-49bc-8fb2-10ac0a489b87",
+						"id": "d5b458b6-c5f8-434e-a0a2-2c500a599d5c",
 						"exec": [
 							"",
 							"pm.test(\"AuthSuccessfullOnTenant1\", function () {",
@@ -91,7 +91,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f529b3c2-48c3-45f5-9020-011c24d621b3",
+						"id": "07ba78e8-5462-45f9-bc08-858b7ef193db",
 						"exec": [
 							"pm.test(\"GetFullAccountingSettings\", function () {",
 							"  pm.response.to.have.status(200);",
@@ -285,7 +285,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "7def5c7a-3dfe-4880-bb6e-232afd2c1ef0",
+						"id": "956cc308-7d68-4b51-bba1-fcfe27fd90bc",
 						"exec": [
 							"",
 							"pm.test(\"Get Chreonological Settings\", function () {",
@@ -367,7 +367,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6e39d185-098e-4173-8311-72657d1b50e8",
+						"id": "c5a0f908-f52f-4603-84d2-7d9c1a6940f6",
 						"exec": [
 							"pm.test(\"Get Accounting Periods\", function () {",
 							"    ",
@@ -376,6 +376,10 @@
 							"    var date = new Date();",
 							"    var month = date.getMonth()+1;",
 							"    pm.environment.set(\"CurrentMonth\",month);",
+							"",
+							"",
+							"    //get the accounting periods ",
+							"   ",
 							"    var idvalue7 = (pm.response.json().Result[pm.response.json().Result.length-2].OpenMonth);",
 							"    pm.environment.set(\"AcocuntingPeriodsOpenMonth\",idvalue7);",
 							"    var idvalue1 = (pm.response.json().Result[pm.response.json().Result.length-2].Id);",
@@ -391,6 +395,25 @@
 							"    pm.environment.set(\"AcocuntingPeriodsPeriodTypeCode\",idvalue4);",
 							"    pm.environment.set(\"AcocuntingPeriodsPeriodTypeName\",idvalue5);",
 							"    pm.environment.set(\"AcocuntingPeriodsClosedMonth\",idvalue6);",
+							"",
+							" // get the invoice periods ",
+							" var idvalue8 = (pm.response.json().Result[pm.response.json().Result.length-1].OpenMonth);",
+							"    pm.environment.set(\"AcocuntingPeriodsOpenMonth\",idvalue7);",
+							"    var idvalue9 = (pm.response.json().Result[pm.response.json().Result.length-1].Id);",
+							"    var idvalue10 = (pm.response.json().Result[pm.response.json().Result.length-1].Tenant);",
+							"    var idvalue11 = (pm.response.json().Result[pm.response.json().Result.length-1].Year);",
+							"    var idvalue12 = (pm.response.json().Result[pm.response.json().Result.length-1].PeriodTypeCode);",
+							"    var idvalue13 = (pm.response.json().Result[pm.response.json().Result.length-1].PeriodTypeName);",
+							"    var idvalue14 = (pm.response.json().Result[pm.response.json().Result.length-1].ClosedMonth);",
+							"    ",
+							"    pm.environment.set(\"AcocuntingPeriodsInvoiceId\",idvalue9);",
+							"    pm.environment.set(\"AcocuntingPeriodsTenant\",idvalue10);",
+							"    pm.environment.set(\"AcocuntingPeriodsInvoiceYear\",idvalue11);",
+							"    pm.environment.set(\"AcocuntingPeriodsPeriodIvoiceTypeCode\",idvalue12);",
+							"    pm.environment.set(\"AcocuntingPeriodsPeriodIvoiceTypeName\",idvalue13);",
+							"    pm.environment.set(\"AcocuntingPeriodsInvoiceClosedMonth\",idvalue14);",
+							"   ",
+							"",
 							"",
 							"",
 							"      if (idvalue7 < month)",
@@ -471,14 +494,14 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "aaa5876d-4629-4a6d-9ac8-be0e6a7b3b4f",
+						"id": "544e36f2-31cf-460b-a47a-68eda2e9a39d",
 						"exec": [
 							"pm.test(\"Current month opened \", function () {",
 							"    ",
 							"    pm.response.to.have.status(200);",
 							"   ",
-							"      var idvalue1 = (pm.response.json().Result.Id);",
-							"   postman.setNextRequest(\"GetAccountingCurriency\");  ",
+							"      var idvalue1 = (pm.response.json().Id);",
+							"    postman.setNextRequest(\"OpenIvoiceMonth\");  ",
 							"  ",
 							" ",
 							"});",
@@ -514,7 +537,72 @@
 						}
 					}
 				},
-				"url": "{URL}}/api/accountingperiods"
+				"url": {
+					"raw": "{{URL}}/api/accountingperiods",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingperiods"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OpenIvoiceMonth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b5128155-acfa-485d-82b8-6f7d87eb779e",
+						"exec": [
+							"pm.test(\"Current month opened \", function () {\r",
+							"    \r",
+							"    pm.response.to.have.status(200);\r",
+							"   \r",
+							"      var idvalue1 = (pm.response.json().Id);\r",
+							"   postman.setNextRequest(\"GetAccountingCurriency\");  \r",
+							"  \r",
+							" \r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":{{AcocuntingPeriodsInvoiceClosedMonth}} ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsInvoiceId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"2\",\r\n\"PeriodTypeName\": \"Invoice\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsInvoiceYear}}\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/accountingperiods",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingperiods"
+					]
+				}
 			},
 			"response": []
 		},
@@ -524,7 +612,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a0e2c436-b3dd-43cf-a794-48337972bf52",
+						"id": "95a0e2c9-d5da-4a66-b7cf-6e7699579cc8",
 						"exec": [
 							"",
 							"pm.test(\"GetAccountingCurriency\", function () {",
@@ -585,7 +673,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0fead3e4-e27f-4a28-9b98-9b7539824f0f",
+						"id": "f253c21c-7443-42f6-85d5-da1ee6c30977",
 						"exec": [
 							"pm.test(\"GetTenantCurriencies\", function () {",
 							"  pm.response.to.have.status(200);",
@@ -616,7 +704,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/currencyviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=23",
+					"raw": "{{URL}}/api/currencyviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=23&&",
 					"host": [
 						"{{URL}}"
 					],
@@ -665,7 +753,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3a39dd00-2f84-417e-89b1-8972728aa588",
+						"id": "ce94d39d-8f19-4dc1-af49-e91e7c29c7b9",
 						"exec": [
 							"pm.test(\"GetCountryAX\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -703,7 +791,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22",
+					"raw": "{{URL}}/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22\n\n",
 					"host": [
 						"{{URL}}"
 					],
@@ -740,7 +828,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "30d1e618-96cf-4f8e-a6a9-e3e32654acf3",
+						"id": "602b7e9e-5816-4a6e-882f-37386b752096",
 						"exec": [
 							"pm.test(\"GetVatTypeExempt\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -777,7 +865,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&Filter1Value=EXMPT",
+					"raw": "{{URL}}/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&&&Filter1Value=EXMPT",
 					"host": [
 						"{{URL}}"
 					],
@@ -850,7 +938,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1682d7af-25ea-487d-8543-53b06de86ddb",
+						"id": "2240ff2e-dd6e-4284-a055-6a927b1c47ff",
 						"exec": [
 							"pm.test(\"Create Vat Type Exempt\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -893,7 +981,16 @@
 					"mode": "raw",
 					"raw": "{\r\n   \r\n   \"Tenant\":{{Tenant}},\r\n   \"IsSecured\":false,\r\n   \"Code\":\"EPT\",\r\n   \"EnglishName\":\"Exempt\",\r\n   \"LocalName\":\"f\",\r\n   \"SearchFields\":\"EPT\",\r\n   \"NewEntityPercentage\":0.0,\r\n   \"NewEntityPercentageDate\":\"2016-02-02T00:00:00Z\",\r\n  \r\n   \"VatTypePercentages\":[\r\n      {\r\n        \r\n         \"Tenant\":{{Tenant}},\r\n         \"VatTypeId\":\"1-3465\",\r\n         \"FromDate\":\"2012-02-02T00:00:00Z\",\r\n         \"Percentage\":0.0,\r\n         \"ChangeSetOp\":0\r\n      }\r\n   ]\r\n  \r\n}"
 				},
-				"url": "{{URL}}/api/vattypes"
+				"url": {
+					"raw": "{{URL}}/api/vattypes",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"vattypes"
+					]
+				}
 			},
 			"response": []
 		},
@@ -903,7 +1000,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "ad0de5f5-52c5-4672-9fa8-d0f0db6e867f",
+						"id": "d1209599-02d7-45b0-8b65-704bad72fbf8",
 						"exec": [
 							"pm.test(\"GetPaymentTermCash\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -981,7 +1078,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "16412c84-d88b-45a5-8e6b-354a18696dac",
+						"id": "5f580692-a990-4846-8ee9-cf2c730c1882",
 						"exec": [
 							"pm.test(\"Create Payment Term Cash\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -1024,7 +1121,16 @@
 					"mode": "raw",
 					"raw": "{\r\n\r\n   \"Tenant\":{{Tenant}},\r\n   \r\n   \"EnglishName\":\"cash\",\r\n   \"LocalName\":\"cash local\",\r\n   \"Days\":0,\r\n   \"InActive\":false,\r\n   \"DisplayInLOV\":true,\r\n   \"SearchFields\":null,\r\n   \"IsManuallySet\":false,\r\n   \"CurrentMonth\":false,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}"
 				},
-				"url": "{{URL}}/api/paymentterms"
+				"url": {
+					"raw": "{{URL}}/api/paymentterms",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"paymentterms"
+					]
+				}
 			},
 			"response": []
 		},
@@ -1034,7 +1140,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "669d741e-9c26-4643-a96f-85649c98462d",
+						"id": "52ce2929-4b00-461a-ac26-9ceea2bff0ed",
 						"exec": [
 							"pm.test(\"GetPaymentMethodCash\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1070,7 +1176,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23",
+					"raw": "{{URL}}/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23\n&&",
 					"host": [
 						"{{URL}}"
 					],
@@ -1123,7 +1229,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f535cde3-eebf-40c4-9915-e39cd2313d41",
+						"id": "db65ec3b-1e22-44df-ba27-6f8e0b2ff7ab",
 						"exec": [
 							"pm.test(\"CreatePayment Method Cash \", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -1168,7 +1274,16 @@
 					"mode": "raw",
 					"raw": "{\r\n   \"Tenant\":{{Tenant}},\r\n   \"IsSecured\":false,\r\n   \"EnglishName\":\"Cash\",\r\n   \"LocalName\":null,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}"
 				},
-				"url": "{{URL}}/api/paymentterms"
+				"url": {
+					"raw": "{{URL}}/api/paymentterms",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"paymentterms"
+					]
+				}
 			},
 			"response": []
 		},
@@ -1177,7 +1292,9 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": ""
+				"url": {
+					"raw": ""
+				}
 			},
 			"response": []
 		},
@@ -1187,7 +1304,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "50a546d2-2d18-4735-bee8-709082bda3cd",
+						"id": "d2025aa9-a999-49a1-8558-d08716b00079",
 						"exec": [
 							"pm.test(\"GetBranchMainOffice\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1236,7 +1353,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{URL}}/api/branchviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]",
+					"raw": "{{URL}}/api/branchviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&&",
 					"host": [
 						"{{URL}}"
 					],
@@ -1309,7 +1426,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "fb3f1fdc-9c1d-4c3c-8775-b5c141007f7e",
+						"id": "74393aff-7642-45b2-b5de-d9ac6585be00",
 						"exec": [
 							"pm.test(\"Create Branch Main Office\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -1348,7 +1465,16 @@
 					"mode": "raw",
 					"raw": "{\r\n\r\n\r\n   \"Tenant\":\"{{Tenant}}\",\r\n   \r\n   \"EnglishName\":\"Main Office\",\r\n   \"LocalName\":\"Main Office\",\r\n  \r\n   \"InActive\":false,\r\n   \r\n   \"SearchFields\":\"test\",\r\n \r\n   \"IsHybrid\":false,\r\n   \"ExternalId\":null,\r\n   \"AddressId\":null,\r\n   \"Signature\":null,\r\n   \r\n   \"INTTRAContactId\":null,\r\n   \"CounterCode\":null\r\n}"
 				},
-				"url": "{{URL}}/api/branches"
+				"url": {
+					"raw": "{{URL}}/api/branches",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"branches"
+					]
+				}
 			},
 			"response": []
 		},
@@ -1358,7 +1484,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f4583b08-3ef7-4750-8296-fdcfaf044a40",
+						"id": "1fe7d208-f9f0-4561-ae3c-852eafb920a4",
 						"exec": [
 							"pm.test(\"Get Charge Type AirFreight\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1395,7 +1521,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/chargestypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=air%20freight&GetCount=true&PageIndex=0&PageSize=23",
+					"raw": "{{URL}}/api/chargestypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=air%20freight&GetCount=true&PageIndex=0&PageSize=23&",
 					"host": [
 						"{{URL}}"
 					],
@@ -1444,7 +1570,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "95d498d4-cbbf-4a38-b7fb-f0747f588e36",
+						"id": "5ca81d65-fe7c-4c5a-8667-11663d913e7c",
 						"exec": [
 							"pm.test(\"Create Branch Main Office\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -1487,7 +1613,16 @@
 					"mode": "raw",
 					"raw": "{\r\n   \"Tenant\":{{Tenant}},\r\n  \r\n   \"Code\":\"AFT\",\r\n   \"EnglishName\":\"141\",\r\n   \"LocalName\":null,\r\n   \"ChargesGroupCode\":\"COMM\",\r\n   \"ChargesGroupId\":\"1-6036\",\r\n   \"MeasurementId\":\"1-29726\",\r\n   \"ContainerMeasurementId\":null,\r\n   \"Description\":null,\r\n   \"IsReceivable\":true,\r\n   \"IsPayable\":true,\r\n   \"IsAir\":true,\r\n   \"IsOcean\":true,\r\n   \"IsInland\":true,\r\n   \"IsAutoDisplayInShipment\":false,\r\n   \"IsAutoDisplayInConsolidation\":false,\r\n   \"IsAutoDisplayInQuote\":false,\r\n   \"DueTypeCode\":null,\r\n   \"IATACodeId\":null,\r\n   \"AWBPrintDescription\":true,\r\n   \"VatTypeId\":null,\r\n   \"ViewOrder\":100,\r\n  \r\n \r\n   \"IsCustoms\":false,\r\n   \"ComputedLocalName\":null,\r\n   \"AddedManually\":true,\r\n   \"InActive\":false,\r\n   \"MeasurementCode\":null,\r\n   \"MeasurementShortName\":null,\r\n   \"ContainerMeasurementCode\":null,\r\n   \"SearchFields\":\"11,11\",\r\n\r\n   \"PayableDebitGLAcountId\":null,\r\n   \"ReceivableCreditGLAccountId\":null,\r\n   \"IsExpense\":false\r\n ,\r\n  \r\n   \"IsExport\":true\r\n  \r\n}"
 				},
-				"url": "{{URL}}/api/chargestypes"
+				"url": {
+					"raw": "{{URL}}/api/chargestypes",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chargestypes"
+					]
+				}
 			},
 			"response": []
 		},
@@ -1497,7 +1632,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6c0443e4-c8bb-4e1e-9f7d-ff352da2fb2d",
+						"id": "81220867-f142-44ec-902a-adf28ae506a5",
 						"exec": [
 							"pm.test(\"GetChartOfAccountVend1\", function () {\r",
 							"   pm.response.to.have.status(200);\r",
@@ -1562,7 +1697,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=1PMCF&PageSize=23",
+					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=1PMCF&PageSize=23 ",
 					"host": [
 						"{{URL}}"
 					],
@@ -1599,7 +1734,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "acc1d4e1-7c34-4550-93c8-876b886c9ec1",
+						"id": "6c350039-afb2-465b-879d-789907d2dc3a",
 						"exec": [
 							"pm.test(\"CreateChartOfAccountVend\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -1665,7 +1800,16 @@
 					"mode": "raw",
 					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"1PMCF\",\r\n    \"LocalName\": \"ספקים\",\r\n    \"Englishname\": \"PMVendorChart\",\r\n    \"TypeCode\": \"4\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
 				},
-				"url": "{{URL}}/api/chartofaccounts"
+				"url": {
+					"raw": "{{URL}}/api/chartofaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chartofaccounts"
+					]
+				}
 			},
 			"response": []
 		},
@@ -1675,7 +1819,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c664975a-4f3a-44c4-8814-db7192e38b0b",
+						"id": "a00293e7-d3a8-4e26-89c8-a96da1ebcb62",
 						"exec": [
 							"pm.test(\"GetCustomerTestGlCust\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1711,7 +1855,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&Filter1Value=12PMCS",
+					"raw": "{{URL}}/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&&Filter1Value=12PMCS",
 					"host": [
 						"{{URL}}"
 					],
@@ -1764,7 +1908,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "147dab07-22e8-4497-97aa-4b67b53f0aa7",
+						"id": "ca98516b-17ec-4d66-852b-3578e9fca44c",
 						"exec": [
 							"pm.test(\"CreateCustomerTest\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -1812,7 +1956,16 @@
 					"mode": "raw",
 					"raw": "\r\n{\r\n  \"Tenant\":\"{{Tenant}}\",\r\n \r\n  \"PartnerTypeId\": \"CS\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"12PMCSadress\",\r\n    \"CountryId\": \"{{CountryId}}\"\r\n    \r\n    \r\n\r\n \r\n  \r\n  },\r\n \r\n  \"Customer\": {\r\n    \"$id\": \"3\",\r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"12PMCS\",\r\n    \"LocalName\": \"12PMCS\",\r\n    \r\n    \r\n\r\n   \r\n   \r\n   \r\n    \"PartnerTypeId\": \"CS\",\r\n   \r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\",\r\n    \r\n\r\n    \r\n    \"IsCustomer\": true,\r\n    \"CustomerStatusCode\": \"ACT\",\r\n\r\n  \r\n    \"SetAsPotential\": false,\r\n    \r\n   \r\n    \"CustomerTenant\": 0\r\n  }\r\n\r\n}\r\n"
 				},
-				"url": "{{URL}}/api/PartnersDomain"
+				"url": {
+					"raw": "{{URL}}/api/PartnersDomain",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"PartnersDomain"
+					]
+				}
 			},
 			"response": []
 		},
@@ -1822,7 +1975,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c97346e7-e9b1-40b3-932a-98b52dba6c26",
+						"id": "2b0dcc29-f545-4ec5-bc60-973d42f8158c",
 						"exec": [
 							"pm.test(\"GetVendorTestGlVend\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1857,7 +2010,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&Filter1Value=1s5PMV2",
+					"raw": "{{URL}}/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&&&Filter1Value=1s5PMV2",
 					"host": [
 						"{{URL}}"
 					],
@@ -1914,7 +2067,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "147dab07-22e8-4497-97aa-4b67b53f0aa7",
+						"id": "81aed51c-bba0-4a45-87ae-71ae9c0b970c",
 						"exec": [
 							"pm.test(\"CreateVendorTest\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -1965,7 +2118,16 @@
 					"mode": "raw",
 					"raw": "\r\n{\r\n  \"Tenant\":\"{{Tenant}}\",\r\n \r\n  \"PartnerTypeId\": \"VD\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"PMVD\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \r\n    \r\n    \r\n    \"SearchFields\": \"1s5PMV2,1s5PMV2,1s5PMV2\"\r\n \r\n  \r\n  },\r\n \r\n  \"Vendor\": {\r\n   \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"1s5PMV2\",\r\n    \"LocalName\": \"1s5PMV2\",\r\n     \"PartnerTypeId\": \"VD\",\r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\"\r\n  }\r\n}\r\n"
 				},
-				"url": "{{URL}}/api/PartnersDomain"
+				"url": {
+					"raw": "{{URL}}/api/PartnersDomain",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"PartnersDomain"
+					]
+				}
 			},
 			"response": []
 		},
@@ -1975,7 +2137,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "ae06fbdb-80b9-455b-b584-2c8b6e0d5d8b",
+						"id": "0bceb14e-6edf-409a-82e8-500f1e232bad",
 						"exec": [
 							"pm.test(\"GetCustomerGlAccountIdCustGL\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -2053,7 +2215,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6c0443e4-c8bb-4e1e-9f7d-ff352da2fb2d",
+						"id": "084d28db-b497-4182-b1cd-4a72c0aa9005",
 						"exec": [
 							"pm.test(\"GetChartOfAccountCust1\", function () {\r",
 							"   pm.response.to.have.status(200);\r",
@@ -2119,7 +2281,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=15CFC&PageSize=23",
+					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=15CFC&PageSize=23 ",
 					"host": [
 						"{{URL}}"
 					],
@@ -2156,7 +2318,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "acc1d4e1-7c34-4550-93c8-876b886c9ec1",
+						"id": "c8f3e199-05f7-4c5b-b933-bcf86c50cb33",
 						"exec": [
 							"pm.test(\"CreateChartOfAccountCust1\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -2222,7 +2384,16 @@
 					"mode": "raw",
 					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"15CFC\",\r\n    \"LocalName\": \"לקוחות\",\r\n    \"Englishname\": \"PMCustomerChart\",\r\n    \"TypeCode\": \"3\",\r\n    \"Inactive\": true,\r\n    \"SearchFields\": \"15CFC,15CFC,15CFC\",\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
 				},
-				"url": "{{URL}}/api/chartofaccounts"
+				"url": {
+					"raw": "{{URL}}/api/chartofaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chartofaccounts"
+					]
+				}
 			},
 			"response": []
 		},
@@ -2232,7 +2403,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "90cec87d-391d-44af-a787-c761323f084f",
+						"id": "44f6de2c-8ec2-408d-b0bd-7b7f0fcc39aa",
 						"exec": [
 							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -2279,7 +2450,16 @@
 					"mode": "raw",
 					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"2\",\r\n   \"DisplayNumber\":\"54l4CSPM\",\r\n   \"LocalName\":\"54l4CSPM\",\r\n   \"EnglishName\":\"54l4CSPM\",\r\n   \"SearchFields\":\"54l4CSPM,54l4CSPM,54l4CSPM\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{ChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"3\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{CustomerId}}\"\r\n}"
 				},
-				"url": "{{URL}}/api/glaccounts"
+				"url": {
+					"raw": "{{URL}}/api/glaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"glaccounts"
+					]
+				}
 			},
 			"response": []
 		},
@@ -2289,7 +2469,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1c5e3b43-19fc-4816-9f8f-e7dec3f51fa9",
+						"id": "d5446b92-0678-4f50-ac97-d440d4edca3b",
 						"exec": [
 							"pm.test(\"Get Vendor GlAccount VendorGL\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -2376,7 +2556,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a803d3ff-7397-4aa9-94ac-374a1f66969f",
+						"id": "740c5c45-6e53-4fad-bbe0-310e8b1f9159",
 						"exec": [
 							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -2428,7 +2608,16 @@
 					"mode": "raw",
 					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"3\",\r\n   \"DisplayNumber\":\"458GLPML\",\r\n   \"LocalName\":\"458GLPML\",\r\n   \"EnglishName\":\"458GLPML\",\r\n   \"SearchFields\":\"458GLPML,458GLPML,458GLPML\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{VendorChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"4\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{VendorId}}\"\r\n}"
 				},
-				"url": "{{URL}}/api/glaccounts"
+				"url": {
+					"raw": "{{URL}}/api/glaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"glaccounts"
+					]
+				}
 			},
 			"response": []
 		},
@@ -2438,7 +2627,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6b703704-e2de-4d97-b3c5-ff7986f1f8d9",
+						"id": "e1bad8b8-95f2-4fe5-9524-4b723f1fd4e9",
 						"exec": [
 							"",
 							"",
@@ -2474,7 +2663,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/cardviews/getsingle/?id={{CustomerId}}",
+					"raw": "{{URL}}/api/cardviews/getsingle/?id={{CustomerId}}\n",
 					"host": [
 						"{{URL}}"
 					],
@@ -2500,7 +2689,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6b703704-e2de-4d97-b3c5-ff7986f1f8d9",
+						"id": "1665c585-58ed-4b74-9cd7-2db82a8ba0e9",
 						"exec": [
 							"",
 							"",
@@ -2537,7 +2726,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/cardviews/getsingle/?id={{VendorId}}",
+					"raw": "{{URL}}/api/cardviews/getsingle/?id={{VendorId}}\n",
 					"host": [
 						"{{URL}}"
 					],
@@ -2563,7 +2752,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4191ebb7-d81a-447b-9b89-e9e852a9afa2",
+						"id": "f1706c7d-3647-4899-a344-9cf85925fdb1",
 						"exec": [
 							"pm.test(\"GetChartOfAccountBank BK771 Successfully Done\", function () {\r",
 							"   pm.response.to.have.status(200);\r",
@@ -2640,7 +2829,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c44706c0-d74d-45f6-878b-a3adbc457c6f",
+						"id": "1e6ca6a1-65ae-46cb-9a65-0d2de4d998d6",
 						"exec": [
 							"pm.test(\"CreateChartOfAccountCust1\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -2678,7 +2867,16 @@
 					"mode": "raw",
 					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"BK771\",\r\n    \"LocalName\": \"PMBankChart\",\r\n    \"Englishname\": \"PMBankChart\",\r\n    \"TypeCode\": \"5\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n}\r\n"
 				},
-				"url": "{{URL}}/api/chartofaccounts"
+				"url": {
+					"raw": "{{URL}}/api/chartofaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chartofaccounts"
+					]
+				}
 			},
 			"response": []
 		},
@@ -2688,7 +2886,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "75bc44b6-854d-43e1-b0e2-62f8b247eef2",
+						"id": "8b2ea3df-2204-4d9f-af78-7f7f4ecb4a23",
 						"exec": [
 							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -2724,7 +2922,16 @@
 					"mode": "raw",
 					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"1\",\r\n   \"DisplayNumber\":\"1414BKPM\",\r\n   \"LocalName\":\"1414BKPM\",\r\n   \"EnglishName\":\"1414BKPM\",\r\n   \"SearchFields\":\"1414BKPM,1414BKPM,1414BKPM\",\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"CurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"ChartOfAccountsId\":\"{{BankChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"5\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n}"
 				},
-				"url": "{{URL}}/api/glaccounts"
+				"url": {
+					"raw": "{{URL}}/api/glaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"glaccounts"
+					]
+				}
 			},
 			"response": []
 		},
@@ -2734,7 +2941,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "81fdd616-9b3a-49f9-9a91-6f8b4f488509",
+						"id": "24b5d345-afd2-4114-9691-409fca49b505",
 						"exec": [
 							"",
 							"pm.test(\"GetBankCode\", function () {",
@@ -2883,7 +3090,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "998d5990-60ca-4f9f-9f4b-f4e1dc495c1f",
+						"id": "ac349f65-921e-49b5-8842-c8547a19cc79",
 						"exec": [
 							"pm.test(\"CreateBankCode\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -2965,7 +3172,16 @@
 					"mode": "raw",
 					"raw": "{   \"tenant\": {{Tenant}},\n    \"code\": \"BK14\",\n    \"englishName\": \"BKT\",\n    \"localName\": \"בקי\"\n}"
 				},
-				"url": "{{URL}}/api/bankcodes"
+				"url": {
+					"raw": "{{URL}}/api/bankcodes",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"bankcodes"
+					]
+				}
 			},
 			"response": []
 		},
@@ -2975,7 +3191,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "5267272b-0cd9-4f05-ac44-053c6531f189",
+						"id": "3d6e1221-5737-489f-ac4e-32669c480b54",
 						"exec": [
 							"pm.test(\"Create Branch Main Office\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -3016,7 +3232,16 @@
 					"mode": "raw",
 					"raw": "{\r\n   \"Tenant\":\"{{Tenant}}\",\r\n   \"EnglishName\":\"Cash Book\",\r\n   \"LocalName\":\"מבחן התרסקות\",\r\n   \"SearchFields\":\"test\"\r\n}"
 				},
-				"url": "{{URL}}/api/branches"
+				"url": {
+					"raw": "{{URL}}/api/branches",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"branches"
+					]
+				}
 			},
 			"response": []
 		}

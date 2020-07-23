@@ -2,6 +2,7 @@ import {QuotePM} from './EntityPMs/QuotePM';
 import {AppTool, ArrayTool} from '../Infrastructure/Tools';
 import {QuoteStageList} from './EntityLists/QuoteStageList';
 import {QuoteStageListService} from './Services/StandardLists/QuoteStageListService';
+import { QuoteUtilities } from './Utilities/QuoteUtilities';
 
 export class QuoteTool {
     public static IsQuoteEditEnabled(entityPM: QuotePM) {
@@ -170,6 +171,182 @@ export class QuoteTool {
                     }
                 }
             });
+        }
+
+        return myResult;
+    }
+
+    public static CheckUpdateQuantities(entityPM: QuotePM) {
+        var myResult: boolean = false;
+
+        var isLCL = QuoteUtilities.IsLCLQuote(entityPM);
+
+        if (isLCL) {
+            myResult = this.CheckUpdateQuantities_LCL(entityPM);
+        }
+
+        else {
+            myResult = this.CheckUpdateQuantities_FCL(entityPM);
+        }
+
+        return myResult;
+    }
+    private static CheckUpdateQuantities_LCL(entityPM: QuotePM) {
+        var myResult: boolean = false;
+
+        if (entityPM.QuoteTypeCode == "A") {
+            if (entityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
+                var entityQuantity: number = null;
+
+                //"GRWT"
+                entityQuantity = entityPM.GrossWeight;
+                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "GRWT" && f.CostQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+                else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "GRWT" && f.SaleQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+
+                //"GWTN"
+                entityQuantity = entityPM.GrossWeightPerTon;
+                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "GWTN" && f.CostQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+                else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "GWTN" && f.SaleQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+
+                //"CHWT"
+                entityQuantity = entityPM.ChargeableWeight;
+                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "CHWT" && f.CostQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+                else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "CHWT" && f.SaleQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+
+                //CWKG
+                entityQuantity = entityPM.ChargeableWeightInKG;
+                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "CWKG" && f.CostQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+                else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "CWKG" && f.SaleQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+
+                //GWKG
+                entityQuantity = entityPM.GrossWeightInKG;
+                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "GWKG" && f.CostQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+                else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "GWKG" && f.SaleQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+
+                //"VOLU"
+                entityQuantity = entityPM.Volume;
+                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "VOLU" && f.CostQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+                else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "VOLU" && f.SaleQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+
+                //"VCBM"
+                entityQuantity = entityPM.VolumeInCBM;
+                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "VCBM" && f.CostQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+                else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "VCBM" && f.SaleQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+
+                //"BTEU"
+                entityQuantity = entityPM.TEU;
+                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "BTEU" && f.CostQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+                else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "BTEU" && f.SaleQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+
+                //"QTY"
+                entityQuantity = entityPM.NumberOfPackages;
+                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+                else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "QTY" && f.SaleQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+
+                //"PRVL"
+                entityQuantity = entityPM.ValueOfGoods;
+                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRVL" && f.CostQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+                else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PRVL" && f.SaleQuantity != entityQuantity).length > 0) {
+                    myResult = true;
+                }
+
+                //"PRFR"
+                if (entityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT").length > 0) {
+                    if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRFR" || f.SaleMeasurementCode == "PRFR").length > 0) {
+
+                        var FRT_CostQuantity = entityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].CostTotalAmount;
+                        var FRT_SaleQuantity = entityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].SaleTotalAmount;
+
+                        if (AppTool.IsNullOrZero(FRT_CostQuantity)) {
+                            FRT_CostQuantity = 0;
+                        }
+
+                        if (AppTool.IsNullOrZero(FRT_SaleQuantity)) {
+                            FRT_SaleQuantity = 0;
+                        }
+
+                        if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRFR" && f.CostQuantity != null && f.CostQuantity != 0 && f.CostQuantity != FRT_CostQuantity).length > 0) {
+                            myResult = true;
+                        }
+
+                        if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PRFR" && f.SaleQuantity != null && f.SaleQuantity != 0 && f.SaleQuantity != FRT_SaleQuantity).length > 0) {
+                            myResult = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return myResult;
+    }
+    private static CheckUpdateQuantities_FCL(entityPM: QuotePM) {
+        var myResult: boolean = false;
+
+        if (entityPM.QuoteTypeCode == "A") {
+            var entityQuantity: number = null;
+
+            entityQuantity = entityPM.TEU;
+            if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "BTEU" && f.CostQuantity != entityQuantity).length > 0) {
+                myResult = true;
+            }
+            else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "BTEU" && f.SaleQuantity != entityQuantity).length > 0) {
+                myResult = true;
+            }
+
+            if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != entityPM.NumberOfContainers).length > 0) {
+                myResult = true;
+            }
+            else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "QTY" && f.SaleQuantity != entityPM.NumberOfContainers).length > 0) {
+                myResult = true;
+            }
+
+            if (entityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
+                if (entityPM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PRVL" && d.CostQuantity != entityPM.ValueOfGoods) || (d.CostMeasurementCode == "PRVL" && d.CostQuantity != entityPM.ValueOfGoods)).length > 0) {
+                    myResult = true;
+                }
+
+                else if (entityPM.QuoteCharges.filter(d => d.SaleMeasurementCode == "PRVL" && d.SaleQuantity != entityPM.ValueOfGoods).length > 0) {
+                    myResult = true;
+                }
+            }
         }
 
         return myResult;

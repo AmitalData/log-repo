@@ -448,6 +448,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @DIM_ShipmentStatusesParentTenantNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ShipmentStatusesParentTenantNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_ShipmentStatusesParentTenantNewId,0,'DIM_ShipmentStatuses','[Parent Tenant]','Parent Tenant','Integer','true',0,0,'false','false','false','false','false','false')  
+declare @DIM_ShipmentStatusesStatusWeightNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ShipmentStatusesStatusWeightNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_ShipmentStatusesStatusWeightNewId,0,'DIM_ShipmentStatuses','[Status Weight]','Status Weight','Integer','false',0,0,'false','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @DIM_SpecialServicesTypesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_SpecialServicesTypesNewId OUTPUT,'DWObjectTable' 

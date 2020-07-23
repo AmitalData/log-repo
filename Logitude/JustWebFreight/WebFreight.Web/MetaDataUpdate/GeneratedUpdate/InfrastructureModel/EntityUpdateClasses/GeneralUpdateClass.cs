@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "6af5f117bda018e769403d5cb3f98440";
+		public const string HashString = "022fea7ed4bb8ad0e96e0ca23a40e401";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "e167",
+			      				    Code =  "0d9e",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2400,13 +2400,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingODontShowCardsWith0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.DontShowCardsWith0", DefaultText = "Don't Include GLAccount with Close Balance 0",LocalDefaultText = @"לא לכלול כרטיסים ביתרת סגירה 0", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   
-	    
-}
+            TextCode GeneralTextCode_GeneralAccountingOAgingMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.Accounting.O.AgingMethod", DefaultText = "Aging Method", LocalDefaultText = @"שיטת גיול", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-    
 
-   }
+        }
+
+
+
+    }
     
 }
 	 

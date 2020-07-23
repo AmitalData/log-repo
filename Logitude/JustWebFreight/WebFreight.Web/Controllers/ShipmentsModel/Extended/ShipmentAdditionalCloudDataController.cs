@@ -528,6 +528,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     Repository.SubmitChanges();
                     SHRepository.Update(Ship);
                     SHRepository.SubmitChanges();
+
+                    RunStoredProcedureClass.UpdateShipmentStatus(Ship.Id, Ship.Tenant);
+
+
                     IQueueService queueservice = new DbQueueService();
                     if (!string.IsNullOrEmpty(entity.DenyReason))
                     {

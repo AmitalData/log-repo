@@ -105,6 +105,16 @@ export class TaxDeductionReportPM {
     public set StatusLocalName(newValue: string) { if (this.statusLocalName != newValue) { this.statusLocalName = newValue; this.MarkAsDirty("StatusLocalName"); } }
        
 	 
+    private byMonth: boolean;
+    public get ByMonth() { return this.byMonth; }
+    public set ByMonth(newValue: boolean) { if (this.byMonth != newValue) { this.byMonth = newValue; this.MarkAsDirty("ByMonth"); } }
+       
+	 
+    private month: Date;
+    public get Month() { return this.month; }
+    public set Month(newValue: Date) { if (this.month != newValue) { this.month = newValue; this.MarkAsDirty("Month"); } }
+       
+	 
 
     public OldEntityPM: TaxDeductionReportPM;
 		

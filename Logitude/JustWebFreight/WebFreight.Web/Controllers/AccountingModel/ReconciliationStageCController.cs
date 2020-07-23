@@ -22,14 +22,15 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        public HttpResponseMessage GetReconciliationStageC(int tenant, string gLAccountId, string accountTypeCode, string upToAccountingDate, int lT_LinesMaximum, decimal maximalDifference)
+        public HttpResponseMessage GetReconciliationStageC(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum) //, decimal maximalDifference)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 ReconciliationStageCArg args = null;
                 string message = "";
-                bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, upToAccountingDate, lT_LinesMaximum, maximalDifference, ref args, message);
+                decimal maximalDifference = Decimal.MaxValue;
+                bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, upToDueDate, lT_LinesMaximum, maximalDifference, ref args, message);
                 if (!isSuccess)
                 {
                     throw new Exception(message);
@@ -66,7 +67,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
         }
 
-        private bool CreateArgs(int tenant, string gLAccountId, string accountTypeCode, string upToAccountingDate, int lT_LinesMaximum, decimal maximalDifference, ref ReconciliationStageCArg args, string message)
+        private bool CreateArgs(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, decimal maximalDifference, ref ReconciliationStageCArg args, string message)
         {
             bool isSuccess = false;
             if (String.IsNullOrWhiteSpace(gLAccountId) && (String.IsNullOrWhiteSpace(accountTypeCode) || (accountTypeCode != "2" && accountTypeCode != "3"))) // 2=Client, 3=Vendor
@@ -75,20 +76,20 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 return isSuccess;
             }
 
-            if (String.IsNullOrWhiteSpace(upToAccountingDate)) 
+            if (String.IsNullOrWhiteSpace(upToDueDate)) 
             {
-                message = "UpToAccountingDate is a must";
+                message = "UpToDueDate is a must";
                 return isSuccess;
             }
 
             DateTime upToDateValue;
             try
             {
-                upToDateValue = DateTime.ParseExact(upToAccountingDate, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                upToDateValue = DateTime.ParseExact(upToDueDate, "dd.MM.yyyy", CultureInfo.InvariantCulture);
             }
             catch (FormatException ex)
             {
-                message = "Cannot parse UpToAccountingDate";
+                message = "Cannot parse UpToDueDate";
                 return isSuccess;
 
             }
@@ -110,7 +111,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 Tenant = tenant,
                 GLAccountId = gLAccountId,
                 AccountTypeCode = accountTypeCode,
-                UpToAccountingDate = upToDateValue,
+                UpToDueDate = upToDateValue,
                 LT_LinesMaximum = lT_LinesMaximum,
                 MaximalDifference = maximalDifference,
             };
@@ -119,14 +120,16 @@ namespace WebFreight.Web.Controllers.AccountingModel
         }
 
 
-        public HttpResponseMessage GetReconciliationStageCNoBatch(int tenant, string gLAccountId, string accountTypeCode, string upToAccountingDate, int lT_LinesMaximum, decimal maximalDifference, int noBatch)
+       // public HttpResponseMessage GetReconciliationStageCNoBatch(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, decimal maximalDifference, int noBatch)
+        public HttpResponseMessage GetReconciliationStageCNoBatch(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, int noBatch) // penultimate parameter was decimal maximalDifference 
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 ReconciliationStageCArg args = null;
                 string message = "";
-                bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, upToAccountingDate, lT_LinesMaximum, maximalDifference, ref args, message);
+                decimal maximalDifference = Decimal.MaxValue;
+                bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, upToDueDate, lT_LinesMaximum, maximalDifference, ref args, message);
                 if (!isSuccess)
                 {
                     throw new Exception(message);

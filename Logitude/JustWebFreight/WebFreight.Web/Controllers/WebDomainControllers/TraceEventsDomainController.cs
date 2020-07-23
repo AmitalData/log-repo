@@ -299,7 +299,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         entityPM.ExceptionDescription = entityPM.LastExceptionDescription = newTraceEvent.Notes;
                         entityPM.HasException = true;
                         entityPM.ExceptionResolvedDescription = null;
-
+                        entityPM.IsUpdateEntityException = true;
                         if (entityPM.ShipmentLevelCode == "A")
                         {
                             List<Shipment> connectedShipments = shipmentRepository.GetConnectedCustomShipments(tenant, entityPM.Id).ToList();
@@ -323,6 +323,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         entityPM.HasException = false;
                         entityPM.ExceptionDescription = null;
                         entityPM.ExceptionDate = null;
+                        entityPM.IsUpdateEntityException = true;
 
                         if (entityPM.ShipmentLevelCode == "A")
                         {

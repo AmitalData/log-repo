@@ -226,9 +226,7 @@ private toDate: Date;
     if (this.currencyFilter != value) {
         this.currencyFilter = value;
         this.SetEnabledProperties();
-        if (this.Level == "GLAccount" && value) {
-            this.IsDetailedCheckBoxEnabled = true;
-        } else this.IsDetailedCheckBoxEnabled = false;
+       
     }
   }
 
@@ -297,7 +295,7 @@ private toDate: Date;
     if (this.FilterSelectedValue != itemValue) {
       this.FilterSelectedValue = itemValue;
         this.Level = itemValue;
-        if(this.Level== "GLAccount" && this.CurrencyFilter){
+        if(this.Level== "GLAccount"){
          this.IsDetailedCheckBoxEnabled = true;
     } else  this.IsDetailedCheckBoxEnabled = false;
   }

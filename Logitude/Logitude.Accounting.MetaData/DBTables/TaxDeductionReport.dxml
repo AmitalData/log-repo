@@ -91,6 +91,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ByMonth"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Month"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
