@@ -69,6 +69,21 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
+        public int GetDeclarationMaxCancelRequestNumber(int tenant, string id)
+        {
+      
+            var list = (from a in context.Declarations
+                        where a.Tenant == tenant && a.CancelRequestNumber != null && a.Id==id
+                        select  a.CancelRequestNumber  ).ToList();
+
+            int? max = 0;
+
+            if (list.Count() != 0)
+                max = list.Max();
+
+            return Convert.ToInt32(max);
+        }
+
         public int GetDeclarationMaxAmendmentRequestNumber(int tenant)
         {
             //var x=  (from a in context.Declarations

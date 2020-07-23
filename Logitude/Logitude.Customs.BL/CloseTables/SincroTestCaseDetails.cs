@@ -64,6 +64,22 @@ MainInterfaceCode ="2892"
                                                
                     MainInterfaceCode="5117",
                 },
+
+
+                    new SincroTestCaseDetail()
+                {
+                    Code = "5118",
+                    Name = "(מענה לביטול הצהרה (5118 ",
+                    IsDCA= true,
+                    Entity="Declaration",
+                    Param1= @"{ ""RequestNumber"" :""1"" ,  ""Content33"" :""5"" , 
+                              ""Content22"" :""test 22"" , ""Content36"" :""test 36"" , ""Content37"" :""2020-07-13T07:15:56.514148+03:00"",
+                                 ""DeclarationStatusID"" :""13"" , ""ProceduralFaultMsg "" :""false"" ,
+                              ""RequiredDocumentDetails "" :""false""  }",
+
+
+                    MainInterfaceCode="5118",
+                },
                 new SincroTestCaseDetail()
                 {
                     Code = "190",

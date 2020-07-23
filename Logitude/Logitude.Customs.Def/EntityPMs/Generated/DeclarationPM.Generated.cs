@@ -5055,6 +5055,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string cancelRequestStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CancelRequestStatusName  
+	   {
+	    
+	     get
+		{
+		   return cancelRequestStatusName;
+		 }
+		 set
+		 {
+		   if(cancelRequestStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CancelRequestStatusName",OldValue=cancelRequestStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cancelRequestStatusName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
