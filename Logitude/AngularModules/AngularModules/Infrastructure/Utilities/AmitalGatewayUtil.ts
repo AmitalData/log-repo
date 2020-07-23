@@ -1401,6 +1401,7 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
            
 
         };
+        AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
         logWindow.ShowCloseButton = true;
         logWindow.Show(
             //'./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent'
@@ -1412,7 +1413,7 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
         logWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
             //AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
             SessionLocator.SelectedSession.StopBusyIndicator();
-            
+            AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
 
             
             AmitalGatewayUtil.Instance.CreateQInvoiceUnifreightCallBack(toCreateQInvoice);
