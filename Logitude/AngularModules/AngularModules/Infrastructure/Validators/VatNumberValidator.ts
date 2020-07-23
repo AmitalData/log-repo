@@ -1,4 +1,4 @@
-﻿import {AppTool, FormatTool} from '../Tools';
+import {AppTool, FormatTool} from '../Tools';
 import {InfraSettings} from '../Utilities/InfraSettings';
 
 export class VatNumberValidator {
@@ -68,13 +68,13 @@ export class VatNumberValidator {
                         if (InfraSettings.TenantPM.VatMandatoryTypeCode == "MFA") {
                             args.Errors.push("VAT Number is required");
                         }
-                    }
 
-                    else if (InfraSettings.TenantPM.VatMandatoryTypeCode == "MSC") {
-                        if (args.CountryId == InfraSettings.TenantPM.VatMandatoryCountryId) {
-                            args.Errors.push("VAT Number is required for " + args.CountryEnglishName);
+                        else if (InfraSettings.TenantPM.VatMandatoryTypeCode == "MSC") {
+                            if (args.CountryId == InfraSettings.TenantPM.VatMandatoryCountryId) {
+                                args.Errors.push("VAT Number is required for " + args.CountryEnglishName);
+                            }
                         }
-                    }
+                    }                   
                 }
             }
         }
