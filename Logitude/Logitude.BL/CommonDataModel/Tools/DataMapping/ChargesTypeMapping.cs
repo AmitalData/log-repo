@@ -70,6 +70,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ReceivablesDefaultCurrencyId = entityPM.ReceivablesDefaultCurrencyId;
             poco.PayablesDefaultCurrencyId = entityPM.PayablesDefaultCurrencyId;
             poco.ApplyRegionalTax = entityPM.ApplyRegionalTax;
+            poco.HasPickup = entityPM.HasPickup;
+            poco.HasDelivery = entityPM.HasDelivery;
             BuildSearchField(entityPM, poco);
         }
 
