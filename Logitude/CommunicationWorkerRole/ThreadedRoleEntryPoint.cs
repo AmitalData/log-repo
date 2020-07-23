@@ -400,7 +400,7 @@ namespace CommunicationWorkerRole
             var tst = false;
             if (tst)
             {
-                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "BatchTaskExecutionWR").ToList();
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "LogMessagesWorkerRole" || r.ClassName == "CustomsSchedularWR").ToList();
             }
             foreach (var Service in BatchServicesDefinitions)
             {
@@ -416,7 +416,8 @@ namespace CommunicationWorkerRole
                         args.Add(Service.Parameter2 == "null" ? null : Service.Parameter2);
                     }
                     object[] ArrArgs = args.ToArray();
-                    var Item = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole." + Service.ClassName), ArrArgs) as WorkerEntryPoint;
+                    var classname = (Service.ClassName == "CustomsSchedularWR" ? "SchedularWorkerRole" : Service.ClassName);
+                    var Item = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole." + classname), ArrArgs) as WorkerEntryPoint;
                     Item.MaxWorkingTimeInMinutes = Service.MaxWorkingTimeInMinutes;
                     workers.Add(Item);
                 }

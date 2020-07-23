@@ -36,22 +36,24 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                var r= (from a in repository.context.TaskSchedulerHistories
-                        where a.Id == id
-                        select new TaskSchedulerHistoryPM()
-                        {
-                            Id = a.Id,
-                            Tenant = a.Tenant,
-                            EndDateTime = a.EndDateTime,
-                            IsError = a.IsError,
-                            RunResult = a.RunResult,
-                            StartDateTime = a.StartDateTime,
-                            TaskId = a.TaskId,
-                            StartDateTimeUTC = a.StartDateTimeUTC,
-                            EndDateTimeUTC = a.EndDateTimeUTC,
-                            LogFirstLine = a.LogFirstLine,
-                            LogType = a.LogType,
-                        }).FirstOrDefault()
+                var r = (from a in repository.context.TaskSchedulerHistories
+                         where a.Id == id
+                         select new TaskSchedulerHistoryPM()
+                         {
+                             Id = a.Id,
+                             Tenant = a.Tenant,
+                             EndDateTime = a.EndDateTime,
+                             IsError = a.IsError,
+                             RunResult = a.RunResult,
+                             StartDateTime = a.StartDateTime,
+                             TaskId = a.TaskId,
+                             StartDateTimeUTC = a.StartDateTimeUTC,
+                             EndDateTimeUTC = a.EndDateTimeUTC,
+                             LogFirstLine = a.LogFirstLine,
+                             LogType = a.LogType,
+                             LogDocumentId = a.LogDocumentId,
+
+                         }).FirstOrDefault()
                         ;
                 r.Duration = GetDurationDiffSeconds(r.EndDateTime,r.StartDateTime);
                 return r;
@@ -195,6 +197,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              EndDateTimeUTC = a.EndDateTimeUTC,
                                              LogFirstLine = a.LogFirstLine,
                                              LogType = a.LogType,
+                                             LogDocumentId = a.LogDocumentId,
                                              //Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
 
                                          }).OrderByDescending(x => x.StartDateTime).Take(10)
@@ -266,6 +269,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               EndDateTimeUTC = a.EndDateTimeUTC,
                               LogFirstLine = a.LogFirstLine,
                               LogType = a.LogType,
+                              LogDocumentId = a.LogDocumentId,
                               //Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
 
                           }).OrderByDescending(a => a.StartDateTime).FirstOrDefault();
@@ -289,6 +293,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LogType = a.LogType,
                         Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
                         LogDocumentId = a.LogDocumentId,
+
 
                     }).OrderByDescending(a => a.StartDateTime).FirstOrDefault();
         }
