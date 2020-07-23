@@ -282,10 +282,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return declarationRepository.GetDeclarationMaxAmendmentRequestNumber(tenant);
         }
 
-        public int GetDeclarationMaxCancelRequestNumber(int tenant)
+        public int GetDeclarationMaxCancelRequestNumber(int tenant, string id)
         {
             DeclarationRepository declarationRepository = new DeclarationRepository(context);
-            return declarationRepository.GetDeclarationMaxCancelRequestNumber(tenant);
+            return declarationRepository.GetDeclarationMaxCancelRequestNumber(tenant, id);
         }
 
 

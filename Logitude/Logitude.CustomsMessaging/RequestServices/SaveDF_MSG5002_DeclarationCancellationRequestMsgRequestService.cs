@@ -287,7 +287,7 @@ namespace Logitude.CustomsMessaging.RequestServices
            DeclarationQueryService declarationQueryService = new DeclarationQueryService(declarationPM.Tenant);
 
             
-            return (declarationQueryService.GetDeclarationMaxCancelRequestNumber(declarationPM.Tenant)+1);
+            return (declarationQueryService.GetDeclarationMaxCancelRequestNumber(declarationPM.Tenant, declarationPM.Id) +1);
 
 
          }

@@ -105,8 +105,7 @@ export class CustomsDocumentsComponent
         this.CustomsDocumentsTicketViewModels = null;
     }
     Start(entityPM: any, objectTableName: string) {
-        debugger;
-        if (objectTableName.split('.').length > 2) {
+         if (objectTableName.split('.').length > 2) {
             this.ParentEntityCode_args = objectTableName.split('.')[2];
             objectTableName = objectTableName.split('.')[0] + "." + objectTableName.split('.')[1];
         }

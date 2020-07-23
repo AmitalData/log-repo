@@ -62,10 +62,17 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
     }
 
 
+    get CancelRequestStatusName() { return this.EntityPM.CancelRequestStatusName; }
+    set CancelRequestStatusName(value: string) {
+        if (this.EntityPM.CancelRequestStatusName != value) {
+            this.EntityPM.CancelRequestStatusName = value;
+        }
+    }
+
+
     get CancelRequestStatusCode() { return this.EntityPM.CancelRequestStatusCode; }
     set CancelRequestStatusCode(value: string) {
-        debugger;
-        if (this.EntityPM.CancelRequestStatusCode != value) {
+         if (this.EntityPM.CancelRequestStatusCode != value) {
             this.EntityPM.CancelRequestStatusCode = value;
         }
     }
@@ -179,7 +186,9 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
 
         this.FillErrors();
-        if (this.ValidationErrorsList.length > 0) {
+                if (this.ValidationErrorsList.length > 0) {
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+
             return;
         }
                 CustomMessageProgressComponent
@@ -224,7 +233,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
            
             this.EntityPM = args.Declaration as DeclarationPM;
-            //this.UIProperties.SetEnabled("CancelRequestStatusCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("CancelRequestStatusName", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CustomCancelRequestRemarks", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CancelRequestApproveDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CancelRequestRejectionReason", this.ObjectTableName, false);
@@ -241,8 +250,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
 
     ViewDocumentsComponent() {
-        debugger;
-        var windowArgs: any = {};
+         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
         windowArgs.ObjectTableName =   this.ObjectTableName +".DeclarationCancellation";
        // windowArgs.ParentEntityCode = "Customs.DeclarationCancellation";
