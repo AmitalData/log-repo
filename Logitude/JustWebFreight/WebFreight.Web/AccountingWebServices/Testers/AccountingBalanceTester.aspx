@@ -768,7 +768,7 @@
             defaultParam.Tenant = 1;
             defaultParam.GLAccountId = "Id, or empty value to get all";
             defaultParam.AccountTypeCode = "2=Client, 3=Vendor";
-            defaultParam.UpToAccountingDate = "01.01.2020";
+            defaultParam.UpToDueDate = "01.01.2020";
             defaultParam.LT_LinesMaximum = 20;
            // defaultParam.MaximalDifference = 50.00;
 
@@ -793,7 +793,7 @@
 
             myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
 
-            myUrl = myUrl + "&upToAccountingDate=" + objToCheck1.UpToAccountingDate;
+            myUrl = myUrl + "&upToDueDate=" + objToCheck1.UpToDueDate;
 
             myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
 
@@ -846,7 +846,7 @@
             defaultParam.Tenant = 1;
             defaultParam.GLAccountId = "Id, or empty value to get all";
             defaultParam.AccountTypeCode = "2=Client, 3=Vendor";
-            defaultParam.UpToAccountingDate = "01.01.2020";
+            defaultParam.UpToDueDate = "01.01.2020";
             defaultParam.LT_LinesMaximum = 20;
          //   defaultParam.MaximalDifference = 50.00;
             if (!_ResponseToken) {
@@ -870,7 +870,7 @@
 
             myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
 
-            myUrl = myUrl + "&upToAccountingDate=" + objToCheck1.UpToAccountingDate;
+            myUrl = myUrl + "&upToDueDate=" + objToCheck1.UpToDueDate;
 
             myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
 
