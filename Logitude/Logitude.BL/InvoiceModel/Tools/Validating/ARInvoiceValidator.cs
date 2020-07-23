@@ -544,7 +544,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         else
                         {
                         if (item.InvoiceCurrencyExchangeRate == null) item.InvoiceCurrencyExchangeRate = entityPM.InvoiceCurrencyExchangeRate;
-                        lineInvoiceAmount_Computed = IsFullAccountingActivated(entityPM.Tenant) ? MethodHelper.Round(item.ForiegnCurrencyAmount * item.InvoiceCurrencyExchangeRate, 2) : lineInvoiceAmount_Computed;
+                       // lineInvoiceAmount_Computed = IsFullAccountingActivated(entityPM.Tenant) ? MethodHelper.Round(item.ForiegnCurrencyAmount * item.InvoiceCurrencyExchangeRate, 2) : lineInvoiceAmount_Computed;
 
                         if (lineInvoiceAmount != lineInvoiceAmount_Computed )
                             {
