@@ -955,7 +955,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestLastBatchServiceController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestReportsConnectInvoiceController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
-    <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBuildTables.cs" />
+    <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBuildTablesController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingSearchController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingShipmentSearchViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\HelpResourceController.Generated.cs" />
