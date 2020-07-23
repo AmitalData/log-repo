@@ -18,32 +18,7 @@ namespace Logitude.CargoTracking.Def.EntityPMs
    [DataContract]
    public partial class CargoTrackingShipmentSearchPM : EntityPM
    {
-   	  private string id ;
-	  
-       [Key]
-	  
-       
-	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Id  
-	   {
-	    
-	     get
-		{
-		   return id;
-		 }
-		 set
-		 {
-		   if(id != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   id=value;
-		   }
-			
-		 }
-	   }
-	  private int tenant ;
+   	  private int tenant ;
 	  	  
        
 	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
@@ -131,6 +106,31 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentDate",OldValue=shipmentDate,NewValue=value,PropertyType="DateTime"};
 		    NotifyPropertyChanged(values);
 		   shipmentDate=value;
+		   }
+			
+		 }
+	   }
+	  private int id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   id=value;
 		   }
 			
 		 }

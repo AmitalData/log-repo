@@ -75,6 +75,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                 this.BuildFiltersLists();
                 this.OnFiltersChanged();
                 this.LoadAllowedAirline();
+                this.GetQuoteSetting();
             });
         });
     }
@@ -148,8 +149,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         this.IsCreatedFromTicket = args.IsCreatedFromTicket;
         this.TicketCreateDate = args.TicketCreateDate;
         this.BuildFiltersLists();
-        this.SetUIProperties();
-        this.GetQuoteSetting();
+        this.SetUIProperties();        
     }
 
     private GetQuoteSetting() {

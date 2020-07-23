@@ -14,11 +14,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         public static string Condition(string TableName, string LastUpdate,CargoTrackingArguments CargoTrackingArguments = null, string Condition = null)
         {
-            string condition = "";
-            if (LastUpdate!=null)
-            {
-                condition = " where (AutomaticLastUpdateDate > '"+ LastUpdate+"')";
-            }
+            string condition = " where (AutomaticLastUpdateDate > '" + LastUpdate + "')";
+            //if (LastUpdate!=null)
+            //{
+            //    condition = " where (AutomaticLastUpdateDate > '"+ LastUpdate+"')";
+            //}
             if (Condition != null && CargoTrackingArguments!=null)
             {
                 condition = " where "+Condition;
@@ -37,7 +37,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                        condition = " where Tenant=" + CargoTrackingArguments.Tenant + " and CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and CreateDateTime <= '" + CargoTrackingArguments.ToDate+"'";
 
                     }
-                    else
+                    else 
                     {
                         condition += " and CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and CreateDateTime <= '" + CargoTrackingArguments.ToDate+"'";
 

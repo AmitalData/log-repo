@@ -131,7 +131,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public CargoTrackingShipmentList GetSingle(string id)
+        public CargoTrackingShipmentList GetSingle(int id)
         {
             IQueryable<CargoTrackingShipment> CargoTrackingShipmentQuery = (from a in context.CargoTrackingShipments
                                                        where a.Id == id

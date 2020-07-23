@@ -8,7 +8,7 @@
 
 export class CargoTrackingShipmentList {
    
-	Id: string;
+	Id: number;
 	Tenant: number;
 	EntityId: string;
 	ForwardingShipmentHeaderId: string;
@@ -31,6 +31,11 @@ export class CargoTrackingShipmentList {
 	ClearanceDone: boolean;
 	PickupDate: Date;
 	ClearanceDate: Date;
+	CreateDate: Date;
+	SecurityKey: string;
+	ConsigneeName: string;
+	ShipperName: string;
+	CustomerReference: string;
 	
 }
  

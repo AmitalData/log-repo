@@ -66,7 +66,7 @@ namespace Logitude.Accounting.BL.Utils
                 //   _WrongSum = new List<string>();
                 _WrongSumToMatch = new List<string>();
 
-                DateTime myUpToAccountingDate = reconciliationStageCArg.UpToAccountingDate;
+                DateTime myUpToDueDate = reconciliationStageCArg.UpToDueDate;
                 BatchTaskExecutionPM batchTaskExecutionPM = reconciliationStageCArg.BatchTask;
                 BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = null;
                 if (batchTaskExecutionPM != null)
@@ -83,7 +83,7 @@ namespace Logitude.Accounting.BL.Utils
                         Tenant = tenant,
                         AccountTypeCode = reconciliationStageCArg.AccountTypeCode,
                         FromDate = fromDate,
-                        UpToAccountingDate = reconciliationStageCArg.UpToAccountingDate,
+                        UpToDueDate = reconciliationStageCArg.UpToDueDate,
                     };
 
                     var gLAccountIdList = ledgerTransactionListQueryService.GetGLAccountIdList__NotReconciled(getAllAccountArgs);
@@ -136,7 +136,7 @@ namespace Logitude.Accounting.BL.Utils
                 bool runAgain = false;
                 int tenant = reconciliationStageCArg.Tenant;
                 string myGLAccountId = reconciliationStageCArg.GLAccountId;
-                DateTime myUpToAccountingDate = reconciliationStageCArg.UpToAccountingDate;
+                DateTime myUpToDueDate = reconciliationStageCArg.UpToDueDate;
 
                 if (String.IsNullOrWhiteSpace(myGLAccountId))
                 {
@@ -166,7 +166,7 @@ namespace Logitude.Accounting.BL.Utils
                          //   FromDate = fromDate,
                          //   FromId = fromId,
                             MaximalDifference = reconciliationStageCArg.MaximalDifference,
-                            UpToAccountingDate = reconciliationStageCArg.UpToAccountingDate,
+                            UpToDueDate = reconciliationStageCArg.UpToDueDate,
                             Stop = false,
                         };
                         runAgain = false;
@@ -251,7 +251,7 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         journalLineList.Add(new JournalLineReco(journalLineLedgerTransactionDTO.JournalLine, journalLineLedgerTransactionDTO.LedgerTransaction));
                     }
-                    List<JournalLineReco> jLL = journalLineList.OrderByDescending(rec => rec._oneLineLedger.AccountingDate).ThenByDescending(rec => Math.Abs(rec._oneLineLedger.AmountToReconcile)).ToList();
+                    List<JournalLineReco> jLL = journalLineList.OrderByDescending(rec => rec._oneLineLedger.DueDate).ThenByDescending(rec => Math.Abs(rec._oneLineLedger.AmountToReconcile)).ToList();
                     if (actualDifference != 0m)
                     {
                         jLL.ForEach(item =>
@@ -537,7 +537,7 @@ namespace Logitude.Accounting.BL.Utils
 
         public string AccountTypeCode { get; set; }
 
-        public DateTime UpToAccountingDate { get; set; }
+        public DateTime UpToDueDate { get; set; }
 
         public int LT_LinesMaximum { get; set; }
 

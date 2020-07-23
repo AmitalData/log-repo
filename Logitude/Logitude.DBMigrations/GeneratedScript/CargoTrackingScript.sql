@@ -1,6 +1,6 @@
--- Add New Column With Name CustomerReference
-ALTER TABLE [dbo].[CargoTrackingShipments] ADD [CustomerReference] VARCHAR(101) NULL;
+-- Add New Column With Name LastRun
+ALTER TABLE [dbo].[CargoTrackingWatermarks] ADD [LastRun] DATETIME NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ab32542c-bb91-435e-985d-d4c65d59c515', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'CustomerReference', 'Add Column', GETDATE(), '-- Add New Column With Name CustomerReferenceALTER TABLE [dbo].[CargoTrackingShipments] ADD [CustomerReference] VARCHAR(101) NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('989f67fa-e476-4e14-98c3-c77cec8875f9', 'CargoTrackingWatermark.dxml', 'CargoTrackingWatermarks', 'LastRun', 'Add Column', GETDATE(), '-- Add New Column With Name LastRunALTER TABLE [dbo].[CargoTrackingWatermarks] ADD [LastRun] DATETIME NULL;');
 
 

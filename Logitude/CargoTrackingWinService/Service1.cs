@@ -34,6 +34,7 @@ namespace CargoTrackingWinService
 
                 //string sourceConnection = cargoTrackingServiceHelper.BuildConnectionString(ConfigurationSettings.AppSettings["SourceConnection"]);
                 //ApplicationInfo.SourceConnection = cargoTrackingServiceHelper.GetMainDBConnectionString(sourceConnection);
+                ApplicationInfo.UpdateCounter = 0;
                 ApplicationInfo.SourceConnection = ConfigurationSettings.AppSettings["SourceConnection"];
                 ApplicationInfo.DestinationConnection = ConfigurationSettings.AppSettings["DestinationConnection"];
                 string updateWarehouseSleepTime = ConfigurationSettings.AppSettings["UpdateCargoTrackingSleepTime"];
