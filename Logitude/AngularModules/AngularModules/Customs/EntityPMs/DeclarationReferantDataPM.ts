@@ -169,7 +169,8 @@ export class DeclarationReferantDataPM {
     private lastStatusDate: string;
     public get LastStatusDate() { return this.lastStatusDate; }
     public set LastStatusDate(newValue: string) { if (this.lastStatusDate != newValue) { this.lastStatusDate = newValue; this.MarkAsDirty("LastStatusDate"); } }
-
+       
+	 
     private orderMoney: boolean;
     public get OrderMoney() { return this.orderMoney; }
     public set OrderMoney(newValue: boolean) { if (this.orderMoney != newValue) { this.orderMoney = newValue; this.MarkAsDirty("OrderMoney"); } }
@@ -199,4 +200,4 @@ export class DeclarationReferantDataPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

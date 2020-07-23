@@ -46,7 +46,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         NewFile, 
 	         Favorite, 
 	         LastStatusName, 
-	         LastStatusDate,
+	         LastStatusDate, 
 	         OrderMoney,
 	      }
 
@@ -78,13 +78,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         NewFile, 
 	         Favorite, 
 	         IsCancelled, 
- 
 	         ClassifiedUserName, 
 	         ControllerUserName, 
 	         CollectorUserName, 
 	         LastStatusName, 
-	         LastStatusDate,
-
+	         LastStatusDate, 
 	         OrderMoney,
 	      }
 
@@ -203,23 +201,20 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 				entityPOCO.Favorite = entityPM.Favorite;
 			}
- 
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusName))
             {
 				entityPOCO.LastStatusName = entityPM.LastStatusName;
 			}
-
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OrderMoney))
-            {
-				entityPOCO.OrderMoney = entityPM.OrderMoney;
-			}
- 
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusDate))
             {
 				entityPOCO.LastStatusDate = entityPM.LastStatusDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OrderMoney))
+            {
+				entityPOCO.OrderMoney = entityPM.OrderMoney;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -346,20 +341,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastStatusName))
             {
 					entityPM.LastStatusName = entityPOCO.LastStatusName;
- 
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastStatusDate))
+            {
+					entityPM.LastStatusDate = entityPOCO.LastStatusDate;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OrderMoney))
             {
 					entityPM.OrderMoney = entityPOCO.OrderMoney;
-            }
-
-	 
- 
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastStatusDate))
-            {
-					entityPM.LastStatusDate = entityPOCO.LastStatusDate;
             }
 
 		}
@@ -486,15 +477,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusDate))
             {
                 oldEntityPM.LastStatusDate = entityPM.LastStatusDate;
- 
             }
-
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OrderMoney))
             {
                 oldEntityPM.OrderMoney = entityPM.OrderMoney;
             }
-		 
-
 			
 		}
 

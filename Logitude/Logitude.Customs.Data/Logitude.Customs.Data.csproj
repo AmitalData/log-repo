@@ -170,6 +170,7 @@
     <Compile Include="EntityKeys\PendingErrorPlaceKeys.cs" />
     <Compile Include="EntityKeys\PointerLevelKeys.cs" />
     <Compile Include="EntityKeys\ReferantExceptionKeys.cs" />
+    <Compile Include="EntityKeys\ReferantTeamKeys.cs" />
     <Compile Include="EntityKeys\RefundCustomerActivityTypeKeys.cs" />
     <Compile Include="EntityKeys\RequestTypeKeys.cs" />
     <Compile Include="EntityKeys\SealCompletenesKeys.cs" />
@@ -319,6 +320,7 @@
     <Compile Include="EntityListQueryServices\Generated\PendingErrorPlaceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PointerLevelListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReferantExceptionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ReferantTeamListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RefundCustomerActivityTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SealCompletenesListQueryService.Generated.cs" />
@@ -350,6 +352,7 @@
     <Compile Include="EntityListQueryServices\PendingErrorPlaceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PointerLevelListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReferantExceptionListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ReferantTeamListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RefundCustomerActivityTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SealCompletenesListQueryService.cs" />
@@ -441,6 +444,7 @@
     <Compile Include="EntityLists\Generated\PointerLevelList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ReferantExceptionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ReferantTeamList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RefundCustomerActivityTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SealCompletenesList.Generated.cs" />
@@ -531,6 +535,7 @@
     <Compile Include="EntityMapping\PendingErrorPlaceMap.cs" />
     <Compile Include="EntityMapping\PointerLevelMap.cs" />
     <Compile Include="EntityMapping\ReferantExceptionMap.cs" />
+    <Compile Include="EntityMapping\ReferantTeamMap.cs" />
     <Compile Include="EntityMapping\RefundCustomerActivityTypeMap.cs" />
     <Compile Include="EntityMapping\RequestTypeMap.cs" />
     <Compile Include="EntityMapping\SealCompletenesMap.cs" />
@@ -622,6 +627,7 @@
     <Compile Include="EntityPOCOs\PointerLevel.cs" />
     <Compile Include="EntityPOCOs\ProceduralFault.cs" />
     <Compile Include="EntityPOCOs\ReferantException.cs" />
+    <Compile Include="EntityPOCOs\ReferantTeam.cs" />
     <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
     <Compile Include="EntityPOCOs\RequestType.cs" />
     <Compile Include="EntityPOCOs\SealCompletenes.cs" />
@@ -771,6 +777,7 @@
     <Compile Include="Repsitories\Generated\PendingErrorPlaceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PointerLevelRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReferantExceptionRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ReferantTeamRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RefundCustomerActivityTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SealCompletenesRepository.Generated.cs" />
@@ -802,6 +809,7 @@
     <Compile Include="Repsitories\PendingErrorPlaceRepository.cs" />
     <Compile Include="Repsitories\PointerLevelRepository.cs" />
     <Compile Include="Repsitories\ReferantExceptionRepository.cs" />
+    <Compile Include="Repsitories\ReferantTeamRepository.cs" />
     <Compile Include="Repsitories\RefundCustomerActivityTypeRepository.cs" />
     <Compile Include="Repsitories\RequestTypeRepository.cs" />
     <Compile Include="Repsitories\SealCompletenesRepository.cs" />
