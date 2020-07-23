@@ -8,7 +8,7 @@ import { SessionLocator } from "../../../Infrastructure/Utilities/SessionLocator
 import { ObservableCollection } from "../../../Infrastructure/Utilities/ObservableCollection";
 import { DateTool } from "../../../Infrastructure/Tools";
 import { InvoiceQueueWebService } from "../../../Customs/Services/WebServices/InvoiceQueueWebService";
-import { Invoices } from "../../../Customs/EntityPMs/Extended/InvoiceQueue";
+import { Invoices, InvoiceList, IntegratedInvoice } from "../../../Customs/EntityPMs/Extended/InvoiceQueue";
 import { EntityResourceService } from "../../../Infrastructure/Services/EntityResourceService";
 import { DeclarationPMService } from "../../../Customs/Services/StandardPMs/DeclarationPMService";
 import { DeclarationPM } from "../../../Customs/EntityPMs/DeclarationPM";
@@ -28,6 +28,7 @@ export class InvoiceQueueComponent
     public InvoiceLineList: ObservableCollection;
     public IntegratedInvoiceList: ObservableCollection;
     public StatusList: ObservableCollection;
+    public InvoiceListList: ObservableCollection;
     public declaration: DeclarationPM;
     _invoiceQueueWebService: InvoiceQueueWebService = new InvoiceQueueWebService();
     RowIndex: any;
@@ -37,10 +38,11 @@ export class InvoiceQueueComponent
         this.InvoiceLineList = new ObservableCollection([]);
         this.IntegratedInvoiceList = new ObservableCollection([]);
         this.StatusList = new ObservableCollection([]);
+        this.InvoiceListList =new ObservableCollection([]);
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-               // this.GetData();
+                // this.GetData();
 
             });
         });
@@ -67,6 +69,11 @@ export class InvoiceQueueComponent
                 (data.Result.Invoice as Invoices).IntegratedInvoices.forEach(x => {
                     this.IntegratedInvoiceList.Insert(x);
                 });
+                if ((data.Result.Invoice as Invoices).InvoiceList != null) {
+                    (data.Result.Invoice as Invoices).InvoiceList.forEach(x => {
+                        this.InvoiceListList.Insert(x);
+                    });
+                }
 
             });
         });

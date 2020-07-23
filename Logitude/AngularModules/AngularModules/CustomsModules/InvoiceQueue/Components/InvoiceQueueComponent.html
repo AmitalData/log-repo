@@ -184,7 +184,7 @@
     </div>
     <table style=" height: 600px;padding-top: 10px;">
 
-        <tr>
+        <tr style="height:260px">
             <td style="width: 55% ; height : 100%" rowspan="2">
                 <div style="height : 100%">
 
@@ -364,9 +364,9 @@
 
         </tr>
 
-        <tr>
-
-            <td style="width: 35% ; height : 50%">
+        <tr style="height:150px">
+           
+            <td style="width: 35%;">
                 <div style="height : 100%">
 
                     <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">חשבונית שילוח משולבת</span>
@@ -434,7 +434,73 @@
             </td>
 
         </tr>
+        <tr style="height:190px;">
+            <td style="width: 55%;"> </td>
+            <td style="width: 5%;"></td>
+            <td style="width: 40%;">
+                <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;"> רשימת חשבוניות </span>
 
+                <br />
+                <br />
+
+                <div class="GeneratedGridContainer" style="width: 100% ; height : 55%">
+
+                    <logitude-edit-grid [IsDarkHeader]="'true'" GridWidth="100%" GridHeight="100%" [ItemSource]="InvoiceListList">
+
+                        <log-column [header]="'לקוח לחיוב'"
+                                    [binding]="'InvoiceBillTo'"
+                                    [width]="'120'" [Alignment]="'Right'">
+                            <ng-template let-item>
+
+                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                    <div style="text-align:right">
+                                        <span>{{item.InvoiceBillTo}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [header]="'סוג חשבונית'"
+                                    [width]="'80'" [Alignment]="'Right'"
+                                    [binding]="'InvoiceType'">
+                            <ng-template let-item>
+
+                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                    <div style="text-align:right">
+                                        <span>{{item.InvoiceType}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+                        <log-column [header]="'תאריך חשבונית'"
+                                    [width]="'100'" [Alignment]="'Right'"
+                                    [binding]="'InvoiceDate'">
+                            <ng-template let-item>
+
+                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                    <div style="text-align:right">
+                                        <span>{{item.InvoiceDate}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [header]="'מטבע לחיוב'"
+                                    [width]="'100'" [Alignment]="'Right'"
+                                    [binding]="'InvoiceCurrency'">
+                            <ng-template let-item>
+
+                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                    <div style="text-align:right">
+                                        <span>{{item.InvoiceCurrency}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+                    </logitude-edit-grid>
+                </div>
+            </td>
+        </tr>
     </table>
 
     <div style="float:left ;width:150px;margin-left: 10%;">
