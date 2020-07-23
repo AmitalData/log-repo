@@ -28,7 +28,7 @@
 	inner JOIN dw_DWHSettings ON dw_CustomPickLists.Tenant = dw_DWHSettings.Tenant
 	where dw_CustomPickLists.AutomaticLastUpdateDate > @LastUpdateDate	
 
-	OPEN CustomPickListsCursor FETCH NEXT FROM CustomPickListsCursor INTO @Id ,@Code, @Value, @IsMultipleChoice ,@SourceTenant , @ParentTenant
+	OPEN CustomPickListsCursor FETCH NEXT FROM CustomPickListsCursor INTO @Id ,@Code, @Value, @IsMultipleChoice ,@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
