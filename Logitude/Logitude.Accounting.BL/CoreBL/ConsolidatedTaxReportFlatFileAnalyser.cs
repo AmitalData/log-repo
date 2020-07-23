@@ -141,7 +141,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         externalLines.ForEach(line => { line.ChangeSetOp = ChangeSetOperation.Delete; });
                     }
 
-                    TaxReportLineUpdateService taxReportLineUpdateService = new TaxReportLineUpdateService(MyContext);
+                    TaxReportLineUpdateService taxReportLineUpdateService = new TaxReportLineUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
                     taxReportLineUpdateService.UpdateMulti(newLines, externalLines, MyTaxReportPM, true);
 
 
