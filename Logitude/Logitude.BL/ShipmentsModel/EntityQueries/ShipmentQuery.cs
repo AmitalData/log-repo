@@ -191,6 +191,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.MasterPreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
                 shipmentPM.MasterProjectNumber = shipment.ProjectNumber;
 
+                shipmentPM.MasterPreCarriageFromPortName = precarriageFromPort != null ? precarriageFromPort.EnglishName: null;
+
                 if (!string.IsNullOrEmpty(shipment.PreCarriageVesselId))
                 {
                     Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.PreCarriageVesselId, tenant);
@@ -234,6 +236,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                         shipmentPM.MasterPreCarriageFromPortName = port != null ? port.EnglishName : null;
                     }
+
                 }
             }
 
