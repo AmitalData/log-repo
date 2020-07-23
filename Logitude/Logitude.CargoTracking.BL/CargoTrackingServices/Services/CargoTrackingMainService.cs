@@ -106,6 +106,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         public int UpdateCTDataBase(CargoArgs buildCargoArgs, int NumberOfBulkPerTime, bool? IsUpdateAfterFinished = null, CargoTrackingArguments CargoTrackingArguments = null)
         {
+            if (CargoTrackingArguments!=null)
+            {
+                ClearTable(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);
+
+            }
             int NumberRecordUpdated = 0;
             bool IsUpadteWaterMark = false;
             if (buildCargoArgs.Table.Condition1 == null)
@@ -480,7 +485,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 if (rowsCount == 1000 || (deleteRowsArgs.IdsList.IndexOf(id) == deleteRowsArgs.IdsList.IndexOf(deleteRowsArgs.IdsList.Last())))
                 {
                     if (deleteRowsArgs.ReturnDeleteIdsAsString) allDeletedRows.Append(deletedRows.ToString());
-                    string cmd = "delete " + deleteRowsArgs.TableName + " where " + deleteRowsArgs.KeyName + " in " + ("(" + deletedRows.ToString() + ")").Replace(",)", ")");
+                    string cmd = "delete from " + deleteRowsArgs.TableName + " where " + deleteRowsArgs.KeyName + " in " + ("(" + deletedRows.ToString() + ")").Replace(",)", ")");
                     ExecuteSql(cmd, deleteRowsArgs.ConnectionString);
                     rowsCount = 0;
                     deletedRows.Clear();
@@ -489,6 +494,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             return !string.IsNullOrEmpty(allDeletedRows.ToString()) ? ("(" + allDeletedRows.ToString() + ")").Replace(",)", ")") : null;
 
+        }
+
+        public void ClearTable(string TableName, string ConnectionString)
+        {
+            string cmd = "delete from " + TableName;
+            ExecuteSql(cmd, ConnectionString);
         }
 
         public string BuildConnectionString(string catalog, string userName, string password, string server)

@@ -26,7 +26,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 {
 
 
-    public class CargoTrackingBuildTables : ApiController
+    public class CargoTrackingBuildTablesController : ApiController
     {
         public HttpResponseMessage PostCargoTrackingBuilder(CargoTrackingArgs Args)
         {
@@ -88,6 +88,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
             return taskExe.Id;
         }
+
+
 
     }
 
