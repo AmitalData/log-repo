@@ -537,6 +537,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
             args.PartnerTypeId = this.PartnerTypeId;
             args.CountryId = this.CountryId_Potential;
             args.CountryName = this.EntityPM.CountryName;
+            args.CountryEnglishName = this.EntityPM.CountryName;
             args.SetReady = false;
 
             VatNumberValidator.ValidateVatFormat(args);
