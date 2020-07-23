@@ -25,7 +25,7 @@
 	From dw_Currencies
 	inner JOIN dw_DWHSettings ON dw_Currencies.Tenant = dw_DWHSettings.Tenant
 	where dw_Currencies.AutomaticLastUpdateDate > @LastUpdateDate	
-	OPEN CurrenciesCursor FETCH NEXT FROM CurrenciesCursor INTO @Id , @EnglishName, @LocalName, @Code,  @CurrencySign ,	@SourceTenant , @ParentTenant
+	OPEN CurrenciesCursor FETCH NEXT FROM CurrenciesCursor INTO @Id , @EnglishName, @LocalName, @Code,  @CurrencySign ,	@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
