@@ -861,13 +861,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     SATForeignRFC = entityPOCO.SATForeignRFC,
                     MetodoPagoCode = entityPOCO.MetodoPagoCode,
                     UsoCFDICode = entityPOCO.UsoCFDICode,
-                    FirmCode = entityPOCO.Warehouse != null ? entityPOCO.Warehouse.FirmCode : null,
+                    //FirmCode = entityPOCO.Warehouse != null ? entityPOCO.Warehouse.FirmCode : null,
                     StateName = entityPOCO.StateName,
                     IsInternationalPartner = entityPOCO.IsInternationalPartner,
                     IsAutonomy = entityPOCO.IsAutonomy,
                     CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
                     CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
-                    CreatedByPartner = entityPOCO.CreatedByPartner,
+                    CreatedByPartner = entityPOCO.CreatedByPartner,                    
                 };
 
                 if (entityPOCO.Customer != null)
@@ -940,6 +940,20 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     entityList.OpenShipments = SetCustomerOpenShipments(entityList);
                     #endregion
+                }
+
+                else if (entityPOCO.Warehouse != null)
+                {
+                    entityList.FirmCode = entityPOCO.Warehouse.FirmCode;
+                    entityList.WarehouseTypeCode = entityPOCO.Warehouse.TypeCode;
+                    entityList.ChargeStorage = entityPOCO.Warehouse.ChargeStorage;
+                    entityList.CurrencyId = entityPOCO.Warehouse.CurrencyId;
+                    entityList.AirWeightMeasurementCode = entityPOCO.Warehouse.AirWeightMeasurementCode;
+                    entityList.OceanWeightMeasurementCode = entityPOCO.Warehouse.OceanWeightMeasurementCode;
+                    entityList.InlandWeightMeasurementCode = entityPOCO.Warehouse.InlandWeightMeasurementCode;
+                    entityList.AirWeightRoundingCode = entityPOCO.Warehouse.AirWeightRoundingCode;
+                    entityList.OceanWeightRoundingCode = entityPOCO.Warehouse.OceanWeightRoundingCode;
+                    entityList.InlandWeightRoundingCode = entityPOCO.Warehouse.InlandWeightRoundingCode;
                 }
 
                 if (entityPOCO.PartnerTypeId == "AL")

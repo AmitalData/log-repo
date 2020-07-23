@@ -18,7 +18,6 @@ import {WarehouseHelper} from '../../../../Warehouse/Helpers/WarehouseHelper';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ShipmentPickUpPM} from '../../../../Shipment/EntityPMs/ShipmentPickUpPM';
 import { CardPMService } from '../../../../Common/Services/StandardPMs/CardPMService';
-import { CardPM } from '../../../../Common/EntityPMs/CardPM';
 
 @Component({
     moduleId: './ShipmentModules/ShipmentRouting/Components/Routings/',
@@ -209,11 +208,15 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         myService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
-                    var result = myResponse.Result;
+                    var result: CardList = myResponse.Result;
                     if (result) {
                         this.WarehouseLegAddressId = result.MainAddressId;
                         this.FatherComponent.WarehouseLegTerminalName = result.EnglishName;
                         this.WarehouseLegTerminalCode = result.FirmCode;
+
+                        if (result.WarehouseTypeCode == "BO") {
+
+                        }
                     }
                 }
             }

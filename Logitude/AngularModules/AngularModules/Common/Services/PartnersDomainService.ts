@@ -46,6 +46,7 @@ import { CarrierAreaPM } from '../EntityPMs/CarrierAreaPM';
 import { CarrierAreasPortPM } from '../EntityPMs/CarrierAreasPortPM';
 import { AccountingPartnerPMService } from './StandardPMs/AccountingPartnerPMService';
 import { TariffCarrierTranslationPM } from '../EntityPMs/TariffCarrierTranslationPM';
+import { WarehouseStoragePricingPM } from '../EntityPMs/WarehouseStoragePricingPM';
 
 @Injectable()
 
@@ -1882,6 +1883,64 @@ export class PartnersDomainService {
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));
         });
+    }
+
+    GetWarehouseStoragePricingForWarehouse(warehouseId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+
+        var url = this._apiUrl + '/GetWarehouseStoragePricingForWarehouse?warehouseId=' + warehouseId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var listJason = response;
+                var listMapped: Array<WarehouseStoragePricingPM> = [];
+
+                for (var itemJeson in listJason) {
+                    var itemMapped: WarehouseStoragePricingPM = this.MapWarehouseStoragePricingPM(listJason[itemJeson]);
+                    listMapped.push(itemMapped);
+
+                }
+
+                var myResponse: ServiceResponse;
+                myResponse = new ServiceResponse();
+                myResponse.Result = listMapped;
+                return myResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+    MapWarehouseStoragePricingPM(jsonList: any, mapParent: boolean = true) {
+        var entityPM: WarehouseStoragePricingPM = null;
+
+        if (jsonList) {
+            entityPM = new WarehouseStoragePricingPM(null);
+
+            var jsonListKeys = Object.keys(jsonList);
+
+            for (var key in jsonListKeys) {
+                var property = jsonListKeys[key];
+
+                if (property === "UIProperties" || property === "entityParentPM") {
+                    continue;
+                }
+
+                entityPM[property] = jsonList[property];
+            }
+
+            entityPM.IsDirty = false;
+
+            if (mapParent) {
+                entityPM.OldEntityPM = this.clone(entityPM);
+            }
+            else {
+                entityPM.OldEntityPM = null;
+            }
+        }
+
+        return entityPM;
     }
 }
 export class AirlineMessagingRuleList {

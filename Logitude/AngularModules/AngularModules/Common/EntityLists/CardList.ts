@@ -97,5 +97,14 @@ export class CardList {
 		RankId: string;
 		IndustryId: string;
 		AccountingVATSplit: boolean;
+		WarehouseTypeCode: string;
+		ChargeStorage: boolean;
+		CurrencyId: string;
+		AirWeightMeasurementCode: string;
+		OceanWeightMeasurementCode: string;
+		InlandWeightMeasurementCode: string;
+		AirWeightRoundingCode: string;
+		OceanWeightRoundingCode: string;
+		InlandWeightRoundingCode: string;
 	
 }
