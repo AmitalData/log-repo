@@ -41,8 +41,14 @@ namespace WebFreight.Web.Helpers
                         //}
                         var tenantDateNow = TenantServerConfigration.GetCurrentDateTime(task.Tenant);
                         var nowDateUTC = DateTime.UtcNow;
-                        TodayDate = new DateTime(tenantDateNow.Year, tenantDateNow.Month, tenantDateNow.Day, tenantDateNow.Hour, tenantDateNow.Minute, tenantDateNow.Second);
-                        var TodayUtcDate = new DateTime(nowDateUTC.Year, nowDateUTC.Month, nowDateUTC.Day, nowDateUTC.Hour, nowDateUTC.Minute, nowDateUTC.Second);
+                        
+                        TodayDate = new DateTime(tenantDateNow.Year, tenantDateNow.Month, tenantDateNow.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
+                        var TodayUtcDate = new DateTime(nowDateUTC.Year, nowDateUTC.Month, nowDateUTC.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
+
+                        //potential fix
+                        //TodayDate = new DateTime(tenantDateNow.Year, tenantDateNow.Month, tenantDateNow.Day, tenantDateNow.Hour, tenantDateNow.Minute, tenantDateNow.Second);
+                        //var TodayUtcDate = new DateTime(nowDateUTC.Year, nowDateUTC.Month, nowDateUTC.Day, nowDateUTC.Hour, nowDateUTC.Minute, nowDateUTC.Second);
+
 
                         DateTime NewNextRunTime = TodayDate;
                         DateTime NewNextRunTimeUTC = TodayUtcDate;
