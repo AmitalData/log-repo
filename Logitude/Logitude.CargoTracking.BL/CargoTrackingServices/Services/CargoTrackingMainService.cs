@@ -28,6 +28,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 ConditionKey = "Id",
                 DBTableName = "Ports",
                 CT_TableName = "CargoTrackingPorts",
+                Pre_TableName = "Pre_CargoTrackingPorts",
                 ConditionsNumber = 1,
             });
 
@@ -40,6 +41,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CT_FieldsDBName = "Id,Code,EnglishName,LocalName",
                 DBTableName = "Cards",
                 CT_TableName = "CargoTrackingCards",
+                Pre_TableName = "Pre_CargoTrackingCards",
                 ConditionsNumber = 1,
             });
 
@@ -52,6 +54,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CT_FieldsDBName = "Id,Name,SearchFields",
                 DBTableName = "TransportModes",
                 CT_TableName = "CargoTrackingTransportModes",
+                Pre_TableName = "Pre_CargoTrackingTransportModes",
                 ConditionsNumber = 1,
 
             });
@@ -65,6 +68,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CT_FieldsDBName = "Id,LocalName,Code,EnglishName",
                 DBTableName = "Countries",
                 CT_TableName = "CargoTrackingCountries",
+                Pre_TableName = "Pre_CargoTrackingCountries",
                 ConditionsNumber = 1,
 
             });
@@ -80,6 +84,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CT_FieldsDBName = "Tenant,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate,CreateDate,SecurityKey,ConsigneeName,ShipperName,CustomerReference",
                 Condition1 = " ((ShipmentLevelCode ='D' or ShipmentLevelCode ='H') and CustomFileId is not null)",
                 Condition2 = " ((ShipmentLevelCode !='D' and ShipmentLevelCode !='H') or CustomFileId is null)",
+                Pre_TableName = "Pre_CargoTrackingShipments",
                 ConditionsNumber = 2,
             });
 
@@ -93,6 +98,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CT_FieldsDBName = "Tenant,ShipmentId,SearchFields,ShipmentDate",
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipmentSearches",
+                Pre_TableName = "Pre_CargoTrackingShipmentSearches",
                 ConditionsNumber = 1,
 
             });
@@ -109,8 +115,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             if (CargoTrackingArguments!=null)
             {
                 ClearTable(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);
+                CheckPreTablesIsExist(buildCargoArgs.Table.Pre_TableName, buildCargoArgs.DestinationConnectionString);
 
             }
+            CheckPreTablesIsExist(buildCargoArgs.Table.Pre_TableName, buildCargoArgs.DestinationConnectionString);
+
             int NumberRecordUpdated = 0;
             bool IsUpadteWaterMark = false;
             if (buildCargoArgs.Table.Condition1 == null)
@@ -501,6 +510,192 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             string cmd = "delete from " + TableName;
             ExecuteSql(cmd, ConnectionString);
         }
+
+        public void CheckPreTablesIsExist(string TableName, string ConnectionString)
+        {
+            string SQL = null;
+            switch (TableName)
+            {
+                case "Pre_CargoTrackingPorts":
+                    {
+                        SQL = CreateTable_Pre_Ports(TableName);
+                        break;
+                    }
+                case "Pre_CargoTrackingCards":
+                    {
+                        SQL = CreateTable_Pre_Cards(TableName);
+                        break;
+                    }
+                case "Pre_CargoTrackingTransportModes":
+                    {
+                        SQL = CreateTable_Pre_TransportModes(TableName);
+                        break;
+                    }
+                case "Pre_CargoTrackingCountries":
+                    {
+                        SQL = CreateTable_Pre_Countries(TableName);
+                        break;
+                    }
+                case "Pre_CargoTrackingShipments":
+                    {
+                        SQL = CreateTable_Pre_Shipments(TableName)+"\n";
+                        SQL += CreateIndexAndRelations_Pre_Shipments(TableName);
+                        break;
+                    }
+                case "Pre_CargoTrackingShipmentSearches":
+                    {
+                        SQL  = CreateTable_Pre_ShipmentSearchs(TableName)+"\n";
+                        SQL += CreateIndex_Pre_ShipmentSearchs(TableName);
+                        break;
+                    }
+            }
+            ExecuteSql(SQL, ConnectionString);
+        }
+
+ 
+        private string CreateIndex_Pre_ShipmentSearchs(string TableName)
+        {
+            string cmd = "CREATE NONCLUSTERED INDEX [IX_"+ TableName + "_Tenant_ShipmentDate_SearchFields] ON [dbo].["+ TableName + "]([Tenant],[ShipmentDate],[SearchFields])";
+
+            return cmd;
+
+        }
+
+        private string CreateIndexAndRelations_Pre_Shipments(string TableName)
+        {
+            string cmd = "ALTER TABLE [dbo].["+ TableName + "] ADD CONSTRAINT [UQ_"+TableName+"_EntityType_EntityId_Tenant] UNIQUE([EntityType],[EntityId],[Tenant])";
+            cmd += "ALTER TABLE [dbo].["+ TableName + "] ADD CONSTRAINT [FK_"+ TableName + "_CargoTrackingHeaderEntityTypes_EntityType] FOREIGN KEY([EntityType]) REFERENCES [dbo].[CargoTrackingHeaderEntityTypes]([Code])";
+            //cmd+= "TableName"
+            return cmd;
+
+        }
+
+        private string CreateTable_Pre_Ports(string TableName)
+        {
+            string cmd = "If not exists (select * from sysobjects where name='"+TableName+"' and xtype='U')" +
+                            "BEGIN " +
+                            "CREATE TABLE [dbo].[" + TableName + "](" +
+                            "[Id] VARCHAR(15) NOT NULL," +
+                            "[Code] VARCHAR(3) NOT NULL," +
+                            "[EnglishName] VARCHAR(40) NULL," +
+                            "[CountryId] VARCHAR(15) NOT NULL," +
+                            "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])" +
+                            ")" +
+                            " End";
+
+            return cmd;
+
+        }
+
+        private string CreateTable_Pre_Cards(string TableName)
+        {
+            string cmd = "If not exists (select * from sysobjects where name='" + TableName + "' and xtype='U')" +
+                            "BEGIN " +
+                            "CREATE TABLE[dbo].["+ TableName + "]("+
+                            "[Id] VARCHAR(15) NOT NULL,"+
+                            "[Code] VARCHAR(15) NOT NULL,"+
+                            "[EnglishName] VARCHAR(70) NULL,"+
+                            "[LocalName] NVARCHAR(100) NULL,"+
+                            "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
+                            ")" +
+                            " End";
+
+            return cmd;
+
+        }
+
+        private string CreateTable_Pre_Countries(string TableName)
+        {
+            string cmd = "If not exists (select * from sysobjects where name='" + TableName + "' and xtype='U')" +
+                            "BEGIN " +
+                            "CREATE TABLE[dbo].["+ TableName + "]("+
+                            "[Id] VARCHAR(15) NOT NULL,"+
+                            "[LocalName] NVARCHAR(120) NULL,"+
+                            "[Code] CHAR(2) NOT NULL,"+
+                            "[EnglishName] VARCHAR(120) NOT NULL,"+
+                            "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
+                            ")"+
+                            " End";
+
+            return cmd;
+
+        }
+
+        private string CreateTable_Pre_TransportModes(string TableName)
+        {
+            string cmd = "If not exists (select * from sysobjects where name='" + TableName + "' and xtype='U')" +
+                            "BEGIN " +
+                            "CREATE TABLE[dbo].["+ TableName + "]("+
+                            "[Id] CHAR(1) NOT NULL,"+
+                            "[SearchFields] NVARCHAR(1000) NULL,"+
+                            "[Name] VARCHAR(10) NOT NULL,"+
+                            "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
+                            ")"+
+                            " End";
+
+            return cmd;
+
+        }
+
+        private string CreateTable_Pre_ShipmentSearchs(string TableName)
+        {
+            string cmd = "If not exists (select * from sysobjects where name='" + TableName + "' and xtype='U')" +
+                            "BEGIN " +
+                            "CREATE TABLE[dbo].["+ TableName + "]("+
+                            "[Tenant] INT NOT NULL,"+
+                            "[SearchFields] NVARCHAR(100) NULL,"+
+                            "[ShipmentId] VARCHAR(15) NOT NULL,"+
+                            "[ShipmentDate] DATETIME NOT NULL,"+
+                            "[Id] INT IDENTITY(1,1) NOT NULL,"+
+                            "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
+                            ")" +
+                            " End ";
+
+            return cmd;
+
+        }
+
+        private string CreateTable_Pre_Shipments(string TableName)
+        {
+            string cmd = "If not exists (select * from sysobjects where name='" + TableName + "' and xtype='U')" +
+                            "BEGIN " +
+                            "CREATE TABLE[dbo].["+ TableName + "]("+
+                            "[Id] INT IDENTITY(1,1) NOT NULL,"+
+                            "[Tenant] INT NOT NULL,"+
+                            "[EntityId] VARCHAR(15) NULL,"+
+                            "[ForwardingShipmentHeaderId] VARCHAR(15) NULL,"+
+                            "[CustomsShipmentHeaderId] VARCHAR(15) NULL,"+
+                            "[EntityType] VARCHAR(1) NULL,"+
+                            "[CurrentMilestoneCode] VARCHAR(2) NULL,"+
+                            "[CurrentMilestoneDate] DATETIME NULL,"+
+                            "[CustomerId] VARCHAR(15) NULL,"+
+                            "[TransportModeId] VARCHAR(15) NULL,"+
+                            "[Master] VARCHAR(20) NULL,"+
+                            "[House] VARCHAR(20) NULL,"+
+                            "[ShipmentNumber] VARCHAR(20) NULL,"+
+                            "[FromPortId] VARCHAR(15) NULL,"+
+                            "[ToPortId] VARCHAR(15) NULL,"+
+                            "[ShipperId] VARCHAR(15) NULL,"+
+                            "[ConsigneeId] VARCHAR(15) NULL,"+
+                            "[GrossWeight] FLOAT NULL,"+
+                            "[Volume] FLOAT NULL,"+
+                            "[PickupDone] BIT NULL,"+
+                            "[ClearanceDone] BIT NULL,"+
+                            "[PickupDate] DATETIME NULL,"+
+                            "[ClearanceDate] DATETIME NULL,"+
+                            "[CreateDate] DATETIME NOT NULL,"+
+                            "[SecurityKey] VARCHAR(40) NULL,"+
+                            "[ConsigneeName] VARCHAR(70) NULL,"+
+                            "[ShipperName] VARCHAR(70) NULL,"+
+                            "[CustomerReference] VARCHAR(101) NULL,"+
+                            "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
+                            ")"+
+                            " End ";
+
+            return cmd;
+
+        }
+
 
         public string BuildConnectionString(string catalog, string userName, string password, string server)
         {

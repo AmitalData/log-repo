@@ -56,6 +56,7 @@
     <Compile Include="CargoTrackingServices\HelperClasses\CargoDeleteRowsArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTable.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingIncrementalArgs.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\SqlTableCreator.cs" />
     <Compile Include="CargoTrackingServices\Services\CargoTrackingBlockRecordsService.cs" />
     <Compile Include="CargoTrackingServices\Services\CargoTrackingCustomMappingService.cs" />
     <Compile Include="CargoTrackingServices\Services\CargoTrackingMainService.cs" />
