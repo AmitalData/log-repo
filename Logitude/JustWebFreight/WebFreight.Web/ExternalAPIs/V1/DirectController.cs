@@ -130,11 +130,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                             }
 
                                         }
-                                             
                                         
-
-
-                                            if (item.PackageType == null)
+                                        if (item.PackageType == null)
                                         {
                                             string message = entity.ShipmentType.Code.Contains("LCL") ? "Package Type is required" : "Container Type is required";
                                             throw new ApplicationException(message);
@@ -422,7 +419,52 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 entityPM.ConsigneeAddressId = address.Id;
                             }
-                        }                        
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.ShipperNotExporterId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperNotExporterId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.ShipperNotExporterAddressId = address.Id;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.AgentId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.AgentId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.AgentAddressId = address.Id;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.CustomAgentImportId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomAgentImportId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.CustomAgentImportAddressId = address.Id;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.ReleasingAgentId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ReleasingAgentId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.ReleasingAgentAddressId = address.Id;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.FreightForwarderId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.FreightForwarderId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.FreightForwarderAddressId = address.Id;
+                            }
+                        }
 
                         if (entityPM.ShipmentPackages.Count > 0)
                         {
