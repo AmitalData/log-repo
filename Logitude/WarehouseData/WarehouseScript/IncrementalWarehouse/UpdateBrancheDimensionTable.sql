@@ -1,7 +1,7 @@
  declare @MaxAutomaticLastUpdateDate as datetime
  declare @LastUpdateDate as datetime
 
- set @LastUpdateDate = (select top(1) LastUpdateDate from dw_WaterMarks  where TableName = 'Branche' )
+ set @LastUpdateDate = (select top(1) LastUpdateDate from dw_WaterMarks  where TableName = 'Branch' )
  set @MaxAutomaticLastUpdateDate = (select  MAX( AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_Branches )
 
  

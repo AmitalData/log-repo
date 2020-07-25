@@ -508,252 +508,293 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 #region Line Amounts
                 //if (!IsFullAccountingActivated(entityPM.Tenant))
                 //{
-                    foreach (ARInvoiceLinePM item in entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
-                    {
-                        double? lineForiegnAmount = MethodHelper.Round(item.ForiegnCurrencyAmount, 2);
-                        double? lineForiegnAmount_Computed = MethodHelper.Round(item.Quantity * item.UnitPrice, 2);
-                        if (lineForiegnAmount != lineForiegnAmount_Computed)
-                        {
-                            throw new ApplicationException("Wrong Line Foriegn Amount");
-                        }
-
-
-                        double? lineLocalAmount = MethodHelper.Round(item.LocalCurrencyAmount, 2);
-                        double? lineLocalAmount_Computed = MethodHelper.Round(item.ForiegnCurrencyAmount * item.ForiegnExchangeRate, 2);
-                        localAmount_Computed = localAmount_Computed + lineLocalAmount_Computed;
-                        if (item.VatPercentage != 0)
-                        {
-                            localAmount_Computed = localAmount_Computed + (lineLocalAmount_Computed * item.VatPercentage / 100);
-                        }
-                        if (lineLocalAmount != lineLocalAmount_Computed && !IsFullAccountingActivated(entityPM.Tenant))
-                        {
-                            throw new ApplicationException("Wrong Line Local Amount");
-                        }
-
-                        double? lineInvoiceAmount = MethodHelper.Round(item.InvoiceCurrencyAmount, 2);
-                        double? exchangeRate = entityPM.InvoiceCurrencyExchangeRate;
-                        double? lineInvoiceAmount_Computed = MethodHelper.Round((item.LocalCurrencyAmount / exchangeRate), 2);
-                        if (item.ForiegnCurrencyId == entityPM.InvoiceCurrencyId)
-                        {
-                            if (lineInvoiceAmount != lineForiegnAmount )
-                            {
-                                throw new ApplicationException("Wrong Line Invoice Amount");
-                            }
-                        }
-
-                        else
-                        {
-                        if (item.InvoiceCurrencyExchangeRate == null) item.InvoiceCurrencyExchangeRate = entityPM.InvoiceCurrencyExchangeRate;
-                       // lineInvoiceAmount_Computed = IsFullAccountingActivated(entityPM.Tenant) ? MethodHelper.Round(item.ForiegnCurrencyAmount * item.InvoiceCurrencyExchangeRate, 2) : lineInvoiceAmount_Computed;
-
-                        if (lineInvoiceAmount != lineInvoiceAmount_Computed )
-                            {
-                                throw new ApplicationException("Wrong Line Invoice Amount");
-                            }
-                        }
-                    }
-                //}
-                #endregion
-
-                #region Lines Amounts VS Invoice Amount
-                double? subTotal = 0;
-                double? subTotal_Local = 0;
-                double? sumOfVATsAmounts = 0;
-                double? sumOfVATsAmounts_Local = 0;
-                double? sumOfVATsAmounts_Profit = 0;
-                double? Amount = 0;
-                double? Amount_Local = 0;
-                double? Amount_Profit = 0;
-                List<ARInvoiceLinePM> lines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
-
-                if (lines.Count > 0)
+                foreach (ARInvoiceLinePM item in entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
                 {
-                    subTotal = MethodHelper.Round(lines.Sum(s => s.InvoiceCurrencyAmount), 2);
-                    subTotal_Local = MethodHelper.Round(lines.Sum(s => s.LocalCurrencyAmount), 2);
-
-                    #region
-                    DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-
-                    List<VatType> allVatTypes = (from d in myCommonContext.VatTypes where d.Tenant == tenant select d).ToList();
-                    List<VATTypesGroup> allVatGroups = (from d in myCommonContext.VATTypesGroups where d.Tenant == tenant select d).ToList();
-
-                    VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(myCommonContext);
-                    VatTypePercentageQuery myVatTypePercentageQuery = new VatTypePercentageQuery(vatTypePercentageRepository);
-                    List<VatTypePercentagePM> allVatPercentages = myVatTypePercentageQuery.GetVatTypePercentagePMByDate(tenant, todayDate);
-
-                    List<InvoiceTotalsClass> group_Source = new List<InvoiceTotalsClass>();
-
-                    foreach (ARInvoiceLinePM item in lines)
+                    double? lineForiegnAmount = MethodHelper.Round(item.ForiegnCurrencyAmount, 2);
+                    double? lineForiegnAmount_Computed = MethodHelper.Round(item.Quantity * item.UnitPrice, 2);
+                    if (lineForiegnAmount != lineForiegnAmount_Computed)
                     {
-                        #region
-                        VatType lineVatType = allVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
+                        throw new ApplicationException("Wrong Line Foriegn Amount");
+                    }
 
-                        if (lineVatType != null)
+
+                    double? lineLocalAmount = MethodHelper.Round(item.LocalCurrencyAmount, 2);
+                    double? lineLocalAmount_Computed = MethodHelper.Round(item.ForiegnCurrencyAmount * item.ForiegnExchangeRate, 2);
+                    localAmount_Computed = localAmount_Computed + lineLocalAmount_Computed;
+                    if (item.VatPercentage != 0)
+                    {
+                        localAmount_Computed = localAmount_Computed + (lineLocalAmount_Computed * item.VatPercentage / 100);
+                    }
+                    if (lineLocalAmount != lineLocalAmount_Computed && !IsFullAccountingActivated(entityPM.Tenant))
+                    {
+                        throw new ApplicationException("Wrong Line Local Amount");
+                    }
+                    if (IsFullAccountingActivated(entityPM.Tenant) && item.ForiegnExchangeRate != null)
+                    {
+                        CheckForeignAmountForInvoiceLineFullAccounting(item);
+                    }
+
+                    double? lineInvoiceAmount = MethodHelper.Round(item.InvoiceCurrencyAmount, 2);
+                    double? exchangeRate = entityPM.InvoiceCurrencyExchangeRate;
+                    double? lineInvoiceAmount_Computed = MethodHelper.Round((item.LocalCurrencyAmount / exchangeRate), 2);
+                    if (item.ForiegnCurrencyId == entityPM.InvoiceCurrencyId)
+                    {
+                        if (lineInvoiceAmount != lineForiegnAmount)
                         {
-                            if (!lineVatType.IsMultiPercentage)
-                            {
-                                InvoiceTotalsClass newItem = new InvoiceTotalsClass()
-                                {
-                                    Id = item.VatTypeId,
-                                    VatTypeId = item.VatTypeId,
-                                    VatTypePercentage = item.VatPercentage,
-                                    LocalCurrencyAmount = item.LocalCurrencyAmount,
-                                    InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
-                                    ProfitCurrencyAmount = item.ProfitCurrencyAmount,
-                                };
-
-                                group_Source.Add(newItem);
-                            }
-
-                            else
-                            {
-                                List<VATTypesGroup> myVatGroups = allVatGroups.Where(d => d.GroupVATTypeId == item.VatTypeId).ToList();
-                                foreach (VATTypesGroup itemGroup in myVatGroups)
-                                {
-                                    InvoiceTotalsClass newItem = new InvoiceTotalsClass()
-                                    {
-                                        Id = itemGroup.SingleVATTypeId,
-                                        VatTypeId = itemGroup.SingleVATTypeId,
-                                        LocalCurrencyAmount = item.LocalCurrencyAmount,
-                                        InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
-                                        ProfitCurrencyAmount = item.ProfitCurrencyAmount,
-                                    };
-
-                                    VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
-                                    if (vatType != null)
-                                    {
-                                        newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
-                                    }
-
-                                    VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
-                                    if (myPercentagePM != null)
-                                    {
-                                        newItem.VatTypePercentage = myPercentagePM.Percentage;
-                                    }
-
-                                    group_Source.Add(newItem);
-                                }
-                            }
+                            throw new ApplicationException("Wrong Line Invoice Amount");
                         }
-                        #endregion
-                    }
-
-                    List<InvoiceTotalsClass> group_data
-                        = (from items in group_Source
-                           group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId } into g
-                           select new InvoiceTotalsClass()
-                           {
-                               Id = g.Key.VatTypeId,
-                               VatTypeId = g.Key.VatTypeId,
-                               VatTypePercentage = g.Key.VatTypePercentage,
-                               LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
-                               InvoiceCurrencyAmount = g.Sum(s => s.InvoiceCurrencyAmount),
-                               ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
-                           }).ToList();
-
-                    foreach (InvoiceTotalsClass item in group_data)
-                    {
-                        ARInvoiceTotalVAT record = new ARInvoiceTotalVAT()
-                        {
-                            Tenant = entityPM.Tenant,
-                            ARInvoiceId = entityPM.Id,
-                            VatTypeId = item.Id,
-                            VatPercent = MethodHelper.Roundd(item.VatTypePercentage, 2),
-                            LocalVatableAmount = MethodHelper.Roundd(item.LocalCurrencyAmount, 2),
-                            InvoiceCurrencyVatableAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2),
-                            ProfitVatableAmount = MethodHelper.Round(item.ProfitCurrencyAmount, 2),
-                        };
-
-                        record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
-                        record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
-                        record.ProfitCurrencyVATAmount = MethodHelper.Roundd((record.ProfitVatableAmount * record.VatPercent / 100), 2);
-
-                        sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
-                        sumOfVATsAmounts_Local += record.LocalVATAmount;
-                        sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
-                    }
-
-                    Amount = MethodHelper.Round(subTotal + sumOfVATsAmounts, 2);
-                    Amount_Local = MethodHelper.Round(subTotal_Local + sumOfVATsAmounts_Local, 2);
-
-                    if (entityPM.ProfitCurrencyId == entityPM.InvoiceCurrencyId)
-                    {
-                        Amount_Profit = Amount;
                     }
 
                     else
                     {
-                        Amount_Profit = MethodHelper.Round(Amount_Local / entityPM.ProfitCurrencyExchangeRate, 2);
+                        //   if (item.InvoiceCurrencyExchangeRate == null) item.InvoiceCurrencyExchangeRate = entityPM.InvoiceCurrencyExchangeRate;
+                        //  lineInvoiceAmount_Computed = IsFullAccountingActivated(entityPM.Tenant) ? MethodHelper.Round(item.ForiegnCurrencyAmount * item.InvoiceCurrencyExchangeRate, 2) : lineInvoiceAmount_Computed;
+                        if (IsFullAccountingActivated(entityPM.Tenant))
+                        {
+                            CheckFullAccountingLineLocalAmount(item);
+                        }
+                        else
+                        {
+                            if (lineInvoiceAmount != lineInvoiceAmount_Computed)
+                            {
+                                throw new ApplicationException("Wrong Line Invoice Amount");
+                            }
+
+
+
+                        }
+                    }
+                    //}
+                    #endregion
+
+                    #region Lines Amounts VS Invoice Amount
+                    double? subTotal = 0;
+                    double? subTotal_Local = 0;
+                    double? sumOfVATsAmounts = 0;
+                    double? sumOfVATsAmounts_Local = 0;
+                    double? sumOfVATsAmounts_Profit = 0;
+                    double? Amount = 0;
+                    double? Amount_Local = 0;
+                    double? Amount_Profit = 0;
+                    List<ARInvoiceLinePM> lines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
+
+                    if (lines.Count > 0)
+                    {
+                        subTotal = MethodHelper.Round(lines.Sum(s => s.InvoiceCurrencyAmount), 2);
+                        subTotal_Local = MethodHelper.Round(lines.Sum(s => s.LocalCurrencyAmount), 2);
+
+                        #region
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+
+                        List<VatType> allVatTypes = (from d in myCommonContext.VatTypes where d.Tenant == tenant select d).ToList();
+                        List<VATTypesGroup> allVatGroups = (from d in myCommonContext.VATTypesGroups where d.Tenant == tenant select d).ToList();
+
+                        VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(myCommonContext);
+                        VatTypePercentageQuery myVatTypePercentageQuery = new VatTypePercentageQuery(vatTypePercentageRepository);
+                        List<VatTypePercentagePM> allVatPercentages = myVatTypePercentageQuery.GetVatTypePercentagePMByDate(tenant, todayDate);
+
+                        List<InvoiceTotalsClass> group_Source = new List<InvoiceTotalsClass>();
+
+                        foreach (ARInvoiceLinePM Item in lines)
+                        {
+                            #region
+                            VatType lineVatType = allVatTypes.Where(d => d.Id == Item.VatTypeId).FirstOrDefault();
+
+                            if (lineVatType != null)
+                            {
+                                if (!lineVatType.IsMultiPercentage)
+                                {
+                                    InvoiceTotalsClass newItem = new InvoiceTotalsClass()
+                                    {
+                                        Id = Item.VatTypeId,
+                                        VatTypeId = Item.VatTypeId,
+                                        VatTypePercentage = Item.VatPercentage,
+                                        LocalCurrencyAmount = Item.LocalCurrencyAmount,
+                                        InvoiceCurrencyAmount = Item.InvoiceCurrencyAmount,
+                                        ProfitCurrencyAmount = Item.ProfitCurrencyAmount,
+                                    };
+
+                                    group_Source.Add(newItem);
+                                }
+
+                                else
+                                {
+                                    List<VATTypesGroup> myVatGroups = allVatGroups.Where(d => d.GroupVATTypeId == Item.VatTypeId).ToList();
+                                    foreach (VATTypesGroup itemGroup in myVatGroups)
+                                    {
+                                        InvoiceTotalsClass newItem = new InvoiceTotalsClass()
+                                        {
+                                            Id = itemGroup.SingleVATTypeId,
+                                            VatTypeId = itemGroup.SingleVATTypeId,
+                                            LocalCurrencyAmount = Item.LocalCurrencyAmount,
+                                            InvoiceCurrencyAmount = Item.InvoiceCurrencyAmount,
+                                            ProfitCurrencyAmount = Item.ProfitCurrencyAmount,
+                                        };
+
+                                        VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
+                                        if (vatType != null)
+                                        {
+                                            newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
+                                        }
+
+                                        VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
+                                        if (myPercentagePM != null)
+                                        {
+                                            newItem.VatTypePercentage = myPercentagePM.Percentage;
+                                        }
+
+                                        group_Source.Add(newItem);
+                                    }
+                                }
+                            }
+                            #endregion
+                        }
+
+                        List<InvoiceTotalsClass> group_data
+                            = (from items in group_Source
+                               group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId } into g
+                               select new InvoiceTotalsClass()
+                               {
+                                   Id = g.Key.VatTypeId,
+                                   VatTypeId = g.Key.VatTypeId,
+                                   VatTypePercentage = g.Key.VatTypePercentage,
+                                   LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
+                                   InvoiceCurrencyAmount = g.Sum(s => s.InvoiceCurrencyAmount),
+                                   ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
+                               }).ToList();
+
+                        foreach (InvoiceTotalsClass Item in group_data)
+                        {
+                            ARInvoiceTotalVAT record = new ARInvoiceTotalVAT()
+                            {
+                                Tenant = entityPM.Tenant,
+                                ARInvoiceId = entityPM.Id,
+                                VatTypeId = Item.Id,
+                                VatPercent = MethodHelper.Roundd(Item.VatTypePercentage, 2),
+                                LocalVatableAmount = MethodHelper.Roundd(Item.LocalCurrencyAmount, 2),
+                                InvoiceCurrencyVatableAmount = MethodHelper.Roundd(Item.InvoiceCurrencyAmount, 2),
+                                ProfitVatableAmount = MethodHelper.Round(Item.ProfitCurrencyAmount, 2),
+                            };
+
+                            record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
+                            record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
+                            record.ProfitCurrencyVATAmount = MethodHelper.Roundd((record.ProfitVatableAmount * record.VatPercent / 100), 2);
+
+                            sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
+                            sumOfVATsAmounts_Local += record.LocalVATAmount;
+                            sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
+                        }
+
+                        Amount = MethodHelper.Round(subTotal + sumOfVATsAmounts, 2);
+                        Amount_Local = MethodHelper.Round(subTotal_Local + sumOfVATsAmounts_Local, 2);
+
+                        if (entityPM.ProfitCurrencyId == entityPM.InvoiceCurrencyId)
+                        {
+                            Amount_Profit = Amount;
+                        }
+
+                        else
+                        {
+                            Amount_Profit = MethodHelper.Round(Amount_Local / entityPM.ProfitCurrencyExchangeRate, 2);
+                        }
+                        #endregion
+                    }
+
+                    if (entityPM.SubTotalInInvoiceCurrency != subTotal)
+                    {
+                        throw new ApplicationException("Wrong Sub Total Amount");
+                    }
+
+                    if (entityPM.SubTotalInLocalCurrency != subTotal_Local)
+                    {
+                        throw new ApplicationException("Wrong Sub Total Local Amount");
+                    }
+
+                    if (entityPM.AmountInInvoiceCurrency != Amount)
+                    {
+                        throw new ApplicationException("Wrong Invoice Total Amount");
+                    }
+
+                    if (entityPM.AmountInLocalCurrency != Amount_Local)
+                    {
+                        throw new ApplicationException("Wrong Invoice Total Local Amount");
+                    }
+
+                    //entityPM.SubTotalInInvoiceCurrency = subTotal;
+                    //entityPM.SubTotalInLocalCurrency = subTotal_Local;
+                    //entityPM.AmountInInvoiceCurrency = Amount;
+                    //entityPM.AmountInLocalCurrency = Amount_Local;
+                    //entityPM.AmountInProfitCurrency = Amount_Profit;
+                    #endregion
+
+                    #region Local Amount
+                    double? localAmount = MethodHelper.Round(entityPM.AmountInLocalCurrency, 2);
+                    //   double? rate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
+                    double computedInvoiceAmount = (double)(entityPM.AmountInInvoiceCurrency * entityPM.InvoiceCurrencyExchangeRate.Value);
+                    localAmount_Computed = MethodHelper.Round(localAmount_Computed, 2);
+                    if (localAmount != localAmount_Computed)
+                    {
+                        throw new ApplicationException("Wrong Invoice Local Amount");
+                    }
+                    if (IsFullAccountingActivated(entityPM.Tenant))
+                    {
+                        computedInvoiceAmount = Math.Round(computedInvoiceAmount, 2);
+                        if (Math.Abs((double)(computedInvoiceAmount - localAmount)) >= 0.1)
+                        {
+
+
+                            throw new ApplicationException(" Amount in Invoice Currency (" + entityPM.AmountInInvoiceCurrency + ") * Exchange Rate (" + entityPM.InvoiceCurrencyExchangeRate + ") is not equal to local amount (" + entityPM.AmountInLocalCurrency + ") +- 0.1 ");
+
+                        }
+
+
+                    }
+
+                    #endregion
+
+                    #region Multi Currency 
+                    TenantRepository tenantRepository = new TenantRepository(tenant);
+                    Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+                    if (tenantPOCO != null && tenantPOCO.AccountingActivated)
+                    {
+                        if (entityPM.IsMultiCurrency)
+                        {
+                            if (entityPM.InvoiceCurrencyId != tenantPOCO.CurrencyId)
+                            {
+                                throw new ApplicationException(TranslateTextsClass.Translate("ARInvoice.M.MultiCurrencyMustInLocalCurrency", tenant));
+                            }
+                        }
                     }
                     #endregion
                 }
-
-                if (entityPM.SubTotalInInvoiceCurrency != subTotal)
-                {
-                    throw new ApplicationException("Wrong Sub Total Amount");
-                }
-
-                if (entityPM.SubTotalInLocalCurrency != subTotal_Local)
-                {
-                    throw new ApplicationException("Wrong Sub Total Local Amount");
-                }
-
-                if (entityPM.AmountInInvoiceCurrency != Amount)
-                {
-                    throw new ApplicationException("Wrong Invoice Total Amount");
-                }
-
-                if (entityPM.AmountInLocalCurrency != Amount_Local)
-                {
-                    throw new ApplicationException("Wrong Invoice Total Local Amount");
-                }
-
-                //entityPM.SubTotalInInvoiceCurrency = subTotal;
-                //entityPM.SubTotalInLocalCurrency = subTotal_Local;
-                //entityPM.AmountInInvoiceCurrency = Amount;
-                //entityPM.AmountInLocalCurrency = Amount_Local;
-                //entityPM.AmountInProfitCurrency = Amount_Profit;
-                #endregion
-
-                #region Local Amount
-                double? localAmount = MethodHelper.Round(entityPM.AmountInLocalCurrency, 2);
-                //   double? rate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
-                 double computedInvoiceAmount = (double)(entityPM.AmountInInvoiceCurrency *  entityPM.InvoiceCurrencyExchangeRate.Value );
-                localAmount_Computed = MethodHelper.Round(localAmount_Computed, 2);
-                if (localAmount != localAmount_Computed)
-                {
-                    throw new ApplicationException("Wrong Invoice Local Amount");
-                }
-                if(IsFullAccountingActivated(entityPM.Tenant))
-                {
-                    computedInvoiceAmount = Math.Round(computedInvoiceAmount, 2);
-                    if (Math.Abs((double)(computedInvoiceAmount - localAmount)) >= 0.1) { 
-
-                    
-                        throw new ApplicationException(" Amount in Invoice Currency ("+ entityPM.AmountInInvoiceCurrency +") * Exchange Rate (" + entityPM.InvoiceCurrencyExchangeRate+") is not equal to local amount ("+entityPM.AmountInLocalCurrency + ") +- 0.1 ");
-
-                    }
-
-
-                }
-
-                #endregion
-
-                #region Multi Currency 
-                TenantRepository tenantRepository = new TenantRepository(tenant);
-                Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-                if (tenantPOCO != null && tenantPOCO.AccountingActivated)
-                {
-                    if (entityPM.IsMultiCurrency)
-                    {
-                        if (entityPM.InvoiceCurrencyId != tenantPOCO.CurrencyId)
-                        {
-                            throw new ApplicationException(TranslateTextsClass.Translate("ARInvoice.M.MultiCurrencyMustInLocalCurrency", tenant));
-                        }
-                    }
-                }
-                #endregion
             }
+        }
+
+        private static void CheckFullAccountingLineLocalAmount(ARInvoiceLinePM line)
+        {
+            if (line.InvoiceCurrencyExchangeRate != null)
+            {
+                double? lineLocalAmount = MethodHelper.Round(line.LocalCurrencyAmount, 2);
+
+                double? lineLocalAmount_Computed = MethodHelper.Round((line.InvoiceCurrencyAmount * line.InvoiceCurrencyExchangeRate), 2);
+                if (Math.Abs((double)(lineLocalAmount_Computed - lineLocalAmount)) >= 0.1)
+                    throw new ApplicationException("Invoice Amount (" + line.InvoiceCurrencyAmount + ") in line (" + line.LineNumber + ") * Exchange Rate (" + line.InvoiceCurrencyExchangeRate + ") is not equal to local amount (" + line.LocalCurrencyAmount + ") + -0.1");
+            }
+
+        }
+        private static void CheckForeignAmountForInvoiceLineFullAccounting(ARInvoiceLinePM line)
+        {
+            if(line.ForiegnExchangeRate != null)
+            {
+                double? lineLocalAmount = MethodHelper.Round(line.LocalCurrencyAmount, 2);
+                double? lineLocalAmount_Computed = MethodHelper.Round(line.ForiegnCurrencyAmount * line.ForiegnExchangeRate, 2);
+                if(Math.Abs((double)(lineLocalAmount - lineLocalAmount_Computed)) >= 0.1)
+                {
+                    throw new ApplicationException("Foriegn Amount (" + line.ForiegnCurrencyAmount + ") in line (" + line.LineNumber + ") * Exchange Rate (" + line.ForiegnExchangeRate + ") is not equal to local amount (" + line.LocalCurrencyAmount + ") +-0.1");
+                }
+
+            }
+
         }
         private static void ValidateAirlineRestriction(ARInvoicePM entityPM, ICommonDataContext myCommonContext)
         {
