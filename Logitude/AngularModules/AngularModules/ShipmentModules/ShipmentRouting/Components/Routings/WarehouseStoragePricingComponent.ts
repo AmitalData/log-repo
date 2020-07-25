@@ -21,7 +21,8 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     public PricingItemsList: ObservableCollection;
-    private maxPackageItemsLineNumber = 0;
+    private maxLineNumber = 0;
+    public IsResourcesReady: boolean = false;
     constructor() {
         super();
     }
@@ -33,7 +34,8 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
         this.DefaultPricings = args['DefaultPricings'];
 
         this.BuildPricingItems();
-        this.maxPackageItemsLineNumber = ArrayTool.Max(this.PricingItemsList.Collection, "LineNumber");       
+        this.CopyPricings();
+        this.maxLineNumber = ArrayTool.Max(this.PricingItemsList.Collection, "LineNumber");
         this.Clone();
     }
 
@@ -49,11 +51,11 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
 
         if (this.DefaultPricings != null && this.DefaultPricings.length > 0) {
             var count: number = 1;
-            this.DefaultPricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {                
+            this.DefaultPricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
                 var defaultItem: ShipmentStoragePricingPM = new ShipmentStoragePricingPM(null);
                 defaultItem.Tenant = SessionLocator.Tenant;
                 defaultItem.ShipmentId = this.EntityPM.Id;
-                defaultItem.WarehouseId = this.EntityPM.WarehouseLegWarehouseId;                
+                defaultItem.WarehouseId = this.EntityPM.WarehouseLegWarehouseId;
                 defaultItem.StepFrom = item.StepFrom;
                 defaultItem.StepTo = item.StepTo;
                 defaultItem.Days = item.Days;
@@ -111,19 +113,19 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     }
 
     AddPricingItemMethod() {
-        var previousLine: PricingItem = this.PricingItemsList.Collection.filter(d => d.LineNumber == this.maxPackageItemsLineNumber)[0];
+        var previousLine: PricingItem = this.PricingItemsList.Collection.filter(d => d.LineNumber == this.maxLineNumber)[0];
 
         var from: number = null;
         if (previousLine != null) {
             from = previousLine.StepTo;
         }
 
-        this.maxPackageItemsLineNumber += 1;
+        this.maxLineNumber += 1;
         var item: ShipmentStoragePricingPM = new ShipmentStoragePricingPM(null);
         item.Tenant = SessionLocator.Tenant;
         item.ShipmentId = this.EntityPM.Id;
         item.WarehouseId = this.EntityPM.WarehouseLegWarehouseId;
-        item.LineNumber = this.maxPackageItemsLineNumber;
+        item.LineNumber = this.maxLineNumber;
         item.StepFrom = from;
         this.PricingItemsList.Insert(new PricingItem(item, this, false, true));
     }
@@ -136,23 +138,34 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     OkButtonClicked() {
         var errors: string[] = [];
 
-        this.PricingItemsList.Collection.forEach((item: PricingItem) => {
+        var myItems: PricingItem[] = this.PricingItemsList.Collection.filter(d => !d.IsFreeLine);
+
+        myItems.forEach((item: PricingItem) => {
             if (item != null) {
-                Validator.TryValidateObject(item.EntityPM, "WarehouseStoragePricing", errors);
+                Validator.TryValidateObject(item.EntityPM, "ShipmentStoragePricing", errors);
             }
         });
 
-        var hasError: boolean = this.ValidateSteps();
-        if (hasError) {
-            errors.push("Invalid Steps");
+        if (myItems.filter(d => AppTool.IsNullOrZero(d.Days) || (AppTool.IsNullOrZero(d.StepTo))).length == 0) {
+            var hasError: boolean = this.ValidateSteps(myItems);
+            if (hasError) {
+                errors.push("Invalid Steps");
+            }
+        }
+
+        else {
+            var hasError: boolean = this.ValidateLastStep(myItems);
+            if (hasError) {
+                errors.push("Only last step can have empty Days or Step To");
+            }
         }
 
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-            this.DataContext.PricingItemsList.Collection.forEach((item: PricingItem) => {
+            myItems.forEach((item: PricingItem) => {
                 if (item != null) {
-                    if (item.IsNewEntity && !item.IsFreeLine) {
+                    if (item.IsNewEntity) {
                         if (this.EntityPM.ShipmentStoragePricings.indexOf(item.EntityPM) == -1) {
                             item.IsNewEntity = false;
                             this.EntityPM.AddShipmentStoragePricing(item.EntityPM);
@@ -165,12 +178,12 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
         }
     }
 
-    private ValidateSteps() {
+    private ValidateSteps(myItems: PricingItem[]) {
         var hasError: boolean = false;
 
-        this.DataContext.PricingItemsList.Collection.forEach((item: PricingItem) => {
+        myItems.forEach((item: PricingItem) => {
             if (item != null) {
-                var previousLine: PricingItem = this.PricingItemsList.Collection.filter(d => d.LineNumber == item.LineNumber - 1)[0];
+                var previousLine: PricingItem = myItems.filter(d => d.LineNumber == item.LineNumber - 1)[0];
                 if (previousLine != null) {
                     if (item.StepFrom != previousLine.StepTo) {
                         hasError = true;
@@ -183,9 +196,20 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
         return hasError;
     }
 
+    private ValidateLastStep(myItems: PricingItem[]) {
+        var hasError: boolean = false;
+        myItems.filter(d => d.LineNumber != this.maxLineNumber).forEach((item: PricingItem) => {
+            if (AppTool.IsNullOrZero(item.Days) || AppTool.IsNullOrZero(item.StepTo)) {
+                hasError = true;
+            }
+        });
+        
+        return hasError;
+    }
+
     private myCloner: Cloner;
     private Clone() {
-        this.myCloner = new Cloner(this.DataContext);
+        this.myCloner = new Cloner(this);
         this.myCloner.AddField('ChargeStorage');
         this.myCloner.AddField('CurrencyId');
         this.myCloner.AddField('AirWeightMeasurementCode');
@@ -198,7 +222,61 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     }
 
     private RejectChanges() {
+        this.ResetPricings();
         this.myCloner.RejectChanges();
+    }
+
+    public savedItems: ShipmentStoragePricingPM[] = [];
+    public CopyPricings() {
+        this.savedItems = [];
+        if (this.EntityPM.ShipmentStoragePricings.length > 0) {
+            this.EntityPM.ShipmentStoragePricings.forEach(item => {
+                this.maxLineNumber = 0;
+                if (item.LineNumber > this.maxLineNumber) {
+                    this.maxLineNumber = item.LineNumber;
+                }
+                var pricingItem = new ShipmentStoragePricingPM(null);
+                pricingItem.ShipmentId = item.ShipmentId;
+                pricingItem.Tenant = item.Tenant;
+                pricingItem.WarehouseId = item.WarehouseId;
+                pricingItem.LineNumber = item.LineNumber;
+                pricingItem.StepFrom = item.StepFrom;
+                pricingItem.StepTo = item.StepTo;
+                pricingItem.Days = item.Days;
+                pricingItem.SalePrice = item.SalePrice;
+                pricingItem.Amount = item.Amount;
+                this.savedItems.push(pricingItem);
+            });
+        }
+    }
+
+    public ResetPricings() {
+        if (this.savedItems != null) {
+            var items: ShipmentStoragePricingPM[] = this.EntityPM.ShipmentStoragePricings;
+            items.forEach(item => {
+                var savedItem: ShipmentStoragePricingPM = this.savedItems.filter(d => d.LineNumber == item.LineNumber)[0];
+                if (savedItem == null) {
+                    if (this.EntityPM.ShipmentStoragePricings.indexOf(item) != -1) {
+                        this.EntityPM.RemoveShipmentStoragePricing(item);
+                    }
+                }
+
+                else {
+                    item.StepFrom = savedItem.StepFrom;
+                    item.StepTo = savedItem.StepTo;
+                    item.Days = savedItem.Days;
+                    item.SalePrice = savedItem.SalePrice;
+                    item.Amount = savedItem.Amount;
+                }
+            });
+
+            this.savedItems.forEach(item => {
+                var list = this.EntityPM.ShipmentStoragePricings.filter(d => d.LineNumber == item.LineNumber);
+                if (list == null) {
+                    this.EntityPM.ShipmentStoragePricings.push(item);
+                }
+            });
+        }
     }
 }
 
@@ -212,6 +290,19 @@ export class PricingItem extends BaseComponent {
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
         this.IsFreeLine = isFree;
+
+        this.SetCellColor();
+    }
+
+    public CellColor: string = "transparent";
+    private SetCellColor() {
+        if (this.IsFreeLine) {
+            this.CellColor = "#B4F3D2";
+        }
+
+        else {
+            this.CellColor = "transparent";
+        }
     }
 
     get StepFrom() {
@@ -223,7 +314,7 @@ export class PricingItem extends BaseComponent {
     }
     set StepFrom(newValue: number) {
         if (this.EntityPM.StepFrom != newValue) {
-            this.EntityPM.StepFrom = newValue;
+            this.EntityPM.StepFrom = AppTool.Round(newValue, 0);
         }
     }
 

@@ -1430,6 +1430,7 @@
     <Content Include="ShipmentModules\ShipmentPackages\Components\Packages\DownloadPackagesFileComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\DeliveryTabs\DeliveryPackagesConnectComponent.html" />
+    <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\WarehouseStoragePricingComponent.html" />
     <Content Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestEditAgentComponent.html" />
     <Content Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestHeaderComponent.html" />
     <Content Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestsWorkSpaces.html" />
@@ -3909,6 +3910,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\DownloadPackagesFileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\DeliveryTabs\DeliveryPackagesConnectComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\WarehouseStoragePricingComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestEditAgentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestHeaderComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestsWorkSpaces.ts" />

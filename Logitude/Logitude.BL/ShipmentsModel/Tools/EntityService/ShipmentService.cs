@@ -153,6 +153,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(objectContext);
             this.shipmentAssemblyRepository = new ShipmentAssemblyRepository(objectContext);
             this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(objectContext);
+            this.shipmentStoragePricingRepository = new ShipmentStoragePricingRepository(objectContext);
+
             this.GetLoggedData();
             this.SetHybridPartner(this.tenant);
         }

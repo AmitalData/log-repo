@@ -4,6 +4,7 @@ import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({    
     templateUrl: './WarehouseGeneralTabComponent.html',
@@ -90,9 +91,12 @@ export class WarehouseGeneralTabComponent extends BaseComponent {
     }
 
     StorageDefaultsClicked() {
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = "Storage Defaults";
-        logitudeWindow.WindowArgs = this.EntityPM;
-        logitudeWindow.Show("./CommonModules/CommonPartners/Components/EditTabs/Warehouse/StorageDefaultsComponents");
+        var entityResourceService: EntityResourceService = new EntityResourceService();
+        entityResourceService.getEntityResourceByTableName("WarehouseStoragePricing").subscribe((res1: any) => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = "Storage Defaults";
+            logitudeWindow.WindowArgs = this.EntityPM;
+            logitudeWindow.Show("./CommonModules/CommonPartners/Components/EditTabs/Warehouse/StorageDefaultsComponents");
+        });
     }
 }

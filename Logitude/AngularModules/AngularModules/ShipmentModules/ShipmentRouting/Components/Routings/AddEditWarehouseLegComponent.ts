@@ -21,7 +21,7 @@ import { CardPMService } from '../../../../Common/Services/StandardPMs/CardPMSer
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { WarehouseStoragePricingPM } from '../../../../Common/EntityPMs/WarehouseStoragePricingPM';
 import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
-import { ShipmentStoragePricingPM } from '../../../../Shipment/EntityPMs/ShipmentStoragePricingPM';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     moduleId: './ShipmentModules/ShipmentRouting/Components/Routings/',
@@ -479,10 +479,13 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     }
 
     StoragePricingClicked() {
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = "Storage Pricing";
-        logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, DefaultPricings: this.warehouseStoragePricings };
-        logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
+        var entityResourceService: EntityResourceService = new EntityResourceService();
+        entityResourceService.getEntityResourceByTableName("ShipmentStoragePricing").subscribe((res1: any) => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = "Storage Pricing";
+            logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, DefaultPricings: this.warehouseStoragePricings };
+            logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
+        });
     }
 
     private SetLastFreeDate() {
