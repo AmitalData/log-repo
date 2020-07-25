@@ -4,6 +4,8 @@ using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -36,8 +38,11 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             CargoTrackingArguments = GetCargoTrackingArgs();
             try
             {
+                TenantRepository tenantRepository = new TenantRepository(0);
+                UpdateIsIncrementalRunning(tenantRepository,true);
                 cargoTrackingMainService.CheckAndUpdateWaterMark(destinationConnectionString,sourceConnectionString);
                 AddAllTablesToThread(cargoTrackingMainService.FillCargoTableList());
+                UpdateIsIncrementalRunning(tenantRepository,false);
             }
 
             catch (Exception e)
@@ -47,8 +52,15 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
 
         }
 
- 
-        
+        private void UpdateIsIncrementalRunning(TenantRepository tenantRepository,bool IsRunning)
+        {
+            Tenant tenant = tenantRepository.GetSingleTenant(0);
+            tenant.IsIncrementalBuildRunning = IsRunning;
+            tenantRepository.Update(tenant);
+            tenantRepository.SubmitChanges();
+        }
+
+
         private CargoTrackingArgs GetCargoTrackingArgs()
         {
             string xmlParameters = BatchTaskExecution.PrametersXml;
@@ -87,8 +99,8 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             string[] sourceConnectionArray = dbConnectionFrom.Split(',');
             string[] destinationConnectionArray = dbConnectionTo.Split(',');
             string[] SourceMainDB = GetMainDBConnectionString(BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3])).Split(',');
-            string sourceConnectionString = BuildConnectionString(SourceMainDB[0], SourceMainDB[1], SourceMainDB[2], SourceMainDB[3]);
-            string destinationConnectionString = BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+            sourceConnectionString = BuildConnectionString(SourceMainDB[0], SourceMainDB[1], SourceMainDB[2], SourceMainDB[3]);
+            destinationConnectionString = BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
         }
 
         private string GetUpdateDataBaseCondition(CargoArgs buildCargoArgs)
