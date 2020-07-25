@@ -30,6 +30,7 @@ export class StorageDefaultsComponents extends BaseComponent {
         this.ObjectTableName = "Warehouse";
         this.SetUIProperties();
         this.BuildPricingItems();
+        this.CopyPricings();
         this.maxLineNumber = ArrayTool.Max(this.PricingItemsList.Collection, "LineNumber");
         this.Clone();
     }
