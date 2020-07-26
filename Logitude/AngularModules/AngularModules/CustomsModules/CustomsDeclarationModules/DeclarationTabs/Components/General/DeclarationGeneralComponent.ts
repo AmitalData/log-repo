@@ -31,6 +31,7 @@ import { CustomsSettingExtendedListService } from '../../../../../Customs/Servic
 import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { DeclarationExportRecipientPM } from '../../../../../Customs/EntityPMs/DeclarationExportRecipientPM';
 
 @Component({
     
@@ -59,6 +60,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     public RefreshDatePicker: boolean;
     ConsigmentTabs: LogTab[] = [];
     public ShowStorageStatusMessage: boolean;
+    _DeclarationExportRecipientPM: DeclarationExportRecipientPM[] =[];
 
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
@@ -73,11 +75,11 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                                     this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
                                         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response: any) => {
                                             this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationExportRecipient").subscribe((response: any) => {
-
-
+                                              
                                                 this.EntityPM = this.entityArgs.EntityPM;
-                                                this.ObjectTableName = this.entityArgs.ObjectTableName;
+                                                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                                                 this.Listen();
+                                                this.BuildRecipientList();
                                                 //var tab;
                                                 console.log("DeclarationGeneralComponent/EntityPM ", this.EntityPM);
                                                 if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
@@ -115,6 +117,38 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         }
 
     }
+
+
+    BuildRecipientList() {
+        var count: number = 1;
+
+        this._DeclarationExportRecipientPM = [];
+
+        //this.AddSiteEnabled = true;
+        for (var i = 0; i < this.EntityPM.DeclarationExportRecipients.length; i++) {
+            var viewModel: DeclarationExportRecipientPM = new DeclarationExportRecipientPM(this.EntityPM.DeclarationExportRecipients[i]);
+         
+           
+            this._DeclarationExportRecipientPM.push(viewModel);
+
+
+        }
+
+        if (this._DeclarationExportRecipientPM.length == 0) {
+            var item = new DeclarationExportRecipientPM(this.EntityPM);
+            var viewModel: DeclarationExportRecipientPM = new DeclarationExportRecipientPM(item);
+             
+            this._DeclarationExportRecipientPM.push(viewModel);
+            //  this.EntityPM.AddConsignmentInternalTransition(item);
+
+
+           // this.AddSiteEnabled = false;
+        }
+
+
+    }
+
+
 
     //#region XML Errors
     XMLErrors: string[] = [];
@@ -527,6 +561,47 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
     public get EntitleImporterCountryName() { return this.EntityPM.EntitleImporterCountryName; }
     public set EntitleImporterCountryName(newValue: string) { this.EntityPM.EntitleImporterCountryName = newValue; }
+
+
+
+    public get ShipCode() { return this.EntityPM.ShipCode; }
+    public set ShipCode(newValue: string) {
+        this.EntityPM.ShipCode = newValue;
+    }
+
+    _CustomsShip: any;
+    public get CustomsShip() { return this._CustomsShip; }
+    public set CustomsShip(newValue: string) {
+        this._CustomsShip;
+    }
+  
+
+    public get ExportAutonomyRegionTypeCode() { return this.EntityPM.ExportAutonomyRegionTypeCode; }
+    public set ExportAutonomyRegionTypeCode(newValue: string) {
+        this.EntityPM.ExportAutonomyRegionTypeCode = newValue;
+    }
+
+    DestinationCountry: any;
+    public get DestinationCountryCode() { return this.EntityPM.DestinationCountryCode; }
+    public set DestinationCountryCode(newValue: string) {
+        this.EntityPM.DestinationCountryCode = newValue;
+        if (newValue) {
+            this.UIProperties.SetRequired("DestinationCountryCode", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetRequired("DestinationCountryCode", this.ObjectTableName, true);
+        }
+    }
+
+
+
+    public get IsExporterConfirmation() { return this.EntityPM.IsExporterConfirmation; }
+    public set IsExporterConfirmation(newValue: boolean) {
+        this.EntityPM.IsExporterConfirmation = newValue;
+        this.UIProperties.SetRequired("IsExporterConfirmation", this.ObjectTableName, false);
+    }
+
+ 
 
     public CalculatedClient: any;
 

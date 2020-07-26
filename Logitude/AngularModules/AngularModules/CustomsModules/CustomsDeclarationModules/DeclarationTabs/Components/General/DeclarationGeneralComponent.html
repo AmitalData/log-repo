@@ -84,7 +84,7 @@
                     </tr>
 
                     <!-- Filters Fields-->
-                    <tr>
+                    <tr *ngIf="1==2">
                         <td style="width: 700px;">
                             <table style="table-layout: fixed;">
                                 <!-- Filters Fields with horizantal tabs-->
@@ -266,6 +266,303 @@
                                         <div [title]="CalculatedEntitleImporterName" style="color: #646464; font-size: 11px; float: right;">{{CalculatedEntitleImporterName}}</div>
                                         <img *ngIf="EntitleImporterCountryCode" style="float: right;margin-right: 5px;margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntitleImporterCountryCode | CountryFlagPipe" [attr.title]="EntitleImporterCountryName" />
                                     </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="1==1">
+                        <td style="width: 700px;">
+                            <table style="table-layout: fixed;">
+                                <!-- Filters Fields with horizantal tabs-->
+                                <tr style="height: 28px;">
+                                    <!-- DeclarationOfficeCode -->
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'DeclarationOfficeCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 105px;">
+                                        <LogLov tabindex="1" [ObjectFieldName]="'DeclarationOfficeCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.CustomsHouseType'"
+                                                [HideColumns]="true"
+                                                [SelectedValue]="DeclarationOfficeCode">
+                                        </LogLov>
+                                    </td>
+
+                                    <td style="width: 10px;"><div></div></td>
+
+                                    <!-- TaxationDateTime -->
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'TaxationDateTime'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 105px;" tabindex="2">
+                                        <LogDatePicker [RefreshMe]="RefreshDatePicker" [ObjectFieldName]="'TaxationDateTime'" [ObjectTableName]="ObjectTableName"
+                                                       [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="TaxationDateTime"></LogDatePicker>
+                                    </td>
+
+                                    <td style="width: 10px;"><div></div></td>
+
+                                    <!-- ImporterCode -->
+                                    <td style="width: 115px;">
+                                        <LogLabel [TextCode]="'Customs.Declaration.F.ExporterCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 100px;">
+                                        <SearchBox #ImporterSearchBox [ObjectTableName]="'Customs.Client'"
+                                                   [IsQuickSearch]="true"
+                                                   [DropDownWidth]="143"
+                                                   [DisplayText]="ImporterCode"
+                                                   [SearchText]="ImporterCode"
+                                                   [DisplayMember]="'Code'"
+                                                   [ItemHeight]="36"
+                                                   [HideIcons]="true"
+                                                   [Watermark]="''"
+                                                   [IsDisabled]="!IsImporerCodeEnabled"
+                                                   (LostFocus)="ImporterLostFocus('Importer', $event, ImporterSearchBox)"
+                                                   (ItemClicked)="ImporterClicked('Importer',$event)"></SearchBox>
+                                        <!--(TextChanged)="ImporterTextChanged('Importer', $event, ImporterSearchBox)"-->
+                                    </td>
+                                    <td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditImporter()"></IconButton></td>
+                                    <!--<td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Search'" (click)="SearchImporter('Importer', $event)" [IsEnabled]="!IsDisplayOnly"></IconButton></td>-->
+                                    <td style="width: 25px;"><IconButton *ngIf="!IsDisplayOnly" [IsSmall]="true" [Name]="'Search'" (click)="SearchImporter('Importer', $event)" [IsIconOnly]="true" style="float:left;"></IconButton></td>
+                                    <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 5px;">
+                                        <div style="color: #646464; font-size: 11px;">{{CalculatedImporterName}}</div>
+                                    </td>
+                                    <td><div></div></td>
+
+                                </tr>
+                                <tr style="height: 28px;">
+                                    <!-- GovernmentProcedureType -->
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'ProcedureCurrentCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'ProcedureCurrentCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [HideColumns]="true"
+                                                [LookUpTableName]="'Customs.GovernmentProcedureType'"
+                                                [ManipulateData]="true"
+                                                [QueryFilterItems]="PreceduralFilterItems"
+                                                [SelectedValue]="ProcedureCurrentCode">
+                                        </LogLov>
+                                    </td>
+                                    <td><div></div></td>
+
+                                    <!-- AutonomyRegionTypeCode -->
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'AutonomyRegionTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'AutonomyRegionTypeCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [HideColumns]="true"
+                                                [LookUpTableName]="'Customs.AutonomyType'"
+                                                [SelectedValue]="AutonomyRegionTypeCode">
+                                        </LogLov>
+                                    </td>
+                                    <td><div></div></td>
+
+                                    <!-- TransferImporterCode -->
+                                    <td>
+                                        <LogLabel [TextCode]="'Customs.Declaration.F.TransferExporterCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+
+                                        <SearchBox [ObjectTableName]="'Customs.Client'"
+                                                   [IsQuickSearch]="true"
+                                                   [DropDownWidth]="143"
+                                                   [IsDisabled]="!IsTransferImporterEnabled"
+                                                   [DisplayText]="TransferImporterCode"
+                                                   [DisplayMember]="'Code'"
+                                                   (LostFocus)="ImporterLostFocus('Transfer', $event, ImporterSearchBox)"
+                                                   [ItemHeight]="36"
+                                                   [HideIcons]="true"
+                                                   [Watermark]="''"
+                                                   (ItemClicked)="ImporterClicked('Transfer',$event)"></SearchBox>
+
+                                    </td>
+                                    <td><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditTransferImporter()"></IconButton></td>
+                                    <td style="width: 25px;"><IconButton *ngIf="!IsDisplayOnly" [IsSmall]="true" [Name]="'Search'" (click)="SearchImporter('Transfer', $event)" [IsIconOnly]="true" style="float:left;"></IconButton></td>
+                                    <td style="text-align: right; padding-right: 5px;">
+                                        <div style="color: #646464; font-size: 11px;">{{CalculatedTransferImporterName}}</div>
+                                    </td>
+
+
+                                </tr>
+                                <tr style="height: 28px;">
+                                    <!-- DeclarationDocumentTypeCode -->
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'DeclarationDocumentTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'DeclarationDocumentTypeCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [HideColumns]="true"
+                                                [LookUpTableName]="'Customs.LeadDocumentType'"
+                                                [SelectedValue]="DeclarationDocumentTypeCode">
+                                        </LogLov>
+                                    </td>
+                                    <td><div></div></td>
+
+                                    <!-- DeclarationDocumentId -->
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'DeclarationDocumentId'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'DeclarationDocumentId'" [ObjectTableName]="ObjectTableName"
+                                                    [HideColumns]="true" [DataContext]="DataContext" [Text]="DeclarationDocumentId"></LogTextBox>
+
+                                    </td>
+                                    <td><div></div></td>
+
+                                    <!-- EntitleImporterCode -->
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+
+                                        <LogDatePicker [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
+                                                       [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="LoadingDateTime"></LogDatePicker>
+
+                                    </td>
+                
+                                </tr>
+                                <tr style="height: 28px;">
+                                    <!-- DeclarationDocumentTypeCode -->
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'DestinationCountryCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'DestinationCountryCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.CustomsCountry'"
+                                                [DisplayMemberPath]="'LocalName'"
+                                                (SelectedItemChanged)="DestinationCountry = $event"
+                                                [SelectedValue]="DestinationCountryCode"
+                                                [HideColumns]="true">
+                                        </LogLov>
+
+
+                                    </td>
+                                    <td><div></div></td>
+
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'ShipCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'ShipCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.CustomsShip'"
+                                                [DisplayMemberPath]="'LocalName'"
+                                                (SelectedItemChanged)="CustomsShip = $event"
+                                                [SelectedValue]="ShipCode"
+                                                [HideColumns]="true">
+                                        </LogLov>
+
+
+                                    </td>
+                                    <td><div></div></td>
+
+                                    <!-- EntitleImporterCode -->
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'IsExporterConfirmation'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <!--(ValueChanged)="IsExporterConfirmationChecked($event)"-->
+                                    <td style="width: 160px;">
+                                        <LogCheckBox [ObjectFieldName]="'IsExporterConfirmation'"
+                                                     [Checked]="DataContext.IsExporterConfirmation"
+                                                     [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+
+                                </tr>
+                                <tr style="height: 28px;">
+                                    <td colspan="8">
+                                        <div style="height: 60px; overflow-x: hidden; overflow-y: auto; float: right; width: 90%;">
+                                            <ul>
+                                                <li class="SiteListItem" style="text-align: right; height:25px;" >
+                                                   <table>
+                                                       <tr>
+                                                           <!-- DeclarationDocumentTypeCode -->
+                                                           <td style="width: 150px;">
+                                                               <LogLabel [ObjectFieldName]="'RecipientName'" [ObjectTableName]="DeclarationExportRecipientTableName"
+                                                                         [DataContext]="DataContext"></LogLabel>
+                                                           </td>
+
+                                                           <td style="width: 160px;">
+
+                                                               <LogTextBox [ObjectFieldName]="'RecipientName'" [ObjectTableName]="ObjectTableName"
+                                                                           [HideColumns]="true" [DataContext]="DataContext" [Text]="RecipientName"></LogTextBox>
+
+                                                           </td>
+                                                           <td><div></div></td>
+
+                                                           <!-- DeclarationDocumentId -->
+                                                           <td style="width: 150px;">
+                                                               <LogLabel [ObjectFieldName]="'RecipientAddress'" [ObjectTableName]="DeclarationExportRecipientTableName"
+                                                                         [DataContext]="DataContext"></LogLabel>
+                                                           </td>
+
+                                                           <td style="width: 160px;">
+                                                               <LogTextBox [ObjectFieldName]="'RecipientAddress'" [ObjectTableName]="ObjectTableName"
+                                                                           [HideColumns]="true" [DataContext]="DataContext" [Text]="RecipientAddress"></LogTextBox>
+
+
+                                                           </td>
+                                                           <td><div></div></td>
+
+                                                           <!-- EntitleImporterCode -->
+                                                           <td style="width: 150px;">
+                                                               <LogLabel [ObjectFieldName]="'RecipientIssueCountryCode'" [ObjectTableName]="DeclarationExportRecipientTableName"
+                                                                         [DataContext]="DataContext"></LogLabel>
+                                                           </td>
+
+                                                           <td style="width: 160px;">
+                                                               <LogLov [ObjectFieldName]="'RecipientIssueCountryCode'"
+                                                                       [ObjectTableName]="ObjectTableName"
+                                                                       [DataContext]="DataContext"
+                                                                       [LookUpTableName]="'Customs.CustomsCountry'"
+                                                                       [DisplayMemberPath]="'LocalName'"
+                                                                       (SelectedItemChanged)="_RecipientIssueCountry = $event"
+                                                                       [SelectedValue]="RecipientIssueCountryCode"
+                                                                       [HideColumns]="true">
+                                                               </LogLov>
+
+</td>
+                                                       </tr>
+                                                   </table>
+                                                </li>
+                                            </ul>
+                                            <div style="clear: both;"></div>
+                                        </div>
+                                        <div style="vertical-align:top;padding-top:7px; padding-right: 3px; float: right;">
+                                            <IconButton style="float: right;" [IsSmall]="true" [Name]="'Add'" (click)="AddRecipientButtonClicked()"></IconButton>
+                                        </div>
+                                    </td>
+                                 
                                 </tr>
 
                             </table>
