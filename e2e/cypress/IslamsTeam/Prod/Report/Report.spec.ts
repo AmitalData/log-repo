@@ -28,8 +28,8 @@ it('Search For Report', () => {
     cy.get('#null_Search').type('Automation test report')
     cy.get('#BI').click()
     cy.get('#Report').click()
-    cy.get('#ReportID').should('be.visible')
-    cy.get('#ReportID').click()
+    //   cy.get('#ReportID').should('be.visible')
+    cy.get('#ReportID').click({ force: true })
 
 })
 
