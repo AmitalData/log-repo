@@ -51,7 +51,7 @@ it('Create Shipment Successfully', () => {
 
   cy.get('#ShipmentCreatebtn').click()
 
-  cy.get('#Shipments-O-Q').click()
+  cy.get('#SHIPMENTS-Q').click()
 
   cy.get('#LogGrid_0_0row0').click()
   //cy.get('#HelperNotesButton_0_1').click()
