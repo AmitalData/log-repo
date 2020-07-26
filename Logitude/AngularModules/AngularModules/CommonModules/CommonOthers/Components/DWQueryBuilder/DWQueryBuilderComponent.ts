@@ -593,7 +593,6 @@ export class DWQueryBuilderComponent extends BaseComponent {
         var tempData = this.SelectedFieldsDataSource;
         tempData.push(this.SelectedItem);
         this.SelectedFieldsDataSource = this.ResetIndexes(tempData);
-        if (this.SelectedItem.IsMultipleSelection) this.SelectedItem.DisplayName += this.selectedItem.IndexOrder;
     }
 
     ClearData() {

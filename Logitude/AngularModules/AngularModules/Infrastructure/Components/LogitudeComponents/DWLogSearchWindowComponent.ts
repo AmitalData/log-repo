@@ -181,7 +181,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
     private SetChargesGroupArgs(args: CustomEntityArgs) {
         this.IsMultipleSelection = args.IsMultipleSelection;
-        this.ColumnName = args.DisplayName;
+        this.ColumnName = "";//args.DisplayName;
         this.SelectedFieldsDataSource = args.SelectedFieldsDataSource;
         this.SelectedIndexOrder = args.SelectedIndexOrder;
         this.FirstListTitle = "All Charge Types";
