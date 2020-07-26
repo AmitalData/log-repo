@@ -132,12 +132,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         isFromAmendment = true;
                     }
 
-                    if (isFromAmendment)
-                    {
-                        declarationOrg.IsAmendment = false;
-                        declarationOrg.ChangeSetOp = ChangeSetOperation.Update;
-                        declarationUpdateService.Update(declarationOrg, true);
-                    }
+                    //if (isFromAmendment)
+                    //{
+                    //    declarationOrg.IsAmendment = false;
+                    //    declarationOrg.ChangeSetOp = ChangeSetOperation.Update;
+                    //    declarationUpdateService.Update(declarationOrg, true);
+                    //}
 
                     decIdOrg = declarationOrg.Id;
                 }
