@@ -38,6 +38,7 @@ namespace CommunicationWorkerRole.Tasks
             }
             finally
             {
+                LogInfo(LogMessagingUtil.Instance.ToString());
                 this.LogInfoToDB(LogMessagingUtil.Instance.ToString());
             }
         }

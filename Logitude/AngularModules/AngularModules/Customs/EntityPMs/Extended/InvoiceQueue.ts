@@ -4,6 +4,9 @@ export class Invoices {
     Statuses: StatusData[];
     InvoiceLines: InvoiceLine[];
     IntegratedInvoices: IntegratedInvoice[];
+    InvoiceList: InvoiceList[];
+    static InvoiceList: any;
+
 }
  
 export class StatusData {
@@ -31,4 +34,10 @@ export class IntegratedInvoice {
     InvoiceCurrency: string;
     InvoiceAmount: any;
  
+}
+export class InvoiceList {
+    InvoiceBillTo: string;
+    InvoiceType: string;
+    InvoiceDate: string;
+    InvoiceCurrency: string;
 }

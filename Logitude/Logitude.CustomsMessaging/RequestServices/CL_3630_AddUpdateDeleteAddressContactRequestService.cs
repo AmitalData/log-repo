@@ -37,7 +37,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             myAddUpdateDeleteAddressContactPhoneForCustomsAgent.CustomerIdentification.externalID = externalID;
             myAddUpdateDeleteAddressContactPhoneForCustomsAgent.CustomerIdentification.externalIDSpecified = externalID > 0 ? true : false;
-            if (clientPM != null && clientPM.PassportCountryCode != "IL")
+            if (clientPM != null && !string.IsNullOrWhiteSpace(clientPM.PassportNumber) && clientPM.PassportCountryCode != "IL")
             {
                 myAddUpdateDeleteAddressContactPhoneForCustomsAgent.CustomerIdentification.externalID = null;
                 myAddUpdateDeleteAddressContactPhoneForCustomsAgent.CustomerIdentification.externalIDSpecified = false;

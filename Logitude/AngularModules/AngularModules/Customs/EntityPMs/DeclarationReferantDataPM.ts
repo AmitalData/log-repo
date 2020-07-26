@@ -144,6 +144,8 @@ export class DeclarationReferantDataPM {
     public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
        
 	 
+    
+	 
     private classifiedUserName: string;
     public get ClassifiedUserName() { return this.classifiedUserName; }
     public set ClassifiedUserName(newValue: string) { if (this.classifiedUserName != newValue) { this.classifiedUserName = newValue; this.MarkAsDirty("ClassifiedUserName"); } }
