@@ -175,6 +175,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="OrderMoney"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"

@@ -156,7 +156,7 @@
 
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px;">
 
-                    {{   declaration.Consignments[0].StorageSiteName}}
+                    {{   declaration.StorageSiteName}}
                 </span>
 
             </td>
@@ -168,9 +168,9 @@
                     תנאי מכר
                 </span>
 
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px;">
+                <span _ngcontent-c14="" class="Counter" style="font-size: 18px;" *ngIf="declaration.SupplierInvoices && declaration.SupplierInvoices[0]">
 
-                    FOB
+                    <!--{{   declaration.SupplierInvoices[0].IncotermCode}}-->
                 </span>
 
             </td>

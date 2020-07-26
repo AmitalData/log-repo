@@ -50,7 +50,6 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
   { loadChildren: () => import('../../CustomsModules/CustomsPaymentOrder/ModuleCustomsPaymentOrder').then(m => m.ModuleCustomsPaymentOrder), path: 'CustomsPaymentOrder' },
   { loadChildren: () => import('../../CustomsModules/CustomsListTemplates/ModuleCustomsListTemplates').then(m => m.ModuleCustomsListTemplates), path: 'CustomsListTemplates' },
   { loadChildren: () => import('../../CustomsModules/CustomsDocuments/ModuleCustomsDocuments').then(m => m.ModuleCustomsDocuments), path: 'CustomsDocuments' },
-  { loadChildren: () => import('../../CustomsModules/CustomsRequests/ModuleCustomsRequests').then(m => m.ModuleCustomsRequests), path: 'CustomsRequests' },
   { loadChildren: () => import('../../CustomsModules/CustomsGeneralRequests/ModuleCustomsGeneralRequests').then(m => m.ModuleCustomsGeneralRequests), path: 'CustomsGeneralRequests' },
   { loadChildren: () => import('../../CustomsModules/CustomsVendor/ModuleCustomsVendor').then(m => m.ModuleCustomsVendor), path: 'CustomsVendor' },
     { loadChildren: () => import('../../CustomsModules/InvoiceQueue/ModuleInvoiceQueue').then(m => m.ModuleInvoiceQueue), path: 'InvoiceQueue' },
