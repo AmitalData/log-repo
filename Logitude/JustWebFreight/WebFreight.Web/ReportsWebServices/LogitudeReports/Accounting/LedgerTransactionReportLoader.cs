@@ -91,11 +91,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             LedgerTransactionBalanceFilterCallBack LTBFilterCallBack = BuildLTBFilterCallback(cardIndexs);
 
-            GLAccountPM glaccountPM = GetGLAccountById(GetFilterValue<string>("GLAccountId"));
+            //GLAccountPM glaccountPM = GetGLAccountById(GetFilterValue<string>("GLAccountId"));
 
-            if (glaccountPM.IsMultiCurrency == true)
+            //if (glaccountPM.IsMultiCurrency == true)
                 SetBalanceForMultiCurrencyAccount(LTBFilterCallBack);
-            else
+            //else
                 SetBalanceForSingleCurrencyAccount(LTBFilterCallBack);
 
 
@@ -145,6 +145,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
 
             transactionsDataProvider.LocalClosedBalance = transactionsDataProvider.LocalClosedBalanceList.Sum(d => d.BalanceLocal).Value;
+            transactionsDataProvider.ForeignClosedBalance = transactionsDataProvider.LocalClosedBalanceList.Sum(d => d.BalanceForeign).Value;
 
         }
 
@@ -179,6 +180,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
 
             transactionsDataProvider.LocalOpenBalance = transactionsDataProvider.LocalOpenBalanceList.Sum(d=>d.BalanceLocal).Value;
+            transactionsDataProvider.ForeignOpenBalance = transactionsDataProvider.LocalOpenBalanceList.Sum(d=>d.BalanceForeign).Value;
 
         }
 
