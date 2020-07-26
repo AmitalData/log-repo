@@ -27,6 +27,8 @@ namespace WebFreight.Web.DataProviders
         // Data
         public decimal LocalOpenBalance { get; set; }
         public decimal LocalClosedBalance { get; set; }
+        public decimal ForeignOpenBalance { get; set; }
+        public decimal ForeignClosedBalance { get; set; }
 
         // List
         public List<ReportLedgerTransaction> Transactions { get; set; }
