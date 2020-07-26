@@ -526,7 +526,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
-                //SecurityUtility.CheckContactFeature("BIReport", "BIReportRun", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("BIReport", "BIReportRun", authToken.Tenant);
 
 
                 DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(authToken.Tenant);
