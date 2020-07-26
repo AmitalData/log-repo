@@ -1780,7 +1780,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             if (orderById)
             {
-                declarationLists = declarationLists.OrderBy(x =>Convert.ToInt32(x.AmendmentRequestNumber)).ToList();
+                declarationLists = declarationLists.OrderBy(x =>x.Id).ToList();
                 declarationLists.ForEach(x => { x.AmendmentNumber = i; i++; });
 
                 return declarationLists.ToList();

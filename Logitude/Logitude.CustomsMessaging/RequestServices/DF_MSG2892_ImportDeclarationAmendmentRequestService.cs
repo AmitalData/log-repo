@@ -54,7 +54,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private ICustomContext _context;
         private DeclarationPM _DeclarationPM;
         private DeclarationPM _DeclarationPMOrg;
-
+        string functionalReferenceID = "";
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
          private string _userId;
@@ -292,9 +292,11 @@ namespace Logitude.CustomsMessaging.RequestServices
 
              req.Response = new UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.Response();
             req.Response.Declaration =  Getdeclaration(_DeclarationPM , _DeclarationPMOrg);
- 
+
             req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType { Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ? GetNextAmendmentRequestNumber() : _DeclarationPM.AmendmentRequestNumber
-        };
+            };
+            functionalReferenceID = req.Response.FunctionalReferenceID.Value;
+
             req.Response.IssueDateTime = DataTypeConvertorUtil.Convert(DateTime.Now);
             req.Response.AdditionalInformation = AdditionalInformation();
             req.Response.FunctionCode = new ResponseFunctionCodeType { Value = "1" };
@@ -432,6 +434,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             if (!string.IsNullOrEmpty(_DeclarationPM.AmendDeficitInitiatedReasTo))
             {
                 responseAdditionalInformation.Add(  new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "26" }, Content = new AdditionalInformationContentTextType { Value = _DeclarationPM.AmendDeficitInitiatedReasTo  } });
+            }
+           if(_DeclarationPMOrg.IsAmendment==true && _DeclarationPMOrg.AmendmentDontDisplayInList==true &&  _DeclarationPMOrg.AmendmentStatus!= "3" && _DeclarationPMOrg.AmendmentStatus != "6")
+            { 
+                responseAdditionalInformation.Add(new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "24" }, Content = new AdditionalInformationContentTextType { Value = functionalReferenceID } });
             }
             return responseAdditionalInformation.ToArray();
          }

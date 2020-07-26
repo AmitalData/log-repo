@@ -211,7 +211,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     Tenant = _MyDeclarationPM.Tenant,
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DMA",
-                                                    notes = null,
+                                                    notes = "- תיקון הצהרה אושר" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
                                                     EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
@@ -225,7 +225,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                         xml_status = "new",
                                                         status_id = "DMA",
                                                         status_DateTime = DateTime.Now,
-                                                        comments = null,
+                                                        comments =  "- תיקון הצהרה אושר" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     }
                                                 };
                                                 AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
@@ -240,7 +240,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     Tenant = _MyDeclarationPM.Tenant,
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DMD",
-                                                    notes = null,
+                                                    notes = "תיקון הצהרה נדחה - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
                                                     EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
@@ -254,7 +254,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                         xml_status = "new",
                                                         status_id = "DMD",
                                                         status_DateTime = DateTime.Now,
-                                                        comments = null,
+                                                        comments = "תיקון הצהרה נדחה - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     }
                                                 };
 
@@ -272,7 +272,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     Tenant = _MyDeclarationPM.Tenant,
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DMC",
-                                                    notes = null,
+                                                    notes = "תיקון הצהרה בוטל - " +( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
                                                     EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
@@ -286,7 +286,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                         xml_status = "new",
                                                         status_id = "DMC",
                                                         status_DateTime = DateTime.Now,
-                                                        comments = null,
+                                                        comments = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber )+ " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     }
                                                 };
 
@@ -316,7 +316,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     Tenant = _MyDeclarationPM.Tenant,
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DMP",
-                                                    notes = null,
+                                                    notes = "תיקון הצהרה אושר חלקית - " + ( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber )+ "מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
                                                     EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
@@ -330,7 +330,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                         xml_status = "new",
                                                         status_id = "DMP",
                                                         status_DateTime = DateTime.Now,
-                                                        comments = null,
+                                                        comments = "תיקון הצהרה אושר חלקית - " +( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + "מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     }
                                                 };
 
@@ -347,7 +347,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     Tenant = _MyDeclarationPM.Tenant,
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DWR",
-                                                    notes = null,
+                                                    notes = "תיקון הצהרה ממתין לטיפול המכס - " +( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber )+ " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
                                                     EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
@@ -361,7 +361,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                         xml_status = "new",
                                                         status_id = "DWR",
                                                         status_DateTime = DateTime.Now,
-                                                        comments = null,
+                                                        comments = "תיקון הצהרה ממתין לטיפול המכס - " +( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     }
                                                 };
 
@@ -394,7 +394,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             Tenant = _MyDeclarationPM.Tenant,
                             objectTableName = "Customs.Declaration",
                             EventCode = "DCH",
-                            notes = null,
+                            notes = "-  בוצע תיקון הצהרה" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
                             CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
                             EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                             UserId = loggingUserId,
@@ -408,7 +408,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 xml_status = "new",
                                 status_id = "DCH",
                                 status_DateTime = DateTime.Now,
-                                comments = null,
+                                comments = "-  בוצע תיקון הצהרה" +( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
                             }
                         };
                         AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
@@ -645,7 +645,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
                         EventCode = "DCH",
                         EventRemarks = "Declaration Changed By Customs",
-                        FUStatusRemarks = "בוצע תיקון הצהרה" + this._MyDeclarationPM.DeclarationNumber,
+                        FUStatusRemarks = "בוצע תיקון הצהרה" + ( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
                     };
 
                     this._MyDeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
