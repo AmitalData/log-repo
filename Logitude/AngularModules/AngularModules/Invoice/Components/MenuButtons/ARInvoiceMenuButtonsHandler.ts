@@ -29,12 +29,18 @@ export class ARInvoiceMenuButtonsHandler {
     public EntityPM: ARInvoicePM;
     public entityArgs: EntityArgs
     private isRunningBatchTaskExecution: boolean = false;
+    private IsConfirmationMessageForCriedtNoteVisible:boolean=false;
     DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
+        
         this.Listen();
+    }
+
+    private CheckIsConfirmationMessageForCriedtNoteVisible(){
+        this.IsConfirmationMessageForCriedtNoteVisible = FeatureLocator.HasFeaturePermession("ARInvoice", "ConfirmationForAutoCreditForCreditNotes") ? true : false;
     }
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
@@ -200,7 +206,7 @@ export class ARInvoiceMenuButtonsHandler {
                                     }
                                 }
                             }
-
+                            myButtonIsDisabled = false; // Test
                             break;
                         }
 
@@ -649,10 +655,11 @@ export class ARInvoiceMenuButtonsHandler {
     }
     ApplyApproveClicked() {
         if (this.EntityPM.IsAutoCredit) {
+            this.CheckIsConfirmationMessageForCriedtNoteVisible();
             var myConfirmWindow = new ConfirmWindow();
             myConfirmWindow.Width = 400;
             var Text=TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCredit");
-            if(this.EntityPM.AutoCreditedByInvoiceTypeCode =="CD" || this.EntityPM.AutoCreditedByInvoiceTypeCode =="CC"){
+            if((this.EntityPM.AutoCreditedByInvoiceTypeCode =="CD" || this.EntityPM.AutoCreditedByInvoiceTypeCode =="CC") && this.IsConfirmationMessageForCriedtNoteVisible){
                Text=TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCreditForAutoCredit");
             }
             myConfirmWindow.Show(Text);

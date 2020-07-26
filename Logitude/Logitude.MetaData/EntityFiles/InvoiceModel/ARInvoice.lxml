@@ -18002,5 +18002,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ConfirmationForAutoCreditForCreditNotes&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;ARInvoice.Features.ConfirmationForAutoCreditForCreditNotes&quot;"
+      FeatureDefaultText="&quot;Confirmation For Auto Credit For CreditNotes&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
