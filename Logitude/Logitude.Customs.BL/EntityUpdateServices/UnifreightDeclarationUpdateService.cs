@@ -976,7 +976,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     else
                     {
-                        myCFIDATA_DATA.ThirdCargoID = "";
+                    //    myCFIDATA_DATA.ThirdCargoID = "";
                     }
                 }
                 if (courierMasterPM != null)
