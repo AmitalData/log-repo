@@ -117,6 +117,21 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         return this._entityListService.getByFilters("InterestReportLinesByDate", filters);//this.ledgerTransactionListExtendedService.getByFilters(filters);
     }
 
+    EditCalculationDate(){
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = TextCodeTranslator.Translate("InterestReport.O.EditOpenBalance");
+        var myPath = "./Accounting/Components/Packages/EditTabs/InterestReport/GeneralTab/InterestReportEditCalculationDate/InterestReportEditCalculationDateComponent";
+        logWindow.Width = 350;
+        logWindow.Height = 160;
+        logWindow.DataContext = this.EntityPM.InterestCalculationDate ;
+        logWindow.Show(myPath);
+        logWindow.WindowClosed.subscribe(s => {
+            if (s!=null) {
+               this.EntityPM.InterestCalculationDate = s;
+            }
+        })
+    }
+
     get CustomerId() {
         if (this.EntityPM != null) {
             return this.EntityPM.CustomerId;
