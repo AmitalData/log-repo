@@ -208,12 +208,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         LoggedUserEmail = loggedUserEmail,
                         Tenant = authToken.Tenant,
-                        IsConfirmationDuplicateByUser = filter.IsConfirmationDuplicateByUser,
+                        IsConfirmationByUser = filter.IsConfirmationByUser,
                         FileName = filter.FileName,
                     };
-                    
-                    var documentId = this.UploadExcelFileToStorage(fileData, args, authToken.Tenant);
-                    args.DocumentId = documentId;
+
+                    if (string.IsNullOrEmpty(args.DocumentId))
+                    {
+                        var documentId = this.UploadExcelFileToStorage(fileData, args, authToken.Tenant);
+                        args.DocumentId = documentId;
+                    }
 
                     var stringwriter = new System.IO.StringWriter();
                     var serializer = new XmlSerializer(typeof(PartnersUploadExcelParameter));
@@ -2891,6 +2894,6 @@ public class PartnersUploadExcelParameter
     public string FileData { get; set; }
     public string DocumentId { get; set; }
     public string LoggedUserEmail { get; set; }
-    public bool IsConfirmationDuplicateByUser { get; set; }
+    public bool IsConfirmationByUser { get; set; }
     public string FileName { get; set; }
 }

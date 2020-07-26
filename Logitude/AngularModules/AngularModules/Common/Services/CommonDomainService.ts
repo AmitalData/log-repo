@@ -1460,5 +1460,6 @@ export class PartnersUploadExcelParameter {
     Tenant: number;
     FileData: string;
     FileName: string;
-    IsConfirmationDuplicateByUser: boolean;
+    IsConfirmationByUser: boolean;
+    DocumentId: string;
 }

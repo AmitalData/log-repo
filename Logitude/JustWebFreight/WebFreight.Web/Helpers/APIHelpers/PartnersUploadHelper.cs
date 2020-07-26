@@ -33,7 +33,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private PartnerTypeRepository partnerTypeRepository;
         private PartnersUploadExcelParameter parameterArgs;
         private DocumentRepository documentRepository;
-        private CountryCityRepository countryCityRepository;
         private CountryRepository countryRepository;
         private StateRepository stateRepository;
         private string errorMsg;
@@ -50,7 +49,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private int duplicateLinesCount;
         private CardRepository cardRepository;
         private AddressQuery addressQuery;
-        private bool IsConfirmationDuplicateByUser;
+        private bool IsConfirmationByUser;
 
         public PartnersUploadHelper(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
@@ -76,10 +75,9 @@ namespace WebFreight.Web.Helpers.APIHelpers
             parameterArgs = serializer.Deserialize(stringReader) as PartnersUploadExcelParameter;
             tenant = parameterArgs.Tenant;
             loggedUserEmail = parameterArgs.LoggedUserEmail;
-            IsConfirmationDuplicateByUser = parameterArgs.IsConfirmationDuplicateByUser;
+            IsConfirmationByUser = parameterArgs.IsConfirmationByUser;
             partnerTypeRepository = new PartnerTypeRepository(commonDataContext);
             documentRepository = new DocumentRepository(commonDataContext);
-            countryCityRepository = new CountryCityRepository(commonDataContext);
             countryRepository = new CountryRepository(commonDataContext);
             stateRepository = new StateRepository(commonDataContext);
             contactRep = new ContactRepository(commonDataContext);
@@ -343,24 +341,28 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             if (!string.IsNullOrEmpty(errorMsg))
             {
-
-                errorMsg = errorMsg.Length > 120 ? errorMsg.Substring(0, 120) : errorMsg;
-                this.batchTaskExecutionPM.StatusCode = "F";
-                this.batchTaskExecutionPM.ProgressMessage = errorMsg;
+                HandelErrorMsg();
             }
             else
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction(new TimeSpan(3, 0, 0)))
                 {
-                    RunPartnersGenerator_CheckDuplicate();
+                    RunPartnersGenerator_Validation();
                     scope.Complete();
                 }
             }
         }
 
+        private void HandelErrorMsg()
+        {
+            this.errorMsg = this.errorMsg.Length > 4000 ? errorMsg.Substring(0, 4000) : errorMsg;
+            this.batchTaskExecutionPM.StatusCode = "F";
+            this.batchTaskExecutionPM.ProgressMessage = errorMsg;
+        }
+
         Dictionary<string, State> statesDictionary;
         Dictionary<string, Country> countriesDictionary;
-        private void RunPartnersGenerator_CheckDuplicate()
+        private void RunPartnersGenerator_Validation()
         {
             var checkDuplicates = from x in PartnerExcelList
                                   group x by x.UniqueCode into g
@@ -368,132 +370,150 @@ namespace WebFreight.Web.Helpers.APIHelpers
                                   orderby count descending
                                   select new { Value = g.Key, Count = count };
 
-            int checkDuplicates_Count = checkDuplicates.Where(a => a.Count > 1).Count();
-            this.duplicateLinesCount = duplicateLinesCount + checkDuplicates.Where(a => a.Count > 1).Sum(a => a.Count);
-            if (!IsConfirmationDuplicateByUser && checkDuplicates_Count > 0)
+            if (!IsConfirmationByUser)
             {
-                this.SendDuplicateMessage(checkDuplicates_Count);
-            }
-
-            else
-            {
+                int checkDuplicates_Count = checkDuplicates.Where(a => a.Count > 1).Count();
                 var excelIds = PartnerExcelList.Select(a => a.UniqueCode).ToList();
                 int intersectionBetweenExcelAndDB = this.partnersUniqueKeys.Intersect(excelIds).ToList().Count();
-
-                if (!IsConfirmationDuplicateByUser && intersectionBetweenExcelAndDB > 0)
+                this.duplicateLinesCount = duplicateLinesCount + checkDuplicates.Where(a => a.Count > 1).Sum(a => a.Count);
+                this.duplicateLinesCount = duplicateLinesCount + intersectionBetweenExcelAndDB;
+                var message = "";
+                if (checkDuplicates_Count > 0 && intersectionBetweenExcelAndDB > 0)
                 {
-                    this.SendDuplicateMessage(intersectionBetweenExcelAndDB);
+                    message = checkDuplicates_Count + " duplicate lines were found in Excel and DB. Do you want to continue?";
+                }
+                else if (checkDuplicates_Count > 0 ||  intersectionBetweenExcelAndDB > 0)
+                {
+                    if (checkDuplicates_Count > 0)
+                    {
+                        message = checkDuplicates_Count + " duplicate lines were found in Excel. Do you want to continue?";
+                    }
+                    else
+                    {
+                        message = intersectionBetweenExcelAndDB + " duplicate lines were found in DB. Do you want to continue?";
+                    }
                 }
                 else
                 {
-                    this.FillPartnersFromExcelToDB();
+                    message = "Do you want to continue?";
                 }
+
+                this.SendConfirmationMessage(message);
+            }
+            else
+            {
+                this.FillPartnersFromExcelToDB();
             }
         }
 
         private void FillPartnersFromExcelToDB()
         {
+            this.errorMsg = "";
+            var errorsCount = 0;
             statesDictionary = stateRepository.GetStates(tenant).ToDictionary(d => d.Id, o => o);
             countriesDictionary = countryRepository.GetCountries(tenant).ToDictionary(d => d.Id, o => o);
             var currentItem = 0;
             foreach (var item in PartnerExcelList)
             {
-                currentItem = currentItem + 1;
-                var checkIfCardExist = this.partnersUniqueKeys.Where(a => a == item.UniqueCode).FirstOrDefault();
-                if (checkIfCardExist == null)
+                try
                 {
-                    switch (item.Type)
+                    currentItem = currentItem + 1;
+                    var checkIfCardExist = this.partnersUniqueKeys.Where(a => a == item.UniqueCode).FirstOrDefault();
+                    if (checkIfCardExist == null)
                     {
-                        case "AG":
-                            {
-                                this.CreateAgentPartner(item);
-                                break;
-                            }
+                        switch (item.Type)
+                        {
+                            case "AG":
+                                {
+                                    this.CreateAgentPartner(item);
+                                    break;
+                                }
 
-                        case "CS":
-                        case "PO":
-                            {
-                                this.CreateCustomerPartner(item);
-                                break;
-                            }
+                            case "CS":
+                            case "PO":
+                                {
+                                    this.CreateCustomerPartner(item);
+                                    break;
+                                }
 
-                        case "CG":
-                            {
-                                this.CreateCustomAgentPartner(item);
-                                break;
-                            }
+                            case "CG":
+                                {
+                                    this.CreateCustomAgentPartner(item);
+                                    break;
+                                }
 
-                        case "SG":
-                            {
-                                this.CreateShippingAgentPartner(item);
-                                break;
-                            }
+                            case "SG":
+                                {
+                                    this.CreateShippingAgentPartner(item);
+                                    break;
+                                }
 
-                        case "VD":
-                            {
-                                this.CreateVendorPartner(item);
-                                break;
-                            }
-
-                        case "WH":
-                            {
-                                this.CreateWarehousePartner(item);
-                                break;
-                            }
-
-                        case "AL":
-                            {
-                                this.CreateAirlinePartner(item);
-                                break;
-                            }
-
-                        case "SL":
-                            {
-                                this.CreateShippingLinePartner(item);
-                                break;
-                            }
-
-                        case "TR":
-                            {
-                                this.CreateTruckerPartner(item);
-                                break;
-                            }
-
-                        case "CO":
-                            {
-                                this.CreateContactPartner(item);
-                                break;
-                            }
-                        case "AC"://Accounting Partner
-                            {
-                                this.CreateAccountingPartnerPartner(item);
-                                break;
-                            }
+                            case "VD":
+                                {
+                                    this.CreateVendorPartner(item);
+                                    break;
+                                }
+                            case "WH":
+                                {
+                                    this.CreateWarehousePartner(item);
+                                    break;
+                                }
+                            case "AL":
+                                {
+                                    this.CreateAirlinePartner(item);
+                                    break;
+                                }
+                            case "SL":
+                                {
+                                    this.CreateShippingLinePartner(item);
+                                    break;
+                                }
+                            case "TR":
+                                {
+                                    this.CreateTruckerPartner(item);
+                                    break;
+                                }
+                            case "AC":
+                                {
+                                    this.CreateAccountingPartnerPartner(item);
+                                    break;
+                                }
+                        }
+                        this.partnersUniqueKeys.Add(item.UniqueCode);
                     }
-                    this.partnersUniqueKeys.Add(item.UniqueCode);
-                }
-                else
-                {
-                    this.duplicateLinesCount = duplicateLinesCount + 1;
-                }
+                    else
+                    {
+                        this.duplicateLinesCount = duplicateLinesCount + 1;
+                    }
 
-                this.UpdateProcessPercentage(PartnerExcelList.Count(), currentItem);
+                    this.UpdateProcessPercentage(PartnerExcelList.Count(), currentItem);
+                }
+                catch (Exception e)
+                {
+                    this.errorMsg += e.Message + ";";
+                    errorsCount = errorsCount + 1;
+                }
             }
 
             this.batchTaskExecutionPM.StatusCode = "D";
-            this.batchTaskExecutionPM.ProgressMessage = "Successfully Uploaded " + (PartnerExcelList.Count() - duplicateLinesCount) + " out of " + PartnerExcelList.Count() + " Partners. " +
+            var msg = "Successfully Uploaded " + (PartnerExcelList.Count() - duplicateLinesCount - errorsCount) + " out of " + PartnerExcelList.Count() + " Partners. " +
                                                        duplicateLinesCount + " duplicate lines were found.";
 
+            if(!string.IsNullOrEmpty(this.errorMsg))
+            {
+                msg = msg + " Some of entity errors found: " + errorMsg;
+            }
 
-
+            msg = msg.Length > 4000 ? msg.Substring(0, 4000) : msg;
+            this.batchTaskExecutionPM.ProgressMessage = msg;
             workbook.Close();
             excelEngine.Dispose();
         }
 
-        private void SendDuplicateMessage(int checkDuplicates_Count)
+        private void SendConfirmationMessage(string msg)
         {
             this.batchTaskExecutionPM.StatusCode = "D";
-            this.batchTaskExecutionPM.ProgressMessage = checkDuplicates_Count + " duplicate lines were found in Excel. Do you want to continue?";
+            this.batchTaskExecutionPM.ProgressMessage = msg;
         }
 
         private void UpdateProcessPercentage(decimal maximum, decimal current)
@@ -559,11 +579,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
            
             AccountingPartnerService service = new AccountingPartnerService(commonDataContext, accountingPartner, systemContact.Id);
             service.Create(accountingPartner);
-        }
-
-        private void CreateContactPartner(PartnerExcel item)
-        {
-            
         }
 
         private void CreateTruckerPartner(PartnerExcel item)
