@@ -564,7 +564,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                         }
                     }
-                    //}
+                   }
                     #endregion
 
                     #region Lines Amounts VS Invoice Amount
@@ -766,7 +766,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         }
                     }
                     #endregion
-                }
+
             }
         }
 
