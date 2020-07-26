@@ -113,7 +113,7 @@ namespace CargoTrackingWinFormService.Forms
         private void UpdateCargoDataBase(CargoTable table)
         {
  
-           NumberOfCoulmnUpdated = cargoTrackingService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection }, NumberOfBulkPerTime);
+           NumberOfCoulmnUpdated = cargoTrackingService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection }, NumberOfBulkPerTime).NumberOfRecordUpdated;
   
         }
 

@@ -118,17 +118,17 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         public RecordUpdated UpdateCTDataBase(CargoArgs buildCargoArgs, int NumberOfBulkPerTime, bool? IsUpdateAfterFinished = null, CargoTrackingArguments CargoTrackingArguments = null)
         {
-            //CargoTrackingArguments = new CargoTrackingArguments(); // Just For Devlopment
-            //CargoTrackingArguments.FromDate = new DateTime(2011, 1, 1);
-            //CargoTrackingArguments.ToDate = new DateTime(2020, 7, 7);
+            CargoTrackingArguments = new CargoTrackingArguments(); // Just For Devlopment
+            CargoTrackingArguments.FromDate = new DateTime(2011, 1, 1);
+            CargoTrackingArguments.ToDate = new DateTime(2020, 7, 7);
 
 
             int NumberRecordUpdated = 0;
 
             if (CargoTrackingArguments!=null)
             {
+                DropTable(buildCargoArgs.Table.Pre_TableName, buildCargoArgs.DestinationConnectionString);
                 CheckPreTablesIsExist(buildCargoArgs.Table.Pre_TableName, buildCargoArgs.DestinationConnectionString);
-                ClearTable(buildCargoArgs.Table.Pre_TableName, buildCargoArgs.DestinationConnectionString);
                 buildCargoArgs.Table.CT_TableName = buildCargoArgs.Table.Pre_TableName;
             }
 
@@ -304,8 +304,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         private string  ChaneNameScript(string Old, string New)
         {
 
-            string cmd = "EXEC sp_rename '" + Old + "', '" + New  + "' \n";
- 
+            string cmd = "EXEC sp_rename '" + Old + "', '" + New  + "' \n ";
+            cmd += " exec sp_rename 'PK_"+ Old + "', 'PK_"+ New + "', 'object' \n ";
+            if (Old== "CargoTrackingShipments" || New== "CargoTrackingShipments")
+            {
+                cmd += " exec sp_rename 'FK_"+ Old + "_CargoTrackingHeaderEntityTypes_EntityType', 'FK_"+ New + "_CargoTrackingHeaderEntityTypes_EntityType', 'object' \n ";
+                cmd += " exec sp_rename 'FK_"+ Old + "_CargoTrackingMilestones_CurrentMilestoneCode', 'FK_"+ New + "_CargoTrackingMilestones_CurrentMilestoneCode', 'object' \n ";
+                cmd += " exec sp_rename 'UQ_"+ Old + "_EntityType_EntityId_Tenant', 'UQ_"+ New + "_EntityType_EntityId_Tenant', 'object' \n ";
+
+            }
             return cmd;
         }
 
@@ -581,9 +588,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         }
 
-        public void ClearTable(string TableName, string ConnectionString)
+        public void DropTable(string TableName, string ConnectionString)
         {
-            string cmd = "delete from " + TableName;
+            string cmd = "If exists (select * from sysobjects where name='" + TableName + "' and xtype='U') " +
+                              " BEGIN " +
+                              " Drop Table "+ TableName +
+                              " END ";
+
+             
             ExecuteSql(cmd, ConnectionString);
         }
 
