@@ -118,9 +118,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         public RecordUpdated UpdateCTDataBase(CargoArgs buildCargoArgs, int NumberOfBulkPerTime, bool? IsUpdateAfterFinished = null, CargoTrackingArguments CargoTrackingArguments = null)
         {
-            CargoTrackingArguments = new CargoTrackingArguments(); // Just For Devlopment
-            CargoTrackingArguments.FromDate = new DateTime(2011, 1, 1);
-            CargoTrackingArguments.ToDate = new DateTime(2020, 7, 7);
+            //CargoTrackingArguments = new CargoTrackingArguments(); // Just For Devlopment
+            //CargoTrackingArguments.FromDate = new DateTime(2011, 1, 1);
+            //CargoTrackingArguments.ToDate = new DateTime(2020, 7, 7);
 
 
             int NumberRecordUpdated = 0;
