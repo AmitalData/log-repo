@@ -693,6 +693,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsIncrementalBuildRunning"
+    OldNames="IsIncrementalRunning"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="AddressId"
     ReferencedTable="Addresses"

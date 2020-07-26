@@ -52,13 +52,17 @@ namespace CargoTrackingWinService.Helper
                                 ApplicationInfo.Countries = 0;
                             }
                             cargoTrackingMainService.CheckAndUpdateWaterMark(destinationConnectionString,sourceConnectionString);
-                            AddAllTablesToThread(cargoTrackingMainService.FillCargoTableList());
+                            bool IsFromBuild = AddAllTablesToThread(cargoTrackingMainService.FillCargoTableList());
                             ApplicationInfo.UpdateCounter++;
                             if (ApplicationInfo.UpdateCounter==10)
                             {
                                 ApplicationInfo.UpdateCounter = 0;
                                 ApplicationInfo.EndDate = TenantServerConfigration.GetCurrentDateTime(0);
-                                CargoTrackingServiceHelper.AddRecordToCargoTrackingIncrementalStats(destinationConnectionString);
+                                if (!IsFromBuild)
+                                {
+                                    CargoTrackingServiceHelper.AddRecordToCargoTrackingIncrementalStats(destinationConnectionString);
+
+                                }
                             }
                             Thread.Sleep(ApplicationInfo.UpdateCargoTrackingSleepTime);
                         }
@@ -74,23 +78,26 @@ namespace CargoTrackingWinService.Helper
             }
         }
 
-        private int UpdateCargoDataBase(CargoTable table)
+        private RecordUpdated UpdateCargoDataBase(CargoTable table)
         {
-           int RecordUpdatedNumber = cargoTrackingMainService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },1000);
+            RecordUpdated RecordUpdatedNumber = cargoTrackingMainService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },1000);
             return RecordUpdatedNumber;
         }
 
 
-        private void AddAllTablesToThread(List<CargoTable> CargoTableLists)
+        private bool AddAllTablesToThread(List<CargoTable> CargoTableLists)
         {
-            int RecordUpdatedNumber = 0;
+            RecordUpdated RecordUpdatedNumber = new RecordUpdated();
             foreach (CargoTable table in CargoTableLists)
             {
 
                 RecordUpdatedNumber = UpdateCargoDataBase(table);
-                UpdaeNumberOfRecordsUpdated(table.CT_TableName, RecordUpdatedNumber);
+                UpdaeNumberOfRecordsUpdated(table.CT_TableName, RecordUpdatedNumber.NumberOfRecordUpdated);
 
             }
+
+            return RecordUpdatedNumber.IsFromBuild;
+
         }
 
 

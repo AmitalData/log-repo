@@ -21,7 +21,7 @@
   <Column
     Name="EntityId"
     Type="varchar"
-    Size="15">
+    Size="16">
     <Constraints
       Nullable="true" />
   </Column>

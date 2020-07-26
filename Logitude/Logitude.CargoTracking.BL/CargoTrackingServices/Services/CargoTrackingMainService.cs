@@ -14,7 +14,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
     public class CargoTrackingMainService
     {
         public static long timeOut = 10000000000000000;
-
+        public RecordUpdated recordUpdated = new RecordUpdated();
         public List<CargoTable> FillCargoTableList()
         {
             List<CargoTable> CargoTableLists = new List<CargoTable>();
@@ -28,6 +28,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 ConditionKey = "Id",
                 DBTableName = "Ports",
                 CT_TableName = "CargoTrackingPorts",
+                Main_CT_TableName = "CargoTrackingPorts",
+                Pre_TableName = "Pre_CargoTrackingPorts",
                 ConditionsNumber = 1,
             });
 
@@ -40,6 +42,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CT_FieldsDBName = "Id,Code,EnglishName,LocalName",
                 DBTableName = "Cards",
                 CT_TableName = "CargoTrackingCards",
+                Main_CT_TableName = "CargoTrackingCards",
+                Pre_TableName = "Pre_CargoTrackingCards",
                 ConditionsNumber = 1,
             });
 
@@ -52,6 +56,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CT_FieldsDBName = "Id,Name,SearchFields",
                 DBTableName = "TransportModes",
                 CT_TableName = "CargoTrackingTransportModes",
+                Main_CT_TableName = "CargoTrackingTransportModes",
+                Pre_TableName = "Pre_CargoTrackingTransportModes",
                 ConditionsNumber = 1,
 
             });
@@ -65,6 +71,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CT_FieldsDBName = "Id,LocalName,Code,EnglishName",
                 DBTableName = "Countries",
                 CT_TableName = "CargoTrackingCountries",
+                Main_CT_TableName = "CargoTrackingCountries",
+                Pre_TableName = "Pre_CargoTrackingCountries",
                 ConditionsNumber = 1,
 
             });
@@ -77,9 +85,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 ConditionKey = "EntityId",
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipments",
+                Main_CT_TableName = "CargoTrackingShipments",
                 CT_FieldsDBName = "Tenant,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate,CreateDate,SecurityKey,ConsigneeName,ShipperName,CustomerReference",
                 Condition1 = " ((ShipmentLevelCode ='D' or ShipmentLevelCode ='H') and CustomFileId is not null)",
                 Condition2 = " ((ShipmentLevelCode !='D' and ShipmentLevelCode !='H') or CustomFileId is null)",
+                Pre_TableName = "Pre_CargoTrackingShipments",
                 ConditionsNumber = 2,
             });
 
@@ -93,6 +103,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 CT_FieldsDBName = "Tenant,ShipmentId,SearchFields,ShipmentDate",
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipmentSearches",
+                Main_CT_TableName = "CargoTrackingShipmentSearches",
+                Pre_TableName = "Pre_CargoTrackingShipmentSearches",
                 ConditionsNumber = 1,
 
             });
@@ -104,42 +116,58 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         }
 
 
-        public int UpdateCTDataBase(CargoArgs buildCargoArgs, int NumberOfBulkPerTime, bool? IsUpdateAfterFinished = null, CargoTrackingArguments CargoTrackingArguments = null)
+        public RecordUpdated UpdateCTDataBase(CargoArgs buildCargoArgs, int NumberOfBulkPerTime, bool? IsUpdateAfterFinished = null, CargoTrackingArguments CargoTrackingArguments = null)
         {
+            //CargoTrackingArguments = new CargoTrackingArguments(); // Just For Devlopment
+            //CargoTrackingArguments.FromDate = new DateTime(2011, 1, 1);
+            //CargoTrackingArguments.ToDate = new DateTime(2020, 7, 7);
+
+
+            int NumberRecordUpdated = 0;
+
             if (CargoTrackingArguments!=null)
             {
-                ClearTable(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);
+                CheckPreTablesIsExist(buildCargoArgs.Table.Pre_TableName, buildCargoArgs.DestinationConnectionString);
+                ClearTable(buildCargoArgs.Table.Pre_TableName, buildCargoArgs.DestinationConnectionString);
+                buildCargoArgs.Table.CT_TableName = buildCargoArgs.Table.Pre_TableName;
+            }
 
-            }
-            int NumberRecordUpdated = 0;
-            bool IsUpadteWaterMark = false;
-            if (buildCargoArgs.Table.Condition1 == null)
-            {
-                IsUpadteWaterMark = true;
-                NumberRecordUpdated += UpdateCTService(buildCargoArgs, NumberOfBulkPerTime, IsUpdateAfterFinished, CargoTrackingArguments,null, IsUpadteWaterMark);
-            }
-            if (buildCargoArgs.Table.Condition1!=null)
-            {
-                if (buildCargoArgs.Table.Condition2 == null)
+            recordUpdated.IsFromBuild = GetIsIncrementalRunning(buildCargoArgs.SourceConnectionString);
+
+            if (!recordUpdated.IsFromBuild || CargoTrackingArguments!=null) {
+                
+                bool IsUpadteWaterMark = false;
+                if (buildCargoArgs.Table.Condition1 == null)
                 {
                     IsUpadteWaterMark = true;
+                    NumberRecordUpdated += UpdateCTService(buildCargoArgs, NumberOfBulkPerTime, IsUpdateAfterFinished, CargoTrackingArguments, null, IsUpadteWaterMark);
                 }
-                NumberRecordUpdated += UpdateCTService(buildCargoArgs, NumberOfBulkPerTime, IsUpdateAfterFinished, CargoTrackingArguments, buildCargoArgs.Table.Condition1, IsUpadteWaterMark);
-            }
-            if (buildCargoArgs.Table.Condition2 != null)
-            {
-                if (buildCargoArgs.Table.Condition3 == null)
+                if (buildCargoArgs.Table.Condition1 != null)
+                {
+                    if (buildCargoArgs.Table.Condition2 == null)
+                    {
+                        IsUpadteWaterMark = true;
+                    }
+                    NumberRecordUpdated += UpdateCTService(buildCargoArgs, NumberOfBulkPerTime, IsUpdateAfterFinished, CargoTrackingArguments, buildCargoArgs.Table.Condition1, IsUpadteWaterMark);
+                }
+                if (buildCargoArgs.Table.Condition2 != null)
+                {
+                    if (buildCargoArgs.Table.Condition3 == null)
+                    {
+                        IsUpadteWaterMark = true;
+                    }
+                    NumberRecordUpdated += UpdateCTService(buildCargoArgs, NumberOfBulkPerTime, IsUpdateAfterFinished, CargoTrackingArguments, buildCargoArgs.Table.Condition2, IsUpadteWaterMark);
+                }
+                if (buildCargoArgs.Table.Condition3 != null)
                 {
                     IsUpadteWaterMark = true;
+                    NumberRecordUpdated += UpdateCTService(buildCargoArgs, NumberOfBulkPerTime, IsUpdateAfterFinished, CargoTrackingArguments, buildCargoArgs.Table.Condition3, IsUpadteWaterMark);
                 }
-                NumberRecordUpdated += UpdateCTService(buildCargoArgs, NumberOfBulkPerTime, IsUpdateAfterFinished, CargoTrackingArguments, buildCargoArgs.Table.Condition2, IsUpadteWaterMark);
             }
-            if (buildCargoArgs.Table.Condition3 != null)
-            {
-                IsUpadteWaterMark = true;
-                NumberRecordUpdated += UpdateCTService(buildCargoArgs, NumberOfBulkPerTime, IsUpdateAfterFinished, CargoTrackingArguments, buildCargoArgs.Table.Condition3, IsUpadteWaterMark);
-            }
-            return NumberRecordUpdated;
+            recordUpdated.NumberOfRecordUpdated = NumberRecordUpdated;
+            
+
+            return recordUpdated;
         }
         private  int UpdateCTService(CargoArgs buildCargoArgs, int NumberOfBulkPerTime, bool? IsUpdateAfterFinished = null, CargoTrackingArguments CargoTrackingArguments = null,string Condition =null, bool IsUpadteWaterMark=false)
         {
@@ -180,7 +208,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                         while (reader.Read())
                         {
 
-                            dataTable = FillDataTableValues(listCols, reader, dataTable, buildCargoArgs.Table.CT_TableName);
+                            dataTable = FillDataTableValues(listCols, reader, dataTable, buildCargoArgs.Table.Main_CT_TableName);
 
                             NumberRecoredTake++;
 
@@ -214,9 +242,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 }
                 else
                 {
+                 
                     reader.Close();
                 }
-
+                if (CargoTrackingArguments != null)
+                {
+                    Rename_Pre_Tables(buildCargoArgs, Condition);
+                }
                 if (IsUpadteWaterMark)
                 {
                     UpdateWaterMarkAfterFinishCheck(table, automaticLastUpdateDate, buildCargoArgs);
@@ -226,6 +258,55 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             return NumberOfCoulmnsUpdated;
 
+        }
+        public void Rename_Pre_Tables(CargoArgs buildCargoArgs , string Condition)
+        {
+            if (buildCargoArgs.Table.ConditionsNumber > 1)
+            {
+                switch (buildCargoArgs.Table.ConditionsNumber)
+                {
+
+                    case 2:
+                        {
+                            if (buildCargoArgs.Table.Condition2 == Condition)
+                            {
+                                StartRenameCargoTables(buildCargoArgs);
+                            }
+                            break;
+                        }
+                    case 3:
+                        {
+                            if (buildCargoArgs.Table.Condition3 == Condition)
+                            {
+                                StartRenameCargoTables(buildCargoArgs);
+                            }
+                            break;
+                        }
+
+                }
+
+            }
+            else
+            {
+                StartRenameCargoTables(buildCargoArgs);
+            }
+         
+
+        }
+
+        private void StartRenameCargoTables(CargoArgs buildCargoArgs)
+        {
+            string cmd = ChaneNameScript(buildCargoArgs.Table.Main_CT_TableName, buildCargoArgs.Table.Main_CT_TableName + "_SW") + "\n";
+            cmd += ChaneNameScript(buildCargoArgs.Table.Pre_TableName, buildCargoArgs.Table.Main_CT_TableName) + "\n";
+            cmd += ChaneNameScript(buildCargoArgs.Table.Main_CT_TableName + "_SW", buildCargoArgs.Table.Pre_TableName) + "\n";
+            ExecuteSql(cmd, buildCargoArgs.DestinationConnectionString);
+        }
+        private string  ChaneNameScript(string Old, string New)
+        {
+
+            string cmd = "EXEC sp_rename '" + Old + "', '" + New  + "' \n";
+ 
+            return cmd;
         }
 
         private SqlDataReader GetSqlDataReader(CargoArgs buildCargoArgs, CargoTable table, SqlConnection sourceConnection, CargoTrackingArguments CargoTrackingArguments = null, string Condition=null)
@@ -305,7 +386,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
                             foreach (DataRow dr in dataTable.Rows)
                             {
-                                CargoTrackingTableLogicService.SetTableLogic(dr, buildCargoArgs.Table.CT_TableName);
+                                CargoTrackingTableLogicService.SetTableLogic(dr, buildCargoArgs.Table.Main_CT_TableName);
 
                             }
  
@@ -394,7 +475,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                 if (!CompareDB.Contains(DB_columns))
                 {
-                    CargoTrackingCustomMappingService.MappingDB_CTDB(dt, sbc, DB_columns, Table.CT_TableName);
+                    CargoTrackingCustomMappingService.MappingDB_CTDB(dt, sbc, DB_columns, Table.Main_CT_TableName);
                 }
             }
 
@@ -456,7 +537,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             string cmd = "insert into CargoTrackingWatermarks  values('" + table.CT_TableName + "' , NULL,NULL)";
             ExecuteSql(cmd, connectionString);
         }
-
+        public void UpdateIsIncrementalRunning(int IsRunning, string connectionString)
+        {
+            string cmd = "Update Tenants set IsIncrementalBuildRunning = " + IsRunning +" Where Id = 0";
+            ExecuteSql(cmd, connectionString);
+        }
         public void ExecuteSql(string sqlString, string connectionString)
         {
 
@@ -502,12 +587,201 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             ExecuteSql(cmd, ConnectionString);
         }
 
+        public void CheckPreTablesIsExist(string TableName, string ConnectionString)
+        {
+            string SQL = null;
+            switch (TableName)
+            {
+                case "Pre_CargoTrackingPorts":
+                    {
+                        SQL = CreateTable_Pre_Ports(TableName);
+                        break;
+                    }
+                case "Pre_CargoTrackingCards":
+                    {
+                        SQL = CreateTable_Pre_Cards(TableName);
+                        break;
+                    }
+                case "Pre_CargoTrackingTransportModes":
+                    {
+                        SQL = CreateTable_Pre_TransportModes(TableName);
+                        break;
+                    }
+                case "Pre_CargoTrackingCountries":
+                    {
+                        SQL = CreateTable_Pre_Countries(TableName);
+                        break;
+                    }
+                case "Pre_CargoTrackingShipments":
+                    {
+                        SQL = CreateTable_Pre_Shipments(TableName) ;
+                        SQL += CreateIndexAndRelations_Pre_Shipments(TableName);
+                        break;
+                    }
+                case "Pre_CargoTrackingShipmentSearches":
+                    {
+                        SQL  = CreateTable_Pre_ShipmentSearchs(TableName) ;
+                        SQL += CreateIndex_Pre_ShipmentSearchs(TableName);
+                        break;
+                    }
+            }
+            ExecuteSql(SQL, ConnectionString);
+        }
+
+ 
+        private string CreateIndex_Pre_ShipmentSearchs(string TableName)
+        {
+            string cmd = "CREATE NONCLUSTERED INDEX [IX_"+ TableName + "_Tenant_ShipmentDate_SearchFields] ON [dbo].["+ TableName + "]([Tenant],[ShipmentDate],[SearchFields]) End";
+
+            return cmd;
+
+        }
+
+        private string CreateIndexAndRelations_Pre_Shipments(string TableName)
+        {
+            string cmd = "ALTER TABLE [dbo].["+ TableName + "] ADD CONSTRAINT [UQ_"+TableName+"_EntityType_EntityId_Tenant] UNIQUE([EntityType],[EntityId],[Tenant])\n";
+            cmd += "ALTER TABLE [dbo].["+ TableName + "] ADD CONSTRAINT [FK_"+ TableName + "_CargoTrackingHeaderEntityTypes_EntityType] FOREIGN KEY([EntityType]) REFERENCES [dbo].[CargoTrackingHeaderEntityTypes]([Code])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_" + TableName + "_EntityType] ON [dbo].[" + TableName + "]([EntityType])\n";
+            cmd += "ALTER TABLE [dbo].["+ TableName + "] ADD CONSTRAINT [FK_"+ TableName + "_CargoTrackingMilestones_CurrentMilestoneCode] FOREIGN KEY([CurrentMilestoneCode]) REFERENCES [dbo].[CargoTrackingMilestones]([Code])\n";
+            cmd += "CREATE NONCLUSTERED INDEX [IX_"+ TableName + "_CurrentMilestoneCode] ON [dbo].["+ TableName + "]([CurrentMilestoneCode]) End \n";
+
+            return cmd;
+
+        }
+
+        private string CreateTable_Pre_Ports(string TableName)
+        {
+            string cmd = "If not exists (select * from sysobjects where name='"+TableName+"' and xtype='U')" +
+                            "BEGIN " +
+                            "CREATE TABLE [dbo].[" + TableName + "](" +
+                            "[Id] VARCHAR(15) NOT NULL," +
+                            "[Code] VARCHAR(3) NOT NULL," +
+                            "[EnglishName] VARCHAR(40) NULL," +
+                            "[CountryId] VARCHAR(15) NOT NULL," +
+                            "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])" +
+                            ")" +
+                            " End";
+
+            return cmd;
+
+        }
+
+        private string CreateTable_Pre_Cards(string TableName)
+        {
+            string cmd = "If not exists (select * from sysobjects where name='" + TableName + "' and xtype='U')" +
+                            "BEGIN " +
+                            "CREATE TABLE[dbo].["+ TableName + "]("+
+                            "[Id] VARCHAR(15) NOT NULL,"+
+                            "[Code] VARCHAR(15) NOT NULL,"+
+                            "[EnglishName] VARCHAR(70) NULL,"+
+                            "[LocalName] NVARCHAR(100) NULL,"+
+                            "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
+                            ")" +
+                            " End";
+
+            return cmd;
+
+        }
+
+        private string CreateTable_Pre_Countries(string TableName)
+        {
+            string cmd = "If not exists (select * from sysobjects where name='" + TableName + "' and xtype='U')" +
+                            "BEGIN " +
+                            "CREATE TABLE[dbo].["+ TableName + "]("+
+                            "[Id] VARCHAR(15) NOT NULL,"+
+                            "[LocalName] NVARCHAR(120) NULL,"+
+                            "[Code] CHAR(2) NOT NULL,"+
+                            "[EnglishName] VARCHAR(120) NOT NULL,"+
+                            "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
+                            ")"+
+                            " End";
+
+            return cmd;
+
+        }
+
+        private string CreateTable_Pre_TransportModes(string TableName)
+        {
+            string cmd = "If not exists (select * from sysobjects where name='" + TableName + "' and xtype='U')" +
+                            "BEGIN " +
+                            "CREATE TABLE[dbo].["+ TableName + "]("+
+                            "[Id] CHAR(1) NOT NULL,"+
+                            "[SearchFields] NVARCHAR(1000) NULL,"+
+                            "[Name] VARCHAR(10) NOT NULL,"+
+                            "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
+                            ")"+
+                            " End";
+
+            return cmd;
+
+        }
+
+        private string CreateTable_Pre_ShipmentSearchs(string TableName)
+        {
+            string cmd = "If not exists (select * from sysobjects where name='" + TableName + "' and xtype='U')" +
+                            "BEGIN " +
+                            "CREATE TABLE[dbo].["+ TableName + "]("+
+                            "[Tenant] INT NOT NULL,"+
+                            "[SearchFields] NVARCHAR(100) NULL,"+
+                            "[ShipmentId] VARCHAR(15) NOT NULL,"+
+                            "[ShipmentDate] DATETIME NOT NULL,"+
+                            "[Id] INT IDENTITY(1,1) NOT NULL,"+
+                            "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
+                            ")" +
+                            " \n";
+
+            return cmd;
+
+        }
+
+        private string CreateTable_Pre_Shipments(string TableName)
+        {
+            string cmd = "If not exists (select * from sysobjects where name='" + TableName + "' and xtype='U')" +
+                            "BEGIN " +
+                            "CREATE TABLE[dbo].["+ TableName + "]("+
+                            "[Id] INT IDENTITY(1,1) NOT NULL,"+
+                            "[Tenant] INT NOT NULL,"+
+                            "[EntityId] VARCHAR(15) NULL,"+
+                            "[ForwardingShipmentHeaderId] VARCHAR(15) NULL,"+
+                            "[CustomsShipmentHeaderId] VARCHAR(15) NULL,"+
+                            "[EntityType] VARCHAR(1) NULL,"+
+                            "[CurrentMilestoneCode] VARCHAR(2) NULL,"+
+                            "[CurrentMilestoneDate] DATETIME NULL,"+
+                            "[CustomerId] VARCHAR(15) NULL,"+
+                            "[TransportModeId] VARCHAR(15) NULL,"+
+                            "[Master] VARCHAR(20) NULL,"+
+                            "[House] VARCHAR(20) NULL,"+
+                            "[ShipmentNumber] VARCHAR(20) NULL,"+
+                            "[FromPortId] VARCHAR(15) NULL,"+
+                            "[ToPortId] VARCHAR(15) NULL,"+
+                            "[ShipperId] VARCHAR(15) NULL,"+
+                            "[ConsigneeId] VARCHAR(15) NULL,"+
+                            "[GrossWeight] FLOAT NULL,"+
+                            "[Volume] FLOAT NULL,"+
+                            "[PickupDone] BIT NULL,"+
+                            "[ClearanceDone] BIT NULL,"+
+                            "[PickupDate] DATETIME NULL,"+
+                            "[ClearanceDate] DATETIME NULL,"+
+                            "[CreateDate] DATETIME NOT NULL,"+
+                            "[SecurityKey] VARCHAR(40) NULL,"+
+                            "[ConsigneeName] VARCHAR(70) NULL,"+
+                            "[ShipperName] VARCHAR(70) NULL,"+
+                            "[CustomerReference] VARCHAR(101) NULL,"+
+                            "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
+                            ")"+
+                            "\n";
+
+            return cmd;
+
+        }
+
+
         public string BuildConnectionString(string catalog, string userName, string password, string server)
         {
             string result = "Data Source=" + server + ";Initial Catalog=" + catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + userName + ";Password= " + password + ";MultipleActiveResultSets=True;Connect Timeout=60";
             return result;
         }
-
+      
         private string GetUpdateDataBaseCondition(CargoArgs buildCargoArgs, CargoTrackingArguments CargoTrackingArguments = null, string Condition=null)
         {
             string LastUpdate = null;
@@ -515,7 +789,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                   LastUpdate = GetTableLastUpdate(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);
             }
-            string condition = CargoTrackingTableCondition.Condition(buildCargoArgs.Table.CT_TableName, LastUpdate, CargoTrackingArguments, Condition);
+            string condition = CargoTrackingTableCondition.Condition(buildCargoArgs.Table.Main_CT_TableName, LastUpdate, CargoTrackingArguments, Condition);
             return condition;
         }
 
@@ -593,6 +867,39 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             return result;
         }
+
+        public bool GetIsIncrementalRunning(string connectionString)
+        {
+            bool Result = false;
+
+            SqlConnection con = new SqlConnection(connectionString);
+
+            SqlCommand com = new SqlCommand(
+               "Select  IsIncrementalBuildRunning FROM dbo.Tenants Where Id = 0", con);
+            try
+            {
+                com.CommandTimeout = (int)timeOut;
+                con.Open();
+                using (SqlDataReader reader = com.ExecuteReader())
+                {
+                    reader.Read();
+                    bool IsRunning = false;
+                    var value = reader["IsIncrementalBuildRunning"];
+                    if (value != null)
+                    { 
+                            IsRunning = (bool)(value);
+                            if (IsRunning != null) Result = IsRunning ;
+      
+
+                    }
+                }
+            }
+            finally
+            {
+                con.Close();
+            }
+            return Result;
+        }
     }
 
     public class CargoTrackingArguments
@@ -601,6 +908,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         public DateTime? ToDate;
         public int? Tenant;
 
+    }
+
+    public class RecordUpdated
+    {
+        public int NumberOfRecordUpdated {get;set;}
+        public bool IsFromBuild { get; set; }
     }
 
 }

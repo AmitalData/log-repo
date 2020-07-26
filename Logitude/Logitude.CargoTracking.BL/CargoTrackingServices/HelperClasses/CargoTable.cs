@@ -11,6 +11,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public string TableName { get; set; }
         public string DBTableName { get; set; }
         public string CT_TableName { get; set; }
+        public string Pre_TableName { get; set; }
         public string KeyName { get; set; }
         public string ConditionKey { get; set; }
         public string FieldsDBName { get; set; }
@@ -23,6 +24,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public string Condition3 { get; set; }
         public bool IsClosedTable { get; set; }
         public int ConditionsNumber { get; set; }
+        public string Main_CT_TableName { get; set; }
         public List<object> Labels { get; set; }
     }
 }
