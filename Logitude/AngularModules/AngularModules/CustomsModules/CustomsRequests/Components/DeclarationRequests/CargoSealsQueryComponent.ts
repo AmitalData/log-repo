@@ -174,8 +174,13 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
                     }
                 }
 
-
-                this.containerSelected = this.containers.filter(x => x.Key == this.CargoRowNumber) ? this.containers.filter(x => x.Key == this.CargoRowNumber)[0]:null;
+                 this.containerSelected = this.containers.filter(x => x.Key == this.CargoRowNumber) ? this.containers.filter(x => x.Key == this.CargoRowNumber)[0] : null;
+                if (this.containerSelected == null && this.containers.length == 1) {
+                    this.containerSelected = this.containers[0];
+                    this.CargoRowNumber = this.containerSelected.Key;
+                    this.ContainerNumber = this.containerSelected.Value;
+                }
+                     
                 this.CurrentSession.StopBusyIndicator();
 
                 this.IsReady = true;
