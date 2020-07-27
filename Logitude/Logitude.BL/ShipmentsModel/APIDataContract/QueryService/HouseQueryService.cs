@@ -278,9 +278,13 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 
                             break;
                         }
-                }               
+                }
 
-                temp.Ratio = this.GetRatio(temp.DirectionId, temp.TransportModeId, temp.ShipmentTypeId, MyTenantPM.CountryCode);
+                if (temp.Ratio == null || temp.Ratio == 0)
+                {
+                    temp.Ratio = this.GetRatio(temp.DirectionId, temp.TransportModeId, temp.ShipmentTypeId, MyTenantPM.CountryCode);
+                }
+
                 temp.DimFactor = this.GetDimFactorFromRatio(temp.Ratio, temp.DimensionsUnitCode, temp.ChargeableWeightUnitCode);
 
                 if (string.IsNullOrEmpty(temp.CreatedByUserId))

@@ -145,6 +145,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public DateTime? MAWBOBLDate { get; set; }
     
     public double? Ratio { get; set; }
+    
+    public List<Transshipment> Transshipments { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
