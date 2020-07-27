@@ -27,9 +27,10 @@ it('OpenShipmentView', () => {
     cy.get('#GeneralMHOperations').click();
     cy.wait(100)
     cy.get('#SHIP').click();
-    cy.get('#SHIPMENTS-Q').click()
+    cy.get('#Shipments-O-Q').click()
 
 })
+
 
 
 
