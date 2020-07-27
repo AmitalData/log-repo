@@ -175,7 +175,7 @@ export class SearchComponent implements AfterViewInit
 
     ItemClicked(item)
     {
-        var id = item.Id;
+        var id = item.EntityId;
 
         this.router.navigate(['/shipment', id]);
 

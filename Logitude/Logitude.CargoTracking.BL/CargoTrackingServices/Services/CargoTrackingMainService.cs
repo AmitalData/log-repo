@@ -330,12 +330,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             if (buildCargoArgs.Table.Main_CT_TableName == "CargoTrackingShipments" && buildCargoArgs.Table.CurrentCondition==1)
             {
                 fieldName=" P."+fieldName.Replace(",", " ,P.");
-                cmd = "SELECT "+ fieldName+ ", C.Id as ForwardingIdForCustom " + " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName+ " C ON P.Id = C.CustomFileId";
+                cmd = "SELECT "+ fieldName+ ", C.Id as ForwardingIdForCustom " + " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName+ " C ON P.CustomFileId = C.Id";
             }
             else if (buildCargoArgs.Table.Main_CT_TableName == "CargoTrackingShipments" && buildCargoArgs.Table.CurrentCondition == 2)
             {
                 fieldName = " P." + fieldName.Replace(",", " ,P.");
-                cmd = "SELECT " + fieldName +  " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + " C ON P.Id != C.CustomFileId";
+                cmd = "SELECT " + fieldName +  " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + " C ON P.CustomFileId != C.Id";
             }
             else
             {
