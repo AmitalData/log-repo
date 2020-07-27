@@ -334,8 +334,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             else if (buildCargoArgs.Table.Main_CT_TableName == "CargoTrackingShipments" && buildCargoArgs.Table.CurrentCondition == 2)
             {
-                fieldName = " P." + fieldName.Replace(",", " ,P.");
-                cmd = "SELECT " + fieldName +  " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + " C ON P.CustomFileId != C.Id";
+                 cmd = "Select "+ fieldName  + " FROM dbo. " + table.DBTableName + " Where Id not in (Select P.Id From  dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + " C ON P.CustomFileId = C.Id)";
             }
             else
             {
