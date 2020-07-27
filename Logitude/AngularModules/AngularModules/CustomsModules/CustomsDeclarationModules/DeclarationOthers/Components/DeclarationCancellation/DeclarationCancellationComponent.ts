@@ -168,6 +168,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
                                 });
                             this._DeclarationWebService.PostSendDeclarationCancellation(currRequestParams)
                                 .subscribe((myServiceResponse: ServiceResponse) => {
+                                    this.InitScreen();
 
                                 });
 
@@ -230,23 +231,27 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
     }
     SetWindowArgs(args: any) {
         this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
-           
             this.EntityPM = args.Declaration as DeclarationPM;
-            this.UIProperties.SetEnabled("CancelRequestStatusName", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("CustomCancelRequestRemarks", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("CancelRequestApproveDate", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("CancelRequestRejectionReason", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("CancelRequestNumber", this.ObjectTableName, false);
 
-            if (this.CancelRequestStatusCode == "5" || this.CancelRequestStatusCode == "2") {
-                this.UIProperties.SetEnabled("CancelRequestReasonExplanation", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("CancelRequestReasonCode", this.ObjectTableName, false);
-                this.readonly = true;
-            }
+            this.InitScreen();
+          
         });
 
     }
 
+    InitScreen() {
+        this.UIProperties.SetEnabled("CancelRequestStatusName", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CustomCancelRequestRemarks", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CancelRequestApproveDate", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CancelRequestRejectionReason", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CancelRequestNumber", this.ObjectTableName, false);
+
+        if (this.CancelRequestStatusCode == "5" || this.CancelRequestStatusCode == "2") {
+            this.UIProperties.SetEnabled("CancelRequestReasonExplanation", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("CancelRequestReasonCode", this.ObjectTableName, false);
+            this.readonly = true;
+        }
+    }
 
     ViewDocumentsComponent() {
          
