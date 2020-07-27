@@ -393,6 +393,10 @@ export class EditMultipleShipmentComponent extends BaseComponent {
         else {
             this.EntityPM.InvoiceLines.forEach(item => {
                 Validator.TryValidateObject(item, "APInvoiceLine", errors);
+
+                if (AppTool.IsNullOrEmpty(item.VatTypeId)) {
+                    errors.push("VAT Type Field is Required");
+                }
             });            
         }
 
