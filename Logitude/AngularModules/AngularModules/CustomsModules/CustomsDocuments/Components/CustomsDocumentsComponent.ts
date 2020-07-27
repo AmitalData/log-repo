@@ -1,43 +1,43 @@
 declare var window: any;
-import { Component, Input,  OnDestroy } from '@angular/core';
-import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
-import {AppTool, ArrayTool} from '../../../Infrastructure/Tools';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {DocumentsFilingPM}  from '../../../Common/EntityPMs/DocumentsFilingPM';
-import {CustomsDocumentPM} from '../../../Customs/EntityPMs/CustomsDocumentPM';
-import {CustomsDocumentsTicketPM} from '../../../Customs/EntityPMs/CustomsDocumentsTicketPM';
-import {CustomsDocumentTicketViewModel} from './CustomsDocumentTicketViewModel';
-import {RelatedDocumentViewModel} from './RelatedDocumentViewModel';
-import {CustDocsTicketWebService} from '../../../Customs/Services/WebServices/CustDocsTicketWebService';
-import {CustDocMetaDataValuesWebService} from '../../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';
-import {CustomsDocumentMetaDataValuePM} from '../../../Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
-import {CustomsDocumentsDataProvider} from './CustomsDocumentsDataProvider';
-import {ICustomsDocumentsController} from './ICustomsDocumentsController';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {ImageLibraryService} from '../../../Common/Services/Others/ImageLibraryService';
-import {CustDocRelatedDocsWebService} from '../../../Customs/Services/WebServices/CustDocRelatedDocsWebService';
+import { Component, Input, OnDestroy } from '@angular/core';
+import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
+import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { DocumentsFilingPM } from '../../../Common/EntityPMs/DocumentsFilingPM';
+import { CustomsDocumentPM } from '../../../Customs/EntityPMs/CustomsDocumentPM';
+import { CustomsDocumentsTicketPM } from '../../../Customs/EntityPMs/CustomsDocumentsTicketPM';
+import { CustomsDocumentTicketViewModel } from './CustomsDocumentTicketViewModel';
+import { RelatedDocumentViewModel } from './RelatedDocumentViewModel';
+import { CustDocsTicketWebService } from '../../../Customs/Services/WebServices/CustDocsTicketWebService';
+import { CustDocMetaDataValuesWebService } from '../../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';
+import { CustomsDocumentMetaDataValuePM } from '../../../Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
+import { CustomsDocumentsDataProvider } from './CustomsDocumentsDataProvider';
+import { ICustomsDocumentsController } from './ICustomsDocumentsController';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ImageLibraryService } from '../../../Common/Services/Others/ImageLibraryService';
+import { CustDocRelatedDocsWebService } from '../../../Customs/Services/WebServices/CustDocRelatedDocsWebService';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import {CustomsDocumentPMService} from '../../../Customs/Services/StandardPMs/CustomsDocumentPMService';
+import { CustomsDocumentPMService } from '../../../Customs/Services/StandardPMs/CustomsDocumentPMService';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { CommunicationLogStepListService } from '../../../Common/Services/ExtendedLists/CommunicationLogStepListService';
 import { CustomsRequestMenuService } from '../../../Customs/Services/Others/CustomsRequestMenuService';
-import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
 @Component({
-    
+
     templateUrl: './CustomsDocumentsComponent.html',
 })
 
 export class CustomsDocumentsComponent
     extends BaseComponent
-    implements OnDestroy{
+    implements OnDestroy {
     //****************Inputs****************//
     @Input() ChildEntityId1: string = null;
     @Input() ChildEntityId2: string = null;
@@ -84,16 +84,11 @@ export class CustomsDocumentsComponent
     IsDocumentRequestCodeButton: boolean = false;
     IsDocumentRequestCodeSendDigital: boolean = false;
     DocumentRequestCodeText: string = "";
-    ParentEntityCode_args: string="";
     //*************************************//
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
-        if (entityArgs.ObjectTableName.split('.').length > 2) {
-            this.ParentEntityCode_args = entityArgs.ObjectTableName.split('.')[2];
-            entityArgs.ObjectTableName = entityArgs.ObjectTableName.split('.')[0] + "." + entityArgs.ObjectTableName.split('.')[1];
-        }
-      if (entityArgs.EntityPM && !entityArgs.SkipCtor) {
+        if (entityArgs.EntityPM && !entityArgs.SkipCtor) {
             this.Start(entityArgs.EntityPM, entityArgs.ObjectTableName);
         }
     }
@@ -105,23 +100,13 @@ export class CustomsDocumentsComponent
         this.CustomsDocumentsTicketViewModels = null;
     }
     Start(entityPM: any, objectTableName: string) {
-         if (objectTableName.split('.').length > 2) {
-            this.ParentEntityCode_args = objectTableName.split('.')[2];
-            objectTableName = objectTableName.split('.')[0] + "." + objectTableName.split('.')[1];
-        }
         this.EntityPM = entityPM;
         this.ObjectTableName = objectTableName;
-        if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args)) {
-            this.ParentEntityCode = this.ParentEntityCode_args;
-        }
-        else {
-            this.ParentEntityCode = this.ObjectTableName.split('.')[1];
-
-        }
-        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocument").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response:any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentsTicket").subscribe((response:any) => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentPointer").subscribe((response:any) => {
+        this.ParentEntityCode = this.ObjectTableName.split('.')[1];
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocument").subscribe((response: any) => {
+            this.EntityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response: any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentsTicket").subscribe((response: any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentPointer").subscribe((response: any) => {
                         this.InsureCustomsDocumentsController();
                         //if (AppTool.IsNullOrEmpty(this.customsDocumentsDataProvider)) {
                         //    this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM);
@@ -166,8 +151,8 @@ export class CustomsDocumentsComponent
                         //this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM);
                         //this.iCustomsDocumentsController = this.customsDocumentsDataProvider.GetCustomsDocumentsController();
                         if (this.RefreshDocsScreen) {
-                          this.RefreshButtonClicked(this.SelectedDocumentId);
-                          this.RefreshDocsScreen = false;
+                            this.RefreshButtonClicked(this.SelectedDocumentId);
+                            this.RefreshDocsScreen = false;
                         }
                         //if (!this.DontLoadTickets) {
                         //    this.InitiateComponent();
@@ -182,7 +167,7 @@ export class CustomsDocumentsComponent
                     if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DCCD") {
                             this.DisplayOnlyCheck();
-                          this.RefreshButtonClicked(this.SelectedDocumentId);
+                            this.RefreshButtonClicked(this.SelectedDocumentId);
                         }
                     }
                 })
@@ -226,12 +211,12 @@ export class CustomsDocumentsComponent
                 customsDocTickets = customsDocTickets + "," + this.CustomsDocumentsTickets[i].DocumentsFilingId;
             }
             customsDocTickets = customsDocTickets.substr(1, customsDocTickets.length - 1);
-           
+
             custDocsMetadataWebService.GetCustomsDocumentMetaDataValuesByCustomsDocumentFilingIds(customsDocTickets).subscribe((response2: ServiceResponse) => {
                 this.MetadataValues = response2.Result;
-               
+
                 this.GetRelatedDocuments();
-              this.GetAutoGeneratedTickets(selectedDocId);
+                this.GetAutoGeneratedTickets(selectedDocId);
                 this.CurrentSession.StopBusyIndicator();
             });
         });
@@ -252,8 +237,8 @@ export class CustomsDocumentsComponent
         this.SetFilterCounts();
         if (selectedDocId) {
             var ticket: CustomsDocumentTicketViewModel = this.CustomsDocumentsTicketViewModels.filter(d => d.Id == selectedDocId)[0];
-          this.EditCustomsDocumentsTicket(ticket);
-          this.SelectedDocumentId = null;
+            this.EditCustomsDocumentsTicket(ticket);
+            this.SelectedDocumentId = null;
         }
     }
 
@@ -285,13 +270,13 @@ export class CustomsDocumentsComponent
     DocumentFilterItemClicked(value: string) {
         this.DocumentFilterSelectedValue = value;
         this.GetRelatedDocuments();
-  }
-  IsRefreshButtonDisabled: boolean = false;
-  RefreshButtonClicked(selectedDocId: string = null) {
-    this.IsRefreshButtonDisabled = true;
-    let t = setTimeout(() => { this.IsRefreshButtonDisabled = false; clearTimeout(t); }, 1000);
-    this.InitiateComponent(selectedDocId);
-  }
+    }
+    IsRefreshButtonDisabled: boolean = false;
+    RefreshButtonClicked(selectedDocId: string = null) {
+        this.IsRefreshButtonDisabled = true;
+        let t = setTimeout(() => { this.IsRefreshButtonDisabled = false; clearTimeout(t); }, 1000);
+        this.InitiateComponent(selectedDocId);
+    }
 
     FilterCustomsDocumentsTickets() {
         this.CustomsDocumentsTicketViewModels = [];
@@ -341,89 +326,89 @@ export class CustomsDocumentsComponent
 
     }
 
-  GetAutoGeneratedTickets(selectedDocId: string) {
+    GetAutoGeneratedTickets(selectedDocId: string) {
         this.iCustomsDocumentsController.GetAutoGeneratedTickets(this.CustomsDocumentsTicketViewModels)
             .subscribe((resp: any) => { // this will push part of the generated tickets.
-            
-           
-              
-              var sub = this.iCustomsDocumentsController
-                .GetCustomsInterfaceSettingsDocumentTypesCompleted
-                .subscribe((response: any) => { // added this to add the tickets from CustomsInterfaceSettings
-                  var tickets: CustomsDocumentTicketViewModel[] = response.Result; // this is the full result of tickets.
-                  sub.unsubscribe();
-                  if (!AppTool.IsNullOrEmpty(tickets)) {
-                    tickets.forEach((autoGeneratedTicketVM) => {
-
-                      var pm = this.CustomsDocumentsTickets.filter(r => r.DocumentTypeCode == autoGeneratedTicketVM.DocumentTypeCode)[0];
-                      //  let task39629SuppressUnique: boolean = true;///CALL#309883 לם נפתח טיקט לכל ח-ן ספק +CALL#309868;310765, 311721
-                      //  if (task39629SuppressUnique  || AppTool.IsNullOrEmpty(vm)) {
-                      //      ticket.DataContext = this;
-                      //      ticket.isDisplayOnly = this.IsDisplayOnly;
-                      //      this.CustomsDocumentsTicketViewModels.push(ticket);
-                      //      this.StaticCustomsDocumentsTicketViewModels.push(ticket);
-                      //}
 
 
-                      let toAdd: boolean = true;;
 
-                      if (/*autoGeneratedTicketVM.DocumentTypeCode == "380" &&*/ autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers.length == 1) {
+                var sub = this.iCustomsDocumentsController
+                    .GetCustomsInterfaceSettingsDocumentTypesCompleted
+                    .subscribe((response: any) => { // added this to add the tickets from CustomsInterfaceSettings
+                        var tickets: CustomsDocumentTicketViewModel[] = response.Result; // this is the full result of tickets.
+                        sub.unsubscribe();
+                        if (!AppTool.IsNullOrEmpty(tickets)) {
+                            tickets.forEach((autoGeneratedTicketVM) => {
 
-                        this.CustomsDocumentsTickets
-                          .filter(r => r.DocumentTypeCode == autoGeneratedTicketVM.DocumentTypeCode)
-                          .forEach(ticket1 => {
-                            var pointer = ticket1.CustomsDocumentPointers
-                              .filter(currPointer =>
-                            currPointer.ParentEntityId == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].ParentEntityId &&
-                            currPointer.ParentEntityCode == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].ParentEntityCode &&
-                            currPointer.Child1EntityCode == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child1EntityCode &&
-                            currPointer.Child2EntityCode == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child2EntityCode &&
-                            currPointer.Child3EntityCode == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child3EntityCode &&
-                            currPointer.Child1EntityId == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child1EntityId &&
-                            currPointer.Child2EntityId == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child2EntityId &&
-                                currPointer.Child3EntityId == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child3EntityId
-                            )[0];
-                            if (!AppTool.IsNullOrEmpty(pointer)) {
-                              toAdd = false;
-                            }
-
-                        });
-                        
-                      }
-
-                      if (!AppTool.IsNullOrEmpty(pm) && autoGeneratedTicketVM.FromCompanyDocumentType2Add) {// already Exist DocumentTypeCode and from   GetCustomsInterfaceSettingsDocumentTypesCompleted
-                        console.log("Task 42286: CALL#315874 טיקטים כפולים לסוגי מסמך");
-                        toAdd = false;
-                      }
-                      if (toAdd) {
-                        autoGeneratedTicketVM.DataContext = this;
-                        autoGeneratedTicketVM.isDisplayOnly = this.IsDisplayOnly;
-                        this.CustomsDocumentsTicketViewModels.push(autoGeneratedTicketVM);
-                        this.StaticCustomsDocumentsTicketViewModels.push(autoGeneratedTicketVM);
-                        //this.CustomsDocumentsTickets.push(ticket);
-                      }
+                                var pm = this.CustomsDocumentsTickets.filter(r => r.DocumentTypeCode == autoGeneratedTicketVM.DocumentTypeCode)[0];
+                                //  let task39629SuppressUnique: boolean = true;///CALL#309883 לם נפתח טיקט לכל ח-ן ספק +CALL#309868;310765, 311721
+                                //  if (task39629SuppressUnique  || AppTool.IsNullOrEmpty(vm)) {
+                                //      ticket.DataContext = this;
+                                //      ticket.isDisplayOnly = this.IsDisplayOnly;
+                                //      this.CustomsDocumentsTicketViewModels.push(ticket);
+                                //      this.StaticCustomsDocumentsTicketViewModels.push(ticket);
+                                //}
 
 
+                                let toAdd: boolean = true;;
+
+                                if (/*autoGeneratedTicketVM.DocumentTypeCode == "380" &&*/ autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers.length == 1) {
+
+                                    this.CustomsDocumentsTickets
+                                        .filter(r => r.DocumentTypeCode == autoGeneratedTicketVM.DocumentTypeCode)
+                                        .forEach(ticket1 => {
+                                            var pointer = ticket1.CustomsDocumentPointers
+                                                .filter(currPointer =>
+                                                    currPointer.ParentEntityId == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].ParentEntityId &&
+                                                    currPointer.ParentEntityCode == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].ParentEntityCode &&
+                                                    currPointer.Child1EntityCode == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child1EntityCode &&
+                                                    currPointer.Child2EntityCode == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child2EntityCode &&
+                                                    currPointer.Child3EntityCode == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child3EntityCode &&
+                                                    currPointer.Child1EntityId == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child1EntityId &&
+                                                    currPointer.Child2EntityId == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child2EntityId &&
+                                                    currPointer.Child3EntityId == autoGeneratedTicketVM.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child3EntityId
+                                                )[0];
+                                            if (!AppTool.IsNullOrEmpty(pointer)) {
+                                                toAdd = false;
+                                            }
+
+                                        });
+
+                                }
+
+                                if (!AppTool.IsNullOrEmpty(pm) && autoGeneratedTicketVM.FromCompanyDocumentType2Add) {// already Exist DocumentTypeCode and from   GetCustomsInterfaceSettingsDocumentTypesCompleted
+                                    console.log("Task 42286: CALL#315874 טיקטים כפולים לסוגי מסמך");
+                                    toAdd = false;
+                                }
+                                if (toAdd) {
+                                    autoGeneratedTicketVM.DataContext = this;
+                                    autoGeneratedTicketVM.isDisplayOnly = this.IsDisplayOnly;
+                                    this.CustomsDocumentsTicketViewModels.push(autoGeneratedTicketVM);
+                                    this.StaticCustomsDocumentsTicketViewModels.push(autoGeneratedTicketVM);
+                                    //this.CustomsDocumentsTickets.push(ticket);
+                                }
+
+
+                            });
+                        }
+
+                        this.FillCustomsDocumentsTickets(this.CustomsDocumentsTickets, selectedDocId);
+                        this.iCustomsDocumentsController.FillDefaultMetaData(this.CustomsDocumentsTicketViewModels);
+                        this.iCustomsDocumentsController.FillDefaultMetaData(this.StaticCustomsDocumentsTicketViewModels);
+                        this.SortCustomsDocumentTickets();
+                        this.SetFilterCounts();
                     });
-                  }
 
-                  this.FillCustomsDocumentsTickets(this.CustomsDocumentsTickets, selectedDocId);
-                this.iCustomsDocumentsController.FillDefaultMetaData(this.CustomsDocumentsTicketViewModels);
-                this.iCustomsDocumentsController.FillDefaultMetaData(this.StaticCustomsDocumentsTicketViewModels);
-                this.SortCustomsDocumentTickets();
-                this.SetFilterCounts();
-                });
+                this.iCustomsDocumentsController.GetCustomsInterfaceSettingsDocumentTypes(this.EntityPM);
 
-            this.iCustomsDocumentsController.GetCustomsInterfaceSettingsDocumentTypes(this.EntityPM);
-            
-        });
+            });
     }
 
     DownloadDocumentFile(documentsFilingId: string) {
 
         this.custDocRelatedDocsWebService.GetSingleDocumentsFilingPM(documentsFilingId).subscribe((resp: ServiceResponse) => {
             var documentFiling = resp.Result;
-            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe((res:any) => {
+            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe((res: any) => {
 
 
                 var documentName = documentFiling.DocumentId;
@@ -451,7 +436,7 @@ export class CustomsDocumentsComponent
     }
 
     DisplayOnlyCheck() {
-         this.iCustomsDocumentsController.DisplayOnlyCheck().subscribe((resp: ServiceResponse) => {
+        this.iCustomsDocumentsController.DisplayOnlyCheck().subscribe((resp: ServiceResponse) => {
 
             this.IsDisplayOnly = resp.Result.IsDisplayOnly;
             this.DisplayOnlyMessage = resp.Result.DisplayOnlyMessage;
@@ -459,7 +444,7 @@ export class CustomsDocumentsComponent
     }
 
 
- 
+
     AddCustomsDocumentsTicket() {
         this.CurrentSession.StartBusyIndicatorLoading();
         var windowArgs: any = {};
@@ -484,7 +469,7 @@ export class CustomsDocumentsComponent
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
 
-      logWindow.Show('./CustomsModules/CustomsDocuments/Components/AddEditCustomsDocumentComponent');
+        logWindow.Show('./CustomsModules/CustomsDocuments/Components/AddEditCustomsDocumentComponent');
         this.CurrentSession.StopBusyIndicator();
     }
     RefreshDocsScreen = false;
@@ -496,23 +481,23 @@ export class CustomsDocumentsComponent
         }
     }
 
-  RefreshEntity() {
+    RefreshEntity() {
 
-    var refreshFrom = this.iCustomsDocumentsController.GetRefreshFrom();
-    if (refreshFrom == "e") {
-      if (this.CurrentSession.CurrentEditComponent) {
-        this.RefreshDocsScreen = true;
-        this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-      }
-      else {
-        this.RefreshButtonClicked(this.SelectedDocumentId);
-      }
+        var refreshFrom = this.iCustomsDocumentsController.GetRefreshFrom();
+        if (refreshFrom == "e") {
+            if (this.CurrentSession.CurrentEditComponent) {
+                this.RefreshDocsScreen = true;
+                this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+            else {
+                this.RefreshButtonClicked(this.SelectedDocumentId);
+            }
+        }
+        else if (refreshFrom == "d") {
+            this.RefreshButtonClicked(this.SelectedDocumentId);
+        }
     }
-    else if (refreshFrom == "d") {
-      this.RefreshButtonClicked(this.SelectedDocumentId);
-      }
-  }
 
     EditCustomsDocumentsTicket(customsDocumentsTicket: CustomsDocumentTicketViewModel) {
         if (!customsDocumentsTicket.PreventEdit) {
@@ -550,14 +535,14 @@ export class CustomsDocumentsComponent
         if (customsDocumentsTicket) {
             windowArgs.CustomsDocumentsTicket = customsDocumentsTicket;
             windowArgs.CustomsDocumentsTicket.Tenant = SessionLocator.Tenant;
-             if (!customsDocumentsTicket.Id) {
+            if (!customsDocumentsTicket.Id) {
                 windowArgs.IsNewState = true;
             }
             else {
                 windowArgs.IsNewState = false;
             }
         }
- 
+
         windowArgs.CustomsDocument = customsDocument;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly && isThereRequests;
         windowArgs.IsEntityDisplayOnly = this.IsDisplayOnly;
@@ -579,7 +564,7 @@ export class CustomsDocumentsComponent
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
 
-      logWindow.Show('./CustomsModules/CustomsDocuments/Components/AddEditCustomsDocumentComponent');
+        logWindow.Show('./CustomsModules/CustomsDocuments/Components/AddEditCustomsDocumentComponent');
     }
 
     private IsCustomDocumentItemEnabled(documentStatusCode: string) {
@@ -717,21 +702,21 @@ export class CustomsDocumentsComponent
 
         myCommunicationLogStepListService
             .GetRequestComminicationIdByEntityId2(SessionLocator.Tenant, "2715", "30", objecttable.Id, customsDocumentsTicket.customsDocumentsTicketPM.DocumentsFilingId)
-            .subscribe((rsp:any) => {
+            .subscribe((rsp: any) => {
                 var myCustomsRequestsSheet = rsp.Result;
-                 this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (myCustomsRequestsSheet) {
                     let customsRequestMenuService = new CustomsRequestMenuService();
                     customsRequestMenuService.ShowModalByIdAndIntreface(
                         myCustomsRequestsSheet.RequestComminicationId, "2715", "קלוט צרופה");
                 } else {
-                    
+
                     var messageWindow = new MessageWindow();
                     messageWindow.Width = 400;
                     messageWindow.Height = 200;
                     messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
                     messageWindow.Show("שליחת המסמך למכס נכשל ( פירוט נוסף בגיליון הבקשות )");
-                    
+
                 }
             });
 
@@ -760,21 +745,21 @@ export class CustomsDocumentsComponent
                 this.EntityPM.Id,
                 "CustomsDocumentsComponent",
                 this.EntityPM.CustomerCode);
-    }   
-    
+    }
+
     private UnifreightDocumentRequestCallbackAction(unifreightMessageM: UnifreightMessageM) { }
 
     private GetDocumentRequestDefaults(CustomerCode: string) {
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_SHARE_DESPO", "NON", "NON", SessionLocator.Tenant)
-            .subscribe((response:any) => {
+            .subscribe((response: any) => {
                 this.IsDocumentRequestCodeButton = false;
                 this.IsDocumentRequestCodeSendDigital = false;
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
 
 
                     myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_BOX_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
-                        .subscribe((response:any) => {
+                        .subscribe((response: any) => {
                             this.IsDocumentRequestCodeButton = false;
                             this.IsDocumentRequestCodeSendDigital = false;
                             this.DocumentRequestCodeIcon = "LOGBOX";
@@ -782,7 +767,7 @@ export class CustomsDocumentsComponent
                                 this.IsDocumentRequestCodeButton = true;
                             }
                             myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_LBL_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
-                                .subscribe((res:any) => {
+                                .subscribe((res: any) => {
                                     if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
                                         this.IsDocumentRequestCodeButton = true;
                                         this.IsDocumentRequestCodeSendDigital = true;

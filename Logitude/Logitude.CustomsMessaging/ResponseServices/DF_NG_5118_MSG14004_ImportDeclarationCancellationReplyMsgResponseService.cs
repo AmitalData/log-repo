@@ -144,7 +144,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             case 37:
                                 {
-                                     _MyDeclarationPM.CancelRequestApproveDate = DateTime.ParseExact(item.Content, "yyyy-MM-ddTHH:mm:ss", null);
+                                     _MyDeclarationPM.CancelRequestApproveDate = DateTime.ParseExact(item.Content, "dd/MM/yyyy HH:mm:ss", null);
                                     break;
                                 }
 
