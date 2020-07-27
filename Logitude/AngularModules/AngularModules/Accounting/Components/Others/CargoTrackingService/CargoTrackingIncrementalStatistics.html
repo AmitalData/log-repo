@@ -18,7 +18,7 @@
             <td *ngIf="_CargoTrackingIncrementalArgs">
                 <div class="Desc_Style">{{Parag1}}<span class="Resp_Style">{{_CargoTrackingIncrementalArgs.IncrementalLastRun |  DateTimePipe:'DTL12'}} </span></div>
                 <div class="Desc_Style">{{Parag2}}<span class="Resp_Style">{{_CargoTrackingIncrementalArgs.RecordsWating}}</span></div>
-                <div class="Desc_Style">{{Parag3}}<span class="Resp_Style">{{_CargoTrackingIncrementalArgs.OldestUpdateStillWaiting}}{{WaitingSinceText}}{{_CargoTrackingIncrementalArgs.DateOfOldestUpdateStillWaiting |  DateTimePipe:'DTL12' }}</span></div>
+                <div class="Desc_Style">{{Parag3}}<span *ngIf="_CargoTrackingIncrementalArgs.OldestUpdateStillWaiting" class="Resp_Style">{{_CargoTrackingIncrementalArgs.OldestUpdateStillWaiting}}{{WaitingSinceText}}{{_CargoTrackingIncrementalArgs.DateOfOldestUpdateStillWaiting |  DateTimePipe:'DTL12' }}</span></div>
                 <div class="Desc_Style">{{Parag4}}<span class="Resp_Style">{{_CargoTrackingIncrementalArgs.TotalUpdatedLast10Minutes}}</span></div>
             </td>
         </tr>

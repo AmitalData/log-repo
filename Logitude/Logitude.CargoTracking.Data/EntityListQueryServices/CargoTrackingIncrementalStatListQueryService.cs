@@ -61,7 +61,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
  
                         if (FromDate != null && ToDate!=null)
                         {
-                            iQueryable = iQueryable.Where(d => d.StartDate >= DbFunctions.TruncateTime(FromDate) && d.EndDate <= DbFunctions.TruncateTime(ToDate));
+                            iQueryable = iQueryable.Where(d => DbFunctions.TruncateTime(d.StartDate) >= DbFunctions.TruncateTime(FromDate) && DbFunctions.TruncateTime(d.EndDate) <= DbFunctions.TruncateTime(ToDate));
                         }
                     }
                 }
