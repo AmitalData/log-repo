@@ -876,25 +876,25 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         }
 
 
-        if (!this.CheckIsValidEmails(filter.ToEmail)) {
+        //if (!this.CheckIsValidEmails(filter.ToEmail)) {
 
-            this.ShowMessage("Some of To e- mails are Invalid", "Logitude Message");
-             this.CurrentSession.StopBusyIndicator();
-            return;
-        }
+        //    this.ShowMessage("Some of To e- mails are Invalid", "Logitude Message");
+        //     this.CurrentSession.StopBusyIndicator();
+        //    return;
+        //}
 
 
-        if (filter.Cc != null && !this.CheckIsValidEmails(filter.Cc)) {
-            this.ShowMessage("Some of Cc e-mails are Invalid", "Logitude Message");
-             this.CurrentSession.StopBusyIndicator();
-            return;
-        }
+        //if (filter.Cc != null && !this.CheckIsValidEmails(filter.Cc)) {
+        //    this.ShowMessage("Some of Cc e-mails are Invalid", "Logitude Message");
+        //     this.CurrentSession.StopBusyIndicator();
+        //    return;
+        //}
 
-        if (filter.Bcc != null && !this.CheckIsValidEmails(filter.Bcc)) {
-            this.ShowMessage("Some of Bcc e-mails are Invalid", "Logitude Message");
-             this.CurrentSession.StopBusyIndicator();
-            return;
-        }
+        //if (filter.Bcc != null && !this.CheckIsValidEmails(filter.Bcc)) {
+        //    this.ShowMessage("Some of Bcc e-mails are Invalid", "Logitude Message");
+        //     this.CurrentSession.StopBusyIndicator();
+        //    return;
+        //}
 
         var Byte = 1024;
         var totalsize = 0;

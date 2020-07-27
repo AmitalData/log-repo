@@ -33,6 +33,7 @@ it('OpenShipmentView', () => {
 
 
 
+
 it('CreateNewView ', () => {
     // cy.wait(1000)
     cy.get('#QueryList_0_0').click()
