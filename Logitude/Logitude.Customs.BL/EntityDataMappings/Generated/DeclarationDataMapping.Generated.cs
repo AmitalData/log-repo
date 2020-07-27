@@ -153,6 +153,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CustomCancelRequestRemarks, 
 	         CancelRequestStatusCode, 
 	         CancelRequestRejectionReason, 
+	         CancelRequestApproveDate, 
 	         IsClaimable,
 	      }
 
@@ -1026,6 +1027,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.CancelRequestRejectionReason = entityPM.CancelRequestRejectionReason;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestApproveDate))
+            {
+				entityPOCO.CancelRequestApproveDate = entityPM.CancelRequestApproveDate;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClaimable))
             {
 				entityPOCO.IsClaimable = entityPM.IsClaimable;
@@ -1692,6 +1698,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CancelRequestRejectionReason = entityPOCO.CancelRequestRejectionReason;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestApproveDate))
+            {
+					entityPM.CancelRequestApproveDate = entityPOCO.CancelRequestApproveDate;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsClaimable))
             {
 					entityPM.IsClaimable = entityPOCO.IsClaimable;
@@ -2351,6 +2362,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestRejectionReason))
             {
                 oldEntityPM.CancelRequestRejectionReason = entityPM.CancelRequestRejectionReason;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestApproveDate))
+            {
+                oldEntityPM.CancelRequestApproveDate = entityPM.CancelRequestApproveDate;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClaimable))

@@ -7,12 +7,11 @@ import { CustomSendOptionsArgs, RequestParamsBase, SendRequestVIA, TestCase } fr
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
-import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import { CustomMessageProgressComponent } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
-import { GenericRequestParams } from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
-import { SendDeclarationService } from '../SendDeclaration/SendDeclarationComponent';
+import { GenericRequestParams } from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
+import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
+import { CustomMessageProgressComponent } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 
 declare var window: any;
 
@@ -169,6 +168,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
                                 });
                             this._DeclarationWebService.PostSendDeclarationCancellation(currRequestParams)
                                 .subscribe((myServiceResponse: ServiceResponse) => {
+                                    this.InitScreen();
 
                                 });
 
@@ -225,37 +225,45 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         }
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.PaymentDate)) {
-            var msg = "לא ניתן לבטל ביטול הצהרה להצהרה שלא נמצאת בסטטוס הגשה.";//TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypeCode");
+            var msg = "לם ניתן לבטל ביטול הצהרה להצהרה שלם נמצםת בסטטוס הגשה.";//TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypeCode");
             this.ValidationErrorsList.push(msg);
         }
     }
     SetWindowArgs(args: any) {
         this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
-
+ 
             this.EntityPM = args.Declaration as DeclarationPM;
-            this.UIProperties.SetEnabled("CancelRequestStatusName", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("CustomCancelRequestRemarks", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("CancelRequestApproveDate", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("CancelRequestRejectionReason", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("CancelRequestNumber", this.ObjectTableName, false);
 
-            if (this.CancelRequestStatusCode == "5" || this.CancelRequestStatusCode == "2") {
-                this.UIProperties.SetEnabled("CancelRequestReasonExplanation", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("CancelRequestReasonCode", this.ObjectTableName, false);
-                this.readonly = true;
-            }
+            this.InitScreen();
+          
         });
 
     }
 
+    InitScreen() {
+        this.UIProperties.SetEnabled("CancelRequestStatusName", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CustomCancelRequestRemarks", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CancelRequestApproveDate", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CancelRequestRejectionReason", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CancelRequestNumber", this.ObjectTableName, false);
+
+        if (this.CancelRequestStatusCode == "5" || this.CancelRequestStatusCode == "2") {
+            this.UIProperties.SetEnabled("CancelRequestReasonExplanation", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("CancelRequestReasonCode", this.ObjectTableName, false);
+            this.readonly = true;
+        }
+    }
 
     ViewDocumentsComponent() {
+         
+       
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
-        windowArgs.ObjectTableName = this.ObjectTableName + ".DeclarationCancellation";
-        // windowArgs.ParentEntityCode = "Customs.DeclarationCancellation";
-        var windowTitle = "Customs.Declaration.TH.Documents";
 
+        windowArgs.ObjectTableName = "Customs.DeclarationCancellation";// this.ObjectTableName;
+        windowArgs.EntityParentPM = "DeclarationCancellation";
+        var windowTitle = "Customs.Declaration.TH.Documents";
+    //    windowArgs.ParentEntityCode = "DeclarationCancellation";
         var logWindow = new LogitudeWindow();
         logWindow.IsHideHeader = true;
         logWindow.Width = 1000;
