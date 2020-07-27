@@ -15,6 +15,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
     public class CargoTrackingMainService
     {
         public static long timeOut = 10000000000000000;
+        public string LastUpdate;
         public RecordUpdated recordUpdated = new RecordUpdated();
         public List<CargoTable> FillCargoTableList()
         {
@@ -331,10 +332,32 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                 fieldName=" P."+fieldName.Replace(",", " ,P.");
                 cmd = "SELECT "+ fieldName+ ", C.Id as ForwardingIdForCustom " + " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName+ " C ON P.CustomFileId = C.Id";
+                if (CargoTrackingArguments == null)
+                {
+                    LastUpdate = GetTableLastUpdate(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);
+                    cmd += " where (P.AutomaticLastUpdateDate > '" + LastUpdate + "')";
+                }
+                else
+                {
+                    cmd += " where P.CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and P.CreateDateTime <= '" + CargoTrackingArguments.ToDate + "'";
+
+                }
             }
             else if (buildCargoArgs.Table.Main_CT_TableName == "CargoTrackingShipments" && buildCargoArgs.Table.CurrentCondition == 2)
             {
-                 cmd = "Select "+ fieldName  + " FROM dbo. " + table.DBTableName + " Where Id not in (Select P.Id From  dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + " C ON P.CustomFileId = C.Id)";
+                cmd = "Select "+ fieldName  + " FROM dbo. " + table.DBTableName + " Where Id not in (Select P.Id From  dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + " C ON P.CustomFileId = C.Id)";
+
+                if (CargoTrackingArguments == null)
+                {
+                    LastUpdate = GetTableLastUpdate(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);
+                    cmd += " and (AutomaticLastUpdateDate > '" + LastUpdate + "')";
+                }
+                else
+                {
+                    cmd += " and CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and CreateDateTime <= '" + CargoTrackingArguments.ToDate + "'";
+
+                }
+
             }
             else
             {
@@ -817,7 +840,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
       
         private string GetUpdateDataBaseCondition(CargoArgs buildCargoArgs, CargoTrackingArguments CargoTrackingArguments = null, string Condition=null)
         {
-            string LastUpdate = null;
+            //string LastUpdate = null;
             if (CargoTrackingArguments == null)
             {
                   LastUpdate = GetTableLastUpdate(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);
