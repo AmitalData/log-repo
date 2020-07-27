@@ -4,6 +4,7 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -13,6 +14,7 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -32,6 +34,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public AccountingAgingDataProvider LoadFromXML(byte[] xmlFilters)
         {
             reportQueryOperations = DeserializeQueryOperationFromXml(xmlFilters);
+
+            CheckSalesmanAbilities(BuildReportParameters());
 
             AgingReportService agingReportService = new AgingReportService(BuildReportParameters());
             agingReportService.RunReport();
@@ -66,7 +70,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             return dataProvider;
         }
+        private void CheckSalesmanAbilities(AgingReportParam args)
+        {
+            bool isSalsmanRestrictionsEnabled = SecurityUtility.CheckFeature("GLAccount", "SalesmanAging", args.Tenant);
+            if (isSalsmanRestrictionsEnabled && args.SalesmanId == null)
+                throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.NoSalesman", args.Tenant,LoggedContactResolver.GetLoggedContactShowLocal(args.Tenant)));
 
+        }
         private void FixSplitAccountData(AccountingAgingDataProvider totalData)
         {
             bool showDetailedCurrencyAccounts = GetFilterValue<bool>("Detailed");
