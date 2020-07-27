@@ -183,9 +183,9 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
 
                 else if (list.StatusCode == "F") {
                     this.StopTimer();
-                    var errors: string[] = [];
-                    errors.push(list.ErrorLog);
-                    this.ValidationErrorsList = errors;
+                    if (list.ProgressMessage != null && list.ProgressMessage.indexOf(',') > -1) {
+                        this.ErrorsList = list.ProgressMessage.split(',');
+                    }
                 }
 
                 else {
