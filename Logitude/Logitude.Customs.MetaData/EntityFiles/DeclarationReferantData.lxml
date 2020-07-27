@@ -3295,7 +3295,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.DeclarationReferantData&quot;"
-    FieldsDataType="&quot;nText&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="30"
     IsRequired="false"
