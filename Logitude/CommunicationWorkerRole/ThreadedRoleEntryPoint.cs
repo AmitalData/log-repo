@@ -306,6 +306,9 @@ namespace CommunicationWorkerRole
             try
             {
                 List<string> Last_journalBufferKeys = null;
+                var myWorker = new Logitude.Accounting.BL.CoreBL.JournalApproveService.JournalApproveWorker();
+                myWorker.WorkUntilQEmptyQueueDB();
+
                 Logitude.Accounting.BL.CoreBL.JournalApproveService.WorkWithoutQueue(1051, null, ref Last_journalBufferKeys);
 
                 var batchTaskExecutionWR = new BatchTaskExecutionWR();
