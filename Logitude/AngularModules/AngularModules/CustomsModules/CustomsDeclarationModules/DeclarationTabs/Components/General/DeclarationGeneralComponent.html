@@ -84,7 +84,7 @@
                     </tr>
 
                     <!-- Filters Fields-->
-                    <tr *ngIf="1==2">
+                    <tr *ngIf="EntityPM.Direction!='E'">
                         <td style="width: 700px;">
                             <table style="table-layout: fixed;">
                                 <!-- Filters Fields with horizantal tabs-->
@@ -274,7 +274,7 @@
                             <div></div>
                         </td>
                     </tr>
-                    <tr *ngIf="1==1">
+                    <tr *ngIf="EntityPM.Direction=='E'">
                         <td style="width: 700px;">
                             <table style="table-layout: fixed;">
                                 <!-- Filters Fields with horizantal tabs-->
@@ -493,78 +493,90 @@
 
                                     <!--(ValueChanged)="IsExporterConfirmationChecked($event)"-->
                                     <td style="width: 160px;">
-                                        <LogCheckBox [ObjectFieldName]="'IsExporterConfirmation'"
-                                                     [Checked]="DataContext.IsExporterConfirmation"
-                                                     [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                        <div style="float: right;">
+                                            <LogCheckBox [ObjectFieldName]="'IsExporterConfirmation'"
+                                                         [Checked]="DataContext.IsExporterConfirmation"
+                                                         [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+
+                                        </div>
+
+                                        <HelpIcon style="float: right;" [HideHeader]="true" [Text]="'Customs.Declaration.O.IsExporterConfirmation' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
+
                                     </td>
 
                                 </tr>
-                                <tr style="height: 28px;">
-                                    <td colspan="8">
-                                        <div style="height: 60px; overflow-x: hidden; overflow-y: auto; float: right; width: 90%;">
-                                            <ul>
-                                                <li class="SiteListItem" style="text-align: right; height:25px;" >
-                                                   <table>
-                                                       <tr>
-                                                           <!-- DeclarationDocumentTypeCode -->
-                                                           <td style="width: 150px;">
-                                                               <LogLabel [ObjectFieldName]="'RecipientName'" [ObjectTableName]="DeclarationExportRecipientTableName"
-                                                                         [DataContext]="DataContext"></LogLabel>
-                                                           </td>
+                                <tr style="height: 28px;" *ngFor="let item of RecipientList">
+                                    <!--<td colspan="8">
+    <div style="height: 60px; overflow-x: hidden; overflow-y: auto; float: right; width: 90%;">-->
+                                    <!--<ul>
+    <li class="SiteListItem" style="text-align: right; height:25px;" *ngFor="let item of RecipientList">
+       <table >
+           <tr *ngFor="let item of RecipientList">-->
+                                    <!-- DeclarationDocumentTypeCode -->
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'RecipientName'" [ObjectTableName]="DeclarationExportRecipientTableName"
+                                                  [DataContext]="item"></LogLabel>
+                                    </td>
 
-                                                           <td style="width: 160px;">
+                                    <td style="width: 160px;">
 
-                                                               <LogTextBox [ObjectFieldName]="'RecipientName'" [ObjectTableName]="ObjectTableName"
-                                                                           [HideColumns]="true" [DataContext]="DataContext" [Text]="RecipientName"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'RecipientName'" [ObjectTableName]="DeclarationExportRecipientTableName"
+                                                    [HideColumns]="true" [DataContext]="item" [Text]="RecipientName"></LogTextBox>
 
-                                                           </td>
-                                                           <td><div></div></td>
+                                    </td>
+                                    <td><div></div></td>
 
-                                                           <!-- DeclarationDocumentId -->
-                                                           <td style="width: 150px;">
-                                                               <LogLabel [ObjectFieldName]="'RecipientAddress'" [ObjectTableName]="DeclarationExportRecipientTableName"
-                                                                         [DataContext]="DataContext"></LogLabel>
-                                                           </td>
+                                    <!-- DeclarationDocumentId -->
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'RecipientAddress'" [ObjectTableName]="DeclarationExportRecipientTableName"
+                                                  [DataContext]="item"></LogLabel>
+                                    </td>
 
-                                                           <td style="width: 160px;">
-                                                               <LogTextBox [ObjectFieldName]="'RecipientAddress'" [ObjectTableName]="ObjectTableName"
-                                                                           [HideColumns]="true" [DataContext]="DataContext" [Text]="RecipientAddress"></LogTextBox>
+                                    <td style="width: 160px;">
+                                        <LogTextBox [ObjectFieldName]="'RecipientAddress'" [ObjectTableName]="DeclarationExportRecipientTableName"
+                                                    [HideColumns]="true" [DataContext]="item" [Text]="RecipientAddress"></LogTextBox>
 
 
-                                                           </td>
-                                                           <td><div></div></td>
+                                    </td>
+                                    <td><div></div></td>
 
-                                                           <!-- EntitleImporterCode -->
-                                                           <td style="width: 150px;">
-                                                               <LogLabel [ObjectFieldName]="'RecipientIssueCountryCode'" [ObjectTableName]="DeclarationExportRecipientTableName"
-                                                                         [DataContext]="DataContext"></LogLabel>
-                                                           </td>
+                                    <!-- EntitleImporterCode -->
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'RecipientIssueCountryCode'" [ObjectTableName]="DeclarationExportRecipientTableName"
+                                                  [DataContext]="item"></LogLabel>
+                                    </td>
 
-                                                           <td style="width: 160px;">
-                                                               <LogLov [ObjectFieldName]="'RecipientIssueCountryCode'"
-                                                                       [ObjectTableName]="ObjectTableName"
-                                                                       [DataContext]="DataContext"
-                                                                       [LookUpTableName]="'Customs.CustomsCountry'"
-                                                                       [DisplayMemberPath]="'LocalName'"
-                                                                       (SelectedItemChanged)="_RecipientIssueCountry = $event"
-                                                                       [SelectedValue]="RecipientIssueCountryCode"
-                                                                       [HideColumns]="true">
-                                                               </LogLov>
-
-</td>
-                                                       </tr>
-                                                   </table>
-                                                </li>
-                                            </ul>
-                                            <div style="clear: both;"></div>
-                                        </div>
-                                        <div style="vertical-align:top;padding-top:7px; padding-right: 3px; float: right;">
-                                            <IconButton style="float: right;" [IsSmall]="true" [Name]="'Add'" (click)="AddRecipientButtonClicked()"></IconButton>
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'RecipientIssueCountryCode'"
+                                                [ObjectTableName]="DeclarationExportRecipientTableName"
+                                                [DataContext]="item"
+                                                [LookUpTableName]="'Customs.CustomsCountry'"
+                                                [DisplayMemberPath]="'LocalName'"
+                                                (SelectedItemChanged)="_RecipientIssueCountry = $event"
+                                                [SelectedValue]="RecipientIssueCountryCode"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+                                    <td><div></div></td>
+                                    <td>
+                                        <div class="DeleteIconButton" style="width:30px">
+                                            <IconButton [IsSmall]="true" [Name]="'Delete'" [IsIconOnly]="true" (click)="item.DeleteSiteButtonClicked()"
+                                                        style="position: absolute;top: 3px;"></IconButton>
                                         </div>
                                     </td>
-                                 
+                                    <td *ngIf="item.LineNumber==1">
+                                        <div style="vertical-align:top;float: right;">
+                                            <IconButton style="float: right;" [IsSmall]="true" [Name]="'Add'" (click)="AddRecipientButtonClicked()" [IsEnabled]="AddRecipientEnabled"></IconButton>
+                                        </div>
+                                    </td>
                                 </tr>
 
+                                                   <!--</table>-->
+                                                <!--</li>
+                                            </ul>-->
+                                            <!--<div style="clear: both;"></div>
+                                        </div>-->
+                            
                             </table>
                         </td>
                         <td>

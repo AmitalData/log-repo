@@ -61,6 +61,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     ConsigmentTabs: LogTab[] = [];
     public ShowStorageStatusMessage: boolean;
     _DeclarationExportRecipientPM: DeclarationExportRecipientPM[] =[];
+    RecipientList: any;
+    AddRecipientEnabled: boolean;
+    public DeclarationExportRecipientTableName: string = "Customs.DeclarationExportRecipient";
 
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
@@ -79,7 +82,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                                                 this.EntityPM = this.entityArgs.EntityPM;
                                                  this.ObjectTableName = this.entityArgs.ObjectTableName;
                                                 this.Listen();
-                                                this.BuildRecipientList();
+                                                this.BuildRecipientsList();
                                                 //var tab;
                                                 console.log("DeclarationGeneralComponent/EntityPM ", this.EntityPM);
                                                 if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
@@ -97,6 +100,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                                                     this.checkImportersVisibility();
                                                     this.DisplayOnlyCheck();
                                                     this.CheckRequrierdFieldsForSend();
+                                                    
                                                     this.PreceduralFilterItems = new ApiQueryFilters();
                                                     this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
                                                 }
@@ -118,36 +122,73 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
     }
 
+    AddRecipientButtonClicked() {
 
-    BuildRecipientList() {
+        if (this.AddRecipientEnabled && !this.IsDisplayOnly) {
+
+           
+            var lineNumber: number = 1;
+
+            if (this.EntityPM.DeclarationExportRecipients.length != 0) {
+
+                var maxObj = this.EntityPM.DeclarationExportRecipients.reduce(function (prev, current) { return (prev.LineNumber > current.LineNumber) ? prev : current });
+                if (maxObj != null) {
+                    if (lineNumber <= maxObj.LineNumber)
+                        lineNumber = maxObj.LineNumber;
+                }
+
+                lineNumber = lineNumber + 1;
+            }
+
+            var item: DeclarationExportRecipientPM = new DeclarationExportRecipientPM(this.EntityPM);
+            item.DeclarationId = this.EntityPM.Id;
+            item.Tenant = this.EntityPM.Tenant;
+            item.LineNumber = lineNumber;
+           
+
+            if (!this.EntityPM.DeclarationExportRecipients.includes(item)) {
+                //this.EntityPM.ConsignmentInternalTransitions.push(item);
+                this.EntityPM.AddDeclarationExportRecipient(item);
+            }
+
+            this.AddRecipientEnabled = false;
+            this.BuildRecipientsList();
+        }
+
+    }
+
+    BuildRecipientsList() {
         var count: number = 1;
 
-        this._DeclarationExportRecipientPM = [];
+        this.RecipientList = [];
 
-        //this.AddSiteEnabled = true;
+        this.AddRecipientEnabled = true;
         for (var i = 0; i < this.EntityPM.DeclarationExportRecipients.length; i++) {
-            var viewModel: DeclarationExportRecipientPM = new DeclarationExportRecipientPM(this.EntityPM.DeclarationExportRecipients[i]);
-         
-           
-            this._DeclarationExportRecipientPM.push(viewModel);
+            var viewModel: DeclarationExportRecipientModel = new DeclarationExportRecipientModel(this.EntityPM.DeclarationExportRecipients[i], this, this.EntityResourceService);
+            //  viewModel.TransitionNumber = i + 1; AddSiteButtonClicked
+            if (viewModel.RecipientName == null) {
+                this.AddRecipientEnabled = false;
+            }
+            this.RecipientList.push(viewModel);
 
 
         }
 
-        if (this._DeclarationExportRecipientPM.length == 0) {
+        if (this.RecipientList.length == 0) {
             var item = new DeclarationExportRecipientPM(this.EntityPM);
-            var viewModel: DeclarationExportRecipientPM = new DeclarationExportRecipientPM(item);
-             
-            this._DeclarationExportRecipientPM.push(viewModel);
+            var viewModel: DeclarationExportRecipientModel = new DeclarationExportRecipientModel(item, this, this.EntityResourceService);
+           // viewModel.TransitionNumber
+            this.RecipientList.push(viewModel);
             //  this.EntityPM.AddConsignmentInternalTransition(item);
 
 
-           // this.AddSiteEnabled = false;
+            this.AddRecipientEnabled = false;
         }
 
 
     }
 
+ 
 
 
     //#region XML Errors
@@ -1355,4 +1396,110 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             });
         });
     }
+}
+
+
+export class DeclarationExportRecipientModel extends BaseComponent {
+    public EntityPM: DeclarationExportRecipientPM;
+    private Parent: DeclarationGeneralComponent;
+    ObjectTableName: string = "Customs.DeclarationExportRecipient";
+    private CurrentSession = SessionLocator.SelectedSession;
+    constructor(item: DeclarationExportRecipientPM, parent: DeclarationGeneralComponent, public EntityResourceService: EntityResourceService) {
+        super();
+        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationExportRecipient").subscribe((response: any) => {
+
+            this.EntityPM = item;
+            this.Parent = parent;
+            this.UIProperties.SetEnabled("RecipientIssueCountryCode", this.ObjectTableName, !this.Parent.IsDisplayOnly);
+            this.UIProperties.SetEnabled("RecipientAddress", this.ObjectTableName, !this.Parent.IsDisplayOnly);
+            this.UIProperties.SetEnabled("RecipientName", this.ObjectTableName, !this.Parent.IsDisplayOnly);
+        });
+    }
+
+    //#region Properties
+    deleteRecipientVisible: boolean = false;
+    public get DeleteRecipientVisible() { return this.deleteRecipientVisible; }
+    public set DeleteRecipientVisible(newValue: boolean) { this.deleteRecipientVisible = newValue; }
+
+    public get Tenant() { return this.EntityPM.Tenant; }
+    public set Tenant(newValue: number) { this.EntityPM.Tenant = newValue; }
+
+    public get LineNumber() { return this.EntityPM.LineNumber; }
+    public set LineNumber(newValue: number) { this.EntityPM.LineNumber = newValue; }
+
+    public get DeclarationId() { return this.EntityPM.DeclarationId; }
+    public set DeclarationId(newValue: string) { this.EntityPM.DeclarationId = newValue; }
+
+
+    public get RecipientName() { return this.EntityPM.RecipientName; }
+    public set RecipientName(newValue: string) {
+        this.EntityPM.RecipientName = newValue;
+        if (newValue != null) {
+            if (this.Parent.RecipientList.length == 1) {
+                this.Parent.EntityPM.AddDeclarationExportRecipient(this.EntityPM);
+            }
+            this.Parent.AddRecipientEnabled = true;
+        }
+        else {
+            this.Parent.AddRecipientEnabled = false;
+        }
+
+    }
+
+    public get RecipientAddress() { return this.EntityPM.RecipientAddress; }
+    public set RecipientAddress(newValue: string) {
+        this.EntityPM.RecipientAddress = newValue;
+
+    }
+
+    public get RecipientIssueCountryCode() { return this.EntityPM.RecipientIssueCountryCode; }
+    public set RecipientIssueCountryCode(newValue: string) {
+        this.EntityPM.RecipientIssueCountryCode = newValue;
+
+    }
+    //#endregion
+
+    OnMouseOver() {
+        if (this.EntityPM.LineNumber > 1) {
+            this.DeleteRecipientVisible = true;
+        }
+    }
+
+    OnMouseLeave() {
+        if (!this.overCloseButton) {
+            this.DeleteRecipientVisible = false;
+        }
+    }
+
+    // close button
+    overCloseButton: boolean = false;
+    OnIconButtonMouseOver() {
+        this.overCloseButton = true;
+    }
+
+    OnIconButtonMouseLeave() {
+        this.overCloseButton = false;
+    }
+
+
+    DeleteSiteButtonClicked() {
+
+        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.DeleteSite");
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 400;
+        confirmWindow.Height = 150;
+        confirmWindow.Show(msg);
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+
+            if (confirmWindow.Yes) { // YES
+                this.Parent.EntityPM.RemoveDeclarationExportRecipient(this.EntityPM);
+                this.Parent.BuildRecipientsList();
+            }
+        });
+
+
+    }
+
+
+
 }
