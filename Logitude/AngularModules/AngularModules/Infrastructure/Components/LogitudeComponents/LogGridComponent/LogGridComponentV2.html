@@ -199,10 +199,11 @@
             </div>-->
 
         </div>
-        <div >
-          <!-- [ngStyle]="row.styles" [class.HLine]="row.rowData.ShowLineOverRow == true" || row.rowData.IsSelected == true  [style.background]="(ChangeColorByPropName && ChangeColorByPropValue && row.rowData[ChangeColorByPropName] == ChangeColorByPropValue) ? RowBackGroundColor : ((SelectedRow == row.rowData)? '#DFECF7':'transparent')"-->
-          <!--(mouseout)="onRowMouseOut('rowtemplate'+rowIndex,rowIndex,row)" (mouseover)="onRowMouseOver('rowtemplate'+rowIndex,rowIndex,row)"-->
-            <cdk-virtual-scroll-viewport autosize [id]="LogGridRowsId" class="GeneratedGridBody" [minBufferPx]="778" [maxBufferPx]="778 * 3">
+        <div>
+            <!-- [ngStyle]="row.styles" [class.HLine]="row.rowData.ShowLineOverRow == true" || row.rowData.IsSelected == true  [style.background]="(ChangeColorByPropName && ChangeColorByPropValue && row.rowData[ChangeColorByPropName] == ChangeColorByPropValue) ? RowBackGroundColor : ((SelectedRow == row.rowData)? '#DFECF7':'transparent')"-->
+            <!--(mouseout)="onRowMouseOut('rowtemplate'+rowIndex,rowIndex,row)" (mouseover)="onRowMouseOver('rowtemplate'+rowIndex,rowIndex,row)"-->
+            <!-- autosize-->
+            <cdk-virtual-scroll-viewport [id]="LogGridRowsId" class="GeneratedGridBody" itemSize=35 [minBufferPx]="778" [maxBufferPx]="778 * 3">
                 <!--(scrolledIndexChange)="onScroll($event)"-->
                 <div *cdkVirtualFor="let row of controller;let rowIndex = index;" [style.height.px]="row && row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight">
                     <div *ngIf="row" class="Row ag-row tooltip" [style.height.px]="row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight"
@@ -250,14 +251,14 @@
                     </div>
                 </div>
             </cdk-virtual-scroll-viewport>
-          <div *ngIf="rowCount == 0 || HasPermition == false" style="width:100%;top:10px;position: relative;">
-            <label *ngIf="rowCount == 0 &&  HasPermition == true" style="text-align:center;font-size:18px;color:gray" class="CenterCenter">
-              {{'General.O.NoDataFound' | TextCodeTranslationPipe}}
-            </label>
-            <label *ngIf="HasPermition == false" style="text-align:center;font-size:18px;color:gray" class="CenterCenter">
-              {{'General.O.PckgNotIncluded' | TextCodeTranslationPipe}}
-            </label>
-          </div>
+            <div *ngIf="rowCount == 0 || HasPermition == false" style="width:100%;top:10px;position: relative;">
+                <label *ngIf="rowCount == 0 &&  HasPermition == true" style="text-align:center;font-size:18px;color:gray" class="CenterCenter">
+                    {{'General.O.NoDataFound' | TextCodeTranslationPipe}}
+                </label>
+                <label *ngIf="HasPermition == false" style="text-align:center;font-size:18px;color:gray" class="CenterCenter">
+                    {{'General.O.PckgNotIncluded' | TextCodeTranslationPipe}}
+                </label>
+            </div>
         </div>
 
     </div>
