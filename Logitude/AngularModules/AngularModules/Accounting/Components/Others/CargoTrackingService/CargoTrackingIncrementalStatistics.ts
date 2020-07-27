@@ -100,7 +100,7 @@ export class CargoTrackingIncrementalStatistics extends BaseComponent implements
             FieldName: 'StartDate',
             DataTypeCode: 'DateTime',
             Display: "Start Date",
-            Styles: { width: '100px' },
+            Styles: { width: '160px' },
             HtmlListComponentName: 'CargoTrackingIncrementalStatListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CargoTrackingIncrementalStatListTemplate',
             IsCustomTemplate: true
@@ -109,7 +109,7 @@ export class CargoTrackingIncrementalStatistics extends BaseComponent implements
             FieldName: 'EndDate',
             DataTypeCode: 'DateTime',
             Display: 'EndDate',  
-            Styles: { width: '100px' },
+            Styles: { width: '160px' },
             HtmlListComponentName: 'CargoTrackingIncrementalStatListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CargoTrackingIncrementalStatListTemplate',
             IsCustomTemplate: true

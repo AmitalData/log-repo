@@ -6,9 +6,9 @@
 <div>
     <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'Id'">{{ rowData[fieldName]}}</div>
 
-    <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'StartDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+    <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'StartDate'">{{ rowData[fieldName] |  DateTimePipe:'DTL12' }}</div>
 
-    <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'EndDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+    <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'EndDate'">{{ rowData[fieldName] |  DateTimePipe:'DTL12' }}</div>
 
     <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'Shipments'">{{ rowData[fieldName] }}</div>
 
