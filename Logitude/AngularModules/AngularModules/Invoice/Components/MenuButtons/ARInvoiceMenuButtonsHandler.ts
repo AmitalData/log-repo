@@ -955,7 +955,8 @@ export class ARInvoiceMenuButtonsHandler {
             });
     }
     CreateAutoCreditInvoice(): ARInvoicePM {
-        var note: string = TextCodeTranslator.Translate("ARInvoice.O.AutoCreditInvoice");
+
+        var note: string = this.EntityPM.ARInvoiceTypeCode == "CD" ? TextCodeTranslator.Translate("ARInvoice.O.CreditARInvoiceForCreditNote"): TextCodeTranslator.Translate("ARInvoice.O.AutoCreditInvoice");
         var myEntityPMService: ARInvoicePMService = new ARInvoicePMService()
         var AutoCreditInvoice: ARInvoicePM = myEntityPMService.GetNewEntityPM();
         AutoCreditInvoice.StatusCode = "AC";
