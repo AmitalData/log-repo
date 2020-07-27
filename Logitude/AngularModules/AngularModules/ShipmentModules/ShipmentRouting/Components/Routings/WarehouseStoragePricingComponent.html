@@ -123,7 +123,7 @@
 
                                     <log-column [header]="'Step From'" [width]="'100'" [Alignment]="'left'">
                                         <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [CellColor]="item.CellColor" [IsEnabled]="!item.IsFreeLine">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.StepFromText}}</span>
                                                 </div>
@@ -138,7 +138,7 @@
 
                                     <log-column [header]="'Days'" [width]="'80'" [Alignment]="'left'">
                                         <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [CellColor]="item.CellColor" [IsEnabled]="!item.IsFreeLine">
                                                 <div *ngIf="logcelltemplate.IsDisplayMode">
                                                     <table>
                                                         <tr>
@@ -159,7 +159,7 @@
 
                                     <log-column [header]="'Step To'" [width]="'80'" [Alignment]="'left'">
                                         <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [CellColor]="item.CellColor" [IsEnabled]="!item.IsFreeLine">
                                                 <div *ngIf="logcelltemplate.IsDisplayMode">
                                                     <table>
                                                         <tr>
@@ -180,7 +180,7 @@
 
                                     <log-column [header]="'Sale Price'" [width]="'100'" [Alignment]="'left'">
                                         <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [CellColor]="item.CellColor" [IsEnabled]="!item.IsFreeLine">
                                                 <div *ngIf="logcelltemplate.IsDisplayMode">
                                                     <table>
                                                         <tr>
@@ -201,7 +201,7 @@
 
                                     <log-column [header]="'Amount'" [width]="'100'" [Alignment]="'left'">
                                         <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [CellColor]="item.CellColor" [IsEnabled]="!item.IsFreeLine">
                                                 <div *ngIf="logcelltemplate.IsDisplayMode">
                                                     <table>
                                                         <tr>
