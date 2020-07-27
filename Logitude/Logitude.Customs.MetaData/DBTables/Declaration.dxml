@@ -901,6 +901,12 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="CancelRequestApproveDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="IsClaimable"
     Type="bit">
     <Constraints
