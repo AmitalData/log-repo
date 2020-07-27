@@ -267,7 +267,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             {
                                 partnerExcel.CountryCode = countryCode;
                                 partnerExcel.CountryId = country.Id;
-                                partnerExcel.City = rowData[7].Trim();
+                                partnerExcel.City = rowData[7].Trim().Length > 25 ? rowData[7].Trim().Substring(0, 25) : rowData[7].Trim();
 
                                 if (partnerExcel.State != null)
                                 {
@@ -490,22 +490,33 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 }
                 catch (Exception e)
                 {
-                    this.errorMsg += e.Message + ";";
+                    this.errorMsg += "Line " + item.RowIndex + ": " + e.Message + ",";
                     errorsCount = errorsCount + 1;
                 }
             }
+            this.HandelBatchTask();
+        }
 
-            this.batchTaskExecutionPM.StatusCode = "D";
-            var msg = "Successfully Uploaded " + (PartnerExcelList.Count() - duplicateLinesCount - errorsCount) + " out of " + PartnerExcelList.Count() + " Partners. " +
-                                                       duplicateLinesCount + " duplicate lines were found.";
-
-            if(!string.IsNullOrEmpty(this.errorMsg))
+        private void HandelBatchTask()
+        {
+            string msg = "";
+            if (!string.IsNullOrEmpty(this.errorMsg))
             {
-                msg = msg + " Some of entity errors found: " + errorMsg;
+                errorMsg = errorMsg.Length > 4000 ? errorMsg.Substring(0, 4000) : errorMsg;
+                this.batchTaskExecutionPM.StatusCode = "F";
+                this.batchTaskExecutionPM.ProgressMessage = errorMsg;
+                throw new ApplicationException(errorMsg);
+
+            }
+            else
+            {
+                this.batchTaskExecutionPM.StatusCode = "D";
+                msg = "Successfully Uploaded " + (PartnerExcelList.Count() - duplicateLinesCount) + " out of " + PartnerExcelList.Count() + " Partners. " +
+                                                           duplicateLinesCount + " duplicate lines were found.";
+                msg = msg.Length > 4000 ? msg.Substring(0, 4000) : msg;
+                this.batchTaskExecutionPM.ProgressMessage = msg;
             }
 
-            msg = msg.Length > 4000 ? msg.Substring(0, 4000) : msg;
-            this.batchTaskExecutionPM.ProgressMessage = msg;
             workbook.Close();
             excelEngine.Dispose();
         }
@@ -590,7 +601,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = item.Code != null? item.Code : CodeCounter.GetNumber("Trucker", tenant).ToString(),
+                Code = item.Code,
                 CarrierTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
             };
@@ -650,7 +661,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = item.Code != null ? item.Code : CodeCounter.GetNumber("Warehouse", tenant).ToString(),
+                Code = item.Code,
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
             };
@@ -792,7 +803,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 ZipCode = item.ZipCode,
                 StateId = state != null ? state.Id : null,
                 CountryId = country != null ? country.Id : null,
-                City = item.CityId,
+                City = item.City,
                 PhoneNumber = item.PhoneNumber != null ? (item.PhoneNumber.Length > 39 ? item.PhoneNumber.Substring(0, 39) : item.PhoneNumber) : null,
                 FaxNumber = item.FaxNumber,
                 AddressTypeId = "M",
@@ -850,7 +861,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
         public string Address2 { get; set; }
         public string ZipCode { get; set; }
         public string City { get; set; }
-        public string CityId { get; set; }
         public string State { get; set; }
         public string StateId { get; set; }
         public string CountryCode { get; set; }
