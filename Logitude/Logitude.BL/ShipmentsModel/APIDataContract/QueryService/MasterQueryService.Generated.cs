@@ -294,14 +294,8 @@ using Simplog.Data.ShipmentsModel;
 					   				   }
 				   
 				   temp.MAWBOBLDate = MyEntityPM.MAWBOBLDate;
-				   temp.Ratio = MyEntityPM.Ratio;
-                if (MyEntityPM.Transshipments != null && MyEntityPM.Transshipments.Count > 0)
-                {
-                    TransshipmentQueryService Service28 = new TransshipmentQueryService(Tenant);
-                    temp.Transshipments = Service28.TransshipmentCustomDataMapping(MyEntityPM.Transshipments, Tenant);
-                }
-
-                return temp;
+				   temp.Ratio = MyEntityPM.Ratio;					
+				   return temp;
 			}
             catch (Exception ex)
             {
@@ -531,16 +525,16 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService26 = new DeliveryQueryService(Tenant);
-						temp.ShipmentDeliveries = DeliveryService26.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
+						DeliveryQueryService DeliveryService25 = new DeliveryQueryService(Tenant);
+						temp.ShipmentDeliveries = DeliveryService25.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
 					}
 
 								  
 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService26 = new PickUpQueryService(Tenant);
-						temp.ShipmentPickUps = PickUpService26.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
+						PickUpQueryService PickUpService25 = new PickUpQueryService(Tenant);
+						temp.ShipmentPickUps = PickUpService25.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -554,8 +548,8 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Houses != null && MyEntity.Houses.Count > 0)
 					{
-						HouseQueryService HouseService26 = new HouseQueryService(Tenant);
-						temp.ShipmentConsoleShipments = HouseService26.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName);
+						HouseQueryService HouseService25 = new HouseQueryService(Tenant);
+						temp.ShipmentConsoleShipments = HouseService25.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -578,16 +572,16 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService26 = new ReceivableQueryService(Tenant);
-						temp.ShipmentReceivables = ReceivableService26.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName);
+						ReceivableQueryService ReceivableService25 = new ReceivableQueryService(Tenant);
+						temp.ShipmentReceivables = ReceivableService25.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName);
 					}
 
 								  
 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService26 = new PayableQueryService(Tenant);
-						temp.ShipmentPayables = PayableService26.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName);
+						PayableQueryService PayableService25 = new PayableQueryService(Tenant);
+						temp.ShipmentPayables = PayableService25.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -694,15 +688,8 @@ using Simplog.Data.ShipmentsModel;
 			
 					
 					temp.MAWBOBLDate = MyEntity.MAWBOBLDate;
-					temp.Ratio = MyEntity.Ratio;
-                if (MyEntity.Transshipments != null && MyEntity.Transshipments.Count > 0)
-                {
-                    TransshipmentQueryService TransshipmentService29 = new TransshipmentQueryService(Tenant);
-                    temp.Transshipments = TransshipmentService29.TransshipmentDataMappingAndValidatin(MyEntity.Transshipments, Tenant, ComputingPartnerName);
-                }
-
-
-                return temp;
+					temp.Ratio = MyEntity.Ratio;					   
+					   return temp;
 		    }
             catch (Exception ex)
             {

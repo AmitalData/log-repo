@@ -15,37 +15,37 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             
         }
 
-        public List<Transshipment> TransshipmentCustomDataMapping(List<TransshipmentLeg> MyEntityPMs, int Tenant)
-        {
-            try
-            {
+        //public List<Transshipment> TransshipmentCustomDataMapping(List<TransshipmentLeg> MyEntityPMs, int Tenant)
+        //{
+        //    try
+        //    {
 
-                var MyList = new List<Transshipment>();
+        //        var MyList = new List<Transshipment>();
 
-                return MyList;
-            }
-            catch (Exception ex)
-            {
+        //        return MyList;
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                throw ex;
-            }
+        //        throw ex;
+        //    }
 
-        }
+        //}
 
-        public List<TransshipmentLeg> TransshipmentDataMappingAndValidatin(List<Transshipment> MyEntity, int Tenant, string ComputingPartnerName = "")
-        {
-            try
-            {
+        //public List<TransshipmentLeg> TransshipmentDataMappingAndValidatin(List<Transshipment> MyEntity, int Tenant, string ComputingPartnerName = "")
+        //{
+        //    try
+        //    {
 
-                var MyList = new List<TransshipmentLeg>();
+        //        var MyList = new List<TransshipmentLeg>();
                 
-                return MyList;
-            }
-            catch (Exception ex)
-            {
+        //        return MyList;
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                throw ex;
-            }
-        }
+        //        throw ex;
+        //    }
+        //}
     }
 }

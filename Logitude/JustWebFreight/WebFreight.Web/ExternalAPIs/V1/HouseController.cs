@@ -349,8 +349,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
                             if (customer != null)
                             {
-                                entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
-                                entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
+                                if (string.IsNullOrEmpty(entityPM.SalesmanUserId))
+                                {
+                                    entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
+                                }
+
+                                if (string.IsNullOrEmpty(entityPM.AccountManagerUserId))
+                                {
+                                    entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
+                                }
                             }
                         }
                         else
