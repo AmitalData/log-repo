@@ -2200,5 +2200,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return pms;
         }
 
+        public string GetARinvoiceTypeCode(string id, int tenant)
+        {
+            ARInvoice invoice = (from a in repository.context.ARInvoices
+                                 where a.Id == id && a.Tenant == tenant select a).FirstOrDefault();
+            return invoice != null ? invoice.ARInvoiceTypeCode : null;
+        }
+
     }
 }
