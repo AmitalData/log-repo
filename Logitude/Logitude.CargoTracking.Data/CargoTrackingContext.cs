@@ -68,7 +68,11 @@ namespace Logitude.CargoTracking.Data
 			
             modelBuilder.Configurations.Add(new CargoTrackingCardMap());
 	
+            modelBuilder.Configurations.Add(new CargoTrackingCountryMap());
+	
             modelBuilder.Configurations.Add(new CargoTrackingHeaderEntityTypeMap());
+	
+            modelBuilder.Configurations.Add(new CargoTrackingIncrementalStatMap());
 	
             modelBuilder.Configurations.Add(new CargoTrackingMilestoneMap());
 	
@@ -77,6 +81,10 @@ namespace Logitude.CargoTracking.Data
             modelBuilder.Configurations.Add(new CargoTrackingShipmentMap());
 	
             modelBuilder.Configurations.Add(new CargoTrackingShipmentSearchMap());
+	
+            modelBuilder.Configurations.Add(new CargoTrackingTransportModeMap());
+	
+            modelBuilder.Configurations.Add(new CargoTrackingWatermarkMap());
 				
 						 
             #region
@@ -364,7 +372,19 @@ namespace Logitude.CargoTracking.Data
 	 
 	 }
 	
+	 public IDbSet<CargoTrackingCountry> CargoTrackingCountries 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CargoTrackingHeaderEntityType> CargoTrackingHeaderEntityTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoTrackingIncrementalStat> CargoTrackingIncrementalStats 
 	 {
 	      get; set;
 	 
@@ -389,6 +409,18 @@ namespace Logitude.CargoTracking.Data
 	 }
 	
 	 public IDbSet<CargoTrackingShipmentSearch> CargoTrackingShipmentSearches 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoTrackingTransportMode> CargoTrackingTransportModes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoTrackingWatermark> CargoTrackingWatermarks 
 	 {
 	      get; set;
 	 

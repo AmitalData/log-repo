@@ -18,11 +18,15 @@ namespace Logitude.CargoTracking.Data
     {
    
        	 IDbSet<CargoTrackingCard> CargoTrackingCards { get; }
+		 IDbSet<CargoTrackingCountry> CargoTrackingCountries { get; }
 		 IDbSet<CargoTrackingHeaderEntityType> CargoTrackingHeaderEntityTypes { get; }
+		 IDbSet<CargoTrackingIncrementalStat> CargoTrackingIncrementalStats { get; }
 		 IDbSet<CargoTrackingMilestone> CargoTrackingMilestones { get; }
 		 IDbSet<CargoTrackingPort> CargoTrackingPorts { get; }
 		 IDbSet<CargoTrackingShipment> CargoTrackingShipments { get; }
 		 IDbSet<CargoTrackingShipmentSearch> CargoTrackingShipmentSearches { get; }
+		 IDbSet<CargoTrackingTransportMode> CargoTrackingTransportModes { get; }
+		 IDbSet<CargoTrackingWatermark> CargoTrackingWatermarks { get; }
 	 
          void SetAsModified(object entity);
          void DetectChanges();

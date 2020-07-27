@@ -32,7 +32,7 @@ export class CargoTrackingShipmentPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cargotrackingshipments';      
     }
 
-	get(id: string) {       
+	get(id: number) {       
 
 		var callTime = new Date();		
 

@@ -88,6 +88,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId, 
                           PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
                           ApplyRegionalTax = a.ApplyRegionalTax,
+                          HasPickup = a.HasPickup,
+                          HasDelivery = a.HasDelivery,
                       }).FirstOrDefault();
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -156,6 +158,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
                                         PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
                                         ApplyRegionalTax = a.ApplyRegionalTax,
+                                        HasPickup = a.HasPickup,
+                                        HasDelivery = a.HasDelivery,
                                     }).FirstOrDefault();
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -231,6 +235,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
                                   PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
                                   ApplyRegionalTax = a.ApplyRegionalTax,
+                                  HasPickup = a.HasPickup,
+                                  HasDelivery = a.HasDelivery,
                               }).FirstOrDefault();
 
                     ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -314,6 +320,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
                               PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
                               ApplyRegionalTax = a.ApplyRegionalTax,
+                              HasPickup = a.HasPickup,
+                              HasDelivery = a.HasDelivery,
                           }).FirstOrDefault();
 
 
@@ -383,6 +391,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
                                                     PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
                                                     ApplyRegionalTax = a.ApplyRegionalTax,
+                                                    HasPickup = a.HasPickup,
+                                                    HasDelivery = a.HasDelivery,
                                                 };
             return charges;
         }
@@ -449,6 +459,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
                              PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
                              ApplyRegionalTax = a.ApplyRegionalTax,
+                             HasPickup = a.HasPickup,
+                             HasDelivery = a.HasDelivery,
                          }).AsQueryable();
 
             IQueryable<ChargesTypePM> query2 = null;
@@ -538,6 +550,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      ReceivablesDefaultCurrencyId = f.ReceivablesDefaultCurrencyId,
                                                      PayablesDefaultCurrencyId = f.PayablesDefaultCurrencyId,
                                                      ApplyRegionalTax = f.ApplyRegionalTax,
+                                                     HasPickup = f.HasPickup,
+                                                     HasDelivery = f.HasDelivery,
                                                  };
             return result;
         }
@@ -600,6 +614,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    ReceivablesDefaultCurrencyId = f.ReceivablesDefaultCurrencyId,
                                                    PayablesDefaultCurrencyId = f.PayablesDefaultCurrencyId,
                                                    ApplyRegionalTax = f.ApplyRegionalTax,
+                                                   HasPickup = f.HasPickup,
+                                                   HasDelivery = f.HasDelivery,
                                                }).FirstOrDefault();
 
             return chargesTypeList;
@@ -666,6 +682,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              ReceivablesDefaultCurrencyId = f.ReceivablesDefaultCurrencyId,
                              PayablesDefaultCurrencyId = f.PayablesDefaultCurrencyId,
                              ApplyRegionalTax = f.ApplyRegionalTax,
+                             HasPickup = f.HasPickup,
+                             HasDelivery = f.HasDelivery,
                          }).OrderBy(d=>d.Code).Skip(skip).Take(take);
 
 

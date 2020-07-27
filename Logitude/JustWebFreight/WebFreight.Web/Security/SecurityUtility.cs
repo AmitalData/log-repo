@@ -886,18 +886,19 @@ namespace WebFreight.Web.Security
 		private static Dictionary<string, FeaturePM> GetFeaturesForRole(string roleId, List<string> allowedPackages, int tenant, bool forceAPIFeaturesCheck = false)
 		{
 			Dictionary<string, FeaturePM> features = null;
+            string roleKey = roleId + "_" + tenant;
 
-			if (CacheManager.CacheWrapper.Get(roleId) == null || forceAPIFeaturesCheck)
+            if (CacheManager.CacheWrapper.Get(roleKey) == null || forceAPIFeaturesCheck)
 			{
 				FeatureQuery featuresQuery = new FeatureQuery(tenant);
 				List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
 				features = fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
-				CacheManager.CacheWrapper.Insert(roleId, features, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+				CacheManager.CacheWrapper.Insert(roleKey, features, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
 			}
 
 			else
 			{
-				features = (Dictionary<string, FeaturePM>)CacheManager.CacheWrapper.Get(roleId);
+				features = (Dictionary<string, FeaturePM>)CacheManager.CacheWrapper.Get(roleKey);
 			}
 
 			return features;

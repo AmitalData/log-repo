@@ -181,7 +181,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
     private SetChargesGroupArgs(args: CustomEntityArgs) {
         this.IsMultipleSelection = args.IsMultipleSelection;
-        this.ColumnName = args.DisplayName;
+        this.ColumnName = "";//args.DisplayName;
         this.SelectedFieldsDataSource = args.SelectedFieldsDataSource;
         this.SelectedIndexOrder = args.SelectedIndexOrder;
         this.FirstListTitle = "All Charge Types";
@@ -349,6 +349,9 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
         if (this.IsExistColumnName()) {
             this.ValidationErrorsList.push("You should have different column name");
+        }
+        if (!this.SecondListValueItems || (this.SecondListValueItems && this.SecondListValueItems.length == 0)) {
+            this.ValidationErrorsList.push("You should select at least one charge type");
         }
 
         if (this.ValidationErrorsList.length == 0) {

@@ -23,7 +23,16 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
                 queryOperations.SortDirectin = "Ascending";
                 bool isTextAlphaNumeric = System.Text.RegularExpressions.Regex.IsMatch(compactSeachvalue.ToString(), @"^[a-zA-Z0-9]+$");
-                if (LogitudeSettings.WorkEnvironment == "customs"|| !isTextAlphaNumeric)
+                if (!isTextAlphaNumeric)
+                {
+                    listQueryOperation.SetFilter("LocalName", compactSeachvalue, false, "StartsWith", null, false);
+                    nameQueryResult = filter.GetFilteredQuery<CardList>(listQueryOperation, entityLists).Take(queryOperations.PageSize);
+
+                    queryOperations.SortByColumnName = "LocalName";
+                    nameQueryResult = QuerySortClass.GetSortedQuery(queryOperations, nameQueryResult, "Card", tenant);
+                    resultList = nameQueryResult.ToList();
+                }
+                else if (LogitudeSettings.WorkEnvironment == "customs")
                 {
                     listQueryOperation.SetFilter("LocalName", compactSeachvalue, false, "StartsWith", null, false);
                     nameQueryResult = filter.GetFilteredQuery<CardList>(listQueryOperation, entityLists).Take(queryOperations.PageSize);
@@ -66,14 +75,38 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
 
 
 
+                if (resultList.Count() < queryOperations.PageSize)
+                {
+                    listQueryOperation.SetFilter("LocalName", null, false, "StartsWith", null, false);
+                    listQueryOperation.SetFilter("EnglishName", null, false, "StartsWith", null, false);
+                    listQueryOperation.SetFilter("Code", compactSeachvalue, false, "StartsWith", null, false);
+
+                    IQueryable<CardList> coedQueryResult = filter.GetFilteredQuery<CardList>(listQueryOperation, entityLists);
+
+                    foreach (CardList card in coedQueryResult)
+                    {
+                        if (!resultList.Where(p => p.Code == card.Code).Any())
+                        {
+                            resultList.Add(card);
+
+                        }
+                        if (resultList.Count == queryOperations.PageSize)
+                        {
+                            break;
+                        }
+                    }
+
                     if (resultList.Count() < queryOperations.PageSize)
                     {
+                        listQueryOperation.SetFilter("LocalName", null, false, "StartsWith", null, false);
                         listQueryOperation.SetFilter("EnglishName", null, false, "StartsWith", null, false);
-                        listQueryOperation.SetFilter("Code", compactSeachvalue, false, "StartsWith", null, false);
+                        listQueryOperation.SetFilter("Code", null, false, "StartsWith", null, false);
+                        listQueryOperation.SetFilter("SearchFields", compactSeachvalue, false, "Contains", null, false);
 
-                        IQueryable<CardList> coedQueryResult = filter.GetFilteredQuery<CardList>(listQueryOperation, entityLists);
+                        IQueryable<CardList> searchFieldQueryResult = filter.GetFilteredQuery<CardList>(listQueryOperation, entityLists);
 
-                        foreach (CardList card in coedQueryResult)
+
+                        foreach (CardList card in searchFieldQueryResult)
                         {
                             if (!resultList.Where(p => p.Code == card.Code).Any())
                             {
@@ -85,36 +118,14 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                                 break;
                             }
                         }
-
-                        if (resultList.Count() < queryOperations.PageSize)
-                        {
-                            listQueryOperation.SetFilter("EnglishName", null, false, "StartsWith", null, false);
-                            listQueryOperation.SetFilter("Code", null, false, "StartsWith", null, false);
-                            listQueryOperation.SetFilter("SearchFields", compactSeachvalue, false, "Contains", null, false);
-
-                            IQueryable<CardList> searchFieldQueryResult = filter.GetFilteredQuery<CardList>(listQueryOperation, entityLists);
-
-
-                            foreach (CardList card in searchFieldQueryResult)
-                            {
-                                if (!resultList.Where(p => p.Code == card.Code).Any())
-                                {
-                                    resultList.Add(card);
-
-                                }
-                                if (resultList.Count == queryOperations.PageSize)
-                                {
-                                    break;
-                                }
-                            }
-                        }
                     }
-
-                    entityLists = resultList.AsQueryable();
                 }
 
-                return entityLists;
+                entityLists = resultList.AsQueryable();
             }
+
+            return entityLists;
         }
     }
+}
 

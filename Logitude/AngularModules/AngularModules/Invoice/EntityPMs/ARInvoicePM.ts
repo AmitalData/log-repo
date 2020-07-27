@@ -593,6 +593,11 @@ export class ARInvoicePM {
     public set ApprovedByUserName(newValue: string) { if (this.approvedByUserName != newValue) { this.approvedByUserName = newValue; this.MarkAsDirty("ApprovedByUserName"); } }
        
 	 
+    private autoCreditedByInvoiceTypeCode: string;
+    public get AutoCreditedByInvoiceTypeCode() { return this.autoCreditedByInvoiceTypeCode; }
+    public set AutoCreditedByInvoiceTypeCode(newValue: string) { if (this.autoCreditedByInvoiceTypeCode != newValue) { this.autoCreditedByInvoiceTypeCode = newValue; this.MarkAsDirty("AutoCreditedByInvoiceTypeCode"); } }
+       
+	 
     private creditedByARInvoiceId: string;
     public get CreditedByARInvoiceId() { return this.creditedByARInvoiceId; }
     public set CreditedByARInvoiceId(newValue: string) { if (this.creditedByARInvoiceId != newValue) { this.creditedByARInvoiceId = newValue; this.MarkAsDirty("CreditedByARInvoiceId"); } }

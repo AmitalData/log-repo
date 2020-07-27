@@ -39,7 +39,7 @@ namespace Logitude.Accounting.BL.CoreBL
                          GetQAllCardsAndDetailsAccType(tenant,
                          controlAccountLevel ? fullAccountingSetting.CustomerControlAccountId : "",
                          controlAccountLevel ? fullAccountingSetting.VendorControlAccountId : "",
-                         ""
+                         null///""
                          ,
                          controlAccountLevel ? fullAccountingSetting.FileControlAccountId : "");
 

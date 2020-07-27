@@ -8,6 +8,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
     
@@ -24,7 +25,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-
+  public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     constructor() {
         super();
 
@@ -40,9 +41,18 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
         var currentMonth = newDate.getMonth()+1;
         //this.NumberOfMonths = currentMonth - 6; // 6 backward
         this.NumberOfMonths = 6; // 6 backward
-
+        this.FillAgingMethodList();
     }
-
+  public  AgingMethodsList: CodeNameClass[];
+  public  Name:string;
+    FillAgingMethodList(){
+     this.Name = this.showLocal?  "LocalName":"Name";
+      
+    this.AgingMethodsList=[];
+    this.AgingMethodsList.push(new CodeNameClass("1", "Open Transaction", "תנועות פתוחות"));
+    this.AgingMethodsList.push(new CodeNameClass("2", "Total By Month FIFO", "סכומים חודשים לפי FIFO"));
+     this.SelectedAgingMethod= this.AgingMethodsList[0];
+   }
     ngOnInit() {
         this.SetUIProperties();
     }
@@ -243,6 +253,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
             myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
             myFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
             myFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
+            myFilterItems.push(new QueryFilterItem("AgingMethod", this.SelectedAgingMethod.Name));
 
             myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
             myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
@@ -262,6 +273,14 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
             this.ValidationErrorsList = errors;
         }
     }
+ 
+    private selectedAgingMethod: CodeNameClass;
+  get SelectedAgingMethod() { return this.selectedAgingMethod; }
+  set SelectedAgingMethod(value: CodeNameClass) {
+    if (this.selectedAgingMethod != value) {
+      this.selectedAgingMethod = value;
+    }
+  }
 
     //#region Category fields
     IsCategoryDisabled: boolean = false;

@@ -955,15 +955,24 @@ namespace Logitude.Accounting.BL.CoreBL
             public Action LogDoneItemInMemoryAction { get; set; }
             public Action SetLastActivate { get; set; }
 
-            public void WorkUntilQEmptyQueueDB()
+            public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null)
             {
-
-
+                Stopwatch stopwatch = null; 
+                if (timeSpan!=null)
+                {
+                    stopwatch=Stopwatch.StartNew();
+                }
 
                 QueueResponse response = null;
                 while (true)
                 {
-
+                    if (stopwatch !=null && timeSpan!=null)
+                    {
+                        if (stopwatch.Elapsed> timeSpan)
+                        {
+                            return;
+                        }
+                    }
                     DbQueueService queueservice = null;
                     //ThrowNewException("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
                     try

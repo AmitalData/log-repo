@@ -1,11 +1,11 @@
- declare @AutomaticLastUpdateDate as datetime
+ declare @MaxAutomaticLastUpdateDate as datetime
  declare @LastUpdateDate as datetime
 
- set @LastUpdateDate = (select top(1) LastUpdateDate from dw_WaterMarks  where TableName = 'Branche' )
- set @AutomaticLastUpdateDate = (select  MAX( AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_Branches )
+ set @LastUpdateDate = (select top(1) LastUpdateDate from dw_WaterMarks  where TableName = 'Branch' )
+ set @MaxAutomaticLastUpdateDate = (select  MAX( AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_Branches )
 
  
- if(@AutomaticLastUpdateDate > @LastUpdateDate)
+ if(@MaxAutomaticLastUpdateDate > @LastUpdateDate)
 
  begin
 
@@ -17,23 +17,24 @@
    declare @Code as varchar(10)
    declare @SourceTenant int
    declare @ParentTenant int
+   declare @AutomaticLastUpdateDate as datetime
 
 	DECLARE BranchesCursor CURSOR READ_ONLY
 	FOR
-	SELECT Id, EnglishName , LocalName ,Code, dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant
+	SELECT Id, EnglishName , LocalName ,Code, dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant, dw_Branches.AutomaticLastUpdateDate
 	From dw_Branches
 	inner JOIN dw_DWHSettings ON dw_Branches.Tenant = dw_DWHSettings.Tenant
 	where dw_Branches.AutomaticLastUpdateDate > @LastUpdateDate
-	OPEN BranchesCursor FETCH NEXT FROM BranchesCursor INTO @Id , @EnglishName, @LocalName, @Code, @SourceTenant , @ParentTenant
+	OPEN BranchesCursor FETCH NEXT FROM BranchesCursor INTO @Id , @EnglishName, @LocalName, @Code, @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
 	set @Key = (select Id from DIM_Branches where Id = @Id)
 	
-	if(@Key is  null) begin  insert into DIM_Branches (Id,Name,[Local Name],Code,[Source Tenant],[Parent Tenant]) values(@Id,@EnglishName,@LocalName,@Code , @SourceTenant,@ParentTenant) end
-	else begin update   DIM_Branches set Name =@EnglishName,  [Local Name] =@LocalName ,  Code = @Code , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant where Id = @Id; end
+	if(@Key is  null) begin  insert into DIM_Branches (Id,Name,[Local Name],Code,[Source Tenant],[Parent Tenant],[Automatic Last Update Date]) values(@Id,@EnglishName,@LocalName,@Code , @SourceTenant,@ParentTenant, @AutomaticLastUpdateDate) end
+	else begin update   DIM_Branches set Name =@EnglishName,  [Local Name] =@LocalName ,  Code = @Code , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate where Id = @Id; end
 
-	FETCH NEXT FROM BranchesCursor  INTO @Id , @EnglishName, @LocalName, @Code, @SourceTenant , @ParentTenant
+	FETCH NEXT FROM BranchesCursor  INTO @Id , @EnglishName, @LocalName, @Code, @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
 		End
 	CLOSE BranchesCursor
 	DEALLOCATE BranchesCursor
@@ -41,4 +42,4 @@
 	End
 
 
-	update dw_WaterMarks set LastUpdateDate = @AutomaticLastUpdateDate where TableName = 'Branch'
+	update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'Branch'

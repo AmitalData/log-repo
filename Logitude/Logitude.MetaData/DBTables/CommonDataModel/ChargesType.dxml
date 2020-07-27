@@ -319,6 +319,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="HasPickup"
+    OldNames="IsPickup"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="HasDelivery"
+    OldNames="IsDelivery"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="ReceivableAccountId"
     ReferencedTable="Accounts1"

@@ -1,12 +1,12 @@
 
- declare @AutomaticLastUpdateDate as datetime
+ declare @MaxAutomaticLastUpdateDate as datetime
  declare @LastUpdateDate as datetime
 
  set @LastUpdateDate = (select top(1) LastUpdateDate from dw_WaterMarks  where TableName = 'Incoterm' )
- set @AutomaticLastUpdateDate = (select  MAX( AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_Incoterms )
+ set @MaxAutomaticLastUpdateDate = (select  MAX( AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_Incoterms )
 
  
- if(@AutomaticLastUpdateDate > @LastUpdateDate)
+ if(@MaxAutomaticLastUpdateDate > @LastUpdateDate)
 
  begin
 
@@ -17,28 +17,28 @@
    declare @Code as varchar(3)
    declare @SourceTenant int
    declare @ParentTenant int
-   
+   declare @AutomaticLastUpdateDate as datetime
 
 	DECLARE IncotermsCursor CURSOR READ_ONLY
 	FOR
-	SELECT dw_Incoterms.Id, dw_Incoterms.Name , dw_Incoterms.LocalName ,dw_Incoterms.Code, dw_Incoterms.Tenant,dw_DWHSettings.ParentTenant
+	SELECT dw_Incoterms.Id, dw_Incoterms.Name , dw_Incoterms.LocalName ,dw_Incoterms.Code, dw_Incoterms.Tenant,dw_DWHSettings.ParentTenant, dw_Incoterms.AutomaticLastUpdateDate
 	From dw_Incoterms
 	inner JOIN dw_DWHSettings ON dw_Incoterms.Tenant = dw_DWHSettings.Tenant
 	where dw_Incoterms.AutomaticLastUpdateDate > @LastUpdateDate	
-	OPEN IncotermsCursor FETCH NEXT FROM IncotermsCursor INTO @Id , @Name, @LocalName, @Code, 	@SourceTenant , @ParentTenant
+	OPEN IncotermsCursor FETCH NEXT FROM IncotermsCursor INTO @Id , @Name, @LocalName, @Code, 	@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
 	set @Key = (select Id from DIM_Incoterms where Id = @Id)
-	if(@Key is  null) begin  insert into DIM_Incoterms (Id,Name,[Local Name],Code,[Source Tenant],[Parent Tenant]) values(@Id,@Name,@LocalName,@Code ,@SourceTenant , @ParentTenant) end
-	else begin update   DIM_Incoterms set Name =@Name,  [Local Name] =@LocalName ,  Code = @Code ,[Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant  Where Id = @Id; end
+	if(@Key is  null) begin  insert into DIM_Incoterms (Id,Name,[Local Name],Code,[Source Tenant],[Parent Tenant],[Automatic Last Update Date]) values(@Id,@Name,@LocalName,@Code ,@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate) end
+	else begin update   DIM_Incoterms set Name =@Name,  [Local Name] =@LocalName ,  Code = @Code ,[Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate  Where Id = @Id; end
     
 
-	FETCH NEXT FROM IncotermsCursor  INTO @Id , @Name, @LocalName, @Code,@SourceTenant , @ParentTenant
+	FETCH NEXT FROM IncotermsCursor  INTO @Id , @Name, @LocalName, @Code,@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
 		End
 	CLOSE IncotermsCursor
 	DEALLOCATE IncotermsCursor
 	
-	update dw_WaterMarks set LastUpdateDate = @AutomaticLastUpdateDate where TableName = 'Incoterm'
+	update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'Incoterm'
 
 End

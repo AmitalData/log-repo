@@ -56,7 +56,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             this.repository = repository;
         }
-
+        
         public ShipmentPM GetSinglePMByShipmentNumber(string shipmentNumber, int tenant, bool withComposition = true)
         {
             if (!string.IsNullOrEmpty(shipmentNumber))
@@ -189,6 +189,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.ShipmentLevelCode == "C")
             {
                 shipmentPM.MasterPreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
+                shipmentPM.MasterProjectNumber = shipment.ProjectNumber;
+
+                shipmentPM.MasterPreCarriageFromPortName = precarriageFromPort != null ? precarriageFromPort.EnglishName: null;
 
                 if (!string.IsNullOrEmpty(shipment.PreCarriageVesselId))
                 {
@@ -196,6 +199,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (vesselEntity != null)
                     {
                         shipmentPM.MasterPreCarriageVesselName = vesselEntity.EnglishName;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(shipment.PreCarriageFromPortId))
+                {
+                    Port portEntity = portsRep.GetSinglePort(shipment.PreCarriageFromPortId, tenant);
+                    if (portEntity != null)
+                    {
+                        shipmentPM.MasterPreCarriageFromPortName = portEntity.EnglishName;
                     }
                 }
             }
@@ -209,6 +221,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 if (masterShipment != null)
                 {
                     shipmentPM.MasterPreCarriageCarrierNumber = masterShipment.PreCarriageCarrierNumber;
+                    shipmentPM.MasterProjectNumber = masterShipment.ProjectNumber;
 
                     if (!string.IsNullOrEmpty(masterShipment.PreCarriageVesselId))
                     {
@@ -216,6 +229,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                         shipmentPM.MasterPreCarriageVesselName = vessel != null ? vessel.EnglishName : null;
                     }
+
+                    if (!string.IsNullOrEmpty(masterShipment.PreCarriageFromPortId))
+                    {
+                        Port port = portsRep.GetSinglePort(masterShipment.PreCarriageFromPortId, tenant);
+
+                        shipmentPM.MasterPreCarriageFromPortName = port != null ? port.EnglishName : null;
+                    }
+
                 }
             }
 
@@ -2306,7 +2327,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipmentPM.ShipmentConsoleShipments != null)
             {
                 this.ComputeHousesNumbersField(shipmentPM);
+
             }
+
+            this.ComputeHousesDescriptionofGoodsField(shipmentPM);
 
             shipmentPM.TEU = shipment.TEU;
             shipmentPM.SecurityKey = shipment.SecurityKey;
@@ -2385,6 +2409,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private void ComputeHousesNumbersField(ShipmentPM shipmentPM)
         {
             var myHousesNumbers = "";
+            var myMasterHousesNumbers = "";
+            
             foreach (ConsoleShipmentPM console in shipmentPM.ShipmentConsoleShipments)
             {
                 if (string.IsNullOrEmpty(myHousesNumbers))
@@ -2395,6 +2421,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     myHousesNumbers += ", " + console.ShipmentNumber;
                 }
+
+                if (string.IsNullOrEmpty(myMasterHousesNumbers))
+                {
+                    myMasterHousesNumbers = console.House;
+                }
+                else
+                {
+                    myMasterHousesNumbers += ", " + console.House;
+                }
+
             }
 
             if (!string.IsNullOrEmpty(myHousesNumbers) && myHousesNumbers.Length > 1000)
@@ -2402,7 +2438,44 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 myHousesNumbers = myHousesNumbers.Substring(0, 1000);
             }
 
+            if (!string.IsNullOrEmpty(myMasterHousesNumbers) && myMasterHousesNumbers.Length > 1000)
+            {
+                myMasterHousesNumbers = myMasterHousesNumbers.Substring(0, 1000);
+            }
+
             shipmentPM.HousesNumbers = myHousesNumbers;
+            shipmentPM.MasterHousesNumbers = myMasterHousesNumbers;
+        }
+        private void ComputeHousesDescriptionofGoodsField(ShipmentPM shipmentPM)
+        {
+            var myHousesDescriptionofGoods = "";
+
+            if (shipmentPM.ShipmentLevelCode == "C")
+            {
+                foreach (ConsoleShipmentPM console in shipmentPM.ShipmentConsoleShipments)
+                {
+                    if (string.IsNullOrEmpty(myHousesDescriptionofGoods))
+                    {
+                        myHousesDescriptionofGoods = console.DescriptionOfGoods;
+                    }
+                    else
+                    {
+                        myHousesDescriptionofGoods += ", " + console.DescriptionOfGoods;
+                    }
+
+                }
+
+                if (!string.IsNullOrEmpty(myHousesDescriptionofGoods) && myHousesDescriptionofGoods.Length > 1000)
+                {
+                    myHousesDescriptionofGoods = myHousesDescriptionofGoods.Substring(0, 1000);
+                }
+            }
+            else
+            {
+                myHousesDescriptionofGoods = shipmentPM.DescriptionOfGoods;
+            }
+
+            shipmentPM.HousesDescriptionofGoods = myHousesDescriptionofGoods;
         }
 
         private void MapAnalyzerConcurrencyFields(ShipmentPM shipmentPM)
@@ -12621,7 +12694,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return result;
 
         }
-
+        public IQueryable<Shipment> GetAllShipments()
+        {
+            return (from d in repository.context.Shipments  select d);
+        }
         public IQueryable<ShipmentList> GetAllShipmentListTenant(int tenant)
         {
             IQueryable<ShipmentList> shipmentsList = from s in repository.context.Shipments.Include("ShipmentType").Include("ShipmentLevel")

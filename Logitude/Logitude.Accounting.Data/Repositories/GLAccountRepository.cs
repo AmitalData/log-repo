@@ -698,7 +698,7 @@ namespace Logitude.Accounting.Data.Repositories
        public IQueryable<GLAccount> GetQAllCardsAndDetailsAccType(int Tenant
            , string clientControlAccountId
            , string vendorControlAccountId
-           , string jobControlAccountId
+           , List<string> jobControlAccountId_list
            , string fileControlAccountId
            )
        {
@@ -745,13 +745,14 @@ namespace Logitude.Accounting.Data.Repositories
             
            }
 
-           
 
-           if (!string.IsNullOrWhiteSpace(jobControlAccountId))
-           {
+
+            //if (!string.IsNullOrWhiteSpace(jobControlAccountId_list))
+            if (jobControlAccountId_list!=null && jobControlAccountId_list.Count>0)
+            {
                //exclude jobControlAccountId
                //qCardTenant=qCardTenant.Where(a => a.Id != jobControlAccountId);
-               excludelist.Add(jobControlAccountId);
+               excludelist.AddRange(jobControlAccountId_list);
 
                //include All AccountTypeCode  Job
                qJobTenant =
@@ -1068,6 +1069,7 @@ namespace Logitude.Accounting.Data.Repositories
             IQueryable<InterestReportCustomerData> gLAccounts = (from a in context.GLAccounts
                                                                  where a.Tenant == tenant && a.ActiveForInterest == true
                                                                  join csJoin in context.Cards on a.Id equals csJoin.GLAccountId
+                                                                 where csJoin.PartnerTypeId=="CS"
                                                                  select new InterestReportCustomerData()
                                                                  {
                                                                      GLAccountId = a.Id,

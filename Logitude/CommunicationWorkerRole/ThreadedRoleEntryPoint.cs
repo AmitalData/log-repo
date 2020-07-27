@@ -392,6 +392,9 @@ namespace CommunicationWorkerRole
             //    //    }
             //    //}
             //}
+            RemoveSchedular(BatchServicesDefinitionsTemp);
+            
+
             if (BatchServicesDefinitions == null)
             {
                 BatchServicesDefinitions = BatchServicesDefinitionsTemp;
@@ -452,12 +455,7 @@ namespace CommunicationWorkerRole
                 BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "ReportExecutionLogWorkerRole").ToList();
             }
 
-            if(Debugger.IsAttached && LogitudeSettings.WorkerRoleName.ToLower() != "development")
-            {
-                var schedularWorkerRole = BatchServicesDefinitions.FirstOrDefault(b => b.ClassName == "SchedularWorkerRole");
-                if (schedularWorkerRole != null)
-                    BatchServicesDefinitions.Remove(schedularWorkerRole);
-            }
+           
 
             foreach (var Service in BatchServicesDefinitions)
             {
@@ -483,6 +481,16 @@ namespace CommunicationWorkerRole
             {
                 into++;
                 worker.OnStart();
+            }
+        }
+
+        private static void RemoveSchedular(List<BatchServicesDefinitionPM> BatchServicesDefinitions)
+        {
+            if (Debugger.IsAttached && LogitudeSettings.WorkerRoleName.ToLower() != "development")
+            {
+                var schedularWorkerRole = BatchServicesDefinitions.FirstOrDefault(b => b.ClassName == "SchedularWorkerRole");
+                if (schedularWorkerRole != null)
+                    BatchServicesDefinitions.Remove(schedularWorkerRole);
             }
         }
 
@@ -565,6 +573,7 @@ namespace CommunicationWorkerRole
             {
                 BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => Services.Select(s => s.SarviceName).Contains(a.Code)).ToList();
             }
+            RemoveSchedular(BatchServicesDefinitionsTemp);
             //}
             return BatchServicesDefinitionsTemp;
         }

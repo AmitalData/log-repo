@@ -2,40 +2,40 @@
 
 import { LoginComp } from "../../../login/Login.po";
 
-    export class NewAgentScenario {
+export class NewAgentScenario {
 
-        private login: LoginComp = new LoginComp();
-    
-     
-    }
+    private login: LoginComp = new LoginComp();
 
 
-
-    it('QuickSearch', function () {
-
-        cy.get('#GeneralMHMaintenance').click()
-        cy.get('#null_Search').click();
-    });
+}
 
 
-    it('SearchAgentTab', function () {
+
+it('QuickSearch', function () {
+
+    cy.get('#GeneralMHMaintenance').click()
+    cy.get('#null_Search').click();
+});
 
 
-        cy.get('#null_Search').type("Agent");
-        cy.get('#MaintenanceItemMTAG').click();
-    });
+it('SearchAgentTab', function () {
 
 
-    it('CreateNewAgent', function () {
-        this.agentName = 'Ahmad Company-' + Math.random();
+    cy.get('#null_Search').type("Agent");
+    cy.get('#MaintenanceItemMTAG').click();
+});
 
-        cy.get('#NewButton_Agent').click();
-        cy.get('#Address_Name').type(this.agentName);
-        cy.get('#Address_City').type('Warsaw');
-        cy.get('#Address_CountryId').type("Poland");
-        cy.get('.DropDownListItem:first').click();
-        cy.get('#OkButtonId').click();
-    });
+
+it('CreateNewAgent', function () {
+    this.agentName = 'Ahmad Company-' + Math.random();
+
+    cy.get('#NewButton_Agent').click();
+    cy.get('#Address_Name').type(this.agentName);
+    cy.get('#Address_City').type('Warsaw');
+    cy.get('#Address_CountryId').type("Poland");
+    cy.get('.DropDownListItem:first').click();
+    cy.get('#OkButtonId').click();
+});
 
 
 
