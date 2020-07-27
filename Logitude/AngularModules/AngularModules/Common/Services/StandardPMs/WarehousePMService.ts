@@ -26,6 +26,7 @@ import {ContactPM} from '../../EntityPMs/ContactPM';
 
 import {CardContactAdditionalServicePM} from '../../EntityPMs/CardContactAdditionalServicePM';
 import {CardExternalCodeByCurrencyPM} from '../../EntityPMs/CardExternalCodeByCurrencyPM';
+import {WarehouseStoragePricingPM} from '../../EntityPMs/WarehouseStoragePricingPM';
 
 @Injectable()
 
@@ -189,6 +190,7 @@ export class WarehousePMService {
                this.MapAddresses(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapContacts(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapCardExternalCodeByCurrencies(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapWarehouseStoragePricings(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -227,6 +229,15 @@ export class WarehousePMService {
 						
 							 
             entityPM.OldEntityPM.CardExternalCodeByCurrencies.push(newCardExternalCodeByCurrencyPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.WarehouseStoragePricings = [];
+            for (var item in entityPM.WarehouseStoragePricings) {
+            var myWarehouseStoragePricingPM = entityPM.WarehouseStoragePricings[item];
+            var newWarehouseStoragePricingPM: WarehouseStoragePricingPM = this.clone(myWarehouseStoragePricingPM);
+						
+							 
+            entityPM.OldEntityPM.WarehouseStoragePricings.push(newWarehouseStoragePricingPM);
             }
 			   
 		}
@@ -373,6 +384,96 @@ export class WarehousePMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.CardExternalCodeByCurrencies.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapWarehouseStoragePricings(entityPM: WarehousePM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldWarehouseStoragePricings: WarehouseStoragePricingPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldWarehouseStoragePricings = entityPM.OldEntityPM.WarehouseStoragePricings;
+        }
+
+        entityPM.WarehouseStoragePricings = new Array<WarehouseStoragePricingPM>();
+        for (var item in jsonPM.WarehouseStoragePricings) {
+            var jItem = jsonPM.WarehouseStoragePricings[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newWarehouseStoragePricingPM: WarehouseStoragePricingPM;
+	  
+            if (mapParent) {
+                newWarehouseStoragePricingPM = new WarehouseStoragePricingPM(entityPM);
+            }
+            else
+            {
+                newWarehouseStoragePricingPM = new WarehouseStoragePricingPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newWarehouseStoragePricingPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newWarehouseStoragePricingPM.UniqueKey = Guid.newGuid();
+                newWarehouseStoragePricingPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newWarehouseStoragePricingPM.OldEntityPM = this.clone(newWarehouseStoragePricingPM);
+
+				
+            }
+            else {
+                if (newWarehouseStoragePricingPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newWarehouseStoragePricingPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newWarehouseStoragePricingPM.ChangeSetOp = "Insert";
+                }
+ 
+                newWarehouseStoragePricingPM.OldEntityPM = null;
+                newWarehouseStoragePricingPM.EntityParentPM = null;
+            }
+			
+			 newWarehouseStoragePricingPM.IsDirty = false;
+            entityPM.WarehouseStoragePricings.push(newWarehouseStoragePricingPM);
+        }
+        if (oldWarehouseStoragePricings) {
+            
+            for (var itemKey in oldWarehouseStoragePricings) {
+                if (entityPM.WarehouseStoragePricings.filter(p=> p.UniqueKey === oldWarehouseStoragePricings[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldWarehouseStoragePricings[itemKey]) {
+                        //oldWarehouseStoragePricings[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.WarehouseStoragePricings.push(oldWarehouseStoragePricings[itemKey]);
+						var oldItemJson = oldWarehouseStoragePricings[itemKey];
+                        var deletedPM: WarehouseStoragePricingPM = new WarehouseStoragePricingPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.WarehouseStoragePricings.push(deletedPM);
                     }
                 }
             }

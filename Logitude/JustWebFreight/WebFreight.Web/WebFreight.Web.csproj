@@ -949,11 +949,16 @@
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingTransportModeController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingWatermarkController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\VatUniquePartnerTypeViewsController.Generated.cs" />
+    <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.WarehouseWeightMeasurement.cs" />
+    <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.WarehouseWeightRounding.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\VatUniquePartnerTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\InterestReportsForEligibleCustomerCreationController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestLastBatchServiceViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestReportsConnectInvoiceViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestLastBatchServiceController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestReportsConnectInvoiceController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseWeightMeasurementViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseWeightRoundingViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBuildTablesController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingSearchController.cs" />
@@ -2722,8 +2727,11 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\VatUniqueTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\VendorUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\VesselUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\WarehouseStoragePricingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\WarehouseTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\WarehouseUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\WarehouseWeightMeasurementUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\WarehouseWeightRoundingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\WeightUnitUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AcceptanceStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AccountingCompanyTypeUpdateClass.cs" />
@@ -3075,6 +3083,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentReceivableLineStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentReceivableStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentReceivableUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentStoragePricingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentSubTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentUpdateClass.cs" />

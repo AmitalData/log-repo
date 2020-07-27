@@ -362,7 +362,10 @@
     <Compile Include="CommonDataModel\EntityPOCOs\NumberFormat.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AccountingPartner.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\VatUniquePartnerType.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\WarehouseStoragePricing.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\WarehouseType.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\WarehouseWeightMeasurement.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\WarehouseWeightRounding.cs" />
     <Compile Include="CommonDataModel\ICustomersDataViewContext.cs" />
     <Compile Include="CommonDataModel\IDocumentsFilingsViewContext.cs" />
     <Compile Include="CommonDataModel\Mapping\AgentSharedDocumentMap.cs" />
@@ -471,8 +474,11 @@
     <Compile Include="CommonDataModel\Mapping\NumberFormatMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AccountingPartnerMap.cs" />
     <Compile Include="CommonDataModel\Mapping\VatUniquePartnerTypeMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\WarehouseStoragePricingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\WarehouseTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PaymentGatewayPartnerMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\WarehouseWeightMeasurementMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\WarehouseWeightRoundingMap.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedDocumentRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedManifestRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CarrierAreasPortRepository.cs" />
@@ -556,8 +562,11 @@
     <Compile Include="CommonDataModel\Repositories\UsersReleaseNotesDisplayRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AccountingPartnerRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\VatUniquePartnerTypeRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\WarehouseStoragePricingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\WarehouseTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\UsoCFDIRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\WarehouseWeightMeasurementRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\WarehouseWeightRoundingRepository.cs" />
     <Compile Include="Helpers\AutomationFollowUp.cs" />
     <Compile Include="Helpers\AutomationQueuedTask.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWCategories.cs" />
@@ -648,6 +657,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsMessageType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentPackageHarmonize.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentStoragePricing.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentSubType.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferHeaderMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferLineMap.cs" />
@@ -667,6 +677,7 @@
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsMessageTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsTransmissionMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentPackageHarmonizeMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ShipmentStoragePricingMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentSubTypeMap.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferHeaderRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferLineRepository.cs" />
@@ -1086,6 +1097,7 @@
     <Compile Include="ShipmentsModel\Repositories\ShipmentCustomsMessageTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentCustomsTransmissionRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentPackageHarmonizeRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ShipmentStoragePricingRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentSubTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\SpecialServicesTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\StateRepository.cs" />

@@ -42,5 +42,14 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
         public string StateName { get; set; }
+
+        public bool ChargeStorage { get; set; }
+        public string CurrencyId { get; set; }
+        public string AirWeightMeasurementCode { get; set; }
+        public string OceanWeightMeasurementCode { get; set; }
+        public string InlandWeightMeasurementCode { get; set; }
+        public string AirWeightRoundingCode { get; set; }
+        public string OceanWeightRoundingCode { get; set; }
+        public string InlandWeightRoundingCode { get; set; }
     }
 }

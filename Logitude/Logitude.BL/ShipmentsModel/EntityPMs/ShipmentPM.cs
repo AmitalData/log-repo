@@ -2472,5 +2472,40 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsUpdateEntityException { get; set; }
         public string MasterHousesNumbers { get; set; }
         public string HousesDescriptionofGoods { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool ChargeStorage { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ChargeStorageCurrencyId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WeightMeasurementCode { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WeightRoundingCode { get; set; }
+
+        private List<ShipmentStoragePricingPM> shipmentStoragePricings;
+        [Include]
+        [Association("shipmentStoragePricingShipment", "Id", "ShipmentId")]
+        [Composition]
+        public virtual List<ShipmentStoragePricingPM> ShipmentStoragePricings
+        {
+            get
+            {
+                if (this.shipmentStoragePricings == null)
+                {
+                    shipmentStoragePricings = new List<ShipmentStoragePricingPM>();
+                }
+                return this.shipmentStoragePricings;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    shipmentStoragePricings = value;
+                }
+            }
+        }
     }
 }

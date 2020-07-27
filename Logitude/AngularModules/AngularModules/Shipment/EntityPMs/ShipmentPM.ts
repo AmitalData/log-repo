@@ -17,7 +17,8 @@ import { ShipmentPMCustomCode } from '../EntityPMCustomCode/ShipmentPMCustomCode
 import { Output, EventEmitter } from '@angular/core';
 import { PropertyChangedArgs } from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import {ShipmentAssemblyPM} from './ShipmentAssemblyPM';
+import { ShipmentAssemblyPM } from './ShipmentAssemblyPM';
+import { ShipmentStoragePricingPM } from './ShipmentStoragePricingPM';
 
 export class ShipmentPM {
     public UIProperties: UIProperties;
@@ -4582,12 +4583,10 @@ export class ShipmentPM {
             this.MarkAsDirty("TR3_ToPortId_Original");
         }
     }
-   
- 
+    
     private storageDays: number;
     public get StorageDays() { return this.storageDays; }
     public set StorageDays(newValue: number) { if (this.storageDays != newValue) { this.storageDays = newValue; this.MarkAsDirty("StorageDays"); } }
-
 
     private warehouseReleasesIds: string;
     public get WarehouseReleasesIds() { return this.warehouseReleasesIds; }
@@ -4605,6 +4604,21 @@ export class ShipmentPM {
     public get ShipmentSubTypeName() { return this.shipmentSubTypeName; }
     public set ShipmentSubTypeName(newValue: string) { if (this.shipmentSubTypeName != newValue) { this.shipmentSubTypeName = newValue; this.MarkAsDirty("ShipmentSubTypeName"); } }
 
+    private chargeStorage: boolean;
+    public get ChargeStorage() { return this.chargeStorage; }
+    public set ChargeStorage(newValue: boolean) { if (this.chargeStorage != newValue) { this.chargeStorage = newValue; this.MarkAsDirty("ChargeStorage"); } }
+
+    private chargeStorageCurrencyId: string;
+    public get ChargeStorageCurrencyId() { return this.chargeStorageCurrencyId; }
+    public set ChargeStorageCurrencyId(newValue: string) { if (this.chargeStorageCurrencyId != newValue) { this.chargeStorageCurrencyId = newValue; this.MarkAsDirty("ChargeStorageCurrencyId"); } }
+
+    private weightMeasurementCode: string;
+    public get WeightMeasurementCode() { return this.weightMeasurementCode; }
+    public set WeightMeasurementCode(newValue: string) { if (this.weightMeasurementCode != newValue) { this.weightMeasurementCode = newValue; this.MarkAsDirty("WeightMeasurementCode"); } }
+
+    private weightRoundingCode: string;
+    public get WeightRoundingCode() { return this.weightRoundingCode; }
+    public set WeightRoundingCode(newValue: string) { if (this.weightRoundingCode != newValue) { this.weightRoundingCode = newValue; this.MarkAsDirty("WeightRoundingCode"); } }
 
     public OldEntityPM: ShipmentPM;
 
@@ -5001,6 +5015,39 @@ export class ShipmentPM {
             var index = this.ShipmentAssemblies.indexOf(item);
             if (index > -1) {
                 this.ShipmentAssemblies.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+
+    private shipmentStoragePricings: ShipmentStoragePricingPM[];
+    get ShipmentStoragePricings() {
+        if (this.shipmentStoragePricings == null) {
+            this.shipmentStoragePricings = [];
+        }
+
+        return this.shipmentStoragePricings;
+    }
+    set ShipmentStoragePricings(newValue: ShipmentStoragePricingPM[]) {
+        if (this.shipmentStoragePricings != newValue) {
+            this.shipmentStoragePricings = newValue;
+        }
+    }
+    public AddShipmentStoragePricing(item: ShipmentStoragePricingPM) {
+        if (item != null) {
+            var index = this.ShipmentStoragePricings.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this.ShipmentStoragePricings.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveShipmentStoragePricing(item: ShipmentStoragePricingPM) {
+        if (item != null) {
+            var index = this.ShipmentStoragePricings.indexOf(item);
+            if (index > -1) {
+                this.ShipmentStoragePricings.splice(index, 1);
                 this.MarkAsDirty();
             }
         }
