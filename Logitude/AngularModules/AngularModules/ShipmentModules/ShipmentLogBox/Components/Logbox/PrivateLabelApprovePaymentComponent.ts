@@ -203,6 +203,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                         windowArgs.tax16Amount = this.tax16Amount;
                         windowArgs.RTL = this.RTL;
                         warningWindow.WindowArgs = windowArgs;
+                        warningWindow.IsShowCloseButton = true;
                         warningWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/WarningApprovePaymentComponent');
                         warningWindow.WindowClosed.subscribe((event: any) => {
                             if (event == "Approved")
