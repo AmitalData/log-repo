@@ -912,6 +912,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ReplacingRepairRequest"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"

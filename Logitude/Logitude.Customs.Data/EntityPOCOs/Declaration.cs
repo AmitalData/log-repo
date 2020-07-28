@@ -396,6 +396,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public DateTime? CancelRequestApproveDate { get; set; }
         [Column("IsClaimable")]
 	    public bool? IsClaimable { get; set; }
+        [Column("ReplacingRepairRequest")]
+	    public string ReplacingRepairRequest { get; set; }
     }
 }
 	 

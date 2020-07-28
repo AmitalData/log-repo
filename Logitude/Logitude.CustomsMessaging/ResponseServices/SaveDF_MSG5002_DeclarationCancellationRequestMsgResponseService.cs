@@ -118,7 +118,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
 
                 declarationUpdateService.Update(dec, true);
-                this.MyResponseData.UserMessage = "ההצהרה בוטלה בהצלחה.";
+                this.MyResponseData.UserMessage = "בקשת ביטול נשלחה בהצלחה.";
             }
 
             //DF_NG_5117_ImportDeclerationAmendmentReplyResponseService dF_NG_5117_ImportDeclerationAmendmentReplyResponseService = new DF_NG_5117_ImportDeclerationAmendmentReplyResponseService();
