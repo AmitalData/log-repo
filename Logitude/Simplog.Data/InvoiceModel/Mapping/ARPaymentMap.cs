@@ -38,7 +38,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TransferError).HasMaxLength(8000).IsOptional().IsUnicode(true);
             this.Property(t => t.ExternalAccountingEntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.InvoiceNumber).HasMaxLength(20).IsUnicode(false);
-            this.Property(t => t.ShipmentNumber).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ShipmentNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.ApprovedByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SATXML).IsMaxLength().IsUnicode(true);
             this.Property(t => t.SATPaymentMethodCode).HasMaxLength(2).IsUnicode(false);
