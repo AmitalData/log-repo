@@ -107,20 +107,22 @@ namespace Logitude.Accounting.BL.CoreBL
         }
         private void CalculatePaymentOpenAmount(ARPaymentPM paymentPM)
         {
+            if(paymentPM != null && paymentPM.StatusCode != "VD") { 
             LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(paymentPM.Tenant);
 
-            List<LedgerTransactionPM> reconciledInvoicesTransactions
-                = transQuery.GetReconciledInvoicesTransactionsForPayment(paymentPM.Id, paymentPM.GLAccountId, paymentPM.Tenant);
+                    List<LedgerTransactionPM> reconciledInvoicesTransactions
+                        = transQuery.GetReconciledInvoicesTransactionsForPayment(paymentPM.Id, paymentPM.GLAccountId, paymentPM.Tenant);
 
-            decimal paymentReconciledInvoicesTotal = reconciledInvoicesTransactions.Sum(d => d.PaymentReconciledAmount).Value;
+                    decimal paymentReconciledInvoicesTotal = reconciledInvoicesTransactions.Sum(d => d.PaymentReconciledAmount).Value;
 
-            // calculate open amount for payment
-            double openAmount = paymentPM.AmountInPaymentCurrency.Value - (double)paymentReconciledInvoicesTotal;
-            paymentPM.OpenAmount = MethodHelper.Round(openAmount, 2);
+                    // calculate open amount for payment
+                    double openAmount = paymentPM.AmountInPaymentCurrency.Value - (double)paymentReconciledInvoicesTotal;
+                    paymentPM.OpenAmount = MethodHelper.Round(openAmount, 2);
+                }
         }
         private void CalculatePaymentStatus(ARPaymentPM paymentPM)
         {
-            if (paymentPM != null)
+            if (paymentPM != null && paymentPM.StatusCode !="VD")
             {
                 if (paymentPM.OpenAmount == 0)
                 {
