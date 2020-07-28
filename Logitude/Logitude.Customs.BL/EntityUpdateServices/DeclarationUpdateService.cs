@@ -1256,6 +1256,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogMessagingUtil.Instance.AppendLine("Declaration Changed By Customs Notification");
             }
 
+            else if (eventCode == "DWR")
+            {
+                notificationDefinitionCode = "5117N";
+                desc = "תיקון הצהרה ממתין לטיפול המכס " + declarationPM.DeclarationNumber;
+                type = "A";
+             }
             var notificationUpdateService = new NotificationUpdateService(this.MainContext as ICustomContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), declarationPM.Tenant);    //Yuval Chalup 17.11.2014 TASK-9089
             var notificationQueryService = new NotificationQueryService(this.MainContext as ICustomContext);  //Yuval Chalup 17.11.2014 TASK-9089
 

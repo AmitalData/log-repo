@@ -183,7 +183,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (isFromAmendment)
                     {
-                        declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
+                        declarationPM.ReplacingRepairRequest = declarationOrg.AmendmentRequestNumber;
+                       declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
                         //declarationPM.AmendmentRequestNumber = declarationOrg.AmendmentRequestNumber;
                     }
                     else
