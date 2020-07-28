@@ -1949,7 +1949,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 if (tenantPOCO != null && tenantPOCO.AccountingActivated)
                 {
                     JournalRepository rep = new JournalRepository(tenant);
-                    JournalEntity journal = rep.GetJournalByAccountingEntityId(entityPM.Id, tenant);
+                    JournalEntity journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id,"2", tenant); // 2- ARInvoice
                     if (journal != null)
                     {
                         entityPM.JournalId = journal.JournalId;
