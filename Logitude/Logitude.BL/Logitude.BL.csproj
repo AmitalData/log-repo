@@ -2420,9 +2420,13 @@
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentLevelQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentTypeQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentTypeQueryService.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\QueryService\SpecialServicesTypeQueryService.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\QueryService\TransshipmentQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Receivable.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\ShipmentLevel.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\ShipmentType.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\SpecialServicesType.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\Transshipment.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\AccountingInformationIdentifierDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\AWBChargesCodeDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\AWBCustomsInformationDetails.Generated.cs" />

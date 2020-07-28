@@ -524,6 +524,42 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             }
                         }
 
+                        if (!string.IsNullOrEmpty(entityPM.ShipperNotExporterId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperNotExporterId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.ShipperNotExporterAddressId = address.Id;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.CustomAgentImportId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomAgentImportId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.CustomAgentImportAddressId = address.Id;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.ReleasingAgentId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ReleasingAgentId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.ReleasingAgentAddressId = address.Id;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.FreightForwarderId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.FreightForwarderId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.FreightForwarderAddressId = address.Id;
+                            }
+                        }
+
                         if (entityPM.ShipmentPackages.Count > 0)
                         {
                             foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
@@ -542,8 +578,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(authToken.Tenant);
                             var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, authToken.Tenant);
                             entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
-
                         }
+
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
