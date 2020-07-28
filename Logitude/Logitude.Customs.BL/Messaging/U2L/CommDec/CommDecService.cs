@@ -596,21 +596,22 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
         private void CalcIsAutonomy()
         {
-            if (String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0,1) == "8")
+            if (String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0, 1) == "8")
             {
                 this.IsAutonomy = true;
+                return;
             }
-            if (String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
+
+            CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
+            var casualImportelTel = _AmitalCustomsFile.CasualImportelTel;
+            if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' });
+            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, ResolvedTenant()))
             {
-                CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
-                var casualImportelTel = _AmitalCustomsFile.CasualImportelTel;
-                if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' });
-                if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, ResolvedTenant()))
-                {
-                    this.IsAutonomy = true;
-                }
+                this.IsAutonomy = true;
+                return;
             }
-            if (!String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && (this._LogitudeCommDecFile.IsAutonomy.ToLower() == "y" || this._LogitudeCommDecFile.IsAutonomy.ToLower() == "yes"))
+
+            if (!String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && this._LogitudeCommDecFile.IsAutonomy.ToLower().Substring(0, 1) == "y")
             {
                 this.IsAutonomy = true;
             }
