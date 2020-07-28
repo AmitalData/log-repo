@@ -92,16 +92,13 @@ namespace Logitude.Customs.Data.EntityLists
        public string ControllerUserName  { get; set; }
        [DataMember]
        public string CollectorUserName  { get; set; }
-     
+       [DataMember]
+       public string LastStatusName  { get; set; }
+       [DataMember]
+       public DateTime LastStatusDate  { get; set; }
        [DataMember]
        public bool OrderMoney  { get; set; }
-
-        [DataMember]
-        public string LastStatusName { get; set; }
-        [DataMember]
-        public string LastStatusDate { get; set; }
-        
-    }
+   }
 
 }
 	 

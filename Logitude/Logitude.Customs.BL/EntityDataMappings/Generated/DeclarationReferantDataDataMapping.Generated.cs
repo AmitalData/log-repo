@@ -501,10 +501,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.LastStatusName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LastStatusName));
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.LastStatusDate)) //T4 find type == nText 
-            {
-                entityPM.LastStatusDate = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LastStatusDate));
-            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 

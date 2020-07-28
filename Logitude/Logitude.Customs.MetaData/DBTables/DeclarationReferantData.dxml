@@ -170,10 +170,9 @@
   </Column>
   <Column
     Name="LastStatusDate"
-    Type="nvarchar"
-    Size="30">
+    Type="datetime">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="OrderMoney"
