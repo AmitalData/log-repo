@@ -351,15 +351,15 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             //_DeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
 
-            EventTracer.CreateTraceEvent(new EventTracerArgs()
-            {
-                Tenant = _DeclarationPM.Tenant,
-                EventTypeCode = "DCH",
-                UserId = _userId,
-                EntityId = _DeclarationPMOrg.Id,
-                ObjectTableName = "Customs.Declaration",
-                Notes = null
-            });
+            //EventTracer.CreateTraceEvent(new EventTracerArgs()
+            //{
+            //    Tenant = _DeclarationPM.Tenant,
+            //    EventTypeCode = "DCH",
+            //    UserId = _userId,
+            //    EntityId = _DeclarationPMOrg.Id,
+            //    ObjectTableName = "Customs.Declaration",
+            //    Notes = "-  בוצע תיקון הצהרה" + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber)
+            //});
 
 
             var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
@@ -367,7 +367,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 Tenant = _DeclarationPM.Tenant,
                 objectTableName = "Customs.Declaration",
                 EventCode = "DCH",
-                notes =null,
+                notes = "בוצע תיקון הצהרה - " + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber),
                 CommunicationLoggingEntityReference = _DeclarationPM.DeclarationNumber,
                 EntityId = _DeclarationPMOrg.Id,
                 UserId = _userId,
@@ -383,7 +383,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     status_DateTime = DateTime.Now,
                     //status_place = "FRA",
                     //status_save = "no_fail",
-                    comments = null,
+                    comments = "בוצע תיקון הצהרה - " + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber),
                 }
             };
             AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
