@@ -129,7 +129,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     CustomData.DenyReason = data.DenyReason;
                     CustomData.GoodsValueDetails = new List<GoodsValueDetails>();
                     CustomData.TaxesDetails = new List<TaxesDetails>();
-                    CustomData.TaxesMoreDetails = new List<TaxesMoreDetails>();
 
                     XmlNodeList CustomsFileNo = xmldoc.GetElementsByTagName("customs_file_num");
                     if (CustomsFileNo[0] != null)
@@ -201,6 +200,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                                     {
                                         TaxDetails.Taxtypename = ChildNodes[j].ChildNodes[x].InnerText;
                                     }
+                                    else if (ChildNodes[j].ChildNodes[x].Name == "tax-taxtype-id")
+                                    {
+                                        TaxDetails.TaxTypeCode = ChildNodes[j].ChildNodes[x].InnerText;
+                                    }
                                 }
                             }
                             else if (ChildNodes[j].Name == "tax-tax_basis")
@@ -226,36 +229,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
                     ///////////////////////////////////////////////////
 
-                    XmlNodeList moreTaxesDetails = xmldoc.GetElementsByTagName("tax_details");
-                    for (int i = 0; i < moreTaxesDetails.Count; i++)
-                    {
-                        var childNodes = moreTaxesDetails[i].ChildNodes;
-                        TaxesMoreDetails taxesMoreDetails = new TaxesMoreDetails();
-                        for (int j = 0; j < childNodes.Count; j++)
-                        {
-                                if (childNodes[j].Name == "tax_details-taxtype")
-                                {
-                                    for (int k = 0; k < childNodes[j].ChildNodes.Count; k++)
-                                    {
-                                        if (childNodes[j].ChildNodes[k].Name == "tax_details-taxtype-name")
-                                        {
-                                            taxesMoreDetails.TaxTypeName = childNodes[j].ChildNodes[k].InnerText;
-                                        }
-                                        else if (childNodes[j].ChildNodes[k].Name == "tax_details-taxtype-id")
-                                        {
-                                            taxesMoreDetails.TaxTypeCode = childNodes[j].ChildNodes[k].InnerText;
-                                        }
-                                    }
-                                }
-                                else if (childNodes[j].Name == "tax_details-tax_amount")
-                                {
-                                    taxesMoreDetails.TaxAmount = childNodes[j].InnerText;
-                                }
-                            
-                        }
-                        CustomData.TaxesMoreDetails.Add(taxesMoreDetails);
-                    }
-                   
+                    
                     ////////////////////////////////
 
                     XmlNodeList GoodsDetailsList = xmldoc.GetElementsByTagName("acc_supplier");
