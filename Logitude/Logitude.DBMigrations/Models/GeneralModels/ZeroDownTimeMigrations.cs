@@ -15,7 +15,7 @@ namespace Logitude.DBMigrations.Models
 
             foreach(var defaultValueMigration in defaultValueMigrations)
             {
-                Console.WriteLine("Handle Default Value Migration For Column " + defaultValueMigration.ColumnName + " In Table " + defaultValueMigration.SchemaName + "." +  defaultValueMigration.TableName + " On " + defaultValueMigration.DatabaseType + " Database ...");
+                Console.WriteLine("Handle Default Value Migration For Column " + defaultValueMigration.ColumnName + " In Table " + defaultValueMigration.TableName + " On " + defaultValueMigration.DatabaseType + " Database ...");
                 HandleDefaultValueMigration(defaultValueMigration);
             }
         }

@@ -35,7 +35,8 @@ namespace Logitude.DBMigrations.Models
                         TableName = reader["TableName"].ToString(),
                         ColumnName = reader["ColumnName"].ToString(),
                         DefaultValue = reader["DefaultValue"].ToString(),
-                        UpdateNumber = Convert.ToInt32(reader["UpdateNumber"].ToString())
+                        UpdateNumber = Convert.ToInt32(reader["UpdateNumber"].ToString()),
+                        DoneRecordsCount = Convert.ToInt32(reader["DoneRecordsCount"].ToString())
                     };
                     defaultValueMigrations.Add(defaultValueMigration);
                 }
@@ -92,7 +93,7 @@ namespace Logitude.DBMigrations.Models
             catch (Exception exception)
             {
                 sqlConnection.Close();
-                ExitZeroDownTimeMigrations(exception.Message);
+                ExitZeroDownTimeMigrations(exception.Message + "\nError Details: " + exception.ToString());
             }
         }
 
