@@ -24,7 +24,6 @@ namespace Logitude.BL.DataContracts
         public DateTime? PaymentDateTime { get; set; }
         public RequestPayment RequestPaymentData { get; set; }
         public List<TaxesDetails> TaxesDetails { get; set; }
-        public List<TaxesMoreDetails> TaxesMoreDetails { get; set; }
         public List<GoodsValueDetails> GoodsValueDetails { get; set; }
         public string DenyReason { get; set; }
         public PaymentData PaymentData { get; set; }
@@ -77,17 +76,11 @@ namespace Logitude.BL.DataContracts
     public class TaxesDetails
     {
         public string Taxtypename { get; set; }
+        public string TaxTypeCode { get; set; }
         public string TaxBasis { get; set; }
         public string TaxToPay { get; set; }
         public string TaxAmount { get; set; }
         public string TaxPostponed { get; set; }
-    }
-
-    public class TaxesMoreDetails
-    {
-        public string TaxTypeName { get; set; }
-        public string TaxTypeCode { get; set; }
-        public string TaxAmount { get; set; }
     }
 
     public class GoodsValueDetails
