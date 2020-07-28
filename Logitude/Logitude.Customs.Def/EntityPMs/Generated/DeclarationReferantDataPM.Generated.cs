@@ -595,12 +595,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime lastStatusDate ;
+	  private DateTime? lastStatusDate ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime LastStatusDate  
+       public DateTime? LastStatusDate  
 	   {
 	    
 	     get
@@ -611,7 +611,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(lastStatusDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastStatusDate",OldValue=lastStatusDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastStatusDate",OldValue=lastStatusDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   lastStatusDate=value;
 		   }

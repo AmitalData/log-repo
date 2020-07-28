@@ -3113,7 +3113,7 @@
     ListFieldLable="&quot;LastStatusDateListLable&quot;"
     ListLableDefaultText="&quot;LastStatusDate&quot;"
     ListLocalDefaultText="&quot;תאריך סטטוס אחרון&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
