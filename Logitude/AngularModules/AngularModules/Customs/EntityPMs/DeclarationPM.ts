@@ -1279,6 +1279,11 @@ export class DeclarationPM {
     public set IsClaimable(newValue: boolean) { if (this.isClaimable != newValue) { this.isClaimable = newValue; this.MarkAsDirty("IsClaimable"); } }
        
 	 
+    private replacingRepairRequest: string;
+    public get ReplacingRepairRequest() { return this.replacingRepairRequest; }
+    public set ReplacingRepairRequest(newValue: string) { if (this.replacingRepairRequest != newValue) { this.replacingRepairRequest = newValue; this.MarkAsDirty("ReplacingRepairRequest"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

@@ -182,6 +182,7 @@ export class DeclarationList {
 	CancelRequestRejectionReason: string;
 	CancelRequestApproveDate: Date;
 	IsClaimable: boolean;
+	ReplacingRepairRequest: string;
 	
 }
  
