@@ -6419,7 +6419,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 houseShipment.AgentComputed = houseShipment.AgentId;
                 entityRepository.Update(houseShipment);
                 entityRepository.SubmitChanges();
-
+                RunStoredProcedureClass.UpdateShipmentStatus(itemPM.Id, tenant);
                 //this.RunRegistryDateProcedure(houseShipment.Id);
 
                 calculateProfit = true;
