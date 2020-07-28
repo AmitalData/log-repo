@@ -353,8 +353,9 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             LogBoxTenantSetting logBoxTenantSetting = logBoxTenantSettingRepository.GetSingleLogBoxTenantSetting(currentTenant.Id);
             logBoxTenantSetting.CustomerTenantShareImportFile = currentTenant.CustomerTenantShareImportFile;
             logBoxTenantSetting.AutoArchiveOnInvoice = currentTenant.AutoArchiveOnInvoice;
-            logBoxTenantSetting.DocumentShareAsDefault = currentTenant.DocumentShareAsDefault; 
-            
+            logBoxTenantSetting.DocumentShareAsDefault = currentTenant.DocumentShareAsDefault;
+            logBoxTenantSetting.LogBoxAdminUserId = currentTenant.LogBoxAdminUserId;
+
             logBoxTenantSettingRepository.Update(logBoxTenantSetting);
             logBoxTenantSettingRepository.SubmitChanges();
         }
