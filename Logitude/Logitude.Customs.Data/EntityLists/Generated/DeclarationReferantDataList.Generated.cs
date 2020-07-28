@@ -95,7 +95,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string LastStatusName  { get; set; }
        [DataMember]
-       public DateTime LastStatusDate  { get; set; }
+       public DateTime? LastStatusDate  { get; set; }
        [DataMember]
        public bool OrderMoney  { get; set; }
    }
