@@ -61,6 +61,7 @@ it('EditShipmentView', () => {
     lastShipment.get('.ActionButtons').last().click({ force: true })
     cy.get('#NewViewSearchFields_0_1').type('account')
     cy.get(".ListBoxItem").eq(0).click();
+    cy.wait(1000)
     cy.get("#NewButtonViewAdd").click()
     cy.get("#NewButtonViewCreate").click()
     cy.get('#BusyIndicator_0').should('not.be.visible')
