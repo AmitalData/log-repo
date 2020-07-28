@@ -12,6 +12,7 @@ import { GenericRequestParams } from '../../../../../Customs/DataContract/Reques
 import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { CustomMessageProgressComponent } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 
 declare var window: any;
 
@@ -207,7 +208,16 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
                     });
                 this._DeclarationWebService.PostSendDeclarationCancellation(currRequestParams)
                     .subscribe((myServiceResponse: ServiceResponse) => {
+                        if (!myServiceResponse.HasError) {
+                          var messageWindow = new MessageWindow();
+                        messageWindow.Width = 400;
+                        messageWindow.Height = 200;
+                        messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                            messageWindow.Show("בקשת ביטול נשלחה בהצלחה.");
 
+                            SessionLocator.SelectedSession.CloseCurrentWindow();
+                        }
+                      
                     });
             }
 
