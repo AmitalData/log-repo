@@ -437,7 +437,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
            if(!string.IsNullOrEmpty(_DeclarationPM.ReplacingRepairRequest))
             { 
-                responseAdditionalInformation.Add(new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "24" }, Content = new AdditionalInformationContentTextType { Value = functionalReferenceID } });
+                responseAdditionalInformation.Add(new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "24" }, Content = new AdditionalInformationContentTextType { Value = _DeclarationPM.ReplacingRepairRequest } });
             }
             return responseAdditionalInformation.ToArray();
          }
