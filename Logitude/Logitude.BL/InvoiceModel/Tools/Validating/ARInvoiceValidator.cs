@@ -529,6 +529,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         {
                             throw new ApplicationException("Wrong Line Local Amount");
                         }
+                        if(IsFullAccountingActivated(entityPM.Tenant) && item.ForiegnExchangeRate != null)
+                        {
+                        CheckForeignAmountForInvoiceLineFullAccounting(item);
+                        }
 
                         double? lineInvoiceAmount = MethodHelper.Round(item.InvoiceCurrencyAmount, 2);
                         double? exchangeRate = entityPM.InvoiceCurrencyExchangeRate;
@@ -543,21 +547,24 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                     else
                     {
-                        if (item.InvoiceCurrencyExchangeRate == null) item.InvoiceCurrencyExchangeRate = entityPM.InvoiceCurrencyExchangeRate;
-                      //  lineInvoiceAmount_Computed = IsFullAccountingActivated(entityPM.Tenant) ? MethodHelper.Round(item.ForiegnCurrencyAmount * item.InvoiceCurrencyExchangeRate, 2) : lineInvoiceAmount_Computed;
-
-                        if (lineInvoiceAmount != lineInvoiceAmount_Computed)
+                     //   if (item.InvoiceCurrencyExchangeRate == null) item.InvoiceCurrencyExchangeRate = entityPM.InvoiceCurrencyExchangeRate;
+                        //  lineInvoiceAmount_Computed = IsFullAccountingActivated(entityPM.Tenant) ? MethodHelper.Round(item.ForiegnCurrencyAmount * item.InvoiceCurrencyExchangeRate, 2) : lineInvoiceAmount_Computed;
+                        if (IsFullAccountingActivated(entityPM.Tenant))
                         {
-                            if (IsFullAccountingActivated(entityPM.Tenant))
+                            CheckFullAccountingLineLocalAmount(item);
+                        }
+                        else
+                        {
+                            if (lineInvoiceAmount != lineInvoiceAmount_Computed)
                             {
-                                if (Math.Abs((double)(lineInvoiceAmount_Computed - lineInvoiceAmount)) >=0.1)
-                                    throw new ApplicationException("Invoice Amount ("+ lineInvoiceAmount + ") in line ("+item.LineNumber+") * Exchange Rate ("+ entityPM.InvoiceCurrencyExchangeRate+") is not equal to local amount ("+item.LocalCurrencyAmount +") + -0.1");
-                            }
-                            else
-                            {
-                                throw new ApplicationException("Wrong Line Invoice Amount");
+                                
+                                    throw new ApplicationException("Wrong Line Invoice Amount");
+                              
                             }
                         }
+
+
+                      
                     }
                     }
                 //}
@@ -762,6 +769,33 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
                 #endregion
             }
+        }
+
+        private static void CheckFullAccountingLineLocalAmount(ARInvoiceLinePM line)
+        {
+            if (line.InvoiceCurrencyExchangeRate != null)
+            {
+                double? lineLocalAmount = MethodHelper.Round(line.LocalCurrencyAmount, 2);
+
+                double? lineLocalAmount_Computed = MethodHelper.Round((line.InvoiceCurrencyAmount * line.InvoiceCurrencyExchangeRate), 2);
+                if (Math.Abs((double)(lineLocalAmount_Computed - lineLocalAmount)) >= 0.1)
+                    throw new ApplicationException("Invoice Amount (" + line.InvoiceCurrencyAmount + ") in line (" + line.LineNumber + ") * Exchange Rate (" + line.InvoiceCurrencyExchangeRate + ") is not equal to local amount (" + line.LocalCurrencyAmount + ") + -0.1");
+            }
+
+        }
+        private static void CheckForeignAmountForInvoiceLineFullAccounting(ARInvoiceLinePM line)
+        {
+            if(line.ForiegnExchangeRate != null)
+            {
+                double? lineLocalAmount = MethodHelper.Round(line.LocalCurrencyAmount, 2);
+                double? lineLocalAmount_Computed = MethodHelper.Round(line.ForiegnCurrencyAmount * line.ForiegnExchangeRate, 2);
+                if(Math.Abs((double)(lineLocalAmount - lineLocalAmount_Computed)) >= 0.1)
+                {
+                    throw new ApplicationException("Foriegn Amount (" + line.ForiegnCurrencyAmount + ") in line (" + line.LineNumber + ") * Exchange Rate (" + line.ForiegnExchangeRate + ") is not equal to local amount (" + line.LocalCurrencyAmount + ") +-0.1");
+                }
+
+            }
+
         }
         private static void ValidateAirlineRestriction(ARInvoicePM entityPM, ICommonDataContext myCommonContext)
         {

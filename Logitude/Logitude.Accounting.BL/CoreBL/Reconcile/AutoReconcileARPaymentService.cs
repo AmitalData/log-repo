@@ -198,7 +198,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
                 var LedgerOfBilltoByJournalIdList = qLedgerOfBilltoByJournalId.ToList();
                 if (!LedgerOfBilltoByJournalIdList.Any())
                 {
-                    throw new Exception("could not found any ledger-to the source journal  withe the ARPayment  BillTo ");
+                    throw new Exception("could not found any ledger-to the source journal  with the ARPayment  BillTo ");
                 }
                 foreach(var l in LedgerOfBilltoByJournalIdList)
                 {

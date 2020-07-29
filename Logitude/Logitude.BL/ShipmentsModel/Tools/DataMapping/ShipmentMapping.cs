@@ -2618,6 +2618,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "DocumentsClosingDate", changeTrackingPM.DocumentsClosingDate, pm.DocumentsClosingDate, "DocumentsClosingDate", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "WarehouseLegLastFreeDate", changeTrackingPM.WarehouseLegLastFreeDate, pm.WarehouseLegLastFreeDate, "WarehouseLegLastFreeDate", notifyPropertyChangeValuesList);
 
+            AddFieldChangedProperties(changeTrackingPM, "LastSharedEventId", changeTrackingPM.LastSharedEventId, pm.LastSharedEventId, "LastSharedEventId", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "LastSharedEventDate", changeTrackingPM.LastSharedEventDate, pm.LastSharedEventDate, "LastSharedEventDate", notifyPropertyChangeValuesList);
+
+
+
+
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field2, pm.Field2, "Field2", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field3, pm.Field3, "Field3", notifyPropertyChangeValuesList);
@@ -2738,6 +2744,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.OnCarriageETD = houseShipment.OnCarriageETD;
             shipmentPM.DocumentsClosingDate = houseShipment.DocumentsClosingDate;
             shipmentPM.WarehouseLegLastFreeDate = houseShipment.WarehouseLegLastFreeDate;
+            shipmentPM.LastSharedEventDate = houseShipment.LastSharedEventDate;
+            shipmentPM.LastSharedEventId = houseShipment.LastSharedEventId;
+
+
 
             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
             {

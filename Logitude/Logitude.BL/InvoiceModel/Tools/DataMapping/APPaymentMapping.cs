@@ -146,7 +146,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
         private static JournalEntity GetJournalOfAPPayment(APPaymentPM entityPM)
         {
             JournalRepository rep = new JournalRepository(entityPM.Tenant);
-            JournalEntity journal = rep.GetJournalByAccountingEntityId(entityPM.Id, entityPM.Tenant);
+            JournalEntity journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id,"5", entityPM.Tenant);
             return journal;
         }
 

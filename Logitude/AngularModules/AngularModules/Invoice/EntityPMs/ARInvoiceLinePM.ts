@@ -253,6 +253,11 @@ export class ARInvoiceLinePM {
     public set IsRegionalTax(newValue: boolean) { if (this.isRegionalTax != newValue) { this.isRegionalTax = newValue; this.MarkAsDirty("IsRegionalTax"); } }
        
 	 
+    private invoiceCurrencyExchangeRate: number;
+    public get InvoiceCurrencyExchangeRate() { return this.invoiceCurrencyExchangeRate; }
+    public set InvoiceCurrencyExchangeRate(newValue: number) { if (this.invoiceCurrencyExchangeRate != newValue) { this.invoiceCurrencyExchangeRate = newValue; this.MarkAsDirty("InvoiceCurrencyExchangeRate"); } }
+       
+	 
 
     public OldEntityPM: ARInvoiceLinePM;
 	    

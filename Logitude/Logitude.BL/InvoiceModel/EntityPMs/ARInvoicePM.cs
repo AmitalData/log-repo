@@ -175,6 +175,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string ApprovedByUserId { get; set; }
         public string ApprovedByUserName { get; set; }
 
+        public string AutoCreditedByInvoiceTypeCode { get; set; }
+
+
         public string CreditedByARInvoiceId { get; set; }
 
         public string ExternalAccountingEntityId { get; set; }
