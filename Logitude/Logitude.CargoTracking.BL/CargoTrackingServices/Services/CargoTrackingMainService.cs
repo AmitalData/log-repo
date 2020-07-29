@@ -1,5 +1,6 @@
 ﻿
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,6 +15,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
     public class CargoTrackingMainService
     {
         public static long timeOut = 10000000000000000;
+        public string LastUpdate;
         public RecordUpdated recordUpdated = new RecordUpdated();
         public List<CargoTable> FillCargoTableList()
         {
@@ -139,11 +141,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 bool IsUpadteWaterMark = false;
                 if (buildCargoArgs.Table.Condition1 == null)
                 {
+                    buildCargoArgs.Table.CurrentCondition = 0;
                     IsUpadteWaterMark = true;
                     NumberRecordUpdated += UpdateCTService(buildCargoArgs, NumberOfBulkPerTime, IsUpdateAfterFinished, CargoTrackingArguments, null, IsUpadteWaterMark);
                 }
                 if (buildCargoArgs.Table.Condition1 != null)
                 {
+                    buildCargoArgs.Table.CurrentCondition = 1;
                     if (buildCargoArgs.Table.Condition2 == null)
                     {
                         IsUpadteWaterMark = true;
@@ -152,6 +156,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 }
                 if (buildCargoArgs.Table.Condition2 != null)
                 {
+                    buildCargoArgs.Table.CurrentCondition = 2;
                     if (buildCargoArgs.Table.Condition3 == null)
                     {
                         IsUpadteWaterMark = true;
@@ -160,6 +165,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 }
                 if (buildCargoArgs.Table.Condition3 != null)
                 {
+                    buildCargoArgs.Table.CurrentCondition = 3;
                     IsUpadteWaterMark = true;
                     NumberRecordUpdated += UpdateCTService(buildCargoArgs, NumberOfBulkPerTime, IsUpdateAfterFinished, CargoTrackingArguments, buildCargoArgs.Table.Condition3, IsUpadteWaterMark);
                 }
@@ -318,13 +324,51 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private SqlDataReader GetSqlDataReader(CargoArgs buildCargoArgs, CargoTable table, SqlConnection sourceConnection, CargoTrackingArguments CargoTrackingArguments = null, string Condition=null)
         {
-            
+            string cmd;
+            string condition;
             string fieldName = !string.IsNullOrEmpty(buildCargoArgs.Table.FieldsDBName) ? buildCargoArgs.Table.FieldsDBName : "*";
-            string condition = GetUpdateDataBaseCondition(buildCargoArgs, CargoTrackingArguments, Condition);
+           
+            if (buildCargoArgs.Table.Main_CT_TableName == "CargoTrackingShipments" && buildCargoArgs.Table.CurrentCondition==1)
+            {
+                fieldName=" P."+fieldName.Replace(",", " ,P.");
+                cmd = "SELECT "+ fieldName+ ", C.Id as ForwardingIdForCustom " + " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName+ " C ON P.CustomFileId = C.Id";
+                if (CargoTrackingArguments == null)
+                {
+                    LastUpdate = GetTableLastUpdate(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);
+                    cmd += " where (P.AutomaticLastUpdateDate > '" + LastUpdate + "')";
+                }
+                else
+                {
+                    cmd += " where P.CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and P.CreateDateTime <= '" + CargoTrackingArguments.ToDate + "'";
 
-            SqlCommand commandSourceData = new SqlCommand(
-                           "SELECT " + fieldName + " " +
-                           "FROM dbo." + table.DBTableName + condition, sourceConnection);
+                }
+            }
+            else if (buildCargoArgs.Table.Main_CT_TableName == "CargoTrackingShipments" && buildCargoArgs.Table.CurrentCondition == 2)
+            {
+                cmd = "Select "+ fieldName  + " FROM dbo. " + table.DBTableName + " Where Id not in (Select P.Id From  dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + " C ON P.CustomFileId = C.Id)";
+
+                if (CargoTrackingArguments == null)
+                {
+                    LastUpdate = GetTableLastUpdate(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);
+                    cmd += " and (AutomaticLastUpdateDate > '" + LastUpdate + "')";
+                }
+                else
+                {
+                    cmd += " and CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and CreateDateTime <= '" + CargoTrackingArguments.ToDate + "'";
+
+                }
+
+            }
+            else
+            {
+                  condition = GetUpdateDataBaseCondition(buildCargoArgs, CargoTrackingArguments, Condition);
+                  cmd = "SELECT " + fieldName + " " +
+                          "FROM dbo." + table.DBTableName + condition;
+            }
+
+
+            SqlCommand commandSourceData = new SqlCommand(cmd, sourceConnection);
+
             SqlDataReader reader = commandSourceData.ExecuteReader(CommandBehavior.CloseConnection);
 
             return reader;
@@ -393,7 +437,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
                             foreach (DataRow dr in dataTable.Rows)
                             {
-                                CargoTrackingTableLogicService.SetTableLogic(dr, buildCargoArgs.Table.Main_CT_TableName);
+                                CargoTrackingTableLogicService.SetTableLogic(dr, buildCargoArgs.Table.Main_CT_TableName, buildCargoArgs.Table.CurrentCondition);
 
                             }
  
@@ -533,7 +577,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         public void UpdateWaterMarksTable(CargoTable table, string date, string connectionString)
         {
-            var TodayDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+            var TodayDate = TenantServerConfigration.GetCurrentDateTime(0);
             string cmd = "update  CargoTrackingWatermarks set LastUpdateDate = '" + date + "',LastRun = '"+ TodayDate + "' where tableName = '" + table.CT_TableName + "'";
             ExecuteSql(cmd, connectionString);
 
@@ -796,7 +840,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
       
         private string GetUpdateDataBaseCondition(CargoArgs buildCargoArgs, CargoTrackingArguments CargoTrackingArguments = null, string Condition=null)
         {
-            string LastUpdate = null;
+            //string LastUpdate = null;
             if (CargoTrackingArguments == null)
             {
                   LastUpdate = GetTableLastUpdate(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);

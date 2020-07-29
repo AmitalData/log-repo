@@ -39,6 +39,7 @@ import { TariffTranslationsTabComponent } from './Components/EditTabs/TariffTran
 import { AddEditTariffTranslationComponent } from './Components/EditTabs/TariffTranslations/AddEditTariffTranslationComponent';
 import { AddEditPartnerAddressComponent } from './Components/AddEdit/AddEditPartnerAddressComponent';
 import { UploadPartnersComponent } from './Components/Maintenance/UploadPartnersComponent';
+import { StorageDefaultsComponents } from './Components/EditTabs/Warehouse/StorageDefaultsComponents';
 
 export const Components =
     [
@@ -82,7 +83,8 @@ export const Components =
         TariffTranslationsTabComponent,
         AddEditTariffTranslationComponent,
         AddEditPartnerAddressComponent,
-        UploadPartnersComponent
+        UploadPartnersComponent,
+        StorageDefaultsComponents
     ];
 
 export class ModuleDeclarations {
@@ -132,6 +134,7 @@ export class ModuleDeclarations {
             case "AddEditTariffTranslationComponent": { myResult = AddEditTariffTranslationComponent; break; }
             case "AddEditPartnerAddressComponent": { myResult = AddEditPartnerAddressComponent; break; }
             case "UploadPartnersComponent": { myResult = UploadPartnersComponent; break; }
+            case "StorageDefaultsComponents": { myResult = StorageDefaultsComponents; break; }
         }
 
         return myResult;

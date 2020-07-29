@@ -14,7 +14,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         public static Dictionary<string, string> ForwardingShipments = new Dictionary<string, string>();
 
 
-        public static void SetTableLogic(DataRow TableRow, string TableName)
+        public static void SetTableLogic(DataRow TableRow, string TableName,int ConditionNumber)
         {
             if (TableName == "CargoTrackingPorts")
             {
@@ -33,16 +33,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 TableRow.SetField("ClearanceDate", TableRow["CustomsClearanceDate"]);
                 TableRow.SetField("CreateDate", TableRow["CreateDateTime"]);
  
-                if (!TableRow["CustomerReference1"].Equals(null) && TableRow["CustomerReference1"].GetType().Name != "DBNull" && !TableRow["CustomerReference2"].Equals(null) && TableRow["CustomerReference2"].GetType().Name != "DBNull")
+                if (!TableRow["CustomerReference1"].Equals(null) && !TableRow["CustomerReference1"].Equals("") && TableRow["CustomerReference1"].GetType().Name != "DBNull" && !TableRow["CustomerReference2"].Equals(null) && !TableRow["CustomerReference2"].Equals("") && TableRow["CustomerReference2"].GetType().Name != "DBNull")
                 {
                     TableRow.SetField("CustomerReference", TableRow["CustomerReference1"] + "," + TableRow["CustomerReference2"]);
                 }
-                else if(!TableRow["CustomerReference1"].Equals(null) && TableRow["CustomerReference1"].GetType().Name != "DBNull")
+                else if(!TableRow["CustomerReference1"].Equals(null) && TableRow["CustomerReference1"].GetType().Name != "" && TableRow["CustomerReference1"].GetType().Name != "DBNull")
                 {
                     TableRow.SetField("CustomerReference", TableRow["CustomerReference1"] );
 
                 }
-                else if (!TableRow["CustomerReference2"].Equals(null) && TableRow["CustomerReference2"].GetType().Name != "DBNull")
+                else if (!TableRow["CustomerReference2"].Equals(null) && TableRow["CustomerReference2"].GetType().Name != "" && TableRow["CustomerReference2"].GetType().Name != "DBNull")
                 {
                     TableRow.SetField("CustomerReference", TableRow["CustomerReference2"]);
 
@@ -67,7 +67,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     if (!TableRow["CustomFileId"].Equals(null) && !TableRow["CustomFileId"].Equals("") &&  TableRow["CustomFileId"].GetType().Name != "DBNull")
                     {
                         TableRow.SetField("CustomsShipmentHeaderId", TableRow["Id"]);
-                        ForwardingShipments.Add((string)TableRow["Id"], (string)TableRow["CustomFileId"]);
+                        //ForwardingShipments.Add((string)TableRow["Id"], (string)TableRow["CustomFileId"]);
                     }
                 }
                 else if (TableRow["ShipmentLevelCode"].Equals("A"))
@@ -89,25 +89,28 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     TableRow.SetField("CurrentMilestoneDate", TableRow["PickupDate"]);
 
                 }
-
-
-                if (ForwardingShipments.Count() > 0)
+                if (ConditionNumber==1)
                 {
-                    string TargetKey = null;
-                    foreach (KeyValuePair<string, string> entry in ForwardingShipments)
-                    {
-                        if (entry.Value.Equals(TableRow["Id"]))
-                        {
-                            TableRow.SetField("ForwardingShipmentHeaderId", entry.Key);
-                            TargetKey = entry.Key;
-                            break;
-                        }
-                    }
-                    if (!string.IsNullOrEmpty(TargetKey))
-                    {
-                        ForwardingShipments.Remove(TargetKey);
-                    }
+                    TableRow.SetField("ForwardingShipmentHeaderId", TableRow["ForwardingIdForCustom"]);
                 }
+
+                //if (ForwardingShipments.Count() > 0)
+                //{
+                //    string TargetKey = null;
+                //    foreach (KeyValuePair<string, string> entry in ForwardingShipments)
+                //    {
+                //        if (entry.Value.Equals(TableRow["Id"]))
+                //        {
+                //            TableRow.SetField("ForwardingShipmentHeaderId", entry.Key);
+                //            TargetKey = entry.Key;
+                //            break;
+                //        }
+                //    }
+                //    if (!string.IsNullOrEmpty(TargetKey))
+                //    {
+                //        ForwardingShipments.Remove(TargetKey);
+                //    }
+                //}
             }
 
             if (TableName == "CargoTrackingShipmentSearches")

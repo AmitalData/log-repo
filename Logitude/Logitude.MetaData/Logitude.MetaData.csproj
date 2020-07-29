@@ -349,6 +349,8 @@
     <None Include="DBScripts\CommonModel\202007051540_AddVATUniquePartnerValues.sxml" />
     <None Include="DBScripts\CommonModel\202007061105_FillMissingPortCountryCode.sxml" />
     <None Include="DBScripts\CommonModel\202007051545_SetVATUniquePartnerDefaultValue.sxml" />
+    <None Include="DBScripts\CommonModel\202007201431_FillWarehouseWeightClosedTables.sxml" />
+    <None Include="DBScripts\CommonModel\202007201436_FillWarehouseFieldsDefaultValues.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingMilestoneFillValues.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingHeaderEntityTypeFillValues.sxml" />
     <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />
@@ -596,6 +598,8 @@
     <None Include="DBTables\CommonDataModel\Vessel.dxml" />
     <None Include="DBTables\CommonDataModel\Warehouse.dxml" />
     <None Include="DBTables\CommonDataModel\WarehouseType.dxml" />
+    <None Include="DBTables\CommonDataModel\WarehouseWeightMeasurement.dxml" />
+    <None Include="DBTables\CommonDataModel\WarehouseWeightRounding.dxml" />
     <None Include="DBTables\CommonDataModel\WeightUnit.dxml" />
     <None Include="DBTables\GlobalModel\AgentSharedLogisticsKey.dxml" />
     <None Include="DBTables\GlobalModel\AnalyzeQueue.dxml" />
@@ -865,6 +869,8 @@
     <None Include="DBTables\ShipmentsModel\ShipmentReceivable.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentReceivableLineStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentReceivableStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentStoragePricing.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentSubType.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentType.dxml" />
     <None Include="DBTables\ShipmentsModel\SpecialServicesType.dxml" />
     <None Include="DBTables\SystemLogsModel\BatchServicesLog.dxml" />
@@ -881,6 +887,11 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\CommonDataModel\VatUniquePartnerType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\WarehouseStoragePricing.lxml" />
+    <None Include="EntityFiles\CommonDataModel\WarehouseWeightMeasurement.lxml" />
+    <None Include="EntityFiles\CommonDataModel\WarehouseWeightRounding.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\InfrastructureModel\DescriptionOfGoods.lxml" />
     <None Include="EntityFiles\InfrastructureModel\WorkerRoleName.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesTotal.lxml" />
@@ -1421,6 +1432,7 @@
     </None>
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivable.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivableStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentStoragePricing.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentSubType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\SpecialServicesType.lxml" />

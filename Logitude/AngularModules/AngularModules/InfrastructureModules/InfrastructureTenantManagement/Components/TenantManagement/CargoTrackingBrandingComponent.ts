@@ -43,6 +43,9 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.EntityPM = entityArgs.EntityPM;
         this.EntityId = this.EntityPM.Id;
         this.ImageId = this.EntityPM.BackgroundId;
+        if(this.EntityPM.MainColor ==null)  document.documentElement.style.setProperty('--sliderBackground', null);
+        if(this.EntityPM.SecondaryColor ==null)  document.documentElement.style.setProperty('--sliderBackground2', null);
+
     }
     clickColor(color: any) {
          console.log('working.....'); 
@@ -52,13 +55,13 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         if (this.EnableBranding) {
             this.MainColor = event.value;
 
-            this.SliderValue = 0;
+            this.SliderValue = 1;
         }
     }
     updateSecondaryColor(event: any) {
         if (this.EnableBranding) {
             this.SecondaryColor = event.value;
-            this.SecondarySliderValue = 0;
+            this.SecondarySliderValue = 1;
         }
     }
     ngAfterViewInit() {
@@ -126,6 +129,11 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
             this.ValidateHexCode(value, "MainColor");
             this.EntityPM.MainColor = value;
             this.colorpicker.value = value;
+            
+             if(value ==null){
+               document.documentElement.style.setProperty('--sliderBackground', null);
+                this.SliderValue=0;
+             }
         }
     }
     get MainColorOpacity() {
@@ -180,7 +188,12 @@ get CustomerURL() {
         if (this.EntityPM.SecondaryColor != value) {
             this.ValidateHexCode(value, "SecondaryColor");
             this.EntityPM.SecondaryColor = value;
+            
             this.secondarycolor.value = value;
+            if(value ==null){
+                document.documentElement.style.setProperty('--sliderBackground2', null);
+               this.SecondarySliderValue=0;
+             }
         }
 
     }

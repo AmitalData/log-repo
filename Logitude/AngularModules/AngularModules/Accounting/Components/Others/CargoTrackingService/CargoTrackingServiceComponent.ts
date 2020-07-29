@@ -58,7 +58,7 @@ ItemClicked(item:CargoTrackingMenuItem){
     case "IncrementalStatistics":{
       var windowTitle = "Incremental Statistics";
       var logWindow = new LogitudeWindow();
-      logWindow.Width = 950;
+      logWindow.Width = 1100;
       logWindow.Height = 500;
       logWindow.Title = windowTitle;
       logWindow.IsShowCloseButton = true;

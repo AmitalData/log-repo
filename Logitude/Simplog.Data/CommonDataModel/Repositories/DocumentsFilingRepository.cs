@@ -256,6 +256,23 @@ namespace Simplog.Data.CommonDataModel.Repositories
             }
             return null;
         }
+
+        public IQueryable<DocumentsFiling> GetDocumentsFilingByEntityId(string EntityId, string ObjectTableId, int tenant)
+        {
+            var documentsFilings = (from a in context.DocumentsFilings
+                                    where a.EntityId == EntityId && a.Tenant == tenant && a.ObjectTableId == ObjectTableId
+                                    select a);
+
+            return documentsFilings;
+        }
+
+
+
+
+
+
+
+
         public DocumentsFiling GetSingleDocumentsFiling(string id)
         {
             DocumentsFiling d = (from a in context.DocumentsFilings.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")

@@ -1524,6 +1524,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.WarehouseLegCutOffDate = shipment.WarehouseLegCutOffDate;
             shipmentPM.WarehouseLegEntryDate = shipment.WarehouseLegActualEntryDate != null ? shipment.WarehouseLegActualEntryDate : shipment.WarehouseLegExpectedEntryDate;
             shipmentPM.WarehouseLegReleaseDate = shipment.WarehouseLegActualReleaseDate != null ? shipment.WarehouseLegActualReleaseDate : shipment.WarehouseLegExpectedReleaseDate;
+            shipmentPM.ChargeStorage = shipment.ChargeStorage;
+            shipmentPM.ChargeStorageCurrencyId = shipment.ChargeStorageCurrencyId;
+            shipmentPM.WeightMeasurementCode = shipment.WeightMeasurementCode;
+            shipmentPM.WeightRoundingCode = shipment.WeightRoundingCode;
 
             if (!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
             {
@@ -2077,6 +2081,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(this.repository.context);
                     shipmentConsoleShipmentQuery.BuildConsoleShipments(shipmentPM);
                 }
+                #endregion
+
+                #region ShipmentStoragePricings
+                ShipmentStoragePricingRepository shipmentStoragePricingRepository = new ShipmentStoragePricingRepository(repository.context);
+                ShipmentStoragePricingQuery shipmentStoragePricingQuery = new ShipmentStoragePricingQuery(shipmentStoragePricingRepository);
+
+                shipmentPM.ShipmentStoragePricings = shipmentStoragePricingQuery.GetShipmentStoragePricingsByShipmentId(shipment.Id, shipment.Tenant);
                 #endregion
             }
 
