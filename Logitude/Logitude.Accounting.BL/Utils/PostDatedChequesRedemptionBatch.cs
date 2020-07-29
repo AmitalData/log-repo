@@ -263,7 +263,7 @@ namespace Logitude.Accounting.BL.Utils
                         GeneralKey = _AggregateKey,
                         CreatedAt = TenantServerConfigration.GetCurrentDateTime(tenant)
                     });
-                    _logger.AppendLine("add GeneralLock");
+                  //  _logger.AppendLine("add GeneralLock");
                     repo.SubmitChanges();
                     scope.Complete();
                 }
@@ -276,7 +276,7 @@ namespace Logitude.Accounting.BL.Utils
             }
             else
             {
-                _logger.AppendLine("Lock it ");
+              //  _logger.AppendLine("Lock it ");
             }
 
         }
