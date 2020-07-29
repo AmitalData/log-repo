@@ -718,14 +718,11 @@ namespace Logitude.DBMigrations.Models
                     ExitDatabaseMigrations("Cannot Use Zero Down Time Mode To Add Not Null Column Without Default Value, The Issue In Column [" + columnName + "] Inside [" + DXMLFileName + "]");
                 }
 
-                if (columnMigration.NewColumn.Constraints.Nullable)
+                addScript += GetDefaultValueScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
+                addScript += " NULL;\n\n";
+
+                if (!columnMigration.NewColumn.Constraints.Nullable)
                 {
-                    addScript += GetDefaultValueScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
-                    addScript += " NULL;\n";
-                }
-                else
-                {
-                    addScript += " NULL;\n";
                     InsertIntoDBMigrationsSetDefaultValues(columnName, defaultValue);
                 }
             }
@@ -1280,8 +1277,9 @@ namespace Logitude.DBMigrations.Models
 
         protected void InsertIntoDBMigrationsSetDefaultValues(string columnName, string defaultValue)
         {
-            UpdateLastDefaultValueCounter();
-            int updateNumber = GetLastDefaultValueCounter();
+            string lastDefaultValueCounterColumnName = "LastDefaultValueCounter";
+            UpdateTableMigrationLastCounter(lastDefaultValueCounterColumnName);
+            int updateNumber = GetTableMigrationLastCounter(lastDefaultValueCounterColumnName);
             string databaseType = DXMLTable.DBType;
             string schemaName = TableMigrations.DxmlTableSchema;
             string tableName = TableMigrations.DxmlTableName;
@@ -1309,14 +1307,14 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected void UpdateLastDefaultValueCounter()
+        protected void UpdateTableMigrationLastCounter(string lastCounterColumnName)
         {
-            string tableName = TableMigrations.DxmlTableName;
+            string tableName = TableMigrations.DxmlTableName;//format name lenth for oracle using table short name
 
-            string queryString = "EXEC('IF (SELECT COUNT(*) FROM [dbo].[DBMigrationsSetValueCounters] WHERE [TableName] = ''" + tableName + "'') = 0 " +
-                                 "INSERT INTO [dbo].[DBMigrationsSetValueCounters]([TableName], [LastCounter]) VALUES(''" + tableName + "'', 1); " +
+            string queryString = "EXEC('IF (SELECT COUNT(*) FROM [dbo].[DBMigrationsCounters] WHERE [TableName] = ''" + tableName + "'') = 0 " +
+                                 "INSERT INTO [dbo].[DBMigrationsCounters]([TableName], [" + lastCounterColumnName + "]) VALUES(''" + tableName + "'', 1); " +
                                  "ELSE " +
-                                 "UPDATE [dbo].[DBMigrationsSetValueCounters] SET [LastCounter] = [LastCounter] + 1 WHERE [TableName] = ''" + tableName + "''');";
+                                 "UPDATE [dbo].[DBMigrationsCounters] SET [" + lastCounterColumnName + "] = [" + lastCounterColumnName + "] + 1 WHERE [TableName] = ''" + tableName + "''');";
 
             SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
 
@@ -1336,12 +1334,12 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected int GetLastDefaultValueCounter()
+        protected int GetTableMigrationLastCounter(string lastCounterColumnName)
         {
-            string tableName = TableMigrations.DxmlTableName;
+            string tableName = TableMigrations.DxmlTableName;//format name lenth for oracle using table short name
 
             int lastCounter = 0;
-            string queryString = "SELECT [LastCounter] FROM [dbo].[DBMigrationsSetValueCounters] WHERE [TableName] = '" + tableName + "'";
+            string queryString = "SELECT [" + lastCounterColumnName + "] FROM [dbo].[DBMigrationsCounters] WHERE [TableName] = '" + tableName + "'";
 
             SqlDataReader reader = null;
             SqlConnection connection = new SqlConnection(ToolConfigurations.MainConnectionString);
@@ -1356,7 +1354,7 @@ namespace Logitude.DBMigrations.Models
 
                 if (reader.HasRows)
                 {
-                    lastCounter = Convert.ToInt32(reader["LastCounter"].ToString());
+                    lastCounter = Convert.ToInt32(reader[lastCounterColumnName].ToString());
                 }
 
                 reader.Close();

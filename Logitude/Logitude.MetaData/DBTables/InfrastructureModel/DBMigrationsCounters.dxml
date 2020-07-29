@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DBMigrationsCounters" Schema="dbo" DBType="Main" Module="Infrastructure">
+
+  <Column Name="TableName" Type="varchar" Size="500">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  
+  <Column Name="LastDefaultValueCounter" Type="int" DefaultValue="0">
+    <Constraints Nullable="false" />
+  </Column>
+
+  <Column Name="LastScriptCounter" Type="int" DefaultValue="0">
+    <Constraints Nullable="false" />
+  </Column>
+
+</Table>

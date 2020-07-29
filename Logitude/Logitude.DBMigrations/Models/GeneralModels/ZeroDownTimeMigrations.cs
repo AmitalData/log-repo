@@ -26,7 +26,6 @@ namespace Logitude.DBMigrations.Models
             UpdateDefaultValueMigration(defaultValueMigration.Id, "StartDate", DateTime.Now.ToString());
             SetDefaultValues(defaultValueMigration);
             UnsetColumnNullable(defaultValueMigration);
-            AddColumnDefaultValue(defaultValueMigration);
             UpdateDefaultValueMigration(defaultValueMigration.Id, "EndDate", DateTime.Now.ToString());
             UpdateDefaultValueMigration(defaultValueMigration.Id, "Status", "Done");
         }
@@ -44,8 +43,6 @@ namespace Logitude.DBMigrations.Models
         protected abstract void UpdateDefaultValueMigration(string defaultValueMigrationId, string property, string value);
 
         protected abstract void UnsetColumnNullable(ZeroDownTimeDefaultValueMigration defaultValueMigration);
-
-        protected abstract void AddColumnDefaultValue(ZeroDownTimeDefaultValueMigration defaultValueMigration);
 
         protected abstract string FormatDefaultValue(string defaultValue);
     }

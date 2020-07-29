@@ -2966,6 +2966,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="DBMigrationsLastScript"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -3686,6 +3693,8 @@
     Columns="AutomaticLastUpdateDate" />
   <Index
     Columns="DBMigrationsLastDefaultValue" />
+  <Index
+    Columns="DBMigrationsLastScript" />
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
 </Table>

@@ -63,6 +63,15 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
+        protected void PrepareRequiredData()
+        {
+            Console.WriteLine("Preparing Required Data ...");
+
+            GetIncludedModulesFromDB();
+            GetDXMLHashesFromDB();
+            GetExecutedSXMLFilesFromDB();
+        }
+
         protected GeneratedScript GenerateAndExecuteDBScripts(string[] dxmlFiles, string[] sxmlFiles)
         {
             List<string> toolDxmlFilesNames = GetToolDxmlFilesNames();
@@ -110,15 +119,6 @@ namespace Logitude.DBMigrations.Models
             }
 
             return generatedScript;
-        }
-
-        protected void PrepareRequiredData()
-        {
-            Console.WriteLine("Preparing Required Data ...");
-
-            GetIncludedModulesFromDB();
-            GetDXMLHashesFromDB();
-            GetExecutedSXMLFilesFromDB();
         }
 
         protected GeneratedScript GetScriptsToSave(GeneratedScript toolTablesScript, GeneratedScript preGeneralScript, GeneratedScript migrationsScript, GeneratedScript postGeneralScript)
@@ -255,7 +255,7 @@ namespace Logitude.DBMigrations.Models
 
                 if (IsDXMLFileForHistoryTable(dxmlTable.DXMLFileName))
                 {
-                    string[] dbTypes = new string[] { "Global", "Main", "SystemLogs","CargoTracking" };
+                    string[] dbTypes = new string[] { "Global", "Main", "SystemLogs", "CargoTracking" };
                     foreach (var dbType in dbTypes)
                     {
                         dxmlTable.TableDefinition.DBType = dbType;
@@ -1796,8 +1796,9 @@ namespace Logitude.DBMigrations.Models
                 "DXMLMigrationHashes.dxml".ToLower(),
                 "DBMigrationSettings.dxml".ToLower(),
 
+                "DBMigrationsCounters.dxml".ToLower(),
                 "DBMigrationsSetDefaultValues.dxml".ToLower(),
-                "DBMigrationsSetValueCounters.dxml".ToLower()
+                "DBMigrationsDataScripts.dxml".ToLower()
             };
 
             return toolDxmlFilesNames;

@@ -154,29 +154,6 @@ namespace Logitude.DBMigrations.Models
                 ExitZeroDownTimeMigrations(exception.Message);
             }
         }
-        
-        protected override void AddColumnDefaultValue(ZeroDownTimeDefaultValueMigration defaultValueMigration)
-        {
-            string queryString = "ALTER TABLE [" + defaultValueMigration.SchemaName + "].[" + defaultValueMigration.TableName + "] ADD DEFAULT " +
-                                 FormatDefaultValue(defaultValueMigration.DefaultValue) + " FOR [" + defaultValueMigration.ColumnName + "];";
-
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(defaultValueMigration.DatabaseType));
-
-            try
-            {
-                sqlConnection.Open();
-                SqlCommand sqlCommand = new SqlCommand();
-                sqlCommand.Connection = sqlConnection;
-                sqlCommand.CommandText = queryString;
-                sqlCommand.ExecuteNonQuery();
-                sqlConnection.Close();
-            }
-            catch (Exception exception)
-            {
-                sqlConnection.Close();
-                ExitZeroDownTimeMigrations(exception.Message);
-            }
-        }
 
         protected override string FormatDefaultValue(string defaultValue)
         {
