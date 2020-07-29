@@ -243,7 +243,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         // Local Validate
         if (this.totalDifference != 0) {
-            if (this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length >= 0) {
+            if (this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length == 0) { // only external pages adjustments
+            // if (this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length >= 0) { // to enable ledgertransactions and external page adjustments
+
                 //errors.push(TextCodeTranslator.Translate("Accounting.O.SelectTwoTransactionAtLeast"));
                 this.AdjustBankFeeWithNewJournalScreen();
                 return;
