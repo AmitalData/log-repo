@@ -367,7 +367,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 Tenant = _DeclarationPM.Tenant,
                 objectTableName = "Customs.Declaration",
                 EventCode = "DCH",
-                notes = "בוצע תיקון הצהרה - " + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber),
+                notes = "בוצע תיקון הצהרה - " + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber) + " מספר בקשה  - " + _DeclarationPM.AmendmentRequestNumber,
                 CommunicationLoggingEntityReference = _DeclarationPM.DeclarationNumber,
                 EntityId = _DeclarationPMOrg.Id,
                 UserId = _userId,
@@ -383,10 +383,21 @@ namespace Logitude.CustomsMessaging.RequestServices
                     status_DateTime = DateTime.Now,
                     //status_place = "FRA",
                     //status_save = "no_fail",
-                    comments = "בוצע תיקון הצהרה - " + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber),
+                    comments = "בוצע תיקון הצהרה - " + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber) + " מספר בקשה  - " + _DeclarationPM.AmendmentRequestNumber,
                 }
             };
             AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+
+
+
+          var  myUpdateEventContextTagModel = new EventContextTagModel()
+            {
+                CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
+                EventCode = "DCH",
+                EventRemarks = "Declaration Changed By Customs",
+                FUStatusRemarks = "בוצע תיקון הצהרה" + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber) + " מספר בקשה  - " + _DeclarationPM.AmendmentRequestNumber,
+            };
+            _DeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
 
             //var myUpdateEventContextTagModel = new EventContextTagModel()
             //{
