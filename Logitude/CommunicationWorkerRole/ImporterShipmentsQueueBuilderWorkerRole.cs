@@ -98,9 +98,9 @@ namespace CommunicationWorkerRole
                 return false;
             }
         }
-        private bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM)
+        private bool IsImporterTenantHasExportFeatureForExportShipments(TenantPM tenantPM, ShipmentPM entityPM)
         {
-            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant))
+            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && tenantPM.CustomerTenantShareExportFile == false)
             {
                 return false;
             }
@@ -280,30 +280,23 @@ namespace CommunicationWorkerRole
                                             }
                                             List<string> IdsList = new List<string>();
                                             List<string> ImportIdsList = new List<string>();
+
+                                            TenantQuery tenantQuery = new TenantQuery(tenant);
+                                            TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
+                                            CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                                             foreach (var item in ShipmentsIds)
                                             {
-
-                                                var tenantQuery = new TenantQuery(tenant);
-                                                var tenantPM = tenantQuery.GetSinglePM(tenant);
                                                 var Shipment = shipmentQuery.GetSinglePMWithoutComposition(item, tenant);
-                                                if (Shipment != null && (customerTenantAccessCard.LastMappingDateTime == null || Shipment.CreateDateTime > customerTenantAccessCard.LastMappingDateTime) && tenantPM.IsCustomerTenantShare && !Shipment.IsCancelled && (Shipment.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(tenantPM, Shipment) || IsExportShipmentsAllowedForLogBox(tenantPM, Shipment)))
+                                                if (Shipment != null && (customerTenantAccessCard.LastMappingDateTime == null || Shipment.CreateDateTime > customerTenantAccessCard.LastMappingDateTime) && tenantPM.IsCustomerTenantShare && !Shipment.IsCancelled)
                                                 {
-                                                    CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                                                     CustomerTenantAccessInfo customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, Shipment.CustomerId);
 
                                                     if (customerTenantAccess != null && customerTenantAccess.HasAccess)
                                                     {
-                                                        IdsList.Add(item);
-                                                    }
-                                                }
-                                                else if (Shipment != null && (customerTenantAccessCard.LastMappingDateTime == null || Shipment.CreateDateTime > customerTenantAccessCard.LastMappingDateTime) && tenantPM.IsCustomerTenantShare && !Shipment.IsCancelled && Shipment.DirectionId == "I" && !string.IsNullOrEmpty(Shipment.CustomFileId))
-                                                {
-                                                    CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
-                                                    CustomerTenantAccessInfo customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, Shipment.CustomerId);
-
-                                                    if (customerTenantAccess != null && customerTenantAccess.HasAccess)
-                                                    {
-                                                        ImportIdsList.Add(item);
+                                                        if ((Shipment.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(tenantPM, Shipment) || IsExportShipmentsAllowedForLogBox(tenantPM, Shipment)))
+                                                            IdsList.Add(item);
+                                                        else if (Shipment.DirectionId == "I" && !string.IsNullOrEmpty(Shipment.CustomFileId))
+                                                            ImportIdsList.Add(item);
                                                     }
                                                 }
                                             }
@@ -371,7 +364,7 @@ namespace CommunicationWorkerRole
                                                 LogPM.EntityId = Shipment.Id;
                                                 LogPM.Refrence = Shipment.ShipmentNumber;
                                                 LogPM.Tenant = Shipment.Tenant;
-                                                if (IsImporterTenantHasExportFeatureForExportShipments(importerTenant, Shipment))
+                                                if (IsImporterTenantHasExportFeatureForExportShipments(tenantPM, Shipment))
                                                 { 
                                                     queueservice.InitializeQueue("ImportersShipmentsBatchQueue", 0);
                                                     queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "ImporterTenant", importerTenant.ToString() }, { "Tenant", tenant.ToString() }, { "BatchNumber", BatchNumber } }, tenant, null, CustomerId, BatchNumber);
