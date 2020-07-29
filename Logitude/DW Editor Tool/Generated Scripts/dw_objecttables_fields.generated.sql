@@ -640,7 +640,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @Fact_ChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,PivotFieldCode) Values(@Fact_ChargesNewId,0,'Fact_Charges','Fact_Charges','Fact','false','factCharges','true','DIM_ChargesTypes')  
+insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,PivotFieldCode,AdditionalFactCode,AdditionalFactForeignKey) Values(@Fact_ChargesNewId,0,'Fact_Charges','Fact_Charges','Fact','false','factCharges','true','DIM_ChargesTypes','Fact_Shipments','[Shipment Id]')  
 --Fields --
 declare @Fact_ChargesId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesId_NumberNewId OUTPUT,'DWObjectField' 

@@ -39,6 +39,8 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("HasPivotColumn", tableViewModel.HasPivotColumn.ToString().ToLower(), entityElement);
                 SetAttribute("PivotFieldCode", GetStringValue(tableViewModel.PivotFieldCode), entityElement);
 
+                SetAttribute("AdditionalFactCode", GetStringValue(tableViewModel.AdditionalFactCode), entityElement);
+                SetAttribute("AdditionalFactForeignKey", GetStringValue(tableViewModel.AdditionalFactForeignKey), entityElement);
 
 
                 XmlElement fieldsTagElement = doc.CreateElement("fields");
@@ -140,6 +142,11 @@ namespace DW_Editor_Tool.Helpers
                         tableViewModel.DataViewName = GetAttributeStringValue(entity.Attributes["DataViewName"]);
                         tableViewModel.HasPivotColumn = GetAttributeBoolValue(entity.Attributes["HasPivotColumn"]);
                         tableViewModel.PivotFieldCode = GetAttributeStringValue(entity.Attributes["PivotFieldCode"]);
+
+                        tableViewModel.AdditionalFactCode = GetAttributeStringValue(entity.Attributes["AdditionalFactCode"]);
+                        tableViewModel.AdditionalFactForeignKey = GetAttributeStringValue(entity.Attributes["AdditionalFactForeignKey"]);
+
+
 
                         List<DWObjectFieldViewModel> fieldsList = new List<DWObjectFieldViewModel>();
                         foreach (XmlNode childNode in entity.ChildNodes)
