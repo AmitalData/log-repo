@@ -311,13 +311,22 @@ export class CustomsRequestMenuService {
                 logitudeWindow.ComponentLoaded.subscribe((compo) => {
                     var myRequestsSheetMassagingView: BaseRequestsSheetMassaging = compo as BaseRequestsSheetMassaging;
                     if (myRequestsSheetMassagingView) {
-                        myRequestsSheetMassagingView.MyCustomsMenuItem = item;
-                        if (!AppTool.IsNullOrEmpty(menuArg)) {
-                            try {
-                                var myRequestsSheetMassagingViewAny = myRequestsSheetMassagingView as any;
-                                myRequestsSheetMassagingViewAny.SetMenuArg(menuArg);
-                            } catch (err) { console.warn("! SetMenuArg(menuArg)") }
-                        }
+                        //myRequestsSheetMassagingView.MyCustomsMenuItem = item;
+                        var my = new LongRunner20(
+                            () => { return myRequestsSheetMassagingView.IsViewChildCustomMessageWrapperComponentInit; },
+                            () => {
+                                myRequestsSheetMassagingView.MyCustomsMenuItem = item;
+                                if (!AppTool.IsNullOrEmpty(menuArg)) {
+                                    try {
+                                        var myRequestsSheetMassagingViewAny = myRequestsSheetMassagingView as any;
+                                        myRequestsSheetMassagingViewAny.SetMenuArg(menuArg);
+                                    } catch (err) { console.warn("! SetMenuArg(menuArg)") }
+                                }
+
+                            }
+                        );
+                        my.RunComponent()
+
                         logitudeWindow.WindowClosed.subscribe((anyString) => {
                             myRequestsSheetMassagingView.DisposeMyState();
                             this.WindowClosed.emit(anyString);
@@ -328,9 +337,15 @@ export class CustomsRequestMenuService {
             }
             if (!isComponentLoaded) {
                 logitudeWindow.ComponentLoaded.subscribe((compo) => {
+
                     var myRequestsSheetMassagingView: BaseRequestsSheetMassaging = compo as BaseRequestsSheetMassaging;
                     if (myRequestsSheetMassagingView) {
-                        myRequestsSheetMassagingView.MyCustomsMenuItem = item;
+                        var my = new LongRunner20(
+                            () => { return myRequestsSheetMassagingView.IsViewChildCustomMessageWrapperComponentInit; },
+                            () => { myRequestsSheetMassagingView.MyCustomsMenuItem = item; }
+                        );
+                        my.RunComponent();
+                        //myRequestsSheetMassagingView.MyCustomsMenuItem = item;
                     }
                 });
             }
@@ -374,18 +389,38 @@ export class CustomsRequestMenuService {
         logitudeWindow.ComponentLoaded.subscribe((compo) => {
             var myRequestsSheetMassagingView: BaseRequestsSheetMassaging = compo as BaseRequestsSheetMassaging;
             if (myRequestsSheetMassagingView) {
-                myRequestsSheetMassagingView.MyCustomsMenuItem = item;
-                myRequestsSheetMassagingView.MyCommunicationLogId = logId;
-                myRequestsSheetMassagingView.CustomRequestContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
-                myRequestsSheetMassagingView.CustomResponseContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
-                myRequestsSheetMassagingView.CustomSendOptionsButtonIsDisable = myRequestSheetState.CustomSendOptionsButtonIsDisable;
-                myRequestsSheetMassagingView.MassageDisplay(reqJson, resJson);
-                if (!AppTool.IsNullOrEmpty(menuArg)) {
-                    try {
-                        var myRequestsSheetMassagingViewAny = myRequestsSheetMassagingView as any;
-                        myRequestsSheetMassagingViewAny.SetMenuArg(menuArg);
-                    } catch (err) { console.warn("! SetMenuArg(menuArg)") }
-                }
+                var my = new LongRunner20(
+                    () => { return myRequestsSheetMassagingView.IsViewChildCustomMessageWrapperComponentInit; },
+                    () => {
+
+                        myRequestsSheetMassagingView.MyCustomsMenuItem = item;
+                        myRequestsSheetMassagingView.MyCommunicationLogId = logId;
+                        myRequestsSheetMassagingView.CustomRequestContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
+                        myRequestsSheetMassagingView.CustomResponseContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
+                        myRequestsSheetMassagingView.CustomSendOptionsButtonIsDisable = myRequestSheetState.CustomSendOptionsButtonIsDisable;
+                        myRequestsSheetMassagingView.MassageDisplay(reqJson, resJson);
+                        if (!AppTool.IsNullOrEmpty(menuArg)) {
+                            try {
+                                var myRequestsSheetMassagingViewAny = myRequestsSheetMassagingView as any;
+                                myRequestsSheetMassagingViewAny.SetMenuArg(menuArg);
+                            } catch (err) { console.warn("! SetMenuArg(menuArg)") }
+                        }
+
+                    }
+                );
+                my.RunComponent();
+                //myRequestsSheetMassagingView.MyCustomsMenuItem = item;
+                //myRequestsSheetMassagingView.MyCommunicationLogId = logId;
+                //myRequestsSheetMassagingView.CustomRequestContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
+                //myRequestsSheetMassagingView.CustomResponseContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
+                //myRequestsSheetMassagingView.CustomSendOptionsButtonIsDisable = myRequestSheetState.CustomSendOptionsButtonIsDisable;
+                //myRequestsSheetMassagingView.MassageDisplay(reqJson, resJson);
+                //if (!AppTool.IsNullOrEmpty(menuArg)) {
+                //    try {
+                //        var myRequestsSheetMassagingViewAny = myRequestsSheetMassagingView as any;
+                //        myRequestsSheetMassagingViewAny.SetMenuArg(menuArg);
+                //    } catch (err) { console.warn("! SetMenuArg(menuArg)") }
+                //}
                 logitudeWindow.WindowClosed.subscribe((anyString) => {
                     myRequestsSheetMassagingView.DisposeMyState();
                     this.WindowClosed.emit("");
@@ -394,5 +429,43 @@ export class CustomsRequestMenuService {
 
         });
         logitudeWindow.Show(item.URLContent);
+    }
+}
+class LongRunner20 {
+    private Retries: number = 0;
+    private timerToken: any;
+    
+    constructor(
+        private IsReady: () => boolean,
+        private ActionMethod: () => void
+    ) {
+        //private myRequestsSheetMassagingView: BaseRequestsSheetMassaging, private myCustomsMenuItem: CustomsMenuItem) {
+    }
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 20) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+    RunComponent() {
+        if (this.IsReady == null) {
+            return;
+        }
+        if (this.ActionMethod == null) {
+            return;
+        }
+        if (this.IsReady()) {
+            this.ActionMethod();
+            //this.myRequestsSheetMassagingView.MyCustomsMenuItem = this.myCustomsMenuItem;
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
     }
 }

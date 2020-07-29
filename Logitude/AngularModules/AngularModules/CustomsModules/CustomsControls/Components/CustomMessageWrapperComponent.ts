@@ -11,6 +11,7 @@ import { CustomSendOptionsComponent } from './CustomSendOptionsComponent'
 //import { CustomSendOptionsComponent } from './CustomSendOptionsComponent'
 
 import { CommunicationLogStepListService } from '../../../Common/Services/ExtendedLists/CommunicationLogStepListService';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
 
 
 
@@ -34,6 +35,7 @@ export class CustomMessageWrapperComponent
 {
     
     private _ValidationErrorsList: string[] = [];
+    public MyGuid: string;
     @Input() get ValidationErrorsList() { return this._ValidationErrorsList; }
     set ValidationErrorsList(newValue: string[]) {
         this._ValidationErrorsList = newValue;
@@ -85,6 +87,8 @@ export class CustomMessageWrapperComponent
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
+        this.MyGuid = Guid.newGuid();
+        console.log("CustomMessageWrapperComponent:" + this.MyGuid);
     }
     _AfterContentInit: boolean = false;
     ngAfterContentInit() {

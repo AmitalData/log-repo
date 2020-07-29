@@ -43,7 +43,8 @@ export class ExchangeRatesQueryComponent
         if (this.SuperCustomMessageWrapperComponent == null) {
             console.warn("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent == null");
         } else {
-            console.log("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent != null");
+            console.log("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent != null" + this.SuperCustomMessageWrapperComponent.MyGuid);
+
         }
         this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
         this.subscribeWrapperComponent()
