@@ -1001,6 +1001,11 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "70N":
                                 case "70C":
                                 case "60A":
+                                case "5117C":
+                                case "5117W":
+                                case "5117D":
+                                case "5117A":
+                                case "5117P":
                                     {
                                         var tab = window.ObjectTableTabs.find(d => d.ObjectTableId == selected.ObjectTableId && d.IndexOrder == 0);
 

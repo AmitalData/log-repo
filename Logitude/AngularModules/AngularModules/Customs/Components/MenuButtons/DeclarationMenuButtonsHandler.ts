@@ -177,8 +177,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     ApplyCheckMenuButtonsState(menuButtons: MenuButtonPM[]) {
         let parentButton: MenuButtonPM;
-        debugger;
-        if (this.EntityPM != null) {
+         if (this.EntityPM != null) {
             if (this.CurrentSession.CurrentEditComponent != null) {
 
                 var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
@@ -378,7 +377,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             button.IsDisabled = false;
                         }
                     }
-                    if (this.EntityPM.IsAmendment || this.EntityPM.AmendmentDontDisplayInList) {
+                    if ( this.EntityPM.AmendmentDontDisplayInList==true) {
                         parentButton = menuButtons.filter(x => x.EventCode == "Actions")[0];
                         if (parentButton.Id == button.ParentMenuButtonId)
                         button.IsDisabled = true;

@@ -53,7 +53,7 @@ export class DeclarationAmendmentListTemplate {
             this.rowData = DeclarationListRecord;
             this.fieldName = fieldName;
             this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM as DeclarationPM;
-             this.allowCancel = AppTool.IsNullOrEmpty(this.rowData.AmendmentStatus);
+            this.allowCancel = AppTool.IsNullOrEmpty(this.rowData.AmendmentStatus) && this.rowData.IsAmendment == true;
             this.CD.detectChanges();
         });
     }
