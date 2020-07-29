@@ -783,7 +783,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     CheckIsValidEmails(mailsList: string) {
 
         var IsOk = true;
-        var EMAIL_REGEXP1 = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+        var EMAIL_REGEXP1 = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
         var EMAIL_REGEXP2 = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 
@@ -876,25 +876,25 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         }
 
 
-        //if (!this.CheckIsValidEmails(filter.ToEmail)) {
+        if (!this.CheckIsValidEmails(filter.ToEmail)) {
 
-        //    this.ShowMessage("Some of To e- mails are Invalid", "Logitude Message");
-        //     this.CurrentSession.StopBusyIndicator();
-        //    return;
-        //}
+            this.ShowMessage("Some of To e- mails are Invalid", "Logitude Message");
+             this.CurrentSession.StopBusyIndicator();
+            return;
+        }
 
 
-        //if (filter.Cc != null && !this.CheckIsValidEmails(filter.Cc)) {
-        //    this.ShowMessage("Some of Cc e-mails are Invalid", "Logitude Message");
-        //     this.CurrentSession.StopBusyIndicator();
-        //    return;
-        //}
+        if (filter.Cc != null && !this.CheckIsValidEmails(filter.Cc)) {
+            this.ShowMessage("Some of Cc e-mails are Invalid", "Logitude Message");
+             this.CurrentSession.StopBusyIndicator();
+            return;
+        }
 
-        //if (filter.Bcc != null && !this.CheckIsValidEmails(filter.Bcc)) {
-        //    this.ShowMessage("Some of Bcc e-mails are Invalid", "Logitude Message");
-        //     this.CurrentSession.StopBusyIndicator();
-        //    return;
-        //}
+        if (filter.Bcc != null && !this.CheckIsValidEmails(filter.Bcc)) {
+            this.ShowMessage("Some of Bcc e-mails are Invalid", "Logitude Message");
+             this.CurrentSession.StopBusyIndicator();
+            return;
+        }
 
         var Byte = 1024;
         var totalsize = 0;
