@@ -543,7 +543,7 @@ namespace Logitude.Customs.Def.ClosedTable
             all.Add(new NotificationDefinitionDetails()
             {
                 Code = "5117W",
-                EnglishName = "Declaration Amendment Waiting for customs response",
+                EnglishName = "Amendment Waiting for customs response",
                 LocalName = "תיקון הצהרה ממתינה לטיפול מכס",
                 AssigneeNotificationTypeCode = "A",
             });
