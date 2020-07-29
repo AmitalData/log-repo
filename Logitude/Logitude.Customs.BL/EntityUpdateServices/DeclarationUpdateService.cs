@@ -1246,10 +1246,38 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             else if (eventCode == "DWR")
             {
-                notificationDefinitionCode = "5117N";
+                notificationDefinitionCode = "5117W";
                 desc = "תיקון הצהרה ממתין לטיפול המכס " + declarationPM.DeclarationNumber;
                 type = "A";
              }
+
+            else if (eventCode == "DMA")
+            {
+                notificationDefinitionCode = "5117A";
+                desc = "- תיקון הצהרה אושר" + declarationPM.DeclarationNumber  + " מספר בקשה - " + declarationPM.AmendmentRequestNumber;
+                type = "A";
+            }
+
+            else if (eventCode == "DMD")
+            {
+                notificationDefinitionCode = "5117D";
+                desc = "תיקון הצהרה נדחה - " + declarationPM.DeclarationNumber  + " מספר בקשה - " + declarationPM.AmendmentRequestNumber;
+                type = "A";
+            }
+
+            else if (eventCode == "DMC")
+            {
+                notificationDefinitionCode = "5117C";
+                desc = "תיקון הצהרה בוטל - " + declarationPM.DeclarationNumber + " מספר בקשה - " + declarationPM.AmendmentRequestNumber;
+                type = "A";
+            }
+
+            else if (eventCode == "DMP")
+            {
+                notificationDefinitionCode = "5117P";
+                desc = "תיקון הצהרה אושר חלקית - " + declarationPM.DeclarationNumber + "מספר בקשה - " + declarationPM.AmendmentRequestNumber;
+                type = "A";
+            }
             var notificationUpdateService = new NotificationUpdateService(this.MainContext as ICustomContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), declarationPM.Tenant);    //Yuval Chalup 17.11.2014 TASK-9089
             var notificationQueryService = new NotificationQueryService(this.MainContext as ICustomContext);  //Yuval Chalup 17.11.2014 TASK-9089
 
