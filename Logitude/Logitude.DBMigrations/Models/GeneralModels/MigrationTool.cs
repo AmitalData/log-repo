@@ -68,7 +68,7 @@ namespace Logitude.DBMigrations.Models
             List<string> toolDxmlFilesNames = GetToolDxmlFilesNames();
             string[] toolDxmlFiles = dxmlFiles?.Where(d => toolDxmlFilesNames.Contains(Path.GetFileName(d).ToLower())).ToArray();
             string[] migrationDxmlFiles = dxmlFiles?.Where(d => !toolDxmlFilesNames.Contains(Path.GetFileName(d).ToLower())).ToArray();
-            bool isExecuteArgumentProvided = ToolArguments.IsArgumentProvided(ToolArguments.EXE) || (RunSettings.DebugMode && RunSettings.ExecuteScripts);
+            bool isExecuteArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.EXE) || (RunSettings.DebugMode && RunSettings.ExecuteScripts);
 
             GeneratedScript toolTablesScript = HandleDXMLFiles(toolDxmlFiles, isExecuteArgumentProvided);
             GeneratedScript preGeneralScript = HandleSXMLFiles(sxmlFiles, isExecuteArgumentProvided, true);
@@ -381,7 +381,7 @@ namespace Logitude.DBMigrations.Models
             string cargoTrackingScript = !String.IsNullOrEmpty(generatedScript.CargoTrackingScript) ? generatedScript.CargoTrackingScript.Replace(ScriptSemicolonCode, ";") : "";
 
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            if (ToolArguments.IsArgumentProvided(ToolArguments.DEPLOYMENT))
+            if (ToolArguments.IsArgumentProvided(Arguments.DEPLOYMENT))
             {
                 projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
             }
@@ -443,7 +443,7 @@ namespace Logitude.DBMigrations.Models
         protected string GetRoot()
         {
             string[] arguments = Array.ConvertAll(ToolArguments.Arguments, a => a.ToLower());
-            int indexOfRootArgument = Array.IndexOf(arguments, ToolArguments.ROOT) + 1;
+            int indexOfRootArgument = Array.IndexOf(arguments, Arguments.ROOT) + 1;
             if (indexOfRootArgument < ToolArguments.Arguments.Length && indexOfRootArgument >= 0)
             {
                 string root = ToolArguments.Arguments[indexOfRootArgument];
@@ -501,7 +501,7 @@ namespace Logitude.DBMigrations.Models
         {
             string missingIndexesWarningsToExport = !String.IsNullOrEmpty(MissingIndexesWarnings) ? MissingIndexesWarnings.TrimEnd('\n') : "";
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            if (ToolArguments.IsArgumentProvided(ToolArguments.DEPLOYMENT))
+            if (ToolArguments.IsArgumentProvided(Arguments.DEPLOYMENT))
             {
                 projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
             }
@@ -562,18 +562,11 @@ namespace Logitude.DBMigrations.Models
 
         protected DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTableDefinition, string dxmlFileName)
         {
-            string dxmlTableConnectionString = ToolConfigurations.GetConnectionString(dxmlTableDefinition.DBType);
-            bool isBasicArgumentProvided = ToolArguments.IsArgumentProvided(ToolArguments.BASIC);
-            bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(ToolArguments.ZERODOWNTIME);
-
             DatabaseMigrationSettings databaseMigrationSettings = new DatabaseMigrationSettings
             {
-                DxmlTableDefinition = dxmlTableDefinition,
-                DxmlTableConnectionString = dxmlTableConnectionString,
                 DxmlFileName = dxmlFileName,
-                DxmlTablesDefinitions = DXMLTablesDefinitions,
-                IsBasicArgumentProvided = isBasicArgumentProvided,
-                IsZeroDownTimeArgumentProvided = isZeroDownTimeArgumentProvided
+                DxmlTableDefinition = dxmlTableDefinition,
+                DxmlTablesDefinitions = DXMLTablesDefinitions
             };
 
             if (DatabaseType.ToLower() == "oracle")
@@ -669,7 +662,7 @@ namespace Logitude.DBMigrations.Models
             List<DXMLView> dxmlViews = new List<DXMLView>();
             List<DXMLProcedure> dxmlProcedures = new List<DXMLProcedure>();
             List<DXMLTrigger> dxmlTriggers = new List<DXMLTrigger>();
-            bool checkDxmlHash = !RunSettings.DebugMode ? !ToolArguments.IsArgumentProvided(ToolArguments.IGNOREHASH) : !RunSettings.IgnoreHash;
+            bool checkDxmlHash = !RunSettings.DebugMode ? !ToolArguments.IsArgumentProvided(Arguments.IGNOREHASH) : !RunSettings.IgnoreHash;
 
             foreach (var dxmlFile in dxmlFiles)
             {
@@ -1819,7 +1812,7 @@ namespace Logitude.DBMigrations.Models
         {
             string versionInfoFilePath;
 
-            if (ToolArguments.IsArgumentProvided(ToolArguments.DEPLOYMENT))
+            if (ToolArguments.IsArgumentProvided(Arguments.DEPLOYMENT))
             {
                 string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 versionInfoFilePath = Path.Combine(projectDirectory, @"VersionInfo.xml");
@@ -1855,9 +1848,9 @@ namespace Logitude.DBMigrations.Models
 
         protected void ValidateToolArguments()
         {
-            if (ToolArguments.IsArgumentProvided(ToolArguments.ZERODOWNTIME) && !ToolArguments.IsArgumentProvided(ToolArguments.EXE))
+            if (ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME) && !ToolArguments.IsArgumentProvided(Arguments.EXE))
             {
-                ExitTool("Error: Cannot Use Zero Down Time Mode Without -exe Argument");
+                ExitTool("Error: Cannot Use Zero Down Time Mode Without Execute Argument");
             }
         }
 
@@ -1958,7 +1951,7 @@ namespace Logitude.DBMigrations.Models
 
             Console.WriteLine(appSettingsMessage);
 
-            if (!ToolArguments.IsArgumentProvided(ToolArguments.IGNORESETTINGSCHECK))
+            if (!ToolArguments.IsArgumentProvided(Arguments.IGNORESETTINGSCHECK))
             {
                 Console.WriteLine("Are You Sure To Continue ? y/n");
                 string userInput = Console.ReadLine().Trim().ToLower();
@@ -1973,7 +1966,7 @@ namespace Logitude.DBMigrations.Models
 
         protected void ValidateAndReadRoot()
         {
-            if (ToolArguments.IsArgumentProvided(ToolArguments.ROOT) || RunSettings.DebugMode)
+            if (ToolArguments.IsArgumentProvided(Arguments.ROOT) || RunSettings.DebugMode)
             {
                 string root = !RunSettings.DebugMode ? GetRoot() : RunSettings.Root;
                 if (String.IsNullOrEmpty(root))
@@ -2019,7 +2012,7 @@ namespace Logitude.DBMigrations.Models
 
         protected void StartZeroDownTimeMigrations()
         {
-            if (ToolArguments.IsArgumentProvided(ToolArguments.ZERODOWNTIME))
+            if (ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
             {
                 Console.WriteLine("\nZero Down Time Migrations Started");
                 ZeroDownTimeMigrations zeroDownTimeMigrations  = CreateZeroDownTimeMigrations();

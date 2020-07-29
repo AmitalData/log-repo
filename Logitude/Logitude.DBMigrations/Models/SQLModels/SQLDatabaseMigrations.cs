@@ -9,12 +9,10 @@ namespace Logitude.DBMigrations.Models
     {
         public SQLDatabaseMigrations(DatabaseMigrationSettings databaseMigrationSettings)
         {
-            ConnectionString = databaseMigrationSettings.DxmlTableConnectionString;
+            DXMLFileName = databaseMigrationSettings.DxmlFileName;
             DXMLTable = databaseMigrationSettings.DxmlTableDefinition;
             DXMLTables = databaseMigrationSettings.DxmlTablesDefinitions;
-            DXMLFileName = databaseMigrationSettings.DxmlFileName;
-            IsBasicArgumentProvided = databaseMigrationSettings.IsBasicArgumentProvided;
-            IsZeroDownTimeArgumentProvided = databaseMigrationSettings.IsZeroDownTimeArgumentProvided;
+            ConnectionString = ToolConfigurations.GetConnectionString(databaseMigrationSettings.DxmlTableDefinition.DBType);
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
@@ -381,7 +379,7 @@ namespace Logitude.DBMigrations.Models
             string columnScript = "[" + columnDefinition.Name + "]" + " ";
             columnScript += GetDataTypeScript(columnDefinition.Type, columnDefinition.Size, columnDefinition.Precision, columnDefinition.Scale);
             columnScript += ((columnDefinition.Identity && columnDefinition.Constraints.PrimaryKey) ? " IDENTITY(1,1)" : null);
-            columnScript += GetDefaultValueScript(columnDefinition.Constraints.Nullable, columnDefinition.Type, columnDefinition.DefaultValue);
+            columnScript += GetDefaultValueScript(columnDefinition.Type, columnDefinition.DefaultValue);
             columnScript += (columnDefinition.Constraints.Nullable ? " NULL" : " NOT NULL");
             columnScript += ",";
             return columnScript;
@@ -690,10 +688,10 @@ namespace Logitude.DBMigrations.Models
             addScript += "ALTER TABLE " + tableNameWithSchema + " ";
             addScript += "ADD " + "[" + columnName + "]" + " ";
             addScript += columnDataTypeScript;
-
-            if (!IsZeroDownTimeArgumentProvided || (IsZeroDownTimeArgumentProvided && columnMigration.NewColumn.Constraints.Nullable))
+            
+            if (!ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
             {
-                addScript += GetDefaultValueScript(columnMigration.NewColumn.Constraints.Nullable, columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
+                addScript += GetDefaultValueScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
 
                 string initialValueScript = columnMigration.NewColumn.InitialValueScript;
                 if (String.IsNullOrEmpty(initialValueScript))
@@ -715,14 +713,21 @@ namespace Logitude.DBMigrations.Models
             else
             {
                 string defaultValue = GetDefaultValue(columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
-                if (String.IsNullOrEmpty(defaultValue))
+                if (defaultValue == null && !columnMigration.NewColumn.Constraints.Nullable)
                 {
                     ExitDatabaseMigrations("Cannot Use Zero Down Time Mode To Add Not Null Column Without Default Value, The Issue In Column [" + columnName + "] Inside [" + DXMLFileName + "]");
                 }
 
-                addScript += " NULL;\n";
-
-                InsertIntoDBMigrationsSetDefaultValues(columnName, defaultValue);
+                if (columnMigration.NewColumn.Constraints.Nullable)
+                {
+                    addScript += GetDefaultValueScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
+                    addScript += " NULL;\n";
+                }
+                else
+                {
+                    addScript += " NULL;\n";
+                    InsertIntoDBMigrationsSetDefaultValues(columnName, defaultValue);
+                }
             }
             
             string addWithHistoryScript = addScript + GetInsertScriptForMigrationsHistory("Add Column", TableMigrations.DxmlTableName, columnName, addScript);
@@ -1101,13 +1106,8 @@ namespace Logitude.DBMigrations.Models
             return null;
         }
 
-        protected override string GetDefaultValueScript(bool nullable, string type, string defaultValue)
+        protected override string GetDefaultValueScript(string type, string defaultValue)
         {
-            if (nullable)
-            {
-                return null;
-            }
-
             if (type == "bit" && String.IsNullOrEmpty(defaultValue))
             {
                 return " DEFAULT(0)";
@@ -1228,10 +1228,14 @@ namespace Logitude.DBMigrations.Models
 
         protected bool IsColumnDataTypeChanged(ColumnDefinition dbColumn, ColumnDefinition dxmlColumn)
         {
-            return (dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !IsBasicArgumentProvided) ||
-                   (dbColumn.Type != dxmlColumn.Type) ||
-                   (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) ||
-                   (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale));
+            bool isBasicArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.BASIC);
+            bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME);
+            bool isColumnDataTypeChanged = ((dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !isBasicArgumentProvided) ||
+                                            (dbColumn.Type != dxmlColumn.Type) ||
+                                            (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) ||
+                                            (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale)));
+
+            return (isColumnDataTypeChanged && !isZeroDownTimeArgumentProvided);
         }
 
         protected Func<RelationDefinition, bool> IsRelationInRelationsList(RelationDefinition relation)

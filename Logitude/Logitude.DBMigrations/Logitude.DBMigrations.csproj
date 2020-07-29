@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\DefinitionModels\ColumnDefinition.cs" />
+    <Compile Include="Models\GeneralModels\Arguments.cs" />
     <Compile Include="Models\GeneralModels\DatabaseMigrationSettings.cs" />
     <Compile Include="Models\GeneralModels\DatabaseMigrationsResult.cs" />
     <Compile Include="Models\GeneralModels\ToolArguments.cs" />
