@@ -305,7 +305,14 @@ namespace WebFreight.Web.WebPages
                                 {
                                     this.LogIt($"email:{email} DownloadFile(filename:{filename}, documentExtension, , (int)tenant, isTenantZero)");
                                     _DatainByte = up.DownloadFile(filename, documentExtension, "", (int)tenant, isTenantZero);
-                                    this.LogIt($"_DatainByte {_DatainByte.Length}= up.DownloadFile");
+                                    if (_DatainByte == null)
+                                    {
+                                        this.LogIt($"Document file is empty!!!");
+                                    }
+                                    else
+                                    {
+                                        this.LogIt($"_DatainByte {_DatainByte.Length}= up.DownloadFile");
+                                    }
                                 }
                                 else isValid = false;
 
