@@ -813,7 +813,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             {
                 throw new Exception("ManipulateFifoPerCurrency:::dbList.Select( r=>r.CurrencyId).Distinct().Count()!=1");
             }
-            dbList = dbList.OrderBy(rec => rec.OrderDate).ThenBy(r => r.OrderDateB4).ToList();
+            dbList = dbList.OrderBy(rec => rec.OrderDate).ThenByDescending(r => r.OrderDateB4).ToList();
 
             //we’ll need to offset the credit from the later month to earlier debits:
             var firstPlusPeriod = dbList.FirstOrDefault(r => r.Total > 0);
