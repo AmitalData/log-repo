@@ -620,12 +620,12 @@ INNER JOIN Customs.SupplierInvoices ON Customs.SupplierInvoiceItems.DeclarationI
             return result.Count!=0 ?true:false;
         }
 
-        public int getNextSequenceNumber(string declarationId, int tenant)
+        public int getNextSequenceNumber(string declarationId, int tenant, int linenumber)
         {
             int? result = (from a in context.SupplierInvioceItemCertificats
-                           where a.DeclarationId == declarationId && a.Tenant == tenant
+                           where a.DeclarationId == declarationId && a.Tenant == tenant && a.LineNumber == linenumber
                            select a).Max(rec => rec.SequenceNumeric);
-            return (result==null)? 1 : Convert.ToInt32(result) ;
+            return (result == null) ? 1 : (Convert.ToInt32(result + 1));
         }
         public SupplierInvioceItemCertificat GetSupplierInvioceItemCertificatWithExternalRequestTypeCode(string code, string decId,int lineNumber)
         {
