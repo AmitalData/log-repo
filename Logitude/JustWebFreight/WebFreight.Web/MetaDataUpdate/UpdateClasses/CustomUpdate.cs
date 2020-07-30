@@ -14969,6 +14969,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature CustomsAutonomyKeyword = tenantFeatures.Where(d => d.Code == "AutonomyKeyword" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature ExceptionReason = tenantFeatures.Where(d => d.Code == "ExceptionReason" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature CustomsReceiptCertificateFromFile = tenantFeatures.Where(d => d.Code == "ReceiptCertificateFromFile" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature CustomsReferantTeam = tenantFeatures.Where(d => d.Code == "ReferantTeam" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+
 
             Feature CustomsPartnerFtpFeature = tenantFeatures.Where(d => d.Code == "CPARTNERFTP" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature courierDeclarationFeature = tenantFeatures.Where(d => d.Code == "COURIERDECLARATION" && d.FeatureTypeCode == "MENU").FirstOrDefault();
@@ -15043,6 +15045,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCPA", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 61, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.AutonomyKeyword", Icon = "list", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CustomsAutonomyKeyword").FirstOrDefault().Id, FeatureId = CustomsAutonomyKeyword.Id ,FeatureUniqeCode = CustomsAutonomyKeyword.FeatureUniqeCode}, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCER", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 62, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.ExceptionReason", Icon = "list", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.ExceptionReason").FirstOrDefault().Id, FeatureId = ExceptionReason.Id ,FeatureUniqeCode = ExceptionReason.FeatureUniqeCode}, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MRCF", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 63, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.ReceiptCertificateFromFile", Icon = "", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.SupplierInvioceItemCertificat").FirstOrDefault().Id, FeatureId = CustomsReceiptCertificateFromFile.Id, FeatureUniqeCode = CustomsReceiptCertificateFromFile.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MRRT", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 64, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.ReferantTeam", Icon = "", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.ReferantTeam").FirstOrDefault().Id, FeatureId = CustomsReferantTeam.Id, FeatureUniqeCode = CustomsReferantTeam.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
 
 
 
@@ -15605,6 +15608,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature ExceptionReasonFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExceptionReason", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ExceptionReason", NameTextCodeDefaultText = "Exception Reasons", FullLocalDefaultText = "חריגות", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature ReceiptCertificateFromFileFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReceiptCertificateFromFile", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ReceiptCertificateFromFile", NameTextCodeDefaultText = "Receipt Certificate From File", FullLocalDefaultText = "קליטת קובץ אישורים מאיקאה להצהרה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ReferantTeamFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReferantTeam", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ReferantTeam", NameTextCodeDefaultText = "Referant Teams", FullLocalDefaultText = "צוותים תפעוליים", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
             textCodeRep.SubmitChanges();
