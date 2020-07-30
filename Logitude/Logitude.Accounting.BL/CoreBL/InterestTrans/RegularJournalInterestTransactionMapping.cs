@@ -69,8 +69,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
                  InterestEntityTypeCode = "3",//3 - “Journal”
                  EntityId = regularJournal.Id,
                  OriginalEntityLineNumber = r.Line,
-                 LocalAmount = (decimal)r.LocalAmount,
-                 ForeignAmount = (decimal?)r.ForeignAmount,
+                 LocalAmount = (decimal)r.LocalAmount *-1,//Credit = 1,
+                 ForeignAmount = (decimal?)r.ForeignAmount * -1,//Credit = 1,
                  CurrencyId = r.CurrencyId,
                  InterestValueDate = (DateTime)r.DueDate,
                  Tenant = r.Tenant,
