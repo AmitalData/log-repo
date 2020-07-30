@@ -92,6 +92,12 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsCustomerLogBoxActivated  { get; set; }
        [DataMember]
        public bool IsCancelled  { get; set; }
+       [DataMember]
+       public string LastStatusName  { get; set; }
+       [DataMember]
+       public DateTime? LastStatusDate  { get; set; }
+       [DataMember]
+       public bool OrderMoney  { get; set; }
    }
 
 }
