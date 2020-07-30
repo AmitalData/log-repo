@@ -24,6 +24,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string LocalName  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
    }
 
 }

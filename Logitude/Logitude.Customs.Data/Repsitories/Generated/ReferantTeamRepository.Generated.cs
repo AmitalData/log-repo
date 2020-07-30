@@ -28,16 +28,17 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  ReferantTeam GetSingle(string code)
+		public  ReferantTeam GetSingle(string code, int tenant)
         {
             return (from a in context.ReferantTeam
-                    where a.Code == code 
+                    where a.Code == code && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<ReferantTeam> GetAll()
+        public IQueryable<ReferantTeam> GetAll(int tenant)
         {
             return from a in context.ReferantTeam  
+                   where a.Tenant == tenant
                    select a;
         }
 				 

@@ -29,6 +29,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string LocalName { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
     }
 }
 	 
