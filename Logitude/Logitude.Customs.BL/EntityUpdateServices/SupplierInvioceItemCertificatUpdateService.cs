@@ -653,7 +653,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entity.ResConfirmationTypeCode = "2402";
             entity.ReqConfirmationTypeCode = "2402";
             entity.AttachmentTypeCode = "2";
-            entity.SequenceNumeric = supplierInvioceItemCertificatRepository.getNextSequenceNumber(decId, tenant,invoiceItem.LineNumber);
+            if(entity.SequenceNumeric == 0 )
+            {
+                entity.SequenceNumeric = supplierInvioceItemCertificatRepository.getNextSequenceNumber(decId, tenant, invoiceItem.LineNumber);
+            }
             entity.ApprovalRequestNumber = requestNumber;
             invoiceItem.SupplierInvioceItemCertificats.Add(entity);
             invoiceItem.ChangeSetOp = ChangeSetOperation.Update;
