@@ -65,6 +65,10 @@ namespace Logitude.Server.Tools.QueueService
                     if (LogitudeSettings.DatabaseManagementSystem == "oracle")
                     {
                         mQueue.ScheduledEnqueueTimeUtc = time.ToUniversalTime();//.UtcNow;
+                            
+                            
+                            LogMessagingUtil.Instance.AppendLine("***** Delay Queue.ScheduledEnqueueTimeUtc = time.ToUniversalTime()" + time.ToUniversalTime().ToString());
+                        
                     }
                     else
                     {
