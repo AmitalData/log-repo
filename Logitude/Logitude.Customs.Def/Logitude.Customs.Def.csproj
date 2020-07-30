@@ -80,6 +80,7 @@
     <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantExceptionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ReferantTeamPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SuppInvoiceItemsAbachStatementPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsPricePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvoicePaymentPM.Generated.cs" />

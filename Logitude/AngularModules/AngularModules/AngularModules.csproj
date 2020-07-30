@@ -264,6 +264,7 @@
     <Content Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\DeclarationMamanSpecialActionComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\PendingByKeyword\AddEditPendingByKeywordComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationCargoSplit\Components\EditTabs\DecCargoSplitConsPackDetComponent.html" />
+    <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\ExporterInvoiceComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\SupplierInvoiceItem\ExporterInvoiceItemComponent.html" />
@@ -274,6 +275,8 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
+    <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\Documents\DeclarationCancellationCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.ts" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ExportDeclarationComponent.html" />
@@ -299,7 +302,6 @@
     <Content Include="CustomsModules\CustomsMaintenance\Components\DocumentTypeCustomsDataComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\GeneralLOVComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\InterfaceManagementComponent.html" />
-    <Content Include="CustomsModules\CustomsMaintenance\Components\DeclarationRemarksComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\LoadTestComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\AddEditRequiredFieldsComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\RequiredFieldsComponent.html" />
@@ -1130,7 +1132,6 @@
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\DocumentTypeCustomsDataComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\GeneralLOVComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\InterfaceManagementComponent.ts" />
-    <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\DeclarationRemarksComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\LoadTestComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\AddEditRequiredFieldsComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\RequiredFieldsComponent.ts" />
@@ -1227,6 +1228,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\PendingByKeywordList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PendingErrorPlaceList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ReferantExceptionList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\ReferantTeamList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\RefundCustomerActivityTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\RequestTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\SealCompletenesList.ts" />
@@ -1279,6 +1281,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\PendingByKeywordPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingErrorPlacePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ReferantExceptionPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ReferantTeamPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\RefundCustomerActivityTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\RequestTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SealCompletenesPM.ts" />
@@ -1361,6 +1364,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\PendingErrorPlaceListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ProceduralFaultsListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ReferantExceptionListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\ReferantTeamListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\RefundCustomerActivityTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\RequestTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\SealCompletenesListService.ts" />
@@ -1393,6 +1397,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\PendingByKeywordPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ProceduralFaultsPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ReferantExceptionPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\ReferantTeamPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\TPGFileTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\CustomDocumentViewerService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeficitsPMService.ts" />
