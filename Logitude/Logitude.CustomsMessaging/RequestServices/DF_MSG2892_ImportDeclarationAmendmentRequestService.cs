@@ -351,15 +351,15 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             //_DeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
 
-            EventTracer.CreateTraceEvent(new EventTracerArgs()
-            {
-                Tenant = _DeclarationPM.Tenant,
-                EventTypeCode = "DCH",
-                UserId = _userId,
-                EntityId = _DeclarationPMOrg.Id,
-                ObjectTableName = "Customs.Declaration",
-                Notes = null
-            });
+            //EventTracer.CreateTraceEvent(new EventTracerArgs()
+            //{
+            //    Tenant = _DeclarationPM.Tenant,
+            //    EventTypeCode = "DCH",
+            //    UserId = _userId,
+            //    EntityId = _DeclarationPMOrg.Id,
+            //    ObjectTableName = "Customs.Declaration",
+            //    Notes = "-  בוצע תיקון הצהרה" + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber)
+            //});
 
 
             var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
@@ -367,7 +367,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 Tenant = _DeclarationPM.Tenant,
                 objectTableName = "Customs.Declaration",
                 EventCode = "DCH",
-                notes =null,
+                notes = "בוצע תיקון הצהרה - " + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber) + " מספר בקשה  - " + _DeclarationPM.AmendmentRequestNumber,
                 CommunicationLoggingEntityReference = _DeclarationPM.DeclarationNumber,
                 EntityId = _DeclarationPMOrg.Id,
                 UserId = _userId,
@@ -383,10 +383,21 @@ namespace Logitude.CustomsMessaging.RequestServices
                     status_DateTime = DateTime.Now,
                     //status_place = "FRA",
                     //status_save = "no_fail",
-                    comments = null,
+                    comments = "בוצע תיקון הצהרה - " + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber) + " מספר בקשה  - " + _DeclarationPM.AmendmentRequestNumber,
                 }
             };
             AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+
+
+
+          var  myUpdateEventContextTagModel = new EventContextTagModel()
+            {
+                CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
+                EventCode = "DCH",
+                EventRemarks = "Declaration Changed By Customs",
+                FUStatusRemarks = "בוצע תיקון הצהרה" + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber) + " מספר בקשה  - " + _DeclarationPM.AmendmentRequestNumber,
+            };
+            _DeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
 
             //var myUpdateEventContextTagModel = new EventContextTagModel()
             //{
@@ -435,9 +446,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 responseAdditionalInformation.Add(  new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "26" }, Content = new AdditionalInformationContentTextType { Value = _DeclarationPM.AmendDeficitInitiatedReasTo  } });
             }
-           if(_DeclarationPMOrg.IsAmendment==true && _DeclarationPMOrg.AmendmentDontDisplayInList==true &&  _DeclarationPMOrg.AmendmentStatus!= "3" && _DeclarationPMOrg.AmendmentStatus != "6")
+           if(!string.IsNullOrEmpty(_DeclarationPM.ReplacingRepairRequest))
             { 
-                responseAdditionalInformation.Add(new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "24" }, Content = new AdditionalInformationContentTextType { Value = functionalReferenceID } });
+                responseAdditionalInformation.Add(new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "24" }, Content = new AdditionalInformationContentTextType { Value = _DeclarationPM.ReplacingRepairRequest } });
             }
             return responseAdditionalInformation.ToArray();
          }

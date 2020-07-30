@@ -1748,6 +1748,24 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return isFreight;
         }
 
+        public DeclarationPM GetDeclarationAmendmentByIdAndAmendmentNo(int tenant, string id, string requestNumber)
+        {
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+
+            DeclarationPM decPm = new DeclarationPM();
+            var decs = repository.GetDeclarationAmendmentsById(tenant, id);
+
+            var dec= decs.FirstOrDefault(x => x.AmendmentRequestNumber == requestNumber);
+
+            mapping.CustomPOCOToPM(decPm, dec);
+            mapping.POCOToPM(decPm, dec);
+
+
+            return decPm;
+        }
+
+
+
         public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById = false)
         {
 
