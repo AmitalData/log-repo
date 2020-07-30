@@ -30,7 +30,7 @@ CREATE TYPE [dbo].[LedgerTransactionsType] AS TABLE(
 	[OppositeAccountId] [varchar](15) NULL,
 	[SearchFields] [nvarchar](4000) NULL,
 	[OpenAmountCurrencyId] [varchar](15) NULL,
-	[Notes] [nvarchar](300) NULL,
+	[Notes] [nvarchar](2000) NULL,
 	[AmountToReconcile] [decimal](16, 2) NOT NULL,
 	[Mark] [bit] NOT NULL,
 	[IsReconciled] [bit] NOT NULL,
