@@ -74,7 +74,7 @@
                     <td colspan="5" style="width: 100% ; height : 100%">
                         <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ErrorsResultList">
-                                <log-column [header]="'שורה באקסל'"
+                                <log-column [header]="'שורה בבקשה'"
                                             [width]="'80'" [Alignment]="'Right'">
                                             <ng-template let-item>
                                     <log-cell-template  #logcelltemplate>
@@ -145,7 +145,7 @@
                 <table>
                     <tr>
                         <td width="200px" *ngIf="UploadSuccess">
-                            <label style="font-size:12px;" *ngIf="UploadSuccessLabel"> הקובץ נקלט בהצלחה</label>
+                            <label style="        font-size: 16px; color: #1B90CB; font-weight: bold;" *ngIf="UploadSuccessLabel">הקובץ נקלט בהצלחה</label>
                         </td>
                         <td style="width: 57px;">
                             <button class="Button" (click)="DeleteFileButtonClicked()" *ngIf="filterImageParameter != null ">נקה נתונים</button>
@@ -160,7 +160,7 @@
                             <div></div>
                         </td>
                         <td width="57px">
-                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                            <button class="Button" (click)="CancelButtonClicked()">סגור</button>
                         </td>
                         <td style="width: 5px;">
                             <div></div>

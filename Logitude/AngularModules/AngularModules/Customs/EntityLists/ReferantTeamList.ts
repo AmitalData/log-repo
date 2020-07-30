@@ -13,6 +13,7 @@ export class ReferantTeamList {
 	EnglishName: string;
 	LocalName: string;
 	Inactive: boolean;
+	Tenant: number;
 	
 }
  

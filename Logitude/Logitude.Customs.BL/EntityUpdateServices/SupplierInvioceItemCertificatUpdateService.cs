@@ -633,21 +633,36 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
         public void InsertSupplierInvioceItemCertificatByCsvFile(string certificateNumber,string requestNumber,int tenant,string decId,int lineNumber,int invoiceCounterkey, SupplierInvoiceItemPM invoiceItem)
         {
+            SupplierInvioceItemCertificatRepository supplierInvioceItemCertificatRepository = new SupplierInvioceItemCertificatRepository(tenant);
             ICustomContext customContext = CustomContext.GetContext(tenant);
+            SupplierInvioceItemCertificatQueryService supplierInvioceItemCertificatQueryService = new SupplierInvioceItemCertificatQueryService(customContext);
             SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
-            SupplierInvioceItemCertificatPM entity = new SupplierInvioceItemCertificatPM();
+            var entity = supplierInvioceItemCertificatQueryService.GetSupplierInvioceItemCertificatWithExternalRequestTypeCode("0402", decId,invoiceItem.LineNumber);
+            if (entity == null)
+            {
+                entity = new SupplierInvioceItemCertificatPM();
+                entity.ChangeSetOp = ChangeSetOperation.Insert;
+            }
+            else
+            {
+                entity.ChangeSetOp = ChangeSetOperation.Update;
+            }
             entity.InvoiceCounterKey = invoiceCounterkey;
             entity.Tenant = tenant;
             entity.CertificateNumber = certificateNumber;
             entity.ResConfirmationTypeCode = "2402";
             entity.ReqConfirmationTypeCode = "2402";
             entity.AttachmentTypeCode = "2";
+            if(entity.SequenceNumeric == 0 )
+            {
+                entity.SequenceNumeric = supplierInvioceItemCertificatRepository.getNextSequenceNumber(decId, tenant, invoiceItem.LineNumber);
+            }
             entity.ApprovalRequestNumber = requestNumber;
-            entity.ChangeSetOp = ChangeSetOperation.Insert;
             invoiceItem.SupplierInvioceItemCertificats.Add(entity);
             invoiceItem.ChangeSetOp = ChangeSetOperation.Update;
             updateService.Update(invoiceItem, true);
         }
+      
         public void UpdateCertificateWithoutCertificateExemptionTypeCode(SupplierInvioceItemCertificatPM cert, int tenant)
         {
             SupplierInvoiceItemQueryService query = new SupplierInvoiceItemQueryService(tenant);
