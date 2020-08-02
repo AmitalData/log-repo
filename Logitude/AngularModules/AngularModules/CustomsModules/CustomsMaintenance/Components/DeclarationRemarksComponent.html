@@ -60,7 +60,7 @@
                                     [binding]="'StatusComment'" [width]="'300'" [Alignment]="'right'">
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate>
-                                    <div class="TextTrimming"  style="text-align:right">
+                                    <div class="TextTrimming" style="text-align:right">
                                         <span>{{item.StatusComment}}</span>
                                     </div>
                                     <!--<<div *ngIf="logcelltemplate.IsEditMode" style="height: 90%; width: 90%;">
@@ -70,11 +70,11 @@
                                     </div>-->
                                 </log-cell-template>
                             </ng-template>
-                        </log-column >
-                        <log-column  [header]="Zoom" [width]="'30'" [Alignment]="'right'">
+                        </log-column>
+                        <log-column [width]="'30'" [Alignment]="'right'">
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate>
-                                    <div  *ngIf="item.StatusComment != null ">
+                                    <div *ngIf="item.StatusComment != null ">
                                         <button class="Button" (click)="ExpandComment(item , $event)"><img class="CenterCenter" title="לצפייה בהערה" src="./Images/Icons/expand.png" /></button>
                                     </div>
                                 </log-cell-template>
