@@ -131,6 +131,8 @@ namespace Logitude.Server.Tools.QueueService
                         
                         
                         queueService.Send(messageProperties, _QueueSendModel.Delay);
+                        LogMessagingUtil.Instance.AppendLine("***** Delay _QueueSendModel.Delay " + _QueueSendModel.Delay.ToString());
+
                     }
                     else
                     {
