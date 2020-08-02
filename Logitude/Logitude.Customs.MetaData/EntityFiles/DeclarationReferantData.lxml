@@ -3521,12 +3521,12 @@
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
         IndexOrder="13"
-        ObjectFieldName="&quot;OrderMoney&quot;"
+        ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
         IndexOrder="14"
-        ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
+        ObjectFieldName="&quot;OrderMoney&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
@@ -3660,17 +3660,17 @@
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
         IndexOrder="12"
-        ObjectFieldName="&quot;OrderMoney&quot;"
-        ColumnWidth="50" />
-      <QueryColumn
-        QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="13"
         ObjectFieldName="&quot;ControllerStatus&quot;"
         ColumnWidth="44" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="14"
+        IndexOrder="13"
         ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;TrackingCases&quot;"
+        IndexOrder="14"
+        ObjectFieldName="&quot;OrderMoney&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
@@ -3803,17 +3803,17 @@
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
         IndexOrder="12"
-        ObjectFieldName="&quot;OrderMoney&quot;"
-        ColumnWidth="50" />
-      <QueryColumn
-        QueryCode="&quot;AllCases&quot;"
-        IndexOrder="13"
         ObjectFieldName="&quot;ControllerStatus&quot;"
         ColumnWidth="44" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="14"
+        IndexOrder="13"
         ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;AllCases&quot;"
+        IndexOrder="14"
+        ObjectFieldName="&quot;OrderMoney&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
