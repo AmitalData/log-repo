@@ -514,7 +514,7 @@
            <tr *ngFor="let item of RecipientList">-->
                                     <!-- DeclarationDocumentTypeCode -->
                                     <td style="width: 150px;">
-                                        <LogLabel [ObjectFieldName]="'RecipientName'" [ObjectTableName]="DeclarationExportRecipientTableName"
+                                        <LogLabel [ObjectFieldName]="'item.RecipientName'" [ObjectTableName]="DeclarationExportRecipientTableName"
                                                   [DataContext]="item"></LogLabel>
                                     </td>
 
@@ -528,7 +528,7 @@
 
                                     <!-- DeclarationDocumentId -->
                                     <td style="width: 150px;">
-                                        <LogLabel [ObjectFieldName]="'RecipientAddress'" [ObjectTableName]="DeclarationExportRecipientTableName"
+                                        <LogLabel [ObjectFieldName]="'item.RecipientAddress'" [ObjectTableName]="DeclarationExportRecipientTableName"
                                                   [DataContext]="item"></LogLabel>
                                     </td>
 
@@ -542,7 +542,7 @@
 
                                     <!-- EntitleImporterCode -->
                                     <td style="width: 150px;">
-                                        <LogLabel [ObjectFieldName]="'RecipientIssueCountryCode'" [ObjectTableName]="DeclarationExportRecipientTableName"
+                                        <LogLabel [ObjectFieldName]="'item.RecipientIssueCountryCode'" [ObjectTableName]="DeclarationExportRecipientTableName"
                                                   [DataContext]="item"></LogLabel>
                                     </td>
 
