@@ -520,7 +520,7 @@
 
                                     <td style="width: 160px;">
 
-                                        <LogTextBox [ObjectFieldName]="'RecipientName'" [ObjectTableName]="DeclarationExportRecipientTableName"
+                                        <LogTextBox [ObjectFieldName]="'item.RecipientName'" [ObjectTableName]="DeclarationExportRecipientTableName"
                                                     [HideColumns]="true" [DataContext]="item" [Text]="RecipientName"></LogTextBox>
 
                                     </td>
@@ -533,7 +533,7 @@
                                     </td>
 
                                     <td style="width: 160px;">
-                                        <LogTextBox [ObjectFieldName]="'RecipientAddress'" [ObjectTableName]="DeclarationExportRecipientTableName"
+                                        <LogTextBox [ObjectFieldName]="'item.RecipientAddress'" [ObjectTableName]="DeclarationExportRecipientTableName"
                                                     [HideColumns]="true" [DataContext]="item" [Text]="RecipientAddress"></LogTextBox>
 
 
@@ -547,12 +547,12 @@
                                     </td>
 
                                     <td style="width: 160px;">
-                                        <LogLov [ObjectFieldName]="'RecipientIssueCountryCode'"
+                                        <LogLov [ObjectFieldName]="'item.RecipientIssueCountryCode'"
                                                 [ObjectTableName]="DeclarationExportRecipientTableName"
                                                 [DataContext]="item"
                                                 [LookUpTableName]="'Customs.CustomsCountry'"
                                                 [DisplayMemberPath]="'LocalName'"
-                                                (SelectedItemChanged)="_RecipientIssueCountry = $event"
+                                                (SelectedItemChanged)="item.RecipientIssueCountryCode = $event"
                                                 [SelectedValue]="RecipientIssueCountryCode"
                                                 [HideColumns]="true">
                                         </LogLov>
