@@ -572,75 +572,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string lastStatusName ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LastStatusName  
-	   {
-	    
-	     get
-		{
-		   return lastStatusName;
-		 }
-		 set
-		 {
-		   if(lastStatusName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastStatusName",OldValue=lastStatusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   lastStatusName=value;
-		   }
-			
-		 }
-	   }
-	  private DateTime? lastStatusDate ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime? LastStatusDate  
-	   {
-	    
-	     get
-		{
-		   return lastStatusDate;
-		 }
-		 set
-		 {
-		   if(lastStatusDate != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastStatusDate",OldValue=lastStatusDate,NewValue=value,PropertyType="DateTime?"};
-		    NotifyPropertyChanged(values);
-		   lastStatusDate=value;
-		   }
-			
-		 }
-	   }
-	  private bool orderMoney ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool OrderMoney  
-	   {
-	    
-	     get
-		{
-		   return orderMoney;
-		 }
-		 set
-		 {
-		   if(orderMoney != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OrderMoney",OldValue=orderMoney,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   orderMoney=value;
-		   }
-			
-		 }
-	   }
 	  private string classifiedUserName ;
 	  	  
        
@@ -706,6 +637,75 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CollectorUserName",OldValue=collectorUserName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   collectorUserName=value;
+		   }
+			
+		 }
+	   }
+	  private string lastStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastStatusName  
+	   {
+	    
+	     get
+		{
+		   return lastStatusName;
+		 }
+		 set
+		 {
+		   if(lastStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastStatusName",OldValue=lastStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lastStatusName=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? lastStatusDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LastStatusDate  
+	   {
+	    
+	     get
+		{
+		   return lastStatusDate;
+		 }
+		 set
+		 {
+		   if(lastStatusDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastStatusDate",OldValue=lastStatusDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   lastStatusDate=value;
+		   }
+			
+		 }
+	   }
+	  private bool orderMoney ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool OrderMoney  
+	   {
+	    
+	     get
+		{
+		   return orderMoney;
+		 }
+		 set
+		 {
+		   if(orderMoney != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OrderMoney",OldValue=orderMoney,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   orderMoney=value;
 		   }
 			
 		 }

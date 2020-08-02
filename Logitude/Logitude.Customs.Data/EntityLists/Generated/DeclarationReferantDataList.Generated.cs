@@ -87,17 +87,17 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool IsCancelled  { get; set; }
        [DataMember]
-       public string LastStatusName  { get; set; }
-       [DataMember]
-       public DateTime? LastStatusDate  { get; set; }
-       [DataMember]
-       public bool OrderMoney  { get; set; }
-       [DataMember]
        public string ClassifiedUserName  { get; set; }
        [DataMember]
        public string ControllerUserName  { get; set; }
        [DataMember]
        public string CollectorUserName  { get; set; }
+       [DataMember]
+       public string LastStatusName  { get; set; }
+       [DataMember]
+       public DateTime? LastStatusDate  { get; set; }
+       [DataMember]
+       public bool OrderMoney  { get; set; }
    }
 
 }

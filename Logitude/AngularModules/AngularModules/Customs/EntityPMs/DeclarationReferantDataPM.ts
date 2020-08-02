@@ -144,21 +144,6 @@ export class DeclarationReferantDataPM {
     public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
        
 	 
-    private lastStatusName: string;
-    public get LastStatusName() { return this.lastStatusName; }
-    public set LastStatusName(newValue: string) { if (this.lastStatusName != newValue) { this.lastStatusName = newValue; this.MarkAsDirty("LastStatusName"); } }
-       
-	 
-    private lastStatusDate: Date;
-    public get LastStatusDate() { return this.lastStatusDate; }
-    public set LastStatusDate(newValue: Date) { if (this.lastStatusDate != newValue) { this.lastStatusDate = newValue; this.MarkAsDirty("LastStatusDate"); } }
-       
-	 
-    private orderMoney: boolean;
-    public get OrderMoney() { return this.orderMoney; }
-    public set OrderMoney(newValue: boolean) { if (this.orderMoney != newValue) { this.orderMoney = newValue; this.MarkAsDirty("OrderMoney"); } }
-       
-	 
     private classifiedUserName: string;
     public get ClassifiedUserName() { return this.classifiedUserName; }
     public set ClassifiedUserName(newValue: string) { if (this.classifiedUserName != newValue) { this.classifiedUserName = newValue; this.MarkAsDirty("ClassifiedUserName"); } }
@@ -172,6 +157,21 @@ export class DeclarationReferantDataPM {
     private collectorUserName: string;
     public get CollectorUserName() { return this.collectorUserName; }
     public set CollectorUserName(newValue: string) { if (this.collectorUserName != newValue) { this.collectorUserName = newValue; this.MarkAsDirty("CollectorUserName"); } }
+       
+	 
+    private lastStatusName: string;
+    public get LastStatusName() { return this.lastStatusName; }
+    public set LastStatusName(newValue: string) { if (this.lastStatusName != newValue) { this.lastStatusName = newValue; this.MarkAsDirty("LastStatusName"); } }
+       
+	 
+    private lastStatusDate: Date;
+    public get LastStatusDate() { return this.lastStatusDate; }
+    public set LastStatusDate(newValue: Date) { if (this.lastStatusDate != newValue) { this.lastStatusDate = newValue; this.MarkAsDirty("LastStatusDate"); } }
+       
+	 
+    private orderMoney: boolean;
+    public get OrderMoney() { return this.orderMoney; }
+    public set OrderMoney(newValue: boolean) { if (this.orderMoney != newValue) { this.orderMoney = newValue; this.MarkAsDirty("OrderMoney"); } }
        
 	 
 

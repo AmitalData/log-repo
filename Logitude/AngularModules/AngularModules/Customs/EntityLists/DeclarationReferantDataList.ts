@@ -44,12 +44,12 @@ export class DeclarationReferantDataList {
 	SortedColumns: number;
 	IsCustomerLogBoxActivated: boolean;
 	IsCancelled: boolean;
-	LastStatusName: string;
-	LastStatusDate: Date;
-	OrderMoney: boolean;
 	ClassifiedUserName: string;
 	ControllerUserName: string;
 	CollectorUserName: string;
+	LastStatusName: string;
+	LastStatusDate: Date;
+	OrderMoney: boolean;
 	
 }
  
