@@ -3,7 +3,7 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="1">
+  <Oracle Version="2">
     <![CDATA[
     
 update declarationreferantdatas set
@@ -17,7 +17,7 @@ inner join
 cards s on d.customerid=s.id
 inner join  CONSIGNMENTS c
 on d.id= c.DECLARATIONID  and c.CONSIGNMENTNUMBER=1
-where  d.id= declarationreferantdatas.DECLARATIONID)
+where  d.id= declarationreferantdatas.DECLARATIONID);
     ]]>
   </Oracle>
 </Script>
