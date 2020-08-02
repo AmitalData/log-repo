@@ -552,8 +552,8 @@
                                                 [DataContext]="item"
                                                 [LookUpTableName]="'Customs.CustomsCountry'"
                                                 [DisplayMemberPath]="'LocalName'"
-                                                (SelectedItemChanged)="RecipientIssueCountryCode = $event"
-                                                [SelectedValue]="RecipientIssueCountryCode"
+                                               
+                                                [SelectedValue]="item.RecipientIssueCountryCode"
                                                 [HideColumns]="true">
                                         </LogLov>
                                     </td>
