@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "af2d60ae8ec1b9f12d433fbb1c13904e";
+		public const string HashString = "4e3ceb56bdaeef968f08176503a4bb4e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1724,7 +1724,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search",
-					  						FullLocalDefaultText =  "תיק, מס' הצהרה, שם לקוח, מזהה מטען ראשון, מזהה מטען שני, מזהה מטען שלישי",
+					  						FullLocalDefaultText =  "תיק/הצהרה/מזהה מטען/לקוח",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "SearchField",
 					  						HelpTextCode =  "SearchFields",

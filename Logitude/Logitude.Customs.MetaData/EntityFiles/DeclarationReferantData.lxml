@@ -1981,7 +1981,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;SearchFields&quot;"
     DefaultText="&quot;Search&quot;"
-    FullLocalDefaultText="&quot;תיק, מס' הצהרה, שם לקוח, מזהה מטען ראשון, מזהה מטען שני, מזהה מטען שלישי&quot;"
+    FullLocalDefaultText="&quot;תיק/הצהרה/מזהה מטען/לקוח&quot;"
     ListFieldLable="&quot;SearchFieldsListLable&quot;"
     ListLableDefaultText="&quot;SearchField&quot;"
     HelpTextCode="&quot;SearchFields&quot;"
