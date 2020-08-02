@@ -80,7 +80,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("LastStatusName")]
 	    public string LastStatusName { get; set; }
         [Column("LastStatusDate")]
-	    public string LastStatusDate { get; set; }
+	    public DateTime LastStatusDate { get; set; }
         [Column("OrderMoney")]
 	    public bool OrderMoney { get; set; }
     }

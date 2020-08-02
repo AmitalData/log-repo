@@ -36,6 +36,7 @@ namespace Logitude.Customs.BL.Tasks
         {
             LogMessagingUtil.Instance.AppendLine($"RunPerTenant({t.Tenant})");
 
+
             CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(t.Tenant);
             List<CourierMasterPM> courierMasterPMList = courierMasterQueryService.GetAllCourierMastersForClosing(t.Tenant);
             if(courierMasterPMList != null)

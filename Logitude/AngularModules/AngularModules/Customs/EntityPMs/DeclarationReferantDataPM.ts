@@ -164,9 +164,9 @@ export class DeclarationReferantDataPM {
     public set LastStatusName(newValue: string) { if (this.lastStatusName != newValue) { this.lastStatusName = newValue; this.MarkAsDirty("LastStatusName"); } }
        
 	 
-    private lastStatusDate: string;
+    private lastStatusDate: Date;
     public get LastStatusDate() { return this.lastStatusDate; }
-    public set LastStatusDate(newValue: string) { if (this.lastStatusDate != newValue) { this.lastStatusDate = newValue; this.MarkAsDirty("LastStatusDate"); } }
+    public set LastStatusDate(newValue: Date) { if (this.lastStatusDate != newValue) { this.lastStatusDate = newValue; this.MarkAsDirty("LastStatusDate"); } }
        
 	 
     private orderMoney: boolean;

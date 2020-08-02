@@ -48,7 +48,7 @@ export class DeclarationReferantDataList {
 	ControllerUserName: string;
 	CollectorUserName: string;
 	LastStatusName: string;
-	LastStatusDate: string;
+	LastStatusDate: Date;
 	OrderMoney: boolean;
 	
 }
