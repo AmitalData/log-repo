@@ -591,11 +591,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
               var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
             _declarationPM.AvailabilityDate = DateTime.Now;
             _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-            using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+            //using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
             {
                 myDeclarationUpdateService.Update(_declarationPM, true);
 
-                 scopeNewCRS.Complete();
+                 //scopeNewCRS.Complete();
             }
             var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_declarationPM.Id, true, false);
             
