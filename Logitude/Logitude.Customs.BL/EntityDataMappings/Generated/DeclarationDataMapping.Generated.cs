@@ -369,7 +369,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CancelRequestRejectionReason, 
 	         CancelRequestApproveDate, 
 	         IsClaimable, 
-	         CancelRequestStatusName,
+	         CancelRequestStatusName, 
 	         ReplacingRepairRequest,
 	      }
 

@@ -1282,7 +1282,8 @@ export class DeclarationPM {
     private cancelRequestStatusName: string;
     public get CancelRequestStatusName() { return this.cancelRequestStatusName; }
     public set CancelRequestStatusName(newValue: string) { if (this.cancelRequestStatusName != newValue) { this.cancelRequestStatusName = newValue; this.MarkAsDirty("CancelRequestStatusName"); } }
-
+       
+	 
     private replacingRepairRequest: string;
     public get ReplacingRepairRequest() { return this.replacingRepairRequest; }
     public set ReplacingRepairRequest(newValue: string) { if (this.replacingRepairRequest != newValue) { this.replacingRepairRequest = newValue; this.MarkAsDirty("ReplacingRepairRequest"); } }
@@ -1312,4 +1313,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
