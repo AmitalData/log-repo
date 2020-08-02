@@ -416,6 +416,67 @@ export class ConsigmentTabContentComponent
 
 
     }
+
+
+
+    public get ExportLoadingPortCode() { return this.EntityPM.ExportLoadingPortCode; }
+    public set ExportLoadingPortCode(newValue: string) {
+        this.EntityPM.ExportLoadingPortCode = newValue;
+        if (newValue) {
+            this.UIProperties.SetRequired("ExportLoadingPortCode", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetRequired("ExportLoadingPortCode", this.ObjectTableName, true);
+        }
+    }
+
+
+
+    public get ExportUnloadingPortCode() { return this.EntityPM.ExportUnloadingPortCode; }
+    public set ExportUnloadingPortCode(newValue: string) {
+        this.EntityPM.ExportUnloadingPortCode = newValue;
+        if (newValue) {
+            this.UIProperties.SetRequired("ExportUnloadingPortCode", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetRequired("ExportUnloadingPortCode", this.ObjectTableName, true);
+        }
+    }
+
+
+
+    DestinationCountry: any;
+    public get FinalDestinationPortCode() { return this.EntityPM.FinalDestinationPortCode; }
+    public set FinalDestinationPortCode(newValue: string) {
+        this.EntityPM.FinalDestinationPortCode = newValue;
+
+    }
+
+   
+
+    public get ExportRecieverWareHouseCode() { return this.EntityPM.ExportRecieverWareHouseCode; }
+    public set ExportRecieverWareHouseCode(newValue: string) {
+        this.EntityPM.ExportRecieverWareHouseCode = newValue;
+        //if (newValue) {
+        //    this.UIProperties.SetRequired("ExportRecieverWareHouseCode", this.ObjectTableName, false);
+        //}
+        //else {
+        //    this.UIProperties.SetRequired("ExportRecieverWareHouseCode", this.ObjectTableName, true);
+        //}
+    }
+
+
+
+    public get IsDangerousGoods() { return this.EntityPM.IsDangerousGoods; }
+    public set IsDangerousGoods(newValue: boolean) {
+        this.EntityPM.IsDangerousGoods = newValue;
+        //if (newValue) {
+        //    this.UIProperties.SetRequired("IsDangerousGoods", this.ObjectTableName, false);
+        //}
+        //else {
+        //    this.UIProperties.SetRequired("IsDangerousGoods", this.ObjectTableName, true);
+        //}
+    }
     //#endregion
 
 
@@ -746,7 +807,7 @@ export class ConsigmentTabContentComponent
         this.AddSiteEnabled = true;
         for (var i = 0; i < this.EntityPM.ConsignmentInternalTransitions.length; i++) {
             var viewModel: ConsignmentInternalTransitionModel = new ConsignmentInternalTransitionModel(this.EntityPM.ConsignmentInternalTransitions[i], this);
-            viewModel.TransitionNumber = i + 1;
+            viewModel.TransitionNumber = i + 1;  
             if (viewModel.SiteCode == null) {
                 this.AddSiteEnabled = false;
             }
