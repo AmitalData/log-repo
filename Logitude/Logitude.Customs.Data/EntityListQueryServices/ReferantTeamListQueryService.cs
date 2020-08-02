@@ -31,13 +31,16 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					
 					                          Inactive = a.Inactive,
 					
+					                          Tenant = a.Tenant,
+											  EnglishName=a.EnglishName,
+											  LocalName=a.LocalName,
 		                    	            });
             return query;
 		}
 
-		private IQueryable<ReferantTeam> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ReferantTeam> iQueryable)
+		private IQueryable<ReferantTeam> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ReferantTeam> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 			}
 

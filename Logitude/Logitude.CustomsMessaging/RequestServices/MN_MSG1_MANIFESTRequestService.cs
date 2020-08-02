@@ -491,8 +491,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 //declarationConsignmentConsignor.ID = new ConsignorIdentificationIDType() { Value = customsVendorPM.VendorNumber };
                 declarationConsignmentConsignor.Name = new ConsignorNameTextType() { Value = customsVendorPM.VendorName };
-
-
+ 
                 List<DeclarationConsignmentConsignorAddress> declarationConsignmentConsignorAddressList = new List<DeclarationConsignmentConsignorAddress>();
                 DeclarationConsignmentConsignorAddress declarationConsignmentConsignorAddress = new DeclarationConsignmentConsignorAddress();
 

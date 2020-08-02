@@ -915,8 +915,21 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="CancelRequestApproveDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="IsClaimable"
     Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ReplacingRepairRequest"
+    Type="varchar"
+    Size="9">
     <Constraints
       Nullable="true" />
   </Column>

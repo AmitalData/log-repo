@@ -6,19 +6,19 @@
     </tr>
 
     <tr>
-        <td style="width: 100%; padding-top: 10px;">
+        <td style="width: 80%; padding-top: 10px;">
             <table>
                 <tr>
                     <td>
                         <table>
 
                             <tr class="FormFieldRow">
-                                <td style="width: 120px">
+                                <td style="width: 150px">
                                     <LogLabel [ObjectFieldName]="'CancelRequestNumber'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td><div></div></td>
-                                <td style="width: 200px; " >
+                                <td style="width:120px; " >
                                     <LogTextBox [ObjectFieldName]="'CancelRequestNumber'" [InputType]="'integertext'" [DataContext]="DataContext"
                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                 </td>
@@ -31,23 +31,24 @@
 
 
                             <tr class="FormFieldRow">
-                                <td style="width: 120px">
+                                <td style="width: 150px">
                                     <LogLabel [ObjectFieldName]="'CancelRequestReasonCode'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td><div></div></td>
-                                <td style="width: 200px;">
-                                    <LogLov [ObjectFieldName]="'CancelRequestReasonCode'"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [SelectedValue]="CancelRequestReasonCode"
-                                            [HideAddLink]="true"
-                                            [LookUpTableName]="'Customs.CancellationReasonRequestType'"
-                                            [DisplayFieldsFromList]="'Code,LocalName'">
-                                    </LogLov>
+                                <td style="width: 120px;">
+                                         <LogLov [ObjectFieldName]="'CancelRequestReasonCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [SelectedValue]="CancelRequestReasonCode"
+                                                [LookUpTableName]="'Customs.CancellationReasonRequestType'"
+                                                [DisplayFieldsFromList]="'Code,LocalName'"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                 
                                 </td>
                                 <td><div></div></td>
-                                <td style="width: 120px">
+                                <td style="width: 150px">
                                     <LogLabel [ObjectFieldName]="'CancelRequestReasonExplanation'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -67,15 +68,18 @@
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td><div></div></td>
-                                <td style="width: 200px;">
-                                    <LogLov [ObjectFieldName]="'CancelRequestStatusCode'"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [SelectedValue]="CancelRequestStatusCode"
-                                            [HideAddLink]="true"
-                                            [LookUpTableName]="'Customs.CancellationRequestStatus'"
-                                            [DisplayFieldsFromList]="'Code,LocalName'">
-                                    </LogLov>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'CancelRequestStatusName'"
+                                                [ObjectTableName]="ObjectTableName" [Text]="CancelRequestStatusName"
+                                                [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                    <!--<LogLov [ObjectFieldName]="'CancelRequestStatusCode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+            [SelectedValue]="CancelRequestStatusCode"
+            [HideAddLink]="true"
+            [LookUpTableName]="'Customs.CancellationRequestStatus'"
+            [DisplayFieldsFromList]="'Code,LocalName'">
+    </LogLov>-->
                                 </td>
                                 <td><div></div></td>
                                 <td style="width: 120px">
@@ -132,18 +136,22 @@
         <td colspan="4" style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
-                    <td>
+                     <td style="width:57px;">
+                        <button class="Button" (click)="ViewDocumentsComponent()" style="margin-right:10px;">{{'Customs.Declaration.TH.Documents' |TextCodeTranslationPipe}}</button>
+
+                    </td>
+                    <td style="width:400px">
                         <div></div>
                     </td>
-                    <td>
+                    <td style="margin-left:5px">
                         <div *ngIf="!readonly">
-                            <custom-send-options #MyCustomSendOptionsComponent
+                            <custom-send-options #MyCustomSendOptionsComponent [HaveTestCase]="'true'"
                                                  (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"
                                                  [CustomSendOptionsButtonCanForcePersonalSign]="'true'"></custom-send-options>
-                            
+
                         </div>
                     </td>
-                
+
                     <!--<td style="width: 57px;">
         <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
     </td>

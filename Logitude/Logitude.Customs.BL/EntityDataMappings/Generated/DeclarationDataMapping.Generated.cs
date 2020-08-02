@@ -155,7 +155,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CustomCancelRequestRemarks, 
 	         CancelRequestStatusCode, 
 	         CancelRequestRejectionReason, 
-	         IsClaimable,
+	         CancelRequestApproveDate, 
+	         IsClaimable, 
+	         ReplacingRepairRequest,
 	      }
 
 
@@ -370,7 +372,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CancelRequestStatusCode, 
 	         CancelRequestRejectionReason, 
 	         CancelRequestApproveDate, 
-	         IsClaimable,
+	         IsClaimable, 
+	         CancelRequestStatusName,
+	         ReplacingRepairRequest,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1039,9 +1043,19 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.CancelRequestRejectionReason = entityPM.CancelRequestRejectionReason;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestApproveDate))
+            {
+				entityPOCO.CancelRequestApproveDate = entityPM.CancelRequestApproveDate;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClaimable))
             {
 				entityPOCO.IsClaimable = entityPM.IsClaimable;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReplacingRepairRequest))
+            {
+				entityPOCO.ReplacingRepairRequest = entityPM.ReplacingRepairRequest;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1715,9 +1729,19 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CancelRequestRejectionReason = entityPOCO.CancelRequestRejectionReason;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CancelRequestApproveDate))
+            {
+					entityPM.CancelRequestApproveDate = entityPOCO.CancelRequestApproveDate;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsClaimable))
             {
 					entityPM.IsClaimable = entityPOCO.IsClaimable;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReplacingRepairRequest))
+            {
+					entityPM.ReplacingRepairRequest = entityPOCO.ReplacingRepairRequest;
             }
 
 		}
@@ -2386,9 +2410,19 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.CancelRequestRejectionReason = entityPM.CancelRequestRejectionReason;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CancelRequestApproveDate))
+            {
+                oldEntityPM.CancelRequestApproveDate = entityPM.CancelRequestApproveDate;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClaimable))
             {
                 oldEntityPM.IsClaimable = entityPM.IsClaimable;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReplacingRepairRequest))
+            {
+                oldEntityPM.ReplacingRepairRequest = entityPM.ReplacingRepairRequest;
             }
 			
 		}

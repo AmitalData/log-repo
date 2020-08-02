@@ -96,12 +96,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.AmendmentMessage);
             this.CustomMappedPMProperties.Add(PMPropertyNames.IsAmendmentDisplayOnly);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AutomaticPayment);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.CancelRequestStatusName);
 
             AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(entityPOCO.Tenant);
             AmendmentStatus amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus);
             if (amendmentStatus != null)
             {
                 entityPM.AmendmentStatusName = amendmentStatus.Name;
+
+            }
+
+            CancellationRequestStatusRepository cancellationRequestStatusRepository = new CancellationRequestStatusRepository(entityPOCO.Tenant);
+            CancellationRequestStatus cancellationRequestStatus = cancellationRequestStatusRepository.GetSingle(entityPOCO.CancelRequestStatusCode);
+            if (cancellationRequestStatus != null)
+            {
+                entityPM.CancelRequestStatusName = cancellationRequestStatus.LocalName;
 
             }
 

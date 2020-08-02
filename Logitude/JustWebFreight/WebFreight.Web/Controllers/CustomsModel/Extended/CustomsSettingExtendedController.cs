@@ -267,7 +267,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                                         .ToList();
                                 }
                                 break;
-                       
+                            case "SincroSendDeclarationCancellation":
+                                {
+                                    mySincroTestCaseDetailList =
+                                    queryService.GetAllSincroTestCaseDetails()
+                                        .Where(r => r.Entity == "DeclarationCancellation")
+                                        .Where(r => !r.IsDCA)
+                                        .ToList();
+                                }
+                                break;
                             default:
                                 throw new Exception($"SincroScreen is not valid (SincroScreen)");
                                 break;

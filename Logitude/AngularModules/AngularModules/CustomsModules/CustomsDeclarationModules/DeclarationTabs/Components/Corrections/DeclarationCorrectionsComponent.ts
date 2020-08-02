@@ -181,6 +181,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                 if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                     if (tabCode == "DCCR") {
                         //this.DisplayOnlyCheck();
+                        this.ReloadDeclarationCorrection();
                     }
                 }
                 })

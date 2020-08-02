@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReferantTeamUpdateClass
    {  		
-		public const string HashString = "e33094c38fbcc8a058e0dda0177bedba";
+		public const string HashString = "98a123ba503679051305cc3d726fe26f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -97,18 +97,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Code",
 			      				    LookUp2 =  "LocalName",
-			      				    LovDisplayMemberPath =  "Code",
-			      				    LovDisplayMemberPathLocal =  "LocalName",
+			      				    DependencyFilter1 =  "",
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
-			      				    CacheOnClient =  true,
+			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  true,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
-			      				    IsAutoComplete =  false,
+			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Code",
 			      				    InActive =  false,
@@ -117,10 +116,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "BR",
+			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "ReferantTeam",
-			      				    Code =  "1b85",
+			      				    LocalDefaultText =  "צוותים תפעוליים",
+			      				    DefaultText =  "ReferantTeam ",
+			      				    Code =  "475a",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -210,13 +210,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MaxLength =  15,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
@@ -334,7 +334,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MaxLength =  100,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -447,10 +447,110 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "Customs.ReferantTeam",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ReferantTeam",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup ReferantTeamQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "475a", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ReferantTeamQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cc43", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable ReferantTeamObjectTable = objectTables.ContainsKey("Customs.ReferantTeam") ? objectTables["Customs.ReferantTeam"] : null;
+            if (ReferantTeamObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                ReferantTeamObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ReferantTeam" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode ReferantTeamTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReferantTeam.Q.OperationalTeams", DefaultText = @"Operational teams",LocalDefaultText = "צוותים תפעוליים", ObjectTableId = ReferantTeamObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ReferantTeamFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReferantTeam.Q.OperationalTeams", ObjectTableId = ReferantTeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReferantTeamFeatures.OperationalTeams", NameTextCodeDefaultText = "OperationalTeams", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReferantTeamObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query OperationalTeamsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReferantTeamTextCode_0.Id, NameTextCodeCode = ReferantTeamTextCode_0.Code, ObjectTableName = "Customs.ReferantTeam", Code = "OperationalTeams",  QueryGroupCode = "475a", IndexOrder = 0, Tenant = 0, ObjectTableId = ReferantTeamObjectTable.Id, QuerySection = "Customs.ReferantTeam", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ReferantTeamFeature_0.Id,FeatureUniqeCode= ReferantTeamFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn OperationalTeamsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalTeamsQuery.Id,QueryCode = OperationalTeamsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ReferantTeam.Code" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OperationalTeamsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalTeamsQuery.Id,QueryCode = OperationalTeamsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ReferantTeam.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OperationalTeamsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OperationalTeamsQuery.Id,QueryCode = OperationalTeamsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ReferantTeam.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -467,11 +567,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		    ReferantTeamObjectTable.HeaderScreenCode = ReferantTeamCustomsTeamHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen ReferantTeamGeneralTabScreenReferantScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ReferantTeam.GeneralTabScreen", Name = "General Tab ScreenReferant", ObjectTableId = ReferantTeamObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+            ScreenField CustomsReferantTeamReferantTeamGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ReferantTeamGeneralTabScreenReferantScreen1.Id,ScreenCode = ReferantTeamGeneralTabScreenReferantScreen1.Code, ObjectFieldCode = "Customs.ReferantTeam.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomsReferantTeamReferantTeamGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ReferantTeamGeneralTabScreenReferantScreen1.Id,ScreenCode = ReferantTeamGeneralTabScreenReferantScreen1.Code, ObjectFieldCode = "Customs.ReferantTeam.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomsReferantTeamReferantTeamGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ReferantTeamGeneralTabScreenReferantScreen1.Id,ScreenCode = ReferantTeamGeneralTabScreenReferantScreen1.Code, ObjectFieldCode = "Customs.ReferantTeam.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+           
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ReferantTeamObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ReferantTeam" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode ReferantTeamGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ReferantTeam.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ReferantTeamObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ReferantTeamGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReferantTeam.Tab.General", ObjectTableId = ReferantTeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReferantTeamFeatures.RT01", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ReferantTeamObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RT01",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReferantTeamGeneralFeature_TH0.Id,FeatureUniqeCode = ReferantTeamGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ReferantTeamObjectTable.Id, TabNameTextCodeId = ReferantTeamGeneralTextCode_TH0.Id, TabNameTextCodeCode = ReferantTeamGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

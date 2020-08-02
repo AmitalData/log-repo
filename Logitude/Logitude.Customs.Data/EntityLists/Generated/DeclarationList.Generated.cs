@@ -366,6 +366,8 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? CancelRequestApproveDate  { get; set; }
        [DataMember]
        public bool? IsClaimable  { get; set; }
+       [DataMember]
+       public string ReplacingRepairRequest  { get; set; }
    }
 
 }

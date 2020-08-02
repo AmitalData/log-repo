@@ -98,7 +98,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     SelectedInvoiceItems: ObservableCollection;
     SelectedInvoices: ObservableCollection;
     IsDisplayOnlyAutomaticPayment: boolean;
-    BetweenMinAndMax: boolean;
+    BetweenMinAndMax: boolean=false;
     sumBtl: any = 0.0;
     _ErrorLogPMFileLoggerService: ErrorLogPMFileLoggerService;
     _2LogBankList: boolean = false;
@@ -814,7 +814,6 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     }
     AutoFillPaymentScreen() {
-        this.BetweenMinAndMax = false;
         this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
             .subscribe(
                 (response: ServiceResponse) => {

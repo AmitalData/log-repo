@@ -218,6 +218,7 @@ export class ReferantTeamPMService {
 	  public GetNewEntityPM() {		 
 		    var entityPM: ReferantTeamPM;
 			entityPM = new ReferantTeamPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
 		 
