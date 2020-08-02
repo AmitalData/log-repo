@@ -1534,6 +1534,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
         {
+            LogitudeSettings.HandleLogMe(
+                "DeclarationId:" + myDeclarationPM.Id + Environment.NewLine + Environment.StackTrace.ToString()
+                , false, "8250", new DateTime(2021, 1, 1));
+
             var mySBQMessage = new SBQMessageService();
             var newSearchDeclarationStatusRequestParams = new DeclarationStatusRequestParams()
             {
