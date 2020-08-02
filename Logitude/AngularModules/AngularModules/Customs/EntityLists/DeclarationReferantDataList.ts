@@ -39,14 +39,14 @@ export class DeclarationReferantDataList {
 	ReferentUserId: string;
 	Actions: string;
 	AvailabilityDate: Date;
+	ClassifiedUserId: string;
+	ControllerUserId: string;
+	CollectorUserId: string;
 	NewFile: boolean;
 	Favorite: boolean;
 	SortedColumns: number;
 	IsCustomerLogBoxActivated: boolean;
 	IsCancelled: boolean;
-	ClassifiedUserName: string;
-	ControllerUserName: string;
-	CollectorUserName: string;
 	LastStatusName: string;
 	LastStatusDate: Date;
 	OrderMoney: boolean;

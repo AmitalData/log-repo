@@ -1,7 +1,7 @@
 declare var window;
 import {Component, AfterViewInit, ChangeDetectorRef, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import {AppTool, ArrayTool} from '../../../../../Infrastructure/Tools';
+import {AppTool, ArrayTool, DateTool} from '../../../../../Infrastructure/Tools';
 import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -102,7 +102,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                                                     this.CheckRequrierdFieldsForSend();
                                                     
                                                     this.PreceduralFilterItems = new ApiQueryFilters();
-                                                    this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
+                                                    if (this.EntityPM.Direction != "E") {
+                                                        this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
+
+                                                    }
                                                 }
                                             });
                 });
@@ -538,6 +541,26 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     }
     public set CalculatedImporterName(newValue: string) {
         this.EntityPM.CalculatedImporterName = newValue;
+    }
+
+    //_LoadingDateTime: any = null;
+    //public get LoadingDateTime() {
+    //    return this._LoadingDateTime;
+
+
+    //}
+    //public set LoadingDateTime(newValue: any) {
+    //    this.EntityPM.LoadingDateTime = newValue;
+    //    this._LoadingDateTime = newValue;
+    //    if (DateTool.IsNullOrMinDateTime(newValue)) {
+    //        this._LoadingDateTime = null;
+    //    }
+
+    //}
+
+    public get LoadingDateTime() { return this.EntityPM.LoadingDateTime; }
+    public set LoadingDateTime(newValue: Date) {
+        this.EntityPM.LoadingDateTime = newValue;
     }
 
     public get TransferImporterCode() {
@@ -1061,7 +1084,11 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
-        var windowTitle = TextCodeTranslator.Translate("Customs.Vendor.O.NewClient");
+        var windowTitle;
+        if (this.EntityPM.Direction!="E")
+        windowTitle = TextCodeTranslator.Translate("Customs.Vendor.O.NewClient");
+        else
+            windowTitle = TextCodeTranslator.Translate("Customs.Vendor.O.NewClientE");
 
         var logWindow = new LogitudeWindow();
         windowArgs.Mode = "DeclarationGeneralComponent";
@@ -1113,7 +1140,12 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
+
+        var windowTitle;
+        if (this.EntityPM.Direction!='E')
+        windowTitle  = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
+        else
+            windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ExporterDetails");
 
         var logWindow = new LogitudeWindow();
         windowArgs.Type = "Transfer";
