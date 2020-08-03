@@ -272,9 +272,10 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
         if (myResponse.Result != null && myResponse.Result.length > 0) {
             let i: number = 1;
             myResponse.Result.forEach((item) => {
+          
                 item.LineNumber = i;
                 i++;
-                   if (item.AmendmentStatus == "1" || item.AmendmentStatus=="2" || item.AmendmentStatus == null)
+                if ((item.AmendmentStatus == "1" || item.AmendmentStatus == "2" || item.AmendmentStatus == null) && item.IsAmendment)
                  this.CanOpenNewAmendment = false;
                  this.amendmentObslist.Insert(item);
             });
