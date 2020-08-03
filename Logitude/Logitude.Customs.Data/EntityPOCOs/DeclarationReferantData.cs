@@ -83,6 +83,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public DateTime? LastStatusDate { get; set; }
         [Column("OrderMoney")]
 	    public bool OrderMoney { get; set; }
+        [ForeignKey("Team")]
+        [Column("Team")]
+	    public string Team { get; set; }
+	      
+        public virtual ReferantTeam Team { get; set; }
     }
 }
 	 

@@ -174,6 +174,11 @@ export class DeclarationReferantDataPM {
     public set OrderMoney(newValue: boolean) { if (this.orderMoney != newValue) { this.orderMoney = newValue; this.MarkAsDirty("OrderMoney"); } }
        
 	 
+    private team: string;
+    public get Team() { return this.team; }
+    public set Team(newValue: string) { if (this.team != newValue) { this.team = newValue; this.MarkAsDirty("Team"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

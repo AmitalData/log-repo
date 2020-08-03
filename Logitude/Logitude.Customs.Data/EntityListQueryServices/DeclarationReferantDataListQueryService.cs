@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -85,7 +86,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ClassifiedUserName = a.ClassifiedUser.Contact.LocalName,
                                                                  CollectorUserName = a.CollectorUser.Contact.LocalName,
                                                                  ControllerUserName= a.ControllerUser.Contact.LocalName,
-                                                              
+                                                                                                                               
                                                              }) ;
             return query;
         }
