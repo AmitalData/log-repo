@@ -3492,7 +3492,7 @@
     IsForeignKey="true"
     ForeignEntity="ReferantTeam"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="Team"
+    NavigationPropertyName="ReferantTeam"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
