@@ -261,7 +261,14 @@
                 <div *ngIf="FieldName == 'LastStatusName'" style="position:relative;width:100%; height: 100%;">
                     <div *ngIf="!IsHeaderScreenTemplate">
                         <div *ngIf="Entity['LastStatusName'] != null ">
-                            <span data-toggle="tooltip" data-placement="bottom" title="{{LastStatusNameText}}">{{LastStatusNameText}}</span>
+                            <span data-toggle="tooltip" data-placement="bottom" title="{{LastStatusNameText}}">{{Entity[FieldName]}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="FieldName == 'LastStatusDate'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['LastStatusDate'] != null ">
+                            <span>{{Entity[FieldName] | DateTimePipe:'D'}}</span>
                         </div>
                     </div>
                 </div>
@@ -319,7 +326,7 @@
                         <div *ngIf="Entity['OrderMoney']=='1'">
                             <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Successful_process@2x.png" />
                         </div>
-                        
+
                     </div>
                 </div>
 
