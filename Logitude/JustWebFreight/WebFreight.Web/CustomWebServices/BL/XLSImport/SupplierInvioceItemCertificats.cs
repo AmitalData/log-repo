@@ -4,6 +4,8 @@ using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Models;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,9 @@ using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
+using Unifreight.Data.AmitalModel.Repsitories;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 
@@ -21,14 +26,25 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
         public List<CertificateFromFile> fromFile = new List<CertificateFromFile>();
         public List<CertificateErrorView> errors = new List<CertificateErrorView>();
 
-       
-        internal List<CertificateErrorView> RecallSuppliersFromFileRequest(string key, int tenant, string decodedString,string clientID)
+
+        internal List<CertificateErrorView> RecallSuppliersFromFileRequest(string key, int tenant, string decodedString, string clientID)
         {
             ReadDataFromCsvFile(decodedString);
-            AnalayzeData(tenant,clientID);
+            AnalayzeData(tenant, clientID);
             return errors;
         }
-        public void AnalayzeData(int tenant ,string clientID)
+        public void AnalayzeData(int tenant, string clientID)
+        {
+            foreach (CertificateFromFile item in fromFile)
+            {
+                foreach (ModelCodeAndConfirmatioNCode model in item.ModelCodeAndConfirmatioNCodeList)
+                {
+                    UpdateDB(item, model, tenant, clientID);
+                }
+            }
+
+        }
+        public void UpdateDB(CertificateFromFile item, ModelCodeAndConfirmatioNCode model, int tenant, string clientID)
         {
             SupplierInvoiceRepository supplierInvoiceRepository = new SupplierInvoiceRepository(tenant);
             DeclarationRepository delcarationRepository = new DeclarationRepository(tenant);
@@ -37,58 +53,71 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
             SupplierInvioceItemCertificatUpdateService updateService = new SupplierInvioceItemCertificatUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
             SupplierInvioceItemCertificatRepository repo = new SupplierInvioceItemCertificatRepository(tenant);
             Boolean foundInvoiceItem = false;
-
-
-
-            foreach (CertificateFromFile item in fromFile)
+            Boolean LockedDec = false;
+            var list = supplierInvoiceRepository.GetDeclarationIdfromInvoiceNumber(item.SupplierItemInvoice, tenant);
+            var decList = delcarationRepository.GetDeclarationsByIdAndClientID(list, clientID);
+            if (decList.Count == 0)
             {
-                foreach (ModelCodeAndConfirmatioNCode model in item.ModelCodeAndConfirmatioNCodeList) {
-                    var list = supplierInvoiceRepository.GetDeclarationIdfromInvoiceNumber(item.SupplierItemInvoice, tenant);
-                    var decList = delcarationRepository.GetDeclarationsByIdAndClientID(list,clientID);
-                    if (decList.Count == 0)
+                AddErrors("", model.RowNumber, "", item.SupplierItemInvoice, model.ModelCode, "	הצהרה ו/או מס' חשבון ספק לא אותר");
+            }
+            foundInvoiceItem = false;
+            foreach (var dec in decList)
+            {
+                LockedDec = false;
+                var invoiceItems = supplierInvoiceItemRepository.GetSupplierInvoiceItemByInvoiceNumber(tenant, dec.Id, model.ModelCode);
+                foreach (SupplierInvoiceItemPM invoiceItem in invoiceItems)
+                {
+                    if (model.ConfirmationCode == "")
                     {
-                        AddErrors("", model.RowNumber, "", item.SupplierItemInvoice, model.ModelCode, "	הצהרה ו/או מס' חשבון ספק לא אותר");
+                        AddErrors(dec.DeclarationNumber, model.RowNumber, dec.CustomFileNo, item.SupplierItemInvoice, model.ModelCode, "מס' אישור לא אותר בעמודה J  באקסל");
+                    }
+                    foundInvoiceItem = true;
+                    if (dec.PaymentDate != null)
+                    {
+                        AddErrors(dec.DeclarationNumber, model.RowNumber, dec.CustomFileNo, item.SupplierItemInvoice, model.ModelCode, "הצהרה שולמה");
                         continue;
                     }
-                    foundInvoiceItem = false;
-                    foreach (var dec in decList)
+                    if (dec.DeclarationStatusTypeCode == "1")
                     {
-                        var invoiceItems = supplierInvoiceItemRepository.GetSupplierInvoiceItemByInvoiceNumber(tenant,dec.Id, model.ModelCode);
-                        foreach(SupplierInvoiceItemPM invoiceItem in invoiceItems)
-                        {
-                            if (model.ConfirmationCode == "")
-                            {
-                                AddErrors(dec.DeclarationNumber, model.RowNumber, dec.CustomFileNo, item.SupplierItemInvoice, model.ModelCode, "מס' אישור לא אותר בעמודה J  באקסל");
-                            }
-                            foundInvoiceItem = true;
-                            if (dec.PaymentDate != null)
-                            {
-                                AddErrors(dec.DeclarationNumber, model.RowNumber, dec.CustomFileNo, item.SupplierItemInvoice, model.ModelCode, "הצהרה שולמה");
-                                continue;
-                            }
-                            if (dec.DeclarationStatusTypeCode == "1")
-                            {
-                                AddErrors(dec.DeclarationNumber, model.RowNumber, dec.CustomFileNo, item.SupplierItemInvoice, model.ModelCode, "הצהרה בוטלה");
-                                continue;
-                            }
-                            if (model.ConfirmationCode != "" &&!repo.IsExist(dec.Id, invoiceItem.CounterKey, invoiceItem.LineNumber,tenant,"2402",model.ConfirmationCode,model.RequestNumber))
-                            {
-                                updateService.InsertSupplierInvioceItemCertificatByCsvFile(model.ConfirmationCode, model.RequestNumber, tenant, dec.Id, invoiceItem.LineNumber, invoiceItem.CounterKey, invoiceItem);
-                            }
-                        }
+                        AddErrors(dec.DeclarationNumber, model.RowNumber, dec.CustomFileNo, item.SupplierItemInvoice, model.ModelCode, "הצהרה בוטלה");
+                        continue;
                     }
-                    if (!foundInvoiceItem)
+                    long lCUSTOMFILENO;
+                    if (!long.TryParse(dec.CustomFileNo, out lCUSTOMFILENO))
                     {
-                        AddErrors("",model.RowNumber,"", item.SupplierItemInvoice, model.ModelCode, "פרט מכס לא אותר");
-                        if (model.ConfirmationCode == "")
-                        {
-                            AddErrors("", model.RowNumber, "", item.SupplierItemInvoice, model.ModelCode, "מס' אישור לא אותר בעמודה J  באקסל");
-                        }
+                        throw new BusinessErrorException("_DirtyDeclarationPaymentPM.DeclarationId could not convert to long ");
+                    }
+                    var myCCUFILEMRepository = new CCUFILEMRepository(dec.Tenant);
+                    var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
+                    var myCCUQUELOCKRepository = new CCUQUELOCKRepository(dec.Tenant);
+                    try
+                    {
+                        var cculock = myCCUQUELOCKRepository.GetSingleGeneralLockNOWAIT("CCUFILEM", ccufilem.ToString());
+                    }
+                    catch (System.Exception)
+                    {
+                        AddErrors(dec.DeclarationNumber, model.RowNumber, dec.CustomFileNo, item.SupplierItemInvoice, model.ModelCode, "התיק נעול על ידי משתמש אחר");
+                        LockedDec = true;
                     }
 
+                    if (!LockedDec && model.ConfirmationCode != "" && !repo.IsExist(dec.Id, invoiceItem.CounterKey, invoiceItem.LineNumber, tenant, "2402", model.ConfirmationCode, model.RequestNumber))
+                    {
+                        updateService.InsertSupplierInvioceItemCertificatByCsvFile(model.ConfirmationCode, model.RequestNumber, tenant, dec.Id, invoiceItem.LineNumber, invoiceItem.CounterKey, invoiceItem);
+                    }
                 }
             }
-            
+            if (!foundInvoiceItem)
+            {
+                if (item.SupplierItemInvoice != "" && item.SupplierItemInvoice != null)
+                {
+                    AddErrors("", model.RowNumber, "", item.SupplierItemInvoice, model.ModelCode, "פרט מכס לא אותר");
+                    if (model.ConfirmationCode == "")
+                    {
+                        AddErrors("", model.RowNumber, "", item.SupplierItemInvoice, model.ModelCode, "מס' אישור לא אותר בעמודה J  באקסל");
+                    }
+                }
+            }
+
         }
         public void ReadDataFromCsvFile(string decodedString)
         {
@@ -105,16 +134,16 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
                 string SupplierItemInvoice = results[i + 8];
                 foreach (var item in fromFile) // check if code exist in list already
                 {
-                    if (item.SupplierItemInvoice == SupplierItemInvoice)
+                     if (item.SupplierItemInvoice == SupplierItemInvoice)
                     {
                         CodeExist = true;
                         item.ModelCodeAndConfirmatioNCodeList.Add(new ModelCodeAndConfirmatioNCode
                         {
                             RequestNumber = results[i + 2],
                             RowNumber = results[i + 3],
-                            ModelCode = results[i + 5],
+                            ModelCode = PadLeftOnModelCdoe(results[i + 5]),
                             ConfirmationCode = Regex.Replace(results[i + 9], @"[^\d]", ""),
-                    });
+                        });
                         break;
                     }
                 }
@@ -128,7 +157,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
                         {
                             RequestNumber=results[i+2],
                             RowNumber=results[i+3],
-                            ModelCode=results[i+5],
+                            ModelCode=PadLeftOnModelCdoe(results[i + 5]),
                             ConfirmationCode = Regex.Replace(results[i + 9], @"[^\d]", ""),
                         }
                     };
@@ -138,15 +167,29 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
             }
 
         }
-        public  void AddErrors(string decID,string excelRow,string customFileNr,string supplierItemInvoice,string modelCode,string error)
+         public string PadLeftOnModelCdoe(string code)
         {
-            errors.Add(new CertificateErrorView() { 
-                ExcelRow = excelRow, 
-                DeclarationId=decID,
-                CustomfileNr=customFileNr,
-                SupplierItemInvoice= supplierItemInvoice,
-                Model=modelCode,
-                Errors=error,
+            if (Regex.IsMatch(code , @"^\d+$"))
+            {
+                if (code.Length < 8)
+                {
+                    int value = Convert.ToInt32(code);
+                    var modelCode = value.ToString("D8");
+                    return modelCode;
+                }
+            }
+            return code;
+        }
+        public void AddErrors(string decID, string excelRow, string customFileNr, string supplierItemInvoice, string modelCode, string error)
+        {
+            errors.Add(new CertificateErrorView()
+            {
+                ExcelRow = excelRow,
+                DeclarationId = decID,
+                CustomfileNr = customFileNr,
+                SupplierItemInvoice = supplierItemInvoice,
+                Model = modelCode,
+                Errors = error,
             });
         }
         public List<CertificateErrorView> getErrorsList()
@@ -163,7 +206,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
             dt = new DataTable("Supplier Invioce Item Certificat Errors");
 
             settingCol.Columns.Add(new Column() { Index = 1, Code = "ExcelRow", Name = "ExcelRow", DataTypeCode = "String", Width = 150, });
-            dt.Columns.Add(new DataColumn() { Caption = /*"ExcelRow"*/"שורה באקסל", ColumnName = "ExcelRow", DataType = System.Type.GetType("System.String"), });
+            dt.Columns.Add(new DataColumn() { Caption = /*"ExcelRow"*/"שורה בבקשה", ColumnName = "ExcelRow", DataType = System.Type.GetType("System.String"), });
 
             settingCol.Columns.Add(new Column() { Index = 2, Code = "CustomfileNr", Name = "CustomfileNr", DataTypeCode = "String", Width = 150, });
             dt.Columns.Add(new DataColumn() { Caption = /*"CustomfileNr"*/"מס' תיק", ColumnName = "CustomfileNr", DataType = System.Type.GetType("System.String"), });

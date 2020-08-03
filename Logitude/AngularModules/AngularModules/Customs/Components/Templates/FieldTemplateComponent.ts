@@ -145,15 +145,15 @@ export class FieldTemplateComponent {
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.ShowHeaderButtons = true;
-        logitudeWindow.Height = 525;
-        logitudeWindow.Width = 750;
+        logitudeWindow.Height = 400;
+        logitudeWindow.Width =700;
         logitudeWindow.ShowCloseButton = true;
         if (this.Entity.IsClassificationRemarks) {
             _declarationRemarksService.GetSVCOrSRVStatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
                 .subscribe((response: any) => {
                     windowArgs.EntityPM = response.Result;
                     windowArgs.length = response.Result.length;
+                    windowArgs.title = "  הערות מסווג  ";
                     logitudeWindow.Title = windowArgs.length + "  הערות מסווג  ";
                     logitudeWindow.WindowArgs = windowArgs;
                     logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
@@ -165,14 +165,14 @@ export class FieldTemplateComponent {
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.ShowHeaderButtons = true;
-        logitudeWindow.Height = 525;
-        logitudeWindow.Width = 750;
+        logitudeWindow.Height = 400;
+        logitudeWindow.Width = 700;
         logitudeWindow.ShowCloseButton = true;
         if (this.Entity.IsControllerRemarks) {
             _declarationRemarksService.GetINCorINAtatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
                 .subscribe((response: any) => {
                     windowArgs.EntityPM = response.Result;
+                    windowArgs.title = "  הערות מבקר  ";
                     let counter = response.Result.length;
                     logitudeWindow.Title = counter + "  הערות מבקר  ";
                     logitudeWindow.WindowArgs = windowArgs;

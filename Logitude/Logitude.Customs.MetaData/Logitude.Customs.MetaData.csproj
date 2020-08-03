@@ -892,6 +892,12 @@
   <ItemGroup>
     <None Include="DBOthers\Procedures\DelayMsgandChangeStatusTo0.dxml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="DBScripts\Post\202007201100_ReferantSearchfield.sxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DBScripts\Post\202007201200_DepartmentSearchfield.sxml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
