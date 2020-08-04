@@ -22,8 +22,7 @@ export class CustomsDocumentsDataProvider {
         var objectTable = window.ObjectTables.filter(d => d.Name === this.objectTableName)[0];
         this.ObjectTableId = objectTable.Id;
         this.parentEntityCode = _parentEntityCode;
-        debugger;
-        switch (this.objectTableName) {
+         switch (this.objectTableName) {
             case 'Customs.Declaration': {
                 if (this.parentEntityCode == "DeclarationCancellation")
                     
@@ -49,8 +48,7 @@ export class CustomsDocumentsDataProvider {
     }
 
     GetCustomsDocumentsController(): ICustomsDocumentsController {
-        debugger;
-        switch (this.objectTableName) {
+         switch (this.objectTableName) {
             case 'Customs.Declaration': {
                 if (this.parentEntityCode == "DeclarationCancellation")
                     return this.declarationCancellationCustomsDocumentsController;

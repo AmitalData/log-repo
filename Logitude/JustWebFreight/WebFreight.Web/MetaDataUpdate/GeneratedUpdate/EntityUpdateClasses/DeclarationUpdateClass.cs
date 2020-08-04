@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "67d4374367467dd0273c9a5ad2ea99b5";
+		public const string HashString = "5a78fbe04990d31a7cf7da2c88645687";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13433,6 +13433,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ReplacingRepairRequest",
 					  						ListPropertyPath =  "ReplacingRepairRequest",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -16660,6 +16661,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterAddress", DefaultText = "Transfer Exporter Address",LocalDefaultText = @"כתובת יצואן מעביר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOExporterDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExporterDetails", DefaultText = "Exporter Details",LocalDefaultText = @"נתונים נוספים ליצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOIsExporterConfirmation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsExporterConfirmation", DefaultText = "שדה זה מיועד לאפשר סימון במידה והיצואן מאשר להעביר את נתוני ההצהרה למדינת היעד",LocalDefaultText = @"שדה זה מיועד לאפשר סימון במידה והיצואן מאשר להעביר את נתוני ההצהרה למדינת היעד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeleteExportRecipient = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteExportRecipient", DefaultText = "Delete Recipient?",LocalDefaultText = @"למחוק פרטי מקבל?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
