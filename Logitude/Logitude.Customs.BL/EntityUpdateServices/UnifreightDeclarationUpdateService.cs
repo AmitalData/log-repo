@@ -2633,7 +2633,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (decSupplierInvoice.IsAccumalated)
             ////if(false)
             {
-                _AccumulatedSupplierInvoice_105LastLineNo = 0;
+                //_AccumulatedSupplierInvoice_105LastLineNo = 0;
                 decSupplierInvoice = AddSupplierInvoiceAccumalated103(decSupplierInvoice);
             }
 
