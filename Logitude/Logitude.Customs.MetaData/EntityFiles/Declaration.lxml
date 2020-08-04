@@ -16454,6 +16454,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ReplacingRepairRequest&quot;"
     ListPropertyPath="&quot;ReplacingRepairRequest&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -21152,6 +21153,18 @@
       Code="&quot;Customs.Declaration.O.ExporterDetails&quot;"
       DefaultText="&quot;Exporter Details&quot;"
       LocalDefaultText="&quot;נתונים נוספים ליצואן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.IsExporterConfirmation&quot;"
+      DefaultText="&quot;שדה זה מיועד לאפשר סימון במידה והיצואן מאשר להעביר את נתוני ההצהרה למדינת היעד&quot;"
+      LocalDefaultText="&quot;שדה זה מיועד לאפשר סימון במידה והיצואן מאשר להעביר את נתוני ההצהרה למדינת היעד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.DeleteExportRecipient&quot;"
+      DefaultText="&quot;Delete Recipient?&quot;"
+      LocalDefaultText="&quot;למחוק פרטי מקבל?&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -971,8 +971,14 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
+        var windowTitle;
 
+        if (this.EntityPM.Direction != 'E')
+            windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
+        else
+            windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ExporterDetails");
+
+ 
         var logWindow = new LogitudeWindow();
         windowArgs.Type = "Importer";
         this.Type = "Importer";
@@ -1514,9 +1520,9 @@ export class DeclarationExportRecipientModel extends BaseComponent {
     }
 
 
-    DeleteSiteButtonClicked() {
+    DeleteExportRecipientButtonClicked() {
 
-        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.DeleteSite");
+        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.DeleteExportRecipient");
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 400;
         confirmWindow.Height = 150;
