@@ -867,7 +867,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             {
                 this._DeclarationReferantDataPM.NewFile = true;
             }
-            this._DeclarationReferantDataPM.Team = TranslateTeam(_AmitalCustomsFile.Team); 
+            //this._DeclarationReferantDataPM.Team = TranslateTeam(_AmitalCustomsFile.Team); 
 
             this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
