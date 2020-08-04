@@ -65,29 +65,37 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.InvoiceCounterKey = maxCounterKey.Value + 1;
             }
 
- 
+
             //var accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == "Customs.SupplierInvoice Customs.Declaration")[0];
 
             //FeaturePM feature = TenantContext.Current.Features.Where(d => d.Code == "SENDTESTCASES").FirstOrDefault();
-            try
+            bool notToCheckFeature = true;
+            if (notToCheckFeature)
             {
-                int tenant = entityPM.Tenant;
-                string email = AuthenticationUtil.ResolveUserIdentityName(tenant);
-                string id = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
-                if (!string.IsNullOrWhiteSpace(id))
-                {
-                    ContactRepository contactrep = new ContactRepository(tenant);
-                    var contact = contactrep.GetSingleContact(id, tenant);
-                    email = contact.Email;
-
-                }
-                InjectionUtil.Instance.CheckContactFeature("Customs.Declaration", "ACCUMULATION", tenant, email);
-                if (string.IsNullOrEmpty(entityPM.AccumalationStateCode)) entityPM.AccumalationStateCode = "1";
-            }
-            catch (Exception ex)
-            {
-                LogMessagingUtil.Instance.AppendLine("Check for ACCUMULATION Feature Failed, Message: " + ex.Message);
                 if (string.IsNullOrEmpty(entityPM.AccumalationStateCode)) entityPM.AccumalationStateCode = "3";
+            }
+            else
+            {
+                try
+                {
+                    int tenant = entityPM.Tenant;
+                    string email = AuthenticationUtil.ResolveUserIdentityName(tenant);
+                    string id = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+                    if (!string.IsNullOrWhiteSpace(id))
+                    {
+                        ContactRepository contactrep = new ContactRepository(tenant);
+                        var contact = contactrep.GetSingleContact(id, tenant);
+                        email = contact.Email;
+
+                    }
+                    InjectionUtil.Instance.CheckContactFeature("Customs.Declaration", "ACCUMULATION", tenant, email);
+                    if (string.IsNullOrEmpty(entityPM.AccumalationStateCode)) entityPM.AccumalationStateCode = "1";
+                }
+                catch (Exception ex)
+                {
+                    LogMessagingUtil.Instance.AppendLine("Check for ACCUMULATION Feature Failed, Message: " + ex.Message);
+                    if (string.IsNullOrEmpty(entityPM.AccumalationStateCode)) entityPM.AccumalationStateCode = "3";
+                }
             }
             //base.OnCreating(entityPM, entityParentPM);
         }
