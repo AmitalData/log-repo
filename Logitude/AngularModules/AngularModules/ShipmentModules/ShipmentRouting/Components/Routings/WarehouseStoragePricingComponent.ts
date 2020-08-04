@@ -297,7 +297,7 @@ export class PricingItem extends BaseComponent {
     public CellColor: string = "transparent";
     private SetCellColor() {
         if (this.IsFreeLine) {
-            this.CellColor = "#B4F3D2";
+            this.CellColor = "#DFF9EB";
         }
 
         else {
