@@ -21180,7 +21180,7 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Customs.Declaration.O.Modifications&quot;"
+      Code="&quot;Customs.Declaration.O.ModificationsExport&quot;"
       DefaultText="&quot;Modifications&quot;"
       LocalDefaultText="&quot;הפחתות / התאמות&quot;"
       TextCodeTypeCode="&quot;O&quot;"

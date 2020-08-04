@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "b25d237a2f86e597d4b695de2677fe57";
+		public const string HashString = "7bf0c5831b21939241831b0dd8a4d242";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16670,7 +16670,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOExporterInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExporterInvoice", DefaultText = "Exporter Invoice",LocalDefaultText = @"חשבון יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOModifications = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Modifications", DefaultText = "Modifications",LocalDefaultText = @"הפחתות / התאמות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOModificationsExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ModificationsExport", DefaultText = "Modifications",LocalDefaultText = @"הפחתות / התאמות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOUCR = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UCR", DefaultText = "UCR",LocalDefaultText = @"זיהוי מטען", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
