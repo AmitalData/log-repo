@@ -19,7 +19,7 @@ namespace Logitude.Customs.Data.EntityMapping
 	    string dbms;
         public ReferantTeamMap()
         { 
-			  this.ToTable("ReferantTeam", "Customs");
+			  this.ToTable("ReferantTeams", "Customs");
 		
 		    this.HasKey(t => new { t.Code });
 	 

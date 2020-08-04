@@ -88,7 +88,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ControllerUserName= a.ControllerUser.Contact.LocalName, 
                                                                  LastStatusDate = a.LastStatusDate,
                                                                  LastStatusName = a.LastStatusName,
-                                                                  OrderMoney = a.OrderMoney
+                                                                 OrderMoney = a.OrderMoney,
+                                                                 Team=a.ReferantTeam.LocalName,
                                                               
                                                              }) ;
                                                                 

@@ -1,42 +1,11 @@
--- General Script From 202007201100_ReferantSearchfield.sxml File
-DECLARE
-StartTime TIMESTAMP;
-EndTime TIMESTAMP;
-BEGIN
-SAVEPOINT ScriptSavePoint;
-StartTime := SYSTIMESTAMP;
-BEGIN
-update declarationreferantdatas set
-declarationreferantdatas.SEARCHFIELDS=
-(select   to_char(d.DeclarationNumber)||',' ||to_char(d.CustomFileNo) ||',' || to_char(d.CustomerId) ||',' ||
-to_char(c.ManifestNumber )  ||',' || c.SecondCargoID  ||',' || c.ThirdCargoID as SEARCHFIELDS
-from  declarationreferantdatas r
-inner join
-declarations d on  r.DECLARATIONID= d.id
-inner join  CONSIGNMENTS c
-on d.id= c.DECLARATIONID  and c.CONSIGNMENTNUMBER=1
-where  d.id= declarationreferantdatas.DECLARATIONID);
-END;
-EndTime:= SYSTIMESTAMP;
-BEGIN
-DECLARE ScriptBody NCLOB;
-BEGIN
-ScriptBody := 'update declarationreferantdatas set
-declarationreferantdatas.SEARCHFIELDS=
-(select   to_char(d.DeclarationNumber)||'','' ||to_char(d.CustomFileNo) ||'','' || to_char(d.CustomerId) ||'','' ||
-to_char(c.ManifestNumber )  ||'','' || c.SecondCargoID  ||'','' || c.ThirdCargoID as SEARCHFIELDS
-from  declarationreferantdatas r
-inner join
-declarations d on  r.DECLARATIONID= d.id
-inner join  CONSIGNMENTS c
-on d.id= c.DECLARATIONID  and c.CONSIGNMENTNUMBER=1
-where  d.id= declarationreferantdatas.DECLARATIONID);';
-INSERT INTO "DBSCRIPTSHISTORY"("SXMLFILENAME", "EXECUTIONDATE", "SCRIPTBODY", "ELAPSEDTIMEINMS", "HASHVALUE", "VERSION")VALUES('202007201100_ReferantSearchfield.sxml', SYSDATE, ScriptBody, EXTRACT(DAY FROM(EndTime - StartTime) * 24 * 60 * 60 * 1000), '24d87dde50c2bf9294d31e637e485ad6', 1);
-END;
-END;
-EXCEPTION
-WHEN OTHERS THEN
-ROLLBACK TO ScriptSavePoint;
-COMMIT;
-END;
+-- Add Foreign Key Constraint For Column TEAM In Table DECLARATIONREFERANTDATAS As Reference To Column CODE In Table REFERANTTEAMS
+ALTER TABLE "DECLARATIONREFERANTDATAS" ADD CONSTRAINT "FK_DECLARATIONREFERANTDA_KZ3JJ" FOREIGN KEY("TEAM") REFERENCES "REFERANTTEAMS"("CODE");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column TEAM In Table DECLARATIONREFERANTDATAS As Reference To Column CODE In Table REFERANTTEAMSALTER TABLE "DECLARATIONREFERANTDATAS" ADD CONSTRAINT "FK_DECLARATIONREFERANTDA_KZ3JJ" FOREIGN KEY("TEAM") REFERENCES "REFERANTTEAMS"("CODE");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('77cebbd7-e771-41c3-8fb8-ebaa190621a2', 'DeclarationReferantData.dxml', 'DECLARATIONREFERANTDATAS', 'TEAM', 'Create Relation', SYSDATE, ScriptText); END;
+
+-- Create Index On DECLARATIONREFERANTDATAS Table
+CREATE INDEX "IX_DECLARATIONREFERANTDA_PMZNT" ON "DECLARATIONREFERANTDATAS"("TEAM");
+
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On DECLARATIONREFERANTDATAS TableCREATE INDEX "IX_DECLARATIONREFERANTDA_PMZNT" ON "DECLARATIONREFERANTDATAS"("TEAM");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('6ccb117b-b9a1-4100-aad6-8bcf2d4080cb', 'DeclarationReferantData.dxml', 'DECLARATIONREFERANTDATAS', 'TEAM', 'Create Index', SYSDATE, ScriptText); END;
+
 
