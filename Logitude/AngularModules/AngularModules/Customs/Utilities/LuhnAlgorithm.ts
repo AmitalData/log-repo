@@ -36,8 +36,7 @@ export class LuhnAlgorithm {
             return null;
         }
 
-        debugger;
-        var year = Number( (new Date()).getUTCFullYear().toString().substr(2, 1));
+         var year = Number( (new Date()).getUTCFullYear().toString().substr(2, 1));
 
         if ( reshimonNumber.substr(0, 1) > (new Date()).getUTCFullYear().toString().substr(3, 1)) {
             year = year - 1;
