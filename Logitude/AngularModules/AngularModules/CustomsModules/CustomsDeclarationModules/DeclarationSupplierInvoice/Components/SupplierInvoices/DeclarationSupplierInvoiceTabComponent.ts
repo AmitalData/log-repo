@@ -611,17 +611,24 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         }
     }
     accumulationFeature: any;
+    notToCheckFeature: boolean = true;
     NewInvoice() {
         var itemPM = new SupplierInvoicePM();
         itemPM.DeclarationId = this.EntityPM.Id;
         itemPM.Tenant = SessionLocator.Tenant;
         var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
-        this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
-        if (this.accumulationFeature == null) {
+        
+        if (this.notToCheckFeature) {
             itemPM.AccumalationStateCode = "3";
         }
         else {
-            itemPM.AccumalationStateCode = "1";
+            this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
+            if (this.accumulationFeature == null) {
+                itemPM.AccumalationStateCode = "3";
+            }
+            else {
+                itemPM.AccumalationStateCode = "1";
+            }
         }
         itemPM.InvoiceCounterKey = 0;
      
