@@ -760,7 +760,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             LedgerTransactionRepository repo = new LedgerTransactionRepository(this.context);
 
             IQueryable<LedgerTransaction> q = (from ltline in repo.GetAll(getAllAccountArgs.Tenant).Where(rec => rec.Tenant == getAllAccountArgs.Tenant
-                        && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m) && rec.DueDate >= getAllAccountArgs.FromDate
+                        && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m || (rec.OpenAmount == 0m && rec.IsReconciled == false)) && rec.DueDate >= getAllAccountArgs.FromDate
                         && rec.DueDate < getAllAccountArgs.UpToDueDate)
                                                join gLAccounts in (context as AccountingContext).GLAccounts.Where(
                                                    r => r.Tenant == getAllAccountArgs.Tenant && r.AccountTypeCode == getAllAccountArgs.AccountTypeCode)
