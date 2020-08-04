@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReferantTeamUpdateClass
    {  		
-		public const string HashString = "9f6e732ac4c59ddf75d26364e8feaeca";
+		public const string HashString = "a4d73558fc5fc0137600b70bc1c47dda";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,9 +85,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			
 	             				    ObjectTableName =  "Customs.ReferantTeam",
 			      				    IsNew =  true,
-			      				    DBTableName =  "Customs.ReferantTeam",
+			      				    DBTableName =  "Customs.ReferantTeams",
 			      				    ObjectTableSingular =  "ReferantTeam",
-			      				    ObjectTablePlural =  "ReferantTeam",
+			      				    ObjectTablePlural =  "ReferantTeams",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
