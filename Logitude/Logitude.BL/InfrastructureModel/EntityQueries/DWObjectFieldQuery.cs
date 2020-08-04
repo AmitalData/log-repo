@@ -7,6 +7,7 @@ using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using System.Collections.Generic;
 using System;
+using Logitude.BL.Helpers;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -153,9 +154,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
 
         public List<DWObjectFieldPM> GetDWObjectFieldWithChildrenFieldsPMsByDWObjectTabelAndTenant(int tenant, string dwotCode)
-        {
-            IQueryable<DWObjectFieldPM> TempList = GetDWObjectFieldByDWObjectTableCode(tenant, dwotCode);
-
+       {
+            var TempList = new DWObjectFieldAdditionalFactService(new DWObjectFieldAdditionalFactArgs() { FactTableCode = dwotCode, Tenant = tenant}).DWObjectFieldPMs;
             var FinalList = TempList.Where(a => a.DimensionTableCode == null).ToList();
             var Parents = TempList.Where(a => a.DimensionTableCode != null).ToList();
             List<string> dimensionTable = Parents.GroupBy(d => d.DimensionTableCode).Select(d => d.First().DimensionTableCode).ToList();
@@ -183,7 +183,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return SetDWFullNameTextCode(tenant, FinalList); 
         }
 
-        private IQueryable<DWObjectFieldPM> GetDWObjectFieldByDWObjectTableCode(int tenant, string dwotCode)
+        public IQueryable<DWObjectFieldPM> GetDWObjectFieldByDWObjectTableCode(int tenant, string dwotCode)
         {
             var TempList = (from a in repository.webFreightContext.DWObjectFields
                             where a.Tenant == tenant && a.DWObjectTableCode == dwotCode && a.DisplayInQueryBuilder == true && a.CannotFilter == false

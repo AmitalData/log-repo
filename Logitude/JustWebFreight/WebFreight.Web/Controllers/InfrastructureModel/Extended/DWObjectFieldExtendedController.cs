@@ -32,7 +32,6 @@ using Logitude.BL.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using WebFreight.Web.Helpers.DataWarehouse;
 
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 {
@@ -75,9 +74,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                
 
-                DWObjectFieldAdditionalFactService dWObjectFieldAdditionalFactService = new DWObjectFieldAdditionalFactService(DWOTId, authToken.Tenant, true);
-                var factFields = dWObjectFieldAdditionalFactService.DWObjectFieldPMs;
+
+
+                var factFields = new DWObjectFieldAdditionalFactService(new DWObjectFieldAdditionalFactArgs() { FactTableCode = DWOTId,Tenant = authToken.Tenant, GroupedByCategory = true }).DWObjectFieldPMs;
                 var CategoryGroup = factFields.GroupBy(a => a.Category);
 
                 DWHSettingRepository dWHSettingRepository = new DWHSettingRepository(authToken.Tenant);
