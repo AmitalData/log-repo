@@ -2473,17 +2473,17 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MasterHousesNumbers { get; set; }
         public string HousesDescriptionofGoods { get; set; }
 
-        //public List<TransshipmentLeg> Transshipments { get; set; }
+        public List<TransshipmentLeg> Transshipments { get; set; }
     }
 
-    //public class TransshipmentLeg
-    //{
-    //    public string Id { get; set; }
-    //    public int LegIndex { get; set; }
-    //    public string CarrierId { get; set; }
-    //    public string PortId { get; set; }
-    //    public string VesselId { get; set; }
-    //    public string CarrierNumber { get; set; }
-    //    public string MasterNumber { get; set; }
-    //}
+    public class TransshipmentLeg
+    {
+        public string Id { get; set; }
+        public int LegIndex { get; set; }
+        public string CarrierId { get; set; }
+        public string PortId { get; set; }
+        public string VesselId { get; set; }
+        public string CarrierNumber { get; set; }
+        public string MasterNumber { get; set; }
+    }
 }

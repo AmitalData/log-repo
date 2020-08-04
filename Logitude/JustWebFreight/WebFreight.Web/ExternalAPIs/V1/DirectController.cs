@@ -105,7 +105,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 {
                                     foreach (OceanOrInlandPackage item in entity.OceanOrInlandPackages)
                                     {
-
                                         if (item.InsidePackages != null && item.InsidePackages.Count > 0)
                                         {
                                             foreach (InsidePackage itemInside in item.InsidePackages)
@@ -213,7 +212,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 }
                             }
                         }
-
+                        
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
                         ShipmentPM entityPM = mappingService.DirectCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
@@ -537,13 +536,18 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         APIReceivablePayableHelper receivablePayableHelper = new APIReceivablePayableHelper(entityPM, authToken.Tenant);
                         receivablePayableHelper.ValidateReceivablesAndPayables();
                         receivablePayableHelper.ComputeReceivablesPayablesTotals();
+
+                        APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(entityPM, authToken.Tenant);
+                        aPITransshipmentHelper.ValidateTransshipments();
+                        aPITransshipmentHelper.MapTransshipments();
+
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {
                             ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(authToken.Tenant);
                             var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, authToken.Tenant);
                             entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
-
                         }
+
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
