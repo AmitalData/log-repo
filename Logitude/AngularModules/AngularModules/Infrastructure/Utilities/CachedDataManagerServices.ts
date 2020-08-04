@@ -111,6 +111,7 @@ import { CustomerRoleTypeListService } from '../../Customs/Services/StandardList
 import { AutonomyRegionTypeListService } from '../../Customs/Services/StandardLists/AutonomyRegionTypeListService';
  import { CancellationRequestStatusListService } from '../../Customs/Services/StandardLists/CancellationRequestStatusListService';
 import { CancellationReasonRequestTypeListService } from '../../Customs/Services/StandardLists/CancellationReasonRequestTypeListService';
+import { ReferantTeamListService } from '../../Customs/Services/StandardLists/ReferantTeamListService';
 
 
 export class CachedDataManagerServices {
@@ -232,7 +233,7 @@ export class CachedDataManagerServices {
          //   case "Customs.AutonomyRegionTypeListService ": { myResult = new AutonomyRegionTypeListService (); break; }
             case "Customs.CancellationReasonRequestTypeListService ": { myResult = new CancellationReasonRequestTypeListService(); break; }
             case "Customs.CancellationRequestStatusListService ": { myResult = new CancellationRequestStatusListService(); break; }
-
+            case "Customs.ReferantTeamListService": { myResult = new ReferantTeamListService();; break; }
 
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }
  

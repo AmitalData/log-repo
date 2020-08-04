@@ -235,6 +235,7 @@ import { NbcDeclarationTypeListService } from './Services/StandardLists/NbcDecla
 import { ExporterRoleTypeListService } from './Services/StandardLists/ExporterRoleTypeListService';
 import { AutonomyRegionTypeListService } from './Services/StandardLists/AutonomyRegionTypeListService';
 import { AmendmentStatusListService } from './Services/StandardLists/AmendmentStatusListService';
+import { ReferantTeamListService } from './Services/StandardLists/ReferantTeamListService';
 
 
 
@@ -291,6 +292,8 @@ import { DeclarationCargoSplitPMService } from './Services/StandardPMs/Declarati
 import { CustomsAirlinePMService } from './Services/StandardPMs/CustomsAirlinePMService';
 import { CustomsCountryPMService } from './Services/StandardPMs/CustomsCountryPMService';
 import { PendingByKeywordPMService } from './Services/StandardPMs/PendingByKeywordPMService';
+import { ReferantTeamPMService } from './Services/StandardPMs/ReferantTeamPMService';
+
 
 //#endregion
 
@@ -620,6 +623,7 @@ export class ModuleProviders {
             case "CancellationReasonRequestTypeListService": { myResult = new CancellationReasonRequestTypeListService(); break; }
             case "CancellationRequestStatusListService": { myResult = new CancellationRequestStatusListService(); break; }
             case "AmendmentStatusListService": { myResult = new AmendmentStatusListService(); break; }
+            case "ReferantTeamListService": { myResult = new ReferantTeamListService(); break; }
 
              //#endregion                
 
@@ -677,6 +681,8 @@ export class ModuleProviders {
             case "CustomsCountryPMService": { myResult = new CustomsCountryPMService(); break; }
             case "PendingByKeywordPMService": { myResult = new PendingByKeywordPMService(); break; }
             case "CurrencyTypePMService": { myResult = new CurrencyTypePMService(); break; }
+            case "ReferantTeamPMService": { myResult = new ReferantTeamPMService(); break; }
+
             //#endregion
 
             //#region ExtendedLists

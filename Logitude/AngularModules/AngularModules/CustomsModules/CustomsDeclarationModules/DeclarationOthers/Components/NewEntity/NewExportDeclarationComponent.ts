@@ -93,8 +93,7 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
 
  
     OkButtonClicked() {
-        debugger;
-         var idIndex = this.CurrentSession.GetNewId("RadioButton");
+          var idIndex = this.CurrentSession.GetNewId("RadioButton");
         var errors: string[] = [];
         this.ValidationErrorsList = [];
 

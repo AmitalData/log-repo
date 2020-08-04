@@ -202,7 +202,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = referantTeamQuery.GetListCount(queryOperations);
+                    int count = referantTeamQuery.GetListCount(queryOperations, tenant);
                     response.Count = count;
                 }
 

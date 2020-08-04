@@ -1166,7 +1166,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             if (!string.IsNullOrWhiteSpace(eventContextTagModel.EventCode))
                             {
-                                DoUpdateNotification(dirtyDeclarationPM, loggingUserId, eventContextTagModel.EventCode); // moran 11.8.14 - Task 7086
+                                if(dirtyDeclarationPM.IsAmendment==true)
+                                {
+                                    string declarationNumber = null;
+                                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(dirtyDeclarationPM.Tenant);
+                                    var dec = declarationQueryService.GetAcceptDeclarationAmendment(dirtyDeclarationPM.AmendmentOriginalDeclartation,dirtyDeclarationPM.Tenant);
+                                    if(dec!=null)
+                                    {
+                                        declarationNumber = dec.DeclarationNumber;
+                                    }
+                                    DoUpdateNotification(dirtyDeclarationPM, loggingUserId, eventContextTagModel.EventCode, declarationNumber); // moran 11.8.14 - Task 7086
+
+                                }
+                                else
+                                {
+                                    DoUpdateNotification(dirtyDeclarationPM, loggingUserId, eventContextTagModel.EventCode); // moran 11.8.14 - Task 7086
+
+                                }
                             }
                         }
                         break;
@@ -1185,7 +1201,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
         // moran 11.8.14 - Task 7086 -->
-        private void DoUpdateNotification(DeclarationPM declarationPM, string loggingUserId, string eventCode)
+        private void DoUpdateNotification(DeclarationPM declarationPM, string loggingUserId, string eventCode, string declarationNumber="")
         {
             string notificationDefinitionCode = "";
             string desc = "";
@@ -1251,11 +1267,49 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             else if (eventCode == "DCH")
             {
                 notificationDefinitionCode = "5117N";
-                desc = "בוצע תיקון הצהרה " + declarationPM.DeclarationNumber;
+                if(string.IsNullOrEmpty( declarationPM.AmendmentRequestNumber))
+                desc = "בוצע תיקון הצהרה " + declarationNumber;
+                else
+                    desc = "בוצע תיקון הצהרה " + declarationNumber + " מספר בקשה  - " + declarationPM.AmendmentRequestNumber;
+
                 type = "A";
                 LogMessagingUtil.Instance.AppendLine("Declaration Changed By Customs Notification");
             }
 
+            else if (eventCode == "DWR")
+            {
+                notificationDefinitionCode = "5117W";
+                desc = "תיקון הצהרה ממתין לטיפול המכס " + declarationNumber + " מספר בקשה - " + declarationPM.AmendmentRequestNumber;
+                type = "A";
+             }
+
+            else if (eventCode == "DMA")
+            {
+                notificationDefinitionCode = "5117A";
+                desc = "- תיקון הצהרה אושר" + declarationNumber + " מספר בקשה - " + declarationPM.AmendmentRequestNumber;
+                type = "A";
+            }
+
+            else if (eventCode == "DMD")
+            {
+                notificationDefinitionCode = "5117D";
+                desc = "תיקון הצהרה נדחה - " + declarationNumber + " מספר בקשה - " + declarationPM.AmendmentRequestNumber;
+                type = "A";
+            }
+
+            else if (eventCode == "DMC")
+            {
+                notificationDefinitionCode = "5117C";
+                desc = "תיקון הצהרה בוטל - " + declarationNumber + " מספר בקשה - " + declarationPM.AmendmentRequestNumber;
+                type = "A";
+            }
+
+            else if (eventCode == "DMP")
+            {
+                notificationDefinitionCode = "5117P";
+                desc = "תיקון הצהרה אושר חלקית - " + declarationNumber + "מספר בקשה - " + declarationPM.AmendmentRequestNumber;
+                type = "A";
+            }
             var notificationUpdateService = new NotificationUpdateService(this.MainContext as ICustomContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), declarationPM.Tenant);    //Yuval Chalup 17.11.2014 TASK-9089
             var notificationQueryService = new NotificationQueryService(this.MainContext as ICustomContext);  //Yuval Chalup 17.11.2014 TASK-9089
 
@@ -1480,6 +1534,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
         {
+            LogitudeSettings.HandleLogMe(
+                "DeclarationId:" + myDeclarationPM.Id + Environment.NewLine + Environment.StackTrace.ToString()
+                , false, "8250", new DateTime(2021, 1, 1));
+
             var mySBQMessage = new SBQMessageService();
             var newSearchDeclarationStatusRequestParams = new DeclarationStatusRequestParams()
             {

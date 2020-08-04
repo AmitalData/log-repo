@@ -1632,6 +1632,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
                     case "Customs.ExceptionReason":
+                    case "Customs.ReferantTeam":
                     //case "Customs.InternationalSite":
                         selectedEntityId = $event.rowData.Code;
                         break;

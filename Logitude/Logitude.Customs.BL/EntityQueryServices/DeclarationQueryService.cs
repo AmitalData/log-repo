@@ -283,6 +283,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
+        public int GetDeclarationMaxCancelRequestNumber(int tenant, string id)
+        {
+            DeclarationRepository declarationRepository = new DeclarationRepository(context);
+            return declarationRepository.GetDeclarationMaxCancelRequestNumber(tenant, id);
+        }
+
+
         public string GetIdByDeclarationNumber(string declarationNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(declarationNumber)) return "";
@@ -1741,6 +1748,24 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return isFreight;
         }
 
+        public DeclarationPM GetDeclarationAmendmentByIdAndAmendmentNo(int tenant, string id, string requestNumber)
+        {
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+
+            DeclarationPM decPm = new DeclarationPM();
+            var decs = repository.GetDeclarationAmendmentsById(tenant, id);
+
+            var dec= decs.FirstOrDefault(x => x.AmendmentRequestNumber == requestNumber);
+
+            mapping.CustomPOCOToPM(decPm, dec);
+            mapping.POCOToPM(decPm, dec);
+
+
+            return decPm;
+        }
+
+
+
         public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById = false)
         {
 
@@ -1773,7 +1798,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             if (orderById)
             {
-                declarationLists = declarationLists.OrderBy(x =>Convert.ToInt32(x.AmendmentRequestNumber)).ToList();
+                declarationLists = declarationLists.OrderBy(x =>x.Id).ToList();
                 declarationLists.ForEach(x => { x.AmendmentNumber = i; i++; });
 
                 return declarationLists.ToList();

@@ -17,17 +17,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         int? maxCounter;
         protected override void OnCreating(DeclarationExportRecipientPM entityPM, DeclarationPM entityParentPM)
         {
-            entityPM.DeclarationId = entityParentPM.Id;
+             entityPM.DeclarationId = entityParentPM.Id;
+            entityPM.Tenant = entityParentPM.Tenant;
+            //entityPM.LineNumber
 
-           
             if (!this.maxCounter.HasValue)
             {
                 ICustomContext _Context = MainContext as CustomContext;
                 //var DeclarationExportQueryService = new DeclarationExportRecipientQueryService(_Context);
-                
+
                 this.maxCounter = (this.Repository as DeclarationExportRecipientRepository).GetMaxCounterKey(entityPM.DeclarationId, entityPM.Tenant) ?? 0;
             }
-            maxCounter = entityPM.LineNumber  = maxCounter.Value + 1;
+            maxCounter = entityPM.LineNumber = maxCounter.Value + 1;
         }
     }
 }

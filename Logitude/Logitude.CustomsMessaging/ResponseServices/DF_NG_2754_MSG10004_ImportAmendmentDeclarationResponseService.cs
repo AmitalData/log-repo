@@ -132,12 +132,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         isFromAmendment = true;
                     }
 
-                    if (isFromAmendment)
-                    {
-                        declarationOrg.IsAmendment = false;
-                        declarationOrg.ChangeSetOp = ChangeSetOperation.Update;
-                        declarationUpdateService.Update(declarationOrg, true);
-                    }
+                    //if (isFromAmendment)
+                    //{
+                    //    declarationOrg.IsAmendment = false;
+                    //    declarationOrg.ChangeSetOp = ChangeSetOperation.Update;
+                    //    declarationUpdateService.Update(declarationOrg, true);
+                    //}
 
                     decIdOrg = declarationOrg.Id;
                 }
@@ -183,8 +183,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (isFromAmendment)
                     {
-                        declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
-                        declarationPM.AmendmentRequestNumber = declarationOrg.AmendmentRequestNumber;
+                        declarationPM.ReplacingRepairRequest = declarationOrg.AmendmentRequestNumber;
+                       declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
+                        //declarationPM.AmendmentRequestNumber = declarationOrg.AmendmentRequestNumber;
                     }
                     else
 

@@ -506,13 +506,56 @@ namespace Logitude.Customs.Def.ClosedTable
                 AssigneeNotificationTypeCode = "A",
             });
 
+
+            all.Add(new NotificationDefinitionDetails()  
+            {
+                Code = "5117A",
+                EnglishName = "Declaration Amendment Approved",
+                LocalName = "תיקון הצהרה אושרה",
+                AssigneeNotificationTypeCode = "A",
+            });
+
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "5117P",
+                EnglishName = "Declaration Amendment Partial Approval",
+                LocalName = "תיקון הצהרה אושרה חלקית",
+                AssigneeNotificationTypeCode = "A",
+            });
+
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "5117D",
+                EnglishName = "Declaration Amendment Denial",
+                LocalName = "תיקון הצהרה נדחתה",
+                AssigneeNotificationTypeCode = "A",
+            });
+
+
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "5117C",
+                EnglishName = "Declaration Amendment Denial",
+                LocalName = "תיקון הצהרה בוטלה",
+                AssigneeNotificationTypeCode = "A",
+            });
+
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "5117W",
+                EnglishName = "Amendment Waiting for customs response",
+                LocalName = "תיקון הצהרה ממתינה לטיפול מכס",
+                AssigneeNotificationTypeCode = "A",
+            });
+
             all.Add(new NotificationDefinitionDetails() // moran 13.7.15 - Task 14521  
             {
-                Code = "2754N",
-                EnglishName = "Declaration Re-Payment Needed",
+                Code = "2754C",
+                EnglishName = "Declaration Amendment Cancelled",
                 LocalName = "יש להגיש הצהרה מחדש",
                 AssigneeNotificationTypeCode = "A",
             });
+
 
             all.Add(new NotificationDefinitionDetails() // Mirit 10.08.15 - Task 15423 
             {

@@ -156,7 +156,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     loggingUserId = user.Id;
                 }
 
-
+                EventContextTagModel myUpdateEventContextTagModel = null;
 
                 string key = ProcessLockTableUtil.Instance.GetKey4Declaration(_MyDeclarationPM.Id, requestParams.Tenant);
                 using (var disposableToken =
@@ -189,29 +189,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         {
                                             case "1":
 
-                                                var declarationParent = myDeclarationQueryService.GetSingleDeclarationById(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
+                                                var declarationParent = myDeclarationQueryService.GetAcceptDeclarationAmendment(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
 
                                                 _MyDeclarationPM.AmendmentDontDisplayInList = false;
                                                 _MyDeclarationPM.AmendmentStatus = "3";
-                                                if(declarationParent!=null)
-                                                {
-                                                    _MyDeclarationPM.DeclarationNumber = declarationParent.DeclarationNumber;
-                                                    declarationParent.AmendmentDontDisplayInList = true;
-                                                    declarationParent.DeclarationNumber = null;
-
-
-                                                    declarationParent.ChangeSetOp = ChangeSetOperation.Update;
-                                                    myDeclarationUpdateService.Update(declarationParent, true);
-
-
-
-                                                }
+                                                UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
+                                                UpdateParentDec(myDeclarationUpdateService, declarationParent);
                                                 var amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                                                 {
                                                     Tenant = _MyDeclarationPM.Tenant,
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DMA",
-                                                    notes = null,
+                                                    notes = "- תיקון הצהרה אושר" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
                                                     EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
@@ -225,10 +214,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                         xml_status = "new",
                                                         status_id = "DMA",
                                                         status_DateTime = DateTime.Now,
-                                                        comments = null,
+                                                        comments = "- תיקון הצהרה אושר" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     }
                                                 };
                                                 AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
+
+                                                myUpdateEventContextTagModel = new EventContextTagModel()
+                                                {
+                                                    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
+                                                    EventCode = "DMA",
+                                                    EventRemarks = "Declaration Amendment Approved",
+                                                    FUStatusRemarks = "- תיקון הצהרה אושר" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
+                                                };
+
                                                 break;
 
                                             case "4":
@@ -240,7 +238,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     Tenant = _MyDeclarationPM.Tenant,
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DMD",
-                                                    notes = null,
+                                                    notes = "תיקון הצהרה נדחה - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
                                                     EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
@@ -254,12 +252,35 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                         xml_status = "new",
                                                         status_id = "DMD",
                                                         status_DateTime = DateTime.Now,
-                                                        comments = null,
+                                                        comments = "תיקון הצהרה נדחה - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     }
                                                 };
 
                                                 AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel2);
-                                            
+                                                  myUpdateEventContextTagModel = new EventContextTagModel()
+                                                {
+                                                    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
+                                                    EventCode = "DMD",
+                                                    EventRemarks = "Declaration Amendment Denial",
+                                                    FUStatusRemarks = "תיקון הצהרה נדחה - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
+                                                };
+
+
+
+                                                List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
+                                                //if ((customResponse.Response.Declaration != null) && (currentXmlVersionId == null || !currentXmlVersionId.Contains(customResponse.Response.Declaration.DMExtensions.VersionID.Value)))
+                                                //{
+
+                                                    var customResponseResponseXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
+                                                        .SerializeObject(customResponse.Response);
+
+                                                    var importDeclarationServiceReferenceResponse = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.Response>
+                                                        .DeSerializeObject(customResponseResponseXml);
+                                                    ////5117 5117 5117 5117 5117
+                                                    List<error> systemMessagesList = new List<error>();
+                                                
+                                                    this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant);
+                                               // }
 
                                                 break;
 
@@ -272,7 +293,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     Tenant = _MyDeclarationPM.Tenant,
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DMC",
-                                                    notes = null,
+                                                    notes = "תיקון הצהרה בוטל - " +( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
                                                     EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
@@ -286,12 +307,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                         xml_status = "new",
                                                         status_id = "DMC",
                                                         status_DateTime = DateTime.Now,
-                                                        comments = null,
+                                                        comments = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber )+ " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     }
                                                 };
 
                                                 AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel3);
-
+                                                myUpdateEventContextTagModel = new EventContextTagModel()
+                                                {
+                                                    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
+                                                    EventCode = "DMC",
+                                                    EventRemarks = "Declaration Amendment Cancelled",
+                                                    FUStatusRemarks = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
+                                                };
 
 
 
@@ -303,20 +330,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             case "2":
                                                 _MyDeclarationPM.AmendmentStatus = "6";
                                                 _MyDeclarationPM.AmendmentDontDisplayInList = false;
-                                                declarationParent = myDeclarationQueryService.GetSingleDeclarationById(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
-                                                if (declarationParent != null)
-                                                {
-                                                    declarationParent.AmendmentDontDisplayInList = true;
-                                                    declarationParent.ChangeSetOp = ChangeSetOperation.Update;
-                                                    myDeclarationUpdateService.Update(declarationParent, true);
-                                                }
-                                               
+
+                                                 declarationParent = myDeclarationQueryService.GetAcceptDeclarationAmendment(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
+
+                                                UpdateParentDec(myDeclarationUpdateService, declarationParent);
+                                                UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
+
+
                                                 var myAmitalEventTracerModel4 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                                                 {
                                                     Tenant = _MyDeclarationPM.Tenant,
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DMP",
-                                                    notes = null,
+                                                    notes = "תיקון הצהרה אושר חלקית - " + ( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber )+ "מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
                                                     EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
@@ -330,12 +356,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                         xml_status = "new",
                                                         status_id = "DMP",
                                                         status_DateTime = DateTime.Now,
-                                                        comments = null,
+                                                        comments = "תיקון הצהרה אושר חלקית - " +( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + "מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     }
                                                 };
 
                                                 AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel4);
-
+                                                myUpdateEventContextTagModel = new EventContextTagModel()
+                                                {
+                                                    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
+                                                    EventCode = "DMP",
+                                                    EventRemarks = "Declaration Amendment Partial Approval",
+                                                    FUStatusRemarks = "תיקון הצהרה אושר חלקית - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + "מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
+                                                };
 
                                                 break;
 
@@ -347,7 +379,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     Tenant = _MyDeclarationPM.Tenant,
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DWR",
-                                                    notes = null,
+                                                    notes = "תיקון הצהרה ממתין לטיפול המכס - " +( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber )+ " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
                                                     EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
@@ -361,12 +393,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                         xml_status = "new",
                                                         status_id = "DWR",
                                                         status_DateTime = DateTime.Now,
-                                                        comments = null,
+                                                        comments = "תיקון הצהרה ממתין לטיפול המכס - " +( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     }
                                                 };
 
                                                 AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel5);
+                                                myUpdateEventContextTagModel = new EventContextTagModel()
+                                                {
+                                                    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
+                                                    EventCode = "DWR",
+                                                    EventRemarks = "Declaration Amendment Waiting for customs response",
+                                                    FUStatusRemarks = "תיקון הצהרה ממתין לטיפול המכס - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
+                                                };
 
+                                                UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
 
                                                 break;
                                         };
@@ -378,6 +418,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                         }
                     }
+
+
+                    if (myUpdateEventContextTagModel != null)
+                        this._MyDeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
                     if (fromMehes)
                     {
                         _MyDeclarationPM.AmendmentCorrectedByUserId = loggingUserId;
@@ -385,33 +429,47 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
  
                     }
-                    if(_MyDeclarationPM.AmendmentStatus == "3")
+                    if(_MyDeclarationPM.AmendmentStatus == "3"  || _MyDeclarationPM.AmendmentStatus == "6")
                     {
                         _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
-
-                        var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                        _MyDeclarationPM.PaymentDate = _MyDeclarationPMOrg.PaymentDate;
+                        if (fromMehes)
                         {
-                            Tenant = _MyDeclarationPM.Tenant,
-                            objectTableName = "Customs.Declaration",
-                            EventCode = "DCH",
-                            notes = null,
-                            CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
-                            EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
-                            UserId = loggingUserId,
-
-                            CommunicationSubject = "FU Status DCH from logitude ",
-                            MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                             {
-                                entname = "CFIFILEM",
-                                primary_number = _MyDeclarationPM.CustomFileNo,
-                                status = "new",
-                                xml_status = "new",
-                                status_id = "DCH",
-                                status_DateTime = DateTime.Now,
-                                comments = null,
-                            }
-                        };
-                        AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+                                Tenant = _MyDeclarationPM.Tenant,
+                                objectTableName = "Customs.Declaration",
+                                EventCode = "DCH",
+                                notes = "-  בוצע תיקון הצהרה" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
+                                CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
+                                EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
+                                UserId = loggingUserId,
+
+                                CommunicationSubject = "FU Status DCH from logitude ",
+                                MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                                {
+                                    entname = "CFIFILEM",
+                                    primary_number = _MyDeclarationPM.CustomFileNo,
+                                    status = "new",
+                                    xml_status = "new",
+                                    status_id = "DCH",
+                                    status_DateTime = DateTime.Now,
+                                    comments = "-  בוצע תיקון הצהרה" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
+                                }
+                            };
+                            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+
+
+                            myUpdateEventContextTagModel = new EventContextTagModel()
+                            {
+                                CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
+                                EventCode = "DCH",
+                                EventRemarks = "Declaration Changed By Customs",
+                                FUStatusRemarks = "בוצע תיקון הצהרה" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
+                            };
+
+                        }
+
 
                         List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
                         if ((customResponse.Response.Declaration != null) && (currentXmlVersionId == null || !currentXmlVersionId.Contains(customResponse.Response.Declaration.DMExtensions.VersionID.Value)))
@@ -645,7 +703,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
                         EventCode = "DCH",
                         EventRemarks = "Declaration Changed By Customs",
-                        FUStatusRemarks = "בוצע תיקון הצהרה" + this._MyDeclarationPM.DeclarationNumber,
+                        FUStatusRemarks = "בוצע תיקון הצהרה" + ( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
                     };
 
                     this._MyDeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
@@ -745,7 +803,36 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             }
         }
-       
+
+        private void UpdateParentDec(DeclarationUpdateService myDeclarationUpdateService, DeclarationPM declarationParent)
+        {
+            if (declarationParent != null)
+            {
+                _MyDeclarationPM.DeclarationNumber = declarationParent.DeclarationNumber;
+                declarationParent.AmendmentDontDisplayInList = true;
+                declarationParent.DeclarationNumber = null;
+
+
+                declarationParent.ChangeSetOp = ChangeSetOperation.Update;
+                myDeclarationUpdateService.Update(declarationParent, true);
+
+
+
+            }
+        }
+
+        private void UpdateReplacingDeclaration(GenericRequestParams requestParams, DeclarationQueryService myDeclarationQueryService, DeclarationUpdateService myDeclarationUpdateService)
+        {
+            if (!string.IsNullOrEmpty(_MyDeclarationPM.ReplacingRepairRequest))
+            {
+                var declarationReplacing = myDeclarationQueryService.GetDeclarationAmendmentByIdAndAmendmentNo(requestParams.Tenant, _MyDeclarationPM.AmendmentOriginalDeclartation, _MyDeclarationPM.ReplacingRepairRequest);
+                declarationReplacing.AmendmentStatus = "7";
+                declarationReplacing.ChangeSetOp = ChangeSetOperation.Update;
+                myDeclarationUpdateService.Update(declarationReplacing, true);
+
+            }
+        }
+
 
         //        private void UpdateDeclaration(Response response)
         //        {

@@ -6,7 +6,6 @@ export class DynamicLoader {
   public static LazyWidgets: { [key: string]: () => Promise<NgModuleFactory<any> | Type<any>> };
   public static ModulesBank: ModuleProfile[] = [];
   public static Load(myPath: string, location: ViewContainerRef): Promise<ComponentRef<any>> {
-
     if (!myPath || !location) {
       alert("Invalid DynamicLoader Load arguments");
     }

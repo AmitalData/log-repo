@@ -27,6 +27,7 @@ namespace Logitude.Customs.Data.Repsitories
 
         public int? GetMaxCounterKey(string declarationId, int tenant)
         {
+            var x = context.DeclarationExportRecipients.Where(a => a.DeclarationId == declarationId);
             return (from a in context.DeclarationExportRecipients
                     where a.DeclarationId == declarationId && a.Tenant == tenant
                     select a).Max(d => (int?)d.LineNumber) ?? 0;
