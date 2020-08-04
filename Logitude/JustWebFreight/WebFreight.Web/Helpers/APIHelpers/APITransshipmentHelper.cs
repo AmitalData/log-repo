@@ -14,10 +14,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private int tenant;
         private ShipmentPM shipmentPM;
         private PortRepository portRepository;
+        private CardRepository cardRepository;
         public APITransshipmentHelper(ShipmentPM shipment, int tenant)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             portRepository = new PortRepository(commonContext);
+            cardRepository = new CardRepository(commonContext);
 
             this.shipmentPM = shipment;
             this.tenant = tenant;
@@ -32,16 +34,131 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     throw new ApplicationException("Wrong Transshipment index");
                 }
 
-                if (string.IsNullOrEmpty(item.PortId))
+                else
                 {
-                    throw new ApplicationException("Missing Transshipment " + item.LegIndex + " port");
-                }
+                    if (item.LegIndex == 2)
+                    {
+                        if (!shipmentPM.Transshipments.Where(d => d.LegIndex == 1).Any())
+                        {
+                            throw new ApplicationException("Wrong Transshipment index");
+                        }
+                    }
 
+                    else
+                    {
+                        if (item.LegIndex == 3)
+                        {
+                            if (!shipmentPM.Transshipments.Where(d => d.LegIndex == 2).Any())
+                            {
+                                throw new ApplicationException("Wrong Transshipment index");
+                            }
+                        }
+                    }
+                }
+                
                 if (!string.IsNullOrEmpty(item.VesselId) && shipmentPM.TransportModeId != "O")
                 {
                     throw new ApplicationException("Can't send vessel for non-ocean shipments");
                 }
+                
+                this.ValidatePort(item.PortId, item.LegIndex);
+                this.ValidateCarrier(item.CarrierId, item.LegIndex);
             }
+        }
+        private void ValidatePort(string portId, int index)
+        {
+            if (string.IsNullOrEmpty(portId))
+            {
+                throw new ApplicationException("Missing Transshipment " + index + " port");
+            }
+
+            else
+            {
+                bool isValid = true;
+                Port myPort = portRepository.GetSinglePort(portId, tenant);
+                if (myPort != null)
+                {
+                    switch (shipmentPM.TransportModeId)
+                    {
+                        case "A":
+                            {
+                                if(!myPort.IsAir)
+                                {
+                                    isValid = false;                                    
+                                }
+                                break;
+                            }
+
+                        case "I":
+                            {
+                                if (!myPort.IsInland)
+                                {
+                                    isValid = false;
+                                }
+                                break;
+                            }
+
+                        case "O":
+                            {
+                                if (!myPort.IsOcean)
+                                {
+                                    isValid = false;
+                                }
+                                break;
+                            }
+                    }
+
+                    if (!isValid)
+                    {
+                        throw new ApplicationException("Transshipment " + index + " port transport mode is different than shipment transport mode");
+                    }
+                }
+            }
+        }
+        private void ValidateCarrier(string carrierId, int index)
+        {
+            if(!string.IsNullOrEmpty(carrierId))
+            {
+                bool isValid = true;
+                Card myCarrier = cardRepository.GetSingleCard(carrierId, tenant);
+                if(myCarrier != null)
+                {
+                    switch (shipmentPM.TransportModeId)
+                    {
+                        case "A":
+                            {
+                                if (myCarrier.PartnerTypeId != "AL")
+                                {
+                                    isValid = false;
+                                }
+                                break;
+                            }
+
+                        case "I":
+                            {
+                                if (myCarrier.PartnerTypeId != "TR")
+                                {
+                                    isValid = false;
+                                }
+                                break;
+                            }
+
+                        case "O":
+                            {
+                                if (myCarrier.PartnerTypeId != "SL")
+                                {
+                                    isValid = false;
+                                }
+                                break;
+                            }
+                    }
+
+                    if (!isValid)
+                    {
+                        throw new ApplicationException("Transshipment " + index + " carrier is not allowed for shipment transport mode");
+                    }
+                }
+            }            
         }
 
         public void MapTransshipments()
