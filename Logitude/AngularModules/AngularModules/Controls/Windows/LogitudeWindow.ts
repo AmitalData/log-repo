@@ -515,8 +515,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     private ComponentRef: any = null;
     private ComponentInstance: any = null;
     private LoadComponent() {
-        debugger;
-        if (this.isLoaderReady) {
+         if (this.isLoaderReady) {
             if (this.ChildComponentPath != null) {
 
                 if (this.IsEditComponent) {

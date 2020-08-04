@@ -130,8 +130,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         currRequestParams.RequestName = "Declaration Cancellation Request";
         currRequestParams.ResponseName = "Declaration Cancellation Response";
         currRequestParams.RequestVIA = this.RequestVIA;
-        debugger;
-        this._declarationPMService.update(this.EntityPM).subscribe(x => {
+         this._declarationPMService.update(this.EntityPM).subscribe(x => {
 
 
             if (customSendOptionsArgs.TestCase) {
