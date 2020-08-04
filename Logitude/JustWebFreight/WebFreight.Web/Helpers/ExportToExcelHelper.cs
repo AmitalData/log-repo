@@ -603,7 +603,7 @@ namespace WebFreight.Web.Helpers
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             workbook.Version = ExcelVersion.Excel2007;
             IWorksheet sheet = workbook.Worksheets[0];
-         
+
             int count = dataTable.Columns.Count;
             List<DataColumn> deletedColumns = new List<DataColumn>();
 
@@ -667,12 +667,34 @@ namespace WebFreight.Web.Helpers
                             writeRange.HorizontalAlignment = ExcelHAlign.HAlignRight;
                             writeRange.NumberFormat = "###,##";
                             break;
-                      
+
                         default:
                             writeRange.HorizontalAlignment = ExcelHAlign.HAlignLeft;
                             break;
                     }
                 }
+            }
+
+
+            int cellRow = 2;
+            foreach (DataRow row in dataTable.Rows)
+            {
+                int cellCol = 1;
+                for (int j = 1; j <= dataTable.Columns.Count; j++)
+                {
+                    var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[j - 1].ColumnName).FirstOrDefault();
+                    if (agColumn != null)
+                    {
+                        if (agColumn.DataTypeCode == "Text")
+                        {
+                            string value = Convert.ToString(row[agColumn.Name]);
+                            sheet.Range[cellRow, cellCol].Text = value;
+                        }
+                    }
+                    cellCol++;
+
+                }
+                cellRow++;
             }
             
             workbook.SaveAs(memory);
