@@ -21167,6 +21167,36 @@
       LocalDefaultText="&quot;למחוק פרטי מקבל?&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.TH.ExporterInvoices&quot;"
+      DefaultText="&quot;Exporter Invoices&quot;"
+      LocalDefaultText="&quot;חשבונות יצואן&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ExporterInvoice&quot;"
+      DefaultText="&quot;Exporter Invoice&quot;"
+      LocalDefaultText="&quot;חשבון יצואן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ModificationsExport&quot;"
+      DefaultText="&quot;Modifications&quot;"
+      LocalDefaultText="&quot;הפחתות / התאמות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.UCR&quot;"
+      DefaultText="&quot;UCR&quot;"
+      LocalDefaultText="&quot;זיהוי מטען&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.PaymentDetails&quot;"
+      DefaultText="&quot;Payment Details&quot;"
+      LocalDefaultText="&quot;פרטי תשלום&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
