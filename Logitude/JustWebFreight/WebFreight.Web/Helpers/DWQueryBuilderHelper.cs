@@ -19,6 +19,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using WebFreight.Web.DataContracts;
+using WebFreight.Web.Helpers.DataWarehouse;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Helpers
@@ -501,9 +502,22 @@ namespace WebFreight.Web.Helpers
                 sqlCommandDefinition = GetWhereStmtForFiltersList(MyFilterList, !string.IsNullOrEmpty(Filters.AndOr) ? Filters.AndOr : "And", sqlCommandDefinition);
             }
 
-            //this.Notes = SelectStmt;
             FromTables = FromTables.Where(a => a != Fact).ToList();
-            //var MeFactName = "";
+
+
+            DWObjectFieldAdditionalFactService dWObjectFieldAdditionalFactService = new DWObjectFieldAdditionalFactService(DWQueryParam.FactTableName, Tenant);
+            if (dWObjectFieldAdditionalFactService.IsHaveAddAdditionalFactFields)
+            {
+                dWObjectFieldAdditionalFactService.LoadDWObjectFieldsWithAdditionalFactFields();
+                if (FinalSelectStmt.Contains(dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode))
+                {
+
+                }
+
+
+            }
+          
+
             foreach (var mytbl in InnerTables)
             {
                 //var Key = this.AllFieldsObsList.filter(a => a.DWObjectTableCode == mytbl.ParentDimTabelName && a.IsPrimaryKey == true)[0];

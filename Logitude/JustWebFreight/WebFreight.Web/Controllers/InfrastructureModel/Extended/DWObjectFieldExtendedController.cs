@@ -32,6 +32,7 @@ using Logitude.BL.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using WebFreight.Web.Helpers.DataWarehouse;
 
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 {
@@ -75,14 +76,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                //SecurityUtility.CheckContactFeature("DWObjectField", "READ", authToken.Tenant);
-                DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(authToken.Tenant);
-                //var Category1Group = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, DWOTId).GroupBy(a => a.Category1);
-                //var Category2Group = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, DWOTId).GroupBy(a => a.Category2);
-                var CategoryGroup = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, DWOTId).GroupBy(a => a.Category);
-
-
-
+                DWObjectFieldAdditionalFactService dWObjectFieldAdditionalFactService = new DWObjectFieldAdditionalFactService(DWOTId, authToken.Tenant, true);
+                var factFields = dWObjectFieldAdditionalFactService.DWObjectFieldPMs;
+                var CategoryGroup = factFields.GroupBy(a => a.Category);
 
                 DWHSettingRepository dWHSettingRepository = new DWHSettingRepository(authToken.Tenant);
                 var isParentTenant =   dWHSettingRepository.IsParentTenant(authToken.Tenant);
