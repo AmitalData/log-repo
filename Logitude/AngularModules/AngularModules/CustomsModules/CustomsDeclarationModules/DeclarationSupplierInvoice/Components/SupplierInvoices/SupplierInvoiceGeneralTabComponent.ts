@@ -3780,7 +3780,7 @@ export class SupplierInvoiceFreightAmountLine extends BaseComponent {
 
 
                     confirmWindow.Width = 400;
-
+                     
 
                     confirmWindow.Height = 200;
                     confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
