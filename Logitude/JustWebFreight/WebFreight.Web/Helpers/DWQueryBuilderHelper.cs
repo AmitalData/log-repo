@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.DataContracts;
+using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
@@ -19,7 +20,6 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using WebFreight.Web.DataContracts;
-using WebFreight.Web.Helpers.DataWarehouse;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Helpers
@@ -82,9 +82,9 @@ namespace WebFreight.Web.Helpers
                         WhereStmt = WhereStmt;
                         if (WhereStmt != " where ")
                         {
-                               WhereStmt = WhereStmt + " " + AndOr + " ( ";
+                            WhereStmt = WhereStmt + " " + AndOr + " ( ";
                         }
-                       
+
                     }
                     sqlCommandDefinition = GetWhereStmtForFiltersList(Myfilter.FilterItems, !string.IsNullOrEmpty(Myfilter.AndOr) ? Myfilter.AndOr : "And", sqlCommandDefinition);
                     if (WhereStmt == " where ")
@@ -98,7 +98,7 @@ namespace WebFreight.Web.Helpers
                     if (WhereStmt != "" && GetIfFiltersHaveValues(Myfilter.FilterItems) == true)
                     {
                         WhereStmt = WhereStmt + " ) ";
-                 
+
                         WhereStmt = WhereStmt.Replace("And  (  )", "");
                         WhereStmt = WhereStmt.Replace("Or  (  )", "");
                     }
@@ -215,7 +215,7 @@ namespace WebFreight.Web.Helpers
                             {
 
                                 if (WhereStmt.Replace("(", "").Replace(")", "").Replace(" ", "") == "where") WhereStmt += "(";
-                        
+
                                 WhereStmt += "(" + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " = '' " + " ) " + AndOr + " ";
                             }
                             else if (filter.Operation.Code == "IsNotNull")
@@ -245,7 +245,7 @@ namespace WebFreight.Web.Helpers
                                 {
                                     if (WhereStmt.EndsWith("( "))
                                     {
-                                        
+
                                         //WhereStmt = WhereStmt.TrimEnd(' ').TrimEnd('('); 
                                         WhereStmt += " " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
                                     }
@@ -253,7 +253,7 @@ namespace WebFreight.Web.Helpers
                                     {
                                         WhereStmt += " " + AndOr + " " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
                                     }
-                                    
+
                                 }
                                 else
                                 {
@@ -280,7 +280,7 @@ namespace WebFreight.Web.Helpers
                                 if (WhereStmt.EndsWith("( "))
                                 {
                                     //WhereStmt = WhereStmt.TrimEnd(' ').TrimEnd('(');
-                                     WhereStmt += " " + sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
+                                    WhereStmt += " " + sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
 
                                 }
                                 else
@@ -504,35 +504,23 @@ namespace WebFreight.Web.Helpers
 
             FromTables = FromTables.Where(a => a != Fact).ToList();
 
-
-            DWObjectFieldAdditionalFactService dWObjectFieldAdditionalFactService = new DWObjectFieldAdditionalFactService(DWQueryParam.FactTableName, Tenant);
+            bool isDWQueryUsedAdditionalFact = false;
+            DWObjectFieldAdditionalFactService dWObjectFieldAdditionalFactService = new DWObjectFieldAdditionalFactService(new DWObjectFieldAdditionalFactArgs() { FactTableCode = DWQueryParam.FactTableName, Tenant = Tenant, DontLoadDwObjectField = true });
             if (dWObjectFieldAdditionalFactService.IsHaveAddAdditionalFactFields)
             {
                 dWObjectFieldAdditionalFactService.LoadDWObjectFieldsWithAdditionalFactFields();
-                if (FinalSelectStmt.Contains(dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode))
-                {
-
-                }
-
-
+                if (FinalSelectStmt.Contains(dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode) || WhereStmt.Contains(dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode)) isDWQueryUsedAdditionalFact = true;
             }
-          
 
+
+            string innerjoinSql = string.Empty;
             foreach (var mytbl in InnerTables)
             {
-                //var Key = this.AllFieldsObsList.filter(a => a.DWObjectTableCode == mytbl.ParentDimTabelName && a.IsPrimaryKey == true)[0];
                 var Key = OFieldQuery.GetPrimaryKeyFieldForDWObjectTable(mytbl.ParentDimTabelName);
-                //MeFactName = OFieldQuery.GetFactTableCode(mytbl.ParentDimTabelName);
-                var FactKey = mytbl.DimensionTableDisplayName;//.Split(' ')[0];
-
+                var FactKey = mytbl.DimensionTableDisplayName;
                 if ((mytbl.ParentDataTypeCode == "Dimension" || mytbl.ParentDataTypeCode.ToLower() == "lookup") && string.IsNullOrEmpty(mytbl.DimensionTableDisplayName))
                 {
-                    FactKey = mytbl.DisplayName;// DisplayName.Split(' ')[0];//OFieldQuery.GetFactKeyFieldForDWDimTable(Fact, mytbl.ParentDimTabelName);
-
-                    //if (!FactKey.Contains("]"))
-                    //{
-                    //    FactKey = FactKey + "]";
-                    //}
+                    FactKey = mytbl.DisplayName;
                 }
                 else if (mytbl.HideTree)
                 {
@@ -540,19 +528,25 @@ namespace WebFreight.Web.Helpers
                     {
                         FactKey = OFieldQuery.GetDWObjectFieldCodeByNameDimTable(mytbl.ParentDimTabelName, mytbl.DisplayName.Replace("[", "").Replace("]", ""));
                     }
-
                 }
                 if (FactKey != null && !FactKey.Contains("["))
                 {
                     FactKey = "[" + FactKey + "]";
                 }
 
-                //this.AllFieldsDataSource.filter(a => a.DimensionTableCode == mytbl.ParentDimTabelName)[0];
-                //(FactKey.DataTypeCode.ToLower() == "lookup" || FactKey.DataTypeCode.ToLower() == "dimension") ? FactKey.DisplayName : 
-                FinalSelectStmt += " inner join " + mytbl.ParentDimTabelName + " " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + " on " + Fact + "." + (FactKey) + " = " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + "." + Key.Code;
+                var factTable = dWObjectFieldAdditionalFactService.DWObjectFieldPMs.Where(d => d.Code == FactKey).Select(d => d.DWObjectTableCode).FirstOrDefault();
+                if (string.IsNullOrEmpty(factTable)) factTable = Fact;
 
+                if (factTable != Fact) isDWQueryUsedAdditionalFact = true;
 
+                innerjoinSql += " inner join " + mytbl.ParentDimTabelName + " " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + " on " + factTable + "." + (FactKey) + " = " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + "." + Key.Code;
             }
+
+            if (isDWQueryUsedAdditionalFact)
+            {
+                FinalSelectStmt += " inner join " + dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode + " " + " on " + Fact + "." + (dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactForeignKey) + " = " + dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode + ".Id";
+            }
+            FinalSelectStmt += innerjoinSql;
             var OrderByString = "" + Fact + ".Id_Number";
 
             //var HasAggregate = false;
