@@ -186,7 +186,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public IQueryable<DWObjectFieldPM> GetDWObjectFieldByDWObjectTableCode(int tenant, string dwotCode)
         {
             var TempList = (from a in repository.webFreightContext.DWObjectFields
-                            where a.Tenant == tenant && a.DWObjectTableCode == dwotCode && a.DisplayInQueryBuilder == true && a.CannotFilter == false
+                            where a.Tenant == tenant && a.DWObjectTableCode == dwotCode &&  a.CannotFilter == false
                             select new DWObjectFieldPM()
                             {
                                 Id = a.Id,

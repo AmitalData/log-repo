@@ -508,7 +508,7 @@ namespace WebFreight.Web.Helpers
             DWObjectFieldAdditionalFactService dWObjectFieldAdditionalFactService = new DWObjectFieldAdditionalFactService(new DWObjectFieldAdditionalFactArgs() { FactTableCode = DWQueryParam.FactTableName, Tenant = Tenant, DontLoadDwObjectField = true });
             if (dWObjectFieldAdditionalFactService.IsHaveAddAdditionalFactFields)
             {
-                dWObjectFieldAdditionalFactService.LoadDWObjectFieldsWithAdditionalFactFields();
+                dWObjectFieldAdditionalFactService.LoadDWObjectFields();
                 if (FinalSelectStmt.Contains(dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode) || WhereStmt.Contains(dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode)) isDWQueryUsedAdditionalFact = true;
             }
 

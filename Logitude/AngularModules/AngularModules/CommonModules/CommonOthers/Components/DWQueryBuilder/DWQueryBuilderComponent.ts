@@ -112,27 +112,42 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
     HeightFilterArea: number;
     HeightPreviewArea: number;
+
+
+
+
+
+    IsLoadShipmentEntityResource: boolean = false;
+    IsLoadShipmentMasterResource: boolean = false;
+    IsLoadShipmentARInvoiceResource: boolean = false;
+    IsLoadShipmentAPInvoiceResource: boolean = false;
+    IsLoadShipmentShipmentComputedFieldsResource: boolean = false;
+    IsLoadShipmentShipmentPayableResource: boolean = false;
+    IsLoadShipmentChargesTypeResource: boolean = false;
+
+
     constructor(private CD: ChangeDetectorRef) {
         super();
 
         this.InitializeService();
+        this.LoadEntityResources();
+    }
 
-        this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe((response: any) => {
-            this._entityResourceService.getEntityResourceByTableName("Master").subscribe((response: any) => {
-                this._entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) => {
-                    this._entityResourceService.getEntityResourceByTableName("APInvoice").subscribe((response: any) => {
-                    this._entityResourceService.getEntityResourceByTableName("ShipmentComputedFields").subscribe((response: any) => {
-                        this._entityResourceService.getEntityResourceByTableName("ShipmentPayable").subscribe((response: any) => {
-                            this._entityResourceService.getEntityResourceByTableName("ChargesType").subscribe((response: any) => {
-                                this.Start();
-                            });
-                        });
-                    });
-                    });
-                });
-            });
 
-        });
+    LoadEntityResources() {
+        this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe((response: any) => { this.IsLoadShipmentEntityResource = true; this.CompleteLoadEntityResources() });
+        this._entityResourceService.getEntityResourceByTableName("Master").subscribe((response: any) => { this.IsLoadShipmentMasterResource = true; this.CompleteLoadEntityResources()});
+        this._entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) => { this.IsLoadShipmentARInvoiceResource = true; this.CompleteLoadEntityResources()});
+        this._entityResourceService.getEntityResourceByTableName("APInvoice").subscribe((response: any) => { this.IsLoadShipmentAPInvoiceResource = true; this.CompleteLoadEntityResources()});
+        this._entityResourceService.getEntityResourceByTableName("ShipmentComputedFields").subscribe((response: any) => { this.IsLoadShipmentShipmentComputedFieldsResource = true; this.CompleteLoadEntityResources() });
+        this._entityResourceService.getEntityResourceByTableName("ShipmentPayable").subscribe((response: any) => { this.IsLoadShipmentShipmentPayableResource = true; this.CompleteLoadEntityResources() });
+        this._entityResourceService.getEntityResourceByTableName("ChargesType").subscribe((response: any) => { this.IsLoadShipmentChargesTypeResource = true; this.CompleteLoadEntityResources() });
+    }
+
+    CompleteLoadEntityResources() {
+        if (this.IsLoadShipmentEntityResource && this.IsLoadShipmentMasterResource && this.IsLoadShipmentARInvoiceResource && this.IsLoadShipmentAPInvoiceResource && this.IsLoadShipmentShipmentComputedFieldsResource && this.IsLoadShipmentShipmentPayableResource && this.IsLoadShipmentChargesTypeResource) {
+            this.Start();
+        }
 
     }
 
