@@ -2716,13 +2716,15 @@ namespace WebFreight.Web.ReportsWebServices
             List<string> cardIdsList = totalList.Select(s => s.CardId).ToList();
             cardIdsList = cardIdsList.Distinct().ToList();
 
-            List<CardEntityClass> allCardData = (from d in commonContext.Cards.Include("PaymentTerm")
+            List<CardEntityClass> allCardData = (from d in commonContext.Cards.Include("PaymentTerm").Include("PartnerType")
                                                  where d.Tenant == tenant && cardIdsList.Contains(d.Id)
                                                  select new CardEntityClass
                                                  {
                                                      Id = d.Id,
                                                      Name = d.EnglishName,
                                                      PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName,
+                                                     CardCode = d.Code,
+                                                     CardTypeName = d.PartnerType == null ? null : d.PartnerType.Name,
                                                  }).ToList();
 
             double? currencyRate = 0;
@@ -2845,6 +2847,8 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     acountsRecored.PaymentTerm = cardEntity.PaymentTerm;
                     acountsRecored.CustomerName = cardEntity.Name;
+                    acountsRecored.CardCode = cardEntity.CardCode;
+                    acountsRecored.CardTypeName = cardEntity.CardTypeName;
                 }
 
                 acountsRecored.CurrentDue = currentsum;
@@ -13534,6 +13538,8 @@ namespace WebFreight.Web.ReportsWebServices
         public string Id { get; set; }
         public string Name { get; set; }
         public string PaymentTerm { get; set; }
+        public string CardCode { get; set; }
+        public string CardTypeName { get; set; }
     }
 
     public class AgingStatemantDataItem
