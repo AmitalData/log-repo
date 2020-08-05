@@ -665,6 +665,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
                             // Refresh Data
                             this.ReloadScreen();
+                            this.SelectedLines.Clear();
+
 
                         });
                     });
