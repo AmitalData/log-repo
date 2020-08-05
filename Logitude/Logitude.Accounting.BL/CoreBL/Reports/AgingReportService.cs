@@ -485,6 +485,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      {
                          AccountId = acc.Id,
                          AccountDisplayNumber = acc.DisplayNumber,
+                         AccountInternalNumber = acc.InternalNumber,
+                         InterestCreditLimit = acc.InterestCreditLimit,
                          AccountTermName = card.PaymentTerm.EnglishName,
 
                          CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
@@ -498,7 +500,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                          CreditStatusAmount_AsIs = cust != null ? (cust.CreditLimitAmount != null ? (double)cust.CreditLimitAmount : 0) : 0,
                          BalanceInLocalCurrency = moredata != null ? (decimal)moredata.BalanceInLocalCurrency : 0.00m,
-                         
                          CustomerVatNumber = card.VatNumber,
                          GLAccountStandardInterestRate = (decimal)(glaPeriod.StandardAddInterestPercent == null ? 0 : glaPeriod.StandardAddInterestPercent+basePeriod.InterestRate),
 
@@ -560,8 +561,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         AccountEnglishName = r.AccountEnglishName,
                         AccountLocalName = r.AccountLocalName,
                         AccountDisplayNumber = r.AccountDisplayNumber,
+                        AccountInternalNumber = r.AccountInternalNumber,
                         AccountCurrencyCode = r.AccountCurrencyCode,
                         AccountTermName = r.AccountTermName,
+                        InterestCreditLimit = r.InterestCreditLimit,
                         CreditLimitAmount = r.CreditLimitAmount,
                         CreditStatusAmount_AsIs = r.CreditStatusAmount_AsIs,
                         CreditStatusAmount =
@@ -666,10 +669,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                       AccountEnglishName = account.AccountEnglishName,
                                                       AccountLocalName = account.AccountLocalName,
                                                       AccountDisplayNumber = account.AccountDisplayNumber,
+                                                      AccountInternalNumber = account.AccountInternalNumber,
                                                       AccountCurrencyCode = account.AccountCurrencyCode,
                                                       AccountTermName = account.AccountTermName,
 
                                                       CreditLimitAmount = account.CreditLimitAmount,
+                                                      InterestCreditLimit = account.InterestCreditLimit,
                                                       CreditStatusAmount_AsIs = account.CreditStatusAmount_AsIs,
                                                       BalanceInLocalCurrency = splitAccount!=null ? splitAccount.BalanceInLocalCurrency: account.BalanceInLocalCurrency,
                                                       TotalOpenShipments = account.TotalOpenShipments,
@@ -1330,6 +1335,7 @@ Period	Acc	Currency	Total
 
 
         public string AccountDisplayNumber { get; set; }
+        public string AccountInternalNumber { get; set; }
         public string AccountCurrencyCode { get; set; }
         //accountCardlist.Payment Term: //PaymentTermName = card.PaymentTerm == null ? null : card.PaymentTerm.EnglishName,
         public string AccountTermName { get; set; }
@@ -1368,6 +1374,7 @@ Period	Acc	Currency	Total
 
         //ccountCardlist?accountCardlist.CreditLimitAmount:0>>entityList.CreditLimitAmount = entityPOCO.Customer.CreditLimitAmount;
         public double? CreditLimitAmount { get; set; }
+        public decimal? InterestCreditLimit { get; set; }
 
         //this.creditStatusAmount = (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0) - this.accountTotal;
         public decimal? CreditStatusAmount { get; set; }
