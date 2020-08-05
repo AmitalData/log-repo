@@ -484,7 +484,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     if (OTName != null && OTName.Name == "Shipment" && !string.IsNullOrEmpty(this.Poco.EntityId))
                     {
                         var ShipmentCompField = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(this.Poco.EntityId, this.Poco.Tenant);
-                        ShipmentCompField.DocumentsSearchFields = entityRepository.GetEntityDocumentsSearchFields(this.Poco.EntityId, this.Poco.ObjectTableId, this.Poco.Tenant);
+                        ShipmentCompField.DocumentsSearchFields = GetEntityDocumentsSearchFields();
+
+
                         DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                         var EntityDirection = documentsFilingQuery.GetDirectionForEntity(Poco.EntityId, theEntityPm.ObjectTableId, tenant);
                         if (CheckIfSignRequired(EntityDirection, this.entityPM.DocumentTypeId, this.entityPM.Tenant) && !this.entityPM.IsDigitallySigned && this.entityPM.HasFile && (!string.IsNullOrEmpty(this.entityPM.FileExtension) && this.entityPM.FileExtension.ToLower() == "pdf"))
@@ -676,11 +678,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             var WasRequested = Poco.IsRequested;
 
             DocumentsFilingMapping.MapEntity(theEntityPm, Poco, isNewEntity);
-
-
-
-
-
             if (tenantPM.IsDocumentsArchive == true)
             {
                 if (theEntityPm.DirectionCode == "I")
@@ -689,7 +686,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     if (OTName != null && OTName.Name == "Shipment" && !string.IsNullOrEmpty(this.Poco.EntityId))
                     {
                         var ShipmentCompField = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(this.Poco.EntityId, this.Poco.Tenant);
-                        ShipmentCompField.DocumentsSearchFields = entityRepository.GetEntityDocumentsSearchFields(this.Poco.EntityId, this.Poco.ObjectTableId, this.Poco.Tenant);
+                        ShipmentCompField.DocumentsSearchFields = GetEntityDocumentsSearchFields();
+
                         DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                         var EntityDirection = documentsFilingQuery.GetDirectionForEntity(Poco.EntityId, theEntityPm.ObjectTableId, tenant);
                         if (CheckIfSignRequired(EntityDirection, this.entityPM.DocumentTypeId, this.entityPM.Tenant) && !this.entityPM.IsDigitallySigned && this.entityPM.HasFile && (!string.IsNullOrEmpty(this.entityPM.FileExtension) && this.entityPM.FileExtension.ToLower() == "pdf"))
@@ -699,7 +697,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         }
                         else if (this.entityPM.IsDigitallySigned)
                         {
-                            ShipmentCompField.IsDigitalSignRequired = documentsFilingQuery.GetIfSignRequiredForEntity(Poco.EntityId, tenant,false);
+                            ShipmentCompField.IsDigitalSignRequired = documentsFilingQuery.GetIfSignRequiredForEntity(Poco.EntityId, tenant, false);
                             Poco.IsDigitalSignRequired = false;
                         }
                         //if (theEntityPm.HasFile)
@@ -732,7 +730,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         {
                             ShipmentCompField.IsMissingDocuments = true;
                         }
-                        var IsRequested = documentsFilingQuery.GetIfIsRequestedForEntity(Poco.EntityId, tenant,entityPM);
+                        var IsRequested = documentsFilingQuery.GetIfIsRequestedForEntity(Poco.EntityId, tenant, entityPM);
                         if (IsRequested == false && Poco.IsRequested && !Poco.IsDeleted)
                         {
                             IsRequested = true;
@@ -768,7 +766,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             {
                                 IQueueService queueservice = new DbQueueService();
                                 queueservice.InitializeQueue("ForwardersShipmentDocumentsQueue", 0);
-                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() },  }, tenant);
+                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
                             }
                         }
                         catch (Exception ex)
@@ -851,6 +849,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         }
 
+        private string GetEntityDocumentsSearchFields()
+        {
+            var documentSearchFieldsLists = entityRepository.GetDocumentsFilingByEntityId(this.Poco.EntityId, this.Poco.ObjectTableId, this.Poco.Tenant).Where(d => d.Id != this.Poco.Id).Select(d => d.SearchFields).ToArray();
+            var documentSearchFields = String.Join(",", documentSearchFieldsLists);
+            documentSearchFields += ((!string.IsNullOrEmpty(documentSearchFields) ? "," :"") + this.Poco.SearchFields);
+            return documentSearchFields;
+        }
 
         private string BuildDocument(byte[] fileData, bool isnew, string DocumentsFilingId = null)
         {

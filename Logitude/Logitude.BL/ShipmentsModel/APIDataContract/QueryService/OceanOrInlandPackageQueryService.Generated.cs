@@ -46,7 +46,9 @@ using Simplog.Data.ShipmentsModel;
 				{
 				   
 				   var temp = new OceanOrInlandPackage(); 
-				   temp.Id = item.Id;			  
+				   temp.Id = item.Id; 
+
+			  
 				   if(item.PackageTypeId != null)
 				   {
 					   PackageTypeQueryService PackageTypeService0 = new PackageTypeQueryService(Tenant);
@@ -97,7 +99,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public List<ShipmentPackagePM> OceanOrInlandPackageDataMappingAndValidatin(List<OceanOrInlandPackage> MyEntity,int Tenant,string ComputingPartnerName = "")
+		public List<ShipmentPackagePM> OceanOrInlandPackageDataMappingAndValidatin(List<OceanOrInlandPackage> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -115,6 +117,7 @@ using Simplog.Data.ShipmentsModel;
 					{   
 					    throw new ApplicationException("ShipmentPackage with Id " + item.Id + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -133,50 +136,209 @@ using Simplog.Data.ShipmentsModel;
 					if(item.PackageType != null)
 					{
 						var myPackageTypePM = PackageTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.PackageType,Tenant,ComputingPartnerName);
-												if(myPackageTypePM != null)
-						{
-							temp.PackageTypeId = myPackageTypePM.Id;
-						}
+						
+						if(myPackageTypePM != null)
+						{ 
+
 						 
+							if(IsUpdate)
+							{
+								throw new ApplicationException("PackageType Can't be update"); 
+							}  
+
+							temp.PackageTypeId = myPackageTypePM.Id;
+						} 
+
 					}
 			
 					
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Length Can't be update"); 
+					}  
+
 					temp.Length = item.Length;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Width Can't be update"); 
+					}  
+
 					temp.Width = item.Width;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Height Can't be update"); 
+					}  
+
 					temp.Height = item.Height;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Pieces Can't be update"); 
+					}  
+
 					temp.Quantity = item.Pieces;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Volume Can't be update"); 
+					}  
+
 					temp.Volume = item.Volume;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("GrossWeight Can't be update"); 
+					}  
+
 					temp.Weight = item.GrossWeight;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Seal Can't be update"); 
+					}  
+
 					temp.ShipperSeal = item.Seal;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Seal2 Can't be update"); 
+					}  
+
 					temp.CarrierSeal = item.Seal2;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Reference1 Can't be update"); 
+					}  
+
 					temp.Reference1 = item.Reference1;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Reference2 Can't be update"); 
+					}  
+
 					temp.Reference2 = item.Reference2;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Reference3 Can't be update"); 
+					}  
+
 					temp.Reference3 = item.Reference3;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Harmonize Can't be update"); 
+					}  
+
 					temp.Harmonize = item.Harmonize;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Temperature Can't be update"); 
+					}  
+
 					temp.Temperature = item.Temperature;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Ventilation Can't be update"); 
+					}  
+
 					temp.Ventilation = item.Ventilation;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("IsDangerous Can't be update"); 
+					}  
+
 					temp.IsDangerous = item.IsDangerous;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("ClassNumber Can't be update"); 
+					}  
+
 					temp.ClassNumber = item.ClassNumber;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("UnNumber Can't be update"); 
+					}  
+
 					temp.UnNumber = item.UnNumber;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("PackagingGroup Can't be update"); 
+					}  
+
 					temp.PackagingGroup = item.PackagingGroup;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("IMDGCode Can't be update"); 
+					}  
+
 					temp.IMDGCode = item.IMDGCode;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("FlashPoint Can't be update"); 
+					}  
+
 					temp.FlashPoint = item.FlashPoint;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("MaterialDescription Can't be update"); 
+					}  
+
 					temp.MaterialDescription = item.MaterialDescription;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("CommodityNumber Can't be update"); 
+					}  
+
 					temp.CommodityNumber = item.CommodityNumber;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Reference4 Can't be update"); 
+					}  
+
 					temp.Reference4 = item.Reference4;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Notes Can't be update"); 
+					}  
+
 					temp.Notes = item.Notes; 
 
 					if(item.InsidePackages != null && item.InsidePackages.Count > 0)
 					{
 						InsidePackageQueryService InsidePackageService1 = new InsidePackageQueryService(Tenant);
+						  
+						if(IsUpdate)
+						{
+								throw new ApplicationException("InsidePackages Can't be update"); 
+						}  
+
 						temp.InsideShipmentPackages = InsidePackageService1.InsidePackageDataMappingAndValidatin(item.InsidePackages,Tenant,ComputingPartnerName);
+						
 					}
 
 								 					   
 						MyList.Add(temp);
 					}
 						
-					   return MyList;
+					return MyList;
 		    }
             catch (Exception ex)
             {

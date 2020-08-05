@@ -13,6 +13,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Logitude.BL.Resolvers;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.BL.ExtendedServices;
@@ -174,11 +175,34 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             else
             {
                 ARInvoicePM aRInvoicePM = FullMapInvoice(interestReportArgs, interestReport);
+                CheckVatNumber(interestReportArgs.Tenant, aRInvoicePM);
                 IInvoiceContext invoiceContext = InvoiceContext.GetContext(interestReportArgs.Tenant);
                 ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, interestReportArgs.Tenant);
                 invoiceService.Create(aRInvoicePM);
                 UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
             }
+        }
+        private void CheckVatNumber(int Tenant, ARInvoicePM aRInvoicePM)
+        {
+            bool isFieldRequired = false;
+            AccountingSettingRepository accountingSettingsRepository = new AccountingSettingRepository(Tenant);
+            AccountingSetting iAccountingSetting = accountingSettingsRepository.GetSingleAccountSetting(Tenant);
+
+            if (iAccountingSetting.IsVatNumberMandatoryInAR)
+            {
+                if (string.IsNullOrEmpty(aRInvoicePM.VatNumber))
+                {
+                    isFieldRequired = true;
+                }
+                if (isFieldRequired== true)
+                {
+                    ContactPM contactLocal = GetLoggedContact(Tenant);
+                    bool showLocals = !contactLocal.DontShowLocal;
+                    string ErrorMessage = TextCodesTranslator.TranslateText("General.M.FieldIsRequired", Tenant, showLocals);
+                    ErrorMessage = ErrorMessage.Replace("%FieldName", TextCodesTranslator.TranslateText("ARInvoice.F.VatNumber", Tenant, showLocals));
+                    throw new Exception(ErrorMessage);
+                }
+             }
         }
         private void UpdateInterestReportsStatues(InterestReportPM interestReportPM, int Tenant, string Statues, ARInvoicePM aRInvoicePM = null, string InvoiceFailureReason=null)
         {
@@ -375,6 +399,16 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             return aRInvoiceLinePM;
 
+        }
+        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
+        public static ContactPM GetLoggedContact(int tenant)
+        {
+            if (OverrideGetLoggedContactFunc != null)
+            {
+                return OverrideGetLoggedContactFunc(tenant);
+            }
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
         private List<LastRate> GetCurrenciesExchangeRateByValueDate(int tenant, string baseCurrencyId, DateTime? date)
         {

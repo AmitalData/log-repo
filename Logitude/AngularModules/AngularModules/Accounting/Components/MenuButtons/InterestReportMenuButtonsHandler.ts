@@ -307,7 +307,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
             _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList.VatTypeId; 
 
         //  }
-         _ARInvoiceLinePM.GLAccountId = this.EntityPM.GLAccountId;
+         _ARInvoiceLinePM.GLAccountId = this.chargesTypeList.ReceivableCreditGLAccountId;
         _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
          var objectTable = window.ObjectTables.filter(d => d.Name === "InterestReport")[0];
         var objectTableId = objectTable.Id;

@@ -1440,6 +1440,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.DimensionTableCode = DWObjectField.DimensionTableCode;
             this.FullNameTextCodeCode = DWObjectField.FullNameTextCodeCode;
             this.PartnerFullNameTextCodeCode = DWObjectField.PartnerFullNameTextCodeCode;
+            this.FieldCode = DWObjectField.Code;
             this.IsMultipleSelection = DWObjectField.IsMultipleSelection;
             this.ColumnName = DWObjectField.ColumnName;
             if (this.IsMultipleSelection)
@@ -1589,6 +1590,10 @@ export class DWObjectFieldsDetails extends BaseComponent {
     private hasTree: boolean;
     public get HasTree() { return this.hasTree; }
     public set HasTree(newValue: boolean) { this.hasTree = newValue; }
+
+    private fieldCode: string;
+    public get FieldCode() { return this.fieldCode; }
+    public set FieldCode(newValue: string) { this.fieldCode = newValue; }
 
 
     private name: string;
@@ -1975,6 +1980,10 @@ export class DWObjectFieldsDetails extends BaseComponent {
             if (!myResult.HasError) {
                 _DWObjectFieldPMService.getDWObjectFieldsByDWTableId(myResult.Result.Code).subscribe((Result: ServiceResponse) => {
                     if (!Result.HasError) {
+
+                        var parentfieldCode = !AppTool.IsNullOrEmpty(DWObjectField.FieldCode) ? (DWObjectField.FieldCode.replace("[", "").replace("]", "")) : DWObjectField.DisplayName;
+
+
                         Result.Result.forEach((field) => {
                             if (field.DisplayInQueryBuilder == true) {
                                 var view = new DWObjectFieldsDetails(field, this.MyParentClass);
@@ -1990,19 +1999,20 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
                                 if (!AppTool.IsNullOrEmpty(DWObjectField.Code)) {
                                     view.DisplayName = (dwObjectFieldName + ' ' + view.DisplayName);
-                                    view.DimensionTableDisplayName = DWObjectField.DisplayName;
+                                    //view.DimensionTableDisplayName = DWObjectField.DisplayName;
                                 }
                                 else if (!AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) {
                                     view.DisplayName = dwObjectFieldName;
-                                    view.DimensionTableDisplayName = DWObjectField.DisplayName;
+                                    //view.DimensionTableDisplayName = DWObjectField.DisplayName;
                                 }
                                 else {
                                     view.DisplayName = (dwObjectFieldName + ' ' + view.DisplayName);
-                                    view.DimensionTableDisplayName = DWObjectField.DisplayName;
+                                   // view.DimensionTableDisplayName = DWObjectField.DisplayName;
 
                                 }
                                 view.ParentCode = DWObjectField.Code;
                                 view.ParentDimTabelName = DWObjectField.DimensionTableCode;
+                                view.DimensionTableDisplayName = parentfieldCode;
 
                                 ObsList.push(view);
                             }

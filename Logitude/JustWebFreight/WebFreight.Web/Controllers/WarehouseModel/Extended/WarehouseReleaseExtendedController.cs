@@ -59,6 +59,28 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
             }
         }
 
+        public HttpResponseMessage GetNumberOfConnectedWarehouseReleasesByChildEntityReference(string childEntityReference)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("WarehouseRelease", "READ", tenant);
+
+                WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(tenant);
+                int numberofConnectedWarehouseReleases = warehouseReleaseQueryService.GetNumberofConnectedWarehouseReleasesByChildEntityReference(childEntityReference, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, numberofConnectedWarehouseReleases);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetWarehouseConnectedReleaseByEntityId(string entityId)
         {
             try  //GetQuoteConnectedEntities

@@ -888,7 +888,7 @@ namespace WebFreight.Web.Security
 			Dictionary<string, FeaturePM> features = null;
             string roleKey = roleId + "_" + tenant;
 
-            if (CacheManager.CacheWrapper.Get(roleKey) == null || forceAPIFeaturesCheck)
+			if (CacheManager.CacheWrapper.Get(roleKey) == null || forceAPIFeaturesCheck)
 			{
 				FeatureQuery featuresQuery = new FeatureQuery(tenant);
 				List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);

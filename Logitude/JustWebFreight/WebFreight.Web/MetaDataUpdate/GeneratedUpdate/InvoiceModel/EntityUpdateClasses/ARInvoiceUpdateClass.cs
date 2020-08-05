@@ -76,8 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-
-		public const string HashString = "3cdb737b2cc09b0a88207bf74714fa4b";
+		public const string HashString = "60491e2dda3a2084e323825d06df51f0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -8834,8 +8833,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 		   Feature ARInvoiceFeature_DatesFieldEnabledWhileCrediting = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DatesFieldEnabledWhileCrediting", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.DatesFieldEnabledWhileCrediting", NameTextCodeDefaultText = @"Enable dates while crediting" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARInvoiceObjectTable);
 
-		   Feature ARInvoiceFeature_ConfirmationForAutoCreditForCreditNotes = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConfirmationForAutoCreditForCreditNotes", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.ConfirmationForAutoCreditForCreditNotes", NameTextCodeDefaultText = @"Confirmation For Auto Credit For CreditNotes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARInvoiceObjectTable);
-
    
 	    
 		}
@@ -9743,10 +9740,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_ARInvoiceSARInvoiceAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.S.ARInvoice.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARInvoiceTextCode_ARInvoiceMConfirmAutoCreditForAutoCredit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.ConfirmAutoCreditForAutoCredit", DefaultText = "Canceling a credit note will debit the customer and mark the credit note as canceled , do you want to continue?",LocalDefaultText = @"ביטול של חשבונית זיכוי מחייב את הלקוח ומסמן את חשבונית הזיכוי כמבוטלת, האם להמשיך?", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
  		   TextCode ARInvoiceTextCode_ARInvoiceOAutoCreditInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.AutoCreditInvoice", DefaultText = "Auto Credit for Invoice %InvoiceNumber",LocalDefaultText = @"ביטול של חשבונית %InvoiceNumber", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOCreditARInvoiceForCreditNote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.CreditARInvoiceForCreditNote", DefaultText = "Auto Credit for Credit Note %InvoiceNumber",LocalDefaultText = @"ביטול של חשבונית זיכוי %InvoiceNumber", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

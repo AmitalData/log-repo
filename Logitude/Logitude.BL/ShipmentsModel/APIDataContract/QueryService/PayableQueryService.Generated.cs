@@ -46,14 +46,18 @@ using Simplog.Data.ShipmentsModel;
 				{
 				   
 				   var temp = new Payable(); 
-				   temp.Id = item.Id;			  
+				   temp.Id = item.Id; 
+
+			  
 				   if(item.ChargesTypeId != null)
 				   {
 					   ChargesTypeQueryService ChargesTypeService0 = new ChargesTypeQueryService(Tenant);
 					   					   temp.ChargesType = ChargesTypeService0.GetChargesTypeById(item.ChargesTypeId,Tenant); 
 			       
 					   				   }
-				   			  
+				    
+
+			  
 				   if(item.MeasurementId != null)
 				   {
 					   MeasurementQueryService MeasurementService1 = new MeasurementQueryService(Tenant);
@@ -62,7 +66,9 @@ using Simplog.Data.ShipmentsModel;
 					   				   }
 				   
 				   temp.Quantity = item.Quantity;
-				   temp.UnitPrice = item.UnitPrice;			  
+				   temp.UnitPrice = item.UnitPrice; 
+
+			  
 				   if(item.CurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService2 = new CurrencyQueryService(Tenant);
@@ -70,7 +76,9 @@ using Simplog.Data.ShipmentsModel;
 			       
 					   				   }
 				   
-				   temp.Rate = item.Rate;			  
+				   temp.Rate = item.Rate; 
+
+			  
 				   if(item.PrepaidCollectId != null)
 				   {
 					   PrepaidCollectQueryService PrepaidCollectService3 = new PrepaidCollectQueryService(Tenant);
@@ -91,7 +99,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public List<ShipmentPayablePM> PayableDataMappingAndValidatin(List<Payable> MyEntity,int Tenant,string ComputingPartnerName = "")
+		public List<ShipmentPayablePM> PayableDataMappingAndValidatin(List<Payable> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -109,6 +117,7 @@ using Simplog.Data.ShipmentsModel;
 					{   
 					    throw new ApplicationException("ShipmentPayable with Id " + item.Id + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -127,11 +136,19 @@ using Simplog.Data.ShipmentsModel;
 					if(item.ChargesType != null)
 					{
 						var myChargesTypePM = ChargesTypeChargesTypeService.ChargesTypeDataMappingAndValidatin(item.ChargesType,Tenant,ComputingPartnerName);
-												if(myChargesTypePM != null)
-						{
-							temp.ChargesTypeId = myChargesTypePM.Id;
-						}
+						
+						if(myChargesTypePM != null)
+						{ 
+
 						 
+							if(IsUpdate)
+							{
+								throw new ApplicationException("ChargesType Can't be update"); 
+							}  
+
+							temp.ChargesTypeId = myChargesTypePM.Id;
+						} 
+
 					}
 			
 					
@@ -139,46 +156,94 @@ using Simplog.Data.ShipmentsModel;
 					if(item.Measurement != null)
 					{
 						var myMeasurementPM = MeasurementMeasurementService.MeasurementDataMappingAndValidatin(item.Measurement,Tenant,ComputingPartnerName);
-												if(myMeasurementPM != null)
-						{
-							temp.MeasurementId = myMeasurementPM.Id;
-						}
+						
+						if(myMeasurementPM != null)
+						{ 
+
 						 
+							if(IsUpdate)
+							{
+								throw new ApplicationException("Measurement Can't be update"); 
+							}  
+
+							temp.MeasurementId = myMeasurementPM.Id;
+						} 
+
 					}
 			
 					
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Quantity Can't be update"); 
+					}  
+
 					temp.Quantity = item.Quantity;
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("UnitPrice Can't be update"); 
+					}  
+
 					temp.UnitPrice = item.UnitPrice;
 					CurrencyQueryService CurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(item.Currency != null)
 					{
 						var myCurrencyPM = CurrencyCurrencyService.CurrencyDataMappingAndValidatin(item.Currency,Tenant,ComputingPartnerName);
-												if(myCurrencyPM != null)
-						{
-							temp.CurrencyId = myCurrencyPM.Id;
-						}
+						
+						if(myCurrencyPM != null)
+						{ 
+
 						 
+							if(IsUpdate)
+							{
+								throw new ApplicationException("Currency Can't be update"); 
+							}  
+
+							temp.CurrencyId = myCurrencyPM.Id;
+						} 
+
 					}
 			
 					
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Rate Can't be update"); 
+					}  
+
 					temp.Rate = item.Rate;
 					PrepaidCollectQueryService PrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
 					if(item.PrepaidCollect != null)
 					{
 						var myPrepaidCollectPM = PrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(item.PrepaidCollect,Tenant,ComputingPartnerName);
-												if(myPrepaidCollectPM != null)
-						{
-							temp.PrepaidCollectId = myPrepaidCollectPM.Id;
-						}
+						
+						if(myPrepaidCollectPM != null)
+						{ 
+
 						 
+							if(IsUpdate)
+							{
+								throw new ApplicationException("PrepaidCollect Can't be update"); 
+							}  
+
+							temp.PrepaidCollectId = myPrepaidCollectPM.Id;
+						} 
+
 					}
 			
 					
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Amount Can't be update"); 
+					}  
+
 					temp.ExpectedAmount = item.Amount;					   
 						MyList.Add(temp);
 					}
 						
-					   return MyList;
+					return MyList;
 		    }
             catch (Exception ex)
             {

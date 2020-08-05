@@ -29,7 +29,7 @@ namespace Logitude.Accounting.BL.Utils
         private List<string> _WrongSumToMatch;
         long _counter = 0;
         public const int LT_LinesMaximum_MIN = 2;
-        public const int LT_LinesMaximum_MAX = 40;
+        public const int LT_LinesMaximum_MAX = 200;
         private List<string> badList;
         private List<string> goodList;
         private List<string> madeList;
