@@ -178,4 +178,14 @@
     ReferencedTable="MamanStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  
+  <!--ecargo--> 
+  <Index
+    Columns="CourierPendingReasonList" />
+  <Index
+    Columns="IsCourierMissingClassification" />
+
+  <Index
+  Columns="IsClosedForFollowUp" />
+
 </Table>
