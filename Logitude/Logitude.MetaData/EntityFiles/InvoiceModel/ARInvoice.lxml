@@ -17904,12 +17904,27 @@
       DefaultText="&quot;Additional Fields&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
+
     <TextCode
       Code="&quot;ARInvoice.M.ConfirmAutoCreditForAutoCredit&quot;"
       DefaultText="&quot;Canceling a credit note will debit the customer and mark the credit note as canceled , do you want to continue?&quot;"
       LocalDefaultText="&quot;ביטול של חשבונית זיכוי מחייב את הלקוח ומסמן את חשבונית הזיכוי כמבוטלת, האם להמשיך?&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+
+    <TextCode
+      Code="&quot;ARInvoice.O.AutoCreditInvoice&quot;"
+      DefaultText="&quot;Auto Credit for Invoice %InvoiceNumber&quot;"
+      LocalDefaultText="&quot;ביטול של חשבונית %InvoiceNumber&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.CreditARInvoiceForCreditNote&quot;"
+      DefaultText="&quot;Auto Credit for Credit Note %InvoiceNumber&quot;"
+      LocalDefaultText="&quot;ביטול של חשבונית זיכוי %InvoiceNumber&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
