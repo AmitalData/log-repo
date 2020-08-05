@@ -13,10 +13,16 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
     {
         public void AdjustBankFees()
         {
+            // must have rows with 
 
-            if (!_JournalPM.JournalExternalReconciles.TrueForAll(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
+            //if (!_JournalPM.JournalExternalReconciles.TrueForAll(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
+            if (_JournalPM.JournalExternalReconciles.Any(r=> string.IsNullOrWhiteSpace(r.ReconcileExternalPageLineId) && string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
             {
-                throw new Exception("in all JournalExternalReconciles LedgerTransactionId must be empty   ");
+                throw new Exception("there is line with empty ReconcileExternalPageLineId && empty LedgerTransactionId");
+            }
+            if (!_JournalPM.JournalExternalReconciles.Where(r => !string.IsNullOrWhiteSpace(r.ReconcileExternalPageLineId) && string.IsNullOrWhiteSpace(r.LedgerTransactionId)).Any())
+            {
+                throw new Exception("at least one JournalExternalReconciles LedgerTransactionId must be empty   ");
             }
 
             List<ReconcileExternalPageList> listOfpageList = RecheckAndGetListOfpageList();

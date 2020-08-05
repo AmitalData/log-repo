@@ -103,8 +103,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             var reconcileExternalPageIdList = listOfpageLineList.Select(r => r.ReconcileExternalPageId).Distinct().ToList();
             listOfpageList = _ExternalReconcileDataProvider.GetReconcileExternalPageList(tenant, reconcileExternalPageIdList);
             ledgerTransactionList =_ExternalReconcileDataProvider.GetLedgerTransactionList(ledgerTransactionIds, tenant);
-
-            var bankGLAccountList = _ExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(listOfpageList.First().GLAccountId, tenant);
+            var reconcileExternalPageLineId = reconcileExternalPageLineIdList.First();
+            var bankGLAccountList = _ExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(reconcileExternalPageLineId, tenant);
             accountingCurrencyId =this._ExternalReconcileDataProvider.GetaccountingCurrencyId(tenant);
 
             Validate(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, listOfpageLineList, listOfpageList, CheckWhileStreaming, ledgerTransactionList, ledgerTransactionIds, bankGLAccountList, accountingCurrencyId);
@@ -132,6 +132,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         private List<JournalExternalReconcilePM> GetJournalExternalReconcileFromLedger(List<LedgerTransactionPM> ledgerTransactionList)
         {
             int line = TheNewJournal.JournalExternalReconciles.Max(r => r.Line);
+            line++;
             return ledgerTransactionList.Select(
                             ledgerTransaction => new JournalExternalReconcilePM()
                             {
@@ -150,7 +151,9 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         private int CreateFromLedger(string adjustGLAccountId, GLAccountList bankGLAccountList, string accountingCurrencyId, string screenNotes, List<LedgerTransactionPM> ledgerTransactionList)
         {
             int line = TheNewJournal.JournalLines.Max(r => r.Line);
-            TheNewJournal.JournalLines = ledgerTransactionList.Select(r =>
+            TheNewJournal.JournalLines.AddRange(
+                
+                ledgerTransactionList.Select(r =>
             new JournalLinePM()
             {
                 Tenant = r.Tenant,
@@ -176,9 +179,11 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 Notes = screenNotes + Environment.NewLine + r.Notes,
                 Reference1 = r.Reference1,
                 Reference2 = r.Reference2,
-                Reference3 = r.Reference2, 
+                Reference3 = r.Reference2,
                 ChangeSetOp = ChangeSetOperation.Insert
-            }).ToList();
+            }).ToList()
+
+            );
             return line;
         }
 
