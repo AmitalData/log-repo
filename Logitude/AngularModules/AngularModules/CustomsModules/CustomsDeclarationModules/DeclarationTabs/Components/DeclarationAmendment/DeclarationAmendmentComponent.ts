@@ -97,8 +97,8 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
-                             this.ngOnInit();
-                        
+                        this.ngOnInit();
+                       // if (tabCode =="DCDA")
                     }
                 })
             );
@@ -106,6 +106,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 DeclarationEventManager.DeclarationAmendmentCancelled.subscribe(data => {
                     this.ngOnInit();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
 
 
@@ -272,9 +273,10 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
         if (myResponse.Result != null && myResponse.Result.length > 0) {
             let i: number = 1;
             myResponse.Result.forEach((item) => {
+          
                 item.LineNumber = i;
                 i++;
-                   if (item.AmendmentStatus == "1" || item.AmendmentStatus=="2" || item.AmendmentStatus == null)
+                if ((item.AmendmentStatus == "1" || item.AmendmentStatus == "2" || item.AmendmentStatus == null) && item.IsAmendment)
                  this.CanOpenNewAmendment = false;
                  this.amendmentObslist.Insert(item);
             });
@@ -346,6 +348,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
                     EntityId: id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "תיקוני הצהרה" });
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                     DeclarationEventManager.DeclarationAmendmentCancelled.emit(null);
+
                     if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
                         SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
                     }

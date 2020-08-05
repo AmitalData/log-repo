@@ -83,12 +83,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  IsCustomerLogBoxActivated = e.Customer.LogBoxActivated,
                                                                  SortedColumns = (a.NewFile && a.Favorite ? 1 : (a.NewFile ? 2 : (a.Favorite ? 3 : 4))),
                                                                  IsCancelled = d.IsCancelled,
-                                                                 //ClassifiedUserName = a.ClassifiedUser.Contact.LocalName,
-                                                                 //CollectorUserName = a.CollectorUser.Contact.LocalName,
-                                                                 //ControllerUserName= a.ControllerUser.Contact.LocalName, 
+                                                                 ClassifiedUserName = a.ClassifiedUser.Contact.LocalName,
+                                                                 CollectorUserName = a.CollectorUser.Contact.LocalName,
+                                                                 ControllerUserName= a.ControllerUser.Contact.LocalName, 
                                                                  LastStatusDate = a.LastStatusDate,
                                                                  LastStatusName = a.LastStatusName,
-                                                                  OrderMoney = a.OrderMoney
+                                                                 OrderMoney = a.OrderMoney,
+                                                                 Team=a.ReferantTeam.LocalName,
                                                               
                                                              }) ;
                                                                 

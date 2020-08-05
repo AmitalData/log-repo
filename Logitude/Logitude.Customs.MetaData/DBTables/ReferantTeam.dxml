@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="ReferantTeam"
-  OldNames="Teams"
+  Name="ReferantTeams"
+  OldNames="Teams,ReferantTeam"
   Schema="Customs"
   DBType="Main"
   Module="Customs">
@@ -14,7 +14,7 @@
   </Column>
   <Column
     Name="Code"
-    Type="varchar"
+    Type="nvarchar"
     Size="15">
     <Constraints
       PrimaryKey="true"

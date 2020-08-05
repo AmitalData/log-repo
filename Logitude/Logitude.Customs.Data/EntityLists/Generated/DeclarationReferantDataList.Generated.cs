@@ -98,6 +98,8 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? LastStatusDate  { get; set; }
        [DataMember]
        public bool OrderMoney  { get; set; }
+       [DataMember]
+       public string Team  { get; set; }
    }
 
 }
