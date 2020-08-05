@@ -967,6 +967,8 @@ export class ARInvoiceMenuButtonsHandler {
             });
     }
     CreateAutoCreditInvoice(): ARInvoicePM {
+
+        var note: string = this.EntityPM.ARInvoiceTypeCode == "CD" ? TextCodeTranslator.Translate("ARInvoice.O.CreditARInvoiceForCreditNote"): TextCodeTranslator.Translate("ARInvoice.O.AutoCreditInvoice");
         var myEntityPMService: ARInvoicePMService = new ARInvoicePMService()
         var AutoCreditInvoice: ARInvoicePM = myEntityPMService.GetNewEntityPM();
         AutoCreditInvoice.StatusCode = "AC";
@@ -977,11 +979,11 @@ export class ARInvoiceMenuButtonsHandler {
         AutoCreditInvoice.TransferStatusCode = this.EntityPM.TransferStatusCode;
         AutoCreditInvoice.BillToAddressId = this.EntityPM.BillToAddressId;
         AutoCreditInvoice.BillToId = this.EntityPM.BillToId;
-        AutoCreditInvoice.InternalNotes = this.EntityPM.InternalNotes;
+        AutoCreditInvoice.InternalNotes = note.replace("%InvoiceNumber", this.EntityPM.InvoiceNumber);// this.EntityPM.InternalNotes;
         AutoCreditInvoice.InvoiceCurrencyExchangeRate = this.EntityPM.InvoiceCurrencyExchangeRate;
         AutoCreditInvoice.InvoiceCurrencyId = this.EntityPM.InvoiceCurrencyId;
         AutoCreditInvoice.InvoiceCurrencyCode = this.EntityPM.InvoiceCurrencyCode;
-        AutoCreditInvoice.PrintNotes = this.EntityPM.PrintNotes;
+        AutoCreditInvoice.PrintNotes = note.replace("%InvoiceNumber", this.EntityPM.InvoiceNumber);// this.EntityPM.PrintNotes;
         AutoCreditInvoice.PaymentTermId = this.EntityPM.PaymentTermId;
         AutoCreditInvoice.PrepaidCollectId = this.EntityPM.PrepaidCollectId;
         AutoCreditInvoice.LocalCurrencyId = this.EntityPM.LocalCurrencyId;

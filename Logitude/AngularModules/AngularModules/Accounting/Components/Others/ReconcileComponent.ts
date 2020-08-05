@@ -519,7 +519,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                         this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: false, RowIndex: -1, ById: true });
                     }
                     for (var i = 0; i < this.SelectedLines.Collection.length; i++) {
-                        var line = this.SelectedLines.Collection[i]; 
+                        var line = this.SelectedLines.Collection[i];
                         this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: false, RowIndex: line.myRowIndex, ById: true });
                     }
                     this.SelectedLines.Clear();
@@ -538,7 +538,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     RunAutomaticReconcile() {
         this.ValidationErrorsList = [];
 
-        
+
 
         //#region filters
         var filters = new ApiQueryFilters;
@@ -557,7 +557,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         filters.GetAll = true;
         filters.GetCount = true;
         //#endregion
-   
+
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
 
 
@@ -665,6 +665,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
                             // Refresh Data
                             this.ReloadScreen();
+                            this.SelectedLines.Clear();
+
 
                         });
                     });
@@ -1089,6 +1091,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
                 this.recoCallback = _callback;
                 this.ShowSuccessAlert();
+
+                this.SelectedLines.Clear();
 
 
                 this.CurrentSession.StopBusyIndicator();
