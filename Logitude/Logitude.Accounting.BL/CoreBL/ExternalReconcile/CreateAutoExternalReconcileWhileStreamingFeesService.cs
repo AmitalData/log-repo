@@ -35,7 +35,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
         private List<ReconcileExternalPageList> RecheckAndGetListOfpageList()
         {
-            List<string> reconcileExternalPageLineIdList = _JournalPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
+            List<string> reconcileExternalPageLineIdList = _JournalPM.JournalExternalReconciles.Where(r => !String.IsNullOrWhiteSpace(r.ReconcileExternalPageLineId)).Select(r => r.ReconcileExternalPageLineId).ToList();
             //reconcileExternalPageLineIdList
             IExternalReconcileAdjustBankFees_Validate myExternalReconcileAdjustBankFeesService = new ExternalReconcileAdjustBankFeesService();
             myExternalReconcileAdjustBankFeesService.MustInit(_ExternalReconcileDataProvider);
@@ -45,7 +45,13 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             List<ReconcileExternalPageLineList> listOfpageLineList;
             List<ReconcileExternalPageList> listOfpageList;
             bool CheckWhileStreaming = true;
-            myExternalReconcileAdjustBankFeesService.PrapareAndValid(_JournalPM.Tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList, CheckWhileStreaming);
+            List<string> ledgerTransactionIds= _JournalPM.JournalExternalReconciles.Where(r => !String.IsNullOrWhiteSpace(r.LedgerTransactionId)).Select(r => r.LedgerTransactionId).ToList();
+
+            myExternalReconcileAdjustBankFeesService.PrapareAndValid(_JournalPM.Tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList, CheckWhileStreaming,
+                 
+                ledgerTransactionIds,
+                out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList
+                );
 
             if (listOfpageLineList.Any(r => !r.InProgressExternalReconcile))
             {
@@ -110,6 +116,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 ReconciliationId = reconcile_BankFees.Id,
                 Line = line++,
                 ExternalPageLineId = r.ReconcileExternalPageLineId,
+                LedgerTransactionId = r.LedgerTransactionId,
             })
             );
             return line;

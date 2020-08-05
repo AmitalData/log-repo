@@ -48,6 +48,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
             if (_JournalPM.JournalExternalReconciles.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
             {
+                //while create  ExternalReconcileAdjustBankFeesService the bank lines are  string.IsNullOrWhiteSpace(r.LedgerTransactionId) 
                 var command = new CreateAutoExternalReconcileWhileStreamingFeesService();
                 command.MustInit(_ExternalReconcileDataProvider, _JournalPM, _NewLedgerTransactionsWithCounters);
                 command.AdjustBankFees();
