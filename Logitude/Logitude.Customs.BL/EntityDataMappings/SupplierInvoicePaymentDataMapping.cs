@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -26,6 +27,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(SupplierInvoicePaymentPM entityPM, SupplierInvoicePayment entityPOCO)
         {
+            CustomMappedPMProperties.Add(PMPropertyNames.PaymentTypeName);
+
+            if (!string.IsNullOrWhiteSpace(entityPOCO.PaymentTypeCode))
+            {
+                PaymentTypeQueryService paymentTypeQueryService = new PaymentTypeQueryService(entityPOCO.Tenant);
+                PaymentTypePM paymentTypePM = paymentTypeQueryService.GetSingle(entityPOCO.PaymentTypeCode, false, true);
+                entityPM.PaymentTypeName = paymentTypePM.LocalName;
+            }
             //throw new NotImplementedException();
         }
    }
