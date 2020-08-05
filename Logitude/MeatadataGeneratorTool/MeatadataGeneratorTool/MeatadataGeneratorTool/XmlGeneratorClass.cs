@@ -1871,6 +1871,7 @@ namespace MeatadataGeneratorTool
                             SetAttribute("IsCloseField", item.IsCloseField.ToString().ToLower(), DCFieldElement, null);
                             SetAttribute("IsCompositKey", item.IsCompositKey.ToString().ToLower(), DCFieldElement, null);
                             SetAttribute("CloseTableCode", GetStringValue(item.CloseTableCode), DCFieldElement, null);
+                            SetAttribute("IsUpdateAllowed", item.IsUpdateAllowed.ToString().ToLower(), DCFieldElement, null);
 
                         }
                     }

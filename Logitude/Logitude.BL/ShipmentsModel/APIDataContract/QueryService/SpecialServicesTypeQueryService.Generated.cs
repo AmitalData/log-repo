@@ -98,7 +98,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public SpecialServicesTypePM SpecialServicesTypeDataMappingAndValidatin(SpecialServicesType MyEntity,int Tenant,string ComputingPartnerName = "")
+		public SpecialServicesTypePM SpecialServicesTypeDataMappingAndValidatin(SpecialServicesType MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -132,6 +132,7 @@ using Simplog.Data.ShipmentsModel;
 					{   
 					    throw new ApplicationException("SpecialServicesType with Code " + MyEntity.Code + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -149,15 +150,33 @@ using Simplog.Data.ShipmentsModel;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
+						 
+						if(IsUpdate)
+						{
+								throw new ApplicationException("Code Can't be update"); 
+						}  
+
 						temp.Code = MyEntity.Code;
 					}
+                    
+					if(IsUpdate)
+					{
+							throw new ApplicationException("Name Can't be update"); 
+					}  
+
 					temp.EnglishName = MyEntity.Name;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
+						 
+						if(IsUpdate)
+						{
+								throw new ApplicationException("PartnerCode Can't be update"); 
+						}  
+
 						temp.Code = MyEntity.PartnerCode;
 					}					   
-					   return temp;
+					return temp;
 		    }
             catch (Exception ex)
             {
