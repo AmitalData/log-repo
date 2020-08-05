@@ -20,7 +20,16 @@ export class WarehouseReleaseListExtendedService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/WarehouseReleaseExtended';
     }
 
+    GetNumberOfConnectedWarehouseReleasesByChildEntityReference(childEntityReference: string) {
 
+        return this._http.get(this._apiUrl + '/GetNumberOfConnectedWarehouseReleasesByChildEntityReference?' + 'childEntityReference=' + childEntityReference, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var serviceresponse: ServiceResponse;
+            serviceresponse = new ServiceResponse();
+
+            serviceresponse.Result = response;
+            return serviceresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
 
 
     getWarehouseReleaseListsByShipmentId(shipmentId: string, tenant: number) {

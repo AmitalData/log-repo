@@ -274,6 +274,14 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             return numberofConnectedWarehouseReleasePackages;
         }
 
+        public int GetNumberofConnectedWarehouseReleasesByChildEntityReference(string childEntityReference, int tenant)
+        {
+            WarehouseReleaseRepository repository = new WarehouseReleaseRepository(tenant);
+            int numberofConnectedWarehouse  = repository.GetNumberofConnectedWarehouseReleasesByChildEntityReference(childEntityReference, tenant);
+
+            return numberofConnectedWarehouse;
+        }
+
         public List<WarehouseReleaseList> GetWarehouseReleasesByEntryId(string entityId, int tenant)
         {
             List<WarehouseReleaseList> warehouseReleaseLists = null;
