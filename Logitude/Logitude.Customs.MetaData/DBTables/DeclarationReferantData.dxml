@@ -180,6 +180,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="Team"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"
@@ -200,4 +207,9 @@
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Team"
+    ReferencedTable="ReferantTeams"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

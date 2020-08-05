@@ -135,6 +135,19 @@
             <td></td>
             <td>
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
+                    תאריך הצהרה
+                </span>
+
+
+                <span _ngcontent-c14="" class="Counter" style="font-size: 18px;">
+
+                    {{declaration.PaymentDate| DateTimePipe:'D'}}
+                </span>
+
+            </td>
+
+            <td>
+                <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
 
                     תחנת מכס
                 </span>
@@ -144,10 +157,7 @@
 
                     {{declaration.DeclarationOfficeName}}
                 </span>
-
             </td>
-
-            <td></td>
             <td>
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
 
@@ -170,7 +180,7 @@
 
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px;" *ngIf="declaration.SupplierInvoices && declaration.SupplierInvoices[0]">
 
-                    <!--{{   declaration.SupplierInvoices[0].IncotermCode}}-->
+                    {{   declaration.SupplierInvoices[0].IncotermCode}}
                 </span>
 
             </td>

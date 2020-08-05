@@ -29,7 +29,7 @@ export class ReferantTeamPMService {
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/referantteam';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/referantteams';      
     }
 
 	get(code: string) {       

@@ -19,13 +19,13 @@ namespace Logitude.Customs.Data.EntityMapping
 	    string dbms;
         public ReferantTeamMap()
         { 
-			  this.ToTable("ReferantTeam", "Customs");
+			  this.ToTable("ReferantTeams", "Customs");
 		
 		    this.HasKey(t => new { t.Code });
 	 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(15).IsUnicode(true);
 
             this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(40).IsUnicode(false);
 
