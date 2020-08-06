@@ -259,6 +259,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
 
                 }
+                bool showInActive = filters.Filter3Value == "true";
+                if (Tabel == "DIM_Partners" && !showInActive) {
+                    WhereStmt = WhereStmt + " and " + Tabel + ".[InActive] = 0"; 
+                }
+
                 if (!string.IsNullOrEmpty(SearchData))
                 {
                     WhereStmt = WhereStmt + " and (" + (Field + " like " + "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString() + ")");
