@@ -320,6 +320,60 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var pmList = q.ToList().Select(rec => this.GetEntityPM(rec)).ToList();
             return pmList;
         }
+
+        public List<CustomsRequestsSheetPM> SameInterfaceCodePerEntity_InProgress(int tenant, string InterfaceTypeCode, 
+            string ObjectTableId1, string EntityId1, 
+            string CustomFileNo)
+        {
+ 
+ 
+            if (string.IsNullOrWhiteSpace(InterfaceTypeCode))
+            {
+                throw new Exception("GetRequestInProgress !displayOnlyMode && string.IsNullOrWhiteSpace(InterfaceTypeCode) ");
+            }
+
+         
+
+           
+           
+            var listSheetStatusInProcess = new List<string>();
+            foreach (var item in Enum.GetValues(typeof(SheetStatusInProcessEnum)))
+            {
+                listSheetStatusInProcess.Add(((int)item).ToString());
+            }
+
+            //List<CustomsRequestsSheet> requests = repository.GetCustomsRequestsSheetByCustomFileNumber(customFileNumber, tenant);
+            var q = //context.CustomsRequestsSheets
+                this.repository.GetAll(Tenant)
+                .Where(rec => rec.Tenant == Tenant)
+                .Where(rec => listSheetStatusInProcess.Contains(rec.RequestStatusCode)
+                    );
+            q = q.Where(rec => rec.InterfaceTypeCode == InterfaceTypeCode);
+
+
+
+            var haveFilter = false;
+            if (!string.IsNullOrWhiteSpace(CustomFileNo))
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.CustomFileNo == CustomFileNo);
+            }
+
+            if (!string.IsNullOrWhiteSpace(EntityId1) && !string.IsNullOrWhiteSpace(ObjectTableId1))
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.EntityId1 == EntityId1 && rec.ObjectTableId1 == ObjectTableId1);
+                
+            }
+            if (!haveFilter)
+            {
+                throw new Exception("SameInterfaceTypeCodePerEntity_InProgress nul arguments !!");
+            }
+
+            var pmList = q.ToList().Select(rec => this.GetEntityPM(rec)).ToList();
+            return pmList;
+        }
+
         internal List<CustomsRequestsSheetPM> GetWaitingForSigningListIncludeSignStepName(int tenant)
         {
 
