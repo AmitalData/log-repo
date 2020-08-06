@@ -1129,7 +1129,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             TrySendBondedCustomDocument(extDocPM);
             if (!string.IsNullOrWhiteSpace(this.MetaDataVersionValue))
             {
-                DocumentsFilingMetaDataValueQuery.UpSert(extDocPM, "VER", this.MetaDataVersionValue);
+                DocumentsFilingMetaDataValueQuery.UpSert_Del(extDocPM, "VER", this.MetaDataVersionValue);
             }
 
             if 
