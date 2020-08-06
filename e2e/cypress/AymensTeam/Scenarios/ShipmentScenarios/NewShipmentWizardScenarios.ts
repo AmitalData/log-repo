@@ -146,13 +146,13 @@ export class NewShipmentWizardScenarios {
         Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("AgentReference2").Type(Random.GetRandomNumber());
     }
     private FillShipper(name: string) {
-        Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("ShipperId").Type(name);
-        Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ShipperReference1").Type(Random.GetRandomNumber());
-        Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ShipperReference2").Type(Random.GetRandomNumber());
+        //Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("ShipperId").Type(name);
+        //Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ShipperReference1").Type(Random.GetRandomNumber());
+        //Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ShipperReference2").Type(Random.GetRandomNumber());
 
-        //Resolvers.LOVResolver.Selector('#Shipment_ShipperId').Type('TestShipper');
-        //Resolvers.TextBoxResolver.Selector("#Shipment_ShipperReference1").Type(Helper.GetRandomNumber());
-        //Resolvers.TextBoxResolver.Selector("#Shipment_ShipperReference2").Type(Helper.GetRandomNumber());
+        Resolvers.LOVResolver.Selector('#Shipment_ShipperId').Type('TestShipper');
+        Resolvers.TextBoxResolver.Selector("#Shipment_ShipperReference1").Type(Random.GetRandomNumber());
+        Resolvers.TextBoxResolver.Selector("#Shipment_ShipperReference2").Type(Random.GetRandomNumber());
     }
     private FillConsignee(name: string) {
         Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("ConsigneeId").Type(name);
