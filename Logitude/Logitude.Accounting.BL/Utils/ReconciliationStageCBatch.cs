@@ -30,6 +30,7 @@ namespace Logitude.Accounting.BL.Utils
         long _counter = 0;
         public const int LT_LinesMaximum_MIN = 2;
         public const int LT_LinesMaximum_MAX = 200;
+        public const int MaxPageSize_MAX = 500;
         private List<string> badList;
         private List<string> goodList;
         private List<string> madeList;
@@ -55,7 +56,7 @@ namespace Logitude.Accounting.BL.Utils
             {
                 DateTime fromDate = DateTime.MinValue;
                 DateTime oldDate = DateTime.MinValue;
-                decimal oldAmount = Decimal.MaxValue;
+              //  decimal oldAmount = Decimal.MaxValue;
                 int tenant = reconciliationStageCArg.Tenant;
                 string myGLAccountId = reconciliationStageCArg.GLAccountId;
                 badList = new List<string>();
@@ -157,6 +158,7 @@ namespace Logitude.Accounting.BL.Utils
                             GLAccountId = myGLAccountId,
                             MIN = LT_LinesMaximum_MIN,
                             LT_LinesMaximum = reconciliationStageCArg.LT_LinesMaximum > LT_LinesMaximum_MAX ? LT_LinesMaximum_MAX : reconciliationStageCArg.LT_LinesMaximum,
+                            MaxPageSize = reconciliationStageCArg.MaxPageSize > MaxPageSize_MAX ? MaxPageSize_MAX : reconciliationStageCArg.MaxPageSize,
                             RunAgain = runAgain,
                             MoveOn = moveOn,
                             RunOnPairs = runOnPairs,
@@ -428,7 +430,7 @@ namespace Logitude.Accounting.BL.Utils
                 //    rv = false;
                 //}
                 // else if (credit_sum - debit_sum != 0m)
-                else if (Math.Abs(credit_sum - debit_sum) > maximalDifference)
+                else if (Math.Abs(credit_sum - debit_sum) > 0m)
                 {
                     _WrongSumToMatch.Add(groupKey);
                     rv = false;
@@ -540,6 +542,7 @@ namespace Logitude.Accounting.BL.Utils
         public DateTime UpToDueDate { get; set; }
 
         public int LT_LinesMaximum { get; set; }
+        public int MaxPageSize { get; set; }
 
         public decimal MaximalDifference { get; set; }
 
