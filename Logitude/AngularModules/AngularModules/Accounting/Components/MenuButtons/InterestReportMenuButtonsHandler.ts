@@ -271,6 +271,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         _ARInvoicePM.UpdatedByUserId = SessionLocator.LoggedUserId;
         _ARInvoicePM.MainEntityId = null;
         _ARInvoicePM.MainEntityReference = null;
+        _ARInvoicePM.HasInterestFeature=true;
         _ARInvoicePM.HouseNumber = null;
         _ARInvoicePM.MasterNumber = null;
         var myDescription: string = null;

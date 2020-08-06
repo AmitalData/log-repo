@@ -125,6 +125,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string SATInvoiceStatusName { get; set; }
         public bool Intercompany { get; set; }
         public string BankAccountLiteId { get; set; }
+        public bool HasInterestFeature { get; set; }
 
         public bool IsMultiCurrency { get; set; }
 
