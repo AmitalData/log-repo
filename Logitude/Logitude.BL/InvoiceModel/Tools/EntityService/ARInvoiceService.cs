@@ -1824,7 +1824,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             if (string.IsNullOrEmpty(line.GLAccountId))
                             {
-                                throw new Exception("The Receivable GLAccount of the Charge Type " + myChargesType.EnglishName + " is NULL");
+                                if (myChargesType.Code == "INT")
+                                {
+                                    bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                                    var msg = TextCodesTranslator.TranslateText("ARInvoice.O.TheReceivableGLAccountOfTheChargeNULL", tenant, showLocals);
+
+                                    throw new Exception(msg);
+
+                                }
+                                else
+                                {
+                                    throw new Exception("The Receivable GLAccount of the Charge Type " + myChargesType.EnglishName + " is NULL");
+
+                                }
                             }
                         }
                     }
