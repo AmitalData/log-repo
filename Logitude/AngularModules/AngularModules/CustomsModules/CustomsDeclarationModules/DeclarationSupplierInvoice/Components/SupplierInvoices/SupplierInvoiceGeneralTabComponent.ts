@@ -728,6 +728,40 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     public get ChangeInSupplierInvoice() { return this.EntityPM.ChangeInSupplierInvoice; }
     public set ChangeInSupplierInvoice(newValue: string) { this.EntityPM.ChangeInSupplierInvoice = newValue; }
 
+
+    public get BuyerName() { return this.EntityPM ? this.EntityPM.BuyerName : null; }
+    public set BuyerName(newValue: string) {
+        this.EntityPM.BuyerName = newValue;
+    }
+
+    public get BuyerAddress() { return this.EntityPM ? this.EntityPM.BuyerAddress : null; }
+    public set BuyerAddress(newValue: string) {
+
+        this.EntityPM.BuyerAddress = newValue;
+    }
+
+    public get BuyerCountryCode() { return this.EntityPM ? this.EntityPM.BuyerCountryCode : null; }
+    public set BuyerCountryCode(newValue: string) {
+
+        this.EntityPM.BuyerCountryCode = newValue;
+    }
+
+    public get BuyerRoleCode() { return this.EntityPM ? this.EntityPM.BuyerRoleCode : null; }
+    public set BuyerRoleCode(newValue: string) {
+      
+        this.EntityPM.BuyerRoleCode = newValue;
+    }
+
+    public get PartyRelationshipCode() { return this.EntityPM ? this.EntityPM.PartyRelationshipCode : null; }
+    public set PartyRelationshipCode(newValue: string) {
+        //if (AppTool.IsNullOrEmpty(newValue))
+        //    this.UIProperties.SetRequired("PartyRelationshipCode", this.ObjectTableName, true);
+        //else
+        //    this.UIProperties.SetRequired("PartyRelationshipCode", this.ObjectTableName, false);
+
+        this.EntityPM.PartyRelationshipCode = newValue;
+    }
+
     public get VendorId() { return this.EntityPM.VendorId; }
     public set VendorId(newValue: string) {
 
