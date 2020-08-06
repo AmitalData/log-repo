@@ -32,8 +32,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             GLAccountRepository repository = new GLAccountRepository(context);
             IQueryable<GLAccountList> query = (from a in iQueryable
                                                join md in context.GLAccountMoreDatas on a.Id equals md.AccountId
+                                               join card in context.Cards.DefaultIfEmpty() on a.Id equals card.GLAccountId
                                                select new GLAccountList()
                                                     {
+                                                        SalesmanUserId = card == null ? null : card.SalesmanUserId,
                                                         Id = a.Id,
                                                         Tenant = a.Tenant,
                                                         InternalNumber = a.InternalNumber,

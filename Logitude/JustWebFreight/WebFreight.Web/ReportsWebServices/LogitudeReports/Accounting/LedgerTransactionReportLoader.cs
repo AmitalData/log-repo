@@ -387,7 +387,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 SearchFields = GetFilterValue<string>("SearchFields"),
                 PageStartAtRecordIndex = PAGE_RECORD_START_INDEX,
                 PageSize = PAGE_SIZE,
-                
+                SalesmanId = GetFilterValue<string>("SalesmanUserId"),
                 Category1Id = "",
                 Category2Id = "",
                 Category3Id = "",
