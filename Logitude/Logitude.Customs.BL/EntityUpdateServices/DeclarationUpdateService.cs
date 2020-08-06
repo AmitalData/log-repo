@@ -680,7 +680,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (extDocPM != null)
             {
                 var DeclarationVersionId = "0";
-                DocumentsFilingMetaDataValueQuery.UpSert(extDocPM, "VER", DeclarationVersionId);
+                DocumentsFilingMetaDataValueQuery.UpSert_Del(extDocPM, "VER", DeclarationVersionId);
             }
         }
 

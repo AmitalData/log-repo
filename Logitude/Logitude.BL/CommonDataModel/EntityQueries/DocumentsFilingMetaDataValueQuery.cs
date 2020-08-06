@@ -50,7 +50,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
 
 
-        public static void UpSert(DocumentsFilingPM documentsFilingPM, string MetaDataTypeCode, string MetaDataTypeValue)
+        public static void UpSert_Del(DocumentsFilingPM documentsFilingPM, string MetaDataTypeCode, string MetaDataTypeValue)
         {
             string documentsMetaDataTypeId = null;
             var commonDataContext = CommonDataContext.GetContext(documentsFilingPM.Tenant);
@@ -63,11 +63,30 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             documentsMetaDataTypeId = pocoMDType.Id;
 
-
+            var repository = new DocumentsFilingMetaDataValueRepository(commonDataContext);
             var documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(commonDataContext);
-            var mydocumentsFilingMetaDataVERValuePM = documentsFilingMetaDataValueQuery
+            var mydocumentsFilingMetaDataVERValueList = documentsFilingMetaDataValueQuery
                 .GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(documentsFilingPM.Id, documentsFilingPM.Tenant)
-                .FirstOrDefault(r => r.DocumentsMetaDataTypeId == documentsMetaDataTypeId);
+                //.FirstOrDefault(r => r.DocumentsMetaDataTypeId == documentsMetaDataTypeId);
+                .Where(r => r.DocumentsMetaDataTypeId == documentsMetaDataTypeId)
+                .ToList();
+            DocumentsFilingMetaDataValuePM mydocumentsFilingMetaDataVERValuePM = null;
+            if (mydocumentsFilingMetaDataVERValueList.Count() > 1)
+            {
+                var listId=mydocumentsFilingMetaDataVERValueList.Select(r => r.Id);
+                var pocosDelete=repository.All().Where(r => listId.Contains(r.Id)).ToList();
+                pocosDelete.ForEach(itemPoco => { repository.Remove(itemPoco); });
+
+                LogMessagingUtil.Instance.AppendLine("UpSert_Del Del there is more then 1 (hd#353339)");
+
+                documentsFilingPM.DocumentsFilingMetaDataValues.Clear();
+            }
+            else if (mydocumentsFilingMetaDataVERValueList.Count() == 1)
+            {
+                mydocumentsFilingMetaDataVERValuePM = mydocumentsFilingMetaDataVERValueList.FirstOrDefault();
+            }
+            
+
             if (mydocumentsFilingMetaDataVERValuePM != null)
             {
                 if (mydocumentsFilingMetaDataVERValuePM.MetaDataValue == MetaDataTypeValue)
@@ -79,7 +98,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 mydocumentsFilingMetaDataVERValuePM.MetaDataValue = MetaDataTypeValue;
                 DocumentsFilingMetaDataValueMapping.MapEntity(mydocumentsFilingMetaDataVERValuePM, itemPoco,true /*false - if false do not map keys !!*/ );
-                var repository = new DocumentsFilingMetaDataValueRepository(commonDataContext);
+                //var repository = new DocumentsFilingMetaDataValueRepository(commonDataContext);
                 repository.Update(itemPoco);
                 var pmInMem = documentsFilingPM.DocumentsFilingMetaDataValues.FirstOrDefault(r => r.DocumentsMetaDataTypeId == documentsMetaDataTypeId);
                 if (pmInMem != null)
@@ -108,6 +127,66 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             commonDataContext.SaveChanges();
         }
+
+        public static void UpSert_OLD_MOVE2DELSERT(DocumentsFilingPM documentsFilingPM, string MetaDataTypeCode, string MetaDataTypeValue)
+        {
+            string documentsMetaDataTypeId = null;
+            var commonDataContext = CommonDataContext.GetContext(documentsFilingPM.Tenant);
+            DocumentsMetaDataTypeRepository TypesRepo = new DocumentsMetaDataTypeRepository(commonDataContext);
+            var pocoMDType = TypesRepo.GetSingleDocumentsMetaDataTypeByCode(MetaDataTypeCode, documentsFilingPM.Tenant);
+            if (pocoMDType == null)
+            {
+                LogMessagingUtil.Instance.AppendLine("GetDocumentsMetaDataTypeVERId is null !!!!! UpSertVERValue - failed ");
+                return;
+            }
+            documentsMetaDataTypeId = pocoMDType.Id;
+
+
+            var documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(commonDataContext);
+            var mydocumentsFilingMetaDataVERValuePM = documentsFilingMetaDataValueQuery
+                .GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(documentsFilingPM.Id, documentsFilingPM.Tenant)
+                .FirstOrDefault(r => r.DocumentsMetaDataTypeId == documentsMetaDataTypeId);
+            if (mydocumentsFilingMetaDataVERValuePM != null)
+            {
+                if (mydocumentsFilingMetaDataVERValuePM.MetaDataValue == MetaDataTypeValue)
+                {
+                    LogMessagingUtil.Instance.AppendLine("mydocumentsFilingMetaDataVERValue.MetaDataValue == DeclarationNumber ");
+                    return;
+                }
+                var itemPoco = new DocumentsFilingMetaDataValue();
+
+                mydocumentsFilingMetaDataVERValuePM.MetaDataValue = MetaDataTypeValue;
+                DocumentsFilingMetaDataValueMapping.MapEntity(mydocumentsFilingMetaDataVERValuePM, itemPoco, true /*false - if false do not map keys !!*/ );
+                var repository = new DocumentsFilingMetaDataValueRepository(commonDataContext);
+                repository.Update(itemPoco);
+                var pmInMem = documentsFilingPM.DocumentsFilingMetaDataValues.FirstOrDefault(r => r.DocumentsMetaDataTypeId == documentsMetaDataTypeId);
+                if (pmInMem != null)
+                {
+                    pmInMem.MetaDataValue = MetaDataTypeValue;
+                }
+                else
+                {
+                    documentsFilingPM.DocumentsFilingMetaDataValues.Add(mydocumentsFilingMetaDataVERValuePM);
+                }
+
+            }
+            else
+            {
+                var temp = new DocumentsFilingMetaDataValuePM()
+                {
+                    DocumentsMetaDataTypeId = documentsMetaDataTypeId,
+                    MetaDataValue = MetaDataTypeValue,
+                    DocumentsMetaDataTypeCode = MetaDataTypeCode,
+
+                };
+                documentsFilingMetaDataValueQuery.Create(documentsFilingPM, temp);
+                documentsFilingPM.DocumentsFilingMetaDataValues.Add(temp);
+
+
+            }
+            commonDataContext.SaveChanges();
+        }
+
 
         public DocumentsFilingMetaDataValueQuery(DocumentsFilingMetaDataValueRepository documentsFilingMetaDataValueRepository)
         {
