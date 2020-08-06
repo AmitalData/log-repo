@@ -10,8 +10,8 @@ namespace Logitude.BL.Helpers
     public class DWObjectFieldAdditionalFactService
     {
         public List<DWObjectFieldPM> DWObjectFieldPMs = new List<DWObjectFieldPM>();
-        public  bool IsHaveAddAdditionalFactFields = false;
-        public  DWObjectTablePM DwObjectTable = null;
+        public bool IsHaveAddAdditionalFactFields = false;
+        public DWObjectTablePM DwObjectTable = null;
         private DWObjectTableQuery dWObjectTableQuery = null;
         private DWObjectFieldQuery dWObjectFieldQuery = null;
         private string factTableCode = string.Empty;
@@ -30,62 +30,34 @@ namespace Logitude.BL.Helpers
             dWObjectFieldQuery = new DWObjectFieldQuery(tenant);
             DwObjectTable = dWObjectTableQuery.GetSinglePM(factTableCode, tenant);
             IsHaveAddAdditionalFactFields = (DwObjectTable != null && !string.IsNullOrEmpty(DwObjectTable.AdditionalFactCode)) ? true : false;
-            if (!dWObjectFieldAdditionalFactArgs.DontLoadDwObjectField) LoadDWObjectFields();
-
-
+            if (!dWObjectFieldAdditionalFactArgs.DontLoadDwObjectField) LoadDWObjectFieldsWithAdditionalFactFields();
 
         }
-        
-        public void LoadDWObjectFields()
-        {
-            if (DwObjectTable != null)
-            {
-                if (groupedByCategory)
-                {
-                    LoadDWObjectFieldsWithAdditionalFactFieldsGroupedByCategory();
-                }
-                else
-                {
-                    LoadDWObjectFieldsWithAdditionalFactFields();
-                }
-            }
-        }
 
-        private void LoadDWObjectFieldsWithAdditionalFactFieldsGroupedByCategory()
+    
+
+        public void LoadDWObjectFieldsWithAdditionalFactFields()
         {
-            DWObjectFieldPMs = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, factTableCode);
+            var factDWObjectFieldPMs = groupedByCategory ? dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, factTableCode) : dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(0, factTableCode).Where(d => d.DisplayInQueryBuilder == true).ToList();
+            DWObjectFieldPMs = new List<DWObjectFieldPM>();
             if (IsHaveAddAdditionalFactFields)
             {
-                var additionalFactFields = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, DwObjectTable.AdditionalFactCode);
-                foreach (DWObjectFieldPM additionalFactField in additionalFactFields.Where(d => d.IsMeasurement == false && (d.DisplayInQueryBuilder || d.IsCustom)))
+                var additionalFactDWObjectFieldPMs = groupedByCategory ? dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, DwObjectTable.AdditionalFactCode) : dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(0, DwObjectTable.AdditionalFactCode).ToList(); ;
+                foreach (DWObjectFieldPM additionalFactField in additionalFactDWObjectFieldPMs.Where(d => d.IsMeasurement == false && (d.DisplayInQueryBuilder || d.IsCustom)))
                 {
-                    var dwObjectField = !string.IsNullOrEmpty(additionalFactField.OriginalObjectFieldCode) ? DWObjectFieldPMs.Where(d => d.OriginalObjectFieldCode == additionalFactField.OriginalObjectFieldCode && d.Category == additionalFactField.Category).FirstOrDefault() : null;
+                    var dwObjectField = !string.IsNullOrEmpty(additionalFactField.OriginalObjectFieldCode) ? factDWObjectFieldPMs.Where(d => d.OriginalObjectFieldCode == additionalFactField.OriginalObjectFieldCode).FirstOrDefault() : null;
                     if (dwObjectField == null)
                     {
-                        dwObjectField = !string.IsNullOrEmpty(additionalFactField.Code) ? DWObjectFieldPMs.Where(d => d.Code == additionalFactField.Code && d.Category == additionalFactField.Category).FirstOrDefault() : null;
+                        dwObjectField = !string.IsNullOrEmpty(additionalFactField.Code) ? factDWObjectFieldPMs.Where(d => d.Code == additionalFactField.Code).FirstOrDefault() : null;
                         if (dwObjectField == null) DWObjectFieldPMs.Add(additionalFactField);
                     }
                 }
             }
+
+            DWObjectFieldPMs = DWObjectFieldPMs.Concat(factDWObjectFieldPMs).ToList();
         }
 
-        private void LoadDWObjectFieldsWithAdditionalFactFields()
-        {
-            DWObjectFieldPMs = dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(0, factTableCode).Where(d=>d.DisplayInQueryBuilder == true ).ToList();
-            if (IsHaveAddAdditionalFactFields)
-            {
-                var additionalFactFields = dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(0, DwObjectTable.AdditionalFactCode).ToList();
-                foreach (DWObjectFieldPM additionalFactField in additionalFactFields.Where(d => d.IsMeasurement == false && (d.DisplayInQueryBuilder || d.IsCustom)))
-                {
-                    var dwObjectField = !string.IsNullOrEmpty(additionalFactField.OriginalObjectFieldCode) ? DWObjectFieldPMs.Where(d => d.OriginalObjectFieldCode == additionalFactField.OriginalObjectFieldCode).FirstOrDefault() : null;
-                    if (dwObjectField == null)
-                    {
-                        dwObjectField = !string.IsNullOrEmpty(additionalFactField.Code) ? DWObjectFieldPMs.Where(d => d.Code == additionalFactField.Code).FirstOrDefault() : null;
-                        if (dwObjectField == null) DWObjectFieldPMs.Add(additionalFactField);
-                    }
-                }
-            }
-        }
+
     }
 
     public class DWObjectFieldAdditionalFactArgs
