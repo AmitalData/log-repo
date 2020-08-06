@@ -9808,10 +9808,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_ARInvoiceOTheReceivableGLAccountOfTheChargeNULL = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.TheReceivableGLAccountOfTheChargeNULL", DefaultText = "The Receivable GLAccount of the Charge Type Interest is NULL",LocalDefaultText = @"לא הוגדר חשבון נגדי בסעיף החיוב", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARInvoiceTextCode_ARInvoiceOAutoCreditInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.AutoCreditInvoice", DefaultText = "Auto Credit for Invoice %InvoiceNumber",LocalDefaultText = @"ביטול של חשבונית %InvoiceNumber", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode ARInvoiceTextCode_ARInvoiceOCreditARInvoiceForCreditNote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.CreditARInvoiceForCreditNote", DefaultText = "Auto Credit for Credit Note %InvoiceNumber",LocalDefaultText = @"ביטול של חשבונית זיכוי %InvoiceNumber", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
+ 
    
 	    
 }
