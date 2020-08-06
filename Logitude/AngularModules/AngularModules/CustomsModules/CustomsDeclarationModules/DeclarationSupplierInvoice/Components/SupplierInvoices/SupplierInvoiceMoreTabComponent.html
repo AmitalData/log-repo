@@ -412,7 +412,7 @@
                                     <span>{{item.SupplierChargeID}}</span>
                                 </div>
                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                    <LogTextBox [FocusOnMe]="true" [ObjectFieldName]="'SupplierChargeID'" [ObjectTableName]="'Customs.SupplierInvoiceUCR'" [Text]="SupplierChargeID"
+                                    <LogTextBox [FocusOnMe]="true" [ObjectFieldName]="'SupplierChargeID'" [ObjectTableName]="'Customs.SupplierInvoiceUCR'" [Text]="item.SupplierChargeID"
                                                 [HideColumns]="true" [DataContext]="item"></LogTextBox>
 
                                 </div>
@@ -428,7 +428,7 @@
                                     <span>{{item.AgentChargeID}}</span>
                                 </div>
                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                    <LogTextBox [FocusOnMe]="true" [ObjectFieldName]="'AgentChargeID'" [ObjectTableName]="'Customs.SupplierInvoiceUCR'" [Text]="AgentChargeID"
+                                    <LogTextBox [FocusOnMe]="true" [ObjectFieldName]="'AgentChargeID'" [ObjectTableName]="'Customs.SupplierInvoiceUCR'" [Text]="item.AgentChargeID"
                                                 [HideColumns]="true" [DataContext]="item"></LogTextBox>
 
 
