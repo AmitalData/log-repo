@@ -374,7 +374,7 @@
                                     <span>{{item.PaymentAmount  | NumbersPipe:'n2'}}</span>
                                 </div>
                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                    <LogTextBox [ObjectFieldName]="'PaymentAmount'" [ObjectTableName]="'Customs.SupplierInvoicePayment'" [Text]="PaymentAmount"
+                                    <LogTextBox [ObjectFieldName]="'PaymentAmount'" [ObjectTableName]="'Customs.SupplierInvoicePayment'" [Text]="item.PaymentAmount"
                                                 [AddCommasToNumbers]="true" [HideColumns]="true" [DataContext]="item" [FocusOnMe]="true"></LogTextBox>
 
 
