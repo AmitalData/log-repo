@@ -58,7 +58,10 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 interestReportQueryService = new InterestReportQueryService(interestReportArgs.Tenant);
                 UserQuery userQuery = new UserQuery(interestReportArgs.Tenant);
                 userPM = userQuery.GetSinglePMByEmail(interestReportArgs.Email, interestReportArgs.Tenant);
-                //CheckAndUpdateInterestLastBatchByTenant(interestReportArgs);
+                if (userPM==null)
+                {
+                    userPM = userQuery.GetSinglePMByEmail(interestReportArgs.Email, 0);
+                }
                 CreateBatchesInvoice(interestReportArgs);
             }
             catch (Exception e)
