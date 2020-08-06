@@ -22,6 +22,14 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DataViewName).HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.PivotFieldCode).HasMaxLength(50).IsUnicode(false);
 
+            this.Property(t => t.AdditionalFactCode).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.AdditionalFactForeignKey).HasMaxLength(100).IsUnicode(false);
+
+
+
+
+
+
             this.ToTable("DWObjectTables");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
@@ -33,6 +41,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DataViewName).HasColumnName("DataViewName");
             this.Property(t => t.HasPivotColumn).HasColumnName("HasPivotColumn");
             this.Property(t => t.PivotFieldCode).HasColumnName("PivotFieldCode");
+
+            this.Property(t => t.AdditionalFactCode).HasColumnName("AdditionalFactCode");
+
+            this.Property(t => t.AdditionalFactForeignKey).HasColumnName("AdditionalFactForeignKey");
+
 
 
         }

@@ -73,4 +73,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AdditionalFactCode"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AdditionalFactForeignKey"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

@@ -27,6 +27,17 @@ namespace DW_Editor_Tool.ViewModels
         private string pivotFieldCode;
         public string PivotFieldCode { get { return pivotFieldCode; } set { pivotFieldCode = value; FirePropertyChanged("PivotFieldCode"); } }
 
+
+        private string additionalFactCode;
+        public string AdditionalFactCode { get { return additionalFactCode; } set { additionalFactCode = value; FirePropertyChanged("AdditionalFactCode"); } }
+
+        private string additionalFactForeignKey;
+        public string AdditionalFactForeignKey { get { return additionalFactForeignKey; } set { additionalFactForeignKey = value; FirePropertyChanged("AdditionalFactForeignKey"); } }
+
+        
+
+
+
         bool isClosed;
         public bool IsClosed
         {
