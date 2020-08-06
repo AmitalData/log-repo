@@ -427,6 +427,24 @@ export class SupplierInvoiceExtendedPMService {
                 entityPM.OldEntityPM.SupplierInvoiceFreightAmounts.push(newSupplierInvoiceFreightAmountPM);
             }
 
+
+            entityPM.OldEntityPM.SupplierInvoicePayments = [];
+            for (var item in entityPM.SupplierInvoicePayments) {
+                var mySupplierInvoicePaymentPM = entityPM.SupplierInvoicePayments[item];
+                var newSupplierInvoicePaymentPM: SupplierInvoicePaymentPM = this.clone(mySupplierInvoicePaymentPM);
+
+
+                entityPM.OldEntityPM.SupplierInvoicePayments.push(newSupplierInvoicePaymentPM);
+            }
+
+            entityPM.OldEntityPM.SupplierInvoiceUCRs = [];
+            for (var item in entityPM.SupplierInvoiceUCRs) {
+                var mySupplierInvoiceUCRPM = entityPM.SupplierInvoiceUCRs[item];
+                var newSupplierInvoiceUCRPM: SupplierInvoiceUCRPM = this.clone(mySupplierInvoiceUCRPM);
+
+
+                entityPM.OldEntityPM.SupplierInvoiceUCRs.push(newSupplierInvoiceUCRPM);
+            }
         }
         else {
 
@@ -2132,8 +2150,7 @@ export class SupplierInvoiceExtendedPMService {
     }
 
     MapSupplierInvoiceModifications(entityPM: SupplierInvoicePM, jsonPM: any, mapParent: boolean = true) {
-
-        var oldSupplierInvoiceModifications: SupplierInvoiceModificationPM[] = [];
+         var oldSupplierInvoiceModifications: SupplierInvoiceModificationPM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
             oldSupplierInvoiceModifications = entityPM.OldEntityPM.SupplierInvoiceModifications;
         }
@@ -2310,8 +2327,7 @@ export class SupplierInvoiceExtendedPMService {
         }
     }
     MapSupplierInvoicePayments(entityPM: SupplierInvoicePM, jsonPM: any, mapParent: boolean = true) {
-
-        var oldSupplierInvoicePayments: SupplierInvoicePaymentPM[] = [];
+         var oldSupplierInvoicePayments: SupplierInvoicePaymentPM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
             oldSupplierInvoicePayments = entityPM.OldEntityPM.SupplierInvoicePayments;
         }

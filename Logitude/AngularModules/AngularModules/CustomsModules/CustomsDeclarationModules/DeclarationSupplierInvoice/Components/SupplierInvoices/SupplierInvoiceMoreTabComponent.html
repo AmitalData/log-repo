@@ -69,7 +69,7 @@
         visibility: collapse;
     }
 </style>
-<table  *ngIf="declarationPM.Direction!='E'">
+<table  *ngIf="declarationPM && declarationPM.Direction!='E'">
 
     <!-- Title -->
     <tr style="height: 28px;">
@@ -199,7 +199,7 @@
 
 </table>
 
-<table *ngIf="declarationPM.Direction=='E'">
+<table *ngIf="declarationPM && declarationPM.Direction=='E'">
 
     <!-- Title -->
     <tr style="height: 28px;">
@@ -358,6 +358,7 @@
                                             [DisplayMemberPath]="'LocalName'"
                                             [SelectedValue]="item.PaymentTypeCode"
                                             [LookUpTableName]="'Customs.PaymentType'"
+                                            (SelectedItemChanged)="item.SetLocalName($event, 'PaymentTypeName')"
                                             [FocusOnMe]="true">
                                     </LogLov>
 

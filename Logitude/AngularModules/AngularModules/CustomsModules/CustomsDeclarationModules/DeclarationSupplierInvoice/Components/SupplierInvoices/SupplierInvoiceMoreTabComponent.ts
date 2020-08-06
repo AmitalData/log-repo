@@ -306,6 +306,15 @@ export class PaymentItemModel extends BaseComponent {
         this.SupplierInvoicePayment = _supplierInvoicePayment;
     }
 
+    SetLocalName(entity, fieldName) {
+        if (!AppTool.IsNullOrEmpty(entity)) {
+            this[fieldName] = entity.LocalName;
+        } else {
+            this[fieldName] = null;
+        }
+
+    }
+
     get DeclarationId() { return this.SupplierInvoicePayment.DeclarationId; }
     set DeclarationId(value: string) {
         if (this.SupplierInvoicePayment.DeclarationId != value) {
