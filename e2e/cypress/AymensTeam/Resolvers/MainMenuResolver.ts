@@ -24,7 +24,7 @@ export class MainMenuResolver extends AbstractResolver implements IResolver {
                     cy.get('searchbox[ng-reflect--object-table-name=Shipment]').should('be.exist');
                     break;
                 }
-
+                     
                 case "Quotes": {
                     cy.get('quicksearchtextbox[ng-reflect--object-table-name=Quote]').should('be.exist');
                     break;

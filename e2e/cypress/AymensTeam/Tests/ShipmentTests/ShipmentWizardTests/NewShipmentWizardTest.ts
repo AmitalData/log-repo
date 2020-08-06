@@ -13,6 +13,8 @@ describe('Operations', () => {
     beforeEach(() => {
        
         Resolvers.MainMenuResolver.Selector('#GeneralMHOperations').Select();
+        Resolvers.MainMenuResolver.Selector('#SHIP').Select();
+
     });
 
     it('Test New Shipment Wizard', () => {
