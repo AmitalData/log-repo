@@ -304,6 +304,10 @@
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
+                    <td *ngIf="!IsMultipleSelection" style="width: 1px;">
+                        <CheckBox [IsChecked]="ShowInactive" (Checked)="ShowInactive = $event" [Text]="'Show Inactive'"></CheckBox>
+                    </td>
+
                     <td>
                         <div></div>
                     </td>
