@@ -780,7 +780,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             getNextGroupArgs.ActualDifference = 0m;
             string old_id_saved = getNextGroupArgs.OldId;
             IQueryable<LedgerTransaction> query;
-            int myMAX = getNextGroupArgs.LT_LinesMaximum;
+            int myMAX = getNextGroupArgs.LT_LinesMaximum; //getNextGroupArgs.LT_LinesMaximum;
             GetNextGroupArgs args = getNextGroupArgs;
             LedgerTransactionRepository repo = new LedgerTransactionRepository(this.context);
             List<LedgerTransaction> q;
@@ -869,7 +869,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             getNextGroupArgs.ActualDifference = 0m;
             string old_id_saved = getNextGroupArgs.OldId;
             IQueryable<LedgerTransaction> query;
-            int myMAX = getNextGroupArgs.LT_LinesMaximum;
+            int myMAX = getNextGroupArgs.MaxPageSize; //getNextGroupArgs.LT_LinesMaximum;
             GetNextGroupArgs args = getNextGroupArgs;
             LedgerTransactionRepository repo = new LedgerTransactionRepository(this.context);
             List<LedgerTransaction> q;
@@ -882,7 +882,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             }
             else if (getNextGroupArgs.RunAgain)
             {
-                myMAX = getNextGroupArgs.LT_LinesMaximum;// was * 2;
+               // myMAX = getNextGroupArgs.LT_LinesMaximum;// was * 2;
                 query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
                     && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m || (rec.OpenAmount == 0m && rec.IsReconciled == false))
                     && (rec.DueDate > args.OldDate || (rec.DueDate == args.OldDate && String.Compare(rec.Id, args.OldId) >= 0))
@@ -925,7 +925,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 List<int> goodList = new List<int>(); 
                 // init = sum getNexrGroupArgs.MIN first elements
                 //while (j < getNextGroupArgs.MIN && j < count)
-                while (j < getNextGroupArgs.LT_LinesMaximum && j < count)
+                while (j < getNextGroupArgs.MaxPageSize && j < count) //getNextGroupArgs.LT_LinesMaximum && j < count)
                 {
                     sum += arr[j].OpenAmount;
                     lineCount++;
@@ -945,6 +945,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                     {
                         if ((sum > 0m && sum < maxPositive) || (sum < 0m && sum > maxNegative) || (sum == 0m))
                         {
+                            if (j + 1 >= getNextGroupArgs.LT_LinesMaximum)
+                                break;
                             goodList.Add(j);
                         }
                     }
@@ -1335,6 +1337,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public bool MoveOn { get; set; }
         public bool Stop { get; set; }
         public int LT_LinesMaximum { get; set; }
+        public int MaxPageSize { get; set; }
         public decimal MaximalDifference { get; set; }
         public decimal ActualDifference { get; set; }
     }

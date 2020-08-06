@@ -22,7 +22,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        public HttpResponseMessage GetReconciliationStageC(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum) //, decimal maximalDifference)
+        public HttpResponseMessage GetReconciliationStageC(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, int maxPageSize)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 ReconciliationStageCArg args = null;
                 string message = "";
                 decimal maximalDifference = Decimal.MaxValue;
-                bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, upToDueDate, lT_LinesMaximum, maximalDifference, ref args, message);
+                bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, upToDueDate, lT_LinesMaximum, maxPageSize, maximalDifference, ref args, message);
                 if (!isSuccess)
                 {
                     throw new Exception(message);
@@ -67,7 +67,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
         }
 
-        private bool CreateArgs(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, decimal maximalDifference, ref ReconciliationStageCArg args, string message)
+        private bool CreateArgs(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, int maxPageSize, decimal maximalDifference, ref ReconciliationStageCArg args, string message)
         {
             bool isSuccess = false;
             if (String.IsNullOrWhiteSpace(gLAccountId) && (String.IsNullOrWhiteSpace(accountTypeCode) || (accountTypeCode != "2" && accountTypeCode != "3"))) // 2=Client, 3=Vendor
@@ -100,11 +100,13 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 return isSuccess;
             }
 
-            if (maximalDifference < 0.00m)
+            if (maxPageSize < lT_LinesMaximum || maxPageSize > ReconciliationStageCBatch.MaxPageSize_MAX)
             {
-                message = "MaximalDifference must not be less than zero";
+                message = "maxPageSize must be between " + lT_LinesMaximum + " and " + ReconciliationStageCBatch.MaxPageSize_MAX;
                 return isSuccess;
             }
+
+
 
             args = new ReconciliationStageCArg()
             {
@@ -113,15 +115,14 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 AccountTypeCode = accountTypeCode,
                 UpToDueDate = upToDateValue,
                 LT_LinesMaximum = lT_LinesMaximum,
+                MaxPageSize = maxPageSize,
                 MaximalDifference = maximalDifference,
             };
             isSuccess = true;
             return isSuccess;
         }
 
-
-       // public HttpResponseMessage GetReconciliationStageCNoBatch(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, decimal maximalDifference, int noBatch)
-        public HttpResponseMessage GetReconciliationStageCNoBatch(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, int noBatch) // penultimate parameter was decimal maximalDifference 
+        public HttpResponseMessage GetReconciliationStageCNoBatch(int tenant, string gLAccountId, string accountTypeCode, string upToDueDate, int lT_LinesMaximum, int maxPageSize, int noBatch)  
         {
             try
             {
@@ -129,7 +130,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 ReconciliationStageCArg args = null;
                 string message = "";
                 decimal maximalDifference = Decimal.MaxValue;
-                bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, upToDueDate, lT_LinesMaximum, maximalDifference, ref args, message);
+                bool isSuccess = CreateArgs(tenant, gLAccountId, accountTypeCode, upToDueDate, lT_LinesMaximum, maxPageSize, maximalDifference, ref args, message);
                 if (!isSuccess)
                 {
                     throw new Exception(message);
