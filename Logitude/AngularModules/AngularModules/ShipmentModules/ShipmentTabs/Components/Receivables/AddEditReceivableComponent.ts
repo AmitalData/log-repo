@@ -20,6 +20,7 @@ export class AddEditReceivableComponent {
     public ShipmentLevelCode: string = null;    
     public ValidationErrorsList: string[] = [];
     public ChargeTypesQueryFilters: ApiQueryFilters;
+    public MeasurementsQueryFilters: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
                
@@ -56,6 +57,10 @@ export class AddEditReceivableComponent {
     private BuildQueryFilters() {
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
+        this.MeasurementsQueryFilters = new ApiQueryFilters();
+
+        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotEqual", false, false, false, "string");
+
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("IsReceivable", true, null, null, "Equals", false, false, false, "Boolean");
 

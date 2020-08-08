@@ -121,6 +121,10 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                 else if (s == "OriginShipmentLoaded") {
                     this.OriginShipment = this.entityArgs.OriginEntity;
                 }
+
+                else if (s == "StorageReceivableCreated" || s == "StorageReceivableRemoved") {
+                    this.BuildItemsSource();
+                }
             });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -1461,23 +1465,29 @@ export class ShipmentReceivableItem extends BaseComponent {
         var isQuantityEnabled = false;
         var isUnitPriceEnabled = false;
         var isTotalAmountEnabled = false;
+        var isExchangeRateFixedEnabled = false;
+
         if (isEditingEnabled) {
-            if (this.IsNewEntity) {
+            if (this.IsNewEntity && this.MeasurementCode != "STFE") {
                 isChargeEnabled = true;
             }
 
             if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentEditExchangeRate")) {
-                if (this.CurrencyId != null) {
+                if (this.CurrencyId != null && this.MeasurementCode != "STFE") {
                     if (this.CurrencyId != SessionLocator.LocalCurrencyId) {
                         isRateEnabled = true;
                     }
                 }
             }
 
-            isQuantityEnabled = true;
-            if (!this.EntityPM.IsChargeBySteps) {
-                isUnitPriceEnabled = true;
-                isTotalAmountEnabled = true;
+            if (this.MeasurementCode != "STFE") {
+                isQuantityEnabled = true;
+                isExchangeRateFixedEnabled = true;
+
+                if (!this.EntityPM.IsChargeBySteps) {
+                    isUnitPriceEnabled = true;
+                    isTotalAmountEnabled = true;
+                }
             }
         }
         
@@ -1499,7 +1509,7 @@ export class ShipmentReceivableItem extends BaseComponent {
         this.UIProperties.SetEnabled("MeasurementId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PrepaidCollectId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("IsExchangeRateFixed", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("IsExchangeRateFixed", this.ObjectTableName, isExchangeRateFixedEnabled);
         this.SetUIProperties_AmountProfit();
     }
     SetUIProperties_AmountProfit() {
@@ -1810,7 +1820,7 @@ export class ShipmentReceivableItem extends BaseComponent {
                                     break;
                                 }
                             }
-
+                            this.SetUIProperties();
                             this.UpdateInsideItemsSource_Measurement();
                         }
                     }
@@ -2560,6 +2570,16 @@ export class ShipmentReceivableItem extends BaseComponent {
         if (this.ChargesGroupCode == "FRT") {
             this.fatherComponent.OnFreightAmountChanged();
         }
+    }
+
+    StoragePricingClicked() {
+        var entityResourceService: EntityResourceService = new EntityResourceService();
+        entityResourceService.getEntityResourceByTableName("ShipmentStoragePricing").subscribe((res1: any) => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = "Storage Pricing";
+            logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName };
+            logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
+        });
     }
 }
 export class InsideReceivableViewModel {
