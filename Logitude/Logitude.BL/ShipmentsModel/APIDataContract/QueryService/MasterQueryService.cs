@@ -29,6 +29,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.ShipmentLevelCode = "C";
                 temp.MainCarriageFromPortId = temp.FromPortId;
                 temp.MainCarriageToPortId = temp.ToPortId;
+                temp.MainCarriageToPortId = temp.ToPortId;
+                temp.FinalDistenationPortId = temp.ToPortId;
+                temp.MainCarriageFinalDestinationPortId = temp.ToPortId;
                 temp.FHLStatusCode = "NSEN";
                 temp.FWBStatusCode = "NSEN";
                 temp.FHLStatusName = "Not Sent";
