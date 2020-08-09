@@ -160,7 +160,16 @@
   </Column>
   <Column
     Name="QtyFeedbackInPendingMessage"
-    Type="int" DefaultValue="100" >
+    Type="int"
+    DefaultValue="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TotalInvoiceAmountInUSD"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
     <Constraints
       Nullable="true" />
   </Column>
