@@ -45,12 +45,25 @@ namespace Logitude.Accounting.BL.DataContract
         List<Address> addresses;
         List<GLAccountList> transactionsOppositGLAccounts;
         DateTime? reportMonth;
+
         public TaxDeductionReportDataProvider(int? taxYear,int tenant)
+
+        TaxDeductionReportPM taxDeductionReport;
+        public TaxDeductionReportDataProvider(TaxDeductionReportPM  report,int tenant)
+
         {
             Tenant = tenant;
+
             ReportYear = taxYear;
             startDate = new DateTime((int)taxYear, 1, 1);
             endDate = new DateTime((int)taxYear , 12, 31);
+
+            ReportYear = report.TaxYear;
+            startDate = report.ByMonth? new DateTime((int)report.TaxYear, (int) report.Month.Value.Month, 1) :   new DateTime((int)report.TaxYear, 1, 1);
+            endDate = report.ByMonth ? new DateTime((int)report.TaxYear, (int)report.Month.Value.Month, DateTime.DaysInMonth((int)report.TaxYear, report.Month.Value.Month)) : new DateTime((int)report.TaxYear , 12, 31);
+            this.taxDeductionReport = report;
+            reportMonth = report.Month;
+
             
             invoiceContext = InvoiceContext.GetContext(tenant);
             commoncontext = CommonDataContext.GetContext(tenant);
@@ -63,7 +76,7 @@ namespace Logitude.Accounting.BL.DataContract
         public TaxDeductionReportData GetTaxDeductionReportData()
         {            
             TaxDeductionReportData taxDeductionReport = new TaxDeductionReportData();
-            taxDeductionReport.TaxYear = ReportYear;
+            taxDeductionReport.TaxYear = ReportYear.ToString(); 
             
             taxDeductionReport.deductionLines = GetTaxReportDeductionLines();
             
@@ -484,8 +497,8 @@ namespace Logitude.Accounting.BL.DataContract
                 LTBFilter.Tenant = Tenant;
                 LTBFilter.GLAccountId = glaccountId;
                 DateTime today = DateTime.Today;
-                LTBFilter.From = new DateTime(ReportYear.Value, 1, 1);
-                LTBFilter.To = new DateTime(ReportYear.Value,12,31);
+                LTBFilter.From = startDate;// new DateTime(ReportYear.Value, 1, 1);
+                LTBFilter.To = endDate;// new DateTime(ReportYear.Value,12,31);
                 LTBFilter.IncludeRelatedCurrenciesAccount = false;
                 LTBFilter.IncludeChildAccounts = false;
                 LTBFilter.DateTypeCode = "1";
@@ -539,22 +552,37 @@ namespace Logitude.Accounting.BL.DataContract
         private List<ByMonthList> FillGroupedByMonthList(List<TaxDeductionReportLine> deductionLines, TaxDeductionReportData taxDeduction)
         {
             List<ByMonthList> groupedByMonthLines = new List<ByMonthList>();
-            for (int i=1; i< 13 ;i++)
+            if (taxDeductionReport.ByMonth)
             {
-                var month = i;
-                ByMonthList byMonthList = new ByMonthList()
+                groupedByMonthLines= FillGroupByMonthData(taxDeductionReport.Month.Value.Month, groupedByMonthLines);
+            }
+            else
+            {
+                for (int i = 1; i < 13; i++)
                 {
-                    Month = month,
-                    TotalVendors = deductionLines.Where(d => d.MonthOfRegisterDate ==month).GroupBy(d =>  d.VendorId ).Count(),
-                    TotalPaymentsWithoutDivided = Math.Round(deductionLines.Where(d => d.MonthOfRegisterDate == month && d.DeductionType != "18" ).Sum(d => d.AmountInLocalCurrency).Value, 0),
-                    TotalDeductionsWithoutDivided = Math.Round(deductionLines.Where(d => d.MonthOfRegisterDate == month && d.DeductionType != "18").Sum(d => d.TaxDeductionLocalAmount).Value, 0),
-                    TotalDivided = Math.Round(deductionLines.Where(d => d.MonthOfRegisterDate == month && d.DeductionType == "18").Sum(d => d.AmountInLocalCurrency + (double?) d.TaxDeductionLocalAmount).Value, 0),
-                    TotalDeductionsFromDivided = Math.Round(deductionLines.Where(d => d.MonthOfRegisterDate == month && d.DeductionType == "18").Sum(d => d.TaxDeductionLocalAmount).Value, 0),
-                    ReportMonth = month + "." + ReportYear,
-                };
-                groupedByMonthLines.Add(byMonthList);
+                    var month = i;
+                    groupedByMonthLines= FillGroupByMonthData(month, groupedByMonthLines);
+
+                }
             }
             return groupedByMonthLines;
+        }
+        private List<ByMonthList> FillGroupByMonthData(int month, List<ByMonthList> groupedByMonthLines)
+        {
+            ByMonthList byMonthList = new ByMonthList()
+            {
+
+                Month = month,
+                TotalVendors = deductionLines.Where(d => d.MonthOfRegisterDate == month).GroupBy(d => d.VendorId).Count(),
+                TotalPaymentsWithoutDivided = Math.Round(deductionLines.Where(d => d.MonthOfRegisterDate == month && d.DeductionType != "18").Sum(d => d.AmountInLocalCurrency).Value, 0),
+                TotalDeductionsWithoutDivided = Math.Round(deductionLines.Where(d => d.MonthOfRegisterDate == month && d.DeductionType != "18").Sum(d => d.TaxDeductionLocalAmount).Value, 0),
+                TotalDivided = Math.Round(deductionLines.Where(d => d.MonthOfRegisterDate == month && d.DeductionType == "18").Sum(d => d.AmountInLocalCurrency + (double?)d.TaxDeductionLocalAmount).Value, 0),
+                TotalDeductionsFromDivided = Math.Round(deductionLines.Where(d => d.MonthOfRegisterDate == month && d.DeductionType == "18").Sum(d => d.TaxDeductionLocalAmount).Value, 0),
+                ReportMonth = month + "." + ReportYear,
+            };
+            groupedByMonthLines.Add(byMonthList);
+            return groupedByMonthLines;
+
         }
         private TaxDeductionReportData FillTotalForCompany(List<TaxDeductionReportLine> deductionLines, TaxDeductionReportData taxDeduction)
         {          

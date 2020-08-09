@@ -1,9 +1,4 @@
 
-
-
-
-
-
 <table>
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -11,11 +6,11 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
         </td>
     </tr>
-    <!--<tr><td colspan="2">
+    <tr><td colspan="2">
     <ul class="FiltersMenu">
         <li (click)="FilterItemClicked('Month')" style="width: 105px; height: 22px;"
             [class.SelectedFilter]="FilterSelectedValue === 'Month'">
-            ByMonth
+            By Month
         </li>
         <li (click)="FilterItemClicked('Year')" style="width: 105px; height: 22px;"
             [class.SelectedFilter]="FilterSelectedValue === 'Year'">
@@ -23,8 +18,8 @@
         </li>
 
     </ul>
-</td>   </tr>-->
-    <tr style="height:32px" *ngIf="!ByMonth">
+</td>   </tr>
+    <tr style="height:32px" >
         <td style="width:100px">
             <LogLabel [ObjectFieldName]="'TaxYear'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>

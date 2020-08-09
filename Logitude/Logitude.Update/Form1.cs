@@ -414,11 +414,20 @@ User/Pass",
 
         private void button6_Click(object sender, EventArgs e)
         {
-            LoggedContactResolver.RegisterLoggedContactUtil();
-            DateTimeUtilResolver.RegisterDateTimeUtil();
-            TranslateTextsClassUtilResolver.RegisterTranslateTextsClassUtil();
-            IdCounterUtilResolver.RegisterIdCounterUtil();
-            AccountingRegistrations.Register();
+        //    LoggedContactResolver.RegisterLoggedContactUtil();
+        //    DateTimeUtilResolver.RegisterDateTimeUtil();
+        //    TranslateTextsClassUtilResolver.RegisterTranslateTextsClassUtil();
+        //    IdCounterUtilResolver.RegisterIdCounterUtil();
+        //    AccountingRegistrations.Register();
+
+            TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(1);
+            TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQueryService.GetSingle("1-12", false, false);
+            //TenantQuery tenantQuery = new TenantQuery(tenant);
+            //TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
+           
+            string TaxYear = taxDeductionReportPM.ByMonth ? taxDeductionReportPM.Month + "/" + taxDeductionReportPM.TaxYear : taxDeductionReportPM.TaxYear.ToString();
+
+
 
             //CommunicationWorkerRole.BatchTaskExecutionWR btwr = new CommunicationWorkerRole.BatchTaskExecutionWR();
             //btwr.ExecuteQueue(null);
@@ -462,20 +471,7 @@ User/Pass",
             //    referenceGroup = "0000";
             //}
 
-            double value = 45.49;
-            //   value = Math.Round(value, 1, MidpointRounding.AwayFromZero);
-            value = Math.Round(value * 2, MidpointRounding.AwayFromZero) / 2;
-            value = Math.Round(value, 1);
-
-            value = 45.5;
-            value = Math.Round(value, 1, MidpointRounding.AwayFromZero);
-            value = 45.97;
-            value = Math.Round(value, 1, MidpointRounding.AwayFromZero);
-            value = 45.49;
-            value = Math.Round(value, 2, MidpointRounding.AwayFromZero);
-            value = 45.49;
-            value = Math.Round(value * 2, 2, MidpointRounding.AwayFromZero);
-
+       
 
         }
 
