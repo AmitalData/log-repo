@@ -165,6 +165,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
         {
             foreach (TransshipmentLeg item in shipmentPM.Transshipments.OrderBy(d => d.LegIndex))
             {
+                Card myCarrier = null;
+                if (!string.IsNullOrEmpty(item.CarrierId))
+                {
+                    myCarrier = cardRepository.GetSingleCard(item.CarrierId, tenant);
+                }
+
                 switch (item.LegIndex)
                 {
                     case 1:
@@ -174,6 +180,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             shipmentPM.Transshipment1CarrierNumber = item.CarrierNumber;
                             shipmentPM.Transshipment1AdditionalMAWBOBLBL = item.MasterNumber;
                             shipmentPM.Transshipment1FromPortId = item.PortId;
+
+                            if (myCarrier != null)
+                            {
+                                shipmentPM.Transshipment1CarrierPrefix = myCarrier.Code;
+                            }
+
                             break;
                         }
 
@@ -184,6 +196,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             shipmentPM.Transshipment2CarrierNumber = item.CarrierNumber;
                             shipmentPM.Transshipment2AdditionalMAWBOBLBL = item.MasterNumber;
                             shipmentPM.Transshipment2FromPortId = item.PortId;
+
+                            if (myCarrier != null)
+                            {
+                                shipmentPM.Transshipment2CarrierPrefix = myCarrier.Code;
+                            }
+
                             break;
                         }
 
@@ -194,9 +212,15 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             shipmentPM.Transshipment3CarrierNumber = item.CarrierNumber;
                             shipmentPM.Transshipment3AdditionalMAWBOBLBL = item.MasterNumber;
                             shipmentPM.Transshipment3FromPortId = item.PortId;
+
+                            if (myCarrier != null)
+                            {
+                                shipmentPM.Transshipment3CarrierPrefix = myCarrier.Code;
+                            }
+
                             break;
                         }
-                }                
+                }
             }
 
             this.SetPorts();
