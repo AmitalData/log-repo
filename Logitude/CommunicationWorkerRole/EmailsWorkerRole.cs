@@ -113,105 +113,107 @@ namespace CommunicationWorkerRole
                         //{
                         //    queueservice = QueueServiceManager.GetQueueService(queueName, 0);
                         //}
-
-                        var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
-                        LastActivity = DateTime.UtcNow;
-
-                        if (response.MessageId != null)
+                        using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
                         {
+                            var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
+                            LastActivity = DateTime.UtcNow;
 
-                            string communicationLogId = response.MessageValues["CommunicationLogId"].ToString();
-                            int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
-                            context = CommonDataContext.GetContext(tenant);
-                            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
-                            CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
-
-                            bool processEnebled = true;//IsCommunicationLogProcessEnabled(communicationLogId, tenant); since there is queueservice.delay(timespan).... ihab mohammad jalal
-                            try
+                            if (response.MessageId != null)
                             {
-                                if (processEnebled)
-                                {
-                                    if (cl != null)
-                                    {
-                                        
+                                string communicationLogId = response.MessageValues["CommunicationLogId"].ToString();
+                                int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
+                                context = CommonDataContext.GetContext(tenant);
+                                CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
+                                CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
 
-                                        if (cl.CommunicationStatusTypeCode == "D")
+                                bool processEnebled = true;//IsCommunicationLogProcessEnabled(communicationLogId, tenant); since there is queueservice.delay(timespan).... ihab mohammad jalal
+                                try
+                                {
+                                    if (processEnebled)
+                                    {
+                                        if (cl != null)
                                         {
-                                            queueservice.Complete();
-                                        }
-                                        else
-                                        {
-                                            var sendingEmailQuotaResult = EmailLimitationHelper.CheckEmailSendingQuotaForTenant(tenant);
-                                            if (sendingEmailQuotaResult.IsQuotaExceeded)
+
+
+                                            if (cl.CommunicationStatusTypeCode == "D")
                                             {
-                                                cl.CommunicationStatusTypeCode = "F";
-                                                cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
-                                                cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
-                                                communicationLogRep.Update(cl);
-                                                communicationLogRep.SubmitChanges(); 
+                                                queueservice.Complete();
                                             }
                                             else
                                             {
-                                                SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep, response); 
-                                            }
-                                            queueservice.Complete();
+                                                var sendingEmailQuotaResult = EmailLimitationHelper.CheckEmailSendingQuotaForTenant(tenant);
+                                                if (sendingEmailQuotaResult.IsQuotaExceeded)
+                                                {
+                                                    cl.CommunicationStatusTypeCode = "F";
+                                                    cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
+                                                    cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
+                                                    communicationLogRep.Update(cl);
+                                                    communicationLogRep.SubmitChanges();
+                                                }
+                                                else
+                                                {
+                                                    SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep, response);
+                                                }
+                                                queueservice.Complete();
 
-                                            LogDoneItemInMemory();
-
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (response.RetryNumber <= 4)
-                                        {
-                                            if (response.RetryNumber <= 1)
-                                            {
-                                                queueservice.Delay(new TimeSpan(0, 0, 0, 40));
-                                            }
-
-                                            if (response.RetryNumber >= 2 && response.RetryNumber < 3)
-                                            {
-                                                queueservice.Delay(new TimeSpan(0, 0, 1, 0));
-                                            }
-
-                                            //if (response.RetryNumber > 5 && response.RetryNumber <= 10)
-                                            //{
-
-                                            //    queueservice.Delay(new TimeSpan(0, 0, 0, 10));
-                                            //    AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
-                                            //        + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
-                                            //    Thread.Sleep(3000);
-                                            //}
-                                            if (response.RetryNumber == 3)
-                                            {
-
-                                                queueservice.Delay(new TimeSpan(0, 0, 2, 0));
-                                                AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
-                                                + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
-                                                //Thread.Sleep(10000);
+                                                LogDoneItemInMemory();
 
                                             }
                                         }
                                         else
                                         {
+                                            if (response.RetryNumber <= 4)
+                                            {
+                                                if (response.RetryNumber <= 1)
+                                                {
+                                                    queueservice.Delay(new TimeSpan(0, 0, 0, 40));
+                                                }
 
-                                            //cl.CommunicationStatusTypeCode = "F";
-                                            //cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
-                                            //cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
-                                            //communicationLogRep.Update(cl);
-                                            //communicationLogRep.SubmitChanges();
+                                                if (response.RetryNumber >= 2 && response.RetryNumber < 3)
+                                                {
+                                                    queueservice.Delay(new TimeSpan(0, 0, 1, 0));
+                                                }
 
-                                            queueservice.Complete();
-                                            AzureLog.SaveLogsInStorage("couldn't find communication log and the message is completed: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
-                                                + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
+                                                //if (response.RetryNumber > 5 && response.RetryNumber <= 10)
+                                                //{
+
+                                                //    queueservice.Delay(new TimeSpan(0, 0, 0, 10));
+                                                //    AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
+                                                //        + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
+                                                //    Thread.Sleep(3000);
+                                                //}
+                                                if (response.RetryNumber == 3)
+                                                {
+
+                                                    queueservice.Delay(new TimeSpan(0, 0, 2, 0));
+                                                    AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
+                                                    + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
+                                                    //Thread.Sleep(10000);
+
+                                                }
+                                            }
+                                            else
+                                            {
+
+                                                //cl.CommunicationStatusTypeCode = "F";
+                                                //cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
+                                                //cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
+                                                //communicationLogRep.Update(cl);
+                                                //communicationLogRep.SubmitChanges();
+
+                                                queueservice.Complete();
+                                                AzureLog.SaveLogsInStorage("couldn't find communication log and the message is completed: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
+                                                    + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
+                                            }
                                         }
                                     }
                                 }
+                                catch (Exception insideEx)
+                                {
+                                    HandleEmailsExceptionRetries(response, insideEx);
+                                }
                             }
-                            catch (Exception insideEx)
-                            {
-                                HandleEmailsExceptionRetries(response, insideEx);
-                            }
+                            scope.Complete();
                         }
                     }
                     catch (Exception ex)
