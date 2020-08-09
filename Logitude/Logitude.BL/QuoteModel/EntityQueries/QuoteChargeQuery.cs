@@ -259,6 +259,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
                             quoteChargePM.VatAmount = quoteChargePM.SaleTotalAmount * percentage / 100;
                         }
+
+                        
                     }
                 }
 
