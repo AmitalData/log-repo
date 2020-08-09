@@ -59,7 +59,7 @@
     ForeignKeyColumn="DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber"
     ReferencedTable="SupplierInvoiceItems"
     ReferencedColumn="DeclarationId,CounterKey,LineNumber"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="StatementTypeCode"
     ReferencedTable="NbcDeclarationTypes"

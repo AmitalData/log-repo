@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "7bf0c5831b21939241831b0dd8a4d242";
+		public const string HashString = "e8dd8f456710cd88268e57625234c82f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16675,6 +16675,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOUCR = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UCR", DefaultText = "UCR",LocalDefaultText = @"זיהוי מטען", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOPaymentDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaymentDetails", DefaultText = "Payment Details",LocalDefaultText = @"פרטי תשלום", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOPrices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Prices", DefaultText = "Prices",LocalDefaultText = @"מחירים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAbachStatement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AbachStatement", DefaultText = "Abach Declaration",LocalDefaultText = @"הצהרות אב'כ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

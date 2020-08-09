@@ -34,6 +34,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string StatementTypeCode  { get; set; }
        [DataMember]
        public bool IsStatementInd  { get; set; }
+       [DataMember]
+       public string StatementTypeName  { get; set; }
    }
 
 }
