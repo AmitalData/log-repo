@@ -49,6 +49,7 @@ namespace Logitude.Accounting.BL.DataContract
         public TaxDeductionReportDataProvider(TaxDeductionReportPM  report,int tenant)
         {
             Tenant = tenant;
+
             ReportYear = report.TaxYear;
             startDate = report.ByMonth? new DateTime((int)report.TaxYear, (int) report.Month.Value.Month, 1) :   new DateTime((int)report.TaxYear, 1, 1);
             endDate = report.ByMonth ? new DateTime((int)report.TaxYear, (int)report.Month.Value.Month, DateTime.DaysInMonth((int)report.TaxYear, report.Month.Value.Month)) : new DateTime((int)report.TaxYear , 12, 31);
