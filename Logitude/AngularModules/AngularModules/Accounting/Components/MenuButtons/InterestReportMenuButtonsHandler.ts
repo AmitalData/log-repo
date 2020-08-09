@@ -73,7 +73,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                             }
                         case "CreateInvoice":
                             {
-                                if (this.EntityPM.InterestReportStatusCode == "1")
+                                if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "9" )
                                     button.IsDisabled = false;
                                 else
                                     button.IsDisabled = true;
