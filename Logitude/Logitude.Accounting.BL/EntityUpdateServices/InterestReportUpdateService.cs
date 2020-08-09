@@ -79,6 +79,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 CancelInterestReport(entityPOCO, entityPM);
             }
+
+            if(entityPM.InterestCalculationDate != entityPOCO.InterestCalculationDate)
+            {
+                CreateBatchTaskExecution(entityPM);
+            }
             
         }
 

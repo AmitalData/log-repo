@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 {
     public class InterestReportLinesByDateCreationService
     {
+        private int tenant;
         public List<InterestReportLinesByDatePM> CreateInterestReportLinesByDate(InterestReportLinesByDateCreationParams interestReportLinesByDateCreationParams)
         {
             List<InterestTransactionsGroupedByDate> interestTransactionsGroupedByDates = GetInterestTransactionsGroupedByDate(interestReportLinesByDateCreationParams.InterestTransactionPMs);
@@ -31,6 +33,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     interestReportLinesByDateCreationParams.InterestReportPM.Tenant,
                     interestReportLinesByDateCreationParams,
                     accumulatedAmount);
+                tenant = interestReportLinesByDateCreationParams.InterestReportPM.Tenant;
                 InterestReportLinesByDatePM interestReportLinesByDatePM = GetMappedInterestReportLinesByDatePM(interestReportLinesByDateMappingParams);
                 interestReportLinesByDatePM.LineNumber = sequence++;
                 interestReportLinesByDatePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -251,16 +254,19 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             switch (interestRateBaseType) {
                 case "standard": 
                     {
-                        throw new ApplicationException("There is no Interest Base period in the dates provided for the Standard Rate Base");
+                        string message = TextCodesTranslator.TranslateText("InterestReport.O.NoStandardBasePeriod", tenant, true);
+                        throw new ApplicationException(message);
                         
                     }
                 case "exceptional":
                     {
-                        throw new ApplicationException("there is no Interest Base period in the dates provided for the Exceptional Rate Base");
+                        string message = TextCodesTranslator.TranslateText("InterestReport.O.NoExceptionalBasePeriod&quot", tenant, true);
+                        throw new ApplicationException(message);
                     }
                 case "credit":
                     {
-                        throw new ApplicationException("there is no Interest Base period in the dates provided for the Credit Rate Base");
+                        string message = TextCodesTranslator.TranslateText("InterestReport.O.NoCreditBasePeriod", tenant, true);
+                        throw new ApplicationException(message);
                     }
             }
         }
@@ -287,7 +293,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
             if (gLAccountInterestPeriodPM == null)
             {
-                throw new ApplicationException("There is no GL Account Interest period in the dates provided");
+                string message = TextCodesTranslator.TranslateText("InterestReport.O.NoGlAccountPeriod", tenant, true);
+                throw new ApplicationException(message);
             }
 
             return gLAccountInterestPeriodPM;

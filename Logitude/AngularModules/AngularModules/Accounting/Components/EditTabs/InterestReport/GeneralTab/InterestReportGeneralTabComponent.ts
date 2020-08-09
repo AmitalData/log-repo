@@ -127,7 +127,8 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         logWindow.Show(myPath);
         logWindow.WindowClosed.subscribe(s => {
             if (s!=null) {
-               this.EntityPM.InterestCalculationDate = s;
+              this.InterestCalculationDate = s;
+              this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
         })
     }
