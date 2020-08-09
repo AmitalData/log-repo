@@ -1100,10 +1100,9 @@ using Simplog.Data.ShipmentsModel;
                     
 					if(IsUpdate)
 					{
-							throw new ApplicationException("MAWBOBLDate Can't be update"); 
+							throw new ApplicationException("MAWBDate Can't be update"); 
 					}  
-			
-					
+
 					temp.MAWBOBLDate = MyEntity.MAWBDate;
                     
 					if(IsUpdate)
@@ -1111,17 +1110,23 @@ using Simplog.Data.ShipmentsModel;
 							throw new ApplicationException("Ratio Can't be update"); 
 					}  
 
-
-					temp.Ratio = MyEntity.Ratio;					   
+					temp.Ratio = MyEntity.Ratio; 
 
 					if(MyEntity.Transshipments != null && MyEntity.Transshipments.Count > 0)
 					{
 						TransshipmentQueryService TransshipmentService25 = new TransshipmentQueryService(Tenant);
+						  
+						if(IsUpdate)
+						{
+								throw new ApplicationException("Transshipments Can't be update"); 
+						}  
+
 						temp.Transshipments = TransshipmentService25.TransshipmentDataMappingAndValidatin(MyEntity.Transshipments,Tenant,ComputingPartnerName);
+						
 					}
 
 								 					   
-					   return temp;
+					return temp;
 		    }
             catch (Exception ex)
             {
@@ -1131,4 +1136,4 @@ using Simplog.Data.ShipmentsModel;
         }
 		 
    }
-}
+}
