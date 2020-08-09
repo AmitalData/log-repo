@@ -263,6 +263,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                             this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoicePayment").subscribe((response: any) => {
                                 this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceUCR").subscribe((response: any) => {
                                     this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsPrice").subscribe((response: any) => {
+                                        this.entityResourceService.getEntityResourceByTableName("Customs.SuppInvoiceItemsAbachStatement").subscribe((response: any) => {
 
                             this.BuildTabs();
                             this.RunComponent();
@@ -276,7 +277,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
                             this.GetPointers();
                             });
-                        });
+                                    });
+                                });
                             });
                         });
                     });

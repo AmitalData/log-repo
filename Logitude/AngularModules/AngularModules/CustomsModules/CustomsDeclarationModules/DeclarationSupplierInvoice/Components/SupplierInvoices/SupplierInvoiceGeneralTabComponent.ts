@@ -3132,6 +3132,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             windowArgs.SupplierInvoiceItemPM = item.entityPM;
             windowArgs.IsDisplayOnly = this.Parent.IsReadOnly;
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
+            windowArgs.allowExport = this.allowExport;
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 1000;

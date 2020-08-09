@@ -105,7 +105,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
 
         this.AbachsList = new ObservableCollection([]);
         for (let item of this.OriginalItemPM.SuppInvoiceItemsAbachStatements) {
-            this.PricesList.Insert(new AbachItemModel(item));
+            this.AbachsList.Insert(new AbachItemModel(item));
         }
 
         // ProcessTypes List
@@ -409,22 +409,22 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     abachCounter = 0;
 
     AddAbachButton() {
-        var item = new SuppInvoiceItemsAbachStatementPM(this.OriginalItemPM);
+         var item = new SuppInvoiceItemsAbachStatementPM(this.OriginalItemPM);
 
         if (this.AbachsList.Length > 0) {
             this.abachCounter = this.getMax(this.AbachsList.Collection, "SequenceNumeric");
-
+        }
              item.DeclarationId = this.OriginalItemPM.DeclarationId,
                 item.Tenant = this.OriginalItemPM.Tenant,
                 item.InvoiceCounterKey = this.OriginalItemPM.CounterKey,
                 item.InvoiceItemLineNumber = this.OriginalItemPM.LineNumber,
-                  item.SequenceNumeric=this.abachCounter,
+                  item.SequenceNumeric=this.abachCounter +1,
                 item.ChangeSetOp = "Insert",
 
                 this.OriginalItemPM.AddSuppInvoiceItemsAbachStatement(item);
-            this.PricesList.Insert(new AbachItemModel(item));
+            this.AbachsList.Insert(new AbachItemModel(item));
             //this.CurrentSession.ResetRowIndex();
-        }
+         
     }
 
     RemoveAbach(item: AbachItemModel) {
@@ -441,20 +441,21 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     AddPriceButton() {
              var item = new SupplierInvoiceItemsPricePM(this.OriginalItemPM);
 
-            if (this.PricesList.Length > 0) {
-                this.priceCounter = this.getMax(this.PricesList.Collection, "LineNumber");
+        if (this.PricesList.Length > 0) {
+            this.priceCounter = this.getMax(this.PricesList.Collection, "LineNumber");
+        }
              item.DeclarationId = this.OriginalItemPM.DeclarationId,
                 item.Tenant = this.OriginalItemPM.Tenant,
                 item.InvoiceCounterKey = this.OriginalItemPM.CounterKey,
                 item.InvoiceItemLineNumber = this.OriginalItemPM.LineNumber,
-                 item.LineNumber = this.priceCounter,
+                 item.LineNumber = this.priceCounter +1,
 
                 item.ChangeSetOp = "Insert",
 
                 this.OriginalItemPM.AddSupplierInvoiceItemsPrice(item);
             this.PricesList.Insert(new PriceItemModel(item));
             //this.CurrentSession.ResetRowIndex();
-        }
+         
     }
 
     RemovePrice(item: PriceItemModel) {
@@ -974,7 +975,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     //#endregion
 
     getMax(list: any[], propertyName: string) {
-        var max = -99999;
+          var max = -99999;
         var maxObj = list ? list.reduce(function (prev, current) { return (prev[propertyName] > current[propertyName]) ? prev : current }) : null;
         if (maxObj != null)
             if (max <= maxObj[propertyName])
@@ -1058,6 +1059,15 @@ export class AbachItemModel extends BaseComponent {
         }
     }
 
+    get SequenceNumeric() { return this.AbachPM.SequenceNumeric; }
+    set SequenceNumeric(value: number) {
+        if (this.AbachPM.SequenceNumeric != value) {
+            this.AbachPM.SequenceNumeric = value;
+
+        }
+    }
+
+
     get StatementTypeName() { return this.AbachPM.StatementTypeName; }
     set StatementTypeName(value: string) {
         if (this.AbachPM.StatementTypeName != value) {
@@ -1102,6 +1112,14 @@ export class PriceItemModel extends BaseComponent {
     set AdditionalPrice(value: number) {
         if (this.PricePM.AdditionalPrice != value) {
             this.PricePM.AdditionalPrice = value;
+
+        }
+    }
+
+    get LineNumber() { return this.PricePM.LineNumber; }
+    set LineNumber(value: number) {
+        if (this.PricePM.LineNumber != value) {
+            this.PricePM.LineNumber = value;
 
         }
     }
