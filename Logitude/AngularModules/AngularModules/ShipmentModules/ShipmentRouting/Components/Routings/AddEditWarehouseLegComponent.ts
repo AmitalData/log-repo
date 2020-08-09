@@ -28,7 +28,6 @@ import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList'
 import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
 import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
-import { ShipmentStoragePricingPM } from '../../../../Shipment/EntityPMs/ShipmentStoragePricingPM';
 
 @Component({
     moduleId: './ShipmentModules/ShipmentRouting/Components/Routings/',
@@ -51,7 +50,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public StoragePricingEnabled: boolean = false;
     public StoragePricingMessageVisible: boolean = false;
-    private OriginalWarehouseLegActualReleaseDate: Date;
 
     constructor() {
         super();
@@ -109,7 +107,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 }
             }
 
-            this.OriginalWarehouseLegActualReleaseDate = this.EntityPM.WarehouseLegActualReleaseDate;
             this.GetShipmentDirection();
             this.SetStorageDays();
         }
@@ -437,6 +434,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             else {
                 this.SetStorageDays();
             }
+
             this.ComputeGrossWeight_PerStorageDays();
         }
     }
@@ -489,6 +487,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
     }
 
+    private PricesChanged: boolean = false;
     StoragePricingClicked() {
         var entityResourceService: EntityResourceService = new EntityResourceService();
         entityResourceService.getEntityResourceByTableName("ShipmentStoragePricing").subscribe((res1: any) => {
@@ -496,9 +495,14 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             logitudeWindow.Title = "Storage Pricing";
             logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, DefaultPricings: this.warehouseStoragePricings };
             logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s == "PricesChanged") {
+                    this.PricesChanged = true;
+                }
+            });
         });
     }
-
+    
     private SetLastFreeDate() {
         if (this.WarehouseLegActualEntryDate != null && this.WarehouseStorageFreeDays != null) {
             var date = DateTool.AddDays(this.WarehouseLegActualEntryDate, this.WarehouseStorageFreeDays);
@@ -608,14 +612,23 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            this.CheckStorageProperties();
+            var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+
+            if (this.PricesChanged && storageReceivable) {
+                this.UpdateStorageReceivable(storageReceivable);
+            }
+
+            else {
+                this.CheckStorageProperties();
+            }
+
             this.FatherComponent.BuildItemsCollection();
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
-    private CheckStorageProperties() {
-        if (this.OriginalWarehouseLegActualReleaseDate == null && this.WarehouseLegActualReleaseDate != null && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
+    private CheckStorageProperties() { 
+        if (this.WarehouseLegActualReleaseDate != null && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
             && !AppTool.IsNullOrZero(this.StorageDays) && this.ChargeStorage && this.EntityPM.ShipmentStoragePricings.length > 0) {
 
             var amount: number = this.ComputeReceivableAmount();
@@ -658,11 +671,10 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                                                 storageReceivable.UpdateDate = DateTool.GetCurrentDateAsUtc();
                                                 storageReceivable.CreatedByUserId = SessionLocator.LoggedUserId;
                                                 storageReceivable.UpdateByUserId = SessionLocator.LoggedUserId;
-                                                storageReceivable.ShipmentReceivableLineStatusCode = "EMPT";
+                                                storageReceivable.ShipmentReceivableLineStatusCode = "OAMT";
                                                 storageReceivable.CurrencyId = this.EntityPM.ChargeStorageCurrencyId;
                                                 storageReceivable.CurrencyCode = currencyList.Code;
-                                                storageReceivable.TotalAmount = amount;
-
+                                                
                                                 if (SessionLocator.LocalCurrencyId == storageReceivable.CurrencyId) {
                                                     storageReceivable.Rate = 1;
                                                 }
@@ -692,6 +704,17 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                                                     storageReceivable.PrepaidCollectId = this.EntityPM.OtherPrepaidCollectId;
                                                 }
 
+                                                storageReceivable.TotalAmount = amount;
+                                                storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
+
+                                                if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
+                                                    storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
+                                                }
+
+                                                else {
+                                                    storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
+                                                }
+
                                                 this.EntityPM.AddReceivable(storageReceivable);
                                                 this.CurrentSession.FireEvent("StorageReceivableCreated");
                                             }
@@ -706,14 +729,14 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
 
         else {
-            var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE")[0];
+            var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
             if (storageReceivable) {
                 this.EntityPM.RemoveReceivable(storageReceivable);
                 this.CurrentSession.FireEvent("StorageReceivableRemoved");
             }
         }
     }
-    ComputeReceivableAmount(): number {
+    private ComputeReceivableAmount(): number {
         var myResult: number = 0;
         var weight: number = 0;
         var rounding: number = 0;
@@ -730,13 +753,14 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
         if (this.EntityPM.WeightRoundingCode == "HAF") {
             rounding = 0.5;
+
+            if (weight != null) {
+                weightRounded = Math.ceil(weight * 20) / 20;
+            }
         }
 
         else if (this.EntityPM.WeightRoundingCode == "ONE") {
             rounding = 1;
-        }
-
-        if (!AppTool.IsNullOrZero(weight) && !AppTool.IsNullOrZero(rounding)) {
             weightRounded = AppTool.Round(weight, rounding);
         }
 
@@ -752,13 +776,19 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 newItem.Price = item.SalePrice;
 
                 var previousLine: CalculatedPricingItem = myPricigs.filter(d => d.Index == item.LineNumber - 1)[0];
-                if (previousLine != null && !AppTool.IsNullOrZero(item.StepTo)) {
-                    if ((item.StepTo - item.StepFrom) <= (days - previousLine.Days)) {
-                        newItem.Days = item.StepTo - item.StepFrom;
+                if (previousLine != null) {
+                    if (!AppTool.IsNullOrZero(item.StepTo)) {
+                        if ((item.StepTo - item.StepFrom) <= (days - previousLine.Days)) {
+                            newItem.Days = item.StepTo - item.StepFrom;
+                        }
+
+                        else {
+                            newItem.Days = days - previousLine.Days
+                        }
                     }
 
                     else {
-                        newItem.Days = days - previousLine.Days;
+                        newItem.Days = days - ArrayTool.Sum(myPricigs, "Days")
                     }
                 }
 
@@ -774,6 +804,20 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
 
         return myResult;
+    }
+    private UpdateStorageReceivable(storageReceivable: ShipmentReceivablePM) {
+        var amount: number = this.ComputeReceivableAmount();
+
+        storageReceivable.TotalAmount = amount;
+        storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
+
+        if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
+            storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
+        }
+
+        else {
+            storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
+        }
     }
 
     private myCloner: Cloner;

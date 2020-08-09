@@ -1466,6 +1466,7 @@ export class ShipmentReceivableItem extends BaseComponent {
         var isUnitPriceEnabled = false;
         var isTotalAmountEnabled = false;
         var isExchangeRateFixedEnabled = false;
+        var isCurrencyEnabled = false;
 
         if (isEditingEnabled) {
             if (this.IsNewEntity && this.MeasurementCode != "STFE") {
@@ -1483,6 +1484,7 @@ export class ShipmentReceivableItem extends BaseComponent {
             if (this.MeasurementCode != "STFE") {
                 isQuantityEnabled = true;
                 isExchangeRateFixedEnabled = true;
+                isCurrencyEnabled = true;
 
                 if (!this.EntityPM.IsChargeBySteps) {
                     isUnitPriceEnabled = true;
@@ -1505,7 +1507,7 @@ export class ShipmentReceivableItem extends BaseComponent {
         this.UIProperties.SetEnabled("ChargesTypeId", this.ObjectTableName, isChargeEnabled);
         this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, isQuantityEnabled);
         this.UIProperties.SetEnabled("UnitPrice", this.ObjectTableName, isUnitPriceEnabled);
-        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, isCurrencyEnabled);
         this.UIProperties.SetEnabled("MeasurementId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PrepaidCollectId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
@@ -2577,7 +2579,7 @@ export class ShipmentReceivableItem extends BaseComponent {
         entityResourceService.getEntityResourceByTableName("ShipmentStoragePricing").subscribe((res1: any) => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Title = "Storage Pricing";
-            logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName };
+            logitudeWindow.WindowArgs = { EntityPM: this.ShipmentPM, ObjectTableName: this.ObjectTableName };
             logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
         });
     }

@@ -345,13 +345,24 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             //    }
             //}
 
+            ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(entityPM.Tenant);
             List<ARInvoiceLinePM> lines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
             foreach (ARInvoiceLinePM item in lines)
             {
+                string importStorageChargeId = null;
                 if (item.ChargesTypeId == null)
                 {
                     string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.ChargesTypeId", entityPM.Tenant);
                     throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
+                }
+
+                else
+                {
+                    ChargesType chargesType = chargesTypeRepository.GetSingleChargesTypeByCode("ISTOR", entityPM.Tenant);
+                    if(chargesType != null)
+                    {
+                        importStorageChargeId = chargesType.Id;
+                    }
                 }
 
                 if (item.VatTypeId == null)
@@ -366,16 +377,24 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
                 }
 
-                if (item.Quantity == null)
+                if (item.MeasurementCode == "STFE" && item.ChargesTypeId == importStorageChargeId)
                 {
-                    string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.Quantity", entityPM.Tenant);
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
+                    // import storage charge has no quantity or price
                 }
 
-                if (item.UnitPrice == null)
+                else
                 {
-                    string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.UnitPrice", entityPM.Tenant);
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
+                    if (item.Quantity == null)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.Quantity", entityPM.Tenant);
+                        throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
+                    }
+
+                    if (item.UnitPrice == null)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.UnitPrice", entityPM.Tenant);
+                        throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
+                    }
                 }
 
                 if (item.ForiegnExchangeRate == null)

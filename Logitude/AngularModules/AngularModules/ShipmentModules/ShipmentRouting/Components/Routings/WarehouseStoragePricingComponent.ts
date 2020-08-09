@@ -23,6 +23,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     public PricingItemsList: ObservableCollection;
     private maxLineNumber = 0;
     public IsResourcesReady: boolean = false;
+    public PricesChanged: boolean = false;
     constructor() {
         super();
     }
@@ -174,7 +175,12 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
                 }
             });
 
-            this.CurrentSession.CloseCurrentWindowEmit("ok");
+            var emitMessage: string = "ok";
+            if (this.PricesChanged) {
+                emitMessage = "PricesChanged";
+            }
+
+            this.CurrentSession.CloseCurrentWindowEmit(emitMessage);
         }
     }
 
@@ -373,6 +379,7 @@ export class PricingItem extends BaseComponent {
     set SalePrice(newValue: number) {
         if (this.EntityPM.SalePrice != newValue) {
             this.EntityPM.SalePrice = newValue;
+            this.fatherComponent.PricesChanged = true;
         }
     }
 

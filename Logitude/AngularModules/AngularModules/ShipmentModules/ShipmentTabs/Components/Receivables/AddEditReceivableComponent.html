@@ -154,7 +154,7 @@
                                                 </td>
                                             </tr>
 
-                                            <tr style="height:25px;" *ngIf="DataContext.MeasurementCode == 'STFE'">
+                                            <tr style="height:25px;" *ngIf="DataContext.MeasurementCode == 'STFE' && DataContext.ARInvoiceId == null">
                                                 <td colspan="2">
                                                     <div class="OrangeInfo" style="margin: 5px;">
                                                         <label>In order to edit the amount, go to the warehouse pricing</label>
@@ -188,7 +188,7 @@
                                                                 <img src="./Images/CellIcons/F-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Receivables.ForeignAmountsetasFixed' | TextCodeTranslationPipe" />
                                                             </td>
 
-                                                            <td style="width: 40px;vertical-align:central;" *ngIf="DataContext.MeasurementCode == 'STFE'">
+                                                            <td style="width: 40px;vertical-align:central;" *ngIf="DataContext.MeasurementCode == 'STFE' && DataContext.ARInvoiceId == null">
                                                                 <div>
                                                                     <span style="float:left" class="hyperlink" (click)="DataContext.StoragePricingClicked()">Storage Pricing</span>
                                                                 </div>
