@@ -23,8 +23,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.DeclarationId = entityParentPM.DeclarationId;
             entityPM.InvoiceCounterKey = entityParentPM.CounterKey;
             entityPM.InvoiceItemLineNumber = entityParentPM.LineNumber;
+            
 
- 
+
             base.OnCreating(entityPM, entityParentPM);
         }
 
