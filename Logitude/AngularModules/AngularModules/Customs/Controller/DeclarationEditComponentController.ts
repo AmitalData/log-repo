@@ -30,8 +30,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
             }
 
         }
-        debugger;
-         if (currentEntity.Direction=="E") {
+          if (currentEntity.Direction=="E") {
             var indexOfTab = allTabs.findIndex(t => t.Code == "DEIN");
              if (indexOfTab > -1) {
                  allTabs[indexOfTab].TabNameTextCodeCode = "Customs.Declaration.TH.ExporterInvoices";
