@@ -18,6 +18,8 @@ using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using WebFreight.Web.Security;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -47,6 +49,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             reportQueryOperations = DeserializeQueryOperationFromXml(xmlFilters);
 
+            CheckSalesmanAbilities(BuildReportParameters());
+
             CardIndexReportService cardIndexReportService = new CardIndexReportService(accountingContext, BuildReportParameters());
             cardIndexReportService.Run();
 
@@ -57,6 +61,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             return BuildDataProvider(cardIndexReportService);
         }
+
+
 
 
 
@@ -75,6 +81,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 FillGLAccountBalance(cardIndexReportService.CardIndexs);
 
             return transactionsDataProvider;
+        }
+
+        private void CheckSalesmanAbilities(AgingReportParam args)
+        {
+            bool isSalsmanRestrictionsEnabled = SecurityUtility.CheckFeature("GLAccount", "SalesmanLTRP", args.Tenant);
+            if (isSalsmanRestrictionsEnabled && args.SalesmanId == null)
+                throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.NoSalesman", args.Tenant, LoggedContactResolver.GetLoggedContactShowLocal(args.Tenant)));
         }
 
         private DateTime GetToDate()
