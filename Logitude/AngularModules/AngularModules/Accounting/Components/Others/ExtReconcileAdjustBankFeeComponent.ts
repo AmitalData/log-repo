@@ -18,7 +18,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { ApiQueryFilters, FilterItem } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
-import { AppTool } from '../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { ReconcileEventManager } from '../../Utilities/ReconcileEventManager';
 import { ReconciliationExtendedPMService } from '../../Services/ExtendedPMs/ReconciliationExtendedPMService';
 import { LedgerTransactionExtendedListService } from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
@@ -244,18 +244,31 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
         return new Date(year, month + 1, 0).getDate();
     }
 
-    _SelectedLines: ObservableCollection;//SelectedLines[];
+    //_SelectedLines: ObservableCollection;//SelectedLines[];
+    _SelectedReconcileExternalPageLinePM: ReconcileExternalPageLinePM;
+    _SelectedLedgerTransactionIdList: [];
     _BankAccountPMId: string;
     SetWindowArgs(winArgs) {
-        this._SelectedLines = winArgs.SelectedLines;
+        //logitudeWindow.WindowArgs = { "ExtPageSelectedLine": this.ExtPageSelectedLines[0], "LedgerTransactionIdList": LedgerTransactionIdList, "BankAccountPMId": this.BankAccountPM.Id };
         this._BankAccountPMId = winArgs.BankAccountPMId;
-        this._SelectedLines.Collection.forEach(r => {
-            let myReconcileExternalPageLinePM: ReconcileExternalPageLinePM = r.PageLinePM;
-            if (AppTool.IsNullOrEmpty(this.Notes)) {
-                this.Notes = myReconcileExternalPageLinePM.Notes;
-            }
+
+        
+
+        this._SelectedReconcileExternalPageLinePM = winArgs.ExtPageSelectedLine;
+        if (!AppTool.IsNullOrEmpty(this._SelectedReconcileExternalPageLinePM.Notes)) {
+            this.Notes = this._SelectedReconcileExternalPageLinePM.Notes;
+        }
+        this.AccountingDate = DateTool.GetDateParts(this._SelectedReconcileExternalPageLinePM.ReferenceDate).DateObject;//ohad  request it 
+
+        this._SelectedLedgerTransactionIdList = winArgs.LedgerTransactionIdList;
+
+        //this._SelectedLines.Collection.forEach(r => {
+        //    let myReconcileExternalPageLinePM: ReconcileExternalPageLinePM = r.PageLinePM;
+        //    if (AppTool.IsNullOrEmpty(this.Notes)) {
+        //        this.Notes = myReconcileExternalPageLinePM.Notes;
+        //    }
             
-        });
+        //});
     }
     FillErrors() {
         this.ValidationErrorsList = [];
@@ -282,17 +295,18 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
 
         
 
-        let reconcileExternalPageLineIdList: string[] = [];
-        this._SelectedLines.Collection.forEach(r => {
-            let myReconcileExternalPageLinePM: ReconcileExternalPageLinePM = r.PageLinePM;
-            reconcileExternalPageLineIdList.push(myReconcileExternalPageLinePM.Id)
+        //let reconcileExternalPageLineIdList: string[] = [];
+        //this._SelectedLines.Collection.forEach(r => {
+        //    let myReconcileExternalPageLinePM: ReconcileExternalPageLinePM = r.PageLinePM;
+        //    reconcileExternalPageLineIdList.push(myReconcileExternalPageLinePM.Id)
 
-        });
+        //});
 
         //var AdjustAccountId: string = "1-19";
 
         this._ExternalReconciliationExtendedPMService.CreateJournalReconcileAdjustBankFee(
-            reconcileExternalPageLineIdList,
+            this._SelectedReconcileExternalPageLinePM.Id, //reconcileExternalPageLineIdList,
+            this._SelectedLedgerTransactionIdList,
             this._BankAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(),
             this.Notes)
             .subscribe(
