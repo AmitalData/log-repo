@@ -430,7 +430,7 @@ namespace Logitude.Accounting.BL.Utils
                 //    rv = false;
                 //}
                 // else if (credit_sum - debit_sum != 0m)
-                else if (Math.Abs(credit_sum - debit_sum) > 0m)
+                else if (Math.Abs(credit_sum - debit_sum) > maximalDifference)
                 {
                     _WrongSumToMatch.Add(groupKey);
                     rv = false;
