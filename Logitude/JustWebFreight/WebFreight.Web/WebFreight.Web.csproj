@@ -3111,6 +3111,7 @@
     <Content Include="Integration Test\LoginVars\Master\TeamIslam\LoginVars.csv" />
     <Content Include="Integration Test\LoginVars\Production\Cloud\TeamAyman\CloudLoginVars.csv" />
     <Content Include="Integration Test\LoginVars\Production\Logitude\TeamIslam\LoginVars.csv" />
+    <Compile Include="AccountingModel\DomainServices\AccountingDomainService.InterestReport.cs" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
