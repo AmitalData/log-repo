@@ -44,6 +44,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? BillToCreditLimitActualBalance { get; set; }
         public bool BillToBlockNewInvoiceCreation { get; set; }
         public bool HasCreditLimitOverrideFeature { get; set; }
+        public bool HasInterestFeature { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BillToAddressId { get; set; }

@@ -43,7 +43,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DefaultFilterBy = a.DefaultFilterBy,
                         DataViewName = a.DataViewName,
                         HasPivotColumn = a.HasPivotColumn,
-                        PivotFieldCode = a.PivotFieldCode
+                        PivotFieldCode = a.PivotFieldCode,
+                        AdditionalFactCode = a.AdditionalFactCode,
+                        AdditionalFactForeignKey = a.AdditionalFactForeignKey,
+
                     }).FirstOrDefault();
         }
 
@@ -63,7 +66,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DefaultFilterBy = a.DefaultFilterBy,
                         DataViewName = a.DataViewName,
                         HasPivotColumn = a.HasPivotColumn,
-                        PivotFieldCode = a.PivotFieldCode
+                        PivotFieldCode = a.PivotFieldCode,
+                        AdditionalFactCode = a.AdditionalFactCode,
+                        AdditionalFactForeignKey = a.AdditionalFactForeignKey,
                     });
         }
 
@@ -82,7 +87,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DefaultFilterBy = a.DefaultFilterBy,
                         DataViewName = a.DataViewName,
                         HasPivotColumn = a.HasPivotColumn,
-                        PivotFieldCode = a.PivotFieldCode
+                        PivotFieldCode = a.PivotFieldCode,
+                        AdditionalFactCode = a.AdditionalFactCode,
+                        AdditionalFactForeignKey = a.AdditionalFactForeignKey,
                     }).FirstOrDefault();
         }
 
@@ -101,7 +108,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DefaultFilterBy = a.DefaultFilterBy,
                         DataViewName = a.DataViewName,
                         HasPivotColumn = a.HasPivotColumn,
-                        PivotFieldCode = a.PivotFieldCode
+                        PivotFieldCode = a.PivotFieldCode,
+                        AdditionalFactCode = a.AdditionalFactCode,
+                        AdditionalFactForeignKey = a.AdditionalFactForeignKey,
                     });
         }
 
@@ -119,7 +128,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   DefaultFilterBy = a.DefaultFilterBy,
                                                   DataViewName = a.DataViewName,
                                                   HasPivotColumn = a.HasPivotColumn,
-                                                  PivotFieldCode = a.PivotFieldCode
+                                                  PivotFieldCode = a.PivotFieldCode,
+                                                  AdditionalFactCode = a.AdditionalFactCode,
+                                                  AdditionalFactForeignKey = a.AdditionalFactForeignKey,
                                               };
 
             return result;

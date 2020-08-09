@@ -304,6 +304,9 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         if (searchfields) {
             filters.Filter2Value = searchfields;
         }
+        if (this.ShowInactive) {
+            filters.Filter3Value = this.ShowInactive;
+        }
         filters.GetCount = getCount;
         filters.PageIndex = skip;
         filters.PageSize = take;
@@ -473,6 +476,15 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
             if (index > -1) {
                 this.SecondListValueItems.splice(index, 1);
             }
+        }
+    }
+
+    private showInactive: boolean = false;
+    public get ShowInactive() { return this.showInactive; }
+    public set ShowInactive(value: boolean) {
+        if (this.showInactive != value) {
+            this.showInactive = value;
+            this.SearchFieldchangeevent.emit(this.searchFields);
         }
     }
 

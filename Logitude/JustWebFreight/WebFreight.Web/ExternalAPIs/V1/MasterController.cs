@@ -570,9 +570,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
 
                         ComputeHelper.ComputeTotals(entityPM);
+
                         APIReceivablePayableHelper receivablePayableHelper = new APIReceivablePayableHelper(entityPM, authToken.Tenant);
                         receivablePayableHelper.ValidateReceivablesAndPayables();
                         receivablePayableHelper.ComputeReceivablesPayablesTotals();
+
+                        APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(entityPM, authToken.Tenant);
+                        aPITransshipmentHelper.ValidateTransshipments();
+                        aPITransshipmentHelper.MapTransshipments();
+
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {
                             ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(authToken.Tenant);

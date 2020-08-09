@@ -99,7 +99,7 @@ export class CardList {
 		AccountingVATSplit: boolean;
 		WarehouseTypeCode: string;
 		ChargeStorage: boolean;
-        ChargeStorageCurrencyId: string;
+		ChargeStorageCurrencyId: string;
 		AirWeightMeasurementCode: string;
 		OceanWeightMeasurementCode: string;
 		InlandWeightMeasurementCode: string;

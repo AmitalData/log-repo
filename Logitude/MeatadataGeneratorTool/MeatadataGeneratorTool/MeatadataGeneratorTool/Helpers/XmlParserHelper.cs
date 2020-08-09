@@ -903,6 +903,16 @@ namespace MeatadataGeneratorTool.Helpers
             }
             try
             {
+                DCField.IsUpdateAllowed = GetAttributeBoolValue(fieldNode.Attributes["IsUpdateAllowed"]);
+
+            }
+            catch (Exception)
+            {
+                DCField.IsUpdateAllowed = false;
+
+            }
+            try
+            {
                 DCField.CloseTableCode = GetAttributeStringValue(fieldNode.Attributes["CloseTableCode"]);
 
             }

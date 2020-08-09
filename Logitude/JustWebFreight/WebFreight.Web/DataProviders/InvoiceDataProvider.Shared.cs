@@ -537,6 +537,8 @@ namespace WebFreight.Web.DataProviders
         public string BillToBillingAddress { get; set; }
         public string ShipmentSubTypeName { get; set; }
         public string TrailerNumber { get; set; }
+        public int WarehouseFreeDays { get; set; }
+        public string PreCarriageVessel { get; set; }
     }
 
     public class SAT

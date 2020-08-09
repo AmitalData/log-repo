@@ -20,6 +20,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string DataViewName { get; set; }
         public bool HasPivotColumn { get; set; }
         public string PivotFieldCode { get; set; }
+        public string AdditionalFactCode { get; set; }
+        public string AdditionalFactForeignKey { get; set; }
 
     }
 }

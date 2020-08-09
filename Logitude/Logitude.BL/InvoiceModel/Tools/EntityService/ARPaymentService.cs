@@ -1763,7 +1763,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     // Update Total Amount
                                     ICashBookUpdateServiceExt cashBookUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookUpdateServiceExt), "CashBookUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookUpdateServiceExt;
                                     cashBook.TotalAmount = cashBook.TotalAmount - (decimal)entityPm.AmountInPaymentCurrency;
-                                    cashBook.TotalAmount += (decimal)entityPm.AmountInPaymentCurrency;
+                                   // cashBook.TotalAmount += (decimal)entityPm.AmountInPaymentCurrency;
                                     cashBook.ChangeSetOp = ChangeSetOperation.Update;
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");
