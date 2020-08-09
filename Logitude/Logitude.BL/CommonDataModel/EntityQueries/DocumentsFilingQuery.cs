@@ -957,6 +957,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<DocumentsFilingPM> GetDocumentsFilingPMsByEntityIdAndObjectTableAndDirectionCode(string entityId, string childEntityId, string objectTableId, string directionCode, int tenant)
         {
+            (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+
             ObjectTableRepository objectTableRep = new ObjectTableRepository(tenant);
             ObjectTablePM shipmentObject = null;
             string shipmentObjectId = null;
@@ -1098,6 +1101,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<DocumentsFilingPM> GetDocumentsFilingPMsByEntityIdAndObjectTable(string entityId, string childEntityId, string objectTableId, string directionCode, int tenant)
         {
+            (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             ObjectTableRepository objectTableRep = new ObjectTableRepository(tenant);
             ObjectTablePM shipmentObject = null;
             string shipmentObjectId = null;
@@ -1325,6 +1330,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<DocumentsFilingPM> GetDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable(string entityId, string childEntityId, string objectTableId, string directionCode, int tenant)
         {
+            (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             ObjectTableRepository objectTableRep = new ObjectTableRepository(tenant);
             ObjectTablePM shipmentObject = null;
             string shipmentObjectId = null;
