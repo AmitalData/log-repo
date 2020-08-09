@@ -127,7 +127,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     }
 
-                    if (declarationOrg.IsAmendment == true)
+                    if (declarationOrg.IsAmendment == true && declarationOrg.AmendmentDontDisplayInList==true)
                     {
                         isFromAmendment = true;
                     }
