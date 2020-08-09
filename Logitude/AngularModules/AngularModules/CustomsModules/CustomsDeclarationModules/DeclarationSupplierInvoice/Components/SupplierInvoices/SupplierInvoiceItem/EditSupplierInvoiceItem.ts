@@ -370,6 +370,21 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         }
     }
 
+    public get ClassificationTypeCode() { return this.OriginalItemPM ? this.OriginalItemPM.ClassificationTypeCode : null; }
+    public set ClassificationTypeCode(newValue: string) {
+        this.OriginalItemPM.ClassificationTypeCode = newValue;
+    }
+
+    public get TransactionNatureCode() { return this.OriginalItemPM ? this.OriginalItemPM.TransactionNatureCode : null; }
+    public set TransactionNatureCode(newValue: string) {
+       
+        this.OriginalItemPM.TransactionNatureCode = newValue;
+    }
+
+    public get ClaimReasonCode() { return this.OriginalItemPM ? this.OriginalItemPM.ClaimReasonCode : null; }
+    public set ClaimReasonCode(newValue: string) {
+        this.OriginalItemPM.ClaimReasonCode = newValue;
+    }
 
     //#endregion
 
@@ -1072,6 +1087,7 @@ export class ConDeclarItemModel extends BaseComponent { // connected declaration
 
         }
     }
+
 
     get DeclarationTypeName() { return this.ConnDeclarPM.DeclarationTypeName; }
     set DeclarationTypeName(value: string) {
