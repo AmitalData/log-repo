@@ -39,7 +39,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
-        this.IsHybrid = true;//SessionLocator.TenantPM.IsHybrid;
+        this.IsHybrid = SessionLocator.TenantPM.IsHybrid;
         this.Listen();
     }
 
