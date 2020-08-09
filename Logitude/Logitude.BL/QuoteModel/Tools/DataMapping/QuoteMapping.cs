@@ -79,7 +79,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
             entityPoco.ChargeableWeight = entityPM.ChargeableWeight;
             entityPoco.ChargeableWeightInKG = entityPM.ChargeableWeightInKG = GetChargeableWeightInKG(entityPM.ChargeableWeightUnitCode, entityPM.ChargeableWeight);
-            entityPoco.PickupDeliveryChargeableWeight = entityPM.PickupDeliveryChargeableWeight = GetPickupDeliveryChargeableWeight(entityPM);
+            entityPoco.PickupDeliveryChargeableWeight = entityPM.PickupDeliveryChargeableWeight;
             entityPoco.Ratio = entityPM.Ratio;
             entityPoco.PickupDeliveryRatio = entityPM.PickupDeliveryRatio;
             entityPoco.DimFactor = entityPM.DimFactor;
@@ -214,11 +214,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
 
             entityPM.ConvertToLCL = false;
             entityPM.ConvertToFCL = false;
-        }
-
-        private static double? GetPickupDeliveryChargeableWeight(QuotePM entityPM)
-        {
-            throw new NotImplementedException();
         }
 
         private static void BuildSearchField(QuotePM entityPM, Quote entityPoco)
