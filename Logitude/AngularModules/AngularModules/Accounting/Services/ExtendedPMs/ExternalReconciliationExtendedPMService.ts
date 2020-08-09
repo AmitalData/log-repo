@@ -30,7 +30,8 @@ export class ExternalReconciliationExtendedPMService {
 
 
     CreateJournalReconcileAdjustBankFee(
-        reconcileExternalPageLineIdList: string[],
+        reconcileExternalPageLineId,//        reconcileExternalPageLineIdList: string[],
+        ledgerTransactionIds: string[],
         TheAccountId: string, AdjustAccountId: string, AccountDate: string,Remarks: string) {
 
         return defer(() => {
@@ -42,11 +43,13 @@ export class ExternalReconciliationExtendedPMService {
            
 
             return this.httpClient.post(this._apiUrl + "/PostCreateJournalReconcileAdjustBankFee?"
+                
+                + "&reconcileExternalPageLineId=" + reconcileExternalPageLineId
             + "&TheAccountId=" + TheAccountId
             + "&AdjustAccountId=" + AdjustAccountId
             + "&AccountDate=" + AccountDate                
             + "&Remarks=" + Remarks
-            , JSON.stringify(reconcileExternalPageLineIdList),  ServiceHelper.GetHttpHeaders()).pipe(
+                , JSON.stringify(ledgerTransactionIds),  ServiceHelper.GetHttpHeaders()).pipe(
                 map(res => {
                     var pm = res;
                     if (pm) {

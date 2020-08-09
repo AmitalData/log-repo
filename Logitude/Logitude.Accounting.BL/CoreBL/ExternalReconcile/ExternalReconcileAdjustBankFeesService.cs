@@ -13,9 +13,12 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 {
     /// <summary>
     /// *** התאמת עמלות בנק **
-    // ניתן לבחור רשימה של שורות מדפי בנק - חובה וגם זכות
+    //  ניתן לבחור שורה אחת מדפי בנק - חובה וגם זכות
     //
     // ****change***  Task 69959: התאמה חיצונית - תמיכה בסגירת הפרש בין כרטיס ודף בנק
+    //כנגד השורה הנל ניתן לבחור רשימה של תנעות  
+    //התנעות כולם אמורות להיות מהעוש  
+    //  לללללא מלשלם!!!!
 
     //  יפתח מסך נתוני התאמה
     //כרטיס לבחירה כל הסוגים למעט 6- עובדים
@@ -29,8 +32,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
     //
     //
     //לכל שורת בנק יפתח שורה הופכית בפקודה
-    //
     //דף בנק חובה 100 -  BANK_GLACCOUT 100 זכות -ולהפך
+    //***תיקון יווצר קיבוץ  לשורה אחת בלבד  והנגדית שלה   ********
     //
     //מול כרטיס לבחירה כל הסוגים למעט 6- עובדים יצטבר לשורה 1 !
     //בהעברה ל הנה"ח יבוצע התאמה חיצונית 1 
@@ -60,16 +63,20 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             _ExternalReconcileDataProvider = externalReconcileDataProvider;
         }
         //const string MyNotes = "פרעון שיק מהתאמה";
-        public void CreateJournalWithExtReconcile(int tenant ,List<string> reconcileExternalPageLineIdList,string adjustGLAccountId,string screenNotes
+        public void CreateJournalWithExtReconcile(int tenant ,string reconcileExternalPageLineId,string adjustGLAccountId,string screenNotes
             , DateTime accountingDate
             , List<string> ledgerTransactionIds =null
             )
         {
             ledgerTransactionIds = ledgerTransactionIds ?? new List<string>();
+            if (screenNotes.Equals("null", StringComparison.OrdinalIgnoreCase)){
+                screenNotes = string.Empty;
+            }
             if (string.IsNullOrWhiteSpace(screenNotes))
             {
                 screenNotes = "התאמת דף בנק (עמלה)";
             }
+            List<string> reconcileExternalPageLineIdList = new List<string>() { reconcileExternalPageLineId };
             List<ReconcileExternalPageLineList> listOfpageLineList;
             List<ReconcileExternalPageList> listOfpageList;
             string accountingCurrencyId = null;// _ExternalReconcileDataProvider.GetaccountingCurrencyId(tenant);
@@ -118,8 +125,12 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         {
             CreateJournalHeader(tenant, accountingDate);
             CreateJournalLinesFromPageLines(listOfpageLineList, bankGLAccountList, adjustGLAccountId, accountingCurrencyId, screenNotes);
-
             CreateFromLedger(adjustGLAccountId, bankGLAccountList, accountingCurrencyId, screenNotes, ledgerTransactionList);
+
+
+
+
+
 
             //CreateJournalExternalReco();
             int line = 1;
@@ -127,6 +138,51 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
             TheNewJournal.JournalExternalReconciles.AddRange(GetJournalExternalReconcileFromLedger(ledgerTransactionList));
             CreateJournalLineToadjustGLAccountId(adjustGLAccountId, bankGLAccountList);
+
+            Accumalation2jounrnalLine();
+        }
+
+        private void Accumalation2jounrnalLine()
+        {
+
+            var jlPage = TheNewJournal.JournalLines.First();
+            var jlAdjust = TheNewJournal.JournalLines.Last();
+
+            jlPage.ActionTypeCodeEnum = jlAdjust.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit ? MyJournalActionTypeEnum.Debit : MyJournalActionTypeEnum.Credit;
+
+            jlPage.CreditAccountId = jlAdjust.CreditAccountId;
+            jlPage.DebitAccountId = jlAdjust.DebitAccountId;
+
+            jlPage.LocalAmount = jlAdjust.LocalAmount;
+            jlPage.ForeignAmount = jlAdjust.ForeignAmount;
+            jlPage.ExchangeRate = jlAdjust.ExchangeRate;
+
+
+            jlAdjust.DocumentDate = jlPage.DocumentDate = TheNewJournal.AccountingDate;//ohad request
+            jlAdjust.DueDate = jlPage.DueDate = TheNewJournal.AccountingDate;//ohad request
+
+            jlAdjust.Reference1 = jlPage.Reference1;//ohad request
+
+            if (TheNewJournal.JournalLines.Count == 3)// if the
+            {
+                 jlPage.Reference2= jlAdjust.Reference2 = TheNewJournal.JournalLines[1].Reference1;//ohad request
+            }
+                
+            if (TheNewJournal.JournalLines.Count > 2)
+            {
+                int count = (TheNewJournal.JournalLines.Count - 2);
+                TheNewJournal.JournalLines.RemoveRange(1, count);
+            }
+            if (TheNewJournal.JournalLines.Count != 2 ||
+                TheNewJournal.JournalLines.First() != jlPage ||
+                TheNewJournal.JournalLines.Last() != jlAdjust
+                )
+            {
+                throw new Exception("accumalation failed");
+            }
+            jlAdjust.Line = 2;
+
+
         }
 
         private List<JournalExternalReconcilePM> GetJournalExternalReconcileFromLedger(List<LedgerTransactionPM> ledgerTransactionList)
@@ -490,7 +546,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
     }
     public interface IExternalReconcileAdjustBankFeesService
     {
-        void CreateJournalWithExtReconcile(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, string screenNotes, DateTime accountingDate
+        void CreateJournalWithExtReconcile(int tenant, string reconcileExternalPageLineId, string adjustGLAccountId, string screenNotes, DateTime accountingDate
             , List<string> ledgerTransactionIds = null);
         void MustInit(IExternalReconcileDataProvider externalReconcileDataProvider);
         JournalPM TheNewJournal { get; }
