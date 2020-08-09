@@ -30,6 +30,9 @@ import {AWBStackDomainService} from '../../../Common/Services/AWBStackDomainServ
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { ChildDirective } from '../../../Infrastructure/Directives/ChildDirective';
+import { ContactInputTemplateArgs } from '../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+
 
 @Component({
     templateUrl: './NewMasterComponent.html',
@@ -1990,6 +1993,27 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
                 }
             }
         });
+    }
+
+    AddContact(partnerId: string) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.Title = "New Contact";
+        var args = new ContactInputTemplateArgs();
+        args.CustomerId = partnerId;
+        args.CardDependencyProperty1 ="AG";
+        args.CustomerLable = "Agent";
+        args.ComponentName = "Partners";
+        logWindow.WindowArgs = args;
+        logWindow.Show('./CommonModules/CommonPartners/Components/NewEntity/NewContactComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewContactWindowClosed($event));
+    }
+
+    OnNewContactWindowClosed(arg: any) {
+        if (arg != 'cancel') {
+            this.AgentContactId = arg;           
+        }
     }
 }
 
