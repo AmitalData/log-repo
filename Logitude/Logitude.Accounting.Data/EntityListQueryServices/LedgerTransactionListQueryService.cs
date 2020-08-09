@@ -913,8 +913,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 getNextGroupArgs.OldDate = q.FirstOrDefault().DueDate;
                 getNextGroupArgs.OldId = q.FirstOrDefault().Id;
                 List<LedgerTransaction> q1 = q;//.OrderByDescending(rec => Math.Abs(rec.OpenAmount)).ToList();
-                LedgerTransaction[] arr = q1.ToArray();
-                int count = q.Count;
+               // LedgerTransaction[] arr = q1.ToArray();
+                int count = q1.Count;
                 int lineCount = 0;
                 int positiveCount = 0;
                 int negativeCount = 0;
@@ -922,35 +922,74 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 decimal maxNegative = 0m;
                 decimal sum = 0.00m;
                 int j = 0;
-                List<int> goodList = new List<int>(); 
+                List<int> goodList = new List<int>();
                 // init = sum getNexrGroupArgs.MIN first elements
-                //while (j < getNextGroupArgs.MIN && j < count)
-                while (j < getNextGroupArgs.MaxPageSize && j < count) //getNextGroupArgs.LT_LinesMaximum && j < count)
+                bool cont = true;
+                while (cont)
                 {
-                    sum += arr[j].OpenAmount;
-                    lineCount++;
-                    if (arr[j].OpenAmount > 0m)
+                    cont = false;
+                    int fistOpposite = 0;
+
+                    while (j < getNextGroupArgs.MaxPageSize && j < count) //getNextGroupArgs.LT_LinesMaximum && j < count)
                     {
-                        positiveCount++;
-                        if (arr[j].OpenAmount > maxPositive)
-                            maxPositive = arr[j].OpenAmount;
-                    }
-                    if (arr[j].OpenAmount < 0m)
-                    {
-                        negativeCount++;
-                        if (arr[j].OpenAmount < maxNegative)
-                            maxNegative = arr[j].OpenAmount;
-                    }
-                    if (lineCount > 1 && ((positiveCount > 0 && negativeCount > 0) || (positiveCount == 0 && negativeCount == 0)))
-                    {
-                        if ((sum > 0m && sum < maxPositive) || (sum < 0m && sum > maxNegative) || (sum == 0m))
+                        sum += q1.ElementAt(j).OpenAmount; //arr[j].OpenAmount;
+                        lineCount++;
+                        if (q1.ElementAt(j).OpenAmount > 0m)
                         {
-                            if (j + 1 >= getNextGroupArgs.LT_LinesMaximum)
-                                break;
-                            goodList.Add(j);
+                            positiveCount++;
+                            if (q1.ElementAt(j).OpenAmount > maxPositive)
+                                maxPositive = q1.ElementAt(j).OpenAmount;
+                        }
+                        if (q1.ElementAt(j).OpenAmount < 0m)
+                        {
+                            negativeCount++;
+                            if (q1.ElementAt(j).OpenAmount < maxNegative)
+                                maxNegative = q1.ElementAt(j).OpenAmount;
+                        }
+                        if (lineCount > 1 && ((positiveCount > 0 && negativeCount > 0) || (positiveCount == 0 && negativeCount == 0)))
+                        {
+                            if ((sum > 0m && sum < maxPositive) || (sum < 0m && sum > maxNegative) || (sum == 0m))
+                            {
+                                if (j + 1 >= getNextGroupArgs.LT_LinesMaximum)
+                                    break; // while j
+                                goodList.Add(j);
+                            }
+                        }
+                        if (q1.ElementAt(0).OpenAmount > 0m)
+                        {
+                            if (j > 0 && q1.ElementAt(j).OpenAmount < 0m && fistOpposite == 0)
+                                fistOpposite = j;
+                        }
+                        if (q1.ElementAt(0).OpenAmount < 0m)
+                        {
+                            if (j > 0 && q1.ElementAt(j).OpenAmount > 0m && fistOpposite == 0)
+                                fistOpposite = j;
+                        }
+                        j++;
+                    }
+                    if (goodList.Count == 0 && fistOpposite > 1) // because fistOpposite>0 would be too tight 
+                    {
+                        for (int i = fistOpposite - 1; i > 0; i--)
+                        {
+
+
+                            if (q1.ElementAt(i).OpenAmount != 0m)
+                            {
+                                q1.RemoveAt(i);
+                                count = q1.Count;
+                                lineCount = 0;
+                                positiveCount = 0;
+                                negativeCount = 0;
+                                maxPositive = 0m;
+                                maxNegative = 0m;
+                                sum = 0.00m;
+                                j = 0;
+
+                                cont = true;
+                                break; // for i
+                            }
                         }
                     }
-                    j++;
                 }
 
                 // New Portion 1.
@@ -963,8 +1002,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                     {
                         if (k < count)
                         {
-                            result.Add(arr[k]);
-                            sum += arr[k].OpenAmount;
+                            result.Add(q1.ElementAt(k));
+                            sum += q1.ElementAt(k).OpenAmount;
                         }
 
                     }
