@@ -29,6 +29,7 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.BL.Validators;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 {
@@ -99,6 +100,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                     break;
                 case "DeletePending":
                     DeletePending();
+                    break;
+                case "IsReferantAddOn":
+                    CheckIsReferantAddOn();
                     break;
                 case "TEST":
                     SendGenericRequest();
@@ -665,6 +669,30 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
         }
 
 
+        private void CheckIsReferantAddOn()
+        {
+            string user = this.MyCommunicationsParams.LoggingUserId;
+            if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+
+            FeatureQuery featureQuery = new FeatureQuery();
+
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(user, ResolvedTenant());
+
+            var feature = features.Features.FirstOrDefault(x => x.Code == "CUSTOMREFERANT");
+            
+            var responseXML = new isReferantAddOnResponseXML();
+            if (feature != null)
+            {
+                responseXML.isReferantAddOn = "T";
+            }
+
+            if (responseXML != null)
+            {
+                var xml = XmlGenericUtil<isReferantAddOnResponseXML>.SerializeObject(responseXML);
+                MyGenericResponseObj.ResponseXml = xml;
+            }
+        }
+
         private bool IsDocumentMissing(DeclarationPM myDeclarationPM)
         {
             var customContext = CustomContext.GetContext(myDeclarationPM.Tenant);
@@ -845,6 +873,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
         public string MAND_FIELDS;
         public string MAND_DOC;
+
+    }
+
+    public class isReferantAddOnResponseXML
+    {
+
+        public string isReferantAddOn;
+
 
     }
 
