@@ -691,7 +691,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 var xml = XmlGenericUtil<isReferantAddOnResponseXML>.SerializeObject(responseXML);
                 MyGenericResponseObj.ResponseXml = xml;
             }
-            MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
         }
 
         private bool IsDocumentMissing(DeclarationPM myDeclarationPM)
