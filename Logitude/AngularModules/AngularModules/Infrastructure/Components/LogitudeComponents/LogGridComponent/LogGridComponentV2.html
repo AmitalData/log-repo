@@ -203,15 +203,16 @@
             <!-- [ngStyle]="row.styles" [class.HLine]="row.rowData.ShowLineOverRow == true" || row.rowData.IsSelected == true  [style.background]="(ChangeColorByPropName && ChangeColorByPropValue && row.rowData[ChangeColorByPropName] == ChangeColorByPropValue) ? RowBackGroundColor : ((SelectedRow == row.rowData)? '#DFECF7':'transparent')"-->
             <!--(mouseout)="onRowMouseOut('rowtemplate'+rowIndex,rowIndex,row)" (mouseover)="onRowMouseOver('rowtemplate'+rowIndex,rowIndex,row)"-->
             <!-- autosize-->
-            <cdk-virtual-scroll-viewport [id]="LogGridRowsId" class="GeneratedGridBody" itemSize=35 [minBufferPx]="778" [maxBufferPx]="778 * 3">
+            <cdk-virtual-scroll-viewport [id]="LogGridRowsId" class="GeneratedGridBody" [itemSize]=rowHeight [minBufferPx]="778" [maxBufferPx]="778 * 3">
                 <!--(scrolledIndexChange)="onScroll($event)"-->
-                <div *cdkVirtualFor="let row of controller;let rowIndex = index;" [style.height.px]="row && row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight">
+                <!--row && row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight-->
+                <div *cdkVirtualFor="let row of controller;let rowIndex = index;" [style.height.px]="rowHeight">
                     <div *ngIf="row" class="Row ag-row tooltip" [style.height.px]="row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight"
                          [attr.SIndex]="row.rowIndex" [class.Selected]="SelectedRow == row"
                          (ondblclick)="onRowSelected(1, 1, row.myData, row.rowIndex)"
                          (click)="onRowSelected(1, 1, row.myData, row.rowIndex)" [class.SelectedGradiant]="IsGradiantSelectedColor && (SelectedRow==row)"
                          [id]="LogGridId +'row'+rowIndex" style="position:absolute;display: flex;width:100%; border-bottom: 1px solid #A7A9AC; border-top: 1px solid transparent;">
-                        <div *ngIf="IsSpotLight" class="row-cell" (click)="onSpotLightSelect(row)"
+                        <div *ngIf="false && IsSpotLight" class="row-cell" (click)="onSpotLightSelect(row)"
                              style="display: block;position: absolute;min-width:25px;width:25px"
                              [id]="'row'+rowIndex+'pluscol'">
                             <img [src]="row.DetailsIcon" />
