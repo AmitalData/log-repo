@@ -633,6 +633,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.UIProperties.SetEnabled("TotalFreightInFreightCurrency", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("InsurancePercentage", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("TotalFreightAmountInNIS", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("PartyRelationshipCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("BuyerName", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("BuyerCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("BuyerAddress", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("BuyerRoleCode", this.ObjectTableName, !this.IsDisplayOnly);
 
         if (this.IsDisplayOnly) {
             this.UIProperties.SetEnabled("FreightCurrencyTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
@@ -3150,8 +3155,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             windowArgs.SupplierInvoiceItemPM = item.entityPM;
             windowArgs.Parent = item;
             windowArgs.IsDisplayOnly = this.Parent.IsReadOnly;
- 
-            var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
+             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 1000;
