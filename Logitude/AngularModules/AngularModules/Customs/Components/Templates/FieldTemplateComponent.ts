@@ -99,7 +99,6 @@ export class FieldTemplateComponent {
         }
     }
     get LastStatusNameText() {
-        debugger;
         if (AppTool.IsNullOrEmpty(this.Entity.LastStatusDate)) {
             return "";
         }

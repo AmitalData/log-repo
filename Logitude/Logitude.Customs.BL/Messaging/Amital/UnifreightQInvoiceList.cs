@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace Logitude.Customs.BL.Messaging.Amital
@@ -14,7 +15,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
     public class UnifreightQInvoiceList
     {
 
-        public Invoices GetInvoice(int tenant, string fileNo, out string ErrMessage)
+        public AllInvoices GetInvoice(int tenant, string fileNo, out string ErrMessage)
         {
             ErrMessage = "";
 
@@ -50,8 +51,8 @@ namespace Logitude.Customs.BL.Messaging.Amital
                 {
                     //var response = UnifreightListsUtil.Deserialize(resXML);
                     //xmlStatusList = UnifreightListsUtil.GetHtmlDecodeValue(ref response, "StatusList");
-                    string alexGiveBadXML = $"<Invoices>{resXML}</Invoices>";
-                    var StatusItemlist = LogitudeXmlSerializer.DeserializeObject<Invoices>(alexGiveBadXML);
+                    string alexGiveBadXML = $"<AllInvoices>{resXML}</AllInvoices>";
+                    var StatusItemlist = LogitudeXmlSerializer.DeserializeObject<AllInvoices>(alexGiveBadXML);
                     return StatusItemlist;
 
 
@@ -73,10 +74,10 @@ namespace Logitude.Customs.BL.Messaging.Amital
 
         }
 
-        public Invoices GetInvoice()
+        public AllInvoices GetInvoice()
         {
 
-            var resXML = @"<Invoices><Statuses>
+            var resXML = @"<AllInvoices><Statuses>
 <StatusData>
   <Code>OPN</Code>
   <Name>פתיחה</Name>
@@ -148,17 +149,25 @@ namespace Logitude.Customs.BL.Messaging.Amital
   <InvoiceAmount>17685</InvoiceAmount>
 </IntegratedInvoice>
 </IntegratedInvoices>
-
+<Invoices>
+<Invoice>
+  <InvoiceBillTo>COM</ServiceCode>
+  <InvoiceType>עמלה</ServiceName>
+  <InvoiceDate>L</PayType>
+  <InvoiceCurrency>NIS</Currency>
+  <InvoiceAmount>10</AmountForeign>
+</Invoice>
 </Invoices>
+</AllInvoices>
  ";
             if (!String.IsNullOrWhiteSpace(resXML))
             {
                 using (var stringReader = new System.IO.StringReader(resXML))
                 {
-                    var serializer = new XmlSerializer(typeof(Invoices));
+                    var serializer = new XmlSerializer(typeof(AllInvoices));
 
 
-                   var x=  serializer.Deserialize(stringReader) as  Invoices ;
+                   var x=  serializer.Deserialize(stringReader) as AllInvoices;
                     return x;
                 }
                 
@@ -176,16 +185,25 @@ namespace Logitude.Customs.BL.Messaging.Amital
 
         }
 
-        public class Invoices
+        public class AllInvoices
         {
 
             public List<StatusData> Statuses;
             public List<InvoiceLine> InvoiceLines;
             public List<IntegratedInvoice> IntegratedInvoices;
+            public List<Invoice> Invoices;
 
 
         }
+        public class Invoice
+        {
+            public string InvoiceBillTo { get; set; }
+            public string InvoiceType { get; set; }
+            public string InvoiceDate { get; set; }
+            public string InvoiceCurrency { get; set; }
+            public decimal InvoiceAmount { get; set; }
 
+        }
         public class StatusData
         {
             public string Code { get; set; }
@@ -216,10 +234,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string ForwarderFile { get; set; }
             public string InvoiceCurrency { get; set; }
             public decimal InvoiceAmount { get; set; }
-
-
-
-
         }
+      
     }
 }
