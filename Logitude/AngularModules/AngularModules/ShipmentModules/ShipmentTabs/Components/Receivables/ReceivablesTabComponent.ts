@@ -2581,7 +2581,98 @@ export class ShipmentReceivableItem extends BaseComponent {
             logitudeWindow.Title = "Storage Pricing";
             logitudeWindow.WindowArgs = { EntityPM: this.ShipmentPM, ObjectTableName: this.ObjectTableName };
             logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s == "PricesChanged") {
+                    var amount: number = this.ComputeReceivableAmount();
+
+                    this.EntityPM.TotalAmount = amount;
+                    this.EntityPM.TotalAmountLocal = AppTool.Round(this.EntityPM.TotalAmount * this.EntityPM.Rate, 2);
+
+                    if (this.EntityPM.CurrencyId == this.ShipmentPM.ProfitCurrencyId) {
+                        this.EntityPM.AmountInProfitCurrency = this.EntityPM.TotalAmount;
+                    }
+
+                    else {
+                        this.EntityPM.AmountInProfitCurrency = (this.EntityPM.TotalAmountLocal / this.EntityPM.ProfitCurrencyExchangeRate);
+                    }
+                }
+            });
         });
+    }
+    private ComputeReceivableAmount(): number {
+        var myResult: number = 0;
+        var weight: number = 0;
+        var rounding: number = 0;
+        var weightRounded: number = 0;
+        var storageDays: number;
+
+        if (DateTool.GetDateFromDate(this.ShipmentPM.WarehouseLegActualReleaseDate) >= DateTool.GetDateFromDate(this.ShipmentPM.WarehouseLegActualEntryDate)) {
+            storageDays = DateTool.GetDaysBetweenDates(this.ShipmentPM.WarehouseLegActualEntryDate, this.ShipmentPM.WarehouseLegActualReleaseDate);
+        }
+
+        var days: number = storageDays - this.ShipmentPM.WarehouseStorageFreeDays;
+
+        if (this.ShipmentPM.WeightMeasurementCode == "GRWT") {
+            weight = this.ShipmentPM.GrossWeight;
+        }
+
+        else {
+            weight = this.ShipmentPM.ChargeableWeight;
+        }
+
+        if (this.ShipmentPM.WeightRoundingCode == "HAF") {
+            rounding = 0.5;
+
+            if (weight != null) {
+                weightRounded = Math.ceil(weight * 20) / 20;
+            }
+        }
+
+        else if (this.ShipmentPM.WeightRoundingCode == "ONE") {
+            rounding = 1;
+            weightRounded = AppTool.Round(weight, rounding);
+        }
+
+        else {
+            weightRounded = weight;
+        }
+
+        var myPricigs: CalculatedPricingItem[] = [];
+        if (!AppTool.IsNullOrZero(weightRounded)) {
+            this.ShipmentPM.ShipmentStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
+                var newItem: CalculatedPricingItem = new CalculatedPricingItem();
+                newItem.Index = item.LineNumber;
+                newItem.Price = item.SalePrice;
+
+                var previousLine: CalculatedPricingItem = myPricigs.filter(d => d.Index == item.LineNumber - 1)[0];
+                if (previousLine != null) {
+                    if (!AppTool.IsNullOrZero(item.StepTo)) {
+                        if ((item.StepTo - item.StepFrom) <= (days - previousLine.Days)) {
+                            newItem.Days = item.StepTo - item.StepFrom;
+                        }
+
+                        else {
+                            newItem.Days = days - previousLine.Days
+                        }
+                    }
+
+                    else {
+                        newItem.Days = days - ArrayTool.Sum(myPricigs, "Days")
+                    }
+                }
+
+                else {
+                    newItem.Days = item.StepTo - item.StepFrom;
+                }
+
+                newItem.Amount = item.SalePrice * weightRounded * newItem.Days;
+                myPricigs.push(newItem);
+            });
+
+            myResult = ArrayTool.Sum(myPricigs, "Amount");
+        }
+
+        return myResult;
     }
 }
 export class InsideReceivableViewModel {
@@ -2899,4 +2990,11 @@ export class InsideReceivableViewModel {
     ComputeOtherAmounts() {
 
     } 
+}
+
+export class CalculatedPricingItem {
+    public Index: number;
+    public Days: number;
+    public Price: number;
+    public Amount: number;
 }
