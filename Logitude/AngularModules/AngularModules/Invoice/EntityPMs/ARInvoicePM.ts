@@ -168,6 +168,11 @@ export class ARInvoicePM {
     public set HasCreditLimitOverrideFeature(newValue: boolean) { if (this.hasCreditLimitOverrideFeature != newValue) { this.hasCreditLimitOverrideFeature = newValue; this.MarkAsDirty("HasCreditLimitOverrideFeature"); } }
        
 	 
+    private hasInterestFeature: boolean;
+    public get HasInterestFeature() { return this.hasInterestFeature; }
+    public set HasInterestFeature(newValue: boolean) { if (this.hasInterestFeature != newValue) { this.hasInterestFeature = newValue; this.MarkAsDirty("HasInterestFeature"); } }
+       
+	 
     private billToAddressId: string;
     public get BillToAddressId() { return this.billToAddressId; }
     public set BillToAddressId(newValue: string) { if (this.billToAddressId != newValue) { this.billToAddressId = newValue; this.MarkAsDirty("BillToAddressId"); } }
