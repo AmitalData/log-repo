@@ -396,10 +396,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         args.DisplayFieldsFromList = this.GroupChargesAdditionalColumns.Code;
         args.LOVAdditionalColumns = this.GroupChargesAdditionalColumns.LOVAdditionalColumns;
         args.DataContext = item;
-        args.IsMultipleSelection = item.IsMultipleSelection;
-        args.DisplayName = item.DisplayName;
         args.SelectedFieldsDataSource = this.SelectedFieldsDataSource;
-        args.SelectedIndexOrder = item.indexOrder;
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 900;

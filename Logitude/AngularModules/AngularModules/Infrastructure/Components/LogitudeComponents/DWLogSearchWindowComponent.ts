@@ -162,9 +162,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         this.ObjectFieldName = args.DisplayFieldsFromList;
         this.LOVAdditionalColumns = this.BuildAdditionalColumns(args.LOVAdditionalColumns);
         this.ViewModel = args.DataContext; 
-        if (args.IsMultipleSelection) {
-            this.SetChargesGroupArgs(args);
-        }
+        
         if (this.ViewModel) {
             this.MultiSelectedValueLists = this.ViewModel.MultiSelectedValueLists;
         }
@@ -177,13 +175,17 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         this.Args = args;
         this.BuildSecondListHeader();
         this.BuildSecondListValues();
+        if (args.DataContext.IsMultipleSelection) {
+            this.SetChargesGroupArgs(args);
+        }
     }
 
     private SetChargesGroupArgs(args: CustomEntityArgs) {
-        this.IsMultipleSelection = args.IsMultipleSelection;
-        this.ColumnName = "";//args.DisplayName;
+        this.IsMultipleSelection = args.DataContext.IsMultipleSelection;
+        this.ColumnName = (!this.SecondListValueItems || (this.SecondListValueItems && this.SecondListValueItems.length == 0)) ? '' : args.DataContext.DisplayName;
+        this.OriginalColumnName = args.DataContext.Code;
         this.SelectedFieldsDataSource = args.SelectedFieldsDataSource;
-        this.SelectedIndexOrder = args.SelectedIndexOrder;
+        this.SelectedIndexOrder = args.DataContext.IndexOrder;
         this.FirstListTitle = "All Charge Types";
         this.SecondListTitle = "Selected Charge Types";
         this.DWLogHelpText = "In this screen you choose which charge types their amounts will be summed in one group";
@@ -488,6 +490,15 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         }
     }
 
+    private originalColumnName: string;
+    public get OriginalColumnName() {
+        return this.originalColumnName;
+    }
+    public set OriginalColumnName(newValue: string) {
+        this.UIProperties.SetEnabled("OriginalColumnName", this.ObjectTableName, false);
+        this.originalColumnName = newValue;
+    }
+
     private columnName: string;
     public get ColumnName() {
         return this.columnName;
@@ -526,10 +537,7 @@ export class CustomEntityArgs {
     public DisplayFieldsFromList: string = null;
     public HideEdit: boolean;
     public DataContext: any;
-    public IsMultipleSelection: boolean;
-    public DisplayName: string;
     public SelectedFieldsDataSource: any;
-    public SelectedIndexOrder: string;
 }
 export class AddEntityArgs {
     public EntityPM: any;
