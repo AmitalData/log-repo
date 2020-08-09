@@ -103,8 +103,12 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             //s.ClearDB(1148);
             //var a = new ReconcileOpenAmountService();
             //var l = a.GetLedgerOpenAmountDiff(69, 2019);
-
-            //ExternalReconcileAdjustBankFees();
+            bool test = false;
+            if (test)
+            {
+                ExternalReconcileAdjustBankFees();
+            }
+            
             //var myWorker = new JournalApproveService.JournalApproveWorker();
             //myWorker.CreateBatchAccountingIntegrityCheck();
             try
@@ -157,13 +161,15 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
         private void ExternalReconcileAdjustBankFees()
         {
-            var accountingContext = AccountingContext.GetContext(1071);
+            var accountingContext = AccountingContext.GetContext(62);
             IExternalReconcileDataProvider externalReconcileDataProvider = new ExternalReconcileDataProvider(accountingContext);
             var a = new ExternalReconcileAdjustBankFeesService();
             a.MustInit(externalReconcileDataProvider);
-            a.CreateJournalWithExtReconcile(1071, new List<string>() { "1-12487" }, "1-216674", "Notes ",DateTime.Now);
-            var aa = a.TheNewJournal;
+            ///TheAccountId=1-4&AdjustAccountId=1-1236&AccountDate=Mon,%2003%20Aug%202020%2008:22:29%20GMT&Remarks=rem
 
+            a.CreateJournalWithExtReconcile(62, /*new List<string>() {*/ "1-7425" /*}*/, "1-1236", "Notes BankFees with trans !!! ", DateTime.Now, new List<string>() { "1-39162791" });
+            var aa = a.TheNewJournal;
+            a.TheNewJournal.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Draft;
             var us = new JournalUpdateService(AccountingContext.GetContext(a.TheNewJournal.Tenant), new Dictionary<string, IContext>(), a.TheNewJournal.Tenant);
             us.Update(a.TheNewJournal, true);
             _LabelResult.Text = JsonConvert.SerializeObject(a.TheNewJournal); ;
