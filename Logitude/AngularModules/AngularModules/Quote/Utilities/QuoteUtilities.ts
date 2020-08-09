@@ -172,7 +172,31 @@ export class QuoteUtilities {
             }
         }
     }
+    public static OnQuotePickupDeliveryRatioChanged(entityPM: QuotePM) {
+        if (entityPM) {
+            if (entityPM.PickupDeliveryRatio == null) {
+                entityPM.PickupDeliveryRatio = AppTool.GetRatio(entityPM.DirectionId, "I", entityPM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
+            }
 
+            if (entityPM.QuotePackages.length == 0) {
+                entityPM.NumberOfPackages = null;
+                entityPM.GrossWeight = null;
+                entityPM.PickupDeliveryVolumetricWeight = null;
+                entityPM.PickupDeliveryChargeableWeight = null;
+            }
+
+            else {
+                entityPM.QuotePackages.forEach((item) => {
+                    if (item.PickupDeliveryVolume) {
+                        item.PickupDeliveryVolumetricWeight = AppTool.GetWeightFromVolume(entityPM.VolumeUnitCode, entityPM.ChargeableWeightUnitCode, item.PickupDeliveryVolume, entityPM.PickupDeliveryRatio);
+                    }
+                });
+
+                entityPM.PickupDeliveryVolumetricWeight = AppTool.Round(ArrayTool.Sum(entityPM.QuotePackages, "PickupDeliveryVolumetricWeight"), 3);
+                entityPM.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(entityPM.GrossWeight, entityPM.PickupDeliveryVolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
+            }
+        }
+    }
     public static CopyQuote(entityPM: QuotePM, copiedEntityPM: QuotePM) {
         entityPM.DirectionId = copiedEntityPM.DirectionId;
         entityPM.TransportModeId = copiedEntityPM.TransportModeId;
