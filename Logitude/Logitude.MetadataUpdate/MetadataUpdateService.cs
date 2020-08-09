@@ -17,14 +17,14 @@ namespace Logitude.MetadataUpdate
 {
     public class MetadataUpdateService
     {
-        public void RunAllModulesUpdate()
+        public void RunModulesUpdate(string moduleName)
         {
             try
             {
                 Console.WriteLine("Initializing Settings ...");
                 InitializeSettings();
-                TenantsUpdateClass.UpdateDataForTenant(0, "UpdateTenantZeroNew");
-                Console.WriteLine("Update Metadata all modules finished successfully");
+                TenantsUpdateClass.UpdateDataForTenant(0, moduleName);
+                Console.WriteLine("Updating all modules finished successfully");
                 Console.WriteLine("Building Object table zip files ...");
                 bool buildCustomsZipFiles = false;
                 TenantsUpdateClass.BuildObjectTablesZipFilesData(false, buildCustomsZipFiles);
