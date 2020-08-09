@@ -2591,6 +2591,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
                 ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
                 IsChargeBySteps = item.IsChargeBySteps,
+                SalesWithVATAmount = item.SaleTotalAmount + item.VatAmount,
             };
             return saleChargePM;
         }
