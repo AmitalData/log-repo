@@ -390,6 +390,11 @@ export class QuoteSaleChargePM {
     public set IsChargeBySteps(newValue: boolean) { if (this.isChargeBySteps != newValue) { this.isChargeBySteps = newValue; this.MarkAsDirty("IsChargeBySteps"); } }
        
 	 
+    private salesWithVATAmount: number;
+    public get SalesWithVATAmount() { return this.salesWithVATAmount; }
+    public set SalesWithVATAmount(newValue: number) { if (this.salesWithVATAmount != newValue) { this.salesWithVATAmount = newValue; this.MarkAsDirty("SalesWithVATAmount"); } }
+       
+	 
 
     public OldEntityPM: QuoteSaleChargePM;
 		
