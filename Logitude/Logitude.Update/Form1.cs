@@ -259,7 +259,7 @@ namespace Logitude.Update
                 var repo = new CustomsSettingRepository(_SeedTenant);
                 if (repo.AnyCourierTenant())
                 {
-                    MessageBox.Show("נמצא סביבת בלדרות פעילה - וודא שאין מסרים לחתימה - שאל את איתן ענת !!!");
+                    ///MessageBox.Show("נמצא סביבת בלדרות פעילה - וודא שאין מסרים לחתימה - שאל את איתן ענת !!!");
                 }
                 Func<string> GetConnetionStringFunc = () =>
                 {
