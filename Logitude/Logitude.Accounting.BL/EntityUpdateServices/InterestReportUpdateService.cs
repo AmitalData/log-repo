@@ -82,7 +82,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if(entityPM.InterestCalculationDate != entityPOCO.InterestCalculationDate)
             {
-                CreateBatchTaskExecution(entityPM);
+                CreateBatchTaskExecutionForRecalculatingData(entityPM);
+            }
+
+            if (entityPM.OpenBalance != entityPOCO.OpenBalance)
+            {
+                CreateBatchTaskExecutionForRecalculatingData(entityPM);
             }
             
         }
@@ -314,7 +319,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             // 1- create BTE record
             BatchTaskExecutionPM taskExe;
 
-            InterestReportArgs args = new InterestReportArgs() { Tenant = entityPM.Tenant, InterestReportId = entityPM.Id};
+            InterestReportArgs args = new InterestReportArgs() { Tenant = entityPM.Tenant, InterestReportId = entityPM.Id, RecalculateData = entityPM.RecalculateData };
             var stringwriter = new System.IO.StringWriter();
             var serializer = new XmlSerializer(typeof(InterestReportArgs));
             serializer.Serialize(stringwriter, args);
@@ -346,6 +351,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", entityPM.Tenant.ToString() }
                 }, Tenant);
+        }
+
+        private void CreateBatchTaskExecutionForRecalculatingData(InterestReportPM entityPM)
+        {
+            entityPM.RecalculateData = true;
+            CreateBatchTaskExecution(entityPM);
         }
         protected override void Validate(InterestReportPM entityPM)
         {

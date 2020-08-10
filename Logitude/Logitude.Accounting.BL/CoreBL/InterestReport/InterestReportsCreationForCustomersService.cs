@@ -48,7 +48,15 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     }
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        interestReportPM = interestReportPM ?? interestReportsCreationForCustomerDataPreparation.CreateInterestReportForCustomerGlAccount(eligibleCustomers[i]);
+                        //interestReportPM = interestReportPM ?? interestReportsCreationForCustomerDataPreparation.CreateInterestReportForCustomerGlAccount(eligibleCustomers[i]);
+                        if (interestReportPM == null)
+                        {
+                            interestReportPM = interestReportsCreationForCustomerDataPreparation.CreateInterestReportForCustomerGlAccount(eligibleCustomers[i]);
+                        }
+                        else
+                        {
+                            interestReportPM.RecalculateData = true;
+                        }
                         interestReportPM.InterestCalculationDate = interestCalculationDate;
                         CalculateDataForInterestReport(interestReportPM);
                         scope.Complete();
@@ -77,7 +85,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 InterestReport = interestReportPM,
                 InterestReportId = interestReportPM.Id,
                 ReportNumber = interestReportPM.ReportNumber,
-                Tenant = tenant
+                Tenant = tenant,
+                RecalculateData = interestReportPM.RecalculateData,
             };
             InterestReportDataCalculations interestReportDataCalculation = new InterestReportDataCalculations(interestReportArgs);
             interestReportDataCalculation.StartCalculations();

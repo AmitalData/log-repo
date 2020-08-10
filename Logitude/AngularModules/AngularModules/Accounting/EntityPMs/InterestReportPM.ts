@@ -224,6 +224,11 @@ export class InterestReportPM {
     public set BatchReportUserEmail(newValue: string) { if (this.batchReportUserEmail != newValue) { this.batchReportUserEmail = newValue; this.MarkAsDirty("BatchReportUserEmail"); } }
        
 	 
+    private recalculateData: boolean;
+    public get RecalculateData() { return this.recalculateData; }
+    public set RecalculateData(newValue: boolean) { if (this.recalculateData != newValue) { this.recalculateData = newValue; this.MarkAsDirty("RecalculateData"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		
