@@ -228,7 +228,7 @@ export class MiscPageComponent implements AfterViewInit {
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 400;
-        logWindow.Height = 200;
+        logWindow.Height = 280;
         logWindow.Title = windowTitle;
         //logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());

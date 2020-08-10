@@ -2639,7 +2639,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     {
 
                         logWindow.Width = 400;
-                        logWindow.Height = 240;
+                        logWindow.Height = 280;
                         break;
                     }
                 case "OpenFormatReport":

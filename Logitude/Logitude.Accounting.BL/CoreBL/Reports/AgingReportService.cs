@@ -813,14 +813,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             {
                 throw new Exception("ManipulateFifoPerCurrency:::dbList.Select( r=>r.CurrencyId).Distinct().Count()!=1");
             }
-            dbList = dbList.OrderByDescending(rec => rec.OrderDate).ThenBy(r => r.OrderDateB4).ToList();
+            dbList = dbList.OrderBy(rec => rec.OrderDate).ThenByDescending(r => r.OrderDateB4).ToList();
 
             //we’ll need to offset the credit from the later month to earlier debits:
             var firstPlusPeriod = dbList.FirstOrDefault(r => r.Total > 0);
 
             if (firstPlusPeriod == null ) return dbList;
 
-            var biggerThanFirstList = dbList.Where(r => r.OrderDate > firstPlusPeriod.OrderDate).ToList();
+            var biggerThanFirstList = dbList;//.Where(r => r.OrderDate > firstPlusPeriod.OrderDate).ToList();
             if(biggerThanFirstList.Count() == 0) return dbList; 
 
             var firstMinusPeriod_ThatAfterFirstPlus = biggerThanFirstList.FirstOrDefault(r => r.Total < 0);
@@ -848,6 +848,52 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
             return ManipulateFifoPerAccCurr(dbList);
         }
+
+
+
+        private List<PeriodM> ManipulateFifoPerAccCurr_BAD(List<PeriodM> dbList)
+        {
+
+            if (dbList.Select(r => new { r.AccountId, r.CurrencyId }).Distinct().Count() != 1)
+            {
+                throw new Exception("ManipulateFifoPerCurrency:::dbList.Select( r=>r.CurrencyId).Distinct().Count()!=1");
+            }
+            dbList = dbList.OrderByDescending(rec => rec.OrderDate).ThenBy(r => r.OrderDateB4).ToList();
+
+            //we’ll need to offset the credit from the later month to earlier debits:
+            var firstPlusPeriod = dbList.FirstOrDefault(r => r.Total > 0);
+
+            if (firstPlusPeriod == null) return dbList;
+
+            var biggerThanFirstList = dbList.Where(r => r.OrderDate > firstPlusPeriod.OrderDate).ToList();
+            if (biggerThanFirstList.Count() == 0) return dbList;
+
+            var firstMinusPeriod_ThatAfterFirstPlus = biggerThanFirstList.FirstOrDefault(r => r.Total < 0);
+
+            if (firstPlusPeriod == null || firstMinusPeriod_ThatAfterFirstPlus == null)
+            {
+                return dbList;
+            }
+
+            var total1 = firstMinusPeriod_ThatAfterFirstPlus.Total + firstPlusPeriod.Total;
+            if (total1 == 0)
+            {
+                firstMinusPeriod_ThatAfterFirstPlus.Total = firstPlusPeriod.Total = 0;
+            }
+            else if (total1 > 0)
+            {
+                firstPlusPeriod.Total = total1;
+                firstMinusPeriod_ThatAfterFirstPlus.Total = 0;
+
+            }
+            else if (total1 < 0)
+            {
+                firstPlusPeriod.Total = 0;
+                firstMinusPeriod_ThatAfterFirstPlus.Total = total1;
+            }
+            return ManipulateFifoPerAccCurr(dbList);
+        }
+
 
         private void FilterAccountPopulation()
         {

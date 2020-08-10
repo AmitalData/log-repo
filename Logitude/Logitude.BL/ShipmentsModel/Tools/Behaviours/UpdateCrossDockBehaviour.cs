@@ -82,10 +82,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         }
         private void UpdateActualExpectedWarehouseEntriesDates()
         {
-            IQueryable<WarehouseEntry> activeWarehouseEntries = warehouseEntries.Where(e => e.StatusCode != "CAEA" && e.ActualEntryDate != null);
+            IQueryable<WarehouseEntry> activeWarehouseEntries = warehouseEntries.Where(e => e.StatusCode != "CAEA");
             if (activeWarehouseEntries.Count() != 0)
             {
-                WarehouseEntry leastWarehouseEntry = activeWarehouseEntries.OrderBy(e => e.ActualEntryDate).FirstOrDefault();
+                WarehouseEntry leastWarehouseEntry = activeWarehouseEntries.Where(e => e.ActualEntryDate != null).OrderBy(e => e.ActualEntryDate).FirstOrDefault();
                 if (leastWarehouseEntry != null)
                 {
                     shipmentPM.WarehouseLegActualEntryDate = leastWarehouseEntry.ActualEntryDate;

@@ -243,7 +243,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         // Local Validate
         if (this.totalDifference != 0) {
-            if (this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length >= 0) {
+            if (this.ExtPageSelectedLines.Length == 1 && this.TransactionSelectedLines.Length >= 0) { // only ONE ROW external pages adjustments WITH ZERO OR MANY TransactionSelectedLines
+
+            //if (this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length == 0) { // only external pages adjustments
+            // if (this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length >= 0) { // to enable ledgertransactions and external page adjustments
+
                 //errors.push(TextCodeTranslator.Translate("Accounting.O.SelectTwoTransactionAtLeast"));
                 this.AdjustBankFeeWithNewJournalScreen();
                 return;
@@ -314,6 +318,20 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
     AdjustBankFeeWithNewJournalScreen(): void {
         //throw new Error("Method not implemented.");
+        if (this.ExtPageSelectedLines.Length != 1) {
+            console.error("(this.ExtPageSelectedLines.Length != 1)")
+            this.ValidationErrorsList.push("to adjust bank fees, select only one row External page line ");
+            return;
+        }
+        let LedgerTransactionIdList: string[] = [];
+        this.TransactionSelectedLines.Collection.forEach(r => {
+            let myTransactionLineModel: TransactionLineModel = r;
+            LedgerTransactionIdList.push(myTransactionLineModel.LedgerTransactionPM.Id)
+
+        });
+        let myExtPageLineModel: ExtPageLineModel = this.ExtPageSelectedLines.Collection[0];
+        
+        
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 390;
         confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
@@ -325,7 +343,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                         logitudeWindow.Width = 500;
                         logitudeWindow.Height = 400;
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.B.Adjust");
-                        logitudeWindow.WindowArgs = { "SelectedLines": this.ExtPageSelectedLines, "BankAccountPMId": this.BankAccountPM.Id };
+
+                        logitudeWindow.WindowArgs = { "ExtPageSelectedLine": myExtPageLineModel.PageLinePM, "LedgerTransactionIdList": LedgerTransactionIdList, "BankAccountPMId": this.BankAccountPM.Id };
+
                         logitudeWindow.Show('./Accounting/Components/Others/ExtReconcileAdjustBankFeeComponent');
                         logitudeWindow.WindowClosed
                             .subscribe(($event: any) => {

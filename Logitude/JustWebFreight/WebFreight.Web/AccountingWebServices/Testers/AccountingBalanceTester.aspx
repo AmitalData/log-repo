@@ -769,8 +769,8 @@
             defaultParam.GLAccountId = "Id, or empty value to get all";
             defaultParam.AccountTypeCode = "2=Client, 3=Vendor";
             defaultParam.UpToDueDate = "01.01.2020";
-            defaultParam.LT_LinesMaximum = 20;
-           // defaultParam.MaximalDifference = 50.00;
+            defaultParam.LT_LinesMaximum = 50;
+            defaultParam.MaxPageSize = 500;
 
             if (!_ResponseToken) {
                 getToken();
@@ -797,7 +797,7 @@
 
             myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
 
-        //    myUrl = myUrl + "&maximalDifference=" + objToCheck1.MaximalDifference;
+            myUrl = myUrl + "&maximalPageSize=" + objToCheck1.MaxPageSize;
 
             //alert(myUrl);
 
@@ -847,8 +847,8 @@
             defaultParam.GLAccountId = "Id, or empty value to get all";
             defaultParam.AccountTypeCode = "2=Client, 3=Vendor";
             defaultParam.UpToDueDate = "01.01.2020";
-            defaultParam.LT_LinesMaximum = 20;
-         //   defaultParam.MaximalDifference = 50.00;
+            defaultParam.LT_LinesMaximum = 50;
+            defaultParam.MaxPageSize = 500;
             if (!_ResponseToken) {
                 getToken();
             }
@@ -874,7 +874,7 @@
 
             myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
 
-        //    myUrl = myUrl + "&maximalDifference=" + objToCheck1.MaximalDifference;
+            myUrl = myUrl + "&maxPageSize=" + objToCheck1.MaxPageSize;
 
             myUrl = myUrl + "&noBatch=1";
 

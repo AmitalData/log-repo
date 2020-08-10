@@ -466,6 +466,12 @@ namespace WebFreight.Web.WcfApi
                                         if (customerCountry != null && tenantEntity.VatMandatoryCountryId == customerCountry.Id)
                                         {
                                             entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+                                            if(entity != null && (entity.Card.Code != entityPM.Code))
+                                            {
+                                                response.HasError = true;
+                                                response.ErrorMessage = "A customer with the same vat and different code already exists.";
+                                                return response;
+                                            }
                                         }
                                     }
 

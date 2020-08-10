@@ -184,8 +184,12 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
         private BankAccountPM GetBankAccountByTransferAccountId(string transferAccountId)
         {
+            
+
+
             BankAccountQueryService bankAccountQuery = new BankAccountQueryService(_JournalPM.Tenant);
-            BankAccountPM bankAccount = bankAccountQuery.GetBankAccountByTransferGLAcccountId(transferAccountId, _JournalPM.Tenant);
+            BankAccountPM bankAccount = //bankAccountQuery.GetBankAccountByTransferGLAcccountId(transferAccountId, _JournalPM.Tenant);
+                _ExternalReconcileDataProvider.GetBankAccountFromTransferAccount(transferAccountId, _JournalPM.Tenant);
             if (bankAccount == null)
                 throw new ApplicationException("We need bank account id inorder to reconcile transfer transaction!!");
             return bankAccount;
