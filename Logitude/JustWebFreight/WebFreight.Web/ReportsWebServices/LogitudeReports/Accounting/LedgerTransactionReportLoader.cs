@@ -83,7 +83,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return transactionsDataProvider;
         }
 
-        private void CheckSalesmanAbilities(AgingReportParam args)
+        private void CheckSalesmanAbilities(CardIndexReportParams args)
         {
             bool isSalsmanRestrictionsEnabled = SecurityUtility.CheckFeature("GLAccount", "SalesmanLTRP", args.Tenant);
             if (isSalsmanRestrictionsEnabled && args.SalesmanId == null)
