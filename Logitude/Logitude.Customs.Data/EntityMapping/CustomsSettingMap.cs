@@ -70,8 +70,6 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsMessagesPending).HasColumnName("IsMessagesPending");
 
             this.Property(t => t.QtyFeedbackInPendingMessage).HasColumnName("QtyFeedbackInPendingMessage");
-
-            this.Property(t => t.TotalInvoiceAmountInUSD).HasColumnName("TotalInvoiceAmountInUSD").HasPrecision(16, 2);
         }
     }
 }
