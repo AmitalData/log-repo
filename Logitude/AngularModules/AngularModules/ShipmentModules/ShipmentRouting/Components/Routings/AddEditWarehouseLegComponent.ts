@@ -435,6 +435,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.SetStorageDays();
             }
 
+            this.PricesChanged = true;
             this.ComputeGrossWeight_PerStorageDays();
         }
     }
@@ -542,7 +543,9 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegActualReleaseDate);
                 this.StorageDays = days;
                 this.Days = " Days";
-            } else {
+            }
+
+            else {
                 this.StorageDays = null;
                 this.Days = null;
             }
@@ -737,7 +740,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
     }
     private ComputeReceivableAmount(): number {
-        var myResult: number = 0;
+        var amount: number = 0;
         var weight: number = 0;
         var rounding: number = 0;
         var weightRounded: number = 0;
@@ -800,7 +803,14 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 myPricigs.push(newItem);
             });
 
-            myResult = ArrayTool.Sum(myPricigs, "Amount");
+            amount = ArrayTool.Sum(myPricigs, "Amount");
+        }
+
+        var myResult: number = amount;
+
+        var invoiceStorageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+        if (invoiceStorageReceivable) {
+            myResult = amount - invoiceStorageReceivable.TotalAmount;
         }
 
         return myResult;
