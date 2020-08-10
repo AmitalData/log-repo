@@ -165,14 +165,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="TotalInvoiceAmountInUSD"
-    Type="decimal"
-    Precision="16"
-    Scale="2">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="DefaultNotificationAssignee"
     ReferencedTable="Users"

@@ -618,29 +618,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal? totalInvoiceAmountInUSD ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal? TotalInvoiceAmountInUSD  
-	   {
-	    
-	     get
-		{
-		   return totalInvoiceAmountInUSD;
-		 }
-		 set
-		 {
-		   if(totalInvoiceAmountInUSD != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalInvoiceAmountInUSD",OldValue=totalInvoiceAmountInUSD,NewValue=value,PropertyType="decimal?"};
-		    NotifyPropertyChanged(values);
-		   totalInvoiceAmountInUSD=value;
-		   }
-			
-		 }
-	   }
    }
    
 }
