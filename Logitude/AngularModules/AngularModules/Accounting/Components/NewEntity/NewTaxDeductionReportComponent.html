@@ -10,11 +10,11 @@
     <ul class="FiltersMenu">
         <li (click)="FilterItemClicked('Month')" style="width: 105px; height: 22px;"
             [class.SelectedFilter]="FilterSelectedValue === 'Month'">
-            By Month
+            {{'TaxDeductionReport.O.ByMonth' | TextCodeTranslationPipe}}
         </li>
         <li (click)="FilterItemClicked('Year')" style="width: 105px; height: 22px;"
             [class.SelectedFilter]="FilterSelectedValue === 'Year'">
-            By Year
+            {{'TaxDeductionReport.O.ByYear' | TextCodeTranslationPipe}}
         </li>
 
     </ul>
