@@ -169,9 +169,10 @@
                             <td style="width: 35px;"></td>
 
                             <!-- Customer -->
-                            <td style="width: 185px; padding: 0 10px;" class="Label">
-                                <!-- <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.Customer'" [ObjectFieldName]="'Customer'"
-                    [DataContext]="DataContext"></LogLabel> -->
+                            <td style="width: 185px; padding: 0 10px;" class="Label" *ngIf="!IsSalesmanRestricted">
+                                <!-- <LogLabel  [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.Customer'" [ObjectFieldName]="'Customer'"
+                                            [DataContext]="DataContext"></LogLabel> -->
+
                                 <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
                                     <li float-start id="filter_customer" (click)="FilterItemClicked('filter_customer')" style="height: 22px;"
                                         [class.SelectedFilter]="filterSelectedValue === 'filter_customer'">
@@ -182,8 +183,9 @@
                                         {{'GLAccount.O.Vendor' | TextCodeTranslationPipe}}
                                     </li>
                                 </ul>
+
                             </td>
-                            <td style="width: 140px;">
+                            <td style="width: 140px;" *ngIf="!IsSalesmanRestricted">
                                 <LogLov [ObjectFieldName]="'Customer'"
                                         [ObjectTableName]="'GLAccount'"
                                         [DataContext]="DataContext"
@@ -194,14 +196,14 @@
                                         [HideColumns]="true">
                                 </LogLov>
                             </td>
-                            <td style="width: 35px;"></td>
+                            <td style="width: 35px;" *ngIf="!IsSalesmanRestricted"></td>
 
-                            <td style="width: 75px; " class="Label" text-start>
+                            <td style="width: 75px; " [style.width.px]="IsSalesmanRestricted?'185':'75'" class="Label" text-start>
                                 <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.Balance'" [ObjectFieldName]="'NumberOfMonths'"
                                           [DataContext]="DataContext"></LogLabel>
                             </td>
 
-                            <td style="width: 230px;">
+                            <td style="width: 230px;" >
                                 <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
                                     <li float-start id="filter_All" (click)="BalanceFilterItemClicked('filter_All')"
                                         style="height: 22px;width: fit-content;"
@@ -268,9 +270,10 @@
                                           [DataContext]="DataContext"></LogLabel>
                             </td>
                             <td style="width: 135px;">
-                                <LogTextBox [ObjectFieldName]="'NumberOfMonths'" [InputType]="'unsinteger'" [DataContext]="DataContext" [Text]="NumberOfMonths"
-                                            [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="true"></LogTextBox>
-
+                                <div [style.width]="IsSalesmanRestricted?'80px':'initial'">
+                                    <LogTextBox [ObjectFieldName]="'NumberOfMonths'" [InputType]="'unsinteger'" [DataContext]="DataContext" [Text]="NumberOfMonths"
+                                    [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="true"></LogTextBox>
+                                </div>
                             </td>
 
                         </tr>
@@ -306,8 +309,8 @@
                             <td style=""></td>
 
                         </tr>
-                       
-                           
+
+
                         <tr>
                             <!-- Category -->
                             <td style="padding-right: 5px;" class="Label">
