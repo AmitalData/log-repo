@@ -61,6 +61,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         ChequeNumber = a.ChequeNumber ,
                         LineNumber = a.LineNumber ,
                         BankId = a.BankId,
+                        StatusCode= a.StatusCode,
                     }).ToList();
            
         }

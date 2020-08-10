@@ -1,0 +1,143 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.QuoteModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
+using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+
+using Logitude.BL.Helpers;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.CommonDataModel;
+
+ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
+{ 
+   public partial class AddressTypeQueryService
+   {
+   
+		AddressTypeQuery query; 
+
+        public AddressTypeQueryService(int tenant)
+        {
+		
+			query = new AddressTypeQuery(tenant);
+        }
+
+		
+		public AddressType GetAddressTypeByCode(string Code,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePM(Code,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("AddressType with Code " + Code + " doesn't exist");
+
+				return AddressTypeDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
+		public AddressType GetAddressTypeById(string Id,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePM(Id,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("AddressType with Id " + Id + " doesn't exist");
+
+				return AddressTypeDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
+		public AddressType AddressTypeDataMapping(AddressTypePM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+        {
+		    try
+            {
+				   
+				   var temp = new AddressType(); 
+				   temp.Code = MyEntityPM.Code;
+				   temp.Name = MyEntityPM.Name;
+				   temp.Id = MyEntityPM.Id;					
+				   return temp;
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        } 
+
+		public AddressTypePM AddressTypeDataMappingAndValidatin(AddressType MyEntity,int Tenant,string ComputingPartnerName = "")
+        {
+		    try
+            {
+				   					var temp = new AddressTypePM();
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePM(MyEntity.Code);
+					} 								  
+					if (!string.IsNullOrEmpty(MyEntity.Id))
+					{
+						temp = query.GetSinglePM(MyEntity.Id);
+					} 
+										   
+					if(temp == null)
+					{   
+					    throw new ApplicationException("AddressType with Id " + MyEntity.Id + " doesn't exist");
+					} 
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+					   
+						temp.Code = MyEntity.Code;
+					}
+					temp.Name = MyEntity.Name;
+					if(string.IsNullOrEmpty(temp.Id))
+					{
+					   
+					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    {
+					        throw new ApplicationException("AddressType with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Id;
+
+						//}
+					}					   
+					   return temp;
+		    }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            } 
+        }
+		 
+   }
+}
