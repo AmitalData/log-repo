@@ -1990,7 +1990,13 @@ export class ShipmentTool {
                 var integer: number = +r[0];
 
                 if (rounding == 0.5) {
-                    weightRounded = integer + 0.5;
+                    if (digits <= 0.5) {
+                        weightRounded = integer + 0.5;
+                    }
+
+                    else {
+                        weightRounded = integer + 1;
+                    }                    
                 }
 
                 else {
@@ -2005,14 +2011,17 @@ export class ShipmentTool {
 
         var myPricigs: CalculatedPricingItem[] = [];
         if (!AppTool.IsNullOrZero(weightRounded)) {
+            var maxLineNumber: number = ArrayTool.Max(entityPM.ShipmentStoragePricings, "LineNumber")
+
             entityPM.ShipmentStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
-                var isLastStep: boolean = entityPM.ShipmentStoragePricings.length == item.LineNumber ? true : false;
+
+                var isLastStep: boolean = item.LineNumber == maxLineNumber ? true : false;
 
                 var newItem: CalculatedPricingItem = new CalculatedPricingItem();
-                newItem.Index = item.LineNumber;
+                newItem.To = item.StepTo;
                 newItem.Price = item.SalePrice;
 
-                var previousLine: CalculatedPricingItem = myPricigs.filter(d => d.Index == item.LineNumber - 1)[0];
+                var previousLine: CalculatedPricingItem = myPricigs.filter(d => d.To == item.StepFrom)[0];
                 if (previousLine != null) {
                     if (!AppTool.IsNullOrZero(item.StepTo)) {
                         if ((item.StepTo - item.StepFrom) <= (days - previousLine.Days)) {
@@ -6612,7 +6621,7 @@ export class RoutingHelper {
     }
 }
 export class CalculatedPricingItem {
-    public Index: number;
+    public To: number;
     public Days: number;
     public Price: number;
     public Amount: number;

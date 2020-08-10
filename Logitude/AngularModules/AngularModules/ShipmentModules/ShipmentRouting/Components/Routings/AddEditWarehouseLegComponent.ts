@@ -475,9 +475,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.EntityPM.WarehouseStorageFreeDays = value;
             if (value == null) {
                 this.WarehouseStorageFreeDays = null;
-            } else {
+            }
+            else {
                 this.SetLastFreeDate();
             }
+
+            this.PricesChanged = true;
         }
     }
 
