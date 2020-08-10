@@ -388,7 +388,7 @@
     <Record
       Code="&quot;HAF&quot;"
       Name="&quot;Half&quot;"
-      Display="&quot;1/2&quot;"
+      Display="&quot;0.5&quot;"
       SearchFields="&quot;HAF,Half&quot;" />
     <Record
       Code="&quot;ONE&quot;"

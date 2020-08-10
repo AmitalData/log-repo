@@ -1955,51 +1955,59 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         // Amount
                         double? TotalAmount = 0;
-                        if (item.Quantity != null && item.UnitPrice != null)
+                        if (item.MeasurementCode == "STFE")
                         {
-                            if (string.IsNullOrEmpty(item.MeasurementCode))
+                            TotalAmount = item.ForiegnCurrencyAmount;
+                        }
+
+                        else
+                        {
+                            if (item.Quantity != null && item.UnitPrice != null)
                             {
-                                if (item.MeasurementId != null)
+                                if (string.IsNullOrEmpty(item.MeasurementCode))
                                 {
-                                    Measurement myMeasurement = (from d in myCommonContext.Measurements
-                                                                 where d.Id == item.MeasurementId
-                                                                 && d.Tenant == tenant
-                                                                 select d).FirstOrDefault();
-
-                                    if (myMeasurement != null)
+                                    if (item.MeasurementId != null)
                                     {
-                                        item.MeasurementCode = myMeasurement.Code;
-                                    }
-                                }
-                            }
+                                        Measurement myMeasurement = (from d in myCommonContext.Measurements
+                                                                     where d.Id == item.MeasurementId
+                                                                     && d.Tenant == tenant
+                                                                     select d).FirstOrDefault();
 
-                            if (item.MeasurementCode == "PRVL" || item.MeasurementCode == "PRFR")
-                            {
-                                var price = item.UnitPrice / 100;
-                                TotalAmount = item.Quantity * price;
-                            }
-
-                            else
-                            {
-                                TotalAmount = item.Quantity * item.UnitPrice;
-                            }
-
-                            /* MinMax Quote */
-                            if (TotalAmount != null)
-                            {
-                                if (myReceivable.QuoteSaleMinAmount != null)
-                                {
-                                    if (TotalAmount < myReceivable.QuoteSaleMinAmount)
-                                    {
-                                        TotalAmount = myReceivable.QuoteSaleMinAmount;
+                                        if (myMeasurement != null)
+                                        {
+                                            item.MeasurementCode = myMeasurement.Code;
+                                        }
                                     }
                                 }
 
-                                if (myReceivable.QuoteSaleMaxAmount != null)
+                                if (item.MeasurementCode == "PRVL" || item.MeasurementCode == "PRFR")
                                 {
-                                    if (TotalAmount > myReceivable.QuoteSaleMaxAmount)
+                                    var price = item.UnitPrice / 100;
+                                    TotalAmount = item.Quantity * price;
+                                }
+
+                                else
+                                {
+                                    TotalAmount = item.Quantity * item.UnitPrice;
+                                }
+
+                                /* MinMax Quote */
+                                if (TotalAmount != null)
+                                {
+                                    if (myReceivable.QuoteSaleMinAmount != null)
                                     {
-                                        TotalAmount = myReceivable.QuoteSaleMaxAmount;
+                                        if (TotalAmount < myReceivable.QuoteSaleMinAmount)
+                                        {
+                                            TotalAmount = myReceivable.QuoteSaleMinAmount;
+                                        }
+                                    }
+
+                                    if (myReceivable.QuoteSaleMaxAmount != null)
+                                    {
+                                        if (TotalAmount > myReceivable.QuoteSaleMaxAmount)
+                                        {
+                                            TotalAmount = myReceivable.QuoteSaleMaxAmount;
+                                        }
                                     }
                                 }
                             }

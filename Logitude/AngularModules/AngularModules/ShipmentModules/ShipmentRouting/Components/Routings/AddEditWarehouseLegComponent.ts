@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
+import {AppTool, DateTool, ArrayTool} from '../../../../Infrastructure/Tools';
 import {ShipmentTool, RoutingHelper} from '../../../../Shipment/Tools';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentFollowUpPM} from '../../../../Shipment/EntityPMs/ShipmentFollowUpPM';
@@ -22,6 +22,12 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { WarehouseStoragePricingPM } from '../../../../Common/EntityPMs/WarehouseStoragePricingPM';
 import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
+import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
+import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
+import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
 
 @Component({
     moduleId: './ShipmentModules/ShipmentRouting/Components/Routings/',
@@ -43,7 +49,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     IsShowNewWarehouseEntryButton: Boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public StoragePricingEnabled: boolean = false;
-    public StoragePricingMessageVisible: boolean = false; 
+    public StoragePricingMessageVisible: boolean = false;
+
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -99,6 +106,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                     this.IsShowNewWarehouseEntryButton = true;
                 }
             }
+
             this.GetShipmentDirection();
             this.SetStorageDays();
         }
@@ -426,6 +434,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             else {
                 this.SetStorageDays();
             }
+
+            this.PricesChanged = true;
             this.ComputeGrossWeight_PerStorageDays();
         }
     }
@@ -465,9 +475,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.EntityPM.WarehouseStorageFreeDays = value;
             if (value == null) {
                 this.WarehouseStorageFreeDays = null;
-            } else {
+            }
+            else {
                 this.SetLastFreeDate();
             }
+
+            this.PricesChanged = true;
         }
     }
 
@@ -478,6 +491,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
     }
 
+    private PricesChanged: boolean = false;
     StoragePricingClicked() {
         var entityResourceService: EntityResourceService = new EntityResourceService();
         entityResourceService.getEntityResourceByTableName("ShipmentStoragePricing").subscribe((res1: any) => {
@@ -485,9 +499,14 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             logitudeWindow.Title = "Storage Pricing";
             logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, DefaultPricings: this.warehouseStoragePricings };
             logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s == "PricesChanged") {
+                    this.PricesChanged = true;
+                }
+            });
         });
     }
-
+    
     private SetLastFreeDate() {
         if (this.WarehouseLegActualEntryDate != null && this.WarehouseStorageFreeDays != null) {
             var date = DateTool.AddDays(this.WarehouseLegActualEntryDate, this.WarehouseStorageFreeDays);
@@ -527,7 +546,9 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegActualReleaseDate);
                 this.StorageDays = days;
                 this.Days = " Days";
-            } else {
+            }
+
+            else {
                 this.StorageDays = null;
                 this.Days = null;
             }
@@ -597,8 +618,167 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
+            //var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+
+            this.CheckStorageProperties();
+
+            //if (this.PricesChanged && storageReceivable) {
+            //    this.UpdateStorageReceivable(storageReceivable);
+            //}
+
+            //else {
+            //    this.CheckStorageProperties();
+            //}
+
             this.FatherComponent.BuildItemsCollection();
             this.CurrentSession.CloseCurrentWindowEmit("OK");
+        }
+    }
+
+    private CheckStorageProperties() {
+        var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+
+        if (this.WarehouseLegActualReleaseDate != null && this.WarehouseLegActualReleaseDate != undefined && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
+            && !AppTool.IsNullOrZero(this.StorageDays) && this.ChargeStorage && this.EntityPM.ShipmentStoragePricings.length > 0) {
+
+            if (this.PricesChanged) {
+                if (storageReceivable) {
+                    this.UpdateStorageReceivable(storageReceivable);
+                }
+
+                else {
+                    this.CreateReceivable();
+                }
+            }
+
+            else {
+                if (storageReceivable == null) {
+                    this.CreateReceivable();
+                }
+            }
+        }
+
+        else {            
+            if (storageReceivable) {
+                this.EntityPM.RemoveReceivable(storageReceivable);
+                this.CurrentSession.FireEvent("StorageReceivableRemoved");
+            }
+        }
+    }
+    private ComputeReceivableAmount(): number {
+        var myResult: number = ShipmentTool.ComputeImportStorageReceivableAmount(this.StorageDays, this.EntityPM);
+
+        return myResult;
+    }
+    private UpdateStorageReceivable(storageReceivable: ShipmentReceivablePM) {
+        var amount: number = this.ComputeReceivableAmount();
+
+        storageReceivable.TotalAmount = amount;
+        storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
+
+        if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
+            storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
+        }
+
+        else {
+            storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
+        }
+    }
+    private CreateReceivable() {
+        var amount: number = this.ComputeReceivableAmount();
+
+        if (!AppTool.IsNullOrZero(amount)) {
+            var myService = new CommonDomainService();
+            myService.GetChargesTypeByCode('ISTOR').subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var chargesType: ChargesTypeList = myResponse.Result;
+
+                    if (chargesType) {
+                        var todayDate: Date = DateTool.GetCurrentDateAsUtc();
+                        var myCurrencyRatesService = new CurrencyRatesService();
+                        myCurrencyRatesService.getAll(SessionLocator.LocalCurrencyId, todayDate).subscribe((myResponse2: ServiceResponse) => {
+                            if (!myResponse2.HasError) {
+                                var allRates: LastRate[] = myResponse2.Result;
+
+                                var myService = new CurrencyListService();
+                                myService.getSingleFromCache(this.EntityPM.ChargeStorageCurrencyId).subscribe((myResponse: ServiceResponse) => {
+                                    if (!myResponse.HasError) {
+                                        var currencyList: CurrencyList = myResponse.Result;
+                                        if (currencyList != null) {
+
+                                            var storageReceivable: ShipmentReceivablePM = new ShipmentReceivablePM(this.EntityPM);
+                                            storageReceivable.Tenant = this.EntityPM.Tenant;
+                                            storageReceivable.ShipmentId = this.EntityPM.Id;
+                                            storageReceivable.ChargesTypeId = chargesType.Id;
+                                            storageReceivable.ChargesTypeCode = chargesType.Code;
+                                            storageReceivable.ChargesTypeName = chargesType.EnglishName;
+                                            storageReceivable.MeasurementId = chargesType.MeasurementId;
+                                            storageReceivable.MeasurementCode = chargesType.MeasurementCode;
+                                            storageReceivable.ChargesGroupCode = chargesType.ChargesGroupCode;
+                                            storageReceivable.DueTypeCode = chargesType.DueTypeCode;
+                                            storageReceivable.DueTypeName = chargesType.DueTypeName;
+                                            storageReceivable.VatTypeId = chargesType.VatTypeId;
+                                            storageReceivable.IATACodeId = chargesType.IATACodeId;
+                                            storageReceivable.IsExpense = chargesType.IsExpense;
+                                            storageReceivable.ShipmentNumber = this.EntityPM.ShipmentNumber;
+                                            storageReceivable.CreateDate = DateTool.GetCurrentDateAsUtc();
+                                            storageReceivable.UpdateDate = DateTool.GetCurrentDateAsUtc();
+                                            storageReceivable.CreatedByUserId = SessionLocator.LoggedUserId;
+                                            storageReceivable.UpdateByUserId = SessionLocator.LoggedUserId;
+                                            storageReceivable.ShipmentReceivableLineStatusCode = "OAMT";
+                                            storageReceivable.CurrencyId = this.EntityPM.ChargeStorageCurrencyId;
+                                            storageReceivable.CurrencyCode = currencyList.Code;
+
+                                            if (SessionLocator.LocalCurrencyId == storageReceivable.CurrencyId) {
+                                                storageReceivable.Rate = 1;
+                                            }
+                                            else {
+                                                var lastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == storageReceivable.CurrencyId)[0];
+                                                if (lastRate != null) {
+                                                    storageReceivable.Rate = lastRate.Rate;
+                                                }
+                                            }
+
+                                            if (this.EntityPM.ProfitCurrencyId == SessionLocator.TenantPM.CurrencyId) {
+                                                storageReceivable.ProfitCurrencyExchangeRate = 1;
+                                            }
+
+                                            else {
+                                                var myLastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == this.EntityPM.ProfitCurrencyId)[0];
+                                                if (myLastRate != null) {
+                                                    storageReceivable.ProfitCurrencyExchangeRate = myLastRate.Rate;
+                                                }
+                                            }
+
+                                            if (chargesType.ChargesGroupCode == "FRT") {
+                                                storageReceivable.PrepaidCollectId = this.EntityPM.FreightPrepaidCollectId;
+                                            }
+
+                                            else {
+                                                storageReceivable.PrepaidCollectId = this.EntityPM.OtherPrepaidCollectId;
+                                            }
+
+                                            storageReceivable.TotalAmount = amount;
+                                            storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
+
+                                            if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
+                                                storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
+                                            }
+
+                                            else {
+                                                storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
+                                            }
+
+                                            this.EntityPM.AddReceivable(storageReceivable);
+                                            this.CurrentSession.FireEvent("StorageReceivableCreated");
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+            });
         }
     }
 

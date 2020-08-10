@@ -23,6 +23,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     public PricingItemsList: ObservableCollection;
     private maxLineNumber = 0;
     public IsResourcesReady: boolean = false;
+    public PricesChanged: boolean = false;
     constructor() {
         super();
     }
@@ -174,7 +175,12 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
                 }
             });
 
-            this.CurrentSession.CloseCurrentWindowEmit("ok");
+            var emitMessage: string = "ok";
+            if (this.PricesChanged) {
+                emitMessage = "PricesChanged";
+            }
+
+            this.CurrentSession.CloseCurrentWindowEmit(emitMessage);
         }
     }
 
@@ -297,7 +303,7 @@ export class PricingItem extends BaseComponent {
     public CellColor: string = "transparent";
     private SetCellColor() {
         if (this.IsFreeLine) {
-            this.CellColor = "#B4F3D2";
+            this.CellColor = "#DFF9EB";
         }
 
         else {
@@ -315,6 +321,7 @@ export class PricingItem extends BaseComponent {
     set StepFrom(newValue: number) {
         if (this.EntityPM.StepFrom != newValue) {
             this.EntityPM.StepFrom = AppTool.Round(newValue, 0);
+            this.fatherComponent.PricesChanged = true;
         }
     }
 
@@ -344,6 +351,7 @@ export class PricingItem extends BaseComponent {
         if (this.EntityPM.StepTo != newValue) {
             this.EntityPM.StepTo = newValue;
 
+            this.fatherComponent.PricesChanged = true;
             this.ComputeDays();
         }
     }
@@ -359,6 +367,7 @@ export class PricingItem extends BaseComponent {
         if (this.EntityPM.Days != newValue) {
             this.EntityPM.Days = newValue;
 
+            this.fatherComponent.PricesChanged = true;
             this.ComputeStepTo();
         }
     }
@@ -373,6 +382,7 @@ export class PricingItem extends BaseComponent {
     set SalePrice(newValue: number) {
         if (this.EntityPM.SalePrice != newValue) {
             this.EntityPM.SalePrice = newValue;
+            this.fatherComponent.PricesChanged = true;
         }
     }
 

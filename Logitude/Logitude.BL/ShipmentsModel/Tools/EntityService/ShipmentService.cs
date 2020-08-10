@@ -2515,26 +2515,35 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             receivable.IsChargeBySteps = payable.IsChargeBySteps;
             receivable.VatTypeId = payable.VatTypeId;
             receivable.IsBackToBack = payable.IsBackToBack;
-            receivable.ShipmentReceivableLineStatusCode = SetReceivableLineStatus(receivable.ShipmentReceivableLineStatusCode, receivable.Quantity, receivable.UnitPrice);
+            receivable.ShipmentReceivableLineStatusCode = SetReceivableLineStatus(receivable);
         }
-        public string SetReceivableLineStatus(string code, double? quantity, double? unitPrice)
+        public string SetReceivableLineStatus(ShipmentReceivablePM receivable)
         {
-            var status = code;
-            if (code == "APPD" || code == "ACCT" || code == "DRFT")
+            var status = receivable.ShipmentReceivableLineStatusCode;
+            if (receivable.ShipmentReceivableLineStatusCode == "APPD" || receivable.ShipmentReceivableLineStatusCode == "ACCT" || receivable.ShipmentReceivableLineStatusCode == "DRFT")
             {
 
             }
 
             else
             {
-                if (quantity != null && unitPrice != null)
+                if (receivable.MeasurementCode == "STFE" && receivable.ChargesTypeCode == "ISTOR")
                 {
+                    // import storage charge has no quantity or price
                     status = "OAMT";
                 }
 
                 else
                 {
-                    status = "EMPT";
+                    if (receivable.Quantity != null && receivable.UnitPrice != null)
+                    {
+                        status = "OAMT";
+                    }
+
+                    else
+                    {
+                        status = "EMPT";
+                    }
                 }
             }
             return status;
@@ -6305,14 +6314,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         string myStatusCode = null;
 
-                        if (itemPM.Quantity == null || itemPM.UnitPrice == null)
+                        if (itemPM.MeasurementCode == "STFE" && itemPM.ChargesTypeCode == "ISTOR")
                         {
-                            myStatusCode = "EMPT";
+                            // import storage charge has no quantity or price
+                            myStatusCode = "OAMT";
                         }
 
                         else
                         {
-                            myStatusCode = "OAMT";
+                            if (itemPM.Quantity == null || itemPM.UnitPrice == null)
+                            {
+                                myStatusCode = "EMPT";
+                            }
+
+                            else
+                            {
+                                myStatusCode = "OAMT";
+                            }
                         }
 
                         if (itemPM.ShipmentReceivableLineStatusCode != myStatusCode)

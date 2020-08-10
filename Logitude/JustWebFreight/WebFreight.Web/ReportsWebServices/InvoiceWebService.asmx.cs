@@ -1126,14 +1126,59 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.WarehouseLegRemarks = shipment.WarehouseLegRemarks;
                     invoicedataprovider.WarehouseLegReference = shipment.WarehouseLegReference;
                     invoicedataprovider.WarehouseLegTerminalName = shipment.WarehouseLegTerminalName;
+
                     if (shipment.WarehouseLegAddressId != null)
                     {
                         Address warehouseAddress = addressRepository.GetSingleAddress(shipment.WarehouseLegAddressId, tenant);
                         invoicedataprovider.WarehouseLegAddress = DataProviders.General.GetAddress(warehouseAddress);
                     }
+
                     invoicedataprovider.WarehouseLegEntryDate = shipment.WarehouseLegEntryDate;
                     invoicedataprovider.WarehouseLegReleaseDate = shipment.WarehouseLegReleaseDate;
                     invoicedataprovider.WarehouseLegTerminalCode = shipment.WarehouseLegTerminalCode;
+
+                    invoicedataprovider.StorageFreeDays = shipment.WarehouseStorageFreeDays;
+
+                    if (shipment.WarehouseLegActualEntryDate != null && shipment.WarehouseLegActualReleaseDate != null)
+                    {
+                        if (shipment.WarehouseLegActualReleaseDate >= shipment.WarehouseLegActualEntryDate)
+                        {
+                            invoicedataprovider.StorageDays = (shipment.WarehouseLegActualReleaseDate - shipment.WarehouseLegActualEntryDate).Value.Days;
+                        }                        
+                    }
+
+                    string warehouseName = null;
+                    if (!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
+                    {
+                        Card warehouse = (from mc in commonContext.Cards
+                                          where mc.Id == shipment.WarehouseLegWarehouseId
+                                          select mc).FirstOrDefault();
+
+                        if (warehouse != null)
+                        {
+                            warehouseName = warehouse.EnglishName;
+                        }
+                    }
+
+                    if (shipment.ShipmentStoragePricings != null && shipment.ShipmentStoragePricings.Count > 0)
+                    {
+                        invoicedataprovider.ShipmentStoragePricings = new List<StoragePricing>();
+
+                        foreach (ShipmentStoragePricingPM pricing in shipment.ShipmentStoragePricings)
+                        {
+                            StoragePricing newItem = new StoragePricing();
+                            newItem.StepFrom = pricing.StepFrom;
+                            newItem.StepTo = pricing.StepTo;
+                            newItem.Days = pricing.Days;
+                            newItem.SalePrice = pricing.SalePrice;
+                            newItem.Amount = pricing.Amount;
+                            newItem.LineNumber = pricing.LineNumber;
+                            newItem.WarehouseName = warehouseName;
+
+                            invoicedataprovider.ShipmentStoragePricings.Add(newItem);
+                        }
+                    }
+
                     #endregion
 
                     #region pickups
