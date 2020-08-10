@@ -61,7 +61,7 @@ namespace Logitude.Accounting.BL.InterestService
                 interestReportPM = GetSingleInterestReportPM(MainContext, Tenant, InvoiceEntitiId, AmountInLocalCurrency, ARInvoiceId, InvoiceNumber);
             }
 
-            interestReportPM = UpdateInterestReportWhenConfirmInvoice(interestReportPM, Tenant, MainContext);
+            interestReportPM = UpdateInterestReportWhenConfirmInvoice(interestReportPM, Tenant, MainContext); //CloseInterestReportWithoutInvoice
 
             return interestReportPM;
         }
@@ -79,7 +79,7 @@ namespace Logitude.Accounting.BL.InterestService
             MyContext.SaveChanges();
         }
 
-        private InterestTransactionsWithTotal MappingDataInterestTransaction(List<InterestTransactionList> interestTransactionLists,int Tenant)
+        private InterestTransactionsWithTotal MappingDataInterestTransaction(List<InterestTransactionList> interestTransactionLists,int Tenant)// call it Map.....
         {
             decimal TotalLocalAmount = 0;
             InterestTransactionsWithTotal interestTransactionsWithTotal = new InterestTransactionsWithTotal();

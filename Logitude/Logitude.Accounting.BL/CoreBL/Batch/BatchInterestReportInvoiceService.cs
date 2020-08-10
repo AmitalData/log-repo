@@ -67,7 +67,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
         }
 
 
-        private void CheckAndUpdateInterestLastBatchByTenant(InterestReportArguments interestReportArguments)
+        private void CheckAndUpdateInterestLastBatchByTenant(InterestReportArguments interestReportArguments)// remove the mathod it is not used at all
         {
             InterestLastBatchServiceQueryService interestLastBatchServiceQueryService = new InterestLastBatchServiceQueryService(interestReportArguments.Tenant);
             InterestLastBatchServicePM interestLastBatchServicePM = interestLastBatchServiceQueryService.CheckInterestLastBatchServicesByTenant(interestReportArguments.Tenant);
@@ -91,7 +91,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
 
         }
-        private void CreateBatchesInvoice(InterestReportArguments interestReportArguments)
+        private void CreateBatchesInvoice(InterestReportArguments interestReportArguments)// CreateInvoicesForInterestReports
         {
             InterestReportArgs args = new InterestReportArgs();
             args.Tenant = interestReportArguments.Tenant;
@@ -100,14 +100,14 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             {
                 List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant);
 
-                if (interestReportArguments.ExcludedIds != null)
+                if (interestReportArguments.ExcludedIds != null) // move the filtering to the previous call to exclude un wanted ids
                 {
                     interestReports = (from a in interestReports
                                        where !interestReportArguments.ExcludedIds.Contains(a.Id)
                                        select a).ToList();
                 }
               
-                foreach (InterestReportPM report in interestReports)
+                foreach (InterestReportPM report in interestReports) // move the foreach or the insides of the foreach to a common method "DRY : dont repeat yourself" this code is "WET: Wast Everybodys time" 
                 {
                     args.ReportNumber = report.ReportNumber;
                     args.InterestReportId = report.Id;
@@ -168,8 +168,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             if (interestReport.TotalAmount == null || interestReport.TotalAmount <= interestReport.GLAccountMinimumInterest)
             {
                 IAccountingContext iAccountingContext = AccountingContext.GetContext(interestReportArgs.Tenant);
-                InterestReportService interestTransactionQuery = new InterestReportService();
-                interestReport = interestTransactionQuery.PutConfirmCreateInvoice(interestReport, interestReportArgs.Tenant, iAccountingContext);
+                InterestReportService interestTransactionQuery = new InterestReportService();// the variable name should be suitable "interestReportService"
+                interestReport = interestTransactionQuery.PutConfirmCreateInvoice(interestReport, interestReportArgs.Tenant, iAccountingContext);// CloseInterestReportWithoutInvoice
             }
             else
             {
@@ -202,6 +202,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             service.Update(interestReportPM, true);
 
         }
+        //--------------------------- all the methods below should move to another class InterestReportInvoiceMapping---------------------
         private ARInvoicePM FullMapInvoice(InterestReportArgs interestReportArgs, InterestReportPM interestReport)
         {
             CardQuery cardQueryService = new CardQuery(interestReportArgs.Tenant);
@@ -227,6 +228,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             return aRInvoicePM;
 
         }
+        // the mapping methods should named as do something "MapARInvoice"
         private ARInvoicePM MappingARInvoice(InterestReportArgs interestReportArgs, InterestReportPM interestReport, TenantPM tenantPM, UserPM userPM, CardPM cardPM)
         {
             ARInvoicePM aRInvoicePM = new ARInvoicePM();
@@ -421,7 +423,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
             return resultList;
         }
-        private ARInvoicePM InitializeDueDate(ARInvoicePM entityPM)
+        private ARInvoicePM InitializeDueDate(ARInvoicePM entityPM)// make sure it goes with the new adjustment
         {
             if (entityPM.DueDate == null)
             {

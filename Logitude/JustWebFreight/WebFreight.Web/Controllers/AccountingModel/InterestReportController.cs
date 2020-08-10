@@ -66,7 +66,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        public HttpResponseMessage PutInterestReportStatus(InterestReportArguments interestReportArgs)
+        public HttpResponseMessage PutInterestReportStatus(InterestReportArguments interestReportArgs) // PutCreateInterestReportInvoiceBatch pay attention it will affect the client
         {
             try
             {
@@ -74,7 +74,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 string email = HttpContext.Current.User.Identity.Name;
                 string BatchId = null;
 
-                BatchId = CheckLastBatchAndCreateInvoiceBatch(interestReportArgs, tenant, email);
+                BatchId = CheckLastBatchAndCreateInvoiceBatch(interestReportArgs, tenant, email); // move this logic to another class to keep the controller clean
                 return Request.CreateResponse(HttpStatusCode.OK, BatchId);
             }
             catch (Exception ex)
@@ -83,7 +83,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
-        private string CheckLastBatchAndCreateInvoiceBatch(InterestReportArguments interestReportArgs,int tenant, string email)
+        private string CheckLastBatchAndCreateInvoiceBatch(InterestReportArguments interestReportArgs,int tenant, string email)// reduce the method lines by moving common things DRY
         {
             string BatchId=null;
             InterestLastBatchServiceQueryService interestLastBatchServiceQueryService = new InterestLastBatchServiceQueryService(tenant);
@@ -137,7 +137,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
 
 
-        public string CreateBatchInvoice(InterestReportArguments interestReportArgs, int tenant, string email)
+        public string CreateBatchInvoice(InterestReportArguments interestReportArgs, int tenant, string email)// move it with CheckLastBatchAndCreateInvoiceBatch
         {
             string BatchId = null;
             interestReportArgs.Tenant = tenant;
@@ -214,7 +214,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        private void  UpdateStatusForALLNotInvoicedInterestReports(InterestReportArguments interestReportArgs, int tenant)
+        private void  UpdateStatusForALLNotInvoicedInterestReports(InterestReportArguments interestReportArgs, int tenant)// delete this method it is not refrenced
         {            
             InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
             
@@ -228,14 +228,14 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
             UpdateInterestReports(interestReports, tenant);
         }
-        private void UpdateStatusForSelectedInterestReport(InterestReportArguments interestReportArgs,int tenant)
+        private void UpdateStatusForSelectedInterestReport(InterestReportArguments interestReportArgs,int tenant)// delete this method it is not refrenced
         {
             InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
             List<InterestReportPM> interestReports = interestReportQueryService.GetInterestReportsByIds(interestReportArgs.SelectedIds, tenant);
             UpdateInterestReports(interestReports,tenant);
 
         }
-        private void UpdateInterestReports(List<InterestReportPM> interestReports, int tenant)
+        private void UpdateInterestReports(List<InterestReportPM> interestReports, int tenant) // remove this one also because it is used for UpdateStatusForSelectedInterestReport
         {
             var accountingContext = AccountingContext.GetContext(tenant);
             foreach (InterestReportPM report in interestReports)
