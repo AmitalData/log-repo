@@ -138,6 +138,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     {
                         _RequestParams.ForcePersonalSign = false;
                     }
+                    _RequestParams.AvoidSign = avoidSign;
                 }
                 if (_RequestParams.TestCase != null && !String.IsNullOrWhiteSpace(_RequestParams.TestCase.Code))
                 {
