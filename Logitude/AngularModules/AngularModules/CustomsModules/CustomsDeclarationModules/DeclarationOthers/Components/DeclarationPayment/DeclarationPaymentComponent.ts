@@ -783,13 +783,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
     AutoFillPaymentScreenByDefault() {
         this.NewMethodMethod();
-      
-
-        if (this.sumBtl != null && this.sumBtl > 0) {
+         if (this.sumBtl != null && this.sumBtl > 0) {
             this.JustAutoFillPaymentScreen();
         }
 
-        if (!AppTool.IsNullOrEmpty(this.GetCreditInternalBankId)) {
+        else if (!AppTool.IsNullOrEmpty(this.GetCreditInternalBankId)) {
             if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
                 this.JustAutoFillPaymentScreen();
                 return;
