@@ -38,6 +38,7 @@ using System.Xml.Serialization;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.BL.CloseTables;
+using Unifreight.BL.EntityQueryServices;
 
 //using Simplog.Infrastructure.SimplogUtilities;
 
@@ -129,7 +130,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 SendRequestVIA requestVIA = _RequestParams.RequestVIA;
 
                 bool avoidSign = false;
-                bool notApprovedYet = true;
+                bool notApprovedYet = false;
                 if (!notApprovedYet)
                 {
                     avoidSign = AvoidSign(_RequestParams);
@@ -310,16 +311,43 @@ namespace Logitude.Customs.BL.Messaging.Customs
         {
             try
             {
+
                 if (!String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
                 {
-
+                    string defValue = GDFDATAQueryService.GetDefault(_Tenant,"ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
+                    decimal defaultAmount = 0;
+                    var boolvar = (decimal.TryParse(defValue, out defaultAmount));
                     if (requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration"))
                     {
-                        var qs = new DeclarationQueryService(requestParams.Tenant);
-                        var declarationPm = qs.GetSingle(requestParams.LoggingEntityId, false, true);
+
+                        //var customsSettingQueryService = new CustomsSettingQueryService(_Tenant);
+                        //var customsSettingPM = customsSettingQueryService.GetSingle(_Tenant.ToString(), false, true);
+                        //if (customsSettingPM.TotalInvoiceAmountInUSD.HasValue)
+                        {
+                            var declarationQueryService = new DeclarationQueryService(_Tenant);
+                            var declaration = declarationQueryService.GetSingle(RequestParams.LoggingEntityId, false, false);
+
+                            if (declaration.IsCourierDeclaration)
+                            {
+                                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_Tenant);
+                                DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declaration.Id, true, false);
+                                if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > defaultAmount)
+                                {
+                                    //myDeclarationCourierStatusPM.HighLowValue = "H";
+                                }
+                                else
+                                {
+                                    //myDeclarationCourierStatusPM.HighLowValue = "L";
+                                    LogMessagingUtil.Instance.AppendLine($"{defaultAmount} בלדרות ביטול חתימה במסרים - סך חשבון בהצהרה בדולרים   {myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD.GetValueOrDefault()} קטן מהגדרת המינימום");
+                                    return true;
+                                }
+                            }
+                           
 
 
-                        return declarationPm.IsCourierDeclaration;
+                        }
+
+                        return false;
                     }
                     else
                     {
@@ -330,6 +358,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 {
                     return false;
                 }
+                return false;
             }
             catch (Exception)
             {
@@ -442,31 +471,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 return;
             }
-            if (signatureBy == SignQueueByType.SignQueueByCustomsAgentId)
-            {
-                if (!String.IsNullOrWhiteSpace(RequestParams.LoggingEntityId) &&
-                    RequestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration"))
-                {
-                    var customsSettingQueryService = new CustomsSettingQueryService(_Tenant);
-                    var customsSettingPM = customsSettingQueryService.GetSingle(_Tenant.ToString(), false, true);
-                    if (customsSettingPM.TotalInvoiceAmountInUSD.HasValue)
-                    {
-                        var declarationQueryService = new DeclarationQueryService(_Tenant);
-                        var declaration = declarationQueryService.GetSingle(RequestParams.LoggingEntityId, false, false);
-                        if (declaration.IsCourierDeclaration && declaration.TotalInvoiceAmountInUSD.HasValue)
-                        {
-                            if (declaration.TotalInvoiceAmountInUSD.Value< customsSettingPM.TotalInvoiceAmountInUSD.Value)
-                            {
-                                LogMessagingUtil.Instance.AppendLine($"{customsSettingPM.TotalInvoiceAmountInUSD} בלדרות ביטול חתימה במסרים - סך חשבון בהצהרה בדולרים   {declaration.TotalInvoiceAmountInUSD.Value} קטן מהגדרת המינימום");
-                                return;
-                            }
-                        }
-                       
-
-                    }
-                }
-
-            } 
+            
             //if (Debugger.IsAttached)
             //{
             //    var doNotThrow = true;
