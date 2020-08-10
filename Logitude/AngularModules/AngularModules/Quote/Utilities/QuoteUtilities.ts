@@ -99,12 +99,18 @@ export class QuoteUtilities {
                 entityPM.Ratio = AppTool.GetRatio(entityPM.DirectionId, entityPM.TransportModeId, entityPM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
             }
 
+            if (entityPM.PickupDeliveryRatio == null) {
+                entityPM.PickupDeliveryRatio = AppTool.GetRatio(entityPM.DirectionId, "I", entityPM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
+            }
+
             if (entityPM.QuotePackages.length == 0) {
                 entityPM.NumberOfPackages = null;
                 entityPM.GrossWeight = null;
                 entityPM.Volume = null;
                 entityPM.VolumetricWeight = null;
                 entityPM.ChargeableWeight = null;
+                entityPM.PickupDeliveryVolumetricWeight = null;
+                entityPM.PickupDeliveryChargeableWeight = null;
             }           
 
             else {                
@@ -112,14 +118,14 @@ export class QuoteUtilities {
                 var myQuantity: number = 0;
                 var myVolumetricWeight: number = 0;
                 var myGrossWeight: number = 0;
-
-                entityPM.QuotePackages.forEach((item) => {
-
-                });
-
+                var myPickupDeliveryVolumetricWeight: number = 0;
                 entityPM.QuotePackages.forEach((item) => {
                     item.Volume = PackageAmountCalculator.ComputeVolume(item.Volume, item.Quantity, item.Width, item.Height, item.Length, item.GrossWeight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode);
                     item.VolumetricWeight = PackageAmountCalculator.ComputeVolumetricWeight(item.VolumetricWeight, item.Volume, item.GrossWeight, entityPM.Ratio, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode);
+
+                    item.PickupDeliveryVolume = PackageAmountCalculator.ComputeVolume(item.PickupDeliveryVolume, item.Quantity, item.Width, item.Height, item.Length, item.GrossWeight, entityPM.PickupDeliveryRatio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode);
+                    item.PickupDeliveryVolumetricWeight = PackageAmountCalculator.ComputeVolumetricWeight(item.VolumetricWeight, item.PickupDeliveryVolume, item.GrossWeight, entityPM.PickupDeliveryRatio, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode);
+
 
                     if (item.Quantity != null) {
                         myQuantity += item.Quantity;
@@ -133,6 +139,10 @@ export class QuoteUtilities {
                         myVolumetricWeight += item.VolumetricWeight;
                     }
 
+                    if (item.PickupDeliveryVolumetricWeight != null) {
+                        myPickupDeliveryVolumetricWeight += item.PickupDeliveryVolumetricWeight;
+                    }
+
                     if (item.GrossWeight != null) {
                         myGrossWeight += item.GrossWeight;
                     }
@@ -141,8 +151,10 @@ export class QuoteUtilities {
                 entityPM.Volume = myVolume;
                 entityPM.NumberOfPackages = myQuantity;
                 entityPM.VolumetricWeight = myVolumetricWeight;
+                entityPM.PickupDeliveryVolumetricWeight = myPickupDeliveryVolumetricWeight;
                 entityPM.GrossWeight = myGrossWeight;
                 entityPM.ChargeableWeight = AppTool.CalculateChargeableWeight(entityPM.GrossWeight, entityPM.VolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
+                entityPM.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(entityPM.GrossWeight, entityPM.PickupDeliveryVolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
             }
         }
     }
@@ -219,6 +231,7 @@ export class QuoteUtilities {
         entityPM.VolumeInCBM = copiedEntityPM.VolumeInCBM;
         entityPM.ChargeableWeightUnitCode = copiedEntityPM.ChargeableWeightUnitCode;
         entityPM.Ratio = copiedEntityPM.Ratio;
+        entityPM.PickupDeliveryRatio = copiedEntityPM.PickupDeliveryRatio;
         entityPM.DimFactor = copiedEntityPM.DimFactor;
         entityPM.IsDangerous = copiedEntityPM.IsDangerous;
         entityPM.DescriptionOfGoods = copiedEntityPM.DescriptionOfGoods;

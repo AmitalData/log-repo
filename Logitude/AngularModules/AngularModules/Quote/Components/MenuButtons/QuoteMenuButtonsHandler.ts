@@ -1002,6 +1002,15 @@ export class QuoteMenuButtonsHandler {
                     displayUpdateMessage = true;
                 }
 
+                // PDCW
+                entityQuantity = this.EntityPM.PickupDeliveryChargeableWeight;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PDCW" && f.CostQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PDCW" && f.SaleQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+
                 //"BTEU"
                 entityQuantity = this.EntityPM.TEU;
                 if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "BTEU" && f.CostQuantity != entityQuantity).length > 0) {
