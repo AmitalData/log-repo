@@ -107,7 +107,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 }
                 else
                 {
-                    documentsFilingPM.DocumentsFilingMetaDataValues.Add(mydocumentsFilingMetaDataVERValuePM);
+                    LogMessagingUtil.Instance.AppendLine("documentsFilingPM.DocumentsFilingMetaDataValues.Add(mydocumentsFilingMetaDataVERValuePM);");//nir ask to delete 
+                    
                 }
                 
             }
