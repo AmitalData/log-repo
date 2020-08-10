@@ -38,6 +38,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                       GrossWeight = a.GrossWeight,
                                                       Width = a.Width,
                                                       VolumetricWeight = a.VolumetricWeight,
+                                                      PickupDeliveryVolume = a.PickupDeliveryVolume,
+                                                      PickupDeliveryVolumetricWeight = a.PickupDeliveryVolumetricWeight,
                                                   }).FirstOrDefault();
 
             return quotePackages;
@@ -61,7 +63,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                                  GrossWeight = a.GrossWeight,
                                                                  Width = a.Width,
                                                                  VolumetricWeight = a.VolumetricWeight,
-                                                             };
+                                                              PickupDeliveryVolume = a.PickupDeliveryVolume,
+                                                              PickupDeliveryVolumetricWeight = a.PickupDeliveryVolumetricWeight,
+                                                          };
             return quotePackages;
         }
 
@@ -84,6 +88,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                        GrossWeight = a.GrossWeight,
                        Width = a.Width,
                        VolumetricWeight = a.VolumetricWeight,
+                       PickupDeliveryVolume = a.PickupDeliveryVolume,
+                       PickupDeliveryVolumetricWeight = a.PickupDeliveryVolumetricWeight,
+
                    }).ToList();
 
             foreach(QuotePackagePM item in myResult)

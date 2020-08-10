@@ -570,8 +570,8 @@ export class QuoteStepItem extends BaseComponent {
         var code: string;
 
         switch (this.QuoteChargePM.CostMeasurementCode) {
-            case "GRWT": { code = this.fatherComponent.DataContext.QuotePM.GrossWeightUnitCode; break; }
-            case "CHWT": { code = this.fatherComponent.DataContext.QuotePM.ChargeableWeightUnitCode; break; }
+            case "GRWT":  { code = this.fatherComponent.DataContext.QuotePM.GrossWeightUnitCode; break; }
+            case "CHWT": case "PDCW":{ code = this.fatherComponent.DataContext.QuotePM.ChargeableWeightUnitCode; break; }
             case "VOLU": { code = this.fatherComponent.DataContext.QuotePM.VolumeUnitCode; break; }
             case "BTEU": { code = "TEU"; break; }
             case "PRVL": { code = "Value of Goods" ; break; }
