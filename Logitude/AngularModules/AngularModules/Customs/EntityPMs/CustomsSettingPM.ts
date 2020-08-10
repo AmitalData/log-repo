@@ -154,6 +154,11 @@ export class CustomsSettingPM {
     public set QtyFeedbackInPendingMessage(newValue: number) { if (this.qtyFeedbackInPendingMessage != newValue) { this.qtyFeedbackInPendingMessage = newValue; this.MarkAsDirty("QtyFeedbackInPendingMessage"); } }
        
 	 
+    private totalInvoiceAmountInUSD: number;
+    public get TotalInvoiceAmountInUSD() { return this.totalInvoiceAmountInUSD; }
+    public set TotalInvoiceAmountInUSD(newValue: number) { if (this.totalInvoiceAmountInUSD != newValue) { this.totalInvoiceAmountInUSD = newValue; this.MarkAsDirty("TotalInvoiceAmountInUSD"); } }
+       
+	 
 
     public OldEntityPM: CustomsSettingPM;
 		
