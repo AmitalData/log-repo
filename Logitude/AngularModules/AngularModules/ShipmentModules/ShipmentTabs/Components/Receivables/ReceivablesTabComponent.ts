@@ -2579,7 +2579,7 @@ export class ShipmentReceivableItem extends BaseComponent {
         entityResourceService.getEntityResourceByTableName("ShipmentStoragePricing").subscribe((res1: any) => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Title = "Storage Pricing";
-            logitudeWindow.WindowArgs = { EntityPM: this.ShipmentPM, ObjectTableName: this.ObjectTableName };
+            logitudeWindow.WindowArgs = { EntityPM: this.ShipmentPM, ObjectTableName: this.fatherComponent.ObjectTableName };
             logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s == "PricesChanged") {

@@ -630,109 +630,112 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
     }
 
-    private CheckStorageProperties() { 
-        if (this.WarehouseLegActualReleaseDate != null && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
+    private CheckStorageProperties() {
+        var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+
+        if (this.WarehouseLegActualReleaseDate != null && this.WarehouseLegActualReleaseDate != undefined && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
             && !AppTool.IsNullOrZero(this.StorageDays) && this.ChargeStorage && this.EntityPM.ShipmentStoragePricings.length > 0) {
 
-            var amount: number = this.ComputeReceivableAmount();
+            if (storageReceivable == null) {
+                var amount: number = this.ComputeReceivableAmount();
 
-            if (!AppTool.IsNullOrZero(amount)) {
-                var myService = new CommonDomainService();
-                myService.GetChargesTypeByCode('ISTOR').subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var chargesType: ChargesTypeList = myResponse.Result;
+                if (!AppTool.IsNullOrZero(amount)) {
+                    var myService = new CommonDomainService();
+                    myService.GetChargesTypeByCode('ISTOR').subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var chargesType: ChargesTypeList = myResponse.Result;
 
-                        if (chargesType) {
-                            var todayDate: Date = DateTool.GetCurrentDateAsUtc();
-                            var myCurrencyRatesService = new CurrencyRatesService();
-                            myCurrencyRatesService.getAll(SessionLocator.LocalCurrencyId, todayDate).subscribe((myResponse2: ServiceResponse) => {
-                                if (!myResponse2.HasError) {
-                                    var allRates: LastRate[] = myResponse2.Result;
+                            if (chargesType) {
+                                var todayDate: Date = DateTool.GetCurrentDateAsUtc();
+                                var myCurrencyRatesService = new CurrencyRatesService();
+                                myCurrencyRatesService.getAll(SessionLocator.LocalCurrencyId, todayDate).subscribe((myResponse2: ServiceResponse) => {
+                                    if (!myResponse2.HasError) {
+                                        var allRates: LastRate[] = myResponse2.Result;
 
-                                    var myService = new CurrencyListService();
-                                    myService.getSingleFromCache(this.EntityPM.ChargeStorageCurrencyId).subscribe((myResponse: ServiceResponse) => {
-                                        if (!myResponse.HasError) {
-                                            var currencyList: CurrencyList = myResponse.Result;
-                                            if (currencyList != null) {
+                                        var myService = new CurrencyListService();
+                                        myService.getSingleFromCache(this.EntityPM.ChargeStorageCurrencyId).subscribe((myResponse: ServiceResponse) => {
+                                            if (!myResponse.HasError) {
+                                                var currencyList: CurrencyList = myResponse.Result;
+                                                if (currencyList != null) {
 
-                                                var storageReceivable: ShipmentReceivablePM = new ShipmentReceivablePM(this.EntityPM);
-                                                storageReceivable.Tenant = this.EntityPM.Tenant;
-                                                storageReceivable.ShipmentId = this.EntityPM.Id;
-                                                storageReceivable.ChargesTypeId = chargesType.Id;
-                                                storageReceivable.ChargesTypeCode = chargesType.Code;
-                                                storageReceivable.ChargesTypeName = chargesType.EnglishName;
-                                                storageReceivable.MeasurementId = chargesType.MeasurementId;
-                                                storageReceivable.MeasurementCode = chargesType.MeasurementCode;
-                                                storageReceivable.ChargesGroupCode = chargesType.ChargesGroupCode;
-                                                storageReceivable.DueTypeCode = chargesType.DueTypeCode;
-                                                storageReceivable.DueTypeName = chargesType.DueTypeName;
-                                                storageReceivable.VatTypeId = chargesType.VatTypeId;
-                                                storageReceivable.IATACodeId = chargesType.IATACodeId;
-                                                storageReceivable.IsExpense = chargesType.IsExpense;
-                                                storageReceivable.ShipmentNumber = this.EntityPM.ShipmentNumber;
-                                                storageReceivable.CreateDate = DateTool.GetCurrentDateAsUtc();
-                                                storageReceivable.UpdateDate = DateTool.GetCurrentDateAsUtc();
-                                                storageReceivable.CreatedByUserId = SessionLocator.LoggedUserId;
-                                                storageReceivable.UpdateByUserId = SessionLocator.LoggedUserId;
-                                                storageReceivable.ShipmentReceivableLineStatusCode = "OAMT";
-                                                storageReceivable.CurrencyId = this.EntityPM.ChargeStorageCurrencyId;
-                                                storageReceivable.CurrencyCode = currencyList.Code;
-                                                
-                                                if (SessionLocator.LocalCurrencyId == storageReceivable.CurrencyId) {
-                                                    storageReceivable.Rate = 1;
-                                                }
-                                                else {
-                                                    var lastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == storageReceivable.CurrencyId)[0];
-                                                    if (lastRate != null) {
-                                                        storageReceivable.Rate = lastRate.Rate;
+                                                    var storageReceivable: ShipmentReceivablePM = new ShipmentReceivablePM(this.EntityPM);
+                                                    storageReceivable.Tenant = this.EntityPM.Tenant;
+                                                    storageReceivable.ShipmentId = this.EntityPM.Id;
+                                                    storageReceivable.ChargesTypeId = chargesType.Id;
+                                                    storageReceivable.ChargesTypeCode = chargesType.Code;
+                                                    storageReceivable.ChargesTypeName = chargesType.EnglishName;
+                                                    storageReceivable.MeasurementId = chargesType.MeasurementId;
+                                                    storageReceivable.MeasurementCode = chargesType.MeasurementCode;
+                                                    storageReceivable.ChargesGroupCode = chargesType.ChargesGroupCode;
+                                                    storageReceivable.DueTypeCode = chargesType.DueTypeCode;
+                                                    storageReceivable.DueTypeName = chargesType.DueTypeName;
+                                                    storageReceivable.VatTypeId = chargesType.VatTypeId;
+                                                    storageReceivable.IATACodeId = chargesType.IATACodeId;
+                                                    storageReceivable.IsExpense = chargesType.IsExpense;
+                                                    storageReceivable.ShipmentNumber = this.EntityPM.ShipmentNumber;
+                                                    storageReceivable.CreateDate = DateTool.GetCurrentDateAsUtc();
+                                                    storageReceivable.UpdateDate = DateTool.GetCurrentDateAsUtc();
+                                                    storageReceivable.CreatedByUserId = SessionLocator.LoggedUserId;
+                                                    storageReceivable.UpdateByUserId = SessionLocator.LoggedUserId;
+                                                    storageReceivable.ShipmentReceivableLineStatusCode = "OAMT";
+                                                    storageReceivable.CurrencyId = this.EntityPM.ChargeStorageCurrencyId;
+                                                    storageReceivable.CurrencyCode = currencyList.Code;
+
+                                                    if (SessionLocator.LocalCurrencyId == storageReceivable.CurrencyId) {
+                                                        storageReceivable.Rate = 1;
                                                     }
-                                                }
-
-                                                if (this.EntityPM.ProfitCurrencyId == SessionLocator.TenantPM.CurrencyId) {
-                                                    storageReceivable.ProfitCurrencyExchangeRate = 1;
-                                                }
-
-                                                else {
-                                                    var myLastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == this.EntityPM.ProfitCurrencyId)[0];
-                                                    if (myLastRate != null) {
-                                                        storageReceivable.ProfitCurrencyExchangeRate = myLastRate.Rate;
+                                                    else {
+                                                        var lastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == storageReceivable.CurrencyId)[0];
+                                                        if (lastRate != null) {
+                                                            storageReceivable.Rate = lastRate.Rate;
+                                                        }
                                                     }
+
+                                                    if (this.EntityPM.ProfitCurrencyId == SessionLocator.TenantPM.CurrencyId) {
+                                                        storageReceivable.ProfitCurrencyExchangeRate = 1;
+                                                    }
+
+                                                    else {
+                                                        var myLastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == this.EntityPM.ProfitCurrencyId)[0];
+                                                        if (myLastRate != null) {
+                                                            storageReceivable.ProfitCurrencyExchangeRate = myLastRate.Rate;
+                                                        }
+                                                    }
+
+                                                    if (chargesType.ChargesGroupCode == "FRT") {
+                                                        storageReceivable.PrepaidCollectId = this.EntityPM.FreightPrepaidCollectId;
+                                                    }
+
+                                                    else {
+                                                        storageReceivable.PrepaidCollectId = this.EntityPM.OtherPrepaidCollectId;
+                                                    }
+
+                                                    storageReceivable.TotalAmount = amount;
+                                                    storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
+
+                                                    if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
+                                                        storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
+                                                    }
+
+                                                    else {
+                                                        storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
+                                                    }
+
+                                                    this.EntityPM.AddReceivable(storageReceivable);
+                                                    this.CurrentSession.FireEvent("StorageReceivableCreated");
                                                 }
-
-                                                if (chargesType.ChargesGroupCode == "FRT") {
-                                                    storageReceivable.PrepaidCollectId = this.EntityPM.FreightPrepaidCollectId;
-                                                }
-
-                                                else {
-                                                    storageReceivable.PrepaidCollectId = this.EntityPM.OtherPrepaidCollectId;
-                                                }
-
-                                                storageReceivable.TotalAmount = amount;
-                                                storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
-
-                                                if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
-                                                    storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
-                                                }
-
-                                                else {
-                                                    storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
-                                                }
-
-                                                this.EntityPM.AddReceivable(storageReceivable);
-                                                this.CurrentSession.FireEvent("StorageReceivableCreated");
                                             }
-                                        }
-                                    });
-                                }
-                            });
+                                        });
+                                    }
+                                });
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         }
 
-        else {
-            var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+        else {            
             if (storageReceivable) {
                 this.EntityPM.RemoveReceivable(storageReceivable);
                 this.CurrentSession.FireEvent("StorageReceivableRemoved");
@@ -755,16 +758,30 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
 
         if (this.EntityPM.WeightRoundingCode == "HAF") {
-            rounding = 0.5;
-
-            if (weight != null) {
-                weightRounded = Math.ceil(weight * 20) / 20;
-            }
+            rounding = 0.5;            
         }
 
         else if (this.EntityPM.WeightRoundingCode == "ONE") {
             rounding = 1;
-            weightRounded = AppTool.Round(weight, rounding);
+        }
+
+        if (!AppTool.IsNullOrZero(weight) && !AppTool.IsNullOrZero(rounding)) {
+            var toString: string = weight.toString();
+            var r: string[] = toString.split('.');
+
+            if (r.length > 1) {
+                var strDigits: string = "0." + r[1];
+                var digits: number = +strDigits;
+                var integer: number = +r[0];
+
+                if (digits <= 0.5) {
+                    weightRounded = integer + 0.5;
+                }
+
+                else {
+                    weightRounded = integer + 1;
+                }
+            }
         }
 
         else {
