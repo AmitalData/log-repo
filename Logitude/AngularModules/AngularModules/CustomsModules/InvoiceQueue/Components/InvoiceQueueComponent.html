@@ -197,7 +197,7 @@
 
 <div class="class-response-content" *ngIf="declaration">
 
-    <div style="float:left;width:115px; bottom:15px; left:5% " class="dropdown">
+    <div style="float:left;width:115px; bottom:15px; left:3% " class="dropdown">
 
         <div tabindex="-1" class="ToggleButton" style="width:115px;height: 1px; border:unset; ">
             <!--background:white; -->
@@ -287,7 +287,18 @@
                 </span>
 
             </td>
+            <td></td>
+            <td>
+                <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
+                    תאריך הצהרה
+                </span>
 
+
+                <span _ngcontent-c14="" class="Counter" style="font-size: 18px;">
+                    {{declaration.PaymentDate}}
+                </span>
+
+            </td>
             <td></td>
             <td>
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
@@ -325,8 +336,7 @@
                 </span>
 
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px;" *ngIf="declaration.SupplierInvoices && declaration.SupplierInvoices[0]">
-
-                    <!--{{   declaration.SupplierInvoices[0].IncotermCode}}-->
+                    {{   declaration.SupplierInvoices[0].IncotermCode}}
                 </span>
 
             </td>

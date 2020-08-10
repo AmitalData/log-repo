@@ -8,7 +8,7 @@ import { SessionLocator } from "../../../Infrastructure/Utilities/SessionLocator
 import { ObservableCollection } from "../../../Infrastructure/Utilities/ObservableCollection";
 import { DateTool } from "../../../Infrastructure/Tools";
 import { InvoiceQueueWebService } from "../../../Customs/Services/WebServices/InvoiceQueueWebService";
-import { AllInvoices, IntegratedInvoice } from "../../../Customs/EntityPMs/Extended/InvoiceQueue";
+import { AllInvoices, IntegratedInvoice, InvoiceLine } from "../../../Customs/EntityPMs/Extended/InvoiceQueue";
 import { EntityResourceService } from "../../../Infrastructure/Services/EntityResourceService";
 import { DeclarationPMService } from "../../../Customs/Services/StandardPMs/DeclarationPMService";
 import { DeclarationPM } from "../../../Customs/EntityPMs/DeclarationPM";
@@ -62,6 +62,8 @@ export class InvoiceQueueComponent
                 this.StatusList = new ObservableCollection([]);
                 if ((data.Result.Invoice as AllInvoices).InvoiceLines != null) {
                     (data.Result.Invoice as AllInvoices).InvoiceLines.forEach(x => {
+                        x = this.setClientForwarder(x);
+                        x = this.setAmount(x);
                         this.InvoiceLineList.Insert(x);
                     });
                 }
@@ -94,6 +96,35 @@ export class InvoiceQueueComponent
 
     }
 
+    setClientForwarder(value: InvoiceLine) {
+        switch (value.PayType) {
+            case "R": {
+                value.PayType = "Forwarder";
+                break;
+            }
+            case "L": {
+                value.PayType = "Client";
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        return value;
+    }
+
+    setAmount(value: InvoiceLine) {
+        debugger;
+    //    value.AmountForeign = value.AmountForeign.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      //  value.AmountNIS = value.AmountNIS.toLocaleString(undefined, { minimumFractionDigits: 2 }) 
+//        num = parseFloat(parseFloat(num).toFixed(2)).toLocaleString('en-IN', { useGrouping: true });
+
+        value.AmountForeign = parseFloat(parseFloat(value.AmountForeign).toFixed(2)).toLocaleString();
+        value.AmountNIS = parseFloat(parseFloat(value.AmountNIS).toFixed(2)).toLocaleString();
+        //value.AmountForeign = parseFloat(value.AmountForeign).toLocaleString();
+        //value.AmountNIS = parseFloat(value.AmountNIS).toLocaleString();
+        return value;
+    }
 
     ShowDisbursement() {
 
