@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "022fea7ed4bb8ad0e96e0ca23a40e401";
+		public const string HashString = "b82cc582d961b296b8e7cb63b726cfcf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "0d9e",
+			      				    Code =  "54ef",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2402,14 +2402,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingODontShowCardsWith0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.DontShowCardsWith0", DefaultText = "Don't Include GLAccount with Close Balance 0",LocalDefaultText = @"לא לכלול כרטיסים ביתרת סגירה 0", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-            TextCode GeneralTextCode_GeneralAccountingOAgingMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.Accounting.O.AgingMethod", DefaultText = "Aging Method", LocalDefaultText = @"שיטת גיול", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralAccountingOAgingMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.Accounting.O.AgingMethod", DefaultText = "Aging Method",LocalDefaultText = @"שיטת גיול", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+   
+	    
+}
 
-        }
+    
 
-
-
-    }
+   }
     
 }
 	 
