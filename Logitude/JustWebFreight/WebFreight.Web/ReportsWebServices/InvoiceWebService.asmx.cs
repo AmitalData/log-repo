@@ -2636,13 +2636,19 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     invoiceDataProvider.InvoiceType_label = invoiceType != null ? invoiceType.Name : "";
                 }
-
+                bool isCreditByAutoCreditInvoice = CheckAutoCreditInvoice(entityPOCO);
                 switch (entityPOCO.ARInvoiceTypeCode)
                 {
                     case "CD":
                         {
                             if (myTenant.AccountingActivated)
                             {
+                             
+                                if (isCreditByAutoCreditInvoice)
+                                {
+                                    invoiceDataProvider.InvoiceType_labelHebrew = "חשבונית";
+                                }
+                                else
                                 invoiceDataProvider.InvoiceType_labelHebrew = "חשבונית זיכוי";
 
                             }
@@ -3087,7 +3093,10 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (entityPOCO.ARInvoiceTypeCode == "CD")
                         {
-                            line_UnitPrice = line_UnitPrice * -1;
+                            if (!isCreditByAutoCreditInvoice)
+                            {
+                                line_UnitPrice = line_UnitPrice * -1;
+                            }
                             lineAmount_Foreign = lineAmount_Foreign * -1;
                             lineAmount_Invoice = lineAmount_Invoice * -1;
                             lineAmount_Local = lineAmount_Local * -1;
@@ -3797,6 +3806,20 @@ namespace WebFreight.Web.ReportsWebServices
             return invoiceDataProvider;
         }
 
+        private bool CheckAutoCreditInvoice(ARInvoice invoice)
+        {
+            if (invoice.IsAutoCredit && invoice.StatusCode == "AC" && invoice.ARInvoiceTypeCode == "CD" && invoice.CreditedByARInvoiceId != null)
+            {
+                ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(invoice.Tenant);
+                string invoiceType = aRInvoiceQuery.GetARinvoiceTypeCode(invoice.CreditedByARInvoiceId, invoice.Tenant);
+                if (invoiceType == "CD")
+                {
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
+        }
         private Contact GetLoggedContact(int tenant)
         {
             string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
