@@ -442,7 +442,31 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 return;
             }
+            if (signatureBy == SignQueueByType.SignQueueByCustomsAgentId)
+            {
+                if (!String.IsNullOrWhiteSpace(RequestParams.LoggingEntityId) &&
+                    RequestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration"))
+                {
+                    var customsSettingQueryService = new CustomsSettingQueryService(_Tenant);
+                    var customsSettingPM = customsSettingQueryService.GetSingle(_Tenant.ToString(), false, true);
+                    if (customsSettingPM.TotalInvoiceAmountInUSD.HasValue)
+                    {
+                        var declarationQueryService = new DeclarationQueryService(_Tenant);
+                        var declaration = declarationQueryService.GetSingle(RequestParams.LoggingEntityId, false, false);
+                        if (declaration.IsCourierDeclaration && declaration.TotalInvoiceAmountInUSD.HasValue)
+                        {
+                            if (declaration.TotalInvoiceAmountInUSD.Value< customsSettingPM.TotalInvoiceAmountInUSD.Value)
+                            {
+                                LogMessagingUtil.Instance.AppendLine($"{customsSettingPM.TotalInvoiceAmountInUSD} בלדרות ביטול חתימה במסרים - סך חשבון בהצהרה בדולרים   {declaration.TotalInvoiceAmountInUSD.Value} קטן מהגדרת המינימום");
+                                return;
+                            }
+                        }
+                       
 
+                    }
+                }
+
+            } 
             //if (Debugger.IsAttached)
             //{
             //    var doNotThrow = true;

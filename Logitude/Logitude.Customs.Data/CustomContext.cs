@@ -761,6 +761,8 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<CustomsExchangeRate>().Property(x => x.ExchangeRate).HasPrecision(15, 10);
 				
+			modelBuilder.Entity<CustomsSetting>().Property(x => x.TotalInvoiceAmountInUSD).HasPrecision(16, 2);
+				
 			modelBuilder.Entity<DBMigration>().Property(x => x.MajorVersion).HasPrecision(5, 2);
 				
 			modelBuilder.Entity<DecCargoSplitConsItem>().Property(x => x.GrossMassMeasure).HasPrecision(18, 2);

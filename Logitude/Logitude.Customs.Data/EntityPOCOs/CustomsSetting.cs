@@ -73,6 +73,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool? IsMessagesPending { get; set; }
         [Column("QtyFeedbackInPendingMessage")]
 	    public int? QtyFeedbackInPendingMessage { get; set; }
+        [Column("TotalInvoiceAmountInUSD")]
+	    public decimal? TotalInvoiceAmountInUSD { get; set; }
     }
 }
 	 

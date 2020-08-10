@@ -45,7 +45,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AutoUnitMeasurement, 
 	         CompanyType, 
 	         IsMessagesPending, 
-	         QtyFeedbackInPendingMessage,
+	         QtyFeedbackInPendingMessage, 
+	         TotalInvoiceAmountInUSD,
 	      }
 
 
@@ -77,7 +78,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AutoUnitMeasurement, 
 	         CompanyType, 
 	         IsMessagesPending, 
-	         QtyFeedbackInPendingMessage,
+	         QtyFeedbackInPendingMessage, 
+	         TotalInvoiceAmountInUSD,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -199,6 +201,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QtyFeedbackInPendingMessage))
             {
 				entityPOCO.QtyFeedbackInPendingMessage = entityPM.QtyFeedbackInPendingMessage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalInvoiceAmountInUSD))
+            {
+				entityPOCO.TotalInvoiceAmountInUSD = entityPM.TotalInvoiceAmountInUSD;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -327,6 +334,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.QtyFeedbackInPendingMessage = entityPOCO.QtyFeedbackInPendingMessage;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TotalInvoiceAmountInUSD))
+            {
+					entityPM.TotalInvoiceAmountInUSD = entityPOCO.TotalInvoiceAmountInUSD;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -446,6 +458,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QtyFeedbackInPendingMessage))
             {
                 oldEntityPM.QtyFeedbackInPendingMessage = entityPM.QtyFeedbackInPendingMessage;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalInvoiceAmountInUSD))
+            {
+                oldEntityPM.TotalInvoiceAmountInUSD = entityPM.TotalInvoiceAmountInUSD;
             }
 			
 		}
