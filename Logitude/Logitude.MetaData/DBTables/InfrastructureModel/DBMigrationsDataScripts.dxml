@@ -5,6 +5,10 @@
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
 
+  <Column Name="SxmlFileName" Type="varchar" Size="500">
+    <Constraints Nullable="false" />
+  </Column>
+
   <Column Name="DatabaseType" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
@@ -34,6 +38,18 @@
   </Column>
 
   <Column Name="LastBatchElapsedTime" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+
+  <Column Name="ScriptVersion" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+
+  <Column Name="ScriptHashValue" Type="nvarchar" Size="-1">
+    <Constraints Nullable="false" />
+  </Column>
+
+  <Column Name="ScriptHistoryAction" Type="varchar" Size="10">
     <Constraints Nullable="false" />
   </Column>
 

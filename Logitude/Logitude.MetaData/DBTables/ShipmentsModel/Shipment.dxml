@@ -2973,6 +2973,16 @@
     <Constraints
       Nullable="false" />
   </Column>
+  
+  <Column
+    Name="TestColumn1"
+    Type="varchar"
+    Size="20"
+    DefaultValue="'Test'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

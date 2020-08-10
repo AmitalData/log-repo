@@ -1277,9 +1277,8 @@ namespace Logitude.DBMigrations.Models
 
         protected void InsertIntoDBMigrationsSetDefaultValues(string columnName, string defaultValue)
         {
-            string lastDefaultValueCounterColumnName = "LastDefaultValueCounter";
-            UpdateTableMigrationLastCounter(lastDefaultValueCounterColumnName);
-            int updateNumber = GetTableMigrationLastCounter(lastDefaultValueCounterColumnName);
+            UpdateTableSetValueCounter();
+            int updateNumber = GetTableSetValueCounter();
             string databaseType = DXMLTable.DBType;
             string schemaName = TableMigrations.DxmlTableSchema;
             string tableName = TableMigrations.DxmlTableName;
@@ -1307,14 +1306,14 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected void UpdateTableMigrationLastCounter(string lastCounterColumnName)
+        protected void UpdateTableSetValueCounter()
         {
-            string tableName = TableMigrations.DxmlTableName;//format name lenth for oracle using table short name
+            string tableName = TableMigrations.DxmlTableName;//format name length for oracle using table short name
 
-            string queryString = "EXEC('IF (SELECT COUNT(*) FROM [dbo].[DBMigrationsCounters] WHERE [TableName] = ''" + tableName + "'') = 0 " +
-                                 "INSERT INTO [dbo].[DBMigrationsCounters]([TableName], [" + lastCounterColumnName + "]) VALUES(''" + tableName + "'', 1); " +
+            string queryString = "EXEC('IF (SELECT COUNT(*) FROM [dbo].[DBMigrationsSetValueCounters] WHERE [TableName] = ''" + tableName + "'') = 0 " +
+                                 "INSERT INTO [dbo].[DBMigrationsSetValueCounters]([TableName], [LastCounter]) VALUES(''" + tableName + "'', 1); " +
                                  "ELSE " +
-                                 "UPDATE [dbo].[DBMigrationsCounters] SET [" + lastCounterColumnName + "] = [" + lastCounterColumnName + "] + 1 WHERE [TableName] = ''" + tableName + "''');";
+                                 "UPDATE [dbo].[DBMigrationsSetValueCounters] SET [LastCounter] = [LastCounter] + 1 WHERE [TableName] = ''" + tableName + "''');";
 
             SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
 
@@ -1334,12 +1333,12 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected int GetTableMigrationLastCounter(string lastCounterColumnName)
+        protected int GetTableSetValueCounter()
         {
-            string tableName = TableMigrations.DxmlTableName;//format name lenth for oracle using table short name
+            string tableName = TableMigrations.DxmlTableName;//format name length for oracle using table short name
 
             int lastCounter = 0;
-            string queryString = "SELECT [" + lastCounterColumnName + "] FROM [dbo].[DBMigrationsCounters] WHERE [TableName] = '" + tableName + "'";
+            string queryString = "SELECT [LastCounter] FROM [dbo].[DBMigrationsSetValueCounters] WHERE [TableName] = '" + tableName + "'";
 
             SqlDataReader reader = null;
             SqlConnection connection = new SqlConnection(ToolConfigurations.MainConnectionString);
@@ -1354,7 +1353,7 @@ namespace Logitude.DBMigrations.Models
 
                 if (reader.HasRows)
                 {
-                    lastCounter = Convert.ToInt32(reader[lastCounterColumnName].ToString());
+                    lastCounter = Convert.ToInt32(reader["LastCounter"].ToString());
                 }
 
                 reader.Close();

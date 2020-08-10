@@ -1,0 +1,27 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
+  <Sql Version="1">
+    <![CDATA[
+    
+declare @ShipmentId as varchar(15)
+declare @Tenant as int
+declare @CustomerId as varchar(15)
+
+    DECLARE ShipmentsCursor CURSOR READ_ONLY
+    FOR
+    SELECT $Top$ Id, Tenant, CustomerId
+    From Shipments WHERE $BatchWhere$
+    OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO @ShipmentId, @Tenant, @CustomerId
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+
+        update Customers set IsCustomer = 1 where Tenant = @Tenant AND Id = @CustomerId;
+        update Shipments set $LastCounter$ where Id = @ShipmentId;
+
+    FETCH NEXT FROM ShipmentsCursor INTO @ShipmentId, @Tenant, @CustomerId
+    END
+    CLOSE ShipmentsCursor
+    DEALLOCATE ShipmentsCursor
+      
+    ]]>
+  </Sql>
+</Script>

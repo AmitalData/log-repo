@@ -14,7 +14,6 @@ namespace Logitude.DBMigrations.Models
 {
     public class MigrationTool
     {
-        protected readonly string DatabaseType;
         protected readonly string ScriptSemicolonCode = "|(;)|";
         protected readonly RunSettings RunSettings;
 
@@ -25,9 +24,8 @@ namespace Logitude.DBMigrations.Models
         protected List<ExecutedSxmlFile> ExecutedSxmlFiles;
         protected IncludedModules IncludedModules;
 
-        public MigrationTool(string[] arguments, RunSettings runSettings)
+        public MigrationTool(RunSettings runSettings)
         {
-            ToolArguments.Arguments = arguments;
             RunSettings = runSettings;
 
             ValidateToolVersion();
@@ -35,8 +33,6 @@ namespace Logitude.DBMigrations.Models
             ValidateToolSettings();
             ValidateAndReadRoot();
             DisplayToolSettings();
-
-            DatabaseType = ToolConfigurations.DatabaseType;
         }
 
         public void RunTool()
@@ -79,10 +75,12 @@ namespace Logitude.DBMigrations.Models
             string[] migrationDxmlFiles = dxmlFiles?.Where(d => !toolDxmlFilesNames.Contains(Path.GetFileName(d).ToLower())).ToArray();
             bool isExecuteArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.EXE) || (RunSettings.DebugMode && RunSettings.ExecuteScripts);
 
+            List<ScriptDefinition> scriptDefinitions = GetScriptDefinitionsFromSxmlFiles(sxmlFiles);
+
             GeneratedScript toolTablesScript = HandleDXMLFiles(toolDxmlFiles, isExecuteArgumentProvided);
-            GeneratedScript preGeneralScript = HandleSXMLFiles(sxmlFiles, isExecuteArgumentProvided, true);
+            GeneratedScript preGeneralScript = HandleSXMLFiles(scriptDefinitions, isExecuteArgumentProvided, true);
             GeneratedScript migrationsScript = HandleDXMLFiles(migrationDxmlFiles, isExecuteArgumentProvided);
-            GeneratedScript postGeneralScript = HandleSXMLFiles(sxmlFiles, isExecuteArgumentProvided, false);
+            GeneratedScript postGeneralScript = HandleSXMLFiles(scriptDefinitions, isExecuteArgumentProvided, false);
             GeneratedScript scriptsToSave = GetScriptsToSave(toolTablesScript, preGeneralScript, migrationsScript, postGeneralScript);
 
             return scriptsToSave;
@@ -104,17 +102,18 @@ namespace Logitude.DBMigrations.Models
 
             return generatedScript;
         }
-
-        protected GeneratedScript HandleSXMLFiles(string[] sxmlFiles, bool execute, bool pre)
+        
+        protected GeneratedScript HandleSXMLFiles(List<ScriptDefinition> scriptDefinitions, bool execute, bool pre)
         {
             GeneratedScript generatedScript = null;
 
-            if (sxmlFiles != null)
+            if (scriptDefinitions.Count > 0)
             {
-                generatedScript = GetGeneralScripts(sxmlFiles, pre);
-                if (execute)
+                generatedScript = GetGeneralScripts(scriptDefinitions, pre);
+                bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME);
+                if (execute && !isZeroDownTimeArgumentProvided)
                 {
-                    ExecuteGeneralScripts(sxmlFiles, pre);
+                    ExecuteGeneralScripts(scriptDefinitions, pre);
                 }
             }
 
@@ -569,7 +568,7 @@ namespace Logitude.DBMigrations.Models
                 DxmlTablesDefinitions = DXMLTablesDefinitions
             };
 
-            if (DatabaseType.ToLower() == "oracle")
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
                 DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(databaseMigrationSettings);
                 return oracleDatabaseMigrations;
@@ -583,7 +582,7 @@ namespace Logitude.DBMigrations.Models
         {
             string connectionString = ToolConfigurations.GetConnectionString(dbType);
 
-            if (DatabaseType.ToLower() == "oracle")
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
                 string currentCommandText = null;
                 OracleConnection oracleConnection = new OracleConnection(connectionString);
@@ -748,7 +747,7 @@ namespace Logitude.DBMigrations.Models
         {
             string viewScript = "-- DataView Script From " + dxmlFileName + "\n";
 
-            if (DatabaseType.ToLower() == "oracle")
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
                 if (String.IsNullOrEmpty(viewDefinition.OracleScript))
                 {
@@ -776,7 +775,7 @@ namespace Logitude.DBMigrations.Models
         {
             string procedureScript = "-- Procedure Script From " + dxmlFileName + "\n";
 
-            if (DatabaseType.ToLower() == "oracle")
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
                 if (String.IsNullOrEmpty(procedureDefinition.OracleScript))
                 {
@@ -804,7 +803,7 @@ namespace Logitude.DBMigrations.Models
         {
             string triggerScript = "-- Trigger Script From " + dxmlFileName + "\n";
 
-            if (DatabaseType.ToLower() == "oracle")
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
                 if (String.IsNullOrEmpty(triggerDefinition.OracleScript))
                 {
@@ -1008,7 +1007,7 @@ namespace Logitude.DBMigrations.Models
         {
             string connectionString = ToolConfigurations.GetConnectionString("Main");
 
-            if (DatabaseType.ToLower() == "oracle")
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
                 string queryString = "SELECT * FROM \"DXMLMIGRATIONHASHES\"";
 
@@ -1113,7 +1112,7 @@ namespace Logitude.DBMigrations.Models
 
                 if (saveDxmlHash)
                 {
-                    if (DatabaseType.ToLower() == "oracle")
+                    if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
                     {
                         string queryString = "DECLARE FileCount NUMBER; " +
                                              "BEGIN " +
@@ -1223,7 +1222,7 @@ namespace Logitude.DBMigrations.Models
         {
             string connectionString = ToolConfigurations.GetConnectionString(dbType);
 
-            if (DatabaseType.ToLower() == "oracle")
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
                 using (OracleConnection oracleConnection = new OracleConnection(connectionString))
                 {
@@ -1289,74 +1288,24 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected void ExecuteGeneralScripts(string[] sxmlFiles, bool preScripts)
+        protected List<ScriptDefinition> GetScriptDefinitionsFromSxmlFiles(string[] sxmlFiles)
         {
+            List<ScriptDefinition> scriptDefinitions = new List<ScriptDefinition>();
+
             foreach (var sxmlFile in sxmlFiles)
             {
                 string sxmlFileName = Path.GetFileName(sxmlFile);
                 ScriptDefinition scriptDefinition = GetScriptDefinition(sxmlFile);
-
                 if (scriptDefinition != null)
                 {
-                    if (scriptDefinition.Pre == preScripts)
+                    if (IncludeScriptDefinition(scriptDefinition.Module))
                     {
-                        if (IncludeScriptDefinition(scriptDefinition.Module))
+                        ExecuteSxmlFileResult executeSxmlFileResult = ShouldExecuteSxmlFile(sxmlFileName, scriptDefinition);
+                        if (executeSxmlFileResult.ShouldExecute)
                         {
-                            ExecuteSxmlFileResult executeSxmlFileResult = ShouldExecuteSxmlFile(sxmlFileName, scriptDefinition);
-
-                            if (executeSxmlFileResult.ShouldExecute)
-                            {
-                                Console.WriteLine("Executing Script From " + sxmlFileName + " File ...");
-
-                                string scriptBody;
-                                if (DatabaseType.ToLower() == "oracle")
-                                {
-                                    string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Oracle.Script);
-                                    string saveScriptHistoryQuery = GetOracleSaveScriptHistoryQuery(executeSxmlFileResult.Action, sxmlFileName, scriptDefinition);
-
-                                    if (!String.IsNullOrEmpty(sxmlScript))
-                                    {
-                                        scriptBody = "DECLARE\n" +
-                                            "StartTime TIMESTAMP;\n" +
-                                            "EndTime TIMESTAMP;\n" +
-                                            "BEGIN\n" +
-                                            "StartTime := SYSTIMESTAMP;\n" +
-                                            "BEGIN\n" +
-                                            sxmlScript + "\n" +
-                                            "END;\n" +
-                                            "EndTime:= SYSTIMESTAMP;\n" +
-                                            "BEGIN\n" +
-                                            "DECLARE ScriptBody NCLOB;\n" +
-                                            "BEGIN\n" +
-                                            "ScriptBody := '" + sxmlScript.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "';\n" +
-                                            saveScriptHistoryQuery + "\n" +
-                                            "END;\n" +
-                                            "END;\n" +
-                                            "END;";
-                                    }
-                                    else
-                                    {
-                                        scriptBody = "DECLARE ScriptBody NCLOB;\n" +
-                                            "BEGIN\n" +
-                                            "ScriptBody := 'NULL';\n" +
-                                            saveScriptHistoryQuery.Replace("EXTRACT(DAY FROM(EndTime - StartTime) * 24 * 60 * 60 * 1000)", "0") + "\n" +
-                                            "END;";
-                                    }
-                                }
-                                else
-                                {
-                                    string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Sql.Script);
-                                    scriptBody = "DECLARE @StartTime datetime\nDECLARE @EndTime datetime\nSELECT @StartTime = GETDATE()" +
-                                        (String.IsNullOrEmpty(sxmlScript) ? null : "\n") + sxmlScript + "\nSELECT @EndTime = GETDATE()\n";
-                                    scriptBody += GetSQLSaveScriptHistoryQuery(executeSxmlFileResult.Action, sxmlFileName, scriptDefinition, sxmlScript);
-                                }
-
-                                string result = ExecuteGeneralScript(scriptBody, scriptDefinition.DBType);
-                                if (result != null)
-                                {
-                                    ExitTool(result);
-                                }
-                            }
+                            scriptDefinition.SxmlFileName = sxmlFileName;
+                            scriptDefinition.ScriptHistoryAction = executeSxmlFileResult.Action;
+                            scriptDefinitions.Add(scriptDefinition);
                         }
                     }
                 }
@@ -1365,89 +1314,157 @@ namespace Logitude.DBMigrations.Models
                     ExitTool("Error: Cannot Create Script Definition For " + sxmlFileName);
                 }
             }
+
+            return scriptDefinitions;
         }
 
-        protected GeneratedScript GetGeneralScripts(string[] sxmlFiles, bool preScripts)
+        protected GeneratedScript GetGeneralScripts(List<ScriptDefinition> scriptDefinitions, bool preScripts)
         {
+            bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME);
+            scriptDefinitions = scriptDefinitions.Where(s => s.Pre == preScripts && s.AOT == isZeroDownTimeArgumentProvided).ToList();
+
             GeneratedScript generalScripts = new GeneratedScript();
 
-            foreach (var sxmlFile in sxmlFiles)
+            foreach (var scriptDefinition in scriptDefinitions)
             {
-                string sxmlFileName = Path.GetFileName(sxmlFile);
-                ScriptDefinition scriptDefinition = GetScriptDefinition(sxmlFile);
+                Console.WriteLine("Generating Script From " + scriptDefinition.SxmlFileName + " File ...");
 
-                if (scriptDefinition != null)
+                if (!isZeroDownTimeArgumentProvided)
                 {
-                    if (scriptDefinition.Pre == preScripts)
+                    string scriptBody;
+                    if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
                     {
-                        if (IncludeScriptDefinition(scriptDefinition.Module))
+                        string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Oracle.Script);
+                        string saveScriptHistoryQuery = GetOracleSaveScriptHistoryQuery(scriptDefinition.ScriptHistoryAction, scriptDefinition.SxmlFileName, scriptDefinition);
+
+                        if (!String.IsNullOrEmpty(sxmlScript))
                         {
-                            ExecuteSxmlFileResult executeSxmlFileResult = ShouldExecuteSxmlFile(sxmlFileName, scriptDefinition);
-                            if (executeSxmlFileResult.ShouldExecute)
-                            {
-                                string scriptBody;
-                                if (DatabaseType.ToLower() == "oracle")
-                                {
-                                    string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Oracle.Script);
-                                    string saveScriptHistoryQuery = GetOracleSaveScriptHistoryQuery(executeSxmlFileResult.Action, sxmlFileName, scriptDefinition);
-
-                                    if (!String.IsNullOrEmpty(sxmlScript))
-                                    {
-                                        scriptBody = "DECLARE\n" +
-                                            "StartTime TIMESTAMP;\n" +
-                                            "EndTime TIMESTAMP;\n" +
-                                            "BEGIN\n" +
-                                            "SAVEPOINT ScriptSavePoint;\n" +
-                                            "StartTime := SYSTIMESTAMP;\n" +
-                                            "BEGIN\n" +
-                                            sxmlScript + "\n" +
-                                            "END;\n" +
-                                            "EndTime:= SYSTIMESTAMP;\n" +
-                                            "BEGIN\n" +
-                                            "DECLARE ScriptBody NCLOB;\n" +
-                                            "BEGIN\n" +
-                                            "ScriptBody := '" + sxmlScript.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "';\n" +
-                                            saveScriptHistoryQuery + "\n" +
-                                            "END;\n" +
-                                            "END;\n" +
-                                            "EXCEPTION\n" +
-                                            "WHEN OTHERS THEN\n" +
-                                            "ROLLBACK TO ScriptSavePoint;\n" +
-                                            "COMMIT;\n" +
-                                            "END;";
-                                    }
-                                    else
-                                    {
-                                        scriptBody = "DECLARE ScriptBody NCLOB;\n" +
-                                            "BEGIN\n" +
-                                            "ScriptBody := 'NULL';\n" +
-                                            saveScriptHistoryQuery.Replace("EXTRACT(DAY FROM(EndTime - StartTime) * 24 * 60 * 60 * 1000)", "0") + "\n" +
-                                            "END;";
-                                    }
-                                }
-                                else
-                                {
-                                    string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Sql.Script);
-                                    scriptBody = "BEGIN TRAN\nBEGIN TRY\nDECLARE @StartTime datetime\nDECLARE @EndTime datetime\nSELECT @StartTime = GETDATE()" +
-                                        (String.IsNullOrEmpty(sxmlScript) ? null : "\n") + sxmlScript +
-                                        "\nSELECT @EndTime = GETDATE()\n";
-                                    scriptBody += GetSQLSaveScriptHistoryQuery(executeSxmlFileResult.Action, sxmlFileName, scriptDefinition, sxmlScript);
-                                    scriptBody += "COMMIT TRAN\nEND TRY\nBEGIN CATCH\nIF @@TRANCOUNT > 0\nROLLBACK TRAN\nEND CATCH;";
-                                }
-
-                                string scriptToAppend = "-- General Script From " + sxmlFileName + " File\n" + scriptBody + "\n";
-                                generalScripts = AppendToGeneratedScript(generalScripts, scriptDefinition.DBType, scriptToAppend);
-                            }
+                            scriptBody = "DECLARE\n" +
+                                "StartTime TIMESTAMP;\n" +
+                                "EndTime TIMESTAMP;\n" +
+                                "BEGIN\n" +
+                                "SAVEPOINT ScriptSavePoint;\n" +
+                                "StartTime := SYSTIMESTAMP;\n" +
+                                "BEGIN\n" +
+                                sxmlScript + "\n" +
+                                "END;\n" +
+                                "EndTime:= SYSTIMESTAMP;\n" +
+                                "BEGIN\n" +
+                                "DECLARE ScriptBody NCLOB;\n" +
+                                "BEGIN\n" +
+                                "ScriptBody := '" + sxmlScript.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "';\n" +
+                                saveScriptHistoryQuery + "\n" +
+                                "END;\n" +
+                                "END;\n" +
+                                "EXCEPTION\n" +
+                                "WHEN OTHERS THEN\n" +
+                                "ROLLBACK TO ScriptSavePoint;\n" +
+                                "COMMIT;\n" +
+                                "END;";
+                        }
+                        else
+                        {
+                            scriptBody = "DECLARE ScriptBody NCLOB;\n" +
+                                "BEGIN\n" +
+                                "ScriptBody := 'NULL';\n" +
+                                saveScriptHistoryQuery.Replace("EXTRACT(DAY FROM(EndTime - StartTime) * 24 * 60 * 60 * 1000)", "0") + "\n" +
+                                "END;";
                         }
                     }
+                    else
+                    {
+                        string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Sql.Script);
+                        scriptBody = "BEGIN TRAN\n" +
+                            "BEGIN TRY\n" +
+                            "DECLARE @StartTime datetime\n" +
+                            "DECLARE @EndTime datetime\n" +
+                            "SELECT @StartTime = GETDATE()" +
+                            (String.IsNullOrEmpty(sxmlScript) ? null : "\n") + sxmlScript + "\n" +
+                            "SELECT @EndTime = GETDATE()\n";
+
+                        scriptBody += GetSQLSaveScriptHistoryQuery(scriptDefinition.ScriptHistoryAction, scriptDefinition.SxmlFileName, scriptDefinition, sxmlScript);
+                        scriptBody += "COMMIT TRAN\n" +
+                            "END TRY\n" +
+                            "BEGIN CATCH\n" +
+                            "IF @@TRANCOUNT > 0\n" +
+                            "ROLLBACK TRAN\n" +
+                            "END CATCH;";
+                    }
+
+                    string scriptToAppend = "-- General Script From " + scriptDefinition.SxmlFileName + " File\n" + scriptBody + "\n";
+                    generalScripts = AppendToGeneratedScript(generalScripts, scriptDefinition.DBType, scriptToAppend);
                 }
                 else
                 {
-                    ExitTool("Error: Cannot Create Script Definition For " + sxmlFileName);
+                    InsertIntoDBMigrationsDataScripts(scriptDefinition);
                 }
             }
 
             return generalScripts;
+        }
+
+        protected void ExecuteGeneralScripts(List<ScriptDefinition> scriptDefinitions, bool preScripts)
+        {
+            scriptDefinitions = scriptDefinitions.Where(s => s.Pre == preScripts && !s.AOT).ToList();
+
+            foreach (var scriptDefinition in scriptDefinitions)
+            {
+                Console.WriteLine("Executing Script From " + scriptDefinition.SxmlFileName + " File ...");
+
+                string scriptBody;
+                if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+                {
+                    string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Oracle.Script);
+                    string saveScriptHistoryQuery = GetOracleSaveScriptHistoryQuery(scriptDefinition.ScriptHistoryAction, scriptDefinition.SxmlFileName, scriptDefinition);
+
+                    if (!String.IsNullOrEmpty(sxmlScript))
+                    {
+                        scriptBody = "DECLARE\n" +
+                            "StartTime TIMESTAMP;\n" +
+                            "EndTime TIMESTAMP;\n" +
+                            "BEGIN\n" +
+                            "StartTime := SYSTIMESTAMP;\n" +
+                            "BEGIN\n" +
+                            sxmlScript + "\n" +
+                            "END;\n" +
+                            "EndTime:= SYSTIMESTAMP;\n" +
+                            "BEGIN\n" +
+                            "DECLARE ScriptBody NCLOB;\n" +
+                            "BEGIN\n" +
+                            "ScriptBody := '" + sxmlScript.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "';\n" +
+                            saveScriptHistoryQuery + "\n" +
+                            "END;\n" +
+                            "END;\n" +
+                            "END;";
+                    }
+                    else
+                    {
+                        scriptBody = "DECLARE ScriptBody NCLOB;\n" +
+                            "BEGIN\n" +
+                            "ScriptBody := 'NULL';\n" +
+                            saveScriptHistoryQuery.Replace("EXTRACT(DAY FROM(EndTime - StartTime) * 24 * 60 * 60 * 1000)", "0") + "\n" +
+                            "END;";
+                    }
+                }
+                else
+                {
+                    string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Sql.Script);
+
+                    scriptBody = "DECLARE @StartTime datetime\n" +
+                        "DECLARE @EndTime datetime\n" +
+                        "SELECT @StartTime = GETDATE()" +
+                        (String.IsNullOrEmpty(sxmlScript) ? null : "\n") + sxmlScript + "\n" +
+                        "SELECT @EndTime = GETDATE()\n";
+
+                    scriptBody += GetSQLSaveScriptHistoryQuery(scriptDefinition.ScriptHistoryAction, scriptDefinition.SxmlFileName, scriptDefinition, sxmlScript);
+                }
+
+                string result = ExecuteGeneralScript(scriptBody, scriptDefinition.DBType);
+                if (result != null)
+                {
+                    ExitTool(result);
+                }
+            }
         }
 
         protected ScriptDefinition GetScriptDefinition(string sxmlFile)
@@ -1455,8 +1472,8 @@ namespace Logitude.DBMigrations.Models
             string sxmlString = File.ReadAllText(sxmlFile);
             try
             {
-                ScriptDefinition ScriptDefinition = sxmlString.ParseXML<ScriptDefinition>();
-                return ScriptDefinition;
+                ScriptDefinition scriptDefinition = sxmlString.ParseXML<ScriptDefinition>();
+                return scriptDefinition;
             }
             catch (Exception)
             {
@@ -1529,7 +1546,7 @@ namespace Logitude.DBMigrations.Models
             {
                 string connectionString = ToolConfigurations.GetConnectionString(dbType);
 
-                if (DatabaseType.ToLower() == "oracle")
+                if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
                 {
                     string queryString = "SELECT * FROM \"DBSCRIPTSHISTORY\"";
 
@@ -1652,7 +1669,7 @@ namespace Logitude.DBMigrations.Models
 
         protected string GetScriptHashValue(ScriptDefinition scriptDefinition)
         {
-            if (DatabaseType.ToLower() == "oracle")
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
                 return GenerateHashString(scriptDefinition.Oracle.Script);
             }
@@ -1664,7 +1681,7 @@ namespace Logitude.DBMigrations.Models
 
         protected int GetScriptVersion(ScriptDefinition scriptDefinition)
         {
-            if (DatabaseType.ToLower() == "oracle")
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
                 return scriptDefinition.Oracle.Version;
             }
@@ -1678,7 +1695,7 @@ namespace Logitude.DBMigrations.Models
         {
             string connectionString = ToolConfigurations.GetConnectionString("Main");
 
-            if (DatabaseType.ToLower() == "oracle")
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
                 string queryString = "SELECT * FROM \"DBMIGRATIONSETTINGS\"";
 
@@ -1796,9 +1813,10 @@ namespace Logitude.DBMigrations.Models
                 "DXMLMigrationHashes.dxml".ToLower(),
                 "DBMigrationSettings.dxml".ToLower(),
 
-                "DBMigrationsCounters.dxml".ToLower(),
                 "DBMigrationsSetDefaultValues.dxml".ToLower(),
-                "DBMigrationsDataScripts.dxml".ToLower()
+                "DBMigrationsSetValueCounters.dxml".ToLower(),
+                "DBMigrationsDataScripts.dxml".ToLower(),
+                "DBMigrationsDataScriptCounters.dxml".ToLower()
             };
 
             return toolDxmlFilesNames;
@@ -1866,7 +1884,7 @@ namespace Logitude.DBMigrations.Models
             {
                 ExitTool("Error: Cannot Find DatabaseType in Configuration File");
             }
-            if (databaseType != "msql" && databaseType != "oracle")
+            if (databaseType.ToLower() != "msql" && databaseType.ToLower() != "oracle")
             {
                 ExitTool("Error: Invalid DatabaseType in Configuration File, DatabaseType should be msql or oracle");
             }
@@ -1881,6 +1899,11 @@ namespace Logitude.DBMigrations.Models
             if (String.IsNullOrEmpty(systemLogsConnectionString))
             {
                 ExitTool("Error: Cannot Find SystemLogsConnectionString in Configuration File");
+            }
+
+            if (databaseType.ToLower() == "oracle" && ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
+            {
+                ExitTool("Error: Zero Down Time Mode For Oracle Not Ready To Use");
             }
         }
 
@@ -2024,13 +2047,129 @@ namespace Logitude.DBMigrations.Models
 
         protected ZeroDownTimeMigrations CreateZeroDownTimeMigrations()
         {
-            if (DatabaseType.ToLower() == "oracle")
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
                 return null;
             }
 
             ZeroDownTimeMigrations sqlZeroDownTimeMigrations = new SQLZeroDownTimeMigrations();
             return sqlZeroDownTimeMigrations;
+        }
+
+        protected void InsertIntoDBMigrationsDataScripts(ScriptDefinition scriptDefinition)
+        {
+            UpdateDataScriptCounter(scriptDefinition.TargetTableName);
+            int scriptExecutionNumber = GetDataScriptCounter(scriptDefinition.TargetTableName);
+            
+            if(ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            {
+
+            }
+            else
+            {
+                string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Sql.Script).Replace("'", "''").TrimEnd(new char[] { '\r', '\n' });
+                int sxmlVersion = scriptDefinition.Sql.Version;
+                string sxmlScriptHashValue = GenerateHashString(scriptDefinition.Sql.Script);
+
+                string queryString = "INSERT INTO [dbo].[DBMigrationsDataScripts]([Id], [SxmlFileName], [DatabaseType], [SxmlScript], [IsPreSxml], [Status], [ScriptExecutionNumber], " +
+                    "[StartDate], [EndDate], [LastBatchElapsedTime], [ScriptVersion], [ScriptHashValue], [ScriptHistoryAction]) " +
+                    "VALUES('" + Guid.NewGuid().ToString() + "', '" + scriptDefinition.SxmlFileName + "', '" + scriptDefinition.DBType + "', '" + sxmlScript + "', " +
+                    (scriptDefinition.Pre ? "1" : "0") + ", 'Waiting', " + scriptExecutionNumber + ", NULL, NULL, 0, " + sxmlVersion + ", '" + sxmlScriptHashValue + "', '" + scriptDefinition.ScriptHistoryAction + "');";
+
+                SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+
+                try
+                {
+                    sqlConnection.Open();
+                    SqlCommand sqlCommand = new SqlCommand();
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = queryString;
+                    sqlCommand.ExecuteNonQuery();
+                    sqlConnection.Close();
+                }
+                catch (Exception exception)
+                {
+                    sqlConnection.Close();
+                    ExitTool(exception.Message);
+                }
+            }
+        }
+
+        protected void UpdateDataScriptCounter(string tableName)
+        {
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            {
+
+            }
+            else
+            {
+                string queryString = "EXEC('IF (SELECT COUNT(*) FROM [dbo].[DBMigrationsDataScriptCounters] WHERE [TableName] = ''" + tableName + "'') = 0 " +
+                 "INSERT INTO [dbo].[DBMigrationsDataScriptCounters]([TableName], [LastCounter]) VALUES(''" + tableName + "'', 1); " +
+                 "ELSE " +
+                 "UPDATE [dbo].[DBMigrationsDataScriptCounters] SET [LastCounter] = [LastCounter] + 1 WHERE [TableName] = ''" + tableName + "''');";
+
+                SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+
+                try
+                {
+                    sqlConnection.Open();
+                    SqlCommand sqlCommand = new SqlCommand();
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = queryString;
+                    sqlCommand.ExecuteNonQuery();
+                    sqlConnection.Close();
+                }
+                catch (Exception exception)
+                {
+                    sqlConnection.Close();
+                    ExitTool(exception.Message);
+                }
+            }
+        }
+
+        protected int GetDataScriptCounter(string tableName)
+        {
+            int lastCounter = 0;
+
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            {
+
+            }
+            else
+            {
+                string queryString = "SELECT [LastCounter] FROM [dbo].[DBMigrationsDataScriptCounters] WHERE [TableName] = '" + tableName + "'";
+
+                SqlDataReader reader = null;
+                SqlConnection connection = new SqlConnection(ToolConfigurations.MainConnectionString);
+                SqlCommand command = new SqlCommand(queryString, connection);
+
+                try
+                {
+                    connection.Open();
+                    reader = command.ExecuteReader();
+
+                    reader.Read();
+
+                    if (reader.HasRows)
+                    {
+                        lastCounter = Convert.ToInt32(reader["LastCounter"].ToString());
+                    }
+
+                    reader.Close();
+                    connection.Close();
+                }
+                catch (Exception exception)
+                {
+                    if (reader != null)
+                    {
+                        reader.Close();
+                    }
+                    connection.Close();
+                    ExitTool(exception.Message);
+                }
+            }
+
+            return lastCounter;
         }
 
         protected void ExitTool(string message)

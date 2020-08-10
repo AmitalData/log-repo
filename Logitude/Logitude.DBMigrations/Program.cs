@@ -18,7 +18,8 @@ namespace Logitude.DBMigrations
                 SpecificSxmlFile = null
             };
 
-            MigrationTool migrationTool = new MigrationTool(args, runSettings);
+            ToolArguments.Arguments = args;
+            MigrationTool migrationTool = new MigrationTool(runSettings);
             migrationTool.RunTool();
         }
     }

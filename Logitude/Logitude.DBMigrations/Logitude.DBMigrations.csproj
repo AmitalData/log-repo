@@ -52,6 +52,7 @@
     <Compile Include="Models\GeneralModels\Arguments.cs" />
     <Compile Include="Models\GeneralModels\DatabaseMigrationSettings.cs" />
     <Compile Include="Models\GeneralModels\DatabaseMigrationsResult.cs" />
+    <Compile Include="Models\GeneralModels\DBMigrationsDataScript.cs" />
     <Compile Include="Models\GeneralModels\ToolArguments.cs" />
     <Compile Include="Models\DXMLModels\DXMLGeneratedScript.cs" />
     <Compile Include="Models\GeneralModels\ColumnMigration.cs" />
@@ -75,7 +76,7 @@
     <Compile Include="Models\GeneralModels\RelationsScript.cs" />
     <Compile Include="Models\GeneralModels\GeneratedScript.cs" />
     <Compile Include="Models\GeneralModels\ToolConfigurations.cs" />
-    <Compile Include="Models\GeneralModels\ZeroDownTimeDefaultValueMigration.cs" />
+    <Compile Include="Models\GeneralModels\DBMigrationsSetDefaultValue.cs" />
     <Compile Include="Models\GeneralModels\ZeroDownTimeMigrations.cs" />
     <Compile Include="Models\OracleModels\OracleDatabaseMigrations.cs" />
     <Compile Include="Models\DefinitionModels\RelationDefinition.cs" />

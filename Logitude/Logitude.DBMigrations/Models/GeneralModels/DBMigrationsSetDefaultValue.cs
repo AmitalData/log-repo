@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.DBMigrations.Models
 {
-    public class ZeroDownTimeDefaultValueMigration
+    public class DBMigrationsSetDefaultValue
     {
         public string Id { get; set; }
         public string DatabaseType { get; set; }

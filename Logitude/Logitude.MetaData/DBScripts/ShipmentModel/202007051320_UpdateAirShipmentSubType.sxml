@@ -1,12 +1,13 @@
-﻿<Script DBType="Main">
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
   <Sql Version="1">
     <![CDATA[
     
-      update Shipments
+      update $Top$ Shipments
       set
       ShipmentTypeId = 'Air',
-      ShipmentSubTypeId = (select top 1 Id from ShipmentSubTypes where Code = 'Air' and Tenant = Shipments.Tenant)
-      where TransportModeId = 'A'
+      ShipmentSubTypeId = (select top 1 Id from ShipmentSubTypes where Code = 'Air' and Tenant = Shipments.Tenant),
+      $LastCounter$
+      where TransportModeId = 'A' and $BatchWhere$
       
     ]]>
   </Sql>

@@ -288,6 +288,13 @@ namespace Logitude.DBMigrations.Models
                     column.Constraints.PrimaryKey = true;
                     column.Constraints.PrimaryKeyConstraintName = constraintName;
                     return column;
+                case "C":
+                case "CHECK":
+                    if(constraintName.ToLower() == ("CK_" + column.Name + "_NotNull").ToLower())
+                    {
+                        column.Constraints.HasNotNullCheckConstraint = true;
+                    }
+                    return column;
                 default:
                     return column;
             }
@@ -666,7 +673,7 @@ namespace Logitude.DBMigrations.Models
 
         protected void BuildUnsetNullableMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
         {
-            if (currentTableColumn.Constraints.Nullable && !dxmlTableColumn.Constraints.Nullable)
+            if (currentTableColumn.Constraints.Nullable && !dxmlTableColumn.Constraints.Nullable && !currentTableColumn.Constraints.HasNotNullCheckConstraint)
             {
                 ColumnMigration unsetNullableMigration = GetColumnMigration(MigrationTypes.UNSETNULLABLE, currentTableColumn, dxmlTableColumn);
                 ColumnsMigrations.Add(unsetNullableMigration);

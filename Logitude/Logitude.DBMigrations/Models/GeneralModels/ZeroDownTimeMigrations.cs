@@ -11,23 +11,64 @@ namespace Logitude.DBMigrations.Models
     {
         public void Start()
         {
-            List<ZeroDownTimeDefaultValueMigration> defaultValueMigrations = GetDefaultValueMigrations();
+            StartZeroDownTimeForPreDataScripts();
+            StartZeroDownTimeForDefaultValues();
+            StartZeroDownTimeForPostDataScripts();
+        }
 
-            foreach(var defaultValueMigration in defaultValueMigrations)
+        protected void StartZeroDownTimeForPreDataScripts()
+        {
+            List<DBMigrationsDataScript> preDBMigrationsDataScripts = GetDBMigrationsDataScripts(true);
+
+            foreach (var preDBMigrationsDataScript in preDBMigrationsDataScripts)
             {
-                Console.WriteLine("Handle Default Value Migration For Column " + defaultValueMigration.ColumnName + " In Table " + defaultValueMigration.TableName + " On " + defaultValueMigration.DatabaseType + " Database ...");
-                HandleDefaultValueMigration(defaultValueMigration);
+                Console.WriteLine("Handle Data Script For SXML File " + preDBMigrationsDataScript.SxmlFileName + " On " + preDBMigrationsDataScript.DatabaseType + " Database ...");
+                HandleDBMigrationsDataScript(preDBMigrationsDataScript);
             }
         }
 
-        protected void HandleDefaultValueMigration(ZeroDownTimeDefaultValueMigration defaultValueMigration)
+        protected void StartZeroDownTimeForDefaultValues()
         {
-            UpdateDefaultValueMigration(defaultValueMigration.Id, "Status", "InProgress");
-            UpdateDefaultValueMigration(defaultValueMigration.Id, "StartDate", DateTime.Now.ToString());
-            SetDefaultValues(defaultValueMigration);
-            UnsetColumnNullable(defaultValueMigration);
-            UpdateDefaultValueMigration(defaultValueMigration.Id, "EndDate", DateTime.Now.ToString());
-            UpdateDefaultValueMigration(defaultValueMigration.Id, "Status", "Done");
+            List<DBMigrationsSetDefaultValue> dbMigrationsSetDefaultValues = GetDBMigrationsSetDefaultValues();
+
+            foreach (var dbMigrationsSetDefaultValue in dbMigrationsSetDefaultValues)
+            {
+                Console.WriteLine("Handle Default Value For Column " + dbMigrationsSetDefaultValue.ColumnName + " In Table " + dbMigrationsSetDefaultValue.TableName + " On " + dbMigrationsSetDefaultValue.DatabaseType + " Database ...");
+                HandleDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue);
+            }
+        }
+
+        protected void StartZeroDownTimeForPostDataScripts()
+        {
+            List<DBMigrationsDataScript> postDBMigrationsDataScripts = GetDBMigrationsDataScripts(false);
+
+            foreach (var postDBMigrationsDataScript in postDBMigrationsDataScripts)
+            {
+                Console.WriteLine("Handle Data Script For SXML File " + postDBMigrationsDataScript.SxmlFileName + " On " + postDBMigrationsDataScript.DatabaseType + " Database ...");
+                HandleDBMigrationsDataScript(postDBMigrationsDataScript);
+            }
+        }
+
+        protected void HandleDBMigrationsSetDefaultValue(DBMigrationsSetDefaultValue dbMigrationsSetDefaultValue)
+        {
+            UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue.Id, "Status", "InProgress");
+            UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue.Id, "StartDate", DateTime.Now.ToString());
+            SetDefaultValueAsBatches(dbMigrationsSetDefaultValue);
+            AddNotNullCheckConstraint(dbMigrationsSetDefaultValue);
+            UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue.Id, "EndDate", DateTime.Now.ToString());
+            UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue.Id, "Status", "Done");
+        }
+
+        protected void HandleDBMigrationsDataScript(DBMigrationsDataScript dbMigrationsDataScript)
+        {
+            UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "Status", "InProgress");
+            dbMigrationsDataScript.StartDate = DateTime.Now;
+            UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "StartDate", dbMigrationsDataScript.StartDate.ToString());
+            ExecuteScriptAsBatches(dbMigrationsDataScript);
+            dbMigrationsDataScript.EndDate = DateTime.Now;
+            UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "EndDate", dbMigrationsDataScript.EndDate.ToString());
+            UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "Status", "Done");
+            InsertIntoDBScriptsHistory(dbMigrationsDataScript);
         }
 
         protected void ExitZeroDownTimeMigrations(string message)
@@ -36,14 +77,22 @@ namespace Logitude.DBMigrations.Models
             Environment.Exit(1);
         }
 
-        protected abstract List<ZeroDownTimeDefaultValueMigration> GetDefaultValueMigrations();
+        protected abstract List<DBMigrationsSetDefaultValue> GetDBMigrationsSetDefaultValues();
 
-        protected abstract void SetDefaultValues(ZeroDownTimeDefaultValueMigration defaultValueMigration);
+        protected abstract List<DBMigrationsDataScript> GetDBMigrationsDataScripts(bool preScripts);
 
-        protected abstract void UpdateDefaultValueMigration(string defaultValueMigrationId, string property, string value);
+        protected abstract void SetDefaultValueAsBatches(DBMigrationsSetDefaultValue dbMigrationsSetDefaultValue);
+        
+        protected abstract void ExecuteScriptAsBatches(DBMigrationsDataScript dbMigrationsDataScript);
 
-        protected abstract void UnsetColumnNullable(ZeroDownTimeDefaultValueMigration defaultValueMigration);
+        protected abstract void InsertIntoDBScriptsHistory(DBMigrationsDataScript dbMigrationsDataScript);
+        
+        protected abstract void UpdateDBMigrationsSetDefaultValue(string dbMigrationsSetDefaultValueId, string property, string value);
 
+        protected abstract void UpdateDBMigrationsDataScript(string dbMigrationsDataScriptId, string property, string value);
+        
+        protected abstract void AddNotNullCheckConstraint(DBMigrationsSetDefaultValue dbMigrationsSetDefaultValue);
+        
         protected abstract string FormatDefaultValue(string defaultValue);
     }
 }
