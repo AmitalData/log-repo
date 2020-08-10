@@ -1956,6 +1956,109 @@ export class ShipmentTool {
             });
         }
     }
+
+    public static ComputeImportStorageReceivableAmount(storageDays: number, entityPM: ShipmentPM ): number {
+        var amount: number = 0;
+        var weight: number = 0;
+        var rounding: number = 0;
+        var weightRounded: number = 0;
+        var days: number = storageDays - entityPM.WarehouseStorageFreeDays;
+
+        if (entityPM.WeightMeasurementCode == "GRWT") {
+            weight = entityPM.GrossWeight;
+        }
+
+        else {
+            weight = entityPM.ChargeableWeight;
+        }
+
+        if (entityPM.WeightRoundingCode == "HAF") {
+            rounding = 0.5;
+        }
+
+        else if (entityPM.WeightRoundingCode == "ONE") {
+            rounding = 1;
+        }
+
+        if (!AppTool.IsNullOrZero(weight) && !AppTool.IsNullOrZero(rounding)) {
+            var toString: string = weight.toString();
+            var r: string[] = toString.split('.');
+
+            if (r.length > 1) {
+                var strDigits: string = "0." + r[1];
+                var digits: number = +strDigits;
+                var integer: number = +r[0];
+
+                if (rounding == 0.5) {
+                    weightRounded = integer + 0.5;
+                }
+
+                else {
+                    weightRounded = integer + 1;
+                }
+            }
+        }
+
+        else {
+            weightRounded = weight;
+        }
+
+        var myPricigs: CalculatedPricingItem[] = [];
+        if (!AppTool.IsNullOrZero(weightRounded)) {
+            entityPM.ShipmentStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
+                var isLastStep: boolean = entityPM.ShipmentStoragePricings.length == item.LineNumber ? true : false;
+
+                var newItem: CalculatedPricingItem = new CalculatedPricingItem();
+                newItem.Index = item.LineNumber;
+                newItem.Price = item.SalePrice;
+
+                var previousLine: CalculatedPricingItem = myPricigs.filter(d => d.Index == item.LineNumber - 1)[0];
+                if (previousLine != null) {
+                    if (!AppTool.IsNullOrZero(item.StepTo)) {
+                        if ((item.StepTo - item.StepFrom) <= (days - previousLine.Days)) {
+                            newItem.Days = item.StepTo - item.StepFrom;
+                        }
+
+                        else {
+                            newItem.Days = days - previousLine.Days
+                        }
+
+                        if (isLastStep) {
+                            if (ArrayTool.Sum(myPricigs, "Days") == days) {
+                                newItem.Days = 0;                                
+                            }
+
+                            else {
+                                newItem.Days = days - ArrayTool.Sum(myPricigs, "Days");
+                            }
+                        }
+                    }
+
+                    else {
+                        newItem.Days = days - ArrayTool.Sum(myPricigs, "Days");
+                    }
+                }
+
+                else {
+                    newItem.Days = item.StepTo - item.StepFrom;
+                }
+
+                newItem.Amount = item.SalePrice * weightRounded * newItem.Days;
+                myPricigs.push(newItem);
+            });
+
+            amount = ArrayTool.Sum(myPricigs, "Amount");
+        }
+
+        var myResult: number = amount;
+
+        var invoiceStorageReceivable: ShipmentReceivablePM = entityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+        if (invoiceStorageReceivable) {
+            myResult = amount - invoiceStorageReceivable.TotalAmount;
+        }
+
+        return myResult;
+    }
 }
 export class ByPckageType {
     public Quantity: number;
@@ -6507,4 +6610,10 @@ export class RoutingHelper {
 
         return output;
     }
+}
+export class CalculatedPricingItem {
+    public Index: number;
+    public Days: number;
+    public Price: number;
+    public Amount: number;
 }

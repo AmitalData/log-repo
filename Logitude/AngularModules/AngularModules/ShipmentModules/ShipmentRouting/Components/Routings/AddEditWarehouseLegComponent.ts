@@ -663,104 +663,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
     }
     private ComputeReceivableAmount(): number {
-        var amount: number = 0;
-        var weight: number = 0;
-        var rounding: number = 0;
-        var weightRounded: number = 0;
-        var days: number = this.StorageDays - this.WarehouseStorageFreeDays;
-
-        if (this.EntityPM.WeightMeasurementCode == "GRWT") {
-            weight = this.EntityPM.GrossWeight;
-        }
-
-        else {
-            weight = this.EntityPM.ChargeableWeight;
-        }
-
-        if (this.EntityPM.WeightRoundingCode == "HAF") {
-            rounding = 0.5;            
-        }
-
-        else if (this.EntityPM.WeightRoundingCode == "ONE") {
-            rounding = 1;
-        }
-
-        if (!AppTool.IsNullOrZero(weight) && !AppTool.IsNullOrZero(rounding)) {
-            var toString: string = weight.toString();
-            var r: string[] = toString.split('.');
-
-            if (r.length > 1) {
-                var strDigits: string = "0." + r[1];
-                var digits: number = +strDigits;
-                var integer: number = +r[0];
-
-                if (rounding == 0.5) {
-                    weightRounded = integer + 0.5;
-                }
-
-                else {
-                    weightRounded = integer + 1;
-                }
-            }
-        }
-
-        else {
-            weightRounded = weight;
-        }
-
-        var myPricigs: CalculatedPricingItem[] = [];
-        if (!AppTool.IsNullOrZero(weightRounded)) {
-            this.EntityPM.ShipmentStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
-                var isLastStep: boolean = this.EntityPM.ShipmentStoragePricings.length == item.LineNumber ? true : false;
-
-                var newItem: CalculatedPricingItem = new CalculatedPricingItem();
-                newItem.Index = item.LineNumber;
-                newItem.Price = item.SalePrice;
-
-                var previousLine: CalculatedPricingItem = myPricigs.filter(d => d.Index == item.LineNumber - 1)[0];
-                if (previousLine != null) {
-                    if (!AppTool.IsNullOrZero(item.StepTo)) {
-                        if ((item.StepTo - item.StepFrom) <= (days - previousLine.Days)) {
-                            newItem.Days = item.StepTo - item.StepFrom;
-                        }
-
-                        else {
-                            newItem.Days = days - previousLine.Days
-                        }
-
-                        if (isLastStep) {
-                            if (newItem.Days < (days - ArrayTool.Sum(myPricigs, "Days"))) {
-                                newItem.Days = days - ArrayTool.Sum(myPricigs, "Days");
-                            }
-
-                            else {
-                                newItem.Days = 0;
-                            }
-                        }
-                    }
-                    
-                    else {
-                        newItem.Days = days - ArrayTool.Sum(myPricigs, "Days");
-                    }
-                }
-
-                else {
-                    newItem.Days = item.StepTo - item.StepFrom;
-                }
-                
-                newItem.Amount = item.SalePrice * weightRounded * newItem.Days;
-                myPricigs.push(newItem);
-            });
-
-            amount = ArrayTool.Sum(myPricigs, "Amount");
-        }
-
-        var myResult: number = amount;
-
-        var invoiceStorageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-        if (invoiceStorageReceivable) {
-            myResult = amount - invoiceStorageReceivable.TotalAmount;
-        }
+        var myResult: number = ShipmentTool.ComputeImportStorageReceivableAmount(this.StorageDays, this.EntityPM);
 
         return myResult;
     }
@@ -975,11 +878,4 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
         ShipmentTool.OnWarehouseStorageFreeDaysChanged(this.EntityPM);
     }
-}
-
-export class CalculatedPricingItem {
-    public Index: number;
-    public Days: number;
-    public Price: number;
-    public Amount: number;
 }

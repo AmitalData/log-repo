@@ -321,6 +321,7 @@ export class PricingItem extends BaseComponent {
     set StepFrom(newValue: number) {
         if (this.EntityPM.StepFrom != newValue) {
             this.EntityPM.StepFrom = AppTool.Round(newValue, 0);
+            this.fatherComponent.PricesChanged = true;
         }
     }
 
@@ -350,6 +351,7 @@ export class PricingItem extends BaseComponent {
         if (this.EntityPM.StepTo != newValue) {
             this.EntityPM.StepTo = newValue;
 
+            this.fatherComponent.PricesChanged = true;
             this.ComputeDays();
         }
     }
@@ -365,6 +367,7 @@ export class PricingItem extends BaseComponent {
         if (this.EntityPM.Days != newValue) {
             this.EntityPM.Days = newValue;
 
+            this.fatherComponent.PricesChanged = true;
             this.ComputeStepTo();
         }
     }
