@@ -216,14 +216,9 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     private myCloner: Cloner;
     private Clone() {
         this.myCloner = new Cloner(this);
-        this.myCloner.AddField('ChargeStorage');
-        this.myCloner.AddField('CurrencyId');
-        this.myCloner.AddField('AirWeightMeasurementCode');
-        this.myCloner.AddField('OceanWeightMeasurementCode');
-        this.myCloner.AddField('InlandWeightMeasurementCode');
-        this.myCloner.AddField('AirWeightRoundingCode');
-        this.myCloner.AddField('OceanWeightRoundingCode');
-        this.myCloner.AddField('InlandWeightRoundingCode');
+        this.myCloner.AddField('ChargeStorageCurrencyId');
+        this.myCloner.AddField('WeightMeasurementCode');
+        this.myCloner.AddField('WeightRoundingCode');
         this.myCloner.AddEntity(this.EntityPM);
     }
 
