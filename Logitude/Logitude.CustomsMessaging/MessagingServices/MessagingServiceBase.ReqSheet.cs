@@ -1198,7 +1198,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (!String.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
                           !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId))
                 {
-                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                    //if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
                     {
                         CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams);
                     }
