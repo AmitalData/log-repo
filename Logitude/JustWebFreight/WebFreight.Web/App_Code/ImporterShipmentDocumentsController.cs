@@ -196,7 +196,7 @@ namespace WebFreight.Web.App_Code
                             EntityPM.CreatedByUserId = loggedContact.Id;
                             EntityPM.OwnerId = loggedContact.Id;
                             EntityPM.UpdatedByUserId = loggedContact.Id;
-                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Start Inserting Document To Importer Tenant " + DateTime.Now, LogitudeXmlSerializer.SerializeObjectToXmlString(EntityAM), null, null, "");
+                            //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Start Inserting Document To Importer Tenant " + DateTime.Now, LogitudeXmlSerializer.SerializeObjectToXmlString(EntityAM), null, null, "");
                             ICommonDataContext objectContext = CommonDataContext.GetContext(EntityPM.Tenant);
                             DocumentsFilingService documentsFilingService = new DocumentsFilingService(objectContext, EntityPM.Tenant);
                             documentsFilingService.SetChangeSet(EntityPM.DocumentsFilingMetaDataValues);
@@ -225,7 +225,7 @@ namespace WebFreight.Web.App_Code
                                 else
                                 {
                                     var Failmsg = "Inserting Document Faild " + DateTime.Now;
-                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(Result), null, "");
+                                    //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(Result), null, "");
                                     return Request.CreateResponse(HttpStatusCode.BadRequest, Result);
                                 }
                             }
@@ -233,7 +233,7 @@ namespace WebFreight.Web.App_Code
                             {
                                 documentsFilingService.Create(EntityPM, null, null, true);// EntityPM.FileData);
                             }
-                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Insert Document To Importer Tenant Done Successfully " + DateTime.Now, null, EntityPM.Id, null, "");
+                            //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Insert Document To Importer Tenant Done Successfully " + DateTime.Now, null, EntityPM.Id, null, "");
 
                             return Request.CreateResponse(HttpStatusCode.OK, EntityPM.Id != null ? EntityPM.Id : DocumentFilingPM.Id);
                         }
@@ -397,7 +397,7 @@ namespace WebFreight.Web.App_Code
                         {
                             EntityAM.FileInfo.DocumentId = ImporterDocumentFilingPM.DocumentId;
                         }
-                       
+
                         var DocId = UploadDocumentByte(EntityAM.FileInfo, ImporterDocumentFilingPM);
                         if (DocId == "Error")
                         {
@@ -406,7 +406,7 @@ namespace WebFreight.Web.App_Code
                                 ErrorType = "Uploading Document Error",
                                 ErrorMessage = "There was an error occured while uploading the document"
                             };
-                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, "Update Document At Importer Tenant Faild " + DateTime.Now, null, LogitudeXmlSerializer.SerializeObjectToXmlString(apiException), null, "");
+                            //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, "Update Document At Importer Tenant Faild " + DateTime.Now, null, LogitudeXmlSerializer.SerializeObjectToXmlString(apiException), null, "");
 
                             return Request.CreateResponse(HttpStatusCode.BadRequest, apiException);
                         }
@@ -420,7 +420,7 @@ namespace WebFreight.Web.App_Code
                     {
                         if (Result == null)
                         {
-                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Start Updating Document at Importer Tenant " + DateTime.Now, LogitudeXmlSerializer.SerializeObjectToXmlString(EntityAM), null, null, "");
+                            //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Start Updating Document at Importer Tenant " + DateTime.Now, LogitudeXmlSerializer.SerializeObjectToXmlString(EntityAM), null, null, "");
 
                             ICommonDataContext objectContext = CommonDataContext.GetContext(ImporterDocumentFilingPM.Tenant);
                             DocumentsFilingService documentsFilingService = new DocumentsFilingService(objectContext, ImporterDocumentFilingPM.Tenant);
@@ -470,15 +470,15 @@ namespace WebFreight.Web.App_Code
                                                 }
                                             }
 
-                                          
+
                                         }
                                     }
-                                   
+
                                 }
                                 else
                                 {
                                     var Failmsg = "Inserting Document Faild " + DateTime.Now;
-                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(Result), null, "");
+                                    //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(Result), null, "");
                                     return Request.CreateResponse(HttpStatusCode.BadRequest, Result);
                                 }
                             }
@@ -486,7 +486,7 @@ namespace WebFreight.Web.App_Code
                             {
                                 if (ImporterDocumentFilingPM.FileData == null)
                                 {
-                                    documentsFilingService.Update(ImporterDocumentFilingPM, null,null,true);
+                                    documentsFilingService.Update(ImporterDocumentFilingPM, null, null, true);
                                 }
                                 else
                                 {
@@ -517,9 +517,9 @@ namespace WebFreight.Web.App_Code
                                     }
                                 }
                             }
-                          
 
-                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Updating Document To Importer Tenant Done Successfully " + DateTime.Now, null, ImporterDocumentFilingPM.Id, null, "");
+
+                            //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Updating Document To Importer Tenant Done Successfully " + DateTime.Now, null, ImporterDocumentFilingPM.Id, null, "");
 
                             return Request.CreateResponse(HttpStatusCode.OK, ImporterDocumentFilingPM.Id);
                         }
@@ -772,7 +772,7 @@ namespace WebFreight.Web.App_Code
             {
                 foreach (var item in EntityAM.DocumentsFilingMetaDataValues)
                 {
-                    
+
                     var DocMetaDataTypeId = DocumentTypeMetaDataTypePropertiesMapping.GetDocumentTypeMetaDataTypeProperties(EntityAM.ImporterTenant, item.DocumentsMetaDataType);
                     if (!string.IsNullOrEmpty(DocMetaDataTypeId))
                     {
@@ -782,7 +782,7 @@ namespace WebFreight.Web.App_Code
                         if (!string.IsNullOrEmpty(EntityAM.CustomerDocumentId))
                         {
                             MYValue = ValuesQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTypeTenant(EntityAM.CustomerDocumentId, DocMetaDataTypeId, EntityAM.ImporterTenant);
-                            
+
                         }
                         if (MYValue != null)
                         {
@@ -820,7 +820,7 @@ namespace WebFreight.Web.App_Code
                                 DocumentsMetaDataTypeId = DocMetaDataTypeId,
                                 ChangeSetOp = MyChangeSetOp
                             });
-                        } 
+                        }
                     }
                     else
                     {
