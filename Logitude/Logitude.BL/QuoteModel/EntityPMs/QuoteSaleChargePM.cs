@@ -82,8 +82,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public int ChargesTypeViewOrder { get; set; }
         public string ChargesGroupName { get; set; }
         public bool IsChargeBySteps { get; set; }
-        
-
+        public double? SalesWithVATAmount { get; set; }
 
     }
 }

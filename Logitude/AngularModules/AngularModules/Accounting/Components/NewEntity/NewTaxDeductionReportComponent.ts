@@ -67,8 +67,7 @@ private selectedMonth: CodeNameClass;
             if (value != null) {
                 this.UIProperties.SetRequired("Month", this.ObjectTableName, false);
                 this.entityPM.Month = new Date();
-              //  this.entityPM.Month.setMonth(value);
-
+                this.entityPM.Month.setMonth(+value.Code-1);
                 
             }
             else {
@@ -134,12 +133,12 @@ private selectedMonth: CodeNameClass;
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         Validator.TryValidateObject(this.entityPM, this.ObjectTableName, errors);
 
-        if (!this.EntityPM.ByMonth && AppTool.IsNullOrEmpty(this.entityPM.TaxYear)) {
+        if ( AppTool.IsNullOrEmpty(this.entityPM.TaxYear)) {
             var s: string = this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("TaxDeductionReport.F.TaxYear"));
 
             errors.push(s);
         }
-      if (this.EntityPM.ByMonth && AppTool.IsNullOrEmpty(this.entityPM.Month)) {
+      if (this.entityPM.ByMonth && AppTool.IsNullOrEmpty(this.entityPM.Month)) {
             var s: string = this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("TaxDeductionReport.F.Month"));
 
             errors.push(s);

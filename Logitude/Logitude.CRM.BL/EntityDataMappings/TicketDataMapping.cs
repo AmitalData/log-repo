@@ -207,7 +207,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
                                   <t:TableRow Height='20.4833221435547'>
                                     <t:TableCell Borders='0,Inherit,#FF000000,none,,' ColumnSpan='10' RowSpan='1' TextAlignment='Center' VerticalAlignment='Center'>
                                       <t:Paragraph Background='#FF98D0DE' TextAlignment='Center'>
-                                        <t:Span FontFamily='Lucida Sans Unicode' FontSize='11' Text='This email is service from Unifreight!'/>
+                                        <t:Span FontFamily='Lucida Sans Unicode' FontSize='11' Text='This email is a service from Unifreight Cloud Generation!'/>
                                       </t:Paragraph>
                                     </t:TableCell>
                                   </t:TableRow>

@@ -2462,17 +2462,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     {
                         myHousesDescriptionofGoods += ", " + console.DescriptionOfGoods;
                     }
-
-                }
-
-                if (!string.IsNullOrEmpty(myHousesDescriptionofGoods) && myHousesDescriptionofGoods.Length > 1000)
-                {
-                    myHousesDescriptionofGoods = myHousesDescriptionofGoods.Substring(0, 1000);
                 }
             }
             else
             {
                 myHousesDescriptionofGoods = shipmentPM.DescriptionOfGoods;
+            }
+            
+            if (!string.IsNullOrEmpty(myHousesDescriptionofGoods) && myHousesDescriptionofGoods.Length > 2000)
+            {
+                myHousesDescriptionofGoods = myHousesDescriptionofGoods.Substring(0, 2000);
             }
 
             shipmentPM.HousesDescriptionofGoods = myHousesDescriptionofGoods;

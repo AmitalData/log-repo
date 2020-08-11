@@ -124,6 +124,7 @@ export class ARInvoiceList {
 		SATInvoiceStatusName: string;
 		Intercompany: boolean;
 		BankAccountLiteId: string;
+		HasInterestFeature: boolean;
 		IsMultiCurrency: boolean;
 		TotalAmountForTaxReport: number;
 		TotaVatableAmountForTaxReport: number;
