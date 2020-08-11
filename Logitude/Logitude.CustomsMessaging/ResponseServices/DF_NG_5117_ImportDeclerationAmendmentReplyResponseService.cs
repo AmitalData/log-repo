@@ -144,6 +144,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
 
+
+                if (customResponse.ProceduralFaults != null)
+                {
+                    var ProceduralFaultDetailsXml_5117 = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.ProceduralFaultDetails[]>
+                       .SerializeObject(customResponse.ProceduralFaults);
+
+                    var customResponse_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsg() { };
+                    customResponse_8218.ProceduralFaultDetails = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Fault.ProceduralFaultDetails[]>
+                        .DeSerializeObject(ProceduralFaultDetailsXml_5117);
+
+                    var ResponseService_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsgResponseService();
+                    ResponseService_8218.Update(customResponse_8218, requestParams);
+                }
+
+
+
+
                 var declarationQueryService = new DeclarationQueryService(_MyDeclarationPM.Tenant);
                 _MyDeclarationPMOrg = declarationQueryService.GetSingle(_MyDeclarationPM.AmendmentOriginalDeclartation, true, false);
 
@@ -499,22 +516,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             _MyDeclarationPM.UserNotes = "LoadTest";
                         }
 
-                        if (customResponse.ProceduralFaults != null)
-                        {
-                            var ProceduralFaultDetailsXml_5117 = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.ProceduralFaultDetails[]>
-                               .SerializeObject(customResponse.ProceduralFaults);
-
-                            var customResponse_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsg() { };
-                            customResponse_8218.ProceduralFaultDetails = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Fault.ProceduralFaultDetails[]>
-                                .DeSerializeObject(ProceduralFaultDetailsXml_5117);
-
-                            var ResponseService_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsgResponseService();
-                            ResponseService_8218.Update(customResponse_8218, requestParams);
-                        }
-
                         this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                         myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
+             
+                   
 
 
 
