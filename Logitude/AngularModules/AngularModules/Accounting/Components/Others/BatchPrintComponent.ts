@@ -81,18 +81,18 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
     public Columns: any[] = null;
     BuildColumns() {
         this.Columns = [];
-        if (this.ShowPrintedInvoice) {
-            this.Columns.push({
-                FieldName: "Select",
-                DataTypeCode: 'String',
-                Display: '',
-                IsCustomTemplate: true,
-                Styles: { width: '27px' },
-                HtmlListComponentName: 'InterestInvoiceListTemplate',
-                HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestInvoiceListTemplate',
-            });
-        }
-        else {
+        // if (this.ShowPrintedInvoice) {
+        //     this.Columns.push({
+        //         FieldName: "Select",
+        //         DataTypeCode: 'String',
+        //         Display: '',
+        //         IsCustomTemplate: true,
+        //         Styles: { width: '27px' },
+        //         HtmlListComponentName: 'InterestInvoiceListTemplate',
+        //         HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestInvoiceListTemplate',
+        //     });
+        // }
+        // else {
 
       this.Columns.push({
                 FieldName: "Select",
@@ -102,7 +102,7 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
                 Styles: { width: '27px' },             
                  IsCheckBox: true,
             });
-        }
+        // }
       this.Columns.push({
           FieldName: 'InvoiceNumber',
             DataTypeCode: 'String',
@@ -271,11 +271,7 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
   public set ShowPrintedInvoice(value: boolean) {
     if (this.showPrintedInvoice != value) {
         this.showPrintedInvoice = value;
-        if (value) {
-
-            this.IsSelectAllEnabled = false;
-        }
-        else this.IsSelectAllEnabled = true;
+ 
         this.BuildColumns();
         this.ValidateDate(null);
 
@@ -391,27 +387,27 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
 
     } this.SetCreateInvoiceButtonText();
   }
-  CreateInvoiceButtonClicked() {
-      var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
-      this.CurrentSession.StartBusyIndicatorLoading();
-      this.interestReportExtendedListService.PutBatchPrint(interestReportArgs).subscribe((response: ServiceResponse) => {
-      this.CurrentSession.StopBusyIndicator();
-        var mm: ServiceResponse = response;
-        if (!mm.HasError) {
-            this.BatchId= mm.Result;
-            this.CancelButtonClicked();
-        }
-        else {
-          if(mm.ErrorsArray){
-            var msg = new MessageWindow();
-            msg.RTL = this.isRTL;
-            msg.Width = 400;
-            msg.Show(mm.ErrorsArray[0]);
-        }
-        }
+  // CreateInvoiceButtonClicked() {
+  //     var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
+  //     this.CurrentSession.StartBusyIndicatorLoading();
+  //     this.interestReportExtendedListService.PutBatchPrint(interestReportArgs).subscribe((response: ServiceResponse) => {
+  //     this.CurrentSession.StopBusyIndicator();
+  //       var mm: ServiceResponse = response;
+  //       if (!mm.HasError) {
+  //           this.BatchId= mm.Result;
+  //           this.CancelButtonClicked();
+  //       }
+  //       else {
+  //         if(mm.ErrorsArray){
+  //           var msg = new MessageWindow();
+  //           msg.RTL = this.isRTL;
+  //           msg.Width = 400;
+  //           msg.Show(mm.ErrorsArray[0]);
+  //       }
+  //       }
 
-      });
-  }
+  //     });
+  // }
   
   PrintInterestInvoice(){
     this.ValidationErrorsList = [];
@@ -428,6 +424,34 @@ var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();
     }
 
   }
+
+
+  CreateInvoiceButtonClicked() {
+  
+    this.CurrentSession.StartBusyIndicatorLoading();
+    var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
+    this.interestReportExtendedListService.PutBatchPrint(interestReportArgs).subscribe((response: ServiceResponse) => {
+      this.CurrentSession.StopBusyIndicator();
+      var mm: ServiceResponse = response;
+      if (!mm.HasError) {
+        let file = new Blob([mm.Result], { type: 'application/pdf' });
+        let url =  URL.createObjectURL(file);
+        let newWindow = window.open();//OPEN WINDOW FIRST ON SUBMIT THEN POPULATE PDF
+        newWindow.location.href = url;//POPULATING PDF 
+        this.Refresh();
+      }
+      else {
+        if(mm.ErrorsArray){
+          var msg = new MessageWindow();
+          msg.RTL = this.isRTL;
+          msg.Width = 400;
+          msg.Show(mm.ErrorsArray[0]);
+      }
+      }
+
+    });
+}
+
   InitializeDate(){
   
   var month = new Date().getMonth();
@@ -494,12 +518,11 @@ public SelectedItems :SelectItem[]=[];
     interestReportArgs.ExcludedIds = [];
     interestReportArgs.Entities = [];
     interestReportArgs.SelectedItems = [];
-
+    interestReportArgs.ShowPrintedInvoice = this.showPrintedInvoice;
     interestReportArgs.Tenant =SessionLocator.TenantPM.Id;
     this.selectedItems.Collection.forEach((item) => {
       interestReportArgs.SelectedIds.push(item.Id);
-      interestReportArgs.Entities.push(item);
-    });
+     });
     interestReportArgs.SelectedItems = this.SelectedItems;
     interestReportArgs.ExcludedIds = this.ExcludedItems.Collection;
     return interestReportArgs;

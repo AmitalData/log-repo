@@ -10,6 +10,7 @@ export class InterestReportArguments {
   public tempId:string;
   public securityId:string;
   public Entities:any[];
+  public ShowPrintedInvoice:boolean;
 
 }
 
