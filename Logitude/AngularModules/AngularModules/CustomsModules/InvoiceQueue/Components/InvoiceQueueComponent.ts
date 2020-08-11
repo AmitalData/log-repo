@@ -8,7 +8,7 @@ import { SessionLocator } from "../../../Infrastructure/Utilities/SessionLocator
 import { ObservableCollection } from "../../../Infrastructure/Utilities/ObservableCollection";
 import { DateTool } from "../../../Infrastructure/Tools";
 import { InvoiceQueueWebService } from "../../../Customs/Services/WebServices/InvoiceQueueWebService";
-import { Invoices, InvoiceList, IntegratedInvoice } from "../../../Customs/EntityPMs/Extended/InvoiceQueue";
+import { AllInvoices, IntegratedInvoice, InvoiceLine } from "../../../Customs/EntityPMs/Extended/InvoiceQueue";
 import { EntityResourceService } from "../../../Infrastructure/Services/EntityResourceService";
 import { DeclarationPMService } from "../../../Customs/Services/StandardPMs/DeclarationPMService";
 import { DeclarationPM } from "../../../Customs/EntityPMs/DeclarationPM";
@@ -42,13 +42,14 @@ export class InvoiceQueueComponent
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                // this.GetData();
+                 this.GetData();
 
             });
         });
     }
     private GetData() {
         this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
+        //this._declarationPMService.get("1-5705").subscribe(data => {
             this.declaration = data.Result;
             SessionLocator.SelectedSession.StopBusyIndicator();
             if (this.declaration==null) {
@@ -59,18 +60,24 @@ export class InvoiceQueueComponent
                 this.InvoiceLineList = new ObservableCollection([]);
                 this.IntegratedInvoiceList = new ObservableCollection([]);
                 this.StatusList = new ObservableCollection([]);
-
-                (data.Result.Invoice as Invoices).InvoiceLines.forEach(x => {
-                    this.InvoiceLineList.Insert(x);
-                });
-                (data.Result.Invoice as Invoices).Statuses.forEach(x => {
+                if ((data.Result.Invoice as AllInvoices).InvoiceLines != null) {
+                    (data.Result.Invoice as AllInvoices).InvoiceLines.forEach(x => {
+                        x = this.setClientForwarder(x);
+                        x.AmountForeign = this.SetFixedValue(x.AmountForeign);
+                        x.AmountNIS = this.SetFixedValue(x.AmountNIS);
+                        this.InvoiceLineList.Insert(x);
+                    });
+                }
+                (data.Result.Invoice as AllInvoices).Statuses.forEach(x => {
                     this.StatusList.Insert(x);
                 });
-                (data.Result.Invoice as Invoices).IntegratedInvoices.forEach(x => {
+                (data.Result.Invoice as AllInvoices).IntegratedInvoices.forEach(x => {
+                    x.InvoiceAmount = this.SetFixedValue(x.InvoiceAmount);
                     this.IntegratedInvoiceList.Insert(x);
                 });
-                if ((data.Result.Invoice as Invoices).InvoiceList != null) {
-                    (data.Result.Invoice as Invoices).InvoiceList.forEach(x => {
+                if ((data.Result.Invoice as AllInvoices).Invoices != null) {
+                    (data.Result.Invoice as AllInvoices).Invoices.forEach(x => {
+                        x.InvoiceAmount = this.SetFixedValue(x.InvoiceAmount);
                         this.InvoiceListList.Insert(x);
                     });
                 }
@@ -92,6 +99,30 @@ export class InvoiceQueueComponent
 
     }
 
+    setClientForwarder(value: InvoiceLine) {
+        switch (value.PayType) {
+            case "R": {
+                value.PayType = "Forwarder";
+                break;
+            }
+            case "L": {
+                value.PayType = "Client";
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        return value;
+    }
+
+    SetFixedValue(value: string) {
+        value = parseFloat(value).toLocaleString();
+        if (value.indexOf('.') == -1 ) {
+            value = value + ".00";
+        }
+        return value;
+    }
 
     ShowDisbursement() {
 
