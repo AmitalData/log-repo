@@ -17,7 +17,8 @@ namespace Logitude.Accounting.BL.InterestService.HelperClasses
         public List<string> ExcludedIds { get; set; }
         public int Tenant { get; set; }
         public string Email { get; set; }
- 
+        public bool ShowPrintedInvoice { get; set; }
+
 
     }
 

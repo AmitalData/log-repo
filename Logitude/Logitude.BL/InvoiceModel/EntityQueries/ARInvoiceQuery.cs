@@ -1984,7 +1984,15 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return securedEntityPM;
         }
-
+        public IQueryable<ARInvoice> GetAllInterestInvoices(DateTime fromDate, DateTime toDate,bool ShowPrintedInvoice, int tenant)
+        {
+            var result = (from a in repository.context.ARInvoices where a.ARInvoiceTypeCode== "IT" && a.InvoiceDate >= fromDate && a.InvoiceDate <= toDate  select a);
+            if (!ShowPrintedInvoice)
+            {
+                result = result.Where(s => s.IsPrinted == false);
+            }
+            return result;
+        }
         public IQueryable<ARInvoiceList> GetInvoiceListByTenant(int tenant)
         {
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;

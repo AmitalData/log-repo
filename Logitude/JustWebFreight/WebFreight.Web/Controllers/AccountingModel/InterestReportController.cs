@@ -7,6 +7,8 @@ using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.Resolvers;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
@@ -24,6 +26,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -108,11 +111,35 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 int tenant = AuthinticateTenant();
                 string email = HttpContext.Current.User.Identity.Name;
                 PdfDocument pdfDoc = new PdfDocument();
-
-                for (int i=0; i < interestReportArgs.SelectedItems.Count; i++)
+                if (interestReportArgs.AllSelected)
                 {
-                    pdfDoc = PrintInvoicesPDF(tenant,interestReportArgs.SelectedItems[i], pdfDoc);
+                    ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
+                    IQueryable<ARInvoice> ARInvoices = aRInvoiceQuery.GetAllInterestInvoices(interestReportArgs.FromDate, interestReportArgs.ToDate, interestReportArgs.ShowPrintedInvoice, tenant);
+                    List<string> SelectedIds = null;
+                    if (interestReportArgs.ExcludedIds != null)
+                    {
+                        SelectedIds = (from a in ARInvoices
+                                      //where !interestReportArgs.ExcludedIds.Contains(a.Id)
+                                           select a.Id).ToList();
+                    }
+
+                    for (int i = 0; i < SelectedIds.Count; i++)
+                    {
+                        pdfDoc = PrintInvoicesPDF(email, tenant, SelectedIds[i], pdfDoc);
+                    }
                 }
+                else
+                {
+                    for (int i = 0; i < interestReportArgs.SelectedIds.Count; i++)
+                    {
+                        pdfDoc = PrintInvoicesPDF(email, tenant, interestReportArgs.SelectedIds[i], pdfDoc);
+                    }
+
+                }
+
+
+
+
                 MemoryStream memoryStream = new MemoryStream();
                 pdfDoc.Save(memoryStream);
 
@@ -239,127 +266,94 @@ namespace WebFreight.Web.Controllers.AccountingModel
             return available;
         }
 
-        private PdfDocument   PrintInvoicesPDF(int? tenant, SelectItem SelectItem, PdfDocument pdfDoc)
+        private PdfDocument   PrintInvoicesPDF(string Email,int? tenant, string SelectId, PdfDocument pdfDoc)
         {
             try
             {
 
-                string token = SelectItem.TempId ?? "";
-                string securityId = "";
-                string securityKey = "";
+
                 string userId = "";
                 string documentOutId = null;
-                SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
-                bool isValid = securityDocumentResult.IsValid;
-                string email = securityDocumentResult.Email;
-                string exceptionMessage = securityDocumentResult.ExceptionResult;
-                tenant = securityDocumentResult.Tenant;
+                string email = Email;
 
-                if (isValid)
+
+                DocumentOut doucmentOut = null;
+                ICommonDataContext commonContext = CommonDataContext.GetContext((tenant != null ? (int)tenant : 0));
+
+                DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery((int)tenant);
+                string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant("999G", (int)tenant);
+
+
+                DocumentOutQuery documentOutQuery = new DocumentOutQuery((int)tenant);
+
+
+                doucmentOut = (from a in commonContext.DocumentOuts
+                               join docFile in commonContext.DocumentsFilings on a.Id equals docFile.Id
+                               where docFile.EntityId == SelectId && docFile.DocumentTypeId == documentTypeId && a.Tenant == tenant
+                               select a).Include("DocumentsFiling").Include("DocumentsFiling.DocumentType").FirstOrDefault();
+
+                if (doucmentOut != null)
                 {
-                    isValid = false;
-                    if (IsUser(email, (int)tenant) && CheckAvailablityTenantsForEmail(email, (int)tenant) || tenant == 0) isValid = true;
-                }
+                    documentOutId = doucmentOut.Id;
+                    tenant = doucmentOut.Tenant;
 
-                if (isValid)
-                {
-                    securityKey = SelectItem.SecurityId ?? "";
+                    List<DocumentOutCopy> copies = (from a in commonContext.DocumentOutCopies
+                                                    where a.DocumentOutId == documentOutId && tenant == (int)tenant
+                                                    select a).OrderBy(d => d.DocumentTypeCopy.IndexOrder).ToList();
 
-                    if (!string.IsNullOrEmpty(securityKey))
+                    Uploader up = new Uploader();
+
+                    foreach (DocumentOutCopy copy in copies)
                     {
- 
-                        var securityArray = securityKey.Split('~');
-                        if (securityArray.Length > 0)
+                        
+                        bool includeInPrint = true;
+                        if (doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
                         {
-                            securityId = securityArray[0];
-                            if (securityArray.Length > 1) userId = securityArray[1];
+                            includeInPrint = false;
+                        }
+                        else if (doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId)
+                        {
+                            UserRepository userRep = new UserRepository((int)tenant);
 
-                            if (!string.IsNullOrEmpty(securityId))
+                            User printedBy = null;
+                            if (!string.IsNullOrEmpty(userId)) printedBy = userRep.GetSingleUser(userId, (int)tenant);
+                            else printedBy = userRep.GetSingleUserByCodeOrEmailForTenant(null, email, (int)tenant, false);
+
+
+                            DocumentOutCopyRepository myRep = new DocumentOutCopyRepository((int)tenant);
+                            DocumentOutCopy documentoutCopy = myRep.GetSingleDocumentOutCopyByTenant(copy.Id, (int)tenant);
+                            documentoutCopy.LastPrintDate = TenantServerConfigration.GetCurrentDateTime((int)tenant);
+                            documentoutCopy.LastPrintedByUserId = printedBy.Id;
+                            myRep.Update(documentoutCopy);
+                            myRep.SubmitChanges();
+                        }
+
+                        if (includeInPrint)
+                        {
+
+                            string documentExtension = up.GetFileExtension(copy.DocumentId, (int)tenant);
+                            string documentId = copy.DocumentId;
+                            if (!string.IsNullOrEmpty(documentExtension))
                             {
-                                DocumentOut doucmentOut = null;
-                                ICommonDataContext commonContext = CommonDataContext.GetContext((tenant != null ? (int)tenant : 0));
-
-
-                                doucmentOut = (from a in commonContext.DocumentOuts.Include("DocumentsFiling").Include("DocumentsFiling.DocumentType")
-                                               where a.DocumentsFiling.SecurityId == securityId
-                                               select a).FirstOrDefault();
-
-                                if (doucmentOut != null)
+                                _Stream = DownloadFile(documentId, documentExtension, "", (int)tenant);
+                                if (_Stream != null)
                                 {
-                                    documentOutId = doucmentOut.Id;
-                                    tenant = doucmentOut.Tenant;
-
-                                    List<DocumentOutCopy> copies = (from a in commonContext.DocumentOutCopies
-                                                                    where a.DocumentOutId == documentOutId && tenant == (int)tenant
-                                                                    select a).OrderBy(d => d.DocumentTypeCopy.IndexOrder).ToList();
-
-                                    Uploader up = new Uploader();
-
-                                    foreach (DocumentOutCopy copy in copies)
+                                    PdfDocumentBase.Merge(pdfDoc, _Stream);
+                                    if ((pdfDoc.Pages.Count % 2 == 1) && doucmentOut.DocumentsFiling.DocumentType.Code == "740")
                                     {
-                                        bool includeInPrint = true;
-                                        if (doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
-                                        {
-                                            includeInPrint = false;
-                                        }
-                                        else if (doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId)
-                                        {
-                                            UserRepository userRep = new UserRepository((int)tenant);
-
-                                            User printedBy = null;
-                                            if (!string.IsNullOrEmpty(userId)) printedBy = userRep.GetSingleUser(userId, (int)tenant);
-                                            else printedBy = userRep.GetSingleUserByCodeOrEmailForTenant(null, email, (int)tenant, false);
-
-
-                                            DocumentOutCopyRepository myRep = new DocumentOutCopyRepository((int)tenant);
-                                            DocumentOutCopy documentoutCopy = myRep.GetSingleDocumentOutCopyByTenant(copy.Id, (int)tenant);
-                                            documentoutCopy.LastPrintDate = TenantServerConfigration.GetCurrentDateTime((int)tenant);
-                                            documentoutCopy.LastPrintedByUserId = printedBy.Id;
-                                            myRep.Update(documentoutCopy);
-                                            myRep.SubmitChanges();
-                                        }
-
-                                        if (includeInPrint)
-                                        {
-
-                                            string documentExtension = up.GetFileExtension(copy.DocumentId, (int)tenant);
-                                            string documentId = copy.DocumentId;
-                                            if (!string.IsNullOrEmpty(documentExtension))
-                                            {
-                                                _Stream = DownloadFile(documentId, documentExtension, "", (int)tenant);
-                                                if (_Stream != null)
-                                                {
-                                                    PdfDocumentBase.Merge(pdfDoc, _Stream);
-                                                    if ((pdfDoc.Pages.Count % 2 == 1) && doucmentOut.DocumentsFiling.DocumentType.Code == "740")
-                                                    {
-                                                        pdfDoc.Pages.Add();
-                                                    }
-                                                }
-                                            }
-
-                                            break;
-                                        }
-
+                                        pdfDoc.Pages.Add();
                                     }
-
-                               
                                 }
                             }
+
+                            break;
                         }
 
                     }
 
-
-
                 }
 
-                else
-                {
 
-                    var message = exceptionMessage;
-                    if (string.IsNullOrEmpty(exceptionMessage)) message = "Sorry you’re not authenticated to view this document.";
-                    throw new ApplicationException(message);
-                }
 
 
                 return pdfDoc;
