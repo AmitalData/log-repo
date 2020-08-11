@@ -46,6 +46,7 @@ using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.ILOVS;
 using System.Diagnostics;
 using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.TraceEvents;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -805,6 +806,40 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             _LastTraceEventParams = new EventTracerArgs() { EntityId = entityPM.Id, ObjectTableName = "Customs.Declaration", Tenant = entityPM.Tenant, UserId = contact.Id, EventTypeCode = "UPDT", Notes = "Update Declaration", };
             EventTracer.CreateTraceEvent(_LastTraceEventParams);
             
+
+            if(entityPM.AmendmentStatus=="5" && entityPM.AmendmentStatus != entityPOCO.AmendmentStatus)
+            {
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+
+                var _MyDeclarationPMOrg = declarationQueryService.GetSingleDeclarationById(entityPM.AmendmentOriginalDeclartation, entityPM.Tenant);
+
+                var myAmitalEventTracerModel3 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+                    Tenant = entityPM.Tenant,
+                    objectTableName = "Customs.Declaration",
+                    EventCode = "DMC",
+                    notes = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : entityPM.DeclarationNumber) ,
+                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : entityPM.DeclarationNumber,
+                    EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : entityPM.Id,
+              //      UserId = resolveLoggingUserId,
+
+                    CommunicationSubject = "FU Status DMC from logitude ",
+                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                    {
+                        entname = "CFIFILEM",
+                        primary_number = entityPM.CustomFileNo,
+                        status = "new",
+                        xml_status = "new",
+                        status_id = "DMC",
+                        status_DateTime = DateTime.Now,
+                        comments = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : entityPM.DeclarationNumber) ,
+                    }
+                };
+
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel3);
+            }
+
+
         }
 
         protected override void AfterUpdating(DeclarationPM entityPM, EntityPM entityParentPM)
