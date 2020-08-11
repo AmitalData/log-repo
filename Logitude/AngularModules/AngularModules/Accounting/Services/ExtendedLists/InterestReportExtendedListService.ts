@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { defer, of, Observable } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -75,7 +75,22 @@ export class InterestReportExtendedListService {
             catchError(ServiceHelper.HandleServiceError));
     }
 
-    GetInterestLastBatchServiceByTenant() {
+    PutBatchPrint(interestReportArgs: InterestReportArguments) {
+      return this.httpClient.put(this._apiUrl + "/PutBatchPrint", JSON.stringify(interestReportArgs), ServiceHelper.GetHttpHeadersForblob()).pipe(
+          map(res => {
+              var serviceResponse: ServiceResponse;
+              serviceResponse = new ServiceResponse();
+              var result = res;
+              serviceResponse.Result = result;
+
+              return serviceResponse;
+          }),
+          catchError(ServiceHelper.HandleServiceError));
+  }
+ 
+ 
+
+GetInterestLastBatchServiceByTenant() {
       return this.httpClient.get(this._apiUrl + "/GetInterestLastBatchServiceByTenant",ServiceHelper.GetHttpHeaders()).pipe(
           map(res => {
               var serviceResponse: ServiceResponse;
