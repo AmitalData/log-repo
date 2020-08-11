@@ -27,6 +27,7 @@ import {QuoteDomainService} from '../../Services/QuoteDomainService';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { ChildDirective } from '../../../Infrastructure/Directives/ChildDirective';
+import { ContactInputTemplateArgs } from '../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 
 @Component({
     templateUrl: './NewQuoteComponent.html',
@@ -2618,6 +2619,32 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             });
     }
 
+    AddContact(partnerId: string, type: string) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.Title = "New Contact";
+        var args = new ContactInputTemplateArgs();
+        args.CustomerId = partnerId;
+        args.CardDependencyProperty1 = this.CardDependencyProperty1;
+        args.CustomerLable = type == "SH" ? "Shipper" : "Consignee";
+        args.ComponentName = "Partners";
+        logWindow.WindowArgs = args;
+        logWindow.Show('./CommonModules/CommonPartners/Components/NewEntity/NewContactComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewContactWindowClosed($event, type));
+    }
+
+    OnNewContactWindowClosed(arg: any, type: string) {
+        if (arg != 'cancel') {
+            if (type == "SH") {
+                this.ShipperContactId = arg;
+            }
+            else {
+                this.ConsigneeContactId = arg;
+            }
+           
+        }
+    }
     //Copy Mode
     public ButtonContent: string = TextCodeTranslator.Translate("Quote.B.Create");
     public DirectionImageSRC: string;
