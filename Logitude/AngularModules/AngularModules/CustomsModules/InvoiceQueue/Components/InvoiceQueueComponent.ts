@@ -63,7 +63,8 @@ export class InvoiceQueueComponent
                 if ((data.Result.Invoice as AllInvoices).InvoiceLines != null) {
                     (data.Result.Invoice as AllInvoices).InvoiceLines.forEach(x => {
                         x = this.setClientForwarder(x);
-                        x = this.setAmount(x);
+                        x.AmountForeign = this.SetFixedValue(x.AmountForeign);
+                        x.AmountNIS = this.SetFixedValue(x.AmountNIS);
                         this.InvoiceLineList.Insert(x);
                     });
                 }
@@ -71,10 +72,12 @@ export class InvoiceQueueComponent
                     this.StatusList.Insert(x);
                 });
                 (data.Result.Invoice as AllInvoices).IntegratedInvoices.forEach(x => {
+                    x.InvoiceAmount = this.SetFixedValue(x.InvoiceAmount);
                     this.IntegratedInvoiceList.Insert(x);
                 });
                 if ((data.Result.Invoice as AllInvoices).Invoices != null) {
                     (data.Result.Invoice as AllInvoices).Invoices.forEach(x => {
+                        x.InvoiceAmount = this.SetFixedValue(x.InvoiceAmount);
                         this.InvoiceListList.Insert(x);
                     });
                 }
@@ -113,16 +116,11 @@ export class InvoiceQueueComponent
         return value;
     }
 
-    setAmount(value: InvoiceLine) {
-        debugger;
-    //    value.AmountForeign = value.AmountForeign.toLocaleString(undefined, { minimumFractionDigits: 2 });
-      //  value.AmountNIS = value.AmountNIS.toLocaleString(undefined, { minimumFractionDigits: 2 }) 
-//        num = parseFloat(parseFloat(num).toFixed(2)).toLocaleString('en-IN', { useGrouping: true });
-
-        value.AmountForeign = parseFloat(parseFloat(value.AmountForeign).toFixed(2)).toLocaleString();
-        value.AmountNIS = parseFloat(parseFloat(value.AmountNIS).toFixed(2)).toLocaleString();
-        //value.AmountForeign = parseFloat(value.AmountForeign).toLocaleString();
-        //value.AmountNIS = parseFloat(value.AmountNIS).toLocaleString();
+    SetFixedValue(value: string) {
+        value = parseFloat(value).toLocaleString();
+        if (value.indexOf('.') == -1 ) {
+            value = value + ".00";
+        }
         return value;
     }
 
