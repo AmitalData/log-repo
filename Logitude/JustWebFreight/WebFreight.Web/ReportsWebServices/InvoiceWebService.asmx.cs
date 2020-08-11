@@ -3092,7 +3092,7 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             if (!isCreditByAutoCreditInvoice)
                             {
-                                line_UnitPrice = line_UnitPrice * -1;
+                                line_UnitPrice =Math.Abs(line_UnitPrice.Value);
                             }
                             lineAmount_Foreign = lineAmount_Foreign * -1;
                             lineAmount_Invoice = lineAmount_Invoice * -1;
