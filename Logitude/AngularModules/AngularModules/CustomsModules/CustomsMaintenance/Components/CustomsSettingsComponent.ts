@@ -145,6 +145,9 @@ export class CustomsSettingsComponent
     get QtyFeedbackInPendingMessage() { return this.entityPM != null ? this.entityPM.QtyFeedbackInPendingMessage : null; }
     set QtyFeedbackInPendingMessage(value: number) {this.entityPM.QtyFeedbackInPendingMessage = value }
         
+    //get TotalInvoiceAmountInUSD() { return this.entityPM != null ? this.entityPM.TotalInvoiceAmountInUSD: null; }
+    //set TotalInvoiceAmountInUSD(value: number) { this.entityPM.TotalInvoiceAmountInUSD = value }
+
 
     get IsMessagesPending() { return this.entityPM != null ? this.entityPM.IsMessagesPending : null; }
     set IsMessagesPending(value: boolean) { this.entityPM.IsMessagesPending = value; }

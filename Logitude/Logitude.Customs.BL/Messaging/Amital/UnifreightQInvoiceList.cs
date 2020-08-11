@@ -219,8 +219,8 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string ServiceCode { get; set; }
             public string ServiceName { get; set; }
             public string PayType { get; set; }
-            public decimal AmountNIS { get; set; }
-            public decimal AmountForeign { get; set; }
+            public string AmountNIS { get; set; }
+            public string AmountForeign { get; set; }
             public string Currency { get; set; }
 
 
