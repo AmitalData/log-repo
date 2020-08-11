@@ -69,7 +69,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //var accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == "Customs.SupplierInvoice Customs.Declaration")[0];
 
             //FeaturePM feature = TenantContext.Current.Features.Where(d => d.Code == "SENDTESTCASES").FirstOrDefault();
-            bool notToCheckFeature = true;
+            bool notToCheckFeature = false;
             if (notToCheckFeature)
             {
                 if (string.IsNullOrEmpty(entityPM.AccumalationStateCode)) entityPM.AccumalationStateCode = "3";

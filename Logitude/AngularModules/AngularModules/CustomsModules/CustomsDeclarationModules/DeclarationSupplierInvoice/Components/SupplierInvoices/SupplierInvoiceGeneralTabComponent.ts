@@ -128,7 +128,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
 
 
-        this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
+        //this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
+        this.accumulationFeature = FeatureLocator.HasFeaturePermession("Customs.Declaration", "ACCUMULATION")
         if (this.accumulationFeature) {
             this.IsAccumulationStateVisibile = true;
             this.IsNotForAccumaltionVisibile = true;

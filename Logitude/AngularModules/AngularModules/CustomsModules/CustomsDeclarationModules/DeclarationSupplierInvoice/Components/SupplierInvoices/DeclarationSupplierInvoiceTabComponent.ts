@@ -628,7 +628,8 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             itemPM.AccumalationStateCode = "3";
         }
         else {
-            this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
+            //this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
+            this.accumulationFeature = FeatureLocator.HasFeaturePermession("Customs.Declaration", "ACCUMULATION")
             if (this.accumulationFeature == null) {
                 itemPM.AccumalationStateCode = "3";
             }
