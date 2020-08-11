@@ -136,8 +136,14 @@
                                                 <td>
                                                     <table>
                                                         <tr style="height:5px;">
+                                                            <td>
                                                             <LogDatePicker [ObjectFieldName]="'InterestCalculationDate'" [ObjectTableName]="ObjectTableName"
-                                                                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                                           [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="InterestCalculationDate"></LogDatePicker>
+                                                            </td>
+                                                            <td style="width: 5px;"></td>
+                                                            <td>
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [disabled]="!IsFirstReport" (click)="EditCalculationDate()" ></IconButton>
+                                                            </td>
                                                         </tr>
                                                         <tr style="height:20px;">
                                                             <td><div></div></td>

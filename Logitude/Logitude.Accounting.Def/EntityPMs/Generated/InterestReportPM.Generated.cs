@@ -814,6 +814,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool recalculateData ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool RecalculateData  
+	   {
+	    
+	     get
+		{
+		   return recalculateData;
+		 }
+		 set
+		 {
+		   if(recalculateData != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RecalculateData",OldValue=recalculateData,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   recalculateData=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

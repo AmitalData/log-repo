@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 {
     public class InterestReportLinesByDateCreationService
     {
+        private int tenant;
         public List<InterestReportLinesByDatePM> CreateInterestReportLinesByDate(InterestReportLinesByDateCreationParams interestReportLinesByDateCreationParams)
         {
             List<InterestTransactionsGroupedByDate> interestTransactionsGroupedByDates = GetInterestTransactionsGroupedByDate(interestReportLinesByDateCreationParams.InterestTransactionPMs);
@@ -23,7 +25,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 {
                     nextInterestTransactionGroupedByDate = interestTransactionsGroupedByDates[i + 1];
                 }
-                accumulatedAmount= accumulatedAmount + currentInterestTransactionGroupedByDate.TotalLocalAmount;
+                accumulatedAmount = accumulatedAmount + currentInterestTransactionGroupedByDate.TotalLocalAmount;
                 InterestReportLinesByDateMappingParams interestReportLinesByDateMappingParams = new InterestReportLinesByDateMappingParams(
                     currentInterestTransactionGroupedByDate,
                     nextInterestTransactionGroupedByDate,
@@ -31,6 +33,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     interestReportLinesByDateCreationParams.InterestReportPM.Tenant,
                     interestReportLinesByDateCreationParams,
                     accumulatedAmount);
+                tenant = interestReportLinesByDateCreationParams.InterestReportPM.Tenant;
                 InterestReportLinesByDatePM interestReportLinesByDatePM = GetMappedInterestReportLinesByDatePM(interestReportLinesByDateMappingParams);
                 interestReportLinesByDatePM.LineNumber = sequence++;
                 interestReportLinesByDatePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -47,7 +50,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             interestReportLinesByDatePM.Tenant = interestReportLinesByDateMappingParams.Tenant;
             interestReportLinesByDatePM.FromDate = interestReportLinesByDateMappingParams.CurrentInterestTransactionGroupedByDate.GroupInterestValueDate;
 
-            interestReportLinesByDatePM.ToDate = interestReportLinesByDateMappingParams.NextInterestTransactionGroupedByDate != null ? 
+            interestReportLinesByDatePM.ToDate = interestReportLinesByDateMappingParams.NextInterestTransactionGroupedByDate != null ?
                 interestReportLinesByDateMappingParams.NextInterestTransactionGroupedByDate.GroupInterestValueDate :
                 interestReportLinesByDateMappingParams.InterestReportLinesByDateCreationParams.InterestReportPM.InterestCalculationDate;
 
@@ -103,7 +106,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             decimal calculatedCreditInterestAmount = 0;
             string calculationEquation = "";
             decimal creditInterestAmount = interestReportLinesByDatePM.CreditInterestAmount;
-            decimal creditInterestPercentage = interestReportLinesByDatePM.CreditInterestPercentage /100;
+            decimal creditInterestPercentage = interestReportLinesByDatePM.CreditInterestPercentage / 100;
             int totalInterestDays = interestReportLinesByDatePM.TotalInterestDays;
             calculatedCreditInterestAmount = creditInterestAmount * (creditInterestPercentage / 365) * totalInterestDays;
             calculatedCreditInterestAmount = Math.Round(calculatedCreditInterestAmount, 4);
@@ -154,7 +157,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             return creditInterestAmount;
         }
 
-        private decimal GetExceptionalInterestAmount(InterestReportLinesByDatePM interestReportLinesByDatePM,InterestReportPM interestReportPM)
+        private decimal GetExceptionalInterestAmount(InterestReportLinesByDatePM interestReportLinesByDatePM, InterestReportPM interestReportPM)
         {
             decimal exceptionalInterestAmount = 0;
             decimal accumulatedAmount = interestReportLinesByDatePM.AccumulatedAmount;
@@ -165,7 +168,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             }
             return exceptionalInterestAmount;
         }
-        private decimal GetStandardInterestAmount(InterestReportLinesByDatePM interestReportLinesByDatePM,InterestReportPM interestReportPM)
+        private decimal GetStandardInterestAmount(InterestReportLinesByDatePM interestReportLinesByDatePM, InterestReportPM interestReportPM)
         {
             decimal standardInterestAmount = 0;
             decimal gLAccountInterestCreditLimit = interestReportPM.GLAccountInterestCreditLimit != null ? interestReportPM.GLAccountInterestCreditLimit.Value : 0;
@@ -187,12 +190,12 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         private decimal GetCreditInterestPercentageForStartInterestDate(InterestPercentageForDateParams interestPercentageForDateParams)
         {
             GLAccountInterestPeriodPM gLAccountInterestPeriodPM = GetGLAccountInterestPeriodPMByPeriodToDate(interestPercentageForDateParams);
-
-            InterestBasesPeriodPM Period = (from a in interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestBasesPeriodPMs
-                                            where a.InterestBaseStartDate <= interestPercentageForDateParams.ToDate
-                                            && a.InterestBaseTypeId == gLAccountInterestPeriodPM.CreditInterestRateBaseId
-                                            && a.Tenant == interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestReportPM.Tenant
-                                            select a).OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault();
+            InterestBasesPeriodPM Period = GetInterestBasesPeriodPMFromParamsPeriods(interestPercentageForDateParams, gLAccountInterestPeriodPM.CreditInterestRateBaseId, "credit");
+            //InterestBasesPeriodPM Period = (from a in interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestBasesPeriodPMs
+            //                                where a.InterestBaseStartDate <= interestPercentageForDateParams.ToDate
+            //                                && a.InterestBaseTypeId == gLAccountInterestPeriodPM.CreditInterestRateBaseId
+            //                                && a.Tenant == interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestReportPM.Tenant
+            //                                select a).OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault();
 
             decimal creditAdditionalInterestPercentage = gLAccountInterestPeriodPM.CreditAddInterestPercent != null ? gLAccountInterestPeriodPM.CreditAddInterestPercent.Value : 0;
             decimal percentage = (Period.InterestRate + creditAdditionalInterestPercentage);
@@ -203,14 +206,15 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         {
             GLAccountInterestPeriodPM gLAccountInterestPeriodPM = GetGLAccountInterestPeriodPMByPeriodToDate(interestPercentageForDateParams);
 
-            InterestBasesPeriodPM Period = (from a in interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestBasesPeriodPMs
-                                            where a.InterestBaseStartDate <= interestPercentageForDateParams.ToDate
-                                            && a.InterestBaseTypeId == gLAccountInterestPeriodPM.ExceptionalInterestRateBaseId
-                                            && a.Tenant == interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestReportPM.Tenant
-                                            select a).OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault();
+            InterestBasesPeriodPM Period = GetInterestBasesPeriodPMFromParamsPeriods(interestPercentageForDateParams, gLAccountInterestPeriodPM.ExceptionalInterestRateBaseId, "exceptional");
+            //InterestBasesPeriodPM Period = (from a in interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestBasesPeriodPMs
+            //                                where a.InterestBaseStartDate <= interestPercentageForDateParams.ToDate
+            //                                && a.InterestBaseTypeId == gLAccountInterestPeriodPM.ExceptionalInterestRateBaseId
+            //                                && a.Tenant == interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestReportPM.Tenant
+            //                                select a).OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault();
 
             decimal exceptionalAdditionalInterestPercentage = gLAccountInterestPeriodPM.ExceptionalAddInterestPercent != null ? gLAccountInterestPeriodPM.ExceptionalAddInterestPercent.Value : 0;
-            decimal percentage =Period != null? (Period.InterestRate + exceptionalAdditionalInterestPercentage): 0;
+            decimal percentage = Period != null ? (Period.InterestRate + exceptionalAdditionalInterestPercentage) : 0;
             return percentage;
         }
 
@@ -218,16 +222,53 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         {
             GLAccountInterestPeriodPM gLAccountInterestPeriodPM = GetGLAccountInterestPeriodPMByPeriodToDate(interestPercentageForDateParams);
 
-
-            InterestBasesPeriodPM Period = (from a in interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestBasesPeriodPMs
-                                          where a.InterestBaseStartDate <= interestPercentageForDateParams.ToDate
-                                          && a.InterestBaseTypeId == gLAccountInterestPeriodPM.StandardInterestRateBaseId 
-                                          && a.Tenant == interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestReportPM.Tenant
-                                          select a).OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault();
+            InterestBasesPeriodPM Period = GetInterestBasesPeriodPMFromParamsPeriods(interestPercentageForDateParams, gLAccountInterestPeriodPM.StandardInterestRateBaseId,"standard");
+            //InterestBasesPeriodPM Period = (from a in interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestBasesPeriodPMs
+            //                              where a.InterestBaseStartDate <= interestPercentageForDateParams.ToDate
+            //                              && a.InterestBaseTypeId == gLAccountInterestPeriodPM.StandardInterestRateBaseId 
+            //                              && a.Tenant == interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestReportPM.Tenant
+            //                              select a).OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault();
 
             decimal standardAdditionalInterestPercentage = gLAccountInterestPeriodPM.StandardAddInterestPercent != null ? gLAccountInterestPeriodPM.StandardAddInterestPercent.Value : 0;
             decimal percentage = (Period.InterestRate + standardAdditionalInterestPercentage);
             return percentage;
+        }
+
+        private InterestBasesPeriodPM GetInterestBasesPeriodPMFromParamsPeriods(InterestPercentageForDateParams interestPercentageForDateParams, string interestRateBaseId,string interestRateBaseType)
+        {
+            InterestBasesPeriodPM Period = (from a in interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestBasesPeriodPMs
+                                            where a.InterestBaseStartDate <= interestPercentageForDateParams.ToDate
+                                            && a.InterestBaseTypeId == interestRateBaseId
+                                            && a.Tenant == interestPercentageForDateParams.InterestReportLinesByDateCreationParams.InterestReportPM.Tenant
+                                            select a).OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault();
+            if (Period == null)
+            {
+                ThrowSuitableException(interestRateBaseType);
+            }
+
+            return Period;
+        }
+
+        private void ThrowSuitableException(string interestRateBaseType)
+        {
+            switch (interestRateBaseType) {
+                case "standard": 
+                    {
+                        string message = TextCodesTranslator.TranslateText("InterestReport.O.NoStandardBasePeriod", tenant, true);
+                        throw new ApplicationException(message);
+                        
+                    }
+                case "exceptional":
+                    {
+                        string message = TextCodesTranslator.TranslateText("InterestReport.O.NoExceptionalBasePeriod&quot", tenant, true);
+                        throw new ApplicationException(message);
+                    }
+                case "credit":
+                    {
+                        string message = TextCodesTranslator.TranslateText("InterestReport.O.NoCreditBasePeriod", tenant, true);
+                        throw new ApplicationException(message);
+                    }
+            }
         }
 
         public virtual List<InterestTransactionsGroupedByDate> GetInterestTransactionsGroupedByDate(List<InterestTransactionPM> interestTransactionPMs)
@@ -250,9 +291,10 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                .Where(d => d.PeriodStartDate <= interestPercentageForDateParams.ToDate)
                .OrderByDescending(d => d.PeriodStartDate).FirstOrDefault();
 
-            if(gLAccountInterestPeriodPM ==null)
+            if (gLAccountInterestPeriodPM == null)
             {
-                throw new ApplicationException("there is no GL Account Interest period in the dates provided");
+                string message = TextCodesTranslator.TranslateText("InterestReport.O.NoGlAccountPeriod", tenant, true);
+                throw new ApplicationException(message);
             }
 
             return gLAccountInterestPeriodPM;
