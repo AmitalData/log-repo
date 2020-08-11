@@ -372,7 +372,6 @@
     <None Include="DBScripts\ShipmentModel\202006111515_AddShipmentSubTypesToTenants.sxml" />
     <None Include="DBScripts\ShipmentModel\202006140958_FillAirShipmentShipmentTypeField.sxml" />
     <None Include="DBScripts\ShipmentModel\202006141227_FillShipmentSubTypeBackward.sxml" />
-    <None Include="DBScripts\ShipmentModel\TestZeroDownTimeScript.sxml" />
     <None Include="DBScripts\ShipmentModel\202007051320_UpdateAirShipmentSubType.sxml" />
     <None Include="DBScripts\ShipmentModel\202007051322_UpdateNotAirShipmentsSubType.sxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingCard.dxml" />

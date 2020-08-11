@@ -249,8 +249,8 @@ namespace Logitude.DBMigrations.Models
             string databaseType = dbMigrationsDataScript.DatabaseType;
             string queryString = dbMigrationsDataScript.SxmlScript;
             queryString = Regex.Replace(queryString, "[$]Top[$]", "TOP(1000)", RegexOptions.IgnoreCase);
-            queryString = Regex.Replace(queryString, "[$]LastCounter[$]", ("[DBMigrationsLastScript] = " + scriptExecutionNumber.ToString()), RegexOptions.IgnoreCase);
-            queryString = Regex.Replace(queryString, "[$]BatchWhere[$]", ("[DBMigrationsLastScript] = " + (scriptExecutionNumber - 1).ToString()), RegexOptions.IgnoreCase);
+            queryString = Regex.Replace(queryString, "[$]UpdateLastCounter[$]", ("[DBMigrationsLastScript] = " + scriptExecutionNumber.ToString()), RegexOptions.IgnoreCase);
+            queryString = Regex.Replace(queryString, "[$]LastCounterWhere[$]", ("[DBMigrationsLastScript] = " + (scriptExecutionNumber - 1).ToString()), RegexOptions.IgnoreCase);
 
             SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
 

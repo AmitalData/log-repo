@@ -6,8 +6,8 @@
       set
       ShipmentTypeId = 'Air',
       ShipmentSubTypeId = (select top 1 Id from ShipmentSubTypes where Code = 'Air' and Tenant = Shipments.Tenant),
-      $LastCounter$
-      where TransportModeId = 'A' and $BatchWhere$
+      $UpdateLastCounter$
+      where TransportModeId = 'A' and $LastCounterWhere$
       
     ]]>
   </Sql>
