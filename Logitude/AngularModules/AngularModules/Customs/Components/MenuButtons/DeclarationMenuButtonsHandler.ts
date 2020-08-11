@@ -317,13 +317,24 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             button.IsHidden = true;
                         }
                         else {
-                            if (this.checkTransfer == "1") {
+                            if (this.checkTransfer == "1" || (this.EntityPM.AmendmentDontDisplayInList != true && this.EntityPM.IsAmendment)) {
                                 button.IsDisabled = true;
                             }
                             else {
                                 button.IsDisabled = false;
                             }
                         }
+                    }
+                    if (button.EventCode == "Copy") // moran 4.8.16 - AMI-56804
+                    {
+                        
+                            if (this.EntityPM.AmendmentDontDisplayInList != true && this.EntityPM.IsAmendment) {
+                                button.IsDisabled = true;
+                            }
+                            else {
+                                button.IsDisabled = false;
+                            }
+                         
                     }
                     if (button.EventCode == "Vehicle Modifications") {
                          if (this.EntityPM.IsCourierDeclaration) {
@@ -377,7 +388,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             button.IsDisabled = false;
                         }
                     }
-                    if ( this.EntityPM.AmendmentDontDisplayInList==true) {
+                    if ( this.EntityPM.AmendmentDontDisplayInList==true ) {
                         parentButton = menuButtons.filter(x => x.EventCode == "Actions")[0];
                         if (parentButton.Id == button.ParentMenuButtonId)
                         button.IsDisabled = true;
