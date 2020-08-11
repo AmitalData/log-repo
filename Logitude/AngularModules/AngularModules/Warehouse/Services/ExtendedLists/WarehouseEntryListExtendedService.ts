@@ -1,4 +1,4 @@
-﻿
+
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
@@ -16,7 +16,16 @@ export class WarehouseEntryListExtendedService {
     }
 
 
+    GetWarehouseEntriesByShipmentId(shipmentId) {
+        return this._http.get(this._apiUrl + '/GetWarehouseEntriesByShipmentId?shipmentId=' + shipmentId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = response;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
 
     GetRecentWarehouseEntries() {
         

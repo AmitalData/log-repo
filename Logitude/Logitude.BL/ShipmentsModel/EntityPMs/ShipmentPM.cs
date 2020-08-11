@@ -2509,6 +2509,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         }
 
         public List<TransshipmentLeg> Transshipments { get; set; }
+        public bool IsBondedWarehouse { get; set; }
     }
 
     public class TransshipmentLeg
