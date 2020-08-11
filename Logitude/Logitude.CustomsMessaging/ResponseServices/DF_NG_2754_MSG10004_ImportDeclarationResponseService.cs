@@ -219,9 +219,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     else
                     {
-                        _MyDeclarationPM.PaymentDate = null;
-                        _MyDeclarationPM.PaymentOrderNumber = "";
-                        _MyDeclarationPM.PaymentStatusCode = "";
+                        if(_MyDeclarationPM.IsAmendment != true)
+                        {
+                            _MyDeclarationPM.PaymentDate = null;
+                            _MyDeclarationPM.PaymentOrderNumber = "";
+                            _MyDeclarationPM.PaymentStatusCode = "";
+                        }
+                   
                     }
                 }
             }
