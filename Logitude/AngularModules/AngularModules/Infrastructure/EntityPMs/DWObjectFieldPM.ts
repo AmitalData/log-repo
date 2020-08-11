@@ -195,6 +195,11 @@ export class DWObjectFieldPM {
     public set IsMultipleSelection(newValue: boolean) { if (this.isMultipleSelection != newValue) { this.isMultipleSelection = newValue; this.MarkAsDirty("IsMultipleSelection"); } }
        
 	 
+    private recordType: string;
+    public get RecordType() { return this.recordType; }
+    public set RecordType(newValue: string) { if (this.recordType != newValue) { this.recordType = newValue; this.MarkAsDirty("RecordType"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		

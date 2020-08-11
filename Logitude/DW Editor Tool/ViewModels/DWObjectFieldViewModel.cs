@@ -182,7 +182,14 @@ namespace DW_Editor_Tool.ViewModels
             set { dimensionDataViewName = value; FirePropertyChanged("DimensionDataViewName"); }
         }
 
-        
+
+        string recordType;
+        public string RecordType
+        {
+            get { return recordType; }
+            set { recordType = value; FirePropertyChanged("RecordType"); }
+        }
+
 
 
 

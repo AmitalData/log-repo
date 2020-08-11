@@ -37,8 +37,9 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool DontDisplayInView { get; set; }
         public string DimensionDataViewName { get; set; }
         public bool IsMultipleSelection { get; set; }
-        
+        public string RecordType { get; set; }
 
+        
         [ForeignKey("DWObjectTableCode")]
         public virtual DWObjectTable DWObjectTable { get; set; }
 

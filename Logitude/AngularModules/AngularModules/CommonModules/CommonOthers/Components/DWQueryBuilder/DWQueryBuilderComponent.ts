@@ -1981,7 +1981,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                         var parentfieldCode = !AppTool.IsNullOrEmpty(DWObjectField.FieldCode) ? (DWObjectField.FieldCode.replace("[", "").replace("]", "")) : DWObjectField.DisplayName;
 
 
-                        Result.Result.forEach((field) => {
+                        Result.Result.filter(d => AppTool.IsNullOrEmpty(d.RecordType) || (!AppTool.IsNullOrEmpty(d.RecordType) && d.RecordType.split(',').indexOf(parentfieldCode) != -1)).forEach((field) => {
                             if (field.DisplayInQueryBuilder == true) {
                                 var view = new DWObjectFieldsDetails(field, this.MyParentClass);
                                 if (field.Code == '[Full Date]' || field.Code == '[Full Date US]') {

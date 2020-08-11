@@ -42,6 +42,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool DontDisplayInView { get; set; }
         public string DimensionDataViewName { get; set; }
         public bool IsMultipleSelection { get; set; }
+        public string RecordType { get; set; }
 
 
 

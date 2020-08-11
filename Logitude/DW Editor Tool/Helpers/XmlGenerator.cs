@@ -109,6 +109,7 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("DontDisplayInView", fieldViewModel.DontDisplayInView.ToString().ToLower(), fieldElement);
                 SetAttribute("IsMultipleSelection", fieldViewModel.IsMultipleSelection.ToString().ToLower(), fieldElement);
                 SetAttribute("DimensionDataViewName", GetStringValue(fieldViewModel.DimensionDataViewName), fieldElement);
+                SetAttribute("RecordType", GetStringValue(fieldViewModel.RecordType), fieldElement);
 
 
 
@@ -216,9 +217,11 @@ namespace DW_Editor_Tool.Helpers
             fieldViewModel.DontDisplayInView = GetAttributeBoolValue(fieldNode.Attributes["DontDisplayInView"]);
             fieldViewModel.IsMultipleSelection = GetAttributeBoolValue(fieldNode.Attributes["IsMultipleSelection"]);
             fieldViewModel.DimensionDataViewName = GetAttributeStringValue(fieldNode.Attributes["DimensionDataViewName"]);
-
+            fieldViewModel.RecordType = GetAttributeStringValue(fieldNode.Attributes["RecordType"]);
 
             
+
+
 
             return fieldViewModel;
         }
