@@ -11,6 +11,7 @@ import {BanksPageComponent} from './Components/Workspaces/Banks/BanksPageCompone
 import { MiscPageComponent } from './Components/Workspaces/Misc/MiscPageComponent';
 import { InterestPageComponent } from './Components/Workspaces/Interest/InterestPageComponent';
 import { BatchInvoicesComponent } from './Components/Others/BatchInvoicesComponent';
+import { BatchPrintComponent } from './Components/Others/BatchPrintComponent';
 
 import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
 import {NewChartOfAccountComponent} from './Components/NewEntity/NewChartOfAccountComponent';
@@ -73,7 +74,9 @@ import {ManageReconciliationListTemplate} from './Components/ListTemplates/Manag
 import {TaxReportListTemplate} from './Components/ListTemplates/TaxReportListTemplate';
 import { ReconciliationLineListTemplate } from './Components/ListTemplates/ReconciliationLineListTemplate';
 import {InterestReportListTemplate} from './Components/ListTemplates/InterestReportListTemplate'
+import {InterestInvoiceListTemplate} from './Components/ListTemplates/InterestInvoiceListTemplate'
 import { InterestBasesTypeDetailsTabComponent } from './Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent';
+import {PrintedListHeaderTemplate} from './Components/ListTemplates/PrintedListHeaderTemplate'
 
 
 import {ReconcileComponent} from './Components/Others/ReconcileComponent';
@@ -134,7 +137,8 @@ export const Components =
         BanksPageComponent,
         MiscPageComponent,
         InterestPageComponent,
-        BatchInvoicesComponent, 
+        BatchInvoicesComponent,
+        BatchPrintComponent, 
         //New Entites
         NewGLAccountComponent,
         NewChartOfAccountComponent,
@@ -207,6 +211,8 @@ export const Components =
         ReconciliationLineListTemplate,
         CashBookLineListTemplate,
         InterestReportListTemplate,
+        InterestInvoiceListTemplate,
+        PrintedListHeaderTemplate,
         //Others
         ReconcileComponent,
         ReconciledMessage,
@@ -339,6 +345,10 @@ export class ModuleDeclarations {
             case "CashBookLineListTemplate": { myResult = CashBookLineListTemplate; break; }
             case "InterestReportLinesByDateListTemplate": { myResult = InterestReportLinesByDateListTemplate; break; }
             case "InterestReportListTemplate": { myResult = InterestReportListTemplate; break;}
+            case "InterestInvoiceListTemplate" :{myResult =InterestInvoiceListTemplate; break;}
+            case "PrintedListHeaderTemplate" :{myResult =PrintedListHeaderTemplate; break;}
+
+
             //Others
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }
             case "ReconciledMessage": { myResult = ReconciledMessage; break; }
@@ -371,6 +381,8 @@ export class ModuleDeclarations {
             case "ManageExternalReconciliationTabComponent": { myResult = ManageExternalReconciliationTabComponent; break;}
             case "InterestReportShortTitleComponent": { myResult = InterestReportShortTitleComponent; break;}
             case "BatchInvoicesComponent" :{myResult =BatchInvoicesComponent; break;}
+            case "BatchPrintComponent" :{myResult =BatchPrintComponent; break;}
+
         }
 
         return myResult;

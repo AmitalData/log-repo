@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "503e42a81304f17505ea4ccd04c15e2d";
+		public const string HashString = "7a181fdd7dea525278ed6b67cd5378e5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2616,6 +2616,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportOBatchReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.BatchReport", DefaultText = "Batch Report",LocalDefaultText = @"הפקת דוחות ריבית מרוכזת ", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOAnotherBatchReportStillInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.AnotherBatchReportStillInProgress", DefaultText = "Please wait until all reports that are being created have completed before creating more batch reports.",LocalDefaultText = @"קיימים דוחות בתהליך הפקה , לא ניתן להפיק נוספים עד שיסתיימו", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOBatchPrint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.BatchPrint", DefaultText = "Batch Print",LocalDefaultText = null, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOShowReportsWithPrintedInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ShowReportsWithPrintedInvoices", DefaultText = "Show Reports with Printed Invoices",LocalDefaultText = null, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
