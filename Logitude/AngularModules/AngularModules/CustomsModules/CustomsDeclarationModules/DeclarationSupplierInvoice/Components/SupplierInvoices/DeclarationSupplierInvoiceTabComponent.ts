@@ -611,7 +611,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         }
     }
     accumulationFeature: any;
-    notToCheckFeature: boolean = true;
+    notToCheckFeature: boolean = false;
     NewInvoice() {
         var itemPM = new SupplierInvoicePM();
         itemPM.DeclarationId = this.EntityPM.Id;
