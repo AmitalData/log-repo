@@ -3679,4 +3679,6 @@
     Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
+  <UniqueConstraint
+   Columns="Tenant,ComputedForwarderShipmentNumber" />
 </Table>

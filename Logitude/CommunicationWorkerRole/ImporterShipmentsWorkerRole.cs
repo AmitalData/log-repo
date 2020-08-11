@@ -119,8 +119,8 @@ namespace CommunicationWorkerRole
 
                             queueservice = new DbQueueService(queueName, 0);
                             //queueservice.InitializeQueue("ImportersShipmentQueue", Tenant);
-                            using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
-                            {
+                            //using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
+                            //{
                                 var response = queueservice.Receive();
                                 LastActivity = DateTime.UtcNow;
                                 int tenant = 0;
@@ -1109,14 +1109,14 @@ namespace CommunicationWorkerRole
                                         #endregion
                                     }
 
-                                    scope.Complete();
+                                    //scope.Complete();
                                 }
                                 else
                                 {
-                                    scope.Complete();
+                                    //scope.Complete();
                                     Thread.Sleep(10000);
                                 }
-                            }
+                            //}
                         }
                         catch (Exception ex)
                         {
