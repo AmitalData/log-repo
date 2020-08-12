@@ -58,6 +58,17 @@
                                 </td>
                             </tr>
 
+                            <!-- IsBondedWarehouse -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 120px;">
+                                    <LogLabel [ObjectFieldName]="'IsBondedWarehouse'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogCheckBox [Checked]="IsBondedWarehouse" [ObjectFieldName]="'IsBondedWarehouse'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+                            </tr>
+
                             <!-- WarehouseLegReference -->
                             <tr class="FormFieldRow">
                                 <td>
@@ -466,7 +477,7 @@
                         <div></div>
                     </td>
                     <td *ngIf="IsShowNewWarehouseEntryButton" style="width: 130px;">
-                        <button style="width:130px;float:right;" class="Button" (click)="NewWarehouseEntryButtonClicked()">New Cross Dock Entry</button>
+                        <button [disabled]="DisableNewWarehouseEntryButton" style="width:130px;float:right;" class="Button" (click)="NewWarehouseEntryButtonClicked()">New Cross Dock Entry</button>
                     </td>
 
                     <td *ngIf="IsShowNewWarehouseEntryButton" style="width: 5px;">

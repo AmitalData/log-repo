@@ -382,5 +382,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return warehouse;
         }
+    
+        public string GetWarehouseTypeById(string warehouseId, int tenant)
+        {
+            return repository.GetWarehouseTypeById(warehouseId, tenant);
+        }
     }
 }

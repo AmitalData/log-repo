@@ -28,6 +28,7 @@ import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList'
 import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
 import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
+import { WarehouseEntryListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseEntryListExtendedService';
 
 @Component({
     moduleId: './ShipmentModules/ShipmentRouting/Components/Routings/',
@@ -50,6 +51,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public StoragePricingEnabled: boolean = false;
     public StoragePricingMessageVisible: boolean = false;
+    public DisableNewWarehouseEntryButton: boolean = false;
 
     constructor() {
         super();
@@ -66,10 +68,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     private myAddressListService: AddressListService;
     private cardService: CardPMService;
     private cardListService: CardListService;
+    private warehouseEntryListExtendedService: WarehouseEntryListExtendedService;
     InitServices() {
         this.myAddressListService = new AddressListService();
         this.cardService = new CardPMService();
         this.cardListService = new CardListService();
+        this.warehouseEntryListExtendedService = new WarehouseEntryListExtendedService();
     }
 
     GetShipmentDirection() {
@@ -109,6 +113,9 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
             this.GetShipmentDirection();
             this.SetStorageDays();
+            if (this.IsBondedWarehouse && this.IsImportShipment) {
+                this.SetIsBondedWarehouseProperities();
+            }
         }
          
         this.ObjectTableName = args['ObjectTableName'];
@@ -154,6 +161,15 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
     }
 
+    SetIsBondedWarehouseProperities() {
+        this.warehouseEntryListExtendedService.GetWarehouseEntriesByShipmentId(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
+            var warehouseEntries = serviceResponse.Result;
+            if (warehouseEntries && warehouseEntries.length > 0) {
+                this.DisableNewWarehouseEntryButton = true;
+            }
+        });
+    }
+
     public IsEditingEnabled: boolean = true;
     public IsFirmCodeVisible: boolean = true;
     SetUIProperties() {
@@ -161,6 +177,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.IsEditingEnabled = isEditingEnabled;
         this.IsFirmCodeVisible = (this.TenantPM.CountryCode.toUpperCase()) == "US" ? true : false;
 
+        this.UIProperties.SetEnabled("IsBonded", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("ChargeStorage", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("WarehouseLegWarehouseId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("WarehouseLegAddressId", this.ObjectTableName, isEditingEnabled);
@@ -481,6 +498,16 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             }
 
             this.PricesChanged = true;
+        }
+    }
+
+    get IsBondedWarehouse() { return this.EntityPM.IsBondedWarehouse; }
+    set IsBondedWarehouse(value: boolean) {
+        if (this.EntityPM.IsBondedWarehouse != value) {
+            this.EntityPM.IsBondedWarehouse = value;
+            if (value && this.IsImportShipment) {
+                this.SetIsBondedWarehouseProperities();
+            }
         }
     }
 
