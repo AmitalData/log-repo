@@ -38,6 +38,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Transactions;
@@ -62,12 +63,12 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
-                int tenant = AuthinticateTenant();          
+                int tenant = AuthinticateTenant();
                 var accountingContext = AccountingContext.GetContext(tenant);
-             
+
                 ServiceResponse response = new ServiceResponse();
                 InterestReportListQueryService interestReportListQueryService = new InterestReportListQueryService(accountingContext);
-                QueryOperations queryOperations = CreateQueryOperations(filters, tenant);            
+                QueryOperations queryOperations = CreateQueryOperations(filters, tenant);
                 List<InterestReportList> interestReports = interestReportListQueryService.GetList(queryOperations, tenant);
                 if (filters.GetCount)
                 {
@@ -77,7 +78,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 response.Result = interestReports;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
 
-              
+
             }
             catch (Exception ex)
             {
@@ -111,55 +112,60 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 int tenant = AuthinticateTenant();
                 string email = HttpContext.Current.User.Identity.Name;
                 PdfDocument pdfDoc = new PdfDocument();
+                InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
+                ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
+
                 if (interestReportArgs.AllSelected)
                 {
-                    ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
                     IQueryable<ARInvoice> ARInvoices = aRInvoiceQuery.GetAllInterestInvoices(interestReportArgs.FromDate, interestReportArgs.ToDate, interestReportArgs.ShowPrintedInvoice, tenant);
-                    List<string> SelectedIds = null;
                     if (interestReportArgs.ExcludedIds != null)
                     {
-                        SelectedIds = (from a in ARInvoices
-                                      //where !interestReportArgs.ExcludedIds.Contains(a.Id)
-                                           select a.Id).ToList();
+                        interestReportArgs.SelectedIds = (from a in ARInvoices
+                                                          where !interestReportArgs.ExcludedIds.Contains(a.Id)
+                                                          select a.Id).ToList();
+
                     }
 
-                    for (int i = 0; i < SelectedIds.Count; i++)
-                    {
-                        pdfDoc = PrintInvoicesPDF(email, tenant, SelectedIds[i], pdfDoc);
-                    }
                 }
-                else
+ 
+                interestReportArgs.SelectedIds = interestReportQueryService.GetInterestReprtsWithInvocies(tenant, interestReportArgs.SelectedIds);
+
+                for (int i = 0; i < interestReportArgs.SelectedIds.Count; i++)
                 {
-                    for (int i = 0; i < interestReportArgs.SelectedIds.Count; i++)
+                    string [] EntitiesId = interestReportArgs.SelectedIds[i].Split(',') ;
+                    string InterestReportId = EntitiesId[0];
+                    string ARInvoieId  = EntitiesId[1];
+                    bool IsPrintARInvoice = PrintInvoicesPDF(email, tenant, ARInvoieId, pdfDoc,"999G",false);
+                    if (IsPrintARInvoice)
                     {
-                        pdfDoc = PrintInvoicesPDF(email, tenant, interestReportArgs.SelectedIds[i], pdfDoc);
+                        bool IsPrintInterestReport = PrintInvoicesPDF(email, tenant, InterestReportId, pdfDoc, "ITDT", false);
                     }
-
-                }
-
-
-
+ 
+                 }
 
                 MemoryStream memoryStream = new MemoryStream();
                 pdfDoc.Save(memoryStream);
+             
+
+                var dataBytes = memoryStream.ToArray();
+                var dataStream = new MemoryStream(dataBytes);
 
           
-                    var dataBytes = memoryStream.ToArray();
-                    var dataStream = new MemoryStream(dataBytes);
 
-                    var response = new HttpResponseMessage
-                    {
-                        StatusCode = HttpStatusCode.OK,
-                        Content = new StreamContent(dataStream)
-                    };
+                var response = new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StreamContent(dataStream),
+                };
 
-                    response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-                    {
-                        FileName = "InterestInvoices.pdf"
-                    };
-                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
- 
- 
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = "InterestInvoices.pdf"
+                };
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+
+
+              
                 return response;
             }
             catch (Exception ex)
@@ -169,9 +175,86 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        private string CheckLastBatchAndCreateInvoiceBatch(InterestReportArguments interestReportArgs,int tenant, string email)
+
+        public HttpResponseMessage PutNumberOfDocumentNotPrinted(InterestReportArguments interestReportArgs)
         {
-            string BatchId=null;
+            try
+            {
+                int tenant = AuthinticateTenant();
+                string email = HttpContext.Current.User.Identity.Name;
+                PdfDocument pdfDoc = new PdfDocument();
+                InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
+                ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
+
+                if (interestReportArgs.AllSelected)
+                {
+                    IQueryable<ARInvoice> ARInvoices = aRInvoiceQuery.GetAllInterestInvoices(interestReportArgs.FromDate, interestReportArgs.ToDate, interestReportArgs.ShowPrintedInvoice, tenant);
+                    if (interestReportArgs.ExcludedIds != null)
+                    {
+                        interestReportArgs.SelectedIds = (from a in ARInvoices
+                                                          where !interestReportArgs.ExcludedIds.Contains(a.Id)
+                                                          select a.Id).ToList();
+
+                    }
+
+                }
+
+                interestReportArgs.SelectedIds = interestReportQueryService.GetInterestReprtsWithInvocies(tenant, interestReportArgs.SelectedIds);
+                List<string> ARInvoiceIdsNotPrinted = new List<string>();
+                List<string> InterestReportIdsNotPrinted = new List<string>();
+
+                for (int i = 0; i < interestReportArgs.SelectedIds.Count; i++)
+                {
+                    string[] EntitiesId = interestReportArgs.SelectedIds[i].Split(',');
+                    string InterestReportId = EntitiesId[0];
+                    string ARInvoieId = EntitiesId[1];
+                    bool IsPrintARInvoice = PrintInvoicesPDF(email, tenant, ARInvoieId, pdfDoc, "999G",true);
+                    if (IsPrintARInvoice)
+                    {
+                        bool IsPrintInterestReport = PrintInvoicesPDF(email, tenant, InterestReportId, pdfDoc, "ITDT", true);
+                        if (!IsPrintInterestReport)
+                        {
+                            InterestReportIdsNotPrinted.Add(InterestReportId);
+                        }
+                    }
+                    else
+                    {
+                        ARInvoiceIdsNotPrinted.Add(ARInvoieId);
+
+                    }
+                }
+
+ 
+                List<string> ARInvoiceNumbersNotPrinted = null;
+                List<string> InterestReportNumbersNotPrinted = null;
+                if (ARInvoiceIdsNotPrinted != null && ARInvoiceIdsNotPrinted.Count() > 0)
+                {
+                    ARInvoiceNumbersNotPrinted = aRInvoiceQuery.GetInterestInvoiceNumbersByIds(ARInvoiceIdsNotPrinted, tenant);
+
+                }
+                if (InterestReportIdsNotPrinted != null && InterestReportIdsNotPrinted.Count() > 0)
+                {
+                    InterestReportNumbersNotPrinted = interestReportQueryService.GetInterestReportNumbersByIds(InterestReportIdsNotPrinted, tenant);
+
+                }
+ 
+                PDFDocumentInvoices pDFDocumentInvoices = new PDFDocumentInvoices();
+                pDFDocumentInvoices.ARInvoiceNumbersNotPrinted = ARInvoiceNumbersNotPrinted;
+                pDFDocumentInvoices.InterestReportNumbersNotPrinted = InterestReportNumbersNotPrinted;
+ 
+ 
+                return Request.CreateResponse(HttpStatusCode.OK, pDFDocumentInvoices);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        private string CheckLastBatchAndCreateInvoiceBatch(InterestReportArguments interestReportArgs, int tenant, string email)
+        {
+            string BatchId = null;
             InterestLastBatchServiceQueryService interestLastBatchServiceQueryService = new InterestLastBatchServiceQueryService(tenant);
             InterestLastBatchServicePM InterestLastBatchService = interestLastBatchServiceQueryService.CheckInterestLastBatchServicesByTenant(tenant);
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
@@ -198,7 +281,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
             else if (InterestLastBatchService != null && string.IsNullOrEmpty(InterestLastBatchService.CreateInvoicesBatchId))
             {
-                BatchId= CreateBatchInvoice(interestReportArgs, tenant, email);
+                BatchId = CreateBatchInvoice(interestReportArgs, tenant, email);
                 InterestLastBatchService.CreateInvoicesBatchId = BatchId;
                 InterestLastBatchService.ChangeSetOp = ChangeSetOperation.Update;
                 interestLastBatchServiceUpdateService.Update(InterestLastBatchService, true);
@@ -207,8 +290,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
             else if (InterestLastBatchService == null)
             {
-                BatchId= CreateBatchInvoice(interestReportArgs, tenant, email);
-               InterestLastBatchService = new InterestLastBatchServicePM();
+                BatchId = CreateBatchInvoice(interestReportArgs, tenant, email);
+                InterestLastBatchService = new InterestLastBatchServicePM();
                 InterestLastBatchService.Tenant = tenant;
                 InterestLastBatchService.CreateInvoicesBatchId = BatchId;
                 InterestLastBatchService.ChangeSetOp = ChangeSetOperation.Insert;
@@ -266,7 +349,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
             return available;
         }
 
-        private PdfDocument   PrintInvoicesPDF(string Email,int? tenant, string SelectId, PdfDocument pdfDoc)
+        private bool PrintInvoicesPDF(string Email, int? tenant, string SelectId, PdfDocument pdfDoc,string DocumentCode,bool IsForChecked)
         {
             try
             {
@@ -275,13 +358,13 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 string userId = "";
                 string documentOutId = null;
                 string email = Email;
-
+                bool IsPrinted = false;
 
                 DocumentOut doucmentOut = null;
                 ICommonDataContext commonContext = CommonDataContext.GetContext((tenant != null ? (int)tenant : 0));
 
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery((int)tenant);
-                string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant("999G", (int)tenant);
+                string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant(DocumentCode, (int)tenant);
 
 
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery((int)tenant);
@@ -294,6 +377,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
                 if (doucmentOut != null)
                 {
+                    bool includeInPrint = true;
+
                     documentOutId = doucmentOut.Id;
                     tenant = doucmentOut.Tenant;
 
@@ -305,8 +390,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
                     foreach (DocumentOutCopy copy in copies)
                     {
-                        
-                        bool includeInPrint = true;
+
                         if (doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
                         {
                             includeInPrint = false;
@@ -330,21 +414,25 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
                         if (includeInPrint)
                         {
-
-                            string documentExtension = up.GetFileExtension(copy.DocumentId, (int)tenant);
-                            string documentId = copy.DocumentId;
-                            if (!string.IsNullOrEmpty(documentExtension))
+                            IsPrinted = true;
+                            if (!IsForChecked)
                             {
-                                _Stream = DownloadFile(documentId, documentExtension, "", (int)tenant);
-                                if (_Stream != null)
+                                string documentExtension = up.GetFileExtension(copy.DocumentId, (int)tenant);
+                                string documentId = copy.DocumentId;
+                                if (!string.IsNullOrEmpty(documentExtension))
                                 {
-                                    PdfDocumentBase.Merge(pdfDoc, _Stream);
-                                    if ((pdfDoc.Pages.Count % 2 == 1) && doucmentOut.DocumentsFiling.DocumentType.Code == "740")
+                                    _Stream = DownloadFile(documentId, documentExtension, "", (int)tenant);
+                                    if (_Stream != null)
                                     {
-                                        pdfDoc.Pages.Add();
+                                        PdfDocumentBase.Merge(pdfDoc, _Stream);
+                                        if ((pdfDoc.Pages.Count % 2 == 1) && doucmentOut.DocumentsFiling.DocumentType.Code == "740")
+                                        {
+                                            pdfDoc.Pages.Add();
+                                        }
                                     }
                                 }
                             }
+                         
 
                             break;
                         }
@@ -356,7 +444,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
 
 
-                return pdfDoc;
+                return IsPrinted;
 
 
 
@@ -418,7 +506,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     }
                     else
                         return null;
- 
+
                 }
                 catch (Exception e)
                 {
@@ -515,12 +603,12 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        private void  UpdateStatusForALLNotInvoicedInterestReports(InterestReportArguments interestReportArgs, int tenant)
-        {            
+        private void UpdateStatusForALLNotInvoicedInterestReports(InterestReportArguments interestReportArgs, int tenant)
+        {
             InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-            
-            List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArgs.FromDate , interestReportArgs.ToDate, tenant);
-           
+
+            List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArgs.FromDate, interestReportArgs.ToDate, tenant);
+
             if (interestReportArgs.ExcludedIds != null)
             {
                 interestReports = (from a in interestReports
@@ -529,11 +617,11 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
             UpdateInterestReports(interestReports, tenant);
         }
-        private void UpdateStatusForSelectedInterestReport(InterestReportArguments interestReportArgs,int tenant)
+        private void UpdateStatusForSelectedInterestReport(InterestReportArguments interestReportArgs, int tenant)
         {
             InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
             List<InterestReportPM> interestReports = interestReportQueryService.GetInterestReportsByIds(interestReportArgs.SelectedIds, tenant);
-            UpdateInterestReports(interestReports,tenant);
+            UpdateInterestReports(interestReports, tenant);
 
         }
         private void UpdateInterestReports(List<InterestReportPM> interestReports, int tenant)
@@ -577,7 +665,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
                 foreach (QueryFilterItem filter in filters_list)
                 {
-                    
+
                     ObjectField field = interestReportObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
 
                     if (field != null)
@@ -600,7 +688,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
             return queryOperations;
         }
 
-        private string CreateBatchTaskExecution(InterestReportArguments args,string Subject , string ClassName)
+        private string CreateBatchTaskExecution(InterestReportArguments args, string Subject, string ClassName)
         {
             // 1- create BTE record
             BatchTaskExecutionPM taskExe;
@@ -653,5 +741,13 @@ namespace WebFreight.Web.Controllers.AccountingModel
         }
 
 
+    }
+
+
+    public class PDFDocumentInvoices
+    {
+        public StreamContent Document { set; get; }
+        public List<string> ARInvoiceNumbersNotPrinted { set; get; }
+        public  List<string> InterestReportNumbersNotPrinted { set; get; }
     }
 }

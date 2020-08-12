@@ -89,7 +89,7 @@
                                [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="Columns" [autoLoad]="true"
                                [QueryChangeEvent]="onQueryChangeEvent" [IsCustomTemplate]="true"
                                [PassAdditionalDataToTemplates]="true"
-                               (DataLoaded)="OnDataLoaded($event)" (CheckBoxChecked)="onCheckBoxChecked($event)"  [IsAllRecordsChecked]="AllSelected"    [CustomColumnsReady]="ColumnsReady">
+                               (DataLoaded)="OnDataLoaded($event)" (SortInvoked)="OnSortInvoked($event)" (CheckBoxChecked)="onCheckBoxChecked($event)"  [IsAllRecordsChecked]="AllSelected"    [CustomColumnsReady]="ColumnsReady">
                 </logitude-grid>
             </div>
         </td>
@@ -108,7 +108,7 @@
                         <div></div>
                     </td>
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="CreateInvoiceButtonClicked()">{{PrintButtonText}}</button>
+                        <button class="RedButton" (click)="GetNumberOfDocumentNotPrinted()">{{PrintButtonText}}</button>
                     </td>
 
                 </tr>
