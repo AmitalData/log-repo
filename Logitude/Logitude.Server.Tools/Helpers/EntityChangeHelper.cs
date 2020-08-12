@@ -587,6 +587,17 @@ namespace Logitude.Server.Tools.Helpers
                     {
                         customObjectFieldLists.Add(objectField);
                     }
+
+
+                    ObjectField partnerObjectField = objectFieldLists.Where(d => d.FieldCode == automationResultEmailRecipient.PartnerObjectFieldCode).FirstOrDefault();
+                    if (partnerObjectField != null && !customObjectFieldLists.Contains(partnerObjectField))
+                    {
+                        customObjectFieldLists.Add(partnerObjectField);
+                    }
+
+
+
+
                 }
 
                 #endregion

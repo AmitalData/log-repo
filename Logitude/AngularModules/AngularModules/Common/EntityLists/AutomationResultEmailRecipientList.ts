@@ -12,5 +12,6 @@ export class AutomationResultEmailRecipientList {
 		AutomationsId: string;
 		RecipientValue: string;
 		RecipientType: string;
+		PartnerObjectFieldCode: string;
 	
 }

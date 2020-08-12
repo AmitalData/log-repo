@@ -33,6 +33,11 @@ namespace Simplog.Data.CommonDataModel.Mapping
                .HasMaxLength(8)
                .IsUnicode(false);
 
+
+            this.Property(t => t.PartnerObjectFieldCode)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+
             this.Property(t => t.RecipientValue)
         
             .HasMaxLength(200)
@@ -54,6 +59,11 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AutomationsId).HasColumnName("AutomationsId");
             this.Property(t => t.RecipientType).HasColumnName("RecipientType");
             this.Property(t => t.RecipientValue).HasColumnName("RecipientValue");
+            this.Property(t => t.PartnerObjectFieldCode).HasColumnName("PartnerObjectFieldCode");
+
+
+
+
 
             this.HasRequired(t => t.Automation)
                 .WithMany()
