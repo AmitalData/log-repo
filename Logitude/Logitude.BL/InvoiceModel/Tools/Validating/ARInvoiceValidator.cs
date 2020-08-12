@@ -1119,19 +1119,18 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                                              && a.StatusCode != "DR"
                                                              && a.StatusCode != "VD"
                                                              && a.InvoiceNumber != a.Id
-                                                             && HasInterestFeature? a.ARInvoiceTypeCode == "IT": a.ARInvoiceTypeCode != "IT"
+                                                             && (HasInterestFeature? a.ARInvoiceTypeCode == "IT": a.ARInvoiceTypeCode != "IT")
                                                              select a).OrderByDescending(d => d.ApprovedDate).FirstOrDefault();
 
                             if (lastApprovedInvoice != null)
                             {
                                 if (entityPM.InvoiceDate < lastApprovedInvoice.InvoiceDate)
                                 {
-                                    ICommonDataContext context = CommonDataContext.GetContext(entityPM.Tenant);
-                                    Tenant currentTenant = context.Tenants.Where(t => t.Id == entityPM.Tenant).FirstOrDefault();
                                     string datetimeformat = @"dd\/MM\/yyyy";
-                                    if (!string.IsNullOrEmpty(currentTenant.DateTimeFormat))
+
+                                    if (!string.IsNullOrEmpty(loggedTenant.DateTimeFormat))
                                     {
-                                        datetimeformat = currentTenant.DateTimeFormat;
+                                        datetimeformat = loggedTenant.DateTimeFormat;
                                     }
 
                                     string dateString = lastApprovedInvoice.InvoiceDate.Value.ToString(datetimeformat, CultureInfo.CurrentCulture);
