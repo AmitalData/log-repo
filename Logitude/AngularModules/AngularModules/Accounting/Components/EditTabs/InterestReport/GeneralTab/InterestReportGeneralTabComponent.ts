@@ -128,7 +128,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         logWindow.WindowClosed.subscribe(s => {
             if (s!=null) {
               this.InterestCalculationDate = s;
-              this.CurrentSession.CurrentEditComponent.SaveChanges();
+              //this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
         })
     }
@@ -193,6 +193,16 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
             this.EntityPM.GLAccountInterestCreditLimit = newValue;
         }
     }
+
+    get IsDraftReport() {
+        if (this.EntityPM != null && this.EntityPM.InterestReportStatusCode == '1') {
+            return true;
+        }
+        else
+            return false;
+    }
+    
+
     public columns: any[] = null;
     BuildColumns() {
         this.columns = [];

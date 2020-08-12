@@ -199,6 +199,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
             interestReportPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             InterestReportUpdateService service = new InterestReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
+            interestReportPM.IsUpdatedFromBatch = true;
             service.Update(interestReportPM, true);
 
         }

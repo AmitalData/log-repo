@@ -48,7 +48,6 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     }
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        //interestReportPM = interestReportPM ?? interestReportsCreationForCustomerDataPreparation.CreateInterestReportForCustomerGlAccount(eligibleCustomers[i]);
                         if (interestReportPM == null)
                         {
                             interestReportPM = interestReportsCreationForCustomerDataPreparation.CreateInterestReportForCustomerGlAccount(eligibleCustomers[i]);
@@ -107,6 +106,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             interestReportPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
             InterestReportUpdateService interestReportUpdateService = new InterestReportUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+            interestReportPM.IsUpdatedFromBatch = true;
             interestReportUpdateService.Update(interestReportPM, true);
         }
 
