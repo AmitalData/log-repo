@@ -76,11 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-
-
-		public const string HashString = "da2d1baa09e8d68145fdb5e633186293";
-
-
+		public const string HashString = "39ef11e9b48663b9d69f4408048cfa46";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2374,7 +2370,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "UPEV",
                 EnglishName =  "Updated",
-                LocalName =  "עדכון",
+                LocalName =  "Updated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -2392,7 +2388,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "IRCN",
                 EnglishName =  "Cancelled",
-                LocalName =  "בוטל",
+                LocalName =  "Cancelled",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -2410,7 +2406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "IRIN",
                 EnglishName =  "Invoiced",
-                LocalName =  "הופקה חשבונית",
+                LocalName =  "Invoiced",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -2428,7 +2424,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "IRCW",
                 EnglishName =  "Closed without Invoice",
-                LocalName =  "נסגר ללא חשבונית",
+                LocalName =  "Closed without Invoice",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -2446,7 +2442,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "IRIF",
                 EnglishName =  "Invoicing Failed",
-                LocalName =  "הפקת חשבונית נכשלה",
+                LocalName =  "Invoicing Failed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -2464,7 +2460,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "IRFD",
                 EnglishName =  "Failed",
-                LocalName =  "הפקת דוח נכשלה",
+                LocalName =  "Failed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -2482,7 +2478,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "IRCD",
                 EnglishName =  "Created",
-                LocalName =  "נוצר",
+                LocalName =  "Created",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -2500,7 +2496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "IRUP",
                 EnglishName =  "Updated",
-                LocalName =  "עדכון",
+                LocalName =  "Updated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
