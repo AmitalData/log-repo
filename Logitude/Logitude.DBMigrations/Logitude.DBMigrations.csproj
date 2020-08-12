@@ -54,7 +54,6 @@
     <Compile Include="Models\GeneralModels\Arguments.cs" />
     <Compile Include="Models\GeneralModels\DatabaseMigrationSettings.cs" />
     <Compile Include="Models\GeneralModels\DatabaseMigrationsResult.cs" />
-    <Compile Include="Models\GeneralModels\DBConfig.cs" />
     <Compile Include="Models\GeneralModels\DBMigrationsDataScript.cs" />
     <Compile Include="Models\GeneralModels\ToolArguments.cs" />
     <Compile Include="Models\DXMLModels\DXMLGeneratedScript.cs" />

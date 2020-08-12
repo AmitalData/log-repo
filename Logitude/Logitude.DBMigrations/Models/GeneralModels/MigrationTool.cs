@@ -24,17 +24,15 @@ namespace Logitude.DBMigrations.Models
         protected List<DXMLHash> DXMLHashes;
         protected List<ExecutedSxmlFile> ExecutedSxmlFiles;
         protected IncludedModules IncludedModules;
-
-        private Configurations Configurations;
-        private DBConfig DBConfig;
+        protected Configurations Configurations;
 
         public MigrationTool(RunSettings runSettings)
         {
             RunSettings = runSettings;
 
+            ValidateToolVersion();
             ReadConfigurations();
             ReadDBConfig();
-            ValidateToolVersion();
             ValidateToolArguments();
             ValidateToolSettings();
             ValidateAndReadRoot();
@@ -1881,10 +1879,10 @@ namespace Logitude.DBMigrations.Models
 
         protected void ValidateToolSettings()
         {
-            string databaseType = DBConfig.DatabaseType;
-            string globalConnectionString = DBConfig.GlobalConnectionString;
-            string mainConnectionString = DBConfig.MainConnectionString;
-            string systemLogsConnectionString = DBConfig.SystemLogsConnectionString;
+            string databaseType = ToolConfigurations.DatabaseType;
+            string globalConnectionString = ToolConfigurations.GlobalConnectionString;
+            string mainConnectionString = ToolConfigurations.MainConnectionString;
+            string systemLogsConnectionString = ToolConfigurations.SystemLogsConnectionString;
 
             if (String.IsNullOrEmpty(databaseType))
             {
@@ -1915,11 +1913,11 @@ namespace Logitude.DBMigrations.Models
 
         protected void DisplayToolSettings()
         {
-            string databaseType = DBConfig.DatabaseType;
-            string globalConnectionString = DBConfig.GlobalConnectionString;
-            string mainConnectionString = DBConfig.MainConnectionString;
-            string systemLogsConnectionString = DBConfig.SystemLogsConnectionString;
-            string cargoTrackingConnectionString = DBConfig.CargoTrackingConnectionString;
+            string databaseType = ToolConfigurations.DatabaseType;
+            string globalConnectionString = ToolConfigurations.GlobalConnectionString;
+            string mainConnectionString = ToolConfigurations.MainConnectionString;
+            string systemLogsConnectionString = ToolConfigurations.SystemLogsConnectionString;
+            string cargoTrackingConnectionString = ToolConfigurations.CargoTrackingConnectionString;
             string globalDB, globalSource, mainDB, mainSource, systemLogsDB, systemLogsSource, databaseTypeMessage, databaseNameMessage;
             string cargoTrackingDB = null, cargoTrackingSource = null;
 
@@ -2178,10 +2176,10 @@ namespace Logitude.DBMigrations.Models
             return lastCounter;
         }
 
-        private void ReadConfigurations()
+        protected void ReadConfigurations()
         {
             string configurationsFilePath;
-            if (IsArgumentProvided(ToolArguments.DEPLOYMENT))
+            if (ToolArguments.IsArgumentProvided(Arguments.DEPLOYMENT))
             {
                 string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 configurationsFilePath = Path.Combine(projectDirectory, @"Configurations.xml");
@@ -2210,7 +2208,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private void ReadDBConfig()
+        protected void ReadDBConfig()
         {
             try
             {
@@ -2244,14 +2242,11 @@ namespace Logitude.DBMigrations.Models
                 XmlElement systemLogsConnectionStringElement = (XmlElement)doc.SelectSingleNode(string.Format("appSettings/add[@key='{0}']", "SystemLogsConnectionString"));
                 XmlElement cargoTrackingConnectionStringElement = (XmlElement)doc.SelectSingleNode(string.Format("appSettings/add[@key='{0}']", "CargoTrackingConnectionString"));
 
-                DBConfig = new DBConfig
-                {
-                    DatabaseType = databaseTypeElement == null ? null : (databaseTypeElement.Attributes["value"]?.Value),
-                    GlobalConnectionString = globalConnectionStringElement == null ? null : (globalConnectionStringElement.Attributes["value"]?.Value),
-                    MainConnectionString = mainConnectionStringElement == null ? null : (mainConnectionStringElement.Attributes["value"]?.Value),
-                    SystemLogsConnectionString = systemLogsConnectionStringElement == null ? null : (systemLogsConnectionStringElement.Attributes["value"]?.Value),
-                    CargoTrackingConnectionString = cargoTrackingConnectionStringElement == null ? null : (cargoTrackingConnectionStringElement.Attributes["value"]?.Value)
-                };
+                ToolConfigurations.DatabaseType = databaseTypeElement == null ? null : (databaseTypeElement.Attributes["value"]?.Value);
+                ToolConfigurations.GlobalConnectionString = globalConnectionStringElement == null ? null : (globalConnectionStringElement.Attributes["value"]?.Value);
+                ToolConfigurations.MainConnectionString = mainConnectionStringElement == null ? null : (mainConnectionStringElement.Attributes["value"]?.Value);
+                ToolConfigurations.SystemLogsConnectionString = systemLogsConnectionStringElement == null ? null : (systemLogsConnectionStringElement.Attributes["value"]?.Value);
+                ToolConfigurations.CargoTrackingConnectionString = cargoTrackingConnectionStringElement == null ? null : (cargoTrackingConnectionStringElement.Attributes["value"]?.Value);
             }
             catch (Exception)
             {

@@ -9,11 +9,11 @@ namespace Logitude.DBMigrations.Models
 {
     public static class ToolConfigurations
     {
-        public static string DatabaseType = ConfigurationManager.AppSettings["DatabaseType"];
-        public static string GlobalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
-        public static string MainConnectionString = ConfigurationManager.AppSettings["MainConnectionString"];
-        public static string SystemLogsConnectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
-        public static string CargoTrackingConnectionString = ConfigurationManager.AppSettings["CargoTrackingConnectionString"];
+        public static string DatabaseType;
+        public static string GlobalConnectionString;
+        public static string MainConnectionString;
+        public static string SystemLogsConnectionString;
+        public static string CargoTrackingConnectionString;
 
         public static string GetConnectionString(string dbType)
         {
