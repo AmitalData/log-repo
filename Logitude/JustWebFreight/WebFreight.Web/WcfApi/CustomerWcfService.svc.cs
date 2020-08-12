@@ -466,6 +466,12 @@ namespace WebFreight.Web.WcfApi
                                         if (customerCountry != null && tenantEntity.VatMandatoryCountryId == customerCountry.Id)
                                         {
                                             entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+                                            if(entity != null && (entity.Card.Code != entityPM.Code))
+                                            {
+                                                response.HasError = true;
+                                                response.ErrorMessage = "A customer with the same vat and different code already exists.";
+                                                return response;
+                                            }
                                         }
                                     }
 
@@ -490,6 +496,15 @@ namespace WebFreight.Web.WcfApi
                         {
                             entityPM.CreditLimitAmount = entity.CreditLimitAmount;  
                         }
+
+
+                        if (LogitudeSettings.WorkEnvironment == "cloud" && (entity.LogBoxActivated != entityPM.LogBoxActivated))
+                        {
+                            response.HasError = true;
+                            response.ErrorMessage = "Sorry you can't update LogBoxActivated field";
+                            return response;
+                        }
+
 
                         CustomerFieldsUpdateSettingQuery customerFieldsUpdateSettingQuery = new CustomerFieldsUpdateSettingQuery(entityPM.Tenant);
                         List<CustomerFieldsUpdateSettingPM> settings = customerFieldsUpdateSettingQuery.GetCustomerFieldsUpdateSettingPMsByTenant(entityPM.Tenant).ToList();
@@ -596,7 +611,6 @@ namespace WebFreight.Web.WcfApi
             }
 
         }
-
 
 
         public List<CustomerList> GetCustomerList(string searchText, string email, bool myCustomer, int tenant, int skip, int take, ref Response response)

@@ -84,6 +84,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ReceivablesDefaultCurrencyId).HasColumnName("ReceivablesDefaultCurrencyId");
             this.Property(t => t.PayablesDefaultCurrencyId).HasColumnName("PayablesDefaultCurrencyId");
             this.Property(t => t.ApplyRegionalTax).HasColumnName("ApplyRegionalTax");
+            this.Property(t => t.HasPickup).HasColumnName("HasPickup");
+            this.Property(t => t.HasDelivery).HasColumnName("HasDelivery");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

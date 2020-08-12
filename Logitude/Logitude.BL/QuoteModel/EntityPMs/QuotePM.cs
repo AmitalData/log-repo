@@ -116,6 +116,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         public double? ChargeableWeight { get; set; }
         public double? ChargeableWeightInKG { get; set; }
+        public double? PickupDeliveryChargeableWeight { get; set; }
         public double? GrossWeight { get; set; }
         public double? GrossWeightInKG { get; set; }
         public double? GrossWeightPerTon { get; set; }
@@ -155,6 +156,8 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public int? NumberOfPackages { get; set; }
         public int? NumberOfContainers { get; set; }
         public double? Ratio { get; set; }
+        public double? PickupDeliveryRatio { get; set; }
+
         public double? DimFactor { get; set; }
         public string VolumeUnitCode { get; set; }
         public bool IsDangerous { get; set; }
@@ -676,5 +679,13 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentSubTypeId { get; set; }
         public string ShipmentSubTypeName { get; set; }
+        public string PickupCity { get; set; }
+        public string PickupCountryId { get; set; }
+        public string PickupZipCode { get; set; }
+        public string DeliveryCity { get; set; }
+        public string DeliveryCountryId { get; set; }
+        public string DeliveryZipCode { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? PickupDeliveryVolumetricWeight { get; set; }
     }
 }

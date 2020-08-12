@@ -66,7 +66,6 @@ namespace WebFreight.Web.Helpers
                 MapImporterDepositionPMToImporterDepositionAM(importerDepositionPM, importerDepositionAM);
                 importerDepositionAM.CustomerTenant = (int)customerTenant;
                 string logId = AddAPILogs(importerDepositionAM, "Start Sending Importer Deposition to LogBox ..",tenant);
-
                 string token = string.Empty;
                 APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
                 {
@@ -84,7 +83,7 @@ namespace WebFreight.Web.Helpers
                     token = User.Token;
                 }
 
-                //token = "gDNp0Sp+D90SDbJ7S6N1dQINIBwDr5r01F8=";
+              //  token = "Jmn4iSPqOvya/KOK3QRRJnfyj7SR+XF8iHs=";
 
                 if (!string.IsNullOrEmpty(token))
                 {
@@ -157,13 +156,13 @@ namespace WebFreight.Web.Helpers
             return response;
 
         }
-
         public void StartImporterDeposition(ImporterDepositionAM importerDepositionAM)
         {
             bool isNew = false;
             int tenant = importerDepositionAM.CustomerTenant;
-            CustomsShipperQuery customsShipperQuery = new CustomsShipperQuery(tenant);
+
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+            CustomsShipperQuery customsShipperQuery = new CustomsShipperQuery(tenant);
             CustomsShipperService customsShipperService = new CustomsShipperService(objectContext, tenant);
             CustomsShipperPM customsShipperPM = customsShipperQuery.GetSinglePMByShipperCode(importerDepositionAM.ShipperCode, tenant);
 
@@ -173,7 +172,7 @@ namespace WebFreight.Web.Helpers
                 customsShipperPM = CreateCustomsShipper(importerDepositionAM, tenant, customsShipperService);
             }
 
-            CustomerDepositionRepository customerDepositionRepository = new CustomerDepositionRepository(tenant);
+            CustomerDepositionRepository customerDepositionRepository = new CustomerDepositionRepository(objectContext);
             CustomerDeposition customerDeposition = !isNew ? customerDepositionRepository.GetCustomerDepositionByCustomsShipperIdAndDepositionNumber(customsShipperPM.Id, importerDepositionAM.DepositionNumber, tenant) : null;
 
             if (customerDeposition == null)
@@ -182,33 +181,23 @@ namespace WebFreight.Web.Helpers
             }
             else
             {
-                if (customerDeposition.ValidityStartDate != importerDepositionAM.ValidityStartDate || customerDeposition.ValidityEndDate != importerDepositionAM.ValidityEndDate)
-                {
-                    customerDeposition.ValidityStartDate = importerDepositionAM.ValidityStartDate;
-                    customerDeposition.ValidityEndDate = importerDepositionAM.ValidityEndDate;
-                    customerDepositionRepository.Update(customerDeposition);
-                    customerDepositionRepository.SubmitChanges();
-                }
+                customerDeposition.ValidityStartDate = importerDepositionAM.ValidityStartDate;
+                customerDeposition.ValidityEndDate = importerDepositionAM.ValidityEndDate;
+                customerDepositionRepository.Update(customerDeposition);
+                customerDepositionRepository.SubmitChanges();
             }
 
 
             if (!isNew)
             {
-                CustomerDeposition validCustomerDeposition = customerDepositionRepository.GetValidityCustomerDepositionByCustomsShipperId(customsShipperPM.Id, customsShipperPM.Tenant);
-                if (validCustomerDeposition != null)
+                if (customerDeposition.ValidityEndDate > customsShipperPM.ValidityEndDate)
                 {
-                    if (customerDeposition.ValidityEndDate > validCustomerDeposition.ValidityEndDate) validCustomerDeposition = customerDeposition;
-                    if (customsShipperPM.ValidityStartDate != validCustomerDeposition.ValidityStartDate || customsShipperPM.ValidityEndDate != validCustomerDeposition.ValidityEndDate)
-                    {
-                        customsShipperPM.ValidityStartDate = validCustomerDeposition.ValidityStartDate;
-                        customsShipperPM.ValidityEndDate = validCustomerDeposition.ValidityEndDate;
-                        customsShipperPM.ValidDepositionNumber = validCustomerDeposition.DepositionNumber;
-                        customsShipperService.Update(customsShipperPM);
-                    }
+                    customsShipperPM.ValidityStartDate = customerDeposition.ValidityStartDate;
+                    customsShipperPM.ValidityEndDate = customerDeposition.ValidityEndDate;
+                    customsShipperPM.ValidDepositionNumber = customerDeposition.DepositionNumber;
+                    customsShipperService.Update(customsShipperPM);
                 }
-
             }
-
 
         }
 

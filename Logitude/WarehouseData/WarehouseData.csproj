@@ -335,7 +335,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\WarehouseDataViews\WarehouseDataViews.csproj">
+      <Project>{3ff3b8d8-d4fb-4e48-8e08-f28ba6904fa0}</Project>
+      <Name>WarehouseDataViews</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

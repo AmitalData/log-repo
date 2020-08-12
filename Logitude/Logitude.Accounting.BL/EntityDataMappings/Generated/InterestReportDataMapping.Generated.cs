@@ -77,7 +77,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CustomerLocalName, 
 	         EnableInvoiceing, 
 	         IsFirstReport, 
-	         InvoiceFailureReason,
+	         InvoiceFailureReason, 
+	         IsCreatedFromBatch, 
+	         BatchReportUserEmail, 
+	         RecalculateData,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

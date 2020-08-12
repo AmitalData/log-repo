@@ -11,6 +11,7 @@ import {BanksPageComponent} from './Components/Workspaces/Banks/BanksPageCompone
 import { MiscPageComponent } from './Components/Workspaces/Misc/MiscPageComponent';
 import { InterestPageComponent } from './Components/Workspaces/Interest/InterestPageComponent';
 import { BatchInvoicesComponent } from './Components/Others/BatchInvoicesComponent';
+import { BatchPrintComponent } from './Components/Others/BatchPrintComponent';
 
 import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
 import {NewChartOfAccountComponent} from './Components/NewEntity/NewChartOfAccountComponent';
@@ -73,7 +74,9 @@ import {ManageReconciliationListTemplate} from './Components/ListTemplates/Manag
 import {TaxReportListTemplate} from './Components/ListTemplates/TaxReportListTemplate';
 import { ReconciliationLineListTemplate } from './Components/ListTemplates/ReconciliationLineListTemplate';
 import {InterestReportListTemplate} from './Components/ListTemplates/InterestReportListTemplate'
+import {InterestInvoiceListTemplate} from './Components/ListTemplates/InterestInvoiceListTemplate'
 import { InterestBasesTypeDetailsTabComponent } from './Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent';
+import {PrintedListHeaderTemplate} from './Components/ListTemplates/PrintedListHeaderTemplate'
 
 
 import {ReconcileComponent} from './Components/Others/ReconcileComponent';
@@ -95,6 +98,7 @@ import { TaxDeductionReportLogTabComponent } from './Components/EditTabs/TaxDedu
 import { NewTaxDeductionReportComponent } from './Components/NewEntity/NewTaxDeductionReportComponent';
 import { AddEditInterestBasesPeriodComponent } from './Components/EditTabs/Interest/DetailsTab/AddEditInterestBasesPeriod/AddEditInterestBasesPeriodComponent';
 import { ExtReconcileAdjustBankFeeComponent } from './Components/Others/ExtReconcileAdjustBankFeeComponent';
+import { CreateInterestReportsForCustomersComponent } from './Components/Others/CreateInterestReportsForCustomersComponent';
 
 // Short Titles
 import {GLAccountShortTitleComponent} from './Components/ShortTitles/GLAccountShortTitleComponent';
@@ -116,8 +120,15 @@ import { InterestReportLinesByDateListTemplate } from './Components/ListTemplate
 import { InterestReportShortTitleComponent } from './Components/ShortTiTles/InterestReportShortTitleComponent';
 import { ConnectWithGLAccountComponent } from './Components/EditTabs/GLAccount/ConnectWithGLAccountComponent';
 import { InterestReportEditOpenBalanceComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportEditOpenBalance/InterestReportEditOpenBalanceComponent';
+
 import { CargoTrackingServiceComponent } from './Components/Others/CargoTrackingService/CargoTrackingServiceComponent';
 import { CargoTrackingBuildShipmentComponent } from './Components/Others/CargoTrackingService/CargoTrackingBuildShipmentComponent';
+import { CargoTrackingIncrementalStatistics } from './Components/Others/CargoTrackingService/CargoTrackingIncrementalStatistics';
+import { CargoTrackingIncrementalStatListTemplate } from './Components/ListTemplates/CargoTrackingIncrementalStatListTemplate';
+
+import { InterestReportEditCalculationDateComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportEditCalculationDate/InterestReportEditCalculationDateComponent';
+
+
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
 
@@ -135,7 +146,8 @@ export const Components =
         BanksPageComponent,
         MiscPageComponent,
         InterestPageComponent,
-        BatchInvoicesComponent, 
+        BatchInvoicesComponent,
+        BatchPrintComponent, 
         //New Entites
         NewGLAccountComponent,
         NewChartOfAccountComponent,
@@ -208,6 +220,8 @@ export const Components =
         ReconciliationLineListTemplate,
         CashBookLineListTemplate,
         InterestReportListTemplate,
+        InterestInvoiceListTemplate,
+        PrintedListHeaderTemplate,
         //Others
         ReconcileComponent,
         ReconciledMessage,
@@ -242,7 +256,15 @@ export const Components =
         InterestReportLinesByDateListTemplate,
         InterestReportShortTitleComponent,
         InterestReportEditOpenBalanceComponent,
-        CargoTrackingBuildShipmentComponent
+        CargoTrackingBuildShipmentComponent,
+        CargoTrackingIncrementalStatistics,
+        CreateInterestReportsForCustomersComponent,
+
+        CargoTrackingIncrementalStatListTemplate,
+
+        InterestReportEditOpenBalanceComponent,
+        InterestReportEditCalculationDateComponent
+
     ];
 
 export class ModuleDeclarations {
@@ -280,6 +302,7 @@ export class ModuleDeclarations {
             case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
             case "LoadRecoExPageComponent": { myResult = LoadRecoExPageComponent; break; }
             case "NewInterestReportComponent": { myResult = NewInterestReportComponent; break; }
+            case "CreateInterestReportsForCustomersComponent": { myResult = CreateInterestReportsForCustomersComponent; break; }
 
             //Maintenance
             case "NewCategory1Component": { myResult = NewCategory1Component; break; }
@@ -340,8 +363,14 @@ export class ModuleDeclarations {
             case "CashBookLineListTemplate": { myResult = CashBookLineListTemplate; break; }
             case "InterestReportLinesByDateListTemplate": { myResult = InterestReportLinesByDateListTemplate; break; }
             case "InterestReportListTemplate": { myResult = InterestReportListTemplate; break;}
+            case "CargoTrackingIncrementalStatListTemplate": { myResult = CargoTrackingIncrementalStatListTemplate; break;}
+            case "InterestInvoiceListTemplate" :{myResult =InterestInvoiceListTemplate; break;}
+            case "PrintedListHeaderTemplate" :{myResult =PrintedListHeaderTemplate; break;}
+
+
             //Others
             case "CargoTrackingBuildShipmentComponent" :{myResult =CargoTrackingBuildShipmentComponent; break;}
+            case "CargoTrackingIncrementalStatistics" :{myResult =CargoTrackingIncrementalStatistics; break;}
             case "CargoTrackingServiceComponent": { myResult = CargoTrackingServiceComponent; break; }
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }
             case "ReconciledMessage": { myResult = ReconciledMessage; break; }
@@ -356,6 +385,7 @@ export class ModuleDeclarations {
             case "TaxReportShortTitleComponent": { myResult = TaxReportShortTitleComponent; break; }
             case "InterestReportLineByDateDetailsComponent": { myResult = InterestReportLineByDateDetailsComponent; break; }
             case "InterestReportEditOpenBalanceComponent": { myResult = InterestReportEditOpenBalanceComponent; break; }
+            case "InterestReportEditCalculationDateComponent": { myResult = InterestReportEditCalculationDateComponent; break; }
             case "GLAccountSearchWindowComponent": {
                 myResult = GLAccountSearchWindowComponent; break;
             }
@@ -374,8 +404,11 @@ export class ModuleDeclarations {
             case "ManageExternalReconciliationTabComponent": { myResult = ManageExternalReconciliationTabComponent; break;}
             case "InterestReportShortTitleComponent": { myResult = InterestReportShortTitleComponent; break;}
             case "BatchInvoicesComponent" :{myResult =BatchInvoicesComponent; break;}
+            case "BatchPrintComponent" :{myResult =BatchPrintComponent; break;}
+
         }
 
         return myResult;
     }
 }
+

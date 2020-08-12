@@ -46,17 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CargoTracking.BL\HelperClasses\CargoArgs.cs" />
-    <Compile Include="CargoTracking.BL\HelperClasses\CargoDeleteRowsArgs.cs" />
-    <Compile Include="CargoTracking.BL\HelperClasses\CargoTable.cs" />
-    <Compile Include="CargoTracking.BL\Services\CargoTrackingTableCondition.cs" />
-    <Compile Include="CargoTracking.BL\Services\CargoTrackingCustomMappingService.cs" />
-    <Compile Include="CargoTracking.BL\Services\CargoTrackingBlockRecordsService.cs" />
-    <Compile Include="CargoTracking.BL\Services\CargoTrackingTableLogicAfterUpdating.cs" />
-    <Compile Include="CargoTracking.BL\Services\CargoTrackingSearchService.cs" />
-    <Compile Include="CargoTracking.BL\Services\CargoTrackingUpdatedAfterFinishMapping.cs" />
-    <Compile Include="CargoTracking.BL\Services\CargoTrackingTableLogicService.cs" />
-    <Compile Include="CargoTracking.BL\Services\CargoTrackingMainService.cs" />
     <Compile Include="CargoTrackingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +79,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.CargoTracking.BL\Logitude.CargoTracking.BL.csproj">
+      <Project>{6b7fb227-28d2-45b8-b079-2e2f4251510d}</Project>
+      <Name>Logitude.CargoTracking.BL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

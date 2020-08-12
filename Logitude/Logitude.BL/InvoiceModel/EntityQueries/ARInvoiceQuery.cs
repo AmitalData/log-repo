@@ -1949,7 +1949,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 if (tenantPOCO != null && tenantPOCO.AccountingActivated)
                 {
                     JournalRepository rep = new JournalRepository(tenant);
-                    JournalEntity journal = rep.GetJournalByAccountingEntityId(entityPM.Id, tenant);
+                    JournalEntity journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id,"2", tenant); // 2- ARInvoice
                     if (journal != null)
                     {
                         entityPM.JournalId = journal.JournalId;
@@ -1984,7 +1984,15 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return securedEntityPM;
         }
-
+        public IQueryable<ARInvoice> GetAllInterestInvoices(DateTime fromDate, DateTime toDate,bool ShowPrintedInvoice, int tenant)
+        {
+            var result = (from a in repository.context.ARInvoices where a.ARInvoiceTypeCode== "IT" && a.InvoiceDate >= fromDate && a.InvoiceDate <= toDate  select a);
+            if (!ShowPrintedInvoice)
+            {
+                result = result.Where(s => s.IsPrinted == false);
+            }
+            return result;
+        }
         public IQueryable<ARInvoiceList> GetInvoiceListByTenant(int tenant)
         {
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
@@ -2198,6 +2206,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             List<ARInvoicePM> pms = entityPOCOs.Select(poco => GetSingleMappedEntityPM(poco, true)).ToList();
             return pms;
+        }
+
+        public string GetARinvoiceTypeCode(string id, int tenant)
+        {
+            ARInvoice invoice = (from a in repository.context.ARInvoices
+                                 where a.Id == id && a.Tenant == tenant select a).FirstOrDefault();
+            return invoice != null ? invoice.ARInvoiceTypeCode : null;
         }
 
     }

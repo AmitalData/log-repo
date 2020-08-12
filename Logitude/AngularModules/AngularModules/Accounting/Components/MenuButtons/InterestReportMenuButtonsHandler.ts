@@ -73,7 +73,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                             }
                         case "CreateInvoice":
                             {
-                                if (this.EntityPM.InterestReportStatusCode == "1")
+                                if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "9" )
                                     button.IsDisabled = false;
                                 else
                                     button.IsDisabled = true;
@@ -271,6 +271,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         _ARInvoicePM.UpdatedByUserId = SessionLocator.LoggedUserId;
         _ARInvoicePM.MainEntityId = null;
         _ARInvoicePM.MainEntityReference = null;
+        _ARInvoicePM.HasInterestFeature=true;
         _ARInvoicePM.HouseNumber = null;
         _ARInvoicePM.MasterNumber = null;
         var myDescription: string = null;
@@ -307,7 +308,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
             _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList.VatTypeId; 
 
         //  }
-         _ARInvoiceLinePM.GLAccountId = this.EntityPM.GLAccountId;
+         _ARInvoiceLinePM.GLAccountId = this.chargesTypeList.ReceivableCreditGLAccountId;
         _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
          var objectTable = window.ObjectTables.filter(d => d.Name === "InterestReport")[0];
         var objectTableId = objectTable.Id;

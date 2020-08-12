@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,35 +52,67 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CargoTrackingServices\HelperClasses\CargoArgs.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\CargoDeleteRowsArgs.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\CargoTable.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingIncrementalArgs.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\SqlTableCreator.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingBlockRecordsService.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingCustomMappingService.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingMainService.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingSearchService.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingTableCondition.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingTableLogicAfterUpdating.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingTableLogicService.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingUpdatedAfterFinishMapping.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTrackingHeaderEntityTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTrackingMilestoneDetails.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CargoTrackingHeaderEntityTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CargoTrackingMilestoneStruct.Generated.cs" />
+    <Compile Include="CoreBL\Batch\BuildCargoTrackingShipments.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingCardDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CargoTrackingCountryDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingHeaderEntityTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CargoTrackingIncrementalStatDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingMilestoneDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingPortDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingShipmentDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingShipmentSearchDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CargoTrackingTransportModeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CargoTrackingWatermarkDataMapping.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingCardDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoTrackingCountryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingHeaderEntityTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoTrackingIncrementalStatDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingMilestoneDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingPortDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingShipmentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingShipmentSearchDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoTrackingTransportModeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoTrackingWatermarkDataMapping.Generated.cs" />
+    <Compile Include="EntityQueryServices\CargoTrackingIncrementalStatQueryService.cs" />
+    <Compile Include="EntityQueryServices\CargoTrackingWatermarkQueryService.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingShipmentSearchQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingCardQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoTrackingCountryQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingHeaderEntityTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoTrackingIncrementalStatQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingMilestoneQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingPortQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingShipmentQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingShipmentSearchQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoTrackingTransportModeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoTrackingWatermarkQueryService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingCardUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CargoTrackingCountryUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingHeaderEntityTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CargoTrackingIncrementalStatUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingMilestoneUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingPortUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingShipmentSearchUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingShipmentUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CargoTrackingTransportModeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CargoTrackingWatermarkUpdateService.Generated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +126,10 @@
     <ProjectReference Include="..\Logitude.CargoTracking.Def\Logitude.CargoTracking.Def.csproj">
       <Project>{1602a405-278e-4ff9-b7b5-dfc6e525b497}</Project>
       <Name>Logitude.CargoTracking.Def</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
+      <Project>{BD959AB6-4476-48B3-AA4D-CFD7ED120E55}</Project>
+      <Name>Logitude.Infrastructure.BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
@@ -110,6 +147,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

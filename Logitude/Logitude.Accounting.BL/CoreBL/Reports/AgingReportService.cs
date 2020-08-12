@@ -485,12 +485,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      {
                          AccountId = acc.Id,
                          AccountDisplayNumber = acc.DisplayNumber,
+                         AccountInternalNumber = acc.InternalNumber,
+                         InterestCreditLimit = acc.InterestCreditLimit,
                          AccountTermName = card.PaymentTerm.EnglishName,
+
+                         CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
 
                          AccountTermLocalName = card.PaymentTerm.LocalName,
 
 
-                         CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
+                         //CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
+
+
 
                          CurrencyCode = acc.CurrencyCode,
                          CreditLimitAmount =
@@ -499,9 +505,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                          CreditStatusAmount_AsIs = cust != null ? (cust.CreditLimitAmount != null ? (double)cust.CreditLimitAmount : 0) : 0,
                          BalanceInLocalCurrency = moredata != null ? (decimal)moredata.BalanceInLocalCurrency : 0.00m,
-                         
                          CustomerVatNumber = card.VatNumber,
-                         GLAccountStandardInterestRate = (decimal)(glaPeriod.StandardAddInterestPercent == null ? 0 : glaPeriod.StandardAddInterestPercent+basePeriod.InterestRate),
+                         GLAccountStandardInterestRate = (decimal)(glaPeriod.StandardAddInterestPercent == null ? 0  : basePeriod.InterestRate ==null? glaPeriod.StandardAddInterestPercent : glaPeriod.StandardAddInterestPercent+basePeriod.InterestRate),
 
 
                             //CreditStatusAmount= 
@@ -561,8 +566,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         AccountEnglishName = r.AccountEnglishName,
                         AccountLocalName = r.AccountLocalName,
                         AccountDisplayNumber = r.AccountDisplayNumber,
+                        AccountInternalNumber = r.AccountInternalNumber,
                         AccountCurrencyCode = r.AccountCurrencyCode,
                         AccountTermName = r.AccountTermName,
+                        InterestCreditLimit = r.InterestCreditLimit,
                         CreditLimitAmount = r.CreditLimitAmount,
                         CreditStatusAmount_AsIs = r.CreditStatusAmount_AsIs,
                         CreditStatusAmount =
@@ -667,10 +674,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                       AccountEnglishName = account.AccountEnglishName,
                                                       AccountLocalName = account.AccountLocalName,
                                                       AccountDisplayNumber = account.AccountDisplayNumber,
+                                                      AccountInternalNumber = account.AccountInternalNumber,
                                                       AccountCurrencyCode = account.AccountCurrencyCode,
                                                       AccountTermName = account.AccountTermName,
 
                                                       CreditLimitAmount = account.CreditLimitAmount,
+                                                      InterestCreditLimit = account.InterestCreditLimit,
                                                       CreditStatusAmount_AsIs = account.CreditStatusAmount_AsIs,
                                                       BalanceInLocalCurrency = splitAccount!=null ? splitAccount.BalanceInLocalCurrency: account.BalanceInLocalCurrency,
                                                       TotalOpenShipments = account.TotalOpenShipments,
@@ -814,14 +823,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             {
                 throw new Exception("ManipulateFifoPerCurrency:::dbList.Select( r=>r.CurrencyId).Distinct().Count()!=1");
             }
-            dbList = dbList.OrderByDescending(rec => rec.OrderDate).ThenBy(r => r.OrderDateB4).ToList();
+            dbList = dbList.OrderBy(rec => rec.OrderDate).ThenByDescending(r => r.OrderDateB4).ToList();
 
             //we’ll need to offset the credit from the later month to earlier debits:
             var firstPlusPeriod = dbList.FirstOrDefault(r => r.Total > 0);
 
             if (firstPlusPeriod == null ) return dbList;
 
-            var biggerThanFirstList = dbList.Where(r => r.OrderDate > firstPlusPeriod.OrderDate).ToList();
+            var biggerThanFirstList = dbList;//.Where(r => r.OrderDate > firstPlusPeriod.OrderDate).ToList();
             if(biggerThanFirstList.Count() == 0) return dbList; 
 
             var firstMinusPeriod_ThatAfterFirstPlus = biggerThanFirstList.FirstOrDefault(r => r.Total < 0);
@@ -849,6 +858,52 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
             return ManipulateFifoPerAccCurr(dbList);
         }
+
+
+
+        private List<PeriodM> ManipulateFifoPerAccCurr_BAD(List<PeriodM> dbList)
+        {
+
+            if (dbList.Select(r => new { r.AccountId, r.CurrencyId }).Distinct().Count() != 1)
+            {
+                throw new Exception("ManipulateFifoPerCurrency:::dbList.Select( r=>r.CurrencyId).Distinct().Count()!=1");
+            }
+            dbList = dbList.OrderByDescending(rec => rec.OrderDate).ThenBy(r => r.OrderDateB4).ToList();
+
+            //we’ll need to offset the credit from the later month to earlier debits:
+            var firstPlusPeriod = dbList.FirstOrDefault(r => r.Total > 0);
+
+            if (firstPlusPeriod == null) return dbList;
+
+            var biggerThanFirstList = dbList.Where(r => r.OrderDate > firstPlusPeriod.OrderDate).ToList();
+            if (biggerThanFirstList.Count() == 0) return dbList;
+
+            var firstMinusPeriod_ThatAfterFirstPlus = biggerThanFirstList.FirstOrDefault(r => r.Total < 0);
+
+            if (firstPlusPeriod == null || firstMinusPeriod_ThatAfterFirstPlus == null)
+            {
+                return dbList;
+            }
+
+            var total1 = firstMinusPeriod_ThatAfterFirstPlus.Total + firstPlusPeriod.Total;
+            if (total1 == 0)
+            {
+                firstMinusPeriod_ThatAfterFirstPlus.Total = firstPlusPeriod.Total = 0;
+            }
+            else if (total1 > 0)
+            {
+                firstPlusPeriod.Total = total1;
+                firstMinusPeriod_ThatAfterFirstPlus.Total = 0;
+
+            }
+            else if (total1 < 0)
+            {
+                firstPlusPeriod.Total = 0;
+                firstMinusPeriod_ThatAfterFirstPlus.Total = total1;
+            }
+            return ManipulateFifoPerAccCurr(dbList);
+        }
+
 
         private void FilterAccountPopulation()
         {
@@ -1331,6 +1386,7 @@ Period	Acc	Currency	Total
 
 
         public string AccountDisplayNumber { get; set; }
+        public string AccountInternalNumber { get; set; }
         public string AccountCurrencyCode { get; set; }
         //accountCardlist.Payment Term: //PaymentTermName = card.PaymentTerm == null ? null : card.PaymentTerm.EnglishName,
         public string AccountTermName { get; set; }
@@ -1369,6 +1425,7 @@ Period	Acc	Currency	Total
 
         //ccountCardlist?accountCardlist.CreditLimitAmount:0>>entityList.CreditLimitAmount = entityPOCO.Customer.CreditLimitAmount;
         public double? CreditLimitAmount { get; set; }
+        public decimal? InterestCreditLimit { get; set; }
 
         //this.creditStatusAmount = (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0) - this.accountTotal;
         public decimal? CreditStatusAmount { get; set; }

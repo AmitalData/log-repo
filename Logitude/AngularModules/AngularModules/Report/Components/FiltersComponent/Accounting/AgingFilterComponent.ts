@@ -1,35 +1,43 @@
-import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {ReportFliter} from '../../../Components/Filters/ReportFliter';
-import {QueryFilterItem} from '../../../Components/Filters/QueryFilterItem';
-import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { FeatureLocator } from './../../../../Infrastructure/Utilities/FeatureLocator';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { ReportFliter } from '../../../Components/Filters/ReportFliter';
+import { QueryFilterItem } from '../../../Components/Filters/QueryFilterItem';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
-    
+
     templateUrl: './AgingFilterComponent.html',
 })
 
-export class AgingFilterComponent extends BaseComponent implements OnInit {
+export class AgingFilterComponent extends BaseComponent implements OnInit
+{
     public DataContext = this;
     public ValidationErrorsList: string[] = [];
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
     isReady: boolean = false;
+    IsSalesmanRestricted: boolean = false;
     public SalesmanFilterItems: ApiQueryFilters;
 
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-
-    constructor() {
+    public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
+    constructor()
+    {
         super();
 
+
         // get requierd resources
-        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response:any) => { this.isReady = true; });
+        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { this.isReady = true; });
+
+        this.GetSalesmanFeature();
 
         // salesman lov field filtera
         this.SalesmanFilterItems = new ApiQueryFilters();
@@ -37,28 +45,65 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
         // set default value for no of months
         var newDate = new Date();
-        var currentMonth = newDate.getMonth()+1;
+        var currentMonth = newDate.getMonth() + 1;
         //this.NumberOfMonths = currentMonth - 6; // 6 backward
         this.NumberOfMonths = 6; // 6 backward
+        this.FillAgingMethodList();
 
     }
 
-    ngOnInit() {
+    GetSalesmanFeature()
+    {
+        var salesmanAging = FeatureLocator.HasFeaturePermession("GLAccount", "SalesmanAging");
+        var isSalesmanRestrictionsEnabled = !!salesmanAging;
+        console.log("[Salesman Aging]", salesmanAging);
+
+        var loggedUser = SessionLocator.LoggedUserPM;
+        if(loggedUser.IsSalesman && isSalesmanRestrictionsEnabled){
+            this.IsSalesmanRestricted = true;
+            this.Salesman = loggedUser.Id;
+        }
+    }
+
+
+    public AgingMethodsList: CodeNameClass[];
+    public Name: string;
+    FillAgingMethodList()
+    {
+        this.Name = this.showLocal ? "LocalName" : "Name";
+
+        this.AgingMethodsList = [];
+        this.AgingMethodsList.push(new CodeNameClass("1", "Open Transaction", "תנועות פתוחות"));
+        this.AgingMethodsList.push(new CodeNameClass("2", "Total By Month FIFO", "סכומים חודשים לפי FIFO"));
+        this.SelectedAgingMethod = this.AgingMethodsList[0];
+    }
+    ngOnInit()
+    {
         this.SetUIProperties();
     }
 
-    SetUIProperties() {
+    SetUIProperties()
+    {
         this.UIProperties.SetRequired("AgingForDate", "GLAccount", true);
         //this.UIProperties.SetRequired("Customer", "GLAccount", true);
         //this.UIProperties.SetRequired("NumberOfMonths", "GLAccount", true);
 
-        if(this.filterSelectedValue == "filter_vendor"){
-            this.UIProperties.SetEnabled("Salesman","GLAccount",false);
-            this.UIProperties.SetEnabled("Collector","GLAccount",false);
-        }else{
-            this.UIProperties.SetEnabled("Salesman","GLAccount",true);
-            this.UIProperties.SetEnabled("Collector","GLAccount",true);
+        if (this.IsSalesmanRestricted)
+        {
+            this.UIProperties.SetRequired("Salesman", "GLAccount", true);
+            this.UIProperties.SetEnabled("Salesman", "GLAccount", false);
         }
+        else
+        {
+            if (this.filterSelectedValue == "filter_vendor") {
+                this.UIProperties.SetEnabled("Salesman", "GLAccount", false);
+                this.UIProperties.SetEnabled("Collector", "GLAccount", false);
+            } else {
+                this.UIProperties.SetEnabled("Salesman", "GLAccount", true);
+                this.UIProperties.SetEnabled("Collector", "GLAccount", true);
+            }
+        }
+
 
     }
 
@@ -67,7 +112,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
     //row 1
     private agingForDate: Date = new Date();
     public get AgingForDate() { return this.agingForDate; }
-    public set AgingForDate(value: Date) {
+    public set AgingForDate(value: Date)
+    {
         if (this.agingForDate != value) {
             this.agingForDate = value;
 
@@ -78,7 +124,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
     private customer: string;
     public get Customer() { return this.customer; }
-    public set Customer(value: string) {
+    public set Customer(value: string)
+    {
         if (this.customer != value) {
             this.customer = value;
 
@@ -89,10 +136,11 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
         }
     }
 
-    ValidateDate() {
+    ValidateDate()
+    {
         if (this.AgingForDate) {
             var newDate = new Date();
-            var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate()+1, 0, 0, 0); // +1 is to include today date to allowed values
+            var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate() + 1, 0, 0, 0); // +1 is to include today date to allowed values
 
             if (this.AgingForDate > currentDate) {
                 this.UIProperties.SetValidity("AgingForDate", "GLAccount", false, TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
@@ -116,7 +164,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
     private numberOfMonths: number;
     public get NumberOfMonths() { return this.numberOfMonths; }
-    public set NumberOfMonths(value: number) {
+    public set NumberOfMonths(value: number)
+    {
         if (this.numberOfMonths != value) {
             this.numberOfMonths = value;
         }
@@ -127,7 +176,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
     private collector: string;
     public get Collector() { return this.collector; }
-    public set Collector(value: string) {
+    public set Collector(value: string)
+    {
         if (this.collector != value) {
             this.collector = value;
         }
@@ -135,7 +185,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
     private salesman: string;
     public get Salesman() { return this.salesman; }
-    public set Salesman(value: string) {
+    public set Salesman(value: string)
+    {
         if (this.salesman != value) {
             this.salesman = value;
         }
@@ -145,7 +196,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
     private category1: string;
     public get Category1() { return this.category1; }
-    public set Category1(value: string) {
+    public set Category1(value: string)
+    {
         if (this.category1 != value) {
             this.category1 = value;
         }
@@ -154,7 +206,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
     private category2: string;
     public get Category2() { return this.category2; }
-    public set Category2(value: string) {
+    public set Category2(value: string)
+    {
         if (this.category2 != value) {
             this.category2 = value;
         }
@@ -162,7 +215,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
     private category3: string;
     public get Category3() { return this.category3; }
-    public set Category3(value: string) {
+    public set Category3(value: string)
+    {
         if (this.category3 != value) {
             this.category3 = value;
         }
@@ -170,7 +224,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
     private category4: string;
     public get Category4() { return this.category4; }
-    public set Category4(value: string) {
+    public set Category4(value: string)
+    {
         if (this.category4 != value) {
             this.category4 = value;
         }
@@ -179,7 +234,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
     //row 4
     private category5: string;
     public get Category5() { return this.category5; }
-    public set Category5(value: string) {
+    public set Category5(value: string)
+    {
         if (this.category5 != value) {
             this.category5 = value;
         }
@@ -187,7 +243,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
     private currenciesDetailed: boolean;
     public get CurrenciesDetailed() { return this.currenciesDetailed; }
-    public set CurrenciesDetailed(value: boolean) {
+    public set CurrenciesDetailed(value: boolean)
+    {
         if (this.currenciesDetailed != value) {
             this.currenciesDetailed = value;
         }
@@ -195,7 +252,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
     private balance: number;
     public get Balance() { return this.balance; }
-    public set Balance(value: number) {
+    public set Balance(value: number)
+    {
         if (this.balance != value) {
             this.balance = value;
         }
@@ -204,7 +262,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
 
     //#endregion
 
-    RunButtonClicked() {
+    RunButtonClicked()
+    {
         this.SetUIProperties();
 
         var errors: string[] = [];
@@ -224,6 +283,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
             errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
         //#endregion
 
+
+
         if (errors.length == 0) {
 
 
@@ -241,15 +302,18 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
             myFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
             myFilterItems.push(new QueryFilterItem("NumberOfMonths", this.NumberOfMonths, "Number"));
             myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
+
             myFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
+
             myFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
+            myFilterItems.push(new QueryFilterItem("AgingMethod", this.SelectedAgingMethod.Name));
 
             myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
             myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
             myFilterItems.push(new QueryFilterItem("GroupByDate", this.DateFilterSelectedValue));
 
-            myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_","")));
-            myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance||0,"decimal"));
+            myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_", "")));
+            myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
@@ -263,6 +327,15 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
         }
     }
 
+    private selectedAgingMethod: CodeNameClass;
+    get SelectedAgingMethod() { return this.selectedAgingMethod; }
+    set SelectedAgingMethod(value: CodeNameClass)
+    {
+        if (this.selectedAgingMethod != value) {
+            this.selectedAgingMethod = value;
+        }
+    }
+
     //#region Category fields
     IsCategoryDisabled: boolean = false;
     CategoriesList: string[] = [
@@ -273,7 +346,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
         'Category 5'
     ];
     SelectedCategory: string;
-    SelectedItemChanged(item) {
+    SelectedItemChanged(item)
+    {
         this.SelectedCategory = item;
     }
     //#endregion
@@ -309,40 +383,41 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
         this.ValidateDate();
 
     }
-      //#endregion
+    //#endregion
 
-      public balanceFilterSelectedValue: string = 'filter_All';
-      BalanceFilterItemClicked(itemValue: string)
-      {
-          if (this.balanceFilterSelectedValue != itemValue) {
-              this.balanceFilterSelectedValue = itemValue;
-              this.BalanceFilterChanged();
-          }
-      }
-      BalanceFilterChanged()
-      {
+    public balanceFilterSelectedValue: string = 'filter_All';
+    BalanceFilterItemClicked(itemValue: string)
+    {
+        if (this.balanceFilterSelectedValue != itemValue) {
+            this.balanceFilterSelectedValue = itemValue;
+            this.BalanceFilterChanged();
+        }
+    }
+    BalanceFilterChanged()
+    {
 
-          switch (this.balanceFilterSelectedValue) {
-              case 'filter_All':
+        switch (this.balanceFilterSelectedValue) {
+            case 'filter_All':
                 //   this.AccountTypeCode = '2';
-                  break;
-              case 'filter_Debtors':
+                break;
+            case 'filter_Debtors':
                 //   this.AccountTypeCode = '2';
-                  break;
-              case 'filter_DebtAbove':
-                  this.balance = 0;
-                  break;
-              default:
-                  break;
-          }
+                break;
+            case 'filter_DebtAbove':
+                this.balance = 0;
+                break;
+            default:
+                break;
+        }
 
-          this.SetUIProperties();
+        this.SetUIProperties();
 
-      }
+    }
 
     // Filter Methods
     public DateFilterSelectedValue: string = 'filter_Due';
-    DateFilterItemClicked(itemValue: string) {
+    DateFilterItemClicked(itemValue: string)
+    {
         if (this.DateFilterSelectedValue != itemValue) {
             this.DateFilterSelectedValue = itemValue;
         }

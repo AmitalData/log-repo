@@ -218,5 +218,10 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int TariffVersion { get; set; }
 
+        public bool HasPickup { get; set; }
+        public bool HasDelivery { get; set; }
+
+
+
     }
 }

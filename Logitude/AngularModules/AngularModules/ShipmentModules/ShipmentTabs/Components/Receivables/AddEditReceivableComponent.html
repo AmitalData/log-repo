@@ -89,10 +89,10 @@
                                                                 <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'UnitPrice'" [Text]="DataContext.UnitPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                             </td>
                                                             <td style="width:18px; font-size:14px;">
-                                                                <label *ngIf="DataContext.MeasurementCode == 'PRVL' || DataContext.MeasurementCode =='PRFR'" >%</label>
+                                                                <label *ngIf="DataContext.MeasurementCode == 'PRVL' || DataContext.MeasurementCode =='PRFR'">%</label>
                                                             </td>
                                                         </tr>
-                                                    </table>                                                   
+                                                    </table>
                                                 </td>
                                             </tr>
 
@@ -137,7 +137,7 @@
                                                             </td>
 
                                                             <td>
-                                                                <span *ngIf="DataContext.IsNewEntity" style="font-size:10px; color:#1B90CB;">{{DataContext.RelativeRateDate}}</span>                                                                
+                                                                <span *ngIf="DataContext.IsNewEntity" style="font-size:10px; color:#1B90CB;">{{DataContext.RelativeRateDate}}</span>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -151,6 +151,14 @@
                                                 </td>
                                                 <td>
                                                     <LogCheckBox [ObjectFieldName]="'IsExchangeRateFixed'" [Checked]="DataContext.IsExchangeRateFixed" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height:25px;" *ngIf="DataContext.MeasurementCode == 'STFE' && DataContext.ARInvoiceId == null">
+                                                <td colspan="2">
+                                                    <div class="OrangeInfo" style="margin: 5px;">
+                                                        <label>In order to edit the amount, go to the warehouse pricing</label>
+                                                    </div>
                                                 </td>
                                             </tr>
 
@@ -178,6 +186,12 @@
 
                                                             <td style="width: 18px;" *ngIf="DataContext.IsFixedAmountIconVisible">
                                                                 <img src="./Images/CellIcons/F-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Receivables.ForeignAmountsetasFixed' | TextCodeTranslationPipe" />
+                                                            </td>
+
+                                                            <td style="width: 40px;vertical-align:central;" *ngIf="DataContext.MeasurementCode == 'STFE' && DataContext.ARInvoiceId == null">
+                                                                <div>
+                                                                    <span style="float:left" class="hyperlink" (click)="DataContext.StoragePricingClicked()">Storage Pricing</span>
+                                                                </div>
                                                             </td>
 
                                                             <td>
@@ -266,6 +280,7 @@
                                                             [LookUpTableName]="'Measurement'"
                                                             [DependencyFilter1Value]="MeasurementDependencyProperty1"
                                                             [DependencyFilter2Value]="false"
+                                                            [QueryFilterItems]="MeasurementsQueryFilters"
                                                             >
                                                     </LogLov>
                                                 </td>

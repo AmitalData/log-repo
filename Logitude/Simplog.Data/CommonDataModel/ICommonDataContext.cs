@@ -226,6 +226,9 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<UserLastSettings> UserLastSettings { get; set; }
         IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
         IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get; set; }
+        IDbSet<WarehouseWeightMeasurement> WarehouseWeightMeasurements { get; set; }
+        IDbSet<WarehouseWeightRounding> WarehouseWeightRoundings { get; set; }
+        IDbSet<WarehouseStoragePricing> WarehouseStoragePricings { get; set; }
 
         void SetAsModified(object entity);
         void DetectChanges();

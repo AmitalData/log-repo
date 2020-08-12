@@ -179,16 +179,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             dataTable1.Columns.Add("Fax Number");
             dataTable1.Columns.Add("E-Mail");
             dataTable1.Columns.Add("Contact Per.");
-            dataTable1.Columns.Add("Account ID = External ID");
+            dataTable1.Columns.Add("Receivables Account ID = Receivables External ID");
+            dataTable1.Columns.Add("Payables Account ID = Payables External ID");
             dataTable1.Columns.Add("Code");
-            var range = "A1:P1";
+            var range = "A1:Q1";
             sheet1.Range["A2:A1001"].DataValidation.ListOfValues = partnersTypes_Sheet.Select(s => s.Code).ToArray();
             sheet1.Range["A2:A1001"].DataValidation.IsSuppressDropDownArrow = false;
             sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
             sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
             sheet1.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
             sheet1.Columns[1].ColumnWidth = sheet1.Columns[6].ColumnWidth = sheet1.Columns[9].ColumnWidth = sheet1.Columns[10].ColumnWidth = sheet1.Columns[11].ColumnWidth = sheet1.Columns[13].ColumnWidth = 14;
-            sheet1.Columns[14].ColumnWidth = 20;
+            sheet1.Columns[14].ColumnWidth = sheet1.Columns[15].ColumnWidth = 20;
             sheet1.ImportDataTable(dataTable1, true, 1, 1);
         }
         [ActionName("PostUploadPartnersExcelFile")]
@@ -208,12 +209,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         LoggedUserEmail = loggedUserEmail,
                         Tenant = authToken.Tenant,
-                        IsConfirmationDuplicateByUser = filter.IsConfirmationDuplicateByUser,
+                        IsConfirmationByUser = filter.IsConfirmationByUser,
                         FileName = filter.FileName,
                     };
-                    
-                    var documentId = this.UploadExcelFileToStorage(fileData, args, authToken.Tenant);
-                    args.DocumentId = documentId;
+
+                    if (string.IsNullOrEmpty(args.DocumentId))
+                    {
+                        var documentId = this.UploadExcelFileToStorage(fileData, args, authToken.Tenant);
+                        args.DocumentId = documentId;
+                    }
 
                     var stringwriter = new System.IO.StringWriter();
                     var serializer = new XmlSerializer(typeof(PartnersUploadExcelParameter));
@@ -2837,6 +2841,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetChargesTypeByCode(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(authToken.Tenant);
+
+                ChargesTypeList chargesTypeList = chargesTypeQuery.GetSingleChargesTypeListByCode(code, authToken.Tenant);                
+
+                return Request.CreateResponse(HttpStatusCode.OK, chargesTypeList);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 
@@ -2891,6 +2913,6 @@ public class PartnersUploadExcelParameter
     public string FileData { get; set; }
     public string DocumentId { get; set; }
     public string LoggedUserEmail { get; set; }
-    public bool IsConfirmationDuplicateByUser { get; set; }
+    public bool IsConfirmationByUser { get; set; }
     public string FileName { get; set; }
 }

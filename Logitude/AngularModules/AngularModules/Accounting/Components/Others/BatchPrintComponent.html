@@ -1,0 +1,119 @@
+<style>
+
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+</style>
+
+
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="12">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 35px;height:23px;">
+            <div>
+                <CheckBox [IsChecked]="AllSelected" (Checked)="AllSelected = $event " [IsEnabled]="IsSelectAllEnabled"></CheckBox>
+
+            </div>
+        </td>
+        <!--<td *ngIf="IsSelectedItemsTextVisibile" style="width:90px">
+            <div style="width: 100%;text-align:center;  height:30px;">
+                <div class="DisbleBox">
+
+                    {{SelectedItemsCountText}}
+
+
+                </div>
+            </div>
+        </td>-->
+        <td style="width: 75px;">
+            {{'Accounting.O.FromDate' | TextCodeTranslationPipe}}
+        </td>
+
+        <td style="width:120px;">
+            <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                                        [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                                                        [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
+        </td>
+
+
+        <!-- ToDate -->
+        <td style="width:10px"></td>
+        <td style="width: 70px;">
+            {{'Accounting.General.O.ToDate' | TextCodeTranslationPipe}}
+        </td>
+
+        <td style="width:120px;">
+            <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                                        [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                                                        [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
+        </td>
+        <td style="width:10px"></td>
+
+        <td style="width: 30px;">
+            <IconButton [Name]="'Refresh'" (click)="Refresh()"></IconButton>
+        </td>
+        <td style="width:10px"></td>
+        <td style="width: 35px;height:23px;">
+            <div>
+                <CheckBox [IsChecked]="ShowPrintedInvoice" (Checked)="ShowPrintedInvoice = $event "></CheckBox>
+
+            </div>
+        </td>
+        <td>
+
+            {{'InterestReport.O.ShowReportsWithPrintedInvoices' | TextCodeTranslationPipe}}
+        </td>
+        <td  ></td>
+
+
+    </tr>
+    <tr style="height:5px"></tr>
+    <tr>
+        <td colspan="12" style="height: 100%; padding-bottom: 3px; vertical-align: top;">
+            <div class="GeneratedGridContainer" style="height: calc(100% - 20px)" *ngIf="LoadGrids">
+                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'ARInvoice'"
+                               [dataSource]="DataSource" [FireCheckBoxChecked]="FireCheckBoxChecked"
+                               [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="Columns" [autoLoad]="true"
+                               [QueryChangeEvent]="onQueryChangeEvent" [IsCustomTemplate]="true"
+                               [PassAdditionalDataToTemplates]="true"
+                               (DataLoaded)="OnDataLoaded($event)" (CheckBoxChecked)="onCheckBoxChecked($event)"  [IsAllRecordsChecked]="AllSelected"    [CustomColumnsReady]="ColumnsReady">
+                </logitude-grid>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td colspan="12" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                 
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 85%">
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="CreateInvoiceButtonClicked()">{{PrintButtonText}}</button>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

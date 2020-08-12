@@ -8648,6 +8648,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsSplitted&quot;"
     ListPropertyPath="&quot;IsSplitted&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -10791,7 +10792,7 @@
       IndexOrder="1"
       LocalDefaultText="&quot;נוספים&quot;"
       FeatureCode="&quot;MOREGLACCOUNT&quot;"
-      IsPackagable="false"
+      IsPackagable="true"
       TextCodeCode="&quot;GLAccount.B.More&quot;"
       FeatureTextCodeCode="&quot;GLAccount.Features.More&quot;"
       FeatureDefaultText="&quot;More Buttons&quot;">
@@ -13089,6 +13090,12 @@
       LocalDefaultText="&quot;הכרטסת מחוברת ליותר מכרטיס תפעולי אחד&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.NoSalesman&quot;"
+      DefaultText="&quot;You cannot run this report without filling the Salesman field&quot;"
+      LocalDefaultText="&quot;לא ניתן להפיק את הדוח ללא בחירת איש מכירות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -13096,15 +13103,6 @@
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;GLAccount.Features.Reconcile&quot;"
       FeatureDefaultText="&quot;Reconcile&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;MOREGLACCOUNT&quot;"
-      FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;GLAccount.Features.More&quot;"
-      FeatureDefaultText="&quot;More Buttons&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
@@ -13132,6 +13130,15 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;YearTransfer.Features.Recv1000MENU&quot;"
       FeatureDefaultText="&quot;Receiving file withholding tax system 1000&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SalesmanAging&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;GLAccount.Features.SalesmanAging&quot;"
+      FeatureDefaultText="&quot;Aging Report Salesman Restrictions&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

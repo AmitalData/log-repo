@@ -305,7 +305,7 @@
                                                                         <td>
                                                                             <div style="margin-left: 2px;">
                                                                                 <!--<IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('S')" [disabled]="!AgentAddressId"></IconButton>
-                                                                                <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('S')"></IconButton>-->
+            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('S')"></IconButton>-->
                                                                             </div>
                                                                         </td>
                                                                         <td [style.width.px]="LabelColumnWidth">
@@ -319,6 +319,9 @@
                                                                                     [LookUpTableName]="'Contact'"
                                                                                     [DependencyFilter1Value]="AgentId">
                                                                             </LogLov>
+                                                                        </td>
+                                                                        <td style="width: 20px;">
+                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddContact(AgentId)"></IconButton>
                                                                         </td>
                                                                     </tr>
 
@@ -346,6 +349,11 @@
                                                                                 </p>
                                                                             </div>
                                                                         </td>
+
+
+                                                                        <td style="width: 20px;">
+                                                                            <div></div>
+                                                                        </td>
                                                                     </tr>
 
                                                                     <tr class="FormFieldRow">
@@ -363,6 +371,10 @@
                                                                         </td>
                                                                         <td [style.width.px]="ControlColumnWidth">
                                                                             <LogTextBox [ObjectFieldName]="'AgentReference2'" [Text]="AgentReference2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+
+                                                                        <td style="width: 20px;">
+                                                                            <div></div>
                                                                         </td>
                                                                     </tr>
                                                                 </table>

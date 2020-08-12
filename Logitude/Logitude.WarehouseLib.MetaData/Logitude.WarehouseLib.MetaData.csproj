@@ -71,6 +71,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>WarehouseClassesGenerated.cs</LastGenOutput>
     </None>
+    <None Include="DBScripts\202007151230_FixNULLChargeableWeightForWarehouseEntries.sxml" />
     <None Include="DBTables\WarehouseEntry.dxml" />
     <None Include="DBTables\WarehouseEntryPackage.dxml" />
     <None Include="DBTables\WarehouseEntryPackagesRelease.dxml" />

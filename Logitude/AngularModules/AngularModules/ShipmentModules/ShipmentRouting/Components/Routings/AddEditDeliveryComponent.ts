@@ -20,6 +20,7 @@ import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/Shipm
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import { ShipmentDeliveryValidator } from '../../../../Shipment/Validators/ShipmentDeliveryValidator';
+import { WarehouseReleaseListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleaseListExtendedService';
 
 @Component({
     
@@ -31,6 +32,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
 
     public EntityPM: ShipmentDeliveryPM;
     myCardListService: CardListService;
+    warehouseReleaseListExtendedService: WarehouseReleaseListExtendedService;
     public ShipmentPM: ShipmentPM;
     public ObjectTableName: string = "ShipmentPickUpDelivery";
     public IsNewEntity: boolean = false;
@@ -41,6 +43,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
     public IsContainerFollowup: boolean = false;
     public ContainerReturnDeliveryId: string = null;
     public IsCreatingContainerDelivery: boolean = false;
+    public DisableNewWarehouseReleaseButton: boolean = true;
     IsShipmentEditComponent: boolean = true;
     WareHouseRelaseCustomerId: string;
     WareHouseRelaseWareHouseId: string;
@@ -48,6 +51,25 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private entityResourceService: EntityResourceService) {
         this.myCardListService = new CardListService();
+        this.warehouseReleaseListExtendedService = new WarehouseReleaseListExtendedService();
+    }
+
+    ReloadData() {
+        this.DisableNewWarehouseReleaseButton = true;
+        if (this.EntityPM && this.ShipmentPM && this.ShipmentPM.DirectionId == 'I') {
+            this.warehouseReleaseListExtendedService.GetNumberOfConnectedWarehouseReleasesByChildEntityReference(this.EntityPM.PickUpDeliveryNumber).subscribe((serviceResponse: any) => {
+                if (serviceResponse.Result == 0) this.DisableNewWarehouseReleaseButton = false;
+            });
+            if (this.ShipmentPM.IsBondedWarehouse) {
+                this.warehouseReleaseListExtendedService.getWarehouseReleaseListsByShipmentId(this.ShipmentPM.Id, this.ShipmentPM.Tenant).subscribe((serviceResponse: ServiceResponse) => {
+                    var warehouseRelease = serviceResponse.Result;
+                    if (warehouseRelease && warehouseRelease.length > 0) {
+                        this.DisableNewWarehouseReleaseButton = true;
+                    }
+                });
+            }
+        }
+        else this.DisableNewWarehouseReleaseButton = false;
     }
 
     SavedEntityId: string;
@@ -72,6 +94,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         }
 
         this.Clone();
+        this.ReloadData();
 
         if (this.ShipmentPM) {
             if (this.ShipmentPM.ShipmentLevelCode == "D" || this.ShipmentPM.ShipmentLevelCode == "H") {
@@ -233,6 +256,10 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         logWindow.Title = "New Cross Dock Release";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./Warehouse/Components/NewWarehouseReleaseComponent");
+        logWindow.WindowClosed.subscribe((event: any) => {
+            this.ReloadData();
+        });
+
         //logWindow.WindowClosed.subscribe((event: any) => {
         //    if (event == "Refresh")
         //        this.ShipmentPM.IsDirty = true;

@@ -102,7 +102,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(845, 424);
+            this.ClientSize = new System.Drawing.Size(848, 576);
             this.Controls.Add(this.BuildWarehouseButton);
             this.Controls.Add(this.PrivateDblabel);
             this.Controls.Add(this.label);

@@ -74,7 +74,7 @@
                     </td>
 
                     <td *ngIf="IsShowNewWarehouseReleaseButton" style="width: 140px;">
-                        <button style="width:140px;float:right;" class="Button" (click)="NewWarehouseReleaseButtonClicked()">New Cross Dock Release</button>
+                        <button [disabled]="DisableNewWarehouseReleaseButton" style="width:140px;float:right;" class="Button" (click)="NewWarehouseReleaseButtonClicked()">New Cross Dock Release</button>
                     </td>
 
 

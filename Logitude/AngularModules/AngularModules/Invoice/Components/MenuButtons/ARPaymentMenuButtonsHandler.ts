@@ -687,7 +687,15 @@ export class ARPaymentMenuButtonsHandler {
         var isValid = true;
         if (errors != null && errors.length > 0) {
             isValid = false;
+
+            errors.forEach(item => {
+                if (this.entityArgs.EditComponent.ValidationErrorsList == null) {
+                    this.entityArgs.EditComponent.ValidationErrorsList = [];
+                }
+                this.entityArgs.EditComponent.ValidationErrorsList.push(item);
+            });
         }
+        
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE" && (this.EntityPM.SATTransferStatusCode == "TD" || this.EntityPM.SATTransferStatusCode == "TG") && (this.EntityPM.StatusCode == "AD" || this.EntityPM.StatusCode == "CL"
             )) {

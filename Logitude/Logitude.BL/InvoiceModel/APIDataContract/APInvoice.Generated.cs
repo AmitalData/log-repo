@@ -114,10 +114,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public string EntityType { get; set; }
     
     public string VendorGLAccount { get; set; }
-    
-    public List<APInvoiceTotalVAT> TotalVATs { get; set; }
-    
-    public bool TotalVATOnly { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

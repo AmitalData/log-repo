@@ -1825,7 +1825,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             if (string.IsNullOrEmpty(line.GLAccountId))
                             {
-                                throw new Exception("The Receivable GLAccount of the Charge Type " + myChargesType.EnglishName + " is NULL");
+                                if (myChargesType.Code == "INT")
+                                {
+                                    bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                                    var msg = TextCodesTranslator.TranslateText("ARInvoice.O.TheReceivableGLAccountOfTheChargeNULL", tenant, showLocals);
+
+                                    throw new Exception(msg);
+
+                                }
+                                else
+                                {
+                                    throw new Exception("The Receivable GLAccount of the Charge Type " + myChargesType.EnglishName + " is NULL");
+
+                                }
                             }
                         }
                     }
@@ -1943,51 +1955,59 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         // Amount
                         double? TotalAmount = 0;
-                        if (item.Quantity != null && item.UnitPrice != null)
+                        if (item.MeasurementCode == "STFE")
                         {
-                            if (string.IsNullOrEmpty(item.MeasurementCode))
+                            TotalAmount = item.ForiegnCurrencyAmount;
+                        }
+
+                        else
+                        {
+                            if (item.Quantity != null && item.UnitPrice != null)
                             {
-                                if (item.MeasurementId != null)
+                                if (string.IsNullOrEmpty(item.MeasurementCode))
                                 {
-                                    Measurement myMeasurement = (from d in myCommonContext.Measurements
-                                                                 where d.Id == item.MeasurementId
-                                                                 && d.Tenant == tenant
-                                                                 select d).FirstOrDefault();
-
-                                    if (myMeasurement != null)
+                                    if (item.MeasurementId != null)
                                     {
-                                        item.MeasurementCode = myMeasurement.Code;
-                                    }
-                                }
-                            }
+                                        Measurement myMeasurement = (from d in myCommonContext.Measurements
+                                                                     where d.Id == item.MeasurementId
+                                                                     && d.Tenant == tenant
+                                                                     select d).FirstOrDefault();
 
-                            if (item.MeasurementCode == "PRVL" || item.MeasurementCode == "PRFR")
-                            {
-                                var price = item.UnitPrice / 100;
-                                TotalAmount = item.Quantity * price;
-                            }
-
-                            else
-                            {
-                                TotalAmount = item.Quantity * item.UnitPrice;
-                            }
-
-                            /* MinMax Quote */
-                            if (TotalAmount != null)
-                            {
-                                if (myReceivable.QuoteSaleMinAmount != null)
-                                {
-                                    if (TotalAmount < myReceivable.QuoteSaleMinAmount)
-                                    {
-                                        TotalAmount = myReceivable.QuoteSaleMinAmount;
+                                        if (myMeasurement != null)
+                                        {
+                                            item.MeasurementCode = myMeasurement.Code;
+                                        }
                                     }
                                 }
 
-                                if (myReceivable.QuoteSaleMaxAmount != null)
+                                if (item.MeasurementCode == "PRVL" || item.MeasurementCode == "PRFR")
                                 {
-                                    if (TotalAmount > myReceivable.QuoteSaleMaxAmount)
+                                    var price = item.UnitPrice / 100;
+                                    TotalAmount = item.Quantity * price;
+                                }
+
+                                else
+                                {
+                                    TotalAmount = item.Quantity * item.UnitPrice;
+                                }
+
+                                /* MinMax Quote */
+                                if (TotalAmount != null)
+                                {
+                                    if (myReceivable.QuoteSaleMinAmount != null)
                                     {
-                                        TotalAmount = myReceivable.QuoteSaleMaxAmount;
+                                        if (TotalAmount < myReceivable.QuoteSaleMinAmount)
+                                        {
+                                            TotalAmount = myReceivable.QuoteSaleMinAmount;
+                                        }
+                                    }
+
+                                    if (myReceivable.QuoteSaleMaxAmount != null)
+                                    {
+                                        if (TotalAmount > myReceivable.QuoteSaleMaxAmount)
+                                        {
+                                            TotalAmount = myReceivable.QuoteSaleMaxAmount;
+                                        }
                                     }
                                 }
                             }
@@ -3571,7 +3591,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
              counter = 1;
             List<JournalLinePM> journalLines = (from d in invoice.InvoiceLines
-                                                group d by new { d.ForiegnCurrencyId, d.ForiegnExchangeRate } into g
+                                                group d by new { d.ForiegnCurrencyId } into g
                                                 select new JournalLinePM()
                                                 {
                                                     Tenant = tenant,
@@ -3585,7 +3605,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                     LocalAmount = (decimal)g.Sum(a => a.LocalCurrencyAmount),
                                                     CurrencyId = g.Key.ForiegnCurrencyId,
                                                     ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
-                                                    ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
+                                                    ExchangeRate = (decimal?) g.Sum(a=> a.ForiegnExchangeRate)/g.Count(),//(decimal)g.Key.ForiegnExchangeRate,
                                                     Reference1 = invoice.InvoiceNumber,
                                                     Reference2 = invoice.MainEntityReference,
                                                     Reference3 = !string.IsNullOrEmpty(invoice.HouseNumber) ? invoice.HouseNumber : invoice.MasterNumber,
@@ -3740,7 +3760,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {
                 JournalRepository rep = new JournalRepository(tenant);
-                JournalEntity journal = rep.GetJournalByAccountingEntityId(entityPM.Id, tenant);
+                JournalEntity journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id,"2", tenant);
                 if (journal != null)
                 {
                     entityPM.JournalId = journal.JournalId;

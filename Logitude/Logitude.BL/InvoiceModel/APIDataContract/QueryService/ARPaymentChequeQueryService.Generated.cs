@@ -55,7 +55,14 @@ using Simplog.Data.InvoiceModel;
 				   temp.ForeignAmount = item.ForeignAmount;
 				   temp.BankBranch = item.BankBranch;
 				   temp.BankAccount = item.BankAccount;
-				   temp.Bank = item.BankId;					
+				   temp.Bank = item.BankId;			  
+				   if(item.StatusCode != null)
+				   {
+					   ARPaymentChequeStatusReplicaQueryService ARPaymentChequeStatusReplicaService0 = new ARPaymentChequeStatusReplicaQueryService(Tenant);
+					   					   temp.ChequeStatus = ARPaymentChequeStatusReplicaService0.GetARPaymentChequeStatusReplicaByCode(item.StatusCode,Tenant); 
+			       
+					   				   }
+				   					
 					MyList.Add(temp);
 				}
 					
@@ -108,7 +115,19 @@ using Simplog.Data.InvoiceModel;
 					temp.ForeignAmount = item.ForeignAmount;
 					temp.BankBranch = item.BankBranch;
 					temp.BankAccount = item.BankAccount;
-					temp.BankId = item.Bank;					   
+					temp.BankId = item.Bank;
+					ARPaymentChequeStatusReplicaQueryService ChequeStatusARPaymentChequeStatusReplicaService = new ARPaymentChequeStatusReplicaQueryService(Tenant);
+					if(item.ChequeStatus != null)
+					{
+						var myChequeStatusPM = ChequeStatusARPaymentChequeStatusReplicaService.ARPaymentChequeStatusReplicaDataMappingAndValidatin(item.ChequeStatus,Tenant,ComputingPartnerName);
+												if(myChequeStatusPM != null)
+						{
+							temp.StatusCode = myChequeStatusPM.Code;
+						}
+						 
+					}
+			
+										   
 						MyList.Add(temp);
 					}
 						

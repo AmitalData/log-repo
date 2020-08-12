@@ -6,8 +6,8 @@
   Module="CargoTracking">
   <Column
     Name="Id"
-    Type="varchar"
-    Size="15">
+    Type="int"
+    Identity="true">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -21,7 +21,7 @@
   <Column
     Name="EntityId"
     Type="varchar"
-    Size="15">
+    Size="16">
     <Constraints
       Nullable="true" />
   </Column>
@@ -158,4 +158,50 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SecurityKey"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsigneeName"
+    Type="varchar"
+    Size="70">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipperName"
+    Type="varchar"
+    Size="70">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomerReference"
+    Type="varchar"
+    Size="101">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="EntityType"
+    ReferencedTable="CargoTrackingHeaderEntityTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CurrentMilestoneCode"
+    ReferencedTable="CargoTrackingMilestones"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="EntityType,EntityId,Tenant" />
 </Table>

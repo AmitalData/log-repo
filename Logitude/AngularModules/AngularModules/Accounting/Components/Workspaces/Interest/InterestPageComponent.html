@@ -101,12 +101,34 @@
                                             </div>
                                             <div class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{'InterestInvoice.O.BatchInterest' |TextCodeTranslationPipe}}</div>
-                                                
+
+                                                <div>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:190px;">
+                                                                <p class="QueryLink" (click)="OpenBatchReportWindow()">{{'InterestReport.O.BatchReport' |TextCodeTranslationPipe}}</p> <!--{{'InterestReport.O.BatchReport' |TextCodeTranslationPipe}}-->
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+
                                                 <div>
                                                     <table>
                                                         <tr>
                                                             <td style="width:190px;">
                                                                 <p class="QueryLink" (click)="RunBatchInvoicesWizard()">{{'InterestReport.O.BatchInvoice' |TextCodeTranslationPipe}}</p>
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+
+                                                <div>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:190px;">
+                                                                <p class="QueryLink" (click)="RunBatchPrintWizard()">{{'InterestReport.O.BatchPrint' |TextCodeTranslationPipe}}</p>
                                                             </td>
                                                         </tr>
 

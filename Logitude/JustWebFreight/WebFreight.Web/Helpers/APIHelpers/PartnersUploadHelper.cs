@@ -33,7 +33,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private PartnerTypeRepository partnerTypeRepository;
         private PartnersUploadExcelParameter parameterArgs;
         private DocumentRepository documentRepository;
-        private CountryCityRepository countryCityRepository;
         private CountryRepository countryRepository;
         private StateRepository stateRepository;
         private string errorMsg;
@@ -50,7 +49,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private int duplicateLinesCount;
         private CardRepository cardRepository;
         private AddressQuery addressQuery;
-        private bool IsConfirmationDuplicateByUser;
+        private bool IsConfirmationByUser;
 
         public PartnersUploadHelper(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
@@ -76,10 +75,9 @@ namespace WebFreight.Web.Helpers.APIHelpers
             parameterArgs = serializer.Deserialize(stringReader) as PartnersUploadExcelParameter;
             tenant = parameterArgs.Tenant;
             loggedUserEmail = parameterArgs.LoggedUserEmail;
-            IsConfirmationDuplicateByUser = parameterArgs.IsConfirmationDuplicateByUser;
+            IsConfirmationByUser = parameterArgs.IsConfirmationByUser;
             partnerTypeRepository = new PartnerTypeRepository(commonDataContext);
             documentRepository = new DocumentRepository(commonDataContext);
-            countryCityRepository = new CountryCityRepository(commonDataContext);
             countryRepository = new CountryRepository(commonDataContext);
             stateRepository = new StateRepository(commonDataContext);
             contactRep = new ContactRepository(commonDataContext);
@@ -269,17 +267,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             {
                                 partnerExcel.CountryCode = countryCode;
                                 partnerExcel.CountryId = country.Id;
-
-                                string cityCode = rowData[7].Trim();
-                                CountryCity countryCity = countryCityRepository.GetSingleCountryCityByCodeAndCountry(cityCode, country.Id, tenant);
-                                if (countryCity != null)
-                                {
-                                    partnerExcel.City = countryCity.Id;
-                                }
-                                else
-                                {
-                                    this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "City is invalid" + ",";
-                                }
+                                partnerExcel.City = rowData[7].Trim().Length > 25 ? rowData[7].Trim().Substring(0, 25) : rowData[7].Trim();
 
                                 if (partnerExcel.State != null)
                                 {
@@ -332,10 +320,17 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (!string.IsNullOrEmpty(rowData[14]))
                         {
-                            partnerExcel.ExternalID = rowData[14].Trim();
+                            partnerExcel.ReceivablesExternalID = rowData[14].Trim();
                         }
                     }
                     if (rowData.Length > 15)
+                    {
+                        if (!string.IsNullOrEmpty(rowData[15]))
+                        {
+                            partnerExcel.PayablesExternalID = rowData[15].Trim();
+                        }
+                    }
+                    if (rowData.Length > 16)
                     {
                         if (!string.IsNullOrEmpty(rowData[15]))
                         {
@@ -353,24 +348,28 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             if (!string.IsNullOrEmpty(errorMsg))
             {
-
-                errorMsg = errorMsg.Length > 120 ? errorMsg.Substring(0, 120) : errorMsg;
-                this.batchTaskExecutionPM.StatusCode = "F";
-                this.batchTaskExecutionPM.ProgressMessage = errorMsg;
+                HandelErrorMsg();
             }
             else
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction(new TimeSpan(3, 0, 0)))
                 {
-                    RunPartnersGenerator_CheckDuplicate();
+                    RunPartnersGenerator_Validation();
                     scope.Complete();
                 }
             }
         }
 
+        private void HandelErrorMsg()
+        {
+            this.errorMsg = this.errorMsg.Length > 4000 ? errorMsg.Substring(0, 4000) : errorMsg;
+            this.batchTaskExecutionPM.StatusCode = "F";
+            this.batchTaskExecutionPM.ProgressMessage = errorMsg;
+        }
+
         Dictionary<string, State> statesDictionary;
         Dictionary<string, Country> countriesDictionary;
-        private void RunPartnersGenerator_CheckDuplicate()
+        private void RunPartnersGenerator_Validation()
         {
             var checkDuplicates = from x in PartnerExcelList
                                   group x by x.UniqueCode into g
@@ -378,132 +377,161 @@ namespace WebFreight.Web.Helpers.APIHelpers
                                   orderby count descending
                                   select new { Value = g.Key, Count = count };
 
-            int checkDuplicates_Count = checkDuplicates.Where(a => a.Count > 1).Count();
-            this.duplicateLinesCount = duplicateLinesCount + checkDuplicates.Where(a => a.Count > 1).Sum(a => a.Count);
-            if (!IsConfirmationDuplicateByUser && checkDuplicates_Count > 0)
+            if (!IsConfirmationByUser)
             {
-                this.SendDuplicateMessage(checkDuplicates_Count);
-            }
-
-            else
-            {
+                int checkDuplicates_Count = checkDuplicates.Where(a => a.Count > 1).Count();
                 var excelIds = PartnerExcelList.Select(a => a.UniqueCode).ToList();
                 int intersectionBetweenExcelAndDB = this.partnersUniqueKeys.Intersect(excelIds).ToList().Count();
-
-                if (!IsConfirmationDuplicateByUser && intersectionBetweenExcelAndDB > 0)
+                this.duplicateLinesCount = duplicateLinesCount + checkDuplicates.Where(a => a.Count > 1).Sum(a => a.Count);
+                this.duplicateLinesCount = duplicateLinesCount + intersectionBetweenExcelAndDB;
+                var message = "";
+                if (checkDuplicates_Count > 0 && intersectionBetweenExcelAndDB > 0)
                 {
-                    this.SendDuplicateMessage(intersectionBetweenExcelAndDB);
+                    message = checkDuplicates_Count + " duplicate lines were found in Excel and DB. Do you want to continue?";
+                }
+                else if (checkDuplicates_Count > 0 ||  intersectionBetweenExcelAndDB > 0)
+                {
+                    if (checkDuplicates_Count > 0)
+                    {
+                        message = checkDuplicates_Count + " duplicate lines were found in Excel. Do you want to continue?";
+                    }
+                    else
+                    {
+                        message = intersectionBetweenExcelAndDB + " duplicate lines were found in DB. Do you want to continue?";
+                    }
                 }
                 else
                 {
-                    this.FillPartnersFromExcelToDB();
+                    message = "Do you want to continue?";
                 }
+
+                this.SendConfirmationMessage(message);
+            }
+            else
+            {
+                this.FillPartnersFromExcelToDB();
             }
         }
 
         private void FillPartnersFromExcelToDB()
         {
+            this.errorMsg = "";
+            var errorsCount = 0;
             statesDictionary = stateRepository.GetStates(tenant).ToDictionary(d => d.Id, o => o);
             countriesDictionary = countryRepository.GetCountries(tenant).ToDictionary(d => d.Id, o => o);
             var currentItem = 0;
             foreach (var item in PartnerExcelList)
             {
-                currentItem = currentItem + 1;
-                var checkIfCardExist = this.partnersUniqueKeys.Where(a => a == item.UniqueCode).FirstOrDefault();
-                if (checkIfCardExist == null)
+                try
                 {
-                    switch (item.Type)
+                    currentItem = currentItem + 1;
+                    var checkIfCardExist = this.partnersUniqueKeys.Where(a => a == item.UniqueCode).FirstOrDefault();
+                    if (checkIfCardExist == null)
                     {
-                        case "AG":
-                            {
-                                this.CreateAgentPartner(item);
-                                break;
-                            }
+                        switch (item.Type)
+                        {
+                            case "AG":
+                                {
+                                    this.CreateAgentPartner(item);
+                                    break;
+                                }
 
-                        case "CS":
-                        case "PO":
-                            {
-                                this.CreateCustomerPartner(item);
-                                break;
-                            }
+                            case "CS":
+                            case "PO":
+                                {
+                                    this.CreateCustomerPartner(item);
+                                    break;
+                                }
 
-                        case "CG":
-                            {
-                                this.CreateCustomAgentPartner(item);
-                                break;
-                            }
+                            case "CG":
+                                {
+                                    this.CreateCustomAgentPartner(item);
+                                    break;
+                                }
 
-                        case "SG":
-                            {
-                                this.CreateShippingAgentPartner(item);
-                                break;
-                            }
+                            case "SG":
+                                {
+                                    this.CreateShippingAgentPartner(item);
+                                    break;
+                                }
 
-                        case "VD":
-                            {
-                                this.CreateVendorPartner(item);
-                                break;
-                            }
-
-                        case "WH":
-                            {
-                                this.CreateWarehousePartner(item);
-                                break;
-                            }
-
-                        case "AL":
-                            {
-                                this.CreateAirlinePartner(item);
-                                break;
-                            }
-
-                        case "SL":
-                            {
-                                this.CreateShippingLinePartner(item);
-                                break;
-                            }
-
-                        case "TR":
-                            {
-                                this.CreateTruckerPartner(item);
-                                break;
-                            }
-
-                        case "CO":
-                            {
-                                this.CreateContactPartner(item);
-                                break;
-                            }
-                        case "AC"://Accounting Partner
-                            {
-                                this.CreateAccountingPartnerPartner(item);
-                                break;
-                            }
+                            case "VD":
+                                {
+                                    this.CreateVendorPartner(item);
+                                    break;
+                                }
+                            case "WH":
+                                {
+                                    this.CreateWarehousePartner(item);
+                                    break;
+                                }
+                            case "AL":
+                                {
+                                    this.CreateAirlinePartner(item);
+                                    break;
+                                }
+                            case "SL":
+                                {
+                                    this.CreateShippingLinePartner(item);
+                                    break;
+                                }
+                            case "TR":
+                                {
+                                    this.CreateTruckerPartner(item);
+                                    break;
+                                }
+                            case "AC":
+                                {
+                                    this.CreateAccountingPartnerPartner(item);
+                                    break;
+                                }
+                        }
+                        this.partnersUniqueKeys.Add(item.UniqueCode);
                     }
-                    this.partnersUniqueKeys.Add(item.UniqueCode);
+                    else
+                    {
+                        this.duplicateLinesCount = duplicateLinesCount + 1;
+                    }
+
+                    this.UpdateProcessPercentage(PartnerExcelList.Count(), currentItem);
                 }
-                else
+                catch (Exception e)
                 {
-                    this.duplicateLinesCount = duplicateLinesCount + 1;
+                    this.errorMsg += "Line " + item.RowIndex + ": " + e.Message + ",";
+                    errorsCount = errorsCount + 1;
                 }
-
-                this.UpdateProcessPercentage(PartnerExcelList.Count(), currentItem);
             }
+            this.HandelBatchTask();
+        }
 
-            this.batchTaskExecutionPM.StatusCode = "D";
-            this.batchTaskExecutionPM.ProgressMessage = "Successfully Uploaded " + (PartnerExcelList.Count() - duplicateLinesCount) + " out of " + PartnerExcelList.Count() + " Partners. " +
-                                                       duplicateLinesCount + " duplicate lines were found.";
+        private void HandelBatchTask()
+        {
+            string msg = "";
+            if (!string.IsNullOrEmpty(this.errorMsg))
+            {
+                errorMsg = errorMsg.Length > 4000 ? errorMsg.Substring(0, 4000) : errorMsg;
+                this.batchTaskExecutionPM.StatusCode = "F";
+                this.batchTaskExecutionPM.ProgressMessage = errorMsg;
+                throw new ApplicationException(errorMsg);
 
-
+            }
+            else
+            {
+                this.batchTaskExecutionPM.StatusCode = "D";
+                msg = "Successfully Uploaded " + (PartnerExcelList.Count() - duplicateLinesCount) + " out of " + PartnerExcelList.Count() + " Partners. " +
+                                                           duplicateLinesCount + " duplicate lines were found.";
+                msg = msg.Length > 4000 ? msg.Substring(0, 4000) : msg;
+                this.batchTaskExecutionPM.ProgressMessage = msg;
+            }
 
             workbook.Close();
             excelEngine.Dispose();
         }
 
-        private void SendDuplicateMessage(int checkDuplicates_Count)
+        private void SendConfirmationMessage(string msg)
         {
             this.batchTaskExecutionPM.StatusCode = "D";
-            this.batchTaskExecutionPM.ProgressMessage = checkDuplicates_Count + " duplicate lines were found in Excel. Do you want to continue?";
+            this.batchTaskExecutionPM.ProgressMessage = msg;
         }
 
         private void UpdateProcessPercentage(decimal maximum, decimal current)
@@ -532,6 +560,9 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = CodeCounter.GetNumber("Vendor", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
+
             };
 
             var address = CreateAddress(item, vendor.Id);
@@ -557,6 +588,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = CodeCounter.GetNumber("AccountingPartner", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             var address = CreateAddress(item, accountingPartner.Id);
@@ -571,11 +604,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
             service.Create(accountingPartner);
         }
 
-        private void CreateContactPartner(PartnerExcel item)
-        {
-            
-        }
-
         private void CreateTruckerPartner(PartnerExcel item)
         {
             TruckerPM trucker = new TruckerPM()
@@ -585,9 +613,11 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = item.Code != null? item.Code : CodeCounter.GetNumber("Trucker", tenant).ToString(),
+                Code = item.Code,
                 CarrierTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             var address = CreateAddress(item, trucker.Id);
@@ -613,6 +643,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = CodeCounter.GetNumber("ShippingLine", tenant).ToString(),
                 CarrierTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             ShippingLineService service = new ShippingLineService(commonDataContext, shippingLine, systemContact.Id);
@@ -630,6 +662,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = CodeCounter.GetNumber("Airline", tenant).ToString(),
                 CarrierTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             AirlineService service = new AirlineService(commonDataContext, airline, systemContact.Id);
@@ -645,9 +679,11 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = item.Code != null ? item.Code : CodeCounter.GetNumber("Warehouse", tenant).ToString(),
+                Code = item.Code,
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             var address = CreateAddress(item, warehouse.Id);
@@ -674,6 +710,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = CodeCounter.GetNumber("ShippingAgent", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             var address = CreateAddress(item, shippingAgent.Id);
@@ -699,6 +737,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = CodeCounter.GetNumber("CustomAgent", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             var address = CreateAddress(item, customAgent.Id);
@@ -727,6 +767,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 CustomerStatusCode = "ACT",
                 IsCustomer = true,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
             var address = CreateAddress(item, customer.Id);
             customer.Addresses.Add(address);
@@ -752,6 +794,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = CodeCounter.GetNumber("Agent", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             var address = CreateAddress(item, agent.Id);
@@ -787,7 +831,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 ZipCode = item.ZipCode,
                 StateId = state != null ? state.Id : null,
                 CountryId = country != null ? country.Id : null,
-                City = item.CityId,
+                City = item.City,
                 PhoneNumber = item.PhoneNumber != null ? (item.PhoneNumber.Length > 39 ? item.PhoneNumber.Substring(0, 39) : item.PhoneNumber) : null,
                 FaxNumber = item.FaxNumber,
                 AddressTypeId = "M",
@@ -845,7 +889,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
         public string Address2 { get; set; }
         public string ZipCode { get; set; }
         public string City { get; set; }
-        public string CityId { get; set; }
         public string State { get; set; }
         public string StateId { get; set; }
         public string CountryCode { get; set; }
@@ -854,7 +897,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
         public string FaxNumber { get; set; }
         public string EMail { get; set; }
         public string ContactName { get; set; }
-        public string ExternalID { get; set; }
+        public string PayablesExternalID { get; set; }
+        public string ReceivablesExternalID { get; set; }
         public string Code { get; set; }
     }
 }

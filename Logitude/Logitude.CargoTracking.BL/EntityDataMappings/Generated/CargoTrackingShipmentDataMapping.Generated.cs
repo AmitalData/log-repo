@@ -44,7 +44,12 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         PickupDone, 
 	         ClearanceDone, 
 	         PickupDate, 
-	         ClearanceDate,
+	         ClearanceDate, 
+	         CreateDate, 
+	         SecurityKey, 
+	         ConsigneeName, 
+	         ShipperName, 
+	         CustomerReference,
 	      }
 
 
@@ -73,7 +78,12 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         PickupDone, 
 	         ClearanceDone, 
 	         PickupDate, 
-	         ClearanceDate,
+	         ClearanceDate, 
+	         CreateDate, 
+	         SecurityKey, 
+	         ConsigneeName, 
+	         ShipperName, 
+	         CustomerReference,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -190,6 +200,31 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClearanceDate))
             {
 				entityPOCO.ClearanceDate = entityPM.ClearanceDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+				entityPOCO.CreateDate = entityPM.CreateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecurityKey))
+            {
+				entityPOCO.SecurityKey = entityPM.SecurityKey;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConsigneeName))
+            {
+				entityPOCO.ConsigneeName = entityPM.ConsigneeName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipperName))
+            {
+				entityPOCO.ShipperName = entityPM.ShipperName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerReference))
+            {
+				entityPOCO.CustomerReference = entityPM.CustomerReference;
 			}
 			}
 
@@ -311,6 +346,31 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.ClearanceDate = entityPOCO.ClearanceDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateDate))
+            {
+					entityPM.CreateDate = entityPOCO.CreateDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SecurityKey))
+            {
+					entityPM.SecurityKey = entityPOCO.SecurityKey;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConsigneeName))
+            {
+					entityPM.ConsigneeName = entityPOCO.ConsigneeName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipperName))
+            {
+					entityPM.ShipperName = entityPOCO.ShipperName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerReference))
+            {
+					entityPM.CustomerReference = entityPOCO.CustomerReference;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -425,6 +485,31 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClearanceDate))
             {
                 oldEntityPM.ClearanceDate = entityPM.ClearanceDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+                oldEntityPM.CreateDate = entityPM.CreateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecurityKey))
+            {
+                oldEntityPM.SecurityKey = entityPM.SecurityKey;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConsigneeName))
+            {
+                oldEntityPM.ConsigneeName = entityPM.ConsigneeName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipperName))
+            {
+                oldEntityPM.ShipperName = entityPM.ShipperName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerReference))
+            {
+                oldEntityPM.CustomerReference = entityPM.CustomerReference;
             }
 			
 		}

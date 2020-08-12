@@ -17,6 +17,8 @@ using System.Linq;
 using Simplog.Data.Helpers;
 using System.Data.SqlClient;
 using System.Data;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -33,14 +35,19 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
-                        string strConnString = TenantServerConfigration.GetDbConnection(0);
-                        using (SqlConnection cn = new SqlConnection(strConnString))
+                        using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
                         {
-                            SqlCommand cmd = new SqlCommand("[dbo].[RemoveDuplicatedQueueMessages]", cn);
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cn.Open();
-                            var output = cmd.ExecuteNonQuery();
-                            cn.Close();
+                            string strConnString = TenantServerConfigration.GetDbConnection(0);
+                            using (SqlConnection cn = new SqlConnection(strConnString))
+                            {
+                                SqlCommand cmd = new SqlCommand("[dbo].[RemoveDuplicatedQueueMessages]", cn);
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cn.Open();
+                                var output = cmd.ExecuteNonQuery();
+                                cn.Close();
+                            }
+
+                            scope.Complete();
                         }
 
                         Thread.Sleep(15000);

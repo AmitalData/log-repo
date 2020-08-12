@@ -199,18 +199,20 @@
             </div>-->
 
         </div>
-        <div >
-          <!-- [ngStyle]="row.styles" [class.HLine]="row.rowData.ShowLineOverRow == true" || row.rowData.IsSelected == true  [style.background]="(ChangeColorByPropName && ChangeColorByPropValue && row.rowData[ChangeColorByPropName] == ChangeColorByPropValue) ? RowBackGroundColor : ((SelectedRow == row.rowData)? '#DFECF7':'transparent')"-->
-          <!--(mouseout)="onRowMouseOut('rowtemplate'+rowIndex,rowIndex,row)" (mouseover)="onRowMouseOver('rowtemplate'+rowIndex,rowIndex,row)"-->
-            <cdk-virtual-scroll-viewport autosize [id]="LogGridRowsId" class="GeneratedGridBody" [minBufferPx]="778" [maxBufferPx]="778 * 3">
+        <div>
+            <!-- [ngStyle]="row.styles" [class.HLine]="row.rowData.ShowLineOverRow == true" || row.rowData.IsSelected == true  [style.background]="(ChangeColorByPropName && ChangeColorByPropValue && row.rowData[ChangeColorByPropName] == ChangeColorByPropValue) ? RowBackGroundColor : ((SelectedRow == row.rowData)? '#DFECF7':'transparent')"-->
+            <!--(mouseout)="onRowMouseOut('rowtemplate'+rowIndex,rowIndex,row)" (mouseover)="onRowMouseOver('rowtemplate'+rowIndex,rowIndex,row)"-->
+            <!-- autosize-->
+            <cdk-virtual-scroll-viewport [id]="LogGridRowsId" class="GeneratedGridBody" [itemSize]=rowHeight [minBufferPx]="778" [maxBufferPx]="778 * 3">
                 <!--(scrolledIndexChange)="onScroll($event)"-->
-                <div *cdkVirtualFor="let row of controller;let rowIndex = index;" [style.height.px]="row && row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight">
+                <!--row && row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight-->
+                <div *cdkVirtualFor="let row of controller;let rowIndex = index;" [style.height.px]="rowHeight">
                     <div *ngIf="row" class="Row ag-row tooltip" [style.height.px]="row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight"
                          [attr.SIndex]="row.rowIndex" [class.Selected]="SelectedRow == row"
                          (ondblclick)="onRowSelected(1, 1, row.myData, row.rowIndex)"
                          (click)="onRowSelected(1, 1, row.myData, row.rowIndex)" [class.SelectedGradiant]="IsGradiantSelectedColor && (SelectedRow==row)"
                          [id]="LogGridId +'row'+rowIndex" style="position:absolute;display: flex;width:100%; border-bottom: 1px solid #A7A9AC; border-top: 1px solid transparent;">
-                        <div *ngIf="IsSpotLight" class="row-cell" (click)="onSpotLightSelect(row)"
+                        <div *ngIf="false && IsSpotLight" class="row-cell" (click)="onSpotLightSelect(row)"
                              style="display: block;position: absolute;min-width:25px;width:25px"
                              [id]="'row'+rowIndex+'pluscol'">
                             <img [src]="row.DetailsIcon" />
@@ -250,14 +252,14 @@
                     </div>
                 </div>
             </cdk-virtual-scroll-viewport>
-          <div *ngIf="rowCount == 0 || HasPermition == false" style="width:100%;top:10px;position: relative;">
-            <label *ngIf="rowCount == 0 &&  HasPermition == true" style="text-align:center;font-size:18px;color:gray" class="CenterCenter">
-              {{'General.O.NoDataFound' | TextCodeTranslationPipe}}
-            </label>
-            <label *ngIf="HasPermition == false" style="text-align:center;font-size:18px;color:gray" class="CenterCenter">
-              {{'General.O.PckgNotIncluded' | TextCodeTranslationPipe}}
-            </label>
-          </div>
+            <div *ngIf="rowCount == 0 || HasPermition == false" style="width:100%;top:10px;position: relative;">
+                <label *ngIf="rowCount == 0 &&  HasPermition == true" style="text-align:center;font-size:18px;color:gray" class="CenterCenter">
+                    {{'General.O.NoDataFound' | TextCodeTranslationPipe}}
+                </label>
+                <label *ngIf="HasPermition == false" style="text-align:center;font-size:18px;color:gray" class="CenterCenter">
+                    {{'General.O.PckgNotIncluded' | TextCodeTranslationPipe}}
+                </label>
+            </div>
         </div>
 
     </div>

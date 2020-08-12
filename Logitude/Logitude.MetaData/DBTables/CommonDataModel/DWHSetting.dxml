@@ -57,4 +57,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PrivateUserName"
+    OldNames="CustomerAccessUserName"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

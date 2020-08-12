@@ -1179,7 +1179,7 @@ namespace WebFreight.Web.Helpers
             string result = "";
             if (string.IsNullOrEmpty(quoteTemplateCopyDetails.QuoteTemplateId))
             {
-                QuoteTemplateLists = quoteTemplateRepository.GetQuoteTemplatePMsByTenant(0).ToList();
+                QuoteTemplateLists = quoteTemplateRepository.GetQuoteTemplatePMsByTenant(0).Where(d=>d.IsCopiedAtSignup && d.IsEnabledForCustomers).ToList();
             }
             else
             {

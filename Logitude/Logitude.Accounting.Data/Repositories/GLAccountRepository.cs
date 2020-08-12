@@ -12,6 +12,7 @@ using Simplog.Server.Infrastructure;
 using System.Diagnostics;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools;
+using Logitude.Accounting.Data.DataContract;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -697,7 +698,7 @@ namespace Logitude.Accounting.Data.Repositories
        public IQueryable<GLAccount> GetQAllCardsAndDetailsAccType(int Tenant
            , string clientControlAccountId
            , string vendorControlAccountId
-           , string jobControlAccountId
+           , List<string> jobControlAccountId_list
            , string fileControlAccountId
            )
        {
@@ -712,7 +713,7 @@ namespace Logitude.Accounting.Data.Repositories
 
            var qCardTenant =
            qAllInTenant 
-               .Where(a => a.AccountTypeCode == "1")// card    1	ëøèéñ	Card
+               .Where(a => a.AccountTypeCode == "1")// card    1	ï¿½ï¿½ï¿½ï¿½ï¿½	Card
                ;
            var excludelist = new List<string>();
 
@@ -724,7 +725,7 @@ namespace Logitude.Accounting.Data.Repositories
                //include All AccountTypeCode  client
                qClientTenant =
                    qAllInTenant
-                   .Where(a => a.AccountTypeCode == "2");//2	ì÷åç	Client
+                   .Where(a => a.AccountTypeCode == "2");//2	ï¿½ï¿½ï¿½ï¿½	Client
             
            }
 
@@ -740,22 +741,23 @@ namespace Logitude.Accounting.Data.Repositories
                //include All AccountTypeCode  vendors
                qVendorTenant =
                    qAllInTenant
-                   .Where(a => a.AccountTypeCode == "3");// 3	ñô÷	Vendor
+                   .Where(a => a.AccountTypeCode == "3");// 3	ï¿½ï¿½ï¿½	Vendor
             
            }
 
-           
 
-           if (!string.IsNullOrWhiteSpace(jobControlAccountId))
-           {
+
+            //if (!string.IsNullOrWhiteSpace(jobControlAccountId_list))
+            if (jobControlAccountId_list!=null && jobControlAccountId_list.Count>0)
+            {
                //exclude jobControlAccountId
                //qCardTenant=qCardTenant.Where(a => a.Id != jobControlAccountId);
-               excludelist.Add(jobControlAccountId);
+               excludelist.AddRange(jobControlAccountId_list);
 
                //include All AccountTypeCode  Job
                qJobTenant =
                    qAllInTenant
-                   .Where(a => a.AccountTypeCode == "4");//4	â'åá	Job
+                   .Where(a => a.AccountTypeCode == "4");//4	ï¿½'ï¿½ï¿½	Job
 
            }
 
@@ -769,7 +771,7 @@ namespace Logitude.Accounting.Data.Repositories
                //include All AccountTypeCode  file
                qFileTenant =
                    qAllInTenant
-                   .Where(a => a.AccountTypeCode == "5");////5	úé÷	File
+                   .Where(a => a.AccountTypeCode == "5");////5	ï¿½ï¿½ï¿½	File
 
            }
 
@@ -1059,6 +1061,29 @@ namespace Logitude.Accounting.Data.Repositories
             return (from a in context.GLAccounts
                     where a.Tenant == tenant && a.Id == glaccountId
                     select a.InterestCalculationStartDate).FirstOrDefault();
+        }
+
+        public IQueryable<InterestReportCustomerData> GetEligibleCustomersForInterestReports(int tenant)
+        {
+
+            IQueryable<InterestReportCustomerData> gLAccounts = (from a in context.GLAccounts
+                                                                 where a.Tenant == tenant && a.ActiveForInterest == true
+                                                                 join csJoin in context.Cards on a.Id equals csJoin.GLAccountId
+                                                                 where csJoin.PartnerTypeId=="CS"
+                                                                 select new InterestReportCustomerData()
+                                                                 {
+                                                                     GLAccountId = a.Id,
+                                                                     ActiveForInterest = a.ActiveForInterest,
+                                                                     EnglishName = a.EnglishName,
+                                                                     InterestCalculationStartDate = a.InterestCalculationStartDate,
+                                                                     InterestCreditLimit = a.InterestCreditLimit,
+                                                                     LocalName = a.LocalName,
+                                                                     MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
+                                                                     Tenant = a.Tenant,
+                                                                     CustomerId = csJoin.Id,
+                                                                 });
+            return gLAccounts;
+
         }
     }
 

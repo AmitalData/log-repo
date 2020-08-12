@@ -920,7 +920,16 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "VCBM" && f.SaleQuantity != entityQuantity).length > 0) {
                     isDifferentOrders = true;
                 }
-                
+
+                // PDCW
+                entityQuantity = this.EntityPM.PickupDeliveryChargeableWeight;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PDCW" && f.CostQuantity != entityQuantity).length > 0) {
+                    isDifferentOrders = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PDCW" && f.SaleQuantity != entityQuantity).length > 0) {
+                    isDifferentOrders = true;
+                }
+
                 //"BTEU"
                 entityQuantity = this.EntityPM.TEU;
                 if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "BTEU" && f.CostQuantity != entityQuantity).length > 0) {
@@ -998,6 +1007,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 item.SetSaleQuantity();
             })
 
+            this.CurrentSession.SessionEvent.emit("QuantitiesUpdated");
             this.CheckUpdateQuantities();
         }
     }
@@ -1348,6 +1358,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "PRFR":
                 case "GWTN":
                 case "QTY":
+                case"PDCW":
                     {
                         isEnabled_CostQuantity = false;
                         break;
@@ -1439,6 +1450,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "PRFR":
                 case "GWTN":
                 case "QTY":
+                case "PDCW":
                     {
                         isEnabled_SaleQuantity = false;
                         break;
@@ -2147,6 +2159,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
                 case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
+                case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
                 default: { break; }
             }
         }
@@ -2463,7 +2476,8 @@ export class QuoteChargeItem extends BaseComponent {
         case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
         case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
         case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
-        case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
+          case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
+          case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
         default: { break; }
       }
     }

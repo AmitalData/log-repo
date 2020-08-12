@@ -231,12 +231,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
 
 
-                if (!string.IsNullOrEmpty(SearchData))
-                {
-                    WhereStmt = WhereStmt + " and (" + (Field + " like " + "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString() + ")");
-                    sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString() , Value = SearchData + "%" });
-                }
                 
+                //string PreparedTenantWhere = "";
                 if (!IsClosed)
                 {
                     string parameterName = "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString();
@@ -263,7 +259,16 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
 
                 }
+                bool showInActive = filters.Filter3Value == "true";
+                if (Tabel == "DIM_Partners" && !showInActive) {
+                    WhereStmt = WhereStmt + " and " + Tabel + ".[InActive] = 0"; 
+                }
 
+                if (!string.IsNullOrEmpty(SearchData))
+                {
+                    WhereStmt = WhereStmt + " and (" + (Field + " like " + "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString() + ")");
+                    sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString(), Value = SearchData + "%" });
+                }
                 using (var scope = TransactionFactory.GetNewTransaction())
                 {
                     var currentDb = GlobalDbHelper.GetGlobalDBWithNoCache(0);
@@ -525,7 +530,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
                 SecurityUtility.CheckContactFeature("BIReport", "BIReportRun", authToken.Tenant);
 
 

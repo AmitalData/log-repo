@@ -18,14 +18,14 @@ namespace Logitude.CargoTracking.Def.EntityPMs
    [DataContract]
    public partial class CargoTrackingShipmentPM : EntityPM
    {
-   	  private string id ;
+   	  private int id ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Id  
+       public int Id  
 	   {
 	    
 	     get
@@ -36,7 +36,7 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		 {
 		   if(id != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   id=value;
 		   }
@@ -545,6 +545,121 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClearanceDate",OldValue=clearanceDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   clearanceDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime createDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime CreateDate  
+	   {
+	    
+	     get
+		{
+		   return createDate;
+		 }
+		 set
+		 {
+		   if(createDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDate",OldValue=createDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   createDate=value;
+		   }
+			
+		 }
+	   }
+	  private string securityKey ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SecurityKey  
+	   {
+	    
+	     get
+		{
+		   return securityKey;
+		 }
+		 set
+		 {
+		   if(securityKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SecurityKey",OldValue=securityKey,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   securityKey=value;
+		   }
+			
+		 }
+	   }
+	  private string consigneeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConsigneeName  
+	   {
+	    
+	     get
+		{
+		   return consigneeName;
+		 }
+		 set
+		 {
+		   if(consigneeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConsigneeName",OldValue=consigneeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   consigneeName=value;
+		   }
+			
+		 }
+	   }
+	  private string shipperName ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipperName  
+	   {
+	    
+	     get
+		{
+		   return shipperName;
+		 }
+		 set
+		 {
+		   if(shipperName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipperName",OldValue=shipperName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipperName=value;
+		   }
+			
+		 }
+	   }
+	  private string customerReference ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerReference  
+	   {
+	    
+	     get
+		{
+		   return customerReference;
+		 }
+		 set
+		 {
+		   if(customerReference != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerReference",OldValue=customerReference,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerReference=value;
 		   }
 			
 		 }

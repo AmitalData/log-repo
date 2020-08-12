@@ -26,7 +26,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
         }
 
         public HttpResponseMessage PostCreateJournalReconcileAdjustBankFee(
-       List<string> reconcileExternalPageLineIdList,
+            List<string> ledgerTransactionIds,
+       /*List<*/string/*>*/ reconcileExternalPageLineId /*List*/,
        string TheAccountId,
        string AdjustAccountId,
        DateTime AccountDate,
@@ -36,6 +37,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
+                
                 JournalPM TheNewJournal=null;
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -49,7 +51,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     var externalReconcileDataProvider = new ExternalReconcileDataProvider(accountingContext);
                     externalReconcileAdjustBankFeesService.MustInit(externalReconcileDataProvider);
                     externalReconcileAdjustBankFeesService
-                        .CreateJournalWithExtReconcile(tenant, reconcileExternalPageLineIdList, AdjustAccountId, Remarks, AccountDate);
+                        .CreateJournalWithExtReconcile(tenant, reconcileExternalPageLineId, AdjustAccountId, Remarks, AccountDate, ledgerTransactionIds);
 
                     TheNewJournal = externalReconcileAdjustBankFeesService.TheNewJournal;
                     var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);

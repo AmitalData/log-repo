@@ -21,6 +21,14 @@ namespace Logitude.Accounting.Data.Repositories
 			throw new NotImplementedException();
         }
 
+        public IQueryable<InterestReportLine> GetInterestReportLinesForInterestReport(string interestReportId,int tenant)
+        {
+            IQueryable<InterestReportLine> interestReportLines = from a in context.InterestReportLines
+                                                                 where a.InterestReportId == interestReportId && a.Tenant == tenant
+                                                                 select a;
+            return interestReportLines;
+        }
+
    }
 
 }

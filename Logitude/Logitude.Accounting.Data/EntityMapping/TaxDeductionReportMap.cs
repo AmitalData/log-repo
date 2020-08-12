@@ -59,6 +59,10 @@ namespace Logitude.Accounting.Data.EntityMapping
 
 
             this.Property(t => t.ErrorMessage).HasColumnName("ErrorMessage").IsUnicode(true);
+
+            this.Property(t => t.ByMonth).HasColumnName("ByMonth");
+
+            this.Property(t => t.Month).HasColumnName("Month");
         }
     }
 }

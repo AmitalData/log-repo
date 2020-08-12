@@ -1181,7 +1181,9 @@ export class NewARInvoiceComponent extends BaseComponent {
         var filteredReceivables: ShipmentReceivablePM[] = this.EntityReceivables.filter(d => d.ShipmentReceivableParentId == null);
 
         if (this.EntityPM.ARInvoiceTypeCode != "MN") {
-            filteredReceivables = filteredReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" && f.Quantity != null && f.UnitPrice != null && f.ARInvoiceId == null && f.ARInvoiceLineId == null);
+            filteredReceivables = filteredReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT"
+                && ((f.MeasurementCode == "STFE" && f.ChargesTypeCode == "ISTOR") ||(  f.Quantity != null && f.UnitPrice != null))
+                && f.ARInvoiceId == null && f.ARInvoiceLineId == null);
 
             switch (this.EntityPM.ARInvoiceTypeCode) {
                 case "IN":

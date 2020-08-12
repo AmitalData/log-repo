@@ -29,12 +29,18 @@ export class ARInvoiceMenuButtonsHandler {
     public EntityPM: ARInvoicePM;
     public entityArgs: EntityArgs
     private isRunningBatchTaskExecution: boolean = false;
+    private IsConfirmationMessageForCriedtNoteVisible:boolean=false;
     DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
+        
         this.Listen();
+    }
+
+    private CheckIsConfirmationMessageForCriedtNoteVisible(){
+        this.IsConfirmationMessageForCriedtNoteVisible = FeatureLocator.HasFeaturePermession("ARInvoice", "ConfirmationForAutoCreditForCreditNotes") ? true : false;
     }
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
@@ -158,15 +164,15 @@ export class ARInvoiceMenuButtonsHandler {
 
                         case "AutoCredit": {
                             if (this.EntityPM.ARInvoiceTypeCode == 'IT') {
-                                myButtonIsDisabled = true;
+                                  myButtonIsDisabled = true;
                             }
                             else {
                                 if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                    myButtonIsDisabled = true;
+                                     myButtonIsDisabled = true;
                                 }
 
                                 else if (this.EntityPM.StatusCode == "LL" || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR") {
-                                    myButtonIsDisabled = true;
+                                      myButtonIsDisabled = true;
                                 }
 
                                 else if (this.EntityPM.ARInvoiceTypeCode == "IN") {
@@ -186,20 +192,21 @@ export class ARInvoiceMenuButtonsHandler {
                                         }
                                     }
 
-                                    myButtonIsDisabled = !isEnabled;
+                                     myButtonIsDisabled = !isEnabled;
+                                   
                                 }
 
                                 else if (this.EntityPM.ARInvoiceTypeCode == "CC") {
-                                    myButtonIsDisabled = true;
+                                     myButtonIsDisabled = true;
                                 }
 
                                 if (SessionLocator.TenantPM.AccountingActivated == true) {
                                     if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
-                                        myButtonIsDisabled = true;
+                                         myButtonIsDisabled = true;
                                     }
                                 }
                             }
-
+                            myButtonIsDisabled = false; // Test
                             break;
                         }
 
@@ -648,9 +655,14 @@ export class ARInvoiceMenuButtonsHandler {
     }
     ApplyApproveClicked() {
         if (this.EntityPM.IsAutoCredit) {
+            this.CheckIsConfirmationMessageForCriedtNoteVisible();
             var myConfirmWindow = new ConfirmWindow();
             myConfirmWindow.Width = 400;
-            myConfirmWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCredit"));
+            var Text=TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCredit");
+            if((this.EntityPM.AutoCreditedByInvoiceTypeCode =="CD" || this.EntityPM.AutoCreditedByInvoiceTypeCode =="CC") && this.IsConfirmationMessageForCriedtNoteVisible){
+               Text=TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCreditForAutoCredit");
+            }
+            myConfirmWindow.Show(Text);
             myConfirmWindow.WindowClosed.subscribe(s => {
                 if (myConfirmWindow.Yes) {
                     this.ProceedToApprove(TextCodeTranslator.Translate("ARInvoice.M.CreatingAutoCredit"));                    
@@ -955,6 +967,8 @@ export class ARInvoiceMenuButtonsHandler {
             });
     }
     CreateAutoCreditInvoice(): ARInvoicePM {
+
+        var note: string = this.EntityPM.ARInvoiceTypeCode == "CD" ? TextCodeTranslator.Translate("ARInvoice.O.CreditARInvoiceForCreditNote"): TextCodeTranslator.Translate("ARInvoice.O.AutoCreditInvoice");
         var myEntityPMService: ARInvoicePMService = new ARInvoicePMService()
         var AutoCreditInvoice: ARInvoicePM = myEntityPMService.GetNewEntityPM();
         AutoCreditInvoice.StatusCode = "AC";
@@ -965,11 +979,11 @@ export class ARInvoiceMenuButtonsHandler {
         AutoCreditInvoice.TransferStatusCode = this.EntityPM.TransferStatusCode;
         AutoCreditInvoice.BillToAddressId = this.EntityPM.BillToAddressId;
         AutoCreditInvoice.BillToId = this.EntityPM.BillToId;
-        AutoCreditInvoice.InternalNotes = this.EntityPM.InternalNotes;
+        AutoCreditInvoice.InternalNotes = note.replace("%InvoiceNumber", this.EntityPM.InvoiceNumber);// this.EntityPM.InternalNotes;
         AutoCreditInvoice.InvoiceCurrencyExchangeRate = this.EntityPM.InvoiceCurrencyExchangeRate;
         AutoCreditInvoice.InvoiceCurrencyId = this.EntityPM.InvoiceCurrencyId;
         AutoCreditInvoice.InvoiceCurrencyCode = this.EntityPM.InvoiceCurrencyCode;
-        AutoCreditInvoice.PrintNotes = this.EntityPM.PrintNotes;
+        AutoCreditInvoice.PrintNotes = note.replace("%InvoiceNumber", this.EntityPM.InvoiceNumber);// this.EntityPM.PrintNotes;
         AutoCreditInvoice.PaymentTermId = this.EntityPM.PaymentTermId;
         AutoCreditInvoice.PrepaidCollectId = this.EntityPM.PrepaidCollectId;
         AutoCreditInvoice.LocalCurrencyId = this.EntityPM.LocalCurrencyId;
@@ -1009,7 +1023,7 @@ export class ARInvoiceMenuButtonsHandler {
         AutoCreditInvoice.MetodoPagoCode = this.EntityPM.MetodoPagoCode;
         AutoCreditInvoice.IsInvoiceNumberFromStock = this.EntityPM.IsInvoiceNumberFromStock;
         AutoCreditInvoice.IsInvoiceNumberManuallySet = this.EntityPM.IsInvoiceNumberManuallySet;
-
+        AutoCreditInvoice.AutoCreditedByInvoiceTypeCode=this.EntityPM.ARInvoiceTypeCode ;
         this.CreateAutoCreditInvoiceLines(AutoCreditInvoice);        
         return AutoCreditInvoice;
     }

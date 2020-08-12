@@ -1347,10 +1347,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
-            if (paymentPM.AccountingPaymentMethodCode == "CH")
+            //if (paymentPM.AccountingPaymentMethodCode == "CH")
+            //    journalLine.Notes = paymentPM.PrintNotes;
+            //else
                 journalLine.Notes = paymentPM.PrintNotes;
-            else
-                journalLine.Notes = paymentPM.InternalNotes;
 
             journalLine.ChangeSetOp = ChangeSetOperation.Insert;
             journal.JournalLines.Add(journalLine);
@@ -1386,7 +1386,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine.DebitAccountId = cashBook.AccountId;
                     journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
                     journalLine.ChangeSetOp = ChangeSetOperation.Insert;
-                    journalLine.Notes = paymentPM.InternalNotes;
+                    journalLine.Notes = paymentPM.PrintNotes;
                     journal.JournalLines.Add(journalLine);
                 }
             }
@@ -1471,7 +1471,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 journalLine.DebitAccountId = cashBook.AccountId;
                 journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
                 journalLine.ChangeSetOp = ChangeSetOperation.Insert;
-                journalLine.Notes = payment.InternalNotes;
+                journalLine.Notes = payment.PrintNotes;
                 journal.JournalLines.Add(journalLine);
             }
             return journal;
@@ -1763,7 +1763,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     // Update Total Amount
                                     ICashBookUpdateServiceExt cashBookUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookUpdateServiceExt), "CashBookUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookUpdateServiceExt;
                                     cashBook.TotalAmount = cashBook.TotalAmount - (decimal)entityPm.AmountInPaymentCurrency;
-                                    cashBook.TotalAmount += (decimal)entityPm.AmountInPaymentCurrency;
+                                   // cashBook.TotalAmount += (decimal)entityPm.AmountInPaymentCurrency;
                                     cashBook.ChangeSetOp = ChangeSetOperation.Update;
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");

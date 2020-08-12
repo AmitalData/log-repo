@@ -168,6 +168,11 @@ export class ARInvoicePM {
     public set HasCreditLimitOverrideFeature(newValue: boolean) { if (this.hasCreditLimitOverrideFeature != newValue) { this.hasCreditLimitOverrideFeature = newValue; this.MarkAsDirty("HasCreditLimitOverrideFeature"); } }
        
 	 
+    private hasInterestFeature: boolean;
+    public get HasInterestFeature() { return this.hasInterestFeature; }
+    public set HasInterestFeature(newValue: boolean) { if (this.hasInterestFeature != newValue) { this.hasInterestFeature = newValue; this.MarkAsDirty("HasInterestFeature"); } }
+       
+	 
     private billToAddressId: string;
     public get BillToAddressId() { return this.billToAddressId; }
     public set BillToAddressId(newValue: string) { if (this.billToAddressId != newValue) { this.billToAddressId = newValue; this.MarkAsDirty("BillToAddressId"); } }
@@ -591,6 +596,11 @@ export class ARInvoicePM {
     private approvedByUserName: string;
     public get ApprovedByUserName() { return this.approvedByUserName; }
     public set ApprovedByUserName(newValue: string) { if (this.approvedByUserName != newValue) { this.approvedByUserName = newValue; this.MarkAsDirty("ApprovedByUserName"); } }
+       
+	 
+    private autoCreditedByInvoiceTypeCode: string;
+    public get AutoCreditedByInvoiceTypeCode() { return this.autoCreditedByInvoiceTypeCode; }
+    public set AutoCreditedByInvoiceTypeCode(newValue: string) { if (this.autoCreditedByInvoiceTypeCode != newValue) { this.autoCreditedByInvoiceTypeCode = newValue; this.MarkAsDirty("AutoCreditedByInvoiceTypeCode"); } }
        
 	 
     private creditedByARInvoiceId: string;

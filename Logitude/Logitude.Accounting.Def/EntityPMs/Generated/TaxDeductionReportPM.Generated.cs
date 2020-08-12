@@ -388,6 +388,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool byMonth ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ByMonth  
+	   {
+	    
+	     get
+		{
+		   return byMonth;
+		 }
+		 set
+		 {
+		   if(byMonth != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ByMonth",OldValue=byMonth,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   byMonth=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? month ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? Month  
+	   {
+	    
+	     get
+		{
+		   return month;
+		 }
+		 set
+		 {
+		   if(month != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Month",OldValue=month,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   month=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

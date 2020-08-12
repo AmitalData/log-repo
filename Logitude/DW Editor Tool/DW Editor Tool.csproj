@@ -85,6 +85,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DWObjectTablesGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="Templates\DWObjectTablesGenerator1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DWObjectTablesGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\DWObjectFieldViewModel.cs" />
     <Compile Include="ViewModels\DWObjectTableViewModel.cs" />
     <Compile Include="Views\DWObjectFieldView.xaml.cs">

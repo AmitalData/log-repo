@@ -32,7 +32,7 @@ export class CargoTrackingShipmentSearchListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cargotrackingshipmentsearchviews';  
     }
 
-	getSingle(id: string) {
+	getSingle(id: number) {
 	   
 		var callTime = new Date();
 

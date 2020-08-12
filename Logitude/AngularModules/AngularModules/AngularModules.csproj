@@ -106,6 +106,8 @@
     <Content Include="Accounting\Components\Others\Aging4CustomerChartWindowComponent.html" />
     <Content Include="Accounting\Components\Others\AccountingFlatFileDownloadComponent.html" />
     <Content Include="Accounting\Components\Others\CancelChequeComponent.html" />
+    <Content Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingBuildShipmentComponent.html" />
+    <Content Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingIncrementalStatistics.html" />
     <Content Include="Accounting\Components\Others\DropdownButtonComponent.html" />
     <Content Include="Accounting\Components\Others\ExtReconcileAdjustBankFeeComponent.html" />
     <Content Include="Accounting\Components\Others\BatchInvoicesComponent.html" />
@@ -160,6 +162,7 @@
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\TruckerDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\AccountingPartner\AccountingPartnerDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\StorageDefaultsComponents.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\Maintenance\UploadPartnersComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\NewEntity\NewAccountingPartnerComponent.html" />
@@ -305,6 +308,18 @@
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\SendVehicleComponent.js" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\SInvoiceClassificationTabComponent.html" />
+    <Content Include="CustomsModules\CustomsListTemplates\Components\CourierDeclarationWorkspaceListTemplate.html" />
+    <TypeScriptCompile Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingBuildShipmentComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingIncrementalStatistics.ts" />
+    <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsCustoms.ts" />
+    <TypeScriptCompile Include="Common\Services\ExtendedPMs\ChargesTypeByProductsService.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\DeclarationListTemplate.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ArrivalDateListHeaderTemplate.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ActionListHeaderTemplate.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />
+    <TypeScriptCompile Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
+    <Content Include="CustomsModules\InvoiceQueue\Components\InvoiceQueueComponent.html" />
+    <Content Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.html" />
     <Content Include="Customs\Components\ListTemplates\CourierWorksheetListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetListTemplate.html" />
     <Content Include="CRMModules\CRMActivity\Components\EditTabs\ActivityGeneralTabComponent.html" />
@@ -603,6 +618,7 @@
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\TruckerDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\AccountingPartner\AccountingPartnerDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\StorageDefaultsComponents.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\Maintenance\UploadPartnersComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\NewEntity\NewAccountingPartnerComponent.ts" />
@@ -633,6 +649,8 @@
     <TypeScriptCompile Include="Common\EntityLists\NumberFormatList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\TariffCarrierTranslationList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\VatUniquePartnerTypeList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\WarehouseWeightMeasurementList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\WarehouseWeightRoundingList.ts" />
     <TypeScriptCompile Include="Common\EntityPMCustomCode\CustomerPMCustomCode.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\AccountingPartnerPM.ts" />
@@ -674,6 +692,8 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\TenantAdditionalDataListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\TermsofUseSignatureListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\VatUniquePartnerTypeListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\WarehouseWeightMeasurementListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\WarehouseWeightRoundingListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\AccountingPartnerPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CarrierAreaPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
@@ -1424,6 +1444,7 @@
     <Content Include="ShipmentModules\ShipmentPackages\Components\Packages\DownloadPackagesFileComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\DeliveryTabs\DeliveryPackagesConnectComponent.html" />
+    <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\WarehouseStoragePricingComponent.html" />
     <Content Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestEditAgentComponent.html" />
     <Content Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestHeaderComponent.html" />
     <Content Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestsWorkSpaces.html" />
@@ -3903,6 +3924,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\DownloadPackagesFileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\DeliveryTabs\DeliveryPackagesConnectComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\WarehouseStoragePricingComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestEditAgentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestHeaderComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestsWorkSpaces.ts" />
@@ -6790,6 +6812,7 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentComputedFieldsPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentCustomsTransmissionPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentPackageHarmonizePM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentStoragePricingPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentSubTypePM.ts" />
     <TypeScriptCompile Include="Shipment\Services\ContainersFUDomainService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\AWBSpecialHandlingCodeExtendedPMService.ts" />

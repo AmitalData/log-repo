@@ -168,8 +168,9 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
                             if (myConfirmWindow.Yes) {
                                 var parameter = new PartnersUploadExcelParameter();
                                 parameter.FileData = this.partnersUploadExcelParameter.FileData;
-                                parameter.IsConfirmationDuplicateByUser = true;
+                                parameter.IsConfirmationByUser = true;
                                 parameter.FileName = this.partnersUploadExcelParameter.FileName;
+                                parameter.DocumentId = this.partnersUploadExcelParameter.DocumentId;
                                 this.SendExcelToServer(parameter);
                             }
                         });
@@ -182,9 +183,9 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
 
                 else if (list.StatusCode == "F") {
                     this.StopTimer();
-                    var errors: string[] = [];
-                    errors.push(list.ErrorLog);
-                    this.ValidationErrorsList = errors;
+                    if (list.ProgressMessage != null && list.ProgressMessage.indexOf(',') > -1) {
+                        this.ErrorsList = list.ProgressMessage.split(',');
+                    }
                 }
 
                 else {

@@ -528,7 +528,6 @@ export class CommonDomainService {
         });
     }
 
-
     GetSingleCustomerTenantAccess(CustomerId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -1246,6 +1245,17 @@ export class CommonDomainService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    GetChargesTypeByCode(code: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(this._apiUrl + "/GetChargesTypeByCode" + '?code=' + code, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
 }
 
 export class TranslationHeader {
@@ -1460,5 +1470,6 @@ export class PartnersUploadExcelParameter {
     Tenant: number;
     FileData: string;
     FileName: string;
-    IsConfirmationDuplicateByUser: boolean;
+    IsConfirmationByUser: boolean;
+    DocumentId: string;
 }

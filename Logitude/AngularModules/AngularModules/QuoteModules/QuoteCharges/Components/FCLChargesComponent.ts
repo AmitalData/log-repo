@@ -1191,6 +1191,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             item.SetCostQuantity();
             item.SetSaleQuantity();
         })
+
+        this.CurrentSession.SessionEvent.emit("QuantitiesUpdated");
         //this.SetUIProperties_UpdateCharges();
     }
     UpdateCharges() {
@@ -1530,6 +1532,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "PRFR":
                 case "GWTN":
                 case "QTY":
+                case "PDCW":
                     {
                         isEnabled_CostQuantity = false;
                         break;
@@ -1635,6 +1638,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "PRFR":
                 case "GWTN":
                 case "QTY":
+                case "PDCW":
                     {
                         isEnabled_SaleQuantity = false;
                         break;
@@ -2641,7 +2645,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
                 case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
-
+                case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
                 default:
                     {
                         if (!AppTool.IsNullOrEmpty(this.CostMeasurementId)) {
@@ -3060,6 +3064,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
                 case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
+                case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
                 default:
                     {
                         if (!AppTool.IsNullOrEmpty(this.SaleMeasurementId)) {

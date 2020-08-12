@@ -146,7 +146,8 @@ export class TextCodeTranslator {
     static ShowAlertMessage(value) {
         if (isNullOrUndefined(value) || value.indexOf(".NewButton") >= 0 || value == "No Filter")
             return false;
-
+        if (value == "AccountingPartner.F.SearchFields")
+            return false;
         var productionStages: Array<string> = ["simplog", "logboxwe1", "amitalstorage"];
         if (!productionStages.find(stage => stage == ObjectsLocator.GlobalSetting.DeploymentStage.toLowerCase())) {
             if (!SessionLocator.ProtractorEmails.find(userEmail => userEmail == SessionLocator.LoggedUserPM.Email.toLowerCase()))

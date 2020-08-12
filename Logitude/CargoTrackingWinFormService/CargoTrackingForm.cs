@@ -1,5 +1,5 @@
-﻿using CargoTrackingWinFormService.CargoTracking.BL.HelperClasses;
-using CargoTrackingWinFormService.CargoTracking.BL.Services;
+﻿using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -113,7 +113,7 @@ namespace CargoTrackingWinFormService.Forms
         private void UpdateCargoDataBase(CargoTable table)
         {
  
-           NumberOfCoulmnUpdated = cargoTrackingService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection }, NumberOfBulkPerTime);
+           NumberOfCoulmnUpdated = cargoTrackingService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection }, NumberOfBulkPerTime).NumberOfRecordUpdated;
   
         }
 
@@ -195,11 +195,11 @@ namespace CargoTrackingWinFormService.Forms
 
         private void UpdateCargoTables()
         {
-
+            
             List<CargoTable> CargoTableLists = cargoTrackingService.FillCargoTableList();
             foreach (CargoTable table in CargoTableLists)
             {
-                table.Labels = new List<Label>();
+                table.Labels = new List<object>();
                 string TableNameLabe = table.CT_TableName.Length <23 ? table.CT_TableName : table.CT_TableName.Substring(0,17)+" ...";
                 AddLabelToGrid(TableNameLabe, 1, 0, 1, table);
                 AddLabelToGrid( "In Progress...", 1, 0, 2, table);
@@ -227,28 +227,28 @@ namespace CargoTrackingWinFormService.Forms
         private void SetLabelValueAndUpdateTable(CargoTable table)
         {
 
-            SetControlPropertyValue(table.Labels[2], "Text", "Updating...");
-            SetControlPropertyValue(table.Labels[2], "ForeColor", Color.Black);
+            SetControlPropertyValue((Label)table.Labels[2], "Text", "Updating...");
+            SetControlPropertyValue((Label)table.Labels[2], "ForeColor", Color.Black);
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             globalStopwatch = stopWatch;
-            generalLabel = table.Labels[2];
+            generalLabel = (Label)table.Labels[2];
             timer1.Enabled = true;
             timer1.Start();
             UpdateCargoDataBase(table);
  
-            SetControlPropertyValue(table.Labels[1], "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
-            SetControlPropertyValue(table.Labels[1], "Text", "( " + NumberOfCoulmnUpdated + " )");
-            SetControlPropertyValue(table.Labels[1], "ForeColor", Color.Red);
+            SetControlPropertyValue((Label)table.Labels[1], "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
+            SetControlPropertyValue((Label)table.Labels[1], "Text", "( " + NumberOfCoulmnUpdated + " )");
+            SetControlPropertyValue((Label)table.Labels[1], "ForeColor", Color.Red);
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
             globalStopwatch = null;
             generalLabel = null;
             timer1.Start();
-            SetControlPropertyValue(table.Labels[2], "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
-            SetControlPropertyValue(table.Labels[2], "ForeColor", Color.Green); // timer
-            SetControlPropertyValue(table.Labels[2], "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+            SetControlPropertyValue((Label)table.Labels[2], "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
+            SetControlPropertyValue((Label)table.Labels[2], "ForeColor", Color.Green); // timer
+            SetControlPropertyValue((Label)table.Labels[2], "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
         }
 
         private void InitFirstChecking()
@@ -286,7 +286,7 @@ namespace CargoTrackingWinFormService.Forms
        
 
             if (name == "CheckAndUpdateWaterMark")
-                cargoTrackingService.CheckAndUpdateWaterMark(dbSourceConnection);
+                cargoTrackingService.CheckAndUpdateWaterMark(dbDestinationConnection,dbSourceConnection);
             if (name == "UpdateCargoTables")
             {
 

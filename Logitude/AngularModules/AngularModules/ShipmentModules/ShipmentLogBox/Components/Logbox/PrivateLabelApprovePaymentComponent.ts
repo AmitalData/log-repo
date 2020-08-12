@@ -188,13 +188,13 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
             else {
                 if (SessionLocator.TenantPM.ShowTaxAmountWarning) {
                     var warningCode: string;
-                    if (this.AdditionalData.TaxesMoreDetails) {
-                        warningCode = this.GetWarningCodeBeforeApproval(this.AdditionalData.TaxesMoreDetails);
+                    if (this.AdditionalData.TaxesDetails) {
+                        warningCode = this.GetWarningCodeBeforeApproval(this.AdditionalData.TaxesDetails);
                     }
                     if (warningCode && warningCode != '0') {
                         var warningWindow = new LogitudeWindow();
-                        warningWindow.Width = 320;
-                        warningWindow.Height = 160;
+                        warningWindow.Width = 290;
+                        warningWindow.Height = 180;
                         warningWindow.RTL = this.RTL;
                         //warningWindow.Title
                         var windowArgs: any = {};
@@ -203,10 +203,13 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                         windowArgs.tax16Amount = this.tax16Amount;
                         windowArgs.RTL = this.RTL;
                         warningWindow.WindowArgs = windowArgs;
+                        warningWindow.IsShowCloseButton = true;
                         warningWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/WarningApprovePaymentComponent');
                         warningWindow.WindowClosed.subscribe((event: any) => {
                             if (event == "Approved")
                                 this.UpdateShipmentAdditionalCloudData(entity);
+                            else if (event == "Deny")
+                                this.DenyButtonClicked();
                         });
                     }
                     else {

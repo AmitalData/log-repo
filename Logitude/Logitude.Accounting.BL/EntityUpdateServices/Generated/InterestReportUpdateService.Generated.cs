@@ -61,43 +61,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 		
 		    entityPM.Id = IdCounter.GetNumber("InterestReport", entityPM.Tenant); 
 					
-			string email = HttpContext.Current.User.Identity.Name;
-            ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-							 
-
-			if (loggedContact != null)
-            {
-		        entityPM.CreatedByUserId = loggedContact.Id;
-		    }
-					 
-
-			if (loggedContact != null)
-            {
-		        entityPM.UpdatedByUserId = loggedContact.Id;
-		    }
-                        
-					
 	    }
         
 		protected override void FillDefaultValuesOnUpdate(InterestReportPM entityPM)
         {       
-             
-            string email = "system@tenant" + entityPM.Tenant + ".com";
-            if (HttpContext.Current != null)
-            {
-                email = HttpContext.Current.User.Identity.Name; 
-            }
-             
-		    //string email = HttpContext.Current.User.Identity.Name;
-            ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-			if (loggedContact != null)
-            {
-		        entityPM.UpdatedByUserId = loggedContact.Id;
-		    }
-                        
-					
+           
         }
 		  
 		 

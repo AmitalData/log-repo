@@ -2460,10 +2460,66 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public string MasterPreCarriageCarrierNumber { get; set; }
         public string MasterPreCarriageVesselName { get; set; }
+        public string MasterPreCarriageFromPortName { get; set; }
+        public string MasterProjectNumber { get; set; }
+
+
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentSubTypeId { get; set; }
         public string ShipmentSubTypeName { get; set; }
         public bool IsUpdateWarehouseLegData { get; set; }
+        public bool IsUpdateEntityException { get; set; }
+        public string MasterHousesNumbers { get; set; }
+        public string HousesDescriptionofGoods { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool ChargeStorage { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ChargeStorageCurrencyId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WeightMeasurementCode { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WeightRoundingCode { get; set; }
+
+        private List<ShipmentStoragePricingPM> shipmentStoragePricings;
+        [Include]
+        [Association("shipmentStoragePricingShipment", "Id", "ShipmentId")]
+        [Composition]
+        public virtual List<ShipmentStoragePricingPM> ShipmentStoragePricings
+        {
+            get
+            {
+                if (this.shipmentStoragePricings == null)
+                {
+                    shipmentStoragePricings = new List<ShipmentStoragePricingPM>();
+                }
+                return this.shipmentStoragePricings;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    shipmentStoragePricings = value;
+                }
+            }
+        }
+
+        public List<TransshipmentLeg> Transshipments { get; set; }
+        public bool IsBondedWarehouse { get; set; }
+    }
+
+    public class TransshipmentLeg
+    {
+        public string Id { get; set; }
+        public int LegIndex { get; set; }
+        public string CarrierId { get; set; }
+        public string PortId { get; set; }
+        public string VesselId { get; set; }
+        public string CarrierNumber { get; set; }
+        public string MasterNumber { get; set; }
     }
 }

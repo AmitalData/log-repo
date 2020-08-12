@@ -138,6 +138,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                CarrierName = f.MainCarriageCarrierCard == null ? "" : f.MainCarriageCarrierCard.EnglishName,
                                                ChargeableWeight = f.ChargeableWeight,
                                                ChargeableWeightInKG = f.ChargeableWeightInKG,
+                                               PickupDeliveryChargeableWeight = f.PickupDeliveryChargeableWeight,
+                                               PickupDeliveryVolumetricWeight = f.PickupDeliveryVolumetricWeight,
                                                GrossWeight = f.GrossWeight,
                                                GrossWeightInKG = f.GrossWeightInKG,
                                                GrossWeightPerTon = f.GrossWeightPerTon,
@@ -345,6 +347,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         VolumeInCBM = f.VolumeInCBM,
                         ChargeableWeight = f.ChargeableWeight,
                         ChargeableWeightInKG = f.ChargeableWeightInKG,
+                        PickupDeliveryChargeableWeight = f.PickupDeliveryChargeableWeight,
+                        PickupDeliveryVolumetricWeight = f.PickupDeliveryVolumetricWeight,
                         NumberOfContainers = f.NumberOfContainers,
                         NumberOfPackages = f.NumberOfPackages,
                         QuoteClosingReasonId = f.QuoteClosingReasonId,
@@ -1237,9 +1241,12 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 GrossWeightPerTon = entityPOCO.GrossWeightPerTon,
                 ChargeableWeight = entityPOCO.ChargeableWeight,
                 ChargeableWeightInKG = entityPOCO.ChargeableWeightInKG,
+                PickupDeliveryChargeableWeight = entityPOCO.PickupDeliveryChargeableWeight,
+                PickupDeliveryVolumetricWeight = entityPOCO.PickupDeliveryVolumetricWeight,
                 VolumeInCBM = entityPOCO.VolumeInCBM,
                 TransportModeId = entityPOCO.TransportModeId,
                 Ratio = entityPOCO.Ratio,
+                PickupDeliveryRatio = entityPOCO.PickupDeliveryRatio,
                 DimFactor = entityPOCO.DimFactor,
                 NumberOfPackages = entityPOCO.NumberOfPackages,
                 NumberOfContainers = entityPOCO.NumberOfContainers,
@@ -1673,6 +1680,12 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             entityPM.ToAddressCity = entityPOCO.ToAddressCity;
             entityPM.ToAddressZipCode = entityPOCO.ToAddressZipCode;
             entityPM.ToAddressCountryId = entityPOCO.ToAddressCountryId;
+            entityPM.PickupCity = entityPOCO.FromAddressCity;
+            entityPM.PickupCountryId = entityPOCO.FromAddressCountryId;
+            entityPM.PickupZipCode = entityPOCO.FromAddressZipCode;
+            entityPM.DeliveryCity = entityPOCO.ToAddressCity;
+            entityPM.DeliveryCountryId = entityPOCO.ToAddressCountryId;
+            entityPM.DeliveryZipCode = entityPOCO.ToAddressZipCode;
 
             if (entityPM.IncludePickUp)
             {
@@ -1684,6 +1697,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         entityPM.PickUpAddress = this.GetAddress(address)
                             + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
                             + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
+                        entityPM.PickupCity = address.City;
+                        entityPM.PickupCountryId = address.Country?.Id;
+                        entityPM.PickupZipCode = address.ZipCode;
                     }
                 }
             }
@@ -1698,6 +1714,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         entityPM.DeliveryAddress = this.GetAddress(address)
                             + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
                             + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
+                        entityPM.DeliveryCity = address.City;
+                        entityPM.DeliveryCountryId = address.Country?.Id;
+                        entityPM.DeliveryZipCode = address.ZipCode;
                     }
                 }
             }
@@ -1831,6 +1850,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                             else
                             {
                                 location += " - " + address.ZipCode;
+                            }
+                            if (string.IsNullOrEmpty(entityPM.ToAddressZipCode))
+                            {
+                                entityPM.ToAddressZipCode = address.ZipCode;
                             }
                         }
 
@@ -2575,6 +2598,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
                 ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
                 IsChargeBySteps = item.IsChargeBySteps,
+                SalesWithVATAmount = item.SaleTotalAmount + item.VatAmount,
             };
             return saleChargePM;
         }

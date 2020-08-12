@@ -20,14 +20,14 @@ export class TaxDeductionReportGeneralTabComponent extends BaseComponent {
 
     public DataContext: any = this;
     ObjectTableName: string = "TaxDeductionReport";
-    entityPM: TaxDeductionReportPM;
+    public entityPM: TaxDeductionReportPM;
     isRTL: boolean = false;
     showLocals: boolean = false;
     taxDeductionReportExtendedPMService: TaxDeductionReportExtendedPMService = new TaxDeductionReportExtendedPMService();
     _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
     Faild: boolean = false;
     taxDeductionReportPMService: TaxDeductionReportPMService = new TaxDeductionReportPMService();
-    
+   
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -36,7 +36,7 @@ export class TaxDeductionReportGeneralTabComponent extends BaseComponent {
         this.showLocals = !SessionLocator.LoggedUserPM.DontShowLocal;
         this.UIProperties.SetEnabled("IsAdditionalReportExist", "TaxDeductionReport", false);
         this.UIProperties.SetEnabled("Email", "TaxDeductionReport", false);
-
+      
         if (this.entityPM.StatusTypeCode == "4") {
             this.Faild = true;
         }

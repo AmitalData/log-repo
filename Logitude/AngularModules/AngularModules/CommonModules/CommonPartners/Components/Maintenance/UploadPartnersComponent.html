@@ -49,7 +49,7 @@
 </style>
 
 <table>
-    <tr>
+    <tr style="height:1px;">
         <td>
             <table>
                 <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -106,39 +106,60 @@
                     </td>
                 </tr>
 
-                <tr *ngIf="ErrorsList != null && ErrorsList.length > 0" style="vertical-align:top;">
-                    <td colspan="3" style="margin-left:20px;">
-                        <table>
-                            <tr class="FormFieldRow">
-                                <td style="color:red;padding-left:10px;">
-                                    Errors in uploaed file: (first 10)
-                                </td>
-                            </tr>
-                            <tr class="FormFieldRow" style="color:red;" *ngFor="let item of ErrorsList; let i=index;">
-                                <td style="color:red; padding-left:10px;">
-                                    - {{item}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <tr class="FormFieldRow" *ngIf="IsDone">
-                    <td style="color:green;padding-left:10px;" colspan="3">
-                        {{DoneMsg}}
-                    </td>
-                </tr>
                 <tr>
                     <td colspan="3">
                         <div></div>
                     </td>
                 </tr>
             </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width:500px;">
+            <div class="MediaFill">
+                <ScrollViewer>
+                    <table>
+
+                        <tr *ngIf="ErrorsList != null && ErrorsList.length > 0" style="vertical-align:top;">
+                            <td style="margin-left:20px;width:500px;">
+                                <table>
+                                    <tr class="FormFieldRow">
+                                        <td style="color:red;padding-left:10px;width:450px;">
+                                            Errors in uploaed file: (first 10)
+                                        </td>
+                                    </tr>
+                                    <tr class="FormFieldRow" style="color:red;" *ngFor="let item of ErrorsList; let i=index;">
+                                        <td style="color:red; padding-left:10px;">
+                                            - {{item}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr class="FormFieldRow" *ngIf="IsDone">
+                            <td style="color:green;padding-left:10px;width:550px;">
+                                <div style="width:100%;white-space: pre-line; font-size: 11px;line-height: 12px;">
+                                    {{DoneMsg}}
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </ScrollViewer>
+            </div>
         </td>
     </tr>
 

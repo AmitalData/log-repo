@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarehouseData.Helper;
 using WarehouseData.Service;
+using WarehouseDataViews.Service;
 
 namespace WarehouseData
 {
@@ -80,7 +81,16 @@ namespace WarehouseData
                         stopWatch.Start();
                         string allMessage = "";
 
-                        if (type == "Build") mainDataWarehouseService.CreateWaterMarksTable("PrivateWaterMarks", sourceConnectionString, true);
+                        PrivateDataWarehouseViewService privateDataWarehouseViewService = null;
+
+                        if (type == "Build")
+                        {
+
+                            mainDataWarehouseService.CreateWaterMarksTable("PrivateWaterMarks", sourceConnectionString, true);
+                            privateDataWarehouseViewService = new PrivateDataWarehouseViewService(sourceConnectionString);
+
+                        }
+
 
                         var dWHSettingsTable = mainDataWarehouseService.privateTenantDataWarehouse.GetPrivateTenant(sourceConnectionString);
 
@@ -92,6 +102,7 @@ namespace WarehouseData
                             string userName = row["UserName"].ToString();
                             string password = row["Password"].ToString();
                             string server = row["Server"].ToString();
+                            string privateUserName = row["PrivateUserName"].ToString();
 
                             if (featureDataWarehouseService.CheckFeature("PrivateDB", tenant))
                             {
@@ -112,7 +123,13 @@ namespace WarehouseData
 
                                 string tenants = mainDataWarehouseService.privateTenantDataWarehouse.ConvertIntgerListToString(relatedTenants);
 
-                                if (type == "Build") mainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                                if (type == "Build")
+                                {
+                                    mainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                                    privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false });
+
+
+                                }
                                 else mainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
 
                                 stopWatchPrivateDB.Stop();

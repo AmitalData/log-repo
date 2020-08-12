@@ -358,6 +358,11 @@ export class QuotePM {
     public set ChargeableWeightInKG(newValue: number) { if (this.chargeableWeightInKG != newValue) { this.chargeableWeightInKG = newValue; this.MarkAsDirty("ChargeableWeightInKG"); } }
        
 	 
+    private pickupDeliveryChargeableWeight: number;
+    public get PickupDeliveryChargeableWeight() { return this.pickupDeliveryChargeableWeight; }
+    public set PickupDeliveryChargeableWeight(newValue: number) { if (this.pickupDeliveryChargeableWeight != newValue) { this.pickupDeliveryChargeableWeight = newValue; this.MarkAsDirty("PickupDeliveryChargeableWeight"); } }
+       
+	 
     private grossWeight: number;
     public get GrossWeight() { return this.grossWeight; }
     public set GrossWeight(newValue: number) { if (this.grossWeight != newValue) { this.grossWeight = newValue; this.MarkAsDirty("GrossWeight"); } }
@@ -486,6 +491,11 @@ export class QuotePM {
     private ratio: number;
     public get Ratio() { return this.ratio; }
     public set Ratio(newValue: number) { if (this.ratio != newValue) { this.ratio = newValue; this.MarkAsDirty("Ratio"); } }
+       
+	 
+    private pickupDeliveryRatio: number;
+    public get PickupDeliveryRatio() { return this.pickupDeliveryRatio; }
+    public set PickupDeliveryRatio(newValue: number) { if (this.pickupDeliveryRatio != newValue) { this.pickupDeliveryRatio = newValue; this.MarkAsDirty("PickupDeliveryRatio"); } }
        
 	 
     private dimFactor: number;
@@ -1601,6 +1611,41 @@ export class QuotePM {
     private shipmentSubTypeName: string;
     public get ShipmentSubTypeName() { return this.shipmentSubTypeName; }
     public set ShipmentSubTypeName(newValue: string) { if (this.shipmentSubTypeName != newValue) { this.shipmentSubTypeName = newValue; this.MarkAsDirty("ShipmentSubTypeName"); } }
+       
+	 
+    private pickupCity: string;
+    public get PickupCity() { return this.pickupCity; }
+    public set PickupCity(newValue: string) { if (this.pickupCity != newValue) { this.pickupCity = newValue; this.MarkAsDirty("PickupCity"); } }
+       
+	 
+    private pickupCountryId: string;
+    public get PickupCountryId() { return this.pickupCountryId; }
+    public set PickupCountryId(newValue: string) { if (this.pickupCountryId != newValue) { this.pickupCountryId = newValue; this.MarkAsDirty("PickupCountryId"); } }
+       
+	 
+    private pickupZipCode: string;
+    public get PickupZipCode() { return this.pickupZipCode; }
+    public set PickupZipCode(newValue: string) { if (this.pickupZipCode != newValue) { this.pickupZipCode = newValue; this.MarkAsDirty("PickupZipCode"); } }
+       
+	 
+    private deliveryCity: string;
+    public get DeliveryCity() { return this.deliveryCity; }
+    public set DeliveryCity(newValue: string) { if (this.deliveryCity != newValue) { this.deliveryCity = newValue; this.MarkAsDirty("DeliveryCity"); } }
+       
+	 
+    private deliveryCountryId: string;
+    public get DeliveryCountryId() { return this.deliveryCountryId; }
+    public set DeliveryCountryId(newValue: string) { if (this.deliveryCountryId != newValue) { this.deliveryCountryId = newValue; this.MarkAsDirty("DeliveryCountryId"); } }
+       
+	 
+    private deliveryZipCode: string;
+    public get DeliveryZipCode() { return this.deliveryZipCode; }
+    public set DeliveryZipCode(newValue: string) { if (this.deliveryZipCode != newValue) { this.deliveryZipCode = newValue; this.MarkAsDirty("DeliveryZipCode"); } }
+       
+	 
+    private pickupDeliveryVolumetricWeight: number;
+    public get PickupDeliveryVolumetricWeight() { return this.pickupDeliveryVolumetricWeight; }
+    public set PickupDeliveryVolumetricWeight(newValue: number) { if (this.pickupDeliveryVolumetricWeight != newValue) { this.pickupDeliveryVolumetricWeight = newValue; this.MarkAsDirty("PickupDeliveryVolumetricWeight"); } }
        
 	 
 

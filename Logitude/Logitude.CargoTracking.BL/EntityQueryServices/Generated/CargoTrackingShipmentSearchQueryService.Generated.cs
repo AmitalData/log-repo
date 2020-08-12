@@ -48,7 +48,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             mapping = new CargoTrackingShipmentSearchDataMapping();
         }
 		 
-		public  CargoTrackingShipmentSearchPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CargoTrackingShipmentSearchPM GetSingle(int id,bool getComposition, bool getFromCache)
         {
              EntityKeys = new CargoTrackingShipmentSearchKeys(){ Id = id };
 

@@ -119,6 +119,12 @@ namespace WebFreight.Web.ReportsWebServices
                 portRepository = new PortRepository(tenant);
                 CardPM customer = cardQuery.GetSinglePM(shipmentpm.CustomerId, tenant);
 
+                #region refences 
+                prealertDataProvider.ShipperReference = shipmentpm.ShipperReference1;
+                prealertDataProvider.CustomerReference = shipmentpm.CustomerReference1;
+                prealertDataProvider.ConsigneeReference = shipmentpm.ConsigneeReference1;
+                #endregion
+
                 #region Customer + Customer's Contact
                 if (!string.IsNullOrEmpty(shipmentpm.ConsigneeId))
                 {

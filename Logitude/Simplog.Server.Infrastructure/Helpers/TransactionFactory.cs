@@ -116,7 +116,7 @@ namespace Simplog.Server.Infrastructure.Helpers
             }
             if (Transaction.Current != null)
             {
-                return new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.Snapshot });
+                return new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = Transaction.Current.IsolationLevel });
             }
             return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.Snapshot });
         }
