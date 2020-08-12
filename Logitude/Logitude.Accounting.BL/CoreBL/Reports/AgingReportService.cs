@@ -542,7 +542,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 }
                 RemoveDummies(ref reportList, myaccountsList, tenant);
                 CurrencyQuery _CurrencyQuery = new CurrencyQuery(_Param.Tenant);
-                var currencies = _CurrencyQuery.GetCurrenciesByTenantPM(_Param.Tenant);
+                var currencies = _CurrencyQuery.GetCurrenciesByTenantPM(_Param.Tenant).ToList();
                 List<PeriodMExtended> namedPeriods = MapExtended(reportList, periodMExtendeds, currencies);
                 //
 
@@ -639,7 +639,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         }
 
-        private static List<PeriodMExtended> MapExtended(List<PeriodM> reportList, List<PeriodMExtended> periodMExtendeds, IQueryable<Logitude.BL.CommonDataModel.EntityPMs.CurrencyPM> currencies)
+        private static List<PeriodMExtended> MapExtended(List<PeriodM> reportList, List<PeriodMExtended> periodMExtendeds, /*IQueryable*/List<Logitude.BL.CommonDataModel.EntityPMs.CurrencyPM> currencies)
         {
             List<PeriodMExtended> namedPeriods = (from line in reportList
                                                  
