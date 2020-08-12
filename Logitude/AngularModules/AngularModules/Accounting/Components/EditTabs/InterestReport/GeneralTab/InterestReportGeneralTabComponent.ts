@@ -119,7 +119,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
 
     EditCalculationDate(){
         var logWindow = new LogitudeWindow();
-        logWindow.Title = TextCodeTranslator.Translate("InterestReport.O.EditOpenBalance");
+        logWindow.Title = TextCodeTranslator.Translate("InterestReport.O.EditCalculationDate");
         var myPath = "./Accounting/Components/Packages/EditTabs/InterestReport/GeneralTab/InterestReportEditCalculationDate/InterestReportEditCalculationDateComponent";
         logWindow.Width = 350;
         logWindow.Height = 160;
