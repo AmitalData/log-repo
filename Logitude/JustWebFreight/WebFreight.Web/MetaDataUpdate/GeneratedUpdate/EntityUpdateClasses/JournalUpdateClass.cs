@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "1b3fc975473cd64b5e90872dde1ab346";
+		public const string HashString = "ca6ab147dd0c68cb0dfc539d72a240cc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3096,7 +3096,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "JCL",
                 EnglishName =  "Journal Closed",
-                LocalName =  "סגור פקודת יומן",
+                LocalName =  "Journal Closed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -3114,7 +3114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "JVD",
                 EnglishName =  "Journal Voided",
-                LocalName =  "בטלה פקודת יומן",
+                LocalName =  "Journal Voided",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -3132,7 +3132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CREV",
                 EnglishName =  "Created",
-                LocalName =  "נוצר",
+                LocalName =  "Created",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -3150,7 +3150,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "UPEV",
                 EnglishName =  "Updated",
-                LocalName =  "עדכון",
+                LocalName =  "Updated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -3168,7 +3168,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "JCR",
                 EnglishName =  "Journal Created",
-                LocalName =  "פתיחת פקודת יומן",
+                LocalName =  "Journal Created",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -3186,7 +3186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "JUP",
                 EnglishName =  "Journal Updated",
-                LocalName =  "עדכון פקודת יומן",
+                LocalName =  "Journal Updated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -3204,7 +3204,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "JSV",
                 EnglishName =  "Journal Waiting For Approval",
-                LocalName =  "שמירת פקודת יומן",
+                LocalName =  "Journal Waiting For Approval",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -3222,7 +3222,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "JAP",
                 EnglishName =  "Journal Approved",
-                LocalName =  "אישור פקודת יומן",
+                LocalName =  "Journal Approved",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
