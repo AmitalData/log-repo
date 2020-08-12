@@ -1134,7 +1134,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if 
                 (
-                LogitudeSettings.IsCostomsDeploy ||
+                (!extDocPM.IsHybrid   && LogitudeSettings.IsCostomsDeploy) ||
                 (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && (!extDocPM.IsHybrid || (extDocPM.IsAttachment))
                 && LogitudeSettings.DeploymentStage != "Simplog" && !extDocPM.NoAddToTasksQueue)
                 )
