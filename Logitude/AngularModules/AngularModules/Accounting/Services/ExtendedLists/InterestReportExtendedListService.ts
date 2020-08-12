@@ -74,7 +74,18 @@ export class InterestReportExtendedListService {
             }),
             catchError(ServiceHelper.HandleServiceError));
     }
+    GetNumberOfDocumentNotPrinted(interestReportArgs: InterestReportArguments) {
+      return this.httpClient.put(this._apiUrl + "/PutNumberOfDocumentNotPrinted", JSON.stringify(interestReportArgs),  ServiceHelper.GetHttpHeaders()).pipe(
+          map(res => {
+              var serviceResponse: ServiceResponse;
+              serviceResponse = new ServiceResponse();
+              var result = res;
+              serviceResponse.Result = result;
 
+              return serviceResponse;
+          }),
+          catchError(ServiceHelper.HandleServiceError));
+  }
     PutBatchPrint(interestReportArgs: InterestReportArguments) {
       return this.httpClient.put(this._apiUrl + "/PutBatchPrint", JSON.stringify(interestReportArgs), ServiceHelper.GetHttpHeadersForblob()).pipe(
           map(res => {
@@ -129,5 +140,14 @@ GetInterestLastBatchServiceByTenant() {
         }),
         catchError(ServiceHelper.HandleServiceError));
 }
+
+
+
+}
+
+export class PDFDocumentInvoices {
+  public Document:any;
+  public ARInvoiceNumbersNotPrinted:string[];
+  public InterestReportNumbersNotPrinted:string[];
 
 }

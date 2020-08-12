@@ -1986,11 +1986,18 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         }
         public IQueryable<ARInvoice> GetAllInterestInvoices(DateTime fromDate, DateTime toDate,bool ShowPrintedInvoice, int tenant)
         {
-            var result = (from a in repository.context.ARInvoices where a.ARInvoiceTypeCode== "IT" && a.InvoiceDate >= fromDate && a.InvoiceDate <= toDate  select a);
+            var result = (from a in repository.context.ARInvoices where a.Tenant == tenant && a.ARInvoiceTypeCode== "IT" && a.InvoiceDate >= fromDate && a.InvoiceDate <= toDate  select a);
             if (!ShowPrintedInvoice)
             {
                 result = result.Where(s => s.IsPrinted == false);
             }
+            return result;
+        }
+
+        public List<string> GetInterestInvoiceNumbersByIds( List<string> ARInvoiceIds, int tenant)
+        {
+            var result = (from a in repository.context.ARInvoices where a.Tenant == tenant && a.ARInvoiceTypeCode == "IT" && ARInvoiceIds.Contains(a.Id) select a.InvoiceNumber).ToList();
+ 
             return result;
         }
         public IQueryable<ARInvoiceList> GetInvoiceListByTenant(int tenant)

@@ -12,6 +12,7 @@ import { MiscPageComponent } from './Components/Workspaces/Misc/MiscPageComponen
 import { InterestPageComponent } from './Components/Workspaces/Interest/InterestPageComponent';
 import { BatchInvoicesComponent } from './Components/Others/BatchInvoicesComponent';
 import { BatchPrintComponent } from './Components/Others/BatchPrintComponent';
+import { BtatchPrintWarningComponent } from './Components/Others/BtatchPrintWarningComponent';
 
 import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
 import {NewChartOfAccountComponent} from './Components/NewEntity/NewChartOfAccountComponent';
@@ -246,7 +247,8 @@ export const Components =
         InterestReportLinesByDateListTemplate,
         InterestReportShortTitleComponent,
         CreateInterestReportsForCustomersComponent,
-        InterestReportEditOpenBalanceComponent
+        InterestReportEditOpenBalanceComponent,
+        BtatchPrintWarningComponent
     ];
 
 export class ModuleDeclarations {
@@ -382,6 +384,7 @@ export class ModuleDeclarations {
             case "InterestReportShortTitleComponent": { myResult = InterestReportShortTitleComponent; break;}
             case "BatchInvoicesComponent" :{myResult =BatchInvoicesComponent; break;}
             case "BatchPrintComponent" :{myResult =BatchPrintComponent; break;}
+            case "BtatchPrintWarningComponent" :{myResult =BtatchPrintWarningComponent; break;}
 
         }
 
