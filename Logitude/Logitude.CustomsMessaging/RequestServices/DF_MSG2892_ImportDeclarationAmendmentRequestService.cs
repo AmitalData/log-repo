@@ -189,7 +189,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var declarationQueryService = new DeclarationQueryService(_context);
             declarationQueryService.LoadSupplierInvoicesItemsParentsOnly = true;
             _DeclarationPM = declarationQueryService.GetSingle(requestParams.AppicationId, true, false);
-            _DeclarationPMOrg = declarationQueryService.GetSingle(_DeclarationPM.AmendmentOriginalDeclartation, true, false);
+            _DeclarationPMOrg = declarationQueryService.GetAcceptDeclarationAmendment(_DeclarationPM.Id, _DeclarationPM.Tenant);
         }
 
 
