@@ -555,7 +555,7 @@ namespace Logitude.DBMigrations.Models
             }
             else if (dbType == "CargoTracking")
             {
-                connectionString = ConfigurationManager.AppSettings["CargoTrackingConnectionString"];
+                connectionString = DBConfig.CargoTrackingConnectionString;
             }
             else
             {
