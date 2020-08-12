@@ -17,5 +17,7 @@ export class DWObjectTableList {
 		DataViewName: string;
 		HasPivotColumn: boolean;
 		PivotFieldCode: string;
+		AdditionalFactCode: string;
+		AdditionalFactForeignKey: string;
 	
 }

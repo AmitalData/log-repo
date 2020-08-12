@@ -66,10 +66,14 @@ namespace WarehouseDataViews.Service
         {
             string parentfieldName = !string.IsNullOrEmpty(field.ViewFieldDisplayName) ? field.ViewFieldDisplayName : GetFieldNameFromCode(field.FieldCode);
             string viewName = !string.IsNullOrEmpty(field.DimensionDataViewName) ?  field.DimensionDataViewName: GetViewName(parentfieldName, "Dim");
+            if(field.FieldCode == "[Customer]" || field.FieldCode == "[Agent]")
+            {
+
+            }
             if (DataWarehouseViewLists.Where(d => d.ViewName == viewName).FirstOrDefault() == null)
             {
                 var warehouseView = new WarehouseView() {ViewName = viewName , SqlString  = " CREATE VIEW " + viewName + " AS SELECT " };
-                foreach (DWObjectFieldItem dwObjectFieldDB in DwObjectFieldLists.Where(d => d.DWObjectTableCode == field.DimensionTableCode).ToList())
+                foreach (DWObjectFieldItem dwObjectFieldDB in DwObjectFieldLists.Where(d => d.DWObjectTableCode == field.DimensionTableCode && (string.IsNullOrEmpty(d.RecordType) || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType.Split(',').Contains(parentfieldName)))).ToList())
                 {
                     warehouseView.SqlString += " " + dwObjectFieldDB.FieldCode + " as ";
                     if (dwObjectFieldDB.IsPrimaryKey) warehouseView.SqlString += (parentfieldName + "Key");
@@ -116,7 +120,7 @@ namespace WarehouseDataViews.Service
         private List<DWObjectFieldItem> GetDwObjectFieldLists()
         {
             var result = new List<DWObjectFieldItem>();
-            DataTable dWObjectFieldsMetaData = GetDataTableFromSql(connectionString, "SELECT  Code,IsCustom, IsPrimaryKey, DWObjectTableCode,ViewFieldDisplayName,DimensionDataViewName, DataTypeCode ,DimensionTableCode from DWObjectFields where DontDisplayInView =0 and IsCustom=0");
+            DataTable dWObjectFieldsMetaData = GetDataTableFromSql(connectionString, "SELECT  Code,IsCustom, IsPrimaryKey, DWObjectTableCode,ViewFieldDisplayName,DimensionDataViewName, DataTypeCode ,DimensionTableCode,RecordType from DWObjectFields where DontDisplayInView =0 and IsCustom=0");
             foreach (DataRow row in dWObjectFieldsMetaData.AsEnumerable())
             {
                 var fieldDB = new DWObjectFieldItem();
@@ -128,6 +132,7 @@ namespace WarehouseDataViews.Service
                 fieldDB.DWObjectTableCode = row.Table.Columns.Contains("DWObjectTableCode") ? row["DWObjectTableCode"].ToString() : "";
                 fieldDB.IsCustom = row.Table.Columns.Contains("IsCustom") ? bool.Parse(row["IsCustom"].ToString()) : false;
                 fieldDB.IsPrimaryKey = row.Table.Columns.Contains("IsPrimaryKey") ? bool.Parse(row["IsPrimaryKey"].ToString()) : false;
+                fieldDB.RecordType = row.Table.Columns.Contains("RecordType") ? row["RecordType"].ToString() : "";
                 result.Add(fieldDB);
             }
             return result;
@@ -154,8 +159,9 @@ namespace WarehouseDataViews.Service
         public string DimensionDataViewName { get; set; }
         public bool IsCustom { get; set; }
         public bool IsPrimaryKey { get; set; }
+        public string RecordType { get; set; }
 
-        
+
 
     }
 
