@@ -1963,7 +1963,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (invoiceTypeCode == "CD")
                         {
-                            line_UnitPrice = line_UnitPrice * -1;
+                            bool isCreditByAutoCreditInvoice = CheckAutoCreditInvoice(currentInvoice);
+                            if (isCreditByAutoCreditInvoice)
+                            {
+                                line_UnitPrice =Math.Abs( line_UnitPrice.Value);
+                            }
+                         //   line_UnitPrice = line_UnitPrice * -1;
                             lineAmount_Foreign = lineAmount_Foreign * -1;
                             lineAmount_Invoice = lineAmount_Invoice * -1;
                             lineAmount_Local = lineAmount_Local * -1;
