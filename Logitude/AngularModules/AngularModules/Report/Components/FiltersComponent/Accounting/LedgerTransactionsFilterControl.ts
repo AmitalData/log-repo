@@ -38,6 +38,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = false;
     public filterControlHight: string = "100";
+    private CurrentSession = SessionLocator.SelectedSession;
 
     public IsSalesmanRestricted: boolean = false;
     public SalesmanFilterItems: ApiQueryFilters;
@@ -89,6 +90,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this.Salesman = loggedUser.Id;
             this.GLAccountFilterItems.addAdditionalFilter("SalesmanUserId", loggedUser.Id, null, null, "Equals", false, true, false, "string", false, false);
         }
+
     }
 
     SetRunReportTitle()
@@ -380,6 +382,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         queryFilterItem.FieldName = "SalesmanUserId";
         queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.salesman);
         queryFilterItem.Operator = "Equals";
+        queryFilterItem.DisplayInList = true; // server code will take this value from DB.ObjectField.DisplayInList
         queryFilterItems.push(queryFilterItem);
 
         queryFilterItem = new QueryFilterItem();
