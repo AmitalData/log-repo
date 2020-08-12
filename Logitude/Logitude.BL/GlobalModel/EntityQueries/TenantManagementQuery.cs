@@ -1070,9 +1070,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                    MainPackage = a.PackageName,
                                                    CRMYN = a.PackageCode == "LOGI" ? "Y" : "N",
                                                    EAWBYN = a.IsAWBStockPrepaid || a.PackageCode == "EAWB" || a.PackageCode == "BUBK" ? "Y" : "N",
-                                                   MainPackageNumberOfUsers = a.MainAdditionalPackageApplied ? a.NumberOfUsers : (!a.IsMultiPackage ? a.NumberOfUsers : 0),
-                                                   CRMNumberOfUsers = !a.IsMultiPackage && a.PackageCode == "LOGI" ? a.NumberOfUsers : 0,
-                                                   EAWBNumberOfUsers = !a.IsMultiPackage && (a.PackageCode == "EAWB" || a.PackageCode == "BUBK") ? a.NumberOfUsers : 0,
+                                                   MainPackageNumberOfUsers = a.MainAdditionalPackageApplied ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : (!a.IsMultiPackage ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : 0),
+                                                   CRMNumberOfUsers = !a.IsMultiPackage && a.PackageCode == "LOGI" ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : 0,
+                                                   EAWBNumberOfUsers = !a.IsMultiPackage && (a.PackageCode == "EAWB" || a.PackageCode == "BUBK") ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : 0,
                                                }).OrderBy(d => d.TenantNumber).Skip(skip).Take(take).ToList();
 
             List<int> tenantManagementIds = new List<int>();

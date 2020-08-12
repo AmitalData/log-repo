@@ -191,7 +191,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public int TrailDaysLeft { get; set; }
         public int PaidDaysLeft { get; set; }
         public bool IsTrial { get; set; }
-        public int NumberOfUsers { get; set; }
+        public int? NumberOfUsers { get; set; }
         public bool IsCargonautEnabled { get; set; }
         public int BluesnapContractQTY { get; set; }
         public int BluesnapCRMContractQTY { get; set; }

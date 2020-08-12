@@ -531,13 +531,13 @@
     FieldName="&quot;NumberOfUsers&quot;"
     OldNames="NumberOfUsers"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;TenantManagement&quot;"
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -578,7 +578,7 @@
     DefaultText="&quot;Number Of Users&quot;"
     ListFieldLable="&quot;NumberOfUsersListLable&quot;"
     ListLableDefaultText="&quot;Number Of Users&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
@@ -12270,20 +12270,20 @@
     <Feature
       Code="&quot;SYSDISENABLED&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;TenantManagement.Features.SysDisEnabled&quot;"
+      FeatureDefaultText="&quot;System &amp; Distributor Support&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;TenantManagement.Features.SysDisEnabled&quot;"
-      FeatureDefaultText="&quot;System &amp; Distributor Support&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;EnableTenantManagementEdit&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;TenantManagement.Features.EnableTenantManagementEdit&quot;"
+      FeatureDefaultText="&quot;Enable Tenant Management Edit&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;TenantManagement.Features.EnableTenantManagementEdit&quot;"
-      FeatureDefaultText="&quot;Enable Tenant Management Edit&quot;" />
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

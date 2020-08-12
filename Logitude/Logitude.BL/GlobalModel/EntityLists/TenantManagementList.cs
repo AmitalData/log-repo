@@ -15,7 +15,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public DateTime? FirstPaymentDate { get; set; }
         public DateTime? PaidUntilDate { get; set; }
         public bool IsTrial { get; set; }
-        public int NumberOfUsers { get; set; }
+        public int? NumberOfUsers { get; set; }
         public string PackageName { get; set; }
         public string SearchFields { get; set; }
         public bool IsAWBStockPrepaid { get; set; }
