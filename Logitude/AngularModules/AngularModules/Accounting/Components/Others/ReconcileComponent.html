@@ -558,6 +558,9 @@
                     <td style="width: 100%;">
                         <table>
                             <tr class="FormFieldRow">
+                                <td style="width: 60px; padding: 0 30px; margin-top: 47px;" >
+                                    <CheckBox title="Select All" style="position: absolute; top: 36px; z-index: 999;" [IsChecked]="isAllSelected" (Checked)="isAllSelected = $event"></CheckBox>
+                                </td>
                                 <td style="width: 100px;text-indent: 11;" [style.text-align]="isRTL ? 'right' : 'left'"  >{{'Accounting.General.B.Search' | TextCodeTranslationPipe}}: </td>
                                 <td style="width: 250px;">
                                     <!--[PlaceHolder]="'Cheque No. / Bank Account'"-->
