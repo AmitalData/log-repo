@@ -818,7 +818,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     Tenant = entityPM.Tenant,
                     objectTableName = "Customs.Declaration",
                     EventCode = "DMC",
-                    notes = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : entityPM.DeclarationNumber) + (string.IsNullOrEmpty(entityPM.AmendmentRequestNumber) ? " מספר בקשה - " + entityPM.AmendmentRequestNumber : ""),
+                    notes = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : entityPM.DeclarationNumber) + (!string.IsNullOrEmpty(entityPM.AmendmentRequestNumber) ? " מספר בקשה - " + entityPM.AmendmentRequestNumber : ""),
                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : entityPM.DeclarationNumber,
                     EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : entityPM.Id,
               //      UserId = resolveLoggingUserId,
@@ -832,7 +832,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         xml_status = "new",
                         status_id = "DMC",
                         status_DateTime = DateTime.Now,
-                        comments = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : entityPM.DeclarationNumber) + (string.IsNullOrEmpty(entityPM.AmendmentRequestNumber)? " מספר בקשה - " + entityPM.AmendmentRequestNumber:"") ,
+                        comments = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : entityPM.DeclarationNumber) + (!string.IsNullOrEmpty(entityPM.AmendmentRequestNumber)? " מספר בקשה - " + entityPM.AmendmentRequestNumber:"") ,
                     }
                 };
 
