@@ -14,7 +14,8 @@ namespace Logitude.DBMigrations.Models
         public static string MainConnectionString;
         public static string SystemLogsConnectionString;
         public static string CargoTrackingConnectionString;
-
+        public static int AOTScriptsExecutionTimeOut;
+        
         public static string GetConnectionString(string dbType)
         {
             if (dbType == "Global")

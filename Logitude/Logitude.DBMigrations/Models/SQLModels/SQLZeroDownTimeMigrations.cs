@@ -84,7 +84,6 @@ namespace Logitude.DBMigrations.Models
                     SqlCommand sqlCommand = new SqlCommand();
                     sqlCommand.Connection = sqlConnection;
                     sqlCommand.CommandText = queryString;
-                    sqlCommand.CommandTimeout = 3600;
                     DateTime batchStartTime = DateTime.Now;
                     affectedRows = sqlCommand.ExecuteNonQuery();
                     DateTime batchEndTime = DateTime.Now;
@@ -262,7 +261,7 @@ namespace Logitude.DBMigrations.Models
                     SqlCommand sqlCommand = new SqlCommand();
                     sqlCommand.Connection = sqlConnection;
                     sqlCommand.CommandText = queryString;
-                    sqlCommand.CommandTimeout = 3600;
+                    sqlCommand.CommandTimeout = ToolConfigurations.AOTScriptsExecutionTimeOut;
                     DateTime batchStartTime = DateTime.Now;
                     affectedRows = sqlCommand.ExecuteNonQuery();
                     DateTime batchEndTime = DateTime.Now;

@@ -1024,6 +1024,8 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateRelationScript(RelationDefinition relation)
         {
+            bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME);
+
             string createRelationScript = "-- Add Foreign Key Constraint For Column " + relation.ForeignKeyColumn + " In Table " + DXMLTable.Name + " As Reference To Column " + relation.ReferencedColumn + " In Table " + relation.ReferencedTable + "\n";
             string foreignKeyColumns = relation.ForeignKeyColumn.Contains(",") ? string.Join(",", relation.ForeignKeyColumn.Split(',').Select(c => "[" + c + "]").ToArray()) : "[" + relation.ForeignKeyColumn + "]";
             string referencedColumns = relation.ReferencedColumn.Contains(",") ? string.Join(",", relation.ReferencedColumn.Split(',').Select(c => "[" + c + "]").ToArray()) : "[" + relation.ReferencedColumn + "]";
@@ -1061,7 +1063,9 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            return createRelationWithHistoryScript + createIndexScript;
+            string createRelationAndIndexScript = isZeroDownTimeArgumentProvided ? (createIndexScript + createRelationWithHistoryScript) : (createRelationWithHistoryScript + createIndexScript);
+
+            return createRelationAndIndexScript;
         }
 
         protected override string GetDropRelationScript(RelationDefinition relation)
@@ -1153,6 +1157,9 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateIndexScript(IndexDefinition index)
         {
+            bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME);
+            string indexOnlineOption = isZeroDownTimeArgumentProvided ? "WITH (ONLINE = ON)" : null;
+
             string indexColumns = !index.Columns.Contains(",") ? "[" + index.Columns + "]" : string.Join(",", index.Columns.Split(',').Select(c => "[" + c + "]").ToArray());
             string includeColumns = String.IsNullOrEmpty(index.Include) ? null : (!index.Include.Contains(",") ? "[" + index.Include + "]" : string.Join(",", index.Include.Split(',').Select(c => "[" + c + "]").ToArray()));
             string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
@@ -1165,11 +1172,11 @@ namespace Logitude.DBMigrations.Models
 
             if (includeColumns != null)
             {
-                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")')";
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ") " + indexOnlineOption + "')";
             }
             else
             {
-                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ")')";
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") " + indexOnlineOption + "')";
             }
 
             createIndexScript += ";\n\n";

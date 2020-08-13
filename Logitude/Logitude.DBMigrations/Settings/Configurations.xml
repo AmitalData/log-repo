@@ -1,5 +1,6 @@
 <Configurations>
 
 <Config Name="DBConfigFileName" Value="Master.DBConfig.config"></Config>
+<Config Name="AOTScriptsExecutionTimeOut" Value="2"></Config>
 
 </Configurations>

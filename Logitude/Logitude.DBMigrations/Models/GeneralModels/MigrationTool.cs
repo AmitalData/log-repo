@@ -32,7 +32,7 @@ namespace Logitude.DBMigrations.Models
 
             ValidateToolVersion();
             ReadConfigurations();
-            ReadDBConfig();
+            SetToolConfigurations();
             ValidateToolArguments();
             ValidateToolSettings();
             ValidateAndReadRoot();
@@ -1331,7 +1331,7 @@ namespace Logitude.DBMigrations.Models
 
             foreach (var scriptDefinition in scriptDefinitions)
             {
-                Console.WriteLine("Generating Script From " + scriptDefinition.SxmlFileName + " File ...");
+                Console.WriteLine("Generating Script From File " + scriptDefinition.SxmlFileName + " ...");
 
                 if (!isZeroDownTimeArgumentProvided)
                 {
@@ -1413,7 +1413,7 @@ namespace Logitude.DBMigrations.Models
 
             foreach (var scriptDefinition in scriptDefinitions)
             {
-                Console.WriteLine("Executing Script From " + scriptDefinition.SxmlFileName + " File ...");
+                Console.WriteLine("Executing Script From File " + scriptDefinition.SxmlFileName + " ...");
 
                 string scriptBody;
                 if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
@@ -2208,16 +2208,23 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected void ReadDBConfig()
+        protected void SetToolConfigurations()
         {
             try
             {
                 string dbConfigFileName = null;
+                int aotScriptsExecutionTimeOut = 1;
                 Config dbConfigFileNameConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "DBConfigFileName".ToLower()).FirstOrDefault();
-
+                Config aotScriptsExecutionTimeOutConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "AOTScriptsExecutionTimeOut".ToLower()).FirstOrDefault();
+                
                 if (dbConfigFileNameConfig != null)
                 {
                     dbConfigFileName = dbConfigFileNameConfig.Value;
+                }
+
+                if(aotScriptsExecutionTimeOutConfig != null)
+                {
+                    aotScriptsExecutionTimeOut = String.IsNullOrEmpty(aotScriptsExecutionTimeOutConfig.Value) ? 1 : Convert.ToInt32(aotScriptsExecutionTimeOutConfig.Value);
                 }
 
                 if (String.IsNullOrEmpty(dbConfigFileName))
@@ -2247,10 +2254,11 @@ namespace Logitude.DBMigrations.Models
                 ToolConfigurations.MainConnectionString = mainConnectionStringElement == null ? null : (mainConnectionStringElement.Attributes["value"]?.Value);
                 ToolConfigurations.SystemLogsConnectionString = systemLogsConnectionStringElement == null ? null : (systemLogsConnectionStringElement.Attributes["value"]?.Value);
                 ToolConfigurations.CargoTrackingConnectionString = cargoTrackingConnectionStringElement == null ? null : (cargoTrackingConnectionStringElement.Attributes["value"]?.Value);
+                ToolConfigurations.AOTScriptsExecutionTimeOut = aotScriptsExecutionTimeOut;
             }
             catch (Exception)
             {
-                ExitTool("Error: Cannot Read DBConfig File");
+                ExitTool("Error: Cannot Set Tool Configurations");
             }
         }
 
