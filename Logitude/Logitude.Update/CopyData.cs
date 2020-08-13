@@ -277,6 +277,10 @@ namespace Logitude.Update
             var AmitalObjectTables = AmitalObjectTabelRepository.GetObjectsByTenant(0);
 
             var AmitalSystemUser = AmitalUserRepository.GetSingleUserByEmail("system@tenant0.com", 0, false);
+
+            int c1 = LogitudeDocumentTypes.Count();
+            int c2 = AmitalDocumentTypes.Count();
+
             //system@tenant0.com,System,99999999
             foreach (var item in LogitudeDocumentTypes)
             {
@@ -310,7 +314,19 @@ namespace Logitude.Update
                         TemplateBody = LogitudeDocumentTypeHtmlTemplate.TemplateBody,
                         TemplateType = LogitudeDocumentTypeHtmlTemplate.TemplateType,
                         Tenant = LogitudeDocumentTypeHtmlTemplate.Tenant,
-                        VerticalShift = LogitudeDocumentTypeHtmlTemplate.VerticalShift
+                        VerticalShift = LogitudeDocumentTypeHtmlTemplate.VerticalShift,
+                        BCC = LogitudeDocumentTypeHtmlTemplate.BCC,
+                        CC = LogitudeDocumentTypeHtmlTemplate.CC,
+                        From = LogitudeDocumentTypeHtmlTemplate.From,
+                        TemplateTechnologyCode = LogitudeDocumentTypeHtmlTemplate.TemplateTechnologyCode,
+                        TemplateBodyHtml = LogitudeDocumentTypeHtmlTemplate.TemplateBodyHtml,
+                        TemplateFooterHeight = LogitudeDocumentTypeHtmlTemplate.TemplateFooterHeight,
+                        TemplateFooterHtml = LogitudeDocumentTypeHtmlTemplate.TemplateFooterHtml,
+                        TemplateBodyjson = LogitudeDocumentTypeHtmlTemplate.TemplateBodyjson,
+                        TemplateHeaderHeight = LogitudeDocumentTypeHtmlTemplate.TemplateHeaderHeight,
+                        TemplateHeaderHtml = LogitudeDocumentTypeHtmlTemplate.TemplateHeaderHtml,
+
+
 
                     };
                     AmitalDocumentTypeTemplateRepository.Add(AmitalDocumentTypeHtmlTemplate);
@@ -338,7 +354,17 @@ namespace Logitude.Update
                         TemplateBody = LogitudeDocumentTypeReportTemplate.TemplateBody,
                         TemplateType = LogitudeDocumentTypeReportTemplate.TemplateType,
                         Tenant = LogitudeDocumentTypeReportTemplate.Tenant,
-                        VerticalShift = LogitudeDocumentTypeReportTemplate.VerticalShift
+                        VerticalShift = LogitudeDocumentTypeReportTemplate.VerticalShift,
+                        BCC = LogitudeDocumentTypeReportTemplate.BCC,
+                        CC = LogitudeDocumentTypeReportTemplate.CC,
+                        From = LogitudeDocumentTypeReportTemplate.From,
+                        TemplateTechnologyCode = LogitudeDocumentTypeReportTemplate.TemplateTechnologyCode,
+                        TemplateBodyHtml = LogitudeDocumentTypeReportTemplate.TemplateBodyHtml,
+                        TemplateFooterHeight = LogitudeDocumentTypeReportTemplate.TemplateFooterHeight,
+                        TemplateFooterHtml = LogitudeDocumentTypeReportTemplate.TemplateFooterHtml,
+                        TemplateBodyjson = LogitudeDocumentTypeReportTemplate.TemplateBodyjson,
+                        TemplateHeaderHeight = LogitudeDocumentTypeReportTemplate.TemplateHeaderHeight,
+                        TemplateHeaderHtml = LogitudeDocumentTypeReportTemplate.TemplateHeaderHtml, 
 
                     };
                     AmitalDocumentTypeTemplateRepository.Add(AmitalDocumentTypeReportTemplate);
@@ -382,7 +408,12 @@ namespace Logitude.Update
                         ObjectTableId = AmitalObjectTable.Id,
                         Subject = item.Subject,
                         TemplateFormatCode = item.TemplateFormatCode,
+                        TemplateFormat = item.TemplateFormat,
+                        DocumentsDataProvider = item.DocumentsDataProvider,
+                        PrintingFieldsScreenCode = item.PrintingFieldsScreenCode,
+                        OrderBy = item.OrderBy,
 
+                         
 
                     };
                     AmitalDocumentTypeRepository.Add(NewDocumentType);
@@ -1254,6 +1285,33 @@ namespace Logitude.Update
             }
 
             return amitalChargesGroup;
+        }
+
+        
+        private void btnCopyDocumentTypes_Click_1(object sender, EventArgs e)
+        {
+            //logbox-global,logboxadmin,London2015!London2015!,logboxdbs.database.windows.net
+            //Global,sa,Saas256,amitaldata.cloudapp.net
+            if (!string.IsNullOrEmpty(txtSourceConnStr.Text) && !string.IsNullOrEmpty(txtDestinationConnStr.Text))
+            {
+                DbConnection Logitudeconnection = DatabaseInitializer.GetConnection(txtSourceConnStr.Text);
+                CommonDataContext Logitudecontext = new CommonDataContext(Logitudeconnection);
+                WebFreightContext LogitudeWebFreightContext = new WebFreightContext(Logitudeconnection);
+
+                DbConnection Amitalconnection = DatabaseInitializer.GetConnection(txtDestinationConnStr.Text);
+                CommonDataContext Amitalcontext = new CommonDataContext(Amitalconnection);
+                WebFreightContext AmitalWebFreightContext = new WebFreightContext(Amitalconnection);
+
+
+
+                this.CopyDocumentTypes(Logitudecontext, Amitalcontext, LogitudeWebFreightContext, AmitalWebFreightContext);
+
+                MessageBox.Show("Copy finished successfully");
+            }
+            else
+            {
+                MessageBox.Show("Please fill the source and destination connection strings");
+            }
         }
     }
 }
