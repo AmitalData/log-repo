@@ -1,6 +1,184 @@
--- Add New Column With Name PartnerObjectFieldCode
-ALTER TABLE [dbo].[AutomationResultEmailRecipients] ADD [PartnerObjectFieldCode] VARCHAR(200) NULL;
+-- General Script From 202007051322_UpdateNotAirShipmentsSubType.sxml File
+BEGIN TRAN
+BEGIN TRY
+DECLARE @StartTime datetime
+DECLARE @EndTime datetime
+SELECT @StartTime = GETDATE()
+If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
+Begin
+Drop Table #tempTable
+End
+If(OBJECT_ID('tempdb..#temp_Shipments') Is Not Null)
+Begin
+Drop Table #temp_Shipments
+End
+CREATE TABLE #temp_Shipments (
+Id varchar(15) not null ,
+ShipmentSubTypeId varchar(15)  null,
+ShipmentTypeId varchar(15)  null
+)
+select
+Id,
+Tenant,
+TransportModeId,
+ShipmentTypeId,
+(
+CASE
+WHEN TransportModeId = 'O' and ShipmentTypeId = 'FCLD' THEN (select top 1 Id from ShipmentSubTypes where Code = 'FCL' and Tenant = Shipments.Tenant)
+WHEN TransportModeId = 'O' and ShipmentTypeId = 'LCLD' THEN (select top 1 Id from ShipmentSubTypes where Code = 'LCL' and Tenant = Shipments.Tenant)
+WHEN TransportModeId = 'O' and ShipmentTypeId = 'MyGO' THEN (select top 1 Id from ShipmentSubTypes where Code = 'MyGO' and Tenant = Shipments.Tenant)
+WHEN TransportModeId = 'I' and ShipmentTypeId = 'FTL' THEN (select top 1 Id from ShipmentSubTypes where Code = 'FTL' and Tenant = Shipments.Tenant)
+WHEN TransportModeId = 'I' and ShipmentTypeId = 'LTL' THEN (select top 1 Id from ShipmentSubTypes where Code = 'LTL' and Tenant = Shipments.Tenant)
+WHEN TransportModeId = 'I' and ShipmentTypeId = 'MyGI' THEN (select top 1 Id from ShipmentSubTypes where Code = 'MyGI' and Tenant = Shipments.Tenant)
+END
+) as ShipmentSubTypeId
+into #tempTable
+FROM Shipments where TransportModeId <> 'A'
+declare @Tenant as int
+declare @EntityId as varchar(15)
+declare @ShipmentTypeId as varchar(4)
+declare @TransportModeId as varchar(4)
+declare @ShipmentSubTypeId as varchar(15)
+declare @Count as int
+set @Count = 0;
+BEGIN
+DECLARE DataCursor CURSOR READ_ONLY
+FOR
+SELECT Id, Tenant, TransportModeId, ShipmentTypeId, ShipmentSubTypeId
+FROM #tempTable
+OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+insert into #temp_Shipments(Id, ShipmentSubTypeId, ShipmentTypeId) values (@EntityId, @ShipmentSubTypeId, @ShipmentTypeId)
+set @Count = @Count + 1;
+if(@Count = 4000)
+begin
+update Shipments
+set
+ShipmentSubTypeId = #temp_Shipments.ShipmentSubTypeId,
+ShipmentTypeId = #temp_Shipments.ShipmentTypeId
+FROM Shipments
+INNER JOIN #temp_Shipments
+on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
+truncate table #temp_Shipments
+set @Count = 0
+end
+FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
+END
+CLOSE DataCursor
+DEALLOCATE DataCursor
+END
+if (@Count > 0)
+begin
+update Shipments
+set
+ShipmentSubTypeId = #temp_Shipments.ShipmentSubTypeId,
+ShipmentTypeId = #temp_Shipments.ShipmentTypeId
+FROM Shipments
+INNER JOIN #temp_Shipments
+on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
+end
+drop table #tempTable
+drop table #temp_Shipments
+SELECT @EndTime = GETDATE()
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202007051322_UpdateNotAirShipmentsSubType.sxml', GETDATE(), 'If(OBJECT_ID(''tempdb..#tempTable'') Is Not Null)
+Begin
+Drop Table #tempTable
+End
+If(OBJECT_ID(''tempdb..#temp_Shipments'') Is Not Null)
+Begin
+Drop Table #temp_Shipments
+End
+CREATE TABLE #temp_Shipments (
+Id varchar(15) not null ,
+ShipmentSubTypeId varchar(15)  null,
+ShipmentTypeId varchar(15)  null
+)
+select
+Id,
+Tenant,
+TransportModeId,
+ShipmentTypeId,
+(
+CASE
+WHEN TransportModeId = ''O'' and ShipmentTypeId = ''FCLD'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''FCL'' and Tenant = Shipments.Tenant)
+WHEN TransportModeId = ''O'' and ShipmentTypeId = ''LCLD'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''LCL'' and Tenant = Shipments.Tenant)
+WHEN TransportModeId = ''O'' and ShipmentTypeId = ''MyGO'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''MyGO'' and Tenant = Shipments.Tenant)
+WHEN TransportModeId = ''I'' and ShipmentTypeId = ''FTL'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''FTL'' and Tenant = Shipments.Tenant)
+WHEN TransportModeId = ''I'' and ShipmentTypeId = ''LTL'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''LTL'' and Tenant = Shipments.Tenant)
+WHEN TransportModeId = ''I'' and ShipmentTypeId = ''MyGI'' THEN (select top 1 Id from ShipmentSubTypes where Code = ''MyGI'' and Tenant = Shipments.Tenant)
+END
+) as ShipmentSubTypeId
+into #tempTable
+FROM Shipments where TransportModeId <> ''A''
+declare @Tenant as int
+declare @EntityId as varchar(15)
+declare @ShipmentTypeId as varchar(4)
+declare @TransportModeId as varchar(4)
+declare @ShipmentSubTypeId as varchar(15)
+declare @Count as int
+set @Count = 0;
+BEGIN
+DECLARE DataCursor CURSOR READ_ONLY
+FOR
+SELECT Id, Tenant, TransportModeId, ShipmentTypeId, ShipmentSubTypeId
+FROM #tempTable
+OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+insert into #temp_Shipments(Id, ShipmentSubTypeId, ShipmentTypeId) values (@EntityId, @ShipmentSubTypeId, @ShipmentTypeId)
+set @Count = @Count + 1;
+if(@Count = 4000)
+begin
+update Shipments
+set
+ShipmentSubTypeId = #temp_Shipments.ShipmentSubTypeId,
+ShipmentTypeId = #temp_Shipments.ShipmentTypeId
+FROM Shipments
+INNER JOIN #temp_Shipments
+on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
+truncate table #temp_Shipments
+set @Count = 0
+end
+FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId, @ShipmentSubTypeId
+END
+CLOSE DataCursor
+DEALLOCATE DataCursor
+END
+if (@Count > 0)
+begin
+update Shipments
+set
+ShipmentSubTypeId = #temp_Shipments.ShipmentSubTypeId,
+ShipmentTypeId = #temp_Shipments.ShipmentTypeId
+FROM Shipments
+INNER JOIN #temp_Shipments
+on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
+end
+drop table #tempTable
+drop table #temp_Shipments', DATEDIFF(MS,@StartTime,@EndTime), 'd83b69dccd89385b36d4782d9c487e31', 1);
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ROLLBACK TRAN
+END CATCH;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('948bba7a-27ba-4b6e-adc9-638865887ff4', 'AutomationResultEmailRecipient.dxml', 'AutomationResultEmailRecipients', 'PartnerObjectFieldCode', 'Add Column', GETDATE(), '-- Add New Column With Name PartnerObjectFieldCodeALTER TABLE [dbo].[AutomationResultEmailRecipients] ADD [PartnerObjectFieldCode] VARCHAR(200) NULL;');
-
+-- General Script From 202007151230_FixNULLChargeableWeightForWarehouseEntries.sxml File
+BEGIN TRAN
+BEGIN TRY
+DECLARE @StartTime datetime
+DECLARE @EndTime datetime
+SELECT @StartTime = GETDATE()
+Update WarehouseEntries SET ChargeableWeightUnitCode = (SELECT ChargeableWeightUnitCode FROM Tenants AS t WHERE WarehouseEntries.Tenant = t.Id) WHERE WarehouseEntries.ChargeableWeightUnitCode IS NULL AND WarehouseEntries.TransportModeId = 'A'
+Update WarehouseEntries SET ChargeableWeightUnitCode = (SELECT WeightMeasurementUnitCode FROM Tenants AS t WHERE WarehouseEntries.Tenant = t.Id) WHERE WarehouseEntries.ChargeableWeightUnitCode IS NULL AND (WarehouseEntries.TransportModeId = 'O' OR WarehouseEntries.TransportModeId = 'I')
+SELECT @EndTime = GETDATE()
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202007151230_FixNULLChargeableWeightForWarehouseEntries.sxml', GETDATE(), 'Update WarehouseEntries SET ChargeableWeightUnitCode = (SELECT ChargeableWeightUnitCode FROM Tenants AS t WHERE WarehouseEntries.Tenant = t.Id) WHERE WarehouseEntries.ChargeableWeightUnitCode IS NULL AND WarehouseEntries.TransportModeId = ''A''
+Update WarehouseEntries SET ChargeableWeightUnitCode = (SELECT WeightMeasurementUnitCode FROM Tenants AS t WHERE WarehouseEntries.Tenant = t.Id) WHERE WarehouseEntries.ChargeableWeightUnitCode IS NULL AND (WarehouseEntries.TransportModeId = ''O'' OR WarehouseEntries.TransportModeId = ''I'')', DATEDIFF(MS,@StartTime,@EndTime), 'a6ef11f2fadee0049efaeb0d7cb2e1fb', 1);
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ROLLBACK TRAN
+END CATCH;
 

@@ -32,21 +32,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         protected override void OnCreating(InterestReportPM entityPM, EntityPM entityParentPM)
         {
-            MapInterestReportDefaultsOnCreating(entityPM);
             if (!entityPM.IsCreatedFromBatch)
             {
                 CreateBatchTaskExecution(entityPM);
             }
         }
-
-
-        private void MapInterestReportDefaultsOnCreating(InterestReportPM entityPM)
-        {
-
-           
-        }
-
-        
 
         protected override void UpdateComposition(InterestReportPM entityPM)
         {
@@ -80,16 +70,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CancelInterestReport(entityPOCO, entityPM);
             }
 
-            if(entityPM.InterestCalculationDate != entityPOCO.InterestCalculationDate)
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update && !entityPM.IsUpdatedFromBatch)
             {
-                CreateBatchTaskExecutionForRecalculatingData(entityPM);
+                if (entityPM.InterestCalculationDate != entityPOCO.InterestCalculationDate)
+                {
+                    
+                    CreateBatchTaskExecutionForRecalculatingData(entityPM);
+                }
+
+                if (entityPM.OpenBalance != entityPOCO.OpenBalance)
+                {
+                    CreateBatchTaskExecutionForRecalculatingData(entityPM);
+                }
             }
 
-            if (entityPM.OpenBalance != entityPOCO.OpenBalance)
-            {
-                CreateBatchTaskExecutionForRecalculatingData(entityPM);
-            }
-            
         }
 
         protected override void Trace(InterestReportPM entityPM, InterestReport entityPOCO, string changesXml)
@@ -355,6 +349,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void CreateBatchTaskExecutionForRecalculatingData(InterestReportPM entityPM)
         {
+            entityPM.InterestReportStatusCode = "5";
             entityPM.RecalculateData = true;
             CreateBatchTaskExecution(entityPM);
         }
