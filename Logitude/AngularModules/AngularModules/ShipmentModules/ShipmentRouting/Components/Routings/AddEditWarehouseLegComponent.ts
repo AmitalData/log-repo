@@ -113,6 +113,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
             this.GetShipmentDirection();
             this.SetStorageDays();
+            this.ComputeStorageFee();
             if (this.IsBondedWarehouse && this.IsImportShipment) {
                 this.SetIsBondedWarehouseProperities();
             }
@@ -581,6 +582,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             }
         }
     }
+    private ComputeStorageFee() {
+        var storageReceivables: ShipmentReceivablePM[] = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE");
+        if (storageReceivables.length > 0) {
+            this.StorageFee = ArrayTool.Sum(storageReceivables, "TotalAmount");
+        }
+    }
     
     NewWarehouseEntryButtonClicked() {
         var windowArgs: any = {};
@@ -691,6 +698,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.CurrentSession.FireEvent("StorageReceivableRemoved");
             }
         }
+
+        this.ComputeStorageFee();
     }
     private ComputeReceivableAmount(): number {
         var myResult: number = ShipmentTool.ComputeImportStorageReceivableAmount(this.StorageDays, this.EntityPM);

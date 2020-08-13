@@ -90,6 +90,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     set ChargeStorageCurrencyId(newValue: string) {
         if (this.EntityPM.ChargeStorageCurrencyId != newValue) {
             this.EntityPM.ChargeStorageCurrencyId = newValue;
+            this.PricesChanged = true;
         }
     }
 
@@ -97,6 +98,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     set WeightMeasurementCode(newValue: string) {
         if (this.EntityPM.WeightMeasurementCode != newValue) {
             this.EntityPM.WeightMeasurementCode = newValue;
+            this.PricesChanged = true;
         }
     }
 
@@ -104,6 +106,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     set WeightRoundingCode(newValue: string) {
         if (this.EntityPM.WeightRoundingCode != newValue) {
             this.EntityPM.WeightRoundingCode = newValue;
+            this.PricesChanged = true;
         }
     }
 
