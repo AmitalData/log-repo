@@ -10,7 +10,7 @@ export class NewQuoteWizardScenarios {
     private isInlandDomestic: boolean = false;
     public EntityId: string;
     public EntityNumber: string;
-    public RunScenario(transportMode: string, direction: string, shipmentType: string = null) {
+    public RunScenario(direction: string, transportMode: string, shipmentType: string = null) {
 
         this.direction = direction;
         this.transportMode = transportMode;
