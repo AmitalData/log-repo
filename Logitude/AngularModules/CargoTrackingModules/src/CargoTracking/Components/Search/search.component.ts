@@ -24,16 +24,17 @@ export class SearchComponent implements AfterViewInit
     FilteredItems: any[] = [];
     searchForm;
     Shipments: CargoTrackingShipmentList[] = [];
-
+    _Tenant:number;
 
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
         private searchService: CargoTrackingSearchService)
     {
-        this.listenToRouterEvents();
-
+        this.GetVariablesFromURI();
         this.GetSearchTextFromURI();
+        this.listenToRouterEvents();
+       
 
         if (this.SearchText) {
             this.Search();
@@ -44,11 +45,32 @@ export class SearchComponent implements AfterViewInit
 
 
     private GetSearchTextFromURI()
-    {
+    {   
         let searchKey = this.route.snapshot.paramMap.get('searchKey');
         this.SearchText = searchKey;
+ 
     }
 
+
+    private GetVariablesFromURI()
+    {   
+        let searchKey = this.route.snapshot.paramMap.get('searchKey');
+      
+
+        var tenant = this.route.snapshot.paramMap.get('Tenant');
+        if(tenant!=null && tenant!=""){
+           this._Tenant = Number(tenant);
+         }
+         else{
+             if(searchKey!=null && searchKey!=""){
+                this.router.navigate([1,'search',searchKey]);
+             }
+             else{
+                this.router.navigate([1,'search']);
+             }
+            
+         }
+    }
     private InitForm()
     {
         this.searchForm = this.formBuilder.group({
@@ -57,7 +79,7 @@ export class SearchComponent implements AfterViewInit
     }
 
     ngAfterViewInit()
-    {
+    { 
      //   document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
     }
 
@@ -113,7 +135,7 @@ export class SearchComponent implements AfterViewInit
             if (event instanceof RoutesRecognized) {
 
                 var url = event.urlAfterRedirects;
-                if (url == "/search/") {
+                if (url == "/"+this._Tenant+"/search/") {
                     this._SearchText = '';
                     this.FilterItems();
                 }
@@ -144,9 +166,12 @@ export class SearchComponent implements AfterViewInit
     }
     Search()
     {
-        this.router.navigate(['/search', this.SearchText]);
-        // this.FilterItems();
-        this.LoadShipments();
+        if(this._Tenant){
+            this.router.navigate([this._Tenant,'search', this.SearchText]);
+            // this.FilterItems();
+            this.LoadShipments();
+        }
+            
     }
     FilterItems()
     {
@@ -177,7 +202,7 @@ export class SearchComponent implements AfterViewInit
     {
         var id = item.EntityId;
 
-        this.router.navigate(['/shipment', id]);
+        this.router.navigate([this._Tenant,'shipment', id]);
 
     }
     LoadShipments()
@@ -187,7 +212,7 @@ export class SearchComponent implements AfterViewInit
         var searchText = this._SearchText.trim().toLowerCase();
         if (searchText) {
             this.isLoading = true;
-            this.searchService.getShipments(searchText, 1).subscribe((result: any) =>
+            this.searchService.getShipments(searchText, this._Tenant).subscribe((result: any) =>
             {
                 this.isLoading = false;
                 console.log("[getShipments]", result);
