@@ -3177,7 +3177,7 @@
     <TextCode
       Code="&quot;InterestReport.O.EditCalculationDate&quot;"
       DefaultText="&quot;Edit Calculation Date&quot;"
-      LocalDefaultText="&quot;עדכן תאריך חישוב ריבית&quot;"
+      LocalDefaultText="&quot;עדכן תאריך חישוב&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

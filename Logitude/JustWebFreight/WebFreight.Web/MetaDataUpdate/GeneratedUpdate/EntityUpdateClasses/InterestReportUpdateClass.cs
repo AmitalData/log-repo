@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "9a0d4ac451e7439b0c7cff3455d85869";
+		public const string HashString = "5ea5017fff0197e6932ce4f8494f89ba";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2737,7 +2737,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterestReportTextCode_InterestReportONoCreditBasePeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.NoCreditBasePeriod", DefaultText = "there is no Interest Base period in the dates provided for the Credit Rate Base",LocalDefaultText = @"לא קיימת הגדרת ריבית זכות בכרטיס בתאריכים אלו", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode InterestReportTextCode_InterestReportOEditCalculationDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EditCalculationDate", DefaultText = "Edit Calculation Date",LocalDefaultText = @"עדכן תאריך חישוב ריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode InterestReportTextCode_InterestReportOEditCalculationDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EditCalculationDate", DefaultText = "Edit Calculation Date",LocalDefaultText = @"עדכן תאריך חישוב", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

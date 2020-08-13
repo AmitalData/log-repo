@@ -128,7 +128,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         logWindow.WindowClosed.subscribe(s => {
             if (s!=null) {
               this.InterestCalculationDate = s;
-              //this.CurrentSession.CurrentEditComponent.SaveChanges();
+              //this.CurrentSession.CurrentEditComponent.SaveChanges();fffff
             }
         })
     }

@@ -54,7 +54,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 interestReportLinesByDateMappingParams.NextInterestTransactionGroupedByDate.GroupInterestValueDate :
                 interestReportLinesByDateMappingParams.InterestReportLinesByDateCreationParams.InterestReportPM.InterestCalculationDate;
 
-            double doubleTotalInterestDays = (interestReportLinesByDatePM.ToDate - interestReportLinesByDatePM.FromDate).TotalDays;
+            double doubleTotalInterestDays = (interestReportLinesByDatePM.ToDate - interestReportLinesByDatePM.FromDate).TotalDays +1;
             interestReportLinesByDatePM.TotalInterestDays = Convert.ToInt32(doubleTotalInterestDays);
             interestReportLinesByDatePM.TotalAmount = interestReportLinesByDateMappingParams.CurrentInterestTransactionGroupedByDate.TotalLocalAmount;
             interestReportLinesByDatePM.AccumulatedAmount = interestReportLinesByDateMappingParams.AccumulatedAmount;
