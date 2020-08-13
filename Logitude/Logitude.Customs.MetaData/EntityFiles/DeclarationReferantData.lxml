@@ -3942,7 +3942,7 @@
     FullLocalDefaultText="&quot;מספר יבואן&quot;"
     ListFieldLable="&quot;ImporterCodeListLable&quot;"
     ListLableDefaultText="&quot;ImporterCode&quot;"
-    ListLocalDefaultText="&quot;ImporterCode&quot;"
+    ListLocalDefaultText="&quot;מספר יבואן&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
