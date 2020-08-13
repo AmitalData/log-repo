@@ -103,13 +103,13 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string StorageSiteName  { get; set; }
        [DataMember]
-       public DateTime TaxationDateTime  { get; set; }
+       public DateTime? TaxationDateTime  { get; set; }
        [DataMember]
        public string ProcedureCurrentName  { get; set; }
        [DataMember]
-       public DateTime HatraDate  { get; set; }
+       public DateTime? HatraDate  { get; set; }
        [DataMember]
-       public DateTime PaymentDate  { get; set; }
+       public DateTime? PaymentDate  { get; set; }
        [DataMember]
        public string ImporterCode  { get; set; }
        [DataMember]

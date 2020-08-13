@@ -90,7 +90,18 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  OrderMoney = a.OrderMoney,
                                                                  Team=a.ReferantTeam.LocalName,
                                                                  StorageSiteName=d.StorageSiteName,
-                                                              
+                                                                 HatraDate=d.HatraDate,
+                                                                 PaymentDate=d.PaymentDate,
+                                                                 TaxationDateTime=d.TaxationDateTime,
+                                                                 CustomerCode = d.CustomerCard == null ? null : d.CustomerCard.Code,
+                                                                 ImporterCode=d.ImporterCode,
+                                                                 ProcedureCurrentName = d.GovernmentProcedureCurrent.LocalName,
+
+
+
+
+
+
                                                              }) ;
                                                                 
                                               return query;
