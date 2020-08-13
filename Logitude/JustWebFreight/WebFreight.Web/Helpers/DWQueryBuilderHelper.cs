@@ -625,7 +625,7 @@ namespace WebFreight.Web.Helpers
             }
             string PagingString = "";
             string offsetPagingString = "";
-            if (LogitudeSettings.LogitudeURL != "http://localhost:9996" && !HasMultipleSelection)
+            if (LogitudeSettings.LogitudeURL != "http://localhost:9996")
             {
                 PagingString = " ORDER BY " + OrderByString;
                 if (LogitudeSettings.LogitudeURL != "http://localhost:9996" && DWQueryParam.PageSize != 0)
