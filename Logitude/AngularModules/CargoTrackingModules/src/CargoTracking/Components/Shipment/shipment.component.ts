@@ -18,7 +18,7 @@ export class ShipmentComponent implements OnInit
     isLoading: boolean = false;
     isMobileView: boolean = false;
     isTabletView: boolean = false;
-
+    _Tenant:number;
     constructor(private route: ActivatedRoute,
         private router: Router,
          private location: Location,
@@ -51,7 +51,12 @@ export class ShipmentComponent implements OnInit
     // }
 
     private GetIdFromURI()
-    {
+    {      
+        
+        var tenant = this.route.snapshot.paramMap.get('shipmentId');
+        if(tenant!=null && tenant!=""){
+            this._Tenant = Number(this.route.snapshot.paramMap.get('Tenant'));
+        }
         let _id = this.route.snapshot.paramMap.get('shipmentId');
         this.ShipmentId = _id;
         return _id;
@@ -95,7 +100,7 @@ export class ShipmentComponent implements OnInit
 
     LoadShipment(){
         this.isLoading = true;
-        this.searchService.getShipment(this.ShipmentId, 1).subscribe((result: any) =>
+        this.searchService.getShipment(this.ShipmentId, this._Tenant).subscribe((result: any) =>
         {
             this.isLoading = false;
             console.log("[getShipment]", result);

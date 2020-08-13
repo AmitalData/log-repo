@@ -16,13 +16,13 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
     public class CargoTrackingBrandingController: ApiController
     {
         [HttpGet]
-        public HttpResponseMessage GetCargoTrackingBrandingData()
+        public HttpResponseMessage GetCargoTrackingBrandingData(int tenant)
         {
             try
             {
-                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(1);
-                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(1);
-                CargoTrackingBrandingData data = new CargoTrackingBrandingData { Tenant = 1, MainColor =tenantManagementPM.MainColor , SecondaryColor = tenantManagementPM.SecondaryColor, BackgroundId = tenantManagementPM.BackgroundId };
+                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
+                CargoTrackingBrandingData data = new CargoTrackingBrandingData { Tenant = tenant, MainColor =tenantManagementPM.MainColor , SecondaryColor = tenantManagementPM.SecondaryColor, BackgroundId = tenantManagementPM.BackgroundId };
                 ServiceResponse response = new ServiceResponse();
                 response.Result = data;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
