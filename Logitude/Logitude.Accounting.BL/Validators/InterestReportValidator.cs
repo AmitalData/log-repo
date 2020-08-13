@@ -33,7 +33,18 @@ namespace Logitude.Accounting.BL.Validators
                 ValidateIsGLAccountActiveForInterest(entityPM, showLocals);
 
             }
+            ValidateIfThereIsARecentInvoicedOrClosedReport(entityPM, showLocals);
             return null;
+        }
+
+        public static void ValidateIfThereIsARecentInvoicedOrClosedReport(InterestReportPM entityPM, bool showLocals)
+        {
+            InterestReportRepository interestReportRepository = new InterestReportRepository(entityPM.Tenant);
+            InterestReport interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPM.CustomerId, entityPM.InterestCalculationDate, entityPM.Tenant);
+            if (interestReport != null)
+            {
+                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasarecent", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
+            }
         }
 
         private static void ValidateIsCardHasGLAccount(InterestReportPM entityPM, bool showLocals)
@@ -77,13 +88,15 @@ namespace Logitude.Accounting.BL.Validators
                 }
             }
 
-            interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPM.CustomerId, entityPM.InterestCalculationDate, entityPM.Tenant);
-            if (interestReport != null)
-            {
-                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasarecent", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
-            }
+            //interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPM.CustomerId, entityPM.InterestCalculationDate, entityPM.Tenant);
+            //if (interestReport != null)
+            //{
+            //    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasarecent", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
+            //}
 
         }
+
+
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         public static ContactPM GetLoggedContact(int tenant)
