@@ -458,7 +458,11 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new WarehouseWeightMeasurementMap());
             modelBuilder.Configurations.Add(new WarehouseWeightRoundingMap());
             modelBuilder.Configurations.Add(new WarehouseStoragePricingMap());
+            modelBuilder.Configurations.Add(new CardSearchMap());
 
+
+
+            
             base.OnModelCreating(modelBuilder);
         }
 
@@ -1018,6 +1022,11 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins { get; set; }
         public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
         public IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get; set; }
+        public IDbSet<CardSearch> CardSearchs { get; set; }
+
+
+
+
 
         public DbConnection GetConnection()
         {
