@@ -99,10 +99,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             CargoTableLists.Add(new CargoTable()
             {
                 TableName = "Shipments",
-                FieldsDBName = "Id,Tenant,ShipmentNumber,SearchFields,CreateDateTime,CustomerReference1,CustomerReference2,AutomaticLastUpdateDate",
+                FieldsDBName = "Id,Tenant,ShipmentNumber,SecurityKey,SearchFields,CreateDateTime,CustomerReference1,CustomerReference2,AutomaticLastUpdateDate",
                 KeyName = "Id",
-                ConditionKey = "ShipmentId",
-                CT_FieldsDBName = "Tenant,ShipmentId,SearchFields,ShipmentDate",
+                ConditionKey = "SecurityKey",
+                CT_FieldsDBName = "Tenant,SecurityKey,SearchFields,ShipmentDate",
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipmentSearches",
                 Main_CT_TableName = "CargoTrackingShipmentSearches",
@@ -779,7 +779,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             "CREATE TABLE[dbo].["+ TableName + "]("+
                             "[Tenant] INT NOT NULL,"+
                             "[SearchFields] NVARCHAR(100) NULL,"+
-                            "[ShipmentId] VARCHAR(15) NOT NULL,"+
+                            "[SecurityKey] VARCHAR(40)   NULL," +
                             "[ShipmentDate] DATETIME NOT NULL,"+
                             "[Id] INT IDENTITY(1,1) NOT NULL,"+
                             "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+

@@ -18,11 +18,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentId"
+    Name="SecurityKey"
     Type="varchar"
-    Size="15">
+    Size="40">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ShipmentDate"
