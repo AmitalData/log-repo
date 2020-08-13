@@ -37,7 +37,7 @@ namespace Logitude.Accounting.BL.Validators
             return null;
         }
 
-        public static void ValidateIfThereIsARecentInvoicedOrClosedReport(InterestReportPM entityPM, bool showLocals)
+        private static void ValidateIfThereIsARecentInvoicedOrClosedReport(InterestReportPM entityPM, bool showLocals)
         {
             InterestReportRepository interestReportRepository = new InterestReportRepository(entityPM.Tenant);
             InterestReport interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPM.CustomerId, entityPM.InterestCalculationDate, entityPM.Tenant);
