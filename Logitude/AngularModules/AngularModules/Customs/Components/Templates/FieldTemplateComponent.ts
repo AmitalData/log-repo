@@ -98,7 +98,13 @@ export class FieldTemplateComponent {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
-
+    get LastStatusNameText() {
+        if (AppTool.IsNullOrEmpty(this.Entity.LastStatusDate)) {
+            return "";
+        }
+        var myFormats = DateTool.GetDateFormats(this.Entity.LastStatusDate);
+        return myFormats.DateString;
+    }
     OpenCourierMaster() {
         //static entityResourceService: EntityResourceService = new EntityResourceService();
 
