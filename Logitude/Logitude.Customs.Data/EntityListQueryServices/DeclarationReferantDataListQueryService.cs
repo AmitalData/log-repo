@@ -84,6 +84,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ClassifiedUserName = a.ClassifiedUser.Contact.LocalName,
                                                                  CollectorUserName = a.CollectorUser.Contact.LocalName,
                                                                  ControllerUserName= a.ControllerUser.Contact.LocalName,
+                                                                 StorageSiteName=d.StorageSiteName,
                                                               
                                                              }) ;
             return query;
