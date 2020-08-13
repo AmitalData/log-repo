@@ -111,18 +111,21 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
           Display: TextCodeTranslator.Translate("InterestReport.F.ReportNumber"),
             Styles: { width: '80px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
+           
             HtmlListComponentName: 'InterestReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportListTemplate',
-
+            ServerSideSortable: true,
+            SortByName: 'ReportNumber'
         });
 
         this.Columns.push({
           FieldName: 'GLAccountLocalName',
             DataTypeCode: 'String',
           Display: TextCodeTranslator.Translate("InterestReport.F.GLAccountLocalName"), // 'Source',
-            Styles: { width: '130px' },
+            Styles: { width: '300px' },
             IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'GLAccountLocalName'
         });
 
       this.Columns.push({
@@ -132,7 +135,9 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
         Styles: { width: '120px' },
         HtmlListComponentName: 'InterestReportListTemplate',
         HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportListTemplate',
-        IsCustomTemplate: true
+        IsCustomTemplate: true,
+        ServerSideSortable: true,
+        SortByName: 'InterestCalculationDate'
       });
         this.Columns.push({
           FieldName: 'GLAccountInterestCreditLimit',
@@ -140,16 +145,17 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
           Display: TextCodeTranslator.Translate("InterestReport.F.GLAccountInterestCreditLimit"),
             Styles: { width: '150px' },
             IsCustomTemplate: true,
-           
+            ServerSideSortable: true,
+           SortByName: 'GLAccountInterestCreditLimit'
         });
         this.Columns.push({
           FieldName: 'TotalAmount',
             DataTypeCode: 'number',
           Display: TextCodeTranslator.Translate("InterestReport.F.TotalAmount"), 
             Styles: { width: '100px' },
-            IsCustomTemplate: true
-            ,
-           
+            IsCustomTemplate: true ,
+             ServerSideSortable: true,
+            SortByName: 'TotalAmount'
         });
         this.Columns.push({
           FieldName: 'InterestReportStatusName',
@@ -159,7 +165,8 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
             IsCustomTemplate: true,
             HtmlListComponentName: 'InterestReportListTemplate',
           HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportListTemplate',
-        
+           ServerSideSortable: true,
+            SortByName: 'InterestReportStatusName'
            
         }); this.ColumnsReady.emit(this.Columns); 
         this.CurrentSession.InterestReportCheckBoxCheckedEvent.subscribe(($event) => {
