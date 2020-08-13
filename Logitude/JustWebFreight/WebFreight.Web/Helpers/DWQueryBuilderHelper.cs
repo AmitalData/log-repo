@@ -503,7 +503,7 @@ namespace WebFreight.Web.Helpers
                             if (field.DataTypeCode.ToLower() == "boolean")
                             {
                                 string selectFrom = isMainSelectStmt ? "AllQuery." + field.DisplayName : field.DWObjectTableCode + "." + field.Code;
-                                SelectStmt.Append("case WHEN " + isMainSelectStmt + "= 1 Then 'Yes' WHEN " + isMainSelectStmt + "= 0 Then 'No' End" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                                SelectStmt.Append("case WHEN " + selectFrom + "= 1 Then 'Yes' WHEN " + selectFrom + "= 0 Then 'No' End" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
                             }
                             else
                             {
@@ -608,9 +608,12 @@ namespace WebFreight.Web.Helpers
             if (HasMultipleSelection)
             {
                 DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(Tenant);
-                var multipleDiminsionSelection =  dWObjectFieldQuery.GetDWObjectFieldByDimTable(dWObjectFieldAdditionalFactService.DwObjectTable.PivotFieldCode);
+                var multipleDiminsionSelection = dWObjectFieldQuery.GetDWObjectFieldByDimTable(dWObjectFieldAdditionalFactService.DwObjectTable.PivotFieldCode);
                 pivotTableNickname = " [" + multipleDiminsionSelection.DimensionTableCode + multipleDiminsionSelection.Name + "]";
-                FinalSelectStmt += " inner join " + multipleDiminsionSelection.DimensionTableCode + pivotTableNickname + " on [" + multipleDiminsionSelection.DWObjectTableCode + "].["+ multipleDiminsionSelection.Name+ "] = " + pivotTableNickname + ".[Id_Number]";
+                if (sqlStatmentDetails.InnerTables.Where(innerTable => innerTable.DWObjectTableCode == dWObjectFieldAdditionalFactService.DwObjectTable.PivotFieldCode).Count() == 0)
+                {
+                    FinalSelectStmt += " inner join " + multipleDiminsionSelection.DimensionTableCode + pivotTableNickname + " on [" + multipleDiminsionSelection.DWObjectTableCode + "].[" + multipleDiminsionSelection.Name + "] = " + pivotTableNickname + ".[Id_Number]";
+                }
             }
             var OrderByString = "" + Fact + ".Id_Number";
 
