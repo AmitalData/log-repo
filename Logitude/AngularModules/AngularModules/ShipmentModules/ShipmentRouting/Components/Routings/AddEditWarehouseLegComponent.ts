@@ -154,7 +154,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     }
 
     SetIsBondedWarehouseProperities() {
-        this.warehouseEntryListExtendedService.GetWarehouseEntriesByShipmentId(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
+        this.warehouseEntryListExtendedService.GetActiveWarehouseEntriesByShipmentId(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
             var warehouseEntries = serviceResponse.Result;
             if (warehouseEntries && warehouseEntries.length > 0) {
                 this.DisableNewWarehouseEntryButton = true;

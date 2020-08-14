@@ -183,13 +183,13 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     }
 
     SetIsBondedWarehouseProperities() {
-        this.warehouseEntryListExtendedService.GetWarehouseEntriesByShipmentId(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
+        this.warehouseEntryListExtendedService.GetActiveWarehouseEntriesByShipmentId(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
             var warehouseEntries = serviceResponse.Result;
             if (warehouseEntries && warehouseEntries.length > 0) {
                 this.DisableNewWarehouseEntryButton = true;
             }
         });
-        this.warehouseReleaseListExtendedService.getWarehouseReleaseListsByShipmentId(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((serviceResponse: ServiceResponse) => {
+        this.warehouseReleaseListExtendedService.getActiveWarehouseReleaseListsByShipmentId(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((serviceResponse: ServiceResponse) => {
             var warehouseRelease = serviceResponse.Result;
             if (warehouseRelease && warehouseRelease.length > 0) {
                 this.DisableNewWarehouseReleaseButton = true;

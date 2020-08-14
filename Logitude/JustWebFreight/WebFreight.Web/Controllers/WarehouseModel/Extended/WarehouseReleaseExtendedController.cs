@@ -270,6 +270,37 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
             }
         }
 
+        public HttpResponseMessage GetActiveWarehouseReleaseListsByShipmentId(string shipmentId, int tenant)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                        WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(tenant);
+                        List<WarehouseReleaseList> warehouseReleaseLists = warehouseReleaseQueryService.GetActiveWarehouseReleaseListsByshipmentId(shipmentId, tenant);
+
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, warehouseReleaseLists);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
 
         public HttpResponseMessage PutCancelWarehouseReleasePM(WarehouseReleasePM entityPM)
         {
