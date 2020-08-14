@@ -23,6 +23,7 @@ import { WarehouseStoragePricingPM } from '../../../../Common/EntityPMs/Warehous
 import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { WarehouseEntryListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseEntryListExtendedService';
+import { WarehouseExtendedListService } from '../../../../Common/Services/ExtendedLists/WarehouseExtendedListService';
 
 @Component({
     moduleId: './ShipmentModules/ShipmentRouting/Components/Routings/',
@@ -62,11 +63,13 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     private cardService: CardPMService;
     private cardListService: CardListService;
     private warehouseEntryListExtendedService: WarehouseEntryListExtendedService;
+    private warehouseExtendedListService: WarehouseExtendedListService;
     InitServices() {
         this.myAddressListService = new AddressListService();
         this.cardService = new CardPMService();
         this.cardListService = new CardListService();
         this.warehouseEntryListExtendedService = new WarehouseEntryListExtendedService();
+        this.warehouseExtendedListService = new WarehouseExtendedListService();
     }
 
     GetShipmentDirection() {
@@ -105,7 +108,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             }
             this.GetShipmentDirection();
             this.SetStorageDays();
-            if (this.IsBondedWarehouse && this.IsImportShipment) {
+            if (this.IsImportShipment) {
                 this.SetIsBondedWarehouseProperities();
             }
         }
@@ -154,12 +157,27 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     }
 
     SetIsBondedWarehouseProperities() {
-        this.warehouseEntryListExtendedService.GetActiveWarehouseEntriesByShipmentId(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
-            var warehouseEntries = serviceResponse.Result;
-            if (warehouseEntries && warehouseEntries.length > 0) {
-                this.DisableNewWarehouseEntryButton = true;
+        if (!this.EntityPM.IsBondedWarehouseChanged)
+        this.warehouseExtendedListService.GetWarehouseTypeById(this.WarehouseLegWarehouseId).subscribe((serviceResponse: ServiceResponse) => {
+            var warehouseType = serviceResponse.Result;
+            if (warehouseType == "Bonded") {
+                this.IsBondedWarehouse = true;
+                this.SetNewWarehouseEntryButtonProperty();
             }
+            else this.IsBondedWarehouse = false;
+            this.EntityPM.IsBondedWarehouseChanged = true;
         });
+    }
+
+    SetNewWarehouseEntryButtonProperty() {
+        if (this.IsBondedWarehouse) {
+            this.warehouseEntryListExtendedService.GetActiveWarehouseEntriesByShipmentId(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
+                var warehouseEntries = serviceResponse.Result;
+                if (warehouseEntries && warehouseEntries.length > 0) {
+                    this.DisableNewWarehouseEntryButton = true;
+                }
+            });
+        }
     }
 
     public IsEditingEnabled: boolean = true;
@@ -251,6 +269,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.WarehouseLegAddressId = null;
                 this.FatherComponent.WarehouseLegTerminalName = "";
             }
+            this.EntityPM.IsBondedWarehouseChanged = false;
+            this.SetIsBondedWarehouseProperities();
 
             this.SetUIProperties();
         }         
@@ -492,9 +512,16 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     set IsBondedWarehouse(value: boolean) {
         if (this.EntityPM.IsBondedWarehouse != value) {
             this.EntityPM.IsBondedWarehouse = value;
-            if (value && this.IsImportShipment) {
+            if (this.IsImportShipment) {
                 this.SetIsBondedWarehouseProperities();
             }
+        }
+    }
+
+    get IsBondedWarehouseChanged() { return this.EntityPM.IsBondedWarehouseChanged; }
+    set IsBondedWarehouseChanged(value: boolean) {
+        if (this.EntityPM.IsBondedWarehouseChanged != value) {
+            this.EntityPM.IsBondedWarehouseChanged = value;
         }
     }
 
