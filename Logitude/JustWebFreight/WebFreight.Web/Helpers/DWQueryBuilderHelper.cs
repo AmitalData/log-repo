@@ -401,18 +401,21 @@ namespace WebFreight.Web.Helpers
             if (HasMultipleSelection)
             {
                 sqlStatmentDetails = BuildSqlStatmentDetails(sqlStatmentDetails, -1, true);
+                SqlStatmentDetails innerSqlStatmentDetails = new SqlStatmentDetails();
+                innerSqlStatmentDetails.Columns = Columns;
+                innerSqlStatmentDetails.Filters = Filters;
                 int columnIndex = 0;
                 Columns.ForEach(c => {
                     columnIndex += 1;
-                    if (c.IsMultipleSelection && c.MultiSelectedValueLists.Count()>0)
+                    if (c.IsMultipleSelection)
                     {
-                        SqlStatmentDetails innerSqlStatmentDetails = new SqlStatmentDetails();
-                        innerSqlStatmentDetails.Columns = Columns;
-                        innerSqlStatmentDetails.Filters = Filters;
+                        SqlColumnStatmentDetails sqlColumnStatmentDetails = new SqlColumnStatmentDetails();
+                        sqlColumnStatmentDetails.Index = columnIndex;
+                        sqlColumnStatmentDetails.MultiSelectedCount = c.MultiSelectedValueLists.Count();
 
                         innerSqlStatmentDetails = BuildSqlStatmentDetails(innerSqlStatmentDetails, columnIndex);
                         
-                        sqlCommandDefinition = BuildSqlCommandDefinition(innerSqlStatmentDetails, DWQueryParam, columnIndex);
+                        sqlCommandDefinition = BuildSqlCommandDefinition(innerSqlStatmentDetails, DWQueryParam, sqlColumnStatmentDetails);
                         FinalQuery += string.IsNullOrEmpty(FinalQuery) ? sqlCommandDefinition.SQLString : " Union " + sqlCommandDefinition.SQLString;
                     }
                 });
@@ -533,7 +536,7 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        private SqlCommandDefinition BuildSqlCommandDefinition(SqlStatmentDetails sqlStatmentDetails, DWQueryData DWQueryParam, int columnIndex = -1)
+        private SqlCommandDefinition BuildSqlCommandDefinition(SqlStatmentDetails sqlStatmentDetails, DWQueryData DWQueryParam, SqlColumnStatmentDetails sqlColumnStatmentDetails = null)
         {
             SqlCommandDefinition sqlCommandDefinition = new SqlCommandDefinition();
             sqlCommandDefinition.Parameters = new List<SqlParameterDetails>();
@@ -674,9 +677,9 @@ namespace WebFreight.Web.Helpers
                 FinalQuery = FinalQuery + " where " + Fact + TenantWhere + "@Tenant";
             }
 
-            if (HasMultipleSelection)
+            if (HasMultipleSelection && (sqlColumnStatmentDetails != null && sqlColumnStatmentDetails.MultiSelectedCount > 0))
             {
-                string replaceString = GetChargesTypeConditions(sqlStatmentDetails.Columns, pivotTableNickname, columnIndex);
+                string replaceString = GetChargesTypeConditions(sqlStatmentDetails.Columns, pivotTableNickname, sqlColumnStatmentDetails.Index);
                 FinalQuery = FinalQuery.Replace("@Tenant", replaceString);
             }
 
@@ -807,6 +810,12 @@ namespace WebFreight.Web.Helpers
         public List<string> FromTables { get; set; }
         public string FinalSelectStmt { get; set; }
         public string FinalGroupByStmt { get; set; }
+    }
+
+    public class SqlColumnStatmentDetails
+    {
+        public int Index { get; set; }
+        public int MultiSelectedCount { get; set; }
     }
 
 }
