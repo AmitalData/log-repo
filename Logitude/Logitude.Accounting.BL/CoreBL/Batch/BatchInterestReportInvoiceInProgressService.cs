@@ -67,6 +67,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 report.InterestReportStatusCode = "8";
                 report.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 InterestReportUpdateService service = new InterestReportUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
+                report.IsUpdatedFromBatch = true;
                 service.Update(report, true);
             }
         }
