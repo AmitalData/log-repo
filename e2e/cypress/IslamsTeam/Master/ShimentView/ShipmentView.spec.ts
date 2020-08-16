@@ -35,7 +35,7 @@ it('OpenShipmentView', () => {
 
 it('CreateNewView ', () => {
     // cy.wait(1000)
-    cy.get('#QueryList_0_0').click()
+    cy.get('#QueryList_0_0').click({ force: true })
     cy.get('#NewViewId_0_0').click()
     cy.get('#NewViewTabchoose').click()
     cy.get('#ViewNameId').type('CypressTest View')
