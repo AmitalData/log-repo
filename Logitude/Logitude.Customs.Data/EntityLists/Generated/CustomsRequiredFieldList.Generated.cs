@@ -26,6 +26,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string ObjectFieldName  { get; set; }
        [DataMember]
        public string ObjectfieldCode  { get; set; }
+       [DataMember]
+       public bool? IsImport  { get; set; }
+       [DataMember]
+       public bool? IsExport  { get; set; }
    }
 
 }
