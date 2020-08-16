@@ -39,6 +39,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsImport"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsExport"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
@@ -48,6 +60,5 @@
     ForeignKeyColumn="ObjectfieldId"
     ReferencedTable="ObjectFields"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo"
-    Ignore="true"/>
+    ReferencedTableSchema="dbo" />
 </Table>
