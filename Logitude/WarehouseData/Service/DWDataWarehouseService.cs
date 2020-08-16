@@ -286,7 +286,7 @@ namespace WarehouseData.Service
 
             else if (table.DBTableName == "Contacts")
             {
-                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,LocalName, Email,AutomaticLastUpdateDate)values('-1'," + tenant + ",'','','' , GETDATE());";
+                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,LocalName, Email, InActive, AutomaticLastUpdateDate)values('-1'," + tenant + ",'','','' , 0, GETDATE());";
             }
 
             else if (table.DBTableName == "ShipmentTypes" || table.DBTableName == "PartnerTypes") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Name, AutomaticLastUpdateDate)values('-1','' ,GETDATE());";

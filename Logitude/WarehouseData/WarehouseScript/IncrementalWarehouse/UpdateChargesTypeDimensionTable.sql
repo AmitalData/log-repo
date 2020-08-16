@@ -19,24 +19,25 @@
    declare @ParentTenant int
    declare @IsExpense as bit
    declare @AutomaticLastUpdateDate as datetime
+   declare @InActive as bit
 
 	DECLARE ChargesTypeCursor CURSOR READ_ONLY
 	FOR
-    SELECT Id,Code, EnglishName , LocalName , ChargesGroupCode, dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant , IsExpense, dw_ChargesTypes.AutomaticLastUpdateDate
+    SELECT Id,Code, EnglishName , LocalName , ChargesGroupCode, dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant , IsExpense, dw_ChargesTypes.AutomaticLastUpdateDate, dw_ChargesTypes.InActive
 	From dw_ChargesTypes
 	inner JOIN dw_DWHSettings ON dw_ChargesTypes.Tenant = dw_DWHSettings.Tenant
 	where dw_ChargesTypes.AutomaticLastUpdateDate > @LastUpdateDate	
-	OPEN ChargesTypeCursor FETCH NEXT FROM ChargesTypeCursor INTO   @Id ,@Code, @EnglishName, @LocalName, @ChargeGroupCode , @SourceTenant , @ParentTenant,@IsExpense, @AutomaticLastUpdateDate
+	OPEN ChargesTypeCursor FETCH NEXT FROM ChargesTypeCursor INTO   @Id ,@Code, @EnglishName, @LocalName, @ChargeGroupCode , @SourceTenant , @ParentTenant,@IsExpense, @AutomaticLastUpdateDate, @InActive
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
 	set @Key = (select Id from DIM_ChargesTypes where Id = @Id)
 	
-	if(@Key is  null) begin     insert into DIM_ChargesTypes (Id, Code ,[English Name] ,[Local Name],[Charge Group Code], [Source Tenant],[Parent Tenant],[Is Expense],[Automatic Last Update Date]) values(@Id ,@Code, @EnglishName, @LocalName, @ChargeGroupCode , @SourceTenant , @ParentTenant,@IsExpense, @AutomaticLastUpdateDate) end
-	else begin update   DIM_ChargesTypes set [Code] =@Code, [English Name] =@EnglishName, [Local Name] =@LocalName , [Charge Group Code] = @ChargeGroupCode , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant  ,[Is Expense] =@IsExpense, [Automatic Last Update Date] = @AutomaticLastUpdateDate Where Id = @Id end
+	if(@Key is  null) begin     insert into DIM_ChargesTypes (Id, Code ,[English Name] ,[Local Name],[Charge Group Code], [Source Tenant],[Parent Tenant],[Is Expense],[Automatic Last Update Date],[InActive]) values(@Id ,@Code, @EnglishName, @LocalName, @ChargeGroupCode , @SourceTenant , @ParentTenant,@IsExpense, @AutomaticLastUpdateDate, @InActive) end
+	else begin update   DIM_ChargesTypes set [Code] =@Code, [English Name] =@EnglishName, [Local Name] =@LocalName , [Charge Group Code] = @ChargeGroupCode , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant  ,[Is Expense] =@IsExpense, [Automatic Last Update Date] = @AutomaticLastUpdateDate, [InActive] = @InActive Where Id = @Id end
 
 
-	FETCH NEXT FROM ChargesTypeCursor INTO   @Id ,@Code, @EnglishName, @LocalName, @ChargeGroupCode , @SourceTenant , @ParentTenant,@IsExpense, @AutomaticLastUpdateDate
+	FETCH NEXT FROM ChargesTypeCursor INTO   @Id ,@Code, @EnglishName, @LocalName, @ChargeGroupCode , @SourceTenant , @ParentTenant,@IsExpense, @AutomaticLastUpdateDate, @InActive
 		End
 	CLOSE ChargesTypeCursor
 	DEALLOCATE ChargesTypeCursor

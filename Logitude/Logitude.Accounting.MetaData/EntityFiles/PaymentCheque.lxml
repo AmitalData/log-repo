@@ -3884,14 +3884,6 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature
-      Code="&quot;MOREE&quot;"
-      FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;PaymentCheque.Features.PCMore&quot;"
-      FeatureDefaultText="&quot;More&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+    
   </AdditionalFeatures>
 </entity>
