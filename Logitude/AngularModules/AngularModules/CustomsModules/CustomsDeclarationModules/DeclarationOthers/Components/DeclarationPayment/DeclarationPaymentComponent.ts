@@ -719,6 +719,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         let allCustomBankList: CustomBankList[] = response.Result;
                         let bank: CustomBankList = allCustomBankList.filter(d => d.InternalCode == customFileCreditResponseData.BankCode && !d.InActive)[0];
                         if (!AppTool.IsNullOrEmpty(bank)) {
+                            debugger;
                             this.GetCreditInternalBankId = bank.Id;
                             //if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
                             //    this.JustAutoFillPaymentScreen();
@@ -884,6 +885,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         else {
             for (let method of this.PaymentMethodsList.Collection) {
                 method.Amount = this.DeclarationPM.TotalTax;
+               
                 if (this.BetweenMinAndMax && method.PayerActivityTypeCode == "3") {
                     method.MethodTypeCode = "2";
                     method.InternalBankId = "";
@@ -2665,7 +2667,7 @@ export class PaymentMethodModel extends BaseComponent {
     customBankCardExtendedPMService: CustomBankCardExtendedPMService = new CustomBankCardExtendedPMService();
     constructor(public methodPM: DeclarationPaymentMethodPM, public parent: DeclarationPaymentComponent) {
         super();
-
+        debugger;
         if (methodPM.MethodTypeCode == "1") {
             this.BanksList = [];
             if (!AppTool.IsNullOrEmpty(methodPM.InternalBankId)) {
@@ -2688,7 +2690,7 @@ export class PaymentMethodModel extends BaseComponent {
     }
 
     LoadBanks() {
-
+        debugger;
 
         this.parent.declarationWebService.GetCustomBanksForCard(this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
 
@@ -3039,6 +3041,7 @@ export class PaymentMethodModel extends BaseComponent {
     }
     get MethodTypeCode() { return this.methodPM.MethodTypeCode; }
     set MethodTypeCode(value: string) {
+        debugger;
         if (this.methodPM.MethodTypeCode != value) {
             this.methodPM.MethodTypeCode = value;
             if (value == "1") {
@@ -3154,8 +3157,25 @@ export class PaymentMethodModel extends BaseComponent {
                             this.methodPM.PayerActivityTypeCode = null;
 
 
+                        }  
+                        if (this.parent.BetweenMinAndMax && this.methodPM.PayerActivityTypeCode == "3") {
+                            
+                                this.methodPM.MethodTypeCode = "2";
+                                this.methodPM.InternalBankId = null;
+                                this.InternalBankId = null;
+                                this.methodPM.PayerActivityTypeCode = "3";
+                                this.parent.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                                    this.methodPM.MethodTypeName = response.Result.LocalName;
+                                });
+                                this.parent.customerActivityTypeListService.getSingleFromCache("3").subscribe((response: ServiceResponse) => {
+                                    this.methodPM.PayerActivityTypeName = response.Result.LocalName;
+                                });
+                            }
 
-                        }
+                       
+
+
+
 
                     }
                 }
