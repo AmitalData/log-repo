@@ -158,6 +158,14 @@ namespace Logitude.Customs.BL.Messaging.Amital
   <InvoiceAmount>10</AmountForeign>
 </Invoice>
 </Invoices>
+<Messages>
+ <MessagesData>
+  <E>חסר תאור בשורה של סעיף MMN1</E>
+ </MessagesData>
+ <MessagesData>
+  <W>בכרטיס 10008559 מספר עוסק מורשה חייב להיות באורך 9</W>
+ </MessagesData>
+</Messages>
 </AllInvoices>
  ";
             if (!String.IsNullOrWhiteSpace(resXML))
@@ -192,6 +200,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public List<InvoiceLine> InvoiceLines;
             public List<IntegratedInvoice> IntegratedInvoices;
             public List<Invoice> Invoices;
+            public List<Messages> MessagesData;
 
 
         }
@@ -235,6 +244,12 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string InvoiceCurrency { get; set; }
             public decimal InvoiceAmount { get; set; }
         }
-      
+        public class Messages
+        {
+            public string W { get; set; }
+            public string E { get; set; }
+        }
+
+
     }
 }
