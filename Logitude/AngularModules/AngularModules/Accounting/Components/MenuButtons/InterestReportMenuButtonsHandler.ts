@@ -281,10 +281,10 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
             _ARInvoicePM.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
             _ARInvoicePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
        // _ARInvoicePM.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
-        InvoiceTool.ComputeARInvoiceDueDate(_ARInvoicePM);
+        // InvoiceTool.ComputeARInvoiceDueDate(_ARInvoicePM);
          _ARInvoicePM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
         _ARInvoicePM.ProfitCurrencyCode = SessionLocator.TenantPM.ProfitCurrencyCode;
- 
+        _ARInvoicePM.DueDate = _ARInvoicePM.InvoiceDate;
         var _ARInvoiceLinePM: ARInvoiceLinePM = new ARInvoiceLinePM(_ARInvoicePM);
         _ARInvoiceLinePM.Tenant = this.TenantPM.Id;
         _ARInvoiceLinePM.InvoiceLocalCurrencyCode = this.TenantPM.CurrencyCode;
