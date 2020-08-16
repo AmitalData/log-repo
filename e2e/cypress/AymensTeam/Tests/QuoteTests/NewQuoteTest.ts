@@ -2,7 +2,7 @@ import { Resolvers } from "../../Resolvers/Resolvers";
 import { NewQuoteWizardScenarios } from '../../Scenarios/QuoteScenarios/NewQuoteWizardScenarios';
 import { LoginComp } from "../../../Login/Login.po";
 
-describe('Operations', () => {
+describe('Quotes Modules', () => {
     let login: LoginComp = new LoginComp();
     let scenarios: NewQuoteWizardScenarios = new NewQuoteWizardScenarios();
 
