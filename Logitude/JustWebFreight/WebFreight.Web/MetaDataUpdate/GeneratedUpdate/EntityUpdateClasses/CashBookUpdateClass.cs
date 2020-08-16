@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CashBookUpdateClass
    {  		
-		public const string HashString = "4e769380660a38618ba047d1bce7f867";
+		public const string HashString = "56047b80bb3c8e1c19e646a6facf4ed9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1752,8 +1752,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   		   //--------------> Additional Features <--------------\\
 
 		   Feature CashBookFeature_CashbookMenuFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashbookMenuFeature", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.CashbookMenuFeature", NameTextCodeDefaultText = @"Cashbook" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CashBookObjectTable);
-
-		   Feature CashBookFeature_MORECASHBOOK = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MORECASHBOOK", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.More", NameTextCodeDefaultText = @"More" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CashBookObjectTable);
 
    
 	    
