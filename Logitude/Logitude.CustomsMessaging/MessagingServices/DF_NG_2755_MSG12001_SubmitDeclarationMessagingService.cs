@@ -72,7 +72,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
                 var Fake2755 = new Fake_2754_MSG10004_SumbitPayment(requestParams);
-                _ResponseHeader = Fake2755.CallWS(out response);
+                _ResponseHeader = Fake2755.CallWS(out response, requestParams);
 
 
                 exceptionMessage = null;
