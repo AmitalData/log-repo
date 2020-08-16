@@ -85,17 +85,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         private void FilterCustomerPeriodsOnBalance(AccountingAgingDataProvider totalData)
         {
-            List<AgingPeriod> totalBalances = GetTotalBalancePeriods(totalData, showLocals);
-
-            var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
-
-            foreach (var totalBalance in totalBalances)
+            if (GetFilterValue<string>("GroupByDate") != "filter_Due")
             {
-                if (GetFilterValue<string>("BalanceFilter") == "Debtors" && !(totalBalance.Total > 0))
-                    RemoveCustomerPeriods(totalData, totalBalance);
-                else if (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && !(totalBalance.Total >= Convert.ToDecimal(balanceFilterAmount)))
-                    RemoveCustomerPeriods(totalData, totalBalance);
+                List<AgingPeriod> totalBalances = GetTotalBalancePeriods(totalData, showLocals);
+
+                var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
+
+                foreach (var totalBalance in totalBalances)
+                {
+                    if (GetFilterValue<string>("BalanceFilter") == "Debtors" && !(totalBalance.Total > 0))
+                        RemoveCustomerPeriods(totalData, totalBalance);
+                    else if (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && !(totalBalance.Total >= Convert.ToDecimal(balanceFilterAmount)))
+                        RemoveCustomerPeriods(totalData, totalBalance);
+                }
             }
+
         }
 
         private void RemoveCustomerPeriods(AccountingAgingDataProvider totalData, AgingPeriod totalBalance)
@@ -370,7 +374,24 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                     record.Total = item.Total;
 
-                    periods.Add(record);
+
+                    if (GetFilterValue<string>("GroupByDate") == "filter_Due")
+                    {
+                        var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
+                        var totalBalance = item.LocalBalanceInDue;
+                        if ((GetFilterValue<string>("BalanceFilter") == "Debtors" && totalBalance > 0)
+                                ||
+                            (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && totalBalance >= Convert.ToDecimal(balanceFilterAmount)))
+                        {
+
+                            periods.Add(record);
+                        }
+                    }
+                    else
+                    {
+                        periods.Add(record);
+                    }
+
                 }
             }
             else
@@ -392,7 +413,23 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                     record.Total = item.Total;
 
-                    periods.Add(record);
+                    if (GetFilterValue<string>("GroupByDate") == "filter_Due")
+                    {
+                        var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
+                        var totalBalance = item.LocalBalanceInDue;
+                        if ((GetFilterValue<string>("BalanceFilter") == "Debtors" && totalBalance > 0)
+                                ||
+                            (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && totalBalance >= Convert.ToDecimal(balanceFilterAmount)))
+                        {
+
+                            periods.Add(record);
+                        }
+                    }
+                    else
+                    {
+                        periods.Add(record);
+                    }
+
                 }
             }
 
