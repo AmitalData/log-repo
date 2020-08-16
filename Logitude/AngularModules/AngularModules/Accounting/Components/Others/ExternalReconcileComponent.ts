@@ -330,8 +330,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         });
         let myExtPageLineModel: ExtPageLineModel = this.ExtPageSelectedLines.Collection[0];
-        
-        
+
+
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 390;
         confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
@@ -349,6 +349,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                         logitudeWindow.Show('./Accounting/Components/Others/ExtReconcileAdjustBankFeeComponent');
                         logitudeWindow.WindowClosed
                             .subscribe(($event: any) => {
+                                this.ExtPageSelectedLines.Clear();
+                                this.TransactionSelectedLines.Clear();
+
                                 this.RefreshButtonClicked();
                             });
                     });
