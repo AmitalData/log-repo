@@ -590,13 +590,17 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                 MyPeriodList = reportList;
                 MyPeriodExtendedList = namedPeriods;
-                DataTable _PivotTable = namedPeriods.ToPivotTable(
-                    rec => rec.PeriodName,
-                    rec => rec.AccountAndCurr, //new { rec.AccountId, rec.CurrencyId }, //rec.AccountId, //
-                    recs => recs.Any() ? recs.Sum(rec => rec.Total) : 0.00m);
-                var xml = _PivotTable.ToJsonString();
-                _PivotTable.TableName = "sss";
-                xml = _PivotTable.ToXml();
+                string xml = string.Empty;
+                if (_Param.BuildPivot)
+                {
+                    DataTable _PivotTable = namedPeriods.ToPivotTable(
+                        rec => rec.PeriodName,
+                        rec => rec.AccountAndCurr, //new { rec.AccountId, rec.CurrencyId }, //rec.AccountId, //
+                        recs => recs.Any() ? recs.Sum(rec => rec.Total) : 0.00m);
+                    xml = _PivotTable.ToJsonString();
+                    _PivotTable.TableName = "sss";
+                    xml = _PivotTable.ToXml();
+                }
                 return xml;
             }
         }
@@ -1527,6 +1531,8 @@ TRUE= כאשר מבקשים עם ריכוז לפי כרטיס אב (פיצול �
             get { return _explained_AggregateByGLAccountCurrencies; }
             set { _explained_AggregateByGLAccountCurrencies = value; }
         }
+
+        public bool BuildPivot { get; set; }
 
     }
 
