@@ -10,9 +10,9 @@ export class CargoTrackingShipmentSearchList {
    
 	Tenant: number;
 	SearchFields: string;
-	ShipmentId: string;
 	ShipmentDate: Date;
 	Id: number;
+	SecurityKey: string;
 	
 }
  

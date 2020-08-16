@@ -32,6 +32,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
                                                                EntityId = a.EntityId,
 
+                                                               SecurityKey = a.SecurityKey,
+
                                                                ForwardingShipmentHeaderId = a.ForwardingShipmentHeaderId,
 
                                                                CustomsShipmentHeaderId = a.CustomsShipmentHeaderId,
@@ -112,6 +114,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     FromPortId = poco.FromPortId,
 
                     ToPortId = poco.ToPortId,
+                    
+                    SecurityKey = poco.SecurityKey,
 
                     ShipperId = poco.ShipperId,
 
@@ -143,19 +147,19 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return iQueryable;
         }
 
-        public List<CargoTrackingShipmentList> GetShipments(List<string> shipmentsIds, int tenant)
+        public List<CargoTrackingShipmentList> GetShipments(List<string> shipmentsSecurityKeies, int tenant)
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(tenant);
-            IQueryable<CargoTrackingShipment> shipments = repo.GetByIds(shipmentsIds, tenant);
+            IQueryable<CargoTrackingShipment> shipments = repo.GetBySecurityKeies(shipmentsSecurityKeies, tenant);
 
             IQueryable<CargoTrackingShipmentList> shipmetsLists = GetIqueryableList(shipments);
 
             return shipmetsLists.ToList();
         }
-        public CargoTrackingShipmentList GetShipment(string shipmentId, int tenant)
+        public CargoTrackingShipmentList GetShipment(string SecurityKey, int tenant)
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(tenant);
-            CargoTrackingShipment shipment = repo.GetById(shipmentId, tenant);
+            CargoTrackingShipment shipment = repo.GetBySecurityKey(SecurityKey, tenant);
 
             CargoTrackingShipmentList shipmentList = GetEntityList(shipment);
 

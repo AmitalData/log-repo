@@ -11,7 +11,7 @@ const routes: Routes = [
     {path: ':Tenant/search/:searchKey', component: SearchComponent },
     // { path: 'pageb', component: PageBComponent },
     // { path: 'login', component: LoginComponent },
-    {path: ':Tenant/shipment/:shipmentId', component: ShipmentComponent},    
+    {path: ':Tenant/shipment/:SecurityKey', component: ShipmentComponent},    
     {path: '', component: SearchComponent , pathMatch: 'full' },
     {path: '**',component: SearchComponent, pathMatch: 'full' },
 ];

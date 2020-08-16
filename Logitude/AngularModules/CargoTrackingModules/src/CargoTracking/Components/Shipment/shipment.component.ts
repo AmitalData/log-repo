@@ -12,7 +12,7 @@ import { db } from '../../../app/mem.data';
 })
 export class ShipmentComponent implements OnInit
 {
-    ShipmentId: string = "";
+    SecurityKey: string = "";
     Shipment: CargoTrackingShipmentList = null;
     innerWidth: number;
     isLoading: boolean = false;
@@ -47,18 +47,18 @@ export class ShipmentComponent implements OnInit
 
     // private GetShipmentFromDB()
     // {
-    //     this.Shipment = db.Shipments.find(d => d.Id == this.ShipmentId);
+    //     this.Shipment = db.Shipments.find(d => d.Id == this.SecurityKey);
     // }
 
     private GetIdFromURI()
     {      
         
-        var tenant = this.route.snapshot.paramMap.get('shipmentId');
+        var tenant = this.route.snapshot.paramMap.get('SecurityKey');
         if(tenant!=null && tenant!=""){
             this._Tenant = Number(this.route.snapshot.paramMap.get('Tenant'));
         }
-        let _id = this.route.snapshot.paramMap.get('shipmentId');
-        this.ShipmentId = _id;
+        let _id = this.route.snapshot.paramMap.get('SecurityKey');
+        this.SecurityKey = _id;
         return _id;
     }
 
@@ -100,7 +100,7 @@ export class ShipmentComponent implements OnInit
 
     LoadShipment(){
         this.isLoading = true;
-        this.searchService.getShipment(this.ShipmentId, this._Tenant).subscribe((result: any) =>
+        this.searchService.getShipment(this.SecurityKey, this._Tenant).subscribe((result: any) =>
         {
             this.isLoading = false;
             console.log("[getShipment]", result);
