@@ -236,10 +236,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }               
                 VatNumber = VatNumber == null? "000000000": VatNumber;
                 SetVatAmounts(a);
-                if(a.JournalId == "1-1500394")
-                {
-
-                }
+              
                 SetReferenceFields(a.Reference);
                 string transmitStatusCode = SetTransmitStatusByDocumentDate(a.ReferenceDate);
                 TaxReportLinePM taxReportLine = new TaxReportLinePM()
