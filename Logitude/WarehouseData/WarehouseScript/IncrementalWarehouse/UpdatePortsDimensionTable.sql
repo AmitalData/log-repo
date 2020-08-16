@@ -21,25 +21,26 @@
    declare @SourceTenant int
    declare @ParentTenant int
    declare @AutomaticLastUpdateDate as datetime
+   declare @InActive as bit
 
 	DECLARE PortsCursor CURSOR READ_ONLY
 	FOR
-	SELECT dw_Ports.Id, dw_Ports.EnglishName, dw_Ports.Code , dw_Ports.LocalName , dw_Ports.CombinedCode ,dw_Countries.EnglishName, dw_States.EnglishName, dw_Ports.Tenant, dw_DWHSettings.ParentTenant, dw_Ports.AutomaticLastUpdateDate
+	SELECT dw_Ports.Id, dw_Ports.EnglishName, dw_Ports.Code , dw_Ports.LocalName , dw_Ports.CombinedCode ,dw_Countries.EnglishName, dw_States.EnglishName, dw_Ports.Tenant, dw_DWHSettings.ParentTenant, dw_Ports.AutomaticLastUpdateDate, dw_Ports.InActive
 	From dw_Ports
 	INNER JOIN dw_States ON dw_Ports.StateId = dw_States.Id
 	INNER JOIN dw_Countries ON dw_Ports.CountryId = dw_Countries.Id
 	INNER JOIN dw_DWHSettings ON dw_Ports.Tenant = dw_DWHSettings.Tenant
 	where dw_Ports.AutomaticLastUpdateDate > @LastUpdateDate	
-	OPEN PortsCursor FETCH NEXT FROM PortsCursor INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate 
+	OPEN PortsCursor FETCH NEXT FROM PortsCursor INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
 	set @Key = (select Id from Dim_Ports where Id = @Id)
-	if(@Key is  null) begin  insert into Dim_Ports (Id,Name,Code,[Local Name],[UN Loc Code] ,Country,[State Name],  [Source Tenant],[Parent Tenant],[Automatic Last Update Date])  values(@Id,@Name,@Code,@LocalName ,@CombinedCode, @Country, @State , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate); end
-	else begin update   Dim_Ports set Name =@Name,  [Local Name] =@LocalName ,  [UN Loc Code] = @CombinedCode ,Country = @Country, [State Name] = @State,   [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate  Where Id = @Id; end
+	if(@Key is  null) begin  insert into Dim_Ports (Id,Name,Code,[Local Name],[UN Loc Code] ,Country,[State Name],  [Source Tenant],[Parent Tenant],[Automatic Last Update Date],[InActive])  values(@Id,@Name,@Code,@LocalName ,@CombinedCode, @Country, @State , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive); end
+	else begin update   Dim_Ports set Name =@Name,  [Local Name] =@LocalName ,  [UN Loc Code] = @CombinedCode ,Country = @Country, [State Name] = @State,   [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate, [InActive] = @InActive  Where Id = @Id; end
 	
 
-	FETCH NEXT FROM PortsCursor  INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
+	FETCH NEXT FROM PortsCursor  INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 		End
 	CLOSE PortsCursor
 	DEALLOCATE PortsCursor

@@ -16,7 +16,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             List<InterestTransactionsGroupedByDate> interestTransactionsGroupedByDates = GetInterestTransactionsGroupedByDate(interestReportLinesByDateCreationParams.InterestTransactionPMs);
             List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = new List<InterestReportLinesByDatePM>();
             int sequence = 1;
-            decimal accumulatedAmount = interestReportLinesByDateCreationParams.InterestReportPM.OpenBalance ?? interestReportLinesByDateCreationParams.InterestReportPM.OpenBalance.Value;
+            decimal accumulatedAmount = interestReportLinesByDateCreationParams.InterestReportPM.OpenBalance != null ? interestReportLinesByDateCreationParams.InterestReportPM.OpenBalance.Value : 0;
             for (int i = 0; i < interestTransactionsGroupedByDates.Count; i++)
             {
                 InterestTransactionsGroupedByDate currentInterestTransactionGroupedByDate = interestTransactionsGroupedByDates[i];
@@ -54,7 +54,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 interestReportLinesByDateMappingParams.NextInterestTransactionGroupedByDate.GroupInterestValueDate :
                 interestReportLinesByDateMappingParams.InterestReportLinesByDateCreationParams.InterestReportPM.InterestCalculationDate;
 
-            double doubleTotalInterestDays = (interestReportLinesByDatePM.ToDate - interestReportLinesByDatePM.FromDate).TotalDays;
+            double doubleTotalInterestDays = (interestReportLinesByDatePM.ToDate - interestReportLinesByDatePM.FromDate).TotalDays +1;
             interestReportLinesByDatePM.TotalInterestDays = Convert.ToInt32(doubleTotalInterestDays);
             interestReportLinesByDatePM.TotalAmount = interestReportLinesByDateMappingParams.CurrentInterestTransactionGroupedByDate.TotalLocalAmount;
             interestReportLinesByDatePM.AccumulatedAmount = interestReportLinesByDateMappingParams.AccumulatedAmount;

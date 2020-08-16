@@ -2971,14 +2971,5 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;MOREBNKDPST&quot;"
-      FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;BankDeposit.Features.More&quot;"
-      FeatureDefaultText="&quot;More Buttons&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

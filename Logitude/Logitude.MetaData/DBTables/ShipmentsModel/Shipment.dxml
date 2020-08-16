@@ -2992,6 +2992,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsBondedWarehouseChanged"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

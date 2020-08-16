@@ -63,7 +63,7 @@ export class BtatchPrintWarningComponent implements OnInit    {
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-    OkButtonClicked(Val:any) {
+    OkButtonClicked() {
  
         this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }

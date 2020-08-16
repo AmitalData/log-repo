@@ -19,24 +19,25 @@
    declare @SourceTenant int
    declare @ParentTenant int
    declare @AutomaticLastUpdateDate as datetime
+   declare @InActive as bit
 
 	DECLARE SpecialServicesTypesCursor CURSOR READ_ONLY
 	FOR
-    SELECT Id,Code, EnglishName , LocalName , dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant, dw_SpecialServicesTypes.AutomaticLastUpdateDate
+    SELECT Id,Code, EnglishName , LocalName , dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant, dw_SpecialServicesTypes.AutomaticLastUpdateDate, dw_SpecialServicesTypes.InActive
 	From dw_SpecialServicesTypes
 	inner JOIN dw_DWHSettings ON dw_SpecialServicesTypes.Tenant = dw_DWHSettings.Tenant
 	where dw_SpecialServicesTypes.AutomaticLastUpdateDate > @LastUpdateDate	
-	OPEN SpecialServicesTypesCursor FETCH NEXT FROM SpecialServicesTypesCursor INTO  @Id ,@Code, @EnglishName, @LocalName,  @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
+	OPEN SpecialServicesTypesCursor FETCH NEXT FROM SpecialServicesTypesCursor INTO  @Id ,@Code, @EnglishName, @LocalName,  @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
 	set @Key = (select Id from DIM_SpecialServicesTypes where Id = @Id)
 	
-	if(@Key is  null) begin     insert into DIM_SpecialServicesTypes (Id, Code ,[English Name] ,[Local Name], [Source Tenant],[Parent Tenant],[Automatic Last Update Date]) values(@Id ,@Code, @EnglishName, @LocalName,  @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate) end
-	else begin update   DIM_SpecialServicesTypes set [Code] =@Code, [English Name] =@EnglishName, [Local Name] =@LocalName , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate Where Id = @Id end
+	if(@Key is  null) begin     insert into DIM_SpecialServicesTypes (Id, Code ,[English Name] ,[Local Name], [Source Tenant],[Parent Tenant],[Automatic Last Update Date],[InActive]) values(@Id ,@Code, @EnglishName, @LocalName,  @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive) end
+	else begin update   DIM_SpecialServicesTypes set [Code] =@Code, [English Name] =@EnglishName, [Local Name] =@LocalName , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate, [InActive] = @InActive Where Id = @Id end
 
 
-	FETCH NEXT FROM SpecialServicesTypesCursor INTO  @Id ,@Code, @EnglishName, @LocalName, @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
+	FETCH NEXT FROM SpecialServicesTypesCursor INTO  @Id ,@Code, @EnglishName, @LocalName, @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 		End
 	CLOSE SpecialServicesTypesCursor
 	DEALLOCATE SpecialServicesTypesCursor
