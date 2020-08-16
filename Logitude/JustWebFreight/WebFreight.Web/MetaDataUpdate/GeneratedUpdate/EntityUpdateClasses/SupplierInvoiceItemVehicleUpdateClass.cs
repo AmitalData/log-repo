@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemVehicleUpdateClass
    {  		
-		public const string HashString = "5f5e6ad9f6c6cb680c0587da2a0d78d9";
+		public const string HashString = "179f796f3f6297dcd3e9296f1de7228c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -115,8 +115,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Supplier Invoice Item Vehicle",
-			      				    Code =  "1756",
+			      				    DefaultText =  "Supplier Invoice Item  Vehicle",
+			      				    Code =  "8e56",
 			      				    Name =  "Customs.SupplierInvoiceItemVehicle Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -974,6 +974,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "VehicleTypeName",
 					  						ListPropertyPath =  "VehicleTypeName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
