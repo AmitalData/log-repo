@@ -18,24 +18,25 @@
    declare @SourceTenant int
    declare @ParentTenant int
    declare @AutomaticLastUpdateDate as datetime
+   declare @InActive as bit
 
 	DECLARE CurrenciesCursor CURSOR READ_ONLY
 	FOR
-	SELECT dw_Currencies.Id, dw_Currencies.EnglishName , dw_Currencies.LocalName ,dw_Currencies.Code, dw_Currencies.Sign, dw_Currencies.Tenant , dw_DWHSettings.ParentTenant, dw_Currencies.AutomaticLastUpdateDate
+	SELECT dw_Currencies.Id, dw_Currencies.EnglishName , dw_Currencies.LocalName ,dw_Currencies.Code, dw_Currencies.Sign, dw_Currencies.Tenant , dw_DWHSettings.ParentTenant, dw_Currencies.AutomaticLastUpdateDate, dw_Currencies.InActive
 	From dw_Currencies
 	inner JOIN dw_DWHSettings ON dw_Currencies.Tenant = dw_DWHSettings.Tenant
 	where dw_Currencies.AutomaticLastUpdateDate > @LastUpdateDate	
-	OPEN CurrenciesCursor FETCH NEXT FROM CurrenciesCursor INTO @Id , @EnglishName, @LocalName, @Code,  @CurrencySign ,	@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
+	OPEN CurrenciesCursor FETCH NEXT FROM CurrenciesCursor INTO @Id , @EnglishName, @LocalName, @Code,  @CurrencySign ,	@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
 	set @Key = (select Id from DIM_Currencies where Id = @Id)
-	if(@Key is  null) begin  insert into DIM_Currencies (Id,Code,Name,[Local Name],[Currency Sign],[Source Tenant],[Parent Tenant],[Automatic Last Update Date]) values(@Id,@Code , @EnglishName,@LocalName, @CurrencySign , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate) end
-	else begin update   DIM_Currencies set Name =@EnglishName,  [Local Name] =@LocalName ,  Code = @Code , [Currency Sign] = @CurrencySign,   [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate  Where Id = @Id; end
+	if(@Key is  null) begin  insert into DIM_Currencies (Id,Code,Name,[Local Name],[Currency Sign],[Source Tenant],[Parent Tenant],[Automatic Last Update Date],[InActive]) values(@Id,@Code , @EnglishName,@LocalName, @CurrencySign , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive) end
+	else begin update   DIM_Currencies set Name =@EnglishName,  [Local Name] =@LocalName ,  Code = @Code , [Currency Sign] = @CurrencySign,   [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate, [InActive] = @InActive  Where Id = @Id; end
 
     
 
-	FETCH NEXT FROM CurrenciesCursor  INTO @Id , @EnglishName, @LocalName, @Code,  @CurrencySign ,	@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
+	FETCH NEXT FROM CurrenciesCursor  INTO @Id , @EnglishName, @LocalName, @Code,  @CurrencySign ,	@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 		End
 	CLOSE CurrenciesCursor
 	DEALLOCATE CurrenciesCursor

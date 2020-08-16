@@ -19,24 +19,25 @@
    declare @SourceTenant int
    declare @ParentTenant int
    declare @AutomaticLastUpdateDate as datetime
-
+   declare @InActive as bit
+   
 	DECLARE VesselsCursor CURSOR READ_ONLY
 	FOR
-    SELECT Id,Code, EnglishName , LocalName , Notes, IMOCode, dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant, dw_Vessels.AutomaticLastUpdateDate
+    SELECT Id,Code, EnglishName , LocalName , Notes, IMOCode, dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant, dw_Vessels.AutomaticLastUpdateDate, dw_Vessels.InActive
 	From dw_Vessels
 	inner JOIN dw_DWHSettings ON dw_Vessels.Tenant = dw_DWHSettings.Tenant
 	where dw_Vessels.AutomaticLastUpdateDate > @LastUpdateDate	
-	OPEN VesselsCursor FETCH NEXT FROM VesselsCursor INTO  @Id ,@Code, @EnglishName, @LocalName, @Notes, @IMOCode , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
+	OPEN VesselsCursor FETCH NEXT FROM VesselsCursor INTO  @Id ,@Code, @EnglishName, @LocalName, @Notes, @IMOCode , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
 	set @Key = (select Id from DIM_Vessels where Id = @Id)
 	
-	if(@Key is  null) begin     insert into DIM_Vessels (Id, Code ,[English Name] ,[Local Name],[Notes],[IMO Code], [Source Tenant],[Parent Tenant],[Automatic Last Update Date]) values(@Id ,@Code, @EnglishName, @LocalName, @Notes, @IMOCode , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate) end
-	else begin update   DIM_Vessels set [Code] =@Code, [English Name] =@EnglishName, [Local Name] =@LocalName ,[Notes] = @Notes ,[IMO Code] = @IMOCode , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate Where Id = @Id end
+	if(@Key is  null) begin     insert into DIM_Vessels (Id, Code ,[English Name] ,[Local Name],[Notes],[IMO Code], [Source Tenant],[Parent Tenant],[Automatic Last Update Date],[InActive]) values(@Id ,@Code, @EnglishName, @LocalName, @Notes, @IMOCode , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive) end
+	else begin update   DIM_Vessels set [Code] =@Code, [English Name] =@EnglishName, [Local Name] =@LocalName ,[Notes] = @Notes ,[IMO Code] = @IMOCode , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate, [InActive] = @InActive Where Id = @Id end
 
 
-	FETCH NEXT FROM VesselsCursor INTO  @Id ,@Code, @EnglishName, @LocalName, @Notes, @IMOCode , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
+	FETCH NEXT FROM VesselsCursor INTO  @Id ,@Code, @EnglishName, @LocalName, @Notes, @IMOCode , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 		End
 	CLOSE VesselsCursor
 	DEALLOCATE VesselsCursor
