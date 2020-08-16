@@ -285,6 +285,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
          */
         public void Update(ARPaymentPM theEntityPm, bool mapComposition = false)
         {
+            this.entityPM = theEntityPm;
             ContactPM loggedUser = GetLoggedContactPM(theEntityPm.Tenant);
             theEntityPm.UpdatedByUserId = loggedUser?.Id;
 
@@ -294,7 +295,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             GLAccountPM gla = FillGLAccountFields(theEntityPm);
 
             this.isNewEntity = false;
-            this.entityPM = theEntityPm;
+         
             this.SetVoided = theEntityPm.SetVoided;
 
             this.newPayment = paymentRepository.GetSingleARPayment(theEntityPm.Id);
