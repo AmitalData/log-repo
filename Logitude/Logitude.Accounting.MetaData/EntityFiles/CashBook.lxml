@@ -2430,14 +2430,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;MORECASHBOOK&quot;"
-      FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;CashBook.Features.More&quot;"
-      FeatureDefaultText="&quot;More&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+    
   </AdditionalFeatures>
 </entity>
