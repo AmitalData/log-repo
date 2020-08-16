@@ -50,4 +50,10 @@
     ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+
+
+  <Index
+    Columns="Keyword,Tenant" />
+
+
 </Table>
