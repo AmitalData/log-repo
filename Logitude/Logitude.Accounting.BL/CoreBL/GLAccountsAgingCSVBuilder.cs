@@ -55,14 +55,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 new CSVRow()
                 {
                     InternalNumber = accountPeriods.First().AccountInternalNumber,
-                    LocalBalance = accountPeriods.Sum(a => a.BalanceInLocalCurrency),
+                    LocalBalance = accountPeriods.First().BalanceInLocalCurrency,
                     TotFutureOpenChequesInLocalCur = accountPeriods.First().TotalFutureOpenCheques,
                     TotalOpenFilesAmount = accountPeriods.First().TotalOpenShipments,
                     GIL1 = accountPeriods.OrderByDescending(p => p.OrderDate).First().Total,
-                    GIL2 = accountPeriods.OrderByDescending(p => p.OrderDate).Skip(1).First().Total,
+                    GIL2 = accountPeriods.OrderBy(p => p.OrderDate).Skip(1).First().Total,
                     GIL3 = accountPeriods.OrderBy(p => p.OrderDate).First().Total,
                     OBLG = accountPeriods.First().CreditStatusAmount,
-                    HRIG = accountPeriods.Sum(a => a.BalanceInLocalCurrency)
+                    HRIG = accountPeriods.First().BalanceInLocalCurrency
                             + accountPeriods.First().TotalFutureOpenCheques
                             - accountPeriods.First().TotalOpenShipments,
                     InterestCreditLimit = accountPeriods.First().InterestCreditLimit,

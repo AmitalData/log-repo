@@ -39,6 +39,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         Id = a.Id,
                                                         Tenant = a.Tenant,
                                                         InternalNumber = a.InternalNumber,
+                                                        InterestCreditLimit = a.InterestCreditLimit,
                                                         AccountTypeCode = a.AccountTypeCode,
                                                         DisplayNumber = a.DisplayNumber,
                                                         EnglishName = a.EnglishName,
