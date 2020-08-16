@@ -1783,6 +1783,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     this.DeleteTraceEvent("WHRD");
                 }
             }
+            else
+            {
+                if (entityPoco.WarehouseLegActualEntryDate == null && entityPM.WarehouseLegActualEntryDate != null)
+                {
+                    this.CreateTraceEvent("WEDE", entityPM.WarehouseLegActualEntryDate);
+                }
+
+                else if (entityPoco.WarehouseLegActualEntryDate != null && entityPM.WarehouseLegActualEntryDate == null)
+                {
+                    this.DeleteTraceEvent("WEDE");
+                }
+
+                if (entityPoco.WarehouseLegActualReleaseDate == null && entityPM.WarehouseLegActualReleaseDate != null)
+                {
+                    this.CreateTraceEvent("WRDE", entityPM.WarehouseLegActualReleaseDate);
+                }
+
+                else if (entityPoco.WarehouseLegActualReleaseDate != null && entityPM.WarehouseLegActualReleaseDate == null)
+                {
+                    this.DeleteTraceEvent("WRDE");
+                }
+            }
         }
         private static void ComputeLastSharedEvent(ShipmentPM entityPM)
         {
