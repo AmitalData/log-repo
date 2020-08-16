@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -15,11 +16,13 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private ShipmentPM shipmentPM;
         private PortRepository portRepository;
         private CardRepository cardRepository;
+        private AirlineRepository airlineRepository;
         public APITransshipmentHelper(ShipmentPM shipment, int tenant)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             portRepository = new PortRepository(commonContext);
             cardRepository = new CardRepository(commonContext);
+            airlineRepository = new AirlineRepository(commonContext);
 
             this.shipmentPM = shipment;
             this.tenant = tenant;
@@ -175,7 +178,26 @@ namespace WebFreight.Web.Helpers.APIHelpers
         }
         private void ValidateFirstLeg(TransshipmentLeg item)
         {
-            
+            if (shipmentPM.TransportModeId == "A")
+            {
+                if (!string.IsNullOrEmpty(item.MasterNumber))
+                {
+                    Airline myAirline = airlineRepository.GetSingleAirline(item.CarrierId, tenant);
+                    if (myAirline != null)
+                    {
+                        if (!string.IsNullOrEmpty(myAirline.Prefix))
+                        {
+                            shipmentPM.AirlinePrefix = myAirline.Prefix.PadLeft(3, '0');
+                        }
+                    }
+
+                    bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(shipmentPM.Id, item.MasterNumber, shipmentPM.AirlinePrefix, shipmentPM.DirectionId, shipmentPM.TransportModeId, shipmentPM.ShipmentLevelCode, shipmentPM.IsCancelled, tenant);
+                    if (isFieldExists)
+                    {
+                        throw new ApplicationException("Main Carriage Leg 1 Master field already used in another Shipment");
+                    }
+                }
+            }
         }
         private void ValidatePortsSequence()
         {
@@ -221,6 +243,15 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             {
                                 shipmentPM.MainCarriageCarrierPrefix = myCarrier.Code;
                             }
+                            
+                            //Airline myAirline = airlineRepository.GetSingleAirline(item.CarrierId, tenant);
+                            //if (myAirline != null)
+                            //{
+                            //    if (!string.IsNullOrEmpty(myAirline.Prefix))
+                            //    {
+                            //        shipmentPM.AirlinePrefix = myAirline.Prefix.PadLeft(3, '0');
+                            //    }
+                            //}
 
                             break;
                         }
