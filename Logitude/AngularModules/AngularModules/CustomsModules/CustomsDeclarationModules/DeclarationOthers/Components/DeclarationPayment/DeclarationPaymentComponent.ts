@@ -213,7 +213,6 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                                     });
                                                 }
                                                 this.LoadPayment();
-
                                                 this.CheckRequrierdFieldsForSend();
                                             });
                                     }
@@ -223,7 +222,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
                                         this.CheckRequrierdFieldsForSend();
                                     }
-
+                                   
 
                                 });
                             });
@@ -786,7 +785,6 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         if (this.sumBtl != null && this.sumBtl > 0) {
             this.JustAutoFillPaymentScreen();
         }
-
         else {
 
 
@@ -813,102 +811,82 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     }
                 });
         }
+      
 
     }
     AutoFillPaymentScreen() {
         this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
             .subscribe(
                 (response: ServiceResponse) => {
-
                     let obj = response.Result;
                     if (obj) {
                         let DefaultValue = obj['DefaultValue'];
 
                         if (DefaultValue == "A") {//==AutoFillPaymentScreen //if (customsSetting.AutoFillPaymentScreen) {
                             if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
-                                var MinAndMax;
-                                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_AMT_RNG", "NON", "NON", SessionLocator.Tenant)
-                                    .subscribe(
-                                        (response: ServiceResponse) => {
-                                            let obj = response.Result;
-                                            if (obj) {
-                                                var CGG_PAY_AMT_RNGDefault: string = obj['DefaultValue'];
-                                                if (CGG_PAY_AMT_RNGDefault != "" && CGG_PAY_AMT_RNGDefault != null) {
-                                                    let MinAndMax = CGG_PAY_AMT_RNGDefault.split("-");
-                                                    let min = Number(MinAndMax[0].replace(",", ""));
-                                                    let max = Number(MinAndMax[1].replace(",", ""));
-                                                    if (min < this.TotalTax && max > this.TotalTax) {
-                                                        this.BetweenMinAndMax = true;
-                                                    }
-                                                }
-                                            }
-                                            this.JustAutoFillPaymentScreen();
-                                        });
-
+                                this.JustAutoFillPaymentScreen();
                             }
                         }
-
                     }
                 });
     }
 
+   
     JustAutoFillPaymentScreen() {
+
         if (this.sumBtl != null && this.sumBtl > 0) {
             for (let method of this.PaymentMethodsList.Collection) {
                 method.Amount = this.DeclarationPM.TotalTax - this.sumBtl;
-                if (this.BetweenMinAndMax && method.PayerActivityTypeCode == "3") {
-                    method.MethodTypeCode = "2";
-                    method.InternalBankId = "";
-                    method.PayerActivityTypeCode = "3";
-                    this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
-                        method.MethodTypeName = response.Result.LocalName;
-                    });
-                    this.customerActivityTypeListService.getSingleFromCache("3").subscribe((response: ServiceResponse) => {
-                        method.PayerActivityTypeName = response.Result.LocalName;
-                    });
-                } else {
-                    method.MethodTypeCode = "1";
-                    this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
-                        method.MethodTypeName = response.Result.LocalName;
-                    });
-
-                }
+                method.MethodTypeCode = "1";
+                this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
+                    method.MethodTypeName = response.Result.LocalName;
+                });
             }
             this.NewMethodMethod(true);
             this.PaymentMethodsList.Collection[this.PaymentMethodsList.Collection.length - 1].Amount = this.sumBtl;
 
 
             //     this.PaymentMethodsList.Collection.push(method);
-
+            for (let method of this.PaymentMethodsList.Collection) {
+                debugger;
+                if (this.BetweenMinAndMax && method.PayerActivityTypeCode == "3") {
+                }
+            }
         }
         else {
             for (let method of this.PaymentMethodsList.Collection) {
                 method.Amount = this.DeclarationPM.TotalTax;
+                method.MethodTypeCode = "1";
+                this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
+                    method.MethodTypeName = response.Result.LocalName;
+                });
+            }
+            for (let method of this.PaymentMethodsList.Collection) {
+                debugger;
                 if (this.BetweenMinAndMax && method.PayerActivityTypeCode == "3") {
-                    method.MethodTypeCode = "2";
-                    method.InternalBankId = "";
-                    method.PayerActivityTypeCode = "3";
-                    this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
-                        method.MethodTypeName = response.Result.LocalName;
-                    });
-                    this.customerActivityTypeListService.getSingleFromCache("3").subscribe((response: ServiceResponse) => {
-                        method.PayerActivityTypeName = response.Result.LocalName;
-                    });
-                } else {
-                    method.MethodTypeCode = "1";
-                    this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
-                        method.MethodTypeName = response.Result.LocalName;
-                    });
                 }
             }
         }
+    }
 
+    AutoFillPaymentWhenBetweenMinAndMax() {
+        for (let method of this.PaymentMethodsList.Collection) {
+            if (this.BetweenMinAndMax && method.PayerActivityTypeCode == "3") {
+                method.MethodTypeCode = "2";
+                method.InternalBankId = "";
+             //   method.PayerActivityTypeCode = "3";
+                this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                    method.MethodTypeName = response.Result.LocalName;
+                });
+                this.customerActivityTypeListService.getSingleFromCache("3").subscribe((response: ServiceResponse) => {
+                    method.PayerActivityTypeName = response.Result.LocalName;
+                });
+            }
+        }
     }
 
 
-
     JustAutoFillPaymentScreenCash(defaultValue: string) {
-
         if (this.sumBtl != null && this.sumBtl > 0) {
             for (let method of this.PaymentMethodsList.Collection) {
                 method.Amount = this.DeclarationPM.TotalTax - this.sumBtl;
@@ -2615,7 +2593,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             }
         }
     }
-
+     
 
 }
 
@@ -2684,14 +2662,13 @@ export class PaymentMethodModel extends BaseComponent {
         if (parent.PaymentMethodsList.Length == 1) {
             this.IsAmountButtonVisibile = true;
         }
-
+    
     }
 
     LoadBanks() {
 
-
         this.parent.declarationWebService.GetCustomBanksForCard(this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
-
+            debugger;
             let BlockAgentBankForMasabDefaultValue = "";
             var result = response.Result.filter(d => !d.InActive);
             console.log("[Response] GetCustomBanksForCard: ", result);
@@ -3039,6 +3016,7 @@ export class PaymentMethodModel extends BaseComponent {
     }
     get MethodTypeCode() { return this.methodPM.MethodTypeCode; }
     set MethodTypeCode(value: string) {
+        debugger;
         if (this.methodPM.MethodTypeCode != value) {
             this.methodPM.MethodTypeCode = value;
             if (value == "1") {
@@ -3080,6 +3058,7 @@ export class PaymentMethodModel extends BaseComponent {
 
     get InternalBankId() { return this.methodPM.InternalBankId; }
     set InternalBankId(value: string) {
+        debugger;
         if (this.methodPM.InternalBankId != value) {
             this.methodPM.InternalBankId = value;
 
@@ -3165,8 +3144,6 @@ export class PaymentMethodModel extends BaseComponent {
             });
 
         }
-
-
 
     }
 
