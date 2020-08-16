@@ -840,12 +840,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             {
                 this._DeclarationReferantDataPM.Weight = myGrossMassMeasure;
             }
-            var arrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.ArrivalDateTime, "AmitalCustomsFile.ArrivalDateTime");
-            if (arrivalDate.HasValue) this._DeclarationReferantDataPM.ArrivalDate = arrivalDate.Value;
+            this._DeclarationReferantDataPM.ArrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.ArrivalDateTime, "AmitalCustomsFile.ArrivalDateTime");
             this._DeclarationReferantDataPM.VendorId = TranslateVendor(_AmitalCustomsFile.VendorId);
 
-            var estimatedTimeOfArrival = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.EstimatedTimeOfArrival, "AmitalCustomsFile.EstimatedTimeOfSrrival");
-            if (estimatedTimeOfArrival.HasValue) this._DeclarationReferantDataPM.EstimatedArrivalDate = estimatedTimeOfArrival.Value;
+            this._DeclarationReferantDataPM.EstimatedArrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.EstimatedTimeOfArrival, "AmitalCustomsFile.EstimatedTimeOfSrrival");
             this._DeclarationReferantDataPM.OrderNumber = _AmitalCustomsFile.OrderNumber;
             if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.WithPaper) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.WithPaper) && _AmitalCustomsFile.WithPaper.ToLower() != "true"))
             {
@@ -856,15 +854,19 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             {
                 this._DeclarationReferantDataPM.WithPaper = true;
             }
-            if (_AmitalCustomsFile.FileStatus == "OPT" && !isNew) _DeclarationReferantDataPM.NewFile = false;
+            if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.NewFile) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.NewFile) && _AmitalCustomsFile.NewFile.ToLower() != "true"))
+            {
+                this._DeclarationReferantDataPM.NewFile = false;
+
+            }
+            else
+            {
+                this._DeclarationReferantDataPM.NewFile = true;
+            }
+            
             this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
-            if (_AmitalCustomsFile.FileStatus == "OPT" && isNew)
-            {
-                this._DeclarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Update;
-                _DeclarationReferantDataPM.NewFile = false;
-                myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
-            }
+            
         }
 
         private string TranslateVendor(string amitalvendorId)

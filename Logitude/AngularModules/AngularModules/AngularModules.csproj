@@ -329,6 +329,7 @@
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\SpecialActivityRequestComponent.html" />
     <Content Include="CustomsModules\CustomsPaymentOrder\Components\EditTabs\Tapag\Deficit\DeficitDecisionComponent.html" />
     <Content Include="CustomsModules\CustomsPaymentOrder\Components\EditTabs\Tapag\Deposit\BankAccountToRefundComponent.html" />
+    <Content Include="CustomsModules\CustomsReferant\Components\RemarksPopUp.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditReferantExceptionReasonComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.html" />
     <Content Include="CustomsModules\CustomsRequests\Components\DeclarationRequests\CargoSealsQueryComponent.html" />
@@ -352,10 +353,13 @@
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\DeclarationListTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ArrivalDateListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ActionListHeaderTemplate.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\RemarksPopUp.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
     <Content Include="CustomsModules\InvoiceQueue\Components\InvoiceQueueComponent.html" />
     <Content Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.html" />
+    <Content Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.html" />
+    <TypeScriptCompile Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.ts" />
     <Content Include="Customs\Components\ListTemplates\CourierWorksheetListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetListTemplate.html" />
     <Content Include="CRMModules\CRMActivity\Components\EditTabs\ActivityGeneralTabComponent.html" />

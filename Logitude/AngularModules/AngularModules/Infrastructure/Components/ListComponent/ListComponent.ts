@@ -812,7 +812,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
 
 
-        if (this.ObjectTable.HasFiltersMenu) {
+        if (this.ObjectTable.HasFiltersMenu || this.HasActionBar()) {
             if (this.AllLocations) {
 
                 if (this.AllLocations.length == 0) {
@@ -821,29 +821,34 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                 else {
                     this.isLoaderReady = true;
+                    this.LoadedActionBar("MNA", "ListActionBar");
+                    if (this.ObjectTable.HasFiltersMenu) {
 
-                    let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "MNH")[0];
-                    if (myLocation != null) {
+                        let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "MNH")[0];
+                        if (myLocation != null) {
 
-                        let myObjectTableName = this.ObjectTable.Name;
-                        if (myObjectTableName.startsWith(this.ObjectTable.ClientModuleName + '.')) {
-                            myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
-                        }
-                        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
-                        SessionLocator.DynamicLoader.Load(myComponentPath, myLocation.viewContainerRef)
-                            .then(cmpRef => {
+                            let myObjectTableName = this.ObjectTable.Name;
+                            if (myObjectTableName.startsWith(this.ObjectTable.ClientModuleName + '.')) {
+                                myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
+                            }
+                            var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
+                            SessionLocator.DynamicLoader.Load(myComponentPath, myLocation.viewContainerRef)
+                                .then(cmpRef => {
 
-                                this.FiltersBarLoaded.emit(cmpRef.instance);
+                                    this.FiltersBarLoaded.emit(cmpRef.instance);
 
-                                cmpRef.instance.SelectedValueChanged.subscribe(($event: any) => {
-                                    this.FiltersMenu = new ApiQueryFilters();
-                                    this.FiltersMenu = $event.Filters;
-                                    this.MenuHeaderchangeevent.emit({ Filters: $event.Filters, RemoveFilter: $event.RemoveFilter })
+                                    cmpRef.instance.SelectedValueChanged.subscribe(($event: any) => {
+                                        this.FiltersMenu = new ApiQueryFilters();
+                                        this.FiltersMenu = $event.Filters;
+                                        this.MenuHeaderchangeevent.emit({ Filters: $event.Filters, RemoveFilter: $event.RemoveFilter })
+                                    });
+
                                 });
-
-                            });
+                        }
                     }
+                    
                 }
+              
             }
 
             else {
@@ -3461,4 +3466,36 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         this.sortColid = $event.id;
     }
 
+    HasActionBar() {//ADD TO LXML\METADATA OBJECTTABLE- to be continue 
+        switch (this.ObjectTable.Name) {
+            case "Customs.DeclarationReferantData":
+                return true;
+                //return false;
+                break;
+            default:
+                return false;
+        }
+    }
+    LoadedActionBar(locationCode: string, prefixComponent: string) {
+        if (!this.HasActionBar()) { return; }
+        let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == locationCode/*"MNH"*/)[0];
+        if (myLocation != null) {
+
+            let myObjectTableName = this.ObjectTable.Name;
+            if (myObjectTableName.startsWith(this.ObjectTable.ClientModuleName + '.')) {
+                myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
+            }
+            var myComponentPath = "./" + this.ObjectTable.ClientModuleName
+                //+ "/Components/FiltersMenu/" + myObjectTableName + "FiltersMenuComponent";
+                + "/Components/" + prefixComponent + "/" + myObjectTableName + prefixComponent + "Component";
+            SessionLocator.DynamicLoader.Load(myComponentPath, myLocation.viewContainerRef)
+                .then(cmpRef => {
+
+                    //this.FiltersBarLoaded.emit(cmpRef.instance);
+
+                    // event not needed - meanwhile ?!?!
+
+                });
+        }
+    }
 }

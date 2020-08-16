@@ -177,7 +177,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     ApplyCheckMenuButtonsState(menuButtons: MenuButtonPM[]) {
         let parentButton: MenuButtonPM;
-         if (this.EntityPM != null) {
+        if (this.EntityPM != null) {
             if (this.CurrentSession.CurrentEditComponent != null) {
 
                 var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];

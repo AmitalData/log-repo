@@ -272,6 +272,13 @@ namespace Logitude.Customs.BL.Messaging.Customs
                                         }
                                     };
                             }
+
+                            string sAvoidInProgressSameInterfaceCodePerEntity = ConfigurationManager.AppSettings["20200805HD353811.AvoidInProgressSameInterfaceCodePerEntity"];
+                            if (!String.IsNullOrWhiteSpace(sAvoidInProgressSameInterfaceCodePerEntity))
+                            {
+                                AvoidInProgressSameInterfaceCodePerEntity(requestParams, reqSheetDetails);
+                            }
+
                         }
                     }
                 }
@@ -290,20 +297,39 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     if (listRequestInProgress.Count > 0)
                     {
                         var RequestInProgressInterfaceTypeName = listRequestInProgress.First().InterfaceTypeName;
-                        var text = //TranslateTextsClass.GetTranslation("Customs.General.RequestInProgress", "", null, null, this._Tenant);
-                            TranslateTextsClass.Translate("Customs.General.RequestInProgress", this._Tenant);
-                        text = String.Format(text, RequestInProgressInterfaceTypeName);
-                        NoteClientNoRequestSheet4U(requestParams, text);
-
-
-                        var ex = new CustomsRequestsSheetDomainModelServiceException(
-                        CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
-                            text, null);
-                        ex.SuppressExceptionTostring = true;
-                        throw ex;
+                        ThrowRequestInProgress(requestParams, RequestInProgressInterfaceTypeName);
+                        return;
                     }
                 }
             }
+        }
+
+        private void AvoidInProgressSameInterfaceCodePerEntity(TRequestParams requestParams, RequestSheetParam reqSheetDetails)
+        {
+            var listSameInterfaceCodePerEntity_InProgress = _CustomsRequestsSheetQueryService.SameInterfaceCodePerEntity_InProgress(
+                                    requestParams.Tenant, requestParams.InterfaceTypeCode,
+                                reqSheetDetails.ObjectTableId1, reqSheetDetails.EntityId1,
+                                reqSheetDetails.CustomFileNo);
+            if (listSameInterfaceCodePerEntity_InProgress.Count > 0)
+            {
+                var RequestInProgressInterfaceTypeName = listSameInterfaceCodePerEntity_InProgress.First().InterfaceTypeName;
+                ThrowRequestInProgress(requestParams, RequestInProgressInterfaceTypeName);
+            }
+        }
+
+        private void ThrowRequestInProgress(TRequestParams requestParams, string RequestInProgressInterfaceTypeName)
+        {
+            var text = //TranslateTextsClass.GetTranslation("Customs.General.RequestInProgress", "", null, null, this._Tenant);
+                TranslateTextsClass.Translate("Customs.General.RequestInProgress", this._Tenant);
+            text = String.Format(text, RequestInProgressInterfaceTypeName);
+            NoteClientNoRequestSheet4U(requestParams, text);
+
+
+            var ex = new CustomsRequestsSheetDomainModelServiceException(
+            CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
+                text, null);
+            ex.SuppressExceptionTostring = true;
+            throw ex;
         }
 
         private bool AvoidSign(TRequestParams requestParams)

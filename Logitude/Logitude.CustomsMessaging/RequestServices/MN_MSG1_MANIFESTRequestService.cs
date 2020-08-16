@@ -458,6 +458,17 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             declarationConsignmentConsigneeAddressList.Add(declarationConsignmentConsigneeAddress);
             declarationConsignmentConsignee.Address = declarationConsignmentConsigneeAddressList.ToArray();
+
+            if (!string.IsNullOrWhiteSpace(_DeclarationPM.CasualImporterTel))
+            {
+                declarationConsignmentConsignee.Communication = new DeclarationConsignmentConsigneeCommunication[1] {
+                    new DeclarationConsignmentConsigneeCommunication() {
+                 ID  =  new CommunicationIdentificationIDType() {Value = _DeclarationPM.CasualImporterTel },
+                TypeID= new CommunicationTypeIDType() { Value = "TE" } }
+
+            };
+            }
+
             //}
             declarationConsignmentConsigneeList.Add(declarationConsignmentConsignee);
             return declarationConsignmentConsigneeList.ToArray();

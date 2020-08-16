@@ -1097,4 +1097,6 @@
     ReferencedTable="CancellationRequestStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Index
+    Columns="AmendmentOriginalDeclartation" />
 </Table>

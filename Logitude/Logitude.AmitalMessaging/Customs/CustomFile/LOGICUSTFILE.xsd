@@ -68,6 +68,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="OrderNumber" />
         <xs:element minOccurs="0" maxOccurs="1" ref="WithPaper" />
         <xs:element minOccurs="0" maxOccurs="1" ref="FileStatus" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="NewFile" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -129,4 +130,5 @@
   <xs:element name="OrderNumber" type="xs:string" />
   <xs:element name="WithPaper" type="xs:string" />
   <xs:element name="FileStatus" type="xs:string" />
+  <xs:element name="NewFile" type="xs:string" />
 </xs:schema>

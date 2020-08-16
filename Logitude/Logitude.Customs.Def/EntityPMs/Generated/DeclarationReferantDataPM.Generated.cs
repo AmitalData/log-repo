@@ -572,6 +572,144 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string classifiedUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClassifiedUserName  
+	   {
+	    
+	     get
+		{
+		   return classifiedUserName;
+		 }
+		 set
+		 {
+		   if(classifiedUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClassifiedUserName",OldValue=classifiedUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   classifiedUserName=value;
+		   }
+			
+		 }
+	   }
+	  private string controllerUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ControllerUserName  
+	   {
+	    
+	     get
+		{
+		   return controllerUserName;
+		 }
+		 set
+		 {
+		   if(controllerUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ControllerUserName",OldValue=controllerUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   controllerUserName=value;
+		   }
+			
+		 }
+	   }
+	  private string collectorUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CollectorUserName  
+	   {
+	    
+	     get
+		{
+		   return collectorUserName;
+		 }
+		 set
+		 {
+		   if(collectorUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CollectorUserName",OldValue=collectorUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   collectorUserName=value;
+		   }
+			
+		 }
+	   }
+	  private string lastStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastStatusName  
+	   {
+	    
+	     get
+		{
+		   return lastStatusName;
+		 }
+		 set
+		 {
+		   if(lastStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastStatusName",OldValue=lastStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lastStatusName=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? lastStatusDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LastStatusDate  
+	   {
+	    
+	     get
+		{
+		   return lastStatusDate;
+		 }
+		 set
+		 {
+		   if(lastStatusDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastStatusDate",OldValue=lastStatusDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   lastStatusDate=value;
+		   }
+			
+		 }
+	   }
+	  private bool orderMoney ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool OrderMoney  
+	   {
+	    
+	     get
+		{
+		   return orderMoney;
+		 }
+		 set
+		 {
+		   if(orderMoney != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OrderMoney",OldValue=orderMoney,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   orderMoney=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
