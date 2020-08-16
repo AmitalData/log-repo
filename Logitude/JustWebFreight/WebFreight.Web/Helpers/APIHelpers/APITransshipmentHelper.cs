@@ -27,9 +27,9 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         public void ValidateTransshipments()
         {
-            foreach (TransshipmentLeg item in shipmentPM.Transshipments.OrderBy(d => d.LegIndex))
+            foreach (TransshipmentLeg item in shipmentPM.MainCarriageLegs.OrderBy(d => d.LegIndex))
             {
-                if (item.LegIndex != 1 && item.LegIndex != 2 && item.LegIndex != 3)
+                if (item.LegIndex != 1 && item.LegIndex != 2 && item.LegIndex != 3 && item.LegIndex != 4)
                 {
                     throw new ApplicationException("Wrong Transshipment index");
                 }
@@ -38,20 +38,25 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 {
                     if (item.LegIndex == 2)
                     {
-                        if (!shipmentPM.Transshipments.Where(d => d.LegIndex == 1).Any())
+                        if (!shipmentPM.MainCarriageLegs.Where(d => d.LegIndex == 1).Any())
                         {
                             throw new ApplicationException("Wrong Transshipment index");
                         }
                     }
 
-                    else
+                    else if (item.LegIndex == 3)
                     {
-                        if (item.LegIndex == 3)
+                        if (!shipmentPM.MainCarriageLegs.Where(d => d.LegIndex == 2).Any())
                         {
-                            if (!shipmentPM.Transshipments.Where(d => d.LegIndex == 2).Any())
-                            {
-                                throw new ApplicationException("Wrong Transshipment index");
-                            }
+                            throw new ApplicationException("Wrong Transshipment index");
+                        }
+                    }
+
+                    else if (item.LegIndex == 4)
+                    {
+                        if (!shipmentPM.MainCarriageLegs.Where(d => d.LegIndex == 3).Any())
+                        {
+                            throw new ApplicationException("Wrong Transshipment index");
                         }
                     }
                 }
@@ -61,15 +66,23 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     throw new ApplicationException("Can't send vessel for non-ocean shipments");
                 }
                 
-                this.ValidatePort(item.PortId, item.LegIndex);
+                this.ValidatePort(item.FromPortId, item.LegIndex, "from");
+                this.ValidatePort(item.ToPortId, item.LegIndex, "to");                
                 this.ValidateCarrier(item.CarrierId, item.LegIndex);
+
+                if (item.LegIndex == 1)
+                {
+                    this.ValidateFirstLeg(item);
+                }
             }
+
+            this.ValidatePortsSequence();
         }
-        private void ValidatePort(string portId, int index)
+        private void ValidatePort(string portId, int index, string direction)
         {
             if (string.IsNullOrEmpty(portId))
             {
-                throw new ApplicationException("Missing Transshipment " + index + " port");
+                throw new ApplicationException("Missing Transshipment " + index + " " + direction + " port");
             }
 
             else
@@ -110,7 +123,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
                     if (!isValid)
                     {
-                        throw new ApplicationException("Transshipment " + index + " port transport mode is different than shipment transport mode");
+                        throw new ApplicationException("Transshipment " + index + " " + direction + " port transport mode is different than shipment transport mode");
                     }
                 }
             }
@@ -160,10 +173,21 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 }
             }            
         }
+        private void ValidateFirstLeg(TransshipmentLeg item)
+        {
+            
+        }
+        private void ValidatePortsSequence()
+        {
+            foreach (TransshipmentLeg item in shipmentPM.MainCarriageLegs.OrderBy(d => d.LegIndex))
+            {
+
+            }
+        }
 
         public void MapTransshipments()
         {
-            foreach (TransshipmentLeg item in shipmentPM.Transshipments.OrderBy(d => d.LegIndex))
+            foreach (TransshipmentLeg item in shipmentPM.MainCarriageLegs.OrderBy(d => d.LegIndex))
             {
                 Card myCarrier = null;
                 if (!string.IsNullOrEmpty(item.CarrierId))
@@ -179,7 +203,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             shipmentPM.Transshipment1VesselId = item.VesselId;
                             shipmentPM.Transshipment1CarrierNumber = item.CarrierNumber;
                             shipmentPM.Transshipment1AdditionalMAWBOBLBL = item.MasterNumber;
-                            shipmentPM.Transshipment1FromPortId = item.PortId;
+                            shipmentPM.Transshipment1FromPortId = item.FromPortId;
 
                             if (myCarrier != null)
                             {
@@ -195,7 +219,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             shipmentPM.Transshipment2VesselId = item.VesselId;
                             shipmentPM.Transshipment2CarrierNumber = item.CarrierNumber;
                             shipmentPM.Transshipment2AdditionalMAWBOBLBL = item.MasterNumber;
-                            shipmentPM.Transshipment2FromPortId = item.PortId;
+                            shipmentPM.Transshipment2FromPortId = item.FromPortId;
 
                             if (myCarrier != null)
                             {
@@ -211,7 +235,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             shipmentPM.Transshipment3VesselId = item.VesselId;
                             shipmentPM.Transshipment3CarrierNumber = item.CarrierNumber;
                             shipmentPM.Transshipment3AdditionalMAWBOBLBL = item.MasterNumber;
-                            shipmentPM.Transshipment3FromPortId = item.PortId;
+                            shipmentPM.Transshipment3FromPortId = item.FromPortId;
 
                             if (myCarrier != null)
                             {
