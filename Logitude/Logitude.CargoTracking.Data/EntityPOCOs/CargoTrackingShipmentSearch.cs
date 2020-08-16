@@ -22,13 +22,13 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
-        [Column("ShipmentId")]
-	    public string ShipmentId { get; set; }
         [Column("ShipmentDate")]
 	    public DateTime ShipmentDate { get; set; }
      [Key]
         [Column("Id")]
 	    public int Id { get; set; }
+        [Column("SecurityKey")]
+	    public string SecurityKey { get; set; }
     }
 }
 	 

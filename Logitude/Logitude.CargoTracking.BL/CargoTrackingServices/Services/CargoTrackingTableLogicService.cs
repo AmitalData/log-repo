@@ -115,10 +115,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             if (TableName == "CargoTrackingShipmentSearches")
             {
-                TableRow.SetField("ShipmentDate", TableRow["CreateDateTime"]);
-                string Id = (string)TableRow["Id"];
-                string[] SplittedId = Id.Split('_');
-                TableRow.SetField("ShipmentId", SplittedId[0]);
+                  TableRow.SetField("ShipmentDate", TableRow["CreateDateTime"]);
+                //string Id = (string)TableRow["Id"];
+                //string[] SplittedId = Id.Split('_');
+                //TableRow.SetField("ShipmentId", SplittedId[0]);
             }
 
         }

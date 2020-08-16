@@ -200,9 +200,9 @@ export class SearchComponent implements AfterViewInit
 
     ItemClicked(item)
     {
-        var id = item.EntityId;
+        var SecurityKey = item.SecurityKey;
 
-        this.router.navigate([this._Tenant,'shipment', id]);
+        this.router.navigate([this._Tenant,'shipment', SecurityKey]);
 
     }
     LoadShipments()
