@@ -286,7 +286,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoicePM.IsGeneralInvoice = true;
             aRInvoicePM.IsFullAccounting = true;
             aRInvoicePM.SetApproved = true;
-
+            aRInvoicePM.DueDate = aRInvoicePM.InvoiceDate;
             if (!string.IsNullOrEmpty(cardPM.SATPaymentMethodCode))
             {
                 aRInvoicePM.SATPaymentMethodCode = cardPM.SATPaymentMethodCode;
@@ -314,7 +314,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 aRInvoicePM.BillToAddressId = cardPM.MainAddressId;
             }
 
-            aRInvoicePM = InitializeDueDate(aRInvoicePM);
+            //aRInvoicePM = InitializeDueDate(aRInvoicePM);
             aRInvoicePM = SetCurrencyRateData(aRInvoicePM, tenantPM);
 
             return aRInvoicePM;
