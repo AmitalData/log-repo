@@ -941,6 +941,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 Category5Id = "",
                 CollectorId = "",
                 SalesmanId = "",
+                BuildPivot= false,
                 AgingMethod = AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString(),
                 AgingMethod_Options = Enum.GetNames(typeof(AgingReportParam.MethodEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
                 GroupByDate = AgingReportParam.DateEnum.DueDate,
@@ -948,6 +949,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 Aging4AccountTypeCode = AgingReportParam.Aging4AccountTypeCodeEnum.Customer2,
                 Aging4AccountTypeCode_Options = Enum.GetNames(typeof(AgingReportParam.Aging4AccountTypeCodeEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
+
             };
             try
             {
@@ -968,8 +970,11 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 //var MyPeriodList = agingReport.MyPeriodList;
                 var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToXmlString(agingReport.MyPeriodExtendedList);
                 _LabelResult.Text = xmlMyPeriodList;
-
-                ReloadGrid(System.Text.Encoding.UTF8.GetBytes(xml));
+                if (!string.IsNullOrWhiteSpace(xml))
+                {
+                    ReloadGrid(System.Text.Encoding.UTF8.GetBytes(xml));
+                }
+                
             }
             catch(Exception E)
             {
