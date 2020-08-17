@@ -58,22 +58,34 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     TableRow.SetField("ClearanceDone", false);
 
                 }
-
-                if (TableRow["ShipmentLevelCode"].Equals("D") || TableRow["ShipmentLevelCode"].Equals("H"))
+                if (ConditionNumber == 1)
                 {
-                    TableRow.SetField("EntityType", "F");
-                    TableRow.SetField("EntityId", TableRow["Id"]);
-
-                    if (!TableRow["CustomFileId"].Equals(null) && !TableRow["CustomFileId"].Equals("") &&  TableRow["CustomFileId"].GetType().Name != "DBNull")
-                    {
-                        TableRow.SetField("CustomsShipmentHeaderId", TableRow["Id"]);
-                        //ForwardingShipments.Add((string)TableRow["Id"], (string)TableRow["CustomFileId"]);
-                    }
+                    //if (TableRow["ShipmentLevelCode"].Equals("A"))
+                    //{
+                        TableRow.SetField("EntityType", "C");
+                        TableRow.SetField("EntityId", TableRow["Id"]);
+                        TableRow.SetField("IsMainRecord", true);
+                        TableRow.SetField("ForwardingShipmentHeaderId", TableRow["ForwardingIdForCustom"]);
+                    //}
                 }
-                else if (TableRow["ShipmentLevelCode"].Equals("A"))
-                {
-                    TableRow.SetField("EntityType", "C");
-                    TableRow.SetField("EntityId", TableRow["Id"]);
+                else if (ConditionNumber == 2){
+                    //if (TableRow["ShipmentLevelCode"].Equals("D") || TableRow["ShipmentLevelCode"].Equals("H"))
+                    //{
+                        TableRow.SetField("EntityType", "F");
+                        TableRow.SetField("EntityId", TableRow["Id"]);
+
+                        if (!TableRow["CustomFileId"].Equals(null) && !TableRow["CustomFileId"].Equals("") && TableRow["CustomFileId"].GetType().Name != "DBNull")
+                        {
+                            TableRow.SetField("CustomsShipmentHeaderId", TableRow["CustomFileId"]);
+                            TableRow.SetField("IsMainRecord", false);
+                            //ForwardingShipments.Add((string)TableRow["Id"], (string)TableRow["CustomFileId"]);
+                        }
+                        else
+                        {
+                            TableRow.SetField("IsMainRecord", true);
+
+                        }
+                    //}
 
                 }
 
@@ -89,10 +101,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     TableRow.SetField("CurrentMilestoneDate", TableRow["PickupDate"]);
 
                 }
-                if (ConditionNumber==1)
-                {
-                    TableRow.SetField("ForwardingShipmentHeaderId", TableRow["ForwardingIdForCustom"]);
-                }
+                //if (ConditionNumber==1)
+                //{
+                //    //TableRow.SetField("ForwardingShipmentHeaderId", TableRow["ForwardingIdForCustom"]);
+                //}
 
                 //if (ForwardingShipments.Count() > 0)
                 //{

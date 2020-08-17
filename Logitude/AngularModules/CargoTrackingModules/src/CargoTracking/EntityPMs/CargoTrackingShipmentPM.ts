@@ -164,6 +164,11 @@ export class CargoTrackingShipmentPM {
     public set CustomerReference(newValue: string) { if (this.customerReference != newValue) { this.customerReference = newValue; this.MarkAsDirty("CustomerReference"); } }
        
 	 
+    private isMainRecord: boolean;
+    public get IsMainRecord() { return this.isMainRecord; }
+    public set IsMainRecord(newValue: boolean) { if (this.isMainRecord != newValue) { this.isMainRecord = newValue; this.MarkAsDirty("IsMainRecord"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		
