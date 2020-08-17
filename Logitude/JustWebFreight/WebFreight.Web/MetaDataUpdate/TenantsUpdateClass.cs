@@ -1070,6 +1070,9 @@ namespace WebFreight.Web.MetaDataUpdate
             WriteLogMessage("Initializing Business Infrastructure Module ...");
             InfrastructureUpdateClass businessInfraUpdateClass = new InfrastructureUpdateClass();
 
+            WriteLogMessage("Updating Entity Status...");
+            updateClass.LoadEntityStatus();
+
             if (runOldUpdateCode)
             {
                
@@ -1157,8 +1160,7 @@ namespace WebFreight.Web.MetaDataUpdate
             updateClass.LoadObjectTableHelperControls();
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTableHelperControls");
 
-            WriteLogMessage("Updating Entity Status...");
-            updateClass.LoadEntityStatus();
+           
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadEntityStatus");
 
             WriteLogMessage("Updating Event Types ...");

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "6a405700b3cca0a2f51af0b63292fff8";
+		public const string HashString = "e834ba9d6ff9e6c877b3cef02c4a9f3b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -43697,6 +43697,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 FollowUpEnglishName =  "Warehouse Release",
                 FollowUpLocalName =  "Warehouse Release",
                 ObjectTableId = ShipmentObjectTable.Id,
+                EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "SRIM").FirstOrDefault().Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -43913,6 +43914,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
                 ObjectTableId = ShipmentObjectTable.Id,
+                EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "SREX").FirstOrDefault().Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -43931,6 +43933,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
                 ObjectTableId = ShipmentObjectTable.Id,
+                EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "SEEX").FirstOrDefault().Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

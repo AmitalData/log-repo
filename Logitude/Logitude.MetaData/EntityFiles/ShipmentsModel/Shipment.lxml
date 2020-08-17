@@ -87835,7 +87835,8 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="true"
       FollowUpEnglishName="&quot;Warehouse Release&quot;"
-      FollowUpLocalName="&quot;Warehouse Release&quot;" />
+      FollowUpLocalName="&quot;Warehouse Release&quot;"
+      EntityStatusCode="&quot;SRIM&quot;" />
     <EventType
       Code="&quot;SFCR&quot;"
       ObjectTableName="&quot;Shipment&quot;"
@@ -87991,7 +87992,8 @@
       IsSharedLogisticsEnabled="false"
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
+      IsFollowUp="false"
+      EntityStatusCode="&quot;SREX&quot;" />
     <EventType
       Code="&quot;WEDE&quot;"
       ObjectTableName="&quot;Shipment&quot;"
@@ -88004,7 +88006,8 @@
       IsSharedLogisticsEnabled="false"
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
+      IsFollowUp="false"
+      EntityStatusCode="&quot;SEEX&quot;" />
   </EventTypes>
   <Records />
   <MenuButtons
