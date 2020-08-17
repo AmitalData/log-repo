@@ -1158,7 +1158,7 @@ namespace Logitude.DBMigrations.Models
         protected override string GetCreateIndexScript(IndexDefinition index)
         {
             bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME);
-            string indexOnlineOption = isZeroDownTimeArgumentProvided ? "WITH (ONLINE = ON)" : null;
+            string indexOnlineOption = isZeroDownTimeArgumentProvided ? " WITH (ONLINE = ON)" : null;
 
             string indexColumns = !index.Columns.Contains(",") ? "[" + index.Columns + "]" : string.Join(",", index.Columns.Split(',').Select(c => "[" + c + "]").ToArray());
             string includeColumns = String.IsNullOrEmpty(index.Include) ? null : (!index.Include.Contains(",") ? "[" + index.Include + "]" : string.Join(",", index.Include.Split(',').Select(c => "[" + c + "]").ToArray()));
@@ -1172,11 +1172,11 @@ namespace Logitude.DBMigrations.Models
 
             if (includeColumns != null)
             {
-                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ") " + indexOnlineOption + "')";
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")" + indexOnlineOption + "')";
             }
             else
             {
-                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") " + indexOnlineOption + "')";
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ")" + indexOnlineOption + "')";
             }
 
             createIndexScript += ";\n\n";

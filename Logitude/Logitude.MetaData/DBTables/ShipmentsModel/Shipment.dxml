@@ -3015,6 +3015,14 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="TestColumn2"
+    Type="varchar"
+    Size="40"
+    DefaultValue="'Test2'">
+    <Constraints
+      Nullable="false" />
+  </Column>
   
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
@@ -3755,6 +3763,4 @@
     Columns="DBMigrationsLastScript" />
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
-  <UniqueConstraint
-   Columns="Tenant,ComputedForwarderShipmentNumber" />
 </Table>
