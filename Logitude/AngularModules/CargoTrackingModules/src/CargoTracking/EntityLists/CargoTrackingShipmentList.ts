@@ -36,6 +36,28 @@ export class CargoTrackingShipmentList {
 	ConsigneeName: string;
 	ShipperName: string;
 	CustomerReference: string;
+	PickupEstimationDate: Date;
+	FromWarehouseDone: boolean;
+	FromWarehouseDate: Date;
+	FromWarehouseEstimationDate: Date;
+	FromWarehouseNotes: string;
+	DepartureDone: boolean;
+	DepartureDate: Date;
+	DepartureEstimationDate: Date;
+	ArrivalDone: boolean;
+	ArrivalDate: Date;
+	ArrivalEstimationDate: Date;
+	ToWarehouseDone: boolean;
+	ToWarehouseDate: Date;
+	ToWarehouseEstimationDate: Date;
+	ToWarehouseNotes: string;
+	CustomsPaymentDone: boolean;
+	CustomsPaymentDate: Date;
+	ClearanceDone: boolean;
+	ClearanceDate: Date;
+	DeliveredDone: boolean;
+	DeliveredDate: Date;
+	DeliveredEstimationDate: Date;
 	
 }
  
