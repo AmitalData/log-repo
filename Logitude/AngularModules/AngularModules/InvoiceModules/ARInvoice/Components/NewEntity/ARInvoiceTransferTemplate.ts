@@ -392,6 +392,10 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
                 {
                     if (this.invoiceLinePM.CreditAccount != value) {
                         this.invoiceLinePM.CreditAccount = value;
+
+                        this.father.ItemsSource.filter(d => d.Code == this.Code && d.invoiceLinePM.ChargesTypeId == this.invoiceLinePM.ChargesTypeId).forEach(item => {
+                            item.EditingFieldValue = value;
+                        });
                     }
 
                     break;
@@ -403,8 +407,8 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
                     if (this.invoiceLinePM.ExternalVATCard != value) {
                         this.invoiceLinePM.ExternalVATCard = value;
 
-                        this.father.EntityPM.InvoiceLines.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
-                            item.ExternalVATCard = value;
+                        this.father.ItemsSource.filter(d => d.Code == this.Code && d.invoiceLinePM.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
+                            item.EditingFieldValue = value;
                         });
                     }
 
@@ -528,7 +532,6 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
         this.EditingFieldValue = SessionLocator.AccountingSettingPM.ReceivableVATCard;
     }
 
-
     get DebitAccount() { return this.invoicePM.DebitAccount; }
     set DebitAccount(value: string) {
         if (this.invoicePM.DebitAccount != value) {
@@ -553,6 +556,10 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
             this.invoiceLinePM.CreditAccount = value;
             this.father.UpdateTransferData();
             this.GetDescriptionHelpVisibility();
+
+            this.father.ItemsSource.filter(d => d.Code == this.Code && d.invoiceLinePM.ChargesTypeId == this.invoiceLinePM.ChargesTypeId).forEach(item => {
+                item.CreditAccount = value;
+            });
         }
     }
 
@@ -560,16 +567,15 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
     set ExternalVATCard(value: string) {
         if (this.invoiceLinePM.ExternalVATCard != value) {
             this.invoiceLinePM.ExternalVATCard = value;
-            this.father.EntityPM.InvoiceLines.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
+            this.father.UpdateTransferData();
+            this.GetDescriptionHelpVisibility();
+
+            this.father.ItemsSource.filter(d => d.Code == this.Code && d.invoiceLinePM.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
                 item.ExternalVATCard = value;
-                this.father.UpdateTransferData();
-                this.GetDescriptionHelpVisibility();
-            }); 
+            });
         }
     }
     
-
-    // Commands
     EditClicked() {
         var tableName = "";
         var entityId = "";
@@ -659,21 +665,13 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
                     tabCode = "CRAC";
                     break;
                 }
-            case "PYTM":
-                {
-                    tableName = "PaymentTerm";
-                    title = "Edit Payment Term";
-                    entityId = this.invoicePM.PaymentTermId;
-                    tabCode = "PTAC";
-                    break;
-                }
 
-            case "VAT":
+            case "Line":
                 {
-                    tableName = "VatType";
-                    title = "Edit VAT Type";
-                    entityId = this.invoiceLinePM.VatTypeId;
-                    tabCode = "VTAC";
+                    tableName = "ChargesType";
+                    title = "Edit Charges Type";
+                    entityId = this.invoiceLinePM.ChargesTypeId;
+                    tabCode = "CHAC";
                     break;
                 }
 
@@ -685,16 +683,8 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
                     tabCode = "VTAC";
                     break;
                 }
-
-            default:
-                {
-                    tableName = "ChargesType";
-                    title = "Edit Charges Type";
-                    entityId = this.invoiceLinePM.ChargesTypeId;
-                    tabCode = "CHAC";
-                    break;
-                }
         }
+
         var editWindow: LogitudeWindow = new LogitudeWindow();
         editWindow.IsFillScreen = true;
         editWindow.ShowHeaderButtons = true;
@@ -724,25 +714,23 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
                         }
 
                         case "Line": {
-                            this.father.ItemsSource.filter(d => d.Code == "Line").forEach(item => {
-                                if (item.invoiceLinePM.ChargesTypeId == entity.Id) {
-                                    if (entity.AccountingVATSplit) {
-                                        var charge: ChargeTypeAccountingPM = entity.ChargeTypeAccountings.filter(d => d.VatTypeId == item.invoiceLinePM.VatTypeId)[0];
-                                        if (charge != null) {
-                                            item.EditingFieldValue = charge.ReceivableCreditAccount;
-                                        }
-                                    }
 
-                                    else {
-                                        item.EditingFieldValue = entity.ReceivableCreditAccount;
-                                    }
+                            if (entity.AccountingVATSplit) {
+                                var charge: ChargeTypeAccountingPM = entity.ChargeTypeAccountings.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId)[0];
+                                if (charge != null) {
+                                    this.EditingFieldValue = charge.ReceivableCreditAccount;
                                 }
-                            });
+                            }
+
+                            else {
+                                this.EditingFieldValue = entity.ReceivableCreditAccount;
+                            }
 
                             break;
                         }
 
                         case "TAX": {
+
                             if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "HV" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "RH") {
                                 this.EditingFieldValue = SessionLocator.AccountingSettingPM.ReceivableVATCard;
                             }

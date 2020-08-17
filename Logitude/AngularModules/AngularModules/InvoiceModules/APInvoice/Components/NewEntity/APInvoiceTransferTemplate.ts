@@ -276,7 +276,6 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
 
         this.GetDescriptionHelpVisibility();
     }
-
     GetDescriptionHelpVisibility() {
         var result = false;
 
@@ -305,9 +304,127 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
     public DescriptionValue: string = "";
     public DescriptionHelp: string = "";
     public DescriptionHelpVisibility = false;
+    InitalizeProperties() {
+        switch (this.Code) {
+            case "BLTO":
+                {
+                    this.EditingFieldName = "CreditAccount";
+                    this.DescriptionTitle = "Vendor";
+                    this.DescriptionValue = this.invoicePM.VendorName;
+                    this.DescriptionHelp = "Please enter credit account";
+                    break;
+                }
 
+            case "CURR":
+                {
+                    this.EditingFieldName = "AccountingExternalCode";
+                    this.DescriptionTitle = "Invoice Currency";
+                    this.DescriptionValue = this.invoicePM.InvoiceCurrencyCode;
+                    this.DescriptionHelp = "Please enter external code for " + this.invoicePM.InvoiceCurrencyCode;
+                    break;
+                }
 
-    // FillFieldsData
+            case "Line":
+                {
+                    this.EditingFieldName = "DebitAccount";
+                    this.DescriptionTitle = "Charge Type";
+                    this.DescriptionValue = this.invoiceLinePM.Description;
+                    this.DescriptionHelp = "Please enter debit account";
+                    break;
+                }
+
+            case "TAX":
+                {
+                    this.EditingFieldName = "ExternalVATCard";
+                    this.DescriptionTitle = "VAT Type Tax Code";
+                    this.DescriptionValue = this.invoiceLinePM.VatTypeName;
+                    this.DescriptionHelp = "Please enter external tax code";
+                    break;
+                }
+        }
+    }
+
+    get EditingFieldValue() {
+        var result = "";
+        switch (this.Code) {
+            case "BLTO":
+                {
+                    result = this.invoicePM.CreditAccount;
+                    break;
+                }
+
+            case "CURR":
+                {
+                    result = this.invoicePM.AccountingExternalCode;
+                    break;
+                }
+
+            case "Line":
+                {
+                    result = this.invoiceLinePM.DebitAccount;
+                    break;
+                }
+
+            case "TAX":
+                {
+                    result = this.invoiceLinePM.ExternalVATCard;
+                    break;
+                }
+        }
+
+        return result;
+    }
+    set EditingFieldValue(value: string) {
+        switch (this.Code) {
+            case "BLTO":
+                {
+                    if (this.invoicePM.CreditAccount != value) {
+                        this.invoicePM.CreditAccount = value;
+                    }
+
+                    break;
+                }
+
+            case "CURR":
+                {
+                    if (this.invoicePM.AccountingExternalCode != value) {
+                        this.invoicePM.AccountingExternalCode = value;
+                    }
+
+                    break;
+                }
+
+            case "Line":
+                {
+                    if (this.invoiceLinePM.DebitAccount != value) {
+                        this.invoiceLinePM.DebitAccount = value;
+
+                        this.father.ItemsSource.filter(d => d.Code == this.Code && d.invoiceLinePM.ChargesTypeId == this.invoiceLinePM.ChargesTypeId).forEach(item => {
+                            item.EditingFieldValue = value;
+                        });
+                    }
+
+                    break;
+                }
+
+            case "TAX":
+                {
+                    if (this.invoiceLinePM.ExternalVATCard != value) {
+                        this.invoiceLinePM.ExternalVATCard = value;
+
+                        this.father.ItemsSource.filter(d => d.Code == this.Code && d.invoiceLinePM.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
+                            item.EditingFieldValue = value;
+                        });
+                    }
+
+                    break;
+                }
+        }
+
+        this.father.UpdateTransferData();
+        this.GetDescriptionHelpVisibility();
+    }
+
     private FillFieldsData() {
         if (this.IsTransferredEnabled) {
             if (AppTool.IsNullOrEmpty(this.EditingFieldValue)) {
@@ -371,19 +488,31 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
             }
         }
     }
-    private GetBillToData() {
+    private GetCardData() {
         this.CardListService.getSingle(this.invoicePM.VendorId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                var card: CardList = response.Result;
-                if (card != null) {
-                    var invoiceDomainService = new InvoiceDomainService();
-                    invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(card.Id, this.invoicePM.InvoiceCurrencyId, true).subscribe((myResult: ServiceResponse) => {
-                        this.EditingFieldValue = myResult.Result;
-                    });
+                var myResult: CardList = response.Result;
+                if (myResult) {
+
+                    if (myResult.AccountingVATSplit) {
+                        this.GetCardDataBySplit();
+                    }
+
+                    else {
+                        this.EditingFieldValue = myResult.PayablesAccountingCard;
+                    }
                 }
             }
         });
     }
+    private GetCardDataBySplit() {
+        this.invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(this.invoicePM.VendorId, this.invoicePM.InvoiceCurrencyId, true).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                this.EditingFieldValue = response.Result;
+            }
+        });
+    }
+
     private GetCurrencyData() {
         this.CurrencyListService.getSingle(this.invoicePM.InvoiceCurrencyId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
@@ -442,281 +571,7 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
     private GetAccountingSettingData() {
         this.EditingFieldValue = SessionLocator.AccountingSettingPM.PayableVATCard;
     }
-
-    // SetUIProperties
-
-    // Props
-    private GetDescriptionTitle() {
-        var result = "";
-        switch (this.Code) {
-            case "BLTO":
-                {
-                    result = "Vendor";
-                    break;
-                }
-            case "CURR":
-                {
-                    result = "Invoice Currency";
-                    break;
-                }
-            case "PYTM":
-                {
-                    result = "Payment Term";
-                    break;
-                }
-            case "VAT":
-                {
-                    result = "VAT Type Item Code";
-                    break;
-                }
-            case "TAX":
-                {
-                    result = "VAT Type Tax Code";
-                    break;
-                }
-            default:
-                {
-                    result = "Charge Type";
-                    break;
-                }
-        }
-        this.DescriptionTitle = result;
-    }
-
-    private GetDescriptionValue() {
-        var result = "";
-        switch (this.Code) {
-            case "BLTO":
-                {
-                    result = this.invoicePM.VendorName;
-                    break;
-                }
-
-            case "CURR":
-                {
-                    result = this.invoicePM.InvoiceCurrencyCode;
-                    break;
-                }
-
-            case "PYTM":
-                {
-                    result = this.invoicePM.PaymentTermName;
-                    break;
-                }
-
-
-            case "VAT":
-                {
-                    result = this.invoiceLinePM.VatTypeName;
-                    break;
-                }
-
-            case "TAX":
-                {
-                    result = this.invoiceLinePM.VatTypeName;
-                    break;
-                }
-
-            default:
-                {
-                    result = this.invoiceLinePM.Description;
-                    if (AppTool.IsNullOrEmpty(result)) {
-                        result = this.invoiceLinePM.ChargesTypeName;
-                    }
-                    break;
-                }
-        }
-
-        this.DescriptionValue = result;
-    }
-
-    private GetDescriptionHelp() {
-        var result = "";
-        switch (this.Code) {
-            case "BLTO":
-                {
-                    result = "Please enter credit account";
-                    break;
-                }
-
-            case "CURR":
-                {
-                    result = "Please enter external code for " + this.invoicePM.InvoiceCurrencyCode;
-                    break;
-                }
-
-            case "PYTM":
-                {
-                    result = "Please enter external payment term";
-                    break;
-                }
-
-
-            case "VAT":
-                {
-                    result = "Please enter external vat card";
-                    break;
-                }
-
-            case "TAX":
-                {
-                    result = "Please enter external tax code";
-                    break;
-                }
-
-            default:
-                {
-                    result = "Please enter credit account";
-                    break;
-                }
-        }
-        this.DescriptionHelp = result;
-    }
-
-    
-    
-    GetEditingFieldName() {
-        var result = "";
-        switch (this.Code) {
-            case "BLTO":
-                {
-                    result = "CreditAccount";
-                    break;
-                }
-
-            case "CURR":
-                {
-                    result = "AccountingExternalCode";
-                    break;
-                }
-
-            case "PYTM":
-                {
-                    result = "PaymentTermExternalId";
-                    break;
-                }
-
-            case "VAT":
-                {
-                    result = "ExternalTAXItemId";
-                    break;
-                }
-
-            case "TAX":
-                {
-
-                    result = "ExternalVATCard";
-                    break;
-                }
-
-            default:
-                {
-                    result = "DebitAccount";
-                    break;
-                }
-        
-        }
-        this.EditingFieldName = result;
-    }
-
-    get EditingFieldValue() {
-        var result = "";
-        switch (this.Code) {
-            case "BLTO":
-                {
-                    result = this.invoicePM.CreditAccount;
-                    break;
-                }
-
-            case "CURR":
-                {
-                    result = this.invoicePM.AccountingExternalCode;
-                    break;
-                }
-
-            case "PYTM":
-                {
-                    result = this.invoicePM.PaymentTermExternalId;
-                    break;
-                }
-
-
-            case "VAT":
-                {
-                    result = this.invoiceLinePM.ExternalTAXItemId;
-                    break;
-                }
-
-            case "TAX":
-                {
-                    result = this.invoiceLinePM.ExternalVATCard;
-                    break;
-                }
-
-            default:
-                {
-                    result = this.invoiceLinePM.DebitAccount;
-                    break;
-                }
-        }
-
-        return result;
-    }
-    set EditingFieldValue(value: string) {
-        switch (this.Code) {
-            case "BLTO":
-                {
-                    if (this.invoicePM.CreditAccount != value) {
-                        this.invoicePM.CreditAccount = value;
-                    }
-                    break;
-                }
-            case "CURR":
-                {
-                    if (this.invoicePM.AccountingExternalCode != value) {
-                        this.invoicePM.AccountingExternalCode = value;
-                    }
-                    break;
-                }
-            case "PYTM":
-                {
-                    if (this.invoicePM.PaymentTermExternalId != value) {
-                        this.invoicePM.PaymentTermExternalId = value;
-                    }
-                    break;
-                }
-            case "VAT":
-                {
-                    if (this.invoiceLinePM.ExternalTAXItemId != value) {
-                        this.invoiceLinePM.ExternalTAXItemId = value;
-                        this.father.EntityPM.InvoiceLines.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
-                            item.ExternalTAXItemId = value;
-                        });
-                    }
-                    break;
-                }
-            case "TAX":
-                {
-                    if (this.invoiceLinePM.ExternalVATCard != value) {
-                        this.invoiceLinePM.ExternalVATCard = value;
-                        this.father.EntityPM.InvoiceLines.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
-                            item.ExternalVATCard = value;
-                        });
-                    }
-                    break;
-                }
-            default:
-                {
-                    if (this.invoiceLinePM.DebitAccount != value) {
-                        this.invoiceLinePM.DebitAccount = value;
-                    }
-                    break;
-                }
-        }
-        this.father.UpdateTransferData();
-        this.GetDescriptionHelpVisibility();
-    }
-
+           
     get CreditAccount() { return this.invoicePM.CreditAccount; }
     set CreditAccount(value: string) {
         if (this.invoicePM.CreditAccount != value) {
@@ -735,23 +590,15 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
         }
     }
 
-    get PaymentTermExternalId() { return this.invoicePM.PaymentTermExternalId; }
-    set PaymentTermExternalId(value: string) {
-        if (this.invoicePM.PaymentTermExternalId != value) {
-            this.invoicePM.PaymentTermExternalId = value;
+    get DebitAccount() { return this.invoiceLinePM.DebitAccount; }
+    set DebitAccount(value: string) {
+        if (this.invoiceLinePM.DebitAccount != value) {
+            this.invoiceLinePM.DebitAccount = value;
             this.father.UpdateTransferData();
             this.GetDescriptionHelpVisibility();
-        }
-    }
 
-    get ExternalTAXItemId() { return this.invoiceLinePM.ExternalTAXItemId; }
-    set ExternalTAXItemId(value: string) {
-        if (this.invoiceLinePM.ExternalTAXItemId != value) {
-            this.invoiceLinePM.ExternalTAXItemId = value;
-            this.father.EntityPM.InvoiceLines.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
-                item.ExternalTAXItemId = value;
-                this.father.UpdateTransferData();
-                this.GetDescriptionHelpVisibility();
+            this.father.ItemsSource.filter(d => d.Code == this.Code && d.invoiceLinePM.ChargesTypeId == this.invoiceLinePM.ChargesTypeId).forEach(item => {
+                item.DebitAccount = value;
             });
         }
     }
@@ -760,24 +607,15 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
     set ExternalVATCard(value: string) {
         if (this.invoiceLinePM.ExternalVATCard != value) {
             this.invoiceLinePM.ExternalVATCard = value;
-            this.father.EntityPM.InvoiceLines.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
+            this.father.UpdateTransferData();
+            this.GetDescriptionHelpVisibility();
+
+            this.father.ItemsSource.filter(d => d.Code == this.Code && d.invoiceLinePM.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
                 item.ExternalVATCard = value;
-                this.father.UpdateTransferData();
-                this.GetDescriptionHelpVisibility();
             });
         }
     }
 
-    get DebitAccount() { return this.invoiceLinePM.DebitAccount; }
-    set DebitAccount(value: string) {
-        if (this.invoiceLinePM.DebitAccount != value) {
-            this.invoiceLinePM.DebitAccount = value;
-            this.father.UpdateTransferData();
-            this.GetDescriptionHelpVisibility();
-        }
-    }
-
-    // Commands
     EditClicked() {
         var tableName = "";
         var entityId = "";
@@ -867,21 +705,13 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
                     tabCode = "CRAC";
                     break;
                 }
-            case "PYTM":
-                {
-                    tableName = "PaymentTerm";
-                    title = "Edit Payment Term";
-                    entityId = this.invoicePM.PaymentTermId;
-                    tabCode = "PTAC";
-                    break;
-                }
 
-            case "VAT":
+            case "Line":
                 {
-                    tableName = "VatType";
-                    title = "Edit VAT Type";
-                    entityId = this.invoiceLinePM.VatTypeId;
-                    tabCode = "VTAC";
+                    tableName = "ChargesType";
+                    title = "Edit Charges Type";
+                    entityId = this.invoiceLinePM.ChargesTypeId;
+                    tabCode = "CHAC";
                     break;
                 }
 
@@ -893,16 +723,8 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
                     tabCode = "VTAC";
                     break;
                 }
-
-            default:
-                {
-                    tableName = "ChargesType";
-                    title = "Edit Charges Type";
-                    entityId = this.invoiceLinePM.ChargesTypeId;
-                    tabCode = "CHAC";
-                    break;
-                }
         }
+
         var editWindow: LogitudeWindow = new LogitudeWindow();
         editWindow.IsFillScreen = true;
         editWindow.ShowHeaderButtons = true;
@@ -912,51 +734,52 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
             editWindow.WindowClosed.subscribe(d => {
                 var entity = s.EntityPM;
                 if (entity != null) {
-                    if (this.Code == "BLTO") {
-                        var invoiceDomainService = new InvoiceDomainService();
-                        invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(entity.Id, this.invoicePM.InvoiceCurrencyId, true).subscribe((myResult: ServiceResponse) => {
-                            this.EditingFieldValue = myResult.Result;
-                        });
-                    }
-                    else if (this.Code == "CURR") {
-                        this.EditingFieldValue = entity.AccountingExternalCode;
-                    }
-                    else if (this.Code == "PYTM") {
-                        this.EditingFieldValue = entity.ExternalId;
-                    }
-                    else if (this.Code == "VAT") {
-                        this.EditingFieldValue = entity.ExternalVATCard;
-                    }
-                    else if (this.Code == "TAX") {
-                        if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "HV" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "RH") {
-                            this.EditingFieldValue = SessionLocator.AccountingSettingPM.PayableVATCard;
-                        }
-                        else {
-                            this.EditingFieldValue = entity.ExternalVATCard;
-                        }
-                    }
-                    else { // Charge Type
-                        if (entity.AccountingVATSplit) {
-                            this.father.ItemsSource.filter(d => d.Code == "Line").forEach(item => {
-                                if (item.invoiceLinePM.ChargesTypeId == entity.Id) {
-                                    var charge: ChargeTypeAccountingPM = entity.ChargeTypeAccountings.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId)[0];
-                                    if (charge != null) {
-                                        item.EditingFieldValue = charge.PayableDebitAccount;
-                                    }
-                                }
-                            });
-                        }
-                        else {
 
-                            this.father.ItemsSource.filter(d => d.Code == "Line").forEach(item => {
-                                if (item.invoiceLinePM.ChargesTypeId == entity.Id) {
-                                    item.EditingFieldValue = entity.PayableDebitAccount;
-                                }
-                            });
-                        }
-                    }
+                    switch (this.Code) {
+                        case "BLTO": {
+                            if (entity.AccountingVATSplit) {
+                                this.GetCardDataBySplit();
+                            }
 
-                    this.father.UpdateTransferData();
+                            else {
+                                this.EditingFieldValue = entity.PayablesAccountingCard;
+                            }
+
+                            break;
+                        }
+
+                        case "CURR": {
+                            this.EditingFieldValue = entity.AccountingExternalCode;
+                            break;
+                        }
+
+                        case "Line": {
+                            if (entity.AccountingVATSplit) {
+                                var charge: ChargeTypeAccountingPM = entity.ChargeTypeAccountings.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId)[0];
+                                if (charge != null) {
+                                    this.EditingFieldValue = charge.PayableDebitAccount;
+                                }
+                            }
+
+                            else {
+                                this.EditingFieldValue = entity.PayableDebitAccount;
+                            }
+
+                            break;
+                        }
+
+                        case "TAX": {
+                            if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "HV" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "RH") {
+                                this.EditingFieldValue = SessionLocator.AccountingSettingPM.PayableVATCard;
+                            }
+
+                            else {
+                                this.EditingFieldValue = entity.PayablesExternalId;
+                            }
+
+                            break;
+                        }
+                    }                 
                 }
             });
         });
