@@ -11,6 +11,7 @@ namespace WebFreight.Web.DataProviders
 
         public string ARPaymentNo { get; set; }
         public string PaymentRef { get; set; }
+        public string PaymentReference { get; set; }
         public DateTime? RegisterDate { get; set; }
         public string PaymentMethodName { get; set; }
         public string ClientNumber { get; set; }
@@ -132,6 +133,10 @@ namespace WebFreight.Web.DataProviders
             public string ARInvoiceField10 { get; set; }
 
             public DateTime? InvocieDate { get; set; }
+            public DateTime? DueDate { get; set; }
+            public string MasterNumber { get; set; }
+            
+
         }
     }
 
