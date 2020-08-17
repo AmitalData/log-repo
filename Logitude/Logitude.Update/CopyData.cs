@@ -276,102 +276,105 @@ namespace Logitude.Update
             var LogitudeObjectTables = LogitudeObjectTabelRepository.GetObjectsByTenant(0);
             var AmitalObjectTables = AmitalObjectTabelRepository.GetObjectsByTenant(0);
 
-            var AmitalSystemUser = AmitalUserRepository.GetSingleUserByEmail("system@tenant0.com", 0, false);
-
             int c1 = LogitudeDocumentTypes.Count();
             int c2 = AmitalDocumentTypes.Count();
+
+            var AmitalSystemUser = AmitalUserRepository.GetSingleUserByEmail("system@tenant0.com", 0, false);
+
+           
 
             //system@tenant0.com,System,99999999
             foreach (var item in LogitudeDocumentTypes)
             {
-                string DocTypeId = IdCounter.GetNumber("DocumentType", 0);
-                var LogitudeObjectTable = LogitudeObjectTables.FirstOrDefault(t => t.Id == item.ObjectTableId); //ObjectTabelRepository.GetSingleObjectTableById(item.ObjectTableId, item.Tenant);
-                var AmitalObjectTable = AmitalObjectTables.FirstOrDefault(t => t.Name == LogitudeObjectTable.Name);//AmitalObjectTabelRepository.GetObjectTableByName(LogitudeObjectTable.Name, item.Tenant, false);
                 var AmitalItem = AmitalDocumentTypes.Where(a => a.Code == item.Code).FirstOrDefault();
-                var LogitudeDocumentTypeHtmlTemplate = LogitudeDocumentTypeTemplateRepository.GetSingleDocumentTypeTemplateByTenant(item.DocumentTypeDefaultHTMLTemplateId, item.Tenant);
-                var LogitudeDocumentTypeReportTemplate = LogitudeDocumentTypeTemplateRepository.GetSingleDocumentTypeTemplateByTenant(item.DocumentTypeDefaultHTMLTemplateId, item.Tenant);
-                DocumentTypeTemplate AmitalDocumentTypeHtmlTemplate = null;
-                DocumentTypeTemplate AmitalDocumentTypeReportTemplate = null;
-                if (LogitudeDocumentTypeHtmlTemplate != null)
-                {
-                    AmitalDocumentTypeHtmlTemplate = new DocumentTypeTemplate()
-                    {
-                        CountryCode = LogitudeDocumentTypeHtmlTemplate.CountryCode,
-                        Description = LogitudeDocumentTypeHtmlTemplate.Description,
-                        DocumentTypeId = DocTypeId,
-                        EditorTool = LogitudeDocumentTypeHtmlTemplate.EditorTool,
-                        HorizontalShift = LogitudeDocumentTypeHtmlTemplate.HorizontalShift,
-                        Id = IdCounter.GetNumber("DocumentTypeTemplate", 0),
-                        InActive = LogitudeDocumentTypeHtmlTemplate.InActive,
-                        InternalRemarks = LogitudeDocumentTypeHtmlTemplate.InternalRemarks,
-                        IsCopiedAtSignup = LogitudeDocumentTypeHtmlTemplate.IsCopiedAtSignup,
-                        IsEnabledForCustomers = LogitudeDocumentTypeHtmlTemplate.IsEnabledForCustomers,
-                        Language = LogitudeDocumentTypeHtmlTemplate.Language,
-                        LastUpdateDate = LogitudeDocumentTypeHtmlTemplate.LastUpdateDate,
-                        LastUpdatedByUserId = AmitalSystemUser.Id,
-                        OriginalTemplateId = LogitudeDocumentTypeHtmlTemplate.OriginalTemplateId,
-                        Subject = LogitudeDocumentTypeHtmlTemplate.Subject,
-                        TemplateBody = LogitudeDocumentTypeHtmlTemplate.TemplateBody,
-                        TemplateType = LogitudeDocumentTypeHtmlTemplate.TemplateType,
-                        Tenant = LogitudeDocumentTypeHtmlTemplate.Tenant,
-                        VerticalShift = LogitudeDocumentTypeHtmlTemplate.VerticalShift,
-                        BCC = LogitudeDocumentTypeHtmlTemplate.BCC,
-                        CC = LogitudeDocumentTypeHtmlTemplate.CC,
-                        From = LogitudeDocumentTypeHtmlTemplate.From,
-                        TemplateTechnologyCode = LogitudeDocumentTypeHtmlTemplate.TemplateTechnologyCode,
-                        TemplateBodyHtml = LogitudeDocumentTypeHtmlTemplate.TemplateBodyHtml,
-                        TemplateFooterHeight = LogitudeDocumentTypeHtmlTemplate.TemplateFooterHeight,
-                        TemplateFooterHtml = LogitudeDocumentTypeHtmlTemplate.TemplateFooterHtml,
-                        TemplateBodyjson = LogitudeDocumentTypeHtmlTemplate.TemplateBodyjson,
-                        TemplateHeaderHeight = LogitudeDocumentTypeHtmlTemplate.TemplateHeaderHeight,
-                        TemplateHeaderHtml = LogitudeDocumentTypeHtmlTemplate.TemplateHeaderHtml,
-
-
-
-                    };
-                    AmitalDocumentTypeTemplateRepository.Add(AmitalDocumentTypeHtmlTemplate);
-                }
-
-                if (LogitudeDocumentTypeReportTemplate != null)
-                {
-                    AmitalDocumentTypeReportTemplate = new DocumentTypeTemplate()
-                    {
-                        CountryCode = LogitudeDocumentTypeReportTemplate.CountryCode,
-                        Description = LogitudeDocumentTypeReportTemplate.Description,
-                        DocumentTypeId = DocTypeId,
-                        EditorTool = LogitudeDocumentTypeReportTemplate.EditorTool,
-                        HorizontalShift = LogitudeDocumentTypeReportTemplate.HorizontalShift,
-                        Id = IdCounter.GetNumber("DocumentTypeTemplate", 0),
-                        InActive = LogitudeDocumentTypeReportTemplate.InActive,
-                        InternalRemarks = LogitudeDocumentTypeReportTemplate.InternalRemarks,
-                        IsCopiedAtSignup = LogitudeDocumentTypeReportTemplate.IsCopiedAtSignup,
-                        IsEnabledForCustomers = LogitudeDocumentTypeReportTemplate.IsEnabledForCustomers,
-                        Language = LogitudeDocumentTypeReportTemplate.Language,
-                        LastUpdateDate = LogitudeDocumentTypeReportTemplate.LastUpdateDate,
-                        LastUpdatedByUserId = AmitalSystemUser.Id,
-                        //OriginalTemplateId = LogitudeDocumentTypeReportTemplate.OriginalTemplateId,
-                        Subject = LogitudeDocumentTypeReportTemplate.Subject,
-                        TemplateBody = LogitudeDocumentTypeReportTemplate.TemplateBody,
-                        TemplateType = LogitudeDocumentTypeReportTemplate.TemplateType,
-                        Tenant = LogitudeDocumentTypeReportTemplate.Tenant,
-                        VerticalShift = LogitudeDocumentTypeReportTemplate.VerticalShift,
-                        BCC = LogitudeDocumentTypeReportTemplate.BCC,
-                        CC = LogitudeDocumentTypeReportTemplate.CC,
-                        From = LogitudeDocumentTypeReportTemplate.From,
-                        TemplateTechnologyCode = LogitudeDocumentTypeReportTemplate.TemplateTechnologyCode,
-                        TemplateBodyHtml = LogitudeDocumentTypeReportTemplate.TemplateBodyHtml,
-                        TemplateFooterHeight = LogitudeDocumentTypeReportTemplate.TemplateFooterHeight,
-                        TemplateFooterHtml = LogitudeDocumentTypeReportTemplate.TemplateFooterHtml,
-                        TemplateBodyjson = LogitudeDocumentTypeReportTemplate.TemplateBodyjson,
-                        TemplateHeaderHeight = LogitudeDocumentTypeReportTemplate.TemplateHeaderHeight,
-                        TemplateHeaderHtml = LogitudeDocumentTypeReportTemplate.TemplateHeaderHtml, 
-
-                    };
-                    AmitalDocumentTypeTemplateRepository.Add(AmitalDocumentTypeReportTemplate);
-                }
-
                 if (AmitalItem == null)
                 {
+                    string DocTypeId = IdCounter.GetNumber("DocumentType", 0);
+                    var LogitudeObjectTable = LogitudeObjectTables.FirstOrDefault(t => t.Id == item.ObjectTableId); //ObjectTabelRepository.GetSingleObjectTableById(item.ObjectTableId, item.Tenant);
+                    var AmitalObjectTable = AmitalObjectTables.FirstOrDefault(t => t.Name == LogitudeObjectTable.Name);//AmitalObjectTabelRepository.GetObjectTableByName(LogitudeObjectTable.Name, item.Tenant, false);
+                    var LogitudeDocumentTypeHtmlTemplate = LogitudeDocumentTypeTemplateRepository.GetSingleDocumentTypeTemplateByTenant(item.DocumentTypeDefaultHTMLTemplateId, item.Tenant);
+                    var LogitudeDocumentTypeReportTemplate = LogitudeDocumentTypeTemplateRepository.GetSingleDocumentTypeTemplateByTenant(item.DocumentTypeDefaultHTMLTemplateId, item.Tenant);
+                    DocumentTypeTemplate AmitalDocumentTypeHtmlTemplate = null;
+                    DocumentTypeTemplate AmitalDocumentTypeReportTemplate = null;
+                    if (LogitudeDocumentTypeHtmlTemplate != null)
+                    {
+                        AmitalDocumentTypeHtmlTemplate = new DocumentTypeTemplate()
+                        {
+                            CountryCode = LogitudeDocumentTypeHtmlTemplate.CountryCode,
+                            Description = LogitudeDocumentTypeHtmlTemplate.Description,
+                            DocumentTypeId = DocTypeId,
+                            EditorTool = LogitudeDocumentTypeHtmlTemplate.EditorTool,
+                            HorizontalShift = LogitudeDocumentTypeHtmlTemplate.HorizontalShift,
+                            Id = IdCounter.GetNumber("DocumentTypeTemplate", 0),
+                            InActive = LogitudeDocumentTypeHtmlTemplate.InActive,
+                            InternalRemarks = LogitudeDocumentTypeHtmlTemplate.InternalRemarks,
+                            IsCopiedAtSignup = LogitudeDocumentTypeHtmlTemplate.IsCopiedAtSignup,
+                            IsEnabledForCustomers = LogitudeDocumentTypeHtmlTemplate.IsEnabledForCustomers,
+                            Language = LogitudeDocumentTypeHtmlTemplate.Language,
+                            LastUpdateDate = LogitudeDocumentTypeHtmlTemplate.LastUpdateDate,
+                            LastUpdatedByUserId = AmitalSystemUser.Id,
+                            OriginalTemplateId = LogitudeDocumentTypeHtmlTemplate.OriginalTemplateId,
+                            Subject = LogitudeDocumentTypeHtmlTemplate.Subject,
+                            TemplateBody = LogitudeDocumentTypeHtmlTemplate.TemplateBody,
+                            TemplateType = LogitudeDocumentTypeHtmlTemplate.TemplateType,
+                            Tenant = LogitudeDocumentTypeHtmlTemplate.Tenant,
+                            VerticalShift = LogitudeDocumentTypeHtmlTemplate.VerticalShift,
+                            BCC = LogitudeDocumentTypeHtmlTemplate.BCC,
+                            CC = LogitudeDocumentTypeHtmlTemplate.CC,
+                            From = LogitudeDocumentTypeHtmlTemplate.From,
+                            TemplateTechnologyCode = LogitudeDocumentTypeHtmlTemplate.TemplateTechnologyCode,
+                            TemplateBodyHtml = LogitudeDocumentTypeHtmlTemplate.TemplateBodyHtml,
+                            TemplateFooterHeight = LogitudeDocumentTypeHtmlTemplate.TemplateFooterHeight,
+                            TemplateFooterHtml = LogitudeDocumentTypeHtmlTemplate.TemplateFooterHtml,
+                            TemplateBodyjson = LogitudeDocumentTypeHtmlTemplate.TemplateBodyjson,
+                            TemplateHeaderHeight = LogitudeDocumentTypeHtmlTemplate.TemplateHeaderHeight,
+                            TemplateHeaderHtml = LogitudeDocumentTypeHtmlTemplate.TemplateHeaderHtml,
+
+
+
+                        };
+                        AmitalDocumentTypeTemplateRepository.Add(AmitalDocumentTypeHtmlTemplate);
+                    }
+
+                    if (LogitudeDocumentTypeReportTemplate != null)
+                    {
+                        AmitalDocumentTypeReportTemplate = new DocumentTypeTemplate()
+                        {
+                            CountryCode = LogitudeDocumentTypeReportTemplate.CountryCode,
+                            Description = LogitudeDocumentTypeReportTemplate.Description,
+                            DocumentTypeId = DocTypeId,
+                            EditorTool = LogitudeDocumentTypeReportTemplate.EditorTool,
+                            HorizontalShift = LogitudeDocumentTypeReportTemplate.HorizontalShift,
+                            Id = IdCounter.GetNumber("DocumentTypeTemplate", 0),
+                            InActive = LogitudeDocumentTypeReportTemplate.InActive,
+                            InternalRemarks = LogitudeDocumentTypeReportTemplate.InternalRemarks,
+                            IsCopiedAtSignup = LogitudeDocumentTypeReportTemplate.IsCopiedAtSignup,
+                            IsEnabledForCustomers = LogitudeDocumentTypeReportTemplate.IsEnabledForCustomers,
+                            Language = LogitudeDocumentTypeReportTemplate.Language,
+                            LastUpdateDate = LogitudeDocumentTypeReportTemplate.LastUpdateDate,
+                            LastUpdatedByUserId = AmitalSystemUser.Id,
+                            //OriginalTemplateId = LogitudeDocumentTypeReportTemplate.OriginalTemplateId,
+                            Subject = LogitudeDocumentTypeReportTemplate.Subject,
+                            TemplateBody = LogitudeDocumentTypeReportTemplate.TemplateBody,
+                            TemplateType = LogitudeDocumentTypeReportTemplate.TemplateType,
+                            Tenant = LogitudeDocumentTypeReportTemplate.Tenant,
+                            VerticalShift = LogitudeDocumentTypeReportTemplate.VerticalShift,
+                            BCC = LogitudeDocumentTypeReportTemplate.BCC,
+                            CC = LogitudeDocumentTypeReportTemplate.CC,
+                            From = LogitudeDocumentTypeReportTemplate.From,
+                            TemplateTechnologyCode = LogitudeDocumentTypeReportTemplate.TemplateTechnologyCode,
+                            TemplateBodyHtml = LogitudeDocumentTypeReportTemplate.TemplateBodyHtml,
+                            TemplateFooterHeight = LogitudeDocumentTypeReportTemplate.TemplateFooterHeight,
+                            TemplateFooterHtml = LogitudeDocumentTypeReportTemplate.TemplateFooterHtml,
+                            TemplateBodyjson = LogitudeDocumentTypeReportTemplate.TemplateBodyjson,
+                            TemplateHeaderHeight = LogitudeDocumentTypeReportTemplate.TemplateHeaderHeight,
+                            TemplateHeaderHtml = LogitudeDocumentTypeReportTemplate.TemplateHeaderHtml,
+
+                        };
+                        AmitalDocumentTypeTemplateRepository.Add(AmitalDocumentTypeReportTemplate);
+                    }
+
+
                     DocumentType NewDocumentType = new DocumentType()
                     {
                         Code = item.Code,
