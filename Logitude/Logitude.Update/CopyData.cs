@@ -260,17 +260,17 @@ namespace Logitude.Update
 
             #endregion
         }
-        private void CopyDocumentTypes(CommonDataContext Logitudecontext, CommonDataContext Amitalcontext, WebFreightContext LogitudeWebFreightContext, WebFreightContext AmitalWebFreightContext)
+        private void CopyDocumentTypes(CommonDataContext sourceContext, CommonDataContext destContext, WebFreightContext sourceWebFreightContext, WebFreightContext destWebFreightContext)
         {
             #region DocumentTypes + Template
 
-            DocumentTypeRepository LogitudeDocumentTypeRepository = new DocumentTypeRepository(Logitudecontext);
-            DocumentTypeRepository AmitalDocumentTypeRepository = new DocumentTypeRepository(Amitalcontext);
-            DocumentTypeTemplateRepository LogitudeDocumentTypeTemplateRepository = new DocumentTypeTemplateRepository(Logitudecontext);
-            DocumentTypeTemplateRepository AmitalDocumentTypeTemplateRepository = new DocumentTypeTemplateRepository(Amitalcontext);
-            ObjectTableRepository LogitudeObjectTabelRepository = new ObjectTableRepository(LogitudeWebFreightContext);
-            ObjectTableRepository AmitalObjectTabelRepository = new ObjectTableRepository(AmitalWebFreightContext);
-            UserRepository AmitalUserRepository = new UserRepository(Amitalcontext);
+            DocumentTypeRepository LogitudeDocumentTypeRepository = new DocumentTypeRepository(sourceContext);
+            DocumentTypeRepository AmitalDocumentTypeRepository = new DocumentTypeRepository(destContext);
+            DocumentTypeTemplateRepository LogitudeDocumentTypeTemplateRepository = new DocumentTypeTemplateRepository(sourceContext);
+            DocumentTypeTemplateRepository AmitalDocumentTypeTemplateRepository = new DocumentTypeTemplateRepository(destContext);
+            ObjectTableRepository LogitudeObjectTabelRepository = new ObjectTableRepository(sourceWebFreightContext);
+            ObjectTableRepository AmitalObjectTabelRepository = new ObjectTableRepository(destWebFreightContext);
+            UserRepository AmitalUserRepository = new UserRepository(destContext);
             var LogitudeDocumentTypes = LogitudeDocumentTypeRepository.GetDocumentTypes(0);
             var AmitalDocumentTypes = AmitalDocumentTypeRepository.GetDocumentTypes(0);
             var LogitudeObjectTables = LogitudeObjectTabelRepository.GetObjectsByTenant(0);
@@ -419,8 +419,8 @@ namespace Logitude.Update
                     AmitalDocumentTypeRepository.Add(NewDocumentType);
 
                     //DocumentTypeCopy
-                    DocumentTypeCopyRepository LogitudeDocumentTypeCopyRepository = new DocumentTypeCopyRepository(Logitudecontext);
-                    DocumentTypeCopyRepository AmitalDocumentTypeCopyRepository = new DocumentTypeCopyRepository(Amitalcontext);
+                    DocumentTypeCopyRepository LogitudeDocumentTypeCopyRepository = new DocumentTypeCopyRepository(sourceContext);
+                    DocumentTypeCopyRepository AmitalDocumentTypeCopyRepository = new DocumentTypeCopyRepository(destContext);
                     var LogitudeDocumentTypeCopies = LogitudeDocumentTypeCopyRepository.GetDocumentTypeCopiesByDocumentTypeIdTenant(item.Id, item.Tenant);
 
 
@@ -444,8 +444,8 @@ namespace Logitude.Update
 
 
                     //DocumentTypeCustomField
-                    DocumentTypeCustomFieldRepository LogitudeDocumentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(Logitudecontext);
-                    DocumentTypeCustomFieldRepository AmitalDocumentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(Amitalcontext);
+                    DocumentTypeCustomFieldRepository LogitudeDocumentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(sourceContext);
+                    DocumentTypeCustomFieldRepository AmitalDocumentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(destContext);
                     var LogitudeDocumentTypeCustomFields = LogitudeDocumentTypeCustomFieldRepository.GetDocumentTypeCusotmFieldsByDocumentTypeId(item.Id, item.Tenant);
 
 
