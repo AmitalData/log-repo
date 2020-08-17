@@ -144,6 +144,19 @@
                                             </div>
                                         </div>
 
+                                        <!-- Shipment Sub Types -->
+                                        <div style="margin: 10px;" *ngIf="DirectionId && TransportModeId && ShipmentTypeId">
+                                            <div style="font-size: 13px; color: #6E7172;">{{'Shipment.F.ShipmentSubTypeId' | TextCodeTranslationPipe}}:</div>
+                                            <div style="margin-top: -2px;">
+                                                <div class="RadioButton" *ngFor="let item of ShipmentSubTypesList" [attr.id]="'ShipmentSubTypeRadio_Div_' + SessionIndex + item.Code">
+                                                    <input [attr.id]="'ShipmentSubTypeRadio_' + SessionIndex + item.Code" [attr.name]="'ShipmentSubTypesRadio' + SessionIndex" type="radio" [checked]="ShipmentSubTypeId == item.Code" (click)="ShipmentSubTypeId = item.Code" />
+                                                    <label [attr.for]="'ShipmentSubTypeRadio_' + SessionIndex + item.Code" style="text-indent: 20px; font-size: 12px" [ngStyle]="{color: ShipmentSubTypeId == item.Code ? '#287828':'#282E30'}">
+                                                        {{item.Name}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </td>
                                 </tr>
 
