@@ -236,11 +236,16 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     CheckRequrierdFieldsForSend() {
+        var isExport = false;
+        if (this.DeclarationPM.Direction == 'E') {
+            isExport = true;
+        }
+
         var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.DeclarationPayment')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
-        customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
+        customsRequiredFieldListService.getAllFromCache(filters, isExport).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
                 var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];

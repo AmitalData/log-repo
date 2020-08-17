@@ -748,8 +748,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 t.Name == "Customs.SupplierInvoiceFreightAmount" ||
                 t.Name == "Customs.Claim" || 
                 t.Name == "Customs.ClaimsRelatedEntity" ||
-                t.Name == "Customs.CourierMaster"
+                t.Name == "Customs.CourierMaster"||
+                 t.Name == "Customs.SupplierInvoicePayment" ||
+                   t.Name == "Customs.DeclarationExportRecipient"
                 ).ToList();           
+
 
             return tables;
         }

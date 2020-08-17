@@ -99,6 +99,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                                 ObjectfieldCode = item.ObjectfieldCode,
                                 ObjectTableId = item.ObjectTableId,
                                 Tenant = tenant,
+                                IsImport=item.IsImport,
+                                IsExport= item.IsExport,
                                 ObjectFieldName = item.ObjectFieldName,
                             };
                             field.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -114,6 +116,26 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                             // delete requierd field from DB
                             CustomsRequiredFieldUpdateService service = new CustomsRequiredFieldUpdateService(customContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
                             reqField.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                            service.Update(reqField, true);
+                        }
+
+                        else
+                        {
+                            // create req field in DB
+
+                            CustomsRequiredFieldQueryService query = new CustomsRequiredFieldQueryService(customContext);
+                            CustomsRequiredFieldUpdateService service = new CustomsRequiredFieldUpdateService(customContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+                            CustomsRequiredFieldPM reqField = query.GetCustomRequiredFieldsByObjectFieldCode(item.ObjectfieldCode, tenant);
+
+                            reqField.ObjectfieldId = item.ObjectfieldId;
+                            reqField.ObjectfieldCode = item.ObjectfieldCode;
+                            reqField.ObjectTableId = item.ObjectTableId;
+                            reqField.Tenant = tenant;
+                            reqField.IsImport = item.IsImport;
+                            reqField.IsExport = item.IsExport;
+                            reqField.ObjectFieldName = item.ObjectFieldName;
+
+                            reqField.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                             service.Update(reqField, true);
                         }
                     }
@@ -136,6 +158,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         public string ObjectfieldCode { get; set; }
         public string ObjectTableId { get; set; }
         public string ObjectFieldName { get; set; }
+        public bool IsImport { get; set; }
+        public bool IsExport { get; set; }
         public bool Active { get; set; }
     }
 }

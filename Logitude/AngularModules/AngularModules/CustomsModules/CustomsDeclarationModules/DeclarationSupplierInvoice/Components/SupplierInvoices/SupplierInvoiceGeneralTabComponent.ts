@@ -134,7 +134,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.IsAccumulationStateVisibile = true;
             this.IsNotForAccumaltionVisibile = true;
         }
-        this.CheckRequrierdFieldsForSend();
         //this.CurrentSession.SubscriptionAdd(
         //this.CurrentSession.SelectInvoiceItemEvent.subscribe((res) => {
         //    var item: SupplierInvoiceItemLine = this.ItemsSource.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
@@ -426,9 +425,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.oldIncoterm = this.EntityPM.IncotermCode;
         //this.InvoiceNumber = entityPM.InvoiceNumber;
         this.IsChecked = false;
-
-        if (this.declarationPM.Direction=="E" && FeatureLocator.HasFeaturePermession("Customs.Declaration", "EXPORTDECLARATIONPSCREEN"))
+         if (this.declarationPM.Direction=="E" && FeatureLocator.HasFeaturePermession("Customs.Declaration", "EXPORTDECLARATIONPSCREEN"))
             this.allowExport = true;
+        this.CheckRequrierdFieldsForSend();
 
 
         this.isNewEntity = IsNewEntity;
@@ -692,13 +691,18 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
 
     CheckRequrierdFieldsForSend() {
+        var isExport = false;
+        if (this.allowExport) {
+            isExport = true;
+        }
+
         var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.SupplierInvoice')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
-        customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
+        customsRequiredFieldListService.getAllFromCache(filters, isExport).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
-            requiredFields.forEach((field) => {
+             requiredFields.forEach((field) => {
                 var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
                 this.UIProperties.SetWarning(objectField.FieldName, 'Customs.SupplierInvoice', true);
             });
