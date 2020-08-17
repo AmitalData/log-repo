@@ -1422,17 +1422,25 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     }
 
     CheckRequrierdFieldsForSend() {
+        var isExport  = false;
+        if (this.EntityPM.Direction == 'E') {
+            isExport = true;
+        }
+
         var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.Declaration')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
-        customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
+        customsRequiredFieldListService.getAllFromCache(filters, isExport).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
                 var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
                 this.UIProperties.SetWarning(objectField.FieldName, 'Customs.Declaration', true);
             });
         });
+
+     
+
     }
 }
 
@@ -1451,7 +1459,21 @@ export class DeclarationExportRecipientModel extends BaseComponent {
             this.UIProperties.SetEnabled("RecipientIssueCountryCode", this.ObjectTableName, !this.Parent.IsDisplayOnly);
             this.UIProperties.SetEnabled("RecipientAddress", this.ObjectTableName, !this.Parent.IsDisplayOnly);
             this.UIProperties.SetEnabled("RecipientName", this.ObjectTableName, !this.Parent.IsDisplayOnly);
+
+            var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
+            var table = window.ObjectTables.filter(d => d.Name == 'Customs.DeclarationExportRecipient')[0];
+            var filters = new ApiQueryFilters();
+            filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
+            customsRequiredFieldListService.getAllFromCache(filters, true).subscribe((response: ServiceResponse) => {
+                var requiredFields = response.Result;
+                requiredFields.forEach((field) => {
+                    var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
+                    this.UIProperties.SetWarning(objectField.FieldName, 'Customs.DeclarationExportRecipient', true);
+                });
+            });
         });
+
+   
     }
 
     //#region Properties

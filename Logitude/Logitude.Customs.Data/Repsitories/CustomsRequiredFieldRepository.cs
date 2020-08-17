@@ -22,12 +22,12 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public List<CustomsRequiredField> GetCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant)
+        public List<CustomsRequiredField> GetCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant,string type= "A")
         {
             List<CustomsRequiredField> requiredFields;
 
             requiredFields = (from a in context.CustomsRequiredFields
-                              where a.ObjectTableId == ObjectTableId && a.Tenant == Tenant
+                              where a.ObjectTableId == ObjectTableId && a.Tenant == Tenant && ((type == "I" && a.IsImport == true)  || (type == "E" && a.IsExport==true) || type=="A")
                               select a).ToList();
             return requiredFields;
         }
