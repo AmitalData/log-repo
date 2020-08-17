@@ -1284,6 +1284,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             switch (args.EventTypeCode)
             {
+                case "WHED":
+                case "WEDE":
+                case "WHRD":
+                case "WRDE":
+                    {
+                        myResult = entityPM.WarehouseLegTerminalName;
+                        break;
+                    }
                 case "ORDR":
                 case "DDCU":
                 case "CCD":
