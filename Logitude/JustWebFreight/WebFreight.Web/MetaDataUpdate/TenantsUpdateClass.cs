@@ -844,6 +844,8 @@ namespace WebFreight.Web.MetaDataUpdate
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTablesToTenantZero");
             //updateClass.LoadObjectTablesMetadata(context);
 
+            updateClass.LoadEntityStatus();
+
             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
             if (runOldUpdateCode)
                 shipmentModelUpdateClass.LoadObjectsTenantZero(context);
@@ -851,9 +853,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 shipmentModelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
 
             performanceTimerLogger.LogMessage("Generated" + ",ShipmentsModelUpdateClass");
-
-
-
 
             MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
             if (runOldUpdateCode)
