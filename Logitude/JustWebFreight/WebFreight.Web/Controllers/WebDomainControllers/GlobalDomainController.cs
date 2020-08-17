@@ -548,7 +548,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         IsTrial = entityPM.IsTrial,
                         ManageLicencesPerUser = entityPM.ManageLicencesPerUser,
                         ManagesRegisteredAgent = entityPM.ManagesRegisteredAgent,
-                        NumberOfUsers = entityPM.NumberOfUsers,
+                        NumberOfUsers = entityPM.NumberOfUsers == null ? 0 : entityPM.NumberOfUsers.Value,
                         NumberOfFreeUsers = entityPM.FreeUsers == null ? 0 : entityPM.FreeUsers.Value,
                         PaidDaysLeft = entityPM.PaidDaysLeft,
                         PaymentFailure = entityPM.PaymentFailure,

@@ -436,7 +436,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
                     if (tenantManagement != null)
                     {
-                        myResult.LicensesCount = tenantManagement.NumberOfUsers;                        
+                        myResult.LicensesCount = tenantManagement.NumberOfUsers == null ? 0 : tenantManagement.NumberOfUsers.Value;                        
                     }
                     scope.Complete();
                 }
