@@ -124,19 +124,9 @@ export class CargoTrackingShipmentPM {
     public set PickupDone(newValue: boolean) { if (this.pickupDone != newValue) { this.pickupDone = newValue; this.MarkAsDirty("PickupDone"); } }
        
 	 
-    private clearanceDone: boolean;
-    public get ClearanceDone() { return this.clearanceDone; }
-    public set ClearanceDone(newValue: boolean) { if (this.clearanceDone != newValue) { this.clearanceDone = newValue; this.MarkAsDirty("ClearanceDone"); } }
-       
-	 
     private pickupDate: Date;
     public get PickupDate() { return this.pickupDate; }
     public set PickupDate(newValue: Date) { if (this.pickupDate != newValue) { this.pickupDate = newValue; this.MarkAsDirty("PickupDate"); } }
-       
-	 
-    private clearanceDate: Date;
-    public get ClearanceDate() { return this.clearanceDate; }
-    public set ClearanceDate(newValue: Date) { if (this.clearanceDate != newValue) { this.clearanceDate = newValue; this.MarkAsDirty("ClearanceDate"); } }
        
 	 
     private createDate: Date;
@@ -172,11 +162,6 @@ export class CargoTrackingShipmentPM {
     private pickupEstimationDate: Date;
     public get PickupEstimationDate() { return this.pickupEstimationDate; }
     public set PickupEstimationDate(newValue: Date) { if (this.pickupEstimationDate != newValue) { this.pickupEstimationDate = newValue; this.MarkAsDirty("PickupEstimationDate"); } }
-       
-	 
-    private fromWarehouseDone: boolean;
-    public get FromWarehouseDone() { return this.fromWarehouseDone; }
-    public set FromWarehouseDone(newValue: boolean) { if (this.fromWarehouseDone != newValue) { this.fromWarehouseDone = newValue; this.MarkAsDirty("FromWarehouseDone"); } }
        
 	 
     private fromWarehouseDate: Date;
@@ -277,6 +262,11 @@ export class CargoTrackingShipmentPM {
     private deliveredEstimationDate: Date;
     public get DeliveredEstimationDate() { return this.deliveredEstimationDate; }
     public set DeliveredEstimationDate(newValue: Date) { if (this.deliveredEstimationDate != newValue) { this.deliveredEstimationDate = newValue; this.MarkAsDirty("DeliveredEstimationDate"); } }
+       
+	 
+    private fromWarehouseDone: boolean;
+    public get FromWarehouseDone() { return this.fromWarehouseDone; }
+    public set FromWarehouseDone(newValue: boolean) { if (this.fromWarehouseDone != newValue) { this.fromWarehouseDone = newValue; this.MarkAsDirty("FromWarehouseDone"); } }
        
 	 
 

@@ -480,29 +480,6 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool? clearanceDone ;
-	  	  
-       
-	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool? ClearanceDone  
-	   {
-	    
-	     get
-		{
-		   return clearanceDone;
-		 }
-		 set
-		 {
-		   if(clearanceDone != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClearanceDone",OldValue=clearanceDone,NewValue=value,PropertyType="bool?"};
-		    NotifyPropertyChanged(values);
-		   clearanceDone=value;
-		   }
-			
-		 }
-	   }
 	  private DateTime? pickupDate ;
 	  	  
        
@@ -522,29 +499,6 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PickupDate",OldValue=pickupDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   pickupDate=value;
-		   }
-			
-		 }
-	   }
-	  private DateTime? clearanceDate ;
-	  	  
-       
-	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime? ClearanceDate  
-	   {
-	    
-	     get
-		{
-		   return clearanceDate;
-		 }
-		 set
-		 {
-		   if(clearanceDate != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClearanceDate",OldValue=clearanceDate,NewValue=value,PropertyType="DateTime?"};
-		    NotifyPropertyChanged(values);
-		   clearanceDate=value;
 		   }
 			
 		 }
@@ -706,29 +660,6 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PickupEstimationDate",OldValue=pickupEstimationDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   pickupEstimationDate=value;
-		   }
-			
-		 }
-	   }
-	  private bool? fromWarehouseDone ;
-	  	  
-       
-	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool? FromWarehouseDone  
-	   {
-	    
-	     get
-		{
-		   return fromWarehouseDone;
-		 }
-		 set
-		 {
-		   if(fromWarehouseDone != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromWarehouseDone",OldValue=fromWarehouseDone,NewValue=value,PropertyType="bool?"};
-		    NotifyPropertyChanged(values);
-		   fromWarehouseDone=value;
 		   }
 			
 		 }
@@ -1189,6 +1120,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeliveredEstimationDate",OldValue=deliveredEstimationDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   deliveredEstimationDate=value;
+		   }
+			
+		 }
+	   }
+	  private bool? fromWarehouseDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? FromWarehouseDone  
+	   {
+	    
+	     get
+		{
+		   return fromWarehouseDone;
+		 }
+		 set
+		 {
+		   if(fromWarehouseDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromWarehouseDone",OldValue=fromWarehouseDone,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   fromWarehouseDone=value;
 		   }
 			
 		 }

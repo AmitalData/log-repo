@@ -88,7 +88,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipments",
                 Main_CT_TableName = "CargoTrackingShipments",
-                CT_FieldsDBName = "Tenant,IsMainRecord,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,PickupEstimationDate,FromWarehouseDone,FromWarehouseNotes,DepartureDate,DepartureEstimationDate,ClearanceDone,ClearanceDate,FromWarehouseEstimationDate,FromWarehouseDate,DepartureDone,ArrivalDone,ToWarehouseDate,ToWarehouseEstimationDate,DeliveredEstimationDate,DeliveredDone,DeliveredDate,ArrivalEstimationDate,ToWarehouseDone,ArrivalDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate,ToWarehouseNotes,CustomsPaymentDone,CustomsPaymentDate,CreateDate,SecurityKey,ConsigneeName,ShipperName,CustomerReference",
+                CT_FieldsDBName = "Tenant,IsMainRecord,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,PickupEstimationDate,FromWarehouseDone,FromWarehouseNotes,DepartureDate,DepartureEstimationDate,ClearanceDone,ClearanceDate,FromWarehouseEstimationDate,FromWarehouseDate,DepartureDone,ArrivalDone,ToWarehouseDate,ToWarehouseEstimationDate,DeliveredEstimationDate,DeliveredDone,DeliveredDate,ArrivalEstimationDate,ToWarehouseDone,ArrivalDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ToWarehouseNotes,CustomsPaymentDone,CustomsPaymentDate,CreateDate,SecurityKey,ConsigneeName,ShipperName,CustomerReference",
                 Condition1 = " ((ShipmentLevelCode ='D' or ShipmentLevelCode ='H') and CustomFileId is not null)",
                 Condition2 = " ((ShipmentLevelCode !='D' and ShipmentLevelCode !='H') or CustomFileId is null)",
                 Pre_TableName = "Pre_CargoTrackingShipments",
@@ -816,7 +816,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             "[Volume] FLOAT NULL,"+
                             "[PickupDone] BIT NULL,"+
                             "[FromWarehouseDone] BIT NULL," +
-                            "[ClearanceDone] BIT NULL," +
                             "[DepartureDone] BIT NULL," +
                             "[ArrivalDone] BIT NULL," +
                             "[ToWarehouseDate] DATETIME NULL," +
@@ -833,7 +832,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             "[FromWarehouseEstimationDate] DATETIME NULL," +
                             "[ToWarehouseEstimationDate] DATETIME NULL," +
                             "[FromWarehouseDate] DATETIME NULL," +
-                            "[ClearanceDate] DATETIME NULL," +
                             "[DepartureDate] DATETIME NULL," +
                             "[DepartureEstimationDate] DATETIME NULL," +
                             "[CreateDate] DATETIME NOT NULL," +

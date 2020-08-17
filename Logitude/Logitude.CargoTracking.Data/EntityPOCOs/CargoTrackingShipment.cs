@@ -65,12 +65,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public double? Volume { get; set; }
         [Column("PickupDone")]
 	    public bool? PickupDone { get; set; }
-        [Column("ClearanceDone")]
-	    public bool? ClearanceDone { get; set; }
         [Column("PickupDate")]
 	    public DateTime? PickupDate { get; set; }
-        [Column("ClearanceDate")]
-	    public DateTime? ClearanceDate { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("SecurityKey")]
@@ -85,10 +81,10 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public bool IsMainRecord { get; set; }
         [Column("PickupEstimationDate")]
 	    public DateTime? PickupEstimationDate { get; set; }
-        [Column("FromWarehouseDone")]
-	    public bool? FromWarehouseDone { get; set; }
         [Column("FromWarehouseDate")]
 	    public DateTime? FromWarehouseDate { get; set; }
+        [Column("FromWarehouseEstimationDate")]
+	    public DateTime? FromWarehouseEstimationDate { get; set; }
         [Column("FromWarehouseNotes")]
 	    public string FromWarehouseNotes { get; set; }
         [Column("DepartureDone")]
@@ -125,6 +121,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public DateTime? DeliveredDate { get; set; }
         [Column("DeliveredEstimationDate")]
 	    public DateTime? DeliveredEstimationDate { get; set; }
+        [Column("FromWarehouseDone")]
+	    public bool? FromWarehouseDone { get; set; }
     }
 }
 	 

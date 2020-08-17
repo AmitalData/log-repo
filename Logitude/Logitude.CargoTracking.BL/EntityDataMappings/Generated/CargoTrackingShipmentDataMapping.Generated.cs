@@ -42,9 +42,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         GrossWeight, 
 	         Volume, 
 	         PickupDone, 
-	         ClearanceDone, 
 	         PickupDate, 
-	         ClearanceDate, 
 	         CreateDate, 
 	         SecurityKey, 
 	         ConsigneeName, 
@@ -52,8 +50,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         CustomerReference, 
 	         IsMainRecord, 
 	         PickupEstimationDate, 
-	         FromWarehouseDone, 
 	         FromWarehouseDate, 
+	         FromWarehouseEstimationDate, 
 	         FromWarehouseNotes, 
 	         DepartureDone, 
 	         DepartureDate, 
@@ -71,7 +69,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ClearanceDate, 
 	         DeliveredDone, 
 	         DeliveredDate, 
-	         DeliveredEstimationDate,
+	         DeliveredEstimationDate, 
+	         FromWarehouseDone,
 	      }
 
 
@@ -98,9 +97,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         GrossWeight, 
 	         Volume, 
 	         PickupDone, 
-	         ClearanceDone, 
 	         PickupDate, 
-	         ClearanceDate, 
 	         CreateDate, 
 	         SecurityKey, 
 	         ConsigneeName, 
@@ -108,7 +105,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         CustomerReference, 
 	         IsMainRecord, 
 	         PickupEstimationDate, 
-	         FromWarehouseDone, 
 	         FromWarehouseDate, 
 	         FromWarehouseEstimationDate, 
 	         FromWarehouseNotes, 
@@ -128,7 +124,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ClearanceDate, 
 	         DeliveredDone, 
 	         DeliveredDate, 
-	         DeliveredEstimationDate,
+	         DeliveredEstimationDate, 
+	         FromWarehouseDone,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -232,19 +229,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 				entityPOCO.PickupDone = entityPM.PickupDone;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClearanceDone))
-            {
-				entityPOCO.ClearanceDone = entityPM.ClearanceDone;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PickupDate))
             {
 				entityPOCO.PickupDate = entityPM.PickupDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClearanceDate))
-            {
-				entityPOCO.ClearanceDate = entityPM.ClearanceDate;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
@@ -282,14 +269,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 				entityPOCO.PickupEstimationDate = entityPM.PickupEstimationDate;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromWarehouseDone))
-            {
-				entityPOCO.FromWarehouseDone = entityPM.FromWarehouseDone;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromWarehouseDate))
             {
 				entityPOCO.FromWarehouseDate = entityPM.FromWarehouseDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromWarehouseEstimationDate))
+            {
+				entityPOCO.FromWarehouseEstimationDate = entityPM.FromWarehouseEstimationDate;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromWarehouseNotes))
@@ -380,6 +367,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveredEstimationDate))
             {
 				entityPOCO.DeliveredEstimationDate = entityPM.DeliveredEstimationDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromWarehouseDone))
+            {
+				entityPOCO.FromWarehouseDone = entityPM.FromWarehouseDone;
 			}
 			}
 
@@ -486,19 +478,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.PickupDone = entityPOCO.PickupDone;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClearanceDone))
-            {
-					entityPM.ClearanceDone = entityPOCO.ClearanceDone;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PickupDate))
             {
 					entityPM.PickupDate = entityPOCO.PickupDate;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClearanceDate))
-            {
-					entityPM.ClearanceDate = entityPOCO.ClearanceDate;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateDate))
@@ -536,14 +518,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.PickupEstimationDate = entityPOCO.PickupEstimationDate;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromWarehouseDone))
-            {
-					entityPM.FromWarehouseDone = entityPOCO.FromWarehouseDone;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromWarehouseDate))
             {
 					entityPM.FromWarehouseDate = entityPOCO.FromWarehouseDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromWarehouseEstimationDate))
+            {
+					entityPM.FromWarehouseEstimationDate = entityPOCO.FromWarehouseEstimationDate;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromWarehouseNotes))
@@ -634,6 +616,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeliveredEstimationDate))
             {
 					entityPM.DeliveredEstimationDate = entityPOCO.DeliveredEstimationDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromWarehouseDone))
+            {
+					entityPM.FromWarehouseDone = entityPOCO.FromWarehouseDone;
             }
 
 		}
@@ -737,19 +724,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.PickupDone = entityPM.PickupDone;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClearanceDone))
-            {
-                oldEntityPM.ClearanceDone = entityPM.ClearanceDone;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PickupDate))
             {
                 oldEntityPM.PickupDate = entityPM.PickupDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClearanceDate))
-            {
-                oldEntityPM.ClearanceDate = entityPM.ClearanceDate;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
@@ -787,14 +764,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.PickupEstimationDate = entityPM.PickupEstimationDate;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromWarehouseDone))
-            {
-                oldEntityPM.FromWarehouseDone = entityPM.FromWarehouseDone;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromWarehouseDate))
             {
                 oldEntityPM.FromWarehouseDate = entityPM.FromWarehouseDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromWarehouseEstimationDate))
+            {
+                oldEntityPM.FromWarehouseEstimationDate = entityPM.FromWarehouseEstimationDate;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromWarehouseNotes))
@@ -885,6 +862,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveredEstimationDate))
             {
                 oldEntityPM.DeliveredEstimationDate = entityPM.DeliveredEstimationDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromWarehouseDone))
+            {
+                oldEntityPM.FromWarehouseDone = entityPM.FromWarehouseDone;
             }
 			
 		}

@@ -141,19 +141,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ClearanceDone"
-    Type="bit">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="PickupDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ClearanceDate"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -205,13 +193,13 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="FromWarehouseDone"
-    Type="bit">
+    Name="FromWarehouseDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="FromWarehouseDate"
+    Name="FromWarehouseEstimationDate"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -323,6 +311,12 @@
   <Column
     Name="DeliveredEstimationDate"
     Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FromWarehouseDone"
+    Type="bit">
     <Constraints
       Nullable="true" />
   </Column>

@@ -28,16 +28,13 @@ export class CargoTrackingShipmentList {
 	GrossWeight: number;
 	Volume: number;
 	PickupDone: boolean;
-	ClearanceDone: boolean;
 	PickupDate: Date;
-	ClearanceDate: Date;
 	CreateDate: Date;
 	SecurityKey: string;
 	ConsigneeName: string;
 	ShipperName: string;
 	CustomerReference: string;
 	PickupEstimationDate: Date;
-	FromWarehouseDone: boolean;
 	FromWarehouseDate: Date;
 	FromWarehouseEstimationDate: Date;
 	FromWarehouseNotes: string;
@@ -58,6 +55,7 @@ export class CargoTrackingShipmentList {
 	DeliveredDone: boolean;
 	DeliveredDate: Date;
 	DeliveredEstimationDate: Date;
+	FromWarehouseDone: boolean;
 	
 }
  

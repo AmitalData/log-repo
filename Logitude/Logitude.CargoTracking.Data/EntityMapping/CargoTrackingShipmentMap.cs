@@ -63,11 +63,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.PickupDone).HasColumnName("PickupDone");
 
-            this.Property(t => t.ClearanceDone).HasColumnName("ClearanceDone");
-
             this.Property(t => t.PickupDate).HasColumnName("PickupDate");
-
-            this.Property(t => t.ClearanceDate).HasColumnName("ClearanceDate");
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 
@@ -83,9 +79,9 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.PickupEstimationDate).HasColumnName("PickupEstimationDate");
 
-            this.Property(t => t.FromWarehouseDone).HasColumnName("FromWarehouseDone");
-
             this.Property(t => t.FromWarehouseDate).HasColumnName("FromWarehouseDate");
+
+            this.Property(t => t.FromWarehouseEstimationDate).HasColumnName("FromWarehouseEstimationDate");
 
             this.Property(t => t.FromWarehouseNotes).HasColumnName("FromWarehouseNotes").HasMaxLength(32).IsUnicode(true);
 
@@ -122,6 +118,8 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.DeliveredDate).HasColumnName("DeliveredDate");
 
             this.Property(t => t.DeliveredEstimationDate).HasColumnName("DeliveredEstimationDate");
+
+            this.Property(t => t.FromWarehouseDone).HasColumnName("FromWarehouseDone");
         }
     }
 }

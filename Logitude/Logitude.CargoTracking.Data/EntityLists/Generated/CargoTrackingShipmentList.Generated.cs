@@ -55,11 +55,7 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [DataMember]
        public bool? PickupDone  { get; set; }
        [DataMember]
-       public bool? ClearanceDone  { get; set; }
-       [DataMember]
        public DateTime? PickupDate  { get; set; }
-       [DataMember]
-       public DateTime? ClearanceDate  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
@@ -72,8 +68,6 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string CustomerReference  { get; set; }
        [DataMember]
        public DateTime? PickupEstimationDate  { get; set; }
-       [DataMember]
-       public bool? FromWarehouseDone  { get; set; }
        [DataMember]
        public DateTime? FromWarehouseDate  { get; set; }
        [DataMember]
@@ -114,6 +108,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public DateTime? DeliveredDate  { get; set; }
        [DataMember]
        public DateTime? DeliveredEstimationDate  { get; set; }
+       [DataMember]
+       public bool? FromWarehouseDone  { get; set; }
    }
 
 }
