@@ -1,25 +1,28 @@
 import { Resolvers } from "../../../Resolvers/Resolvers";
-import { ShipmentScenarios } from '../../../Scenarios/ShipmentScenarios';
 import { NewActivitiesScenarios } from '../../../Scenarios/CRMScenarios/NewActivitiesScenarios';
-
 import { LoginComp } from "../../../../Login/Login.po";
 
 describe('Activities', () => {
     let login: LoginComp = new LoginComp();
-    let scenarios: NewShipmentWizardScenarios = new NewShipmentWizardScenarios();
-    //let scenarios: ShipmentScenarios = new ShipmentScenarios();
+    let senarios: NewActivitiesScenarios = new NewActivitiesScenarios();
 
 
     beforeEach(() => {
 
-        Resolvers.MainMenuResolver.Selector('#GeneralMHOperations').Select();
-        Resolvers.MainMenuResolver.Selector('#SHIP').Select();
+        Resolvers.MainMenuResolver.Selector('#GeneralMHCRM').Select();
+        Resolvers.MainMenuResolver.Selector('#CRMACT').Select();
 
     });
 
-    it('Test New Shipment Wizard', () => {
-        scenarios.RunScenario('D', 'A', 'E');
+    it('Test New Activities', () => {
+        
+        senarios.RunScenario('T');
+    
 
+      //  Resolvers.ToggleButtonResolver.Selector('#NEWACTIVITY').SelectByIndex(0);
+      //  Resolvers.WindowResolver.ShouldBeOpend();
+
+   
         //scenarios.CreateWizardShipment('D', 'E', 'A');
 
         //scenarios.CreateWizardShipment('D', 'E', 'A');
