@@ -3,6 +3,7 @@ using System.Linq;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
+using System;
 
 namespace Simplog.Data.ShipmentsModel.Repositories
 {
@@ -106,6 +107,33 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             throw new System.NotImplementedException();
         }
 
+        public string GetContainersNumbersByShipmentIdAndTenant(string id, int tenant)
+        {
+            string containerNumbers = "";
+            List<ShipmentPackage> shipmentPackages = (from a in context.ShipmentPackages
+                                                      where a.Tenant == tenant && a.ShipmentId == id
+                                                      select a).ToList();
+            string myContainersNumbers = null;
+            foreach (ShipmentPackage packagePM in shipmentPackages)
+            {
+                if (string.IsNullOrEmpty(myContainersNumbers))
+                {
+                    myContainersNumbers = packagePM.ContainerNumber;
+                }
 
+                else
+                {
+                    myContainersNumbers += ", " + packagePM.ContainerNumber;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(myContainersNumbers) && myContainersNumbers.Length > 1000)
+            {
+                myContainersNumbers = myContainersNumbers.Substring(0, 1000);
+            }
+
+            containerNumbers = myContainersNumbers;
+            return containerNumbers;
+        }
     }
 }

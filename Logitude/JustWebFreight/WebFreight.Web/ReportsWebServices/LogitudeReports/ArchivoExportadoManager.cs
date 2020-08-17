@@ -34,6 +34,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private IInvoiceContext myInvoiceContext;
         private ICommonDataContext myCommonContext;
         private IShipmentsContext myShipmentsContext;
+        private ShipmentPackageRepository shipmentPackageRepository;
+
         public ArchivoExportadoManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -41,6 +43,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             myInvoiceContext = InvoiceContext.GetContext(tenant);
             myCommonContext = CommonDataContext.GetContext(tenant);
             myShipmentsContext = ShipmentsContext.GetContext(tenant);
+            shipmentPackageRepository = new ShipmentPackageRepository(myShipmentsContext);
 
             AccountingSetting myAccountingSetting = (from d in myCommonContext.AccountingSettings where d.Id == tenant select d).FirstOrDefault();
             if (myAccountingSetting != null)
@@ -242,6 +245,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.Salesman = myShipment.SalesmanUserName;
                             myRecord.Direction = myShipment.DirectionName;
                             myRecord.House = myShipment.House;
+                            myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
 
                             if (!string.IsNullOrEmpty(myShipment.BranchId))
                             {
