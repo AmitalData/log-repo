@@ -333,10 +333,12 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\WeightUnitStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CodePropertiesMapping\IncotermCodePropertiesMapping.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AgentSharedManifestCustomFilter.cs" />
+    <Compile Include="CommonDataModel\CustomFilters\CardSearchFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AccountingPartnerCustomFilter.cs" />
     <Compile Include="CommonDataModel\EntityLists\AddressTypeList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\CardSearchList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CarrierAreasPortList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CarrierAreaList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CustomerOpenFilesAmountList.cs" />
@@ -350,6 +352,7 @@
     <Compile Include="CommonDataModel\EntityLists\WarehouseWeightMeasurementList.cs" />
     <Compile Include="CommonDataModel\EntityLists\WarehouseWeightRoundingList.cs" />
     <Compile Include="CommonDataModel\EntityOtherServices\MexicanCountryCities.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\CardSearchPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CarrierAreasPortPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CarrierAreaPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CardContactAdditionalServicePM.cs" />
@@ -364,6 +367,7 @@
     <Compile Include="CommonDataModel\EntityPMs\UserLastSettingsPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\WarehouseStoragePricingPM.cs" />
     <Compile Include="CommonDataModel\EntityQueries\AddressTypeQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\CardSearchQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CarrierAreasPortQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CarrierAreaQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CardContactAdditionalServiceQuery.cs" />
@@ -380,6 +384,7 @@
     <Compile Include="CommonDataModel\EntityQueries\WarehouseStoragePricingQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\WarehouseWeightMeasurementQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\WarehouseWeightRoundingQuery.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\CardSearchMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreasPortMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreaMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardContactAdditionalServiceMapping.cs" />
@@ -392,6 +397,7 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\AccountingPartnerMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\UserLastSettingsMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\WarehouseStoragePricingMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\CardSearchService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CarrierAreaService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerOpenFilesAmountService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />

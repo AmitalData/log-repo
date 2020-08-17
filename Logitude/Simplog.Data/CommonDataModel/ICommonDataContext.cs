@@ -230,6 +230,10 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<WarehouseWeightRounding> WarehouseWeightRoundings { get; set; }
         IDbSet<WarehouseStoragePricing> WarehouseStoragePricings { get; set; }
 
+        IDbSet<CardSearch> CardSearchs { get; set; }
+
+
+
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();
