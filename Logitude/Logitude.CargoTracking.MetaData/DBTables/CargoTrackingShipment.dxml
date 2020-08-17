@@ -21,7 +21,7 @@
   <Column
     Name="EntityId"
     Type="varchar"
-    Size="16">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -191,6 +191,12 @@
     Size="101">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="IsMainRecord"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="EntityType"

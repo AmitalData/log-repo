@@ -81,6 +81,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string ShipperName { get; set; }
         [Column("CustomerReference")]
 	    public string CustomerReference { get; set; }
+        [Column("IsMainRecord")]
+	    public bool IsMainRecord { get; set; }
     }
 }
 	 
