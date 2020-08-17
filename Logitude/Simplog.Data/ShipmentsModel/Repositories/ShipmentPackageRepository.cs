@@ -7,7 +7,7 @@ using System;
 
 namespace Simplog.Data.ShipmentsModel.Repositories
 {
-    public class ShipmentPackageRepository: IRepository<ShipmentPackage>
+    public class ShipmentPackageRepository : IRepository<ShipmentPackage>
     {
         IShipmentsContext shipmentContext;
 
@@ -18,7 +18,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public ShipmentPackageRepository()
         {
-            shipmentContext = new  ShipmentsContext();
+            shipmentContext = new ShipmentsContext();
         }
 
         public ShipmentPackageRepository(int tenant)
@@ -29,7 +29,8 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public IQueryable<ShipmentPackage> GetShipmentPackages(int tenant)
         {
             return (from record in context.ShipmentPackages
-                    where record.Tenant == tenant select record);
+                    where record.Tenant == tenant
+                    select record);
         }
 
         public ShipmentPackage GetSingleShipmentPackage(string id, int tenant)
@@ -96,7 +97,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             context.SaveChanges();
         }
-       
+
         public List<ShipmentPackage> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
@@ -109,30 +110,9 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public string GetContainersNumbersByShipmentIdAndTenant(string id, int tenant)
         {
-            string containerNumbers = "";
-            List<ShipmentPackage> shipmentPackages = (from a in context.ShipmentPackages
-                                                      where a.Tenant == tenant && a.ShipmentId == id
-                                                      select a).ToList();
-            string myContainersNumbers = null;
-            foreach (ShipmentPackage packagePM in shipmentPackages)
-            {
-                if (string.IsNullOrEmpty(myContainersNumbers))
-                {
-                    myContainersNumbers = packagePM.ContainerNumber;
-                }
-
-                else
-                {
-                    myContainersNumbers += ", " + packagePM.ContainerNumber;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(myContainersNumbers) && myContainersNumbers.Length > 1000)
-            {
-                myContainersNumbers = myContainersNumbers.Substring(0, 1000);
-            }
-
-            containerNumbers = myContainersNumbers;
+            string containerNumbers = string.Join(",", (from a in context.ShipmentPackages
+                                                        where a.Tenant == tenant && a.ShipmentId == id && a.ContainerNumber != null
+                                                        select a.ContainerNumber));
             return containerNumbers;
         }
     }
