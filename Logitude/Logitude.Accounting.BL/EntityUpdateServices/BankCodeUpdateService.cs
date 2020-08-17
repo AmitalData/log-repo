@@ -11,6 +11,8 @@ using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.Accounting.BL.EntityQueryServices;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -25,6 +27,24 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnUpdating(BankCodePM entityPM)
         {
             entityPM.SearchFields = entityPM.Code + "," + entityPM.EnglishName + "," + entityPM.LocalName;
+            if(entityPM.ChangeSetOp == ChangeSetOperation.Insert && entityPM.Tenant == 0)
+            {
+                
+                ImageDetailRepository imageDetailRepository = new ImageDetailRepository(entityPM.Tenant);
+                string extension = imageDetailRepository.GetImageExtensionbyId(entityPM.Tenant, entityPM.LogoId);
+                Uploader uploaderService = new Uploader();
+                byte[] filedata = uploaderService.DownloadFile(filename, documentExtension, fileLocation, tenant);
+
+                if (filedata != null)
+                {
+                    if (filename.Contains("logo") || type == "Base64")
+                    {
+                        result = "data:image/" + documentExtension + ";base64," + Convert.ToBase64String(filedata);
+                    }
+                    else result = UTF8Encoding.UTF8.GetString(filedata, 0, filedata.Length);
+                }
+
+            }
         }
 
         protected override void Trace(BankCodePM entityPM, BankCode entityPOCO, string changesXml)

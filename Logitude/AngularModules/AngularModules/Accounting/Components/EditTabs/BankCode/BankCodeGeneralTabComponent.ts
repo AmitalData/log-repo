@@ -5,7 +5,6 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {BankCodePM} from '../../../EntityPMs/BankCodePM';
-import {BankCodePMService} from '../../../Services/StandardPMs/BankCodePM';
 
 @Component({
     
@@ -18,7 +17,7 @@ export class BankCodeGeneralTabComponent extends BaseComponent {
     public DataContext = this;
     EntityId: string;
     ImageId: string;
-    bankCodePMService:BankCodePMService= new BankCodePMService();
+
     constructor(private entityArgs: EntityArgs) {
         super();
         
