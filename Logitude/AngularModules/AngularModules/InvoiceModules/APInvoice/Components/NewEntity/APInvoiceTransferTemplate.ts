@@ -12,7 +12,6 @@ import {CardList} from '../../../../Common/EntityLists/CardList';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {VatTypeListService} from '../../../../Common/Services/StandardLists/VatTypeListService';
 import {VatTypeList} from '../../../../Common/EntityLists/VatTypeList';
-import {PaymentTermListService} from '../../../../Common/Services/StandardLists/PaymentTermListService';
 import {PaymentTermList} from '../../../../Common/EntityLists/PaymentTermList';
 import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import {ChargesTypeList} from '../../../../Common/EntityLists/ChargesTypeList';
@@ -250,12 +249,9 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
         this.InitalizeProperties();
         this.SetUIProperties();
 
-        this.GetEditingFieldName();
-        this.GetDescriptionTitle();
-        this.GetDescriptionValue();
-        this.GetDescriptionHelp();
-        this.GetDescriptionHelpVisibility();
-        this.FillFieldsData();
+        if (this.father.IsAutoUpdatingFields && this.IsTransferredEnabled) {
+            this.FillFieldsData();
+        }
     }
 
     SetUIProperties() {
@@ -426,65 +422,38 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
     }
 
     private FillFieldsData() {
-        if (this.IsTransferredEnabled) {
-            if (AppTool.IsNullOrEmpty(this.EditingFieldValue)) {
-                switch (this.Code) {
-                    case "BLTO":
-                        {
-                            this.GetBillToData();
-                            break;
-                        }
+        if (AppTool.IsNullOrEmpty(this.EditingFieldValue)) {
+            switch (this.Code) {
+                case "BLTO":
+                    {
+                        this.GetCardData();
+                        break;
+                    }
 
-                    case "CURR":
-                        {
-                            this.GetCurrencyData();
-                            break;
-                        }
+                case "CURR":
+                    {
+                        this.GetCurrencyData();
+                        break;
+                    }
 
-                    case "VAT":
-                        {
-                            this.GetVatTypeData();
-                            break;
-                        }
-                    case "TAX":
-                        {
-                            if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "HV" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "RH") {
-                                this.GetAccountingSettingData();
-                            }
-                            else {
-                                this.GetVatTypeData();
-                            }
-                            break;
-                        }
-                    case "Line": {
+                case "Line":
+                    {
                         this.GetChargesTypeData();
                         break;
                     }
-                    case "PYTM":
-                        {
-                            this.GetPaymentTermData();
-                            break;
-                        }
-                    case "MultipleLine":
-                        {
-                            break;
+
+                case "TAX":
+                    {
+                        if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "HV" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "RH") {
+                            this.GetAccountingSettingData();
                         }
 
-                    case "MultipleVAT":
-                        {
-                            break;
+                        else {
+                            this.GetVatTypeData();
                         }
 
-                    case "MultipleTAX":
-                        {
-
-                            break;
-                        }
-                    default: {
-                       
                         break;
                     }
-                }
             }
         }
     }
@@ -528,17 +497,7 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
             if (!response.HasError) {
                 var vat: VatTypeList = response.Result;
                 if (vat != null) {
-                    this.EditingFieldValue = vat.ExternalTAXItemId;                    
-                }
-            }
-        });
-    }
-    private GetPaymentTermData() {
-        this.PaymentTermListService.getSingle(this.invoicePM.PaymentTermId).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                var payment: PaymentTermList = response.Result;
-                if (payment != null) {
-                    this.EditingFieldValue = payment.ExternalId;
+                    this.EditingFieldValue = vat.PayablesExternalId;                    
                 }
             }
         });
@@ -549,7 +508,7 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
                 var charge: ChargesTypeList = response.Result;
                 if (charge != null) {
                     if (charge.AccountingVATSplit) {
-                        this.GetChargeTypeAccountingList();
+                        this.GetChargesTypeDataBySplit();
                     }
                     else {
                         this.EditingFieldValue = charge.PayableDebitAccount;
@@ -558,8 +517,8 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
             }
         });
     }
-    private GetChargeTypeAccountingList() {
-        this.InvoiceDomainService.GetSingleChargeTypeAccountingList(this.invoiceLinePM.ChargesTypeId, this.invoiceLinePM.VatTypeId).subscribe((respo: ServiceResponse) => {
+    private GetChargesTypeDataBySplit() {
+        this.invoiceDomainService.GetSingleChargeTypeAccountingList(this.invoiceLinePM.ChargesTypeId, this.invoiceLinePM.VatTypeId).subscribe((respo: ServiceResponse) => {
             if (!respo.HasError) {
                 var list: ChargeTypeAccountingList = respo.Result;
                 if (list != null) {

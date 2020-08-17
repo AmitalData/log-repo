@@ -20,8 +20,7 @@ import {InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainS
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ARInvoicePMService} from '../../../../Invoice/Services/StandardPMs/ARInvoicePMService';
 
-@Component({
-    
+@Component({   
     templateUrl: './ARInvoiceTransferTemplate.html',
 })
 
