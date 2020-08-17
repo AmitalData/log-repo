@@ -1,4 +1,4 @@
-﻿
+
 
 
 <div class="TableHolder">
@@ -64,6 +64,7 @@
                         </td>
                         <td><div></div></td>
                     </tr>
+                 
                     <tr></tr>
                 </table>
 
@@ -74,6 +75,12 @@
             <td>
                 <table>
                     <!-- Logo -->
+                    <tr class="FormFieldRow"><td></td>
+                                             <td>
+                                                 <button class="Button" (click)="RetrieveDefaultClicked()">Retrieve Default</button>
+
+                                             </td>
+                    </tr>
                     <tr class="FormFieldRow">
                         <td style="width:70px; vertical-align:top">
                             <LogLabel [ObjectFieldName]="'LogoId'" [ObjectTableName]="ObjectTableName"

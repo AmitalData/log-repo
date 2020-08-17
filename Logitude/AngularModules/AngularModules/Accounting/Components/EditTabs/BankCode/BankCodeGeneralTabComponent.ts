@@ -1,11 +1,11 @@
-﻿
+
 import {Component}  from '@angular/core';
 
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {BankCodePM} from '../../../EntityPMs/BankCodePM';
-
+import {BankCodePMService} from '../../../Services/StandardPMs/BankCodePM';
 
 @Component({
     
@@ -18,6 +18,7 @@ export class BankCodeGeneralTabComponent extends BaseComponent {
     public DataContext = this;
     EntityId: string;
     ImageId: string;
+    bankCodePMService:BankCodePMService= new BankCodePMService();
     constructor(private entityArgs: EntityArgs) {
         super();
         
@@ -87,5 +88,11 @@ export class BankCodeGeneralTabComponent extends BaseComponent {
         this.ImageId = code;
         this.EntityPM.LogoId = code;
     }
+
+
+RetrieveDefaultClicked(){
+
+
+}
 
 }
