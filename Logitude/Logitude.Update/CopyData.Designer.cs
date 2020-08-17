@@ -133,7 +133,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(617, 67);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 13);
+            this.label2.Size = new System.Drawing.Size(68, 13);
             this.label2.TabIndex = 8;
             this.label2.Text = "From Tenant";
             // 
@@ -149,7 +149,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(617, 103);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 13);
+            this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 10;
             this.label3.Text = "To Tenant";
             // 
@@ -221,9 +221,9 @@
             this.lblDestConn.AutoSize = true;
             this.lblDestConn.Location = new System.Drawing.Point(15, 73);
             this.lblDestConn.Name = "lblDestConn";
-            this.lblDestConn.Size = new System.Drawing.Size(129, 13);
+            this.lblDestConn.Size = new System.Drawing.Size(152, 13);
             this.lblDestConn.TabIndex = 20;
-            this.lblDestConn.Text = "Source Connection string:";
+            this.lblDestConn.Text = "Destination Connection string:";
             // 
             // txtSourceConnStr
             // 
@@ -238,7 +238,7 @@
             this.lblSourceConnection.AutoSize = true;
             this.lblSourceConnection.Location = new System.Drawing.Point(15, 34);
             this.lblSourceConnection.Name = "lblSourceConnection";
-            this.lblSourceConnection.Size = new System.Drawing.Size(129, 13);
+            this.lblSourceConnection.Size = new System.Drawing.Size(131, 13);
             this.lblSourceConnection.TabIndex = 18;
             this.lblSourceConnection.Text = "Source Connection string:";
             // 
