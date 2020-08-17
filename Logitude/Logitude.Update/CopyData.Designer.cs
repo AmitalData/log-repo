@@ -214,7 +214,7 @@
             this.txtDestinationConnStr.Name = "txtDestinationConnStr";
             this.txtDestinationConnStr.Size = new System.Drawing.Size(481, 20);
             this.txtDestinationConnStr.TabIndex = 21;
-            this.txtDestinationConnStr.Text = "logbox-main,logboxadmin,London2015!London2015!,logboxdbs.database.windows.net";
+            this.txtDestinationConnStr.Text = "Main,sa,Saas256,amitaldata.cloudapp.net";
             // 
             // lblDestConn
             // 
@@ -231,7 +231,7 @@
             this.txtSourceConnStr.Name = "txtSourceConnStr";
             this.txtSourceConnStr.Size = new System.Drawing.Size(481, 20);
             this.txtSourceConnStr.TabIndex = 19;
-            this.txtSourceConnStr.Text = "Main,sa,Saas256,amitaldata.cloudapp.net";
+            this.txtSourceConnStr.Text = "logbox-main,logboxadmin,London2015!London2015!,logboxdbs.database.windows.net";
             // 
             // lblSourceConnection
             // 
