@@ -9463,6 +9463,8 @@ namespace WebFreight.Web.ReportsWebServices
                                               PaymentId = d.Id,
                                               ARPaymentNo = d.PaymentNo,
                                               PaymentRef = d.PaymentNo,
+                                              PaymentReference = d.ChequeOrPaymentRef,
+                                              Bank = d.Bank,
                                               ValueDate = d.ValueDate,
                                               PaymentMethodName = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
                                               IssuedByUserName = d.CreatedByUser == null ? null : d.CreatedByUser.Contact.EnglishName,
@@ -9493,6 +9495,7 @@ namespace WebFreight.Web.ReportsWebServices
                     reportAPIPayment.AmountPaid = null;
                     reportAPIPayment.OriginalAmount = null;
                     reportAPIPayment.InvocieDate = null;
+                    reportAPIPayment.DueDate = null;
 
                     item.PaidAPInvoicesList.Add(reportAPIPayment);
                 }
@@ -9517,6 +9520,7 @@ namespace WebFreight.Web.ReportsWebServices
                             reportAPIPayment.BillTo = apiInvoicePayment.ARInvoice.BillTo.LocalName;
                             reportAPIPayment.InvoiceNumber = apiInvoicePayment.ARInvoice.InvoiceNumber;
                             reportAPIPayment.InvocieDate = apiInvoicePayment.ARInvoice.InvoiceDate;
+                            reportAPIPayment.DueDate = apiInvoicePayment.ARInvoice.DueDate;
                             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                             customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, apiInvoicePayment.ARInvoice, reportAPIPayment);
 
@@ -9547,6 +9551,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         reportAPIPayment.ShipmentNumber = apiInvoicePayment.ARInvoice.MainEntityReference != null ? apiInvoicePayment.ARInvoice.MainEntityReference : "";
+                        reportAPIPayment.MasterNumber = apiInvoicePayment.ARInvoice.MasterNumber != null ? apiInvoicePayment.ARInvoice.MasterNumber : "";
                         item.PaidAPInvoicesList.Add(reportAPIPayment);
                     }
 

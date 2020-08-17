@@ -61,7 +61,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
                 if (serviceResponse.Result == 0) this.DisableNewWarehouseReleaseButton = false;
             });
             if (this.ShipmentPM.IsBondedWarehouse) {
-                this.warehouseReleaseListExtendedService.getWarehouseReleaseListsByShipmentId(this.ShipmentPM.Id, this.ShipmentPM.Tenant).subscribe((serviceResponse: ServiceResponse) => {
+                this.warehouseReleaseListExtendedService.getActiveWarehouseReleaseListsByShipmentId(this.ShipmentPM.Id, this.ShipmentPM.Tenant).subscribe((serviceResponse: ServiceResponse) => {
                     var warehouseRelease = serviceResponse.Result;
                     if (warehouseRelease && warehouseRelease.length > 0) {
                         this.DisableNewWarehouseReleaseButton = true;

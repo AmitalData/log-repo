@@ -3494,7 +3494,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         journalLine.Reference1 = theEntityPm.InvoiceNumber;
                         journalLine.Reference2 = theEntityPm.MainEntityReference;
                         journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
-                        journalLine.Notes = theEntityPm.InternalNotes;
+                        journalLine.Notes = theEntityPm.PrintNotes;
                         journalLine.DebitAccountId = this.glAccount == null ? "" : this.glAccount.Id;
                         journalLine.DebitControlAccountId = this.glAccount == null ? "" : this.glAccount.ControlAccountId;
                         journalLine.ChangeSetOp = ChangeSetOperation.Insert;
@@ -3523,7 +3523,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                                 Reference1 = theEntityPm.InvoiceNumber,
                                                                 Reference2 = theEntityPm.MainEntityReference,
                                                                 Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
-                                                                Notes = theEntityPm.InternalNotes,
+                                                                Notes = theEntityPm.PrintNotes,
                                                                 DebitAccountId = glAccount == null ? "" : glAccount.Id,
                                                                 DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId,
                                                             }).ToList();
@@ -3609,7 +3609,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                     Reference1 = invoice.InvoiceNumber,
                                                     Reference2 = invoice.MainEntityReference,
                                                     Reference3 = !string.IsNullOrEmpty(invoice.HouseNumber) ? invoice.HouseNumber : invoice.MasterNumber,
-                                                    Notes = invoice.InternalNotes,
+                                                    Notes = invoice.PrintNotes,
                                                     DebitAccountId = glAccount == null ? "" : glAccount.Id,
                                                     DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId,
                                                     ChangeSetOp = ChangeSetOperation.Insert,

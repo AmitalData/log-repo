@@ -16,6 +16,7 @@ using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
 using System.Net;
+using System.Data.Entity;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
 {
@@ -113,7 +114,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         {
             IGlobalContext globalObjectContext = GlobalContext.GetContext();
             ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
-            IQueryable<TenantManagement> iQueryable_Tenantmanagements = globalObjectContext.TenantManagements.Where(a => a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL");
+            IQueryable<TenantManagement> iQueryable_Tenantmanagements = (from a in globalObjectContext.TenantManagements.Include("GlobalTenant")
+                                                                         where a.GlobalTenant.IsActive && a.GlobalTenant.Version != -1 && a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL"
+                                                                         select a);
+            //IQueryable<TenantManagement> iQueryable_Tenantmanagements = globalObjectContext.TenantManagements.Where(a => a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL");
             iQueryable_BluesnapTransactions = globalObjectContext.BluesnapTransactions;
             iQueryable_BluesnapTransactions = iQueryable_BluesnapTransactions.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) && System.Data.Entity.DbFunctions.TruncateTime(d.TransactionDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
 
@@ -258,6 +262,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                     if (queryParameters.ContainsKey("invoiceAmountUSD"))
                     {
                         totalPayments += Double.Parse(queryParameters["invoiceAmountUSD"]);
+                    }
+                    if (queryParameters.ContainsKey("taxAmountUSD"))
+                    {
+                        totalPayments -= Double.Parse(queryParameters["taxAmountUSD"]);
                     }
                 }
             }

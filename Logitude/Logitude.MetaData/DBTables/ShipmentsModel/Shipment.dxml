@@ -2992,6 +2992,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsBondedWarehouseChanged"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -3728,5 +3734,5 @@
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
   <UniqueConstraint
-   Columns="Tenant,ComputedForwarderShipmentNumber" />
+    Columns="Tenant,ComputedForwarderShipmentNumber" />
 </Table>

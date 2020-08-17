@@ -664,6 +664,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isMainRecord ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsMainRecord  
+	   {
+	    
+	     get
+		{
+		   return isMainRecord;
+		 }
+		 set
+		 {
+		   if(isMainRecord != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsMainRecord",OldValue=isMainRecord,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isMainRecord=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

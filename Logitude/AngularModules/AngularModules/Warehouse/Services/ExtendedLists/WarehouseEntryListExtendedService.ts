@@ -16,7 +16,7 @@ export class WarehouseEntryListExtendedService {
     }
 
 
-    GetWarehouseEntriesByShipmentId(shipmentId) {
+    GetActiveWarehouseEntriesByShipmentId(shipmentId) {
         return this._http.get(this._apiUrl + '/GetWarehouseEntriesByShipmentId?shipmentId=' + shipmentId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
             var pmresponse: ServiceResponse;

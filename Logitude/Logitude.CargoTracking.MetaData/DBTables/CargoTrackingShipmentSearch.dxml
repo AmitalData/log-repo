@@ -18,13 +18,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="ShipmentDate"
     Type="datetime">
     <Constraints
@@ -37,6 +30,13 @@
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
+  </Column>
+  <Column
+    Name="SecurityKey"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Index
     Columns="Tenant,ShipmentDate,SearchFields" />

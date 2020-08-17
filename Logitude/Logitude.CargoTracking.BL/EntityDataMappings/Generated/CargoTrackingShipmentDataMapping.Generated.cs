@@ -49,7 +49,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         SecurityKey, 
 	         ConsigneeName, 
 	         ShipperName, 
-	         CustomerReference,
+	         CustomerReference, 
+	         IsMainRecord,
 	      }
 
 
@@ -83,7 +84,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         SecurityKey, 
 	         ConsigneeName, 
 	         ShipperName, 
-	         CustomerReference,
+	         CustomerReference, 
+	         IsMainRecord,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -225,6 +227,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerReference))
             {
 				entityPOCO.CustomerReference = entityPM.CustomerReference;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMainRecord))
+            {
+				entityPOCO.IsMainRecord = entityPM.IsMainRecord;
 			}
 			}
 
@@ -371,6 +378,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.CustomerReference = entityPOCO.CustomerReference;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsMainRecord))
+            {
+					entityPM.IsMainRecord = entityPOCO.IsMainRecord;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -510,6 +522,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerReference))
             {
                 oldEntityPM.CustomerReference = entityPM.CustomerReference;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMainRecord))
+            {
+                oldEntityPM.IsMainRecord = entityPM.IsMainRecord;
             }
 			
 		}

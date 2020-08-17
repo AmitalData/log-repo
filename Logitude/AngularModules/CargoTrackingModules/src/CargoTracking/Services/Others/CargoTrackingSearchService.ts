@@ -31,12 +31,12 @@ export class CargoTrackingSearchService {
 					}));
 		});
 	}
-    getShipment(shipmentId: string, tenant: number) {
+    getShipment(SecurityKey: string, tenant: number) {
         var authHeaders = ServiceHelper.GetHeaders();
 
 
 		return defer(() => {
-            return this._http.get(this._apiUrl + '/GetShipment/?' + 'shipmentId=' + shipmentId + '&tenant=' + tenant,
+            return this._http.get(this._apiUrl + '/GetShipment/?' + 'SecurityKey=' + SecurityKey + '&tenant=' + tenant,
              {headers: authHeaders})
 				.pipe(
 					map((response: HttpResponse<any>) => {

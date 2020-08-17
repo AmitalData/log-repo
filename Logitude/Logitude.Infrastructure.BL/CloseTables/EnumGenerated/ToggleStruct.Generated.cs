@@ -20,7 +20,6 @@ namespace Logitude.Infrastructure.BL.CloseTables
        public const string TicketJumpingCounter = "TJC";  
        public const string BuildDocumentViaWorkerRole = "BDW";  
        public const string RunReportonSecondaryDB = "RRS";  
-       public const string ChargesDWH = "CWH";  
        public const string LogGridV2 = "LV2";  
        public const string CardSearchsToggle = "CST";  
     }

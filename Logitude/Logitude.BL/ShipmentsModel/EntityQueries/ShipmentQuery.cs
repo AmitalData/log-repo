@@ -1529,6 +1529,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.WeightMeasurementCode = shipment.WeightMeasurementCode;
             shipmentPM.WeightRoundingCode = shipment.WeightRoundingCode;
             shipmentPM.IsBondedWarehouse = shipment.IsBondedWarehouse;
+            shipmentPM.IsBondedWarehouseChanged = shipment.IsBondedWarehouseChanged;
 
             if (!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
             {

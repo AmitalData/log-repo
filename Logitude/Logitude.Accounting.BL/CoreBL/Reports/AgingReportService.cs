@@ -257,7 +257,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          CurrencyId = _AccountingCurrencyId,
                          Total = groupByAccCurrr.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
                          OpenCredit = groupByAccCurrr.Sum(rec => rec.LocalAmountCredit),
-                         OpenDebit = groupByAccCurrr.Sum(rec => rec.LocalAmountCredit),
+                         OpenDebit = groupByAccCurrr.Sum(rec => rec.LocalAmountDebit),
 
                      });
 
@@ -366,7 +366,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                          OrderDateB4 = groupby.Key.OrderDateB4,
                                          AccountId = groupby.Key.AccountId,
                                          CurrencyId = groupby.Key.CurrencyId,
-                                         Total = groupby.Sum(rec => rec.Total)
+                                         Total = groupby.Sum(rec => rec.Total),
+                                         OpenDebit = groupby.Sum(rec => rec.OpenDebit),
+                                         OpenCredit = groupby.Sum(rec => rec.OpenCredit),
                                      }
                                         ).ToList();
                     }
@@ -598,13 +600,17 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                 MyPeriodList = reportList;
                 MyPeriodExtendedList = namedPeriods;
-                DataTable _PivotTable = namedPeriods.ToPivotTable(
-                    rec => rec.PeriodName,
-                    rec => rec.AccountAndCurr, //new { rec.AccountId, rec.CurrencyId }, //rec.AccountId, //
-                    recs => recs.Any() ? recs.Sum(rec => rec.Total) : 0.00m);
-                var xml = _PivotTable.ToJsonString();
-                _PivotTable.TableName = "sss";
-                xml = _PivotTable.ToXml();
+                string xml = string.Empty;
+                if (_Param.BuildPivot)
+                {
+                    DataTable _PivotTable = namedPeriods.ToPivotTable(
+                        rec => rec.PeriodName,
+                        rec => rec.AccountAndCurr, //new { rec.AccountId, rec.CurrencyId }, //rec.AccountId, //
+                        recs => recs.Any() ? recs.Sum(rec => rec.Total) : 0.00m);
+                    xml = _PivotTable.ToJsonString();
+                    _PivotTable.TableName = "sss";
+                    xml = _PivotTable.ToXml();
+                }
                 return xml;
             }
         }
@@ -815,8 +821,56 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
         }
 
-
         private List<PeriodM> ManipulateFifoPerAccCurr(List<PeriodM> dbList)
+        {
+
+            if (dbList.Select(r => new { r.AccountId, r.CurrencyId }).Distinct().Count() != 1)
+            {
+                throw new Exception("ManipulateFifoPerCurrency:::dbList.Select( r=>r.CurrencyId).Distinct().Count()!=1");
+            }
+            dbList = dbList.OrderBy(rec => rec.OrderDate).ThenByDescending(r => r.OrderDateB4).ToList();
+
+            //we’ll need to offset the credit from the later month to earlier debits:
+            var firstPlusPeriod = dbList.FirstOrDefault(r => r.OpenDebit > 0);
+
+            if (firstPlusPeriod == null) return dbList;
+
+            var biggerThanFirstList = dbList;//.Where(r => r.OrderDate > firstPlusPeriod.OrderDate).ToList();
+            if (biggerThanFirstList.Count() == 0) return dbList;
+
+            var firstMinusPeriod_ThatAfterFirstPlus = biggerThanFirstList.FirstOrDefault(r => r.OpenCredit > 0);
+
+            if (firstPlusPeriod == null || firstMinusPeriod_ThatAfterFirstPlus == null)
+            {
+                return dbList;
+            }
+
+            var total1 = firstPlusPeriod.OpenDebit - firstMinusPeriod_ThatAfterFirstPlus.OpenCredit;
+            if (total1 == 0)
+            {
+                //firstMinusPeriod_ThatAfterFirstPlus.Total = firstPlusPeriod.Total = 0;
+                firstMinusPeriod_ThatAfterFirstPlus.OpenDebit = firstPlusPeriod.OpenCredit = 0;
+            }
+            else if (total1 > 0) 
+            {
+                //firstPlusPeriod.OpenDebit > firstMinusPeriod_ThatAfterFirstPlus.OpenCredit
+                firstPlusPeriod.OpenDebit -= firstMinusPeriod_ThatAfterFirstPlus.OpenCredit;
+                firstMinusPeriod_ThatAfterFirstPlus.OpenCredit = 0;
+            }
+            else if (total1 < 0)
+            {
+                //firstPlusPeriod.OpenDebit < firstMinusPeriod_ThatAfterFirstPlus.OpenCredit
+                firstMinusPeriod_ThatAfterFirstPlus.OpenCredit -= firstPlusPeriod.OpenDebit;
+                firstPlusPeriod.OpenDebit = 0;
+                
+            }
+            firstPlusPeriod.Total = firstPlusPeriod.OpenDebit - firstPlusPeriod.OpenCredit;
+            firstMinusPeriod_ThatAfterFirstPlus.Total = firstMinusPeriod_ThatAfterFirstPlus.OpenDebit - firstMinusPeriod_ThatAfterFirstPlus.OpenCredit;
+
+
+            return ManipulateFifoPerAccCurr(dbList);
+        }
+        private List<PeriodM> ManipulateFifoPerAccCurrTotal(List<PeriodM> dbList)
         {
             
             if (dbList.Select(r => new { r.AccountId, r.CurrencyId }).Distinct().Count() != 1)
@@ -1539,6 +1593,8 @@ TRUE= כאשר מבקשים עם ריכוז לפי כרטיס אב (פיצול �
             get { return _explained_AggregateByGLAccountCurrencies; }
             set { _explained_AggregateByGLAccountCurrencies = value; }
         }
+
+        public bool BuildPivot { get; set; }
 
     }
 

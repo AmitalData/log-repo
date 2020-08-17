@@ -209,19 +209,17 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     string InterestReportId = EntitiesId[0];
                     string ARInvoieId = EntitiesId[1];
                     bool IsPrintARInvoice = PrintInvoicesPDF(email, tenant, ARInvoieId, pdfDoc, "999G",true);
-                    if (IsPrintARInvoice)
-                    {
-                        bool IsPrintInterestReport = PrintInvoicesPDF(email, tenant, InterestReportId, pdfDoc, "ITDT", true);
-                        if (!IsPrintInterestReport)
-                        {
-                            InterestReportIdsNotPrinted.Add(InterestReportId);
-                        }
-                    }
-                    else
+                    if (!IsPrintARInvoice)
                     {
                         ARInvoiceIdsNotPrinted.Add(ARInvoieId);
 
                     }
+                    bool IsPrintInterestReport = PrintInvoicesPDF(email, tenant, InterestReportId, pdfDoc, "ITDT", true);
+                    if (!IsPrintInterestReport)
+                    {
+                        InterestReportIdsNotPrinted.Add(InterestReportId);
+                    }
+      
                 }
 
  

@@ -40,6 +40,7 @@
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
   Code="&quot;150b&quot;"
+
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -359,10 +360,6 @@
       Code="&quot;RRS&quot;"
       Name="&quot;Run Report on Secondary DB&quot;"
       SearchFields="&quot;RRS,Run Report on Secondary DB&quot;" />
-    <Record
-      Name="&quot;Charges DWH&quot;"
-      Code="&quot;CWH&quot;"
-      SearchFields="&quot;CWH,Charges DWH&quot;" />
     <Record
       Code="&quot;LV2&quot;"
       Name="&quot;LogGrid V2&quot;"
