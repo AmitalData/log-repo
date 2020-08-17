@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
 import {APInvoiceLinePM} from '../../../../Invoice/EntityPMs/APInvoiceLinePM';
@@ -11,9 +10,6 @@ import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
 import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
 import {CardList} from '../../../../Common/EntityLists/CardList';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
-import {AccountingSystemListService} from '../../../../Common/Services/StandardLists/AccountingSystemListService';
-import {AccountingSystemList} from '../../../../Common/EntityLists/AccountingSystemList';
 import {VatTypeListService} from '../../../../Common/Services/StandardLists/VatTypeListService';
 import {VatTypeList} from '../../../../Common/EntityLists/VatTypeList';
 import {PaymentTermListService} from '../../../../Common/Services/StandardLists/PaymentTermListService';
@@ -26,8 +22,7 @@ import {InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainS
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {APInvoicePMService} from '../../../../Invoice/Services/StandardPMs/APInvoicePMService';
 
-@Component({
-    
+@Component({   
     templateUrl: './APInvoiceTransferTemplate.html',
 })
 
@@ -38,6 +33,7 @@ export class APInvoiceTransferTemplate extends BaseComponent {
     public IsNew: boolean = false; 
     public EntityId: string;
     public ItemsSource: APInvoiceTransferLineArgs[] = [];
+    public IsAutoUpdatingFields: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -48,6 +44,7 @@ export class APInvoiceTransferTemplate extends BaseComponent {
     }
     SetWindowArgs(args: any) {
         if (args) {
+            this.IsAutoUpdatingFields = true;
             this.EntityId = args.EntityId;
             this.IsNew = args.IsNewTemplate;
             this.GetSingleEntityPM();
@@ -74,6 +71,7 @@ export class APInvoiceTransferTemplate extends BaseComponent {
         if (this.EntityPM.IsMultipleEntities) {
             //nothing
         }
+
         else {
             this.EntityPM.InvoiceLines.forEach(item => {
                 this.ItemsSource.push(new APInvoiceTransferLineArgs(null, item, this, "Line"));
@@ -98,17 +96,22 @@ export class APInvoiceTransferTemplate extends BaseComponent {
                 }
             });
         }
-        this.UpdateTransferData();
+
+        if (this.IsAutoUpdatingFields) {
+            this.UpdateTransferData();
+        }
     }
 
-    //UpdateTransferData
     UpdateTransferData() {
         if (this.EntityPM.TransferStatusCode != "TR" && this.EntityPM.TransferStatusCode != "IP" && this.EntityPM.TransferStatusCode != "ET") {
+
             var isReady = true;
+
             var isValid = this.ItemsSource.filter(d => AppTool.IsNullOrEmpty(d.EditingFieldValue))[0];
             if (isValid != null) {
                 isReady = false;
             }
+
             if (this.EntityPM.TransferStatusCode != "BL") {
                 this.TransferStatusCode = isReady ? "RD" : "NR";
             }
@@ -226,45 +229,83 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
     public DataContext = this;
     public VatPercentage: number;
     public IsTransferredEnabled: boolean;
-
     constructor(entity: APInvoicePM, line: APInvoiceLinePM, public father: APInvoiceTransferTemplate, typeCode: string) {
         super();
-        this.InitalizeServices();
+
+        this.Code = typeCode;
+
         if (entity != null) {
             this.invoicePM = entity;
             this.ObjectTableName = "APInvoice";
         }
+
         if (line != null) {
             this.invoicePM = father.EntityPM;
             this.invoiceLinePM = line;
             this.ObjectTableName = "APInvoiceLine";
             this.VatPercentage = line.VatPercentage;
         }
-        this.IsTransferredEnabled = father.TransferStatusCode != "TR" && this.invoicePM.StatusCode != "WA"; 
-        this.Code = typeCode;
+
+        this.InitalizeServices();
+        this.InitalizeProperties();
+        this.SetUIProperties();
+
         this.GetEditingFieldName();
         this.GetDescriptionTitle();
         this.GetDescriptionValue();
         this.GetDescriptionHelp();
         this.GetDescriptionHelpVisibility();
-        this.SetUIProperties();
         this.FillFieldsData();
+    }
+
+    SetUIProperties() {
+
+        var isEnabled = true;
+
+        if (this.father.TransferStatusCode == "TR") {
+            isEnabled = false;
+        }
+
+        else if (this.invoicePM.StatusCode == "WA") {
+            isEnabled = false;
+        }
+
+        this.IsTransferredEnabled = isEnabled;
+
+        this.UIProperties.SetEnabled(this.EditingFieldName, this.ObjectTableName, this.IsTransferredEnabled);
+
+        this.GetDescriptionHelpVisibility();
+    }
+
+    GetDescriptionHelpVisibility() {
+        var result = false;
+
+        if (AppTool.IsNullOrEmpty(this.EditingFieldValue)) {
+            result = true;
+        }
+
+        this.DescriptionHelpVisibility = result;
     }
 
     private CardListService: CardListService;
     private CurrencyListService: CurrencyListService;
     private VatTypeListService: VatTypeListService;
-    private PaymentTermListService: PaymentTermListService;
     private ChargesTypeListService: ChargesTypeListService;
-    private InvoiceDomainService: InvoiceDomainService;
+    private invoiceDomainService: InvoiceDomainService;
     InitalizeServices() {
         this.CardListService = new CardListService();
         this.CurrencyListService = new CurrencyListService();
         this.VatTypeListService = new VatTypeListService();
-        this.PaymentTermListService = new PaymentTermListService();
         this.ChargesTypeListService = new ChargesTypeListService();
-        this.InvoiceDomainService = new InvoiceDomainService();
+        this.invoiceDomainService = new InvoiceDomainService();
     }
+
+    public EditingFieldName: string;
+    public DescriptionTitle: string = "";
+    public DescriptionValue: string = "";
+    public DescriptionHelp: string = "";
+    public DescriptionHelpVisibility = false;
+
 
     // FillFieldsData
     private FillFieldsData() {
@@ -403,12 +444,8 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
     }
 
     // SetUIProperties
-    private SetUIProperties() {
-        this.UIProperties.SetEnabled(this.EditingFieldName, this.ObjectTableName, this.IsTransferredEnabled);
-    }
 
     // Props
-    public DescriptionTitle: string = "";
     private GetDescriptionTitle() {
         var result = "";
         switch (this.Code) {
@@ -446,7 +483,6 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
         this.DescriptionTitle = result;
     }
 
-    public DescriptionValue: string = "";
     private GetDescriptionValue() {
         var result = "";
         switch (this.Code) {
@@ -494,7 +530,6 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
         this.DescriptionValue = result;
     }
 
-    public DescriptionHelp: string = "";
     private GetDescriptionHelp() {
         var result = "";
         switch (this.Code) {
@@ -538,16 +573,8 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
         this.DescriptionHelp = result;
     }
 
-    public DescriptionHelpVisibility = false;
-    GetDescriptionHelpVisibility() {
-        var result = false;
-        if (AppTool.IsNullOrEmpty(this.EditingFieldValue)) {
-            result = true;
-        }
-        this.DescriptionHelpVisibility = result;
-    }
     
-    public EditingFieldName: string;
+    
     GetEditingFieldName() {
         var result = "";
         switch (this.Code) {
