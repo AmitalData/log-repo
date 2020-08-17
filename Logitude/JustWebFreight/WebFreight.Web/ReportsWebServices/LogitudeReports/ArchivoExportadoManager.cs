@@ -241,6 +241,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                             myRecord.Salesman = myShipment.SalesmanUserName;
                             myRecord.Direction = myShipment.DirectionName;
+                            myRecord.House = myShipment.House;
 
                             if (!string.IsNullOrEmpty(myShipment.BranchId))
                             {

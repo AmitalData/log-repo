@@ -279,6 +279,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                             myRecord.Direction = myShipment.DirectionName;
                             myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                            myRecord.House = myShipment.House;
+                        
 
                             ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                             myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
