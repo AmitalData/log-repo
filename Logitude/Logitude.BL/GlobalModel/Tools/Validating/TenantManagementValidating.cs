@@ -78,19 +78,12 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
         {
             if (!entityPM.IsMultiPackage)
             {
-                int? totalUsers = entityPM.NumberOfUsers;
+                int? totalUsers = entityPM.NumberOfUsers == null ? 0 : entityPM.NumberOfUsers;
                 if (entityPM.FreeUsers != null)
                 {
                     totalUsers += entityPM.FreeUsers;
                 }
-
-                //if (totalUsers > 999)
-                //{
-                //    throw new Exception("The maximum number of users is 999 !!");
-                //}
-
-                //else
-                //{
+                
                 int tenantUsers = 0;
                 string usersType = "active";
 
@@ -99,13 +92,17 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
                     UserRepository userRepository = new UserRepository(entityPM.Id);
                     IQueryable<User> allTenantUsers = userRepository.GetUsers(entityPM.Id);
 
-                    allTenantUsers = allTenantUsers.Where(d => d.Contact.Email.ToLower() != "customercare@logitudeworld.com");
-                    allTenantUsers = allTenantUsers.Where(d => d.Contact.InActive == false);
+                    allTenantUsers = allTenantUsers.Where(d => d.Contact.Email.ToLower() != "customercare@logitudeworld.com" && d.Contact.InActive == false);
 
                     if (entityPM.ManageLicencesPerUser)
                     {
                         allTenantUsers = allTenantUsers.Where(d => d.LicencedUser == true);
                         usersType = "licenced";
+                    }
+
+                    if (entityPM.MainAdditionalPackageApplied)
+                    {
+                        allTenantUsers = allTenantUsers.Where(d => !d.AdditionalPackagesOnly);
                     }
 
                     tenantUsers = allTenantUsers.Count();
@@ -116,8 +113,7 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
                 if (tenantUsers > totalUsers)
                 {
                     throw new Exception("You can't change the number of users to less than " + tenantUsers + " (Number of " + usersType + " users)");
-                }
-                //}
+                }                
             }
         }
         private static void ValidateConnectedAirline(TenantManagementPM entityPM, TenantManagementRepository entityRepository)
