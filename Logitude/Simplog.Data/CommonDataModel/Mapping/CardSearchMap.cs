@@ -12,7 +12,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Keyword).IsRequired().HasMaxLength(100).IsUnicode(true);
             this.Property(t => t.CardId).HasMaxLength(15).IsRequired().IsUnicode(false);
-            
+            this.Property(t => t.PartnerTypeId).IsRequired().IsFixedLength().HasMaxLength(2).IsUnicode(false);
+
 
             this.ToTable("CardSearchs");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -21,6 +22,11 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.RecordDate).HasColumnName("RecordDate");
             this.Property(t => t.Weight).HasColumnName("Weight");
+            this.Property(t => t.PartnerTypeId).HasColumnName("PartnerTypeId");
+            this.Property(t => t.InActive).HasColumnName("InActive");
+
+
+
             this.HasRequired(t => t.Card).WithMany().HasForeignKey(d => d.CardId);
 
 

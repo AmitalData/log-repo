@@ -61,6 +61,8 @@ CREATE TABLE #temp_CardSearchs
 	[Keyword] [nvarchar](100) NULL,
 	[Weight] [int] NOT NULL,
 	[CardId] [varchar](15) NULL,
+	[PartnerTypeId] [varchar](2) not NULL,
+    [InActive] bit,
 )
 
  
@@ -84,13 +86,15 @@ declare  @UpdateDate datetime
 
 declare  @Weight int
 
+declare  @PartnerTypeId varchar(2)
+declare  @InActive bit
 
 
     DECLARE CardCursor CURSOR READ_ONLY
     FOR
-    SELECT Id,Tenant, Code,EnglishName , LocalName , VatNumber ,CityName , CountryName , ReceivablesAccountingCard , PayablesAccountingCard , CreateDate ,UpdateDate
+    SELECT Id,Tenant, Code,EnglishName , LocalName , VatNumber ,CityName , CountryName , ReceivablesAccountingCard , PayablesAccountingCard , CreateDate ,UpdateDate , PartnerTypeId , InActive
     From Cards 
-    OPEN CardCursor FETCH NEXT FROM CardCursor INTO  @CardId,@Tenant, @Code,@EnglishName , @LocalName , @VatNumber , @CityName , @CountryName , @ReceivablesAccountingCard , @PayablesAccountingCard , @CreateDate , @UpdateDate
+    OPEN CardCursor FETCH NEXT FROM CardCursor INTO  @CardId,@Tenant, @Code,@EnglishName , @LocalName , @VatNumber , @CityName , @CountryName , @ReceivablesAccountingCard , @PayablesAccountingCard , @CreateDate , @UpdateDate , @PartnerTypeId,@InActive
     WHILE @@FETCH_STATUS = 0
     BEGIN
 
@@ -149,7 +153,7 @@ END CATCH
 		 set @RecordDate = @UpdateDate;
 		 if(@RecordDate is null) set @RecordDate = @CreateDate
 
-		 insert into #temp_CardSearchs (Id, Tenant, CardId , Keyword , RecordDate , Weight ) values (@newId , @Tenant , @CardId , @Value , @RecordDate , @Weight)
+		 insert into #temp_CardSearchs (Id, Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive ) values (@newId , @Tenant , @CardId , @Value , @RecordDate , @Weight , @PartnerTypeId,@InActive)
 
 	    set @Count = @Count + 1;
         if(@Count = 4000)
@@ -180,7 +184,7 @@ END CATCH
  
 
 
-    FETCH NEXT FROM CardCursor INTO @CardId,@Tenant, @Code,@EnglishName , @LocalName , @VatNumber , @CityName , @CountryName , @ReceivablesAccountingCard , @PayablesAccountingCard , @CreateDate , @UpdateDate
+    FETCH NEXT FROM CardCursor INTO @CardId,@Tenant, @Code,@EnglishName , @LocalName , @VatNumber , @CityName , @CountryName , @ReceivablesAccountingCard , @PayablesAccountingCard , @CreateDate , @UpdateDate , @PartnerTypeId,@InActive
     END
     CLOSE CardCursor
     DEALLOCATE CardCursor

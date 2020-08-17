@@ -18,5 +18,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string Keyword { get; set; }
         public string CardId { get; set; }
         public int Weight { get; set; }
+        public string PartnerTypeId { get; set; }
+        public bool InActive { get; set; }
     }
 }

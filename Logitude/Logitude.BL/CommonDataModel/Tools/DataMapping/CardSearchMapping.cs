@@ -26,6 +26,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.Weight = entityPM.Weight;
             poco.Keyword = entityPM.Keyword;
             poco.CardId = entityPM.CardId;
+            poco.PartnerTypeId = entityPM.PartnerTypeId;
+            poco.InActive = entityPM.InActive;
+
         }
     }
 }

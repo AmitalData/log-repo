@@ -43,6 +43,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                       Keyword = a.Keyword,
                       RecordDate = a.RecordDate,
                       Weight = a.Weight,
+                      PartnerTypeId = a.PartnerTypeId,
+                      InActive = a.InActive,
                    }).FirstOrDefault();
 
             return myResult;
@@ -62,6 +64,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      Keyword = a.Keyword,
                                                      RecordDate = a.RecordDate,
                                                      Weight = a.Weight,
+                                                     PartnerTypeId = a.PartnerTypeId,
+                                                     InActive = a.InActive,
                                                  };
             return result;
         }

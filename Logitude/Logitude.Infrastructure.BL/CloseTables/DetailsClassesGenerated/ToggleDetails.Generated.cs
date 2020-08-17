@@ -104,6 +104,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "LogGrid V2", 
                 SearchFields = "LGV2,LogGrid V2", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Card Searchs Toggle", 
+                Code = "CST", 
+                SearchFields = "CST,Card Searchs Toggle", 
+			});
 			
             return all;
        }

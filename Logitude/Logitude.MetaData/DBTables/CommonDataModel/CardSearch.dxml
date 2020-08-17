@@ -45,15 +45,28 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PartnerTypeId"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CardId"
     ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-
+  <Index
+    Columns="Keyword,Tenant,PartnerTypeId,InActive" />
 
   <Index
-    Columns="Keyword,Tenant" />
-
-
+    Columns="RecordDate" />
+  
 </Table>
