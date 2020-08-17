@@ -88,7 +88,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipments",
                 Main_CT_TableName = "CargoTrackingShipments",
-                CT_FieldsDBName = "Tenant,IsMainRecord,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate,CreateDate,SecurityKey,ConsigneeName,ShipperName,CustomerReference",
+                CT_FieldsDBName = "Tenant,IsMainRecord,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,PickupEstimationDate,FromWarehouseDone,FromWarehouseNotes,DepartureDate,DepartureEstimationDate,ClearanceDone,ClearanceDate,FromWarehouseEstimationDate,FromWarehouseDate,DepartureDone,ArrivalDone,ToWarehouseDate,ToWarehouseEstimationDate,DeliveredEstimationDate,DeliveredDone,DeliveredDate,ArrivalEstimationDate,ToWarehouseDone,ArrivalDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate,ToWarehouseNotes,CustomsPaymentDone,CustomsPaymentDate,CreateDate,SecurityKey,ConsigneeName,ShipperName,CustomerReference",
                 Condition1 = " ((ShipmentLevelCode ='D' or ShipmentLevelCode ='H') and CustomFileId is not null)",
                 Condition2 = " ((ShipmentLevelCode !='D' and ShipmentLevelCode !='H') or CustomFileId is null)",
                 Pre_TableName = "Pre_CargoTrackingShipments",
@@ -815,14 +815,36 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             "[GrossWeight] FLOAT NULL,"+
                             "[Volume] FLOAT NULL,"+
                             "[PickupDone] BIT NULL,"+
-                            "[ClearanceDone] BIT NULL,"+
-                            "[PickupDate] DATETIME NULL,"+
-                            "[ClearanceDate] DATETIME NULL,"+
-                            "[CreateDate] DATETIME NOT NULL,"+
-                            "[SecurityKey] VARCHAR(40) NULL,"+
+                            "[FromWarehouseDone] BIT NULL," +
+                            "[ClearanceDone] BIT NULL," +
+                            "[DepartureDone] BIT NULL," +
+                            "[ArrivalDone] BIT NULL," +
+                            "[ToWarehouseDate] DATETIME NULL," +
+                            "[DeliveredEstimationDate] DATETIME NULL," +
+                            "[ToWarehouseDone] BIT NULL," +
+                            "[CustomsPaymentDone] BIT NULL," +
+                            "[ClearanceDone] BIT NULL," +
+                            "[DeliveredDone] BIT NULL," +
+                            "[PickupDate] DATETIME NULL," +
+                            "[DeliveredDate] DATETIME NULL," +
+                            "[ArrivalDate] DATETIME NULL," +
+                            "[ArrivalEstimationDate] DATETIME NULL," +
+                            "[PickupEstimationDate] DATETIME NULL," +
+                            "[FromWarehouseEstimationDate] DATETIME NULL," +
+                            "[ToWarehouseEstimationDate] DATETIME NULL," +
+                            "[FromWarehouseDate] DATETIME NULL," +
+                            "[ClearanceDate] DATETIME NULL," +
+                            "[DepartureDate] DATETIME NULL," +
+                            "[DepartureEstimationDate] DATETIME NULL," +
+                            "[CreateDate] DATETIME NOT NULL," +
+                            "[CustomsPaymentDate] DATETIME NOT NULL," +
+                            "[ClearanceDate] DATETIME NOT NULL," +
+                            "[SecurityKey] VARCHAR(40) NULL," +
                             "[ConsigneeName] VARCHAR(70) NULL,"+
                             "[ShipperName] VARCHAR(70) NULL,"+
-                            "[CustomerReference] VARCHAR(101) NULL,"+
+                            "[FromWarehouseNotes] NVARCHAR(32) NULL," +
+                            "[ToWarehouseNotes] NVARCHAR(32) NULL," +
+                            "[CustomerReference] VARCHAR(101) NULL," +
                             "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
                             ")"+
                             "\n";
