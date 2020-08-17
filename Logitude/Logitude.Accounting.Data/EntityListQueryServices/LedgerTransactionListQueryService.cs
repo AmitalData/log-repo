@@ -899,7 +899,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             }
             q = query.ToList<LedgerTransaction>();
             string long_text = "";
-            q.ForEach(item => long_text += item.OpenAmount.ToString() + "   ");
+            q.ForEach(item => long_text += item.DueDate.ToString("dd.MM.yyyy") + " : " + item.OpenAmount.ToString() + "   ");
             List<LedgerTransaction> result = new List<LedgerTransaction>();
             bool next_set = false;
 

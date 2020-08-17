@@ -139,6 +139,22 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
                     }
 
+                    if (entity.FromPort != null && entity.ToPort != null)
+                    {
+                        if (entity.MainCarriageLegs != null && entity.MainCarriageLegs.Count > 0)
+                        {
+                            throw new ApplicationException("You can't use the From Port/ To Port with the Main Carriage Legs");
+                        }
+                    }
+
+                    else
+                    {
+                        if (entity.MainCarriageLegs == null || entity.MainCarriageLegs.Count == 0)
+                        {
+                            throw new ApplicationException("You must send the From Port/ To Port or the Main Carriage Legs");
+                        }
+                    }
+
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.MasterCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);

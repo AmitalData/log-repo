@@ -88,7 +88,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipments",
                 Main_CT_TableName = "CargoTrackingShipments",
-                CT_FieldsDBName = "Tenant,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate,CreateDate,SecurityKey,ConsigneeName,ShipperName,CustomerReference",
+                CT_FieldsDBName = "Tenant,IsMainRecord,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate,EntityId,EntityType,ForwardingShipmentHeaderId,CustomsShipmentHeaderId,CurrentMilestoneCode,CurrentMilestoneDate,ClearanceDone,ClearanceDate,CreateDate,SecurityKey,ConsigneeName,ShipperName,CustomerReference",
                 Condition1 = " ((ShipmentLevelCode ='D' or ShipmentLevelCode ='H') and CustomFileId is not null)",
                 Condition2 = " ((ShipmentLevelCode !='D' and ShipmentLevelCode !='H') or CustomFileId is null)",
                 Pre_TableName = "Pre_CargoTrackingShipments",
@@ -99,10 +99,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             CargoTableLists.Add(new CargoTable()
             {
                 TableName = "Shipments",
-                FieldsDBName = "Id,Tenant,ShipmentNumber,SearchFields,CreateDateTime,CustomerReference1,CustomerReference2,AutomaticLastUpdateDate",
+                FieldsDBName = "Id,Tenant,ShipmentNumber,SecurityKey,SearchFields,CreateDateTime,CustomerReference1,CustomerReference2,AutomaticLastUpdateDate",
                 KeyName = "Id",
-                ConditionKey = "ShipmentId",
-                CT_FieldsDBName = "Tenant,ShipmentId,SearchFields,ShipmentDate",
+                ConditionKey = "SecurityKey",
+                CT_FieldsDBName = "Tenant,SecurityKey,SearchFields,ShipmentDate",
                 DBTableName = "Shipments",
                 CT_TableName = "CargoTrackingShipmentSearches",
                 Main_CT_TableName = "CargoTrackingShipmentSearches",
@@ -330,22 +330,22 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
            
             if (buildCargoArgs.Table.Main_CT_TableName == "CargoTrackingShipments" && buildCargoArgs.Table.CurrentCondition==1)
             {
-                fieldName=" P."+fieldName.Replace(",", " ,P.");
-                cmd = "SELECT "+ fieldName+ ", C.Id as ForwardingIdForCustom " + " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName+ " C ON P.CustomFileId = C.Id";
+                fieldName= " C." + fieldName.Replace(",", " ,C.");
+                cmd = "SELECT "+ fieldName+ ", P.Id as ForwardingIdForCustom " + " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName+ " C ON P.CustomFileId = C.Id";
                 if (CargoTrackingArguments == null)
                 {
                     LastUpdate = GetTableLastUpdate(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);
-                    cmd += " where (P.AutomaticLastUpdateDate > '" + LastUpdate + "')";
+                    cmd += " where (C.AutomaticLastUpdateDate > '" + LastUpdate + "')";
                 }
                 else
                 {
-                    cmd += " where P.CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and P.CreateDateTime <= '" + CargoTrackingArguments.ToDate + "'";
+                    cmd += " where C.CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and C.CreateDateTime <= '" + CargoTrackingArguments.ToDate + "'";
 
                 }
             }
             else if (buildCargoArgs.Table.Main_CT_TableName == "CargoTrackingShipments" && buildCargoArgs.Table.CurrentCondition == 2)
             {
-                cmd = "Select "+ fieldName  + " FROM dbo. " + table.DBTableName + " Where Id not in (Select P.Id From  dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + " C ON P.CustomFileId = C.Id)";
+                cmd = "Select "+ fieldName  + " FROM dbo. " + table.DBTableName + " Where Id not in (Select C.Id From  dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + " C ON P.CustomFileId = C.Id)";
 
                 if (CargoTrackingArguments == null)
                 {
@@ -779,7 +779,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             "CREATE TABLE[dbo].["+ TableName + "]("+
                             "[Tenant] INT NOT NULL,"+
                             "[SearchFields] NVARCHAR(100) NULL,"+
-                            "[ShipmentId] VARCHAR(15) NOT NULL,"+
+                            "[SecurityKey] VARCHAR(40)   NULL," +
                             "[ShipmentDate] DATETIME NOT NULL,"+
                             "[Id] INT IDENTITY(1,1) NOT NULL,"+
                             "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+

@@ -22,7 +22,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public DateTime? FirstPaymentDate { get; set; }      
         public DateTime? PaidUntilDate { get; set; }
         public bool IsTrial { get; set; }
-        public int NumberOfUsers { get; set; }
+        public int? NumberOfUsers { get; set; }
         public string SearchFields { get; set; }
         public int? FreeUsers { get; set; }
         public bool IsRecurring { get; set; }

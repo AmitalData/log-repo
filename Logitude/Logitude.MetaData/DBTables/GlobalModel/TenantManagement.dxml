@@ -38,7 +38,7 @@
     Name="NumberOfUsers"
     Type="int">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="SearchFields"

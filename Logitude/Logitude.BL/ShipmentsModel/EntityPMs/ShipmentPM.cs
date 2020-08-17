@@ -2508,18 +2508,24 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             }
         }
 
-        public List<TransshipmentLeg> Transshipments { get; set; }
+        public List<TransshipmentLeg> MainCarriageLegs { get; set; }
         public bool IsBondedWarehouse { get; set; }
+        public bool IsBondedWarehouseChanged { get; set; }
     }
 
     public class TransshipmentLeg
     {
         public string Id { get; set; }
         public int LegIndex { get; set; }
+        public string FromPortId { get; set; }
+        public string ToPortId { get; set; }
         public string CarrierId { get; set; }
-        public string PortId { get; set; }
-        public string VesselId { get; set; }
         public string CarrierNumber { get; set; }
+        public string VesselId { get; set; }        
         public string MasterNumber { get; set; }
+        public DateTime? ETD { get; set; }
+        public DateTime? ETA { get; set; }
+        public DateTime? ATD { get; set; }
+        public DateTime? ATA { get; set; }
     }
 }

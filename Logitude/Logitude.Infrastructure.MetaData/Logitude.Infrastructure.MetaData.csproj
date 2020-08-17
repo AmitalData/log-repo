@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="DBScripts\202008161345_RemoveCHWFeatureToggle.sxml" />
     <None Include="DBScripts\202006092059_SetPermissionToAllBIFolders.sxml" />
     <None Include="DBTables\BatchTaskExecution.dxml" />
     <None Include="DBTables\BatchTaskExecutionStatus.dxml" />

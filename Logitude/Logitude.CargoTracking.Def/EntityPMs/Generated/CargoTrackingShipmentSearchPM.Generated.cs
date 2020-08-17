@@ -64,29 +64,6 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
-	  private string shipmentId ;
-	  	  
-       
-	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentId  
-	   {
-	    
-	     get
-		{
-		   return shipmentId;
-		 }
-		 set
-		 {
-		   if(shipmentId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentId",OldValue=shipmentId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   shipmentId=value;
-		   }
-			
-		 }
-	   }
 	  private DateTime shipmentDate ;
 	  	  
        
@@ -131,6 +108,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   id=value;
+		   }
+			
+		 }
+	   }
+	  private string securityKey ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SecurityKey  
+	   {
+	    
+	     get
+		{
+		   return securityKey;
+		 }
+		 set
+		 {
+		   if(securityKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SecurityKey",OldValue=securityKey,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   securityKey=value;
 		   }
 			
 		 }

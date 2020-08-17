@@ -6,19 +6,20 @@
    declare @SourceTenant int
    declare @ParentTenant int
    declare @AutomaticLastUpdateDate as datetime
+   declare @InActive as bit
 
 	DECLARE DepartmentsCursor CURSOR READ_ONLY
 	FOR
-	SELECT dw_Departments.Id, dw_Departments.EnglishName , dw_Departments.LocalName , dw_Departments.Tenant, dw_DWHSettings.ParentTenant, dw_Departments.AutomaticLastUpdateDate
+	SELECT dw_Departments.Id, dw_Departments.EnglishName , dw_Departments.LocalName , dw_Departments.Tenant, dw_DWHSettings.ParentTenant, dw_Departments.AutomaticLastUpdateDate, dw_Departments.InActive
 	From dw_Departments
 	inner JOIN dw_DWHSettings ON dw_Departments.Tenant = dw_DWHSettings.Tenant
-	OPEN DepartmentsCursor FETCH NEXT FROM DepartmentsCursor INTO @Id , @EnglishName, @LocalName, 	@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
+	OPEN DepartmentsCursor FETCH NEXT FROM DepartmentsCursor INTO @Id , @EnglishName, @LocalName, 	@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-    insert into #DIM_DepartmentsTemp (Id,Name,[Local Name],[Source Tenant],[Parent Tenant],[Automatic Last Update Date]) values(@Id,@EnglishName,@LocalName,	@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate)
+    insert into #DIM_DepartmentsTemp (Id,Name,[Local Name],[Source Tenant],[Parent Tenant],[Automatic Last Update Date],[InActive]) values(@Id,@EnglishName,@LocalName,	@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive)
 
-	FETCH NEXT FROM DepartmentsCursor INTO @Id , @EnglishName, @LocalName, 	@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
+	FETCH NEXT FROM DepartmentsCursor INTO @Id , @EnglishName, @LocalName, 	@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 		End
 	CLOSE DepartmentsCursor
 	DEALLOCATE DepartmentsCursor

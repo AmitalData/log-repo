@@ -320,6 +320,12 @@ namespace WebFreight.Web.MetaDataUpdate
 
                             break;
                         }
+                    case "accounting":
+                        {
+                            UpdateAccountingModule(context, true);
+
+                            break;
+                        }
                     case "shipment":
                         {
                             UpdateShipmentAndMasterModules(context, true);

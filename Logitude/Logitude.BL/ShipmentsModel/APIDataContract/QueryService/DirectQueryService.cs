@@ -227,12 +227,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                         }
                     }
                 }
-
-                foreach(TransshipmentLeg item in temp.Transshipments)
-                {
-
-                }
-
+                
                 return temp;
             }
 

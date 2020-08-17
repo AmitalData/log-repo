@@ -109,7 +109,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     mainAdditionalPackageApplied = tenantManagement.MainAdditionalPackageApplied;
                     isManageLicencesPerUser = tenantManagement.ManageLicencesPerUser;
 
-                    totalTenantManagementUsers = tenantManagement.NumberOfUsers;
+                    totalTenantManagementUsers = tenantManagement.NumberOfUsers == null ? 0 : tenantManagement.NumberOfUsers;
                     if (tenantManagement.FreeUsers != null)
                     {
                         totalTenantManagementUsers += tenantManagement.FreeUsers;

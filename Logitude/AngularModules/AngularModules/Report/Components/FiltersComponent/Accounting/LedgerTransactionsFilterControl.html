@@ -145,6 +145,7 @@
                         <LogLov style="display: block;width: 150px;" float-start
                                 [ObjectFieldName]="'GLAccountId'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext" [LookUpTableName]="'GLAccount'"
+                                [QueryFilterItems]="GLAccountFilterItems"
                                 (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true" [HideAddLink]="true"
                                 [HideColumns]="true">
                         </LogLov>
@@ -215,12 +216,21 @@
 
                     <!-- 3 -->
                     <td>
-                        <div></div>
+                        <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'"
+                                  [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                     </td>
 
                     <!-- 4 -->
                     <td>
-                        <div></div>
+                        <LogLov         style="display: block;width: 150px;" float-start
+                                        [ObjectFieldName]="'Salesman'"
+                                        [ObjectTableName]="'GLAccount'"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'User'"
+                                        [SelectedValue]="Salesman"
+                                        [QueryFilterItems]="SalesmanFilterItems"
+                                        [HideColumns]="true">
+                                </LogLov>
                     </td>
 
                     <!-- 5 -->
