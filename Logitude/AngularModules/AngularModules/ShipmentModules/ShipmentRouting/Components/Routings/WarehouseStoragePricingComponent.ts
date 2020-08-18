@@ -28,11 +28,9 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
         super();
     }
 
-    private DefaultPricings: WarehouseStoragePricingPM[];
     SetWindowArgs(args: any) {
         this.EntityPM = args['EntityPM'];
         this.ObjectTableName = args['ObjectTableName'];
-        this.DefaultPricings = args['DefaultPricings'];
 
         this.BuildPricingItems();
         this.CopyPricings();
@@ -50,28 +48,9 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
 
         itemsCollection.push(new PricingItem(freeItem, this, true, false));
 
-        if (this.DefaultPricings != null && this.DefaultPricings.length > 0) {
-            var count: number = 1;
-            this.DefaultPricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
-                var defaultItem: ShipmentStoragePricingPM = new ShipmentStoragePricingPM(null);
-                defaultItem.Tenant = SessionLocator.Tenant;
-                defaultItem.ShipmentId = this.EntityPM.Id;
-                defaultItem.WarehouseId = this.EntityPM.WarehouseLegWarehouseId;
-                defaultItem.StepFrom = item.StepFrom;
-                defaultItem.StepTo = item.StepTo;
-                defaultItem.Days = item.Days;
-                defaultItem.SalePrice = item.SalePrice;
-                defaultItem.LineNumber = count++;
-
-                itemsCollection.push(new PricingItem(defaultItem, this, false, true));
-            });
-        }
-
-        else {
-            this.EntityPM.ShipmentStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
-                itemsCollection.push(new PricingItem(item, this, false, false));
-            });
-        }
+        this.EntityPM.ShipmentStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
+            itemsCollection.push(new PricingItem(item, this, false, false));
+        });
 
         if (this.PricingItemsList == null) {
             this.PricingItemsList = new ObservableCollection([]);

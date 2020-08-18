@@ -1970,7 +1970,7 @@ export class ShipmentTool {
 
             entityPM.ShipmentStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
 
-                var isLastStep: boolean = item.LineNumber == maxLineNumber ? true : false;
+                //var isLastStep: boolean = item.LineNumber == maxLineNumber ? true : false;
 
                 var newItem: CalculatedPricingItem = new CalculatedPricingItem();
                 newItem.LineNumber = item.LineNumber;
@@ -1988,15 +1988,15 @@ export class ShipmentTool {
                             newItem.Days = days - previousLine.Days
                         }
 
-                        if (isLastStep) {
-                            if (ArrayTool.Sum(myPricigs, "Days") == days) {
-                                newItem.Days = 0;                                
-                            }
+                        //if (isLastStep) {
+                        //    if (ArrayTool.Sum(myPricigs, "Days") == days) {
+                        //        newItem.Days = 0;                                
+                        //    }
 
-                            else {
-                                newItem.Days = days - ArrayTool.Sum(myPricigs, "Days");
-                            }
-                        }
+                        //    else {
+                        //        newItem.Days = days - ArrayTool.Sum(myPricigs, "Days");
+                        //    }
+                        //}
                     }
 
                     else {
@@ -2068,6 +2068,10 @@ export class ShipmentTool {
                 else {
                     weightRounded = integer + 1;
                 }
+            }
+
+            else {
+                weightRounded = weight;
             }
         }
 
