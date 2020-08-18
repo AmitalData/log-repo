@@ -285,6 +285,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
          */
         public void Update(ARPaymentPM theEntityPm, bool mapComposition = false)
         {
+            this.entityPM = theEntityPm;
             ContactPM loggedUser = GetLoggedContactPM(theEntityPm.Tenant);
             theEntityPm.UpdatedByUserId = loggedUser?.Id;
 
@@ -294,7 +295,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             GLAccountPM gla = FillGLAccountFields(theEntityPm);
 
             this.isNewEntity = false;
-            this.entityPM = theEntityPm;
+         
             this.SetVoided = theEntityPm.SetVoided;
 
             this.newPayment = paymentRepository.GetSingleARPayment(theEntityPm.Id);
@@ -1500,7 +1501,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
                 glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
+
+                if (glaAccount.IsMultiCurrency.Value)
+                {
+                  string splitByCurrencyAccountId=  GetAccountIdForGLAccountCurrency(glaAccount, entityPM.PaymentCurrencyId);
+                    glaAccount= glAccountQuery.GetSingleGLAccountPM(splitByCurrencyAccountId, tenant);
+                }
+                else return glaAccount;
             }
+
 
             return glaAccount;
         }
@@ -1991,20 +2000,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 if (gLAccount.IsMultiCurrency.Value)
                 {
-
-                    GLAccountCurrencyRepository glAccountCurrencyRepository = new GLAccountCurrencyRepository(tenant);
-                    GLAccountCurrency gLAccountCurrency = glAccountCurrencyRepository.GetEntityByCurrencyAndGLAccountId(gLAccount.Id, paymentCurrencyId, tenant);
-                    if (gLAccountCurrency != null)
-                    {
-                        return gLAccountCurrency.GLAccountId;
-                    }
-                    else return gLAccount.Id;
+                  return  GetAccountIdForGLAccountCurrency(gLAccount,paymentCurrencyId);                  
                 }
                 else
                     return gLAccount.Id;
 
             }
             return null;
+        }
+
+        private string GetAccountIdForGLAccountCurrency(GLAccountPM gLAccount, string paymentCurrencyId)
+        {
+            GLAccountCurrencyRepository glAccountCurrencyRepository = new GLAccountCurrencyRepository(gLAccount.Tenant);
+            GLAccountCurrency gLAccountCurrency = glAccountCurrencyRepository.GetEntityByCurrencyAndGLAccountId(gLAccount.Id, paymentCurrencyId, gLAccount.Tenant);
+            if (gLAccountCurrency != null)
+            {
+                return gLAccountCurrency.GLAccountId;
+            }
+            else return gLAccount.Id;
+
         }
         private ReconciliationLinePM CreatePaymentRecoLine(ARPaymentPM paymentPM)
         {
