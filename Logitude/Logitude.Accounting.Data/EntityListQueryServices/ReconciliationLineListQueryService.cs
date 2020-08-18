@@ -37,8 +37,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                             // ledger transaction fields
                                                             CreateDate = a.LedgerTransaction != null ? a.LedgerTransaction.CreateDate : DateTime.Now,
                                                             DueDate = (a.LedgerTransaction != null ? a.LedgerTransaction.DueDate : DateTime.Now),
-                                                            ForeignAmountCredit = (a.LedgerTransaction != null ? a.LedgerTransaction.ForeignAmountCredit : 0),
-                                                            ForeignAmountDebit = (a.LedgerTransaction != null ? a.LedgerTransaction.ForeignAmountDebit : 0),
+                                                            AmountCredit = (a.LedgerTransaction != null ? a.LedgerTransaction.Account.IsMultiCurrency.Value? a.LedgerTransaction.LocalAmountCredit: a.LedgerTransaction.ForeignAmountCredit : 0),
+                                                            AmountDebit = (a.LedgerTransaction != null ? a.LedgerTransaction.Account.IsMultiCurrency.Value ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0),
                                                             Reference1 = (a.LedgerTransaction != null ? a.LedgerTransaction.Reference1 : null),
                                                             Reference2 = (a.LedgerTransaction != null ? a.LedgerTransaction.Reference2 : null),
                                                             Reference3 = (a.LedgerTransaction != null ? a.LedgerTransaction.Reference3 : null),

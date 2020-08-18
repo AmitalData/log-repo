@@ -40,10 +40,10 @@ export class ReconciliationLineListTemplate {
     }
 
     GetTransacionAmount(){
-        if (AppTool.IsNullOrZero(this.rowData.ForeignAmountCredit)) {
-            return  -1 * this.rowData.ForeignAmountDebit;
+        if (AppTool.IsNullOrZero(this.rowData.AmountCredit)) {
+            return  -1 * this.rowData.AmountDebit;
         } else {
-            return this.rowData.ForeignAmountCredit;
+            return this.rowData.AmountCredit;
         }
     }
 
