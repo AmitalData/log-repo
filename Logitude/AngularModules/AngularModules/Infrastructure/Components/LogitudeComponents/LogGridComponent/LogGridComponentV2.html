@@ -156,6 +156,7 @@
         opacity: 0.5;
         pointer-events: none;
     }
+
 </style>
 <div id="{{'ListDataLoaded' | IdGeneratorPipe}}" *ngIf="IsDataLoaded" ></div>
 <div class="outer-container">
@@ -202,53 +203,57 @@
         <div>
             <!-- [ngStyle]="row.styles" [class.HLine]="row.rowData.ShowLineOverRow == true" || row.rowData.IsSelected == true  [style.background]="(ChangeColorByPropName && ChangeColorByPropValue && row.rowData[ChangeColorByPropName] == ChangeColorByPropValue) ? RowBackGroundColor : ((SelectedRow == row.rowData)? '#DFECF7':'transparent')"-->
             <!--(mouseout)="onRowMouseOut('rowtemplate'+rowIndex,rowIndex,row)" (mouseover)="onRowMouseOver('rowtemplate'+rowIndex,rowIndex,row)"-->
-            <!-- autosize-->
-            <cdk-virtual-scroll-viewport [id]="LogGridRowsId" class="GeneratedGridBody" [itemSize]=rowHeight [minBufferPx]="778" [maxBufferPx]="778 * 3">
+            <!-- autosize [minBufferPx]="778" [maxBufferPx]="778 * 3"-->
+            <cdk-virtual-scroll-viewport [id]="LogGridRowsId" class="GeneratedGridBody" (scroll)="onScroll()" [itemSize]=rowHeight>
                 <!--(scrolledIndexChange)="onScroll($event)"-->
                 <!--row && row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight-->
-                <div *cdkVirtualFor="let row of controller;let rowIndex = index;" [style.height.px]="rowHeight">
-                    <div *ngIf="row" class="Row ag-row tooltip" [style.height.px]="row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight"
-                         [attr.SIndex]="row.rowIndex" [class.Selected]="SelectedRow == row"
-                         (ondblclick)="onRowSelected(1, 1, row.myData, row.rowIndex)"
-                         (click)="onRowSelected(1, 1, row.myData, row.rowIndex)" [class.SelectedGradiant]="IsGradiantSelectedColor && (SelectedRow==row)"
-                         [id]="LogGridId +'row'+rowIndex" style="position:absolute;display: flex;width:100%; border-bottom: 1px solid #A7A9AC; border-top: 1px solid transparent;">
-                        <div *ngIf="false && IsSpotLight" class="row-cell" (click)="onSpotLightSelect(row)"
-                             style="display: block;position: absolute;min-width:25px;width:25px"
-                             [id]="'row'+rowIndex+'pluscol'">
-                            <img [src]="row.DetailsIcon" />
-                        </div>
-                        <div class="row-cell"
-                             style="display: block;position: absolute;min-width:25px;"
-                             *ngFor="let col of columns; let colIndex = index" [class.DisabledCell]="Disabled"
-                             [ngStyle]="col.Styles"
-                             [id]="'row'+rowIndex+'col'+colIndex">
-                            <!--[IsChecked]="row.rowData.IsChecked == true"-->
-                            <div class="OverflowSpan" (click)="PreventCheckBoxSelect($event,col)" [id]="'span-row'+rowIndex+'col'+colIndex" [ngStyle]="col.Styles" style="height: 100%; text-align: left; text-indent: 10px;min-width:25px;">
-                                <CheckBox class="CenterCenter" [class.Disabled]="IsCheckBoxEnabled == false" *ngIf="col.IsCheckBox == true" style="margin-left:10px;float:right;" (click)="$event.stopPropagation();"
-                                          (Checked)="OnCheckBoxChecked(row,$event,row.rowIndex)"></CheckBox>
-                                <ObjectFieldTemplate *ngIf="!col.IsCustomTemplate" [ObjectTable]="ObjectTable" [ObjectField]="col.ObjectField" [Entity]="row.myData" [IsListColumnCellTemplate]="true"></ObjectFieldTemplate>
-                                <div [id]="LogGridId + colIndex + 'rowtemplate'+rowIndex" [style.visibility]="col.EnableHoverVisibility ? 'hidden' : 'visible'">
-                                    <list-template *ngIf="col.IsCustomTemplate" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;"
-                                                   [rowData]="row.myData"
-                                                   [AdditionalData]="{rowIndex:row.rowIndex,gridId:LogGridId,RowOutEvent:RowOutEvent,RowOverEvent:RowOverEvent}"
-                                                   [PassAdditionalData]="PassAdditionalDataToTemplates"
-                                                   [fieldName]="col.FieldName"
-                                                   [htmlListComponentName]="col.HtmlListComponentName"
-                                                   [htmlListComponentUrl]="col.HtmlListComponentUrl">
-                                    </list-template>
+                <div [ngStyle]="headerStyle">
+                    <div *cdkVirtualFor="let row of controller;let rowIndex = index;" [style.height.px]="rowHeight">
+                        <div *ngIf="row" class="Row ag-row tooltip" [style.height.px]="row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight"
+                             [style.background]="(ChangeColorByPropName && ChangeColorByPropValue && row.rowData[ChangeColorByPropName] == ChangeColorByPropValue) ? RowBackGroundColor : ((SelectedRow == row.rowData)? '#DFECF7':'transparent')"
+                             [attr.SIndex]="row.rowIndex" [class.Selected]="SelectedRow == row.rowData"
+                             (ondblclick)="onRowSelected(1, 1, row.rowData, row.rowIndex)"
+                             (mouseout)="onRowMouseOut('rowtemplate'+rowIndex,rowIndex,row)" (mouseover)="onRowMouseOver('rowtemplate'+rowIndex,rowIndex,row)"
+                             (click)="onRowSelected(1, 1, row.rowData, row.rowIndex)" [class.SelectedGradiant]="IsGradiantSelectedColor && (SelectedRow==row.rowData || row.rowData.IsSelected == true)"
+                             [id]="LogGridId +'row'+rowIndex" style="position:absolute;display: flex;width:100%; border-bottom: 1px solid #A7A9AC; border-top: 1px solid transparent;">
+                            <div *ngIf="false && IsSpotLight" class="row-cell" (click)="onSpotLightSelect(row)"
+                                 style="display: block;position: absolute;min-width:25px;width:25px"
+                                 [id]="'row'+rowIndex+'pluscol'">
+                                <img [src]="row.DetailsIcon" />
+                            </div>
+                            <div class="row-cell"
+                                 style="display: block;position: absolute;min-width:25px;"
+                                 *ngFor="let col of columns; let colIndex = index" [class.DisabledCell]="Disabled"
+                                 [ngStyle]="col.Styles"
+                                 [id]="'row'+rowIndex+'col'+colIndex">
+                                <!--[IsChecked]="row.rowData.IsChecked == true"-->
+                                <div class="OverflowSpan" (click)="PreventCheckBoxSelect($event,col)" [id]="'span-row'+rowIndex+'col'+colIndex" [ngStyle]="col.Styles" style="height: 100%; text-align: left; text-indent: 10px;min-width:25px;">
+                                    <CheckBox class="CenterCenter" [class.Disabled]="IsCheckBoxEnabled == false" *ngIf="col.IsCheckBox == true" style="margin-left:10px;float:right;" (click)="$event.stopPropagation();"
+                                              (Checked)="OnCheckBoxChecked(row,$event,row.rowIndex)"></CheckBox>
+                                    <ObjectFieldTemplate *ngIf="!col.IsCustomTemplate" [ObjectTable]="ObjectTable" [ObjectField]="col.ObjectField" [Entity]="row.rowData" [IsListColumnCellTemplate]="true"></ObjectFieldTemplate>
+                                    <div [id]="LogGridId + colIndex + 'rowtemplate'+rowIndex" [style.visibility]="col.EnableHoverVisibility ? 'hidden' : 'visible'">
+                                        <list-template *ngIf="col.IsCustomTemplate" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;"
+                                                       [rowData]="row.rowData"
+                                                       [AdditionalData]="{rowIndex:row.rowIndex,gridId:LogGridId,RowOutEvent:RowOutEvent,RowOverEvent:RowOverEvent}"
+                                                       [PassAdditionalData]="PassAdditionalDataToTemplates"
+                                                       [fieldName]="col.FieldName"
+                                                       [htmlListComponentName]="col.HtmlListComponentName"
+                                                       [htmlListComponentUrl]="col.HtmlListComponentUrl">
+                                        </list-template>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row-cell" style="line-height: 35px; height: 35px; max-height: 35px; display: block; ">
+                            <div class="row-cell" style="line-height: 35px; height: 35px; max-height: 35px; display: block; ">
 
+                            </div>
+                            <div *ngIf="EnableRowToolTip" class="tooltiptext" [style.width.px]="ToolTipWidth" [style.minHeight.px]="ToolTipHeight" style="word-wrap:break-word;word-break:keep-all;white-space:normal;">
+                                <div [style.textAlign]="RTL == true ? 'right' : 'left'" style="padding:5px;white-space: pre-wrap;word-wrap:break-word;">{{row[ToolTipBinding]}}</div>
+                            </div>
                         </div>
-                        <div *ngIf="EnableRowToolTip" class="tooltiptext" [style.width.px]="ToolTipWidth" [style.minHeight.px]="ToolTipHeight" style="word-wrap:break-word;word-break:keep-all;white-space:normal;">
-                            <div [style.textAlign]="RTL == true ? 'right' : 'left'" style="padding:5px;white-space: pre-wrap;word-wrap:break-word;">{{row[ToolTipBinding]}}</div>
+                        <div *ngIf="row && row.ShowDetails && IsSpotLight" [id]="'DetailsDiv' + row.rowIndex" [style.top.px]="rowHeight" [style.height.px]="SpotLightHeight" style="position:relative;display: flex;width:100%;" [ngStyle]="row.Detailsstyles">
+                            <ObjectFieldTemplate [ObjectTable]="ObjectTable" [Entity]="row.rowData" [IsSpotLightTemplate]="IsSpotLight" [SpotlightDataTemplate]="SpotlightDataTemplate" style="width:100%;"></ObjectFieldTemplate>
                         </div>
-                    </div>
-                    <div *ngIf="row && row.ShowDetails && IsSpotLight" [id]="'DetailsDiv' + row.rowIndex" [style.top.px]="rowHeight" [style.height.px]="SpotLightHeight" style="position:relative;display: flex;width:100%;" [ngStyle]="row.Detailsstyles">
-                        <ObjectFieldTemplate [ObjectTable]="ObjectTable" [Entity]="row.myData" [IsSpotLightTemplate]="IsSpotLight" [SpotlightDataTemplate]="SpotlightDataTemplate" style="width:100%;"></ObjectFieldTemplate>
                     </div>
                 </div>
             </cdk-virtual-scroll-viewport>

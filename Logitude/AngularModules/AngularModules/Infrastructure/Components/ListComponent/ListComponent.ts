@@ -396,7 +396,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public searchFields: string;
 
     dataSource = {
-        pageSize: 30,
+        pageSize: 10,
         rowCount: null,
         sortingCol: "",//"CreateDateTime",
         sortingDir: "",//"Descending",

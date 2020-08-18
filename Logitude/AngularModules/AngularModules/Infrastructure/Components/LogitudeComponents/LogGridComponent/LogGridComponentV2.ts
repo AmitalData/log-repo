@@ -163,36 +163,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         this.MouseUpSub = this.CurrentSession.MouseUpEvent.subscribe((res) => {
             this.OnMyMouseUp(res);
         });
-        //document.onmouseup = (e) => {
-        //    if (this.isResizing == true) {
-        //        this.isResizing = false;
-        //        this.ColumnResisedevent.emit({ FieldName : this.columns[this.ColIndex].FieldName, Width: this.NewWidthFinal });
-        //    }
-        //};
-        //document.onmouseup = (e) => {
-        //    if (this.isResizing || this.isDraging) {
-        //        if (this.isResizing) {
-        //            this.TotalWidth = this.FinalWidthNew;
-        //            this.headerStyle = {
-        //                'width': this.TotalWidth + 'px',
-        //                'min-width': (this.ViewWidth) + 'px'
-        //            };
-        //        } 
-        //        this.isResizing = false;
-        //        this.isDraging = false;
-        //        var left = document.getElementById(this.ColumnId + "resizable-column-," + this.ColIndex);
-        //        left.classList.remove("ag-header-cell-moving");
-        //        var d = document.getElementById(this.ColumnId + 'Mask');
-        //        //d.style.width = "0px";
-        //        d.innerText = "";
-        //        styleDisplay(d); 
-        //        if (this.timerToken) {
-        //            clearTimeout(this.timerToken);
-        //    }
-        //        this.timerToken = setTimeout(() => this.FireColumnReorderComplete(), 400);
-
-        //    }
-        //};
+       
 
     }
     onRowMouseOut(id, rowIndex, row) {
@@ -205,7 +176,6 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                 elem.style.background = this.RowBackGroundColor;
             }
             else {
-
                 elem.style.background = this.SelectedRow == row.rowData ? "#DFECF7" : "transparent";
             }
         }
@@ -1323,7 +1293,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         this.virtualRowMetaData.IsSpotLight = this.IsSpotLight;
         this.virtualRowMetaData.SpotlightDataTemplate = this.SpotlightDataTemplate;
         this.virtualRowMetaData.DetailsIcon = "./Images/SpotLightPlusIcon.png";
-        this.controller.ReloadDataSource();
+        this.controller.ReloadDataSource(this.rowCount);
 
 
         ////this.controller.ClearCache();
@@ -1438,6 +1408,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         }
         this.requestedRowCountSub = this.controllerForCount.requestedRowCount.subscribe((res) => {
 
+
             this.rowCount = res;
             this.virtualRowMetaData.rowsCount = res;
             this.virtualRowMetaData.Filters = this.Filters;
@@ -1448,11 +1419,17 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             this.virtualRowMetaData.SpotlightDataTemplate = this.SpotlightDataTemplate;
             this.virtualRowMetaData.DetailsIcon = "./Images/SpotLightPlusIcon.png";
             this.virtualRowMetaData.cd = this.cd;//
-            this.controller = new VirtualRowControllerV2(this.virtualRowMetaData);
+            if (!this.controller) {
+                //this.controller.disconnect();
+                this.controller = new VirtualRowControllerV2(this.virtualRowMetaData);
+            }
             this.controller.setDataSource(this.dataSource);
+            this.controller.ClearCache();
+            this.controller.ReloadDataSource(res);
+            
             if (this.cd) {
-                this.cd.reattach();
-                this.cd.detectChanges();
+                //this.cd.reattach();
+                //this.cd.detectChanges();
             }
             this.CountReady.emit(res);
             //this.rows = new Array(this.rowCount)
@@ -1476,8 +1453,8 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             }
             else {
                 if (this.cd) {
-                    this.cd.reattach();
-                    this.cd.detectChanges();
+                    //this.cd.reattach();
+                    //this.cd.detectChanges();
                 }
             }
             if (this.MyScrollTop != 0) {
@@ -1783,34 +1760,22 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
 
     scrolltimer = null;
     onScroll() {
-        //alert("sss");
-        //this.SearchFieldChanged = false;
-        //var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
-        //var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
-
-        //this.LogGridElement = elem;
-        //if (elem) {
-        //  if (this.HScrollPosition == -1 || elem.scrollLeft > this.HScrollPosition) {
-        //    this.HScrollPosition = elem.scrollLeft;
-        //  }
-        //  if (columns) {
-        //    //columns.style.top = elem.scrollTop + "px";
-        //    if (this.RTL == true) {
-        //      columns.style.right = -1 * (this.HScrollPosition - elem.scrollLeft) + "px";
-        //    }
-        //    else {
-        //      columns.style.left = -1 * elem.scrollLeft + "px";
-        //    }
-        //  }
-        //  //console.log("Inside Elem " + elem.scrollTop);
-        //}
-        //else {
-        //  //console.log("Inside else ");
-        //}
-        //if (this.timer) {
-        //  clearTimeout(this.timer);
-        //}
-        //this.timer = setTimeout(() => this.DoScroll(), 200);
+        
+        var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
+        var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId); 
+        if (elem) {
+          if (this.HScrollPosition == -1 || elem.scrollLeft > this.HScrollPosition) {
+            this.HScrollPosition = elem.scrollLeft;
+          }
+          if (columns) { 
+            if (this.RTL == true) {
+              columns.style.right = -1 * (this.HScrollPosition - elem.scrollLeft) + "px";
+            }
+            else {
+              columns.style.left = -1 * elem.scrollLeft + "px";
+            }
+          } 
+        }
     };
     HScrollPosition: number = -1;
     HorizantalScrollValue: string = "0px";

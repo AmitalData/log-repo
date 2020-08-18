@@ -243,7 +243,8 @@ export class AppTool {
         var logitude_url = location.href.replace('index.html', '');
 
         if (location.href.indexOf('localhost') > -1) {
-            logitude_url = 'http://localhost:9996/';
+            logitude_url = 'http://localhost:9996/';//test.logitudeworld.com/test/';//
+
         }
 
         else {
@@ -263,7 +264,7 @@ export class AppTool {
         var logitude_url = location.href.replace('index.html', '');
 
         if (location.href.indexOf('localhost') > -1) {
-            logitude_url = 'http://localhost:9996/';
+            logitude_url = 'http://localhost:9996/';//test.logitudeworld.com/test/';
         }
 
         else {
