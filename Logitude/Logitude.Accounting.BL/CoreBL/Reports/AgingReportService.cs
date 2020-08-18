@@ -839,7 +839,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             if (total1 == 0)
             {
                 //firstMinusPeriod_ThatAfterFirstPlus.Total = firstPlusPeriod.Total = 0;
-                firstMinusPeriod_ThatAfterFirstPlus.OpenDebit = firstPlusPeriod.OpenCredit = 0;
+                //firstMinusPeriod_ThatAfterFirstPlus.OpenDebit = firstPlusPeriod.OpenCredit = 0;
+                firstPlusPeriod.OpenDebit = firstMinusPeriod_ThatAfterFirstPlus.OpenCredit = 0;
             }
             else if (total1 > 0) 
             {
