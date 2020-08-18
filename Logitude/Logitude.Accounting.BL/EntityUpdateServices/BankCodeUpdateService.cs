@@ -13,6 +13,12 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Simplog.Server.Infrastructure.Azure;
+using Microsoft.Practices.Unity;
+using Logitude.Server.Tools.StorageService;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.IO;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -27,26 +33,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnUpdating(BankCodePM entityPM)
         {
             entityPM.SearchFields = entityPM.Code + "," + entityPM.EnglishName + "," + entityPM.LocalName;
-            if(entityPM.ChangeSetOp == ChangeSetOperation.Insert && entityPM.Tenant == 0)
+            if(entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                
-                ImageDetailRepository imageDetailRepository = new ImageDetailRepository(entityPM.Tenant);
-                string extension = imageDetailRepository.GetImageExtensionbyId(entityPM.Tenant, entityPM.LogoId);
-                Uploader uploaderService = new Uploader();
-                byte[] filedata = uploaderService.DownloadFile(filename, documentExtension, fileLocation, tenant);
-
-                if (filedata != null)
+                BankCodeQueryService bankCodeQueryService = new BankCodeQueryService(entityPM.Tenant);
+                BankCodePM bankCode = bankCodeQueryService.GetSingleByCode(entityPM.Code, 0);
+                if (bankCode != null)
                 {
-                    if (filename.Contains("logo") || type == "Base64")
-                    {
-                        result = "data:image/" + documentExtension + ";base64," + Convert.ToBase64String(filedata);
-                    }
-                    else result = UTF8Encoding.UTF8.GetString(filedata, 0, filedata.Length);
+                   entityPM.LogoId= GetLogogIdFromTenant0BankCode(bankCode, entityPM.Tenant);
+                  
                 }
-
             }
         }
-
+      
         protected override void Trace(BankCodePM entityPM, BankCode entityPOCO, string changesXml)
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
@@ -115,5 +113,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.Trace(entityPM, entityPOCO, changesXml);
         }
 
+       private string GetLogogIdFromTenant0BankCode(BankCodePM bankCode, int tenant)
+        {
+            ImageDetailRepository imageDetailRepository = new ImageDetailRepository(tenant);
+            ImageDetail image = imageDetailRepository.GetSingleImageDetail(bankCode.LogoId, 0);
+            UploadTool uploader = new UploadTool();
+            byte[] filedata = uploader.DownloadFile(image.Id, image.Extension, "images", 0);
+            string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
+            string ImageId = uploader.UploadImage(image.Id, filedata, filedata.Length, filedata.Length, blockIdlist, 0, tenant, image.Extension,null, null, image.Id);
+           return ImageId;
+        }
     }
 }
