@@ -287,6 +287,11 @@ export class WarehouseEntryPackagePM {
     public set OverManifest(newValue: number) { if (this.overManifest != newValue) { this.overManifest = newValue; this.MarkAsDirty("OverManifest"); } }
        
 	 
+    private oldQuantity: number;
+    public get OldQuantity() { return this.oldQuantity; }
+    public set OldQuantity(newValue: number) { if (this.oldQuantity != newValue) { this.oldQuantity = newValue; this.MarkAsDirty("OldQuantity"); } }
+       
+	 
 
     public OldEntityPM: WarehouseEntryPackagePM;
 	

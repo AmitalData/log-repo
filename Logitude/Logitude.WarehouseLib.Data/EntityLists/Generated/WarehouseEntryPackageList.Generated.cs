@@ -100,6 +100,8 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public string WarehouseEntryNumber  { get; set; }
        [DataMember]
        public int OverManifest  { get; set; }
+       [DataMember]
+       public int OldQuantity  { get; set; }
    }
 
 }
