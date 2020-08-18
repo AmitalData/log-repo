@@ -174,7 +174,7 @@ namespace Logitude.Accounting.BL.DataContract
         public List<CardList> GetVendorsByIds(List<APPayment> payments)
         {
             List<string> vendorIds = payments.Select(d => d.VendorId).ToList();
-            addresses = addresses.Concat(GetVendorsAddresses(vendorIds)).ToList();
+          
             List<CardList> vendors= (from a in commoncontext.Cards
                     where vendorIds.Contains(a.Id) && a.CountryCode == "IL"
                     && a.Tenant == Tenant
@@ -191,9 +191,33 @@ namespace Logitude.Accounting.BL.DataContract
                         LocalName = a.LocalName,
                         Code = a.Code
                     }).ToList();
+           
             gLAccounts = gLAccounts.Concat(GetVendorsGLAccounts(vendors)).ToList();
+            vendors = vendors.Concat(GetAccountsVendors(gLAccounts.Select(d => d.Id).ToList())).ToList();
+            addresses = addresses.Concat(GetVendorsAddresses(vendors.Select(d=> d.Id).ToList())).ToList();
             return vendors;
 
+        }
+
+        private List<CardList> GetAccountsVendors(List<string> accountIds)
+        {
+            List<CardList> vendors = (from a in commoncontext.Cards
+                                      where accountIds.Contains(a.GLAccountId) && a.CountryCode == "IL"
+                                      && a.Tenant == Tenant
+                                      select new CardList()
+                                      {
+                                          Id = a.Id,
+                                          CityName = a.CityName,
+                                          MainAddressId = a.Address1,
+                                          GLAccountId = a.GLAccountId,
+                                          IsAutonomy = a.IsAutonomy,
+                                          IsInternationalPartner = a.IsInternationalPartner,
+                                          EnglishName = a.EnglishName,
+                                          VatNumber = a.VatNumber,
+                                          LocalName = a.LocalName,
+                                          Code = a.Code
+                                      }).ToList();
+            return vendors;
         }
 
         public List<CardList> GetVendorsByAccountsIds(List<string> accountIds)
@@ -250,7 +274,7 @@ namespace Logitude.Accounting.BL.DataContract
                         DeductionFileNumber = a.DeductionFileNumber
                     }
                         ).ToList();
-
+        
         }
 
         public List<GLAccountList> GetTransactionsOppositeGLAccounts(List<LedgerTransaction> transactions)
