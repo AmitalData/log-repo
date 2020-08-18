@@ -1193,6 +1193,29 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private int overManifest ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int OverManifest  
+	   {
+	    
+	     get
+		{
+		   return overManifest;
+		 }
+		 set
+		 {
+		   if(overManifest != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OverManifest",OldValue=overManifest,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   overManifest=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
