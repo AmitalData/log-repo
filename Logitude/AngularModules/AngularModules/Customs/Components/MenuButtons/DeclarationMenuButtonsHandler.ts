@@ -587,7 +587,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
     }
-    OpenDeclarationCancellationWindow() {
+    OpenDeclarationCancellationWindow_() {
         var args: any = {
             Declaration: this.EntityPM,
         };
