@@ -29,7 +29,7 @@ namespace Logitude.Customs.BL.CloseTables
                 },
                 new SincroTestCaseDetail()
                 {
-                    Code = "2755Payment",
+                    Code = "2755",
                     Name = "  ללא חתימה הגשת תשלום",
                     Entity="DeclarationPayment",
                     AvoidSign= true

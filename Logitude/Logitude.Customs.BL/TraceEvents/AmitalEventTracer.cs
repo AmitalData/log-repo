@@ -20,7 +20,7 @@ namespace Logitude.Customs.BL.TraceEvents
     {
 
 
-        public static void CreateTraceEvent(AmitalEventTracerModel myAmitalEventTracer, bool suppressSendToUniFreight = false, bool suppress_RAISE_EVENT = false)
+        public static void CreateTraceEvent(AmitalEventTracerModel myAmitalEventTracer, bool suppressSendToUniFreight = false, bool suppress_RAISE_EVENT = false, bool iscustomUser=false)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace Logitude.Customs.BL.TraceEvents
                     throw new BusinessErrorException("NO DATA TO SEND FU/Status INTERFACE to Amital !! (myAmitalEventTracer.MyFUStatus == null)");
                 }
 
-                var myFUStatus = GetFUStatus(myAmitalEventTracer);
+                var myFUStatus = GetFUStatus(myAmitalEventTracer, iscustomUser:  iscustomUser);
                 var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
                 myUServerCommunicationService.Send();
 
@@ -92,7 +92,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
         
 
-        public static GFUSTS GetFUStatus(AmitalEventTracerModel myAmitalEventTracer)
+        public static GFUSTS GetFUStatus(AmitalEventTracerModel myAmitalEventTracer, bool iscustomUser = false)
         {
 
             var myFUStatus = new GFUSTS();
@@ -120,7 +120,7 @@ namespace Logitude.Customs.BL.TraceEvents
                     }
                 }
             }
-            if (String.IsNullOrWhiteSpace(unfreightUserId))
+            if (String.IsNullOrWhiteSpace(unfreightUserId) || iscustomUser)
             {
                 if (!String.IsNullOrWhiteSpace(myAmitalEventTracer.UserId))
                 {
@@ -141,7 +141,8 @@ namespace Logitude.Customs.BL.TraceEvents
                     unfreightUserId = "MEHES"; // change from "AMITAL"
                 }
             }
-            //<-- Mirit 07/06/15 task 13520
+
+             //<-- Mirit 07/06/15 task 13520
             myFollow_up_status.foll_up_details = new foll_up_details[] {
                     new  foll_up_details()
                     {

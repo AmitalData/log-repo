@@ -218,8 +218,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             req.GeneralData.DeclarationType = 1;
             req.GeneralData.CancellationReasonTypeId = Convert.ToInt32(dec.CancelRequestReasonCode);
             req.GeneralData.AgentCancellationRemarks = dec.CancelRequestReasonExplanation;
-            req.Attachment = new Attachment[1];
-            req.Attachment[0] = new Attachment() { IsAttachment = "false" , externalAttachmentID= "IIG-227-1" };
+            req.Attachment = GetAttachments(dec);
+                //new Attachment[1];
+            //req.Attachment[0] = new Attachment() { IsAttachment = "false" , externalAttachmentID= "IIG-227-1" };
             dec.ChangeSetOp = ChangeSetOperation.Update;
             declarationUpdateService.Update(dec, true);
 
@@ -254,14 +255,14 @@ namespace Logitude.CustomsMessaging.RequestServices
             return req;
         }
 
-        private Attachment[] GetAttachments()
+        private Attachment[] GetAttachments(DeclarationPM declaration)
         {
             List<Attachment> attachments = new List<Attachment>();
 
 
 
              var customsDocumentQueryService = new CustomsDocumentQueryService(_context);
-            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = _DeclarationPM.Id, ParentEntityCode = "Declaration" }, _DeclarationPM.Tenant);
+            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = declaration.Id, ParentEntityCode = "DeclarationCancellation" }, declaration.Tenant);
 
             foreach (var customsDocumentPM in customsDocumentPMList)
             {

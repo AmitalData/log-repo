@@ -811,14 +811,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
-                var _MyDeclarationPMOrg = declarationQueryService.GetSingleDeclarationById(entityPM.AmendmentOriginalDeclartation, entityPM.Tenant);
+                var _MyDeclarationPMOrg = declarationQueryService.GetAcceptDeclarationAmendment(entityPM.AmendmentOriginalDeclartation, entityPM.Tenant);
 
                 var myAmitalEventTracerModel3 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
                     Tenant = entityPM.Tenant,
                     objectTableName = "Customs.Declaration",
                     EventCode = "DMC",
-                    notes = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : entityPM.DeclarationNumber) ,
+                    notes = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : entityPM.DeclarationNumber) + (!string.IsNullOrEmpty(entityPM.AmendmentRequestNumber) ? " מספר בקשה - " + entityPM.AmendmentRequestNumber : ""),
                     CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : entityPM.DeclarationNumber,
                     EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : entityPM.Id,
               //      UserId = resolveLoggingUserId,
@@ -832,7 +832,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         xml_status = "new",
                         status_id = "DMC",
                         status_DateTime = DateTime.Now,
-                        comments = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : entityPM.DeclarationNumber) ,
+                        comments = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : entityPM.DeclarationNumber) + (!string.IsNullOrEmpty(entityPM.AmendmentRequestNumber)? " מספר בקשה - " + entityPM.AmendmentRequestNumber:"") ,
                     }
                 };
 
