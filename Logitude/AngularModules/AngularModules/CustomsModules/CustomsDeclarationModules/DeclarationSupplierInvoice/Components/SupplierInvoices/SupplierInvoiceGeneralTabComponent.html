@@ -197,7 +197,7 @@
                 <tr>
                     <td style="width:500px;">
                         <div style="width:500px; margin:5px">
-                            <table  *ngIf ="declarationPM && declarationPM.Direction !='E'">
+                            <table  *ngIf ="!allowExport">
 
                                 <tr style="height: 32px;">
                                     <td style="width: 150px;">
@@ -420,7 +420,7 @@
 
 
                             </table>
-                            <table *ngIf="declarationPM && declarationPM.Direction =='E'">
+                            <table *ngIf="allowExport">
 
                                 <tr style="height: 32px;">
                                     <td style="width: 150px;">
@@ -683,12 +683,12 @@
                         <div style="width:30px"></div>
                     </td>
                     <td rowspan="2">
-                        <!--<span *ngIf="allowExport" class="LeftTop buttonelipsis"
+                        <span *ngIf="allowExport" class="LeftTop buttonelipsis"
                               style="background-color: white; color: black; border: 2px solid #e7e7e7; width: 30px; text-align: center; font-weight: bold;cursor: pointer;"
                               (click)="OpenExporterInvoiceWindow()">...E</span>
 
                         <br />
-                        <br />-->
+                        <br />
                         <table>
 
                             <tr>

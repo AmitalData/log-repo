@@ -2015,7 +2015,7 @@ namespace Logitude.Customs.Def.EntityPMs
  
 		     
 	   [Include]
-	   [Association("SuppInvoiceItemsAbachStatement", "DeclarationId,CounterKey,LineNumber","DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber")]
+	   [Association("SuppInvoiceItemsAbachStatements", "DeclarationId,CounterKey,LineNumber","DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber")]
 	   [DataMember]
 	   public virtual List<SuppInvoiceItemsAbachStatementPM> SuppInvoiceItemsAbachStatements  
 	   {

@@ -51,6 +51,13 @@ export class DeclarationReferantDataList {
 	LastStatusDate: Date;
 	OrderMoney: boolean;
 	Team: string;
+	StorageSiteName: string;
+	TaxationDateTime: Date;
+	ProcedureCurrentName: string;
+	HatraDate: Date;
+	PaymentDate: Date;
+	ImporterCode: string;
+	CustomerCode: string;
 	
 }
  

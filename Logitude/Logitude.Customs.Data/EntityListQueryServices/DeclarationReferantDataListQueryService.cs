@@ -24,7 +24,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
                                                              join d in context.Declarations.Include("CustomerCard").Include("DeclarationOffice").Include("DeclarationStatusType")
                                                              on a.DeclarationId equals d.Id
-                                                             where d.ReferentUserId != null
 
                                                              join e in context.Cards.Include("CustomerCard")
                                                              on d.CustomerId equals e.Customer.Id
@@ -90,7 +89,19 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  LastStatusName = a.LastStatusName,
                                                                  OrderMoney = a.OrderMoney,
                                                                  Team=a.ReferantTeam.LocalName,
-                                                              
+                                                                 StorageSiteName=d.StorageSiteName,
+                                                                 HatraDate=d.HatraDate,
+                                                                 PaymentDate=d.PaymentDate,
+                                                                 TaxationDateTime=d.TaxationDateTime,
+                                                                 CustomerCode = d.CustomerCard == null ? null : d.CustomerCard.Code,
+                                                                 ImporterCode=d.ImporterCode,
+                                                                 ProcedureCurrentName = d.GovernmentProcedureCurrent.LocalName,
+
+
+
+
+
+
                                                              }) ;
                                                                 
                                               return query;
