@@ -76,6 +76,31 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
 
         protected override void Trace(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO, string changesXml)
         {
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                string overManifestNotes = "";
+                entityPM.WarehouseEntryPackages.ForEach(entryPackage =>
+                {
+                    if (entryPackage.OverManifest > 0)
+                    {
+                        overManifestNotes += GetOverManifestWarningMessage(entryPackage.OverManifest, entryPackage.Quantity - entryPackage.OverManifest);
+                    }
+                });
+
+                if (!string.IsNullOrEmpty(overManifestNotes))
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "OVMA",
+                        UserId = entityPM.UpdatedByUserId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "WarehouseEntry",
+                        Notes = overManifestNotes
+                    });
+                }
+            }
+
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
                 if (entityPM.StatusCode != entityPOCO.StatusCode)
@@ -95,6 +120,12 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
             }
         }
 
+        private string GetOverManifestWarningMessage(int overManifest, int oldQuantity)
+        {
+            string isOrAre = overManifest == 1 ? "is" : "are";
+            string warningMessage = overManifest + " out of " + oldQuantity + " packages " + isOrAre + " over manifest\n";
+            return warningMessage;
+        }
         protected override void OnUpdating(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO)
         {
             AddTraceEvents(entityPM, entityPOCO);

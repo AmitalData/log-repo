@@ -223,7 +223,7 @@
                                     </div>
 
                                     <div *ngIf="logcelltemplate.IsEditMode">
-                                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'Integer'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="'WarehouseEntry'" [HideColumns]="true"></LogTextBox>
+                                        <LogTextBox (ValueChanged)="onQuantityChange(item)" [FocusOnMe]="'true'" [InputType]="'Integer'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="'WarehouseEntry'" [HideColumns]="true"></LogTextBox>
                                     </div>
                                 </log-cell-template>
                             </ng-template>

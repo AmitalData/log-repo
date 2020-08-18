@@ -282,6 +282,11 @@ export class WarehouseEntryPackagePM {
     public set ShipmentPackageId(newValue: string) { if (this.shipmentPackageId != newValue) { this.shipmentPackageId = newValue; this.MarkAsDirty("ShipmentPackageId"); } }
        
 	 
+    private overManifest: number;
+    public get OverManifest() { return this.overManifest; }
+    public set OverManifest(newValue: number) { if (this.overManifest != newValue) { this.overManifest = newValue; this.MarkAsDirty("OverManifest"); } }
+       
+	 
 
     public OldEntityPM: WarehouseEntryPackagePM;
 	
