@@ -43,6 +43,7 @@ import { ChildDirective } from '../../../Infrastructure/Directives/ChildDirectiv
 import { ContactInputTemplateArgs } from '../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 import { ShipmentSubTypeListService } from '../../services/standardlists/shipmentsubtypelistservice';
 import { ShipmentSubTypeList } from '../../EntityLists/ShipmentSubTypeList';
+import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({
     templateUrl: './NewShipmentComponent.html',
@@ -80,6 +81,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
     }
 
+    public SubTypeFeatureToggle: FeatureToggleList;
     public ScreenIsReady: boolean = false;
     ngOnInit() {
         var listservice: EntityListService = new EntityListService();
@@ -92,6 +94,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                     this.OnFiltersChanged();
                 }
 
+                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB" && d.TenantNumber == SessionLocator.Tenant)[0];                
                 this.LoadAllowedAirline();
                 this.LoadShipmentSubTypes();
                 this.ScreenIsReady = true;

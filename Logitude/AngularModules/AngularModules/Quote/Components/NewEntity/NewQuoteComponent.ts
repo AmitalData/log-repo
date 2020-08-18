@@ -30,6 +30,7 @@ import { ChildDirective } from '../../../Infrastructure/Directives/ChildDirectiv
 import { ContactInputTemplateArgs } from '../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 import { ShipmentSubTypeListService } from '../../../Shipment/services/standardlists/shipmentsubtypelistservice';
 import { ShipmentSubTypeList } from '../../../Shipment/EntityLists/ShipmentSubTypeList';
+import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({
     templateUrl: './NewQuoteComponent.html',
@@ -67,13 +68,15 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.IsAddAgentVisible = true;
         }
     }
-    public ScreenIsReady: boolean = false;
 
+    public ScreenIsReady: boolean = false;
+    public SubTypeFeatureToggle: FeatureToggleList;
     ngOnInit() {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
             res.subscribe((resp: any) => {
+                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB" && d.TenantNumber == SessionLocator.Tenant)[0]; 
                 this.ScreenIsReady = true;
                 this.BuildFiltersLists();
                 this.OnFiltersChanged();

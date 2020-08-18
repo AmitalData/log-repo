@@ -34,6 +34,7 @@ import { ContactInputTemplateArgs } from '../../../CommonModules/CommonPartners/
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ShipmentSubTypeListService } from '../../services/standardlists/shipmentsubtypelistservice';
 import { ShipmentSubTypeList } from '../../EntityLists/ShipmentSubTypeList';
+import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({
     templateUrl: './NewMasterComponent.html',
@@ -70,12 +71,14 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         }
     }
 
+    public SubTypeFeatureToggle: FeatureToggleList;
     public ScreenIsReady: boolean = false;
     ngOnInit() {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
             res.subscribe((resp: any) => {
+                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB" && d.TenantNumber == SessionLocator.Tenant)[0]; 
                 this.ScreenIsReady = true;
 
                 this.BuildFiltersLists();

@@ -145,7 +145,7 @@
                                         </div>
 
                                         <!-- Shipment Sub Types -->
-                                        <div style="margin: 10px;" *ngIf="DirectionId && TransportModeId && ShipmentTypeId">
+                                        <div style="margin: 10px;" *ngIf="DirectionId && TransportModeId && ShipmentTypeId && SubTypeFeatureToggle">
                                             <div style="font-size: 13px; color: #6E7172;">{{'Shipment.F.ShipmentSubTypeId' | TextCodeTranslationPipe}}:</div>
                                             <div style="margin-top: -2px;">
                                                 <div class="RadioButton" *ngFor="let item of ShipmentSubTypesList" [attr.id]="'ShipmentSubTypeRadio_Div_' + SessionIndex + item.Code">
