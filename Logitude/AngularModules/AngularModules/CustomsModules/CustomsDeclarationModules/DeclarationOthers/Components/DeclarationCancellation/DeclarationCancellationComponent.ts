@@ -13,6 +13,7 @@ import { DeclarationWebService } from '../../../../../Customs/Services/WebServic
 import { CustomMessageProgressComponent } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
+import { CustomsCollateralPM } from '../../../../../Customs/EntityPMs/CustomsCollateralPM';
 
 declare var window: any;
 
@@ -208,15 +209,16 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
                     });
                 this._DeclarationWebService.PostSendDeclarationCancellation(currRequestParams)
                     .subscribe((myServiceResponse: ServiceResponse) => {
-                        if (!myServiceResponse.HasError) {
+                        if (!myServiceResponse.HasError && myServiceResponse.Result != null && myServiceResponse.Result.HasException!=true) {
                           var messageWindow = new MessageWindow();
                         messageWindow.Width = 400;
                         messageWindow.Height = 200;
                         messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
                             messageWindow.Show("בקשת ביטול נשלחה בהצלחה.");
 
-                            SessionLocator.SelectedSession.CloseCurrentWindow();
                         }
+                        SessionLocator.SelectedSession.CloseCurrentWindow();
+
                       
                     });
             }
@@ -263,17 +265,16 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
             this.readonly = true;
         }
     }
-
     ViewDocumentsComponent() {
-         
-       
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
 
-        windowArgs.ObjectTableName = "Customs.DeclarationCancellation";// this.ObjectTableName;
-        windowArgs.EntityParentPM = "DeclarationCancellation";
+       // windowArgs.ObjectTableName = "Customs.CustomsCollateral";Cancellation
+       windowArgs.ObjectTableName = "Customs.Declaration";// this.ObjectTableName;
+       windowArgs.EntityParentPM = "DeclarationCancellation";
+
         var windowTitle = "Customs.Declaration.TH.Documents";
-    //    windowArgs.ParentEntityCode = "DeclarationCancellation";
+
         var logWindow = new LogitudeWindow();
         logWindow.IsHideHeader = true;
         logWindow.Width = 1000;
@@ -281,10 +282,30 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         logWindow.Title = windowTitle;
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
-        // logWindow.WindowClosed.subscribe(($event: any) => this.OnDocumentsWindowClosed($event));
-        //this.entityArgs.SkipCtor = true;
+
         logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
     }
+
+    //ViewDocumentsComponent() {
+         
+       
+    //     var windowArgs: any = {};
+    //    windowArgs.EntityPM = this.EntityPM;
+    //    windowArgs.ObjectTableName = "Customs.DeclarationCancellation";// this.ObjectTableName;
+    //    windowArgs.EntityParentPM = "DeclarationCancellation";
+    //    var windowTitle = "Customs.Declaration.TH.Documents";
+    ////    windowArgs.ParentEntityCode = "DeclarationCancellation";
+    //    var logWindow = new LogitudeWindow();
+    //    logWindow.IsHideHeader = true;
+    //    logWindow.Width = 1000;
+    //    logWindow.Height = 700;
+    //    logWindow.Title = windowTitle;
+    //    logWindow.ShowCloseButton = false;
+    //    logWindow.WindowArgs = windowArgs;
+    //   // logWindow.WindowClosed.subscribe(($event: any) => this.OnDocumentsWindowClosed($event));
+    //    //this.entityArgs.SkipCtor = true;
+    //    logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
+    //}
 
     ngOnInit() {
 
