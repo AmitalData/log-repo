@@ -200,6 +200,7 @@ namespace Logitude.Accounting.BL.Utils
                         else
                         {
                             decimal actualDifference = getNextGroupArgs.ActualDifference;
+
                             success = ProcessOneReconciableLT_List(tenant, myGLAccountId, reconciableLT_List, reconciliationStageCArg.MaximalDifference, actualDifference);
                             if (success)
                             {
@@ -256,6 +257,7 @@ namespace Logitude.Accounting.BL.Utils
                     List<JournalLineReco> jLL = journalLineList.OrderByDescending(rec => rec._oneLineLedger.DueDate).ThenByDescending(rec => Math.Abs(rec._oneLineLedger.AmountToReconcile)).ToList();
                     if (actualDifference != 0m)
                     {
+                        jLL.Reverse();
                         jLL.ForEach(item =>
                         {
                             if (actualDifference != 0m)
@@ -273,6 +275,7 @@ namespace Logitude.Accounting.BL.Utils
                             }
     
                         });
+                        jLL.Reverse();
                     }
                     if (actualDifference != 0m)
                     {

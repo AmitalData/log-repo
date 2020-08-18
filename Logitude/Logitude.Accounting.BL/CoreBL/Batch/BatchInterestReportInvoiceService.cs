@@ -226,6 +226,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
             interestReportPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             InterestReportUpdateService service = new InterestReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
+            interestReportPM.IsUpdatedFromBatch = true;
             service.Update(interestReportPM, true);
 
         }
@@ -285,7 +286,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoicePM.IsGeneralInvoice = true;
             aRInvoicePM.IsFullAccounting = true;
             aRInvoicePM.SetApproved = true;
-
+            aRInvoicePM.DueDate = aRInvoicePM.InvoiceDate;
             if (!string.IsNullOrEmpty(cardPM.SATPaymentMethodCode))
             {
                 aRInvoicePM.SATPaymentMethodCode = cardPM.SATPaymentMethodCode;
@@ -313,7 +314,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 aRInvoicePM.BillToAddressId = cardPM.MainAddressId;
             }
 
-            aRInvoicePM = InitializeDueDate(aRInvoicePM);
+            //aRInvoicePM = InitializeDueDate(aRInvoicePM);
             aRInvoicePM = SetCurrencyRateData(aRInvoicePM, tenantPM);
 
             return aRInvoicePM;
@@ -388,7 +389,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoiceLinePM.ChargesTypeId = chargesType.Id;
             aRInvoiceLinePM.VatTypeId = chargesType.VatTypeId;
             aRInvoiceLinePM.VatPercentage = vatTypePercentagePM.Percentage;
-            aRInvoiceLinePM.GLAccountId = interestReport.GLAccountId;
+            aRInvoiceLinePM.GLAccountId = chargesType.ReceivableCreditGLAccountId;
             if (aRInvoiceLinePM.ForiegnCurrencyAmount == null || aRInvoiceLinePM.LocalCurrencyAmount == null || aRInvoiceLinePM.LocalCurrencyAmount == 0)
             {
                 aRInvoiceLinePM.ForiegnExchangeRate = 0;

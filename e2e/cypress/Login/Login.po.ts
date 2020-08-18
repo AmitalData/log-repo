@@ -33,33 +33,27 @@ it('Login Successfully', () => {
         Password = Cypress.env("LocalPassword");
     }
 
-    else if ( Env == 'FATest'){
+    else if (Env == 'FATest') {
         Email = Cypress.env("FATestEmail");
         Password = Cypress.env("FATestPassword");
-       }
-       else if ( Env == 'FACloud'){
-         URL = Cypress.env("CloudStagingURL");
-         Email = Cypress.env("FACloudEmail");
-         Password = Cypress.env("FACloudPassword");
-       }
+    }
+    else if (Env == 'FACloud') {
+        URL = Cypress.env("CloudStagingURL");
+        Email = Cypress.env("FACloudEmail");
+        Password = Cypress.env("FACloudPassword");
+    }
 
-       else if ( Env == 'ProdStagingTI'){
+    else if (Env == 'ProdStagingTI') {
         URL = Cypress.env("ProdStagingTIURL");
         Email = Cypress.env("ProdStagingTIEmail");
         Password = Cypress.env("ProdStagingTIPassword");
-      }
+    }
 
-      else if ( Env == 'TestStagingTI'){
+    else if (Env == 'TestStagingTI') {
         URL = Cypress.env("TestStagingURL");
         Email = Cypress.env("TestStagingEmail");
         Password = Cypress.env("TestStagingPassword");
-      }
-
-
-       
-   
-   
-
+    }
     else //test_staging
     {
         //URL = Cypress.env("TestURL");
@@ -75,20 +69,13 @@ it('Login Successfully', () => {
 
     cy.get('#Password').type(Password)
     cy.get('#cmdLogin').click()
-
-
-
     cy.server();
     //cy.route('test/api/ObjectTableLastUpdate/GetLastTableUpdateDate/?tenant=1102').as('LoadDataCompleted');
     cy.route('**/ObjectTableLastUpdate/**').as('LoadDataCompleted');
 
     cy.window().then(win => { win.sessionStorage.setItem('ControlledByCypress', 'true') });
 
-    cy.wait('@LoadDataCompleted'); 
-
-
-
-
+    cy.wait('@LoadDataCompleted');
 })
 
 

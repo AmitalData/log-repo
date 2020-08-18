@@ -14,6 +14,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         public int Tenant { get; set; }
         public string ReportNumber { get; set; }
         public string Email { get; set; }
+        public bool RecalculateData { get; set; }
 
     }
 }

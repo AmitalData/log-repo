@@ -54,6 +54,12 @@ namespace Logitude.Accounting.Data.Repositories
                     select a/*.Id*/);
         }
 
+        public IQueryable<GLAccountCurrency> GetGLAccountCurrenciesByGLAccountIds(int tenant, List<string> accountIds)
+        {
+            return (from a in context.GLAccountCurrencies                     
+                    where accountIds.Contains(a.GLAccountId) && a.Tenant == tenant
+                    select a);
+        }
 
         public IQueryable<GLAccountCurrency> GetCurrenciesAccounts(int tenant)
         {
