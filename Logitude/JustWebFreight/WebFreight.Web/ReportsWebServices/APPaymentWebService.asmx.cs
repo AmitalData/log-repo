@@ -77,7 +77,8 @@ namespace WebFreight.Web.ReportsWebServices
                 apPaymentDataProvider.VendorSwift = currentPayment.VendorSwift;
                 apPaymentDataProvider.VendorBankAccountNumber = currentPayment.VendorBankAccountNumber;
                 apPaymentDataProvider.VendorIBANNo = currentPayment.VendorIBANNumber;
-
+               
+ 
                 if (bankAccount != null)
                 {
                     if (loggedContact.DontShowLocalLabels)
@@ -374,6 +375,29 @@ namespace WebFreight.Web.ReportsWebServices
                     apPaymentDataProvider.TotalAmount = totalAmount;
                     apPaymentDataProvider.OutstandingBalance = currentPayment.AmountInPaymentCurrency - totalAmount;
                     apPaymentDataProvider.Logo = DataProviders.General.GetLogo(tenantSettings.Id);
+
+
+                    apPaymentDataProvider.DeductionPercentage = currentPayment.TaxDeductionPercentage;
+                    if (currentPayment.TaxDeductionLocalAmount != null)
+                    {
+                        apPaymentDataProvider.DeductionAmount = (double?)currentPayment.TaxDeductionLocalAmount;
+                    }
+                    if (apPaymentDataProvider.TotalPayment != null)
+                    {
+                        apPaymentDataProvider.TotalPaymentAfterDeduction = (double?)apPaymentDataProvider.TotalPayment;
+                    }
+                    if (apPaymentDataProvider.DeductionAmount != null)
+                    {
+                        if (apPaymentDataProvider.TotalPaymentAfterDeduction != null)
+                        {
+                            apPaymentDataProvider.TotalPaymentAfterDeduction += (double?)apPaymentDataProvider.DeductionAmount;
+                        }
+                        else {
+                            apPaymentDataProvider.TotalPaymentAfterDeduction = (double?)apPaymentDataProvider.DeductionAmount;
+                        }
+                        
+                    }
+                    
                 }
             }
 
