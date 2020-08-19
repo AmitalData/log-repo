@@ -79,6 +79,9 @@ namespace WebFreight.Web.DataProviders
         public string APPaymentField8 { get; set; }
         public string APPaymentField9 { get; set; }
         public string APPaymentField10 { get; set; }
+        public int? DeductionPercentage { get; set; }
+        public double? DeductionAmount { get; set; }
+        public double? TotalPaymentAfterDeduction { get; set; }
 
         public string BranchAddress { get; set; }
         public string BranchName { get; set; }
