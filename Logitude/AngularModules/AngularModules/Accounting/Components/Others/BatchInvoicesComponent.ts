@@ -54,7 +54,7 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
   @Output() onQueryChangeEvent = new EventEmitter();
   public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
   @Output() MenuHeaderchangeevent = new EventEmitter();
-  //public MarkIsChecked: EventEmitter<any> = new EventEmitter();
+ public MarkIsChecked: EventEmitter<any> = new EventEmitter();
     public ColumnsReady: EventEmitter<any> = new EventEmitter();
   ngOnInit() {
     this.InitializeDate();
@@ -178,7 +178,7 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
 
                 this.onCheckBoxChecked($event);
                 this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
-                /// this.MarkIsChecked.emit({ MyRecord: row });
+                 this.MarkIsChecked.emit({ MyRecord: row });
             }
         });
 
@@ -214,7 +214,9 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
             this.DataCount = this.DataSource.rowCount;
           this.EnabledDataCount = result.filter(d => d.InterestReportStatusCode != "8").length;
           this.SelectedItemsCountText = "selected 0 of " + this.DataCount;
-        } 
+        }
+  this.MarkIsChecked.emit({SelectedLines:this.selectedItems});
+
     }
      today: Date = new Date();
      lastmonth:any = this.today.setDate(this.today.getDay() - 30);
@@ -280,7 +282,7 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
   DataSource = {
     pageSize: 30,
     rowCount: null,
-    sortingCol: "InterestCalculationDate",
+    sortingCol: "ReportNumber",
     sortingDir: "Descending",
     getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
       var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
