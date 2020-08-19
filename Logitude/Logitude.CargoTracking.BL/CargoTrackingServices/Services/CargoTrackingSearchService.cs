@@ -16,8 +16,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             if (TableName == "CargoTrackingShipmentSearches")
             {
-                AddCustomerRefrences(TableRow, dataTable, "CustomerReference1");
-                AddCustomerRefrences(TableRow, dataTable, "CustomerReference2");
+                 AddCustomerRefrences(TableRow, dataTable, "CustomerReference1");
+                 AddCustomerRefrences(TableRow, dataTable, "CustomerReference2");
+                 AddNewRecord(TableRow, dataTable, "Master");
+                 AddNewRecord(TableRow, dataTable, "House");
                 if (!TableRow["ShipmentNumber"].Equals(null) && TableRow["ShipmentNumber"].GetType().Name != "DBNull")
                 { TableRow.SetField("SearchFields", TableRow["ShipmentNumber"]); }
 
@@ -46,6 +48,22 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             }
            } 
+        }
+
+
+
+        private static void AddNewRecord(DataRow TableRow, DataTable dataTable, string CoulmnNmae)
+        {
+            string SearchField = null;
+            if (!TableRow[CoulmnNmae].Equals(null) && TableRow[CoulmnNmae].GetType().Name != "DBNull")
+            {
+                    SearchField = (string)TableRow[CoulmnNmae];
+                    DataRow TableRow1 = dataTable.NewRow();
+                    TableRow1.ItemArray = TableRow.ItemArray.Clone() as object[];
+                    TableRow1.SetField("SearchFields", SearchField);
+                    dataTable.Rows.Add(TableRow1);
+ 
+            }
         }
 
     }

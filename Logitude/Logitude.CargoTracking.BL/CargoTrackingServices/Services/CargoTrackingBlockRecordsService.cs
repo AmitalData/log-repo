@@ -15,7 +15,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         public static bool  BlockRecords (string TableName, SqlDataReader reader)
         {
             bool  IsValid = true;
-            if (TableName == "CargoTrackingShipments")
+            if (TableName == "CargoTrackingShipments" || TableName == "CargoTrackingShipmentSearches")
             {
                 IsValid= IsRecordFieldsEqualValue(TableName, "ShipmentLevelCode", "C", reader);
 
