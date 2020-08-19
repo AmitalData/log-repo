@@ -65,12 +65,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public double? Volume { get; set; }
         [Column("PickupDone")]
 	    public bool? PickupDone { get; set; }
-        [Column("ClearanceDone")]
-	    public bool? ClearanceDone { get; set; }
         [Column("PickupDate")]
 	    public DateTime? PickupDate { get; set; }
-        [Column("ClearanceDate")]
-	    public DateTime? ClearanceDate { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("SecurityKey")]
@@ -83,6 +79,50 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string CustomerReference { get; set; }
         [Column("IsMainRecord")]
 	    public bool IsMainRecord { get; set; }
+        [Column("PickupEstimationDate")]
+	    public DateTime? PickupEstimationDate { get; set; }
+        [Column("FromWarehouseDate")]
+	    public DateTime? FromWarehouseDate { get; set; }
+        [Column("FromWarehouseEstimationDate")]
+	    public DateTime? FromWarehouseEstimationDate { get; set; }
+        [Column("FromWarehouseNotes")]
+	    public string FromWarehouseNotes { get; set; }
+        [Column("DepartureDone")]
+	    public bool? DepartureDone { get; set; }
+        [Column("DepartureDate")]
+	    public DateTime? DepartureDate { get; set; }
+        [Column("DepartureEstimationDate")]
+	    public DateTime? DepartureEstimationDate { get; set; }
+        [Column("ArrivalDone")]
+	    public bool? ArrivalDone { get; set; }
+        [Column("ArrivalDate")]
+	    public DateTime? ArrivalDate { get; set; }
+        [Column("ArrivalEstimationDate")]
+	    public DateTime? ArrivalEstimationDate { get; set; }
+        [Column("ToWarehouseDone")]
+	    public bool? ToWarehouseDone { get; set; }
+        [Column("ToWarehouseDate")]
+	    public DateTime? ToWarehouseDate { get; set; }
+        [Column("ToWarehouseEstimationDate")]
+	    public DateTime? ToWarehouseEstimationDate { get; set; }
+        [Column("ToWarehouseNotes")]
+	    public string ToWarehouseNotes { get; set; }
+        [Column("CustomsPaymentDone")]
+	    public bool? CustomsPaymentDone { get; set; }
+        [Column("CustomsPaymentDate")]
+	    public DateTime? CustomsPaymentDate { get; set; }
+        [Column("ClearanceDone")]
+	    public bool? ClearanceDone { get; set; }
+        [Column("ClearanceDate")]
+	    public DateTime? ClearanceDate { get; set; }
+        [Column("DeliveredDone")]
+	    public bool? DeliveredDone { get; set; }
+        [Column("DeliveredDate")]
+	    public DateTime? DeliveredDate { get; set; }
+        [Column("DeliveredEstimationDate")]
+	    public DateTime? DeliveredEstimationDate { get; set; }
+        [Column("FromWarehouseDone")]
+	    public bool? FromWarehouseDone { get; set; }
     }
 }
 	 

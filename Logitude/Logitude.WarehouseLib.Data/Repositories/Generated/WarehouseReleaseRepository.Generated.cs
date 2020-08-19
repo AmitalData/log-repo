@@ -85,14 +85,7 @@ namespace Logitude.WarehouseLib.Data.Repositories
         {
             context.SaveChanges();
         }
-
-        public int GetNumberofConnectedWarehouseReleasesByChildEntityReference(string childEntityReference, int tenant)
-        {
-            return (from a in context.WarehouseReleases
-                    where a.Tenant == tenant && a.StatusCode != "CARE" && a.ChildEntityReference == childEntityReference
-                    select a).Count();
-        }
-
-    }
+	 
+   }
    }
 	 

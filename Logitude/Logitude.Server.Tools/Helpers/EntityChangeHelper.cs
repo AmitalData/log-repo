@@ -855,7 +855,8 @@ namespace Logitude.Server.Tools.Helpers
 
             else if (item.DataTypeCode.Trim() == "DateTime" || item.DataTypeCode.Trim() == "Date")
             {
-                result = ConvertToDate(item.Value);
+                var dateSplitParts = item.Value.Split('*');
+                result = ConvertToDate(dateSplitParts[dateSplitParts.Length - 1]);
             }
 
             else if (item.DataTypeCode.Trim() == "Boolean")

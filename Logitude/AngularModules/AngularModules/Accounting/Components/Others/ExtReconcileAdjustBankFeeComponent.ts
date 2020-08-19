@@ -245,20 +245,21 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
     }
 
     //_SelectedLines: ObservableCollection;//SelectedLines[];
-    _SelectedReconcileExternalPageLinePM: ReconcileExternalPageLinePM;
+    _SelectedReconcileExternalPageLinePMList: ReconcileExternalPageLinePM[]=[];
     _SelectedLedgerTransactionIdList: [];
     _BankAccountPMId: string;
     SetWindowArgs(winArgs) {
         //logitudeWindow.WindowArgs = { "ExtPageSelectedLine": this.ExtPageSelectedLines[0], "LedgerTransactionIdList": LedgerTransactionIdList, "BankAccountPMId": this.BankAccountPM.Id };
+        //"ReconcileExternalPageLinePMList": ReconcileExternalPageLinePMList,
         this._BankAccountPMId = winArgs.BankAccountPMId;
+        this._SelectedReconcileExternalPageLinePMList = winArgs.ReconcileExternalPageLinePMList;
 
-        
-
-        this._SelectedReconcileExternalPageLinePM = winArgs.ExtPageSelectedLine;
-        if (!AppTool.IsNullOrEmpty(this._SelectedReconcileExternalPageLinePM.Notes)) {
-            this.Notes = this._SelectedReconcileExternalPageLinePM.Notes;
+        let firstNote =this._SelectedReconcileExternalPageLinePMList.filter(r => !AppTool.IsNullOrEmpty(r.Notes))[0]
+        if (!AppTool.IsNullOrEmpty(firstNote) && !AppTool.IsNullOrEmpty(firstNote.Notes)) {
+            this.Notes = firstNote.Notes;
         }
-        this.AccountingDate = DateTool.GetDateParts(this._SelectedReconcileExternalPageLinePM.ReferenceDate).DateObject;//ohad  request it 
+
+        this.AccountingDate = DateTool.GetDateParts(this._SelectedReconcileExternalPageLinePMList[0].ReferenceDate).DateObject;//ohad  request it 
 
         this._SelectedLedgerTransactionIdList = winArgs.LedgerTransactionIdList;
 
@@ -304,8 +305,11 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
 
         //var AdjustAccountId: string = "1-19";
 
+        let SelectedReconcileExternalPageLineIdsList: string[] = [];
+        this._SelectedReconcileExternalPageLinePMList.forEach(r => SelectedReconcileExternalPageLineIdsList.push(r.Id));
         this._ExternalReconciliationExtendedPMService.CreateJournalReconcileAdjustBankFee(
-            this._SelectedReconcileExternalPageLinePM.Id, //reconcileExternalPageLineIdList,
+            //this._SelectedReconcileExternalPageLinePMList.Id, //reconcileExternalPageLineIdList,
+            SelectedReconcileExternalPageLineIdsList,
             this._SelectedLedgerTransactionIdList,
             this._BankAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(),
             this.Notes)

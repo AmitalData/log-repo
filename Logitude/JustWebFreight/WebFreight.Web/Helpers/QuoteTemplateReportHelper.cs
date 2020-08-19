@@ -3539,7 +3539,9 @@ namespace Logitude.BL.Helpers
                     {
                         var priceBreak = FormatPriceBreaksWithTwoDecimalDigits(item);
                         if (i > 1 || quoteTemplateBuildArges.QuoteTemplateSettingPM.RightToLeft) priceBreaks += "&nbsp;";
-                        priceBreaks += ((priceBreak + " " + GetChargeCurrencyCode(quotePM , chargePM) ) + "<br>");
+                        priceBreaks += ((priceBreak + " " + GetChargeCurrencyCode(quotePM, chargePM)) + "<br>");
+
+
                         i += 1;
                     }
                     saleUnitPriceValues = priceBreaks;
