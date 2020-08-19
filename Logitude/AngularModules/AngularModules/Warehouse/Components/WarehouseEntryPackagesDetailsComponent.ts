@@ -274,15 +274,21 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
     }
 
-    onQuantityChange(item: any) {
-        this.WarehouseEntryPackagesLists.filter(entryPackage => {
-            if (entryPackage.ShipmentPackageId == item.EntityPM.ShipmentPackageId) {
-                if (entryPackage.OldQuantity < item.Quantity)
-                    entryPackage.OverManifest = item.Quantity - entryPackage.OldQuantity;
-                else entryPackage.OverManifest = 0;
-                this.CurrentSession.FireEvent({ Name: 'QuantityChanged', DataContext: this.DataContext })
-            }
-        });
+    OnQuantityChange(item: any) {
+        this.OnQuantityLostFocus(item.Quantity, item.EntityPM.ShipmentPackageId);
+    }
+
+    OnQuantityLostFocus(quantity: any, shipmentPackageId: any) {
+        if (this.warehouseEntryPM.DirectionId == "I") {
+            this.WarehouseEntryPackagesLists.filter(entryPackage => {
+                if (entryPackage.ShipmentPackageId == shipmentPackageId) {
+                    if (entryPackage.OldQuantity < quantity)
+                        entryPackage.OverManifest = quantity - entryPackage.OldQuantity;
+                    else entryPackage.OverManifest = 0;
+                    this.CurrentSession.FireEvent({ Name: 'QuantityChanged', DataContext: this.DataContext })
+                }
+            });
+        }
     }
 
     private ComputeGrossWeigh_Kg_Ton() {

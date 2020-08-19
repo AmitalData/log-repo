@@ -78,26 +78,29 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
-                string overManifestNotes = "";
-                entityPM.WarehouseEntryPackages.ForEach(entryPackage =>
+                if (entityPM.DirectionId == "I")
                 {
-                    if (entryPackage.OverManifest > 0)
+                    string overManifestNotes = "";
+                    entityPM.WarehouseEntryPackages.ForEach(entryPackage =>
                     {
-                        overManifestNotes += GetOverManifestWarningMessage(entryPackage.OverManifest, entryPackage.Quantity - entryPackage.OverManifest);
-                    }
-                });
-
-                if (!string.IsNullOrEmpty(overManifestNotes))
-                {
-                    EventTracer.CreateTraceEvent(new EventTracerArgs()
-                    {
-                        Tenant = entityPM.Tenant,
-                        EventTypeCode = "OVMA",
-                        UserId = entityPM.UpdatedByUserId,
-                        EntityId = entityPM.Id,
-                        ObjectTableName = "WarehouseEntry",
-                        Notes = overManifestNotes
+                        if (entryPackage.OverManifest > 0)
+                        {
+                            overManifestNotes += GetOverManifestWarningMessage(entryPackage.OverManifest, entryPackage.Quantity - entryPackage.OverManifest);
+                        }
                     });
+
+                    if (!string.IsNullOrEmpty(overManifestNotes))
+                    {
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            Tenant = entityPM.Tenant,
+                            EventTypeCode = "OVMA",
+                            UserId = entityPM.UpdatedByUserId,
+                            EntityId = entityPM.Id,
+                            ObjectTableName = "WarehouseEntry",
+                            Notes = overManifestNotes
+                        });
+                    }
                 }
             }
 
