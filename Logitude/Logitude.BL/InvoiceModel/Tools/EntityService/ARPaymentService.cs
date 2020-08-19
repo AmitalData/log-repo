@@ -162,7 +162,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             newPayment.ValueDate = _arpaymentPM.ValueDate;
             paymentRepository.Update(newPayment);
             paymentRepository.SubmitChanges();
-            CreateInterestTransactionLine(_arpaymentPM);
+            if (_arpaymentPM.IsFullAccounting)
+            {
+                CreateInterestTransactionLine(_arpaymentPM);
+
+            }
+
             GetPaymentForeignFields();
 
             BuildEntitiesNumbers();
@@ -1291,8 +1296,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // Insert Journal Lines 
             // [Credit]
-            GLAccountPM glAccount = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
-            JournalLinePM journalLine = new JournalLinePM();
+            GLAccountPM glAccount = null;
+            if (paymentPM.IsFullAccounting)
+            {
+                glAccount = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
+            }
+             JournalLinePM journalLine = new JournalLinePM();
 
 
             journalLine.Tenant = tenant;
@@ -1451,7 +1460,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
 
             JournalLinePM journalLine;
-            GLAccountPM glAccount = getGLAccount(payment.BillToId, payment.Tenant);
+            GLAccountPM glAccount = null;
+            if (payment.IsFullAccounting)
+            {
+               glAccount = getGLAccount(payment.BillToId, payment.Tenant);
+            }
             foreach (ARPaymentChequeReplicaPM cheque in payment.ARPaymentChequeReplicas)
             {
                 journalLine = new JournalLinePM();
@@ -2112,13 +2125,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         GLAccountPM FillGLAccountFields(ARPaymentPM paymentPM)
         {
-            GLAccountPM gla = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
-            if (gla != null)
+            if (paymentPM.IsFullAccounting)
             {
-                paymentPM.GLAccountId = gla.Id;
-                paymentPM.GLAccountRecoMethodCode = gla.ReconcileMethodCode;
+                GLAccountPM gla = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
+                if (gla != null)
+                {
+                    paymentPM.GLAccountId = gla.Id;
+                    paymentPM.GLAccountRecoMethodCode = gla.ReconcileMethodCode;
+                }
+
+                return gla;
             }
-            return gla;
+            return null;
         }
 
         void FillPaymentInvoicesFromInvoicesTransactions(ARPaymentPM paymentPM, bool isMultiCurrency)
