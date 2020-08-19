@@ -3481,27 +3481,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
 
+
             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
             {
-                #region ShipmentComputedFields
-                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipment.Tenant);
-                ShipmentComputedFields entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipment.Id, shipment.Tenant);
-
-                if (entityComputedFields != null)
-                {
-                    shipmentPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
-                    shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
-                    shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
-                }
-                #endregion
-
                 #region ShipmentAdditionalCloudDatas
                 shipmentPM.IsImporterApprovalRequired = GetIsImporterApprovalRequried(shipment.Id, shipment.Tenant);
                 #endregion
             }
-
-
-
+            
 
             shipmentPM.CreatedByPartner = shipment.CreatedByPartner;
             shipmentPM.Tenant = shipment.Tenant;
@@ -3601,10 +3588,38 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Field39 = new CustomFieldClass("Field39", "Shipment", shipment.Field39);
             shipmentPM.Field40 = new CustomFieldClass("Field40", "Shipment", shipment.Field40);
 
+            #region ShipmentComputedFields
+            MapShipmentComputedFields(shipmentPM);
+            #endregion
+
+
 
 
 
             return null;
+        }
+
+        private static void MapShipmentComputedFields(ShipmentPM shipmentPM)
+        {
+            ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentPM.Tenant);
+            ShipmentComputedFields entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipmentPM.Id, shipmentPM.Tenant);
+
+            if (entityComputedFields != null)
+            {
+                if (EntityChangeHelper.IsShowLogBoxAutomationFields())
+                {
+                    shipmentPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
+                    shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
+                    shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
+                }
+                shipmentPM.BookingConfirmationSentDate = entityComputedFields.BookingConfirmationSent;
+                shipmentPM.PreAlertSentDate = entityComputedFields.PreAlertSent;
+                shipmentPM.DeliveryNoticeSentDate = entityComputedFields.DeliveryNoticeSent;
+                shipmentPM.ExpectedArrivalNoticeSentDate = entityComputedFields.ExpectedArrivalNoticeSent;
+                shipmentPM.ArrivalNoticeSentDate = entityComputedFields.ArrivalNoticeSent;
+                shipmentPM.T1ReceivedDate = entityComputedFields.T1Received;
+
+            }
         }
 
         private bool GetIsImporterApprovalRequried(string shipmentId , int tenant , List<ShipmentAdditionalCloudData> shipmentAdditionalCloudDataLists = null)
@@ -3744,6 +3759,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
                     }
+
+                    MapShipmentComputedFields(returnShipment);
+
 
                     return returnShipment;
                 }
@@ -4434,12 +4452,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                         where a.Id == masterId
                                         select a).FirstOrDefault();
 
-                if (EntityChangeHelper.IsShowLogBoxAutomationFields())
-                {
+            
                     List<string> shipmentIds = shipmentLists.GroupBy(d => d.Id).Select(d => d.First().Id).ToList();
                     ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(tenant);
                     entityComputedFieldsLists = shipmentComputedFieldsRepository.GetShipmentComputedFieldsByIds(shipmentIds, tenant).ToList();
 
+
+                if (EntityChangeHelper.IsShowLogBoxAutomationFields())
+                {
                     shipmentAdditionalCloudDataLists = (from a in repository.context.ShipmentAdditionalCloudDatas
                                                         where shipmentIds.Contains(a.Id) && a.Tenant == tenant
                                                         select a).ToList();
@@ -4534,21 +4554,31 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.Field40 = new CustomFieldClass("Field40", "Shipment", shipment.Field40);
 
 
-                    if (EntityChangeHelper.IsShowLogBoxAutomationFields())
+                   
+                    var entityComputedFields = entityComputedFieldsLists.Where(d => d.Id == shipment.Id).FirstOrDefault();
+                    if (entityComputedFields != null)
                     {
-                        var entityComputedFields = entityComputedFieldsLists.Where(d => d.Id == shipment.Id).FirstOrDefault();
-                        if (entityComputedFields != null)
+                        if (EntityChangeHelper.IsShowLogBoxAutomationFields())
                         {
                             shipmentPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
                             shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
                             shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
                         }
 
+
+                        shipmentPM.BookingConfirmationSentDate = entityComputedFields.BookingConfirmationSent;
+                        shipmentPM.PreAlertSentDate = entityComputedFields.PreAlertSent;
+                        shipmentPM.DeliveryNoticeSentDate = entityComputedFields.DeliveryNoticeSent;
+                        shipmentPM.ExpectedArrivalNoticeSentDate = entityComputedFields.ExpectedArrivalNoticeSent;
+                        shipmentPM.ArrivalNoticeSentDate = entityComputedFields.ArrivalNoticeSent;
+                        shipmentPM.T1ReceivedDate = entityComputedFields.T1Received;
+                    }
+
                         #region ShipmentAdditionalCloudDatas
                         shipmentPM.IsImporterApprovalRequired = GetIsImporterApprovalRequried(shipment.Id, shipment.Tenant, shipmentAdditionalCloudDataLists);
                         #endregion
 
-                    }
+                 //   }
 
 
                     ShipmentPM securedPM = new ShipmentPM();

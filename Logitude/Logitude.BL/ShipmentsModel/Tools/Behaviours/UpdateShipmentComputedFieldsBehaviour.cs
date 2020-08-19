@@ -80,6 +80,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             MapOperationalClosed();
             MapCustomsClearance();
             MapMasterHouses();
+            MapDocumentFields();
+
 
             shipmentPM.IsShipmentComputedFieldChange = false;
             shipmentPM.IsDepositionRequired = entity.IsDepositionRequired;
@@ -87,7 +89,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             shipmentPM.IsDigitalSignRequired = entity.IsDigitalSignRequired;
             shipmentPM.CreatedFromDigital = entity.CreatedFromDigital;
         }
-        private void SaveEntity()
+
+        private void MapDocumentFields()
+        {
+            entity.BookingConfirmationSent = shipmentPM.BookingConfirmationSentDate;
+            entity.PreAlertSent = shipmentPM.PreAlertSentDate;
+            entity.DeliveryNoticeSent = shipmentPM.DeliveryNoticeSentDate;
+            entity.ExpectedArrivalNoticeSent = shipmentPM.ExpectedArrivalNoticeSentDate;
+            entity.ArrivalNoticeSent = shipmentPM.ArrivalNoticeSentDate;
+            entity.T1Received = shipmentPM.T1ReceivedDate;
+
+
+        }
+
+    private void SaveEntity()
         {
             if (isNewEntity)
             {

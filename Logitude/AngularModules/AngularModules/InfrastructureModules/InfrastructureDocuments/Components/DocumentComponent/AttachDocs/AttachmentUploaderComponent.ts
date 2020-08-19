@@ -368,7 +368,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
                             this.CurrentDocument.FileExtension = this.FileExtension;
                             this.CurrentDocument.FileSize = result.FileSize;
                             this.CurrentDocument.FileName = this.FileName;
-
+                            this.CurrentDocument.IsUoloadedField = true;
                             this.CurrentDocument.ReceivedByUserName = SessionLocator.LoggedUserPM.EnglishName;
 
                             if (this.RequsetPageName == "DocIn" || this.RequsetPageName == "SharedDocument") {

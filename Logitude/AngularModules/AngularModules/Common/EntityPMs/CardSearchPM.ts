@@ -55,6 +55,16 @@ export class CardSearchPM {
     public set Weight(newValue: number) { if (this.weight != newValue) { this.weight = newValue; this.MarkAsDirty("Weight"); } }
        
 	 
+    private partnerTypeId: string;
+    public get PartnerTypeId() { return this.partnerTypeId; }
+    public set PartnerTypeId(newValue: string) { if (this.partnerTypeId != newValue) { this.partnerTypeId = newValue; this.MarkAsDirty("PartnerTypeId"); } }
+       
+	 
+    private inActive: boolean;
+    public get InActive() { return this.inActive; }
+    public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
+       
+	 
 
     public OldEntityPM: CardSearchPM;
 		

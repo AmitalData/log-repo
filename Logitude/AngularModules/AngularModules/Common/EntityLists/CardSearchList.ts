@@ -13,5 +13,7 @@ export class CardSearchList {
 		Keyword: string;
 		CardId: string;
 		Weight: number;
+		PartnerTypeId: string;
+		InActive: boolean; 
 	
 }

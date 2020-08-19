@@ -846,10 +846,11 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         filter.Bcc = this.Bcc;
         filter.Attachments = "";
         filter.ObjectTableName = this.ObjecttableName;
+        filter.DocumentTypeCode = this.SelectedInternalDocument.DocumentTypePM.Code;
+
         if (this.SelectedInternalDocument.IsCrm) {
             filter.EventTypeCode = this.SelectedInternalDocument.EventTypeCode;
             filter.CustomerId = this.SelectedInternalDocument.EntityPM ? this.SelectedInternalDocument.EntityPM.CustomerId : "";
-            filter.DocumentTypeCode = this.SelectedInternalDocument.DocumentTypePM.Code;
             filter.IsCRM = this.SelectedInternalDocument.IsCrm;
 
             if (this.SelectedInternalDocument.ObjectTableName == "Customer") {
