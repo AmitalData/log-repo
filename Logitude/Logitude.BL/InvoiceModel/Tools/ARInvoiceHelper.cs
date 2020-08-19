@@ -114,44 +114,57 @@ namespace Logitude.BL.InvoiceModel.Tools
                 myObjectTableId = objectTable.Id;
             }
         }
-        public  void ARInvoiceQuickbooksValidating(ARInvoicePM entityPM, Boolean IsSetApproved, Boolean isNewEntity, IInvoiceContext InvoiceContext, ICommonDataContext CommonContext,Boolean isSetVoided)
+        public  void ARInvoiceQuickbooksValidating(ARInvoice entityPOCO, ARInvoicePM entityPM, Boolean IsSetApproved, Boolean isNewEntity, IInvoiceContext InvoiceContext, ICommonDataContext CommonContext,Boolean isSetVoided)
         {
             if ((isSetVoided && entityPM.ARInvoiceTypeCode != "CD" && entityPM.ARInvoiceTypeCode != "CC") || (entityPM.StatusCode == "VD" && entityPM.SetReSendQBO == true))
             {
-                commonContext = CommonContext;
-                this.globalContext = GlobalContext.GetContext(tenant);
-                Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
-                tenant = loggedTenant.Id;
-                tenantName = loggedTenant.Company;
-                AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
-                AccountingSystemQuery query = new AccountingSystemQuery(tenant);
-                AccountingSystemPM AccountingSystemPM = query.GetSingleAccountingSystemPM(AccountingSystemCode);
-                if (loggedTenant.AccountingSetting != null)
-                    if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsARInvoicesTransferEnabled && AccountingSystemPM.AllowARInvoicesTransfer)
-                    {
-                        if(entityPM.ExternalAccountingEntityId != null)
+                bool isTransferingVoiding = true;
+
+                if (entityPOCO.StatusCode == null || entityPOCO.StatusCode == "DR")
+                {
+                    isTransferingVoiding = false;
+                }
+
+                else if (entityPOCO.TransferStatusCode == "ET")
+                {
+                    isTransferingVoiding = false;
+                }
+
+                if (isTransferingVoiding)
+                {
+                    commonContext = CommonContext;
+                    this.globalContext = GlobalContext.GetContext(tenant);
+                    Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
+                    tenant = loggedTenant.Id;
+                    tenantName = loggedTenant.Company;
+                    AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
+                    AccountingSystemQuery query = new AccountingSystemQuery(tenant);
+                    AccountingSystemPM AccountingSystemPM = query.GetSingleAccountingSystemPM(AccountingSystemCode);
+                    if (loggedTenant.AccountingSetting != null)
+                        if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsARInvoicesTransferEnabled && AccountingSystemPM.AllowARInvoicesTransfer)
                         {
-                            ARInvoice = entityPM;
-                            ARInvoiceId = entityPM.Id;
-                            GetObjectTableData();
-                            documentRepository = new DocumentRepository(commonContext);
-                            communicationLogRepository = new CommunicationLogRepository(commonContext);
-                            //ContactRepository contactRepository = new ContactRepository(commonContext);
-                            //Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
-                            //LoggedContactId = loggedContact.Id;
+                            if (entityPM.ExternalAccountingEntityId != null)
+                            {
+                                ARInvoice = entityPM;
+                                ARInvoiceId = entityPM.Id;
+                                GetObjectTableData();
+                                documentRepository = new DocumentRepository(commonContext);
+                                communicationLogRepository = new CommunicationLogRepository(commonContext);
+                                //ContactRepository contactRepository = new ContactRepository(commonContext);
+                                //Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+                                //LoggedContactId = loggedContact.Id;
 
-                            entityPM.TransferStatusCode = "IP";
-                            entityPM.TransferError = null;
-                            this.SendXMLFileInvoiceVoid(entityPM.ExternalAccountingEntityId, "QBO");
+                                entityPM.TransferStatusCode = "IP";
+                                entityPM.TransferError = null;
+                                this.SendXMLFileInvoiceVoid(entityPM.ExternalAccountingEntityId, "QBO");
+                            }
+
+                            else
+                            {
+                                throw new ApplicationException("This Invoice is not transfered yet to quickbooks online.");
+                            }
                         }
-                        else
-                        {
-                            throw new ApplicationException("This Invoice is not transfered yet to quickbooks online.");
-
-                        }
-
-
-                    }
+                }
             }
 
             else if (IsSetApproved || (entityPM.IsAutoCredit && entityPM.ExternalAccountingEntityId==null))

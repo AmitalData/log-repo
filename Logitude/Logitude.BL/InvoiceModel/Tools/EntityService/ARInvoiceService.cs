@@ -274,7 +274,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             CheckLinesVatExcempt(entityPM, isApprovingInvoice);
 
             ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
-            helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
+            helper.ARInvoiceQuickbooksValidating(invoice, entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
 
             SetSatStatus();
 
@@ -516,12 +516,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
                 if (entityPM.SetReSendQBO)
                 {
-                    helper.ARInvoiceQuickbooksValidating(entityPM, true, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
+                    helper.ARInvoiceQuickbooksValidating(invoice, entityPM, true, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
 
                 }
                 else
                 {
-                    helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
+                    helper.ARInvoiceQuickbooksValidating(invoice, entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
                 }
 
                 // Full Accounting - Tax Fields Work 
