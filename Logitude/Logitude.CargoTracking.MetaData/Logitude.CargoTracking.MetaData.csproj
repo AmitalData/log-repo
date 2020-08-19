@@ -107,6 +107,7 @@
     <None Include="EntityFiles\CargoTrackingMilestone.lxml" />
     <None Include="EntityFiles\CargoTrackingPort.lxml" />
     <None Include="EntityFiles\CargoTrackingShipment.lxml" />
+    <None Include="EntityFiles\CargoTrackingShipmentMaster.lxml" />
     <None Include="EntityFiles\CargoTrackingShipmentSearch.lxml">
       <SubType>Designer</SubType>
     </None>

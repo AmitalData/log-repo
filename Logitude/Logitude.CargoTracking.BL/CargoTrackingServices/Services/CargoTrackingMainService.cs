@@ -81,6 +81,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             CargoTableLists.Add(new CargoTable()
             {
+                TableName = "ShipmentMasterDatas",
+                FieldsDBName = "Id,Master,AutomaticLastUpdateDate",
+                KeyName = "Id",
+                ConditionKey = "Id",
+                CT_FieldsDBName = "Id,Master",
+                DBTableName = "ShipmentMasterDatas",
+                CT_TableName = "CargoTrackingShipmentMasters",
+                Main_CT_TableName = "CargoTrackingShipmentMasters",
+                Pre_TableName = "Pre_CargoTrackingShipmentMasters",
+                ConditionsNumber = 1,
+
+            });
+
+            CargoTableLists.Add(new CargoTable()
+            {
                 TableName = "Shipment",
                 FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,MasterShipmentDataId,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,AutomaticLastUpdateDate,ShipmentPickUpIndex,FirstPickupETA,ShipmentLevelCode,CustomsClearanceDate,CustomFileId,CreateDateTime,SecurityKey,ConsigneeName,ShipperName,CustomerReference1,CustomerReference2",
                 KeyName = "Id",
@@ -99,7 +114,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             CargoTableLists.Add(new CargoTable()
             {
                 TableName = "Shipments",
-                FieldsDBName = "Id,Tenant,ShipmentNumber,SecurityKey,SearchFields,CreateDateTime,CustomerReference1,CustomerReference2,AutomaticLastUpdateDate",
+                FieldsDBName = "Id,Tenant,ShipmentNumber,SecurityKey,SearchFields,CreateDateTime,CustomerReference1,CustomerReference2,AutomaticLastUpdateDate,House,ShipmentLevelCode",
                 KeyName = "Id",
                 ConditionKey = "SecurityKey",
                 CT_FieldsDBName = "Tenant,SecurityKey,SearchFields,ShipmentDate",
@@ -355,6 +370,24 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 else
                 {
                     cmd += " and CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and CreateDateTime <= '" + CargoTrackingArguments.ToDate + "'";
+
+                }
+
+            }
+            else if (buildCargoArgs.Table.Main_CT_TableName == "CargoTrackingShipmentSearches")
+            {
+                fieldName = " S." + fieldName.Replace(",", " ,S.");
+                cmd = "SELECT " + fieldName + ", D.Master as Master " + " FROM dbo." + table.DBTableName + " S left outer JOIN dbo.ShipmentMasterDatas D ON S.Id = D.Id";
+
+
+                if (CargoTrackingArguments == null)
+                {
+                    LastUpdate = GetTableLastUpdate(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);
+                    cmd += " where (S.AutomaticLastUpdateDate > '" + LastUpdate + "')";
+                }
+                else
+                {
+                    cmd += " where S.CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and S.CreateDateTime <= '" + CargoTrackingArguments.ToDate + "'";
 
                 }
 
