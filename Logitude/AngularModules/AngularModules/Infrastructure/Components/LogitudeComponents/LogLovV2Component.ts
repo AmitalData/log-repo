@@ -1,3 +1,4 @@
+import { ApiQueryFiltersAddParams } from './../../DataContracts/ApiQueryFiltersAddParams';
 declare var window: any;
 declare var System: any;
 import { Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, Injector, EventEmitter, AfterViewInit, OnDestroy } from '@angular/core';
@@ -2745,6 +2746,15 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             filters.removeAdditionalFilter("CompactSearchField");
         }
 
+        let filterParams: ApiQueryFiltersAddParams =new ApiQueryFiltersAddParams();
+        filterParams.FieldValue=searchText;
+        filterParams.Operator="StartsWith";
+        filterParams.IsCustom=false;
+        filterParams.DisplayInList=false;
+        filterParams.IsCustomField=false;
+        filterParams.FieldDataType=null;
+        filterParams.IsCacheOnClient=this.LookUpTable.CacheOnClient;
+        filterParams.IsLookUpFilter=true;
         if (searchText) {
 
             //if (this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters.length > 0 && this.callCount == 0) {
@@ -2763,8 +2773,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         }
                     }
                 }
-
-                filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
+                
+                filterParams.FieldName=this.LookUp1;
+                filterParams.ForceEnableAdd=forceEnableAdd;
+                
+               // filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
+                filters.pushAdditionalFilter(filterParams);
                 this.currentFilter = this.LookUp1;
             }
             else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined && this.LookUp1 != this.LookUp2) {
@@ -2778,7 +2792,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         }
                     }
                 }
-                if (this.LookUpTable.DependencyFilter1 != this.LookUp1 && this.LookUpTable.DependencyFilter2 != this.LookUp1 && this.LookUpTable.DependencyFilter3 != this.LookUp1) {
+                if (this.LookUpTable.DependencyFilter1 != this.LookUp1 
+                    && this.LookUpTable.DependencyFilter2 != this.LookUp1 
+                    && this.LookUpTable.DependencyFilter3 != this.LookUp1) {
                     filters.removeAdditionalFilter(this.LookUp1);
                 }
                 filters.addAdditionalFilter(this.LookUp2, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
@@ -2922,10 +2938,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     CallDataFromServer(searchText: string, filters: ApiQueryFilters) {
-        //turn loading flag on
-        //if (searchText && !this.UseCompactSearch) {
-        //    filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null);
-        //}
+        
         if (!this.LookUpTable.AutoCompleteSearchWindow) {
             filters.PageSize = 50;
         }
