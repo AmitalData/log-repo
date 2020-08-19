@@ -587,6 +587,21 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
     }
+    OpenDeclarationCancellationWindow_() {
+        var args: any = {
+            Declaration: this.EntityPM,
+        };
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 300;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.DeclarationCancellation");
+        logWindow.WindowArgs = args;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
+    }
     SincroSendDeclarationDCA(): any {
         
         let windowArgs = { "SincroScreen": "SincroSendDeclarationDCA" };

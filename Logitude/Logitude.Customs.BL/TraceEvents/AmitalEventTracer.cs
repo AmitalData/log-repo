@@ -68,7 +68,7 @@ namespace Logitude.Customs.BL.TraceEvents
                     throw new BusinessErrorException("NO DATA TO SEND FU/Status INTERFACE to Amital !! (myAmitalEventTracer.MyFUStatus == null)");
                 }
 
-                var myFUStatus = GetFUStatus(myAmitalEventTracer, iscustomUser);
+                var myFUStatus = GetFUStatus(myAmitalEventTracer, iscustomUser:  iscustomUser);
                 var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
                 myUServerCommunicationService.Send();
 
