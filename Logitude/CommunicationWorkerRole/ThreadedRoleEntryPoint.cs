@@ -43,6 +43,9 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Stimulsoft.Base;
 using System.Xml;
 using System.Xml.Linq;
+using WebFreight.Web.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.BL.Messaging.Amital;
 
 namespace CommunicationWorkerRole
 {
@@ -230,6 +233,32 @@ namespace CommunicationWorkerRole
 
             AccountingRegistrations.Register();
 
+            Func<IAmitalRestrictOwnerService> createAmitalRestrictOwnerModelService = null;
+
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                createAmitalRestrictOwnerModelService = () =>
+                {
+                    var amitalRestrictOwnerService = new AmitalRestrictOwnerService();
+                    return amitalRestrictOwnerService;
+                };
+            }
+            Func<int> getTenantFromToken = () =>
+            {
+
+                return 0;
+
+            };
+
+
+            InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, SecurityUtility.CheckContactFeature,
+               () => (new ByteCompressorUtil()) as IByteCompressorUtil,
+               new IISManager(),
+               () => (new HtmlEditorHelper()) as IHtmlEditorHelper,
+               () => (new EntityUpdateReflectorService()) as IEntityUpdateReflectorService
+               );
+
+           
 
 
 

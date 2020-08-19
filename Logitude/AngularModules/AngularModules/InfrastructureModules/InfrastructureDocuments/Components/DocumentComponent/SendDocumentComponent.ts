@@ -972,6 +972,10 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
 
                 });
+
+                if (this.CurrentSession.CurrentEditComponent) this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+
             }
             else {
                  this.CurrentSession.StopBusyIndicator();

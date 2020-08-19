@@ -156,7 +156,7 @@ END CATCH
 		 insert into #temp_CardSearchs (Id, Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive ) values (@newId , @Tenant , @CardId , @Value , @RecordDate , @Weight , @PartnerTypeId,@InActive)
 
 	    set @Count = @Count + 1;
-        if(@Count = 4000)
+        if(@Count = 500000)
         begin    
 
 		

@@ -28,8 +28,10 @@ namespace WebFreight.Web.DataContracts
         public List<string> DocumentTypeCopyIdsList { get; set; }
         public string DocumentTypeId { get; set; }
         public string DocumentTypeName { get; set; }
-        
+        public string ObjectTableName { get; set; }
+        public string DocumentTemplateEditorTool { get; set; }
 
+        
 
     }
 }

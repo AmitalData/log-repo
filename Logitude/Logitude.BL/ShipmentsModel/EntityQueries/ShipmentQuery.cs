@@ -2411,6 +2411,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipment.IsDangerous && iDangerousShipmentPackages) shipmentPM.ShipmentContanisDangerousGoods = true;
 
+
+            MapShipmentComputedFields(shipmentPM);
+
+
             this.MapAnalyzerConcurrencyFields(shipmentPM);
 
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
