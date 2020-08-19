@@ -203,6 +203,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.myShipmentSubTypeListService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.allShipmentSubTypes = myResponse.Result;
+                this.BuildShipmentSubTypes();
             }
         });
     }
@@ -313,7 +314,9 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.ShipmentSubTypesList.push(new FilterClass(item.Id, item.Name));
         });
 
-        this.SetDefaultSubType();
+        if (AppTool.IsNullOrEmpty(this.ShipmentSubTypeId)) {
+            this.SetDefaultSubType();
+        }
     }
     private SetDefaultSubType() {
         var subTypeCode: string = null;
