@@ -25,8 +25,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.GrossWeight = itemPM.GrossWeight;
             itemPoco.Width = itemPM.Width;
             itemPoco.VolumetricWeight = itemPM.VolumetricWeight;
-            itemPoco.PickupDeliveryVolume = itemPM.PickupDeliveryVolume;
-            itemPoco.PickupDeliveryVolumetricWeight = itemPM.PickupDeliveryVolumetricWeight;
         }
     }
 }
