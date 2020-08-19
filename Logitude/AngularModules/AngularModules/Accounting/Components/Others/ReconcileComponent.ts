@@ -976,6 +976,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this.SelectedLines.Remove(this.SelectedLines.Collection.find(c => c.Id == id));
         //ReconcileEventManager.RowUnselected.emit({ id: id });
         this.CalculateTotals();
+        this._isAllSelected = false;
     }
 
     CheckBoxValueChanged(Row) {
