@@ -24,7 +24,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
                                                              join d in context.Declarations.Include("CustomerCard").Include("DeclarationOffice").Include("DeclarationStatusType")
                                                              on a.DeclarationId equals d.Id
-                                                             where d.ReferentUserId != null
 
                                                              join e in context.Cards.Include("CustomerCard")
                                                              on d.CustomerId equals e.Customer.Id
@@ -85,7 +84,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ClassifiedUserName = a.ClassifiedUser.Contact.LocalName,
                                                                  CollectorUserName = a.CollectorUser.Contact.LocalName,
                                                                  ControllerUserName= a.ControllerUser.Contact.LocalName,
-                                                              
+                                                                 LastStatusDate = a.LastStatusDate,
+                                                                 LastStatusName = a.LastStatusName,
+                                                                 OrderMoney = a.OrderMoney,
+
                                                              }) ;
             return query;
         }

@@ -5,7 +5,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { CustomsAutonomyKeywordExtendedPMService } from '../../Services/ExtendedPMs/CustomsAutonomyKeywordExtendedPMService';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
-import { AppTool } from '../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/DeclarationRemarksService';
@@ -98,7 +98,13 @@ export class FieldTemplateComponent {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
-
+    get LastStatusNameText() {
+        if (AppTool.IsNullOrEmpty(this.Entity.LastStatusDate)) {
+            return "";
+        }
+        var myFormats = DateTool.GetDateFormats(this.Entity.LastStatusDate);
+        return myFormats.DateString;
+    }
     OpenCourierMaster() {
         //static entityResourceService: EntityResourceService = new EntityResourceService();
 
