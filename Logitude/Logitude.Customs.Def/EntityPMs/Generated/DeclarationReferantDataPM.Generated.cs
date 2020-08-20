@@ -710,6 +710,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string importerFile ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterFile  
+	   {
+	    
+	     get
+		{
+		   return importerFile;
+		 }
+		 set
+		 {
+		   if(importerFile != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterFile",OldValue=importerFile,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerFile=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

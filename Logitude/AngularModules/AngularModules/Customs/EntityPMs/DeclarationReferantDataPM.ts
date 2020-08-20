@@ -174,6 +174,11 @@ export class DeclarationReferantDataPM {
     public set OrderMoney(newValue: boolean) { if (this.orderMoney != newValue) { this.orderMoney = newValue; this.MarkAsDirty("OrderMoney"); } }
        
 	 
+    private importerFile: string;
+    public get ImporterFile() { return this.importerFile; }
+    public set ImporterFile(newValue: string) { if (this.importerFile != newValue) { this.importerFile = newValue; this.MarkAsDirty("ImporterFile"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

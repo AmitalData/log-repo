@@ -47,7 +47,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Favorite, 
 	         LastStatusName, 
 	         LastStatusDate, 
-	         OrderMoney,
+	         OrderMoney, 
+	         ImporterFile,
 	      }
 
 
@@ -83,7 +84,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CollectorUserName, 
 	         LastStatusName, 
 	         LastStatusDate, 
-	         OrderMoney,
+	         OrderMoney, 
+	         ImporterFile,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -215,6 +217,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OrderMoney))
             {
 				entityPOCO.OrderMoney = entityPM.OrderMoney;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterFile))
+            {
+				entityPOCO.ImporterFile = entityPM.ImporterFile;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -353,6 +360,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.OrderMoney = entityPOCO.OrderMoney;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImporterFile))
+            {
+					entityPM.ImporterFile = entityPOCO.ImporterFile;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationReferantDataPM entityPM, DeclarationReferantDataPM oldEntityPM)
@@ -482,6 +494,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OrderMoney))
             {
                 oldEntityPM.OrderMoney = entityPM.OrderMoney;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterFile))
+            {
+                oldEntityPM.ImporterFile = entityPM.ImporterFile;
             }
 			
 		}
