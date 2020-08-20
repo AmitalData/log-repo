@@ -999,7 +999,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Thread.Sleep(TimeSpan.FromMinutes(2));
                     }
-                    if (requestParams.TestCase== null && ( _CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy != SignQueueByType.None || requestParams.ForcePersonalSign))
+
+                    if (!requestParams.AvoidSign  && requestParams.TestCase== null && ( _CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy != SignQueueByType.None || requestParams.ForcePersonalSign))
+
+                    //if (!requestParams.AvoidSign  && (_CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy != SignQueueByType.None || requestParams.ForcePersonalSign))
+
                     {
                         LogMessagingUtil.Instance.AppendLine("DoCallWSSigned...");
                         customsResponse = TaskCallWSSigned(requestParams, customsRequest, _CustomsRequestsSheetService.GetCustomsRequestSign());
