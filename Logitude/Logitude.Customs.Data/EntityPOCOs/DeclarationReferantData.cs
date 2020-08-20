@@ -88,6 +88,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string Team { get; set; }
 	      
         public virtual ReferantTeam ReferantTeam { get; set; }
+        [Column("ImporterFile")]
+	    public string ImporterFile { get; set; }
     }
 }
 	 

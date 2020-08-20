@@ -97,6 +97,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ImporterCode=d.ImporterCode,
                                                                  ProcedureCurrentName = d.GovernmentProcedureCurrent.LocalName,
 
+                                                                 LastStatusDate = a.LastStatusDate,
+                                                                 LastStatusName = a.LastStatusName,
+                                                                 OrderMoney = a.OrderMoney,
+
 
 
 
