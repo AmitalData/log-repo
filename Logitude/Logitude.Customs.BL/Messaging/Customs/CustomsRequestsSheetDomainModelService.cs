@@ -343,7 +343,8 @@ namespace Logitude.Customs.BL.Messaging.Customs
             try
             {
                 if (requestParams.MainInterfaceCode == "2715" //D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService
-                    && 
+                    &&
+                    String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
                     CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).CompanyType == "B")//Courier
                 {
                     return true;//in courier CompanyType -AvoidSign
