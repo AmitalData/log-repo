@@ -418,6 +418,11 @@ namespace WebFreight.Web.Controllers.AccountingModel
                                         User printedBy = null;
                                         if (!string.IsNullOrEmpty(userId)) printedBy = userRep.GetSingleUser(userId, (int)tenant);
                                         else printedBy = userRep.GetSingleUserByCodeOrEmailForTenant(null, email, (int)tenant, false);
+                                        if (printedBy==null)
+                                        {
+                                            printedBy = userRep.GetSingleUserByCodeOrEmailForTenant(null, email, 0, false);
+                                        }
+
                                         DocumentOutCopyRepository myRep = new DocumentOutCopyRepository((int)tenant);
                                         DocumentOutCopy documentoutCopy = myRep.GetSingleDocumentOutCopyByTenant(copy.Id, (int)tenant);
                                         documentoutCopy.LastPrintDate = TenantServerConfigration.GetCurrentDateTime((int)tenant);

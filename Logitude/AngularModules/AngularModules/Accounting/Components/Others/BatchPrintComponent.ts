@@ -429,6 +429,10 @@ var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();
         this.Refresh();
       }
       else {
+        if(this.newWindow){
+          this.newWindow.blur();
+          this.newWindow.close();
+        }
         if(mm.ErrorsArray){
           var msg = new MessageWindow();
           msg.RTL = this.isRTL;
@@ -460,8 +464,10 @@ GetNumberOfDocumentNotPrinted() {
     if (!mm.HasError) {
     var pDFDocumentInvoices:PDFDocumentInvoices = mm.Result;
     if((!AppTool.IsNullOrEmpty(pDFDocumentInvoices.ARInvoiceNumbersNotPrinted) && pDFDocumentInvoices.ARInvoiceNumbersNotPrinted.length>0 ) ||  (!AppTool.IsNullOrEmpty(pDFDocumentInvoices.InterestReportNumbersNotPrinted) && pDFDocumentInvoices.InterestReportNumbersNotPrinted.length >0 )){
-      this.newWindow.blur();
-      this.newWindow.close();
+      if(this.newWindow){
+        this.newWindow.blur();
+        this.newWindow.close();
+      }
       this.ShowBtatchPrintWarningComponent(pDFDocumentInvoices,interestReportArgs);
     }
     else{
@@ -471,6 +477,10 @@ GetNumberOfDocumentNotPrinted() {
     
     }
     else {
+      if(this.newWindow){
+        this.newWindow.blur();
+        this.newWindow.close();
+      }
       if(mm.ErrorsArray){
         var msg = new MessageWindow();
         msg.RTL = this.isRTL;
