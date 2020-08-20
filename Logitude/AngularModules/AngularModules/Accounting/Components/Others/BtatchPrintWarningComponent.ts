@@ -8,6 +8,7 @@ import { AppTool } from 'Infrastructure/Tools';
 import {  PDFDocumentInvoices } from '../../../Accounting/Services/ExtendedLists/InterestReportExtendedListService';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 
 
 
@@ -26,10 +27,15 @@ export class BtatchPrintWarningComponent implements OnInit    {
     public HideHeader: boolean = true;
     public ErrorsCount: number;
     public ItemWidth: string = "50%";
+    public isRTL: boolean = false;
     ngOnInit() {
         if (this.SingleLine) {
             this.ItemWidth = "100%";
         }
+    }
+
+    constructor(){
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
     SetDataContext(pDFDocumentInvoices: PDFDocumentInvoices) {
    if(!AppTool.IsNullOrEmpty(pDFDocumentInvoices.ARInvoiceNumbersNotPrinted) && pDFDocumentInvoices.ARInvoiceNumbersNotPrinted.length > 0){
