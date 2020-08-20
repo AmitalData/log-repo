@@ -261,7 +261,7 @@ namespace WebFreight.Web.Security
                 }
             }
 
-            if (false)//(!exists)
+            if (!exists)
             {
                 string errorMessage = "Sorry! you have no permission to do this operation" + Environment.NewLine + "Table:" + objectTableName + Environment.NewLine + "User:" + overrideEmail + Environment.NewLine + "Tenant:" + tenant;
 

@@ -172,7 +172,27 @@ export class NotificationBellComponent {
                                 case "70C":
                                 case "60A":
                                     {
-                                        var tab = window.ObjectTableTabs.find(d => d.ObjectTableId == selected.ObjectTableId && d.IndexOrder == 0);
+                                      //  var tab = window.ObjectTableTabs.find(d => d.ObjectTableId == selected.ObjectTableId && d.IndexOrder == 0);
+                                        var tab;
+                                        var tabs = window.ObjectTableTabs.find(d => d.ObjectTableId == selected.ObjectTableId);
+                                        if (tabs.lenght > 0) {
+                                            tabs = tabs.sort((n1, n2) => {
+                                                if (n1.IndexOrder > n2.IndexOrder) {
+                                                    return 1;
+                                                }
+
+                                                if (n1.IndexOrder < n2.IndexOrder) {
+                                                    return -1;
+                                                }
+
+                                                return 0;
+                                            });
+
+                                            tab = tabs[0];
+                                        }
+                                        else {
+                                            tab = tabs;
+                                        }
 
                                         if (tab) {
                                             currentScreenCode = tab.Code;

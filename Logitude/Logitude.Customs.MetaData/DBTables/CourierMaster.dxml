@@ -244,4 +244,6 @@
     ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="Tenant,AirlineId,MAWB" />
 </Table>

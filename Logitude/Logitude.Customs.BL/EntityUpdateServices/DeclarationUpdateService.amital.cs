@@ -472,6 +472,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //}
             if (this.IsDelayedDeclarationStatusRequestSent == true) return;
             LogMessagingUtil.Instance.AppendLine("SendDelayedDeclarationStatusRequest 13:45 til 14:15");
+            LogitudeSettings.HandleLogMe(
+                "DeclarationId:" + dirtyDeclarationPM.Id + Environment.NewLine + Environment.StackTrace.ToString()
+                , false, "8250", new DateTime(2021, 1, 1));
+
             string user = null;
             if (RequestSheetContext.Current != null) user = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
             if (RequestSheetContext.Current != null) user = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();

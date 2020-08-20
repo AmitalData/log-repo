@@ -1195,9 +1195,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
             bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
             if (tryConcurrentKiller)
             {
-                if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                if (!String.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
+                          !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId))
                 {
-                    CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams);
+                    //if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                    {
+                        CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams);
+                    }
                 }
             }
             var stepRequest = new StepRequest()

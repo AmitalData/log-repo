@@ -44,7 +44,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ControllerUserId, 
 	         CollectorUserId, 
 	         NewFile, 
-	         Favorite,
+	         Favorite, 
+	         LastStatusName, 
+	         LastStatusDate, 
+	         OrderMoney,
 	      }
 
 
@@ -74,7 +77,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CollectorUserId, 
 	         NewFile, 
 	         Favorite, 
-	         IsCancelled,
+	         IsCancelled, 
+	         ClassifiedUserName, 
+	         ControllerUserName, 
+	         CollectorUserName, 
+	         LastStatusName, 
+	         LastStatusDate, 
+	         OrderMoney,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -191,6 +200,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Favorite))
             {
 				entityPOCO.Favorite = entityPM.Favorite;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusName))
+            {
+				entityPOCO.LastStatusName = entityPM.LastStatusName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusDate))
+            {
+				entityPOCO.LastStatusDate = entityPM.LastStatusDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OrderMoney))
+            {
+				entityPOCO.OrderMoney = entityPM.OrderMoney;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -314,6 +338,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Favorite = entityPOCO.Favorite;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastStatusName))
+            {
+					entityPM.LastStatusName = entityPOCO.LastStatusName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastStatusDate))
+            {
+					entityPM.LastStatusDate = entityPOCO.LastStatusDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OrderMoney))
+            {
+					entityPM.OrderMoney = entityPOCO.OrderMoney;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationReferantDataPM entityPM, DeclarationReferantDataPM oldEntityPM)
@@ -430,6 +469,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.Favorite = entityPM.Favorite;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusName))
+            {
+                oldEntityPM.LastStatusName = entityPM.LastStatusName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusDate))
+            {
+                oldEntityPM.LastStatusDate = entityPM.LastStatusDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OrderMoney))
+            {
+                oldEntityPM.OrderMoney = entityPM.OrderMoney;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationReferantDataPM entityPM)
@@ -442,6 +496,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LastStatusName)) //T4 find type == nText 
+            {
+                entityPM.LastStatusName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LastStatusName));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

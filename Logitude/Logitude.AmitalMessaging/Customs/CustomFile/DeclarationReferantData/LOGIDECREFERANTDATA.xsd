@@ -21,6 +21,9 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="ClassifiedUserId" />
         <xs:element minOccurs="0" maxOccurs="1" ref="ControllerUserId" />
         <xs:element minOccurs="0" maxOccurs="1" ref="FileStatus" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="LastStatusName" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="LastStatusDate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="OrderMoney" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -35,4 +38,7 @@
   <xs:element name="ClassifiedUserId" type="xs:string" />
   <xs:element name="ControllerUserId" type="xs:string" />
   <xs:element name="FileStatus" type="xs:string" />
+  <xs:element name="LastStatusName" type="xs:string" />
+  <xs:element name="LastStatusDate" type="xs:string" />
+  <xs:element name="OrderMoney" type="xs:string" />
 </xs:schema>

@@ -293,6 +293,36 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return repository.GetMaxCounterKey(declarationId, invoiceCounterKey, invoiceItemLineNum, tenant);
         }
+        public SupplierInvioceItemCertificatPM GetSupplierInvioceItemCertificatWithExternalRequestTypeCode(string code, string decId, int lineNumber)
+        {
+            SupplierInvioceItemCertificat supplierInvioceItemCertificates = repository.GetSupplierInvioceItemCertificatWithExternalRequestTypeCode(code,decId,lineNumber);
+            if (supplierInvioceItemCertificates != null)
+            {
+                SupplierInvioceItemCertificatPM supplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM()
+                {
+                    DeclarationId = supplierInvioceItemCertificates.DeclarationId,
+                    AttachmentTypeCode = supplierInvioceItemCertificates.AttachmentTypeCode,
+                    AttachmentTypeName = supplierInvioceItemCertificates.AttachmentType != null ? supplierInvioceItemCertificates.AttachmentType.LocalName : null,
+                    CertificateExemptionTypeCode = supplierInvioceItemCertificates.CertificateExemptionTypeCode,
+                    CertificateExemptionTypeName = supplierInvioceItemCertificates.CertificateExemptionType != null ? supplierInvioceItemCertificates.CertificateExemptionType.LocalName : null,
+                    CertificateNumber = supplierInvioceItemCertificates.CertificateNumber,
+                    CustomsAttachmentID = supplierInvioceItemCertificates.CustomsAttachmentID,
+                    ItemCertificateCounterKey = supplierInvioceItemCertificates.ItemCertificateCounterKey,
+                    ReqConfirmationTypeCode = supplierInvioceItemCertificates.ReqConfirmationTypeCode,
+                    ReqConfirmationTypeName = supplierInvioceItemCertificates.RequestConfirmationType != null ? supplierInvioceItemCertificates.RequestConfirmationType.LocalName : null,
+                    ResConfirmationTypeCode = supplierInvioceItemCertificates.ResConfirmationTypeCode,
+                    ResConfirmationTypeName = supplierInvioceItemCertificates.ResponseConfirmationType != null ? supplierInvioceItemCertificates.ResponseConfirmationType.LocalName : null,
+                    InvoiceCounterKey = supplierInvioceItemCertificates.InvoiceCounterKey,
+                    LineNumber = supplierInvioceItemCertificates.LineNumber,
+                    Tenant = supplierInvioceItemCertificates.Tenant,
+                    SequenceNumeric = supplierInvioceItemCertificates.SequenceNumeric,
+                    ApprovalRequestNumber = supplierInvioceItemCertificates.ApprovalRequestNumber,
+                    ExternalRequestTypeCode = supplierInvioceItemCertificates.ExternalRequestTypeCode
+                };
+                return supplierInvioceItemCertificatPM;
+            }
+            return null;
+        }
 
     }
 }
