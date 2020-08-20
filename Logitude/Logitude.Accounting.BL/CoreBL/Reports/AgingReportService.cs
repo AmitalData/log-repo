@@ -122,7 +122,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 _myGLAccountRepository = new GLAccountRepository(_AccountingContext);
 
 
-                FilterAccountPopulation();
+                if (!FilterAccountPopulation())
+                {
+                    return string.Empty ;// no accounts 
+                }
 
                 _AccountingCurrencyId = (new AccountingSettingResolver()).ResolveAccountingCurrencyId(_Param.Tenant);
 
@@ -960,13 +963,15 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         }
 
 
-        private void FilterAccountPopulation()
+        private bool FilterAccountPopulation()
         {
             FilterGLAccountByParams();
 
             if (!_MainAccountIdList_ToFetchThenAggragrate.Any())
             {
-                throw new Exception("No GLAccounts");
+                MyPeriodList = new List<PeriodM>();
+                MyPeriodExtendedList = new List<PeriodMExtended>();
+                return false;// throw new Exception("No GLAccounts");
             }
 
             bool testMulti = false;
@@ -1010,6 +1015,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             }
             Create_WhichGLAccountWillShow_ForeignAmount();
+            return true;
         }
 
         private void Create_WhichGLAccountWillShow_ForeignAmount()
@@ -1116,7 +1122,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                          select acc.Id
                 );
                 Union_AccountIdList(qVendorCustomerId);
-                return;
+                //return;
             }
 
 
