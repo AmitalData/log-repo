@@ -27,6 +27,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -393,28 +394,13 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         {
                             includeInPrint = false;
                         }
-                        else if (doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId)
-                        {
-                            UserRepository userRep = new UserRepository((int)tenant);
-
-                            User printedBy = null;
-                            if (!string.IsNullOrEmpty(userId)) printedBy = userRep.GetSingleUser(userId, (int)tenant);
-                            else printedBy = userRep.GetSingleUserByCodeOrEmailForTenant(null, email, (int)tenant, false);
-
-
-                            DocumentOutCopyRepository myRep = new DocumentOutCopyRepository((int)tenant);
-                            DocumentOutCopy documentoutCopy = myRep.GetSingleDocumentOutCopyByTenant(copy.Id, (int)tenant);
-                            documentoutCopy.LastPrintDate = TenantServerConfigration.GetCurrentDateTime((int)tenant);
-                            documentoutCopy.LastPrintedByUserId = printedBy.Id;
-                            myRep.Update(documentoutCopy);
-                            myRep.SubmitChanges();
-                        }
-
+                       
                         if (includeInPrint)
                         {
                             IsPrinted = true;
                             if (!IsForChecked)
                             {
+
                                 string documentExtension = up.GetFileExtension(copy.DocumentId, (int)tenant);
                                 string documentId = copy.DocumentId;
                                 if (!string.IsNullOrEmpty(documentExtension))
@@ -427,12 +413,35 @@ namespace WebFreight.Web.Controllers.AccountingModel
                                         {
                                             pdfDoc.Pages.Add();
                                         }
+
+                                        UserRepository userRep = new UserRepository((int)tenant);
+                                        User printedBy = null;
+                                        if (!string.IsNullOrEmpty(userId)) printedBy = userRep.GetSingleUser(userId, (int)tenant);
+                                        else printedBy = userRep.GetSingleUserByCodeOrEmailForTenant(null, email, (int)tenant, false);
+                                        DocumentOutCopyRepository myRep = new DocumentOutCopyRepository((int)tenant);
+                                        DocumentOutCopy documentoutCopy = myRep.GetSingleDocumentOutCopyByTenant(copy.Id, (int)tenant);
+                                        documentoutCopy.LastPrintDate = TenantServerConfigration.GetCurrentDateTime((int)tenant);
+                                        documentoutCopy.LastPrintedByUserId = printedBy.Id;
+                                        myRep.Update(documentoutCopy);
+                                        myRep.SubmitChanges();
+
+                                        if (DocumentCode== "999G")
+                                        {
+                                            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository((int)tenant);
+                                            ARInvoice aRInvoice = aRInvoiceRepository.GetInvoices().Where(s=>s.Id == SelectId).FirstOrDefault();
+                                            aRInvoice.IsPrinted = true;
+                                            aRInvoiceRepository.Update(aRInvoice);
+                                            aRInvoiceRepository.SubmitChanges();
+                                         }
+
+                                        break;
+
                                     }
                                 }
                             }
                          
 
-                            break;
+                            
                         }
 
                     }
