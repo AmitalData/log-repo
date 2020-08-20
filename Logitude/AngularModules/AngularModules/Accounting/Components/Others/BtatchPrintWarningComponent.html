@@ -56,9 +56,9 @@
                         
                                                     <td style="position: relative; vertical-align:top; padding-top: 2px;">
                                                         <ul style="height: 100%;max-height: 100%;overflow: hidden;">
-                                                            <li style="padding-left: 10px; padding-right: 10px;" [style.height]="InvoicesAndReportsNotPrinted.length > 1? '75px': '150px'" class="ValidationItem" [ngStyle]="{width: ItemWidth}" *ngFor="let item of InvoicesAndReportsNotPrinted">
+                                                            <li [style.padding-right]="isRTL? '10px':'0px'"  [style.height]="InvoicesAndReportsNotPrinted.length > 1? '75px': '150px'" class="ValidationItem" [ngStyle]="{width: ItemWidth}" *ngFor="let item of InvoicesAndReportsNotPrinted">
                                                                 <img   [ngClass]="{'LeftCenter': !isRTL}"  style="margin: 0px 3px;"   src="./Images/WarningIcon.png" />
-                                                                <span  [ngClass]="{'LeftCenter': !isRTL}" style="white-space:normal;overflow-y: auto;">{{item}}</span>  
+                                                                <span  [ngClass]="{'LeftCenter': !isRTL}" style="margin-left: 20px;white-space:normal;overflow-y: auto;">{{item}}</span>  
                                                             </li>
                                                         </ul>
                                                     </td>
