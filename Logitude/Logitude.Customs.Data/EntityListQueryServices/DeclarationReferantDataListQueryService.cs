@@ -96,7 +96,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  CustomerCode = d.CustomerCard == null ? null : d.CustomerCard.Code,
                                                                  ImporterCode=d.ImporterCode,
                                                                  ProcedureCurrentName = d.GovernmentProcedureCurrent.LocalName,
-
+                                                                 ImporterFile=a.ImporterFile
 
 
 
