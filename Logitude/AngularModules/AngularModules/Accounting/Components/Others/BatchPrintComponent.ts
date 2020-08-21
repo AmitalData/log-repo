@@ -501,7 +501,7 @@ public newWindow:any;
   var myPath = "./Accounting/Components/Packages/Others/BtatchPrintWarningComponent";
   logWindow.Width = 650;
   logWindow.Height = 260;
-  DataContext.Document = this.DataCount;
+  DataContext.Document =  this.SelectedItemsCount;
   logWindow.DataContext = DataContext;
   logWindow.Show(myPath);
   logWindow.WindowClosed.subscribe(s => {
