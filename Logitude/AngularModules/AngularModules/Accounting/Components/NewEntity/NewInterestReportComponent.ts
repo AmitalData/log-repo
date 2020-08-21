@@ -37,14 +37,9 @@ export class NewInterestReportComponent extends BaseComponent implements OnDestr
         this.EntityPM = new InterestReportPM();
         this.EntityPM.Tenant = this.TenantPM.Id;
         this.myService = new InterestReportPMService();
-        this.SetUIProperties();
         this.Listen();
     }
-
-    SetUIProperties() {
-        this.UIProperties.SetRequired("InterestCalculationDate", this.ObjectTableName, true);
-        this.UIProperties.SetRequired("CustomerId", this.ObjectTableName, true);
-    }
+ 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private Listen() {
