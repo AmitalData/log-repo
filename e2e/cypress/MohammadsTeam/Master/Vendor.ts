@@ -16,14 +16,14 @@ export class VendorGLAccount {
             cy.get('input[id=Address_CountryId]').type('PS').should("have.value", "PS")
             cy.get('ul[id=mydatalist_Address_CountryId]').contains("State Of Palestine").then(a => {
 
-
+            
                 a[0].click();
             })
             cy.get('input[id=Address_City]').type('Nablus').should("have.value", "Nablus")
             cy.get('button[id=Ok-AddVendor]').click()
-            cy.get('input[id=SearchFieldsId_0_0]').type(Name).should("have.value", Name)
+            cy.get('input[id=SearchFieldsId_0_0]').type(Name,{ force: true }).should("have.value", Name)
             cy.get('div[id=ListDataLoaded]').should('exist');
-            cy.get('div[id=LogGrid_0_0row0]').click();
+            cy.get('div[id=LogGrid_0_0row0]').click({ force: true })
             cy.log('Createing new vendor is done');
 
         }

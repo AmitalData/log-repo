@@ -1,28 +1,31 @@
 
+
+
+
 import { Login } from './Login';
 import  { CreateRandom } from './CreateRandom';
-import { ARInvoice } from './ARInvoice';
+import { APPayment } from './APPayment';
 import { LoginComp } from "../../login/Login.po";
 export class ARPAyemntSpec {
 
   private login: LoginComp = new LoginComp();
 }
-describe('New ARInvoice ', () => {
+describe('New APPayment ', () => {
 
  
 let l: Login= new Login();
 let R: CreateRandom= new CreateRandom();
-let AR: ARInvoice= new ARInvoice();
+let AP: APPayment= new APPayment();
 
 
-  it('New ARInvoice Created Successfully', function () {
+  it('New APPayment Created Successfully', function () {
 
       var str = R.createrandomnum();
       cy.get('li[id=GeneralMHMaintenance]').click()
    
       cy.get('li[id=PAR]')
       cy.get('li[id=GeneralMHFullAccounting]').click();
-      AR.CreateNewARInvoice("Test Customer GLAccountWX56347MT")
+      AP.CreateNewAPPayment("Test Customer GLAccountWX56347MT")
 
     });
       
