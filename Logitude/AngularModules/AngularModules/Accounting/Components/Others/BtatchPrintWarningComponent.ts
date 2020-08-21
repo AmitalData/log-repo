@@ -28,6 +28,7 @@ export class BtatchPrintWarningComponent implements OnInit    {
     public ErrorsCount: number;
     public ItemWidth: string = "50%";
     public isRTL: boolean = false;
+    public Context:PDFDocumentInvoices;
     ngOnInit() {
         if (this.SingleLine) {
             this.ItemWidth = "100%";
@@ -38,6 +39,13 @@ export class BtatchPrintWarningComponent implements OnInit    {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
     SetDataContext(pDFDocumentInvoices: PDFDocumentInvoices) {
+        this.Context = pDFDocumentInvoices;
+        if(this.Context.ARInvoiceNumbersNotPrinted.length !=  this.Context.Document){
+            this.EnablePrintButton=true;
+        }
+        else{
+            this.EnablePrintButton=false; 
+        }
    if(!AppTool.IsNullOrEmpty(pDFDocumentInvoices.ARInvoiceNumbersNotPrinted) && pDFDocumentInvoices.ARInvoiceNumbersNotPrinted.length > 0){
     for(let i =0 ; i < pDFDocumentInvoices.ARInvoiceNumbersNotPrinted.length ;i++){
  
@@ -69,9 +77,13 @@ export class BtatchPrintWarningComponent implements OnInit    {
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
+
+    EnablePrintButton:boolean=false;
     OkButtonClicked() {
- 
+    if(this.EnablePrintButton){
         this.CurrentSession.CloseCurrentWindowEmit("Ok");
+    }
+        
     }
  
     private itemsSource: string[] = [];
