@@ -32,7 +32,7 @@ export class ChartOfAccount {
     EditChartOFAccount(ChartOfAccountNo:string) {
         cy.get('input[id=SearchFieldsId_0_0]').type(ChartOfAccountNo);
         cy.get('div[id=ListDataLoaded]').then( a=> {
-            cy.get('div[id=LogGrid_0_0row0]').click();
+            cy.get('div[id=LogGrid_0_0row0]').click({ force: true });
         })
       
       //  cy.get('#BusyIndicator_0').should('not.be.visible');
