@@ -488,11 +488,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myShipperPM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("Shipper Can't be update"); 
-							}  
+						  
 
 							temp.ShipperId = myShipperPM.Id;
 						} 
@@ -500,18 +496,10 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("ShipperReference1 Can't be update"); 
-					}  
+                     
 
 					temp.ShipperReference1 = MyEntity.ShipperReference1;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("ShipperReference2 Can't be update"); 
-					}  
+                     
 
 					temp.ShipperReference2 = MyEntity.ShipperReference2;
 					CardQueryService ConsigneeCardService = new CardQueryService(Tenant);
@@ -522,11 +510,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myConsigneePM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("Consignee Can't be update"); 
-							}  
+						  
 
 							temp.ConsigneeId = myConsigneePM.Id;
 						} 
@@ -534,18 +518,10 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("ConsigneeReference1 Can't be update"); 
-					}  
+                     
 
 					temp.ConsigneeReference1 = MyEntity.ConsigneeReference1;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("ConsigneeReference2 Can't be update"); 
-					}  
+                     
 
 					temp.ConsigneeReference2 = MyEntity.ConsigneeReference2;
 					CardQueryService CustomerCardService = new CardQueryService(Tenant);
@@ -556,11 +532,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myCustomerPM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("Customer Can't be update"); 
-							}  
+						  
 
 							temp.CustomerId = myCustomerPM.Id;
 						} 
@@ -676,11 +648,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myIncotermPM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("Incoterm Can't be update"); 
-							}  
+						  
 
 							temp.IncotermId = myIncotermPM.Id;
 						} 
@@ -688,18 +656,10 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("HouseNo Can't be update"); 
-					}  
+                     
 
 					temp.House = MyEntity.HouseNo;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("HouseDate Can't be update"); 
-					}  
+                     
 
 					temp.HAWBDate = MyEntity.HouseDate;
                     
@@ -769,11 +729,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myBranchPM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("Branch Can't be update"); 
-							}  
+						  
 
 							temp.BranchId = myBranchPM.Id;
 						} 
@@ -789,11 +745,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myDepartmentPM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("Department Can't be update"); 
-							}  
+						  
 
 							temp.DepartmentId = myDepartmentPM.Id;
 						} 
@@ -906,11 +858,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myCreatedByUserPM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("CreatedByUser Can't be update"); 
-							}  
+						  
 
 							temp.CreatedByUserId = myCreatedByUserPM.Id;
 						} 
@@ -955,11 +903,7 @@ using Simplog.Data.ShipmentsModel;
 				}		
 			
 					
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("ValueOfGoods Can't be update"); 
-					}  
+                     
 
 					temp.ValueOfGoods = MyEntity.ValueOfGoods;
 					CurrencyQueryService ValueOfGoodsCurrencyCurrencyService = new CurrencyQueryService(Tenant);
@@ -970,11 +914,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myValueOfGoodsCurrencyPM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("ValueOfGoodsCurrency Can't be update"); 
-							}  
+						  
 
 							temp.ValueOfGoodsCurrencyId = myValueOfGoodsCurrencyPM.Id;
 						} 
@@ -1067,11 +1007,7 @@ using Simplog.Data.ShipmentsModel;
 					}  
 
 					temp.OrderIsDangerouseGoods = MyEntity.OrderIsDangerouseGoods;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("MainHarmonize Can't be update"); 
-					}  
+                     
 
 					temp.MainHarmonize = MyEntity.MainHarmonize;
 					UserQueryService SalesmanUserUserService = new UserQueryService(Tenant);
@@ -1082,11 +1018,7 @@ using Simplog.Data.ShipmentsModel;
 						if(mySalesmanUserPM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("SalesmanUser Can't be update"); 
-							}  
+						  
 
 							temp.SalesmanUserId = mySalesmanUserPM.Id;
 						} 
@@ -1102,11 +1034,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myAccountManagerUserPM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("AccountManagerUser Can't be update"); 
-							}  
+						  
 
 							temp.AccountManagerUserId = myAccountManagerUserPM.Id;
 						} 
@@ -1122,11 +1050,7 @@ using Simplog.Data.ShipmentsModel;
 						if(mySpecialServicesTypePM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("SpecialServicesType Can't be update"); 
-							}  
+						  
 
 							temp.SpecialServicesTypeId = mySpecialServicesTypePM.Id;
 						} 
@@ -1142,11 +1066,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myShipperNotExporterPM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("ShipperNotExporter Can't be update"); 
-							}  
+						  
 
 							temp.ShipperNotExporterId = myShipperNotExporterPM.Id;
 						} 
@@ -1162,11 +1082,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myAgentPM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("Agent Can't be update"); 
-							}  
+						  
 
 							temp.AgentId = myAgentPM.Id;
 						} 
@@ -1182,11 +1098,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myCustomAgentImportPM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("CustomAgentImport Can't be update"); 
-							}  
+						  
 
 							temp.CustomAgentImportId = myCustomAgentImportPM.Id;
 						} 
@@ -1202,11 +1114,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myReleasingAgentPM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("ReleasingAgent Can't be update"); 
-							}  
+						  
 
 							temp.ReleasingAgentId = myReleasingAgentPM.Id;
 						} 
@@ -1222,11 +1130,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myFreightForwarderPM != null)
 						{ 
 
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("FreightForwarder Can't be update"); 
-							}  
+						  
 
 							temp.FreightForwarderId = myFreightForwarderPM.Id;
 						} 

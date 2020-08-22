@@ -35,6 +35,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -673,9 +674,42 @@ namespace WebFreight.Web.ExternalAPIs.V1
         
         public HttpResponseMessage Put(Master entity)
         {
-            var apiExceptionResult = ApiExceptionHandler.HandleException(new Exception("Updates are not supported"));
-            APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "Master API");
-            return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                    MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
+                    ShipmentQuery query = new ShipmentQuery(authToken.Tenant);
+                    //ShipmentPM entityPM = query.GetSinglePMByShipmentNumber(entity.ShipmentNumber, authToken.Tenant);
+
+                    //ShipmentPM MasterPM = mappingService.MasterDataMappingAndValidatin(entity, authToken.Tenant, "", true);
+                    //ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
+
+                    //service.Update(true);
+
+                    ShipmentPM entityPM = new ShipmentPM(); // to be deleted
+                    var result = mappingService.GetMasterById(entityPM.Id, authToken.Tenant);
+                    APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "DireMasterct API", authToken.Tenant);
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+
+                catch (Exception ex)
+                {
+                    var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                    APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "Master API");
+                    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                }
+            }
+            else
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
+                APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "Master API");
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
         }
 
         private string CheckReceivablesChargesTypeCurrency(string chargeTypeCode, int tenant)

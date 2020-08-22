@@ -48,10 +48,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     TransshipmentLeg temp = new TransshipmentLeg();
                     temp.LegIndex = item.LegIndex;
 
-                    if (IsUpdate)
-                    {
-                        throw new ApplicationException("MasterNumber Can't be update");
-                    }
+                    //if (IsUpdate)
+                    //{
+                    //    throw new ApplicationException("MasterNumber Can't be update");
+                    //}
                     temp.MasterNumber = item.MasterNumber;
 
                     if (IsUpdate)
@@ -60,28 +60,28 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     }
                     temp.CarrierNumber = item.CarrierNumber;
 
-                    if (IsUpdate)
-                    {
-                        throw new ApplicationException("ETD Can't be update");
-                    }
+                    //if (IsUpdate)
+                    //{
+                    //    throw new ApplicationException("ETD Can't be update");
+                    //}
                     temp.ETD = item.ETD;
 
-                    if (IsUpdate)
-                    {
-                        throw new ApplicationException("ETA Can't be update");
-                    }
+                    //if (IsUpdate)
+                    //{
+                    //    throw new ApplicationException("ETA Can't be update");
+                    //}
                     temp.ETA = item.ETA;
 
-                    if (IsUpdate)
-                    {
-                        throw new ApplicationException("ATD Can't be update");
-                    }
+                    //if (IsUpdate)
+                    //{
+                    //    throw new ApplicationException("ATD Can't be update");
+                    //}
                     temp.ATD = item.ATD;
 
-                    if (IsUpdate)
-                    {
-                        throw new ApplicationException("ATA Can't be update");
-                    }
+                    //if (IsUpdate)
+                    //{
+                    //    throw new ApplicationException("ATA Can't be update");
+                    //}
                     temp.ATA = item.ATA;
 
                     if (item.Carrier != null)
@@ -89,10 +89,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                         var myCarrierPM = CardService.CardDataMappingAndValidatin(item.Carrier, Tenant, ComputingPartnerName);
                         if (myCarrierPM != null)
                         {
-                            if (IsUpdate)
-                            {
-                                throw new ApplicationException("Carrier Can't be update");
-                            }
+                            //if (IsUpdate)
+                            //{
+                            //    throw new ApplicationException("Carrier Can't be update");
+                            //}
 
                             temp.CarrierId = myCarrierPM.Id;
                         }
@@ -131,10 +131,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                         var myVesselPM = VesselService.VesselDataMappingAndValidatin(item.Vessel, Tenant, ComputingPartnerName);
                         if (myVesselPM != null)
                         {
-                            if (IsUpdate)
-                            {
-                                throw new ApplicationException("Vessel Can't be update");
-                            }
+                            //if (IsUpdate)
+                            //{
+                            //    throw new ApplicationException("Vessel Can't be update");
+                            //}
 
                             temp.VesselId = myVesselPM.Id;
                         }

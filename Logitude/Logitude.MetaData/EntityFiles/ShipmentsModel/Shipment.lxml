@@ -84042,6 +84042,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsBondedWarehouseChanged&quot;"
     ListPropertyPath="&quot;IsBondedWarehouseChanged&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -88240,7 +88241,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ShipperReference1&quot;"
         DCVersion="&quot;&quot;"
@@ -88256,7 +88257,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ShipperReference2&quot;"
         DCVersion="&quot;&quot;"
@@ -88272,7 +88273,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Consignee&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -88288,7 +88289,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ConsigneeReference1&quot;"
         DCVersion="&quot;&quot;"
@@ -88304,7 +88305,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ConsigneeReference2&quot;"
         DCVersion="&quot;&quot;"
@@ -88320,7 +88321,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Customer&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -88336,7 +88337,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;FromPort&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -88432,7 +88433,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;HouseNo&quot;"
         DCVersion="&quot;&quot;"
@@ -88448,7 +88449,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;HouseDate&quot;"
         DCVersion="&quot;&quot;"
@@ -88464,7 +88465,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;DescriptionOfGoods&quot;"
         DCVersion="&quot;&quot;"
@@ -88562,7 +88563,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Department&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -88578,7 +88579,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TEU&quot;"
         FieldName="&quot;TEU&quot;"
@@ -88775,7 +88776,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;PickUps&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -88825,7 +88826,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ValueOfGoods&quot;"
         FieldName="&quot;ValueOfGoods&quot;"
@@ -88840,7 +88841,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ValueOfGoodsCurrency&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -88856,7 +88857,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Receivables&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -88996,7 +88997,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;SalesmanUser&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89012,7 +89013,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;AccountManagerUser&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89028,7 +89029,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;SpecialServicesType&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89044,7 +89045,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ShipperNotExporter&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89060,7 +89061,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Agent&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89076,7 +89077,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;CustomAgentImport&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89092,7 +89093,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ReleasingAgent&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89108,7 +89109,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;FreightForwarder&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89124,7 +89125,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;MAWBDate&quot;"
         FieldName="&quot;MAWBOBLDate&quot;"
@@ -89238,7 +89239,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ShipperReference1&quot;"
         DCVersion="&quot;&quot;"
@@ -89254,7 +89255,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ShipperReference2&quot;"
         DCVersion="&quot;&quot;"
@@ -89270,7 +89271,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Consignee&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89286,7 +89287,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ConsigneeReference1&quot;"
         DCVersion="&quot;&quot;"
@@ -89302,7 +89303,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ConsigneeReference2&quot;"
         DCVersion="&quot;&quot;"
@@ -89318,7 +89319,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Customer&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89334,7 +89335,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;FromPort&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89430,7 +89431,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;DescriptionOfGoods&quot;"
         DCVersion="&quot;&quot;"
@@ -89528,7 +89529,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Department&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89559,7 +89560,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;NumberOfPackages&quot;"
         FieldName="&quot;NumberOfPackages&quot;"
@@ -89649,7 +89650,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ShipmentNumber&quot;"
         FieldName="&quot;ShipmentNumber&quot;"
@@ -89680,7 +89681,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Deliveries&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89730,7 +89731,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;IsOperationalClosed&quot;"
         FieldName="&quot;IsOperationalClosed&quot;"
@@ -89761,7 +89762,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;MainCarriageATA&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89777,7 +89778,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;MainCarriageATD&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89793,7 +89794,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;IsAccountingClosed&quot;"
         FieldName="&quot;IsAccountingClosed&quot;"
@@ -89823,7 +89824,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ValueOfGoodsCurrency&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89839,7 +89840,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;MainCarriageCarrierNumber&quot;"
         FieldName="&quot;MainCarriageCarrierNumber&quot;"
@@ -89870,7 +89871,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Receivables&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90010,7 +90011,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;SalesmanUser&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90026,7 +90027,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;AccountManagerUser&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90042,7 +90043,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;SpecialServicesType&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90058,7 +90059,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ShipperNotExporter&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90074,7 +90075,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Agent&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90090,7 +90091,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;CustomAgentImport&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90106,7 +90107,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ReleasingAgent&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90122,7 +90123,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;FreightForwarder&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90138,7 +90139,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;MAWBDate&quot;"
         FieldName="&quot;MAWBOBLDate&quot;"
@@ -90185,7 +90186,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
     </DataContract>
     <DataContract
       Name="&quot;Customs&quot;"
@@ -90901,7 +90902,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ShipperReference1&quot;"
         FieldName="&quot;ShipperReference1&quot;"
@@ -90916,7 +90917,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ShipperReference2&quot;"
         FieldName="&quot;ShipperReference2&quot;"
@@ -90931,7 +90932,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Consignee&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90947,7 +90948,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ConsigneeReference1&quot;"
         FieldName="&quot;ConsigneeReference1&quot;"
@@ -90962,7 +90963,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ConsigneeReference2&quot;"
         FieldName="&quot;ConsigneeReference2&quot;"
@@ -90977,7 +90978,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Agent&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -90993,7 +90994,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;AgentReference1&quot;"
         FieldName="&quot;AgentReference1&quot;"
@@ -91008,7 +91009,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;AgentReference2&quot;"
         FieldName="&quot;AgentReference2&quot;"
@@ -91023,7 +91024,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;FromPort&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91149,7 +91150,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Department&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91165,7 +91166,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;MasterNumber&quot;"
         FieldName="&quot;Master&quot;"
@@ -91180,7 +91181,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;MainCarriageCarrier&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91196,7 +91197,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;MainCarriageCarrierNumber&quot;"
         FieldName="&quot;MainCarriageCarrierNumber&quot;"
@@ -91227,7 +91228,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Deliveries&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91277,7 +91278,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Houses&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91325,7 +91326,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;MainCarriageATA&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91341,7 +91342,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;MainCarriageATD&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91357,7 +91358,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;IsAccountingClosed&quot;"
         FieldName="&quot;IsAccountingClosed&quot;"
@@ -91512,7 +91513,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;SalesmanUser&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91528,7 +91529,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;AccountManagerUser&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91544,7 +91545,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;SpecialServicesType&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91560,7 +91561,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ShipperNotExporter&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91576,7 +91577,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;CustomAgentImport&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91592,7 +91593,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ReleasingAgent&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91608,7 +91609,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;FreightForwarder&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91624,7 +91625,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;MAWBDate&quot;"
         FieldName="&quot;MAWBOBLDate&quot;"
@@ -91671,7 +91672,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
