@@ -578,18 +578,20 @@ namespace Logitude.BL.QuoteModel.EntityQueries
         private string GetPriceBreakWeightUnitCodeByCostMeasurementCode(string costMeasurementCode, QuotePM quotePM)
         {
             string weightUnitCode = "";
-            switch(costMeasurementCode) {
-            case "GRWT": { weightUnitCode = quotePM.GrossWeightUnitCode; break; }
-            case "CHWT": { weightUnitCode = quotePM.ChargeableWeightUnitCode; break; }
-            case "VOLU": { weightUnitCode = quotePM.VolumeUnitCode; break; }
-            case "BTEU": { weightUnitCode = "TEU"; break; }
-            case "PRVL": { weightUnitCode = "Value of Goods"; break; }
-            case "PRFR": { weightUnitCode = "Freight Value"; break; }
-            case "GWTN": { weightUnitCode = "Ton"; break; }
-            case "QTY": { weightUnitCode = "pieces"; break; }
-            case "CWKG": { weightUnitCode = "KG"; break; }
-            case "GWKG": { weightUnitCode = "KG"; break; }
-            case "VCBM": { weightUnitCode = "CBM"; break; }
+            switch (costMeasurementCode)
+            {
+                case "GRWT": { weightUnitCode = quotePM.GrossWeightUnitCode; break; }
+                case "CHWT": { weightUnitCode = quotePM.ChargeableWeightUnitCode; break; }
+                case "PDCW": { weightUnitCode = quotePM.PickupDeliveryCWeightUnitCode; break; }
+                case "VOLU": { weightUnitCode = quotePM.VolumeUnitCode; break; }
+                case "BTEU": { weightUnitCode = "TEU"; break; }
+                case "PRVL": { weightUnitCode = "Value of Goods"; break; }
+                case "PRFR": { weightUnitCode = "Freight Value"; break; }
+                case "GWTN": { weightUnitCode = "Ton"; break; }
+                case "QTY": { weightUnitCode = "pieces"; break; }
+                case "CWKG": { weightUnitCode = "KG"; break; }
+                case "GWKG": { weightUnitCode = "KG"; break; }
+                case "VCBM": { weightUnitCode = "CBM"; break; }
             }
             return weightUnitCode.ToLower();
         }
@@ -1234,6 +1236,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 DimensionsUnitCode = entityPOCO.DimensionsUnitCode,
                 GrossWeightUnitCode = entityPOCO.GrossWeightUnitCode,
                 ChargeableWeightUnitCode = entityPOCO.ChargeableWeightUnitCode,
+                PickupDeliveryCWeightUnitCode = entityPOCO.PickupDeliveryCWeightUnitCode,
                 Volume = entityPOCO.Volume,
                 VolumetricWeight = entityPOCO.VolumetricWeight,
                 GrossWeight = entityPOCO.GrossWeight,

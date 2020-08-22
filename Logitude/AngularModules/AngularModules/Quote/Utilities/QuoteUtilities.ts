@@ -123,8 +123,8 @@ export class QuoteUtilities {
                     item.Volume = PackageAmountCalculator.ComputeVolume(item.Volume, item.Quantity, item.Width, item.Height, item.Length, item.GrossWeight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode);
                     item.VolumetricWeight = PackageAmountCalculator.ComputeVolumetricWeight(item.VolumetricWeight, item.Volume, item.GrossWeight, entityPM.Ratio, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode);
 
-                    item.PickupDeliveryVolume = PackageAmountCalculator.ComputeVolume(item.PickupDeliveryVolume, item.Quantity, item.Width, item.Height, item.Length, item.GrossWeight, entityPM.PickupDeliveryRatio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode);
-                    item.PickupDeliveryVolumetricWeight = PackageAmountCalculator.ComputeVolumetricWeight(item.VolumetricWeight, item.PickupDeliveryVolume, item.GrossWeight, entityPM.PickupDeliveryRatio, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode);
+                   // item.PickupDeliveryVolume = PackageAmountCalculator.ComputeVolume(item.PickupDeliveryVolume, item.Quantity, item.Width, item.Height, item.Length, item.GrossWeight, entityPM.PickupDeliveryRatio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode);
+                    //item.PickupDeliveryVolumetricWeight = PackageAmountCalculator.ComputeVolumetricWeight(item.VolumetricWeight, item.PickupDeliveryVolume, item.GrossWeight, entityPM.PickupDeliveryRatio, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode);
 
 
                     if (item.Quantity != null) {
@@ -139,9 +139,9 @@ export class QuoteUtilities {
                         myVolumetricWeight += item.VolumetricWeight;
                     }
 
-                    if (item.PickupDeliveryVolumetricWeight != null) {
-                        myPickupDeliveryVolumetricWeight += item.PickupDeliveryVolumetricWeight;
-                    }
+                    //if (item.PickupDeliveryVolumetricWeight != null) {
+                    //    myPickupDeliveryVolumetricWeight += item.PickupDeliveryVolumetricWeight;
+                    //}
 
                     if (item.GrossWeight != null) {
                         myGrossWeight += item.GrossWeight;
@@ -198,11 +198,11 @@ export class QuoteUtilities {
             }
 
             else {
-                entityPM.QuotePackages.forEach((item) => {
-                    if (item.PickupDeliveryVolume) {
-                        item.PickupDeliveryVolumetricWeight = AppTool.GetWeightFromVolume(entityPM.VolumeUnitCode, entityPM.ChargeableWeightUnitCode, item.PickupDeliveryVolume, entityPM.PickupDeliveryRatio);
-                    }
-                });
+                //entityPM.QuotePackages.forEach((item) => {
+                //    if (item.PickupDeliveryVolume) {
+                //        item.PickupDeliveryVolumetricWeight = AppTool.GetWeightFromVolume(entityPM.VolumeUnitCode, entityPM.ChargeableWeightUnitCode, item.PickupDeliveryVolume, entityPM.PickupDeliveryRatio);
+                //    }
+                //});
 
                 entityPM.PickupDeliveryVolumetricWeight = AppTool.Round(ArrayTool.Sum(entityPM.QuotePackages, "PickupDeliveryVolumetricWeight"), 3);
                 entityPM.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(entityPM.GrossWeight, entityPM.PickupDeliveryVolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);

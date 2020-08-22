@@ -2072,7 +2072,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         var myVolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
         var myGrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
         var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.EntityPM.TransportModeId);
-
+        var myPickupDeliveryChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.EntityPM.TransportModeId);
         if (this.EntityPM.DirectionId == "D") {
             if (!AppTool.IsNullOrEmpty(SessionLocator.TenantPM.CountryCode)) {
                 if (SessionLocator.TenantPM.CountryCode.toUpperCase() == "US") {
@@ -2098,6 +2098,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             }
 
             this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
+            this.EntityPM.PickupDeliveryCWeightUnitCode = myPickupDeliveryChargeableWeightUnitCode;
 
             if (this.EntityPM.Ratio == null) {
                 this.EntityPM.Ratio = AppTool.GetRatio(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
@@ -2123,6 +2124,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.EntityPM.DimFactor = AppTool.GetDimFactorFromRatio(this.EntityPM.Ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.ChargeableWeightUnitCode);
             this.EntityPM.VolumetricWeight = QuoteUtilities.ComputeVolumetricWeight(this.EntityPM);
             this.EntityPM.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
+            this.EntityPM.PickupDeliveryCWeightUnitCode = myPickupDeliveryChargeableWeightUnitCode;
         }
     }
     private SetPartners() {

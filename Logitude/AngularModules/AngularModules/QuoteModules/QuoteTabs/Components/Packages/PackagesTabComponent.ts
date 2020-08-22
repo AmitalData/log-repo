@@ -377,6 +377,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
+    get PickupDeliveryCWeightUnitCode() { return this.EntityPM.PickupDeliveryCWeightUnitCode; }
+    set PickupDeliveryCWeightUnitCode(newValue: string) {
+        if (this.EntityPM.PickupDeliveryCWeightUnitCode != newValue) {
+            this.EntityPM.PickupDeliveryCWeightUnitCode = newValue;
+            this.OnMeasurmentsSettingsChanged();
+        }
+    }
+
+
     get DimensionsUnitCode() { return this.EntityPM.DimensionsUnitCode; }
     set DimensionsUnitCode(newValue: string) {
         if (this.EntityPM.DimensionsUnitCode != newValue) {
@@ -875,13 +884,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     myGrossWeight += item.GrossWeight;
                 }
 
-                if (!AppTool.IsNullOrEmpty(item.PickupDeliveryVolume)) {
-                    myPickupDeliveryVolume += item.PickupDeliveryVolume;
-                }
+                //if (!AppTool.IsNullOrEmpty(item.PickupDeliveryVolume)) {
+                //    myPickupDeliveryVolume += item.PickupDeliveryVolume;
+                //}
 
-                if (!AppTool.IsNullOrEmpty(item.PickupDeliveryVolumetricWeight)) {
-                    myPickupDeliveryVolumetricWeight += item.PickupDeliveryVolumetricWeight;
-                }
+                //if (!AppTool.IsNullOrEmpty(item.PickupDeliveryVolumetricWeight)) {
+                //    myPickupDeliveryVolumetricWeight += item.PickupDeliveryVolumetricWeight;
+                //}
             })
 
             this.NumberOfPackages = myNumberOfPackages;
@@ -1389,7 +1398,7 @@ export class QuotePackageItem extends BaseComponent {
     set Volume(newValue: number) {
         if (this.EntityPM.Volume != newValue) {
             this.EntityPM.Volume = AppTool.Round(newValue, 3);
-            this.EntityPM.PickupDeliveryVolume = AppTool.Round(newValue, 3);
+            //this.EntityPM.PickupDeliveryVolume = AppTool.Round(newValue, 3);
             this.ComputeVolumetricWeight();
             this.SetUIProperties();
         }
@@ -1403,20 +1412,20 @@ export class QuotePackageItem extends BaseComponent {
         }
     }
 
-    get PickupDeliveryVolume() { return this.EntityPM.PickupDeliveryVolume; }
-    set PickupDeliveryVolume(newValue: number) {
-        if (this.EntityPM.PickupDeliveryVolume != newValue) {
-            this.EntityPM.PickupDeliveryVolume = AppTool.Round(newValue, 3);
-        }
-    }
+    //get PickupDeliveryVolume() { return this.EntityPM.PickupDeliveryVolume; }
+    //set PickupDeliveryVolume(newValue: number) {
+    //    if (this.EntityPM.PickupDeliveryVolume != newValue) {
+    //        this.EntityPM.PickupDeliveryVolume = AppTool.Round(newValue, 3);
+    //    }
+    //}
 
-    get PickupDeliveryVolumetricWeight() { return this.EntityPM.PickupDeliveryVolumetricWeight; }
-    set PickupDeliveryVolumetricWeight(newValue: number) {
-        if (this.EntityPM.PickupDeliveryVolumetricWeight != newValue) {
-            this.EntityPM.PickupDeliveryVolumetricWeight = AppTool.Round(newValue, 3);
-            this.fatherComponent.ComputeTotals();
-        }
-    }
+    //get PickupDeliveryVolumetricWeight() { return this.EntityPM.PickupDeliveryVolumetricWeight; }
+    //set PickupDeliveryVolumetricWeight(newValue: number) {
+    //    if (this.EntityPM.PickupDeliveryVolumetricWeight != newValue) {
+    //        this.EntityPM.PickupDeliveryVolumetricWeight = AppTool.Round(newValue, 3);
+    //        this.fatherComponent.ComputeTotals();
+    //    }
+    //}
 
     get GrossWeight() { return this.EntityPM.GrossWeight; }
     set GrossWeight(newValue: number) {
@@ -1463,7 +1472,7 @@ export class QuotePackageItem extends BaseComponent {
         if (this.fatherComponent.PickupDeliveryRatio == null) {
             this.fatherComponent.PickupDeliveryRatio = AppTool.GetRatio(this.QuotePM.DirectionId, "I", this.QuotePM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
         }
-        this.PickupDeliveryVolume = AppTool.ComputePackageVolume(this.Quantity, this.Width, this.Height, this.Length, this.GrossWeight, this.QuotePM.PickupDeliveryRatio, this.QuotePM.DimensionsUnitCode, this.QuotePM.VolumeUnitCode, this.QuotePM.GrossWeightUnitCode);
+        //this.PickupDeliveryVolume = AppTool.ComputePackageVolume(this.Quantity, this.Width, this.Height, this.Length, this.GrossWeight, this.QuotePM.PickupDeliveryRatio, this.QuotePM.DimensionsUnitCode, this.QuotePM.VolumeUnitCode, this.QuotePM.GrossWeightUnitCode);
     }
 
     private ComputeVolumetricWeight() {
@@ -1480,6 +1489,6 @@ export class QuotePackageItem extends BaseComponent {
             this.fatherComponent.PickupDeliveryRatio = AppTool.GetRatio(this.QuotePM.DirectionId, "I", this.QuotePM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
         }
 
-        this.PickupDeliveryVolumetricWeight = AppTool.ComputePackageVolumetricWeight(this.Quantity, this.Width, this.Height, this.Length, this.PickupDeliveryVolume, this.GrossWeight, this.QuotePM.PickupDeliveryRatio, this.QuotePM.DimensionsUnitCode, this.QuotePM.VolumeUnitCode, this.QuotePM.GrossWeightUnitCode, this.QuotePM.ChargeableWeightUnitCode);
+        //this.PickupDeliveryVolumetricWeight = AppTool.ComputePackageVolumetricWeight(this.Quantity, this.Width, this.Height, this.Length, this.PickupDeliveryVolume, this.GrossWeight, this.QuotePM.PickupDeliveryRatio, this.QuotePM.DimensionsUnitCode, this.QuotePM.VolumeUnitCode, this.QuotePM.GrossWeightUnitCode, this.QuotePM.ChargeableWeightUnitCode);
     }
 }
