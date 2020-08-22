@@ -215,13 +215,19 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         void SetGLAccountFields(ARPaymentPM paymentPM)
         {
-            GLAccountPM glaccount = getGLAccount(paymentPM.BillToId, paymentPM);
-            if (glaccount != null)
+
+            if (paymentPM.IsFullAccounting)
             {
-                paymentPM.GLAccountId = glaccount.Id;
-                paymentPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
-                paymentPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
+                GLAccountPM glaccount = getGLAccount(paymentPM.BillToId, paymentPM);
+                if (glaccount != null)
+                {
+                    paymentPM.GLAccountId = glaccount.Id;
+                    paymentPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
+                    paymentPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
+                }
+
             }
+           
         }
         private ARPaymentPM SetJournalFields(ARPaymentPM payment)
         {
