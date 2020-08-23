@@ -239,7 +239,7 @@ namespace Logitude.Accounting.BL.Utils
                 IQueryable<JournalLineLedgerTransactionAccDTO> journalLine_LT_DTOs;
                 journalLine_LT_DTOs = journalLineQueryService.GetQJournalLinesByLTList(tenant, reconciableLT_List);
 
-                List<JournalLineLedgerTransactionAccDTO> journalLine_LT_DTOsList = journalLine_LT_DTOs.ToList().OrderBy(l => l.AccId).ToList();
+                List<JournalLineLedgerTransactionAccDTO> journalLine_LT_DTOsList = journalLine_LT_DTOs.ToList();//.OrderBy(l => l.AccId).ToList();
                 var journalLineGroups = journalLine_LT_DTOsList.GroupBy(l => l.AccId);
                 // IQueryable<IGrouping<String, JournalLineLedgerTransactionDTO>> journalLineGroups = journalLineQueryService.GetQGJournalLinesByExternalRecoFromTo(tenant, fromExtNum, toExtNum);
                 LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(context);
@@ -254,7 +254,10 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         journalLineList.Add(new JournalLineReco(journalLineLedgerTransactionDTO.JournalLine, journalLineLedgerTransactionDTO.LedgerTransaction));
                     }
-                    List<JournalLineReco> jLL = journalLineList.OrderByDescending(rec => rec._oneLineLedger.DueDate).ThenByDescending(rec => Math.Abs(rec._oneLineLedger.AmountToReconcile)).ToList();
+                    string id = "";
+                    List<JournalLineReco> jLL = journalLineList;//.OrderByDescending(rec => rec._oneLineLedger.DueDate).ThenByDescending(rec => Math.Abs(rec._oneLineLedger.AmountToReconcile)).ToList();
+
+                    decimal ad = actualDifference;
                     if (actualDifference != 0m)
                     {
                         jLL.Reverse();
@@ -265,11 +268,13 @@ namespace Logitude.Accounting.BL.Utils
                                 if (item._oneLineLedger.AmountToReconcile > actualDifference && actualDifference > 0)
                                 {
                                     item._oneLineLedger.AmountToReconcile -= actualDifference;
+                                    id = item._oneLineLedger.Id;
                                     actualDifference = 0m; //break
                                 }
                                 else if (item._oneLineLedger.AmountToReconcile < actualDifference && actualDifference < 0)
                                 {
                                     item._oneLineLedger.AmountToReconcile -= actualDifference;
+                                    id = item._oneLineLedger.Id;
                                     actualDifference = 0m; //break 
                                 }
                             }
@@ -283,6 +288,8 @@ namespace Logitude.Accounting.BL.Utils
                     }
                     else if (IsGroupReconciable(jLL, groupKey, maximalDifference, context, tenant))
                     {
+                      //  if (ad != 0m)
+                      //     jLL.Where(item => item._oneLineLedger.Id == id).FirstOrDefault()._oneLineLedger.AmountToReconcile += ad; 
                         ReconciableGroup recoGroup = new ReconciableGroup(groupKey, jLL);
                         reconciableGroupList.Add(recoGroup);
                         goodList.Add(groupKey);
