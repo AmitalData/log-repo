@@ -120,7 +120,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         Category4Name = a.Category4.EnglishName,
                                                         Category5Name = a.Category5.EnglishName,
 
-                                                        InterestCreditLimit = a.InterestCreditLimit,
+                                                         
 
                                                         // Created & Updated
                                                         CreateDate = a.CreateDate,
