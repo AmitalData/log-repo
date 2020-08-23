@@ -113,8 +113,8 @@ namespace CommunicationWorkerRole
                         //{
                         //    queueservice = QueueServiceManager.GetQueueService(queueName, 0);
                         //}
-                        using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
-                        {
+                        //using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
+                        //{
                             var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
                             LastActivity = DateTime.UtcNow;
 
@@ -213,8 +213,8 @@ namespace CommunicationWorkerRole
                                     HandleEmailsExceptionRetries(response, insideEx);
                                 }
                             }
-                            scope.Complete();
-                        }
+                          //  scope.Complete();
+                        //}
                     }
                     catch (Exception ex)
                     {
