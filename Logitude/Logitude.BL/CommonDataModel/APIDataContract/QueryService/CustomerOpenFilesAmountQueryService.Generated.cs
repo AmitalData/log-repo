@@ -93,7 +93,7 @@ using Simplog.Data.CommonDataModel;
 					} 
 					
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.CustomerId))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.CustomerId))
 					{
 							throw new ApplicationException("CustomerId Can't be update"); 
 					}  
@@ -114,7 +114,7 @@ using Simplog.Data.CommonDataModel;
 
 					temp.Tenant = MyEntity.Tenant;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Customer))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Customer))
 					{
 							throw new ApplicationException("Customer Can't be update"); 
 					}  

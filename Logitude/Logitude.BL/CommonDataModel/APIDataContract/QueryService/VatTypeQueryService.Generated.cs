@@ -111,7 +111,7 @@ using Simplog.Data.CommonDataModel;
 					{
 					   
 						 
-						if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Code))
+						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
 						{
 								throw new ApplicationException("Code Can't be update"); 
 						}  
@@ -119,14 +119,14 @@ using Simplog.Data.CommonDataModel;
 						temp.Code = MyEntity.Code;
 					}
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.EnglishName))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.EnglishName))
 					{
 							throw new ApplicationException("EnglishName Can't be update"); 
 					}  
 
 					temp.EnglishName = MyEntity.EnglishName;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.LocalName))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.LocalName))
 					{
 							throw new ApplicationException("LocalName Can't be update"); 
 					}  

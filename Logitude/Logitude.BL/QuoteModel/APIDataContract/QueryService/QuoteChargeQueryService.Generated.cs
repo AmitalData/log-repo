@@ -208,7 +208,7 @@ using Simplog.Data.QuoteModel;
 
 					temp.CostExchangeRate = item.CostExchangeRate;
                     
-					if(IsUpdate && item.CostIsFixedRate != temp.CostIsFixedRate)
+					if(IsUpdate && (item.CostIsFixedRate != temp.CostIsFixedRate))
 					{
 							throw new ApplicationException("CostIsFixedRate Can't be update"); 
 					}  
@@ -256,7 +256,7 @@ using Simplog.Data.QuoteModel;
 
 					temp.CostUnitPrice = item.CostUnitPrice;
                     
-					if(IsUpdate && item.IsAllIN != temp.IsAllIN)
+					if(IsUpdate && (item.IsAllIN != temp.IsAllIN))
 					{
 							throw new ApplicationException("IsAllIN Can't be update"); 
 					}  
@@ -270,7 +270,7 @@ using Simplog.Data.QuoteModel;
 
 					temp.SaleExchangeRate = item.SaleExchangeRate;
                     
-					if(IsUpdate && item.SaleIsFixedRate != temp.SaleIsFixedRate)
+					if(IsUpdate && (item.SaleIsFixedRate != temp.SaleIsFixedRate))
 					{
 							throw new ApplicationException("SaleIsFixedRate Can't be update"); 
 					}  
@@ -417,14 +417,14 @@ using Simplog.Data.QuoteModel;
 
 								 
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.VendorName))
+					if(IsUpdate && !string.IsNullOrEmpty(item.VendorName))
 					{
 							throw new ApplicationException("VendorName Can't be update"); 
 					}  
 
 					temp.VendorName = item.VendorName;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.VendorCode))
+					if(IsUpdate && !string.IsNullOrEmpty(item.VendorCode))
 					{
 							throw new ApplicationException("VendorCode Can't be update"); 
 					}  

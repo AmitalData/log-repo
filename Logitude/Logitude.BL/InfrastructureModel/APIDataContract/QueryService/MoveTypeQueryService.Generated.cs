@@ -111,7 +111,7 @@ using Simplog.Data.InfrastructureModel;
 					{
 					   
 						 
-						if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Code))
+						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
 						{
 								throw new ApplicationException("Code Can't be update"); 
 						}  
@@ -119,14 +119,14 @@ using Simplog.Data.InfrastructureModel;
 						temp.Code = MyEntity.Code;
 					}
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.MoveTypeEnglishName))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.MoveTypeEnglishName))
 					{
 							throw new ApplicationException("MoveTypeEnglishName Can't be update"); 
 					}  
 
 					temp.MoveTypeEnglishName = MyEntity.MoveTypeEnglishName;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.MoveTypeLocalName))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.MoveTypeLocalName))
 					{
 							throw new ApplicationException("MoveTypeLocalName Can't be update"); 
 					}  

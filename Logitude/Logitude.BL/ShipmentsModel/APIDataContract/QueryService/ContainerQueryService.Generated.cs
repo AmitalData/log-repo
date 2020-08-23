@@ -142,7 +142,7 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.ContainerNumber))
+					if(IsUpdate && !string.IsNullOrEmpty(item.ContainerNumber))
 					{
 							throw new ApplicationException("ContainerNumber Can't be update"); 
 					}  
@@ -170,49 +170,49 @@ using Simplog.Data.ShipmentsModel;
 
 					temp.Tare = item.Tare;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.Seal))
+					if(IsUpdate && !string.IsNullOrEmpty(item.Seal))
 					{
 							throw new ApplicationException("Seal Can't be update"); 
 					}  
 
 					temp.ShipperSeal = item.Seal;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.Seal2))
+					if(IsUpdate && !string.IsNullOrEmpty(item.Seal2))
 					{
 							throw new ApplicationException("Seal2 Can't be update"); 
 					}  
 
 					temp.CarrierSeal = item.Seal2;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.MarksAndNumbers))
+					if(IsUpdate && !string.IsNullOrEmpty(item.MarksAndNumbers))
 					{
 							throw new ApplicationException("MarksAndNumbers Can't be update"); 
 					}  
 
 					temp.MarksAndNumbers = item.MarksAndNumbers;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.Reference1))
+					if(IsUpdate && !string.IsNullOrEmpty(item.Reference1))
 					{
 							throw new ApplicationException("Reference1 Can't be update"); 
 					}  
 
 					temp.Reference1 = item.Reference1;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.Reference2))
+					if(IsUpdate && !string.IsNullOrEmpty(item.Reference2))
 					{
 							throw new ApplicationException("Reference2 Can't be update"); 
 					}  
 
 					temp.Reference2 = item.Reference2;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.Reference3))
+					if(IsUpdate && !string.IsNullOrEmpty(item.Reference3))
 					{
 							throw new ApplicationException("Reference3 Can't be update"); 
 					}  
 
 					temp.Reference3 = item.Reference3;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.CommodityNumber))
+					if(IsUpdate && !string.IsNullOrEmpty(item.CommodityNumber))
 					{
 							throw new ApplicationException("CommodityNumber Can't be update"); 
 					}  
@@ -226,7 +226,7 @@ using Simplog.Data.ShipmentsModel;
 
 					temp.Quantity = item.Pieces;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.Reference4))
+					if(IsUpdate && !string.IsNullOrEmpty(item.Reference4))
 					{
 							throw new ApplicationException("Reference4 Can't be update"); 
 					}  

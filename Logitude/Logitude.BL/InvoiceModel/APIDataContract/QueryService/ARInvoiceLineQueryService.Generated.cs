@@ -215,14 +215,14 @@ using Simplog.Data.InvoiceModel;
 
 					temp.ForiegnCurrencyAmount = item.ForeignCurrencyAmount;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.LocalDescription))
+					if(IsUpdate && !string.IsNullOrEmpty(item.LocalDescription))
 					{
 							throw new ApplicationException("LocalDescription Can't be update"); 
 					}  
 
 					temp.LocalDescription = item.LocalDescription;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.Notes))
+					if(IsUpdate && !string.IsNullOrEmpty(item.Notes))
 					{
 							throw new ApplicationException("Notes Can't be update"); 
 					}  
@@ -263,7 +263,7 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.Description))
+					if(IsUpdate && !string.IsNullOrEmpty(item.Description))
 					{
 							throw new ApplicationException("Description Can't be update"); 
 					}  
@@ -319,7 +319,7 @@ using Simplog.Data.InvoiceModel;
 
 					temp.Tenant = item.Tenant;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(item.GLAccountId))
+					if(IsUpdate && !string.IsNullOrEmpty(item.GLAccountId))
 					{
 							throw new ApplicationException("GLAccountId Can't be update"); 
 					}  

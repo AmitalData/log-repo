@@ -208,7 +208,7 @@ using Simplog.Data.InvoiceModel;
 
 					temp.Tenant = MyEntity.Tenant;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.PaymentNo))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.PaymentNo))
 					{
 							throw new ApplicationException("PaymentNo Can't be update"); 
 					}  
@@ -249,7 +249,7 @@ using Simplog.Data.InvoiceModel;
 
 					temp.AmountInPaymentCurrency = MyEntity.AmountInPaymentCurrency;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.PaidBy))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.PaidBy))
 					{
 							throw new ApplicationException("PaidBy Can't be update"); 
 					}  
@@ -290,7 +290,7 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.LocalCurrencyCode))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.LocalCurrencyCode))
 					{
 							throw new ApplicationException("LocalCurrencyCode Can't be update"); 
 					}  
@@ -357,28 +357,28 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.ChequeOrPaymentRef))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ChequeOrPaymentRef))
 					{
 							throw new ApplicationException("ChequeOrPaymentRef Can't be update"); 
 					}  
 
 					temp.ChequeOrPaymentRef = MyEntity.ChequeOrPaymentRef;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Bank))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Bank))
 					{
 							throw new ApplicationException("Bank Can't be update"); 
 					}  
 
 					temp.Bank = MyEntity.Bank;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.BankBranch))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.BankBranch))
 					{
 							throw new ApplicationException("BankBranch Can't be update"); 
 					}  
 
 					temp.BankBranch = MyEntity.BankBranch;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Account))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Account))
 					{
 							throw new ApplicationException("Account Can't be update"); 
 					}  
@@ -419,7 +419,7 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.PaymentCurrencyCode))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.PaymentCurrencyCode))
 					{
 							throw new ApplicationException("PaymentCurrencyCode Can't be update"); 
 					}  
@@ -463,14 +463,14 @@ using Simplog.Data.InvoiceModel;
 
 								 
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.BankAccountNumber))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.BankAccountNumber))
 					{
 							throw new ApplicationException("BankAccountNumber Can't be update"); 
 					}  
 
 					temp.BankAccountNumber = MyEntity.BankAccountNumber;
                     
-					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.CancelationNotes))
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.CancelationNotes))
 					{
 							throw new ApplicationException("CancelationNotes Can't be update"); 
 					}  
