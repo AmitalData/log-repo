@@ -84,7 +84,7 @@ export class ApiQueryFilters {
     return myNewString;
     }
     removeAdditionalFilter(FieldName: string) {
-        var item = this.AdditionalFilters.filter(d=> d.FieldName == FieldName)[0];
+        var item = this.AdditionalFilters.filter(d=> d.FieldName == FieldName && d.IsLookUpfilter==true)[0];
         if (item) {
             var index = this.AdditionalFilters.indexOf(item);
             this.AdditionalFilters.splice(index, 1);
@@ -126,7 +126,8 @@ export class ApiQueryFilters {
           params.IsCustomField, 
           params.FieldDataType,
           params.IgnoreFilter,
-          params.IsCacheOnClient);
+          params.IsCacheOnClient,
+          params.IsLookUpFilter);
         this.AdditionalFilters.push(item);
     }
     }

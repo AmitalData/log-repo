@@ -1631,7 +1631,20 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             var loadPromise = this.entityListService.getByFilters(this.LookUpTableName, tenantZeroFilters);
             if (this.UseCompactSearch) {
 
-                tenantZeroFilters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null, false, false);
+                let filterParams: ApiQueryFiltersAddParams =new ApiQueryFiltersAddParams();
+                filterParams.FieldName="CompactSearchField"
+                filterParams.FieldValue=searchText;
+                filterParams.Operator="Contains";
+                filterParams.IsCustom=false;
+                filterParams.DisplayInList=false;
+                filterParams.IsCustomField=false;
+                filterParams.FieldDataType=null;
+                filterParams.IsCacheOnClient=false;
+                filterParams.IsLookUpFilter=true;
+                //filters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null);
+                tenantZeroFilters.pushAdditionalFilter(filterParams);
+
+                //tenantZeroFilters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null, false, false);
                 loadPromise = this.entityListService.getByCompactFilters(this.LookUpTableName, tenantZeroFilters);
             }
 
@@ -2778,7 +2791,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 filterParams.ForceEnableAdd=forceEnableAdd;
                 
                // filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
-                filters.pushAdditionalFilter(filterParams);
                 this.currentFilter = this.LookUp1;
             }
             else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined && this.LookUp1 != this.LookUp2) {
@@ -2797,7 +2809,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     && this.LookUpTable.DependencyFilter3 != this.LookUp1) {
                     filters.removeAdditionalFilter(this.LookUp1);
                 }
-                filters.addAdditionalFilter(this.LookUp2, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
+                filterParams.FieldName=this.LookUp2;
+                filterParams.ForceEnableAdd=forceEnableAdd;
+                //filters.addAdditionalFilter(this.LookUp2, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = this.LookUp2;
             }
             else {
@@ -2817,9 +2831,14 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp2 && this.LookUpTable.DependencyFilter2 != this.LookUp2 && this.LookUpTable.DependencyFilter3 != this.LookUp2) {
                     filters.removeAdditionalFilter(this.LookUp2);
                 }
-                filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
+                filterParams.FieldName="SearchFields";
+                filterParams.ForceEnableAdd=forceEnableAdd;
+                filterParams.Operator="Contains";
+                
+                //filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = null;
             }
+            filters.pushAdditionalFilter(filterParams);
         }
         //turn loading flag on
         this.isLoading = true;
@@ -2955,16 +2974,39 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
         var loadPromise = this.entityListService.getByFilters(this.LookUpTableName, filters);
         if (this.UseCompactSearch) {
-            filters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null);
+            let filterParams: ApiQueryFiltersAddParams =new ApiQueryFiltersAddParams();
+            filterParams.FieldName="CompactSearchField"
+            filterParams.FieldValue=searchText;
+            filterParams.Operator="Contains";
+            filterParams.IsCustom=false;
+            filterParams.DisplayInList=false;
+            filterParams.IsCustomField=false;
+            filterParams.FieldDataType=null;
+            filterParams.IsCacheOnClient=false;
+            filterParams.IsLookUpFilter=true;
+            //filters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null);
+            filters.pushAdditionalFilter(filterParams);
             loadPromise = this.entityListService.getByCompactFilters(this.LookUpTableName, filters);
         }
         else if (searchText) {
 
             searchText = searchText.replace(/\\/g, "\\\\");
 
+            let filterParams: ApiQueryFiltersAddParams =new ApiQueryFiltersAddParams();
+            filterParams.FieldValue=searchText;
+            filterParams.Operator="StartsWith";
+            filterParams.IsCustom=false;
+            filterParams.DisplayInList=false;
+            filterParams.IsCustomField=false;
+            filterParams.FieldDataType=null;
+            filterParams.IsCacheOnClient=false;
+            filterParams.IsLookUpFilter=true;
+
             if (this.currentFilter == null || this.currentFilter == undefined) {
                 this.callCount = 1;
-                filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null);
+                filterParams.FieldName=this.LookUp1;
+                
+                //filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null);
                 this.currentFilter = this.LookUp1;
             }
             else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined && this.LookUp1 != this.LookUp2) {
@@ -2972,7 +3014,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp1 && this.LookUpTable.DependencyFilter2 != this.LookUp1 && this.LookUpTable.DependencyFilter3 != this.LookUp1) {
                     filters.removeAdditionalFilter(this.LookUp1);
                 }
-                filters.addAdditionalFilter(this.LookUp2, searchText, null, null, "StartsWith", false, false, false, null);
+                filterParams.FieldName=this.LookUp2;
+                //filters.addAdditionalFilter(this.LookUp2, searchText, null, null, "StartsWith", false, false, false, null);
                 this.currentFilter = this.LookUp2;
             }
             else {
@@ -2983,9 +3026,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp2 && this.LookUpTable.DependencyFilter2 != this.LookUp2 && this.LookUpTable.DependencyFilter3 != this.LookUp2) {
                     filters.removeAdditionalFilter(this.LookUp2);
                 }
-                filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null);
+                filterParams.FieldName="SearchFields";
+                filterParams.Operator="Contains";
+                //filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null);
                 this.currentFilter = null;
             }
+            filters.pushAdditionalFilter(filterParams);            
+
 
         }
         loadPromise.then((res: any) => {
