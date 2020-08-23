@@ -153,168 +153,168 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(IsUpdate)
+					if(IsUpdate && item.Length != null)
 					{
 							throw new ApplicationException("Length Can't be update"); 
 					}  
 
 					temp.Length = item.Length;
                     
-					if(IsUpdate)
+					if(IsUpdate && item.Width != null)
 					{
 							throw new ApplicationException("Width Can't be update"); 
 					}  
 
 					temp.Width = item.Width;
                     
-					if(IsUpdate)
+					if(IsUpdate && item.Height != null)
 					{
 							throw new ApplicationException("Height Can't be update"); 
 					}  
 
 					temp.Height = item.Height;
                     
-					if(IsUpdate)
+					if(IsUpdate && item.Pieces != null)
 					{
 							throw new ApplicationException("Pieces Can't be update"); 
 					}  
 
 					temp.Quantity = item.Pieces;
                     
-					if(IsUpdate)
+					if(IsUpdate && item.Volume != null)
 					{
 							throw new ApplicationException("Volume Can't be update"); 
 					}  
 
 					temp.Volume = item.Volume;
                     
-					if(IsUpdate)
+					if(IsUpdate && item.GrossWeight != null)
 					{
 							throw new ApplicationException("GrossWeight Can't be update"); 
 					}  
 
 					temp.Weight = item.GrossWeight;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.Seal))
 					{
 							throw new ApplicationException("Seal Can't be update"); 
 					}  
 
 					temp.ShipperSeal = item.Seal;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.Seal2))
 					{
 							throw new ApplicationException("Seal2 Can't be update"); 
 					}  
 
 					temp.CarrierSeal = item.Seal2;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.Reference1))
 					{
 							throw new ApplicationException("Reference1 Can't be update"); 
 					}  
 
 					temp.Reference1 = item.Reference1;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.Reference2))
 					{
 							throw new ApplicationException("Reference2 Can't be update"); 
 					}  
 
 					temp.Reference2 = item.Reference2;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.Reference3))
 					{
 							throw new ApplicationException("Reference3 Can't be update"); 
 					}  
 
 					temp.Reference3 = item.Reference3;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.Harmonize))
 					{
 							throw new ApplicationException("Harmonize Can't be update"); 
 					}  
 
 					temp.Harmonize = item.Harmonize;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.Temperature))
 					{
 							throw new ApplicationException("Temperature Can't be update"); 
 					}  
 
 					temp.Temperature = item.Temperature;
                     
-					if(IsUpdate)
+					if(IsUpdate && item.Ventilation != null)
 					{
 							throw new ApplicationException("Ventilation Can't be update"); 
 					}  
 
 					temp.Ventilation = item.Ventilation;
                     
-					if(IsUpdate)
+					if(IsUpdate && item.IsDangerous != null)
 					{
 							throw new ApplicationException("IsDangerous Can't be update"); 
 					}  
 
 					temp.IsDangerous = item.IsDangerous;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.ClassNumber))
 					{
 							throw new ApplicationException("ClassNumber Can't be update"); 
 					}  
 
 					temp.ClassNumber = item.ClassNumber;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.UnNumber))
 					{
 							throw new ApplicationException("UnNumber Can't be update"); 
 					}  
 
 					temp.UnNumber = item.UnNumber;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.PackagingGroup))
 					{
 							throw new ApplicationException("PackagingGroup Can't be update"); 
 					}  
 
 					temp.PackagingGroup = item.PackagingGroup;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.IMDGCode))
 					{
 							throw new ApplicationException("IMDGCode Can't be update"); 
 					}  
 
 					temp.IMDGCode = item.IMDGCode;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.FlashPoint))
 					{
 							throw new ApplicationException("FlashPoint Can't be update"); 
 					}  
 
 					temp.FlashPoint = item.FlashPoint;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.MaterialDescription))
 					{
 							throw new ApplicationException("MaterialDescription Can't be update"); 
 					}  
 
 					temp.MaterialDescription = item.MaterialDescription;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.CommodityNumber))
 					{
 							throw new ApplicationException("CommodityNumber Can't be update"); 
 					}  
 
 					temp.CommodityNumber = item.CommodityNumber;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.Reference4))
 					{
 							throw new ApplicationException("Reference4 Can't be update"); 
 					}  
 
 					temp.Reference4 = item.Reference4;
                     
-					if(IsUpdate)
+					if(IsUpdate && !string.IsNullOrEmpty(item.Notes))
 					{
 							throw new ApplicationException("Notes Can't be update"); 
 					}  

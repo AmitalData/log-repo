@@ -72,7 +72,7 @@ using Simplog.Data.QuoteModel;
             }
         } 
 
-		public QuoteCustomerTypePM QuoteCustomerTypeDataMappingAndValidatin(QuoteCustomerType MyEntity,int Tenant,string ComputingPartnerName = "")
+		public QuoteCustomerTypePM QuoteCustomerTypeDataMappingAndValidatin(QuoteCustomerType MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -85,13 +85,26 @@ using Simplog.Data.QuoteModel;
 					{   
 					    throw new ApplicationException("QuoteCustomerType with Code " + MyEntity.Code + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
+						 
+						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
+						{
+								throw new ApplicationException("Code Can't be update"); 
+						}  
+
 						temp.Code = MyEntity.Code;
 					}
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Name))
+					{
+							throw new ApplicationException("Name Can't be update"); 
+					}  
+
 					temp.Name = MyEntity.Name;					   
-					   return temp;
+					return temp;
 		    }
             catch (Exception ex)
             {

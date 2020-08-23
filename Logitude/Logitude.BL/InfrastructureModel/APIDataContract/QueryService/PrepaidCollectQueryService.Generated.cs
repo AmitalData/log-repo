@@ -72,7 +72,7 @@ using Simplog.Data.InfrastructureModel;
             }
         } 
 
-		public PrepaidCollectPM PrepaidCollectDataMappingAndValidatin(PrepaidCollect MyEntity,int Tenant,string ComputingPartnerName = "")
+		public PrepaidCollectPM PrepaidCollectDataMappingAndValidatin(PrepaidCollect MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -86,6 +86,7 @@ using Simplog.Data.InfrastructureModel;
 					{   
 					    throw new ApplicationException("PrepaidCollect with Code " + MyEntity.Code + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -100,8 +101,14 @@ using Simplog.Data.InfrastructureModel;
 
 						//}
 					}
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Name))
+					{
+							throw new ApplicationException("Name Can't be update"); 
+					}  
+
 					temp.Name = MyEntity.Name;					   
-					   return temp;
+					return temp;
 		    }
             catch (Exception ex)
             {

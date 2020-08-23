@@ -55,7 +55,9 @@ using Simplog.Data.InvoiceModel;
 				   temp.ForeignAmount = item.ForeignAmount;
 				   temp.BankBranch = item.BankBranch;
 				   temp.BankAccount = item.BankAccount;
-				   temp.Bank = item.BankId;			  
+				   temp.Bank = item.BankId; 
+
+			  
 				   if(item.StatusCode != null)
 				   {
 					   ARPaymentChequeStatusReplicaQueryService ARPaymentChequeStatusReplicaService0 = new ARPaymentChequeStatusReplicaQueryService(Tenant);
@@ -75,7 +77,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public List<ARPaymentChequeReplicaPM> ARPaymentChequeDataMappingAndValidatin(List<ARPaymentCheque> MyEntity,int Tenant,string ComputingPartnerName = "")
+		public List<ARPaymentChequeReplicaPM> ARPaymentChequeDataMappingAndValidatin(List<ARPaymentCheque> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -93,6 +95,7 @@ using Simplog.Data.InvoiceModel;
 					{   
 					    throw new ApplicationException("ARPaymentChequeReplica with Id " + item.Id + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -107,31 +110,93 @@ using Simplog.Data.InvoiceModel;
 
 						//}
 					}
+                    
+					if(IsUpdate && item.Tenant != null)
+					{
+							throw new ApplicationException("Tenant Can't be update"); 
+					}  
+
 					temp.Tenant = item.Tenant;
+                    
+					if(IsUpdate && item.LineNumber != null)
+					{
+							throw new ApplicationException("LineNumber Can't be update"); 
+					}  
+
 					temp.LineNumber = item.LineNumber;
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(item.ChequeNumber))
+					{
+							throw new ApplicationException("ChequeNumber Can't be update"); 
+					}  
+
 					temp.ChequeNumber = item.ChequeNumber;
+                    
+					if(IsUpdate && item.ValueDate != null)
+					{
+							throw new ApplicationException("ValueDate Can't be update"); 
+					}  
+
 					temp.ValueDate = item.ValueDate;
+                    
+					if(IsUpdate && item.LocalAmount != null)
+					{
+							throw new ApplicationException("LocalAmount Can't be update"); 
+					}  
+
 					temp.LocalAmount = item.LocalAmount;
+                    
+					if(IsUpdate && item.ForeignAmount != null)
+					{
+							throw new ApplicationException("ForeignAmount Can't be update"); 
+					}  
+
 					temp.ForeignAmount = item.ForeignAmount;
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(item.BankBranch))
+					{
+							throw new ApplicationException("BankBranch Can't be update"); 
+					}  
+
 					temp.BankBranch = item.BankBranch;
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(item.BankAccount))
+					{
+							throw new ApplicationException("BankAccount Can't be update"); 
+					}  
+
 					temp.BankAccount = item.BankAccount;
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(item.Bank))
+					{
+							throw new ApplicationException("Bank Can't be update"); 
+					}  
+
 					temp.BankId = item.Bank;
 					ARPaymentChequeStatusReplicaQueryService ChequeStatusARPaymentChequeStatusReplicaService = new ARPaymentChequeStatusReplicaQueryService(Tenant);
 					if(item.ChequeStatus != null)
 					{
 						var myChequeStatusPM = ChequeStatusARPaymentChequeStatusReplicaService.ARPaymentChequeStatusReplicaDataMappingAndValidatin(item.ChequeStatus,Tenant,ComputingPartnerName);
-												if(myChequeStatusPM != null)
-						{
-							temp.StatusCode = myChequeStatusPM.Code;
-						}
+						
+						if(myChequeStatusPM != null)
+						{ 
+
 						 
+							if(IsUpdate)
+							{
+								throw new ApplicationException("ChequeStatus Can't be update"); 
+							}  
+
+							temp.StatusCode = myChequeStatusPM.Code;
+						} 
+
 					}
 			
 										   
 						MyList.Add(temp);
 					}
 						
-					   return MyList;
+					return MyList;
 		    }
             catch (Exception ex)
             {

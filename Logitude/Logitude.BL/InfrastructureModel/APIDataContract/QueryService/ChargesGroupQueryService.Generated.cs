@@ -77,7 +77,7 @@ using Simplog.Data.InfrastructureModel;
             }
         } 
 
-		public ChargesGroupPM ChargesGroupDataMappingAndValidatin(ChargesGroup MyEntity,int Tenant,string ComputingPartnerName = "")
+		public ChargesGroupPM ChargesGroupDataMappingAndValidatin(ChargesGroup MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -91,6 +91,7 @@ using Simplog.Data.InfrastructureModel;
 					{   
 					    throw new ApplicationException("ChargesGroup with Id " + MyEntity.Id + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -108,10 +109,22 @@ using Simplog.Data.InfrastructureModel;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
+						 
+						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
+						{
+								throw new ApplicationException("Code Can't be update"); 
+						}  
+
 						temp.Code = MyEntity.Code;
 					}
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Name))
+					{
+							throw new ApplicationException("Name Can't be update"); 
+					}  
+
 					temp.Name = MyEntity.Name;					   
-					   return temp;
+					return temp;
 		    }
             catch (Exception ex)
             {

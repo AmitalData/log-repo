@@ -99,7 +99,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public MeasurementPM MeasurementDataMappingAndValidatin(Measurement MyEntity,int Tenant,string ComputingPartnerName = "")
+		public MeasurementPM MeasurementDataMappingAndValidatin(Measurement MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -133,6 +133,7 @@ using Simplog.Data.CommonDataModel;
 					{   
 					    throw new ApplicationException("Measurement with Code " + MyEntity.Code + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -150,16 +151,40 @@ using Simplog.Data.CommonDataModel;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
+						 
+						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
+						{
+								throw new ApplicationException("Code Can't be update"); 
+						}  
+
 						temp.Code = MyEntity.Code;
 					}
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Name))
+					{
+							throw new ApplicationException("Name Can't be update"); 
+					}  
+
 					temp.Name = MyEntity.Name;
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ShortName))
+					{
+							throw new ApplicationException("ShortName Can't be update"); 
+					}  
+
 					temp.ShortName = MyEntity.ShortName;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
+						 
+						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.PartnerCode))
+						{
+								throw new ApplicationException("PartnerCode Can't be update"); 
+						}  
+
 						temp.Code = MyEntity.PartnerCode;
 					}					   
-					   return temp;
+					return temp;
 		    }
             catch (Exception ex)
             {

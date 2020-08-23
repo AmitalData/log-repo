@@ -173,14 +173,14 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(IsUpdate)
+					if(IsUpdate && item.Quantity != null)
 					{
 							throw new ApplicationException("Quantity Can't be update"); 
 					}  
 
 					temp.Quantity = item.Quantity;
                     
-					if(IsUpdate)
+					if(IsUpdate && item.UnitPrice != null)
 					{
 							throw new ApplicationException("UnitPrice Can't be update"); 
 					}  
@@ -207,7 +207,7 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(IsUpdate)
+					if(IsUpdate && item.Rate != null)
 					{
 							throw new ApplicationException("Rate Can't be update"); 
 					}  
@@ -234,7 +234,7 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(IsUpdate)
+					if(IsUpdate && item.Amount != null)
 					{
 							throw new ApplicationException("Amount Can't be update"); 
 					}  

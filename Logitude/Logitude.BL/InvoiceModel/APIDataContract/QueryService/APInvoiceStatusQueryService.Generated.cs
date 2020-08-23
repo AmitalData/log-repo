@@ -72,7 +72,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public APInvoiceStatusPM APInvoiceStatusDataMappingAndValidatin(APInvoiceStatus MyEntity,int Tenant,string ComputingPartnerName = "")
+		public APInvoiceStatusPM APInvoiceStatusDataMappingAndValidatin(APInvoiceStatus MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -85,13 +85,26 @@ using Simplog.Data.InvoiceModel;
 					{   
 					    throw new ApplicationException("APInvoiceStatus with Code " + MyEntity.Code + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
+						 
+						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
+						{
+								throw new ApplicationException("Code Can't be update"); 
+						}  
+
 						temp.Code = MyEntity.Code;
 					}
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Name))
+					{
+							throw new ApplicationException("Name Can't be update"); 
+					}  
+
 					temp.Name = MyEntity.Name;					   
-					   return temp;
+					return temp;
 		    }
             catch (Exception ex)
             {

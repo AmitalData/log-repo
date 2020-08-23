@@ -78,7 +78,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public CustomerOpenFilesAmountPM CustomerOpenFilesAmountDataMappingAndValidatin(CustomerOpenFilesAmount MyEntity,int Tenant,string ComputingPartnerName = "")
+		public CustomerOpenFilesAmountPM CustomerOpenFilesAmountDataMappingAndValidatin(CustomerOpenFilesAmount MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -91,11 +91,36 @@ using Simplog.Data.CommonDataModel;
 					{   
 					    throw new ApplicationException("CustomerOpenFilesAmount with CustomerId " + MyEntity.CustomerId + " doesn't exist");
 					} 
+					
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.CustomerId))
+					{
+							throw new ApplicationException("CustomerId Can't be update"); 
+					}  
+
 					temp.CustomerId = MyEntity.CustomerId;
+                    
+					if(IsUpdate && MyEntity.TotalOpenFilesAmount != null)
+					{
+							throw new ApplicationException("TotalOpenFilesAmount Can't be update"); 
+					}  
+
 					temp.TotalOpenFilesAmount = MyEntity.TotalOpenFilesAmount;
+                    
+					if(IsUpdate && MyEntity.Tenant != null)
+					{
+							throw new ApplicationException("Tenant Can't be update"); 
+					}  
+
 					temp.Tenant = MyEntity.Tenant;
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Customer))
+					{
+							throw new ApplicationException("Customer Can't be update"); 
+					}  
+
 					temp.CustomerCode = MyEntity.Customer;					   
-					   return temp;
+					return temp;
 		    }
             catch (Exception ex)
             {

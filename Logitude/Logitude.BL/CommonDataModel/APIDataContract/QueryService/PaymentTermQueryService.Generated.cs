@@ -120,7 +120,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public PaymentTermPM PaymentTermDataMappingAndValidatin(PaymentTerm MyEntity,int Tenant,string ComputingPartnerName = "")
+		public PaymentTermPM PaymentTermDataMappingAndValidatin(PaymentTerm MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -158,6 +158,7 @@ using Simplog.Data.CommonDataModel;
 					{   
 					    throw new ApplicationException("PaymentTerm with Code " + MyEntity.Code + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -172,21 +173,57 @@ using Simplog.Data.CommonDataModel;
 
 						//}
 					}
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.EnglishName))
+					{
+							throw new ApplicationException("EnglishName Can't be update"); 
+					}  
+
 					temp.EnglishName = MyEntity.EnglishName;
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.LocalName))
+					{
+							throw new ApplicationException("LocalName Can't be update"); 
+					}  
+
 					temp.LocalName = MyEntity.LocalName;
+                    
+					if(IsUpdate && MyEntity.Days != null)
+					{
+							throw new ApplicationException("Days Can't be update"); 
+					}  
+
 					temp.Days = MyEntity.Days;
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ExternalId))
+					{
+							throw new ApplicationException("ExternalId Can't be update"); 
+					}  
+
 					temp.ExternalId = MyEntity.ExternalId;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
+						 
+						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
+						{
+								throw new ApplicationException("Code Can't be update"); 
+						}  
+
 						temp.Code = MyEntity.Code;
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
+						 
+						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.PartnerCode))
+						{
+								throw new ApplicationException("PartnerCode Can't be update"); 
+						}  
+
 						temp.Code = MyEntity.PartnerCode;
 					}					   
-					   return temp;
+					return temp;
 		    }
             catch (Exception ex)
             {

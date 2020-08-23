@@ -475,6 +475,12 @@ using <#=myspacestring#>
 								 if(myBool != null){
 								 IsManualMapping = myBool.Value;
 								 } 
+								 var HasValueString = "!string.IsNullOrEmpty(" + (IsComposition == "true" ? "item." + DCFieldName + ")" : "MyEntity." + DCFieldName + ")");
+								 if(type != "string")
+								 {
+								     HasValueString = IsComposition == "true" ? "item." + DCFieldName + " != null" : "MyEntity." + DCFieldName + " != null";
+								 }
+
 								 if(IsCustomType == "true" || IgnoreCustomTypeCheck == "true"){
 								 if(IsMulti == "true"){  #> 
 
@@ -563,7 +569,7 @@ using <#=myspacestring#>
 
 						 <#+if(IsUpdateAllowed == "false"){#>
 
-						if(IsUpdate)
+						if(IsUpdate && <#=HasValueString#>)
 						{
 								throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
 						} <#+}#> 
@@ -576,7 +582,7 @@ using <#=myspacestring#>
 
                     <#+if(IsUpdateAllowed == "false"){#>
 
-					if(IsUpdate)
+					if(IsUpdate && <#=HasValueString#>)
 					{
 							throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
 					} <#+}#> 
