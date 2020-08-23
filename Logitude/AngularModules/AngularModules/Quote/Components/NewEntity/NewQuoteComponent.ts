@@ -1748,7 +1748,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.EntityPM.PickupDeliveryVolumetricWeight = AppTool.Round(newValue, 3);
 
             if (this.EntityPM.QuotePackages.length == 0) {
-                this.EntityPM.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(this.GrossWeight, this.EntityPM.PickupDeliveryVolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+                this.EntityPM.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(this.GrossWeight, this.EntityPM.PickupDeliveryVolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.PickupDeliveryCWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
             }
         }
     }
@@ -1762,7 +1762,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             if (this.GrossWeight == null && this.EntityPM.PickupDeliveryVolumetricWeight == null) {
                 this.EntityPM.PickupDeliveryVolumetricWeight = result;
                 this.EntityPM.GrossWeight = AppTool.GetWeightFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeightUnitCode, result);
-                //this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.EntityPM.Ratio);
+                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.EntityPM.Ratio);
             }
         }
     }
@@ -1774,7 +1774,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     }
 
     ComputePickupDeliveryChargeableWeight() {
-        this.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(this.GrossWeight, this.PickupDeliveryVolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+        this.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(this.GrossWeight, this.PickupDeliveryVolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.PickupDeliveryCWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
     }
     ComputeVolumetricWeight() {
         var myResult = null;
