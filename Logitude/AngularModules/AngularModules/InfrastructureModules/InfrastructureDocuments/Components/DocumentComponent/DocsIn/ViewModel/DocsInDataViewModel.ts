@@ -330,6 +330,7 @@ export class DocsInDataViewModel extends BaseComponent{
          
             this.DocsInComponent.CheckHasDocuments();
 
+            if (this.CurrentSession.CurrentEditComponent) this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
         }
 

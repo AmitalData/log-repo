@@ -2473,6 +2473,20 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MasterHousesNumbers { get; set; }
         public string HousesDescriptionofGoods { get; set; }
 
+
+
+
+
+        public DateTime? BookingConfirmationSentDate { get; set; }
+        public DateTime? PreAlertSentDate { get; set; }
+        public DateTime? DeliveryNoticeSentDate { get; set; }
+        public DateTime? ExpectedArrivalNoticeSentDate { get; set; }
+        public DateTime? ArrivalNoticeSentDate { get; set; }
+        public DateTime? T1ReceivedDate { get; set; }
+
+
+
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool ChargeStorage { get; set; }
 

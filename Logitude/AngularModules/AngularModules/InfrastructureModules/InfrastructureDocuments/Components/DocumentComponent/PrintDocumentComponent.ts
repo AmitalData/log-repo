@@ -501,7 +501,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
                     if (this.DocumentTypeTemplateLists.length > 0) {
 
-                        this.CurrentDocumentOut.DocumentTemplateId
                         var item = this.DocumentTypeTemplateLists.filter(r => r.Id == this.CurrentDocumentOut.DocumentTemplateId)[0];
 
                         if (item == null) item = this.DocumentTypeTemplateLists.filter(r => r.Id == this.DataContext.DocumentTypePM.DocumentTypeDefaultReportTemplateId)[0];
@@ -1017,7 +1016,11 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             });
 
             if (this.IsBuildDocumentViaWorkerRole) {
-                this.BliudDocumentViewWorkerRole(this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected));
+
+         
+                    this.BliudDocumentViewWorkerRole(this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected));
+
+              
             }
 
 
@@ -1066,6 +1069,53 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     IsDocumentBuildSucceeded: boolean = false;
     IsDocumentBuildFailed: boolean = false;
 
+
+
+
+    LoadDocumentOut() {
+        this._documentOutPMService.getSingleDocumentOutPM(this.DataContext.CurrentDocument.Id, this.DataContext.CurrentDocument.Tenant).subscribe((res: any) => {
+            this.StopBusyIndicator();
+            var pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError) {
+                var myResult = pmResponse.Result;
+                if (myResult) {
+                    myResult.HasFollowUp = this.DataContext.CurrentDocument.HasFollowUp;
+                    this.CurrentDocumentOut = myResult;
+                    this.DataContext.CurrentDocument = myResult;
+                    if (this.AddedDocumentTypeCopyViewModels != null) {
+                        this.AddedDocumentTypeCopyViewModels.forEach((copy) => {
+                            copy.RefereshDocumentOutCopies(this.CurrentDocumentOut);
+                        });
+
+                        this.DataContext.HasFile = true;
+                        if (this.DataContext.Issued != true) {
+                            this.DataContext.Issued = true;
+                        }
+                        this.LastBuildDate = this.CurrentDocumentOut.IssuedDate;
+                        this.DataContext.IssuedDate = this.CurrentDocumentOut.IssuedDate;
+                        this.DataContext.IssuedByUserName = this.CurrentDocumentOut.IssuedByUserName;
+                        ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DataContext.DocumentTypePM.Name + " Built");
+
+                        if (this.DataContext.IsNotFromDocsOutListOpenPrintControl) {
+                            this.CurrentSession.FireEvent("RefreshDocumentOutPrint");
+                        }
+
+                        this.IsDocumentBuildSucceeded = true;
+                        if (this.CurrentSession.CurrentEditComponent) this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+
+                    }
+                }
+
+            }
+            else this.StopBusyIndicator();
+
+
+        });
+
+    }
+
+
     SaveContext() {
 
 
@@ -1074,45 +1124,8 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 var myResult = pmResponse.Result;
-                this._documentOutPMService.getSingleDocumentOutPM(this.DataContext.CurrentDocument.Id, this.DataContext.CurrentDocument.Tenant).subscribe((res: any) => {
-                    this.StopBusyIndicator();
-                    var pmResponse: ServiceResponse = res;
-                    if (!pmResponse.HasError) {
-                        var myResult = pmResponse.Result;
-                        if (myResult) {
-                            myResult.HasFollowUp = this.DataContext.CurrentDocument.HasFollowUp;
-                            this.CurrentDocumentOut = myResult;
-                            this.DataContext.CurrentDocument = myResult;
-                            if (this.AddedDocumentTypeCopyViewModels != null) {
-                                this.AddedDocumentTypeCopyViewModels.forEach((copy) => {
-                                    copy.RefereshDocumentOutCopies(this.CurrentDocumentOut);
-                                });
-
-                                this.DataContext.HasFile = true;
-                                if (this.DataContext.Issued != true) {
-                                    this.DataContext.Issued = true;
-                                }
-                                this.LastBuildDate = this.CurrentDocumentOut.IssuedDate;
-                                this.DataContext.IssuedDate = this.CurrentDocumentOut.IssuedDate;
-                                this.DataContext.IssuedByUserName = this.CurrentDocumentOut.IssuedByUserName;
-                                ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DataContext.DocumentTypePM.Name + " Built");
-
-                                if (this.DataContext.IsNotFromDocsOutListOpenPrintControl) {
-                                    this.CurrentSession.FireEvent("RefreshDocumentOutPrint");
-                                }
-
-                                this.IsDocumentBuildSucceeded = true;
-
-
-                            }
-                        }
-
-                    }
-                    else this.StopBusyIndicator();
-
-
-                });
-
+                this.LoadDocumentOut();
+               
 
 
             } else this.StopBusyIndicator();
@@ -1137,6 +1150,10 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             exportDocumentArgs.Tenant = SessionLocator.Tenant;
             exportDocumentArgs.DocumentTypeName = this.DataContext.DocumentTypePM.Name;
             exportDocumentArgs.DocumentTypeTemplateId = this.CurrentDocumentOut.DocumentTemplateId;
+            exportDocumentArgs.CurrentDocumentTypeCode = this.DataContext.DocumentTypePM.Code;
+            exportDocumentArgs.ObjectTableName = this.ObjectTableName;
+            exportDocumentArgs.DocumentTemplateEditorTool = this.CurrentDocumentOut.DocumentTemplateEditorTool;
+        
             exportDocumentArgs.DocumentTypeCopyIdsList = documentTypeCopyLists.map(function (a) { return a.Id; });
             this._exportDocumentService.BuildDocumentViaWorkerRole(exportDocumentArgs).subscribe((myResponse: ServiceResponse) => {
                 var result: any = myResponse.Result;
@@ -1213,12 +1230,17 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                                         copy.Status = "Success";
                                         copy.Exists = true;
                                     });
-                                    this.CurrentDocumentOut.Issued = true;
-                                    this.CurrentDocumentOut.NeedsRebuild = false;
-                                    this.DataContext.Issued = true;
-                                    this.CurrentDocumentOut.IssuedByUserId = SessionInfo.LoggedUserId;
-                                    this.CurrentDocumentOut.IsChangeIssuedDate = true;
-                                    this.SaveContext();
+
+
+                                    this.LoadDocumentOut();
+
+
+                                    //this.CurrentDocumentOut.Issued = true;
+                                    //this.CurrentDocumentOut.NeedsRebuild = false;
+                                    //this.DataContext.Issued = true;
+                                    //this.CurrentDocumentOut.IssuedByUserId = SessionInfo.LoggedUserId;
+                                    //this.CurrentDocumentOut.IsChangeIssuedDate = true;
+                                    //this.SaveContext();
                                 }
                             }
                             else {

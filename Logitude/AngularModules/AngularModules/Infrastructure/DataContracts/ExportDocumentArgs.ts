@@ -25,6 +25,11 @@ export class ExportDocumentArgs {
     public AccountingCurrencyId: string;
     public DocumentTypeCopyIdsList: string[];
     public DocumentTypeName: string;
+    public ObjectTableName: string;
+    public DocumentTemplateEditorTool: string;
+
     
+
+
 }
 

@@ -1,9 +1,5 @@
 
 
-
-
-
-
   --DROP FUNCTION SplitBySpaceFunction 
 
 
@@ -39,23 +35,18 @@
 
 
 
-
-TRUNCATE table CardSearchs
-
- If(OBJECT_ID('tempdb..#temp_AllKeywords') Is Not Null)
-Begin Drop Table #temp_AllKeywords End
-CREATE TABLE #temp_AllKeywords([Value] [nvarchar](100) , [FieldName] [nvarchar](70))
+TRUNCATE table CardSearches
 
 
-If(OBJECT_ID('tempdb..#temp_CardSearchs') Is Not Null)
+If(OBJECT_ID('tempdb..#temp_CardSearches') Is Not Null)
 Begin
-    Drop Table #temp_CardSearchs
+    Drop Table #temp_CardSearches
 End
 
  
-CREATE TABLE #temp_CardSearchs
+CREATE TABLE #temp_CardSearches
 (
-	[Id] [varchar](15) NOT NULL,
+[Id] INT IDENTITY(1,1) NOT NULL,
 	[Tenant] [int] NOT NULL,
 	[RecordDate] [datetime] NOT NULL,
 	[Keyword] [nvarchar](100) NULL,
@@ -65,7 +56,7 @@ CREATE TABLE #temp_CardSearchs
     [InActive] bit,
 )
 
- 
+
 
 
 declare  @Tenant int
@@ -90,6 +81,10 @@ declare  @PartnerTypeId varchar(2)
 declare  @InActive bit
 
 
+
+    Declare @SearchField nvarchar(max)
+
+
     DECLARE CardCursor CURSOR READ_ONLY
     FOR
     SELECT Id,Tenant, Code,EnglishName , LocalName , VatNumber ,CityName , CountryName , ReceivablesAccountingCard , PayablesAccountingCard , CreateDate ,UpdateDate , PartnerTypeId , InActive
@@ -103,26 +98,34 @@ declare  @InActive bit
 		set @Weight = 0
 	 DECLARE  @newId varchar(100) ;
 
-	    TRUNCATE TABLE #temp_AllKeywords;
+	  declare  @RecordDate datetime
+		 set @RecordDate = @UpdateDate;
+		 if(@RecordDate is null) set @RecordDate = @CreateDate
+
 			 BEGIN TRY  
-	  	 if (@Code is not null)	begin insert into #temp_AllKeywords (FieldName , Value) select 'Code',  t.Name from dbo.SplitBySpaceFunction(@Code) t end
-		if (@EnglishName is not null)	begin  insert into #temp_AllKeywords (FieldName , Value) select 'EnglishName',  t.Name from dbo.SplitBySpaceFunction(@EnglishName) t end
-		if (@LocalName is not null)	begin  insert into #temp_AllKeywords (FieldName , Value) select 'LocalName',  t.Name from dbo.SplitBySpaceFunction(@LocalName) t end
-		if (@VatNumber is not null)	begin  insert into #temp_AllKeywords (FieldName , Value) select 'VatNumber',  t.Name from dbo.SplitBySpaceFunction(@VatNumber) t end
-		if (@CountryName is not null)	begin  insert into #temp_AllKeywords (FieldName , Value) select 'CountryName',  t.Name from dbo.SplitBySpaceFunction(@CountryName) t end
-		if (@CityName is not null)	begin  insert into #temp_AllKeywords (FieldName , Value) select 'CityName',  t.Name from dbo.SplitBySpaceFunction(@CityName) t end
-		if (@ReceivablesAccountingCard is not null)	begin  insert into #temp_AllKeywords (FieldName , Value) select 'ReceivablesAccountingCard',  t.Name from dbo.SplitBySpaceFunction(@ReceivablesAccountingCard) t end
-		if (@PayablesAccountingCard is not null)	begin  insert into #temp_AllKeywords (FieldName , Value) select 'PayablesAccountingCard',  t.Name from dbo.SplitBySpaceFunction(@PayablesAccountingCard) t end
+
+			 set @SearchField = @Code;
+			 if(@EnglishName is not null) set @SearchField += (' ' + @EnglishName);
+			 if(@LocalName is not null) set @SearchField += (' ' + @LocalName);
+			 if(@VatNumber is not null) set @SearchField += (' ' + @VatNumber);
+			 if(@CountryName is not null) set @SearchField += (' ' + @CountryName);
+			 if(@CityName is not null) set @SearchField += (' ' + @CityName);
+			 if(@ReceivablesAccountingCard is not null) set @SearchField += (' ' + @ReceivablesAccountingCard);
+			 if(@PayablesAccountingCard is not null) set @SearchField += (' ' + @PayablesAccountingCard);
 
 
-		--	if (@Code is not null)	begin insert into #temp_AllKeywords (FieldName , Value) select 'Code',  t.value  FROM STRING_SPLIT(@Code, ' ') t end
-		--if (@EnglishName is not null)	begin  insert into #temp_AllKeywords (FieldName , Value) select 'EnglishName',   t.value  FROM STRING_SPLIT(@EnglishName, ' ') t end
-		--if (@LocalName is not null)	begin  insert into #temp_AllKeywords (FieldName , Value) select 'LocalName',   t.value  FROM STRING_SPLIT(@LocalName, ' ') t end
-		--if (@VatNumber is not null)	begin  insert into #temp_AllKeywords (FieldName , Value) select 'VatNumber',   t.value  FROM STRING_SPLIT(@VatNumber, ' ') t end
-		--if (@CountryName is not null)	begin  insert into #temp_AllKeywords (FieldName , Value) select 'CountryName',  t.value  FROM STRING_SPLIT(@CountryName, ' ') t end
-		--if (@CityName is not null)	begin  insert into #temp_AllKeywords (FieldName , Value) select 'CityName',   t.value  FROM STRING_SPLIT(@CityName, ' ') t end
-		--if (@ReceivablesAccountingCard is not null)	begin  insert into #temp_AllKeywords (FieldName , Value) select 'ReceivablesAccountingCard',  t.value  FROM STRING_SPLIT(@ReceivablesAccountingCard, ' ') t end
-		--if (@PayablesAccountingCard is not null)	begin  insert into #temp_AllKeywords (FieldName , Value) select 'PayablesAccountingCard', t.value  FROM STRING_SPLIT(@PayablesAccountingCard, ' ') t end
+			
+			 insert into #temp_CardSearches (Tenant, CardId  , RecordDate , Weight , PartnerTypeId,InActive , Keyword) select  @Tenant, @CardId , @RecordDate , @Weight , @PartnerTypeId,@InActive ,  Name from dbo.SplitBySpaceFunction(@SearchField) where Name !=' '
+
+
+	  set @Count = @Count + 1;
+        if(@Count = 500000)
+        begin    
+
+		    insert into CardSearches (Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive) select  Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive from #temp_CardSearches
+            truncate table #temp_CardSearches
+            set @Count = 0
+        end
 
 
 
@@ -138,46 +141,7 @@ declare  @InActive bit
 RETURN;
 END CATCH  
 
-    DECLARE @value nvarchar(100)
-    DECLARE AllKeywordsCursor CURSOR READ_ONLY
-    FOR
-    SELECT Value from  #temp_AllKeywords where Value is not null and  Value !=''
-    OPEN AllKeywordsCursor FETCH NEXT FROM AllKeywordsCursor INTO @Value
-    WHILE @@FETCH_STATUS = 0
-    BEGIN
-        begin
-
-	     EXECUTE usp_GetNextTableIdValue  @pLastNumber = @newId output,@pTableName = 'CardSearch'; 
-
-		 declare  @RecordDate datetime
-		 set @RecordDate = @UpdateDate;
-		 if(@RecordDate is null) set @RecordDate = @CreateDate
-
-		 insert into #temp_CardSearchs (Id, Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive ) values (@newId , @Tenant , @CardId , @Value , @RecordDate , @Weight , @PartnerTypeId,@InActive)
-
-	    set @Count = @Count + 1;
-        if(@Count = 4000)
-        begin    
-
-		
-		    insert into CardSearchs  select  * from #temp_CardSearchs
-            truncate table #temp_CardSearchs
-            set @Count = 0
-            WAITFOR DELAY '00:00:00'
-
-        end
-
-
-
-        end
-
- 
-
-    FETCH NEXT FROM AllKeywordsCursor INTO @Value
-    END
-    CLOSE AllKeywordsCursor
-    DEALLOCATE AllKeywordsCursor
-
+    
 
         end
 
@@ -190,15 +154,15 @@ END CATCH
     DEALLOCATE CardCursor
 
  
-         if (@Count > 0) begin  insert into CardSearchs  select  * from #temp_CardSearchs  end
+        if (@Count > 0) begin  insert into CardSearches (Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive) select  Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive from #temp_CardSearches end
  
 	 
-             drop table #temp_CardSearchs
-			 drop table #temp_AllKeywords
+             drop table #temp_CardSearches
 
+			 
+			
 
-
-
+     
 
  
 

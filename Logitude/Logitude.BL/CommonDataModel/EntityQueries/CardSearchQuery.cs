@@ -33,7 +33,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public CardSearchPM GetSinglePM(string id, int tenant)
         {
             CardSearchPM myResult
-                = (from a in repository.context.CardSearchs
+                = (from a in repository.context.CardSearches
                    where a.Id == id && a.Tenant == tenant
                    select new CardSearchPM()
                    {

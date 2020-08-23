@@ -15,7 +15,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.PartnerTypeId).IsRequired().IsFixedLength().HasMaxLength(2).IsUnicode(false);
 
 
-            this.ToTable("CardSearchs");
+            this.ToTable("CardSearches");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Keyword).HasColumnName("Keyword");
             this.Property(t => t.CardId).HasColumnName("CardId");
