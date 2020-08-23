@@ -425,14 +425,15 @@ var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();
       if (!mm.HasError) {
         let file = new Blob([mm.Result], { type: 'application/pdf' });
         let url =  URL.createObjectURL(file);       
-        this.newWindow.location.href = url;//POPULATING PDF 
-        this.Refresh();
+
+        this.ShowBtatchPrintConfirmComponent(url);
+       
       }
       else {
-        if(this.newWindow){
-          this.newWindow.blur();
-          this.newWindow.close();
-        }
+        // if(this.newWindow){
+        //   this.newWindow.blur();
+        //   this.newWindow.close();
+        // }
         if(mm.ErrorsArray){
           var msg = new MessageWindow();
           msg.RTL = this.isRTL;
@@ -445,18 +446,18 @@ var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();
   
 }
 
-private OpenWindow(){
-  this.newWindow = window.open('', '_blank');//OPEN WINDOW FIRST ON SUBMIT THEN POPULATE PDF
-  this.newWindow.document.write("<html><head> </head><body> <style> body { padding: 10em 0; } .loading { font-size: 84px; font-family: 'Montserrat', sans-serif; font-weight: 800; text-align: center; } .loading span { display: inline-block; margin: 0 -0.05em; } .loading07 span { position: relative; color: rgba(0, 0, 0, 0.2); } .loading07 span::after { position: absolute; top: 0; left: 0; content: attr(data-text); color: #grey; opacity: 0; transform: scale(1.5); animation: loading07 3s infinite; } .loading07 span:nth-child(2)::after { animation-delay: 0.1s; } .loading07 span:nth-child(3)::after { animation-delay: 0.2s; } .loading07 span:nth-child(4)::after { animation-delay: 0.3s; } .loading07 span:nth-child(5)::after { animation-delay: 0.4s; } .loading07 span:nth-child(6)::after { animation-delay: 0.5s; } .loading07 span:nth-child(7)::after { animation-delay: 0.6s; } @keyframes loading07 { 0%, 75%, 100% { transform: scale(1.5); opacity: 0; } 25%, 50% { transform: scale(1); opacity: 1; } } </style> <section> <div class='loading loading07'> <span data-text='I'>I</span> <span data-text='n'>n</span> <span data-text=''> </span> <span data-text='P'>P</span> <span data-text='r'>r</span> <span data-text='o'>o</span> <span data-text='g'>g</span> <span data-text='r'>r</span> <span data-text='e'>e</span> <span data-text='s'>s</span> <span data-text='s'>s</span> <span data-text='.'>.</span> <span data-text='.'>.</span> <span data-text='.'>.</span> </div> </section> </body></html>");
+// private OpenWindow(){
+//   this.newWindow = window.open('', '_blank');//OPEN WINDOW FIRST ON SUBMIT THEN POPULATE PDF
+//   this.newWindow.document.write("<html><head> </head><body> <style> body { padding: 10em 0; } .loading { font-size: 84px; font-family: 'Montserrat', sans-serif; font-weight: 800; text-align: center; } .loading span { display: inline-block; margin: 0 -0.05em; } .loading07 span { position: relative; color: rgba(0, 0, 0, 0.2); } .loading07 span::after { position: absolute; top: 0; left: 0; content: attr(data-text); color: #grey; opacity: 0; transform: scale(1.5); animation: loading07 3s infinite; } .loading07 span:nth-child(2)::after { animation-delay: 0.1s; } .loading07 span:nth-child(3)::after { animation-delay: 0.2s; } .loading07 span:nth-child(4)::after { animation-delay: 0.3s; } .loading07 span:nth-child(5)::after { animation-delay: 0.4s; } .loading07 span:nth-child(6)::after { animation-delay: 0.5s; } .loading07 span:nth-child(7)::after { animation-delay: 0.6s; } @keyframes loading07 { 0%, 75%, 100% { transform: scale(1.5); opacity: 0; } 25%, 50% { transform: scale(1); opacity: 1; } } </style> <section> <div class='loading loading07'> <span data-text='I'>I</span> <span data-text='n'>n</span> <span data-text=''> </span> <span data-text='P'>P</span> <span data-text='r'>r</span> <span data-text='o'>o</span> <span data-text='g'>g</span> <span data-text='r'>r</span> <span data-text='e'>e</span> <span data-text='s'>s</span> <span data-text='s'>s</span> <span data-text='.'>.</span> <span data-text='.'>.</span> <span data-text='.'>.</span> </div> </section> </body></html>");
  
-}
+// }
 
 GetNumberOfDocumentNotPrinted() {
   this.ValidationErrorsList = [];
   if (this.SelectedItemsCount == 0) {
     this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
   } else { 
-     this.OpenWindow();
+    //  this.OpenWindow();
     var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
     this.interestReportExtendedListService.GetNumberOfDocumentNotPrinted(interestReportArgs).subscribe((response: ServiceResponse) => {
     this.CurrentSession.StopBusyIndicator();
@@ -464,10 +465,10 @@ GetNumberOfDocumentNotPrinted() {
     if (!mm.HasError) {
     var pDFDocumentInvoices:PDFDocumentInvoices = mm.Result;
     if((!AppTool.IsNullOrEmpty(pDFDocumentInvoices.ARInvoiceNumbersNotPrinted) && pDFDocumentInvoices.ARInvoiceNumbersNotPrinted.length>0 ) ||  (!AppTool.IsNullOrEmpty(pDFDocumentInvoices.InterestReportNumbersNotPrinted) && pDFDocumentInvoices.InterestReportNumbersNotPrinted.length >0 )){
-      if(this.newWindow){
-        this.newWindow.blur();
-        this.newWindow.close();
-      }
+      // if(this.newWindow){
+      //   this.newWindow.blur();
+      //   this.newWindow.close();
+      // }
       this.ShowBtatchPrintWarningComponent(pDFDocumentInvoices,interestReportArgs);
     }
     else{
@@ -477,10 +478,10 @@ GetNumberOfDocumentNotPrinted() {
     
     }
     else {
-      if(this.newWindow){
-        this.newWindow.blur();
-        this.newWindow.close();
-      }
+      // if(this.newWindow){
+      //   this.newWindow.blur();
+      //   this.newWindow.close();
+      // }
       if(mm.ErrorsArray){
         var msg = new MessageWindow();
         msg.RTL = this.isRTL;
@@ -493,7 +494,7 @@ GetNumberOfDocumentNotPrinted() {
 }
 }
 
-public newWindow:any;
+// public newWindow:any;
 
  ShowBtatchPrintWarningComponent(DataContext:PDFDocumentInvoices,interestReportArgs: InterestReportArguments) {
   var logWindow = new LogitudeWindow();
@@ -503,14 +504,48 @@ public newWindow:any;
   logWindow.Height = 260;
   DataContext.Document =  this.SelectedItemsCount;
   logWindow.DataContext = DataContext;
+  logWindow.IsShowCloseButton = true;
   logWindow.Show(myPath);
   logWindow.WindowClosed.subscribe(s => {
       if (s!=null) {
-        this.OpenWindow();
+        // this.OpenWindow();
          this.CurrentSession.StartBusyIndicatorLoading();
-         setTimeout(() =>  this.CreateInvoiceButtonClicked(interestReportArgs),200);
+          this.CreateInvoiceButtonClicked(interestReportArgs);
       }
   })
+}
+
+ShowBtatchPrintConfirmComponent(URL) {
+  var logWindow = new LogitudeWindow();
+  logWindow.Title = TextCodeTranslator.Translate("InterestReport.O.BatchPrint");
+  var myPath = "./Accounting/Components/Packages/Others/BtatchPrintConfirmComponent";
+  logWindow.Width = 560;
+  logWindow.Height = 160;
+  logWindow.DataContext = URL;
+  logWindow.Show(myPath);
+  logWindow.IsShowCloseButton = true;
+  logWindow.WindowClosed.subscribe(s => {
+    if (s!=null) {
+      this.Refresh();
+    }
+  
+  });
+  // logWindow.WindowClosed.subscribe(s => {
+  //     if (s!=null) {
+  //       if(s=="View"){
+  //          window.open(URL,  '_blank');
+  //        }
+  //       else{
+  //         var a = document.createElement("a");
+  //         a.href = URL;
+  //         a.download = "InterestInvoices.pdf"; 
+  //         a.click();
+  //          window.URL.revokeObjectURL(URL);        
+          
+  //         }
+    
+  //     }
+  // })
 }
 
   InitializeDate(){

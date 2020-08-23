@@ -40,7 +40,7 @@ export class BtatchPrintWarningComponent implements OnInit    {
     }
     SetDataContext(pDFDocumentInvoices: PDFDocumentInvoices) {
         this.Context = pDFDocumentInvoices;
-        if(this.Context.ARInvoiceNumbersNotPrinted && this.Context.ARInvoiceNumbersNotPrinted.length !=  this.Context.Document){
+        if(!this.Context.ARInvoiceNumbersNotPrinted || (this.Context.ARInvoiceNumbersNotPrinted.length !=  this.Context.Document)){
             this.EnablePrintButton=true;
         }
         else{

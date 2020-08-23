@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "f151a26e602d381b93434107c44d6a11";
+		public const string HashString = "acb8283de988ac1eb11907e944fc1382";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2628,6 +2628,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportOInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Invoices", DefaultText = "Invoices ",LocalDefaultText = @"חשבוניות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Reports", DefaultText = "Reports ",LocalDefaultText = @"דוחות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportODownloadorView = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.DownloadorView", DefaultText = "Would you like to Download or View all selected interest invoices as one document?",LocalDefaultText = @"", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportODownload = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Download", DefaultText = "Download",LocalDefaultText = @"הורדה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOView = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.View", DefaultText = "View",LocalDefaultText = @"לצפות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

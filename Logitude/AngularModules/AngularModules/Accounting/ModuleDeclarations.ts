@@ -13,6 +13,7 @@ import { InterestPageComponent } from './Components/Workspaces/Interest/Interest
 import { BatchInvoicesComponent } from './Components/Others/BatchInvoicesComponent';
 import { BatchPrintComponent } from './Components/Others/BatchPrintComponent';
 import { BtatchPrintWarningComponent } from './Components/Others/BtatchPrintWarningComponent';
+import { BtatchPrintConfirmComponent } from './Components/Others/BtatchPrintConfirmComponent';
 
 import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
 import {NewChartOfAccountComponent} from './Components/NewEntity/NewChartOfAccountComponent';
@@ -248,7 +249,8 @@ export const Components =
         InterestReportShortTitleComponent,
         CreateInterestReportsForCustomersComponent,
         InterestReportEditOpenBalanceComponent,
-        BtatchPrintWarningComponent
+        BtatchPrintWarningComponent,
+        BtatchPrintConfirmComponent
     ];
 
 export class ModuleDeclarations {
@@ -352,6 +354,7 @@ export class ModuleDeclarations {
 
 
             //Others
+            case "BtatchPrintConfirmComponent": { myResult = BtatchPrintConfirmComponent; break; }
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }
             case "ReconciledMessage": { myResult = ReconciledMessage; break; }
             case "OutOfDepositMessage": { myResult = OutOfDepositMessage; break; }
