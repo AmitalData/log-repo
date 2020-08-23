@@ -645,7 +645,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         if (item.HasTree) {
             var defaultItem: any = window.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
             if (defaultItem) {
-                view.Code = defaultItem.Code;
+                view.Code = defaultItem.DWObjectTableCode == "DIM_Partners" ? "[Name]" : defaultItem.Code;
                 view.LOVAdditionalColumns = defaultItem.LOVAdditionalColumns;
             }
         }
@@ -1297,7 +1297,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             if (view.HasTree) {
                 var defaultItem: any = window.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
                 if (defaultItem) {
-                    view.Code = defaultItem.Code;
+                    view.Code = defaultItem.DWObjectTableCode == "DIM_Partners" ? "[Name]" : defaultItem.Code;
                 }
             }
             if (field.FilterItems.length == 0) {
