@@ -25,7 +25,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     
     public VatType VatType { get; set; }
     
-    public double VatPercent { get; set; }
+    public double? VatPercent { get; set; }
     
     public double InvoiceCurrencyVATAmount { get; set; }
 
