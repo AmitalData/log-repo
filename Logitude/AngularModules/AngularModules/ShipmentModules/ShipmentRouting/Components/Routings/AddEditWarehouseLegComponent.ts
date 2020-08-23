@@ -166,15 +166,18 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
     SetIsBondedWarehouseProperities() {
         if (!this.EntityPM.IsBondedWarehouseChanged)
-        this.warehouseExtendedListService.GetWarehouseTypeById(this.WarehouseLegWarehouseId).subscribe((serviceResponse: ServiceResponse) => {
-            var warehouseType = serviceResponse.Result;
-            if (warehouseType == "Bonded") {
-                this.IsBondedWarehouse = true;
-                this.SetNewWarehouseEntryButtonProperty();
-            }
-            else this.IsBondedWarehouse = false;
-            this.EntityPM.IsBondedWarehouseChanged = true;
-        });
+            this.warehouseExtendedListService.GetWarehouseTypeById(this.WarehouseLegWarehouseId).subscribe((serviceResponse: ServiceResponse) => {
+                var warehouseType = serviceResponse.Result;
+                if (warehouseType == "Bonded") {
+                    this.IsBondedWarehouse = true;
+                    this.SetNewWarehouseEntryButtonProperty();
+                }
+                else this.IsBondedWarehouse = false;
+                this.EntityPM.IsBondedWarehouseChanged = true;
+            });
+        else if (this.IsBondedWarehouse) {
+            this.SetNewWarehouseEntryButtonProperty();
+        }
     }
 
     SetNewWarehouseEntryButtonProperty() {
