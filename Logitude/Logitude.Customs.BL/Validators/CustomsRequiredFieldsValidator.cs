@@ -79,7 +79,7 @@ namespace Logitude.Customs.BL.Validators
             }
 
 
-            if(declaration.DeclarationExportRecipients==null || declaration.DeclarationExportRecipients.Count()==0)
+            if(declaration.Direction=="E" &&(declaration.DeclarationExportRecipients==null || declaration.DeclarationExportRecipients.Count()==0))
             {
                 requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "שורת פרטי מקבל", TableName = "Customs.Declaration" });
 
