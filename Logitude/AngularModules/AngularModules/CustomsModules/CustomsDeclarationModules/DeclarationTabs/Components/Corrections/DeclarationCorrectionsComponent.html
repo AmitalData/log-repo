@@ -277,7 +277,7 @@
                                                   [DataContext]="DataContext"></LogLabel>
 
                                     </td>
-                                    <td  style="vertical-align: top;padding-top: 2px">
+                                    <td style="vertical-align: top;padding-top: 2px">
                                         <LogTextBox [ObjectFieldName]="'AmendDeficitInitiatedReasTo'" [ObjectTableName]="ObjectTableName" [Text]="AmendDeficitInitiatedReasTo"
                                                     [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                     </td>
@@ -288,7 +288,7 @@
                                                   [DataContext]="DataContext"></LogLabel>
 
                                     </td>
-                                    <td >
+                                    <td>
                                         <LogTextBox [ObjectFieldName]="'AmendmentRemarks'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRemarks"
                                                     [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
 
@@ -297,25 +297,51 @@
 
 
                                 </tr>
-                                <!--rowspan="3"-->
-                                <!--<tr style="height: 25px;">
-        <td style="width:75px"></td>
-        <td></td>
-        <td style="width:110px"></td>
-        <td></td>
-        <td style="width:110px"></td>
-
-    </tr>
-    <tr style="height: 25px;">
-        <td style="width:75px"></td>
-        <td></td>
-        <td style="width:110px"></td>
-        <td></td>
-        <td style="width:110px"></td>
-
-    </tr>-->
+                                <tr style="height: 10px;"></tr>
                             </table>
-                        </td>
+                                <table style="width:950px;height: 25px;" *ngIf="this.EntityPM.IsAmendment">
+
+                                    <tr style="height: 25px;">
+
+                                        <td style="width:83px">
+                                            <LogLabel [ObjectFieldName]="'AmendmentRejectionReason'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+
+                                        </td>
+
+                                        <td   style="width:240px">
+                                            <LogTextBox [ObjectFieldName]="'AmendmentRejectionReason'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentRejectionReason"
+                                                        [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
+                                        </td>
+                                        <!--<td style="width:7px"></td>-->
+                                 
+                                        <td style="width:110px">
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td style="width:7px"></td>
+
+
+                                    </tr>
+                                    <!--rowspan="3"-->
+                                    <!--<tr style="height: 25px;">
+            <td style="width:75px"></td>
+            <td></td>
+            <td style="width:110px"></td>
+            <td></td>
+            <td style="width:110px"></td>
+
+        </tr>
+        <tr style="height: 25px;">
+            <td style="width:75px"></td>
+            <td></td>
+            <td style="width:110px"></td>
+            <td></td>
+            <td style="width:110px"></td>
+
+        </tr>-->
+                                </table>
+</td>
                     </tr>
                     <tr style="height: 10px;">
                         <td></td>
