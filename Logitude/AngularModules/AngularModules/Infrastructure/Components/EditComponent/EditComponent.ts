@@ -1499,6 +1499,10 @@ export class EditComponent implements OnDestroy {
                                 this.StopBusyIndicator();
                                 this.UpdateComponentMembers();
                                 this.LoadCompleted.emit(true);
+                                if (this.ObjectTableName == "Shipment") {
+                                    this.CurrentSession.FireEvent("FollowupsChanged")
+                                }
+
                             });
                         }
                     });
