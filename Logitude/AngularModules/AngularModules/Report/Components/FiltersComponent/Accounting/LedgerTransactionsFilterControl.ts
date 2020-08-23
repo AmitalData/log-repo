@@ -88,7 +88,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         if (loggedUser.IsSalesman && isSalesmanRestrictionsEnabled) {
             this.IsSalesmanRestricted = true;
             this.Salesman = loggedUser.Id;
-            this.GLAccountFilterItems.addAdditionalFilter("SalesmanUserId", loggedUser.Id, null, null, "Equals", false, true, false, "string", false, false);
+            this.GLAccountFilterItems.addAdditionalFilter("ConnectedToSalesmanId", loggedUser.Id, null, null, "Equals", true, true, false, "string", false, false);
         }
 
     }
