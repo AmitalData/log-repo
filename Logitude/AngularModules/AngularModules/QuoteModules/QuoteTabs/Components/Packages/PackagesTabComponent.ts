@@ -1470,7 +1470,7 @@ export class QuotePackageItem extends BaseComponent {
 
     private ComputePickupDeliveryVolume() {
         if (this.fatherComponent.PickupDeliveryRatio == null) {
-            this.fatherComponent.PickupDeliveryRatio = AppTool.GetRatio(this.QuotePM.DirectionId, "I", this.QuotePM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
+            this.fatherComponent.PickupDeliveryRatio = AppTool.GetPickupDeliveryRatio(this.QuotePM.ShipmentTypeId);
         }
         //this.PickupDeliveryVolume = AppTool.ComputePackageVolume(this.Quantity, this.Width, this.Height, this.Length, this.GrossWeight, this.QuotePM.PickupDeliveryRatio, this.QuotePM.DimensionsUnitCode, this.QuotePM.VolumeUnitCode, this.QuotePM.GrossWeightUnitCode);
     }
@@ -1486,7 +1486,7 @@ export class QuotePackageItem extends BaseComponent {
 
     private ComputePickupDeliveryVolumetricWeight() {
         if (this.fatherComponent.PickupDeliveryRatio == null) {
-            this.fatherComponent.PickupDeliveryRatio = AppTool.GetRatio(this.QuotePM.DirectionId, "I", this.QuotePM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
+            this.fatherComponent.PickupDeliveryRatio = AppTool.GetPickupDeliveryRatio(this.QuotePM.ShipmentTypeId);
         }
 
         //this.PickupDeliveryVolumetricWeight = AppTool.ComputePackageVolumetricWeight(this.Quantity, this.Width, this.Height, this.Length, this.PickupDeliveryVolume, this.GrossWeight, this.QuotePM.PickupDeliveryRatio, this.QuotePM.DimensionsUnitCode, this.QuotePM.VolumeUnitCode, this.QuotePM.GrossWeightUnitCode, this.QuotePM.ChargeableWeightUnitCode);

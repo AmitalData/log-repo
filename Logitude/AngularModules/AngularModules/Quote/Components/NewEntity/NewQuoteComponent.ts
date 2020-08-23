@@ -2106,7 +2106,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
 
 
             if (this.EntityPM.PickupDeliveryRatio == null) {
-                this.EntityPM.PickupDeliveryRatio = AppTool.GetRatio(this.EntityPM.DirectionId, "I", this.EntityPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+                this.EntityPM.PickupDeliveryRatio = AppTool.GetPickupDeliveryRatio(this.EntityPM.ShipmentTypeId);
             }
 
             if (this.EntityPM.DimFactor == null) {
@@ -2120,7 +2120,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
             this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
             this.EntityPM.Ratio = AppTool.GetRatio(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
-            this.EntityPM.PickupDeliveryRatio = AppTool.GetRatio(this.EntityPM.DirectionId,"I", this.EntityPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+            this.EntityPM.PickupDeliveryRatio = AppTool.GetPickupDeliveryRatio(this.EntityPM.ShipmentTypeId);
             this.EntityPM.DimFactor = AppTool.GetDimFactorFromRatio(this.EntityPM.Ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.ChargeableWeightUnitCode);
             this.EntityPM.VolumetricWeight = QuoteUtilities.ComputeVolumetricWeight(this.EntityPM);
             this.EntityPM.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);

@@ -100,7 +100,7 @@ export class QuoteUtilities {
             }
 
             if (entityPM.PickupDeliveryRatio == null) {
-                entityPM.PickupDeliveryRatio = AppTool.GetRatio(entityPM.DirectionId, "I", entityPM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
+                entityPM.PickupDeliveryRatio = AppTool.GetPickupDeliveryRatio(entityPM.ShipmentTypeId);
             }
 
             if (entityPM.QuotePackages.length == 0) {
@@ -187,7 +187,7 @@ export class QuoteUtilities {
     public static OnQuotePickupDeliveryRatioChanged(entityPM: QuotePM) {
         if (entityPM) {
             if (entityPM.PickupDeliveryRatio == null) {
-                entityPM.PickupDeliveryRatio = AppTool.GetRatio(entityPM.DirectionId, "I", entityPM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
+                entityPM.PickupDeliveryRatio = AppTool.GetPickupDeliveryRatio(entityPM.ShipmentTypeId);
             }
 
             if (entityPM.QuotePackages.length == 0) {

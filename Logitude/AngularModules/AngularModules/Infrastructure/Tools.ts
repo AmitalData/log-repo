@@ -550,6 +550,27 @@ export class AppTool {
 
         return myResult;
     }
+    public static GetPickupDeliveryRatio(shipmentTypeId: string) {
+        var myResult: number = null;
+        switch (shipmentTypeId.toLowerCase()) {
+            case "air":
+            case "lcl":
+            case "ltl":
+                {
+                    myResult = 3.3;
+                    break;
+                }
+            case "ftl":
+            case "fcl":
+                {
+                    myResult = 1;
+                    break;
+                }
+            default:
+                break;
+        }
+        return myResult;
+    }
     public static GetRatioFromDimFactor(myDimFactor: number, dimentionCode: string, weightCode: string) {
 
         var myResult: number = null;
