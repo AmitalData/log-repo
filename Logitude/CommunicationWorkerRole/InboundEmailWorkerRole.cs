@@ -1112,7 +1112,7 @@ namespace CommunicationWorkerRole
             }
 
             myResult += @"<div style='text-align:center;width:100%!important;height:50px;background:#008dbc;border:1px solid #DADADA;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;font-family:Lucida Sans Unicode;font-size:17px;'>"
-                   + @"<p style='text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>This email is service from Unifreight!</p>"
+                   + @"<p style='text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>This email is a service from Unifreight Cloud Generation!</p>"
                    + @"</div>";
 
             string lowerPart =

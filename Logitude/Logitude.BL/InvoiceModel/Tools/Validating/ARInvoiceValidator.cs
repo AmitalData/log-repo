@@ -32,6 +32,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using System.Data.Entity.Core;
 using Logitude.BL.Resolvers;
+using Logitude.BL.Security;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -1092,24 +1093,26 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         if (loggedTenant.AccountingSetting.IsARInvoiceChronologicalDates && !entityPM.IsExternalEntity)
                         {
+                            bool HasInterestFeature = entityPM.HasInterestFeature;
+
                             ARInvoice lastApprovedInvoice = (from a in myContext.ARInvoices
                                                              where a.Tenant == entityPM.Tenant
                                                              && a.IsInvoiceNumberManuallySet == false
                                                              && a.StatusCode != "DR"
                                                              && a.StatusCode != "VD"
                                                              && a.InvoiceNumber != a.Id
+                                                             && (HasInterestFeature? a.ARInvoiceTypeCode == "IT": a.ARInvoiceTypeCode != "IT")
                                                              select a).OrderByDescending(d => d.ApprovedDate).FirstOrDefault();
 
                             if (lastApprovedInvoice != null)
                             {
                                 if (entityPM.InvoiceDate < lastApprovedInvoice.InvoiceDate)
                                 {
-                                    ICommonDataContext context = CommonDataContext.GetContext(entityPM.Tenant);
-                                    Tenant currentTenant = context.Tenants.Where(t => t.Id == entityPM.Tenant).FirstOrDefault();
                                     string datetimeformat = @"dd\/MM\/yyyy";
-                                    if (!string.IsNullOrEmpty(currentTenant.DateTimeFormat))
+
+                                    if (!string.IsNullOrEmpty(loggedTenant.DateTimeFormat))
                                     {
-                                        datetimeformat = currentTenant.DateTimeFormat;
+                                        datetimeformat = loggedTenant.DateTimeFormat;
                                     }
 
                                     string dateString = lastApprovedInvoice.InvoiceDate.Value.ToString(datetimeformat, CultureInfo.CurrentCulture);

@@ -65,7 +65,7 @@ CREATE TABLE #temp_Shipments (
 				ShipmentTypeId = #temp_Shipments.ShipmentTypeId
 				FROM Shipments
 				INNER JOIN #temp_Shipments
-				on Shipments.Id = #temp_Shipments.Id
+				on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 
 				truncate table #temp_Shipments
 				set @Count = 0
@@ -87,7 +87,7 @@ CREATE TABLE #temp_Shipments (
 				ShipmentTypeId = #temp_Shipments.ShipmentTypeId
 				FROM Shipments
 				INNER JOIN #temp_Shipments
-				on Shipments.Id = #temp_Shipments.Id
+				on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 	end
 
 	

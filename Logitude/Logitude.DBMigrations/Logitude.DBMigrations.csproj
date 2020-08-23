@@ -49,7 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\DefinitionModels\ColumnDefinition.cs" />
+    <Compile Include="Models\GeneralModels\Config.cs" />
+    <Compile Include="Models\GeneralModels\Configurations.cs" />
     <Compile Include="Models\GeneralModels\DatabaseMigrationsResult.cs" />
+    <Compile Include="Models\GeneralModels\DBConfig.cs" />
     <Compile Include="Models\GeneralModels\ToolArguments.cs" />
     <Compile Include="Models\DXMLModels\DXMLGeneratedScript.cs" />
     <Compile Include="Models\GeneralModels\ColumnMigration.cs" />
@@ -94,6 +97,7 @@
     <None Include="Reports\DBMigrationsPerformance.csv" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Settings\Configurations.xml" />
     <Content Include="Settings\VersionInfo.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -101,4 +105,8 @@
     <Folder Include="Warnings\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>xcopy "$(ProjectDir)Settings\VersionInfo.xml" "$(ProjectDir)bin\Debug" /Y
+xcopy "$(ProjectDir)Settings\Configurations.xml" "$(ProjectDir)bin\Debug" /Y</PreBuildEvent>
+  </PropertyGroup>
 </Project>

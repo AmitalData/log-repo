@@ -18,7 +18,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 {
     public class InterestReportsCreationForCustomersService
     {
-        
+
         private int tenant;
         private IInterestReportsCreationForCustomerDataPreparation interestReportsCreationForCustomerDataPreparation;
         private DateTime interestCalculationDate;
@@ -39,39 +39,53 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             for (int i = 0; i < eligibleCustomers.Count; i++)
             {
                 InterestReportPM interestReportPM = null;
-                interestReportPM = interestReportsCreationForCustomerDataPreparation.GetDraftInterestReportForCustomer(eligibleCustomers[i]);
-                if (interestReportPM!=null && interestReportPM.InterestReportStatusCode == "1")
+                try
                 {
-                    SetInterestReportStatusInProgress(interestReportPM);
-                }
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-                    
-                    try
+                    interestReportPM = interestReportsCreationForCustomerDataPreparation.GetDraftInterestReportForCustomer(eligibleCustomers[i]);
+                    if (interestReportPM != null && interestReportPM.InterestReportStatusCode == "1")
                     {
-                        interestReportPM = interestReportPM ?? interestReportsCreationForCustomerDataPreparation.CreateInterestReportForCustomerGlAccount(eligibleCustomers[i]);
+                        SetInterestReportStatusInProgress(interestReportPM);
+                    }
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        if (interestReportPM == null)
+                        {
+                            interestReportPM = interestReportsCreationForCustomerDataPreparation.CreateInterestReportForCustomerGlAccount(eligibleCustomers[i]);
+                        }
+                        else
+                        {
+                            interestReportPM.RecalculateData = true;
+                        }
                         interestReportPM.InterestCalculationDate = interestCalculationDate;
                         CalculateDataForInterestReport(interestReportPM);
                         scope.Complete();
+
                     }
-                    catch (Exception ex)
+                }
+                catch (Exception ex)
+                {
+                    string errorMessage = interestReportsCreationForCustomerDataPreparation.GetErrorMessage(ex);
+                    log = log + Environment.NewLine + "Error in report for customer: "
+                        + eligibleCustomers[i].EnglishName;
+                    if (interestReportPM != null)
                     {
-                        string errorMessage = interestReportsCreationForCustomerDataPreparation.GetErrorMessage(ex);
-                        log = log + Environment.NewLine + "Error in report for customer: "
-                            + eligibleCustomers[i].EnglishName + Environment.NewLine + "Error: " + errorMessage;
+                        log = log + " and report number: " + interestReportPM.ReportNumber;
                     }
+                    log = log + Environment.NewLine + " Error: " + errorMessage;
+
                 }
             }
             return log;
         }
-        private void CalculateDataForInterestReport(InterestReportPM interestReportPM) 
+        private void CalculateDataForInterestReport(InterestReportPM interestReportPM)
         {
             InterestReportArgs interestReportArgs = new InterestReportArgs()
             {
                 InterestReport = interestReportPM,
                 InterestReportId = interestReportPM.Id,
                 ReportNumber = interestReportPM.ReportNumber,
-                Tenant = tenant
+                Tenant = tenant,
+                RecalculateData = interestReportPM.RecalculateData,
             };
             InterestReportDataCalculations interestReportDataCalculation = new InterestReportDataCalculations(interestReportArgs);
             interestReportDataCalculation.StartCalculations();
@@ -92,6 +106,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             interestReportPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
             InterestReportUpdateService interestReportUpdateService = new InterestReportUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+            interestReportPM.IsUpdatedFromBatch = true;
             interestReportUpdateService.Update(interestReportPM, true);
         }
 

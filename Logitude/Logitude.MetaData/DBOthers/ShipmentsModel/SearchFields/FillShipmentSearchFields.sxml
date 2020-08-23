@@ -1829,7 +1829,7 @@ BEGIN
 				SearchFields = #temp_Shipments.SearchFields
 				FROM Shipments
 				INNER JOIN #temp_Shipments
-				on Shipments.Id = #temp_Shipments.Id
+				on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 
 				truncate table #temp_Shipments
 				set @Count = 0
@@ -1872,7 +1872,7 @@ BEGIN
 				SearchFields = #temp_Shipments.SearchFields
 				FROM Shipments
 				INNER JOIN #temp_Shipments
-				on Shipments.Id = #temp_Shipments.Id
+				on Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Shipments.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 	end
 
 SET NOCOUNT OFF

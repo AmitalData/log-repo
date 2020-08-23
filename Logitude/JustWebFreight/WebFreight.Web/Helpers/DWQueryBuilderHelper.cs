@@ -621,7 +621,10 @@ namespace WebFreight.Web.Helpers
         {
             try
             {
-                SecurityUtility.CheckContactFeature("General", "BICentralDWH", Tenant);
+                if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity != null)
+                {
+                    SecurityUtility.CheckContactFeature("General", "BICentralDWH", Tenant);
+                }
             }
             catch (Exception ex)
             {
