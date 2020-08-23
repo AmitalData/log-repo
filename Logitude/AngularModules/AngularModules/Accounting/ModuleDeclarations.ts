@@ -13,6 +13,7 @@ import { InterestPageComponent } from './Components/Workspaces/Interest/Interest
 import { BatchInvoicesComponent } from './Components/Others/BatchInvoicesComponent';
 import { BatchPrintComponent } from './Components/Others/BatchPrintComponent';
 import { BtatchPrintWarningComponent } from './Components/Others/BtatchPrintWarningComponent';
+import { BtatchPrintConfirmComponent } from './Components/Others/BtatchPrintConfirmComponent';
 
 import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
 import {NewChartOfAccountComponent} from './Components/NewEntity/NewChartOfAccountComponent';
@@ -262,13 +263,20 @@ export const Components =
         CreateInterestReportsForCustomersComponent,
 
 
+
         CargoTrackingIncrementalStatListTemplate,
 
      
         InterestReportEditCalculationDateComponent,
 
       
-        BtatchPrintWarningComponent
+
+        InterestReportEditOpenBalanceComponent,
+        BtatchPrintWarningComponent,
+        BtatchPrintConfirmComponent
+
+      
+
 
     ];
 
@@ -377,6 +385,7 @@ export class ModuleDeclarations {
             case "CargoTrackingBuildShipmentComponent" :{myResult =CargoTrackingBuildShipmentComponent; break;}
             case "CargoTrackingIncrementalStatistics" :{myResult =CargoTrackingIncrementalStatistics; break;}
             case "CargoTrackingServiceComponent": { myResult = CargoTrackingServiceComponent; break; }
+            case "BtatchPrintConfirmComponent": { myResult = BtatchPrintConfirmComponent; break; }
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }
             case "ReconciledMessage": { myResult = ReconciledMessage; break; }
             case "OutOfDepositMessage": { myResult = OutOfDepositMessage; break; }
