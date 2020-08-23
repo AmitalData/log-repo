@@ -85,6 +85,11 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     public get AmendmentDeficitInitiated() { return this.EntityPM ? this.EntityPM.AmendmentDeficitInitiated : null; }
     public set AmendmentDeficitInitiated(newValue: boolean) { this.EntityPM.AmendmentDeficitInitiated = newValue; }
 
+
+    public get AmendmentRejectionReason() { return this.EntityPM ? this.EntityPM.AmendmentRejectionReason : null; }
+    public set AmendmentRejectionReason(newValue: string) { this.EntityPM.AmendmentRejectionReason = newValue; }
+
+
     public get VersionId() { return this.EntityPM ? this.EntityPM.VersionId : null; }
     public set VersionId(newValue: string) { this.EntityPM.VersionId = newValue; }
 
@@ -117,6 +122,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         this.UIProperties.SetEnabled("AmendmentRequestNumber", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentissueDate", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("VersionId", this.ObjectTableName, false);
+                        this.UIProperties.SetEnabled("AmendmentRejectionReason", this.ObjectTableName, false);
+
                         this.DisplayOnlyCheck();
 
                      });
