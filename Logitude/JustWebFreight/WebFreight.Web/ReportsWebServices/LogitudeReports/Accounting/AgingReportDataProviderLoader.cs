@@ -73,14 +73,29 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private void CheckSalesmanAbilities(AgingReportParam args)
         {
             bool isSalsmanRestrictionsEnabled = SecurityUtility.CheckFeature("GLAccount", "SalesmanAging", tenant);
-            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
-            UserQuery userQuery = new UserQuery(tenant);
-            UserPM loggedUser = userQuery.GetSinglePM(loggedContact.Id, tenant);
+            UserPM loggedUser = GetLoggerUser();
 
             if (isSalsmanRestrictionsEnabled && loggedUser?.IsSalesman == true && args.SalesmanId == null)
-                throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.NoSalesman", args.Tenant,LoggedContactResolver.GetLoggedContactShowLocal(tenant)));
+                throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.NoSalesman", args.Tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant)));
 
         }
+
+        private UserPM GetLoggerUser()
+        {
+            UserPM loggedUser;
+            UserQuery userQuery = new UserQuery(tenant);
+            if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            { // user set and passed from from WR
+                loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
+            }
+            else
+            {
+                ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+                loggedUser = userQuery.GetSinglePM(loggedContact.Id, tenant);
+            }
+            return loggedUser;
+        }
+
         private void FixSplitAccountData(AccountingAgingDataProvider totalData)
         {
             bool showDetailedCurrencyAccounts = GetFilterValue<bool>("Detailed");
@@ -478,7 +493,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             reportParameters.AggregateByGLAccountCurrencies = GetFilterValue<bool>("Detailed");
          
             reportParameters.GroupByDate = GetFilterValue<string>("GroupByDate") == "filter_Due" ? AgingReportParam.DateEnum.DueDate : AgingReportParam.DateEnum.AccountingDate;
-            reportParameters.AgingMethod = GetFilterValue<string>("AgingMethod") == "Open Transaction" ? AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString() : AgingReportParam.MethodEnum.TotalByMonthFIFOMethod.ToString();
+            reportParameters.AgingMethod = GetFilterValue<string>("AgingMethod") == "Open Balance" ? AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString() : AgingReportParam.MethodEnum.TotalByMonthFIFOMethod.ToString();
             reportParameters.Aging4AccountTypeCode = (GetFilterValue<string>("GLAccountType") == "2") ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3;
 
             SetReportCategoryParameters(reportParameters);
