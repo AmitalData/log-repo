@@ -75,7 +75,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 myObjectTableId = objectTable.Id;
             }
         }
-        public  void ARPaymentQuickbooksValidating(ARPayment entityPOCO, ARPaymentPM entityPM, Boolean IsSetApproved, Boolean isNewEntity, ARPayment payment, IInvoiceContext invoiceContext, ICommonDataContext CommonContext, Boolean isSetVoided,bool setCancelApproved,bool SetReSendQBO, bool SystemWorkerRole=false)
+        public  void ARPaymentQuickbooksValidating(ARPaymentPM entityPM, Boolean IsSetApproved, Boolean isNewEntity, ARPayment entityPOCO, IInvoiceContext invoiceContext, ICommonDataContext CommonContext, Boolean isSetVoided,bool setCancelApproved,bool SetReSendQBO, bool SystemWorkerRole=false)
         {
             if (isSetVoided || (entityPM.StatusCode == "VD" && SetReSendQBO == true))
             {
@@ -154,7 +154,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     if (loggedTenant.AccountingSetting != null)
                         if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsARPaymentsTransferEnabled && AccountingSystemPM.AllowARPaymentsTransfer)
                         {
-                            entityPM.ExternalAccountingEntityId = payment.ExternalAccountingEntityId;
+                            entityPM.ExternalAccountingEntityId = entityPOCO.ExternalAccountingEntityId;
                             ARPayment = entityPM;
                             ARPaymentId = entityPM.Id;
                             documentRepository = new DocumentRepository(commonContext);
@@ -263,8 +263,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                             {
                                 entityPM.TransferStatusCode = "IP";
                                 entityPM.TransferError = null;
-                                payment.TransferStatusCode = "IP";
-                                payment.TransferError = null;
+                                entityPOCO.TransferStatusCode = "IP";
+                                entityPOCO.TransferError = null;
                                 Run(entityPM);
                             }
 
@@ -272,8 +272,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                             {
                                 entityPM.TransferStatusCode = "NR";
                                 entityPM.TransferError = myError;
-                                payment.TransferStatusCode = "IP";
-                                payment.TransferError = myError;
+                                entityPOCO.TransferStatusCode = "IP";
+                                entityPOCO.TransferError = myError;
                                 throw new ApplicationException(myError);
                             }
                             #endregion
