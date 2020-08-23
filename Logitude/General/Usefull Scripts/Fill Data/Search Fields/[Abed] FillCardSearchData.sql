@@ -35,19 +35,18 @@
 
 
 
+TRUNCATE table CardSearches
 
-TRUNCATE table CardSearchs
 
-
-If(OBJECT_ID('tempdb..#temp_CardSearchs') Is Not Null)
+If(OBJECT_ID('tempdb..#temp_CardSearches') Is Not Null)
 Begin
-    Drop Table #temp_CardSearchs
+    Drop Table #temp_CardSearches
 End
 
  
-CREATE TABLE #temp_CardSearchs
+CREATE TABLE #temp_CardSearches
 (
-	[Id] [varchar](15) NOT NULL,
+[Id] INT IDENTITY(1,1) NOT NULL,
 	[Tenant] [int] NOT NULL,
 	[RecordDate] [datetime] NOT NULL,
 	[Keyword] [nvarchar](100) NULL,
@@ -57,7 +56,7 @@ CREATE TABLE #temp_CardSearchs
     [InActive] bit,
 )
 
- 
+
 
 
 declare  @Tenant int
@@ -82,10 +81,7 @@ declare  @PartnerTypeId varchar(2)
 declare  @InActive bit
 
 
- Declare @Current As Int 
-  Declare @CounterLastNumber varchar(100)
 
-  set @Current = 1;
     Declare @SearchField nvarchar(max)
 
 
@@ -106,10 +102,6 @@ declare  @InActive bit
 		 set @RecordDate = @UpdateDate;
 		 if(@RecordDate is null) set @RecordDate = @CreateDate
 
-
-
-
-
 			 BEGIN TRY  
 
 			 set @SearchField = @Code;
@@ -120,52 +112,20 @@ declare  @InActive bit
 			 if(@CityName is not null) set @SearchField += (' ' + @CityName);
 			 if(@ReceivablesAccountingCard is not null) set @SearchField += (' ' + @ReceivablesAccountingCard);
 			 if(@PayablesAccountingCard is not null) set @SearchField += (' ' + @PayablesAccountingCard);
-			 if (@SearchField is not null)	begin
-			 
-			 
-			 
-			 DECLARE @value nvarchar(100)
-    DECLARE AllKeywordsCursor CURSOR READ_ONLY
-    FOR
-  select  Name from dbo.SplitBySpaceFunction(@SearchField)
-  where Name is not null and Name!=''
-OPEN AllKeywordsCursor FETCH NEXT FROM AllKeywordsCursor INTO @Value
-    WHILE @@FETCH_STATUS = 0
-    BEGIN
-        begin
-
-        Set @CounterLastNumber = '1' + '-'+ CONVERT(varchar(50) ,@Current)
-
-		 insert into #temp_CardSearchs (Id, Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive ) values (@CounterLastNumber , @Tenant , @CardId , @Value , @RecordDate , @Weight , @PartnerTypeId,@InActive)
-
-			 Set @Current = @Current + 1
 
 
-	    set @Count = @Count + 1;
+			
+			 insert into #temp_CardSearches (Tenant, CardId  , RecordDate , Weight , PartnerTypeId,InActive , Keyword) select  @Tenant, @CardId , @RecordDate , @Weight , @PartnerTypeId,@InActive ,  Name from dbo.SplitBySpaceFunction(@SearchField) where Name !=' '
+
+
+	  set @Count = @Count + 1;
         if(@Count = 500000)
         begin    
 
-		
-		    insert into CardSearchs  select  * from #temp_CardSearchs
-            truncate table #temp_CardSearchs
+		    insert into CardSearches (Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive) select  Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive from #temp_CardSearches
+            truncate table #temp_CardSearches
             set @Count = 0
-
         end
-
-
-        end
-
- 
-
-    FETCH NEXT FROM AllKeywordsCursor INTO @Value
-    END
-    CLOSE AllKeywordsCursor
-    DEALLOCATE AllKeywordsCursor
-
-		
-			 
-			 end
-
 
 
 
@@ -194,18 +154,13 @@ END CATCH
     DEALLOCATE CardCursor
 
  
-         if (@Count > 0) begin  insert into CardSearchs  select  * from #temp_CardSearchs  end
+        if (@Count > 0) begin  insert into CardSearches (Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive) select  Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive from #temp_CardSearches end
  
 	 
-             drop table #temp_CardSearchs
+             drop table #temp_CardSearches
 
 			 
-			 declare  @tableName varchar(70)
-			 set @tableName = (select TableName from DBIdCounters where TableName = 'CardSearch' )
-			 if(@tableName is null)begin INSERT INTO DBIdCounters(TableName,LastIdNumber ) VALUES('CardSearch', @Current) end
-			 else begin  update DBIdCounters set LastIdNumber =@Current  where TableName = 'CardSearch'end
-
-
+			
 
      
 

@@ -258,7 +258,7 @@
     <Compile Include="Helpers\AesFunction.cs" />
     <Compile Include="Helpers\AmitalConvertUtil.cs" />
     <Compile Include="Helpers\AuthenticationUtil.cs" />
-    <Compile Include="Helpers\DocumentDateUpdateService.cs" />
+    <Compile Include="Helpers\DocumentPopulateAutomaticDateUpdateService.cs" />
     <Compile Include="Helpers\DropBoxActionsHelper.cs" />
     <Compile Include="Helpers\EmailLimitationHelper.cs" />
     <Compile Include="Helpers\EntityChangeHelper.cs" />

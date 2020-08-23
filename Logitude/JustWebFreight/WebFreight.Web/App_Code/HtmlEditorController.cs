@@ -208,8 +208,8 @@ namespace WebFreight.Web.App_Code
                     }
 
 
-                    DocumentDateUpdateService documentDateUpdateService = new DocumentDateUpdateService();
-                    documentDateUpdateService.Update(new DocumentDateUpdateArgs() { EntityId = filter.EntityId, ObjectTableName = filter.ObjectTableName, DocumentTypeCode = filter.DocumentTypeCode, ProcessType = "Send", Tenant = filter.Tenant });
+                    DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
+                    documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = filter.EntityId, ObjectTableName = filter.ObjectTableName, DocumentTypeCode = filter.DocumentTypeCode, ProcessType = "Send", Tenant = filter.Tenant });
 
 
                 }

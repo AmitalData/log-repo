@@ -30,36 +30,36 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-        public IQueryable<CardSearch> GetCardSearchs(int tenant)
+        public IQueryable<CardSearch> GetCardSearches(int tenant)
         {
-            return (from record in context.CardSearchs where record.Tenant == tenant select record);
+            return (from record in context.CardSearches where record.Tenant == tenant select record);
         }
 
         public CardSearch GetSingleCardSearch(string id, int tenant)
         {
-            return (from record in context.CardSearchs where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.CardSearches where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
         public void Add(CardSearch entity)
         {
-            context.CardSearchs.Add(entity);
+            context.CardSearches.Add(entity);
         }
 
         public void Remove(CardSearch entity)
         {
-            context.CardSearchs.Attach(entity);
-            context.CardSearchs.Remove(entity);
+            context.CardSearches.Attach(entity);
+            context.CardSearches.Remove(entity);
         }
 
         public void Update(CardSearch entity)
         {
-            context.CardSearchs.Attach(entity);
+            context.CardSearches.Attach(entity);
             context.SetAsModified(entity);
         }
 
         public List<CardSearch> All()
         {
-            return context.CardSearchs.ToList();
+            return context.CardSearches.ToList();
         }
 
         public ICommonDataContext context

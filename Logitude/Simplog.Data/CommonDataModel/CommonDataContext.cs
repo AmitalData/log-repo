@@ -1022,7 +1022,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins { get; set; }
         public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
         public IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get; set; }
-        public IDbSet<CardSearch> CardSearchs { get; set; }
+        public IDbSet<CardSearch> CardSearches { get; set; }
 
 
 

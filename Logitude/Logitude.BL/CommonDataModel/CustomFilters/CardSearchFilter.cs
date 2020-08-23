@@ -29,7 +29,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                 if (inactiveFilter != null && inactiveFilter.FieldValue != null && !string.IsNullOrEmpty(inactiveFilter.FieldValue.ToString())) inactive = bool.Parse(inactiveFilter.FieldValue.ToString());
 
                 ICommonDataContext commonDataContext = CommonDataContext.GetContext(cardSearchFilterArgs.Tenant);
-                List<string> cardIds = (from a in commonDataContext.CardSearchs
+                List<string> cardIds = (from a in commonDataContext.CardSearches
                                         where a.Tenant == cardSearchFilterArgs.Tenant && partnerTypeCodeLists.Contains(a.PartnerTypeId) && a.InActive == inactive && a.Keyword.StartsWith(cardSearchFilterArgs.SeachText)
                                         select a).OrderByDescending(d => d.RecordDate).GroupBy(d => d.CardId).Select(d => d.FirstOrDefault()).Take(cardSearchFilterArgs.QueryOperations.PageSize).Select(d => d.CardId).ToList();
                    return entityLists.Where(d => cardIds.Contains(d.Id));
@@ -100,7 +100,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                 while ((cardLists.Count() < cardSearchFilterArgs.QueryOperations.PageSize && cardIds.Count() == cardSearchFilterArgs.QueryOperations.PageSize) || isfirsttime)
                 {
                     isfirsttime = false;
-                    cardIds = (from a in commonDataContext.CardSearchs where a.Tenant == cardSearchFilterArgs.Tenant && a.Keyword.StartsWith(cardSearchFilterArgs.SeachText) select a).GroupBy(d => d.CardId).Select(d => d.FirstOrDefault()).OrderByDescending(d => d.RecordDate).Skip(skip).Take(cardSearchFilterArgs.QueryOperations.PageSize).Select(d => d.CardId).ToList();
+                    cardIds = (from a in commonDataContext.CardSearches where a.Tenant == cardSearchFilterArgs.Tenant && a.Keyword.StartsWith(cardSearchFilterArgs.SeachText) select a).GroupBy(d => d.CardId).Select(d => d.FirstOrDefault()).OrderByDescending(d => d.RecordDate).Skip(skip).Take(cardSearchFilterArgs.QueryOperations.PageSize).Select(d => d.CardId).ToList();
                     foreach (CardList cardList in entityLists.Where(d => cardIds.Contains(d.Id)))
                     {
                         if (cardLists.Count() < 10)

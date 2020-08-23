@@ -815,10 +815,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (theEntityPm.IsUoloadedField)
             {
-                DocumentDateUpdateService documentDateUpdateService = new DocumentDateUpdateService();
+                DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
                var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
                 string objectTableName = OTName != null ? OTName.Name : "";
-                documentDateUpdateService.Update(new DocumentDateUpdateArgs() { EntityId = theEntityPm.EntityId, ObjectTableName = objectTableName, DocumentTypeCode = theEntityPm.DocumentTypeCode, ProcessType = "Upload", Tenant = theEntityPm.Tenant });
+                documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = theEntityPm.EntityId, ObjectTableName = objectTableName, DocumentTypeCode = theEntityPm.DocumentTypeCode, ProcessType = "Upload", Tenant = theEntityPm.Tenant });
             }
 
 

@@ -1,0 +1,1 @@
+Warning: Missing Index In DXML File CardSearch.dxml, The Found Index On DB Is IX_CardSearches_RecordDate, The Index Should Added To The DXML File
