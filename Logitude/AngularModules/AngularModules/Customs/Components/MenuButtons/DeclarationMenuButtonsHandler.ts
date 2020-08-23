@@ -381,12 +381,18 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
                     if (button.EventCode == "Declaration Customs Requests") {
-                        if (this.IsDisplayOnly) {
-                            button.IsDisabled = true;
-                        }
-                        else {
+                        if (this.EntityPM.AmendmentDontDisplayInList == true && this.EntityPM.IsAmendment == true) {
                             button.IsDisabled = false;
                         }
+                        else {
+                            if (this.IsDisplayOnly) {
+                                button.IsDisabled = true;
+                            }
+                            else {
+                                button.IsDisabled = false;
+                            }
+                        }
+                      
                     }
                     if ( this.EntityPM.AmendmentDontDisplayInList==true ) {
                         parentButton = menuButtons.filter(x => x.EventCode == "Actions")[0];
