@@ -138,6 +138,19 @@
             /*border-top: none;*/
         }
 
+    .InfoIcon {
+        width: 14px;
+        height: 14px;
+        margin-left: 2px;
+        margin-top: -8px;
+    }
+        .InfoIcon:hover {
+            width: 14px;
+            height: 14px;
+            margin-left: 2px;
+            margin-top: -8px;
+            border: 1px solid black;
+        }
     .ArrowBtn {
         width: 14px;
         display: inline-block;
@@ -575,7 +588,10 @@
                                                                                         </span>
                                                                                     </td>
                                                                                     <td>
-                                                                                        <span><img [class.Visible]="FieldSelectedItem == item" [class.Hidden]="FieldSelectedItem != item" (click)="btnRemove_Click(item)" src="./Images/RedX2.png" class="RemoveBtn" /></span>
+                                                                                       
+                                                                                        <span *ngIf="item.IsMultipleSelection && item.MultiSelectedValueLists && item.MultiSelectedValueLists.length > 0" title="{{item.Code}}"><img [class.Visible]="FieldSelectedItem == item" [class.Hidden]="FieldSelectedItem != item" src="./Images/info-black.png"  class="InfoIcon"/></span>
+                                                                                    
+                                                                                        <span style="display:block;"><img [style.margin-top]="item.IsMultipleSelection && item.MultiSelectedValueLists && item.MultiSelectedValueLists.length > 0 ?'-11px':'0px'" [class.Visible]="FieldSelectedItem == item" [class.Hidden]="FieldSelectedItem != item" (click)="btnRemove_Click(item)" src="./Images/RedX2.png" class="RemoveBtn" /></span>
                                                                                     </td>
                                                                                     <td>
                                                                                         <span style="width:20px;"><img [class.Visible]="FieldSelectedItem == item" [class.Hidden]="FieldSelectedItem != item" (click)="btnDown_Click(item)" src="./Images/ArrowRight.png" class="ArrowBtn" /></span>
