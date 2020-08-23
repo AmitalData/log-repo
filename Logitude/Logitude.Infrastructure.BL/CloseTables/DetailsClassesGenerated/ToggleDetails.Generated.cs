@@ -104,6 +104,13 @@ namespace Logitude.Infrastructure.BL
                 Code = "CST", 
                 SearchFields = "CST,Card Searchs Toggle", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SUB", 
+                Name = "Shipment Sub Type", 
+                SearchFields = "SUB,Shipment Sub Type", 
+			});
 			
             return all;
        }
