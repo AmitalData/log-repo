@@ -59,7 +59,8 @@ export class AddEditReceivableComponent {
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.MeasurementsQueryFilters = new ApiQueryFilters();
 
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotEqual", false, false, false, "string");
+        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true,true);
+
 
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("IsReceivable", true, null, null, "Equals", false, false, false, "Boolean");
