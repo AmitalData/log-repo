@@ -124,8 +124,15 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 if (batchIt)
                 {
                     int SUB_BATCH_SIZE = 50;
+                    int MAX_PARALLELS = 3;
                     long fromExt_long = Convert.ToInt64(fromExtNum);
                     long toExt_long = Convert.ToInt64(toExtNum);
+                    long big_batch_size = 1;
+                    long all_in_total = toExt_long - fromExt_long + 1;
+                    if (all_in_total > SUB_BATCH_SIZE)
+                    {
+                        big_batch_size = all_in_total / MAX_PARALLELS + 1;
+                    }
                     int count = 0;
                     string firstSubj = ""; 
                     string lastSubj = "";
@@ -134,7 +141,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     for (long lower = fromExt_long; ;)
                     {
 
-                        long upper = lower + SUB_BATCH_SIZE - 1;
+                        long upper = lower + big_batch_size - 1;
                         if (upper > toExt_long)
                         {
                             upper = toExt_long;
@@ -169,13 +176,13 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         count++;
 
 
-                        if (lower + SUB_BATCH_SIZE - 1 >= toExt_long)
+                        if (lower + big_batch_size - 1 >= toExt_long)
                         {
                             break;
                         }
                         else
                         {
-                            lower += SUB_BATCH_SIZE;
+                            lower += big_batch_size;
                             if (lower > toExt_long)
                             {
                                 lower = toExt_long;
@@ -258,8 +265,18 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 {
 
                     int SUB_BATCH_SIZE = 50;
+                    int MAX_PARALLELS = 3;
+
                     long fromExt_long = Convert.ToInt64(fromExtNum);
                     long toExt_long = Convert.ToInt64(toExtNum);
+                    long big_batch_size = 1;
+                    long all_in_total = toExt_long - fromExt_long + 1;
+                    if (all_in_total > SUB_BATCH_SIZE)
+                    {
+                        big_batch_size = all_in_total / MAX_PARALLELS + 1;
+                    }
+
+
                     int count = 0;
                     string firstSubj = "";
                     string lastSubj = "";
@@ -268,7 +285,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     for (long lower = fromExt_long; ;)
                     {
 
-                        long upper = lower + SUB_BATCH_SIZE - 1;
+                        long upper = lower + big_batch_size - 1;
                         if (upper > toExt_long)
                         {
                             upper = toExt_long;
@@ -303,13 +320,13 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         count++;
 
 
-                        if (lower + SUB_BATCH_SIZE - 1 >= toExt_long)
+                        if (lower + big_batch_size - 1 >= toExt_long)
                         {
                             break;
                         }
                         else
                         {
-                            lower += SUB_BATCH_SIZE;
+                            lower += big_batch_size;
                             if (lower > toExt_long)
                             {
                                 lower = toExt_long;

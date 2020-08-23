@@ -51,8 +51,18 @@ namespace Logitude.Accounting.Data.Repositories
                                      select a.CloseBalance).FirstOrDefault();
             return closedBalance != null ? closedBalance.Value : 0;
         }
-       
-   }
+
+        public InterestReport GetDraftInterestReportForCustomer(string customerId,string glAccount, int tenant)
+        {
+            InterestReport interestReport = (from a in context.InterestReports
+                                             where a.Tenant == tenant && a.InterestReportStatusCode == "1"
+                                             && a.CustomerId == customerId
+                                             && a.GLAccountId == glAccount
+                                             select a).FirstOrDefault();
+            return interestReport;
+        }
+
+    }
 
 }
    

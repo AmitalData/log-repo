@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6c49ffad-eb24-4f67-96e8-adcb524e9ebd",
+		"_postman_id": "2c769c32-74cc-482c-b994-b62c921377bd",
 		"name": "SecurityTests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "aee83870-8f24-4039-993a-528906803f8e",
+						"id": "bea36d51-e344-43e3-8aa3-396ece80c06f",
 						"exec": [
 							"pm.test(\"AuthenticationOnMyTenant\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -33,7 +33,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "ede32ea3-3a4b-4c35-a96f-b18652ad5206",
+						"id": "d7b17676-0459-4a75-993f-7eb90b45bb8f",
 						"exec": [
 							""
 						],
@@ -78,7 +78,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "2701d126-6025-43fb-b59f-fd7032070a89",
+						"id": "615eedb0-34de-4cbb-a39a-7e96fe1fe427",
 						"exec": [
 							"pm.test(\"AuthenticationOnNotMyTenant\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -100,7 +100,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "c713b3e4-7a12-4ed4-b190-92239f42a101",
+						"id": "f6173b65-b57f-4474-a557-3031eb0c7fc1",
 						"exec": [
 							""
 						],
@@ -145,7 +145,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "998d1880-c945-4d28-bb42-2d254584e864",
+						"id": "046c829b-686c-4678-a8d1-3b50219020b1",
 						"exec": [
 							"pm.test(\"GetFirstShipmentIdFromNotMyTenant\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -253,7 +253,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f480f379-0ec6-4254-bb7e-1233a11b012b",
+						"id": "a8457afc-d166-4db5-a4f6-3c806987e304",
 						"exec": [
 							"pm.test(\"GetNotMyShipmentIdFromMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -313,7 +313,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "76698742-42af-4434-b86d-6f8fcfc042a9",
+						"id": "482e878c-a13b-49d2-87cb-a8612cc4780a",
 						"exec": [
 							"pm.test(\"UpdateNotMyShipmentFromMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(400);",
@@ -369,7 +369,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "fafdef4e-ff08-42cb-a9df-f645d0b1e086",
+						"id": "6fc8835e-fa96-4e9b-ab9b-c8ae30e02481",
 						"exec": [
 							"pm.test(\"GetCompanyAddressSettingsFromMyTenant\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -448,7 +448,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6f3b3c6d-a449-43c1-963a-fb12fc716037",
+						"id": "a863e0d1-79bb-4fa1-a053-5176bb9c8931",
 						"exec": [
 							"pm.test(\"GetCompanyAddressSettingsFromNotMyTenant Fail\" , function () {",
 							"     pm.response.to.have.status(400);",
@@ -570,7 +570,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "7214adcf-1446-40af-b9c7-d98f011f444a",
+						"id": "71254f3f-83e2-4945-be25-1b892f0407d8",
 						"exec": [
 							"pm.test(\"GetFirstARInvoiceIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -681,7 +681,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "cadd8930-62ca-4cc8-be11-946f087b7342",
+						"id": "ce839ebe-907c-42ed-b8b9-f99d21bdc837",
 						"exec": [
 							"pm.test(\"GetARInvoiceIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -755,7 +755,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b62e8685-1e9e-4169-932e-56c3d38c7c53",
+						"id": "ab08108c-e2e0-46a5-a1ec-2513af674db1",
 						"exec": [
 							"pm.test(\"GetARInvoiceIdFromMyTenant Fail\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -826,7 +826,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "93244c07-915b-4e91-b5f7-538c19bfbae0",
+						"id": "3db51f2e-dc2c-4053-ba2b-be7e27e562c4",
 						"exec": [
 							"pm.test(\"GetFirstARPaymentIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -937,7 +937,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1513fc90-155a-4cbd-afbe-8ca9b19dd9dd",
+						"id": "0a1e3762-b17c-4a72-a0c3-be81c47af0bd",
 						"exec": [
 							"pm.test(\"GetARPaymentIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1011,7 +1011,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "33abd854-e90c-4a96-8b0b-0e5a648bf376",
+						"id": "30572cf0-8018-4d90-9149-a693781a908e",
 						"exec": [
 							"pm.test(\"GetARPaymentIdFromNotMyTenant Fail\", function () {",
 							"   pm.response.to.have.status(400);",
@@ -1082,7 +1082,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1dc7a825-167d-4802-bc5e-b3ba25f2cc56",
+						"id": "ed9eebd7-7153-480b-8720-97271d3636b9",
 						"exec": [
 							"pm.test(\"GetFirstAPInvoiceIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1189,7 +1189,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1de1fcd4-2534-48bc-b10c-d94250a64fba",
+						"id": "9e125cc8-09d6-4a7e-8750-5f0b0be90f96",
 						"exec": [
 							"pm.test(\"GetAPInvoiceIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1263,7 +1263,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1c68011b-2267-4bed-a381-5c82c2f488bb",
+						"id": "cf3567e9-fd09-4a95-840e-fd36840fb047",
 						"exec": [
 							"pm.test(\"GetAPInvoiceIdFromNotMyTenant Fail\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1334,7 +1334,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "108b6643-3019-41b9-b0cf-58c3f346f962",
+						"id": "1b76fbd4-1572-4a48-885e-1ad1fb3df24e",
 						"exec": [
 							"pm.test(\"GetFirstAPPaymentIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1441,7 +1441,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1d1cab4f-5830-4eb9-9726-d11deea7b643",
+						"id": "af1cefdb-c3a0-44a9-97ad-eebdee222c95",
 						"exec": [
 							"pm.test(\"GetAPPaymentIdFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1515,7 +1515,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8acfbea9-8bc1-42c5-aaa4-9443370ba7eb",
+						"id": "1243ff55-414f-4165-94e8-2f03135b16c6",
 						"exec": [
 							"pm.test(\"GetAPPaymentIdFromNotMyTenant Fail\", function () {",
 							"   pm.response.to.have.status(400);",
@@ -1586,7 +1586,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0d73f0db-1bac-4bf8-a124-9c2076a50ae1",
+						"id": "304195da-e450-47d2-a00f-b001c37c3677",
 						"exec": [
 							"pm.test(\"GetContactFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1694,7 +1694,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "7f8ff01a-0199-4fd5-92fb-1856cf9fb172",
+						"id": "29b54516-8d8d-492c-acde-9137364ab041",
 						"exec": [
 							"pm.test(\"GetContactFromMyTenantNotMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1806,7 +1806,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "18deee12-76d2-4593-9135-a14b61a236e9",
+						"id": "6f7f17b2-6626-464b-a0fe-8198ea69f633",
 						"exec": [
 							"pm.test(\"GetContactLoggedUserFromMyTenant\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1902,7 +1902,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "622ce1f9-abea-4ff1-abb7-74c6724fdc29",
+						"id": "a4b12db7-5449-4f0a-986d-11c6d28f4499",
 						"exec": [
 							"pm.test(\"GetContactLoggedUserFromNotMyTenant Fail\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1998,7 +1998,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "56f0cbc2-3813-43ad-b80e-97970fb3ca53",
+						"id": "827d9530-ab81-4c6d-94a9-631419cc04bb",
 						"exec": [
 							"pm.test(\"GetAccoutingSettingsFromMyTenant\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -2050,7 +2050,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "cb776d97-9e8f-44ec-80aa-2b54152a5918",
+						"id": "a2598334-c773-4353-a121-aed8dd3cdb14",
 						"exec": [
 							"pm.test(\"GetFTPSettingsFromMyTenant\", function () {\r",
 							"      pm.response.to.have.status(200);\r",
@@ -2101,7 +2101,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "bdb53ed0-9fc0-4a93-a1ee-cfb0b2b1598f",
+						"id": "c54c7d7a-4209-41d1-90df-23a423399d03",
 						"exec": [
 							"pm.test(\"GetFTPSettingsFromNOTMyTenant Fail\", function () {\r",
 							"      pm.response.to.have.status(200);\r",
@@ -2155,7 +2155,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a28ac79b-7bb2-4f0c-a02e-3670b15824a4",
+						"id": "f35cd770-a62e-48e8-bae6-66d0c1ac24f9",
 						"exec": [
 							"pm.test(\"AuthSuccessfullOnTenant1150\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -2167,7 +2167,7 @@
 							"     var idvalue5 = pm.response.to.have.header(\"x-xss-protection\");\r",
 							"     var idvalue6 = pm.response.to.not.have.header(\"X-AspNet-Version\");\r",
 							"     var idvalue7 = pm.response.to.not.have.header(\"X-Powered-By\");\r",
-							"     var idvalue8 = pm.response.to.have.header(\"Cache-Control\");\r",
+							"     //var idvalue8 = pm.response.to.have.header(\"Cache-Control\");\r",
 							"    \r",
 							"     \r",
 							"     var id1exist = idvalue1 !== null;\r",
@@ -2177,14 +2177,14 @@
 							"     var id5exist = idvalue5 !== null;\r",
 							"     var id6exist = idvalue6 === null;\r",
 							"     var id7exist = idvalue7 === null;\r",
-							"     var id8exist = idvalue8 !== null;\r",
+							"    // var id8exist = idvalue8 !== null;\r",
 							"     \r",
 							"     pm.expect(pm.response.headers.get('Server')).to.eql('nginx');\r",
 							"     pm.expect(pm.response.headers.get('Strict-Transport-Security')).to.eql('max-age=31536000 ; includeSubDomains');\r",
 							"     pm.expect(pm.response.headers.get('Access-Control-Allow-Origin')).to.eql('https://system.logitudeworld.com');\r",
 							"     //pm.expect(pm.response.headers.get('x-frame-options')).to.eql('SAMEORIGIN');\r",
 							"     pm.expect(pm.response.headers.get('x-xss-protection')).to.eql('1; mode=block');\r",
-							"     pm.expect(pm.response.headers.get('Cache-Control')).to.eql('no-cache,no-store, must-revalidate');\r",
+							"     //pm.expect(pm.response.headers.get('Cache-Control')).to.eql('no-cache,no-store, must-revalidate');\r",
 							"\r",
 							"     \r",
 							"     \r",

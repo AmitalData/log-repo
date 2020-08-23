@@ -195,7 +195,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {
                 JournalRepository rep = new JournalRepository(entityPM.Tenant);
-                JournalEntity journal = rep.GetJournalByAccountingEntityId(entityPM.Id, entityPM.Tenant);
+                JournalEntity journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id,"2", entityPM.Tenant);
+
                 if (journal != null)
                 {
                     entityPM.JournalId = journal.JournalId;

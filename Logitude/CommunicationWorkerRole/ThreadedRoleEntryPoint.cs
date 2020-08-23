@@ -273,7 +273,7 @@ namespace CommunicationWorkerRole
 
             //throw (new InvalidOperationException());
         }
-
+        private static string[] ActiveWorkers = { };
         private static void SetWorkerRoleName()
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
@@ -283,13 +283,23 @@ namespace CommunicationWorkerRole
             LogitudeSettings.WorkerRoleName = nameElement.Value;
 
             var automaticBreakPointElement = workerRoleNameElement.Element("AutomaticBreakPoint");
-            bool automaticBreakPoint = false;
+            bool automaticBreakPoint;
             if (automaticBreakPointElement != null)
                 bool.TryParse(automaticBreakPointElement.Value, out automaticBreakPoint);
             else
             {
                 string automaticBreakPointStr = System.Configuration.ConfigurationManager.AppSettings.Get("AutomaticBreakPoint");
                 bool.TryParse(automaticBreakPointStr, out automaticBreakPoint);
+            }
+
+            var activeWorkersElement = workerRoleNameElement.Element("ActiveWorkers");
+            if(activeWorkersElement != null)
+            {
+                string activeWorkersStr = activeWorkersElement.Value;
+                if (!string.IsNullOrEmpty(activeWorkersStr))
+                {
+                    ActiveWorkers = activeWorkersStr.Split(',');
+                }
             }
 
             LogitudeSettings.RunWorkerRoleAutomaticBreakPoint = automaticBreakPoint;
@@ -306,6 +316,9 @@ namespace CommunicationWorkerRole
             try
             {
                 List<string> Last_journalBufferKeys = null;
+                var myWorker = new Logitude.Accounting.BL.CoreBL.JournalApproveService.JournalApproveWorker();
+                myWorker.WorkUntilQEmptyQueueDB();
+
                 Logitude.Accounting.BL.CoreBL.JournalApproveService.WorkWithoutQueue(1051, null, ref Last_journalBufferKeys);
 
                 var batchTaskExecutionWR = new BatchTaskExecutionWR();
@@ -451,6 +464,11 @@ namespace CommunicationWorkerRole
             {
                 BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "ReportExecutionLogWorkerRole").ToList();
             }
+            if(ActiveWorkers != null && ActiveWorkers.Length > 0)
+            {
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => ActiveWorkers.Contains(r.Code)).ToList();
+            }
+
             foreach (var Service in BatchServicesDefinitions)
             {
                 for (int i = 0; i < Service.NumberOfThreads; i++)

@@ -18,6 +18,8 @@ using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using WebFreight.Web.Security;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -47,6 +49,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             reportQueryOperations = DeserializeQueryOperationFromXml(xmlFilters);
 
+            CheckSalesmanAbilities(BuildReportParameters());
+
             CardIndexReportService cardIndexReportService = new CardIndexReportService(accountingContext, BuildReportParameters());
             cardIndexReportService.Run();
 
@@ -57,6 +61,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             return BuildDataProvider(cardIndexReportService);
         }
+
+
 
 
 
@@ -77,6 +83,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return transactionsDataProvider;
         }
 
+        private void CheckSalesmanAbilities(CardIndexReportParams args)
+        {
+            bool isSalsmanRestrictionsEnabled = SecurityUtility.CheckFeature("GLAccount", "SalesmanLTRP", args.Tenant);
+            if (isSalsmanRestrictionsEnabled && args.SalesmanId == null)
+                throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.NoSalesman", args.Tenant, LoggedContactResolver.GetLoggedContactShowLocal(args.Tenant)));
+        }
+
         private DateTime GetToDate()
         {
             return new DateTime(GetFilterValue<DateTime>("ToDate").Year, GetFilterValue<DateTime>("ToDate").Month, GetFilterValue<DateTime>("ToDate").Day, 23, 59, 59);
@@ -91,11 +104,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             LedgerTransactionBalanceFilterCallBack LTBFilterCallBack = BuildLTBFilterCallback(cardIndexs);
 
-            GLAccountPM glaccountPM = GetGLAccountById(GetFilterValue<string>("GLAccountId"));
+            //GLAccountPM glaccountPM = GetGLAccountById(GetFilterValue<string>("GLAccountId"));
 
-            if (glaccountPM.IsMultiCurrency == true)
+            //if (glaccountPM.IsMultiCurrency == true)
                 SetBalanceForMultiCurrencyAccount(LTBFilterCallBack);
-            else
+            //else
                 SetBalanceForSingleCurrencyAccount(LTBFilterCallBack);
 
 
@@ -145,6 +158,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
 
             transactionsDataProvider.LocalClosedBalance = transactionsDataProvider.LocalClosedBalanceList.Sum(d => d.BalanceLocal).Value;
+            transactionsDataProvider.ForeignClosedBalance = transactionsDataProvider.LocalClosedBalanceList.Sum(d => d.BalanceForeign).Value;
 
         }
 
@@ -179,6 +193,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
 
             transactionsDataProvider.LocalOpenBalance = transactionsDataProvider.LocalOpenBalanceList.Sum(d=>d.BalanceLocal).Value;
+            transactionsDataProvider.ForeignOpenBalance = transactionsDataProvider.LocalOpenBalanceList.Sum(d=>d.BalanceForeign).Value;
 
         }
 
@@ -385,7 +400,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 SearchFields = GetFilterValue<string>("SearchFields"),
                 PageStartAtRecordIndex = PAGE_RECORD_START_INDEX,
                 PageSize = PAGE_SIZE,
-                
+                SalesmanId = GetFilterValue<string>("SalesmanUserId"),
                 Category1Id = "",
                 Category2Id = "",
                 Category3Id = "",

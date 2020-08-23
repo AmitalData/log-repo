@@ -55,6 +55,16 @@ using WebFreight.Web.Helpers;
                     CurrencyCode = a.CurrencyCode,
                     ForeignAmount = a.ForeignAmount,
                 }).ToList(),
+                GroupedInterestTransactionList = interestTransactionLists == null ? null : interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date).GroupBy(x=> new { x.InterestEntityNumber, x.InterestEntityIconCode, x.CurrencyCode, x.InterestValueDate }).Select(a =>
+                   new InterestTransactionProvider
+                   {
+                       EntityType =a.Key.InterestEntityIconCode,
+                       EntityNumber =a.Key.InterestEntityNumber,
+                       LocalAmount = a.Sum(x=> x.LocalAmount),
+                       InterestValueDate = a.Key.InterestValueDate,
+                       CurrencyCode =a.Key.CurrencyCode,
+                       ForeignAmount = a.Sum(x=> x.ForeignAmount),
+                   }).ToList(),
             }).ToList();
 
 

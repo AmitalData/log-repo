@@ -200,12 +200,16 @@ namespace WebFreight.Web.WebServices
 
                 
                 StringBuilder HtmlTemplate = new StringBuilder();
+                string teamName = (LogitudeSettings.WorkEnvironment == "cloud" ? "Amital" : LogitudeSettings.ProductName) + " Team";
+                string siteUri = LogitudeSettings.WorkEnvironment == "cloud" ? "https://cloud.amital.co.il/" : ("www." + LogitudeSettings.DomainName);
 
-                string teamName = LogitudeSettings.ProductName + " Team";
-                string siteUri = "www." + LogitudeSettings.DomainName;
                 string siteLogin = LogitudeSettings.LogitudeURL;
                 bool isLogBox = false;
                 string senderEmail = "no-reply@" + (LogitudeSettings.WorkEnvironment == "cloud" ? "amital.co.il" : "LogitudeWorld.com");
+
+
+
+
 
                 TenantManagmentPrivateLabelsPM privatelabel = null;
                 if (LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
@@ -256,7 +260,7 @@ namespace WebFreight.Web.WebServices
                 HtmlTemplate.Append("<p style='text-align:left'>");
                 HtmlTemplate.Append("Your new password is: " + newPassword);
                 HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append("To access you account please <a href='" + siteLogin + "'>login</a>");
+                HtmlTemplate.Append("To access your account please <a href='" + siteLogin + "'>login</a>");
                 HtmlTemplate.Append("<br /><br />");
                 HtmlTemplate.Append("Thanks,");
                 HtmlTemplate.Append("<br />");
@@ -386,11 +390,11 @@ namespace WebFreight.Web.WebServices
 
                 MessageArgs result = new MessageArgs();
                 StringBuilder HtmlTemplate = new StringBuilder();
+                string teamName = (LogitudeSettings.WorkEnvironment == "cloud" ? "Amital" : LogitudeSettings.ProductName) + " Team";
+                string siteUri = LogitudeSettings.WorkEnvironment == "cloud" ? "https://cloud.amital.co.il/" : ("www." + LogitudeSettings.DomainName);
 
-                string teamName = LogitudeSettings.ProductName + " Team";
-                string siteUri = "www." + LogitudeSettings.DomainName;
                 bool isLogBox = false;
-                string env = LogitudeSettings.WorkEnvironment == "cloud" ?  "Unifreight Cloud" : "Logitude";
+                string env = LogitudeSettings.WorkEnvironment == "cloud" ? "Amital Cloud" : "Logitude";
 
                 string senderEmail = "no-reply@" + LogitudeSettings.DomainName;
                 TenantManagmentPrivateLabelsPM privatelabel = null;

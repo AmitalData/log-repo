@@ -30,13 +30,13 @@ export class WarningApprovePaymentComponent {
     SetWarningMessage(WarningCode: string) {
         switch (WarningCode) {
             case '16':
-                this.WarningMessage = 'נדרש אישור לתשלום על סעיף מס קניה בסך  ' + this.tax16Amount + '  ש"ח, <br/>האם אתה מאשר ?';
+                this.WarningMessage = 'אנא תשומת ליבך כי בנוסף לתשלום המע"מ, <br/> יש לנו צורך באישורך לשלם: <br/> מס קנייה בסך של ' + this.tax16Amount + ' ₪<br/> האם אתה מאשר?';
                 break;
             case '1':
-                this.WarningMessage = 'נדרש אישור לתשלום על סעיף מכס בסך  ' + this.tax1Amount + '  ש"ח, <br/>האם אתה מאשר ?';
+                this.WarningMessage = 'אנא תשומת ליבך כי בנוסף לתשלום המע"מ, <br/> יש לנו צורך באישורך לשלם: <br/> מכס בסך של ' + this.tax1Amount + ' ₪<br/> האם אתה מאשר?';
                 break;
             case '17':
-                this.WarningMessage = 'נדרש אישור לתשלום ' + this.tax1Amount + '  ש”ח <br/>בגין סעיף מכס וכן מס קניה בסך ' + this.tax16Amount + '  ש"ח, <br/>האם אתה מאשר ?';
+                this.WarningMessage = 'אנא תשומת ליבך כי בנוסף לתשלום המע"מ, <br/> יש לנו צורך באישורך לשלם: <br/> מכס בסך של ' + this.tax1Amount + ' ₪<br/> מס קנייה בסך של ' + this.tax16Amount + ' ₪<br/> האם אתה מאשר?';
                 break;
             default:
                 this.WarningMessage = '';
@@ -47,7 +47,11 @@ export class WarningApprovePaymentComponent {
         this.CurrentSession.CloseCurrentWindowEmit("Approved");
     }
 
-    DennyButtonClicked() {
+    DenyButtonClicked() {
+        this.CurrentSession.CloseCurrentWindowEmit("Deny");
+    }
+
+    CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 

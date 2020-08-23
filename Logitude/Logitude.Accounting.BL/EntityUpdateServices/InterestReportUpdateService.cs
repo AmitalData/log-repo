@@ -24,6 +24,7 @@ using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.InvoiceModel;
 using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.BL.Validators;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -31,22 +32,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         protected override void OnCreating(InterestReportPM entityPM, EntityPM entityParentPM)
         {
-            MapInterestReport(entityPM);
-            CreateBatchTaskExecution(entityPM);
-          
+            if (!entityPM.IsCreatedFromBatch)
+            {
+                CreateBatchTaskExecution(entityPM);
+            }
         }
-
-
-        private void MapInterestReport(InterestReportPM entityPM)
-        {
-           
-            entityPM.CreateDateTime = DateTime.UtcNow;
-            entityPM.InterestReportStatusCode = "5";
-            entityPM.ReportNumber = CodeCounter.GetNumber("InterestReport", entityPM.Tenant).ToString();
-           
-        }
-
-        
 
         protected override void UpdateComposition(InterestReportPM entityPM)
         {
@@ -71,14 +61,29 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             });
         }
 
- 
+
         protected override void OnUpdating(InterestReportPM entityPM, InterestReport entityPOCO)
         {
             entityPM.UpdateDateTime = DateTime.UtcNow;
-            if(entityPM.InterestReportStatusCode == "3" && (entityPM.InterestReportStatusCode != entityPOCO.InterestReportStatusCode))
+            if (entityPM.InterestReportStatusCode == "3" && (entityPM.InterestReportStatusCode != entityPOCO.InterestReportStatusCode))
             {
-                CancelInterestReport(entityPOCO,  entityPM);
+                CancelInterestReport(entityPOCO, entityPM);
             }
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update && !entityPM.IsUpdatedFromBatch)
+            {
+                if (entityPM.InterestCalculationDate != entityPOCO.InterestCalculationDate)
+                {
+                    
+                    CreateBatchTaskExecutionForRecalculatingData(entityPM);
+                }
+
+                if (entityPM.OpenBalance != entityPOCO.OpenBalance)
+                {
+                    CreateBatchTaskExecutionForRecalculatingData(entityPM);
+                }
+            }
+
         }
 
         protected override void Trace(InterestReportPM entityPM, InterestReport entityPOCO, string changesXml)
@@ -308,7 +313,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             // 1- create BTE record
             BatchTaskExecutionPM taskExe;
 
-            InterestReportArgs args = new InterestReportArgs() { Tenant = entityPM.Tenant, InterestReportId = entityPM.Id};
+            InterestReportArgs args = new InterestReportArgs() { Tenant = entityPM.Tenant, InterestReportId = entityPM.Id, RecalculateData = entityPM.RecalculateData };
             var stringwriter = new System.IO.StringWriter();
             var serializer = new XmlSerializer(typeof(InterestReportArgs));
             serializer.Serialize(stringwriter, args);
@@ -340,6 +345,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", entityPM.Tenant.ToString() }
                 }, Tenant);
+        }
+
+        private void CreateBatchTaskExecutionForRecalculatingData(InterestReportPM entityPM)
+        {
+            entityPM.InterestReportStatusCode = "5";
+            entityPM.RecalculateData = true;
+            CreateBatchTaskExecution(entityPM);
         }
         protected override void Validate(InterestReportPM entityPM)
         {

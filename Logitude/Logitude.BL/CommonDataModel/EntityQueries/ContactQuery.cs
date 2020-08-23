@@ -1979,5 +1979,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return result.AsQueryable();
         }
 
+        public string GetContactIdByEmail(string email,int tenant)
+        {
+            string id = repository.GetConactIdByemail(email, tenant);
+            return id;
+        }
+
     }
 }

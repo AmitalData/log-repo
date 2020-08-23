@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="AccountingContext.cs" />
     <Compile Include="AccountingContext.SharedTable.cs" />
+    <Compile Include="DataContract\InterestReportCustomerData.cs" />
     <Compile Include="DataContract\TaxReportData.cs" />
     <Compile Include="EntitiesTypeEnums.CS" />
     <Compile Include="EntityKeys\AccountingIntegrityCheckKeys.cs" />

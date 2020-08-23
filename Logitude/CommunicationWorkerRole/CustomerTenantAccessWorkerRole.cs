@@ -205,7 +205,7 @@ namespace CommunicationWorkerRole
                                             var LBTenant = LBTenantRep.GetSingleLBTenant(tenant);
                                             Contact LogBoxUser = contactRepository.GetSingleContact(LBTenant.LogBoxAdminUserId, tenant);
                                             var domain = "@logbox.co.il";
-                                            if (!string.IsNullOrEmpty(LogBoxUser.Email))
+                                            if (LogBoxUser != null && !string.IsNullOrEmpty(LogBoxUser.Email))
                                             {
                                                 var EmailParts = LogBoxUser.Email.Split('@');
                                                 if (EmailParts.Length == 2)

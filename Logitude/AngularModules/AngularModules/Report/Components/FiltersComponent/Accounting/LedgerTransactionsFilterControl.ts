@@ -1,3 +1,4 @@
+import { FeatureLocator } from './../../../../Infrastructure/Utilities/FeatureLocator';
 import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -37,16 +38,28 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = false;
     public filterControlHight: string = "100";
+    private CurrentSession = SessionLocator.SelectedSession;
+
+    public IsSalesmanRestricted: boolean = false;
+    public SalesmanFilterItems: ApiQueryFilters;
+    public GLAccountFilterItems: ApiQueryFilters;
+
     constructor(private CD: ChangeDetectorRef)
     {
         super();
 
+        this.InitLOVFilters();
 
+        this.GetSalesmanFeature();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
+        this.GetResources();
 
-        // get requierd resources
+    }
+
+    private GetResources()
+    {
         this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) =>
         {
             this.entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) =>
@@ -55,10 +68,28 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                 this.SetRunReportTitle();
             });
         });
+    }
 
+    private InitLOVFilters()
+    {
+        this.SalesmanFilterItems = new ApiQueryFilters();
+        this.SalesmanFilterItems.addAdditionalFilter("IsSalesman", true, null, null, "Equals", false, false, false, "boolean", false, false);
 
+        // GLAccount lov field filtera
+        this.GLAccountFilterItems = new ApiQueryFilters();
+    }
 
-
+    GetSalesmanFeature()
+    {
+        var salesmanLedger = FeatureLocator.HasFeaturePermession("LedgerTransaction", "SalesmanLTRP");
+        var isSalesmanRestrictionsEnabled =  !!salesmanLedger;
+        console.log("[Salesman Ledger Transactions]", salesmanLedger);
+        var loggedUser = SessionLocator.LoggedUserPM;
+        if (loggedUser.IsSalesman && isSalesmanRestrictionsEnabled) {
+            this.IsSalesmanRestricted = true;
+            this.Salesman = loggedUser.Id;
+            this.GLAccountFilterItems.addAdditionalFilter("SalesmanUserId", loggedUser.Id, null, null, "Equals", false, true, false, "string", false, false);
+        }
 
     }
 
@@ -95,12 +126,14 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     SetUIProperties()
     {
-        // this.UIProperties.SetRequired("AgingForDate", "GLAccount", true);
-
-        //this.UIProperties.SetRequired("GLAccountId", this.ObjectTableName, !this.GLAccountId);
         this.UIProperties.SetRequired("FromDate", this.ObjectTableName, !this.FromDate);
         this.UIProperties.SetRequired("ToDate", this.ObjectTableName, !this.ToDate);
-        // this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+
+        if (this.IsSalesmanRestricted)
+        {
+            this.UIProperties.SetRequired("Salesman", "GLAccount", true);
+            this.UIProperties.SetEnabled("Salesman", "GLAccount", false);
+        }
 
     }
 
@@ -343,6 +376,13 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         queryFilterItem.FieldName = "GLAccountId";
         queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.GLAccountId);
         queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "SalesmanUserId";
+        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.salesman);
+        queryFilterItem.Operator = "Equals";
+        queryFilterItem.DisplayInList = true; // server code will take this value from DB.ObjectField.DisplayInList
         queryFilterItems.push(queryFilterItem);
 
         queryFilterItem = new QueryFilterItem();

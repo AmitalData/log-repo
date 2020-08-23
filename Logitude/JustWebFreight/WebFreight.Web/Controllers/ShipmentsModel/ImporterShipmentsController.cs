@@ -162,7 +162,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 try
                 {
                     var msg = "Start Inserting Shipment To Importer Tenant " + DateTime.Now;
-                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, LogPM.Status, 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(Shipment), null, null, "");
+                    //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, LogPM.Status, 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(Shipment), null, null, "");
                     // Insert Importer Shipment
                     var ImporterShipment = new ShipmentPM() { NewConcurrencyGUID = Guid.NewGuid().ToString() };//shipmentQuery.GetSinglePMWithoutComposition(Shipment.Id, Shipment.Tenant);
                     if (!string.IsNullOrEmpty(Shipment.CustomerShipmentNumber))
@@ -216,14 +216,14 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
                         var ResponseData = JsonConvert.SerializeObject(ImporterShipment.Id);
                         var Donemsg = "Shipment Added To Importer Tenant Successfully " + DateTime.Now;
-                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ImporterShipment.Id, null, "");
+                        //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ImporterShipment.Id, null, "");
                         return Request.CreateResponse(HttpStatusCode.OK, new List<string>() { ImporterShipment.Id, ImporterShipment.ShipmentNumber });
                     }
                     else
                     {
 
                         var Failmsg = "Inserting Shipment Faild " + DateTime.Now;
-                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(Result), null, "");
+                        //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(Result), null, "");
                         return Request.CreateResponse(HttpStatusCode.BadRequest, Result);
                     }
                 }
@@ -244,7 +244,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     }
 
                     errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
-                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, "Update Shipment At Importer Tenant Faild " + DateTime.Now, null, null, errorMessage, (errorMessage.Length >= 250 ? errorMessage.Substring(0, 249) : errorMessage));
+                    //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, "Update Shipment At Importer Tenant Faild " + DateTime.Now, null, null, errorMessage, (errorMessage.Length >= 250 ? errorMessage.Substring(0, 249) : errorMessage));
 
                     return Request.CreateResponse(HttpStatusCode.BadRequest, apiException);
                 }
@@ -335,7 +335,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 try
                 {
                     var msg = "Start updating Shipment At Importer Tenant " + DateTime.Now;
-                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, LogPM.Status, 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(Shipment), null, null, "");
+                    //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, LogPM.Status, 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(Shipment), null, null, "");
                     ShipmentPM ImporterShipment = null;
                     var IsNew = false;
                     if (!string.IsNullOrEmpty(Shipment.CustomerShipmentNumber))
@@ -343,7 +343,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         ImporterShipment = shipmentQuery.GetSingleShipmentPMByNumber(Shipment.CustomerShipmentNumber, Shipment.ImporterTenant);
                         if (ImporterShipment == null)
                         {
-                            ImporterShipment = shipmentQuery.GetSingleShipmentPMByForwarderNumber(Shipment.ForwarderShipmentNumber, Shipment.ImporterTenant, Shipment.Tenant); 
+                            ImporterShipment = shipmentQuery.GetSingleShipmentPMByForwarderNumber(Shipment.ForwarderShipmentNumber, Shipment.ImporterTenant, Shipment.Tenant);
                         }
                     }
                     else
@@ -378,13 +378,13 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         shipmentService.SetChangeSet(ImporterShipment.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>());
                         shipmentService.Update();
                         var Donemsg = "Shipment Updated Successfully " + DateTime.Now;
-                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ImporterShipment.Id, null, "");
+                        //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ImporterShipment.Id, null, "");
                         return Request.CreateResponse(HttpStatusCode.OK, new List<string>() { ImporterShipment.Id, ImporterShipment.ShipmentNumber });
                     }
                     else
                     {
                         var Failmsg = "Updating Shipment Faild " + DateTime.Now;
-                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(Result), null, "");
+                        //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(Result), null, "");
                         return Request.CreateResponse(HttpStatusCode.BadRequest, Result);
                     }
                 }

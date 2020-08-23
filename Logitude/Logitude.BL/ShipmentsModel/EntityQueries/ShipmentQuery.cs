@@ -2462,17 +2462,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     {
                         myHousesDescriptionofGoods += ", " + console.DescriptionOfGoods;
                     }
-
-                }
-
-                if (!string.IsNullOrEmpty(myHousesDescriptionofGoods) && myHousesDescriptionofGoods.Length > 1000)
-                {
-                    myHousesDescriptionofGoods = myHousesDescriptionofGoods.Substring(0, 1000);
                 }
             }
             else
             {
                 myHousesDescriptionofGoods = shipmentPM.DescriptionOfGoods;
+            }
+            
+            if (!string.IsNullOrEmpty(myHousesDescriptionofGoods) && myHousesDescriptionofGoods.Length > 2000)
+            {
+                myHousesDescriptionofGoods = myHousesDescriptionofGoods.Substring(0, 2000);
             }
 
             shipmentPM.HousesDescriptionofGoods = myHousesDescriptionofGoods;
@@ -3529,6 +3528,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.OnCarriageETA = shipment.OnCarriageETA;
             shipmentPM.OnCarriageETD = shipment.OnCarriageETD;
             shipmentPM.WarehouseLegLastFreeDate = shipment.WarehouseLegLastFreeDate;
+            shipmentPM.LastSharedEventId = shipment.LastSharedEventId;
+            shipmentPM.LastSharedEventDate = shipment.LastSharedEventDate;
+
+
 
             if (masterData != null)
             {
@@ -4458,6 +4461,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.AgentContactId = shipment.AgentContactId;
                     shipmentPM.ShipmentTypeId = shipment.ShipmentTypeId;
                     shipmentPM.MasterShipmentDataId = shipment.MasterShipmentDataId;
+                    shipmentPM.LastSharedEventDate = shipment.LastSharedEventDate;
+                    shipmentPM.LastSharedEventId = shipment.LastSharedEventId;
+
+
+
                     if (m != null)
                     {
                         shipmentPM.MainCarriageETD = m.MainCarriageETD;

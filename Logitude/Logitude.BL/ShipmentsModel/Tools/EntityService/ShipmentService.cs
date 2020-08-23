@@ -4896,7 +4896,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                                 foreach (string id in ids)
                                 {
-                                    ShipmentPM iHousePM = iShipmentQuery.GetSinglePMWithoutComposition(id, this.tenant);
+                                    // Bug 70470: TEU of house is changed to NULL
+                                    // ShipmentPM iHousePM = iShipmentQuery.GetSinglePMWithoutComposition(id, this.tenant);
+
+                                    ShipmentPM iHousePM = iShipmentQuery.GetSinglePM(id, this.tenant);
 
                                     if (iHousePM != null)
                                     {
@@ -6371,7 +6374,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 houseShipment.AgentComputed = houseShipment.AgentId;
                 entityRepository.Update(houseShipment);
                 entityRepository.SubmitChanges();
-
+                RunStoredProcedureClass.UpdateShipmentStatus(itemPM.Id, tenant);
                 //this.RunRegistryDateProcedure(houseShipment.Id);
 
                 calculateProfit = true;

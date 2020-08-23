@@ -23,6 +23,9 @@ namespace Logitude.Accounting.BL.InterestService
 {
     public class InterestReportService
     {
+        private const string invoiced = "2";
+        private const string closedWithoutInvoice = "4";
+        
         public InterestTransactionsWithTotal GetAllInterestTransactionByDate(string ReportId, DateTime? InterestCalculationDate, int Tenant, IAccountingContext MyContext=null)
         {
             if (MyContext == null)
@@ -199,9 +202,9 @@ namespace Logitude.Accounting.BL.InterestService
             //{
             //    interestReportPM.CloseBalance += interestReportPM.TotalAmount;
             //}
-            if (interestReportPM.InterestReportStatusCode != "2")
+            if (interestReportPM.InterestReportStatusCode != invoiced)
             {
-                interestReportPM.InterestReportStatusCode = "4";
+                interestReportPM.InterestReportStatusCode = closedWithoutInvoice;
             }
             if (interestReportPM.InterestReportStatusCode != null)
             {

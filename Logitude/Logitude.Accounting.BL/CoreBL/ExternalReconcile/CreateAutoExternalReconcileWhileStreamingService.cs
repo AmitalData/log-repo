@@ -44,10 +44,12 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 return;//nothing to do !!!
             }
 
-            
+            bool isCreateAutoExternalReconcileMoveBankCheckFromTransferService = TypeIs_CreateAutoExternalReconcileMoveBankCheckFromTransfer();
 
-            if (_JournalPM.JournalExternalReconciles.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
+            //if (_JournalPM.JournalExternalReconciles.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
+            if (!isCreateAutoExternalReconcileMoveBankCheckFromTransferService)
             {
+                //while create  ExternalReconcileAdjustBankFeesService the bank lines are  string.IsNullOrWhiteSpace(r.LedgerTransactionId) 
                 var command = new CreateAutoExternalReconcileWhileStreamingFeesService();
                 command.MustInit(_ExternalReconcileDataProvider, _JournalPM, _NewLedgerTransactionsWithCounters);
                 command.AdjustBankFees();
@@ -60,11 +62,32 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 command.MustInit(_ExternalReconcileDataProvider, _JournalPM, _NewLedgerTransactionsWithCounters);
                 command.MoveBankCheckFromTransfer();
                 this.ExternalReconciliationList = command.ExternalReconciliationList;
-                
+
             }
         }
-     
 
+        private bool TypeIs_CreateAutoExternalReconcileMoveBankCheckFromTransfer()
+        {
+            if (_JournalPM.JournalExternalReconciles.Count() != 1)
+            {
+                return false;
+            }
+            var myJournalExternalReconciles = _JournalPM.JournalExternalReconciles.First();
+            if (String.IsNullOrWhiteSpace(myJournalExternalReconciles.LedgerTransactionId))
+            {
+                return false;
+            }
+            var listLedger =
+            _ExternalReconcileDataProvider.GetLedgerTransactionList(new List<string>() { myJournalExternalReconciles.LedgerTransactionId }, _JournalPM.Tenant);
+            var myLedgerTransactionTransferInCredit = listLedger.First();
+            if (myLedgerTransactionTransferInCredit.LocalAmountDebit != 0)
+            {
+                return false;// not in credit
+            }
+
+            var BankAccountFromTransferAccount = _ExternalReconcileDataProvider.GetBankAccountFromTransferAccount(myLedgerTransactionTransferInCredit.AccountId, _JournalPM.Tenant);
+            return BankAccountFromTransferAccount != null;
+        }
 
         public static string GetAdjustGLAccountId(JournalPM myJournalPM)
         {

@@ -1824,7 +1824,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             if (string.IsNullOrEmpty(line.GLAccountId))
                             {
-                                throw new Exception("The Receivable GLAccount of the Charge Type " + myChargesType.EnglishName + " is NULL");
+                                if (myChargesType.Code == "INT")
+                                {
+                                    bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                                    var msg = TextCodesTranslator.TranslateText("ARInvoice.O.TheReceivableGLAccountOfTheChargeNULL", tenant, showLocals);
+
+                                    throw new Exception(msg);
+
+                                }
+                                else
+                                {
+                                    throw new Exception("The Receivable GLAccount of the Charge Type " + myChargesType.EnglishName + " is NULL");
+
+                                }
                             }
                         }
                     }
@@ -3473,7 +3485,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         journalLine.Reference1 = theEntityPm.InvoiceNumber;
                         journalLine.Reference2 = theEntityPm.MainEntityReference;
                         journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
-                        journalLine.Notes = theEntityPm.InternalNotes;
+                        journalLine.Notes = theEntityPm.PrintNotes;
                         journalLine.DebitAccountId = this.glAccount == null ? "" : this.glAccount.Id;
                         journalLine.DebitControlAccountId = this.glAccount == null ? "" : this.glAccount.ControlAccountId;
                         journalLine.ChangeSetOp = ChangeSetOperation.Insert;
@@ -3502,7 +3514,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                                 Reference1 = theEntityPm.InvoiceNumber,
                                                                 Reference2 = theEntityPm.MainEntityReference,
                                                                 Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
-                                                                Notes = theEntityPm.InternalNotes,
+                                                                Notes = theEntityPm.PrintNotes,
                                                                 DebitAccountId = glAccount == null ? "" : glAccount.Id,
                                                                 DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId,
                                                             }).ToList();
@@ -3588,7 +3600,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                     Reference1 = invoice.InvoiceNumber,
                                                     Reference2 = invoice.MainEntityReference,
                                                     Reference3 = !string.IsNullOrEmpty(invoice.HouseNumber) ? invoice.HouseNumber : invoice.MasterNumber,
-                                                    Notes = invoice.InternalNotes,
+                                                    Notes = invoice.PrintNotes,
                                                     DebitAccountId = glAccount == null ? "" : glAccount.Id,
                                                     DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId,
                                                     ChangeSetOp = ChangeSetOperation.Insert,
@@ -3739,7 +3751,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {
                 JournalRepository rep = new JournalRepository(tenant);
-                JournalEntity journal = rep.GetJournalByAccountingEntityId(entityPM.Id, tenant);
+                JournalEntity journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id,"2", tenant);
                 if (journal != null)
                 {
                     entityPM.JournalId = journal.JournalId;

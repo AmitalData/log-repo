@@ -32,8 +32,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             GLAccountRepository repository = new GLAccountRepository(context);
             IQueryable<GLAccountList> query = (from a in iQueryable
                                                join md in context.GLAccountMoreDatas on a.Id equals md.AccountId
+                                               join card in context.Cards on a.Id equals card.GLAccountId into ca
+                                               from card in ca.DefaultIfEmpty()
                                                select new GLAccountList()
                                                     {
+                                                        SalesmanUserId = card == null ? null : card.SalesmanUserId,
                                                         Id = a.Id,
                                                         Tenant = a.Tenant,
                                                         InternalNumber = a.InternalNumber,
@@ -115,6 +118,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         Category3Name = a.Category3.EnglishName,
                                                         Category4Name = a.Category4.EnglishName,
                                                         Category5Name = a.Category5.EnglishName,
+
+                                                        InterestCreditLimit = a.InterestCreditLimit,
 
                                                         // Created & Updated
                                                         CreateDate = a.CreateDate,

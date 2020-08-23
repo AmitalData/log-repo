@@ -74,7 +74,7 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
-                        
+
                         queueservice = new DbQueueService(queueName, tenant);//QueueServiceManager.GetQueueService(queueName, 0);
                         var response = queueservice.Receive();
                         LastActivity = DateTime.UtcNow;
@@ -281,7 +281,7 @@ namespace CommunicationWorkerRole
             {
                 string[] emails = emailsText.Split(';');
 
-                foreach(string email in emails)
+                foreach (string email in emails)
                 {
                     string iEmail = email.Replace(";", "").ToLower();
 
@@ -483,18 +483,18 @@ namespace CommunicationWorkerRole
 
             try
             {
-				//IQueueService queueservice = QueueServiceManager.GetQueueService("emailqueue", Tenant);
-				//Dictionary<string, string> message = new Dictionary<string, string>() 
-				//    {
-				//        { "CommunicationLogId", myCommunicationLogId}, 
-				//        { "Tenant", Tenant.ToString() }, 
-				//    };
+                //IQueueService queueservice = QueueServiceManager.GetQueueService("emailqueue", Tenant);
+                //Dictionary<string, string> message = new Dictionary<string, string>() 
+                //    {
+                //        { "CommunicationLogId", myCommunicationLogId}, 
+                //        { "Tenant", Tenant.ToString() }, 
+                //    };
 
-				//queueservice.Send(message);
+                //queueservice.Send(message);
 
-				DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
-				queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId",myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
-			}
+                DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
+            }
 
             catch (Exception ex)
             {
@@ -591,13 +591,13 @@ namespace CommunicationWorkerRole
                 EntityId = EntityId,
                 ObjectTableId = ObjectTableId,
                 ChildEntityId = newInboundEmailLine.EntityLineId,
-                ChildObjectTableId =ChildObjectTableId, 
+                ChildObjectTableId = ChildObjectTableId,
                 Subject = newInboundEmailLine.Subject,
                 Tenant = Tenant,
                 CommunicationLogTypeCode = "E",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant),
                 CommunicationStatusTypeCode = "W",
-               // CreatedByUserId = TicketUser != null ? TicketUser.Id : null,
+                // CreatedByUserId = TicketUser != null ? TicketUser.Id : null,
                 DocumentId = document.Id,
                 SearchFields = "mailgun" + "," + "O" + "," + newInboundEmailLine.Subject,
                 CreateDateUTC = DateTime.UtcNow,
@@ -632,18 +632,18 @@ namespace CommunicationWorkerRole
 
             try
             {
-				//IQueueService queueservice = QueueServiceManager.GetQueueService("emailqueue", Tenant);
-				//Dictionary<string, string> message = new Dictionary<string, string>() 
-				//    {
-				//        { "CommunicationLogId", myCommunicationLogId}, 
-				//        { "Tenant", Tenant.ToString() }, 
-				//    };
+                //IQueueService queueservice = QueueServiceManager.GetQueueService("emailqueue", Tenant);
+                //Dictionary<string, string> message = new Dictionary<string, string>() 
+                //    {
+                //        { "CommunicationLogId", myCommunicationLogId}, 
+                //        { "Tenant", Tenant.ToString() }, 
+                //    };
 
-				//queueservice.Send(message);
+                //queueservice.Send(message);
 
-				DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
-				queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
-			}
+                DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
+            }
 
             catch (Exception ex)
             {
@@ -857,15 +857,10 @@ namespace CommunicationWorkerRole
 
                         List<string> docIds = myCorrespondencesAttachments.Where(a => a.CorrespondenceId == item.EntityLineId && a.Tenant == item.Tenant).Select(d => d.DocumentFilingId).ToList();
                         myResult += @"<nav>";
-                        DocumentsFilingQuery docQuery = new DocumentsFilingQuery(tenant);
 
                         foreach (string id in docIds)
                         {
                             DocumentsFilingPM myDoc = DocumentsFilings.Where(a => a.Id == id).FirstOrDefault();
-                            if (myDoc == null)
-                            {
-                                myDoc = docQuery.GetSinglePM(id, tenant);
-                            }
                             string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
                             myResult += @"<a href=" + uri + "><span style=';font-family:Lucida Sans Unicode;font-size:12px;'>" + myDoc.FileName + "</span></a> |";
                         }
@@ -1002,15 +997,10 @@ namespace CommunicationWorkerRole
 
                         List<string> docIds = myCorrespondencesAttachments.Where(a => a.CorrespondenceId == item.EntityLineId && a.Tenant == item.Tenant).Select(d => d.DocumentFilingId).ToList();
                         myResult += @"<nav>";
-                        DocumentsFilingQuery docQuery = new DocumentsFilingQuery(tenant);
                         foreach (string id in docIds)
                         {
                             DocumentsFilingPM myDoc = DocumentsFilings.Where(a => a.Id == id).FirstOrDefault();
-                            if (myDoc == null)
-                            {
-                                myDoc = docQuery.GetSinglePM(id, tenant);
-                            }
-                            string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant; 
+                            string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
                             myResult += @"<a href=" + uri + "><span style=';font-family:Lucida Sans Unicode;font-size:12px;'>" + myDoc.FileName + "</span></a> |";
                         }
 
@@ -1105,14 +1095,9 @@ namespace CommunicationWorkerRole
 
                             List<string> docIds = myCorrespondencesAttachments.Where(a => a.CorrespondenceId == item.EntityLineId && a.Tenant == item.Tenant).Select(d => d.DocumentFilingId).ToList();
                             myResult += @"<nav>";
-                            DocumentsFilingQuery docQuery = new DocumentsFilingQuery(tenant);
                             foreach (string id in docIds)
                             {
                                 DocumentsFilingPM myDoc = DocumentsFilings.Where(a => a.Id == id).FirstOrDefault();
-                                if (myDoc == null)
-                                {
-                                    myDoc = docQuery.GetSinglePM(id, tenant);
-                                }
                                 string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
                                 myResult += @"<a href=" + uri + "><span style=';font-family:Lucida Sans Unicode;font-size:12px;'>" + myDoc.FileName + "</span></a> |";
                             }
@@ -1127,7 +1112,7 @@ namespace CommunicationWorkerRole
             }
 
             myResult += @"<div style='text-align:center;width:100%!important;height:50px;background:#008dbc;border:1px solid #DADADA;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;font-family:Lucida Sans Unicode;font-size:17px;'>"
-                   + @"<p style='text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>This email is service from Unifreight!</p>"
+                   + @"<p style='text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>This email is a service from Unifreight Cloud Generation!</p>"
                    + @"</div>";
 
             string lowerPart =
@@ -1261,16 +1246,10 @@ namespace CommunicationWorkerRole
                     myResult += @"<p style='width:100%!important;direction:" + textDirection + ";font-family:Lucida Sans Unicode;font-size:12px'>" + htmlbody + "</p>";
 
                     List<string> docIds = myCorrespondencesAttachments.Where(a => a.CorrespondenceId == item.EntityLineId && a.Tenant == item.Tenant).Select(d => d.DocumentFilingId).ToList();
-                    DocumentsFilingQuery docQuery = new DocumentsFilingQuery(tenant);
-
                     myResult += @"<nav>";
                     foreach (string id in docIds)
                     {
                         DocumentsFilingPM myDoc = DocumentsFilings.Where(a => a.Id == id).FirstOrDefault();
-                        if (myDoc == null)
-                        {
-                            myDoc = docQuery.GetSinglePM(id, tenant);
-                        }
                         string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
                         myResult += @"<a href=" + uri + "><span style=';font-family:Lucida Sans Unicode;font-size:12px;'>" + myDoc.FileName + "</span></a> |";
                     }
@@ -1355,7 +1334,7 @@ namespace CommunicationWorkerRole
         {
             try
             {
-                queueservice = new DbQueueService(queueName, 0); 
+                queueservice = new DbQueueService(queueName, 0);
             }
             catch (Exception ex)
             {

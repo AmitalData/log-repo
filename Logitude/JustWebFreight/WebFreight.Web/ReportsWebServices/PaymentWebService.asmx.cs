@@ -483,9 +483,12 @@ namespace WebFreight.Web.ReportsWebServices
         {
             BankAccountQueryService bankAccountRepository = new BankAccountQueryService(payment.Tenant);
             BankAccountPM bankAccount = bankAccountRepository.GetSingle(payment.BankAccountId, false, false);
-            paymentDataProvider.Branch = bankAccount.BranchNumber;
-            paymentDataProvider.Account = bankAccount.AccountNumber;
-            paymentDataProvider.Bank = GetBankName(bankAccount.BankId, bankAccount.Tenant);
+            if (bankAccount != null)
+            {
+                paymentDataProvider.Branch = bankAccount.BranchNumber;
+                paymentDataProvider.Account = bankAccount.AccountNumber;
+                paymentDataProvider.Bank = GetBankName(bankAccount.BankId, bankAccount.Tenant);
+            }
             return paymentDataProvider;
 
         }

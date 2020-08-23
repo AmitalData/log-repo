@@ -65,9 +65,19 @@ export class TaxDeductionReportMenuButtonsHandler {
                             }
 
                         case "DNPD":
+                               {
+                                if (this.EntityPM.StatusTypeCode != "3") {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsDisabled = false;
+                                }
+
+                                break;
+                              }
                         case "TXFL":
                             {
-                                if (this.EntityPM.StatusTypeCode != "3") {
+                                if (this.EntityPM.StatusTypeCode != "3" || this.EntityPM.ByMonth) {
                                     button.IsDisabled = true;
                                 }
                                 else {
