@@ -294,7 +294,19 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             this.CheckIfThereIsDraftReconcile();
         }
     }
+   getScreenHeight() {
+        if (self.innerHeight) {
+            return self.innerHeight;
+        }
 
+        if (document.documentElement && document.documentElement.clientHeight) {
+            return document.documentElement.clientHeight;
+        }
+
+        if (document.body) {
+            return document.body.clientHeight;
+        }
+    }
     SetUIProperty() {
         if (this.GLAccountPM.IsMultiCurrency) {
             this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
