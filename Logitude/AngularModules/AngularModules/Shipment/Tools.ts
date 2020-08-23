@@ -1966,7 +1966,7 @@ export class ShipmentTool {
 
         var myPricigs: CalculatedPricingItem[] = [];
         if (!AppTool.IsNullOrZero(weight)) {
-            var maxLineNumber: number = ArrayTool.Max(entityPM.ShipmentStoragePricings, "LineNumber")
+            //var maxLineNumber: number = ArrayTool.Max(entityPM.ShipmentStoragePricings, "LineNumber")
 
             entityPM.ShipmentStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
 
@@ -2006,6 +2006,10 @@ export class ShipmentTool {
 
                 else {
                     newItem.Days = item.StepTo - item.StepFrom;
+
+                    if (newItem.Days > days) {
+                        newItem.Days = days;
+                    }
                 }
 
                 newItem.Amount = AppTool.Round((item.SalePrice * weight * newItem.Days), 2);
