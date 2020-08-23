@@ -1087,7 +1087,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     if (entityPM.AutomaticallyCloseDate != null)
                     {
                         DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-                        if (entityPM.AutomaticallyCloseDate.Value.Date == todayDateTime)
+                        if (entityPM.AutomaticallyCloseDate.Value.Date <= todayDateTime)
                         {
                             this.CloseEntityAutomatically();
                         }
@@ -1099,7 +1099,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     if (entityPM.AutomaticallyCloseDate != null)
                     {
                         DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-                        if (entityPM.AutomaticallyCloseDate.Value.Date == todayDateTime)
+                        if (entityPM.AutomaticallyCloseDate.Value.Date <= todayDateTime)
                         {
                             this.CloseEntityAutomatically();
                         }
