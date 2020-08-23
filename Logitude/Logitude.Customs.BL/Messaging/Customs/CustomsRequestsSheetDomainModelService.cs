@@ -263,7 +263,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                         // eitan: בקשת מכס אחת פר ישות בו זמנית -לא תתור במקביל 
                         // itzik : CourierMaster מלבד בישות 
                         // בשלב ראשון ב CUSTOMS יעבור ל PROD בהמשך 
-                        "Customs.CourierMaster" != ObjectTableRepository.GetObjectTableByName(requestParams.LoggingObjectTableId)
+                        "Customs.CourierMaster" != ObjectTableRepository.GetSingleObjectTableById(requestParams.LoggingObjectTableId, requestParams.Tenant).Name 
                         )
                     {
                         if (!String.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
