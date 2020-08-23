@@ -401,6 +401,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     BuildSecondListHeader() {
         var test: MultiSelectedValue[] = [];
 
+
         if (this.ObjectFieldName) {
             this.SecondListHeaderItems.push(this.ObjectFieldName.replace('[', '').replace(']', ''));
         }
