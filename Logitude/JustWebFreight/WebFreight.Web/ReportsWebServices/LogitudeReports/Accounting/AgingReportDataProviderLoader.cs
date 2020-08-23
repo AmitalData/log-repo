@@ -44,27 +44,55 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private AccountingAgingDataProvider BuildDataProvider(List<PeriodMExtended> resultedPeriods)
         {
+            List<PeriodMExtended> filteredPeriods = FilterPeriods(resultedPeriods);
+
             AccountingAgingDataProvider dataProvider = new AccountingAgingDataProvider();
 
             dataProvider.Month = GetFilterValue<DateTime>("AgingForDate");
             dataProvider.PrintedByUser = GetLoggedContactName();
             dataProvider.CustomerFilterValue = GetCustomerFilterTitle();
-            dataProvider.AgingPeriods = BuildAgingPeriods(resultedPeriods);
+            dataProvider.AgingPeriods = BuildAgingPeriods(filteredPeriods);
 
             SetLocalCurrency(dataProvider);
-            AddTotalBalancePeriods(resultedPeriods, dataProvider);
-            AddTotalLocalBalancePeriods(resultedPeriods, dataProvider);
+            AddTotalBalancePeriods(filteredPeriods, dataProvider);
+            AddTotalLocalBalancePeriods(filteredPeriods, dataProvider);
             CalculateReportLocalBalanceTotal(dataProvider);
 
-            FilterCustomerPeriodsOnBalance(dataProvider);
+            //FilterCustomerPeriodsOnBalance(dataProvider);
             FixSplitAccountData(dataProvider);
 
-            SetOrderForPeriods(resultedPeriods, dataProvider);
-            SetPeriodsTotal(resultedPeriods, dataProvider);
+            SetOrderForPeriods(filteredPeriods, dataProvider);
+            SetPeriodsTotal(filteredPeriods, dataProvider);
 
             ResharpPeriodsName(dataProvider);
 
             return dataProvider;
+        }
+
+        private List<PeriodMExtended> FilterPeriods(List<PeriodMExtended> resultedPeriods)
+        {
+            string groupBy = GetFilterValue<string>("GroupByDate"); // filter_Due, filter_Accounting
+            string filterBy = GetFilterValue<string>("BalanceFilter"); // Debtors, DebtAbove, filter_All
+            decimal balanceFilterAmount = Convert.ToDecimal(GetFilterValue<decimal>("BalanceFilterValue"));
+
+            if (groupBy == "filter_Due")
+            {
+                if(filterBy == "Debtors")
+                    resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue > 0).ToList();
+                else if (filterBy == "DebtAbove")
+                    resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue >= balanceFilterAmount).ToList();
+
+            }
+            else
+            {
+                if (filterBy == "Debtors")
+                    resultedPeriods = resultedPeriods.Where(d => d.BalanceInLocalCurrency > 0).ToList();
+                else if (filterBy == "DebtAbove")
+                    resultedPeriods = resultedPeriods.Where(d => d.BalanceInLocalCurrency >= balanceFilterAmount).ToList();
+
+            }
+
+            return resultedPeriods;
         }
 
         private void FixSplitAccountData(AccountingAgingDataProvider totalData)
@@ -85,20 +113,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         private void FilterCustomerPeriodsOnBalance(AccountingAgingDataProvider totalData)
         {
-            if (GetFilterValue<string>("GroupByDate") != "filter_Due")
-            {
-                List<AgingPeriod> totalBalances = GetTotalBalancePeriods(totalData, showLocals);
+            //if (GetFilterValue<string>("GroupByDate") != "filter_Due")
+            //{
+            //    List<AgingPeriod> totalBalances = GetTotalBalancePeriods(totalData, showLocals);
 
-                var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
+            //    var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
 
-                foreach (var totalBalance in totalBalances)
-                {
-                    if (GetFilterValue<string>("BalanceFilter") == "Debtors" && !(totalBalance.Total > 0))
-                        RemoveCustomerPeriods(totalData, totalBalance);
-                    else if (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && !(totalBalance.Total >= Convert.ToDecimal(balanceFilterAmount)))
-                        RemoveCustomerPeriods(totalData, totalBalance);
-                }
-            }
+            //    foreach (var totalBalance in totalBalances)
+            //    {
+            //        if (GetFilterValue<string>("BalanceFilter") == "Debtors" && !(totalBalance.Total > 0))
+            //            RemoveCustomerPeriods(totalData, totalBalance);
+            //        else if (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && !(totalBalance.Total >= Convert.ToDecimal(balanceFilterAmount)))
+            //            RemoveCustomerPeriods(totalData, totalBalance);
+            //    }
+            //}
 
         }
 
