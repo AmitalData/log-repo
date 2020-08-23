@@ -603,7 +603,7 @@
                                     </td>
                                     <td style="width: 160px;">
                                         <LogTextBox [ObjectFieldName]="'BuyerName'" [ObjectTableName]="ObjectTableName" [Text]="BuyerName"
-                                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                                    [HideColumns]="true" [DataContext]="DataContext"  [InputType]="'ntext'"></LogTextBox>
                                     </td>
                                     <td>
                                         <div style="width:20px"></div>
@@ -633,7 +633,7 @@
 
                                     <td style="width: 160px;">
                                         <LogTextBox [ObjectFieldName]="'BuyerAddress'" [ObjectTableName]="ObjectTableName" [Text]="BuyerAddress"
-                                                    [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                    [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true"  [InputType]="'ntext'"></LogTextBox>
 
                                     </td>
                                     <td>
@@ -649,7 +649,7 @@
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [HideColumns]="true"
-                                                [LookUpTableName]="'Customs.CustomerRoleType'">
+                                                [LookUpTableName]="'Customs.CustomerRoleType'" >
                                         </LogLov>
                                     </td>
 
@@ -683,12 +683,12 @@
                         <div style="width:30px"></div>
                     </td>
                     <td rowspan="2">
-                        <span *ngIf="allowExport" class="LeftTop buttonelipsis"
+                        <!--<span *ngIf="allowExport" class="LeftTop buttonelipsis"
                               style="background-color: white; color: black; border: 2px solid #e7e7e7; width: 30px; text-align: center; font-weight: bold;cursor: pointer;"
                               (click)="OpenExporterInvoiceWindow()">...E</span>
 
                         <br />
-                        <br />
+                        <br />-->
                         <table>
 
                             <tr>
