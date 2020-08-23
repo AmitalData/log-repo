@@ -1319,7 +1319,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         this._exportDocumentService.GetIsRunStimulDocumentViaWorkerRole().subscribe((res: any) => {
 
             var serviceResponse: ServiceResponse = res;
-            if (!serviceResponse.HasError) this.IsBuildDocumentViaWorkerRole = serviceResponse.Result;
+            if (!serviceResponse.HasError) this.IsBuildDocumentViaWorkerRole = true;
 
             this._entityResourceService.getEntityResourceByTableName("DocsOut").subscribe((response: any) => {
 

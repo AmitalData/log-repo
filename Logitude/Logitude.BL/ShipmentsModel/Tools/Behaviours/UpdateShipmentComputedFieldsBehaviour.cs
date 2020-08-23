@@ -49,8 +49,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         {
             GetEntity();
             MapEntity();
-            SaveEntity();
         }
+
+
+      
 
         private void GetEntity()
         {
@@ -102,7 +104,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
         }
 
-    private void SaveEntity()
+    public void Save()
         {
             if (isNewEntity)
             {
