@@ -837,7 +837,11 @@ using Simplog.Data.ShipmentsModel;
                      
 
 					temp.Master = MyEntity.Master;
-                     
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ShipmentNumber))
+					{
+							throw new ApplicationException("ShipmentNumber Can't be update"); 
+					}  
 
 					temp.ShipmentNumber = MyEntity.ShipmentNumber;
 					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);

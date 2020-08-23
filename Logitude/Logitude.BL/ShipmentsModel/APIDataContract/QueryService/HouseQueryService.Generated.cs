@@ -795,7 +795,11 @@ using Simplog.Data.ShipmentsModel;
 					}  
 
 					temp.ChargeableWeight = MyEntity.ChargeableWeight;
-                     
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ShipmentNumber))
+					{
+							throw new ApplicationException("ShipmentNumber Can't be update"); 
+					}  
 
 					temp.ShipmentNumber = MyEntity.ShipmentNumber;
 					DirectionQueryService DirectionDirectionService = new DirectionQueryService(Tenant);

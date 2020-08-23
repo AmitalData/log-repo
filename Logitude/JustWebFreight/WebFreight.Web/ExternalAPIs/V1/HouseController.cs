@@ -536,18 +536,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-                    HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
-                    ShipmentQuery query = new ShipmentQuery(authToken.Tenant);
-                    ShipmentPM entityPM = query.GetSinglePMByShipmentNumber(entity.ShipmentNumber, authToken.Tenant);
-
+                    HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);                    
                     ShipmentPM HousePM = mappingService.HouseDataMappingAndValidatin(entity, authToken.Tenant, "", true);
-                    ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
-
+                    ShipmentService service = new ShipmentService(MyContext, HousePM, SecurityUtility.GetAuthenticatedUser());
                     service.Update(true);
 
-                    var result = mappingService.GetHouseById(entityPM.Id, authToken.Tenant);
-                    APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "House API", authToken.Tenant);
+                    var result = mappingService.GetHouseById(HousePM.Id, authToken.Tenant);
+                    APIHelper.AddCommunicationLog("D", entity, result, "Shipment", HousePM.Id, "House API", authToken.Tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
 

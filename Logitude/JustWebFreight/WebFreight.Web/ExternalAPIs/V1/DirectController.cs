@@ -598,18 +598,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-                    DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
-                    ShipmentQuery query = new ShipmentQuery(authToken.Tenant);
-                    ShipmentPM entityPM = query.GetSinglePMByShipmentNumber(entity.ShipmentNumber, authToken.Tenant);
-                    
-                    ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, authToken.Tenant, "", true);
-                    ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
 
+                    IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                    DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);                    
+                    ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, authToken.Tenant, "", true);
+                    ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
                     service.Update(true);
 
-                    var result = mappingService.GetDirectById(entityPM.Id, authToken.Tenant);
-                    APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Direct API", authToken.Tenant);
+                    var result = mappingService.GetDirectById(directPM.Id, authToken.Tenant);
+                    APIHelper.AddCommunicationLog("D", entity, result, "Shipment", directPM.Id, "Direct API", authToken.Tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
 

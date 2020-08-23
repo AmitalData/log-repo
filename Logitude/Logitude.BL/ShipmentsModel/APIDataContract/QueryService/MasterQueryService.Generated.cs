@@ -1046,7 +1046,11 @@ using Simplog.Data.ShipmentsModel;
 					}
 
 								 
-                     
+                    
+					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ShipmentNumber))
+					{
+							throw new ApplicationException("ShipmentNumber Can't be update"); 
+					}  
 
 					temp.ShipmentNumber = MyEntity.ShipmentNumber;					   
 					return temp;

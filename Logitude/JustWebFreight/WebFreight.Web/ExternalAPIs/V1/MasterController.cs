@@ -61,7 +61,28 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-       
+
+        public HttpResponseMessage GetSingleMasterByNumber(string number)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                MasterQueryService Service = new MasterQueryService(tenant);
+                ServiceResponse response = new ServiceResponse();
+                var Result = Service.GetMasterByShipmentNumber(number, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, Result);
+            }
+
+            catch (Exception ex)
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
         public HttpResponseMessage Post(Master entity)
         {
             if (ModelState.IsValid)
@@ -681,19 +702,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
-                    ShipmentQuery query = new ShipmentQuery(authToken.Tenant);
-                    //ShipmentPM entityPM = query.GetSinglePMByShipmentNumber(entity.ShipmentNumber, authToken.Tenant);
-
-                    //ShipmentPM MasterPM = mappingService.MasterDataMappingAndValidatin(entity, authToken.Tenant, "", true);
-                    //ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
-
-                    //service.Update(true);
-
-                    ShipmentPM entityPM = new ShipmentPM(); // to be deleted
-                    var result = mappingService.GetMasterById(entityPM.Id, authToken.Tenant);
-                    APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "DireMasterct API", authToken.Tenant);
+                    ShipmentPM MasterPM = mappingService.MasterDataMappingAndValidatin(entity, authToken.Tenant, "", true);
+                    ShipmentService service = new ShipmentService(MyContext, MasterPM, SecurityUtility.GetAuthenticatedUser());
+                    service.Update(true);
+                    
+                    var result = mappingService.GetMasterById(MasterPM.Id, authToken.Tenant);
+                    APIHelper.AddCommunicationLog("D", entity, result, "Shipment", MasterPM.Id, "Master API", authToken.Tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
 
