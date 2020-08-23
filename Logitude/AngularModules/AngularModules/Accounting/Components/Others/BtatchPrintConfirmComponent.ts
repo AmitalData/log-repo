@@ -18,13 +18,13 @@ import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 })
 
 export class BtatchPrintConfirmComponent implements OnInit    {
-    private CurrentSession = SessionLocator.SelectedSession;
-    private DownloadorViewText= TextCodeTranslator.Translate("InterestReport.O.DownloadorView");
-    private DownloadText=TextCodeTranslator.Translate("InterestReport.O.Download");
-    private ViewText= TextCodeTranslator.Translate("InterestReport.O.View");
-    private isRTL:boolean;
-    private URL:any;
-    private newWindow:any;
+    public CurrentSession = SessionLocator.SelectedSession;
+    public DownloadorViewText= TextCodeTranslator.Translate("InterestReport.O.DownloadorView");
+    public DownloadText=TextCodeTranslator.Translate("InterestReport.O.Download");
+    public ViewText= TextCodeTranslator.Translate("InterestReport.O.View");
+    public isRTL:boolean;
+    public URL:any;
+    public newWindow:any;
     ngOnInit() {
        
     }
