@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="APInvoice"
   DefaultText="&quot;A/P Invoice Total VAT&quot;"
-  Code="&quot;daf5&quot;"
+  Code="&quot;79d5&quot;"
   Name="&quot;APInvoiceTotalVAT&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
@@ -1336,7 +1336,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;VatType&quot;"
         FieldName="&quot;VatTypeId&quot;"
@@ -1350,7 +1351,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;VatPercent&quot;"
         FieldName="&quot;VatPercent&quot;"
@@ -1358,13 +1360,14 @@
         IsManualMapping="false"
         IsMulti="false"
         FieldsDataType="&quot;Double&quot;"
-        IsNullable="false"
+        IsNullable="true"
         IsSpecialField="false"
         IsCustomType="false"
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;InvoiceCurrencyVATAmount&quot;"
         FieldName="&quot;InvoiceCurrencyVATAmount&quot;"
@@ -1378,7 +1381,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />

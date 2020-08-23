@@ -88684,7 +88684,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Direction&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -89661,11 +89661,11 @@
         IsNullable="false"
         IsSpecialField="false"
         IsCustomType="false"
-        IsAttribute="false"
+        IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;CreatedByUser&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -91669,6 +91669,21 @@
         IsSpecialField="false"
         IsCustomType="true"
         IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;ShipmentNumber&quot;"
+        FieldName="&quot;ShipmentNumber&quot;"
+        IsKey="true"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"

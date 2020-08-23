@@ -59,6 +59,25 @@ using Simplog.Data.ShipmentsModel;
             }
         }
 		
+		public Master GetMasterByShipmentNumber(string ShipmentNumber,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByShipmentNumber(ShipmentNumber,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Shipment with ShipmentNumber " + ShipmentNumber + " doesn't exist");
+
+				return MasterDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public Master MasterDataMapping(ShipmentPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -351,7 +370,8 @@ using Simplog.Data.ShipmentsModel;
 					 temp.MainCarriageLegs = MainCarriageLegService25.MainCarriageLegDataMapping(MyEntityPM.MainCarriageLegs,Tenant);
 				}
 
-							 					
+							 
+				   temp.ShipmentNumber = MyEntityPM.ShipmentNumber;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -370,10 +390,14 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
+					
+					if (!string.IsNullOrEmpty(MyEntity.ShipmentNumber))
+					{
+						temp = query.GetSinglePMByShipmentNumber(MyEntity.ShipmentNumber, Tenant);
+					} 					   
 					if(temp == null)
 					{   
-					    throw new ApplicationException("Shipment with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("Shipment with ShipmentNumber " + MyEntity.ShipmentNumber + " doesn't exist");
 					} 
 					
 					if(IsUpdate == true)
@@ -1021,7 +1045,10 @@ using Simplog.Data.ShipmentsModel;
 						
 					}
 
-								 					   
+								 
+                     
+
+					temp.ShipmentNumber = MyEntity.ShipmentNumber;					   
 					return temp;
 		    }
             catch (Exception ex)
