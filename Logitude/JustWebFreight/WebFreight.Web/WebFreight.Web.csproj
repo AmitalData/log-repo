@@ -4601,6 +4601,7 @@
     <Content Include="WebPages\DownLoadImage.aspx" />
     <Content Include="WebPages\DownloadingPage.aspx" />
     <Content Include="WebPages\DownloadTemplateDocumentPage.aspx" />
+    <Content Include="WebPages\PDFViewer.aspx" />
     <Content Include="WebPages\ReportPdfDownLoad.aspx" />
     <Content Include="WebPages\xml2HTML.xsl" />
     <Content Include="WebPages\DataBackupDownloadPage.aspx" />
@@ -6339,6 +6340,13 @@
     </Compile>
     <Compile Include="WebPages\HowToDownloadPage.aspx.designer.cs">
       <DependentUpon>HowToDownloadPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\PDFViewer.aspx.cs">
+      <DependentUpon>PDFViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\PDFViewer.aspx.designer.cs">
+      <DependentUpon>PDFViewer.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebPages\MergeAllPage.aspx.cs">
       <DependentUpon>MergeAllPage.aspx</DependentUpon>
