@@ -155,7 +155,8 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             this.LogGridColumnsId = "LogGridColumns_" + this.CurrentSession.LogitudeGridHelper.GetLogGridColumnsIndexId();
             this.ColumnId = "ColumnId_" + this.CurrentSession.LogitudeGridHelper.GetLogGridColumnsIndexId();
         }
-        //this.controller = new VirtualRowController();
+        //this.dataSource.pageSize = this.viewportSize * 2;
+
         this.controllerForCount = new VirtualRowControllerV2(new VirtualRowMetaData());
 
         this.canvasHeight = { height: '800px' };
@@ -163,7 +164,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         this.MouseUpSub = this.CurrentSession.MouseUpEvent.subscribe((res) => {
             this.OnMyMouseUp(res);
         });
-       
+
 
     }
     onRowMouseOut(id, rowIndex, row) {
@@ -526,9 +527,13 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             this.BackFromEditSub = this.BackFromEdit.subscribe((res) => {
                 //alert("Oh Yeah !!" + res.rowIndex);
 
-                if (this.rows.filter(a => a.rowIndex == res.rowIndex).length > 0) {
+                if (this.controller.cachedData.filter(a => a.rowIndex == res.rowIndex).length > 0) {
                     //this.rows.filter(a => a.rowIndex == res.rowIndex)[0].rowData = res.Data;
-                    this.controller.cachedData[res.rowIndex] = res.Data;
+                    //this.controller.cachedData[res.rowIndex].rowData = res.Data;
+                    var myRow = this.controller.cachedData[res.rowIndex];
+                    myRow.rowData = res.Data;
+                    //this.cd.detectChanges();
+                    this.controller.UpdateRecord(myRow);
                     //**this.updateDisplayList();
                 }
             });
@@ -537,11 +542,11 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                     this.SelectedRows.Collection = this.SelectedRows.Collection.filter(a => a.rowIndex != rowIndex);
                     this.SelectedRows.Changed.emit(false);
                     //this.SelectedRows.Remove(this.rows.filter(a => a.rowIndex == rowIndex)[0]);
-                    this.rows.filter(a => a.rowIndex == rowIndex)[0].rowData.IsSelected = false;
-                    this.RowUnselected.emit(this.rows.filter(a => a.rowIndex == rowIndex)[0].rowData);
-                    if (this.cd) {
-                        this.cd.detectChanges();
-                    }
+                    //this.rows.filter(a => a.rowIndex == rowIndex)[0].rowData.IsSelected = false;
+                    //this.RowUnselected.emit(this.rows.filter(a => a.rowIndex == rowIndex)[0].rowData);
+                    //if (this.cd) {
+                      //  this.cd.detectChanges();
+                    //}
                 }
                 else {
                     //this.SelectedRows.push(item);
@@ -1180,6 +1185,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         }
         var vscroll = elem.scrollTop;
         var hscroll = elem.scrollLeft;
+        this.dataSource.pageSize = this.viewportSize * 2;
         this.controllerForCount.setDataSource(this.dataSource);
         if (this.autoLoad == true) {
             //console.log("autoLoad");
@@ -1281,19 +1287,19 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
     }
 
     myReloadData() {
-        var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
-        if (elem) {
-            elem.scrollTop = 0;
-        }
-        this.virtualRowMetaData.rowsCount = this.rowCount;
-        this.virtualRowMetaData.Filters = this.Filters;
-        this.virtualRowMetaData.searchFields = this.searchFields;
-        this.virtualRowMetaData.sortingCol = AppTool.IsNullOrEmpty(this.dataSource.sortingCol) ? this.sortingCol : this.dataSource.sortingCol
-        this.virtualRowMetaData.sortingDir = AppTool.IsNullOrEmpty(this.dataSource.sortingDir) ? this.sortingDir : this.dataSource.sortingDir
-        this.virtualRowMetaData.IsSpotLight = this.IsSpotLight;
-        this.virtualRowMetaData.SpotlightDataTemplate = this.SpotlightDataTemplate;
-        this.virtualRowMetaData.DetailsIcon = "./Images/SpotLightPlusIcon.png";
-        this.controller.ReloadDataSource(this.rowCount);
+        //var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
+        //if (elem) {
+        //    elem.scrollTop = 0;
+        //}
+        //this.virtualRowMetaData.rowsCount = this.rowCount;
+        //this.virtualRowMetaData.Filters = this.Filters;
+        //this.virtualRowMetaData.searchFields = this.searchFields;
+        //this.virtualRowMetaData.sortingCol = AppTool.IsNullOrEmpty(this.dataSource.sortingCol) ? this.sortingCol : this.dataSource.sortingCol
+        //this.virtualRowMetaData.sortingDir = AppTool.IsNullOrEmpty(this.dataSource.sortingDir) ? this.sortingDir : this.dataSource.sortingDir
+        //this.virtualRowMetaData.IsSpotLight = this.IsSpotLight;
+        //this.virtualRowMetaData.SpotlightDataTemplate = this.SpotlightDataTemplate;
+        //this.virtualRowMetaData.DetailsIcon = "./Images/SpotLightPlusIcon.png";
+        //this.controller.ReloadDataSource(this.rowCount);
 
 
         ////this.controller.ClearCache();
@@ -1324,7 +1330,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                 this.IsSpotLight = true;
                 this.SpotlightDataTemplate = query.SpotlightDataTemplate;
                 if (this.cd) {
-                    this.cd.detectChanges();
+                    //this.cd.detectChanges();
 
                 }
             }
@@ -1336,16 +1342,9 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         }
         this.rowsBuffer = [];
 
-        //this.controller.requestedRowCount.subscribe((res) => {
-        //    //////console.log(res);
-        //    this.rowCount = res;
-        //});
-        //elem[0].addEventListener('scroll', this.onScroll);
+
         var logGrid = document.getElementById(this.LogGridId);
         if (this.ViewHeight == null || this.ViewWidth == null || (this.ViewHeight <= 0 && this.ViewWidth <= 0) || this.ViewHeight < logGrid.clientHeight) {
-            //console.log(this.LogGridId);
-            //var logGrid = document.getElementById(this.LogGridId);
-            //var viewHeight = logGrid.clientHeight;
             this.ViewHeight = logGrid.clientHeight;
             this.ViewWidth = logGrid.clientWidth;
             this.headerStyle = {
@@ -1354,50 +1353,19 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             };
             this.canvasHeight = {
                 height: this.rowCount * this.rowHeight + 'px',
-                //'width': this.TotalWidth + 'px',
-                //'min-width': '100%'//(this.ViewWidth) + 'px'
             };
         }
 
-        //this.headerStyle.width = (this.ViewWidth - 2) + 'px';
-        //this.headerStyle[min-width] = (this.ViewWidth - 2) + 'px';
 
         this.rowStyle.minWidth = this.ViewWidth + 'px';
-        //this.rowStyle.width = this.ViewWidth + 'px';
 
-        ////console.log("headerStyle", this.headerStyle, "ViewWidth", this.ViewWidth, "rowStyle", this.rowStyle);
         this.viewportSize = Math.round(this.ViewHeight / this.rowHeight);
         this.tripleViewport = this.viewportSize * 3;
-        //////console.log("viewportSize", this.viewportSize);
-        //this.numberOfCells = 3 * this.viewportSize;
-        //this.rowsPerPage = 20;
+
         this.rowsPerPage = this.dataSource.pageSize;
-        //////console.log("rowsPerPage", this.rowsPerPage);//, "numberOfCells", this.numberOfCells);
-        //if (this.rows) {
 
-        //}
-        //////console.log("after canvasHeight: ", this.canvasHeight.height, this.rowCount);
-        //////console.log("numberOfTotalPages", this.numberOfTotalPages, "pixelsPerPage", this.pixelsPerPage);
-        //////console.log("after canvasHeight: ", this.canvasHeight.height, this.rows.length);
-        this.rows = [];
-        if (this.requestedRowsReadySub) {
-            this.requestedRowsReadySub.unsubscribe();
-        }
-        this.requestedRowsReadySub = this.controllerForCount.requestedRowsReady.subscribe((res) => {
-            //////console.log(res);
-
-            this.renderRows(res);
-            if (this.cd) {
-                this.cd.reattach();
-                this.cd.detectChanges();
-                //console.log("Inside detectChanges " + res.length + " this.columns " + this.columns.length);
-                //setTimeout(() => this.DoIt(), 10);
-            }
-            else {
-                this.DetectChangesTimer();
-            }
-
-        });
+        //this.rows = [];
+        
         var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
 
         if (elem) {
@@ -1419,27 +1387,25 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             this.virtualRowMetaData.SpotlightDataTemplate = this.SpotlightDataTemplate;
             this.virtualRowMetaData.DetailsIcon = "./Images/SpotLightPlusIcon.png";
             this.virtualRowMetaData.cd = this.cd;//
-            if (!this.controller) {
-                //this.controller.disconnect();
-                this.controller = new VirtualRowControllerV2(this.virtualRowMetaData);
+            if (this.controller) {
+                this.controller.disconnect(); 
             }
+            this.dataSource.pageSize = this.viewportSize * 3;
+            this.controller = new VirtualRowControllerV2(this.virtualRowMetaData); 
             this.controller.setDataSource(this.dataSource);
-            this.controller.ClearCache();
+            //this.controller.ClearCache();
             this.controller.ReloadDataSource(res);
-            
+
             if (this.cd) {
                 //this.cd.reattach();
-                //this.cd.detectChanges();
+                this.cd.detectChanges();
             }
             this.CountReady.emit(res);
-            //this.rows = new Array(this.rowCount)
             this.dataSource.rowCount = res;
             this.canvasHeight = {
                 height: this.rowCount * this.rowHeight + 'px',
-                //'width': this.TotalWidth + 'px',
-                //'min-width': '100%'//(this.ViewWidth) + 'px'
             };
-            //var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
+
             var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
 
             if (elem) {
@@ -1448,23 +1414,9 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             this.customHeight = this.rowCount * this.rowHeight;
             this.height = this.rowCount * this.rowHeight;
             this.numberOfTotalPages = this.rowCount / this.rowsPerPage;
-            if (this.rowCount > 0) {
-                //**this.updateDisplayList(false);
-            }
-            else {
-                if (this.cd) {
-                    //this.cd.reattach();
-                    //this.cd.detectChanges();
-                }
-            }
             if (this.MyScrollTop != 0) {
                 elem.scrollTop = this.MyScrollTop;
             }
-            //this.BackFromEditSub = this.CurrentSession.BackFromEdit.subscribe((res) => {
-            //    this.BackFromEditSub.unsubscribe();
-            //    this.BackFromEditSub = null; 
-            //    this.MyScrollTop = (res.rowIndex * this.rowHeight) - this.rowHeight;
-            //});
         });
         this.GetRowCount(reload);
     };
@@ -1724,7 +1676,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             this.SelectedSpotLightIndex = rowIndex.rowIndex;
         }
         this.SpotLightCLicked = true;
-       
+
         var ShowDetails = this.controller.cachedData[rowIndex.rowIndex].ShowDetails = !(this.controller.cachedData[rowIndex.rowIndex].ShowDetails);
         if (!ShowDetails) {
             this.controller.cachedData[rowIndex.rowIndex].DetailsIcon = "./Images/SpotLightPlusIcon.png";
@@ -1760,21 +1712,21 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
 
     scrolltimer = null;
     onScroll() {
-        
+
         var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
-        var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId); 
+        var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
         if (elem) {
-          if (this.HScrollPosition == -1 || elem.scrollLeft > this.HScrollPosition) {
-            this.HScrollPosition = elem.scrollLeft;
-          }
-          if (columns) { 
-            if (this.RTL == true) {
-              columns.style.right = -1 * (this.HScrollPosition - elem.scrollLeft) + "px";
+            if (this.HScrollPosition == -1 || elem.scrollLeft > this.HScrollPosition) {
+                this.HScrollPosition = elem.scrollLeft;
             }
-            else {
-              columns.style.left = -1 * elem.scrollLeft + "px";
+            if (columns) {
+                if (this.RTL == true) {
+                    columns.style.right = -1 * (this.HScrollPosition - elem.scrollLeft) + "px";
+                }
+                else {
+                    columns.style.left = -1 * elem.scrollLeft + "px";
+                }
             }
-          } 
         }
     };
     HScrollPosition: number = -1;
@@ -2071,9 +2023,10 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
 
     GetRowCount(reload: boolean = false) {
         var firstRow = Math.floor(this.scrollTop / this.rowHeight);
-        if (reload == true) {
-            this.controller.ClearCache();
-        }
+        //if (reload == true) {
+        //    this.controller.ClearCache();
+        //}
+
         this.controllerForCount.getRow(firstRow, AppTool.IsNullOrEmpty(this.dataSource.sortingCol) ? "" : this.dataSource.sortingCol, AppTool.IsNullOrEmpty(this.dataSource.sortingDir) ? "" : this.dataSource.sortingDir, true, this.searchFields, false, this.Filters, reload, false, this.viewportSize, this.SearchFieldChanged);
 
     }

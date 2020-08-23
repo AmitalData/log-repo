@@ -120,8 +120,10 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
     }
 
     disconnect(): void {
-        this.subscription.unsubscribe();
-        this.subscription = new Subscription();
+        //this.dataStream.complete();
+        //this.subscription.unsubscribe();
+        //this.fetchedPages = null;
+        //this.cachedData = null;
     }
 
     private _getPageForIndex(index: number): number {
@@ -134,7 +136,13 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
     timer = null;
     private _fetchPage(page: number) {
         if (this.fetchedPages.has(page)) {
-            return;
+            //if (!this.fetchedPages.has(page + 1)) {
+            //    this.getPageData(page + 1);
+            //    this.getPageData(page + 2);
+            //}
+            //else {
+                return;
+            //}
         }
         this.getPageData(page)
     }
@@ -142,6 +150,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
     private getPageData(page: number) {
         this.fetchedPages.add(page);
         //this.mycachedData = [];
+        this.pageSize = 17;
         this.dataSource.getRows(page * this.pageSize, this.pageSize, this.myMetaData.sortingCol, this.myMetaData.sortingDir, false, this.myMetaData.searchFields, this.myMetaData.Filters).then(res => {
             res.subscribe((viewResponse: ServiceResponse) => {
                 if (!viewResponse.HasError) {
@@ -162,6 +171,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
                     for (var i = 0; i < jsonlist.length; i++) {
                         //this.mycachedData[i + (page * this.pageSize)] = { rowData: jsonlist[i], rowIndex: (i + (page * this.pageSize)), DetailsIcon: "./Images/SpotLightPlusIcon.png" };//jsonlist[i];
                         var item = { rowData: jsonlist[i], rowIndex: (i + (page * this.pageSize)), DetailsIcon: "./Images/SpotLightPlusIcon.png" };
+                        item.rowData['$id'] = (i + (page * this.pageSize)).toString();
                         var myIndex = i + (page * this.pageSize);
                         this.mycachedData.splice(i + (page * this.pageSize), 1, item);
                             //...Array.from({ length: jsonlist.length })
@@ -210,8 +220,8 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
         this.dataSource.getRows(pageIndex * PSize, PSize, sortingCol, sortingDir, getCount, searchfields, Filters).then(res => {
             res.subscribe((viewResponse: ServiceResponse) => {
                 if (!viewResponse.HasError) {
-                    this.dataStream = new BehaviorSubject<(any | undefined)[]>(this.cachedData);
-                    this.dataStream.next(this.cachedData);
+                    //this.dataStream = new BehaviorSubject<(any | undefined)[]>(this.cachedData);
+                    //this.dataStream.next(this.cachedData);
                     this.requestedRowCount.emit(viewResponse.Count); 
                 }
             });
@@ -261,9 +271,22 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
         //this.rowsRequested = [];
     }
 
+    public UpdateRecord(Row) {
+        //this.dataStream.complete();
+        var mycachedData = this.cachedData;//.splice(Row.rowIndex, 1, Row);
+        mycachedData.splice(Row.rowIndex, 1, Row);
+        this.cachedData = [...mycachedData]
+        this.dataStream.next(this.cachedData);
+        if (this.myMetaData.cd) {
+            this.myMetaData.cd.detectChanges();
+        }
+        //this.dataStream.complete();
+        //this.dataStream = new BehaviorSubject<(any | undefined)[]>(this.cachedData);
+        //this.dataStream.next(this.cachedData);
+    }
     public ReloadDataSource(Count:number) {
-        this.fetchedPages = new Set<number>();
-        this.cachedData = Array.from<any>({ length: Count });
+        //this.fetchedPages = new Set<number>();
+        //this.cachedData = Array.from<any>({ length: Count });
         this._fetchPage(0);
     }
 
