@@ -54,7 +54,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         if (courierPendingReasonPM != null && !string.IsNullOrEmpty(courierPendingReasonPM.UnifreightStatusCode))
                         {
                             DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();
-                            declarationPendingPM = dirtyDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == myDeclarationPM.Id && r.CourierPendingReasonCode == courierPendingReason).FirstOrDefault();
+                            declarationPendingPM = dirtyDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == courierPendingReason).FirstOrDefault();
                             if (declarationPendingPM != null)
                             {
                                 RaiseEventAndStatus(null, courierPendingReasonPM.UnifreightStatusCode, myDeclarationPM, declarationPendingPM.PendingRemarks, true);

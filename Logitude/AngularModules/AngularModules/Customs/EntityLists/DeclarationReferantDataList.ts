@@ -58,6 +58,7 @@ export class DeclarationReferantDataList {
 	PaymentDate: Date;
 	ImporterCode: string;
 	CustomerCode: string;
+	ImporterFile: string;
 	
 }
  
