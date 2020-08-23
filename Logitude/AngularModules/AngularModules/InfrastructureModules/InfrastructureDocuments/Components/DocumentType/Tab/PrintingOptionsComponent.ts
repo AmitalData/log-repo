@@ -21,8 +21,17 @@ export class PrintingOptionsComponent extends BaseComponent implements OnInit {
     public ObjectFieldFilterItems: ApiQueryFilters;
     ObjectTableId: string;
     DataContext: any = this;
+
+    IsShowPopulateAutomaticDate : boolean = false;
+
+
     constructor(public entityArgs: EntityArgs) {
         super();
+
+        if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+            this.IsShowPopulateAutomaticDate = true;
+        }
+
     }
 
     ngOnInit() {
