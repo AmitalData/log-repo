@@ -124,7 +124,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             }
             PaymentChequeDP.PrintDate = paymentChequePM.PrintDate;
 
-
+           
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSinglePM(tenantPM.AddressId, tenant);
             NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
@@ -163,6 +163,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
                     PaymentChequeDP.BankAddress = bankAccount.BranchAddress == null ? "" : bankAccount.BranchAddress;
                     PaymentChequeDP.BankCode = bankAccount.BankCode;
                     PaymentChequeDP.BranchNumber = bankAccount.BranchNumber;
+                    PaymentChequeDP.BranchNumberPrint = bankAccount.PrintingBranchNumber;
                 }
                 else
                 {
