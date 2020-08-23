@@ -176,42 +176,42 @@ using Simplog.Data.ShipmentsModel;
 
 					temp.Weight = item.GrossWeight;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.Commodity))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.Commodity))
 					{
 							throw new ApplicationException("Commodity Can't be update"); 
 					}  
 
 					temp.CommodityNumber = item.Commodity;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.Reference1))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.Reference1))
 					{
 							throw new ApplicationException("Reference1 Can't be update"); 
 					}  
 
 					temp.Reference1 = item.Reference1;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.Reference2))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.Reference2))
 					{
 							throw new ApplicationException("Reference2 Can't be update"); 
 					}  
 
 					temp.Reference2 = item.Reference2;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.Reference3))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.Reference3))
 					{
 							throw new ApplicationException("Reference3 Can't be update"); 
 					}  
 
 					temp.Reference3 = item.Reference3;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.Reference4))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.Reference4))
 					{
 							throw new ApplicationException("Reference4 Can't be update"); 
 					}  
 
 					temp.Reference4 = item.Reference4;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.Description))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.Description))
 					{
 							throw new ApplicationException("Description Can't be update"); 
 					}  

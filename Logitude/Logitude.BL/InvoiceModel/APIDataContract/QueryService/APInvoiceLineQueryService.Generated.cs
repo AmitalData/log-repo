@@ -139,7 +139,7 @@ using Simplog.Data.InvoiceModel;
 					} 
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.APInvoiceId))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.APInvoiceId))
 					{
 							throw new ApplicationException("APInvoiceId Can't be update"); 
 					}  
@@ -221,7 +221,7 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.Notes))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.Notes))
 					{
 							throw new ApplicationException("Notes Can't be update"); 
 					}  
@@ -269,28 +269,28 @@ using Simplog.Data.InvoiceModel;
 
 					temp.ForiegnCurrencyAmount = item.ForiegnCurrencyAmount;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.DebitAccount))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.DebitAccount))
 					{
 							throw new ApplicationException("DebitAccount Can't be update"); 
 					}  
 
 					temp.DebitAccount = item.DebitAccount;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.Description))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.Description))
 					{
 							throw new ApplicationException("Description Can't be update"); 
 					}  
 
 					temp.Description = item.Description;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.LocalDescription))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.LocalDescription))
 					{
 							throw new ApplicationException("LocalDescription Can't be update"); 
 					}  
 
 					temp.LocalDescription = item.LocalDescription;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.ChargeTypeGLAccountId))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.ChargeTypeGLAccountId))
 					{
 							throw new ApplicationException("ChargeTypeGLAccountId Can't be update"); 
 					}  
@@ -317,7 +317,7 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.ExternalVATCard))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.ExternalVATCard))
 					{
 							throw new ApplicationException("ExternalVATCard Can't be update"); 
 					}  

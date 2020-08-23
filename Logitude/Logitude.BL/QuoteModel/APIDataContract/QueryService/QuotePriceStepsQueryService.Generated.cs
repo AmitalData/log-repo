@@ -118,7 +118,7 @@ using Simplog.Data.QuoteModel;
 
 					temp.SaleUnitPrice = item.SaleUnitPrice;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.MeasurementUnit))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.MeasurementUnit))
 					{
 							throw new ApplicationException("MeasurementUnit Can't be update"); 
 					}  

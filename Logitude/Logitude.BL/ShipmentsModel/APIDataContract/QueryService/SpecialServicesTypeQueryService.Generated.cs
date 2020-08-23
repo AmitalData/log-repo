@@ -151,7 +151,7 @@ using Simplog.Data.ShipmentsModel;
 					{
 					   
 						 
-						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
+						if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Code))
 						{
 								throw new ApplicationException("Code Can't be update"); 
 						}  
@@ -159,7 +159,7 @@ using Simplog.Data.ShipmentsModel;
 						temp.Code = MyEntity.Code;
 					}
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Name))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Name))
 					{
 							throw new ApplicationException("Name Can't be update"); 
 					}  
@@ -169,7 +169,7 @@ using Simplog.Data.ShipmentsModel;
 					{
 					   
 						 
-						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.PartnerCode))
+						if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.PartnerCode))
 						{
 								throw new ApplicationException("PartnerCode Can't be update"); 
 						}  

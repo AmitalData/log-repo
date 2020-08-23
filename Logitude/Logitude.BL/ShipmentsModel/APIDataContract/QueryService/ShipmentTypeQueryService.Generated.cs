@@ -102,7 +102,7 @@ using Simplog.Data.ShipmentsModel;
 						//}
 					}
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Name))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Name))
 					{
 							throw new ApplicationException("Name Can't be update"); 
 					}  

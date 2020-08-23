@@ -229,7 +229,7 @@ using Simplog.Data.InvoiceModel;
 
 					temp.Tenant = MyEntity.Tenant;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.InternalNumber))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.InternalNumber))
 					{
 							throw new ApplicationException("InternalNumber Can't be update"); 
 					}  
@@ -256,14 +256,14 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.VATNumber))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.VATNumber))
 					{
 							throw new ApplicationException("VATNumber Can't be update"); 
 					}  
 
 					temp.VATNumber = MyEntity.VATNumber;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.InvoiceNumber))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.InvoiceNumber))
 					{
 							throw new ApplicationException("InvoiceNumber Can't be update"); 
 					}  
@@ -365,7 +365,7 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.InternalNotes))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.InternalNotes))
 					{
 							throw new ApplicationException("InternalNotes Can't be update"); 
 					}  
@@ -522,42 +522,42 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.HouseNumber))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.HouseNumber))
 					{
 							throw new ApplicationException("HouseNumber Can't be update"); 
 					}  
 
 					temp.HouseNumber = MyEntity.HouseNumber;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.MasterNumber))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.MasterNumber))
 					{
 							throw new ApplicationException("MasterNumber Can't be update"); 
 					}  
 
 					temp.MasterNumber = MyEntity.MasterNumber;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Description))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Description))
 					{
 							throw new ApplicationException("Description Can't be update"); 
 					}  
 
 					temp.Description = MyEntity.Description;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.AccountingExternalCode))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.AccountingExternalCode))
 					{
 							throw new ApplicationException("AccountingExternalCode Can't be update"); 
 					}  
 
 					temp.AccountingExternalCode = MyEntity.AccountingExternalCode;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.CreditAccount))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.CreditAccount))
 					{
 							throw new ApplicationException("CreditAccount Can't be update"); 
 					}  
 
 					temp.CreditAccount = MyEntity.CreditAccount;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.PaymentTermExternalId))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.PaymentTermExternalId))
 					{
 							throw new ApplicationException("PaymentTermExternalId Can't be update"); 
 					}  
@@ -611,21 +611,21 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(IsUpdate && MyEntity.IsExternalEntity != null)
+					if(IsUpdate && MyEntity.IsExternalEntity != temp.IsExternalEntity)
 					{
 							throw new ApplicationException("IsExternalEntity Can't be update"); 
 					}  
 
 					temp.IsExternalEntity = MyEntity.IsExternalEntity;
                     
-					if(IsUpdate && MyEntity.IsGeneralInvoice != null)
+					if(IsUpdate && MyEntity.IsGeneralInvoice != temp.IsGeneralInvoice)
 					{
 							throw new ApplicationException("IsGeneralInvoice Can't be update"); 
 					}  
 
 					temp.IsGeneralInvoice = MyEntity.IsGeneralInvoice;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ExternalAccountingEntityId))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.ExternalAccountingEntityId))
 					{
 							throw new ApplicationException("ExternalAccountingEntityId Can't be update"); 
 					}  
@@ -675,14 +675,14 @@ using Simplog.Data.InvoiceModel;
 
 					temp.InvoiceExpectedAmount = MyEntity.InvoiceExpectedAmount;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.EntityReference))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.EntityReference))
 					{
 							throw new ApplicationException("EntityReference Can't be update"); 
 					}  
 
 					temp.MainEntityReference = MyEntity.EntityReference;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.VendorGLAccount))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.VendorGLAccount))
 					{
 							throw new ApplicationException("VendorGLAccount Can't be update"); 
 					}  

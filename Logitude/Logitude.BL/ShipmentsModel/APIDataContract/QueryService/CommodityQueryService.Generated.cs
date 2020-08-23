@@ -102,7 +102,7 @@ using Simplog.Data.ShipmentsModel;
 						//}
 					}
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.DescriptionOfGoods))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.DescriptionOfGoods))
 					{
 							throw new ApplicationException("DescriptionOfGoods Can't be update"); 
 					}  
@@ -130,7 +130,7 @@ using Simplog.Data.ShipmentsModel;
 
 					temp.ChargeAmount = item.ChargeAmount;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.CommodityNumber))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.CommodityNumber))
 					{
 							throw new ApplicationException("CommodityNumber Can't be update"); 
 					}  

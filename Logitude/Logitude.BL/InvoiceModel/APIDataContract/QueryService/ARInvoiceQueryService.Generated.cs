@@ -271,7 +271,7 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.InvoiceNumber))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.InvoiceNumber))
 					{
 							throw new ApplicationException("InvoiceNumber Can't be update"); 
 					}  
@@ -292,28 +292,28 @@ using Simplog.Data.InvoiceModel;
 
 					temp.PrintDate = MyEntity.PrintDate;
                     
-					if(IsUpdate && MyEntity.IsPrinted != null)
+					if(IsUpdate && MyEntity.IsPrinted != temp.IsPrinted)
 					{
 							throw new ApplicationException("IsPrinted Can't be update"); 
 					}  
 
 					temp.IsPrinted = MyEntity.IsPrinted;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.MainEntityReference))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.MainEntityReference))
 					{
 							throw new ApplicationException("MainEntityReference Can't be update"); 
 					}  
 
 					temp.MainEntityReference = MyEntity.MainEntityReference;
                     
-					if(IsUpdate && MyEntity.IsConstituentInvoice != null)
+					if(IsUpdate && MyEntity.IsConstituentInvoice != temp.IsConstituentInvoice)
 					{
 							throw new ApplicationException("IsConstituentInvoice Can't be update"); 
 					}  
 
 					temp.IsConstituentInvoice = MyEntity.IsConstituentInvoice;
                     
-					if(IsUpdate && MyEntity.IsConsolidationInvoice != null)
+					if(IsUpdate && MyEntity.IsConsolidationInvoice != temp.IsConsolidationInvoice)
 					{
 							throw new ApplicationException("IsConsolidationInvoice Can't be update"); 
 					}  
@@ -347,7 +347,7 @@ using Simplog.Data.InvoiceModel;
 
 					temp.AmountInLocalCurrency = MyEntity.AmountInLocalCurrency;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.CancelledByARInvoice))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.CancelledByARInvoice))
 					{
 							throw new ApplicationException("CancelledByARInvoice Can't be update"); 
 					}  
@@ -374,7 +374,7 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.VATNumber))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.VATNumber))
 					{
 							throw new ApplicationException("VATNumber Can't be update"); 
 					}  
@@ -401,7 +401,7 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.PrintNotes))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.PrintNotes))
 					{
 							throw new ApplicationException("PrintNotes Can't be update"); 
 					}  
@@ -478,7 +478,7 @@ using Simplog.Data.InvoiceModel;
 
 					temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
                     
-					if(IsUpdate && MyEntity.IsDraft != null)
+					if(IsUpdate && MyEntity.IsDraft != temp.IsDraft)
 					{
 							throw new ApplicationException("IsDraft Can't be update"); 
 					}  
@@ -566,28 +566,28 @@ using Simplog.Data.InvoiceModel;
 
 					temp.Tenant = MyEntity.Tenant;
                     
-					if(IsUpdate && MyEntity.IsMultiCurrency != null)
+					if(IsUpdate && MyEntity.IsMultiCurrency != temp.IsMultiCurrency)
 					{
 							throw new ApplicationException("IsMultiCurrency Can't be update"); 
 					}  
 
 					temp.IsMultiCurrency = MyEntity.IsMultiCurrency;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.CreditARInvoice))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.CreditARInvoice))
 					{
 							throw new ApplicationException("CreditARInvoice Can't be update"); 
 					}  
 
 					temp.CreditARInvoice = MyEntity.CreditARInvoice;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ExternalAccountingEntityId))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.ExternalAccountingEntityId))
 					{
 							throw new ApplicationException("ExternalAccountingEntityId Can't be update"); 
 					}  
 
 					temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.BillToGLAccount))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.BillToGLAccount))
 					{
 							throw new ApplicationException("BillToGLAccount Can't be update"); 
 					}  

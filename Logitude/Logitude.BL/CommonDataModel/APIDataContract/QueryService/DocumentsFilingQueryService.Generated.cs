@@ -166,7 +166,7 @@ using Simplog.Data.CommonDataModel;
 					{
 					   
 						 
-						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
+						if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Code))
 						{
 								throw new ApplicationException("Code Can't be update"); 
 						}  
@@ -194,7 +194,7 @@ using Simplog.Data.CommonDataModel;
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.EntityNumber))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.EntityNumber))
 					{
 							throw new ApplicationException("EntityNumber Can't be update"); 
 					}  
@@ -241,42 +241,42 @@ using Simplog.Data.CommonDataModel;
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.BlobId))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.BlobId))
 					{
 							throw new ApplicationException("BlobId Can't be update"); 
 					}  
 
 					temp.DocumentId = MyEntity.BlobId;
                     
-					if(IsUpdate && MyEntity.IsDigitallySigned != null)
+					if(IsUpdate && MyEntity.IsDigitallySigned != temp.IsDigitallySigned)
 					{
 							throw new ApplicationException("IsDigitallySigned Can't be update"); 
 					}  
 
 					temp.IsDigitallySigned = MyEntity.IsDigitallySigned;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.SignersList))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.SignersList))
 					{
 							throw new ApplicationException("SignersList Can't be update"); 
 					}  
 
 					temp.SignersList = MyEntity.SignersList;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.BlobName))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.BlobName))
 					{
 							throw new ApplicationException("BlobName Can't be update"); 
 					}  
 
 					temp.FileName = MyEntity.BlobName;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Description))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Description))
 					{
 							throw new ApplicationException("Description Can't be update"); 
 					}  
 
 					temp.Description = MyEntity.Description;
                     
-					if(IsUpdate && MyEntity.IsSharedWithCustomer != null)
+					if(IsUpdate && MyEntity.IsSharedWithCustomer != temp.IsSharedWithCustomer)
 					{
 							throw new ApplicationException("IsSharedWithCustomer Can't be update"); 
 					}  

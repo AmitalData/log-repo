@@ -544,14 +544,14 @@ using Simplog.Data.QuoteModel;
 
 					temp.AcceptedDate = MyEntity.AcceptedDate;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.AgentReference1))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.AgentReference1))
 					{
 							throw new ApplicationException("AgentReference1 Can't be update"); 
 					}  
 
 					temp.AgentReference1 = MyEntity.AgentReference1;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.AgentReference2))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.AgentReference2))
 					{
 							throw new ApplicationException("AgentReference2 Can't be update"); 
 					}  
@@ -565,14 +565,14 @@ using Simplog.Data.QuoteModel;
 
 					temp.ChargeableWeight = MyEntity.ChargeableWeight;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ConsigneeReference1))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.ConsigneeReference1))
 					{
 							throw new ApplicationException("ConsigneeReference1 Can't be update"); 
 					}  
 
 					temp.ConsigneeReference1 = MyEntity.ConsigneeReference1;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ConsigneeReference2))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.ConsigneeReference2))
 					{
 							throw new ApplicationException("ConsigneeReference2 Can't be update"); 
 					}  
@@ -593,14 +593,14 @@ using Simplog.Data.QuoteModel;
 
 					temp.CostTotalAmountInSaleCurrency = MyEntity.CostTotalAmountInSaleCurrency;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.CustomerReference1))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.CustomerReference1))
 					{
 							throw new ApplicationException("CustomerReference1 Can't be update"); 
 					}  
 
 					temp.CustomerReference1 = MyEntity.CustomerReference1;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.CustomerReference2))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.CustomerReference2))
 					{
 							throw new ApplicationException("CustomerReference2 Can't be update"); 
 					}  
@@ -614,21 +614,21 @@ using Simplog.Data.QuoteModel;
 
 					temp.DeclinedDate = MyEntity.DeclinedDate;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.DeliveryLocation))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.DeliveryLocation))
 					{
 							throw new ApplicationException("DeliveryLocation Can't be update"); 
 					}  
 
 					temp.DeliveryLocation = MyEntity.DeliveryLocation;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.DepartureFrequency))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.DepartureFrequency))
 					{
 							throw new ApplicationException("DepartureFrequency Can't be update"); 
 					}  
 
 					temp.DepartureFrequency = MyEntity.DepartureFrequency;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.DescriptionOfGoods))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.DescriptionOfGoods))
 					{
 							throw new ApplicationException("DescriptionOfGoods Can't be update"); 
 					}  
@@ -670,14 +670,14 @@ using Simplog.Data.QuoteModel;
 
 					temp.GrossWeight = MyEntity.GrossWeight;
                     
-					if(IsUpdate && MyEntity.IncludeDelivery != null)
+					if(IsUpdate && MyEntity.IncludeDelivery != temp.IncludeDelivery)
 					{
 							throw new ApplicationException("IncludeDelivery Can't be update"); 
 					}  
 
 					temp.IncludeDelivery = MyEntity.IncludeDelivery;
                     
-					if(IsUpdate && MyEntity.IncludePickUp != null)
+					if(IsUpdate && MyEntity.IncludePickUp != temp.IncludePickUp)
 					{
 							throw new ApplicationException("IncludePickUp Can't be update"); 
 					}  
@@ -698,7 +698,7 @@ using Simplog.Data.QuoteModel;
 
 					temp.OpenDate = MyEntity.CreateDate;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ProductCode))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.ProductCode))
 					{
 							throw new ApplicationException("ProductCode Can't be update"); 
 					}  
@@ -712,7 +712,7 @@ using Simplog.Data.QuoteModel;
 
 					temp.SaleTotalAmountInSaleCurrency = MyEntity.SaleTotalAmountInSaleCurrency;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Notes))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Notes))
 					{
 							throw new ApplicationException("Notes Can't be update"); 
 					}  
@@ -726,7 +726,7 @@ using Simplog.Data.QuoteModel;
 
 					temp.UpdateDate = MyEntity.UpdateDate;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.QuoteNumber))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.QuoteNumber))
 					{
 							throw new ApplicationException("QuoteNumber Can't be update"); 
 					}  
@@ -740,21 +740,21 @@ using Simplog.Data.QuoteModel;
 
 					temp.SentDate = MyEntity.SentDate;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ShipperPickAddressId))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.ShipperPickAddressId))
 					{
 							throw new ApplicationException("ShipperPickAddressId Can't be update"); 
 					}  
 
 					temp.ShipperPickAddressId = MyEntity.ShipperPickAddressId;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ShipperReference1))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.ShipperReference1))
 					{
 							throw new ApplicationException("ShipperReference1 Can't be update"); 
 					}  
 
 					temp.ShipperReference1 = MyEntity.ShipperReference1;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ShipperReference2))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.ShipperReference2))
 					{
 							throw new ApplicationException("ShipperReference2 Can't be update"); 
 					}  
@@ -768,7 +768,7 @@ using Simplog.Data.QuoteModel;
 
 					temp.StageDueDate = MyEntity.StageDueDate;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Subject))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Subject))
 					{
 							throw new ApplicationException("Subject Can't be update"); 
 					}  
@@ -782,14 +782,14 @@ using Simplog.Data.QuoteModel;
 
 					temp.TEU = MyEntity.TEU;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.TotalContainers))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.TotalContainers))
 					{
 							throw new ApplicationException("TotalContainers Can't be update"); 
 					}  
 
 					temp.TotalContainers = MyEntity.TotalContainers;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.TransitTime))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.TransitTime))
 					{
 							throw new ApplicationException("TransitTime Can't be update"); 
 					}  
@@ -1623,14 +1623,14 @@ using Simplog.Data.QuoteModel;
 
 					temp.LastStageDate = MyEntity.StageDate;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.SameOrFixed))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.SameOrFixed))
 					{
 							throw new ApplicationException("SameOrFixed Can't be update"); 
 					}  
 
 					temp.SameOrFixed = MyEntity.SameOrFixed;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.PickupCity))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.PickupCity))
 					{
 							throw new ApplicationException("PickupCity Can't be update"); 
 					}  
@@ -1657,14 +1657,14 @@ using Simplog.Data.QuoteModel;
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.PickupZipCode))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.PickupZipCode))
 					{
 							throw new ApplicationException("PickupZipCode Can't be update"); 
 					}  
 
 					temp.PickupZipCode = MyEntity.PickupZipCode;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.DeliveryCity))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.DeliveryCity))
 					{
 							throw new ApplicationException("DeliveryCity Can't be update"); 
 					}  
@@ -1691,7 +1691,7 @@ using Simplog.Data.QuoteModel;
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.DeliveryZipCode))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.DeliveryZipCode))
 					{
 							throw new ApplicationException("DeliveryZipCode Can't be update"); 
 					}  

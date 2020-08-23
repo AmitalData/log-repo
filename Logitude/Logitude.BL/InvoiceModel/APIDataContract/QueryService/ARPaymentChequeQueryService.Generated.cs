@@ -125,7 +125,7 @@ using Simplog.Data.InvoiceModel;
 
 					temp.LineNumber = item.LineNumber;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.ChequeNumber))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.ChequeNumber))
 					{
 							throw new ApplicationException("ChequeNumber Can't be update"); 
 					}  
@@ -153,21 +153,21 @@ using Simplog.Data.InvoiceModel;
 
 					temp.ForeignAmount = item.ForeignAmount;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.BankBranch))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.BankBranch))
 					{
 							throw new ApplicationException("BankBranch Can't be update"); 
 					}  
 
 					temp.BankBranch = item.BankBranch;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.BankAccount))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.BankAccount))
 					{
 							throw new ApplicationException("BankAccount Can't be update"); 
 					}  
 
 					temp.BankAccount = item.BankAccount;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.Bank))
+					if(IsUpdate &&  !string.IsNullOrEmpty(item.Bank))
 					{
 							throw new ApplicationException("Bank Can't be update"); 
 					}  

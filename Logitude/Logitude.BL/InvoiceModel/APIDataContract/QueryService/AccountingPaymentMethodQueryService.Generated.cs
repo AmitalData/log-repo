@@ -118,7 +118,7 @@ using Simplog.Data.InvoiceModel;
 					{
 					   
 						 
-						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
+						if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Code))
 						{
 								throw new ApplicationException("Code Can't be update"); 
 						}  
@@ -126,7 +126,7 @@ using Simplog.Data.InvoiceModel;
 						temp.Code = MyEntity.Code;
 					}
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Name))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Name))
 					{
 							throw new ApplicationException("Name Can't be update"); 
 					}  

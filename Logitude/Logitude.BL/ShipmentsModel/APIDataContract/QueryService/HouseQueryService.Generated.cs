@@ -663,7 +663,7 @@ using Simplog.Data.ShipmentsModel;
 
 					temp.HAWBDate = MyEntity.HouseDate;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.DescriptionOfGoods))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.DescriptionOfGoods))
 					{
 							throw new ApplicationException("DescriptionOfGoods Can't be update"); 
 					}  
@@ -715,7 +715,7 @@ using Simplog.Data.ShipmentsModel;
 
 								 
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Commodity))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.Commodity))
 					{
 							throw new ApplicationException("Commodity Can't be update"); 
 					}  
@@ -796,7 +796,7 @@ using Simplog.Data.ShipmentsModel;
 
 					temp.ChargeableWeight = MyEntity.ChargeableWeight;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.ShipmentNumber))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.ShipmentNumber))
 					{
 							throw new ApplicationException("ShipmentNumber Can't be update"); 
 					}  
@@ -823,28 +823,28 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(IsUpdate && MyEntity.IsCancelled != null)
+					if(IsUpdate && MyEntity.IsCancelled != temp.IsCancelled)
 					{
 							throw new ApplicationException("IsCancelled Can't be update"); 
 					}  
 
 					temp.IsCancelled = MyEntity.IsCancelled;
                     
-					if(IsUpdate && MyEntity.IsOperationalClosed != null)
+					if(IsUpdate && MyEntity.IsOperationalClosed != temp.IsOperationalClosed)
 					{
 							throw new ApplicationException("IsOperationalClosed Can't be update"); 
 					}  
 
 					temp.IsOperationalClosed = MyEntity.IsOperationalClosed;
                     
-					if(IsUpdate && MyEntity.IsAccountingClosed != null)
+					if(IsUpdate && MyEntity.IsAccountingClosed != temp.IsAccountingClosed)
 					{
 							throw new ApplicationException("IsAccountingClosed Can't be update"); 
 					}  
 
 					temp.IsAccountingClosed = MyEntity.IsAccountingClosed;
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.MasterShipmentDataId))
+					if(IsUpdate &&  !string.IsNullOrEmpty(MyEntity.MasterShipmentDataId))
 					{
 							throw new ApplicationException("MasterShipmentDataId Can't be update"); 
 					}  
@@ -1001,7 +1001,7 @@ using Simplog.Data.ShipmentsModel;
 
 					temp.OrderChargeableWeight = MyEntity.OrderChargeableWeight;
                     
-					if(IsUpdate && MyEntity.OrderIsDangerouseGoods != null)
+					if(IsUpdate && MyEntity.OrderIsDangerouseGoods != temp.OrderIsDangerouseGoods)
 					{
 							throw new ApplicationException("OrderIsDangerouseGoods Can't be update"); 
 					}  
