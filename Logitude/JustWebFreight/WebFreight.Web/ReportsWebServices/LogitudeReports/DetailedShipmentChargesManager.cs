@@ -40,7 +40,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private IShipmentsContext myShipmentsContext;
         private CustomFieldResolver customFieldResolver;
         private AddressRepository addressRepository;
-
+        private ShipmentPackageRepository shipmentPackageRepository;
         public DetailedShipmentChargesManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -50,7 +50,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             myShipmentsContext = ShipmentsContext.GetContext(tenant);
             customFieldResolver = new CustomFieldResolver();
             addressRepository = new AddressRepository(myCommonContext);
-            
+            shipmentPackageRepository = new ShipmentPackageRepository(myShipmentsContext);
+
             MemoryStream memoryStream = new MemoryStream(xmlFilters);
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations myQueryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
@@ -279,6 +280,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                             myRecord.Direction = myShipment.DirectionName;
                             myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                            myRecord.House = myShipment.House;
+                            myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
 
                             ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                             myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -332,6 +335,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                         myRecord.Direction = myShipment.DirectionName;
                         myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                        myRecord.House = myShipment.House;
+                        myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
 
                         ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                         myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -408,6 +413,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                         myRecord.Direction = myShipment.DirectionName;
                         myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                        myRecord.House = myShipment.House;
+                        myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
 
                         ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                         myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -704,6 +711,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                     myRecord.CustomerRef2 = myShipment.CustomerReference2;
                                     myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                                    myRecord.House = myShipment.House;
+                                    myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
 
                                     ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                                     myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -787,6 +796,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                     myRecord.CustomerRef2 = myShipment.CustomerReference2;
                                     myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                                    myRecord.House = myShipment.House;
+                                    myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
 
                                     ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                                     myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -874,6 +885,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                 myRecord.CustomerRef2 = myShipment.CustomerReference2;
                                 myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                                myRecord.House = myShipment.House;
+                                myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
 
                                 ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                                 myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -1010,6 +1023,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                 myRecord.CustomerRef2 = myShipment.CustomerReference2;
                                 myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
+                                myRecord.House = myShipment.House;
+                                myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
 
                                 ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                                 myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
