@@ -72,9 +72,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         private void CheckSalesmanAbilities(AgingReportParam args)
         {
-            bool isSalsmanRestrictionsEnabled = SecurityUtility.CheckFeature("GLAccount", "SalesmanAging", args.Tenant);
-            if (isSalsmanRestrictionsEnabled && args.SalesmanId == null)
-                throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.NoSalesman", args.Tenant,LoggedContactResolver.GetLoggedContactShowLocal(args.Tenant)));
+            bool isSalsmanRestrictionsEnabled = SecurityUtility.CheckFeature("GLAccount", "SalesmanAging", tenant);
+            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+            UserQuery userQuery = new UserQuery(tenant);
+            UserPM loggedUser = userQuery.GetSinglePM(loggedContact.Id, tenant);
+
+            if (isSalsmanRestrictionsEnabled && loggedUser?.IsSalesman == true && args.SalesmanId == null)
+                throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.NoSalesman", args.Tenant,LoggedContactResolver.GetLoggedContactShowLocal(tenant)));
 
         }
         private void FixSplitAccountData(AccountingAgingDataProvider totalData)
