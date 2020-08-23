@@ -224,7 +224,7 @@ export class CustomsRequiredFieldListService {
 		}
 	}
 
-    getAllFromCache(filters: ApiQueryFilters = new ApiQueryFilters(true), isExport = false) {
+    getAllFromCache(filters: ApiQueryFilters = new ApiQueryFilters(true)) {
 
 		var callTime = new Date();
 
@@ -236,7 +236,7 @@ export class CustomsRequiredFieldListService {
 		var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
- 
+
         for (var i in mykeys) {
             var propName = mykeys[i];
             var propValue = filters[propName];
@@ -341,15 +341,7 @@ export class CustomsRequiredFieldListService {
         else {
             var filteredData = CustomsRequiredFieldListService.CachedData;
             if (!filters.GetAll) {
-
-                if (isExport) {
-                    filters.addAdditionalFilter("IsExport", true, null, null, "Equals", false, false, false, "boolean");
-
-                }
-                else {
-                    filters.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
-
-                }
+	
                 filteredData = InfraGenericFilter.GetFilteredArray(filteredData, filters);
             }
 
