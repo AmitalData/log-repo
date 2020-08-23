@@ -1052,6 +1052,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                     }
                 }
             }
+            string long_text_res = "";
+            result.ForEach(item => long_text_res += item.DueDate.ToString("dd.MM.yyyy") + " : " + item.OpenAmount.ToString() + "   ");
 
             return result;
         }
