@@ -352,6 +352,7 @@
     <None Include="DBScripts\CommonModel\202007201431_FillWarehouseWeightClosedTables.sxml" />
     <None Include="DBScripts\CommonModel\202007201436_FillWarehouseFieldsDefaultValues.sxml" />
     <None Include="DBScripts\CommonModel\202008051018_AddNewMeasurementAndChargesType.sxml" />
+    <None Include="DBScripts\CommonModel\20200812_SetIATACodeToSRForImportStorageCharge.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingMilestoneFillValues.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingHeaderEntityTypeFillValues.sxml" />
     <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />

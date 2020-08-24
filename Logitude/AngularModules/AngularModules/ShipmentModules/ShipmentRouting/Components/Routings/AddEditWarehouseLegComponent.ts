@@ -30,6 +30,7 @@ import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
 import { WarehouseEntryListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseEntryListExtendedService';
 import { WarehouseExtendedListService } from '../../../../Common/Services/ExtendedLists/WarehouseExtendedListService';
+import { ShipmentStoragePricingPM } from '../../../../Shipment/EntityPMs/ShipmentStoragePricingPM';
 
 @Component({
     moduleId: './ShipmentModules/ShipmentRouting/Components/Routings/',
@@ -117,6 +118,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.GetShipmentDirection();
             this.SetStorageDays();
             if (this.IsImportShipment) {
+            this.ComputeStorageFee();
+            if (this.IsBondedWarehouse && this.IsImportShipment) {
                 this.SetIsBondedWarehouseProperities();
             }
         }
@@ -325,7 +328,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         myService.GetWarehouseStoragePricingForWarehouse(this.EntityPM.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
-                    this.warehouseStoragePricings = myResponse.Result;                    
+                    this.warehouseStoragePricings = myResponse.Result;
+                    this.FillDefaultPricings();
                 }
 
                 this.CurrentSession.StopBusyIndicator();
@@ -367,6 +371,24 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.EntityPM.WeightMeasurementCode = null;
             this.EntityPM.WeightRoundingCode = null;
             this.EntityPM.ShipmentStoragePricings = [];
+        }
+    }
+    private FillDefaultPricings() {        
+        if (this.warehouseStoragePricings != null && this.warehouseStoragePricings.length > 0) {
+            var count: number = 1;
+            this.warehouseStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
+                var defaultItem: ShipmentStoragePricingPM = new ShipmentStoragePricingPM(this.EntityPM);
+                defaultItem.Tenant = SessionLocator.Tenant;
+                defaultItem.ShipmentId = this.EntityPM.Id;
+                defaultItem.WarehouseId = this.EntityPM.WarehouseLegWarehouseId;
+                defaultItem.StepFrom = item.StepFrom;
+                defaultItem.StepTo = item.StepTo;
+                defaultItem.Days = item.Days;
+                defaultItem.SalePrice = item.SalePrice;
+                defaultItem.LineNumber = count++;
+
+                this.EntityPM.AddShipmentStoragePricing(defaultItem);
+            });
         }
     }
 
@@ -554,11 +576,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         entityResourceService.getEntityResourceByTableName("ShipmentStoragePricing").subscribe((res1: any) => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Title = "Storage Pricing";
-            logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, DefaultPricings: this.warehouseStoragePricings };
+            logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName };
             logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s == "PricesChanged") {
                     this.PricesChanged = true;
+                    this.CheckStorageProperties();
                 }
             });
         });
@@ -609,6 +632,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.StorageDays = null;
                 this.Days = null;
             }
+        }
+    }
+    private ComputeStorageFee() {
+        var storageReceivables: ShipmentReceivablePM[] = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE");
+        if (storageReceivables.length > 0) {
+            this.StorageFee = ArrayTool.Sum(storageReceivables, "TotalAmount");
         }
     }
     
@@ -675,18 +704,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            //var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-
             this.CheckStorageProperties();
-
-            //if (this.PricesChanged && storageReceivable) {
-            //    this.UpdateStorageReceivable(storageReceivable);
-            //}
-
-            //else {
-            //    this.CheckStorageProperties();
-            //}
-
             this.FatherComponent.BuildItemsCollection();
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
@@ -721,6 +739,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.CurrentSession.FireEvent("StorageReceivableRemoved");
             }
         }
+
+        this.ComputeStorageFee();
     }
     private ComputeReceivableAmount(): number {
         var myResult: number = ShipmentTool.ComputeImportStorageReceivableAmount(this.StorageDays, this.EntityPM);

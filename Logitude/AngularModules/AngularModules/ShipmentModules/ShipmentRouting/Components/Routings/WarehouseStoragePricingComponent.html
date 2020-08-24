@@ -201,20 +201,15 @@
 
                                     <log-column [header]="'Amount'" [width]="'100'" [Alignment]="'left'">
                                         <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [CellColor]="item.CellColor" [IsEnabled]="!item.IsFreeLine">
+                                            <log-cell-template #logcelltemplate [CellColor]="item.CellColor" [IsEnabled]="false">
                                                 <div *ngIf="logcelltemplate.IsDisplayMode">
                                                     <table>
                                                         <tr>
                                                             <td style="text-align: right;">
-                                                                {{item.Amount}}
+                                                                {{item.Amount | NumbersPipe:'N2'}}
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                </div>
-
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Amount'" [DataContext]="item"
-                                                                [Text]="item.Amount" [ObjectTableName]="'ShipmentStoragePricing'" [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

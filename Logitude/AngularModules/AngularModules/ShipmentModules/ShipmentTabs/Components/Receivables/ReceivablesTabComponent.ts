@@ -961,7 +961,8 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                         }
 
                         else {
-                            availableAmount = this.EntityPM.ShipmentReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" && f.ARInvoiceId == null && f.ARInvoiceLineId == null && f.UnitPrice > 0).length;
+                            availableAmount = this.EntityPM.ShipmentReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" && f.ARInvoiceId == null && f.ARInvoiceLineId == null
+                                && (f.UnitPrice > 0 || (f.ChargesTypeCode == "ISTOR" && f.MeasurementCode == "STFE"))).length;
                         }
 
                         if (availableAmount == 0) {
@@ -988,7 +989,8 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                         }
 
                         else {
-                            availableAmount = this.EntityPM.ShipmentReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" && f.ARInvoiceId == null && f.ARInvoiceLineId == null && f.UnitPrice < 0).length;
+                            availableAmount = this.EntityPM.ShipmentReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" && f.ARInvoiceId == null && f.ARInvoiceLineId == null
+                                && (f.UnitPrice < 0 || (f.ChargesTypeCode == "ISTOR" && f.MeasurementCode == "STFE"))).length;
                         }
 
                         if (availableAmount == 0) {
