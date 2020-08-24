@@ -264,12 +264,14 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
             this.readonly = true;
         }
     }
+    SkipCtor: boolean=false;
     ViewDocumentsComponent() {
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
        // windowArgs.ObjectTableName = "Customs.CustomsCollateral";Cancellation
        windowArgs.ObjectTableName = "Customs.Declaration";// this.ObjectTableName;
        windowArgs.EntityParentPM = "DeclarationCancellation";
+    //    windowArgs.SkipCtor = this.SkipCtor;
 
         var windowTitle = "Customs.Declaration.TH.Documents";
 
@@ -280,8 +282,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         logWindow.Title = windowTitle;
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
-      //  logWindow.WindowClosed.subscribe(($event: any) => this.OnDocumentsWindowClosed($event));
-      //  this.entityArgs.SkipCtor = true;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SkipCtor = true);
         logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
     }
 
