@@ -117,53 +117,53 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
             this.GetShipmentDirection();
             this.SetStorageDays();
-            if (this.IsImportShipment) {
             this.ComputeStorageFee();
+
             if (this.IsBondedWarehouse && this.IsImportShipment) {
                 this.SetIsBondedWarehouseProperities();
             }
-        }
-         
-        this.ObjectTableName = args['ObjectTableName'];
-        this.FatherComponent = args['FatherComponent'];
-        this.WarehouseAddressList = this.FatherComponent.WarehouseAddressList;
-        this.SetUIProperties();
-        this.Clone();
-         
-        if (this.IsNewLeg) {
-            if (this.LegType == "WarehouseLeg_Pickups") {
-                if (this.EntityPM.ShipmentPickUps.length > 0) {
-                    var FirstPickup: ShipmentPickUpPM = this.EntityPM.ShipmentPickUps.sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; })[0];
-                    if (FirstPickup) {
-                        this.WarehouseLegExpectedEntryDate = FirstPickup.ETA
-                        this.WarehouseLegActualEntryDate = FirstPickup.ATA;
-                    }
-                }
-            }
-            this.GetShipmentDirection();
-            this.InitFreeDaysStorage();
-        }
 
-        if (!AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId)) {
-            this.cardListService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
-                if (myResponse != null) {
-                    if (!myResponse.HasError) {
-                        var result: CardList = myResponse.Result;
-                        if (result) {
-                            if (result.WarehouseTypeCode == "BO") {
-                                this.StoragePricingEnabled = true;
-                                this.StoragePricingMessageVisible = false;
-                            }
-                            else {
-                                this.StoragePricingEnabled = false;
-                                this.StoragePricingMessageVisible = true;
-                            }
+            this.ObjectTableName = args['ObjectTableName'];
+            this.FatherComponent = args['FatherComponent'];
+            this.WarehouseAddressList = this.FatherComponent.WarehouseAddressList;
+            this.SetUIProperties();
+            this.Clone();
 
-                            this.SetUIProperties_Storage();
+            if (this.IsNewLeg) {
+                if (this.LegType == "WarehouseLeg_Pickups") {
+                    if (this.EntityPM.ShipmentPickUps.length > 0) {
+                        var FirstPickup: ShipmentPickUpPM = this.EntityPM.ShipmentPickUps.sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; })[0];
+                        if (FirstPickup) {
+                            this.WarehouseLegExpectedEntryDate = FirstPickup.ETA
+                            this.WarehouseLegActualEntryDate = FirstPickup.ATA;
                         }
                     }
                 }
-            });
+                this.GetShipmentDirection();
+                this.InitFreeDaysStorage();
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId)) {
+                this.cardListService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
+                    if (myResponse != null) {
+                        if (!myResponse.HasError) {
+                            var result: CardList = myResponse.Result;
+                            if (result) {
+                                if (result.WarehouseTypeCode == "BO") {
+                                    this.StoragePricingEnabled = true;
+                                    this.StoragePricingMessageVisible = false;
+                                }
+                                else {
+                                    this.StoragePricingEnabled = false;
+                                    this.StoragePricingMessageVisible = true;
+                                }
+
+                                this.SetUIProperties_Storage();
+                            }
+                        }
+                    }
+                });
+            }
         }
     }
 
