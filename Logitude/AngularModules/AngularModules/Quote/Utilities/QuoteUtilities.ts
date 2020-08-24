@@ -217,6 +217,8 @@ export class QuoteUtilities {
         entityPM.ChargeableWeightUnitCode = copiedEntityPM.ChargeableWeightUnitCode;
         entityPM.Ratio = copiedEntityPM.Ratio;
         entityPM.PickupDeliveryRatio = copiedEntityPM.PickupDeliveryRatio;
+        entityPM.PickupDeliveryVolumetricWeight = copiedEntityPM.PickupDeliveryVolumetricWeight;
+        entityPM.PickupDeliveryChargeableWeight = copiedEntityPM.PickupDeliveryChargeableWeight;
         entityPM.DimFactor = copiedEntityPM.DimFactor;
         entityPM.IsDangerous = copiedEntityPM.IsDangerous;
         entityPM.DescriptionOfGoods = copiedEntityPM.DescriptionOfGoods;

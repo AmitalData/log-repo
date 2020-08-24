@@ -39,7 +39,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
-        this.IsHybrid = true;//SessionLocator.TenantPM.IsHybrid;
+        this.IsHybrid = SessionLocator.TenantPM.IsHybrid;
         this.Listen();
     }
 
@@ -151,6 +151,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.UIProperties.SetEnabled("IsDangerous", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("DescriptionOfGoods", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PickupDeliveryRatio", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("PickupDeliveryCWeightUnitCode", this.ObjectTableName, this.IsEditingEnabled);
     }
 
 

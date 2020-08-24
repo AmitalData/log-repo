@@ -185,7 +185,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "QTY": { quoteChargePM.CostQuantity = entityPM.NumberOfPackages; break; }
                                         case "CWKG": { quoteChargePM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { quoteChargePM.CostQuantity = entityPM.GrossWeightInKG; break; }
-
+                                        case "PDCW": { quoteChargePM.CostQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
                                         default: { break; }
                                     }
 
@@ -201,6 +201,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "QTY": { quoteChargePM.SaleQuantity = entityPM.NumberOfPackages; break; }
                                         case "CWKG": { quoteChargePM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { quoteChargePM.SaleQuantity = entityPM.GrossWeightInKG; break; }
+                                        case "PDCW": { quoteChargePM.SaleQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
+
                                         default: { break; }
                                     }
 
@@ -342,6 +344,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "QTY": { itemPM.CostQuantity = entityPM.NumberOfContainers; break; }
                                         case "CWKG": { itemPM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { itemPM.CostQuantity = entityPM.GrossWeightInKG; break; }
+                                        case "PDCW": { itemPM.CostQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
+
                                         default: { break; }
                                     }
 
@@ -357,6 +361,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "QTY": { itemPM.SaleQuantity = entityPM.NumberOfContainers; break; }
                                         case "CWKG": { itemPM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { itemPM.SaleQuantity = entityPM.GrossWeightInKG; break; }
+                                        case "PDCW": { itemPM.SaleQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
                                         default: { break; }
                                     }
 
@@ -509,6 +514,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "QTY": { myResult = this.isFCLQuote ? entityPM.NumberOfContainers : entityPM.NumberOfPackages; break; }
                     case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
                     case "GWKG": { myResult = entityPM.GrossWeightInKG; break; }
+                    case "PDCW": { myResult = entityPM.PickupDeliveryChargeableWeight; break; }
                     default:
                         {
                             if (this.isFCLQuote)
@@ -556,6 +562,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "QTY": { myResult = this.isFCLQuote ? entityPM.NumberOfContainers : entityPM.NumberOfPackages; break; }
                     case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
                     case "GWKG": { myResult = entityPM.GrossWeightInKG; break; }
+                    case "PDCW": { myResult = entityPM.PickupDeliveryChargeableWeight; break; }
                     default:
                         {
                             if (this.isFCLQuote)
