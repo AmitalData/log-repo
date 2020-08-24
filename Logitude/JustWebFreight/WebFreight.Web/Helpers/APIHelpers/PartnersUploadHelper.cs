@@ -332,9 +332,9 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     }
                     if (rowData.Length > 16)
                     {
-                        if (!string.IsNullOrEmpty(rowData[15]))
+                        if (!string.IsNullOrEmpty(rowData[16]))
                         {
-                            partnerExcel.Code = rowData[15].Trim();
+                            partnerExcel.Code = rowData[16].Trim();
                         }
                     }
 
