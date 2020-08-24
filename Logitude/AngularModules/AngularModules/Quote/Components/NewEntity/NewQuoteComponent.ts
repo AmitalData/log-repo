@@ -566,7 +566,12 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.FromPortId = null;
             this.ToPortId = null;
             this.MainCarriageCarrierId = null;
-            this.ShipmentTypeId = null;
+
+            if (newValue == "A") {
+                this.ShipmentTypeId = "Air";
+            } else {
+                this.ShipmentTypeId = null;
+            }
 
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = !this.IsLCLEntity;
