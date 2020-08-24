@@ -138,7 +138,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             UpdatePaymentOpenAmount();
 
             ARPaymentHelper service = new ARPaymentHelper();
-            service.ARPaymentQuickbooksValidating(_arpaymentPM, setApproved, false, newPayment, objectContext, myCommonContext, isVoidingInvoice, setCancelApproved, _arpaymentPM.SetReSendQBO);
+            service.ARPaymentQuickbooksValidating(_arpaymentPM, setApproved, false, newPayment, objectContext, myCommonContext, isVoidingInvoice, setCancelApproved, _arpaymentPM.SetReSendQBO,false);
 
             BuildSearchFields();
 
@@ -300,6 +300,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.newPayment = paymentRepository.GetSingleARPayment(theEntityPm.Id);
 
+            bool isErrorInTransfer = this.newPayment.TransferStatusCode == "ET" ? true : false;
+
             this.ValidateHigherStatus();
 
             this.InitializeComponent();
@@ -402,11 +404,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARPaymentHelper service = new ARPaymentHelper();
             if (newPayment.ExternalAccountingEntityId != null || SetReSendQBO)
             {
-                service.ARPaymentQuickbooksValidating(theEntityPm, true, false, newPayment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO);
+                service.ARPaymentQuickbooksValidating(theEntityPm, true, false, newPayment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO, isErrorInTransfer);
             }
             else
             {
-                service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, newPayment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO);
+                service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, newPayment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO, isErrorInTransfer);
             }
             this.BuildSearchFields();
 

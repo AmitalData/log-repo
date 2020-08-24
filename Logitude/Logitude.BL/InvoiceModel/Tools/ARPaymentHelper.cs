@@ -75,7 +75,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 myObjectTableId = objectTable.Id;
             }
         }
-        public  void ARPaymentQuickbooksValidating(ARPaymentPM entityPM, Boolean IsSetApproved, Boolean isNewEntity, ARPayment entityPOCO, IInvoiceContext invoiceContext, ICommonDataContext CommonContext, Boolean isSetVoided,bool setCancelApproved,bool SetReSendQBO, bool SystemWorkerRole=false)
+        public  void ARPaymentQuickbooksValidating(ARPaymentPM entityPM, Boolean IsSetApproved, Boolean isNewEntity, ARPayment entityPOCO, IInvoiceContext invoiceContext, ICommonDataContext CommonContext, Boolean isSetVoided,bool setCancelApproved,bool SetReSendQBO, bool isErrorInTransfer, bool SystemWorkerRole=false)
         {
             if (isSetVoided || (entityPM.StatusCode == "VD" && SetReSendQBO == true))
             {
