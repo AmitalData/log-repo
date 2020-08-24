@@ -32,11 +32,13 @@ namespace Logitude.BL.Security
                 {
                     return HttpContext.Current.User.Identity.Name;
                 }
+
                 else
                 {
                     throw new AutenticationException("Sorry! this user is not authorized!");
                 }
             }
+
             throw new AutenticationException("Sorry! this user is not authorized!");
         }
 
@@ -464,6 +466,27 @@ namespace Logitude.BL.Security
             return email;
         }
 
+        public static string GetAuthenticatedWorkWebUser()
+        {
+            if (HttpContext.Current != null)
+            {
+                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                {
+                    return HttpContext.Current.User.Identity.Name;
+                }
 
+                else
+                {
+                    throw new AutenticationException("Sorry! this user is not authorized!");
+                }
+            }
+
+            else if (!string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail))
+            {
+                return AuthenticationUtil.AuthenticatedUserEmail;
+            }
+
+            throw new AutenticationException("Sorry! this user is not authorized!");
+        }
     }
 }
