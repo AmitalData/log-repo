@@ -977,7 +977,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         else
                         {
-                            line.DebitAccount = myChargesType.ReceivablesChargesTypeExternalCode;
+                            line.DebitAccount = myChargesType.PayablesChargesTypeExternalCode;
+                        }
+                    }
+
+                    if (FieldIsEmpty(line.ExternalVATCard))
+                    {
+                        if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
+                        {
+                            line.ExternalVATCard = this.accountingSetting.PayableVATCard;
+                        }
+
+                        else
+                        {
+                            VatType vatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, true);
+
+                            if (vatType != null)
+                            {
+                                line.ExternalVATCard = vatType.PayablesExternalId;
+                            }
                         }
                     }
 
@@ -986,43 +1004,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         if (line.ChangeSetOp == ChangeSetOperation.None)
                         {
                             UpdateInvoiceLine(line);
-                        }
-                    }
-                }
-                #endregion
-
-                #region VATs
-
-                APInvoiceTotalVATRepository invoiceTotalVatRepository = new APInvoiceTotalVATRepository(initializer.Context);
-
-                List<APInvoiceTotalVAT> myTotalVATs = invoiceTotalVatRepository.GetInvoiceTotalVatsByInvoiceId(entityPM.Id, tenant).ToList();
-                foreach (APInvoiceTotalVAT itemVAT in myTotalVATs)
-                {
-                    if (FieldIsEmpty(itemVAT.ExternalVATCard) || FieldIsEmpty(itemVAT.ExternalTAXItemId))
-                    {
-                        VatType myVatType = VatTypeRepository.GetSingleVatType(itemVAT.VatTypeId, tenant, true);
-                        if (myVatType != null)
-                        {
-                            if (FieldIsEmpty(itemVAT.ExternalVATCard))
-                            {
-                                if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
-                                {
-                                    itemVAT.ExternalVATCard = this.accountingSetting.PayableVATCard;
-                                }
-
-                                else if (myVatType != null)
-                                {
-                                    itemVAT.ExternalVATCard = myVatType.ReceivablesExternalId;
-                                }
-                            }
-
-                            if (FieldIsEmpty(itemVAT.ExternalTAXItemId))
-                            {
-                                itemVAT.ExternalTAXItemId = myVatType.ExternalTAXItemId;
-                            }
-
-
-                            invoiceTotalVatRepository.Update(itemVAT);
                         }
                     }
                 }
@@ -1147,13 +1128,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                    where a.VatTypeId != null
                                    && a.VatPercentage != null
                                    && a.VatPercentage != 0
-                                   group a by new { a.VatTypeId, a.VatPercentage, a.ExternalVATCard, a.ExternalTAXItemId } into g
+                                   group a by new { a.VatTypeId, a.VatPercentage, a.ExternalVATCard } into g
                                    select new
                                    {
                                        VatTypeId = g.Key.VatTypeId,
                                        VatPercentage = g.Key.VatPercentage,
                                        ExternalVATCard = g.Key.ExternalVATCard,
-                                       ExternalTAXItemId = g.Key.ExternalTAXItemId,
                                    });
 
                     foreach (var g in myGroup)

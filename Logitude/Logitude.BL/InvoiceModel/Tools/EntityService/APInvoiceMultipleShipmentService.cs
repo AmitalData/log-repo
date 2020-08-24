@@ -430,7 +430,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             else
                             {
-                                line.DebitAccount = myChargesType.ReceivablesChargesTypeExternalCode;
+                                line.DebitAccount = myChargesType.PayablesChargesTypeExternalCode;
                             }
                         }
 
@@ -454,7 +454,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             }
                             else if(myVatType != null)
                             {
-                                itemVAT.ExternalVATCard = myVatType.ReceivablesExternalId;
+                                itemVAT.ExternalVATCard = myVatType.PayablesExternalId;
                             }
                         }
 
@@ -753,7 +753,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                             }
                                             else
                                             {
-                                                myRecord.ExternalVATCard = myVatType.ReceivablesExternalId;
+                                                myRecord.ExternalVATCard = myVatType.PayablesExternalId;
                                             }
                                         }
                                     }
