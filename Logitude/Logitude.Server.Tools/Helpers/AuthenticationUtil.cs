@@ -185,7 +185,7 @@ namespace Logitude.Server.Tools.Helpers
             }
             return defaultName;
         }
-        public static string ResolveUserId(int Tenant)
+        public static string ResolveUserId(int Tenant,bool fromSign=false)
         {
             ContactRepository contactRep = new ContactRepository(Tenant);
 
@@ -193,6 +193,11 @@ namespace Logitude.Server.Tools.Helpers
 
 
             var contact = contactRep.GetSingleContactByEmail(resolveUserIdentityName, Tenant, false);
+            if (contact == null && fromSign)
+            {
+                string systemEmail = SystemIdentityName(Tenant);
+                contact = contactRep.GetSingleContactByEmail(systemEmail, Tenant, false);
+            }
             if (contact == null)
             {
                 throw new BusinessErrorException($" resolveUserIdentityName :{resolveUserIdentityName} could not ResolveUserId from  Tenant:{Tenant}");
