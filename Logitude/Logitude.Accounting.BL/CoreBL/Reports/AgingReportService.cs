@@ -510,6 +510,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                          CreditStatusAmount_AsIs = cust != null ? (cust.CreditLimitAmount != null ? (double)cust.CreditLimitAmount : 0) : 0,
                          BalanceInLocalCurrency = moredata != null ? (decimal)moredata.BalanceInLocalCurrency : 0.00m,
+
+                         LocalBalanceInDue = moredata != null ? (decimal)moredata.LocalBalanceInDue : 0.00m,
                          CustomerVatNumber = card.VatNumber,
                          GLAccountStandardInterestRate = (decimal)(glaPeriod.StandardAddInterestPercent == null ? 0  : basePeriod.InterestRate ==null? glaPeriod.StandardAddInterestPercent : glaPeriod.StandardAddInterestPercent+basePeriod.InterestRate),
 
@@ -591,6 +593,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
                         BalanceInLocalCurrency = r.BalanceInLocalCurrency,
+                        LocalBalanceInDue = r.LocalBalanceInDue,
                         TotalOpenShipments = r.TotalOpenShipments,
                         TotalFutureOpenCheques = r.TotalFutureOpenCheques,
                         TotalOpenCheques = r.TotalOpenCheques,
@@ -691,6 +694,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                       InterestCreditLimit = account.InterestCreditLimit,
                                                       CreditStatusAmount_AsIs = account.CreditStatusAmount_AsIs,
                                                       BalanceInLocalCurrency = splitAccount!=null ? splitAccount.BalanceInLocalCurrency: account.BalanceInLocalCurrency,
+                                                      LocalBalanceInDue = splitAccount!=null ? splitAccount.LocalBalanceInDue : account.LocalBalanceInDue,                                                      
                                                       TotalOpenShipments = account.TotalOpenShipments,
                                                       TotalFutureOpenCheques = account.TotalFutureOpenCheques,
                                                       TotalOpenCheques = account.TotalOpenCheques,
@@ -1498,6 +1502,7 @@ Period	Acc	Currency	Total
         public decimal? TotalOpenCheques { get; set; }
         public double? CreditStatusAmount_AsIs { get; set; }
         public decimal? BalanceInLocalCurrency { get;  set; }
+        public decimal? LocalBalanceInDue { get;  set; }
         public string SplitAccountId { get;  set; }
     }
 
