@@ -72,7 +72,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 else if (args.AmountReconcile && args.ReferenceReconcile && args.RefDateReconcile)
                     SetMatchedLinesByAmountAndReferenceDateAndReferences();
                 else if (!args.AmountReconcile && !args.ReferenceReconcile && args.RefDateReconcile)
-                    SetMatchedLinesByReferenceDate();
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("ExternalReconciliation.O.CantAutoRecoByRefDate",tenant,LoggedContactResolver.GetLoggedContactShowLocal(tenant)));
+                //SetMatchedLinesByReferenceDate();
                 else if (!args.AmountReconcile && args.ReferenceReconcile && !args.RefDateReconcile)
                     SetMatchedLinesByReferences();
                 else if (!args.AmountReconcile && args.ReferenceReconcile && args.RefDateReconcile)
@@ -467,9 +468,13 @@ namespace Logitude.Accounting.BL.CoreBL
             matchedLines.Add(new MatchingLine() { LedgerTransactionId = null, BankPageLineId = pageLine.Id, GroupNumber = groupNumberCounter });
         }
 
-        private static void ValidateParameters(AutoExternalReconcileArgs args)
+        private void ValidateParameters(AutoExternalReconcileArgs args)
         {
-            if (args.AmountReconcile == false && args.ReferenceReconcile == false && args.RefDateReconcile == false) throw new ApplicationException("Please select at least one choice");
+            if (args.AmountReconcile == false && args.ReferenceReconcile == false && args.RefDateReconcile == false)
+            {
+                var msg = TextCodesTranslator.TranslateText("ExternalReconciliation.O.SelectOneAutoRecoMethod", tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant));
+                throw new ApplicationException(msg);
+            }
             if (args.ObjectTableId == null) throw new ApplicationException("args.objectTableId is not provided !!!");
             if (args.GLAccountId == null) throw new ApplicationException("gl Account is not provided !!!");
         }

@@ -116,7 +116,6 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         //#endregion
 
-        this.AmountCheckBoxChecked = true;
         this.GetDefaultValues();
 
     }
@@ -330,8 +329,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         });
         let myExtPageLineModel: ExtPageLineModel = this.ExtPageSelectedLines.Collection[0];
-        
-        
+
+
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 390;
         confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
@@ -1524,7 +1523,39 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                 if (myResponse != null) {
                     var res = myResponse.Result;
                     this.FullAccountingSetting = res;
+
                     this.GetAutoRecoMethod();
+
+                    switch (this.FullAccountingSetting.ExternalReconciliationDefault) {
+                        case '1': { // Amount
+                            this.AmountCheckBoxChecked = true;
+                            this.ReferenceDateCheckBoxChecked = false;
+                            this.ReferenceCheckBoxChecked = false;
+                            break;
+                        }
+                        case '2': { // Reference
+                            this.AmountCheckBoxChecked = false;
+                            this.ReferenceDateCheckBoxChecked = false;
+                            this.ReferenceCheckBoxChecked = true;
+                            break;
+                        }
+                        case '3': { // Reference Date + Reference
+                            this.AmountCheckBoxChecked = false;
+                            this.ReferenceDateCheckBoxChecked = true;
+                            this.ReferenceCheckBoxChecked = true;
+                            break;
+                        }
+                        case '4': { // Amount + Reference + Reference Date
+                            this.AmountCheckBoxChecked = true;
+                            this.ReferenceDateCheckBoxChecked = true;
+                            this.ReferenceCheckBoxChecked = true;
+                            break;
+                        }
+
+                        default:
+                            break;
+                    }
+
                 }
             })
         });
