@@ -389,7 +389,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
                     foreach (DocumentOutCopy copy in copies)
                     {
-
+                        includeInPrint = true;
                         if (doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
                         {
                             includeInPrint = false;
