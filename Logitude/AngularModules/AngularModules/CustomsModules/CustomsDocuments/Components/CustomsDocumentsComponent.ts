@@ -252,10 +252,11 @@ export class CustomsDocumentsComponent
         if (this.CustomsDocumentsTicketViewModels == null) {
             this.CustomsDocumentsTicketViewModels = [];
         }
-       // if (reload) {
+        if (!AppTool.IsNullOrEmpty( this.ParentEntityCode_args)) {
             this.CustomsDocumentsTicketViewModels = [];
+            this.StaticCustomsDocumentsTicketViewModels = [];
 
-      //  }
+        }
         for (var i = 0; i < tickets.length; i++) {
             var customsDocumentsTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(tickets[i], this.MetadataValues, false, this.IsDisplayOnly,
                 this.EntityPM, this.ObjectTableName, this.iCustomsDocumentsController);
@@ -689,7 +690,7 @@ export class CustomsDocumentsComponent
 
     SetWindowArgs(windowArgs) {
         this.IsWindowMode = true;
-        this.Start(windowArgs.EntityPM, windowArgs.ObjectTableName, windowArgs.EntityParentPM);
+         this.Start(windowArgs.EntityPM, windowArgs.ObjectTableName, windowArgs.EntityParentPM);
     }
 
     CloseButtonClicked() {
