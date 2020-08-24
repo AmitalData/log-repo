@@ -74,18 +74,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="PickupDeliveryVolumetricWeight"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PickupDeliveryVolume"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="QuoteId"
     ReferencedTable="Quotes"

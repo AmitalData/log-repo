@@ -463,6 +463,11 @@ export class QuotePM {
     public set ChargeableWeightUnitCode(newValue: string) { if (this.chargeableWeightUnitCode != newValue) { this.chargeableWeightUnitCode = newValue; this.MarkAsDirty("ChargeableWeightUnitCode"); } }
        
 	 
+    private pickupDeliveryCWeightUnitCode: string;
+    public get PickupDeliveryCWeightUnitCode() { return this.pickupDeliveryCWeightUnitCode; }
+    public set PickupDeliveryCWeightUnitCode(newValue: string) { if (this.pickupDeliveryCWeightUnitCode != newValue) { this.pickupDeliveryCWeightUnitCode = newValue; this.MarkAsDirty("PickupDeliveryCWeightUnitCode"); } }
+       
+	 
     private dimensionsUnitCode: string;
     public get DimensionsUnitCode() { return this.dimensionsUnitCode; }
     public set DimensionsUnitCode(newValue: string) { if (this.dimensionsUnitCode != newValue) { this.dimensionsUnitCode = newValue; this.MarkAsDirty("DimensionsUnitCode"); } }

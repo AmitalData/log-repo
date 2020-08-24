@@ -50,10 +50,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public virtual QuotePM Quote { get; set; }
 
         public ChangeSetOperation ChangeSetOp { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? PickupDeliveryVolumetricWeight { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? PickupDeliveryVolume { get; set; }
 
     }
 }
