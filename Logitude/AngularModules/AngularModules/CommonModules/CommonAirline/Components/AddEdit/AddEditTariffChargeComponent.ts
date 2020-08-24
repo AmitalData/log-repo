@@ -21,14 +21,11 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import {ChargesTypeList} from '../../../../Common/EntityLists/ChargesTypeList';
 
-@Component({
-    
+@Component({    
     templateUrl: './AddEditTariffChargeComponent.html',
-
 })
 
 export class AddEditTariffChargeComponent extends BaseComponent {
-
     public ObjectTableName: string = "TarrifCharge";
     public EntityPM: TarrifChargePM;
     public TarrifHeaderPM: TarrifHeaderPM;
@@ -85,8 +82,6 @@ export class AddEditTariffChargeComponent extends BaseComponent {
     }
     }
 
-
-
     private myCloner: Cloner;
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
@@ -102,8 +97,6 @@ export class AddEditTariffChargeComponent extends BaseComponent {
     private RejectChanges() {
         this.myCloner.RejectChanges();
     }
-
-
 
     private chargesGroupCode:string;
     public get ChargesGroupCode() { return this.chargesGroupCode; }
@@ -125,22 +118,27 @@ export class AddEditTariffChargeComponent extends BaseComponent {
         return str;
     }
 
+    public MeasurementsQueryFilters: ApiQueryFilters;
     SetDataContext(dataContext: TariffChargeItem) {
         this.TarrifHeaderPM = dataContext.TarrifHeaderPM;
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
+
         if (this.TarrifHeaderPM.TarrifTypeCode == "S") {
             this.ChargeTypesQueryFilters = new ApiQueryFilters();
             this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "SCH", null, null, "Equals", false, false, false, "string");
         }
-        this.Clone();
 
-      //  this.EntityPM.CloneMe();
-       
-        //this.SetLabels();
+        this.BuildQueryFilters(); 
+        this.Clone();
     }
-   
+
+    private BuildQueryFilters() {
+        this.MeasurementsQueryFilters = new ApiQueryFilters();
+        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+    }
+
     //Commands 
     CancelButtonClicked() {
         // this.EntityPM.RejectChanges();
@@ -189,7 +187,6 @@ export class AddEditTariffChargeComponent extends BaseComponent {
             //this.SubmitChanges();
         }
     }
-
 }
 
 export class ChargeWindowArgs {

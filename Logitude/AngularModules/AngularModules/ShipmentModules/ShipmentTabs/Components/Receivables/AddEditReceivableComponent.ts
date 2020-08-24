@@ -54,13 +54,11 @@ export class AddEditReceivableComponent {
         this.MeasurementDependencyProperty2 = myMeasurementDependencyProperty2;
     }
 
-    private BuildQueryFilters() {
+    private BuildQueryFilters() {        
+        this.MeasurementsQueryFilters = new ApiQueryFilters();
+        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true,true);
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters = new ApiQueryFilters();
-
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotEqual", false, false, false, "string");
-
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("IsReceivable", true, null, null, "Equals", false, false, false, "Boolean");
 
