@@ -86,7 +86,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     isTransferingVoiding = false;
                 }
 
-                else if (entityPOCO.TransferStatusCode == "ET")
+                else if (isErrorInTransfer)
                 {
                     isTransferingVoiding = false;
                 }
