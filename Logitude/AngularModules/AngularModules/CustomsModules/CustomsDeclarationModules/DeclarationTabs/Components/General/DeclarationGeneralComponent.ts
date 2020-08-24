@@ -148,7 +148,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             item.Tenant = this.EntityPM.Tenant;
             item.LineNumber = lineNumber;
            
-
+            debugger;
             if (!this.EntityPM.DeclarationExportRecipients.includes(item)) {
                 //this.EntityPM.ConsignmentInternalTransitions.push(item);
                 this.EntityPM.AddDeclarationExportRecipient(item);
