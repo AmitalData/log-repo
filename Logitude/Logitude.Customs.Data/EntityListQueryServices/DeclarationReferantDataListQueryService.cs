@@ -63,7 +63,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                                  TransportModeId = d.TransportModeId,
 
-                                                                 DeclarationOfficeName = d.DeclarationOffice.LocalName,
+                                                                 DeclarationOfficeCode = d.DeclarationOfficeCode,
 
                                                                  VendorName = a.CustomsVendor.VendorName,
                                                                  ArrivalDate = a.ArrivalDate != null ? a.ArrivalDate : a.EstimatedArrivalDate,
@@ -89,13 +89,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  LastStatusName = a.LastStatusName,
                                                                  OrderMoney = a.OrderMoney,
                                                                  Team=a.ReferantTeam.LocalName,
-                                                                 StorageSiteName=d.StorageSiteName,
+                                                                 StorageSiteCode=d.StorageSiteCode,
                                                                  HatraDate=d.HatraDate,
                                                                  PaymentDate=d.PaymentDate,
                                                                  TaxationDateTime=d.TaxationDateTime,
                                                                  CustomerCode = d.CustomerCard == null ? null : d.CustomerCard.Code,
                                                                  ImporterCode=d.ImporterCode,
-                                                                 ProcedureCurrentName = d.GovernmentProcedureCurrent.LocalName,
+                                                                  ProcedureCurrentCode = d.ProcedureCurrentCode,
                                                                  ImporterFile=a.ImporterFile
 
 
