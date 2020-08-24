@@ -1284,6 +1284,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             switch (args.EventTypeCode)
             {
+                case "WHED":
+                case "WEDE":
+                case "WHRD":
+                case "WRDE":
+                    {
+                        myResult = entityPM.WarehouseLegTerminalName;
+                        break;
+                    }
                 case "ORDR":
                 case "DDCU":
                 case "CCD":
@@ -1781,6 +1789,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 else if (entityPoco.WarehouseLegActualReleaseDate != null && entityPM.WarehouseLegActualReleaseDate == null)
                 {
                     this.DeleteTraceEvent("WHRD");
+                }
+            }
+            else
+            {
+                if (entityPoco.WarehouseLegActualEntryDate == null && entityPM.WarehouseLegActualEntryDate != null)
+                {
+                    this.CreateTraceEvent("WEDE", entityPM.WarehouseLegActualEntryDate);
+                }
+
+                else if (entityPoco.WarehouseLegActualEntryDate != null && entityPM.WarehouseLegActualEntryDate == null)
+                {
+                    this.DeleteTraceEvent("WEDE");
+                }
+
+                if (entityPoco.WarehouseLegActualReleaseDate == null && entityPM.WarehouseLegActualReleaseDate != null)
+                {
+                    this.CreateTraceEvent("WRDE", entityPM.WarehouseLegActualReleaseDate);
+                }
+
+                else if (entityPoco.WarehouseLegActualReleaseDate != null && entityPM.WarehouseLegActualReleaseDate == null)
+                {
+                    this.DeleteTraceEvent("WRDE");
                 }
             }
         }

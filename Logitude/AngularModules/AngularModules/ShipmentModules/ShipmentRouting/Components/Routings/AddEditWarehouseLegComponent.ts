@@ -298,6 +298,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                     if (result) {
                         this.WarehouseLegAddressId = result.MainAddressId;
                         this.FatherComponent.WarehouseLegTerminalName = result.EnglishName;
+                        this.FatherComponent.EntityPM.WarehouseLegTerminalName = result.EnglishName;
                         this.WarehouseLegTerminalCode = result.FirmCode;
 
                         if (result.WarehouseTypeCode == "BO") {

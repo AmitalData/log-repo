@@ -2133,6 +2133,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string WarehouseLegReference { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
         public string WarehouseLegTerminalName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
