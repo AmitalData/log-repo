@@ -399,12 +399,13 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                             foreach (VATTypesGroup vATGroupItem in myVATTypesGroups)
                             {
                                 APInvoiceTotalVAT totalVAT = myTotalVATs.Where(d => d.VatTypeId == vATGroupItem.SingleVATTypeId).FirstOrDefault();
+                                VatType lineSingleVatType = VatTypeRepository.GetSingleVatType(vATGroupItem.SingleVATTypeId, item.Tenant, true);
 
                                 multiVatPercentage += totalVAT.VatPercent;
                                 
                                 lineElement.TaxDetails.Add(new LineTaxDetailsElement()
                                 {
-                                    TaxCode = lineVatType.Code,
+                                    TaxCode = lineSingleVatType.Code,
                                     TaxPercentage = (decimal)totalVAT.VatPercent,
                                     VATExternalId = totalVAT.ExternalVATCard
                                 });
