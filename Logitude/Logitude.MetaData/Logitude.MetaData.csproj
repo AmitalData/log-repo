@@ -370,7 +370,9 @@
     <None Include="DBScripts\QuoteModel\202007091327_UpdateAirQuotesSubType.sxml" />
     <None Include="DBScripts\QuoteModel\202007091330_UpdateNotAirQuotesSubType.sxml" />
     <None Include="DBScripts\QuoteModel\202008211829_FillPickupDeliveryCWeightUnitCodeQuoteField.sxml" />
-    <None Include="DBScripts\QuoteModel\202008221040_FillPickupDeliveryRatioQuoteField.sxml" />
+    <None Include="DBScripts\QuoteModel\202008221040_FillPickupDeliveryRatioQuoteField.sxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="DBScripts\QuoteModel\202008221130_FillPickupDeliveryChargeableWeightQuoteField.sxml" />
     <None Include="DBScripts\ShipmentModel\202006111511_AddAirShipmentType.sxml" />
     <None Include="DBScripts\ShipmentModel\202006111515_AddShipmentSubTypesToTenants.sxml" />
