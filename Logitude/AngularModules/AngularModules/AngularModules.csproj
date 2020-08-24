@@ -283,6 +283,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\SupplierInvoiceItem\ExporterInvoiceItemComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ExportDeclarationComponent.ts" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\CopyDeclarationComponent.html" />
+    <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\Documents\SpecialActivityCustomsDocumentsController.ts" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\EndPhysicalCheckComponent.html" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\PhysicalCheckComponent.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\DeclarationAmendmentListTemplate.html" />

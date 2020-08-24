@@ -1068,11 +1068,37 @@
                                         <tr><td><div></div></td></tr>
                                     </table>
                                 </td>
+
                             </tr>
 
+                            <tr  class="FormFieldRow" >
+                                <td colspan="2" style="vertical-align: bottom">
+                                    <table style="height: 22px;">
+                                        <tr>
+                                            <td style="width:57px;">
+                                                <button class="Button" (click)="ViewDocumentsComponent()" style="margin-right:10px;">{{'Customs.Declaration.TH.Documents' |TextCodeTranslationPipe}}</button>
 
+                                            </td>
+                                            <td style="width:400px">
+                                                <div></div>
+                                            </td>
+                                            <td style="margin-left:5px">
+                                               
+                                                
+                                            </td>
+
+
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td colspan="10">
+
+                                </td>
+                            </tr>
                             <!-- IsOtherActivity = 13 -->
                             <tr class="FormFieldRow" *ngIf="IsOtherActivity">
+                                
+
                                 <td colspan="12" style="width: 860px; height:200px">
                                     <table>
                                         <tr style="width: 860px; height: 30px">

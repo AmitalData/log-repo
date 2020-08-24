@@ -84,6 +84,7 @@ export class CustomsDocumentsComponent
     IsDocumentRequestCodeSendDigital: boolean = false;
     DocumentRequestCodeText: string = "";
     ParentEntityCode_args: string = "";
+
      //*************************************//
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
@@ -122,10 +123,12 @@ export class CustomsDocumentsComponent
             this.EntityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response: any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentsTicket").subscribe((response: any) => {
                     this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentPointer").subscribe((response: any) => {
-                        if (this.ParentEntityCode_args == "DeclarationCancellation")
+
+                        if (!AppTool.IsNullOrEmpty( this.ParentEntityCode_args))
                             this.InsureCustomsDocumentsController(true);
                         else
                             this.InsureCustomsDocumentsController();
+
 
 
                         //if (AppTool.IsNullOrEmpty(this.customsDocumentsDataProvider)) {
@@ -252,7 +255,7 @@ export class CustomsDocumentsComponent
         if (this.CustomsDocumentsTicketViewModels == null) {
             this.CustomsDocumentsTicketViewModels = [];
         }
-        if (!AppTool.IsNullOrEmpty( this.ParentEntityCode_args)) {
+        if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args)) {
             this.CustomsDocumentsTicketViewModels = [];
             this.StaticCustomsDocumentsTicketViewModels = [];
 
