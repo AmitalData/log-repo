@@ -564,7 +564,7 @@
                                                         style="position: absolute;top: 3px;"></IconButton>
                                         </div>
                                     </td>
-                                    <td *ngIf="item.LineNumber==1 || RecipientList.lenght >0">
+                                    <td *ngIf="!item.LineNumber || item.LineNumber==1">
                                         <div style="vertical-align:top;float: right;">
                                             <IconButton style="float: right;" [IsSmall]="true" [Name]="'Add'" (click)="AddRecipientButtonClicked()" [IsEnabled]="AddRecipientEnabled"></IconButton>
                                         </div>
