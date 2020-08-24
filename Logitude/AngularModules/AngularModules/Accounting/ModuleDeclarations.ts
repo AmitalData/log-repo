@@ -11,6 +11,9 @@ import {BanksPageComponent} from './Components/Workspaces/Banks/BanksPageCompone
 import { MiscPageComponent } from './Components/Workspaces/Misc/MiscPageComponent';
 import { InterestPageComponent } from './Components/Workspaces/Interest/InterestPageComponent';
 import { BatchInvoicesComponent } from './Components/Others/BatchInvoicesComponent';
+import { BatchPrintComponent } from './Components/Others/BatchPrintComponent';
+import { BtatchPrintWarningComponent } from './Components/Others/BtatchPrintWarningComponent';
+import { BtatchPrintConfirmComponent } from './Components/Others/BtatchPrintConfirmComponent';
 
 import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
 import {NewChartOfAccountComponent} from './Components/NewEntity/NewChartOfAccountComponent';
@@ -73,7 +76,9 @@ import {ManageReconciliationListTemplate} from './Components/ListTemplates/Manag
 import {TaxReportListTemplate} from './Components/ListTemplates/TaxReportListTemplate';
 import { ReconciliationLineListTemplate } from './Components/ListTemplates/ReconciliationLineListTemplate';
 import {InterestReportListTemplate} from './Components/ListTemplates/InterestReportListTemplate'
+import {InterestInvoiceListTemplate} from './Components/ListTemplates/InterestInvoiceListTemplate'
 import { InterestBasesTypeDetailsTabComponent } from './Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent';
+import {PrintedListHeaderTemplate} from './Components/ListTemplates/PrintedListHeaderTemplate'
 
 
 import {ReconcileComponent} from './Components/Others/ReconcileComponent';
@@ -135,7 +140,8 @@ export const Components =
         BanksPageComponent,
         MiscPageComponent,
         InterestPageComponent,
-        BatchInvoicesComponent, 
+        BatchInvoicesComponent,
+        BatchPrintComponent, 
         //New Entites
         NewGLAccountComponent,
         NewChartOfAccountComponent,
@@ -208,6 +214,8 @@ export const Components =
         ReconciliationLineListTemplate,
         CashBookLineListTemplate,
         InterestReportListTemplate,
+        InterestInvoiceListTemplate,
+        PrintedListHeaderTemplate,
         //Others
         ReconcileComponent,
         ReconciledMessage,
@@ -241,8 +249,12 @@ export const Components =
         InterestReportLinesByDateListTemplate,
         InterestReportShortTitleComponent,
         CreateInterestReportsForCustomersComponent,
+
         InterestReportEditOpenBalanceComponent,
-        InterestReportEditCalculationDateComponent
+        InterestReportEditCalculationDateComponent,
+        BtatchPrintWarningComponent,
+        BtatchPrintConfirmComponent
+
     ];
 
 export class ModuleDeclarations {
@@ -341,7 +353,12 @@ export class ModuleDeclarations {
             case "CashBookLineListTemplate": { myResult = CashBookLineListTemplate; break; }
             case "InterestReportLinesByDateListTemplate": { myResult = InterestReportLinesByDateListTemplate; break; }
             case "InterestReportListTemplate": { myResult = InterestReportListTemplate; break;}
+            case "InterestInvoiceListTemplate" :{myResult =InterestInvoiceListTemplate; break;}
+            case "PrintedListHeaderTemplate" :{myResult =PrintedListHeaderTemplate; break;}
+
+
             //Others
+            case "BtatchPrintConfirmComponent": { myResult = BtatchPrintConfirmComponent; break; }
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }
             case "ReconciledMessage": { myResult = ReconciledMessage; break; }
             case "OutOfDepositMessage": { myResult = OutOfDepositMessage; break; }
@@ -374,6 +391,9 @@ export class ModuleDeclarations {
             case "ManageExternalReconciliationTabComponent": { myResult = ManageExternalReconciliationTabComponent; break;}
             case "InterestReportShortTitleComponent": { myResult = InterestReportShortTitleComponent; break;}
             case "BatchInvoicesComponent" :{myResult =BatchInvoicesComponent; break;}
+            case "BatchPrintComponent" :{myResult =BatchPrintComponent; break;}
+            case "BtatchPrintWarningComponent" :{myResult =BtatchPrintWarningComponent; break;}
+
         }
 
         return myResult;
