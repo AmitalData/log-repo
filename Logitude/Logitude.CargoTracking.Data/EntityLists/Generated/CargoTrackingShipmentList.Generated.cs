@@ -110,6 +110,18 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public DateTime? DeliveredEstimationDate  { get; set; }
        [DataMember]
        public bool? FromWarehouseDone  { get; set; }
+       [DataMember]
+       public DateTime? FirstPickupETD  { get; set; }
+       [DataMember]
+       public DateTime? WarehouseLegActualEntryDate  { get; set; }
+       [DataMember]
+       public DateTime? WarehouseLegExpectedEntryDate  { get; set; }
+       [DataMember]
+       public string WarehouseLegRemarks  { get; set; }
+       [DataMember]
+       public DateTime? DeclarationDate  { get; set; }
+       [DataMember]
+       public DateTime? CustomsClearanceDate  { get; set; }
    }
 
 }

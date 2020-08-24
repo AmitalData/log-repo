@@ -14,26 +14,22 @@ using Logitude.CargoTracking.Data;
 namespace Logitude.CargoTracking.Data.EntityMapping
 {
  
-    public class CargoTrackingShipmentMasterMap : EntityTypeConfiguration<CargoTrackingShipmentMaster>
+    public class CargoTrackingShipmentComputedMap : EntityTypeConfiguration<CargoTrackingShipmentComputed>
     {
 	    string dbms;
-        public CargoTrackingShipmentMasterMap()
+        public CargoTrackingShipmentComputedMap()
         { 
-				this.ToTable("CargoTrackingShipmentMasters");
+				this.ToTable("CargoTrackingShipmentComputeds");
 		
 		    this.HasKey(t => new { t.Id });
 	 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.Master).HasColumnName("Master").HasMaxLength(20).IsUnicode(false);
+            this.Property(t => t.FirstPickupATD).HasColumnName("FirstPickupATD");
 
-            this.Property(t => t.MainCarriageATD).HasColumnName("MainCarriageATD");
+            this.Property(t => t.FinalDeliveryATA).HasColumnName("FinalDeliveryATA");
 
-            this.Property(t => t.MainCarriageETD).HasColumnName("MainCarriageETD");
-
-            this.Property(t => t.MainCarriageATA).HasColumnName("MainCarriageATA");
-
-            this.Property(t => t.MainCarriageETA).HasColumnName("MainCarriageETA");
+            this.Property(t => t.FinalDeliveryETA).HasColumnName("FinalDeliveryETA");
         }
     }
 }

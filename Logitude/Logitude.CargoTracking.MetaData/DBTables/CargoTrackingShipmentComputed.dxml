@@ -1,44 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="CargoTrackingShipmentMasters"
+  Name="CargoTrackingShipmentComputeds"
   Schema="dbo"
   DBType="CargoTracking"
   Module="CargoTracking">
   <Column
     Name="Id"
     Type="varchar"
-    Size="16">
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
-    Name="Master"
-    Type="varchar"
-    Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="MainCarriageATD"
+    Name="FirstPickupATD"
     Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="MainCarriageETD"
+    Name="FinalDeliveryATA"
     Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="MainCarriageATA"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="MainCarriageETA"
+    Name="FinalDeliveryETA"
     Type="datetime">
     <Constraints
       Nullable="true" />

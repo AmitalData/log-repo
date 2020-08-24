@@ -120,6 +120,18 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.DeliveredEstimationDate).HasColumnName("DeliveredEstimationDate");
 
             this.Property(t => t.FromWarehouseDone).HasColumnName("FromWarehouseDone");
+
+            this.Property(t => t.FirstPickupETD).HasColumnName("FirstPickupETD");
+
+            this.Property(t => t.WarehouseLegActualEntryDate).HasColumnName("WarehouseLegActualEntryDate");
+
+            this.Property(t => t.WarehouseLegExpectedEntryDate).HasColumnName("WarehouseLegExpectedEntryDate");
+
+            this.Property(t => t.WarehouseLegRemarks).HasColumnName("WarehouseLegRemarks").HasMaxLength(500).IsUnicode(true);
+
+            this.Property(t => t.DeclarationDate).HasColumnName("DeclarationDate");
+
+            this.Property(t => t.CustomsClearanceDate).HasColumnName("CustomsClearanceDate");
         }
     }
 }

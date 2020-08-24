@@ -204,6 +204,52 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private int shipmentComputedFields ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int ShipmentComputedFields  
+	   {
+	    
+	     get
+		{
+		   return shipmentComputedFields;
+		 }
+		 set
+		 {
+		   if(shipmentComputedFields != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentComputedFields",OldValue=shipmentComputedFields,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   shipmentComputedFields=value;
+		   }
+			
+		 }
+	   }
+	  private int shipmentMasterDatas ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int ShipmentMasterDatas  
+	   {
+	    
+	     get
+		{
+		   return shipmentMasterDatas;
+		 }
+		 set
+		 {
+		   if(shipmentMasterDatas != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentMasterDatas",OldValue=shipmentMasterDatas,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   shipmentMasterDatas=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

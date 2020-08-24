@@ -75,6 +75,10 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
             WaterMarkForEntity = cargoTrackingWatermark.Where(s => s.TableName == "CargoTrackingCountries").FirstOrDefault();
             GetLastRecordUpdatedOnCountries(Tenant, WaterMarkForEntity);
 
+
+            WaterMarkForEntity = cargoTrackingWatermark.Where(s => s.TableName == "CargoTrackingCountries").FirstOrDefault();
+            GetLastRecordUpdatedOnCountries(Tenant, WaterMarkForEntity);
+ 
             WaterMarkForEntity = cargoTrackingWatermark.Where(s => s.TableName == "CargoTrackingTransportModes").FirstOrDefault();
             GetLastRecordUpdatedOnTransportModes(Tenant, WaterMarkForEntity);
 
@@ -154,6 +158,7 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
             }
             
         }
+ 
 
         private void GetLastRecordUpdatedOnTransportModes(int Tenant, CargoTrackingWatermark WaterMarkForEntity)
         {

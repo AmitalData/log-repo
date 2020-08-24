@@ -54,4 +54,16 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ShipmentComputedFields"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShipmentMasterDatas"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

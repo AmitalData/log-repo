@@ -1147,6 +1147,144 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? firstPickupETD ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? FirstPickupETD  
+	   {
+	    
+	     get
+		{
+		   return firstPickupETD;
+		 }
+		 set
+		 {
+		   if(firstPickupETD != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FirstPickupETD",OldValue=firstPickupETD,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   firstPickupETD=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? warehouseLegActualEntryDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? WarehouseLegActualEntryDate  
+	   {
+	    
+	     get
+		{
+		   return warehouseLegActualEntryDate;
+		 }
+		 set
+		 {
+		   if(warehouseLegActualEntryDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WarehouseLegActualEntryDate",OldValue=warehouseLegActualEntryDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   warehouseLegActualEntryDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? warehouseLegExpectedEntryDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? WarehouseLegExpectedEntryDate  
+	   {
+	    
+	     get
+		{
+		   return warehouseLegExpectedEntryDate;
+		 }
+		 set
+		 {
+		   if(warehouseLegExpectedEntryDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WarehouseLegExpectedEntryDate",OldValue=warehouseLegExpectedEntryDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   warehouseLegExpectedEntryDate=value;
+		   }
+			
+		 }
+	   }
+	  private string warehouseLegRemarks ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string WarehouseLegRemarks  
+	   {
+	    
+	     get
+		{
+		   return warehouseLegRemarks;
+		 }
+		 set
+		 {
+		   if(warehouseLegRemarks != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WarehouseLegRemarks",OldValue=warehouseLegRemarks,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   warehouseLegRemarks=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? declarationDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? DeclarationDate  
+	   {
+	    
+	     get
+		{
+		   return declarationDate;
+		 }
+		 set
+		 {
+		   if(declarationDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationDate",OldValue=declarationDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   declarationDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? customsClearanceDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? CustomsClearanceDate  
+	   {
+	    
+	     get
+		{
+		   return customsClearanceDate;
+		 }
+		 set
+		 {
+		   if(customsClearanceDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsClearanceDate",OldValue=customsClearanceDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   customsClearanceDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

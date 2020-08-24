@@ -10,22 +10,18 @@ using System.Runtime.Serialization;
 namespace Logitude.CargoTracking.Data.EntityLists
 {
    [DataContract]
-   public partial class CargoTrackingShipmentMasterList
+   public partial class CargoTrackingShipmentComputedList
    {
    
        [Key]
        [DataMember]
        public string Id  { get; set; }
        [DataMember]
-       public string Master  { get; set; }
+       public DateTime? FirstPickupATD  { get; set; }
        [DataMember]
-       public DateTime? MainCarriageATD  { get; set; }
+       public DateTime? FinalDeliveryATA  { get; set; }
        [DataMember]
-       public DateTime? MainCarriageETD  { get; set; }
-       [DataMember]
-       public DateTime? MainCarriageATA  { get; set; }
-       [DataMember]
-       public DateTime? MainCarriageETA  { get; set; }
+       public DateTime? FinalDeliveryETA  { get; set; }
    }
 
 }

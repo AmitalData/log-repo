@@ -80,6 +80,8 @@ namespace Logitude.CargoTracking.Data
 	
             modelBuilder.Configurations.Add(new CargoTrackingShipmentMap());
 	
+            modelBuilder.Configurations.Add(new CargoTrackingShipmentComputedMap());
+	
             modelBuilder.Configurations.Add(new CargoTrackingShipmentMasterMap());
 	
             modelBuilder.Configurations.Add(new CargoTrackingShipmentSearchMap());
@@ -405,6 +407,12 @@ namespace Logitude.CargoTracking.Data
 	 }
 	
 	 public IDbSet<CargoTrackingShipment> CargoTrackingShipments 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoTrackingShipmentComputed> CargoTrackingShipmentComputeds 
 	 {
 	      get; set;
 	 
