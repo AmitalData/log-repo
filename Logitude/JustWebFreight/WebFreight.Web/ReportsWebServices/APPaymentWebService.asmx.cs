@@ -390,7 +390,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         if (apPaymentDataProvider.TotalPaymentAfterDeduction != null)
                         {
-                            apPaymentDataProvider.TotalPaymentAfterDeduction += (double?)apPaymentDataProvider.DeductionAmount;
+                            apPaymentDataProvider.TotalPaymentAfterDeduction -= (double?)apPaymentDataProvider.DeductionAmount;
                         }
                         else {
                             apPaymentDataProvider.TotalPaymentAfterDeduction = (double?)apPaymentDataProvider.DeductionAmount;
