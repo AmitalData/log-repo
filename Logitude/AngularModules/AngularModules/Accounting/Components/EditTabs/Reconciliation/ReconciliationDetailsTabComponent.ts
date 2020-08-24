@@ -66,7 +66,9 @@ export class ReconciliationDetailsTabComponent extends BaseComponent implements 
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.LoadData();
-        this.AmountText = TextCodeTranslator.Translate("Accounting.General.O.Amount") + " ("+  this.EntityPM.CurrencyCode + ")";
+        var currencyCode= this.EntityPM.AccountReconcileMethodCode =="0"?  SessionLocator.TenantPM.AccountingCurrencyCode: this.EntityPM.CurrencyCode;
+
+        this.AmountText = TextCodeTranslator.Translate("Accounting.General.O.Amount") + " ("+  currencyCode + ")";
     }
 
     ngOnInit() {

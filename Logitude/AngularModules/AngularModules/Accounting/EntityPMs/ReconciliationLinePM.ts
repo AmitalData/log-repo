@@ -97,14 +97,14 @@ export class ReconciliationLinePM {
     public set DueDate(newValue: Date) { if (this.dueDate != newValue) { this.dueDate = newValue; this.MarkAsDirty("DueDate"); } }
        
 	 
-    private foreignAmountDebit: number;
-    public get ForeignAmountDebit() { return this.foreignAmountDebit; }
-    public set ForeignAmountDebit(newValue: number) { if (this.foreignAmountDebit != newValue) { this.foreignAmountDebit = newValue; this.MarkAsDirty("ForeignAmountDebit"); } }
+    private amountDebit: number;
+    public get AmountDebit() { return this.amountDebit; }
+    public set AmountDebit(newValue: number) { if (this.amountDebit != newValue) { this.amountDebit = newValue; this.MarkAsDirty("AmountDebit"); } }
        
 	 
-    private foreignAmountCredit: number;
-    public get ForeignAmountCredit() { return this.foreignAmountCredit; }
-    public set ForeignAmountCredit(newValue: number) { if (this.foreignAmountCredit != newValue) { this.foreignAmountCredit = newValue; this.MarkAsDirty("ForeignAmountCredit"); } }
+    private amountCredit: number;
+    public get AmountCredit() { return this.amountCredit; }
+    public set AmountCredit(newValue: number) { if (this.amountCredit != newValue) { this.amountCredit = newValue; this.MarkAsDirty("AmountCredit"); } }
        
 	 
     private reference1: string;
