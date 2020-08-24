@@ -615,17 +615,22 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             if (date1 != null && date2 != null)
             {
-                if (date1 > date2)
+                if(date1 > date2.Value.AddHours(24))
                 {
-                    int ticks = (date1 - date2).Value.Milliseconds;
-                    int seconds = ticks / 1000;
-                    int minutes = seconds / 60;
-
-                    if (minutes > (24 * 60))
-                    {
-                        myResult = false;
-                    }
+                    myResult = false;
                 }
+
+                //if (date1 > date2)
+                //{
+                //    int ticks = (date1 - date2).Value.Milliseconds;
+                //    int seconds = ticks / 1000;
+                //    int minutes = seconds / 60;
+
+                //    if (minutes > (24 * 60))
+                //    {
+                //        myResult = false;
+                //    }
+                //}
             }
 
             return myResult;
@@ -637,17 +642,20 @@ namespace WebFreight.Web.Helpers.APIHelpers
             if (date != null)
             {
                 DateTime date2 = TenantServerConfigration.GetCurrentDateTime(tenant);
+                date2 = date2.AddHours(24);
 
                 if (date > date2)
                 {
-                    int ticks = (date - date2).Value.Milliseconds;
-                    int seconds = ticks / 1000;
-                    int minutes = seconds / 60;
+                    myResult = false;
 
-                    if (minutes > (24 * 60))
-                    {
-                        myResult = false;
-                    }
+                    //int ticks = (date - date2).Value.Milliseconds;
+                    //int seconds = ticks / 1000;
+                    //int minutes = seconds / 60;
+
+                    //if (minutes > (24 * 60))
+                    //{
+                    //    myResult = false;
+                    //}
                 }
             }
 
