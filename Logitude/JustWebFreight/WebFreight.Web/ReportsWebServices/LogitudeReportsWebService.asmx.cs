@@ -2385,6 +2385,9 @@ namespace WebFreight.Web.ReportsWebServices
 
             shipments = shipments.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H") && !d.IsCancelled);
 
+            shipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentDataView>(new QueryOperations(), shipments, tenant);
+            shipments = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentDataView>(new QueryOperations(), shipments, tenant);
+
             if (toDate != null || FromDate != null)
             {
                 #region
