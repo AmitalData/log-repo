@@ -6,14 +6,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class CargoTrackingShipmentMasterList {
+export class CargoTrackingShipmentComputedList {
    
 	Id: string;
-	Master: string;
-	MainCarriageATD: Date;
-	MainCarriageETD: Date;
-	MainCarriageATA: Date;
-	MainCarriageETA: Date;
+	FirstPickupATD: Date;
+	FinalDeliveryATA: Date;
+	FinalDeliveryETA: Date;
 	
 }
  

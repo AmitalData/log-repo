@@ -14,23 +14,19 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 namespace Logitude.CargoTracking.Data.EntityPOCOs
 {
    
-    public class CargoTrackingShipmentMaster
+    public class CargoTrackingShipmentComputed
     {
 	 string dbms;
 
         [Key]
         [Column("Id")]
 	    public string Id { get; set; }
-        [Column("Master")]
-	    public string Master { get; set; }
-        [Column("MainCarriageATD")]
-	    public DateTime? MainCarriageATD { get; set; }
-        [Column("MainCarriageETD")]
-	    public DateTime? MainCarriageETD { get; set; }
-        [Column("MainCarriageATA")]
-	    public DateTime? MainCarriageATA { get; set; }
-        [Column("MainCarriageETA")]
-	    public DateTime? MainCarriageETA { get; set; }
+        [Column("FirstPickupATD")]
+	    public DateTime? FirstPickupATD { get; set; }
+        [Column("FinalDeliveryATA")]
+	    public DateTime? FinalDeliveryATA { get; set; }
+        [Column("FinalDeliveryETA")]
+	    public DateTime? FinalDeliveryETA { get; set; }
     }
 }
 	 

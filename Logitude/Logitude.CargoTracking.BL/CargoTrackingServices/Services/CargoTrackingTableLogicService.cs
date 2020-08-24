@@ -29,10 +29,43 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                 CompareNullabelFirstPickupETADateTime(TableRow);
                 TableRow.SetField("Master", TableRow["MasterShipmentDataId"]);
-                TableRow.SetField("PickupDate", TableRow["FirstPickupETA"]);
+                TableRow.SetField("PickupEstimationDate", TableRow["FirstPickupETD"]);
                 TableRow.SetField("ClearanceDate", TableRow["CustomsClearanceDate"]);
                 TableRow.SetField("CreateDate", TableRow["CreateDateTime"]);
- 
+                TableRow.SetField("DepartureEstimationDate", TableRow["MainCarriageETD"]);
+                TableRow.SetField("ArrivalEstimationDate", TableRow["MainCarriageETA"]);
+                TableRow.SetField("DeliveredEstimationDate", TableRow["FinalDeliveryETA"]);
+
+                TableRow.SetField("PickupDate", TableRow["FirstPickupATD"]);
+
+                SetFromWarehouseDoneField(TableRow);
+                SetPickupDoneField(TableRow);
+                SetFromWarehouseDate(TableRow);
+                SetFromWarehouseEstimationDate(TableRow);
+                SetFromWarehouseNotes(TableRow);
+
+                TableRow.SetField("DepartureDate", TableRow["MainCarriageATD"]);
+                SetDepartureDone(TableRow);
+
+
+                TableRow.SetField("ArrivalDate", TableRow["MainCarriageATA"]);
+                SetArrivalDone(TableRow);
+
+
+                SetToWarehouseDate(TableRow);
+                SetToWarehouseDone(TableRow);
+                SetToWarehouseEstimationDate(TableRow);
+                SetToWarehouseNotes(TableRow);
+
+                TableRow.SetField("DeliveredDate", TableRow["FinalDeliveryATA"]);
+                SetDeliveredDone(TableRow);
+
+                TableRow.SetField("CustomsPaymentDate", TableRow["DeclarationDate"]);
+                SetCustomsPaymentDone(TableRow);
+
+                TableRow.SetField("ClearanceDate", TableRow["CustomsClearanceDate"]);
+                SetClearanceDone(TableRow);
+
                 if (!TableRow["CustomerReference1"].Equals(null) && !TableRow["CustomerReference1"].Equals("") && TableRow["CustomerReference1"].GetType().Name != "DBNull" && !TableRow["CustomerReference2"].Equals(null) && !TableRow["CustomerReference2"].Equals("") && TableRow["CustomerReference2"].GetType().Name != "DBNull")
                 {
                     TableRow.SetField("CustomerReference", TableRow["CustomerReference1"] + "," + TableRow["CustomerReference2"]);
@@ -136,6 +169,209 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         }
 
 
+        private static void SetFromWarehouseDoneField(DataRow TableRow)
+        {
+            TableRow.SetField("FromWarehouseDone", false);
+
+            if (TableRow["DirectionId"].Equals("E"))
+            {
+                if (!IsFieldNullOrEmpty(TableRow, "WarehouseLegActualEntryDate"))
+                {
+                    DateTime? WarehouseLegActualEntryDate = (DateTime?)(TableRow["WarehouseLegActualEntryDate"]);
+                    DateTime? todayDate = DateTime.Today.Date;
+
+                    if (WarehouseLegActualEntryDate != null && WarehouseLegActualEntryDate.Value.Date <= todayDate.Value.Date)
+                    {
+                        TableRow.SetField("FromWarehouseDone", true);
+                    }
+                }
+            }
+ 
+        }
+
+        private static void SetPickupDoneField(DataRow TableRow)
+        {
+            if (!IsFieldNullOrEmpty(TableRow, "PickupDate"))
+            {
+                TableRow.SetField("PickupDone", true);
+            }
+            else
+            {
+                TableRow.SetField("PickupDone", false);
+
+            }
+
+
+        }
+ 
+
+        private static void SetDepartureDone(DataRow TableRow)
+        {
+            if (!IsFieldNullOrEmpty(TableRow, "DepartureDate"))
+            {
+                TableRow.SetField("DepartureDone", true);
+            }
+            else
+            {
+                TableRow.SetField("DepartureDone", false);
+
+            }
+
+
+        }
+
+        private static void SetToWarehouseDone(DataRow TableRow)
+        {
+            TableRow.SetField("ToWarehouseDone", false);
+            if (TableRow["DirectionId"].Equals("I"))
+            {
+                if (!IsFieldNullOrEmpty(TableRow, "ToWarehouseDate"))
+                {
+                    TableRow.SetField("ToWarehouseDone", true);
+                }
+
+            }
+
+
+        }
+
+        private static void SetClearanceDone(DataRow TableRow)
+        {
+            if (!IsFieldNullOrEmpty(TableRow, "ClearanceDate"))
+            {
+                TableRow.SetField("ClearanceDone", true);
+            }
+            else
+            {
+                TableRow.SetField("ClearanceDone", false);
+
+            }
+
+
+        }
+
+        private static void SetCustomsPaymentDone(DataRow TableRow)
+        {
+            if (!IsFieldNullOrEmpty(TableRow, "CustomsPaymentDate"))
+            {
+                TableRow.SetField("CustomsPaymentDone", true);
+            }
+            else
+            {
+                TableRow.SetField("CustomsPaymentDone", false);
+
+            }
+
+
+        }
+
+        private static void SetDeliveredDone(DataRow TableRow)
+        {
+            if (!IsFieldNullOrEmpty(TableRow, "DeliveredDate"))
+            {
+                TableRow.SetField("DeliveredDone", true);
+            }
+            else
+            {
+                TableRow.SetField("DeliveredDone", false);
+
+            }
+
+
+        }
+
+        private static void SetArrivalDone(DataRow TableRow)
+        {
+            if (!IsFieldNullOrEmpty(TableRow, "ArrivalDate"))
+            {
+                TableRow.SetField("ArrivalDone", true);
+            }
+            else
+            {
+                TableRow.SetField("ArrivalDone", false);
+
+            }
+
+
+        }
+
+
+        private static void SetFromWarehouseDate(DataRow TableRow)
+        {
+            if (TableRow["DirectionId"].Equals("E"))
+            {
+                TableRow.SetField("FromWarehouseDate", TableRow["WarehouseLegActualEntryDate"]);
+            }
+ 
+
+        }
+
+
+        private static void SetFromWarehouseEstimationDate(DataRow TableRow)
+        {
+            if (TableRow["DirectionId"].Equals("E"))
+            {
+                TableRow.SetField("FromWarehouseEstimationDate", TableRow["WarehouseLegExpectedEntryDate"]);
+            }
+
+
+        }
+
+        private static void SetToWarehouseDate(DataRow TableRow)
+        {
+            if (TableRow["DirectionId"].Equals("I"))
+            {
+                TableRow.SetField("ToWarehouseDate", TableRow["WarehouseLegActualEntryDate"]);
+            }
+
+
+        }
+
+
+        private static void SetToWarehouseEstimationDate(DataRow TableRow)
+        {
+            if (TableRow["DirectionId"].Equals("I"))
+            {
+                TableRow.SetField("ToWarehouseEstimationDate", TableRow["WarehouseLegExpectedEntryDate"]);
+            }
+
+
+        }
+
+
+
+        private static void SetToWarehouseNotes(DataRow TableRow)
+        {
+            if (TableRow["DirectionId"].Equals("I"))
+            {
+                TableRow.SetField("ToWarehouseNotes", TableRow["WarehouseLegRemarks"]);
+            }
+
+
+        }
+
+        private static void SetFromWarehouseNotes(DataRow TableRow)
+        {
+            if (TableRow["DirectionId"].Equals("E"))
+            {
+                TableRow.SetField("FromWarehouseNotes", TableRow["WarehouseLegRemarks"]);
+            }
+
+
+        }
+
+        private static bool IsFieldNullOrEmpty(DataRow TableRow,string CoulmnName)
+        {
+            bool IsNull = false;
+            if (TableRow[CoulmnName].Equals(null) || TableRow[CoulmnName].Equals("") || TableRow[CoulmnName].GetType().Name == "DBNull")
+            {
+                IsNull = true;
+            }
+ 
+            return IsNull;
+
+
+        }
 
         private static void CompareNullabelFirstPickupETADateTime(DataRow TableRow)
         {

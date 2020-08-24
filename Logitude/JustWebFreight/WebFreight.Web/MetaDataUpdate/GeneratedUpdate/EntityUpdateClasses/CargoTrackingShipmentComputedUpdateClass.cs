@@ -74,20 +74,20 @@ using Logitude.TariffModule.BL.CLoseTable;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class CargoTrackingShipmentMasterUpdateClass
+   public class CargoTrackingShipmentComputedUpdateClass
    {  		
-		public const string HashString = "d4d2278cf43e156b6a84dc018877104d";
+		public const string HashString = "d1682c2ce744146669d3dfe056564baf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "CargoTrackingShipmentMaster",
+	             				    ObjectTableName =  "CargoTrackingShipmentComputed",
 			      				    IsNew =  true,
-			      				    DBTableName =  "CargoTrackingShipmentMasters",
-			      				    ObjectTableSingular =  "CargoTrackingShipmentMaster",
-			      				    ObjectTablePlural =  "CargoTrackingShipmentMasters",
+			      				    DBTableName =  "CargoTrackingShipmentComputeds",
+			      				    ObjectTableSingular =  "CargoTrackingShipmentComputed",
+			      				    ObjectTablePlural =  "CargoTrackingShipmentComputeds",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -95,8 +95,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    LookUp1 =  "Id",
-			      				    LookUp2 =  "Id",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -117,8 +115,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "CargoTracking Shipment Master",
-			      				    Code =  "6f1e",
+			      				    DefaultText =  "Shipment Computed",
+			      				    Code =  "1e5b",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "CargoTracking",
@@ -130,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  CargoTrackingShipmentMasterUpdateClass.HashString,
+			      				    HashString =  CargoTrackingShipmentComputedUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -141,11 +139,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Master",
-					  						ObjectTableName =  "CargoTrackingShipmentMaster",
-					  						FieldsDataType =  "Text",
+					 						FieldName =  "FirstPickupATD",
+					  						ObjectTableName =  "CargoTrackingShipmentComputed",
+					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  20,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -153,14 +151,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  20,
+					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Master",
-					  						ListPropertyPath =  "Master",
+					  						PMPropertyPath =  "FirstPickupATD",
+					  						ListPropertyPath =  "FirstPickupATD",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -177,8 +175,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Master",
-					  						DefaultText =  "Master",
+					  						FullFieldLable =  "FirstPickupATD",
+					  						DefaultText =  "FirstPickupATD",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -197,8 +195,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "MainCarriageATD",
-					  						ObjectTableName =  "CargoTrackingShipmentMaster",
+					 						FieldName =  "FinalDeliveryATA",
+					  						ObjectTableName =  "CargoTrackingShipmentComputed",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -215,8 +213,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "MainCarriageATD",
-					  						ListPropertyPath =  "MainCarriageATD",
+					  						PMPropertyPath =  "FinalDeliveryATA",
+					  						ListPropertyPath =  "FinalDeliveryATA",
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -232,8 +230,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "MainCarriageATD",
-					  						DefaultText =  "MainCarriageATD",
+					  						FullFieldLable =  "FinalDeliveryATA",
+					  						DefaultText =  "FinalDeliveryATA",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -252,8 +250,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "MainCarriageETD",
-					  						ObjectTableName =  "CargoTrackingShipmentMaster",
+					 						FieldName =  "FinalDeliveryETA",
+					  						ObjectTableName =  "CargoTrackingShipmentComputed",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -270,8 +268,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "MainCarriageETD",
-					  						ListPropertyPath =  "MainCarriageETD",
+					  						PMPropertyPath =  "FinalDeliveryETA",
+					  						ListPropertyPath =  "FinalDeliveryETA",
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -287,118 +285,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "MainCarriageETD",
-					  						DefaultText =  "MainCarriageETD ",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "MainCarriageATA",
-					  						ObjectTableName =  "CargoTrackingShipmentMaster",
-					  						FieldsDataType =  "DateTime",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "MainCarriageATA",
-					  						ListPropertyPath =  "MainCarriageATA",
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "MainCarriageATA",
-					  						DefaultText =  "MainCarriageATA",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "MainCarriageETA",
-					  						ObjectTableName =  "CargoTrackingShipmentMaster",
-					  						FieldsDataType =  "DateTime",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "MainCarriageETA",
-					  						ListPropertyPath =  "MainCarriageETA",
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "MainCarriageETA",
-					  						DefaultText =  "MainCarriageETA",
+					  						FullFieldLable =  "FinalDeliveryETA",
+					  						DefaultText =  "FinalDeliveryETA",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -422,15 +310,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable CargoTrackingShipmentMasterObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CargoTrackingShipmentMaster" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> CargoTrackingShipmentMasterObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CargoTrackingShipmentMaster").ToList();
+		   ObjectTable CargoTrackingShipmentComputedObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CargoTrackingShipmentComputed" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CargoTrackingShipmentComputedObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CargoTrackingShipmentComputed").ToList();
 		       
 	      
 
-	         Screen CargoTrackingShipmentMasterCargoTrackingShipmentMasterHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CargoTrackingShipmentMaster.HeaderScreen", Name = "CargoTrackingShipmentMasterHeaderScreen", ObjectTableId = CargoTrackingShipmentMasterObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen CargoTrackingShipmentComputedCargoTrackingShipmentComputedHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CargoTrackingShipmentComputed.HeaderScreen", Name = "CargoTrackingShipmentComputedHeaderScreen", ObjectTableId = CargoTrackingShipmentComputedObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    CargoTrackingShipmentMasterObjectTable.HeaderScreenId = CargoTrackingShipmentMasterCargoTrackingShipmentMasterHeaderScreenScreen0.Id;
-		    CargoTrackingShipmentMasterObjectTable.HeaderScreenCode = CargoTrackingShipmentMasterCargoTrackingShipmentMasterHeaderScreenScreen0.Code;
+		    CargoTrackingShipmentComputedObjectTable.HeaderScreenId = CargoTrackingShipmentComputedCargoTrackingShipmentComputedHeaderScreenScreen0.Id;
+		    CargoTrackingShipmentComputedObjectTable.HeaderScreenCode = CargoTrackingShipmentComputedCargoTrackingShipmentComputedHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -442,18 +330,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable CargoTrackingShipmentMasterObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CargoTrackingShipmentMaster" && d.Tenant == 0).FirstOrDefault(); 
+		   ObjectTable CargoTrackingShipmentComputedObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CargoTrackingShipmentComputed" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CargoTrackingShipmentMasterFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingShipmentMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingShipmentMaster.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingShipmentMasterObjectTable);
-		   Feature CargoTrackingShipmentMasterFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingShipmentMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingShipmentMaster.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingShipmentMasterObjectTable);
-		   Feature CargoTrackingShipmentMasterFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingShipmentMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingShipmentMaster.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingShipmentMasterObjectTable);
-		   Feature CargoTrackingShipmentMasterFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingShipmentMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingShipmentMaster.Features.PackageFeature", NameTextCodeDefaultText = "CargoTrackingShipmentMaster Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingShipmentMasterObjectTable);    
+		   Feature CargoTrackingShipmentComputedFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingShipmentComputedObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingShipmentComputed.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingShipmentComputedObjectTable);
+		   Feature CargoTrackingShipmentComputedFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingShipmentComputedObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingShipmentComputed.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingShipmentComputedObjectTable);
+		   Feature CargoTrackingShipmentComputedFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingShipmentComputedObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingShipmentComputed.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingShipmentComputedObjectTable);
+		   Feature CargoTrackingShipmentComputedFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingShipmentComputedObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingShipmentComputed.Features.PackageFeature", NameTextCodeDefaultText = "CargoTrackingShipmentComputed Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingShipmentComputedObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable CargoTrackingShipmentMasterObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CargoTrackingShipmentMaster" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable CargoTrackingShipmentComputedObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CargoTrackingShipmentComputed" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -467,7 +355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = CargoTrackingShipmentMasterObjectTable.Id,
+                ObjectTableId = CargoTrackingShipmentComputedObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -485,7 +373,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = CargoTrackingShipmentMasterObjectTable.Id,
+                ObjectTableId = CargoTrackingShipmentComputedObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

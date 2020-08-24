@@ -56,6 +56,12 @@ export class CargoTrackingShipmentList {
 	DeliveredDate: Date;
 	DeliveredEstimationDate: Date;
 	FromWarehouseDone: boolean;
+	FirstPickupETD: Date;
+	WarehouseLegActualEntryDate: Date;
+	WarehouseLegExpectedEntryDate: Date;
+	WarehouseLegRemarks: string;
+	DeclarationDate: Date;
+	CustomsClearanceDate: Date;
 	
 }
  

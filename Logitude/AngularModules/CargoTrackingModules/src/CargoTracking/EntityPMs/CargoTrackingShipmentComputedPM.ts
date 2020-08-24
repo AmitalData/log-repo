@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class CargoTrackingShipmentMasterPM {
+export class CargoTrackingShipmentComputedPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -29,33 +29,23 @@ export class CargoTrackingShipmentMasterPM {
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
-    private master: string;
-    public get Master() { return this.master; }
-    public set Master(newValue: string) { if (this.master != newValue) { this.master = newValue; this.MarkAsDirty("Master"); } }
+    private firstPickupATD: Date;
+    public get FirstPickupATD() { return this.firstPickupATD; }
+    public set FirstPickupATD(newValue: Date) { if (this.firstPickupATD != newValue) { this.firstPickupATD = newValue; this.MarkAsDirty("FirstPickupATD"); } }
        
 	 
-    private mainCarriageATD: Date;
-    public get MainCarriageATD() { return this.mainCarriageATD; }
-    public set MainCarriageATD(newValue: Date) { if (this.mainCarriageATD != newValue) { this.mainCarriageATD = newValue; this.MarkAsDirty("MainCarriageATD"); } }
+    private finalDeliveryATA: Date;
+    public get FinalDeliveryATA() { return this.finalDeliveryATA; }
+    public set FinalDeliveryATA(newValue: Date) { if (this.finalDeliveryATA != newValue) { this.finalDeliveryATA = newValue; this.MarkAsDirty("FinalDeliveryATA"); } }
        
 	 
-    private mainCarriageETD: Date;
-    public get MainCarriageETD() { return this.mainCarriageETD; }
-    public set MainCarriageETD(newValue: Date) { if (this.mainCarriageETD != newValue) { this.mainCarriageETD = newValue; this.MarkAsDirty("MainCarriageETD"); } }
-       
-	 
-    private mainCarriageATA: Date;
-    public get MainCarriageATA() { return this.mainCarriageATA; }
-    public set MainCarriageATA(newValue: Date) { if (this.mainCarriageATA != newValue) { this.mainCarriageATA = newValue; this.MarkAsDirty("MainCarriageATA"); } }
-       
-	 
-    private mainCarriageETA: Date;
-    public get MainCarriageETA() { return this.mainCarriageETA; }
-    public set MainCarriageETA(newValue: Date) { if (this.mainCarriageETA != newValue) { this.mainCarriageETA = newValue; this.MarkAsDirty("MainCarriageETA"); } }
+    private finalDeliveryETA: Date;
+    public get FinalDeliveryETA() { return this.finalDeliveryETA; }
+    public set FinalDeliveryETA(newValue: Date) { if (this.finalDeliveryETA != newValue) { this.finalDeliveryETA = newValue; this.MarkAsDirty("FinalDeliveryETA"); } }
        
 	 
 
-    public OldEntityPM: CargoTrackingShipmentMasterPM;
+    public OldEntityPM: CargoTrackingShipmentComputedPM;
 		
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
@@ -63,12 +53,12 @@ export class CargoTrackingShipmentMasterPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CargoTrackingShipmentMaster");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CargoTrackingShipmentComputed");
            
         }
     }
 
-    private MyClone: CargoTrackingShipmentMasterPM;
+    private MyClone: CargoTrackingShipmentComputedPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

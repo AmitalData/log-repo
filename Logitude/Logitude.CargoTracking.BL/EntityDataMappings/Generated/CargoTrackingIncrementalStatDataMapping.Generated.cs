@@ -29,7 +29,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         Cards, 
 	         Ports, 
 	         Countries, 
-	         TransportModes,
+	         TransportModes, 
+	         ShipmentComputedFields, 
+	         ShipmentMasterDatas,
 	      }
 
 
@@ -43,7 +45,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         Cards, 
 	         Ports, 
 	         Countries, 
-	         TransportModes,
+	         TransportModes, 
+	         ShipmentComputedFields, 
+	         ShipmentMasterDatas,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -85,6 +89,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransportModes))
             {
 				entityPOCO.TransportModes = entityPM.TransportModes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentComputedFields))
+            {
+				entityPOCO.ShipmentComputedFields = entityPM.ShipmentComputedFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentMasterDatas))
+            {
+				entityPOCO.ShipmentMasterDatas = entityPM.ShipmentMasterDatas;
 			}
 			}
 
@@ -131,6 +145,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.TransportModes = entityPOCO.TransportModes;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentComputedFields))
+            {
+					entityPM.ShipmentComputedFields = entityPOCO.ShipmentComputedFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentMasterDatas))
+            {
+					entityPM.ShipmentMasterDatas = entityPOCO.ShipmentMasterDatas;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingIncrementalStatPM entityPM, CargoTrackingIncrementalStatPM oldEntityPM)
@@ -170,6 +194,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransportModes))
             {
                 oldEntityPM.TransportModes = entityPM.TransportModes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentComputedFields))
+            {
+                oldEntityPM.ShipmentComputedFields = entityPM.ShipmentComputedFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentMasterDatas))
+            {
+                oldEntityPM.ShipmentMasterDatas = entityPM.ShipmentMasterDatas;
             }
 			
 		}

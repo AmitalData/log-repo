@@ -23,7 +23,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
           { 
 		     None,  
 	         Id, 
-	         Master,
+	         Master, 
+	         MainCarriageATD, 
+	         MainCarriageETD, 
+	         MainCarriageATA, 
+	         MainCarriageETA,
 	      }
 
 
@@ -31,7 +35,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
           { 
 		     None,  
 	         Id, 
-	         Master,
+	         Master, 
+	         MainCarriageATD, 
+	         MainCarriageETD, 
+	         MainCarriageATA, 
+	         MainCarriageETA,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -43,6 +51,26 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Master))
             {
 				entityPOCO.Master = entityPM.Master;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MainCarriageATD))
+            {
+				entityPOCO.MainCarriageATD = entityPM.MainCarriageATD;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MainCarriageETD))
+            {
+				entityPOCO.MainCarriageETD = entityPM.MainCarriageETD;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MainCarriageATA))
+            {
+				entityPOCO.MainCarriageATA = entityPM.MainCarriageATA;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MainCarriageETA))
+            {
+				entityPOCO.MainCarriageETA = entityPM.MainCarriageETA;
 			}
 			}
 
@@ -59,6 +87,26 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.Master = entityPOCO.Master;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MainCarriageATD))
+            {
+					entityPM.MainCarriageATD = entityPOCO.MainCarriageATD;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MainCarriageETD))
+            {
+					entityPM.MainCarriageETD = entityPOCO.MainCarriageETD;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MainCarriageATA))
+            {
+					entityPM.MainCarriageATA = entityPOCO.MainCarriageATA;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MainCarriageETA))
+            {
+					entityPM.MainCarriageETA = entityPOCO.MainCarriageETA;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentMasterPM entityPM, CargoTrackingShipmentMasterPM oldEntityPM)
@@ -68,6 +116,26 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Master))
             {
                 oldEntityPM.Master = entityPM.Master;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MainCarriageATD))
+            {
+                oldEntityPM.MainCarriageATD = entityPM.MainCarriageATD;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MainCarriageETD))
+            {
+                oldEntityPM.MainCarriageETD = entityPM.MainCarriageETD;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MainCarriageATA))
+            {
+                oldEntityPM.MainCarriageATA = entityPM.MainCarriageATA;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MainCarriageETA))
+            {
+                oldEntityPM.MainCarriageETA = entityPM.MainCarriageETA;
             }
 			
 		}
