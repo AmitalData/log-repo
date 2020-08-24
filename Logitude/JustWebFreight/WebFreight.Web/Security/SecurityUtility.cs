@@ -304,11 +304,15 @@ namespace WebFreight.Web.Security
                 /*string */
                 email = HttpContext.Current.User.Identity.Name;
             }
+            else if(AuthenticationUtil.AuthenticatedUserEmail != null)
+            {
+                email = AuthenticationUtil.AuthenticatedUserEmail;
+            }
             else
             {
                 email = AuthenticationUtil.ResolveLoggingUserId(tenant);
             }
-			ContactInfo contactinfo = GetContactInfo(email, tenant);
+            ContactInfo contactinfo = GetContactInfo(email, tenant);
 
             if (contactinfo != null)
             {
