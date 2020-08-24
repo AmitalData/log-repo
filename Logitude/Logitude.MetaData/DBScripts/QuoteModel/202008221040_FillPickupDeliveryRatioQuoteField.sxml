@@ -36,8 +36,8 @@
        WHILE @@FETCH_STATUS = 0
        BEGIN
 
-			if (@ShipmentTypeId = 'Air' or @ShipmentTypeId = 'LCL' or @ShipmentTypeId = 'LTL') set @PickupDelivaryRatio = '3.3'
-			else if (@ShipmentTypeId = 'FCL' or @ShipmentTypeId = 'FTL') set @PickupDelivaryRatio ='1'
+			if (@ShipmentTypeId = 'Air' or @ShipmentTypeId = 'LCL' or @ShipmentTypeId = 'LCLD' or @ShipmentTypeId = 'LTL') set @PickupDelivaryRatio = '3.3'
+			else if (@ShipmentTypeId = 'FCL' or @ShipmentTypeId = 'FCLD' or @ShipmentTypeId = 'FTL') set @PickupDelivaryRatio ='1'
 
       insert into #temp_Quotes(Id, PickupDelivaryRatio) values (@EntityId, @PickupDelivaryRatio)
        			
