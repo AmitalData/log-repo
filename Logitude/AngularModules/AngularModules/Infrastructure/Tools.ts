@@ -552,9 +552,10 @@ export class AppTool {
     }
     public static GetPickupDeliveryRatio(shipmentTypeId: string) {
         var myResult: number = null;
-        switch (shipmentTypeId.toLowerCase()) {
+        switch (shipmentTypeId != null && shipmentTypeId.toLowerCase()) {
             case "air":
             case "lcl":
+            case "lcld":
             case "ltl":
                 {
                     myResult = 3.3;
@@ -562,6 +563,7 @@ export class AppTool {
                 }
             case "ftl":
             case "fcl":
+            case "fcld":        
                 {
                     myResult = 1;
                     break;
