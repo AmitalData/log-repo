@@ -128,7 +128,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             }
                             else
                             {
-                                throw new ApplicationException("This Invoice is not transfered yet to quickbooks online.");
+                                throw new ApplicationException("This Payment is not transfered yet to quickbooks online.");
 
                             }
 
