@@ -10,6 +10,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { AccountingSettingPM } from '../../../EntityPMs/AccountingSettingPM';
 import { AccountingSettingPMService } from '../../../Services/StandardPMs/AccountingSettingPMService';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     selector: 'ChargesTypeGeneralTabComponent',
@@ -23,7 +24,7 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
     public EntityPM: ChargesTypePM;
     public DisplaySATSettings: boolean = false;
     public DisplayRegoinalTax: boolean = false;
-
+    public MeasurementsQueryFilters: ApiQueryFilters;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -39,9 +40,15 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         if (this.EntityPM != null) {
             this.SetUIProperties();
             this.CheckWarnings();
+            this.BuildQueryFilters(); 
         }
     }
-    
+
+    private BuildQueryFilters() {
+        this.MeasurementsQueryFilters = new ApiQueryFilters();
+        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+    }
+
     public CustomsFieldsIsVisible: boolean = false;
     private SetUIProperties() {
         var fieldsEnabled = true;  
