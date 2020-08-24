@@ -274,11 +274,22 @@ export class DWDateComponent extends BaseComponent {
                 result.setUTCFullYear(date.getUTCFullYear());
                 result.setUTCMonth(date.getUTCMonth());
                 result.setUTCDate(date.getUTCDate());
-                result.setUTCHours(date.getUTCHours());
-                result.setUTCMinutes(date.getUTCMinutes());
-                result.setUTCSeconds(date.getUTCSeconds());
             }
 
+            if (!AppTool.IsNullOrEmpty(value)) {
+                var dateValues = value.toString().split(' ')[0];
+                if (!AppTool.IsNullOrEmpty(dateValues) && dateValues.split('-').length == 3) {
+                    var day = dateValues.split('-')[2];
+                    if (!AppTool.IsNullOrEmpty(day)) {
+                        var orginalDay = Number(day);
+                        var newDay = date.getUTCDate();
+                        if (newDay < orginalDay) {
+                            var diffDay = orginalDay - newDay;
+                            result.setUTCDate(date.getUTCDate() + diffDay);
+                        }
+                    }
+                }
+            }
             return result;
         }
 
