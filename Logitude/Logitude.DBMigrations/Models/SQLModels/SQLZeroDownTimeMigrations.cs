@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -90,8 +91,6 @@ namespace Logitude.DBMigrations.Models
                     DateTime batchEndTime = DateTime.Now;
                     sqlConnection.Close();
 
-                    Thread.Sleep(1000);
-
                     if(affectedRows > 0)
                     {
                         doneRecordsCount += affectedRows;
@@ -102,6 +101,8 @@ namespace Logitude.DBMigrations.Models
                             UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValueId, "LastBatchElapsedTime", elapsedTime.ToString());
                         }
                     }
+
+                    Thread.Sleep(1000);
                 }
                 catch (Exception exception)
                 {
@@ -197,7 +198,8 @@ namespace Logitude.DBMigrations.Models
                         ScriptExecutionNumber = Convert.ToInt32(reader["ScriptExecutionNumber"].ToString()),
                         ScriptVersion = Convert.ToInt32(reader["ScriptVersion"].ToString()),
                         ScriptHashValue = reader["ScriptHashValue"].ToString(),
-                        ScriptHistoryAction = reader["ScriptHistoryAction"].ToString()
+                        ScriptHistoryAction = reader["ScriptHistoryAction"].ToString(),
+                        TargetTableName = reader["TargetTableName"].ToString()
                     };
                     dbMigrationsDataScripts.Add(dbMigrationsDataScript);
                 }
@@ -247,12 +249,22 @@ namespace Logitude.DBMigrations.Models
             int scriptExecutionNumber = dbMigrationsDataScript.ScriptExecutionNumber;
             string dbMigrationsDataScriptId = dbMigrationsDataScript.Id;
             string databaseType = dbMigrationsDataScript.DatabaseType;
+            string targetTableName = dbMigrationsDataScript.TargetTableName;
             string queryString = dbMigrationsDataScript.SxmlScript;
-            queryString = Regex.Replace(queryString, "[$]Top[$]", "TOP(1000)", RegexOptions.IgnoreCase);
-            queryString = Regex.Replace(queryString, "[$]UpdateLastCounter[$]", ("[DBMigrationsLastScript] = " + scriptExecutionNumber.ToString()), RegexOptions.IgnoreCase);
-            queryString = Regex.Replace(queryString, "[$]LastCounterWhere[$]", ("[DBMigrationsLastScript] = " + (scriptExecutionNumber - 1).ToString()), RegexOptions.IgnoreCase);
+            //queryString = Regex.Replace(queryString, "[$]Top[$]", "TOP(1000)", RegexOptions.IgnoreCase);
+            //queryString = Regex.Replace(queryString, "[$]UpdateLastCounter[$]", ("[DBMigrationsLastScript] = " + scriptExecutionNumber.ToString()), RegexOptions.IgnoreCase);
+            queryString = Regex.Replace(queryString, "[$]LastCounterWhere[$]", "Id IN (SELECT Id from @TableIds)", RegexOptions.IgnoreCase);
+
+            queryString = "DECLARE @TableIds TABLE (Id VARCHAR(20));\n" +
+                          "INSERT INTO @TableIds SELECT TOP(1000) Id FROM " + targetTableName + " WHERE DBMigrationsLastScript = " + (scriptExecutionNumber - 1).ToString() + ";" +
+                          queryString + "\n" +
+                          "UPDATE " + targetTableName + " SET DBMigrationsLastScript = " + scriptExecutionNumber.ToString() + " WHERE Id IN (SELECT Id FROM @TableIds);\n" +
+                          "DELETE FROM @TableIds;";
 
             SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
+
+            int batchNumberCounter = 1;
+            string csvFileName = dbMigrationsDataScript.SxmlFileName.Replace(".sxml", String.Empty) + "_" + DateTime.Now.Ticks.ToString();
 
             while (affectedRows > 0)
             {
@@ -262,25 +274,31 @@ namespace Logitude.DBMigrations.Models
                     SqlCommand sqlCommand = new SqlCommand();
                     sqlCommand.Connection = sqlConnection;
                     sqlCommand.CommandText = queryString;
-                    sqlCommand.CommandTimeout = ToolConfigurations.AOTScriptsExecutionTimeOut;
+                    sqlCommand.CommandTimeout = 7200;//ToolConfigurations.AOTScriptsExecutionTimeOut;
                     DateTime batchStartTime = DateTime.Now;
                     affectedRows = sqlCommand.ExecuteNonQuery();
                     DateTime batchEndTime = DateTime.Now;
                     sqlConnection.Close();
 
-                    Thread.Sleep(1000);
+                    int elapsedTime = (int)(batchEndTime - batchStartTime).TotalMilliseconds;
 
                     if (affectedRows >= 1000)
                     {
-                        int elapsedTime = (int)(batchEndTime - batchStartTime).TotalMilliseconds;
                         UpdateDBMigrationsDataScript(dbMigrationsDataScriptId, "LastBatchElapsedTime", elapsedTime.ToString());
                     }
+
+                    string data = batchNumberCounter.ToString() + "," + batchStartTime.ToString() + "," + batchEndTime.ToString() + "," + elapsedTime.ToString() + "," + affectedRows.ToString() + "\n";
+                    AppendToCSVFile(csvFileName, data);
+
+                    Thread.Sleep(1000);
                 }
                 catch (Exception exception)
                 {
                     sqlConnection.Close();
                     ExitZeroDownTimeMigrations(exception.Message + "\nError Details: " + exception.ToString());
                 }
+
+                batchNumberCounter++;
             }
         }
 
@@ -323,6 +341,22 @@ namespace Logitude.DBMigrations.Models
             {
                 sqlConnection.Close();
                 ExitZeroDownTimeMigrations(exception.Message);
+            }
+        }
+
+        protected void AppendToCSVFile(string csvFileName, string data)
+        {
+            string reportsDirectoryPath = @"C:\Users\AbedMalakh\Desktop\ZeroDownTimeExecuteScriptsReports";
+            if (Directory.Exists(reportsDirectoryPath))
+            {
+                string csvFilePath = reportsDirectoryPath + @"\" + csvFileName + ".csv";
+                if (!File.Exists(csvFilePath))
+                {
+                    string dataHeader = "Batch Number,Start Time,End Time,Elapsed Time(ms),Affected Rows\n";
+                    File.WriteAllText(csvFilePath, dataHeader);
+                }
+
+                File.AppendAllText(csvFilePath, data);
             }
         }
     }

@@ -53,4 +53,8 @@
     <Constraints Nullable="false" />
   </Column>
 
+  <Column Name="TargetTableName" Type="varchar" Size="500">
+    <Constraints Nullable="false" />
+  </Column>
+
 </Table>

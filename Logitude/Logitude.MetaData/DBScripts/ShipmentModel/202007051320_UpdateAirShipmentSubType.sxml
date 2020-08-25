@@ -2,11 +2,10 @@
   <Sql Version="1">
     <![CDATA[
     
-      update $Top$ Shipments
+      update Shipments
       set
       ShipmentTypeId = 'Air',
-      ShipmentSubTypeId = (select top 1 Id from ShipmentSubTypes where Code = 'Air' and Tenant = Shipments.Tenant),
-      $UpdateLastCounter$
+      ShipmentSubTypeId = (select top 1 Id from ShipmentSubTypes where Code = 'Air' and Tenant = Shipments.Tenant)
       where TransportModeId = 'A' and $LastCounterWhere$
       
     ]]>

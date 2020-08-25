@@ -2076,9 +2076,9 @@ namespace Logitude.DBMigrations.Models
                 string sxmlScriptHashValue = GenerateHashString(scriptDefinition.Sql.Script);
 
                 string queryString = "INSERT INTO [dbo].[DBMigrationsDataScripts]([Id], [SxmlFileName], [DatabaseType], [SxmlScript], [IsPreSxml], [Status], [ScriptExecutionNumber], " +
-                    "[StartDate], [EndDate], [LastBatchElapsedTime], [ScriptVersion], [ScriptHashValue], [ScriptHistoryAction]) " +
+                    "[StartDate], [EndDate], [LastBatchElapsedTime], [ScriptVersion], [ScriptHashValue], [ScriptHistoryAction], [TargetTableName]) " +
                     "VALUES('" + Guid.NewGuid().ToString() + "', '" + scriptDefinition.SxmlFileName + "', '" + scriptDefinition.DBType + "', '" + sxmlScript + "', " +
-                    (scriptDefinition.Pre ? "1" : "0") + ", 'Waiting', " + scriptExecutionNumber + ", NULL, NULL, 0, " + sxmlVersion + ", '" + sxmlScriptHashValue + "', '" + scriptDefinition.ScriptHistoryAction + "');";
+                    (scriptDefinition.Pre ? "1" : "0") + ", 'Waiting', " + scriptExecutionNumber + ", NULL, NULL, 0, " + sxmlVersion + ", '" + sxmlScriptHashValue + "', '" + scriptDefinition.ScriptHistoryAction + "', '" + scriptDefinition.TargetTableName + "');";
 
                 SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
 
