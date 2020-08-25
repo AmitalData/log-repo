@@ -93,6 +93,12 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     DisplayFieldsFromList: string = null;
     PseventRowSelectEventSub: any;
     private CurrentSession = SessionLocator.SelectedSession;
+    DontApplyVirtualization: boolean = false;
+    ConstantPageSize: number = 0;
+
+
+
+
     constructor() {
         super();
         this._entityListService = new EntityListService;
@@ -141,6 +147,12 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this.HideAdd = args.HideAdd;
         this.IsAddDisabled = args.IsAddDisabled;
         this.IsEditDisabled = args.IsEditDisabled;
+
+        if (args.ObjectTableName == "Card") {
+            this.DontApplyVirtualization = true;
+            this.ConstantPageSize = 100;
+        }
+
 
         if (!this.IsAddDisabled) {
             this.IsAddBtnVisible = true;
@@ -814,7 +826,8 @@ export class CustomEntityArgs {
     public IsEditDisabled: boolean = true;
     public DisplayFieldsFromList: string = null;
     public HideEdit: boolean;
-    
+
+
 }
 export class AddEntityArgs {
     public EntityPM: any;

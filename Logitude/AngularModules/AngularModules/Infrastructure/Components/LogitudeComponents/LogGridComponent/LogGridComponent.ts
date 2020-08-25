@@ -27,7 +27,7 @@ import { filter } from 'rxjs/operators';
     //directives: [CORE_DIRECTIVES, ObjectFieldTemplate, ListHeaderTemplateComponent, ListTemplateComponent],
     providers: [PubSubService1],
     //pipes: [TextCodeTranslationPipe],
-    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData','NoDataTextCode','CheckboxProp'],
+    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'NoDataTextCode', 'CheckboxProp', 'DontApplyVirtualization' , 'ConstantPageSize'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -140,6 +140,8 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     private removedItemsTemp: any[] = [];
     private addedItems: any[] = [];
 
+    DontApplyVirtualization: boolean =false;
+    ConstantPageSize: number = 0;
     constructor(private _elementRef: ElementRef, private cd: ChangeDetectorRef) {
         //setTimeout(() => this.cd.markForCheck(), 10);
         if (this.CurrentSession == null) {
@@ -1223,7 +1225,11 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
         var xx = this.Filters;
         var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridId);
-        this.viewportSize = Math.round(elem.clientHeight / this.rowHeight);
+        this.viewportSize = this.GetviewportSize(elem.clientHeight, this.rowHeight);
+
+
+
+
         this.tripleViewport = this.viewportSize * 3;
         this.LogGridElement = elem;
         this.scrollPosition = elem.scrollTop;
@@ -1441,7 +1447,11 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         //this.rowStyle.width = this.ViewWidth + 'px';
 
         ////console.log("headerStyle", this.headerStyle, "ViewWidth", this.ViewWidth, "rowStyle", this.rowStyle);
-        this.viewportSize = Math.round(this.ViewHeight / this.rowHeight);
+
+        this.viewportSize = this.GetviewportSize(this.ViewHeight, this.rowHeight);
+
+
+
         this.tripleViewport = this.viewportSize * 3;
         //////console.log("viewportSize", this.viewportSize);
         //this.numberOfCells = 3 * this.viewportSize;
@@ -2039,33 +2049,37 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     //};
     scrolltimer = null;
     onScroll() {
-        this.SearchFieldChanged = false;
-        var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
-        var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
 
-        this.LogGridElement = elem;
-        if (elem) {
-            if (this.HScrollPosition == -1 || elem.scrollLeft > this.HScrollPosition) {
-                this.HScrollPosition = elem.scrollLeft;
-            }
-            if (columns) {
-                //columns.style.top = elem.scrollTop + "px";
-                if (this.RTL == true) {
-                    columns.style.right = -1 * (this.HScrollPosition - elem.scrollLeft) + "px";
+
+        if (!this.DontApplyVirtualization) {
+            this.SearchFieldChanged = false;
+            var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
+            var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
+
+            this.LogGridElement = elem;
+            if (elem) {
+                if (this.HScrollPosition == -1 || elem.scrollLeft > this.HScrollPosition) {
+                    this.HScrollPosition = elem.scrollLeft;
                 }
-                else {
-                    columns.style.left = -1 * elem.scrollLeft + "px";
+                if (columns) {
+                    //columns.style.top = elem.scrollTop + "px";
+                    if (this.RTL == true) {
+                        columns.style.right = -1 * (this.HScrollPosition - elem.scrollLeft) + "px";
+                    }
+                    else {
+                        columns.style.left = -1 * elem.scrollLeft + "px";
+                    }
                 }
+                //console.log("Inside Elem " + elem.scrollTop);
             }
-            //console.log("Inside Elem " + elem.scrollTop);
+            else {
+                //console.log("Inside else ");
+            }
+            if (this.timer) {
+                clearTimeout(this.timer);
+            }
+            this.timer = setTimeout(() => this.DoScroll(), 200);
         }
-        else {
-            //console.log("Inside else ");
-        }
-        if (this.timer) {
-            clearTimeout(this.timer);
-        }
-        this.timer = setTimeout(() => this.DoScroll(), 200);
     };
     HScrollPosition: number = -1;
     HorizantalScrollValue: string = "0px";
@@ -2160,6 +2174,14 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         }
     }
 
+    GetviewportSize(viewHeight: number, rowHeight:number ) {
+
+        return this.DontApplyVirtualization ? this.ConstantPageSize : (Math.round(viewHeight / rowHeight));
+
+    }
+
+
+
     private onWindowResized(event: UIEvent): void {
 
         var logGrid = document.getElementById(this.LogGridId);
@@ -2178,7 +2200,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             // rowsArray.item(i).style.minWidth = (this.ViewWidth) + 'px';
         }
         this.rowStyle.minWidth = this.ViewWidth + 'px';
-        this.viewportSize = Math.round(this.ViewHeight / this.rowHeight);
+        this.viewportSize = this.GetviewportSize(this.ViewHeight , this.rowHeight);
         this.tripleViewport = this.viewportSize * 3;
         this.rowsPerPage = this.dataSource != null ? this.dataSource.pageSize : 10;
         var header = document.getElementById(this.LogGridColumnsId);

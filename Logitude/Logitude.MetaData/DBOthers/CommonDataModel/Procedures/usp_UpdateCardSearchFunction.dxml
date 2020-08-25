@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_UpdateCardSearchFunction"
+  Schema="dbo"
+  Module="Common">
+  <SqlScript>
+    <![CDATA[
+
+
+Create PROCEDURE [dbo].[usp_UpdateCardSearchFunction]
+(
+	@CardId varchar(15)
+)
+AS
+
+
+declare  @Tenant int
+declare  @EnglishName varchar(70)
+declare  @LocalName nvarchar(100)
+declare  @VatNumber varchar(20)
+declare  @CityName nvarchar(25)
+declare  @CountryName varchar(120)
+declare  @Code varchar(15)
+declare  @ReceivablesAccountingCard varchar(25)
+declare  @PayablesAccountingCard varchar(25)
+declare  @CreateDate datetime
+declare  @UpdateDate datetime
+declare  @Weight int
+
+declare  @PartnerTypeId varchar(2)
+declare  @InActive bit
+Declare @SearchField nvarchar(max)
+
+
+if (@CardId is not null)
+
+begin 
+
+
+delete CardSearches where CardId = @CardId
+select
+@Tenant = Tenant,
+@Code = Code,
+@EnglishName = EnglishName,
+@LocalName = LocalName,
+@VatNumber = VatNumber,
+@CityName = CityName,
+@CountryName =CountryName,
+@ReceivablesAccountingCard = ReceivablesAccountingCard,
+@PayablesAccountingCard = PayablesAccountingCard,
+@CreateDate = CreateDate,
+@UpdateDate = UpdateDate,
+@PartnerTypeId = PartnerTypeId,
+@InActive = InActive
+from Cards
+where Id = @CardId
+
+
+	  set @Weight = 0
+	  declare  @RecordDate datetime
+	  set @RecordDate = @UpdateDate;
+	  if(@RecordDate is null) set @RecordDate = @CreateDate
+
+	  	 set @SearchField = @Code;
+			 if(@EnglishName is not null) set @SearchField += (' ' + @EnglishName);
+			 if(@LocalName is not null) set @SearchField += (' ' + @LocalName);
+			 if(@VatNumber is not null) set @SearchField += (' ' + @VatNumber);
+			 if(@CountryName is not null) set @SearchField += (' ' + @CountryName);
+			 if(@CityName is not null) set @SearchField += (' ' + @CityName);
+			 if(@ReceivablesAccountingCard is not null) set @SearchField += (' ' + @ReceivablesAccountingCard);
+			 if(@PayablesAccountingCard is not null) set @SearchField += (' ' + @PayablesAccountingCard);
+
+
+
+    insert into CardSearches (Tenant, CardId  , RecordDate , Weight , PartnerTypeId,InActive , Keyword) select  @Tenant, @CardId , @RecordDate , @Weight , @PartnerTypeId,@InActive ,  Name from dbo.SplitBySpaceFunction(@SearchField) where Name !=' '
+
+
+
+  end 
+]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</Procedure>
