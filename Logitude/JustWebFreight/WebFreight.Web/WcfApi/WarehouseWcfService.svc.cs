@@ -1,29 +1,29 @@
-﻿using System;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.Validators;
+using Logitude.Server.Tools;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Server.Infrastructure.Helpers;
-using Logitude.BL.Validators;
 using System.Transactions;
 using WebFreight.Web.Security;
-using Logitude.Server.Tools;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
 
 namespace WebFreight.Web.WcfApi
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "VendorWcfService" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select VendorWcfService.svc or VendorWcfService.svc.cs at the Solution Explorer and start debugging.
-     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class VendorWcfService : IVendorWcfService
-    {
-        public Response Upsert(VendorPM entityPM, bool batch)
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "WarehouseWcfService" in code, svc and config file together.
+    // NOTE: In order to launch WCF Test Client for testing this service, please select WarehouseWcfService.svc or WarehouseWcfService.svc.cs at the Solution Explorer and start debugging.
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    public class WarehouseWcfService : IWarehouseWcfService
+    { 
+        public Response Upsert(WarehousePM entityPM, bool batch)
         {
             if (CacheManager.CacheWrapper == null)
             {
@@ -34,41 +34,42 @@ namespace WebFreight.Web.WcfApi
             try
             {
                 SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
-                SecurityUtility.CheckContactFeature("Vendor", "UPDATE", entityPM.Tenant);//UPDATE//READ
+                SecurityUtility.CheckContactFeature("Warehouse", "UPDATE", entityPM.Tenant);//UPDATE//READ
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    
-                    ClassLevelValidator validationClass = new ClassLevelValidator("Vendor", entityPM.Tenant) { IsHybrid = true };
+                    entityPM.PartnerTypeId = "WH";
+
+                    ClassLevelValidator validationClass = new ClassLevelValidator("Warehouse", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))
                     {
                         response.HasError = true;
                         response.ErrorMessage = validationClass.GetErrorMessage(entityPM, null);
                         return response;
                     }
-                   
+
                     ICommonDataContext objectContext = CommonDataContext.GetContext(entityPM.Tenant);
 
-                    VendorRepository VendorRepository = new VendorRepository(objectContext);
-                    VendorService service = new VendorService(objectContext, entityPM.Tenant);
+                    WarehouseRepository WarehouseRepository = new WarehouseRepository(objectContext);
+                    WarehouseService service = new WarehouseService(objectContext, entityPM.Tenant);
 
-                    if (entityPM.PrimaryContactId != null)
-                    {
-                        ContactRepository contactRepository = new ContactRepository(objectContext);
-                        Contact contact = contactRepository.GetSingleContactByExternalId(entityPM.PrimaryContactId, entityPM.Tenant);
-                        if (contact != null)
-                        {
-                            entityPM.PrimaryContactId = contact.Id;
-                        }
-                        else
-                        {
-                            response.HasError = true;
-                            response.ErrorMessage = "PrimaryContactId field doesn't exist in the database,Upsert this entity before using it.";
-                            return response;
-                        }
-                    }
+                    //if (entityPM.PrimaryContactId != null)
+                    //{
+                    //    ContactRepository contactRepository = new ContactRepository(objectContext);
+                    //    Contact contact = contactRepository.GetSingleContactByExternalId(entityPM.PrimaryContactId, entityPM.Tenant);
+                    //    if (contact != null)
+                    //    {
+                    //        entityPM.PrimaryContactId = contact.Id;
+                    //    }
+                    //    else
+                    //    {
+                    //        response.HasError = true;
+                    //        response.ErrorMessage = "PrimaryContactId field doesn't exist in the database,Upsert this entity before using it.";
+                    //        return response;
+                    //    }
+                    //}
 
                     entityPM.IsHybrid = true;
-                    Vendor entity = VendorRepository.GetSingleVendorByCode(entityPM.Code, entityPM.Tenant);
+                    Warehouse entity = WarehouseRepository.GetFirstSingleByCode(entityPM.Code, entityPM.Tenant);
                     if (entity == null)
                     {
                         service.Create(entityPM);
