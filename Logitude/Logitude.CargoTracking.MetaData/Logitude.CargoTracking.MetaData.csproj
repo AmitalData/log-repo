@@ -98,6 +98,7 @@
     <None Include="DBTables\CargoTrackingMilestone.dxml" />
     <None Include="DBTables\CargoTrackingPort.dxml" />
     <None Include="DBTables\CargoTrackingShipment.dxml" />
+    <None Include="DBTables\CargoTrackingShipmentComputed.dxml" />
     <None Include="DBTables\CargoTrackingShipmentMaster.dxml" />
     <None Include="DBTables\CargoTrackingShipmentSearch.dxml" />
     <None Include="DBTables\CargoTrackingTransportMode.dxml" />
