@@ -857,7 +857,7 @@ new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
 
             using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)warehouseService.InnerChannel))
             {
-               System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
 
                 WarehouseProxy.Response resultResponse = new WarehouseProxy.Response();
                 // CustomerPM pm = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "10107933" }, 8, ref resultResponse);
@@ -870,10 +870,14 @@ new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
 
                 };
 
-                 
+
 
                 var response = warehouseService.Upsert(newCustomer, false);
-            
+                if (response.HasError)
+                    MessageBox.Show("Failed: " + response.ErrorMessage);
+                else
+                    MessageBox.Show("Success: " + response.Result);
+
             }
 
           
@@ -1792,6 +1796,8 @@ new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
             //Token = "AVhvxABWFNq5dmKYIaelKhInSqsDsqQqdWQ=";
             Login();
             TestWarehouseService(Token);
+
+            return;
 
             TestCustomerService(Token);
             GetExternalTasksFromQueue(1, 1);
@@ -3119,6 +3125,22 @@ new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
 
                 }
             }
+        }
+
+        private void btnRunTest_Click(object sender, EventArgs e)
+        {
+            Login();
+
+            switch(cmdServices.SelectedItem)
+            {
+                case "Warehouse":
+                    TestWarehouseService(Token);
+                    break;
+                default:
+                    MessageBox.Show("select a service to test");
+                    break;
+            }
+            
         }
 
 
