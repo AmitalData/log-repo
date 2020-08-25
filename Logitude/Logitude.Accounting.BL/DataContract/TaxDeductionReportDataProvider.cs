@@ -67,8 +67,9 @@ namespace Logitude.Accounting.BL.DataContract
         public TaxDeductionReportData GetTaxDeductionReportData()
         {            
             TaxDeductionReportData taxDeductionReport = new TaxDeductionReportData();
-            taxDeductionReport.TaxYear = ReportYear.ToString(); 
-            
+            taxDeductionReport.TaxYear = ReportYear.ToString();
+            setting = GetFullAccountingPMForTenant();
+            taxDeductionReport.SettingDeductionFileNumber = setting.DeductionFileNumber;
             taxDeductionReport.deductionLines = GetTaxReportDeductionLines();
 
             taxDeductionReport.ByVendorList = FillGroupByVendorList(taxDeductionReport.deductionLines);
@@ -125,7 +126,7 @@ namespace Logitude.Accounting.BL.DataContract
         List<JournalLine> journalLines;
         public List<LedgerTransaction> GetTransactions()
         {
-            setting = GetFullAccountingPMForTenant();
+          
             List<LedgerTransaction> transactions = (from a in accountingContext.LedgerTransactions
                     join j in accountingContext.Journals on a.JournalId equals j.Id
                     where (a.AccountingDate >= startDate && a.AccountingDate <= endDate)
