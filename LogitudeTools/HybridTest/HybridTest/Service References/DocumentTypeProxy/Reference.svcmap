@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8957fcbc-6794-4d20-ab49-8d0acb6d5829" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://192.116.221.103/main/wcfapi/documenttypewcfservice.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="DocumentTypeWcfService7.xsd" MetadataType="Schema" ID="f78006c3-4591-4680-8046-29cbb85f8c95" SourceId="1" SourceUrl="http://192.116.221.103/main/WcfApi/DocumentTypeWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="DocumentTypeWcfService1.wsdl" MetadataType="Wsdl" ID="e757a7a9-d15f-4a6e-877e-217b281f98df" SourceId="1" SourceUrl="http://192.116.221.103/main/WcfApi/DocumentTypeWcfService.svc?wsdl" />
+    <MetadataFile FileName="DocumentTypeWcfService71.xsd" MetadataType="Schema" ID="16c85fad-80d7-4012-87df-c97c96885682" SourceId="1" SourceUrl="http://192.116.221.103/main/WcfApi/DocumentTypeWcfService.svc?xsd=xsd6" />
+    <MetadataFile FileName="DocumentTypeWcfService1.disco" MetadataType="Disco" ID="c540dc94-2e35-4018-8d4e-fcb61d4b0d25" SourceId="1" SourceUrl="http://192.116.221.103/main/WcfApi/DocumentTypeWcfService.svc?disco" />
+    <MetadataFile FileName="DocumentTypeWcfService72.xsd" MetadataType="Schema" ID="fa0a2361-593a-4ad1-9efe-250755107120" SourceId="1" SourceUrl="http://192.116.221.103/main/WcfApi/DocumentTypeWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="DocumentTypeWcfService73.xsd" MetadataType="Schema" ID="c669ca83-968a-4ad9-a678-d9a22894850f" SourceId="1" SourceUrl="http://192.116.221.103/main/WcfApi/DocumentTypeWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="DocumentTypeWcfService74.xsd" MetadataType="Schema" ID="b257debb-6df0-4107-97e8-288526db04fd" SourceId="1" SourceUrl="http://192.116.221.103/main/WcfApi/DocumentTypeWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="DocumentTypeWcfService75.xsd" MetadataType="Schema" ID="adcb4cce-c620-443a-a381-0cd4fe8ca5d7" SourceId="1" SourceUrl="http://192.116.221.103/main/WcfApi/DocumentTypeWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="DocumentTypeWcfService76.xsd" MetadataType="Schema" ID="9df19e3e-95a5-4c2e-bf9f-c4ec6c31d40b" SourceId="1" SourceUrl="http://192.116.221.103/main/WcfApi/DocumentTypeWcfService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

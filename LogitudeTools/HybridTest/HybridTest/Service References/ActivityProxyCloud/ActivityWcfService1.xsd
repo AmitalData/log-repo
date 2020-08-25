@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://cloud.amital.co.il/WcfApi/ActivityWcfService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" />
+  <xs:complexType name="EntityPM">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q1:ChangeSetOperation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EntityPM" nillable="true" type="tns:EntityPM" />
+</xs:schema>

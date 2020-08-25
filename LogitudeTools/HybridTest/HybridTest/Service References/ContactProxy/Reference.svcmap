@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="550e2ca4-fc49-4b2e-9e14-66eea662bdd6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/ContactWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ContactWcfService6.xsd" MetadataType="Schema" ID="1a2d2b5a-209b-46b2-97c9-092b7bfefd73" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ContactWcfService61.xsd" MetadataType="Schema" ID="25cc9ed7-abc7-4bf0-b11b-13bd36ccf0e0" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ContactWcfService62.xsd" MetadataType="Schema" ID="63b07edf-e0c5-4b24-8009-7856b213760e" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ContactWcfService1.wsdl" MetadataType="Wsdl" ID="7e88106b-7b9e-4fdc-bcbf-383a9cb74de2" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?wsdl" />
+    <MetadataFile FileName="ContactWcfService63.xsd" MetadataType="Schema" ID="162e868d-057d-4e03-86d7-bc3591a8759b" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="ContactWcfService64.xsd" MetadataType="Schema" ID="80bf3067-473a-4a3c-89e4-04b0a069df50" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ContactWcfService65.xsd" MetadataType="Schema" ID="9b53d826-8527-4986-9c45-9f91b8ff40e0" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="ContactWcfService66.xsd" MetadataType="Schema" ID="be0a92a9-afa4-4bd9-a657-cd1639607d35" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd6" />
+    <MetadataFile FileName="ContactWcfService1.disco" MetadataType="Disco" ID="7f5ebd97-7186-4bff-a701-9061a3a54433" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

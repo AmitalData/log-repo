@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="862502b0-13e3-4772-ba8e-ec9740cac767" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9999/WcfApi/CountryWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CountryWcfService4.xsd" MetadataType="Schema" ID="9fd3cbc5-9732-43a2-826e-a242a05d6aec" SourceId="1" SourceUrl="http://localhost:9999/WcfApi/CountryWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="CountryWcfService1.disco" MetadataType="Disco" ID="d1ceb47d-a5fa-45f4-b239-e0b2173102e3" SourceId="1" SourceUrl="http://localhost:9999/WcfApi/CountryWcfService.svc?disco" />
+    <MetadataFile FileName="CountryWcfService41.xsd" MetadataType="Schema" ID="3cdcc2b1-5b21-48f1-abbf-2913b00ae7ec" SourceId="1" SourceUrl="http://localhost:9999/WcfApi/CountryWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="CountryWcfService42.xsd" MetadataType="Schema" ID="c595a5cf-e0f6-405e-a543-c8107aab81fc" SourceId="1" SourceUrl="http://localhost:9999/WcfApi/CountryWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="CountryWcfService1.wsdl" MetadataType="Wsdl" ID="85a798f3-098d-4419-991b-4c3b7379b858" SourceId="1" SourceUrl="http://localhost:9999/WcfApi/CountryWcfService.svc?wsdl" />
+    <MetadataFile FileName="CountryWcfService43.xsd" MetadataType="Schema" ID="5c1b0d59-12f9-4349-8050-04ede2da0349" SourceId="1" SourceUrl="http://localhost:9999/WcfApi/CountryWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="CountryWcfService44.xsd" MetadataType="Schema" ID="0b58ed8e-f3e1-423b-ad68-79d1148804e3" SourceId="1" SourceUrl="http://localhost:9999/WcfApi/CountryWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="CountryWcfService45.xsd" MetadataType="Schema" ID="9b90ea83-c6f1-4126-9cd4-1f5f9d1db5b5" SourceId="1" SourceUrl="http://localhost:9999/WcfApi/CountryWcfService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
