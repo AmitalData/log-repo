@@ -4642,6 +4642,7 @@
     <Content Include="WcfApi\VendorCommissionWcfService.svc" />
     <Content Include="WcfApi\VendorWcfService.svc" />
     <Content Include="WcfApi\VesselWcfServcie.svc" />
+    <Content Include="WcfApi\WarehouseWcfService.svc" />
     <Content Include="WcfServices\XapFilesDatabaseWcfService.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -6126,6 +6127,7 @@
     <Compile Include="WcfApi\CustomerDWWcfService.svc.cs">
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\IWarehouseWcfService.cs" />
     <Compile Include="WcfApi\UserIDNumberRequestWcfService.svc.cs">
       <DependentUpon>UserIDNumberRequestWcfService.svc</DependentUpon>
     </Compile>
@@ -6285,6 +6287,9 @@
     </Compile>
     <Compile Include="WcfApi\VesselWcfServcie.svc.cs">
       <DependentUpon>VesselWcfServcie.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WcfApi\WarehouseWcfService.svc.cs">
+      <DependentUpon>WarehouseWcfService.svc</DependentUpon>
     </Compile>
     <Compile Include="WcfServices\IXapFilesDatabaseWcfService.cs" />
     <Compile Include="WcfServices\XapFilesDatabaseWcfService.svc.cs">

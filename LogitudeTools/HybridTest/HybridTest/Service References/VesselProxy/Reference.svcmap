@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b2734027-915e-4b31-97df-9a1ea009803f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:62619/WcfApi/VesselWcfServcie.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="VesselWcfServcie.xsd" MetadataType="Schema" ID="aca5b08d-298f-49c7-93e4-8465ac25d4f1" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/VesselWcfServcie.svc?xsd=xsd2" />
+    <MetadataFile FileName="VesselWcfServcie.disco" MetadataType="Disco" ID="bf290c82-d375-42c4-8f41-690e3be999ce" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/VesselWcfServcie.svc?disco" />
+    <MetadataFile FileName="VesselWcfServcie1.xsd" MetadataType="Schema" ID="b95f4002-85ac-432a-b5d1-1ce58ca792c6" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/VesselWcfServcie.svc?xsd=xsd1" />
+    <MetadataFile FileName="VesselWcfServcie.wsdl" MetadataType="Wsdl" ID="ba9cc138-1f77-45c8-ba65-27e0d7376528" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/VesselWcfServcie.svc?wsdl" />
+    <MetadataFile FileName="VesselWcfServcie2.xsd" MetadataType="Schema" ID="e7904612-593c-4458-99fc-26cc1b03de95" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/VesselWcfServcie.svc?xsd=xsd0" />
+    <MetadataFile FileName="VesselWcfServcie3.xsd" MetadataType="Schema" ID="10b62fd2-951e-49d0-8d34-8e0c79f9ff71" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/VesselWcfServcie.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

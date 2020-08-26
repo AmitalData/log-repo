@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8a911d9a-8369-44ce-834b-3f099698b28a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/HybridTenantStateWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="HybridTenantStateWcfService.xsd" MetadataType="Schema" ID="e979eda3-f0cc-41c8-a25c-aa482dc9396d" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/HybridTenantStateWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="HybridTenantStateWcfService.disco" MetadataType="Disco" ID="74bc9d7e-0d8f-45c0-ae6c-0b02f3ab6066" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/HybridTenantStateWcfService.svc?disco" />
+    <MetadataFile FileName="HybridTenantStateWcfService1.xsd" MetadataType="Schema" ID="5873bdf1-7402-4f63-8a7e-093849be0ff9" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/HybridTenantStateWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="HybridTenantStateWcfService.wsdl" MetadataType="Wsdl" ID="96316d37-4fc0-4975-971d-b67de92f9753" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/HybridTenantStateWcfService.svc?wsdl" />
+    <MetadataFile FileName="HybridTenantStateWcfService2.xsd" MetadataType="Schema" ID="724dcc9a-7c98-4b47-8b9a-46cbf5988ec3" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/HybridTenantStateWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="HybridTenantStateWcfService3.xsd" MetadataType="Schema" ID="de2c9430-8a43-4bbc-bf24-ee969c288b50" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/HybridTenantStateWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="HybridTenantStateWcfService4.xsd" MetadataType="Schema" ID="90494ff9-c9b8-4ee9-a063-657b3e543c05" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/HybridTenantStateWcfService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
