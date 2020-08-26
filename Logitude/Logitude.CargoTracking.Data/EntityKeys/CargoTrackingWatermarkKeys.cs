@@ -20,7 +20,8 @@ namespace Logitude.CargoTracking.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return TableName;
+                    return (TableName).ToString() ;
+                 
       }
 
       public override string GetEntityPMName()

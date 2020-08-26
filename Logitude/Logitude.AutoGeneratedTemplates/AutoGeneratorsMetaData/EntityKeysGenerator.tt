@@ -159,7 +159,18 @@ namespace <#= keynamespacestring #>
 	 
 	  public override string GetFullKey()
       {
-          return <#= fullKey #>;
+        <#+ 
+        if(!keynamespacestring.Contains("CargoTracking")){
+            #>
+         return <#=fullKey #> ;
+        <#+
+        }
+        else{
+            #>
+          return (<#=fullKey#>).ToString() ;
+        <#+
+        }
+         #>         
       }
 
       public override string GetEntityPMName()
