@@ -357,6 +357,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         } else {
             this.ReloadScreen();
             this.SelectedLines.Clear();
+            this.CalculateTotals();
         }
     }
 
