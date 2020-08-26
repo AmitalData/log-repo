@@ -123,7 +123,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                           TariffId = a.TariffId,
                                           TariffNumber = a.TariffNumber,
                                           TariffVersion = a.TariffVersion,
-
+                                          IsRegionalTax = a.IsRegionalTax,
                                       }).FirstOrDefault();
 
             return myResult;
@@ -221,7 +221,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 TariffId = a.TariffId,
                                                 TariffNumber = a.TariffNumber,
                                                 TariffVersion = a.TariffVersion,
-
+                                                IsRegionalTax = a.IsRegionalTax,
                                             }).ToList();
 
             QuotePriceStepsRepository quotePriceStepsRepository = new QuotePriceStepsRepository(this.repository.context);

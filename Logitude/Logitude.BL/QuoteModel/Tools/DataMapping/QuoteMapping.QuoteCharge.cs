@@ -90,6 +90,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.TariffId = itemPM.TariffId;
             itemPoco.TariffNumber = itemPM.TariffNumber;
             itemPoco.TariffVersion = itemPM.TariffVersion;
+            itemPoco.IsRegionalTax = itemPM.IsRegionalTax;
         }
     }
 }

@@ -40,6 +40,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
     public ChargeTypesQueryFilters: ApiQueryFilters;
     public MeasurementsQueryFilters: ApiQueryFilters;
     public IsVATVisible: boolean = false;
+    public IsRegionalTaxVisible: boolean = false;
     public ValidationErrorsList: string[] = [];
     public CheckChargeTypeDuplicationFlag: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;    
@@ -94,6 +95,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         this.IsRoutingRate = this.DataContext.fatherComponent.IsRoutingRate;
         this.IsEditingEnabled = this.DataContext.fatherComponent.IsEditingEnabled;
         this.IsVATVisible = this.IsAdhoc && this.QuotePM.IsChargesByVAT ? true : false;
+        this.IsRegionalTaxVisible = this.IsVATVisible && this.Father.IsRegionalTaxVisible ? true : false;
         this.ChargesTypeCode = this.EntityPM.ChargesTypeCode;
 
         this.SetUIProperties();
@@ -424,6 +426,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         this.myCloner.AddField('SaleMinAmount');
         this.myCloner.AddField('SaleMaxAmount');
         this.myCloner.AddField('TariffId');
+        this.myCloner.AddField('IsRegionalTax');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.QuotePM);
     }

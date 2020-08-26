@@ -277,6 +277,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                EstimatedProfitInProfit = f.EstimatedProfitInProfit,
                                                ShipmentSubTypeId = f.ShipmentSubTypeId,
                                                ShipmentSubTypeName = f.ShipmentSubType == null ? null : f.ShipmentSubType.Name,
+                                               RegionalTaxId = f.RegionalTaxId,
+                                               RegionalTaxPercentage=f.RegionalTaxPercentage,
                                            };
             return result;
         }
@@ -1343,6 +1345,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 ProfitCurrencyId = entityPOCO.ProfitCurrencyId,
                 ProfitExchangeRate = entityPOCO.ProfitExchangeRate,
                 RequestDate = entityPOCO.RequestDate,
+                RegionalTaxId = entityPOCO.RegionalTaxId,
+                RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
             };
 
             int tenant = entityPOCO.Tenant;
