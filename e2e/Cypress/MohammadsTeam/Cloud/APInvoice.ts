@@ -18,7 +18,7 @@ export class APInvoice {
             })
             cy.get('input[id=APInvoice_InvoiceNumber]').type(InvoiceNumber).should("have.value", InvoiceNumber)
             cy.get('input[id=APInvoice_AmountInInvoiceCurrency]').type('10000').should("have.value", '10000')
-            cy.get('input[id=APInvoice_InvoiceCurrencyId]').type('NIS').should("have.value", 'NIS')
+            cy.get('input[id=APInvoice_InvoiceCurrencyId]').type('NIS');
 
             cy.get('ul[id=mydatalist_APInvoice_InvoiceCurrencyId]').contains('NIS').then(a => {
                 a[0].click();
@@ -33,6 +33,14 @@ export class APInvoice {
             cy.get('ul[id=mydatalist_APInvoiceLine_ChargesTypeId]').contains('Air Freight').then(a => {
                 a[0].click();
             })
+            cy.get('input[id=APInvoiceLine_VatTypeId]').clear();
+            cy.get('input[id=APInvoiceLine_VatTypeId]').type('Zero');
+
+            cy.get('ul[id=mydatalist_APInvoiceLine_VatTypeId]').contains('Zero').then(a => {
+                a[0].click();
+            })
+
+            
             cy.get('input[id=APInvoiceLine_VatPercentage]').type('0')
             cy.get('input[id=APInvoiceLine_InvoiceCurrencyAmount]').type('10000')
 
