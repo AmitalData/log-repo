@@ -211,7 +211,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CompactSearchField").FirstOrDefault();
                 queryOperations.QueryFilterItems.Remove(item);
-                object compactSeachvalue = item != null ? item.FieldValue : null;
+                string seachvalue = item != null ? item.FieldValue!=null ? !string.IsNullOrEmpty(item.FieldValue.ToString()) ? item.FieldValue.ToString() :null :null : null;
 
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
@@ -233,10 +233,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 IQueryable<CardList> entityLists = cardQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<CardList>(listQueryOperation, entityLists);
-                if (compactSeachvalue != null && !string.IsNullOrEmpty(compactSeachvalue.ToString()))
+                if (!string.IsNullOrEmpty(seachvalue))
                 {
                     CardSearchFilter cardSearchFilter = new CardSearchFilter();
-                    entityLists = cardSearchFilter.GetFilteredQuery(new CardSearchFilterArgs() { SeachText = compactSeachvalue != null ? compactSeachvalue.ToString() : "", Tenant = tenant, QueryOperations = queryOperations, EntityLists = entityLists, Filter = genericFilter });
+                    entityLists = cardSearchFilter.GetFilteredQuery(new CardSearchFilterArgs() { SeachText = seachvalue, Tenant = tenant, QueryOperations = queryOperations, EntityLists = entityLists, Filter = genericFilter });
                 }
 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
@@ -303,29 +303,30 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                         }
                     }
                 }
-                else if (compactSeachvalue == null || (compactSeachvalue != null && string.IsNullOrEmpty(compactSeachvalue.ToString())))
-
+                else if(string.IsNullOrEmpty(seachvalue))
                 {
                     entityLists = entityLists.OrderBy(d => d.EnglishName);
                 }
 
                 ServiceResponse response = new ServiceResponse();
 
-                if (filters.GetCount) response.Count = entityLists.Count();
+                if (filters.GetCount)
+                {
+                    response.Count = entityLists.Count();
+                }
                 if (!queryOperations.GetAll)
                 {
 
                     entityLists = entityLists.Skip(skippedEntities);
-
                     entityLists = entityLists.Take(queryOperations.PageSize);
 
                 }
-			   List<CardList> listResult = entityLists.ToList();
+                List<CardList> listResult = entityLists.ToList();
 
-               response.Result = listResult;
-			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-			   PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
-               
+                response.Result = listResult;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
                 return reponseMessage;
             }
             catch (Exception ex)
@@ -335,7 +336,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
         }
 
-		[HttpGet]
+        [HttpGet]
         public HttpResponseMessage GetByCompactFilters([FromUri] ApiQueryFilters filters)
         {
             try
