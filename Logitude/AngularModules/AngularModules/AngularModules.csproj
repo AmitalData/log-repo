@@ -313,7 +313,11 @@
     <TypeScriptCompile Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingIncrementalStatistics.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\BankCodeExtendedPMService.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsCustoms.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\HorseList.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\HorsePM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\ChargesTypeByProductsService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\HorseListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\HorsePMService.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\DeclarationListTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ArrivalDateListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ActionListHeaderTemplate.ts" />

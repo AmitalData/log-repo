@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class HorseUpdateClass
    {  		
-		public const string HashString = "68eec8d843f5e1a64a36ba75efcd4c5e";
+		public const string HashString = "1b99daf86779eeffaa71eab8e6af86d4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1629,7 +1629,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature HorseFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = HorseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Horse.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HorseObjectTable);
 		   Feature HorseFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = HorseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Horse.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HorseObjectTable);
 		   Feature HorseFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = HorseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Horse.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HorseObjectTable);
-		   Feature HorseFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = HorseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Horse.Features.PackageFeature", NameTextCodeDefaultText = "Horse Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HorseObjectTable);    
+		   Feature HorseFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = HorseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Horse.Features.PackageFeature", NameTextCodeDefaultText = "Horse Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HorseObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature HorseFeature_Horse_M_Horses = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Horse.M.Horses", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = HorseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Horse.Features.Horse.M.Horses", NameTextCodeDefaultText = @"Horses" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HorseObjectTable);
+
+   
 	    
 		}
 
