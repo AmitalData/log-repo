@@ -439,7 +439,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         string myContainersNumbersText = "";
-
+                        
                         foreach (ShipmentPackage item in shipmentPackagesList)
                         {
                             if (!string.IsNullOrEmpty(item.ContainerNumber))
@@ -460,6 +460,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                         invoiceDataProvider.ContainersNumbersArray = myContainersNumbersText;
                         invoiceDataProvider.NumberofPackages = myNumberofPackages;
+                        string myPackageDetails = this.FillShipmentPackageDetails(shipment, shipmentPackagesList);
+                        invoiceDataProvider.PackageDetails = myPackageDetails;
                     }
 
                     #region ReleasingAgent
@@ -613,6 +615,60 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return invoiceDataProvider;
+        }
+
+        private string FillShipmentPackageDetails(ShipmentPM shipment, List<ShipmentPackage> shipmentPackagesList)
+        {
+            string myContainersNumbersText = "";
+            string myContainersNumbersAndTypesText = "";
+            string myPackageDetails = "";
+            string myLCLContainersNumbersText = "";
+            foreach (ShipmentPackage item in shipmentPackagesList)
+            {
+                if (!string.IsNullOrEmpty(myPackageDetails))
+                {
+                    myPackageDetails = Environment.NewLine + myPackageDetails;
+                }
+             
+                if (shipment.TransportModeId == "A")
+                {
+                    myPackageDetails = myPackageDetails + item.Quantity == null ? "0" : item.Quantity.ToString();
+                }
+
+                else
+                {
+                    PackageType myPackageType = (from pa in commonContext.PackageTypes where pa.Id == item.PackageTypeId select pa).FirstOrDefault();
+
+                    if (myPackageType != null)
+                    {
+                        myPackageDetails = myPackageDetails + item.Quantity == null ? "0" : item.Quantity.ToString() + " " + myPackageType.EnglishName;
+                    }
+                    else
+                    {
+                        myPackageDetails = myPackageDetails + item.Quantity == null ? "0" : item.Quantity.ToString();
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(item.ContainerNumber))
+                {
+                    myLCLContainersNumbersText = string.IsNullOrEmpty(myLCLContainersNumbersText) ? item.ContainerNumber : myLCLContainersNumbersText + ", " + item.ContainerNumber;
+
+                    PackageType myPackageType = (from pa in commonContext.PackageTypes where pa.Id == item.PackageTypeId select pa).FirstOrDefault();
+                    if (myPackageType != null)
+                    {
+                        if (myPackageType.IsContainer)
+                        {
+                            string type = !string.IsNullOrEmpty(myPackageType.PrintAs) ? myPackageType.PrintAs : myPackageType.Code;
+                            string itemText = item.ContainerNumber + " " + type;
+
+                            myContainersNumbersText = string.IsNullOrEmpty(myContainersNumbersText) ? item.ContainerNumber : myContainersNumbersText + ", " + item.ContainerNumber;
+                            myContainersNumbersAndTypesText = string.IsNullOrEmpty(myContainersNumbersAndTypesText) ? itemText : myContainersNumbersAndTypesText + "," + itemText;
+                        }
+                    }
+                }
+            }
+
+            return myPackageDetails;
         }
 
         private APInvoiceDataProvider GetMultipleAPInvoiceDataProvider(APInvoicePM invoice)
