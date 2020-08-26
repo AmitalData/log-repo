@@ -2725,6 +2725,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                  {
                                                      Id = d.Id,
                                                      Name = d.EnglishName,
+                                                     Code = d.Code,
                                                      PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName,
                                                  }).ToList();
 
@@ -2746,8 +2747,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             foreach (string cardId in cardIdsList)
-            {
-                
+            {                
                 AgedAccountsReceivableDataProvider.AgedAccountsReceivable acountsRecored = new AgedAccountsReceivableDataProvider.AgedAccountsReceivable();
 
                 double? currentsum = 0;
@@ -2848,6 +2848,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     acountsRecored.PaymentTerm = cardEntity.PaymentTerm;
                     acountsRecored.CustomerName = cardEntity.Name;
+                    acountsRecored.CardCode = cardEntity.Code;
                 }
 
                 acountsRecored.CurrentDue = currentsum;
@@ -2873,14 +2874,10 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (acountsRecored.CustomerTotals != 0)
                 {
-
                     dataProvider.AgedAccountsReceivableList.Add(acountsRecored);
-
                 }
-            }
-              
-
-
+            }           
+            
             #endregion
 
             return dataProvider;
@@ -13541,6 +13538,7 @@ namespace WebFreight.Web.ReportsWebServices
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public string Code { get; set; }
         public string PaymentTerm { get; set; }
     }
 
