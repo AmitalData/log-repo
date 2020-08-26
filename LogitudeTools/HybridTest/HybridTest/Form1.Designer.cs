@@ -43,6 +43,7 @@
             this.button5 = new System.Windows.Forms.Button();
             this.btnRunTest = new System.Windows.Forms.Button();
             this.cmdServices = new System.Windows.Forms.ComboBox();
+            this.btnPaymentTerms = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnSendXml
@@ -197,11 +198,22 @@
             this.cmdServices.Size = new System.Drawing.Size(298, 21);
             this.cmdServices.TabIndex = 14;
             // 
+            // btnPaymentTerms
+            // 
+            this.btnPaymentTerms.Location = new System.Drawing.Point(361, 84);
+            this.btnPaymentTerms.Name = "btnPaymentTerms";
+            this.btnPaymentTerms.Size = new System.Drawing.Size(152, 30);
+            this.btnPaymentTerms.TabIndex = 15;
+            this.btnPaymentTerms.Text = "Payment Term Test";
+            this.btnPaymentTerms.UseVisualStyleBackColor = true;
+            this.btnPaymentTerms.Click += new System.EventHandler(this.btnPaymentTerms_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1014, 571);
+            this.Controls.Add(this.btnPaymentTerms);
             this.Controls.Add(this.cmdServices);
             this.Controls.Add(this.btnRunTest);
             this.Controls.Add(this.button5);
@@ -240,6 +252,7 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button btnRunTest;
         private System.Windows.Forms.ComboBox cmdServices;
+        private System.Windows.Forms.Button btnPaymentTerms;
     }
 }
 
