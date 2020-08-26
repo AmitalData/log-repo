@@ -2403,7 +2403,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         if (reload == true) {
             this.controller.ClearCache();
         }
-        this.controller.getRow(firstRow, AppTool.IsNullOrEmpty(this.dataSource.sortingCol) ? "" : this.dataSource.sortingCol, AppTool.IsNullOrEmpty(this.dataSource.sortingDir) ? "" : this.dataSource.sortingDir, true, this.searchFields, false, this.Filters, reload, false, this.viewportSize, this.SearchFieldChanged);
+        this.controller.getRow(firstRow, AppTool.IsNullOrEmpty(this.dataSource.sortingCol) ? "" : this.dataSource.sortingCol, AppTool.IsNullOrEmpty(this.dataSource.sortingDir) ? "" : this.dataSource.sortingDir, true, this.searchFields, false, this.Filters, reload, false, this.viewportSize, this.SearchFieldChanged, this.DontApplyVirtualization);
 
     }
 

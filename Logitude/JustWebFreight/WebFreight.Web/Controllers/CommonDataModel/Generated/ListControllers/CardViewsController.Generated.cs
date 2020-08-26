@@ -171,7 +171,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-
+					
 
 
                 }
@@ -183,7 +183,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-
                         ObjectField field = CardObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
@@ -209,11 +208,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+								                
                 QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CompactSearchField").FirstOrDefault();
                 queryOperations.QueryFilterItems.Remove(item);
                 string seachvalue = item != null ? item.FieldValue!=null ? !string.IsNullOrEmpty(item.FieldValue.ToString()) ? item.FieldValue.ToString() :null :null : null;
-
-
+				
+				
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 CardRepository  cardRepository = new CardRepository(MyContext);
                 IQueryable<Card> entityPocos = cardRepository.GetCards(tenant);
@@ -233,100 +233,105 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 IQueryable<CardList> entityLists = cardQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<CardList>(listQueryOperation, entityLists);
-                if (!string.IsNullOrEmpty(seachvalue))
+
+		      
+			  								             
+			 if (!string.IsNullOrEmpty(seachvalue))
                 {
                     CardSearchFilter cardSearchFilter = new CardSearchFilter();
                     entityLists = cardSearchFilter.GetFilteredQuery(new CardSearchFilterArgs() { SeachText = seachvalue, Tenant = tenant, QueryOperations = queryOperations, EntityLists = entityLists, Filter = genericFilter });
                 }
-
+		     
+ 
+ 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
-                {
-                    PropertyInfo propInfo = typeof(CardList).GetProperty(queryOperations.SortByColumnName);
+                 {
+                   PropertyInfo propInfo = typeof(CardList).GetProperty(queryOperations.SortByColumnName);
+                   
 
+                   ObjectField objectField = (from a in CardObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
 
-                    ObjectField objectField = (from a in CardObjectFields
-                                               where a.FieldName == queryOperations.SortByColumnName
-                                               select a).FirstOrDefault();
-
-                    if (objectField != null)
+                   if (objectField != null)
+                   {
+                    if (objectField.IsCustom)
                     {
-                        if (objectField.IsCustom)
-                        {
-                            entityLists = sortClass.GetSorterQuery<CardList, string>(queryOperations, entityLists);
-                        }
-                        else
-                        {
-                            switch (objectField.DataTypeCode.ToLower())
-                            {
-                                case "ntext":
-                                case "text":
-                                case "lookup":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<CardList, string>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "sigdouble":
-                                case "double":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<CardList, double>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "date":
-                                case "datetime":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<CardList, DateTime>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "unsinteger":
-                                case "integer":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<CardList, int>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "boolean":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<CardList, bool>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "unsdecimal":
-                                case "decimal":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<CardList, decimal>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                default:
-                                    {
-                                        entityLists = entityLists.OrderBy(d => d.EnglishName);
-                                        break;
-                                    }
-                            }
-                        }
+                        entityLists = sortClass.GetSorterQuery<CardList, string>(queryOperations, entityLists);
                     }
+                    else
+                    {
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+						case "lookup":
+                            {
+                                entityLists = sortClass.GetSorterQuery<CardList, string>(queryOperations, entityLists);
+                                break;
+                            }
+						case "sigdouble":
+						case "double":
+                            {
+                                entityLists = sortClass.GetSorterQuery<CardList, double>(queryOperations, entityLists);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+                            {
+                                entityLists = sortClass.GetSorterQuery<CardList, DateTime>(queryOperations, entityLists);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                entityLists = sortClass.GetSorterQuery<CardList, int>(queryOperations, entityLists);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                entityLists = sortClass.GetSorterQuery<CardList, bool>(queryOperations, entityLists);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                entityLists = sortClass.GetSorterQuery<CardList, decimal>(queryOperations, entityLists);
+                                break;
+                            }
+                        default:
+                            {
+                                entityLists = entityLists.OrderBy(d => d.EnglishName);
+                                break;
+                            }
+                    }
+				 }
                 }
-                else if(string.IsNullOrEmpty(seachvalue))
-                {
-                    entityLists = entityLists.OrderBy(d => d.EnglishName);
-                }
+            }					  						
+	       else
+            {
+                entityLists = entityLists.OrderBy(d => d.EnglishName);
+            } 
 
-                ServiceResponse response = new ServiceResponse();
+			ServiceResponse response = new ServiceResponse();
+			
+			if (filters.GetCount)
+              {
+					response.Count = entityLists.Count();
+			  }
+			  	if(!queryOperations.GetAll)
+				 {
 
-                if (filters.GetCount)
-                {
-                    response.Count = entityLists.Count();
-                }
-                if (!queryOperations.GetAll)
-                {
+                  entityLists = entityLists.Skip(skippedEntities);
+				  entityLists = entityLists.Take(queryOperations.PageSize);
 
-                    entityLists = entityLists.Skip(skippedEntities);
-                    entityLists = entityLists.Take(queryOperations.PageSize);
+				}
+			   List<CardList> listResult = entityLists.ToList();
 
-                }
-                List<CardList> listResult = entityLists.ToList();
-
-                response.Result = listResult;
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
+               response.Result = listResult;
+			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+			   PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+               
                 return reponseMessage;
             }
             catch (Exception ex)
@@ -336,7 +341,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
         }
 
-        [HttpGet]
+		[HttpGet]
         public HttpResponseMessage GetByCompactFilters([FromUri] ApiQueryFilters filters)
         {
             try

@@ -60,7 +60,7 @@
                                                     <table>
                                                         <tr>
                                                             <td style="color: #666666; font-size: 11px; padding-left: 15px;">
-                                                                My {{ObjectTableNamePluralName}} ({{DataSource.rowCount}})
+                                                                My {{ObjectTableNamePluralName}} ({{DataSource.rowCount}}) <span style="margin-left:5px" *ngIf="DataSource.rowCount == ConstantPageSize && DontApplyVirtualization"> Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span> 
                                                             </td>
 
                                                             <!-- Add US Warehouse Button -->
