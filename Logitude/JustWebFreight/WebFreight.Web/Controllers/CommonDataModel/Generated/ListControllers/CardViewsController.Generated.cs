@@ -233,9 +233,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 IQueryable<CardList> entityLists = cardQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<CardList>(listQueryOperation, entityLists);
-                ServiceResponse response = new ServiceResponse();
-
-                
                 if (compactSeachvalue != null && !string.IsNullOrEmpty(compactSeachvalue.ToString()))
                 {
                     CardSearchFilter cardSearchFilter = new CardSearchFilter();
@@ -306,12 +303,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                         }
                     }
                 }
-                else if (compactSeachvalue == null ||  (compactSeachvalue!=null && string.IsNullOrEmpty(compactSeachvalue.ToString())))
+                else if (compactSeachvalue == null || (compactSeachvalue != null && string.IsNullOrEmpty(compactSeachvalue.ToString())))
 
                 {
                     entityLists = entityLists.OrderBy(d => d.EnglishName);
                 }
-                
+
+                ServiceResponse response = new ServiceResponse();
 
                 if (filters.GetCount) response.Count = entityLists.Count();
                 if (!queryOperations.GetAll)
