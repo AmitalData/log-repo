@@ -2213,9 +2213,11 @@ namespace Logitude.DBMigrations.Models
             try
             {
                 string dbConfigFileName = null;
-                int aotScriptsExecutionTimeOut = 1;
+                int aotScriptsExecutionTimeOut = 30;
+                bool aotCreateIndexWithOnline = true;
                 Config dbConfigFileNameConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "DBConfigFileName".ToLower()).FirstOrDefault();
                 Config aotScriptsExecutionTimeOutConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "AOTScriptsExecutionTimeOut".ToLower()).FirstOrDefault();
+                Config aotCreateIndexWithOnlineConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "AOTCreateIndexWithOnline".ToLower()).FirstOrDefault();
                 
                 if (dbConfigFileNameConfig != null)
                 {
@@ -2224,7 +2226,12 @@ namespace Logitude.DBMigrations.Models
 
                 if(aotScriptsExecutionTimeOutConfig != null)
                 {
-                    aotScriptsExecutionTimeOut = String.IsNullOrEmpty(aotScriptsExecutionTimeOutConfig.Value) ? 1 : Convert.ToInt32(aotScriptsExecutionTimeOutConfig.Value);
+                    aotScriptsExecutionTimeOut = String.IsNullOrEmpty(aotScriptsExecutionTimeOutConfig.Value) ? 30 : Convert.ToInt32(aotScriptsExecutionTimeOutConfig.Value);
+                }
+
+                if(aotCreateIndexWithOnlineConfig != null)
+                {
+                    aotCreateIndexWithOnline = String.IsNullOrEmpty(aotCreateIndexWithOnlineConfig.Value) || (aotCreateIndexWithOnlineConfig.Value == "true");
                 }
 
                 if (String.IsNullOrEmpty(dbConfigFileName))
@@ -2255,6 +2262,7 @@ namespace Logitude.DBMigrations.Models
                 ToolConfigurations.SystemLogsConnectionString = systemLogsConnectionStringElement == null ? null : (systemLogsConnectionStringElement.Attributes["value"]?.Value);
                 ToolConfigurations.CargoTrackingConnectionString = cargoTrackingConnectionStringElement == null ? null : (cargoTrackingConnectionStringElement.Attributes["value"]?.Value);
                 ToolConfigurations.AOTScriptsExecutionTimeOut = aotScriptsExecutionTimeOut;
+                ToolConfigurations.AOTCreateIndexWithOnline = aotCreateIndexWithOnline;
             }
             catch (Exception)
             {

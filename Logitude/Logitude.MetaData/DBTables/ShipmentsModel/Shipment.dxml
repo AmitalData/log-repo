@@ -2992,34 +2992,12 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column
-    Name="DBMigrationsLastDefaultValue"
-    Type="int"
-    DefaultValue="0">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="DBMigrationsLastScript"
-    Type="int"
-    DefaultValue="0">
-    <Constraints
-      Nullable="false" />
-  </Column>
   
   <Column
     Name="TestColumn1"
     Type="varchar"
-    Size="20"
+    Size="10"
     DefaultValue="'Test'">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="TestColumn2"
-    Type="varchar"
-    Size="40"
-    DefaultValue="'Test2'">
     <Constraints
       Nullable="false" />
   </Column>
@@ -3757,10 +3735,6 @@
     Columns="Tenant,ShipmentNumber" />
   <Index
     Columns="AutomaticLastUpdateDate" />
-  <Index
-    Columns="DBMigrationsLastDefaultValue" />
-  <Index
-    Columns="DBMigrationsLastScript" />
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
 </Table>

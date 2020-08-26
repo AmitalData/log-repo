@@ -25,6 +25,8 @@ namespace Logitude.DBMigrations.Models
         public string GetScript()
         {
             CurrentTable = GetCurrentTableDefinitionFromDB();
+            ExcludeInfrastructureObjectsFromCurrentTable();
+            
             string script;
             if (CurrentTable == null)
             {
@@ -1034,6 +1036,17 @@ namespace Logitude.DBMigrations.Models
         protected bool IsTableHasPrimaryKeys(TableDefinition table)
         {
             return table.Columns.Where(c => c.Constraints.PrimaryKey).Any();
+        }
+
+        protected void ExcludeInfrastructureObjectsFromCurrentTable()
+        {
+            if (CurrentTable != null)
+            {
+                List<string> infrastructureObjectsNames = new List<string>() { "DBMigrationsLastDefaultValue", "DBMigrationsLastScript" };
+                CurrentTable.Columns.RemoveAll(c => infrastructureObjectsNames.Any(s => s.ToLower() == c.Name.ToLower()));
+                CurrentTable.Indexes.RemoveAll(i => infrastructureObjectsNames.Any(s => s.ToLower() == i.Columns.ToLower()));
+                CurrentTable.AllIndexes.RemoveAll(i => infrastructureObjectsNames.Any(s => s.ToLower() == i.Columns.ToLower()));
+            }
         }
 
         protected void ExitDatabaseMigrations(string message)

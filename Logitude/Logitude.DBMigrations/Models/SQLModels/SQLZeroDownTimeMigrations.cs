@@ -73,7 +73,8 @@ namespace Logitude.DBMigrations.Models
             string defaultValue = FormatDefaultValue(dbMigrationsSetDefaultValue.DefaultValue);
 
             string queryString = "UPDATE TOP(1000) [" + schemaName + "].[" + tableName + "] SET [" + columnName + "] = " + defaultValue + ", " +
-                "[DBMigrationsLastDefaultValue] = " + updateNumber.ToString() + " WHERE [DBMigrationsLastDefaultValue] = " + (updateNumber - 1).ToString() + ";";
+                "[DBMigrationsLastDefaultValue] = " + updateNumber.ToString() + " WHERE [DBMigrationsLastDefaultValue] = " + (updateNumber - 1).ToString() +
+                (updateNumber - 1 == 0 ? " OR [DBMigrationsLastDefaultValue] IS NULL" : null) + ";";
 
             SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
 
@@ -253,13 +254,14 @@ namespace Logitude.DBMigrations.Models
             string queryString = dbMigrationsDataScript.SxmlScript;
             //queryString = Regex.Replace(queryString, "[$]Top[$]", "TOP(1000)", RegexOptions.IgnoreCase);
             //queryString = Regex.Replace(queryString, "[$]UpdateLastCounter[$]", ("[DBMigrationsLastScript] = " + scriptExecutionNumber.ToString()), RegexOptions.IgnoreCase);
-            queryString = Regex.Replace(queryString, "[$]LastCounterWhere[$]", "Id IN (SELECT Id from @TableIds)", RegexOptions.IgnoreCase);
+            queryString = Regex.Replace(queryString, "[$]LastCounterWhere[$]", "[Id] IN (SELECT Id from @IdsTable)", RegexOptions.IgnoreCase);
 
-            queryString = "DECLARE @TableIds TABLE (Id VARCHAR(20));\n" +
-                          "INSERT INTO @TableIds SELECT TOP(1000) Id FROM " + targetTableName + " WHERE DBMigrationsLastScript = " + (scriptExecutionNumber - 1).ToString() + ";" +
+            queryString = "DECLARE @IdsTable TABLE (Id VARCHAR(20));\n" +
+                          "INSERT INTO @IdsTable SELECT TOP(1000) [Id] FROM [" + targetTableName + "] WHERE [DBMigrationsLastScript] = " + (scriptExecutionNumber - 1).ToString() +
+                          (scriptExecutionNumber - 1 == 0 ? " OR [DBMigrationsLastScript] IS NULL" : null) + ";\n" +
                           queryString + "\n" +
-                          "UPDATE " + targetTableName + " SET DBMigrationsLastScript = " + scriptExecutionNumber.ToString() + " WHERE Id IN (SELECT Id FROM @TableIds);\n" +
-                          "DELETE FROM @TableIds;";
+                          "UPDATE [" + targetTableName + "] SET [DBMigrationsLastScript] = " + scriptExecutionNumber.ToString() + " WHERE [Id] IN (SELECT Id FROM @IdsTable);\n" +
+                          "DELETE FROM @IdsTable;";
 
             SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
 
@@ -357,6 +359,64 @@ namespace Logitude.DBMigrations.Models
                 }
 
                 File.AppendAllText(csvFilePath, data);
+            }
+        }
+
+        protected override void CreateDBMigrationsLastDefaultValueColumn(string tableName)
+        {
+            string indexOnlineOption = ToolConfigurations.AOTCreateIndexWithOnline ? " WITH (ONLINE = ON)" : null;
+
+            string queryString = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + tableName + "' AND COLUMN_NAME = 'DBMigrationsLastDefaultValue')\n" +
+                                 "BEGIN\n" +
+                                 "ALTER TABLE [" + tableName + "] ADD [DBMigrationsLastDefaultValue] INT NULL;\n" +
+                                 "CREATE NONCLUSTERED INDEX [IX_" + tableName + "_DBMigrationsLastDefaultValue] ON [" + tableName + "]([DBMigrationsLastDefaultValue])" + indexOnlineOption + ";\n" +
+                                 "END";
+
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+
+            try
+            {
+                sqlConnection.Open();
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.Connection = sqlConnection;
+                sqlCommand.CommandText = queryString;
+                sqlCommand.CommandTimeout = 3600;
+                sqlCommand.ExecuteNonQuery();
+                sqlConnection.Close();
+            }
+            catch (Exception exception)
+            {
+                sqlConnection.Close();
+                ExitZeroDownTimeMigrations(exception.Message);
+            }
+        }
+
+        protected override void CreateDBMigrationsLastScriptColumn(string tableName)
+        {
+            string indexOnlineOption = ToolConfigurations.AOTCreateIndexWithOnline ? " WITH (ONLINE = ON)" : null;
+
+            string queryString = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + tableName + "' AND COLUMN_NAME = 'DBMigrationsLastScript')\n" +
+                                 "BEGIN\n" +
+                                 "ALTER TABLE [" + tableName + "] ADD [DBMigrationsLastScript] INT NULL;\n" +
+                                 "CREATE NONCLUSTERED INDEX [IX_" + tableName + "_DBMigrationsLastScript] ON [" + tableName + "]([DBMigrationsLastScript])" + indexOnlineOption + ";\n" +
+                                 "END";
+
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+
+            try
+            {
+                sqlConnection.Open();
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.Connection = sqlConnection;
+                sqlCommand.CommandText = queryString;
+                sqlCommand.CommandTimeout = 3600;
+                sqlCommand.ExecuteNonQuery();
+                sqlConnection.Close();
+            }
+            catch (Exception exception)
+            {
+                sqlConnection.Close();
+                ExitZeroDownTimeMigrations(exception.Message);
             }
         }
     }

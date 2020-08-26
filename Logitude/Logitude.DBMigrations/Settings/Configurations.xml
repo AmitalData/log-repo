@@ -2,5 +2,6 @@
 
 <Config Name="DBConfigFileName" Value="Master.DBConfig.config"></Config>
 <Config Name="AOTScriptsExecutionTimeOut" Value="30"></Config>
+<Config Name="AOTCreateIndexWithOnline" Value="true"></Config>
 
 </Configurations>

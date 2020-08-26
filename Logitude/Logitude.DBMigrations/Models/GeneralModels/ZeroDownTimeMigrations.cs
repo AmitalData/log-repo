@@ -11,20 +11,9 @@ namespace Logitude.DBMigrations.Models
     {
         public void Start()
         {
-            StartZeroDownTimeForPreDataScripts();
+            StartZeroDownTimeForDataScripts(true);
             StartZeroDownTimeForDefaultValues();
-            StartZeroDownTimeForPostDataScripts();
-        }
-
-        protected void StartZeroDownTimeForPreDataScripts()
-        {
-            List<DBMigrationsDataScript> preDBMigrationsDataScripts = GetDBMigrationsDataScripts(true);
-
-            foreach (var preDBMigrationsDataScript in preDBMigrationsDataScripts)
-            {
-                Console.WriteLine("Handle Data Script For SXML File " + preDBMigrationsDataScript.SxmlFileName + " On " + preDBMigrationsDataScript.DatabaseType + " Database ...");
-                HandleDBMigrationsDataScript(preDBMigrationsDataScript);
-            }
+            StartZeroDownTimeForDataScripts(false);
         }
 
         protected void StartZeroDownTimeForDefaultValues()
@@ -38,19 +27,21 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected void StartZeroDownTimeForPostDataScripts()
+        protected void StartZeroDownTimeForDataScripts(bool preScripts)
         {
-            List<DBMigrationsDataScript> postDBMigrationsDataScripts = GetDBMigrationsDataScripts(false);
+            List<DBMigrationsDataScript> dbMigrationsDataScripts = GetDBMigrationsDataScripts(preScripts);
 
-            foreach (var postDBMigrationsDataScript in postDBMigrationsDataScripts)
+            foreach (var dbMigrationsDataScript in dbMigrationsDataScripts)
             {
-                Console.WriteLine("Handle Data Script For SXML File " + postDBMigrationsDataScript.SxmlFileName + " On " + postDBMigrationsDataScript.DatabaseType + " Database ...");
-                HandleDBMigrationsDataScript(postDBMigrationsDataScript);
+                Console.WriteLine("Handle Data Script For SXML File " + dbMigrationsDataScript.SxmlFileName + " On " + dbMigrationsDataScript.DatabaseType + " Database ...");
+                HandleDBMigrationsDataScript(dbMigrationsDataScript);
             }
         }
 
         protected void HandleDBMigrationsSetDefaultValue(DBMigrationsSetDefaultValue dbMigrationsSetDefaultValue)
         {
+            CreateDBMigrationsLastDefaultValueColumn(dbMigrationsSetDefaultValue.TableName);
+
             UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue.Id, "Status", "InProgress");
             UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue.Id, "StartDate", DateTime.Now.ToString());
             SetDefaultValueAsBatches(dbMigrationsSetDefaultValue);
@@ -61,6 +52,8 @@ namespace Logitude.DBMigrations.Models
 
         protected void HandleDBMigrationsDataScript(DBMigrationsDataScript dbMigrationsDataScript)
         {
+            CreateDBMigrationsLastScriptColumn(dbMigrationsDataScript.TargetTableName);
+
             UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "Status", "InProgress");
             dbMigrationsDataScript.StartDate = DateTime.Now;
             UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "StartDate", dbMigrationsDataScript.StartDate.ToString());
@@ -94,5 +87,9 @@ namespace Logitude.DBMigrations.Models
         protected abstract void AddNotNullCheckConstraint(DBMigrationsSetDefaultValue dbMigrationsSetDefaultValue);
         
         protected abstract string FormatDefaultValue(string defaultValue);
+
+        protected abstract void CreateDBMigrationsLastDefaultValueColumn(string tableName);
+
+        protected abstract void CreateDBMigrationsLastScriptColumn(string tableName);
     }
 }
