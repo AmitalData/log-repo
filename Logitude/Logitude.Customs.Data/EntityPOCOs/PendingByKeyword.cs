@@ -32,6 +32,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string KeywordsList { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [Column("SearchByFieldCode")]
+	    public string SearchByFieldCode { get; set; }
     }
 }
 	 
