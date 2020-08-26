@@ -13,6 +13,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMService';
 import { CardList } from '../../../Common/EntityLists/CardList';
 import { PartnerTypeList } from '../../../Common/EntityLists/PartnerTypeList';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     
     templateUrl: "./GLAccountShortTitleComponent.html",
@@ -141,13 +142,34 @@ export class GLAccountShortTitleComponent {
                 });
         });
     }
+    GLaccountConnectedMoreOneCardText:string =TextCodeTranslator.Translate("GLAccount.O.GLaccountConnectedMoreOneCard"); 
+    Connected10CardsText:string =TextCodeTranslator.Translate("GLAccount.O.Connected10Cards"); 
+    accountCardnumberLists:string[]=[];
+    IsConnectedMoreThan10:boolean = false;
+    accountCardlist: CardList[];
 
     CheckIsConnectedCard(accountId: string) {
         this._GLAccountExtendedPMService.GetConnectedCardsForGLAccount(accountId).subscribe((myResponse: ServiceResponse) => {
-            var connectedCards = myResponse.Result;
-            if (connectedCards.length == 1) {
-                this.IsConnectedCard = true;
+            this.accountCardlist = myResponse.Result;
+            if(  this.accountCardlist){
+                if (  this.accountCardlist.length > 0) {
+                    this.IsConnectedCard = true;
+                
+                if (  this.accountCardlist.length > 1 &&   this.accountCardlist.length<10){
+                    this.accountCardlist.forEach(s => {
+                        this.accountCardnumberLists.push(s.Code);
+                    });
+
+                    this.GLaccountConnectedMoreOneCardText+=" ";
+                    this.GLaccountConnectedMoreOneCardText+=this.accountCardnumberLists.toString();
+                }
+                else if (  this.accountCardlist.length >=10){
+                    this.GLaccountConnectedMoreOneCardText=this.Connected10CardsText;
+                    this.IsConnectedMoreThan10=true;
+                }
             }
+        }
+           
             });
 
     }

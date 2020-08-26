@@ -13196,6 +13196,12 @@
       LocalDefaultText="&quot;לא ניתן להפיק את הדוח ללא בחירת איש מכירות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.Connected10Cards&quot;"
+      DefaultText="&quot;The GLAccount is connected to 10 or more operational cards.&quot;"
+      LocalDefaultText="&quot;כרטיס הנח&quot;ש מחובר ליותר מ 10 כרטיסים תפעוליים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
