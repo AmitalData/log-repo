@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="7779dad0-b3b4-4b09-b80a-eff76e1a5aa3" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/PortWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PortWcfService6.xsd" MetadataType="Schema" ID="a86e1fbd-2849-4b06-931d-11d2c57f76bf" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PortWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="PortWcfService61.xsd" MetadataType="Schema" ID="7db215b6-1aff-40ee-9987-705d848d571f" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PortWcfService.svc?xsd=xsd6" />
+    <MetadataFile FileName="PortWcfService1.wsdl" MetadataType="Wsdl" ID="a5ee7de1-c5f6-4c0c-baf2-9ea71df70d6c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PortWcfService.svc?wsdl" />
+    <MetadataFile FileName="PortWcfService1.disco" MetadataType="Disco" ID="ed5f7e10-8d68-4953-af10-9a6011b9b4ab" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PortWcfService.svc?disco" />
+    <MetadataFile FileName="PortWcfService62.xsd" MetadataType="Schema" ID="b5df8091-fe4b-4a50-8939-125a8f416921" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PortWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="PortWcfService63.xsd" MetadataType="Schema" ID="abe3eaf0-338c-4157-b9c5-75cc348cc098" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PortWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="PortWcfService64.xsd" MetadataType="Schema" ID="ff794d73-0131-4451-9de5-9bf2b2993430" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PortWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="PortWcfService65.xsd" MetadataType="Schema" ID="5706d7f3-0df0-464c-82a1-21093920301e" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PortWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PortWcfService66.xsd" MetadataType="Schema" ID="464f667f-0374-4de6-9474-93b7b483bc55" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PortWcfService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

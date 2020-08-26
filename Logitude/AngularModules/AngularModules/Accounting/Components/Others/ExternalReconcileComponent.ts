@@ -242,7 +242,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         var errors: string[] = [];
 
         // Local Validate
-        if (this.totalDifference != 0) {
+        if (Math.abs(this.totalDifference) > 0.001) {//if (this.totalDifference != 0) {
             if (this.ExtPageSelectedLines.Length == 1 && this.TransactionSelectedLines.Length >= 0) { // only ONE ROW external pages adjustments WITH ZERO OR MANY TransactionSelectedLines
 
             //if (this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length == 0) { // only external pages adjustments

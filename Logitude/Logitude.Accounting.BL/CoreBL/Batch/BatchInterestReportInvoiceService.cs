@@ -247,7 +247,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             ARInvoicePM aRInvoicePM = MappingARInvoice(interestReportArgs, interestReport, tenantPM, userPM, cardPM);
             ARInvoiceEntityPM aRInvoiceEntityPM = MappingARInvoiceEntity(interestReportArgs, ObjectTableId);
-            ARInvoiceLinePM aRInvoiceLinePM = MappingARInvoiceLine(interestReport, tenantPM, chargesType, vatTypePercentagePM);
+            ARInvoiceLinePM aRInvoiceLinePM = MappingARInvoiceLine(interestReport, tenantPM, chargesType, vatTypePercentagePM, aRInvoicePM);
 
             aRInvoicePM.InvoiceEntities.Add(aRInvoiceEntityPM);
             aRInvoicePM.InvoiceLines.Add(aRInvoiceLinePM);
@@ -286,7 +286,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoicePM.IsGeneralInvoice = true;
             aRInvoicePM.IsFullAccounting = true;
             aRInvoicePM.SetApproved = true;
-            aRInvoicePM.DueDate = aRInvoicePM.InvoiceDate;
+            //aRInvoicePM.DueDate = aRInvoicePM.InvoiceDate;
             if (!string.IsNullOrEmpty(cardPM.SATPaymentMethodCode))
             {
                 aRInvoicePM.SATPaymentMethodCode = cardPM.SATPaymentMethodCode;
@@ -314,7 +314,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 aRInvoicePM.BillToAddressId = cardPM.MainAddressId;
             }
 
-            //aRInvoicePM = InitializeDueDate(aRInvoicePM);
+            aRInvoicePM = InitializeDueDate(aRInvoicePM);
             aRInvoicePM = SetCurrencyRateData(aRInvoicePM, tenantPM);
 
             return aRInvoicePM;
@@ -359,7 +359,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoiceEntityPM.ObjectTableId = ObjectTableId;
             return aRInvoiceEntityPM;
         }
-        private ARInvoiceLinePM MappingARInvoiceLine(InterestReportPM interestReport, TenantPM tenantPM, ChargesTypePM chargesType, VatTypePercentagePM vatTypePercentagePM)
+        private ARInvoiceLinePM MappingARInvoiceLine(InterestReportPM interestReport, TenantPM tenantPM, ChargesTypePM chargesType, VatTypePercentagePM vatTypePercentagePM, ARInvoicePM aRInvoicePM)
         {
             ARInvoiceLinePM aRInvoiceLinePM = new ARInvoiceLinePM();
             aRInvoiceLinePM.Tenant = tenantPM.Id;
@@ -367,6 +367,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoiceLinePM.ForiegnCurrencyCode = tenantPM.CurrencyCode;
             aRInvoiceLinePM.InvoiceCurrencyCode = tenantPM.CurrencyCode;
             aRInvoiceLinePM.ForiegnCurrencyId = tenantPM.CurrencyId;
+            aRInvoiceLinePM.DateForInterest = aRInvoicePM.InvoiceDate;
             if (interestReport.TotalAmount == null)
             {
                 aRInvoiceLinePM.UnitPrice = 0;

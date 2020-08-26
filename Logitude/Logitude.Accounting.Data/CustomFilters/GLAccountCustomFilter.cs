@@ -1,5 +1,7 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
+﻿using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -25,7 +27,7 @@ namespace Logitude.Accounting.Data.CustomFilters
 
 
 
-        public IQueryable<GLAccount> GetFilteredQuery(QueryOperations operations, IQueryable<GLAccount> queryableData)
+        public IQueryable<GLAccount> GetFilteredQuery(QueryOperations operations, IQueryable<GLAccount> queryableData, IAccountingContext context)
         {
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
 
@@ -48,6 +50,23 @@ namespace Logitude.Accounting.Data.CustomFilters
                     queryableData = FilterByPayableDebit(queryableData, item);
 
                     queryableData = FilterByGLAccountCurrency(queryableData, item);
+
+                    if (item.FieldName == "ConnectedToSalesmanId")
+                    {
+
+                        string salesManId = item.FieldValue as string;
+
+                        queryableData = (from a in queryableData
+                                         join md in context.GLAccountMoreDatas on a.Id equals md.AccountId
+                                         
+                                         join card in context.Cards on a.Id equals card.GLAccountId
+                                         into cardjoin from card in cardjoin.DefaultIfEmpty()
+
+                                         where card.SalesmanUserId == salesManId
+
+                                         select a);
+
+                    }
 
                     if (item.FieldName == "BalanceInLocalCurrencyNotNull")
                     {

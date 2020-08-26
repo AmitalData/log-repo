@@ -192,9 +192,14 @@ namespace WebFreight.Web.InvoiceModel
 
                         if (FieldIsEmpty(itemVAT.ExternalVATCard))
                         {
-                            if (this.accountingSetting != null)
+                            if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
                             {
                                 itemVAT.ExternalVATCard = this.accountingSetting.ReceivableVATCard;
+                            }
+
+                            else
+                            {
+                                itemVAT.ExternalVATCard = myVatType.ReceivablesExternalId;
                             }
                         }
 
@@ -301,9 +306,14 @@ namespace WebFreight.Web.InvoiceModel
 
                         if (FieldIsEmpty(itemVAT.ExternalVATCard))
                         {
-                            if (this.accountingSetting != null)
+                            if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
                             {
                                 itemVAT.ExternalVATCard = this.accountingSetting.PayableVATCard;
+                            }
+
+                            else
+                            {
+                                itemVAT.ExternalVATCard = myVatType.PayablesExternalId;
                             }
                         }
 

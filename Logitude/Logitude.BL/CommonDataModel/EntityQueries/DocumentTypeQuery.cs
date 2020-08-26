@@ -833,7 +833,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
         
+        public string GetDocumentTypeListIdByCodeAndTenant(string Code,int tenant)
+        {
+            string Id = (from a in repository.context.DocumentTypes
+                             where a.Code == Code && a.Tenant == tenant
+                             select a.Id).FirstOrDefault();
 
+            return Id;
+        }
 
 
 

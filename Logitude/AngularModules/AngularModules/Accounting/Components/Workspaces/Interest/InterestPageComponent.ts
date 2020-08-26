@@ -112,7 +112,7 @@ OpenBatchInvoice(){
         windowArgs.IsNew = true;
         var windowTitle = TextCodeTranslator.Translate("InterestReport.O.BatchInvoice");
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 800;
+        logWindow.Width = 1000;
         logWindow.Height = 1000;
         logWindow.WindowArgs = windowArgs;
         logWindow.Title = windowTitle;
@@ -120,7 +120,22 @@ OpenBatchInvoice(){
         logWindow.Show('./Accounting/Components/Others/BatchInvoicesComponent');
     });
 }
- 
+RunBatchPrintWizard(){
+    this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {
+
+        var windowArgs: any = {};
+        windowArgs.IsNew = true;
+        var windowTitle = TextCodeTranslator.Translate("InterestReport.O.BatchPrint");
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1250;
+        logWindow.Height = 1000;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = windowTitle;
+        logWindow.IsShowCloseButton = true;
+        logWindow.Show('./Accounting/Components/Others/BatchPrintComponent');
+    });
+
+}
 CheckBatchTaskExcecutingAndRunBatchInvoicesWizard( BatchId:string) {
         this._BatchTaskExecutionListService.getSingle( BatchId).subscribe((myResult:any) => {
             console.log("[_BatchTaskExecutionListService.getSingle]", myResult);

@@ -76,7 +76,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "5956c6fa307f2192092a64535882c1e4";
+
+		public const string HashString = "acb8283de988ac1eb11907e944fc1382";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2738,6 +2740,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportONoCreditBasePeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.NoCreditBasePeriod", DefaultText = "there is no Interest Base period in the dates provided for the Credit Rate Base",LocalDefaultText = @"לא קיימת הגדרת ריבית זכות בכרטיס בתאריכים אלו", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOEditCalculationDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EditCalculationDate", DefaultText = "Edit Calculation Date",LocalDefaultText = @"עדכן תאריך חישוב", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOBatchPrint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.BatchPrint", DefaultText = "Batch Print",LocalDefaultText = @"הדפסה ברצף", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOShowReportsWithPrintedInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ShowReportsWithPrintedInvoices", DefaultText = "Show Reports with Printed Invoices",LocalDefaultText = @"הצג דוחות בתהליך הפקת חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOInvoicesnovalidcopiestoprint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Invoicesnovalidcopiestoprint", DefaultText = " were not printed because there are no valid copies to print.",LocalDefaultText = @"לא הודפסו מכיוון שלא נמצאו עותקים להדפסה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOReportsnovalidcopiestoprint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Reportsnovalidcopiestoprint", DefaultText = " were not printed because there are no valid copies to print.",LocalDefaultText = @"לא הודפסו מכיוון שלא נמצאו עותקים להדפסה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Invoices", DefaultText = "Invoices ",LocalDefaultText = @"חשבוניות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Reports", DefaultText = "Reports ",LocalDefaultText = @"דוחות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportODownloadorView = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.DownloadorView", DefaultText = "Would you like to Download or View all selected interest invoices as one document?",LocalDefaultText = @"", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportODownload = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Download", DefaultText = "Download",LocalDefaultText = @"הורדה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOView = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.View", DefaultText = "View",LocalDefaultText = @"לצפות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
 
    
 	    

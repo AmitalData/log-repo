@@ -97,7 +97,7 @@
 
     <!-- **** -->
     <!-- Reconcile Window -->
-    <div class="TextTrimming" *ngIf="fieldName == 'SelectCheckBox'" style="padding: 4px;">
+    <div class="TextTrimming" *ngIf="fieldName == 'SelectCheckBox'" style="padding: 4px 7px;">
         <CheckBox [IsEnabled]="rowData['InReconcileProgress'] == false" (Checked)="CheckBoxClicked($event)" [IsChecked]="rowData['IsChecked']"></CheckBox>
 
         <!--<div class="CheckBox" style="padding: 4px;">
