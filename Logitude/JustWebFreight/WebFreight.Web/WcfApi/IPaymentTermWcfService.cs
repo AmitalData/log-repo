@@ -1,5 +1,5 @@
-﻿using Intuit.Ipp.Core.Configuration;
-using Logitude.BL.CommonDataModel.EntityLists;
+﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.Server.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,6 @@ namespace WebFreight.Web.WcfApi
     {
 
         [OperationContract]
-        List<PaymentTermList> GetIncoterms(ref Response response, int tenant);
+        List<PaymentTermList> GetPaymentTerms(ref Response response, int tenant);
     }
 }

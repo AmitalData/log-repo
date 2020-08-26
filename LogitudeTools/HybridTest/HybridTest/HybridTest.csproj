@@ -257,6 +257,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\PaymentTermProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\PortProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1298,6 +1303,31 @@
     <None Include="Service References\PackageTypeProxy\PackageTypeWcfService5.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\PaymentTermProxy\HypredTest.PaymentTermProxy.GetPaymentTermsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PaymentTermProxy\HypredTest.PaymentTermProxy.PaymentTermList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PaymentTermProxy\HypredTest.PaymentTermProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PaymentTermProxy\PaymentTermWcfService.wsdl" />
+    <None Include="Service References\PaymentTermProxy\PaymentTermWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PaymentTermProxy\PaymentTermWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PaymentTermProxy\PaymentTermWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PaymentTermProxy\PaymentTermWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PaymentTermProxy\PaymentTermWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\PortProxy\HypredTest.PortProxy.GetListResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -1672,6 +1702,7 @@
     <WCFMetadataStorage Include="Service References\LoginProxy\" />
     <WCFMetadataStorage Include="Service References\OpportunityProxy\" />
     <WCFMetadataStorage Include="Service References\PackageTypeProxy\" />
+    <WCFMetadataStorage Include="Service References\PaymentTermProxy\" />
     <WCFMetadataStorage Include="Service References\PortProxy\" />
     <WCFMetadataStorage Include="Service References\QuoteProxy\" />
     <WCFMetadataStorage Include="Service References\ServiceReference12222\" />
@@ -2000,6 +2031,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+    <None Include="Service References\PaymentTermProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\PaymentTermProxy\configuration.svcinfo" />
+    <None Include="Service References\PaymentTermProxy\configuration91.svcinfo" />
+    <None Include="Service References\PaymentTermProxy\PaymentTermWcfService.disco" />
     <None Include="Service References\WarehouseProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
