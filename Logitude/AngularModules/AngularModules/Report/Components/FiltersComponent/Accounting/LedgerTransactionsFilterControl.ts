@@ -77,6 +77,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
         // GLAccount lov field filtera
         this.GLAccountFilterItems = new ApiQueryFilters();
+        this.GLAccountFilterItems.addAdditionalFilter("AccountTypeCode", '1,2,3', null, null, "InList", false, false, false, "String");
     }
 
     GetSalesmanFeature()
