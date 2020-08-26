@@ -24,7 +24,8 @@ namespace Logitude.TariffModule.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return TariffId+'_'+Version;
+                 return TariffId+'_'+Version ;
+                 
       }
 
       public override string GetEntityPMName()
