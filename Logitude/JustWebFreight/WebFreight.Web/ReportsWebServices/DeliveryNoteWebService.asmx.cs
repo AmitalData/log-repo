@@ -189,6 +189,8 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.ShipmentNotes = shipment.Notes;
             dataProvider.LongMaster = shipment.LongMaster;
             dataProvider.LastFreeDate = shipment.WarehouseLegLastFreeDate;
+            dataProvider.StorageFreeDays = shipment.WarehouseStorageFreeDays;
+            dataProvider.WarehouseReferenceNumber = shipment.WarehouseLegReference;
             dataProvider.FinalDestinationCode = shipment.MainCarriageFinalDestinationPortCode;
             dataProvider.AMSBL = shipment.AMSBL;
             dataProvider.DescriptionOfGoods = DataProviders.General.GetFieldString(shipment.DescriptionOfGoods);
