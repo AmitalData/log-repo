@@ -1284,6 +1284,11 @@ export class DeclarationPM {
     public set ReplacingRepairRequest(newValue: string) { if (this.replacingRepairRequest != newValue) { this.replacingRepairRequest = newValue; this.MarkAsDirty("ReplacingRepairRequest"); } }
        
 	 
+    private amendmentErrorXml: string;
+    public get AmendmentErrorXml() { return this.amendmentErrorXml; }
+    public set AmendmentErrorXml(newValue: string) { if (this.amendmentErrorXml != newValue) { this.amendmentErrorXml = newValue; this.MarkAsDirty("AmendmentErrorXml"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
