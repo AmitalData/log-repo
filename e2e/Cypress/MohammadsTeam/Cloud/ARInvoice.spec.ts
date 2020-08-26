@@ -22,7 +22,7 @@ let AR: ARInvoice= new ARInvoice();
    
       cy.get('li[id=PAR]')
       cy.get('li[id=GeneralMHFullAccounting]').click();
-      AR.CreateNewARInvoice("Test Customer GLAccountWX56347MT")
+      AR.CreateNewARInvoice("70724")
 
     });
       

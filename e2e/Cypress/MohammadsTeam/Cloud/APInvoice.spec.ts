@@ -21,11 +21,11 @@ let AP: APInvoice= new APInvoice();
   it('New APInvoice Created Successfully', function () {
 
       var str = R.createrandomnum();
-      cy.get('li[id=GeneralMHMaintenance]').click()
+     // cy.get('li[id=GeneralMHMaintenance]').click({force:true});
    
-      cy.get('li[id=PAR]')
+      //cy.get('li[id=PAR]')
       cy.get('li[id=GeneralMHFullAccounting]').click();
-      AP.CreateNewAPInvoice("Test Vendor GLAccount",str)
+      AP.CreateNewAPInvoice("1000",str)
 
     });
       
