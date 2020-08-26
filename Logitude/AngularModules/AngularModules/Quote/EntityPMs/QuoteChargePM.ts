@@ -588,6 +588,11 @@ export class QuoteChargePM {
     public set HasDelivery(newValue: boolean) { if (this.hasDelivery != newValue) { this.hasDelivery = newValue; this.MarkAsDirty("HasDelivery"); } }
        
 	 
+    private isRegionalTax: boolean;
+    public get IsRegionalTax() { return this.isRegionalTax; }
+    public set IsRegionalTax(newValue: boolean) { if (this.isRegionalTax != newValue) { this.isRegionalTax = newValue; this.MarkAsDirty("IsRegionalTax"); } }
+       
+	 
 
     public OldEntityPM: QuoteChargePM;
 	    

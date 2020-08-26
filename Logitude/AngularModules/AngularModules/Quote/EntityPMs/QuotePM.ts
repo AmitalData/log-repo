@@ -1653,6 +1653,16 @@ export class QuotePM {
     public set PickupDeliveryVolumetricWeight(newValue: number) { if (this.pickupDeliveryVolumetricWeight != newValue) { this.pickupDeliveryVolumetricWeight = newValue; this.MarkAsDirty("PickupDeliveryVolumetricWeight"); } }
        
 	 
+    private regionalTaxId: string;
+    public get RegionalTaxId() { return this.regionalTaxId; }
+    public set RegionalTaxId(newValue: string) { if (this.regionalTaxId != newValue) { this.regionalTaxId = newValue; this.MarkAsDirty("RegionalTaxId"); } }
+       
+	 
+    private regionalTaxPercentage: number;
+    public get RegionalTaxPercentage() { return this.regionalTaxPercentage; }
+    public set RegionalTaxPercentage(newValue: number) { if (this.regionalTaxPercentage != newValue) { this.regionalTaxPercentage = newValue; this.MarkAsDirty("RegionalTaxPercentage"); } }
+       
+	 
 
     public OldEntityPM: QuotePM;
 		
