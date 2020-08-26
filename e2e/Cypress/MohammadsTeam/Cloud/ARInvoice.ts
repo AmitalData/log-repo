@@ -17,17 +17,25 @@ export class ARInvoice {
             cy.get('ul[id=mydatalist_ARInvoice_BillToId]').contains(BillToName).then(a => {
                 a[0].click();
             })
-            cy.get('input[id=ARInvoice_InvoiceCurrencyId]').type("NIS").should("have.value","NIS");
+         /*   cy.get('input[id=ARInvoice_InvoiceCurrencyId]').type("NIS");
             cy.get('ul[id=mydatalist_ARInvoice_InvoiceCurrencyId]').contains("NIS").then(a => {
                 a[0].click();
-            }) 
+            }) */
+            
+            cy.get('input[id=ARInvoice_VatNumber]').type("123");
+
             cy.get('button[id=ok-addArInvoice]').click();
             cy.get('button[id=Add]').click();
             cy.get('input[id=ARInvoiceLine_ChargesTypeId]').type("air");
             cy.get('ul[id=mydatalist_ARInvoiceLine_ChargesTypeId]').contains("AFT").then(a => {
                 a[0].click();
-            })           
-            cy.get('input[id= ARInvoiceLine_ForiegnCurrencyId]').type("NIS").should("have.value","NIS");
+            })      
+            cy.get('input[id=ARInvoiceLine_VatTypeId]').type('Zero');
+
+            cy.get('ul[id=mydatalist_ARInvoiceLine_VatTypeId]').contains('Zero').then(a => {
+                a[0].click();
+            })      
+            cy.get('input[id= ARInvoiceLine_ForiegnCurrencyId]').type("NIS");
             cy.get('ul[id=mydatalist_ARInvoiceLine_ForiegnCurrencyId]').contains("NIS").then(a => {
                 a[0].click();
             })

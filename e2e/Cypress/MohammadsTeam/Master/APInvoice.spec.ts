@@ -25,7 +25,7 @@ let AP: APInvoice= new APInvoice();
    
       cy.get('li[id=PAR]')
       cy.get('li[id=GeneralMHFullAccounting]').click();
-      AP.CreateNewAPInvoice("Test Vendor GLAccount",str)
+      AP.CreateNewAPInvoice("1000",str)
 
     });
       
