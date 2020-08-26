@@ -1,12 +1,10 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Data.Linq.SqlClient;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -16,31 +14,8 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.CommonDataModel.CustomFilters
 {
-  public  class CardSearchFilter
+    public class CardSearchFilter
     {
-
-
-
-
-
-        public IQueryable<CardList> SearchForParts(string[] query, IQueryable<EntityLists.CardList> entityLists)
-        {
-            foreach (var qs in query)
-            {
-                var likestr = string.Format("%{0}%", qs);
-                entityLists = entityLists.Where(x => SqlMethods.Like(x.Id, likestr));
-            }
-
-            return entityLists;
-        }
-
-
-
-
-
-
-
-
         public IQueryable<EntityLists.CardList> GetFilteredQuery(CardSearchFilterArgs cardSearchFilterArgs)
         {
             IQueryable<EntityLists.CardList> entityLists = cardSearchFilterArgs.EntityLists;
@@ -56,55 +31,17 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                 ICommonDataContext commonDataContext = CommonDataContext.GetContext(cardSearchFilterArgs.Tenant);
                 List<string> cardIds = (from a in commonDataContext.CardSearches
                                         where a.Tenant == cardSearchFilterArgs.Tenant && partnerTypeCodeLists.Contains(a.PartnerTypeId) && a.InActive == inactive && a.Keyword.StartsWith(cardSearchFilterArgs.SeachText)
-                                        select a).OrderByDescending(d => d.RecordDate).GroupBy(d => d.CardId).Select(d => d.FirstOrDefault()).Take(cardSearchFilterArgs.QueryOperations.PageSize).Select(d => d.CardId).ToList();
+                                        select a).GroupBy(d => d.CardId).Select(d => d.FirstOrDefault()).OrderByDescending(d => d.RecordDate).Take(cardSearchFilterArgs.QueryOperations.PageSize).Select(d => d.CardId).ToList();
+
+                entityLists = entityLists.Where(d => cardIds.Contains(d.Id));
+                if (string.IsNullOrEmpty(cardSearchFilterArgs.QueryOperations.SortByColumnName) || string.IsNullOrEmpty(cardSearchFilterArgs.QueryOperations.SortDirectin) || cardSearchFilterArgs.SortByRecordDate) {
+                    entityLists = entityLists.OrderByDescending(d => d.RecordDate);
+                }
 
 
-                entityLists =  entityLists.Where(d => cardIds.Any(id => d.Id == id));
-                TraceStringValues MySql;
-                MySql = IQueryableExtensions.ToTraceString<CardList>(entityLists);
+
+
                 return entityLists;
-
-
-
-
-                //string searchFilterAsWhere = string.Empty;
-                //if (cardIds.Count() != 0)
-                //{
-                //    var values = new StringBuilder();
-                //    values.AppendFormat("{0}", "'" + cardIds[0] + "'");
-                //    for (int i = 1; i < cardIds.Count; i++)
-                //        values.AppendFormat(", {0}", "'" + cardIds[i] + "'");
-
-                //    searchFilterAsWhere = string.Format(
-                //        "[Extent1].Id IN ({0})",
-                //        values);
-
-
-                //}
-
-
-                //TraceStringValues MySql;
-                //MySql = IQueryableExtensions.ToTraceString<CardList>(entityLists);
-                //List<SqlParameter> parameters = new List<SqlParameter>();
-
-                //if (!string.IsNullOrEmpty(searchFilterAsWhere))
-                //{
-                //    var regex = new Regex(Regex.Escape("WHERE"), RegexOptions.IgnoreCase);
-                //    MySql.TSQL = regex.Replace(MySql.TSQL, "WHERE " + searchFilterAsWhere + " AND ", 1);
-                //}
-
-                //foreach (var item in MySql.TSQLParams)
-                //{
-                //    parameters.Add(new SqlParameter(item.Name, item.Value));
-                //}
-
-                //CommonDataContext activeContext = commonDataContext.GetActiveDbContext() as CommonDataContext;
-                //var xx = activeContext.Database.SqlQuery<CardList>(MySql.TSQL, parameters.ToArray()).AsQueryable<CardList>();
-                //var s = entityLists.Where(d => cardIds.Contains(d.Id));
-
-
-
-                //return xx;
 
             }
             else return GetDefultQuery(cardSearchFilterArgs);
@@ -114,7 +51,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
 
         private static IQueryable<CardList> GetDefultQuery(CardSearchFilterArgs cardSearchFilterArgs)
         {
-           var results = cardSearchFilterArgs.EntityLists.Take(cardSearchFilterArgs.QueryOperations.PageSize);
+            var results = cardSearchFilterArgs.EntityLists.Take(cardSearchFilterArgs.QueryOperations.PageSize);
             cardSearchFilterArgs.QueryOperations.SortByColumnName = "LocalName";
             results = QuerySortClass.GetSortedQuery(cardSearchFilterArgs.QueryOperations, results, "Card", cardSearchFilterArgs.Tenant);
             return results;
@@ -151,7 +88,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
 
             }
             else return entityLists;
-  
+
         }
 
 
@@ -168,7 +105,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
         public IQueryable<EntityLists.CardList> EntityLists { get; set; }
         public GenericFilter Filter { get; set; }
 
-         
+        public bool SortByRecordDate { get; set; }
     }
 
 

@@ -1103,6 +1103,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CreatedByPartner = card.CreatedByPartner,
                                                 RankId = card.Customer != null ? (card.Customer.Rank != null ? card.Customer.Rank.Name : null) : null,
                                                 IndustryId = card.Customer != null ? (card.Customer.Industry != null ? card.Customer.Industry.Name : null) : null,
+                                                RecordDate = card.UpdateDate != null ? card.UpdateDate : card.CreateDate,
                                             };
 
             if (myResult.Count() > 0)

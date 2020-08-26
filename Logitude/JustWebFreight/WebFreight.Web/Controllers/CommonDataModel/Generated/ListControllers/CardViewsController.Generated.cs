@@ -184,8 +184,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     foreach (QueryFilterItem filter in filters_list)
                     {
 
-                        if (filter.FieldName == "SearchFields") filter.FieldName = "CompactSearchField";
-                         ObjectField field = CardObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = CardObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -236,91 +235,93 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 entityLists = genericFilter.GetFilteredQuery<CardList>(listQueryOperation, entityLists);
                 ServiceResponse response = new ServiceResponse();
 
-                if (compactSeachvalue != null)
+                
+                if (compactSeachvalue != null && !string.IsNullOrEmpty(compactSeachvalue.ToString()))
                 {
-                    entityLists = CardCompactFilter.GetFilteredQuery(compactSeachvalue, queryOperations, genericFilter, entityLists, tenant);
+                    CardSearchFilter cardSearchFilter = new CardSearchFilter();
+                    entityLists = cardSearchFilter.GetFilteredQuery(new CardSearchFilterArgs() { SeachText = compactSeachvalue != null ? compactSeachvalue.ToString() : "", Tenant = tenant, QueryOperations = queryOperations, EntityLists = entityLists, Filter = genericFilter });
                 }
-                else
+
+                if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {
-                    if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+                    PropertyInfo propInfo = typeof(CardList).GetProperty(queryOperations.SortByColumnName);
+
+
+                    ObjectField objectField = (from a in CardObjectFields
+                                               where a.FieldName == queryOperations.SortByColumnName
+                                               select a).FirstOrDefault();
+
+                    if (objectField != null)
                     {
-                        PropertyInfo propInfo = typeof(CardList).GetProperty(queryOperations.SortByColumnName);
-
-
-                        ObjectField objectField = (from a in CardObjectFields
-                                                   where a.FieldName == queryOperations.SortByColumnName
-                                                   select a).FirstOrDefault();
-
-                        if (objectField != null)
+                        if (objectField.IsCustom)
                         {
-                            if (objectField.IsCustom)
+                            entityLists = sortClass.GetSorterQuery<CardList, string>(queryOperations, entityLists);
+                        }
+                        else
+                        {
+                            switch (objectField.DataTypeCode.ToLower())
                             {
-                                entityLists = sortClass.GetSorterQuery<CardList, string>(queryOperations, entityLists);
-                            }
-                            else
-                            {
-                                switch (objectField.DataTypeCode.ToLower())
-                                {
-                                    case "ntext":
-                                    case "text":
-                                    case "lookup":
-                                        {
-                                            entityLists = sortClass.GetSorterQuery<CardList, string>(queryOperations, entityLists);
-                                            break;
-                                        }
-                                    case "sigdouble":
-                                    case "double":
-                                        {
-                                            entityLists = sortClass.GetSorterQuery<CardList, double>(queryOperations, entityLists);
-                                            break;
-                                        }
-                                    case "date":
-                                    case "datetime":
-                                        {
-                                            entityLists = sortClass.GetSorterQuery<CardList, DateTime>(queryOperations, entityLists);
-                                            break;
-                                        }
-                                    case "unsinteger":
-                                    case "integer":
-                                        {
-                                            entityLists = sortClass.GetSorterQuery<CardList, int>(queryOperations, entityLists);
-                                            break;
-                                        }
-                                    case "boolean":
-                                        {
-                                            entityLists = sortClass.GetSorterQuery<CardList, bool>(queryOperations, entityLists);
-                                            break;
-                                        }
-                                    case "unsdecimal":
-                                    case "decimal":
-                                        {
-                                            entityLists = sortClass.GetSorterQuery<CardList, decimal>(queryOperations, entityLists);
-                                            break;
-                                        }
-                                    default:
-                                        {
-                                            entityLists = entityLists.OrderBy(d => d.EnglishName);
-                                            break;
-                                        }
-                                }
+                                case "ntext":
+                                case "text":
+                                case "lookup":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<CardList, string>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "sigdouble":
+                                case "double":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<CardList, double>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "date":
+                                case "datetime":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<CardList, DateTime>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "unsinteger":
+                                case "integer":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<CardList, int>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "boolean":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<CardList, bool>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                case "unsdecimal":
+                                case "decimal":
+                                    {
+                                        entityLists = sortClass.GetSorterQuery<CardList, decimal>(queryOperations, entityLists);
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        entityLists = entityLists.OrderBy(d => d.EnglishName);
+                                        break;
+                                    }
                             }
                         }
                     }
-                    else
-                    {
-                        entityLists = entityLists.OrderBy(d => d.EnglishName);
-                    }
                 }
+                else if (compactSeachvalue == null ||  (compactSeachvalue!=null && string.IsNullOrEmpty(compactSeachvalue.ToString())))
+
+                {
+                    entityLists = entityLists.OrderBy(d => d.EnglishName);
+                }
+                
 
                 if (filters.GetCount) response.Count = entityLists.Count();
-			  	if(!queryOperations.GetAll)
-				 {
+                if (!queryOperations.GetAll)
+                {
 
-                  if (compactSeachvalue != null) entityLists = entityLists.Skip(skippedEntities);
+                    entityLists = entityLists.Skip(skippedEntities);
 
-				  entityLists = entityLists.Take(queryOperations.PageSize);
+                    entityLists = entityLists.Take(queryOperations.PageSize);
 
-				}
+                }
 			   List<CardList> listResult = entityLists.ToList();
 
                response.Result = listResult;
