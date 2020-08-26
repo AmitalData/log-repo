@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Logitude.BL.InfrastructureModel.EntityLists;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.HybridTest;
 using Logitude.HybridTest.WcfCallers;
@@ -20,7 +21,6 @@ namespace Logitude.LogboxIntegrationTest.Senarios
         {
             RestAPIService restAPIService = new RestAPIService();
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
-            CloudVariables.TempShipmentNumber = shipmentPM.ShipmentNumber;
             ServiceOutcome serviceOutcome = UpsertShipmentInCloud(shipmentPM);
             string queueMessagesId = GetQueueMessageId(serviceOutcome);
             CheckStatusOfQueueMessage(restAPIService, queueMessagesId);
@@ -31,8 +31,7 @@ namespace Logitude.LogboxIntegrationTest.Senarios
         public void Senario91_IsCustomsClearance_ArchivedShipment()
         {
             RestAPIService restAPIService = new RestAPIService();
-            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
-            shipmentPM.ShipmentNumber = "81bfe0757ac2";//CloudVariables.TempShipmentNumber;
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
             shipmentPM.CustomsClearanceDate = DateTime.Now;
             shipmentPM.IsOperationalClosed = false;
             shipmentPM.StatusId = "CCD";
@@ -67,12 +66,16 @@ namespace Logitude.LogboxIntegrationTest.Senarios
         {
             RestAPIService restAPIService = new RestAPIService();
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
-            shipmentPM.ShipmentNumber = "TestWesam";//"81bfe0757ac2";//CloudVariables.TempShipmentNumber;
             shipmentPM.CustomsClearanceDate = null;
             shipmentPM.ExceptionDescription = "Test";
             ServiceOutcome serviceOutcome = UpsertShipmentInCloud(shipmentPM);
             shipmentPM.CustomsClearanceDate = DateTime.Now;
-            shipmentPM.HasException = true;
+            //shipmentPM.HasException = true;
+            List<TraceEventPM> events = new List<TraceEventPM>()
+            {
+                new TraceEventPM() { Tenant = EnvironmentParams.CloudTenant, ExternalId = null, UserId = "WA", EventTypeCode = "EXCE", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid Exception" },
+            };
+            Shipment_BuildEventsList(shipmentPM.ShipmentNumber, events);
             serviceOutcome = UpsertShipmentInCloud(shipmentPM);
             string queueMessagesId = GetQueueMessageId(serviceOutcome);
             CheckStatusOfQueueMessage(restAPIService, queueMessagesId);
@@ -147,6 +150,28 @@ namespace Logitude.LogboxIntegrationTest.Senarios
 
             }
             return shipmentPM;
+        }
+
+        private static void Shipment_BuildEventsList(string shipmentNumber, List<TraceEventPM> events)
+        {
+            AdditionalIncludedData includedData = new AdditionalIncludedData
+            {
+                URL = EnvironmentParams.CloudServerURL,
+                Token = EnvironmentParams.CloudTenantToken
+            };
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Shipment",
+                ServiceOperation = "BuildEventsList",
+                ServiceType = typeof(TraceEventPM),
+                IncludedData = includedData
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { EnvironmentParams.CloudTenant, shipmentNumber, events.ToArray() };
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Build Events List Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "Build Events List Failed! " + serviceOutcome.Response.ErrorMessage);
         }
 
     }
