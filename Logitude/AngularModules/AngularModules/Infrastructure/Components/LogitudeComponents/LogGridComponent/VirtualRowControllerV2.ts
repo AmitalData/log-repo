@@ -136,21 +136,28 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
     timer = null;
     private _fetchPage(page: number) {
         if (this.fetchedPages.has(page)) {
-            //if (!this.fetchedPages.has(page + 1)) {
-            //    this.getPageData(page + 1);
-            //    this.getPageData(page + 2);
+            if (!this.fetchedPages.has(page + 1)) {
+                this.getPageData(page + 1);
+                if (!this.fetchedPages.has(page + 2)) {  
+                    this.getPageData(page + 2);
+                } 
+            } 
+            else {
+            //this.dataStream.next(this.cachedData);
+            //if (this.myMetaData.cd) {
+            //    this.myMetaData.cd.detectChanges();
             //}
-            //else {
-                return;
-            //}
+            return;
+            }
         }
         this.getPageData(page)
     }
 
+
     private getPageData(page: number) {
         this.fetchedPages.add(page);
         //this.mycachedData = [];
-        this.pageSize = 17;
+        //this.pageSize = 17;
         this.dataSource.getRows(page * this.pageSize, this.pageSize, this.myMetaData.sortingCol, this.myMetaData.sortingDir, false, this.myMetaData.searchFields, this.myMetaData.Filters).then(res => {
             res.subscribe((viewResponse: ServiceResponse) => {
                 if (!viewResponse.HasError) {

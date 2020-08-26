@@ -527,7 +527,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             this.BackFromEditSub = this.BackFromEdit.subscribe((res) => {
                 //alert("Oh Yeah !!" + res.rowIndex);
 
-                if (this.controller.cachedData.filter(a => a.rowIndex == res.rowIndex).length > 0) {
+                if (this.controller.cachedData.filter(a => a && a.rowIndex == res.rowIndex).length > 0) {
                     //this.rows.filter(a => a.rowIndex == res.rowIndex)[0].rowData = res.Data;
                     //this.controller.cachedData[res.rowIndex].rowData = res.Data;
                     var myRow = this.controller.cachedData[res.rowIndex];
@@ -547,6 +547,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                     //if (this.cd) {
                       //  this.cd.detectChanges();
                     //}
+
                 }
                 else {
                     //this.SelectedRows.push(item);
@@ -1390,7 +1391,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             if (this.controller) {
                 this.controller.disconnect(); 
             }
-            this.dataSource.pageSize = this.viewportSize * 3;
+            this.dataSource.pageSize = this.viewportSize * 2;
             this.controller = new VirtualRowControllerV2(this.virtualRowMetaData); 
             this.controller.setDataSource(this.dataSource);
             //this.controller.ClearCache();
