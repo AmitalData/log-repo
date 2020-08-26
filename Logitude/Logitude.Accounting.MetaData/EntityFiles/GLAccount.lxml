@@ -8072,13 +8072,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -8092,6 +8093,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -8103,6 +8105,9 @@
     FullFieldLable="&quot;ActiveForInterest&quot;"
     DefaultText="&quot;Active for Interest&quot;"
     FullLocalDefaultText="&quot;פעיל לריבית&quot;"
+    ListFieldLable="&quot;ActiveForInterestListLable&quot;"
+    ListLableDefaultText="&quot;Active for Interest&quot;"
+    ListLocalDefaultText="&quot;פעיל לריבית&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -8142,13 +8147,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;GreaterThanOrEqual&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -8162,6 +8168,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -8173,6 +8180,9 @@
     FullFieldLable="&quot;InterestCalculationStartDate&quot;"
     DefaultText="&quot;Interest Calculation Start Date&quot;"
     FullLocalDefaultText="&quot;תאריך לחישוב ריבית&quot;"
+    ListFieldLable="&quot;InterestCalculationStartDateListLable&quot;"
+    ListLableDefaultText="&quot;Interest Calculation Start Date&quot;"
+    ListLocalDefaultText="&quot;תאריך לחישוב ריבית&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -8212,13 +8222,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -8232,6 +8243,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -8243,6 +8255,9 @@
     FullFieldLable="&quot;ActiveForInterestCreditInvoice&quot;"
     DefaultText="&quot;Active for Interest Credit invoice&quot;"
     FullLocalDefaultText="&quot;פעיל לחשבונית זיכוי&quot;"
+    ListFieldLable="&quot;ActiveForInterestCreditInvoiceListLable&quot;"
+    ListLableDefaultText="&quot;Active for Interest Credit invoice&quot;"
+    ListLocalDefaultText="&quot;פעיל לחשבונית זיכוי&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -8355,13 +8370,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;GreaterThanOrEqual&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -8375,6 +8391,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -8388,6 +8405,9 @@
     FullFieldLable="&quot;InterestCreditLimit&quot;"
     DefaultText="&quot;Interest Credit&quot;"
     FullLocalDefaultText="&quot;אשראי לריבית&quot;"
+    ListFieldLable="&quot;InterestCreditLimitListLable&quot;"
+    ListLableDefaultText="&quot;Interest Credit&quot;"
+    ListLocalDefaultText="&quot;אשראי לריבית&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -8567,13 +8587,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;GreaterThanOrEqual&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -8587,6 +8608,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -8598,6 +8620,9 @@
     FullFieldLable="&quot;MinimumInterestInvoiceBilling&quot;"
     DefaultText="&quot;Minimum Interest Invoice billing&quot;"
     FullLocalDefaultText="&quot;מינימום חיוב בחשבונית ריבית&quot;"
+    ListFieldLable="&quot;MinimumInterestInvoiceBillingListLable&quot;"
+    ListLableDefaultText="&quot;Minimum Interest Invoice billing&quot;"
+    ListLocalDefaultText="&quot;מינימום חיוב בחשבונית ריבית&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -10844,7 +10869,8 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Tenant&quot;"
         FieldName="&quot;Tenant&quot;"
@@ -10858,7 +10884,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;InternalNumber&quot;"
         FieldName="&quot;InternalNumber&quot;"
@@ -10872,7 +10899,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;GLAccountType&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -10887,7 +10915,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;DisplayNumber&quot;"
         FieldName="&quot;DisplayNumber&quot;"
@@ -10901,7 +10930,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalName&quot;"
         FieldName="&quot;LocalName&quot;"
@@ -10915,7 +10945,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;EnglishName&quot;"
         FieldName="&quot;EnglishName&quot;"
@@ -10929,7 +10960,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;IsMultiCurrency&quot;"
         FieldName="&quot;IsMultiCurrency&quot;"
@@ -10943,7 +10975,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Currency&quot;"
         FieldName="&quot;CurrencyId&quot;"
@@ -10957,7 +10990,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChartOfAccount&quot;"
         FieldName="&quot;ChartOfAccountsId&quot;"
@@ -10971,7 +11005,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Inactive&quot;"
         FieldName="&quot;Inactive&quot;"
@@ -10985,7 +11020,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AccountTypeName&quot;"
         FieldName="&quot;AccountTypeName&quot;"
@@ -10999,7 +11035,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CurrencyName&quot;"
         FieldName="&quot;CurrencyName&quot;"
@@ -11013,7 +11050,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChartOfAccountsName&quot;"
         FieldName="&quot;ChartOfAccountsName&quot;"
@@ -11027,7 +11065,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChartOfAccountsType&quot;"
         FieldName="&quot;ChartOfAccountsTypeCode&quot;"
@@ -11041,7 +11080,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChartOfAccountsTypeName&quot;"
         FieldName="&quot;ChartOfAccountsTypeName&quot;"
@@ -11055,7 +11095,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CurrencyCode&quot;"
         FieldName="&quot;CurrencyCode&quot;"
@@ -11069,7 +11110,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ReconcileMethod&quot;"
         FieldName="&quot;ReconcileMethodCode&quot;"
@@ -11083,7 +11125,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ReconcileMethodName&quot;"
         FieldName="&quot;ReconcileMethodName&quot;"
@@ -11097,7 +11140,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ControlAccount&quot;"
         FieldName="&quot;ControlAccountId&quot;"
@@ -11111,7 +11155,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ControlAccountName&quot;"
         FieldName="&quot;ControlAccountName&quot;"
@@ -11125,7 +11170,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ControlAccountNumber&quot;"
         FieldName="&quot;ControlAccountNumber&quot;"
@@ -11139,7 +11185,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ActiveStatusName&quot;"
         FieldName="&quot;ActiveStatusName&quot;"
@@ -11153,7 +11200,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;OldCurrencyId&quot;"
         FieldName="&quot;OldCurrencyId&quot;"
@@ -11167,7 +11215,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;OldIsMultiCurrency&quot;"
         FieldName="&quot;OldIsMultiCurrency&quot;"
@@ -11181,7 +11230,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AutomaticReconcileMethod&quot;"
         FieldName="&quot;AutomaticReconcileId&quot;"
@@ -11195,7 +11245,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AutomaticReconcileName&quot;"
         FieldName="&quot;AutomaticReconcileName&quot;"
@@ -11209,7 +11260,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PreviousEnglishName&quot;"
         FieldName="&quot;PreviousEnglishName&quot;"
@@ -11223,7 +11275,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PreviousLocalName&quot;"
         FieldName="&quot;PreviousLocalName&quot;"
@@ -11237,7 +11290,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PreviousNumber&quot;"
         FieldName="&quot;PreviousNumber&quot;"
@@ -11251,7 +11305,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PreviousChartOfAccount&quot;"
         FieldName="&quot;PreviousChartOfAccountsId&quot;"
@@ -11265,7 +11320,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CustomerGLAccount&quot;"
         FieldName="&quot;CustomerGLAccountId&quot;"
@@ -11279,7 +11335,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CustomerGLAccountName&quot;"
         FieldName="&quot;CustomerGLAccountName&quot;"
@@ -11293,7 +11350,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CustomerGLAccountNumber&quot;"
         FieldName="&quot;CustomerGLAccountNumber&quot;"
@@ -11307,7 +11365,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;BalanceInLocalCurrency&quot;"
         FieldName="&quot;BalanceInLocalCurrency&quot;"
@@ -11321,7 +11380,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;RevaluationEnabled&quot;"
         FieldName="&quot;RevaluationEnabled&quot;"
@@ -11335,7 +11395,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ParentAccount&quot;"
         FieldName="&quot;ParentAccountId&quot;"
@@ -11349,7 +11410,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ParentAccountName&quot;"
         FieldName="&quot;ParentAccountName&quot;"
@@ -11363,7 +11425,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ParentAccountNumber&quot;"
         FieldName="&quot;ParentAccountNumber&quot;"
@@ -11377,7 +11440,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CustomerGLAccountInternalNumber&quot;"
         FieldName="&quot;CustomerGLAccountInternalNumber&quot;"
@@ -11391,7 +11455,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category1&quot;"
         FieldName="&quot;Category1Id&quot;"
@@ -11405,7 +11470,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category1Name&quot;"
         FieldName="&quot;Category1Name&quot;"
@@ -11419,7 +11485,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category2&quot;"
         FieldName="&quot;Category2Id&quot;"
@@ -11433,7 +11500,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category2Name&quot;"
         FieldName="&quot;Category2Name&quot;"
@@ -11447,7 +11515,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category3&quot;"
         FieldName="&quot;Category3Id&quot;"
@@ -11461,7 +11530,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category3Name&quot;"
         FieldName="&quot;Category3Name&quot;"
@@ -11475,7 +11545,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category4&quot;"
         FieldName="&quot;Category4Id&quot;"
@@ -11489,7 +11560,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category4Name&quot;"
         FieldName="&quot;Category4Name&quot;"
@@ -11503,7 +11575,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category5&quot;"
         FieldName="&quot;Category5Id&quot;"
@@ -11517,7 +11590,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category5Name&quot;"
         FieldName="&quot;Category5Name&quot;"
@@ -11531,7 +11605,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;IsVATExempt&quot;"
         FieldName="&quot;IsVATExempt&quot;"
@@ -11545,7 +11620,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChartOfAccountsCode&quot;"
         FieldName="&quot;ChartOfAccountsCode&quot;"
@@ -11559,7 +11635,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CustomerCode&quot;"
         FieldName="&quot;CustomerCode&quot;"
@@ -11573,7 +11650,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ParentAccountByCurrency&quot;"
         FieldName="&quot;ParentAccountByCurrency&quot;"
@@ -11587,7 +11665,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;VatNumber&quot;"
         FieldName="&quot;VatNumber&quot;"
@@ -11601,7 +11680,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PaymentTermId&quot;"
         FieldName="&quot;PaymentTermId&quot;"
@@ -11615,7 +11695,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Collector&quot;"
         FieldName="&quot;CollectorId&quot;"
@@ -11629,7 +11710,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;SalesmanUserId&quot;"
         FieldName="&quot;SalesmanUserId&quot;"
@@ -11643,7 +11725,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;NewGLAccountCardId&quot;"
         FieldName="&quot;NewGLAccountCardId&quot;"
@@ -11657,7 +11740,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalBalanceInDue&quot;"
         FieldName="&quot;LocalBalanceInDue&quot;"
@@ -11671,7 +11755,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;NextDueDate&quot;"
         FieldName="&quot;NextDueDate&quot;"
@@ -11685,7 +11770,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CurrencySign&quot;"
         FieldName="&quot;CurrencySign&quot;"
@@ -11699,7 +11785,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ConnectedItems&quot;"
         FieldName="&quot;ConnectedItems&quot;"
@@ -11713,7 +11800,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Type&quot;"
         FieldName="&quot;Type&quot;"
@@ -11727,7 +11815,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;DeductionFileTypeId&quot;"
         FieldName="&quot;DeductionFileTypeId&quot;"
@@ -11741,7 +11830,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;DeductionFileNumber&quot;"
         FieldName="&quot;DeductionFileNumber&quot;"
@@ -11755,7 +11845,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AssessingOfficeCode&quot;"
         FieldName="&quot;AssessingOfficeCode&quot;"
@@ -11769,7 +11860,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Occupation&quot;"
         FieldName="&quot;Occupation&quot;"
@@ -11783,7 +11875,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;DeductionTypeId&quot;"
         FieldName="&quot;DeductionTypeId&quot;"
@@ -11797,7 +11890,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ConsolidationVat&quot;"
         FieldName="&quot;ConsolidationVat&quot;"
@@ -11811,7 +11905,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;RevenueExpenseType&quot;"
         FieldName="&quot;RevenueExpenseType&quot;"
@@ -11825,7 +11920,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="true"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Parent&quot;"
         FieldName="&quot;Parent&quot;"
@@ -11839,7 +11935,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CardCode&quot;"
         FieldName="&quot;CardCode&quot;"
@@ -11853,7 +11950,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PartnerTypeId&quot;"
         FieldName="&quot;PartnerTypeId&quot;"
@@ -11867,7 +11965,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
