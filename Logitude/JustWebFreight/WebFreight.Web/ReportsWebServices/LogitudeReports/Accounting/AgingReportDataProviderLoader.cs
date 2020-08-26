@@ -432,22 +432,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.Total = item.Total;
 
 
-                    if (GetFilterValue<string>("GroupByDate") == "filter_Due")
-                    {
-                        var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
-                        var totalBalance = item.LocalBalanceInDue;
-                        if ((GetFilterValue<string>("BalanceFilter") == "Debtors" && totalBalance > 0)
-                                ||
-                            (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && totalBalance >= Convert.ToDecimal(balanceFilterAmount)))
-                        {
-
-                            periods.Add(record);
-                        }
-                    }
-                    else
-                    {
-                        periods.Add(record);
-                    }
+                    periods.Add(record);
 
                 }
             }
@@ -470,22 +455,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                     record.Total = item.Total;
 
-                    if (GetFilterValue<string>("GroupByDate") == "filter_Due")
-                    {
-                        var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
-                        var totalBalance = item.LocalBalanceInDue;
-                        if ((GetFilterValue<string>("BalanceFilter") == "Debtors" && totalBalance > 0)
-                                ||
-                            (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && totalBalance >= Convert.ToDecimal(balanceFilterAmount)))
-                        {
-
-                            periods.Add(record);
-                        }
-                    }
-                    else
-                    {
-                        periods.Add(record);
-                    }
+                    periods.Add(record);
 
                 }
             }
