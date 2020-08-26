@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b725f56e-a3c0-4a1b-98e4-9f350d4659b4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/ShipmentWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ShipmentWcfService.xsd" MetadataType="Schema" ID="645bb44b-3c07-4edc-971d-9223fae85aa4" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd10" />
+    <MetadataFile FileName="ShipmentWcfService1.xsd" MetadataType="Schema" ID="74a33f7e-fe8e-4bc4-924d-25952a3f612f" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd7" />
+    <MetadataFile FileName="ShipmentWcfService2.xsd" MetadataType="Schema" ID="0c2cac0a-f1f5-4949-923a-6429fc2ae79c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ShipmentWcfService3.xsd" MetadataType="Schema" ID="18e3b997-c38a-4237-ad98-1bcac2e6bc26" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ShipmentWcfService4.xsd" MetadataType="Schema" ID="a581c985-6521-42bf-a069-31248a13413f" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd8" />
+    <MetadataFile FileName="ShipmentWcfService5.xsd" MetadataType="Schema" ID="a45903ac-b0d6-4e08-84d6-66bf0ad10885" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="ShipmentWcfService6.xsd" MetadataType="Schema" ID="b53f1e52-4dd6-4872-9d3b-cfeceec9b158" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd6" />
+    <MetadataFile FileName="ShipmentWcfService.wsdl" MetadataType="Wsdl" ID="f1fd3cae-b0d7-4d6e-822c-e813018a8410" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?wsdl" />
+    <MetadataFile FileName="ShipmentWcfService7.xsd" MetadataType="Schema" ID="a6bdf860-1781-465d-8ef9-f4829d58d547" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ShipmentWcfService8.xsd" MetadataType="Schema" ID="d00fefa0-3601-4785-95bf-b340ddf5b60c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ShipmentWcfService9.xsd" MetadataType="Schema" ID="51c672cd-214d-4c3c-ba70-2454a31eb01d" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd9" />
+    <MetadataFile FileName="ShipmentWcfService.disco" MetadataType="Disco" ID="639d2aba-a9f4-408a-b683-e67bf475fb35" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?disco" />
+    <MetadataFile FileName="ShipmentWcfService10.xsd" MetadataType="Schema" ID="da1d59e3-5553-44af-bb0c-bcc988dfa49e" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd5" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

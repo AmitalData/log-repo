@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5e7cf6ef-1d7e-4940-bb92-060add0ced80" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996//WcfApi/CardContactWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CardContactWcfService5.xsd" MetadataType="Schema" ID="f778425d-4bf1-4621-a3d9-c507e2b5550e" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CardContactWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="CardContactWcfService1.wsdl" MetadataType="Wsdl" ID="779c4592-867b-4ebd-952e-9030e3e99bd7" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CardContactWcfService.svc?wsdl" />
+    <MetadataFile FileName="CardContactWcfService51.xsd" MetadataType="Schema" ID="c81b227a-4718-4483-b973-8d3002057187" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CardContactWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="CardContactWcfService52.xsd" MetadataType="Schema" ID="f7c0ad64-d1de-40be-b150-182d8e72e9d8" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CardContactWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="CardContactWcfService53.xsd" MetadataType="Schema" ID="7d5e9796-2b7b-4483-805e-69244acae5c5" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CardContactWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="CardContactWcfService54.xsd" MetadataType="Schema" ID="c27d2036-52fb-4d23-89b8-3bdac41feb99" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CardContactWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="CardContactWcfService1.disco" MetadataType="Disco" ID="d3c84714-5902-4268-9374-daf0c68c84d2" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CardContactWcfService.svc?disco" />
+    <MetadataFile FileName="CardContactWcfService55.xsd" MetadataType="Schema" ID="749c317a-3985-4e41-a4e1-c55fcb8219fe" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CardContactWcfService.svc?xsd=xsd4" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
