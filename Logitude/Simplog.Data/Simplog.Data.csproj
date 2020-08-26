@@ -184,6 +184,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerOpenFilesAmount.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\Horse.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserLastSettings.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerAdditional.cs" />
@@ -436,6 +437,7 @@
     <Compile Include="CommonDataModel\Mapping\FilingInboxAttachmentMap.cs" />
     <Compile Include="CommonDataModel\Mapping\FilingInboxMap.cs" />
     <Compile Include="CommonDataModel\Mapping\FTPDetailMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\HorseMap.cs" />
     <Compile Include="CommonDataModel\Mapping\HybridPartnerMap.cs" />
     <Compile Include="CommonDataModel\Mapping\HybridPartnersPermissionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\HybridTenantStateMap.cs" />
