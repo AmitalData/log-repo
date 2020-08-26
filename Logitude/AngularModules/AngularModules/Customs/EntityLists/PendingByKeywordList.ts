@@ -14,6 +14,8 @@ export class PendingByKeywordList {
 	CourierPendingReasonName: string;
 	KeywordsList: string;
 	SearchFields: string;
+	SearchByFieldCode: string;
+	SearchByFieldName: string;
 	
 }
  
