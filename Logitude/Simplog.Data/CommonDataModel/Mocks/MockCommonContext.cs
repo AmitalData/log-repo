@@ -2763,9 +2763,10 @@ namespace Simplog.Data.CommonDataModel.Mocks
         public IDbSet<WarehouseWeightRounding> WarehouseWeightRoundings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<WarehouseStoragePricing> WarehouseStoragePricings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<CardSearch> CardSearches { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<Horse> Horses { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
-        
+
 
 
 

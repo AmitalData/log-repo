@@ -459,10 +459,8 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new WarehouseWeightRoundingMap());
             modelBuilder.Configurations.Add(new WarehouseStoragePricingMap());
             modelBuilder.Configurations.Add(new CardSearchMap());
+            modelBuilder.Configurations.Add(new HorseMap());
 
-
-
-            
             base.OnModelCreating(modelBuilder);
         }
 
@@ -535,6 +533,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<WarehouseWeightMeasurement> WarehouseWeightMeasurements { get; set; }
         public IDbSet<WarehouseWeightRounding> WarehouseWeightRoundings { get; set; }
         public IDbSet<WarehouseStoragePricing> WarehouseStoragePricings { get; set; }
+        public IDbSet<Horse> Horses { get; set; }
 
         public IDbSet<Warehouse> Warehouses
         {

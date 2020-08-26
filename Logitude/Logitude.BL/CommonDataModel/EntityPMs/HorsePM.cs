@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simplog.Data.CommonDataModel.EntityPOCOs
+namespace Logitude.BL.CommonDataModel.EntityPMs
 {
-    public class Horse
+    public class HorsePM
     {
         [Key]
         public string Id { get; set; }
@@ -31,9 +31,5 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public DateTime UpdateDate { get; set; }
         public string UpdatedByUserId { get; set; }
         public string SearchFields { get; set; }
-
-        public virtual Country CountryOfBirth { get; set; }
-        public virtual User CreatedByUser { get; set; }
-        public virtual User UpdatedByUser { get; set; }
     }
 }

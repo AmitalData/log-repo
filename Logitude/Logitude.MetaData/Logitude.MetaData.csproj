@@ -519,6 +519,7 @@
     <None Include="DBTables\CommonDataModel\FormCustomField.dxml" />
     <None Include="DBTables\CommonDataModel\FTPDetail.dxml" />
     <None Include="DBTables\CommonDataModel\GlobalZone.dxml" />
+    <None Include="DBTables\CommonDataModel\Horse.dxml" />
     <None Include="DBTables\CommonDataModel\HybridPartner.dxml" />
     <None Include="DBTables\CommonDataModel\HybridPartnersPermission.dxml" />
     <None Include="DBTables\CommonDataModel\HybridTenantState.dxml" />
@@ -893,6 +894,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\CommonDataModel\CardSearch.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Horse.lxml" />
     <None Include="EntityFiles\CommonDataModel\HybridTenantState.lxml" />
     <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">
       <SubType>Designer</SubType>
