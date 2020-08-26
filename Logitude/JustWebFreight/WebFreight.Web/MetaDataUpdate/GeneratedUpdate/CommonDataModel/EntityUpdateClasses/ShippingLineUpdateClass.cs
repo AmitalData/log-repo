@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ShippingLineUpdateClass
    {  		
-		public const string HashString = "2130a1df9fdb752801425154604ce620";
+		public const string HashString = "195985da90773b1596c4b8d4a07330c9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -335,7 +335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "BankName",
 					  						ObjectTableName =  "ShippingLine",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  false,
@@ -397,7 +397,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "BankAddress",
 					  						ObjectTableName =  "ShippingLine",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
@@ -3427,7 +3427,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
                 Code =  "SLDS",
                 EnglishName =  "GLAccount was disconnected",
-                LocalName =  "נותק כרטיס הנהח\"ש",
+                LocalName =  "GLAccount was disconnected",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,

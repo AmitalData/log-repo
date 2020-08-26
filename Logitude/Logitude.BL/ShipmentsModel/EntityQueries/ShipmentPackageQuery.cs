@@ -6,6 +6,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -194,6 +195,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return myResult;
         }
+
         public List<ShipmentPackagePM> GetShipmentPackages(string shipmentId, string myShipmentNumber, int tenant)
         {
             InsideShipmentPackageRepository insideShipmentPackagesRepository = new InsideShipmentPackageRepository(repository.context);
@@ -206,7 +208,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentPackageHarmonizeQuery shipmentPackageHarmonizeQuery = new ShipmentPackageHarmonizeQuery(shipmentPackageHarmonizeRepository);
 
             List<ShipmentPackagePM> shipmentPackages
-                = (from a in repository.context.ShipmentPackages.Include("PackageType").Include("LastStatus").Include("Country")
+                = (from a in repository.context.ShipmentPackages
                    where a.ShipmentId == shipmentId && a.Tenant == tenant
                    select new ShipmentPackagePM()
                    {
@@ -247,21 +249,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        MethodUsed = a.MethodUsed,
                        ShipmentNumber = myShipmentNumber,
                        PackageTypeId = a.PackageTypeId,
-                       PackageTypeCode = a.PackageType == null ? null : a.PackageType.Code,
-                       PackageTypeName = a.PackageType == null ? null : a.PackageType.EnglishName,
-                       PackageTypeLocalName = a.PackageType == null ? null : a.PackageType.LocalName,
-                       PackageTypeNote = a.PackageType == null ? null : a.PackageType.Notes,
-                       PrintAs = a.PackageType == null ? null : a.PackageType.PrintAs,
-                       IsPackageAddedManually = a.PackageType == null ? false : a.PackageType.AddedManually,
-                       IsContainer = a.PackageType == null ? false : a.PackageType.IsContainer,
-                       IsContainerRefrigerated = a.PackageType == null ? false : a.PackageType.IsRefrigerated,
-                       PackageTypeIsInland = a.PackageType == null ? false : a.PackageType.IsInland,
-                       PackageTypeIsOcean = a.PackageType == null ? false : a.PackageType.IsOcean,
-                       PackageTypeIsAir = a.PackageType == null ? false : a.PackageType.IsAir,
-                       TEU = a.PackageType == null ? 0 : a.PackageType.TEU,
-                       ContainerSize = a.PackageType == null ? 0 : a.PackageType.ContainerSize,
-                       PackageTypeVolume = a.PackageType == null ? 0 : a.PackageType.Volume,
-                       IsVehicle = a.PackageType == null ? false : a.PackageType.IsVehicle,
                        IsDeliveryFU = a.IsDeliveryFU,
                        DeliveryId = a.DeliveryId,
                        DeliveryETD = a.DeliveryETD,
@@ -299,7 +286,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        OnCarriageETD = a.OnCarriageETD,
                        LastStatusCode = a.LastStatusCode,
                        LastStatusDate = a.LastStatusDate,
-                       LastStatusName = a.LastStatus == null ? null : a.LastStatus.Name,
+                       //LastStatusName = a.LastStatus == null ? null : a.LastStatus.Name,
                        DeliveryTransportModeCode = a.DeliveryTransportModeCode,
                        ECRTransportModeCode = a.ECRTransportModeCode,
                        IsMultiHarmonize = a.IsMultiHarmonize,
@@ -316,15 +303,60 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ChassisNumber = a.ChassisNumber,
                        RegistrationNumber = a.RegistrationNumber,
                        CountryId = a.CountryId,
-                       CountryName = a.Country != null ? a.Country.EnglishName : "",
+                       //CountryName = a.Country != null ? a.Country.EnglishName : "",
                        WarehouseReleaseNumber = a.WarehouseReleaseNumber,
                    }).ToList();
+
+            var commonContext = CommonDataContext.GetContext(tenant);
+            PackageTypeRepository PTypeRepo = new PackageTypeRepository(commonContext);
+            //CountryRepository CountryRepo = new CountryRepository(commonContext);
+            //PackageTypeRepository PTypeRepo = new PackageTypeRepository(commonContext);
 
             foreach (ShipmentPackagePM package in shipmentPackages)
             {
                 package.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(package.Id, package.Tenant);
                 package.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(package.Id, package.Tenant);
                 package.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(package.Id, package.Tenant);
+                if (!string.IsNullOrEmpty(package.PackageTypeId))
+                {
+                    PackageType CurrentPackageType = PTypeRepo.GetSinglePackageType(package.PackageTypeId, tenant);
+                    package.PackageTypeCode = CurrentPackageType.Code;
+                    package.PackageTypeName = CurrentPackageType.EnglishName;
+                    package.PackageTypeLocalName = CurrentPackageType.LocalName;
+                    package.PackageTypeNote = CurrentPackageType.Notes;
+                    package.PrintAs = CurrentPackageType.PrintAs;
+                    package.IsPackageAddedManually = CurrentPackageType.AddedManually;
+                    package.IsContainer = CurrentPackageType.IsContainer;
+                    package.IsContainerRefrigerated = CurrentPackageType.IsRefrigerated;
+                    package.PackageTypeIsInland = CurrentPackageType.IsInland;
+                    package.PackageTypeIsOcean = CurrentPackageType.IsOcean;
+                    package.PackageTypeIsAir = CurrentPackageType.IsAir;
+                    package.TEU = CurrentPackageType.TEU;
+                    package.ContainerSize = CurrentPackageType.ContainerSize;
+                    package.PackageTypeVolume = CurrentPackageType.Volume;
+                    package.IsVehicle = CurrentPackageType.IsVehicle;
+
+                }
+                if (!string.IsNullOrEmpty(package.CountryId))
+                {
+                    package.CountryName = (from d in commonContext.Countries
+
+                                           where d.Id == package.CountryId
+
+                                           select d.EnglishName).FirstOrDefault();
+
+                }
+                if (!string.IsNullOrEmpty(package.LastStatusCode))
+                {
+                    package.LastStatusName = (from d in repository.context.INTTRAStatuses
+
+                                              where d.Code == package.LastStatusCode
+
+                                              select d.Name).FirstOrDefault();
+
+
+                }
+
             }
 
             return shipmentPackages;

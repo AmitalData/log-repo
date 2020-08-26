@@ -452,6 +452,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ChargeStorageCurrencyId = entityPM.ChargeStorageCurrencyId;
             entityPoco.WeightMeasurementCode = entityPM.WeightMeasurementCode;
             entityPoco.WeightRoundingCode = entityPM.WeightRoundingCode;
+            entityPoco.IsBondedWarehouse = entityPM.IsBondedWarehouse;
+            entityPoco.IsBondedWarehouseChanged = entityPM.IsBondedWarehouseChanged;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
@@ -2531,6 +2533,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
 
 
+            AddFieldChangedProperties(changeTrackingPM, "BookingConfirmationSentDate", changeTrackingPM.BookingConfirmationSentDate, pm.BookingConfirmationSentDate, "BookingConfirmationSentDate", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "PreAlertSentDate", changeTrackingPM.PreAlertSentDate, pm.PreAlertSentDate, "PreAlertSentDate", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "DeliveryNoticeSentDate", changeTrackingPM.DeliveryNoticeSentDate, pm.DeliveryNoticeSentDate, "DeliveryNoticeSentDate", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "ExpectedArrivalNoticeSentDate", changeTrackingPM.ExpectedArrivalNoticeSentDate, pm.ExpectedArrivalNoticeSentDate, "ExpectedArrivalNoticeSentDate", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "ArrivalNoticeSentDate", changeTrackingPM.ArrivalNoticeSentDate, pm.ArrivalNoticeSentDate, "ArrivalNoticeSentDate", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "T1ReceivedDate", changeTrackingPM.T1ReceivedDate, pm.T1ReceivedDate, "T1ReceivedDate", notifyPropertyChangeValuesList);
+
 
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field2, pm.Field2, "Field2", notifyPropertyChangeValuesList);
@@ -2662,6 +2671,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 shipmentPM.IsRequestedDocuments = houseShipment.IsRequestedDocuments;
                 shipmentPM.IsImporterApprovalRequired = houseShipment.IsImporterApprovalRequired;
             }
+
+
+            shipmentPM.BookingConfirmationSentDate = houseShipment.BookingConfirmationSentDate;
+            shipmentPM.PreAlertSentDate = houseShipment.PreAlertSentDate;
+            shipmentPM.DeliveryNoticeSentDate = houseShipment.DeliveryNoticeSentDate;
+            shipmentPM.ExpectedArrivalNoticeSentDate = houseShipment.ExpectedArrivalNoticeSentDate;
+            shipmentPM.ArrivalNoticeSentDate = houseShipment.ArrivalNoticeSentDate;
+            shipmentPM.T1ReceivedDate = houseShipment.T1ReceivedDate;
+
 
             shipmentPM.ShipmentTypeId = houseShipment.ShipmentTypeId;
 

@@ -724,6 +724,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChargeStorageCurrencyId).HasColumnName("ChargeStorageCurrencyId");
             this.Property(t => t.WeightMeasurementCode).HasColumnName("WeightMeasurementCode");
             this.Property(t => t.WeightRoundingCode).HasColumnName("WeightRoundingCode");
+            this.Property(t => t.IsBondedWarehouse).HasColumnName("IsBondedWarehouse");
+            this.Property(t => t.IsBondedWarehouseChanged).HasColumnName("IsBondedWarehouseChanged");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

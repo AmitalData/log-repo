@@ -144,6 +144,19 @@
                                             </div>
                                         </div>
 
+                                        <!-- Shipment Sub Types -->
+                                        <div style="margin: 10px;" *ngIf="DirectionId && TransportModeId && ShipmentTypeId && SubTypeFeatureToggle">
+                                            <div style="font-size: 13px; color: #6E7172;">{{'Shipment.F.ShipmentSubTypeId' | TextCodeTranslationPipe}}:</div>
+                                            <div style="margin-top: -2px;">
+                                                <div class="RadioButton" *ngFor="let item of ShipmentSubTypesList" [attr.id]="'ShipmentSubTypeRadio_Div_' + SessionIndex + item.Code">
+                                                    <input [attr.id]="'ShipmentSubTypeRadio_' + SessionIndex + item.Code" [attr.name]="'ShipmentSubTypesRadio' + SessionIndex" type="radio" [checked]="ShipmentSubTypeId == item.Code" (click)="ShipmentSubTypeId = item.Code" />
+                                                    <label [attr.for]="'ShipmentSubTypeRadio_' + SessionIndex + item.Code" style="text-indent: 20px; font-size: 12px" [ngStyle]="{color: ShipmentSubTypeId == item.Code ? '#287828':'#282E30'}">
+                                                        {{item.Name}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </td>
                                 </tr>
 
@@ -375,6 +388,12 @@
                                                                                     [DependencyFilter1Value]="ShipperId">
                                                                             </LogLov>
                                                                         </td>
+                                                                        <td style="width: 20px;">
+                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddContact(ShipperId, 'SH')"></IconButton>
+                                                                        </td>
+                                                                        <td >
+                                                                            <div></div>
+                                                                        </td>
                                                                     </tr>
 
                                                                     <tr class="FormFieldRow" style="height: 80px;">
@@ -389,6 +408,9 @@
                                                                                 </p>
                                                                             </div>
                                                                         </td>
+                                                                        <td colspan="2">
+                                                                            <div></div>
+                                                                        </td>
                                                                     </tr>
 
                                                                     <tr class="FormFieldRow">
@@ -397,6 +419,9 @@
                                                                         </td>
                                                                         <td [style.width.px]="ControlColumnWidth">
                                                                             <LogTextBox [ObjectFieldName]="'ShipperReference2'" [Text]="ShipperReference2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                        <td colspan="2">
+                                                                            <div></div>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -503,6 +528,12 @@
                                                                                     [DependencyFilter1Value]="ConsigneeId">
                                                                             </LogLov>
                                                                         </td>
+                                                                        <td style="width: 20px;">
+                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddContact(ConsigneeId, 'CO')"></IconButton>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
                                                                     </tr>
 
                                                                     <tr class="FormFieldRow" style="height: 80px;">
@@ -517,6 +548,9 @@
                                                                                 </p>
                                                                             </div>
                                                                         </td>
+                                                                        <td colspan="2">
+                                                                            <div></div>
+                                                                        </td>
                                                                     </tr>
 
                                                                     <tr class="FormFieldRow">
@@ -525,6 +559,9 @@
                                                                         </td>
                                                                         <td [style.width.px]="ControlColumnWidth">
                                                                             <LogTextBox [ObjectFieldName]="'ConsigneeReference2'" [Text]="ConsigneeReference2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                        <td colspan="2">
+                                                                            <div></div>
                                                                         </td>
                                                                     </tr>
                                                                 </table>

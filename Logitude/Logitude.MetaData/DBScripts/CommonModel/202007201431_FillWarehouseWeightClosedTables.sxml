@@ -1,4 +1,4 @@
-﻿<Script DBType="Main">
+﻿<Script DBType="Main" Module="Common">
   <Sql Version="1">
     <![CDATA[
     
@@ -23,7 +23,7 @@
       if not exists (select Code from WarehouseWeightRoundings where Code = 'HAF')
       begin                
         insert into WarehouseWeightRoundings (Code, Name, SearchFields, Display)
-        values ('HAF', 'Half', 'HAF,Half', '1/2')
+        values ('HAF', 'Half', 'HAF,Half', '0.5')
       end
       
       if not exists (select Code from WarehouseWeightRoundings where Code = 'ONE')

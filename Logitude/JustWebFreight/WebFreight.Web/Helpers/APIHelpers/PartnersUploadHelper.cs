@@ -320,14 +320,21 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (!string.IsNullOrEmpty(rowData[14]))
                         {
-                            partnerExcel.ExternalID = rowData[14].Trim();
+                            partnerExcel.ReceivablesExternalID = rowData[14].Trim();
                         }
                     }
                     if (rowData.Length > 15)
                     {
                         if (!string.IsNullOrEmpty(rowData[15]))
                         {
-                            partnerExcel.Code = rowData[15].Trim();
+                            partnerExcel.PayablesExternalID = rowData[15].Trim();
+                        }
+                    }
+                    if (rowData.Length > 16)
+                    {
+                        if (!string.IsNullOrEmpty(rowData[16]))
+                        {
+                            partnerExcel.Code = rowData[16].Trim();
                         }
                     }
 
@@ -553,6 +560,9 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = CodeCounter.GetNumber("Vendor", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
+
             };
 
             var address = CreateAddress(item, vendor.Id);
@@ -578,6 +588,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = CodeCounter.GetNumber("AccountingPartner", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             var address = CreateAddress(item, accountingPartner.Id);
@@ -604,6 +616,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = item.Code,
                 CarrierTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             var address = CreateAddress(item, trucker.Id);
@@ -629,6 +643,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = CodeCounter.GetNumber("ShippingLine", tenant).ToString(),
                 CarrierTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             ShippingLineService service = new ShippingLineService(commonDataContext, shippingLine, systemContact.Id);
@@ -646,6 +662,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = CodeCounter.GetNumber("Airline", tenant).ToString(),
                 CarrierTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             AirlineService service = new AirlineService(commonDataContext, airline, systemContact.Id);
@@ -664,6 +682,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = item.Code,
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             var address = CreateAddress(item, warehouse.Id);
@@ -690,6 +710,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = CodeCounter.GetNumber("ShippingAgent", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             var address = CreateAddress(item, shippingAgent.Id);
@@ -715,6 +737,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = CodeCounter.GetNumber("CustomAgent", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             var address = CreateAddress(item, customAgent.Id);
@@ -743,6 +767,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 CustomerStatusCode = "ACT",
                 IsCustomer = true,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
             var address = CreateAddress(item, customer.Id);
             customer.Addresses.Add(address);
@@ -768,6 +794,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = CodeCounter.GetNumber("Agent", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
             };
 
             var address = CreateAddress(item, agent.Id);
@@ -869,7 +897,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
         public string FaxNumber { get; set; }
         public string EMail { get; set; }
         public string ContactName { get; set; }
-        public string ExternalID { get; set; }
+        public string PayablesExternalID { get; set; }
+        public string ReceivablesExternalID { get; set; }
         public string Code { get; set; }
     }
 }

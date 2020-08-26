@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .red {
         color: red !important;
     }
@@ -15,7 +15,7 @@
 <!-- TransactionAmount -->
 <div class="TextTrimming" *ngIf="fieldName == 'TransactionAmount'"
     style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
-    [class.red]='rowData["ForeignAmountDebit"] > 0'>
+    [class.red]='rowData["AmountDebit"] > 0'>
     {{ GetTransacionAmount() | NumbersPipe:'N2' }}
 </div>
 

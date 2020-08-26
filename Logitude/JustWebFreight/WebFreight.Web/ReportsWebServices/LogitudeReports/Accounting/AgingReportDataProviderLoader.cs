@@ -4,6 +4,7 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -13,6 +14,7 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -33,6 +35,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             reportQueryOperations = DeserializeQueryOperationFromXml(xmlFilters);
 
+            CheckSalesmanAbilities(BuildReportParameters());
+
             AgingReportService agingReportService = new AgingReportService(BuildReportParameters());
             agingReportService.RunReport();
             List<PeriodMExtended> resultedPeriods = agingReportService.MyPeriodExtendedList;
@@ -44,27 +48,80 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private AccountingAgingDataProvider BuildDataProvider(List<PeriodMExtended> resultedPeriods)
         {
+            List<PeriodMExtended> filteredPeriods = FilterPeriods(resultedPeriods);
+
             AccountingAgingDataProvider dataProvider = new AccountingAgingDataProvider();
 
             dataProvider.Month = GetFilterValue<DateTime>("AgingForDate");
             dataProvider.PrintedByUser = GetLoggedContactName();
             dataProvider.CustomerFilterValue = GetCustomerFilterTitle();
-            dataProvider.AgingPeriods = BuildAgingPeriods(resultedPeriods);
+            dataProvider.AgingPeriods = BuildAgingPeriods(filteredPeriods);
 
             SetLocalCurrency(dataProvider);
-            AddTotalBalancePeriods(resultedPeriods, dataProvider);
-            AddTotalLocalBalancePeriods(resultedPeriods, dataProvider);
+            AddTotalBalancePeriods(filteredPeriods, dataProvider);
+            AddTotalLocalBalancePeriods(filteredPeriods, dataProvider);
             CalculateReportLocalBalanceTotal(dataProvider);
 
-            FilterCustomerPeriodsOnBalance(dataProvider);
+            //FilterCustomerPeriodsOnBalance(dataProvider);
             FixSplitAccountData(dataProvider);
 
-            SetOrderForPeriods(resultedPeriods, dataProvider);
-            SetPeriodsTotal(resultedPeriods, dataProvider);
+            SetOrderForPeriods(filteredPeriods, dataProvider);
+            SetPeriodsTotal(filteredPeriods, dataProvider);
 
             ResharpPeriodsName(dataProvider);
 
             return dataProvider;
+        }
+        private void CheckSalesmanAbilities(AgingReportParam args)
+        {
+            bool isSalsmanRestrictionsEnabled = SecurityUtility.CheckFeature("GLAccount", "SalesmanAging", tenant);
+            UserPM loggedUser = GetLoggerUser();
+
+            if (isSalsmanRestrictionsEnabled && loggedUser?.IsSalesman == true && args.SalesmanId == null)
+                throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.NoSalesman", args.Tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant)));
+
+        }
+
+        private UserPM GetLoggerUser()
+        {
+            UserPM loggedUser;
+            UserQuery userQuery = new UserQuery(tenant);
+            if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            { // user set and passed from from WR
+                loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
+            }
+            else
+            {
+                ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+                loggedUser = userQuery.GetSinglePM(loggedContact.Id, tenant);
+            }
+            return loggedUser;
+        }
+
+        private List<PeriodMExtended> FilterPeriods(List<PeriodMExtended> resultedPeriods)
+        {
+            string groupBy = GetFilterValue<string>("GroupByDate"); // filter_Due, filter_Accounting
+            string filterBy = GetFilterValue<string>("BalanceFilter"); // Debtors, DebtAbove, filter_All
+            decimal balanceFilterAmount = Convert.ToDecimal(GetFilterValue<decimal>("BalanceFilterValue"));
+
+            if (groupBy == "filter_Due")
+            {
+                if(filterBy == "Debtors")
+                    resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue > 0).ToList();
+                else if (filterBy == "DebtAbove")
+                    resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue >= balanceFilterAmount).ToList();
+
+            }
+            else
+            {
+                if (filterBy == "Debtors")
+                    resultedPeriods = resultedPeriods.Where(d => d.BalanceInLocalCurrency > 0).ToList();
+                else if (filterBy == "DebtAbove")
+                    resultedPeriods = resultedPeriods.Where(d => d.BalanceInLocalCurrency >= balanceFilterAmount).ToList();
+
+            }
+
+            return resultedPeriods;
         }
 
         private void FixSplitAccountData(AccountingAgingDataProvider totalData)
@@ -85,17 +142,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         private void FilterCustomerPeriodsOnBalance(AccountingAgingDataProvider totalData)
         {
-            List<AgingPeriod> totalBalances = GetTotalBalancePeriods(totalData, showLocals);
+            //if (GetFilterValue<string>("GroupByDate") != "filter_Due")
+            //{
+            //    List<AgingPeriod> totalBalances = GetTotalBalancePeriods(totalData, showLocals);
 
-            var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
+            //    var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
 
-            foreach (var totalBalance in totalBalances)
-            {
-                if (GetFilterValue<string>("BalanceFilter") == "Debtors" && !(totalBalance.Total > 0))
-                    RemoveCustomerPeriods(totalData, totalBalance);
-                else if (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && !(totalBalance.Total >= Convert.ToDecimal(balanceFilterAmount)))
-                    RemoveCustomerPeriods(totalData, totalBalance);
-            }
+            //    foreach (var totalBalance in totalBalances)
+            //    {
+            //        if (GetFilterValue<string>("BalanceFilter") == "Debtors" && !(totalBalance.Total > 0))
+            //            RemoveCustomerPeriods(totalData, totalBalance);
+            //        else if (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && !(totalBalance.Total >= Convert.ToDecimal(balanceFilterAmount)))
+            //            RemoveCustomerPeriods(totalData, totalBalance);
+            //    }
+            //}
+
         }
 
         private void RemoveCustomerPeriods(AccountingAgingDataProvider totalData, AgingPeriod totalBalance)
@@ -370,7 +431,24 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                     record.Total = item.Total;
 
-                    periods.Add(record);
+
+                    if (GetFilterValue<string>("GroupByDate") == "filter_Due")
+                    {
+                        var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
+                        var totalBalance = item.LocalBalanceInDue;
+                        if ((GetFilterValue<string>("BalanceFilter") == "Debtors" && totalBalance > 0)
+                                ||
+                            (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && totalBalance >= Convert.ToDecimal(balanceFilterAmount)))
+                        {
+
+                            periods.Add(record);
+                        }
+                    }
+                    else
+                    {
+                        periods.Add(record);
+                    }
+
                 }
             }
             else
@@ -392,7 +470,23 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                     record.Total = item.Total;
 
-                    periods.Add(record);
+                    if (GetFilterValue<string>("GroupByDate") == "filter_Due")
+                    {
+                        var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
+                        var totalBalance = item.LocalBalanceInDue;
+                        if ((GetFilterValue<string>("BalanceFilter") == "Debtors" && totalBalance > 0)
+                                ||
+                            (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && totalBalance >= Convert.ToDecimal(balanceFilterAmount)))
+                        {
+
+                            periods.Add(record);
+                        }
+                    }
+                    else
+                    {
+                        periods.Add(record);
+                    }
+
                 }
             }
 
@@ -464,7 +558,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             reportParameters.AggregateByGLAccountCurrencies = GetFilterValue<bool>("Detailed");
          
             reportParameters.GroupByDate = GetFilterValue<string>("GroupByDate") == "filter_Due" ? AgingReportParam.DateEnum.DueDate : AgingReportParam.DateEnum.AccountingDate;
-            reportParameters.AgingMethod = GetFilterValue<string>("AgingMethod") == "Open Transaction" ? AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString() : AgingReportParam.MethodEnum.TotalByMonthFIFOMethod.ToString();
+            reportParameters.AgingMethod = GetFilterValue<string>("AgingMethod") == "Open Balance" ? AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString() : AgingReportParam.MethodEnum.TotalByMonthFIFOMethod.ToString();
             reportParameters.Aging4AccountTypeCode = (GetFilterValue<string>("GLAccountType") == "2") ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3;
 
             SetReportCategoryParameters(reportParameters);

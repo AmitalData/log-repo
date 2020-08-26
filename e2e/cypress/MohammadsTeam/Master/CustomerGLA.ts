@@ -24,9 +24,9 @@ export class CustomerGLA {
     }
 
     activatecustomer(name: string) {
-        cy.get('#SearchFieldsId_0_0').type(name);
+        cy.get('#SearchFieldsId_0_0').type(name,{ force: true });
         cy.get('div[id=ListDataLoaded]').should('exist');
-        cy.get('div[id=LogGrid_0_0row0]').click();
+        cy.get('div[id=LogGrid_0_0row0]').click({ force: true });
         cy.get('li[id=CustomerTHGeneral]').click();
         cy.get('#Customer_EnglishName');
         // cy.get('#Customer.TH.Accounting').click(); didnt work  ???? should talk with moh about it 

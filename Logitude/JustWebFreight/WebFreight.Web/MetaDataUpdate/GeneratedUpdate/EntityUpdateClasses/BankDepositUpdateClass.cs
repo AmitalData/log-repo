@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankDepositUpdateClass
    {  		
-		public const string HashString = "bee4aef83507849fcc8d20c702b1650a";
+		public const string HashString = "152c2d64e5efa48d9968e4f7b0c19a54";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2124,8 +2124,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature BankDepositFeature_BANKDEPOSITMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKDEPOSITMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.BankDepositMenu", NameTextCodeDefaultText = @"Bank Deposit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankDepositObjectTable);
 
-		   Feature BankDepositFeature_MOREBNKDPST = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREBNKDPST", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.More", NameTextCodeDefaultText = @"More Buttons" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankDepositObjectTable);
-
    
 	    
 		}
@@ -2137,7 +2135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "BDRC",
                 EnglishName =  "Cheque returned to cashbook",
-                LocalName =  "המחאה הוצאה מהפקדה",
+                LocalName =  "Cheque returned to cashbook",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
@@ -2156,7 +2154,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CREV",
                 EnglishName =  "Created",
-                LocalName =  "יצירה",
+                LocalName =  "Created",
                 IsManualEntry =  false,
                 ShortView =  true,
                 EventTypeCategoryCode =  "OPE",
@@ -2194,7 +2192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CNEV",
                 EnglishName =  "Cancelled",
-                LocalName =  "ביטול",
+                LocalName =  "Cancelled",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,

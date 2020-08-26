@@ -33,7 +33,7 @@ namespace Logitude.BL.CommonDataModel
             {    
                 Code = "HAF", 
                 Name = "Half", 
-                Display = "1/2", 
+                Display = "0.5", 
                 SearchFields = "HAF,Half", 
 			});
 			 

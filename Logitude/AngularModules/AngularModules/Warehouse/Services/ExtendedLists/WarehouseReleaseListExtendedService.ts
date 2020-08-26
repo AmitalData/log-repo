@@ -45,6 +45,20 @@ export class WarehouseReleaseListExtendedService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
 
+
+    getActiveWarehouseReleaseListsByShipmentId(shipmentId: string, tenant: number) {
+
+
+        return this._http.get(this._apiUrl + '/GetActiveWarehouseReleaseListsByShipmentId/?' + 'shipmentId=' + shipmentId + '&tenant=' + tenant + '&s=true', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = response;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
+
     GetRecentWarehouseReleases() {
         
         

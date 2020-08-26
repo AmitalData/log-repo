@@ -31,9 +31,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.ViewFieldDisplayName).HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.DimensionDataViewName).HasMaxLength(200).IsUnicode(true);
-
-
-
+            this.Property(t => t.RecordType).HasMaxLength(100).IsUnicode(false);
 
 
 
@@ -65,6 +63,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DontDisplayInView).HasColumnName("DontDisplayInView ");
             this.Property(t => t.DimensionDataViewName).HasColumnName("DimensionDataViewName ");
             this.Property(t => t.IsMultipleSelection).HasColumnName("IsMultipleSelection ");
+            this.Property(t => t.RecordType).HasColumnName("RecordType");
 
 
             this.HasRequired(t => t.DWObjectTable).WithMany().HasForeignKey(d => d.DWObjectTableCode);

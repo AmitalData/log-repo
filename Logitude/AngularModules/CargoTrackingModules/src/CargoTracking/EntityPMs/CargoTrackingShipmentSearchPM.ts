@@ -34,11 +34,6 @@ export class CargoTrackingShipmentSearchPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private shipmentId: string;
-    public get ShipmentId() { return this.shipmentId; }
-    public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
-       
-	 
     private shipmentDate: Date;
     public get ShipmentDate() { return this.shipmentDate; }
     public set ShipmentDate(newValue: Date) { if (this.shipmentDate != newValue) { this.shipmentDate = newValue; this.MarkAsDirty("ShipmentDate"); } }
@@ -47,6 +42,11 @@ export class CargoTrackingShipmentSearchPM {
     private id: number;
     public get Id() { return this.id; }
     public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+       
+	 
+    private securityKey: string;
+    public get SecurityKey() { return this.securityKey; }
+    public set SecurityKey(newValue: string) { if (this.securityKey != newValue) { this.securityKey = newValue; this.MarkAsDirty("SecurityKey"); } }
        
 	 
 

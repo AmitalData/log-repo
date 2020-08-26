@@ -9,6 +9,7 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Reflection;
+using System.Xml;
 
 namespace Logitude.DBMigrations.Models
 {
@@ -25,16 +26,21 @@ namespace Logitude.DBMigrations.Models
         private List<ExecutedSxmlFile> ExecutedSxmlFiles;
         private IncludedModules IncludedModules;
 
+        private Configurations Configurations;
+        private DBConfig DBConfig;
+
         public MigrationTool(string[] arguments, RunSettings runSettings)
         {
             Arguments = arguments;
             RunSettings = runSettings;
 
+            ReadConfigurations();
+            ReadDBConfig();
             ValidateToolVersion();
             ValidateToolSettings();
             DisplayToolSettings();
 
-            DatabaseType = ConfigurationManager.AppSettings["DatabaseType"];
+            DatabaseType = DBConfig.DatabaseType;
         }
 
         public void RunTool()
@@ -537,19 +543,19 @@ namespace Logitude.DBMigrations.Models
 
             if (dbType == "Global")
             {
-                connectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
+                connectionString = DBConfig.GlobalConnectionString;
             }
             else if (dbType == "Main")
             {
-                connectionString = ConfigurationManager.AppSettings["MainConnectionString"];
+                connectionString = DBConfig.MainConnectionString;
             }
             else if (dbType == "SystemLogs")
             {
-                connectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
+                connectionString = DBConfig.SystemLogsConnectionString;
             }
             else if (dbType == "CargoTracking")
             {
-                connectionString = ConfigurationManager.AppSettings["CargoTrackingConnectionString"];
+                connectionString = DBConfig.CargoTrackingConnectionString;
             }
             else
             {
@@ -1846,7 +1852,6 @@ namespace Logitude.DBMigrations.Models
         private void ValidateToolVersion()
         {
             string versionInfoFilePath;
-
             if (IsArgumentProvided(ToolArguments.DEPLOYMENT))
             {
                 string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -1883,10 +1888,10 @@ namespace Logitude.DBMigrations.Models
 
         private void ValidateToolSettings()
         {
-            string databaseType = ConfigurationManager.AppSettings["DatabaseType"];
-            string globalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
-            string mainConnectionString = ConfigurationManager.AppSettings["MainConnectionString"];
-            string systemLogsConnectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
+            string databaseType = DBConfig.DatabaseType;
+            string globalConnectionString = DBConfig.GlobalConnectionString;
+            string mainConnectionString = DBConfig.MainConnectionString;
+            string systemLogsConnectionString = DBConfig.SystemLogsConnectionString;
 
             if (String.IsNullOrEmpty(databaseType))
             {
@@ -1912,11 +1917,11 @@ namespace Logitude.DBMigrations.Models
 
         private void DisplayToolSettings()
         {
-            string databaseType = ConfigurationManager.AppSettings["DatabaseType"];
-            string globalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
-            string mainConnectionString = ConfigurationManager.AppSettings["MainConnectionString"];
-            string systemLogsConnectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
-            string cargoTrackingConnectionString = ConfigurationManager.AppSettings["CargoTrackingConnectionString"];
+            string databaseType = DBConfig.DatabaseType;
+            string globalConnectionString = DBConfig.GlobalConnectionString;
+            string mainConnectionString = DBConfig.MainConnectionString;
+            string systemLogsConnectionString = DBConfig.SystemLogsConnectionString;
+            string cargoTrackingConnectionString = DBConfig.CargoTrackingConnectionString;
             string globalDB, globalSource, mainDB, mainSource, systemLogsDB, systemLogsSource, databaseTypeMessage, databaseNameMessage;
             string cargoTrackingDB = null, cargoTrackingSource = null;
 
@@ -2007,6 +2012,87 @@ namespace Logitude.DBMigrations.Models
             if (!(script.ToLower().Contains("INSERT INTO".ToLower()) && script.ToLower().Contains("DBMigrationsHistory".ToLower())))
             {
                 Console.WriteLine("Executing Script:\n" + script.TrimStart('\n').TrimEnd('\n') + "\n");
+            }
+        }
+
+        private void ReadConfigurations()
+        {
+            string configurationsFilePath;
+            if (IsArgumentProvided(ToolArguments.DEPLOYMENT))
+            {
+                string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                configurationsFilePath = Path.Combine(projectDirectory, @"Configurations.xml");
+            }
+            else
+            {
+                string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                configurationsFilePath = Path.Combine(projectDirectory, @"Settings\Configurations.xml");
+            }
+
+            if (File.Exists(configurationsFilePath))
+            {
+                try
+                {
+                    string configurationsXmlString = File.ReadAllText(configurationsFilePath);
+                    Configurations = configurationsXmlString.ParseXML<Configurations>();
+                }
+                catch (Exception)
+                {
+                    ExitTool("Error: Cannot Read Configurations File");
+                }
+            }
+            else
+            {
+                ExitTool("Error: Cannot Find File " + configurationsFilePath);
+            }
+        }
+
+        private void ReadDBConfig()
+        {
+            try
+            {
+                string dbConfigFileName = null;
+                Config dbConfigFileNameConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "DBConfigFileName".ToLower()).FirstOrDefault();
+
+                if (dbConfigFileNameConfig != null)
+                {
+                    dbConfigFileName = dbConfigFileNameConfig.Value;
+                }
+
+                if (String.IsNullOrEmpty(dbConfigFileName))
+                {
+                    ExitTool("Error: Cannot Find DBConfigFileName In Configurations File");
+                }
+
+                string dbConfigFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dbConfigFileName);
+
+                if (!File.Exists(dbConfigFilePath))
+                {
+                    ExitTool("Error: Cannot Find File " + dbConfigFilePath);
+                }
+
+                string dbConfigXmlString = File.ReadAllText(dbConfigFilePath);
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(dbConfigXmlString);
+
+                XmlElement databaseTypeElement = (XmlElement)doc.SelectSingleNode(string.Format("appSettings/add[@key='{0}']", "DatabaseType"));
+                XmlElement globalConnectionStringElement = (XmlElement)doc.SelectSingleNode(string.Format("appSettings/add[@key='{0}']", "GlobalConnectionString"));
+                XmlElement mainConnectionStringElement = (XmlElement)doc.SelectSingleNode(string.Format("appSettings/add[@key='{0}']", "MainConnectionString"));
+                XmlElement systemLogsConnectionStringElement = (XmlElement)doc.SelectSingleNode(string.Format("appSettings/add[@key='{0}']", "SystemLogsConnectionString"));
+                XmlElement cargoTrackingConnectionStringElement = (XmlElement)doc.SelectSingleNode(string.Format("appSettings/add[@key='{0}']", "CargoTrackingConnectionString"));
+
+                DBConfig = new DBConfig
+                {
+                    DatabaseType = databaseTypeElement == null ? null : (databaseTypeElement.Attributes["value"]?.Value),
+                    GlobalConnectionString = globalConnectionStringElement == null ? null : (globalConnectionStringElement.Attributes["value"]?.Value),
+                    MainConnectionString = mainConnectionStringElement == null ? null : (mainConnectionStringElement.Attributes["value"]?.Value),
+                    SystemLogsConnectionString = systemLogsConnectionStringElement == null ? null : (systemLogsConnectionStringElement.Attributes["value"]?.Value),
+                    CargoTrackingConnectionString = cargoTrackingConnectionStringElement == null ? null : (cargoTrackingConnectionStringElement.Attributes["value"]?.Value)
+                };
+            }
+            catch (Exception)
+            {
+                ExitTool("Error: Cannot Read DBConfig File");
             }
         }
 

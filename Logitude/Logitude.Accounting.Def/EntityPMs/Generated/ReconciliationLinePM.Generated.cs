@@ -344,48 +344,48 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal foreignAmountDebit ;
+	  private decimal amountDebit ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal ForeignAmountDebit  
+       public decimal AmountDebit  
 	   {
 	    
 	     get
 		{
-		   return foreignAmountDebit;
+		   return amountDebit;
 		 }
 		 set
 		 {
-		   if(foreignAmountDebit != value)
+		   if(amountDebit != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForeignAmountDebit",OldValue=foreignAmountDebit,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmountDebit",OldValue=amountDebit,NewValue=value,PropertyType="decimal"};
 		    NotifyPropertyChanged(values);
-		   foreignAmountDebit=value;
+		   amountDebit=value;
 		   }
 			
 		 }
 	   }
-	  private decimal foreignAmountCredit ;
+	  private decimal amountCredit ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal ForeignAmountCredit  
+       public decimal AmountCredit  
 	   {
 	    
 	     get
 		{
-		   return foreignAmountCredit;
+		   return amountCredit;
 		 }
 		 set
 		 {
-		   if(foreignAmountCredit != value)
+		   if(amountCredit != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForeignAmountCredit",OldValue=foreignAmountCredit,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmountCredit",OldValue=amountCredit,NewValue=value,PropertyType="decimal"};
 		    NotifyPropertyChanged(values);
-		   foreignAmountCredit=value;
+		   amountCredit=value;
 		   }
 			
 		 }

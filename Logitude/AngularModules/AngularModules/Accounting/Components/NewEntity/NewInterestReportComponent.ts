@@ -39,7 +39,7 @@ export class NewInterestReportComponent extends BaseComponent implements OnDestr
         this.myService = new InterestReportPMService();
         this.Listen();
     }
-
+ 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private Listen() {

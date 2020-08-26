@@ -345,10 +345,10 @@ using Simplog.Data.ShipmentsModel;
 				   
 				   temp.MAWBDate = MyEntityPM.MAWBOBLDate;
 				   temp.Ratio = MyEntityPM.Ratio;
-				if(MyEntityPM.Transshipments != null && MyEntityPM.Transshipments.Count > 0)
+				if(MyEntityPM.MainCarriageLegs != null && MyEntityPM.MainCarriageLegs.Count > 0)
 				{
-					 TransshipmentQueryService TransshipmentService25 = new TransshipmentQueryService(Tenant);
-					 temp.Transshipments = TransshipmentService25.TransshipmentDataMapping(MyEntityPM.Transshipments,Tenant);
+					 MainCarriageLegQueryService MainCarriageLegService25 = new MainCarriageLegQueryService(Tenant);
+					 temp.MainCarriageLegs = MainCarriageLegService25.MainCarriageLegDataMapping(MyEntityPM.MainCarriageLegs,Tenant);
 				}
 
 							 					
@@ -1100,10 +1100,9 @@ using Simplog.Data.ShipmentsModel;
                     
 					if(IsUpdate)
 					{
-							throw new ApplicationException("MAWBOBLDate Can't be update"); 
+							throw new ApplicationException("MAWBDate Can't be update"); 
 					}  
-			
-					
+
 					temp.MAWBOBLDate = MyEntity.MAWBDate;
                     
 					if(IsUpdate)
@@ -1111,17 +1110,23 @@ using Simplog.Data.ShipmentsModel;
 							throw new ApplicationException("Ratio Can't be update"); 
 					}  
 
+					temp.Ratio = MyEntity.Ratio; 
 
-					temp.Ratio = MyEntity.Ratio;					   
-
-					if(MyEntity.Transshipments != null && MyEntity.Transshipments.Count > 0)
+					if(MyEntity.MainCarriageLegs != null && MyEntity.MainCarriageLegs.Count > 0)
 					{
-						TransshipmentQueryService TransshipmentService25 = new TransshipmentQueryService(Tenant);
-						temp.Transshipments = TransshipmentService25.TransshipmentDataMappingAndValidatin(MyEntity.Transshipments,Tenant,ComputingPartnerName);
+						MainCarriageLegQueryService MainCarriageLegService25 = new MainCarriageLegQueryService(Tenant);
+						  
+						if(IsUpdate)
+						{
+								throw new ApplicationException("MainCarriageLegs Can't be update"); 
+						}  
+
+						temp.MainCarriageLegs = MainCarriageLegService25.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName);
+						
 					}
 
 								 					   
-					   return temp;
+					return temp;
 		    }
             catch (Exception ex)
             {
@@ -1131,4 +1136,4 @@ using Simplog.Data.ShipmentsModel;
         }
 		 
    }
-}
+}

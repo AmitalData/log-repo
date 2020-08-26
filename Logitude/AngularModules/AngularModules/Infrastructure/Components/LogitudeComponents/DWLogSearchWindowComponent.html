@@ -84,7 +84,14 @@
                                 <td *ngIf="IsMultipleSelection" style="width: 180px;">
                                     <LogTextBox [ObjectFieldName]="'ColumnName'" [HideColumns]="true" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                 </td>
-                                <td *ngIf="IsMultipleSelection" style="width:42%"></td>
+                                <td *ngIf="IsMultipleSelection" style="width: 150px;">
+                                    <LogLabel [ObjectFieldName]="'OriginalColumnName'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true" [Text]="'Original Column Name'" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td *ngIf="IsMultipleSelection" style="width: 21%;">
+                                    <LogTextBox [ObjectFieldName]="'OriginalColumnName'" [HideColumns]="true" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                                <td *ngIf="IsMultipleSelection" style="width:10%"></td>
                                 <td style="width: 230px; vertical-align:middle;">
                                     <SearchTextBox [ObjectTableName]="ParentTableName"
                                                    (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
@@ -304,7 +311,7 @@
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
-                    <td *ngIf="!IsMultipleSelection" style="width: 1px;">
+                    <td *ngIf="HasActiveField" style="width: 1px;">
                         <CheckBox [IsChecked]="ShowInactive" (Checked)="ShowInactive = $event" [Text]="'Show Inactive'"></CheckBox>
                     </td>
 

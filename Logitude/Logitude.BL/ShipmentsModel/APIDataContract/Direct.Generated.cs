@@ -149,7 +149,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public double? Ratio { get; set; }
     
-    public List<Transshipment> Transshipments { get; set; }
+    public List<MainCarriageLeg> MainCarriageLegs { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

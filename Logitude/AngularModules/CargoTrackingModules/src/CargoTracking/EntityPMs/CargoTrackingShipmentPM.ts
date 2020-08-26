@@ -124,19 +124,9 @@ export class CargoTrackingShipmentPM {
     public set PickupDone(newValue: boolean) { if (this.pickupDone != newValue) { this.pickupDone = newValue; this.MarkAsDirty("PickupDone"); } }
        
 	 
-    private clearanceDone: boolean;
-    public get ClearanceDone() { return this.clearanceDone; }
-    public set ClearanceDone(newValue: boolean) { if (this.clearanceDone != newValue) { this.clearanceDone = newValue; this.MarkAsDirty("ClearanceDone"); } }
-       
-	 
     private pickupDate: Date;
     public get PickupDate() { return this.pickupDate; }
     public set PickupDate(newValue: Date) { if (this.pickupDate != newValue) { this.pickupDate = newValue; this.MarkAsDirty("PickupDate"); } }
-       
-	 
-    private clearanceDate: Date;
-    public get ClearanceDate() { return this.clearanceDate; }
-    public set ClearanceDate(newValue: Date) { if (this.clearanceDate != newValue) { this.clearanceDate = newValue; this.MarkAsDirty("ClearanceDate"); } }
        
 	 
     private createDate: Date;
@@ -162,6 +152,121 @@ export class CargoTrackingShipmentPM {
     private customerReference: string;
     public get CustomerReference() { return this.customerReference; }
     public set CustomerReference(newValue: string) { if (this.customerReference != newValue) { this.customerReference = newValue; this.MarkAsDirty("CustomerReference"); } }
+       
+	 
+    private isMainRecord: boolean;
+    public get IsMainRecord() { return this.isMainRecord; }
+    public set IsMainRecord(newValue: boolean) { if (this.isMainRecord != newValue) { this.isMainRecord = newValue; this.MarkAsDirty("IsMainRecord"); } }
+       
+	 
+    private pickupEstimationDate: Date;
+    public get PickupEstimationDate() { return this.pickupEstimationDate; }
+    public set PickupEstimationDate(newValue: Date) { if (this.pickupEstimationDate != newValue) { this.pickupEstimationDate = newValue; this.MarkAsDirty("PickupEstimationDate"); } }
+       
+	 
+    private fromWarehouseDate: Date;
+    public get FromWarehouseDate() { return this.fromWarehouseDate; }
+    public set FromWarehouseDate(newValue: Date) { if (this.fromWarehouseDate != newValue) { this.fromWarehouseDate = newValue; this.MarkAsDirty("FromWarehouseDate"); } }
+       
+	 
+    private fromWarehouseEstimationDate: Date;
+    public get FromWarehouseEstimationDate() { return this.fromWarehouseEstimationDate; }
+    public set FromWarehouseEstimationDate(newValue: Date) { if (this.fromWarehouseEstimationDate != newValue) { this.fromWarehouseEstimationDate = newValue; this.MarkAsDirty("FromWarehouseEstimationDate"); } }
+       
+	 
+    private fromWarehouseNotes: string;
+    public get FromWarehouseNotes() { return this.fromWarehouseNotes; }
+    public set FromWarehouseNotes(newValue: string) { if (this.fromWarehouseNotes != newValue) { this.fromWarehouseNotes = newValue; this.MarkAsDirty("FromWarehouseNotes"); } }
+       
+	 
+    private departureDone: boolean;
+    public get DepartureDone() { return this.departureDone; }
+    public set DepartureDone(newValue: boolean) { if (this.departureDone != newValue) { this.departureDone = newValue; this.MarkAsDirty("DepartureDone"); } }
+       
+	 
+    private departureDate: Date;
+    public get DepartureDate() { return this.departureDate; }
+    public set DepartureDate(newValue: Date) { if (this.departureDate != newValue) { this.departureDate = newValue; this.MarkAsDirty("DepartureDate"); } }
+       
+	 
+    private departureEstimationDate: Date;
+    public get DepartureEstimationDate() { return this.departureEstimationDate; }
+    public set DepartureEstimationDate(newValue: Date) { if (this.departureEstimationDate != newValue) { this.departureEstimationDate = newValue; this.MarkAsDirty("DepartureEstimationDate"); } }
+       
+	 
+    private arrivalDone: boolean;
+    public get ArrivalDone() { return this.arrivalDone; }
+    public set ArrivalDone(newValue: boolean) { if (this.arrivalDone != newValue) { this.arrivalDone = newValue; this.MarkAsDirty("ArrivalDone"); } }
+       
+	 
+    private arrivalDate: Date;
+    public get ArrivalDate() { return this.arrivalDate; }
+    public set ArrivalDate(newValue: Date) { if (this.arrivalDate != newValue) { this.arrivalDate = newValue; this.MarkAsDirty("ArrivalDate"); } }
+       
+	 
+    private arrivalEstimationDate: Date;
+    public get ArrivalEstimationDate() { return this.arrivalEstimationDate; }
+    public set ArrivalEstimationDate(newValue: Date) { if (this.arrivalEstimationDate != newValue) { this.arrivalEstimationDate = newValue; this.MarkAsDirty("ArrivalEstimationDate"); } }
+       
+	 
+    private toWarehouseDone: boolean;
+    public get ToWarehouseDone() { return this.toWarehouseDone; }
+    public set ToWarehouseDone(newValue: boolean) { if (this.toWarehouseDone != newValue) { this.toWarehouseDone = newValue; this.MarkAsDirty("ToWarehouseDone"); } }
+       
+	 
+    private toWarehouseDate: Date;
+    public get ToWarehouseDate() { return this.toWarehouseDate; }
+    public set ToWarehouseDate(newValue: Date) { if (this.toWarehouseDate != newValue) { this.toWarehouseDate = newValue; this.MarkAsDirty("ToWarehouseDate"); } }
+       
+	 
+    private toWarehouseEstimationDate: Date;
+    public get ToWarehouseEstimationDate() { return this.toWarehouseEstimationDate; }
+    public set ToWarehouseEstimationDate(newValue: Date) { if (this.toWarehouseEstimationDate != newValue) { this.toWarehouseEstimationDate = newValue; this.MarkAsDirty("ToWarehouseEstimationDate"); } }
+       
+	 
+    private toWarehouseNotes: string;
+    public get ToWarehouseNotes() { return this.toWarehouseNotes; }
+    public set ToWarehouseNotes(newValue: string) { if (this.toWarehouseNotes != newValue) { this.toWarehouseNotes = newValue; this.MarkAsDirty("ToWarehouseNotes"); } }
+       
+	 
+    private customsPaymentDone: boolean;
+    public get CustomsPaymentDone() { return this.customsPaymentDone; }
+    public set CustomsPaymentDone(newValue: boolean) { if (this.customsPaymentDone != newValue) { this.customsPaymentDone = newValue; this.MarkAsDirty("CustomsPaymentDone"); } }
+       
+	 
+    private customsPaymentDate: Date;
+    public get CustomsPaymentDate() { return this.customsPaymentDate; }
+    public set CustomsPaymentDate(newValue: Date) { if (this.customsPaymentDate != newValue) { this.customsPaymentDate = newValue; this.MarkAsDirty("CustomsPaymentDate"); } }
+       
+	 
+    private clearanceDone: boolean;
+    public get ClearanceDone() { return this.clearanceDone; }
+    public set ClearanceDone(newValue: boolean) { if (this.clearanceDone != newValue) { this.clearanceDone = newValue; this.MarkAsDirty("ClearanceDone"); } }
+       
+	 
+    private clearanceDate: Date;
+    public get ClearanceDate() { return this.clearanceDate; }
+    public set ClearanceDate(newValue: Date) { if (this.clearanceDate != newValue) { this.clearanceDate = newValue; this.MarkAsDirty("ClearanceDate"); } }
+       
+	 
+    private deliveredDone: boolean;
+    public get DeliveredDone() { return this.deliveredDone; }
+    public set DeliveredDone(newValue: boolean) { if (this.deliveredDone != newValue) { this.deliveredDone = newValue; this.MarkAsDirty("DeliveredDone"); } }
+       
+	 
+    private deliveredDate: Date;
+    public get DeliveredDate() { return this.deliveredDate; }
+    public set DeliveredDate(newValue: Date) { if (this.deliveredDate != newValue) { this.deliveredDate = newValue; this.MarkAsDirty("DeliveredDate"); } }
+       
+	 
+    private deliveredEstimationDate: Date;
+    public get DeliveredEstimationDate() { return this.deliveredEstimationDate; }
+    public set DeliveredEstimationDate(newValue: Date) { if (this.deliveredEstimationDate != newValue) { this.deliveredEstimationDate = newValue; this.MarkAsDirty("DeliveredEstimationDate"); } }
+       
+	 
+    private fromWarehouseDone: boolean;
+    public get FromWarehouseDone() { return this.fromWarehouseDone; }
+    public set FromWarehouseDone(newValue: boolean) { if (this.fromWarehouseDone != newValue) { this.fromWarehouseDone = newValue; this.MarkAsDirty("FromWarehouseDone"); } }
        
 	 
 

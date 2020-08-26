@@ -86,6 +86,17 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string SharedDocumentTypeCopyId { get; set; }
 
 
+        public string OnSendPopulateDateFieldName { get; set; }
+        public string OnUploadPopulateDateFieldName { get; set; }
+        public string OnPrintPopulateDateFieldName { get; set; }
+
+
+
+
+
+
+
+
         [DataMember]
         public int OrderBy { get; set; }
 

@@ -41,7 +41,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                                 RecipientValue = a.RecipientValue,
                                                                                                 RecipientType = a.RecipientType,
                                                                                                 Tenant = a.Tenant,
-
+                                                                                                PartnerObjectFieldCode = a.PartnerObjectFieldCode,
                                                                                             }).ToList();
             return AutomationResultEmailRecipientes;
         }
@@ -57,6 +57,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                                    RecipientValue = a.RecipientValue,
                                                                                                    RecipientType = a.RecipientType,
                                                                                                    Tenant = a.Tenant,
+                                                                                                   PartnerObjectFieldCode = a.PartnerObjectFieldCode,
 
                                                                                                });
             return automationResultEmailRecipientes;
@@ -91,6 +92,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                         RecipientValue = a.RecipientValue,
                                                                         RecipientType = a.RecipientType,
                                                                         Tenant = a.Tenant,
+                                                                        PartnerObjectFieldCode = a.PartnerObjectFieldCode,
+
                                                                     };
             return result;
         }
@@ -112,6 +115,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                            RecipientValue = a.RecipientValue,
                                                                                            RecipientType = a.RecipientType,
                                                                                            AutomationsId = a.AutomationsId,
+                                                                                           PartnerObjectFieldCode = a.PartnerObjectFieldCode,
+
                                                                                        }).ToList();
             return AutomationResultEmailRecipientes;
         }

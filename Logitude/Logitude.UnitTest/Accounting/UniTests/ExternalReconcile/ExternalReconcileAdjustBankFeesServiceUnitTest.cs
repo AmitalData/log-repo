@@ -22,20 +22,20 @@ namespace Logitude.UnitTest.Accounting.UniTests.ExternalReconcile
         private string _GLAccountId;
         private DateTime _ReferenceDate;
 
-        [TestMethod]
+        //[TestMethod]
         public void CreateJournalWithExtReconcile01_PageLineinCreditAmount_OK()
         {
             bool allreconcileExternalPageLineListinDebit = false;
             checkCreateJournalWithExtReconcilePerExample(allreconcileExternalPageLineListinDebit);
         }
-        [TestMethod]
+        //[TestMethod]
         public void CreateJournalWithExtReconcile02_PageLineinDebitAmount_OK()
         {
             bool allreconcileExternalPageLineListinDebit = true;
             checkCreateJournalWithExtReconcilePerExample(allreconcileExternalPageLineListinDebit);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void CreateAutoExternalReconcileWhileStreaming()
         {
             bool allreconcileExternalPageLineListinDebit = true;

@@ -23,15 +23,14 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     public PricingItemsList: ObservableCollection;
     private maxLineNumber = 0;
     public IsResourcesReady: boolean = false;
+    public PricesChanged: boolean = false;
     constructor() {
         super();
     }
 
-    private DefaultPricings: WarehouseStoragePricingPM[];
     SetWindowArgs(args: any) {
         this.EntityPM = args['EntityPM'];
         this.ObjectTableName = args['ObjectTableName'];
-        this.DefaultPricings = args['DefaultPricings'];
 
         this.BuildPricingItems();
         this.CopyPricings();
@@ -49,28 +48,9 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
 
         itemsCollection.push(new PricingItem(freeItem, this, true, false));
 
-        if (this.DefaultPricings != null && this.DefaultPricings.length > 0) {
-            var count: number = 1;
-            this.DefaultPricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
-                var defaultItem: ShipmentStoragePricingPM = new ShipmentStoragePricingPM(null);
-                defaultItem.Tenant = SessionLocator.Tenant;
-                defaultItem.ShipmentId = this.EntityPM.Id;
-                defaultItem.WarehouseId = this.EntityPM.WarehouseLegWarehouseId;
-                defaultItem.StepFrom = item.StepFrom;
-                defaultItem.StepTo = item.StepTo;
-                defaultItem.Days = item.Days;
-                defaultItem.SalePrice = item.SalePrice;
-                defaultItem.LineNumber = count++;
-
-                itemsCollection.push(new PricingItem(defaultItem, this, false, true));
-            });
-        }
-
-        else {
-            this.EntityPM.ShipmentStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
-                itemsCollection.push(new PricingItem(item, this, false, false));
-            });
-        }
+        this.EntityPM.ShipmentStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
+            itemsCollection.push(new PricingItem(item, this, false, false));
+        });
 
         if (this.PricingItemsList == null) {
             this.PricingItemsList = new ObservableCollection([]);
@@ -89,6 +69,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     set ChargeStorageCurrencyId(newValue: string) {
         if (this.EntityPM.ChargeStorageCurrencyId != newValue) {
             this.EntityPM.ChargeStorageCurrencyId = newValue;
+            this.PricesChanged = true;
         }
     }
 
@@ -96,6 +77,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     set WeightMeasurementCode(newValue: string) {
         if (this.EntityPM.WeightMeasurementCode != newValue) {
             this.EntityPM.WeightMeasurementCode = newValue;
+            this.PricesChanged = true;
         }
     }
 
@@ -103,6 +85,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     set WeightRoundingCode(newValue: string) {
         if (this.EntityPM.WeightRoundingCode != newValue) {
             this.EntityPM.WeightRoundingCode = newValue;
+            this.PricesChanged = true;
         }
     }
 
@@ -174,7 +157,12 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
                 }
             });
 
-            this.CurrentSession.CloseCurrentWindowEmit("ok");
+            var emitMessage: string = "ok";
+            if (this.PricesChanged) {
+                emitMessage = "PricesChanged";
+            }
+
+            this.CurrentSession.CloseCurrentWindowEmit(emitMessage);
         }
     }
 
@@ -210,14 +198,9 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     private myCloner: Cloner;
     private Clone() {
         this.myCloner = new Cloner(this);
-        this.myCloner.AddField('ChargeStorage');
-        this.myCloner.AddField('CurrencyId');
-        this.myCloner.AddField('AirWeightMeasurementCode');
-        this.myCloner.AddField('OceanWeightMeasurementCode');
-        this.myCloner.AddField('InlandWeightMeasurementCode');
-        this.myCloner.AddField('AirWeightRoundingCode');
-        this.myCloner.AddField('OceanWeightRoundingCode');
-        this.myCloner.AddField('InlandWeightRoundingCode');
+        this.myCloner.AddField('ChargeStorageCurrencyId');
+        this.myCloner.AddField('WeightMeasurementCode');
+        this.myCloner.AddField('WeightRoundingCode');
         this.myCloner.AddEntity(this.EntityPM);
     }
 
@@ -297,7 +280,7 @@ export class PricingItem extends BaseComponent {
     public CellColor: string = "transparent";
     private SetCellColor() {
         if (this.IsFreeLine) {
-            this.CellColor = "#B4F3D2";
+            this.CellColor = "#DFF9EB";
         }
 
         else {
@@ -315,6 +298,7 @@ export class PricingItem extends BaseComponent {
     set StepFrom(newValue: number) {
         if (this.EntityPM.StepFrom != newValue) {
             this.EntityPM.StepFrom = AppTool.Round(newValue, 0);
+            this.fatherComponent.PricesChanged = true;
         }
     }
 
@@ -344,6 +328,7 @@ export class PricingItem extends BaseComponent {
         if (this.EntityPM.StepTo != newValue) {
             this.EntityPM.StepTo = newValue;
 
+            this.fatherComponent.PricesChanged = true;
             this.ComputeDays();
         }
     }
@@ -359,6 +344,7 @@ export class PricingItem extends BaseComponent {
         if (this.EntityPM.Days != newValue) {
             this.EntityPM.Days = newValue;
 
+            this.fatherComponent.PricesChanged = true;
             this.ComputeStepTo();
         }
     }
@@ -373,6 +359,7 @@ export class PricingItem extends BaseComponent {
     set SalePrice(newValue: number) {
         if (this.EntityPM.SalePrice != newValue) {
             this.EntityPM.SalePrice = newValue;
+            this.fatherComponent.PricesChanged = true;
         }
     }
 

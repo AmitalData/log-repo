@@ -1,4 +1,5 @@
-﻿using Logitude.BL.Helpers;
+﻿using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
@@ -1029,6 +1030,11 @@ namespace Logitude.XSD
             shipmentMasterDataRepository.Update(MasterData);
             shipmentContext.SaveChanges();
             commonContext.SaveChanges();
+            RunStoredProcedureClass.UpdateShipmentStatus(Shipment.Id, Shipment.Tenant);
+
+
+
+
         }
         #endregion        
     }

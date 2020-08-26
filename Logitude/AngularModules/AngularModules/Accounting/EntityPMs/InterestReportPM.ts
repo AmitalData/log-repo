@@ -224,6 +224,16 @@ export class InterestReportPM {
     public set BatchReportUserEmail(newValue: string) { if (this.batchReportUserEmail != newValue) { this.batchReportUserEmail = newValue; this.MarkAsDirty("BatchReportUserEmail"); } }
        
 	 
+    private recalculateData: boolean;
+    public get RecalculateData() { return this.recalculateData; }
+    public set RecalculateData(newValue: boolean) { if (this.recalculateData != newValue) { this.recalculateData = newValue; this.MarkAsDirty("RecalculateData"); } }
+       
+	 
+    private isUpdatedFromBatch: boolean;
+    public get IsUpdatedFromBatch() { return this.isUpdatedFromBatch; }
+    public set IsUpdatedFromBatch(newValue: boolean) { if (this.isUpdatedFromBatch != newValue) { this.isUpdatedFromBatch = newValue; this.MarkAsDirty("IsUpdatedFromBatch"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		

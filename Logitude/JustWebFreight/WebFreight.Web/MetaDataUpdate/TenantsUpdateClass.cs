@@ -320,6 +320,12 @@ namespace WebFreight.Web.MetaDataUpdate
 
                             break;
                         }
+                    case "accounting":
+                        {
+                            UpdateAccountingModule(context, true);
+
+                            break;
+                        }
                     case "shipment":
                         {
                             UpdateShipmentAndMasterModules(context, true);
@@ -844,6 +850,8 @@ namespace WebFreight.Web.MetaDataUpdate
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTablesToTenantZero");
             //updateClass.LoadObjectTablesMetadata(context);
 
+            updateClass.LoadEntityStatus();
+
             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
             if (runOldUpdateCode)
                 shipmentModelUpdateClass.LoadObjectsTenantZero(context);
@@ -851,9 +859,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 shipmentModelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
 
             performanceTimerLogger.LogMessage("Generated" + ",ShipmentsModelUpdateClass");
-
-
-
 
             MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
             if (runOldUpdateCode)
@@ -1070,6 +1075,9 @@ namespace WebFreight.Web.MetaDataUpdate
             WriteLogMessage("Initializing Business Infrastructure Module ...");
             InfrastructureUpdateClass businessInfraUpdateClass = new InfrastructureUpdateClass();
 
+            WriteLogMessage("Updating Entity Status...");
+            updateClass.LoadEntityStatus();
+
             if (runOldUpdateCode)
             {
                
@@ -1157,8 +1165,7 @@ namespace WebFreight.Web.MetaDataUpdate
             updateClass.LoadObjectTableHelperControls();
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTableHelperControls");
 
-            WriteLogMessage("Updating Entity Status...");
-            updateClass.LoadEntityStatus();
+           
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadEntityStatus");
 
             WriteLogMessage("Updating Event Types ...");

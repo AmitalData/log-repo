@@ -59,6 +59,7 @@
     <Compile Include="EntityPMs\Generated\CargoTrackingIncrementalStatPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingMilestonePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingPortPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CargoTrackingShipmentMasterPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingShipmentPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingShipmentSearchPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingTransportModePM.Generated.cs" />

@@ -61,7 +61,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ViewFieldDisplayName = a.ViewFieldDisplayName,
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName  = a.DimensionDataViewName,
-                        IsMultipleSelection = a.IsMultipleSelection
+                        IsMultipleSelection = a.IsMultipleSelection,
+                        RecordType = a.RecordType,
                     }).FirstOrDefault();
 
 
@@ -109,7 +110,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ViewFieldDisplayName = a.ViewFieldDisplayName,
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
-                        IsMultipleSelection = a.IsMultipleSelection
+                        IsMultipleSelection = a.IsMultipleSelection,
+                        RecordType = a.RecordType,
+
 
                     });
         }
@@ -145,7 +148,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ViewFieldDisplayName = a.ViewFieldDisplayName,
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
-                        IsMultipleSelection = a.IsMultipleSelection
+                        IsMultipleSelection = a.IsMultipleSelection,
+                        RecordType = a.RecordType,
+
 
                     }).ToList();
 
@@ -169,7 +174,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 var dWObjectFieldPMDimensionGroup = DWObjectFieldPMDimensionGroups.Where(d => d.Key == parent.DimensionTableCode).FirstOrDefault();
                 if (dWObjectFieldPMDimensionGroup != null)
                 {
-                    foreach (DWObjectFieldPM item in dWObjectFieldPMDimensionGroup.ToList())
+                    string parentfieldName = parent.Name;
+                    foreach (DWObjectFieldPM item in dWObjectFieldPMDimensionGroup.ToList().Where( d=> (string.IsNullOrEmpty(d.RecordType) || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType.Split(',').Contains(parentfieldName)))))
                     {
                         DWObjectFieldPM dWObjectFieldPM = GetNewInstanceFromDWObjectFieldPM(parent, item);
                         tempInnerList.Add(dWObjectFieldPM);
@@ -215,7 +221,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                 ViewFieldDisplayName = a.ViewFieldDisplayName,
                                 DontDisplayInView = a.DontDisplayInView,
                                 DimensionDataViewName = a.DimensionDataViewName,
-                                IsMultipleSelection = a.IsMultipleSelection
+                                IsMultipleSelection = a.IsMultipleSelection,
+                                RecordType = a.RecordType,
+
 
                             });
             return TempList;
@@ -251,7 +259,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 ViewFieldDisplayName = item.ViewFieldDisplayName,
                 DontDisplayInView = item.DontDisplayInView,
                 DimensionDataViewName = item.DimensionDataViewName,
-                IsMultipleSelection = item.IsMultipleSelection
+                IsMultipleSelection = item.IsMultipleSelection,
+                RecordType = item.RecordType,
+
 
             };
         }
@@ -285,7 +295,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                                                   ViewFieldDisplayName = a.ViewFieldDisplayName,
                                                                                                   DontDisplayInView = a.DontDisplayInView,
                                                                                                   DimensionDataViewName = a.DimensionDataViewName,
-                                                                                                  IsMultipleSelection = a.IsMultipleSelection
+                                                                                                  IsMultipleSelection = a.IsMultipleSelection,
+                                                                                                  RecordType = a.RecordType,
 
 
                                                                                               }
@@ -324,7 +335,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ViewFieldDisplayName = a.ViewFieldDisplayName,
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
-                        IsMultipleSelection = a.IsMultipleSelection
+                        IsMultipleSelection = a.IsMultipleSelection,
+                        RecordType = a.RecordType,
+
 
 
                     }).FirstOrDefault();
@@ -361,7 +374,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ViewFieldDisplayName = a.ViewFieldDisplayName,
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
-                        IsMultipleSelection = a.IsMultipleSelection
+                        IsMultipleSelection = a.IsMultipleSelection,
+                        RecordType = a.RecordType,
+
 
 
                     });
@@ -396,7 +411,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        ViewFieldDisplayName = a.ViewFieldDisplayName,
                                                        DontDisplayInView = a.DontDisplayInView,
                                                        DimensionDataViewName = a.DimensionDataViewName,
-                                                       IsMultipleSelection = a.IsMultipleSelection
+                                                       IsMultipleSelection = a.IsMultipleSelection,
+                                                       RecordType = a.RecordType,
+
 
 
                                                    };
@@ -442,7 +459,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ViewFieldDisplayName = a.ViewFieldDisplayName,
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
-                        IsMultipleSelection = a.IsMultipleSelection
+                        IsMultipleSelection = a.IsMultipleSelection,
+                        RecordType = a.RecordType,
+
 
 
                     }).FirstOrDefault();
@@ -491,7 +510,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ViewFieldDisplayName = a.ViewFieldDisplayName,
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
-                        IsMultipleSelection = a.IsMultipleSelection
+                        IsMultipleSelection = a.IsMultipleSelection,
+                        RecordType = a.RecordType,
+
 
 
                     }).FirstOrDefault();
@@ -534,7 +555,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  ViewFieldDisplayName = a.ViewFieldDisplayName,
                                                  DontDisplayInView = a.DontDisplayInView,
                                                  DimensionDataViewName = a.DimensionDataViewName,
-                                                 IsMultipleSelection = a.IsMultipleSelection
+                                                 IsMultipleSelection = a.IsMultipleSelection,
+                                                 RecordType = a.RecordType,
+
 
                                              }
                   ).ToList();
@@ -565,6 +588,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 }
             }
             return results;
+        }
+
+        public DWObjectField GetDWObjectFieldByDimTable(string DWDimTableCode)
+        {
+            return (from a in repository.webFreightContext.DWObjectFields
+                    where a.DimensionTableCode == DWDimTableCode
+                    select a).FirstOrDefault();
         }
     }
 }

@@ -137,6 +137,21 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsInlandDigitalSignRequired { get; set; }
 
 
+        [DataMember]
+        public string OnSendPopulateDateFieldName { get; set; }
+
+        [DataMember]
+        public string OnUploadPopulateDateFieldName { get; set; }
+
+        [DataMember]
+        public string OnPrintPopulateDateFieldName { get; set; }
+
+
+
+
+
+
+
         private List<DocumentTypeCustomFieldPM> documentTypeCustomFields;
         [Include]
         [Association("DocumentTypePMDocumentTypeCustomFieldPM", "Id", "DocumentTypeId")]

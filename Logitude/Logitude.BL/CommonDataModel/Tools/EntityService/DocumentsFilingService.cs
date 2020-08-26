@@ -743,6 +743,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         }
                         ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
                         shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField, shipmentComputedFieldsRepository.context);
+
+
                         //shipmentComputedFieldsRepository.Update(ShipmentCompField);
                         // shipmentComputedFieldsRepository.SubmitChanges();
                         try
@@ -809,6 +811,17 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+
+
+            if (theEntityPm.IsUoloadedField)
+            {
+                DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
+               var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
+                string objectTableName = OTName != null ? OTName.Name : "";
+                documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = theEntityPm.EntityId, ObjectTableName = objectTableName, DocumentTypeCode = theEntityPm.DocumentTypeCode, ProcessType = "Upload", Tenant = theEntityPm.Tenant });
+            }
+
+
             if (!tenantPM.IsDocumentsArchive && !entityPM.DontAddToQueue)
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, null);
@@ -842,6 +855,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.IsUpdateSharedDocument = false;
             }
 
+      
             if (addBackupQueue)
             {
                 AddDocumentBackupLog();

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardUpdateClass
    {  		
-		public const string HashString = "67f45828a71a2111f451d905780d6f3b";
+		public const string HashString = "f42acde944fa8b5a85bb3ad8d1931112";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -124,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Card",
-			      				    Code =  "6973",
+			      				    Code =  "bf15",
 			      				    Name =  "Card",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -191,7 +191,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SalesmanUserId",
-					  						DefaultText =  "SalesmanUser",
+					  						DefaultText =  "Salesman",
 					  						FullLocalDefaultText =  "SalesmanUserId",
 					  						ListFieldLable =  "SalesmanUserIdListLable",
 					  						ListLableDefaultText =  "SalesmanUserId",
@@ -201,7 +201,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  true,
-					  						AutomationEmailRecipient =  false,
+					  						AutomationEmailRecipient =  true,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						RecordType =  "Customer",
@@ -2434,7 +2434,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountManagerUserId",
-					  						DefaultText =  "AccountManagerUserId",
+					  						DefaultText =  "Account Manager",
 					  						FullLocalDefaultText =  "AccountManagerUserId",
 					  						ListFieldLable =  "AccountManagerUserIdListLable",
 					  						ListLableDefaultText =  "AccountManagerUserId",
@@ -2444,7 +2444,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  true,
-					  						AutomationEmailRecipient =  false,
+					  						AutomationEmailRecipient =  true,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HtmlListComponentUrl =  "Customer",

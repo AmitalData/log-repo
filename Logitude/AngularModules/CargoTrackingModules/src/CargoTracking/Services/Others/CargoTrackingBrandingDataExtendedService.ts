@@ -18,8 +18,8 @@ export class CargoTrackingBrandingDataExtendedService {
         this._apiUrl = ServiceHelper.GetAppURL() + 'api/CargoTrackingBranding';
     }
    
-    get() {
-        var url = '/GetCargoTrackingBrandingData';
+    get(tenant:number) {
+        var url = '/GetCargoTrackingBrandingData?tenant='+tenant;
         var callUrl = this._apiUrl.concat(url);
 
         return this._http.get(callUrl, { headers: this.httpHeaders}).pipe(

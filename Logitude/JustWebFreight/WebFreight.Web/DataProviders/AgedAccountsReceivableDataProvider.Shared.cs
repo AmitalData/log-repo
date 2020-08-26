@@ -33,6 +33,8 @@ namespace WebFreight.Web.DataProviders
         public List<AgedAccountsReceivable> AgedAccountsReceivableList { get; set; }
         public class AgedAccountsReceivable
         {
+            public string CardCode { get; set; }
+            public string CardTypeName { get; set; }
             public string CustomerName { get; set; }
             public string PaymentTerm { get; set; }
             public double? DaysPastDue1_30 { get; set; }

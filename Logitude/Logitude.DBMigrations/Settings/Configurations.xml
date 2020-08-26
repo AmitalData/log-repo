@@ -1,0 +1,5 @@
+<Configurations>
+
+<Config Name="DBConfigFileName" Value="Master.DBConfig.config"></Config>
+
+</Configurations>

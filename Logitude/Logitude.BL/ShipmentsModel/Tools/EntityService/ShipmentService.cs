@@ -332,6 +332,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                 shipmentBehaviourFacade.Handle();
+                shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
 
                 if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
                 {
@@ -531,6 +532,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentBehaviourFacade.Handle();
 
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
+
+                    shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
                     this.UpdateShipmentFollowUpsCollection();
 
 
@@ -2515,26 +2518,35 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             receivable.IsChargeBySteps = payable.IsChargeBySteps;
             receivable.VatTypeId = payable.VatTypeId;
             receivable.IsBackToBack = payable.IsBackToBack;
-            receivable.ShipmentReceivableLineStatusCode = SetReceivableLineStatus(receivable.ShipmentReceivableLineStatusCode, receivable.Quantity, receivable.UnitPrice);
+            receivable.ShipmentReceivableLineStatusCode = SetReceivableLineStatus(receivable);
         }
-        public string SetReceivableLineStatus(string code, double? quantity, double? unitPrice)
+        public string SetReceivableLineStatus(ShipmentReceivablePM receivable)
         {
-            var status = code;
-            if (code == "APPD" || code == "ACCT" || code == "DRFT")
+            var status = receivable.ShipmentReceivableLineStatusCode;
+            if (receivable.ShipmentReceivableLineStatusCode == "APPD" || receivable.ShipmentReceivableLineStatusCode == "ACCT" || receivable.ShipmentReceivableLineStatusCode == "DRFT")
             {
 
             }
 
             else
             {
-                if (quantity != null && unitPrice != null)
+                if (receivable.MeasurementCode == "STFE" && receivable.ChargesTypeCode == "ISTOR")
                 {
+                    // import storage charge has no quantity or price
                     status = "OAMT";
                 }
 
                 else
                 {
-                    status = "EMPT";
+                    if (receivable.Quantity != null && receivable.UnitPrice != null)
+                    {
+                        status = "OAMT";
+                    }
+
+                    else
+                    {
+                        status = "EMPT";
+                    }
                 }
             }
             return status;
@@ -4944,7 +4956,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                                 foreach (string id in ids)
                                 {
-                                    ShipmentPM iHousePM = iShipmentQuery.GetSinglePMWithoutComposition(id, this.tenant);
+                                    // Bug 70470: TEU of house is changed to NULL
+                                    // ShipmentPM iHousePM = iShipmentQuery.GetSinglePMWithoutComposition(id, this.tenant);
+
+                                    ShipmentPM iHousePM = iShipmentQuery.GetSinglePM(id, this.tenant);
 
                                     if (iHousePM != null)
                                     {
@@ -6302,14 +6317,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         string myStatusCode = null;
 
-                        if (itemPM.Quantity == null || itemPM.UnitPrice == null)
+                        if (itemPM.MeasurementCode == "STFE" && itemPM.ChargesTypeCode == "ISTOR")
                         {
-                            myStatusCode = "EMPT";
+                            // import storage charge has no quantity or price
+                            myStatusCode = "OAMT";
                         }
 
                         else
                         {
-                            myStatusCode = "OAMT";
+                            if (itemPM.Quantity == null || itemPM.UnitPrice == null)
+                            {
+                                myStatusCode = "EMPT";
+                            }
+
+                            else
+                            {
+                                myStatusCode = "OAMT";
+                            }
                         }
 
                         if (itemPM.ShipmentReceivableLineStatusCode != myStatusCode)

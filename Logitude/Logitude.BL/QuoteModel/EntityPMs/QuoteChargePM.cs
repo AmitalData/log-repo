@@ -221,5 +221,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool HasPickup { get; set; }
         public bool HasDelivery { get; set; }
 
+
+
     }
 }

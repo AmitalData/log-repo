@@ -2986,6 +2986,49 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsBondedWarehouse"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsBondedWarehouseChanged"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PreAlertSentDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeliveryNoticeSentDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExpectedArrivalNoticeSentDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="T1ReceivedDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ArrivalNoticeSentDate"
+    OldNames="ArrivalNoticeSent"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -3721,4 +3764,6 @@
     Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
+  <UniqueConstraint
+    Columns="Tenant,ComputedForwarderShipmentNumber" />
 </Table>

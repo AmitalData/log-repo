@@ -121,6 +121,10 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                 else if (s == "OriginShipmentLoaded") {
                     this.OriginShipment = this.entityArgs.OriginEntity;
                 }
+
+                else if (s == "StorageReceivableCreated" || s == "StorageReceivableRemoved") {
+                    this.BuildItemsSource();
+                }
             });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -957,7 +961,8 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                         }
 
                         else {
-                            availableAmount = this.EntityPM.ShipmentReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" && f.ARInvoiceId == null && f.ARInvoiceLineId == null && f.UnitPrice > 0).length;
+                            availableAmount = this.EntityPM.ShipmentReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" && f.ARInvoiceId == null && f.ARInvoiceLineId == null
+                                && (f.UnitPrice > 0 || (f.ChargesTypeCode == "ISTOR" && f.MeasurementCode == "STFE"))).length;
                         }
 
                         if (availableAmount == 0) {
@@ -984,7 +989,8 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                         }
 
                         else {
-                            availableAmount = this.EntityPM.ShipmentReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" && f.ARInvoiceId == null && f.ARInvoiceLineId == null && f.UnitPrice < 0).length;
+                            availableAmount = this.EntityPM.ShipmentReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" && f.ARInvoiceId == null && f.ARInvoiceLineId == null
+                                && (f.UnitPrice < 0 || (f.ChargesTypeCode == "ISTOR" && f.MeasurementCode == "STFE"))).length;
                         }
 
                         if (availableAmount == 0) {
@@ -1461,23 +1467,31 @@ export class ShipmentReceivableItem extends BaseComponent {
         var isQuantityEnabled = false;
         var isUnitPriceEnabled = false;
         var isTotalAmountEnabled = false;
+        var isExchangeRateFixedEnabled = false;
+        var isCurrencyEnabled = false;
+
         if (isEditingEnabled) {
-            if (this.IsNewEntity) {
+            if (this.IsNewEntity && this.MeasurementCode != "STFE") {
                 isChargeEnabled = true;
             }
 
             if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentEditExchangeRate")) {
-                if (this.CurrencyId != null) {
+                if (this.CurrencyId != null && this.MeasurementCode != "STFE") {
                     if (this.CurrencyId != SessionLocator.LocalCurrencyId) {
                         isRateEnabled = true;
                     }
                 }
             }
 
-            isQuantityEnabled = true;
-            if (!this.EntityPM.IsChargeBySteps) {
-                isUnitPriceEnabled = true;
-                isTotalAmountEnabled = true;
+            if (this.MeasurementCode != "STFE") {
+                isQuantityEnabled = true;
+                isExchangeRateFixedEnabled = true;
+                isCurrencyEnabled = true;
+
+                if (!this.EntityPM.IsChargeBySteps) {
+                    isUnitPriceEnabled = true;
+                    isTotalAmountEnabled = true;
+                }
             }
         }
         
@@ -1495,11 +1509,11 @@ export class ShipmentReceivableItem extends BaseComponent {
         this.UIProperties.SetEnabled("ChargesTypeId", this.ObjectTableName, isChargeEnabled);
         this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, isQuantityEnabled);
         this.UIProperties.SetEnabled("UnitPrice", this.ObjectTableName, isUnitPriceEnabled);
-        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, isCurrencyEnabled);
         this.UIProperties.SetEnabled("MeasurementId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PrepaidCollectId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("IsExchangeRateFixed", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("IsExchangeRateFixed", this.ObjectTableName, isExchangeRateFixedEnabled);
         this.SetUIProperties_AmountProfit();
     }
     SetUIProperties_AmountProfit() {
@@ -1810,7 +1824,7 @@ export class ShipmentReceivableItem extends BaseComponent {
                                     break;
                                 }
                             }
-
+                            this.SetUIProperties();
                             this.UpdateInsideItemsSource_Measurement();
                         }
                     }
@@ -2560,6 +2574,42 @@ export class ShipmentReceivableItem extends BaseComponent {
         if (this.ChargesGroupCode == "FRT") {
             this.fatherComponent.OnFreightAmountChanged();
         }
+    }
+
+    StoragePricingClicked() {
+        var entityResourceService: EntityResourceService = new EntityResourceService();
+        entityResourceService.getEntityResourceByTableName("ShipmentStoragePricing").subscribe((res1: any) => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = "Storage Pricing";
+            logitudeWindow.WindowArgs = { EntityPM: this.ShipmentPM, ObjectTableName: this.fatherComponent.ObjectTableName };
+            logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s == "PricesChanged") {
+                    var amount: number = this.ComputeReceivableAmount();
+
+                    this.EntityPM.TotalAmount = amount;
+                    this.EntityPM.TotalAmountLocal = AppTool.Round(this.EntityPM.TotalAmount * this.EntityPM.Rate, 2);
+
+                    if (this.EntityPM.CurrencyId == this.ShipmentPM.ProfitCurrencyId) {
+                        this.EntityPM.AmountInProfitCurrency = this.EntityPM.TotalAmount;
+                    }
+
+                    else {
+                        this.EntityPM.AmountInProfitCurrency = (this.EntityPM.TotalAmountLocal / this.EntityPM.ProfitCurrencyExchangeRate);
+                    }
+                }
+            });
+        });
+    }
+    private ComputeReceivableAmount(): number {
+        var storageDays: number;
+        if (DateTool.GetDateFromDate(this.ShipmentPM.WarehouseLegActualReleaseDate) >= DateTool.GetDateFromDate(this.ShipmentPM.WarehouseLegActualEntryDate)) {
+            storageDays = DateTool.GetDaysBetweenDates(this.ShipmentPM.WarehouseLegActualEntryDate, this.ShipmentPM.WarehouseLegActualReleaseDate);
+        }
+
+        var myResult: number = ShipmentTool.ComputeImportStorageReceivableAmount(storageDays, this.ShipmentPM);
+
+        return myResult;
     }
 }
 export class InsideReceivableViewModel {

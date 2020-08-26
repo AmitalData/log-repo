@@ -274,7 +274,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             CheckLinesVatExcempt(entityPM, isApprovingInvoice);
 
             ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
-            helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
+            helper.ARInvoiceQuickbooksValidating(invoice, entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
 
             SetSatStatus();
 
@@ -516,12 +516,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
                 if (entityPM.SetReSendQBO)
                 {
-                    helper.ARInvoiceQuickbooksValidating(entityPM, true, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
+                    helper.ARInvoiceQuickbooksValidating(invoice, entityPM, true, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
 
                 }
                 else
                 {
-                    helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
+                    helper.ARInvoiceQuickbooksValidating(invoice, entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
                 }
 
                 // Full Accounting - Tax Fields Work 
@@ -575,7 +575,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     ARPaymentRepository repository = new ARPaymentRepository(tenant);
                     ARPayment payment = repository.GetSingleARPayment(paymentPM.Id, tenant);
-                    service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, paymentPM.SetReSendQBO, false);
+                    bool isErrorInTransfer = payment.TransferStatusCode == "ET" ? true : false;
+
+                    service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, paymentPM.SetReSendQBO, isErrorInTransfer, false);
                 }
             }
 
@@ -1573,43 +1575,30 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         }
                     }
 
+                    if (FieldIsEmpty(line.ExternalVATCard))
+                    {
+                        if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
+                        {
+                            line.ExternalVATCard = this.accountingSetting.ReceivableVATCard;
+                        }
+
+                        else
+                        {
+                            VatType vatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, true);
+
+                            if(vatType != null)
+                            {
+                                line.ExternalVATCard = vatType.ReceivablesExternalId;
+                            }
+                        }
+                    }
+
                     if (!isNewEntity)
                     {
                         if (line.ChangeSetOp == ChangeSetOperation.None)
                         {
                             UpdateInvoiceLine(line);
                         }
-                    }
-                }
-                #endregion
-
-                #region VATs
-                List<ARInvoiceTotalVAT> myTotalVATs = invoiceTotalVatRepository.GetInvoiceTotalVatsForInvoice(entityPM.Id, tenant).ToList();
-                foreach (ARInvoiceTotalVAT itemVAT in myTotalVATs)
-                {
-                    if (FieldIsEmpty(itemVAT.ExternalVATCard) || FieldIsEmpty(itemVAT.ExternalTAXItemId))
-                    {
-                        VatType myVatType = VatTypeRepository.GetSingleVatType(itemVAT.VatTypeId, tenant, true);
-
-                        if (FieldIsEmpty(itemVAT.ExternalVATCard))
-                        {
-                            if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
-                            {
-                                itemVAT.ExternalVATCard = this.accountingSetting.ReceivableVATCard;
-                            }
-
-                            else if (myVatType != null)
-                            {
-                                itemVAT.ExternalVATCard = myVatType.ReceivablesExternalId;
-                            }
-                        }
-
-                        if (FieldIsEmpty(itemVAT.ExternalTAXItemId))
-                        {
-                            itemVAT.ExternalTAXItemId = myVatType.ExternalTAXItemId;
-                        }
-
-                        invoiceTotalVatRepository.Update(itemVAT);
                     }
                 }
                 #endregion
@@ -1734,13 +1723,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                    where a.VatTypeId != null
                                    && a.VatPercentage != null
                                    && a.VatPercentage != 0
-                                   group a by new { a.VatTypeId, a.VatPercentage, a.ExternalVATCard, a.ExternalTAXItemId } into g
+                                   group a by new { a.VatTypeId, a.VatPercentage, a.ExternalVATCard } into g
                                    select new
                                    {
                                        VatTypeId = g.Key.VatTypeId,
                                        VatPercentage = g.Key.VatPercentage,
                                        ExternalVATCard = g.Key.ExternalVATCard,
-                                       ExternalTAXItemId = g.Key.ExternalTAXItemId,
                                    });
 
                     foreach (var g in myGroup)
@@ -1752,7 +1740,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             isReady = false;
                             vatError = lineVatTypeName + " VAT External Id is missing";
                             myError = string.IsNullOrEmpty(myError) ? vatError : myError + "," + vatError;
-                            //break;
                         }
                     }
                 }
@@ -1955,51 +1942,59 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         // Amount
                         double? TotalAmount = 0;
-                        if (item.Quantity != null && item.UnitPrice != null)
+                        if (item.MeasurementCode == "STFE")
                         {
-                            if (string.IsNullOrEmpty(item.MeasurementCode))
+                            TotalAmount = item.ForiegnCurrencyAmount;
+                        }
+
+                        else
+                        {
+                            if (item.Quantity != null && item.UnitPrice != null)
                             {
-                                if (item.MeasurementId != null)
+                                if (string.IsNullOrEmpty(item.MeasurementCode))
                                 {
-                                    Measurement myMeasurement = (from d in myCommonContext.Measurements
-                                                                 where d.Id == item.MeasurementId
-                                                                 && d.Tenant == tenant
-                                                                 select d).FirstOrDefault();
-
-                                    if (myMeasurement != null)
+                                    if (item.MeasurementId != null)
                                     {
-                                        item.MeasurementCode = myMeasurement.Code;
-                                    }
-                                }
-                            }
+                                        Measurement myMeasurement = (from d in myCommonContext.Measurements
+                                                                     where d.Id == item.MeasurementId
+                                                                     && d.Tenant == tenant
+                                                                     select d).FirstOrDefault();
 
-                            if (item.MeasurementCode == "PRVL" || item.MeasurementCode == "PRFR")
-                            {
-                                var price = item.UnitPrice / 100;
-                                TotalAmount = item.Quantity * price;
-                            }
-
-                            else
-                            {
-                                TotalAmount = item.Quantity * item.UnitPrice;
-                            }
-
-                            /* MinMax Quote */
-                            if (TotalAmount != null)
-                            {
-                                if (myReceivable.QuoteSaleMinAmount != null)
-                                {
-                                    if (TotalAmount < myReceivable.QuoteSaleMinAmount)
-                                    {
-                                        TotalAmount = myReceivable.QuoteSaleMinAmount;
+                                        if (myMeasurement != null)
+                                        {
+                                            item.MeasurementCode = myMeasurement.Code;
+                                        }
                                     }
                                 }
 
-                                if (myReceivable.QuoteSaleMaxAmount != null)
+                                if (item.MeasurementCode == "PRVL" || item.MeasurementCode == "PRFR")
                                 {
-                                    if (TotalAmount > myReceivable.QuoteSaleMaxAmount)
+                                    var price = item.UnitPrice / 100;
+                                    TotalAmount = item.Quantity * price;
+                                }
+
+                                else
+                                {
+                                    TotalAmount = item.Quantity * item.UnitPrice;
+                                }
+
+                                /* MinMax Quote */
+                                if (TotalAmount != null)
+                                {
+                                    if (myReceivable.QuoteSaleMinAmount != null)
                                     {
-                                        TotalAmount = myReceivable.QuoteSaleMaxAmount;
+                                        if (TotalAmount < myReceivable.QuoteSaleMinAmount)
+                                        {
+                                            TotalAmount = myReceivable.QuoteSaleMinAmount;
+                                        }
+                                    }
+
+                                    if (myReceivable.QuoteSaleMaxAmount != null)
+                                    {
+                                        if (TotalAmount > myReceivable.QuoteSaleMaxAmount)
+                                        {
+                                            TotalAmount = myReceivable.QuoteSaleMaxAmount;
+                                        }
                                     }
                                 }
                             }
@@ -3486,7 +3481,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         journalLine.Reference1 = theEntityPm.InvoiceNumber;
                         journalLine.Reference2 = theEntityPm.MainEntityReference;
                         journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
-                        journalLine.Notes = theEntityPm.InternalNotes;
+                        journalLine.Notes = theEntityPm.PrintNotes;
                         journalLine.DebitAccountId = this.glAccount == null ? "" : this.glAccount.Id;
                         journalLine.DebitControlAccountId = this.glAccount == null ? "" : this.glAccount.ControlAccountId;
                         journalLine.ChangeSetOp = ChangeSetOperation.Insert;
@@ -3515,7 +3510,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                                 Reference1 = theEntityPm.InvoiceNumber,
                                                                 Reference2 = theEntityPm.MainEntityReference,
                                                                 Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
-                                                                Notes = theEntityPm.InternalNotes,
+                                                                Notes = theEntityPm.PrintNotes,
                                                                 DebitAccountId = glAccount == null ? "" : glAccount.Id,
                                                                 DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId,
                                                             }).ToList();
@@ -3601,7 +3596,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                     Reference1 = invoice.InvoiceNumber,
                                                     Reference2 = invoice.MainEntityReference,
                                                     Reference3 = !string.IsNullOrEmpty(invoice.HouseNumber) ? invoice.HouseNumber : invoice.MasterNumber,
-                                                    Notes = invoice.InternalNotes,
+                                                    Notes = invoice.PrintNotes,
                                                     DebitAccountId = glAccount == null ? "" : glAccount.Id,
                                                     DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId,
                                                     ChangeSetOp = ChangeSetOperation.Insert,

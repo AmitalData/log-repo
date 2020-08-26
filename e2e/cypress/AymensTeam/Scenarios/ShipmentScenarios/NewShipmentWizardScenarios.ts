@@ -34,8 +34,25 @@ export class NewShipmentWizardScenarios {
         this.FillPartners();
         this.FillMainCarriage();
         this.FillGeneral();
-        this.FillOrderDetails();
+        //this.FillOrderDetails();
         //this.Save(this);
+
+        this.Save().then((entityNumber: string) => {
+            cy.get('searchbox')
+                .find('#SearchBoxDivId1')
+                .eq(0)
+                .within(() => {
+                    cy.get('input').type(entityNumber).then(() => {
+                        cy.get('ul > li').eq(0).click({ force: true });
+                    });
+                });
+
+            //Resolvers.SearchBoxResolver.Selector('#SearchBoxDivId1').Type(entityNumber);
+            //Resolvers.SearchBoxResolver.Workspace("Operations").Type(entityNumber);
+            //Resolvers.EditComponentResolver.ShouldBeOpend();
+            //Resolvers.EditComponentResolver.Tab('Overview').ShouldBeSelected();
+        });
+
 
         //this.OpenWizardWindow();
         //this.CancelWizardWindow();
@@ -141,23 +158,31 @@ export class NewShipmentWizardScenarios {
         }
     }
     private FillAgent(name: string) {
-        Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("AgentId").Type(name);
-        Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("AgentReference1").Type(Random.GetRandomNumber());
-        Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("AgentReference2").Type(Random.GetRandomNumber());
+        Resolvers.LOVResolver.Selector('#Master_AgentId').Type(name);
+        Resolvers.TextBoxResolver.Selector("#Master_AgentReference1_1").Type(Random.GetRandomNumber());
+        Resolvers.TextBoxResolver.Selector("#Master_AgentReference2_1").Type(Random.GetRandomNumber());
+
+        //Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("AgentId").Type(name);
+        //Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("AgentReference1").Type(Random.GetRandomNumber());
+        //Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("AgentReference2").Type(Random.GetRandomNumber());
     }
     private FillShipper(name: string) {
         //Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("ShipperId").Type(name);
         //Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ShipperReference1").Type(Random.GetRandomNumber());
         //Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ShipperReference2").Type(Random.GetRandomNumber());
 
-        Resolvers.LOVResolver.Selector('#Shipment_ShipperId').Type('TestShipper');
+        Resolvers.LOVResolver.Selector('#Shipment_ShipperId').Type(name);
         Resolvers.TextBoxResolver.Selector("#Shipment_ShipperReference1").Type(Random.GetRandomNumber());
         Resolvers.TextBoxResolver.Selector("#Shipment_ShipperReference2").Type(Random.GetRandomNumber());
     }
     private FillConsignee(name: string) {
-        Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("ConsigneeId").Type(name);
-        Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ConsigneeReference1").Type(Random.GetRandomNumber());
-        Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ConsigneeReference2").Type(Random.GetRandomNumber());
+        Resolvers.LOVResolver.Selector('#Shipment_ConsigneeId').Type(name);
+        Resolvers.TextBoxResolver.Selector("#Shipment_ConsigneeReference1").Type(Random.GetRandomNumber());
+        Resolvers.TextBoxResolver.Selector("#Shipment_ConsigneeReference2").Type(Random.GetRandomNumber());
+
+        //Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("ConsigneeId").Type(name);
+        //Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ConsigneeReference1").Type(Random.GetRandomNumber());
+        //Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ConsigneeReference2").Type(Random.GetRandomNumber());
     }
     private FillMainCarriage() {
 
@@ -184,7 +209,7 @@ export class NewShipmentWizardScenarios {
 
             case "O": {
                 carrier = "MAEU";
-                carrierNumber = "Voyage 1";
+                carrierNumber = "Shipping # 1";
                 fromPortLabel = "Loading Port";
                 toPortLabel = "Discharge Port";
                 carrierLabel = "Shipping line";
@@ -210,24 +235,45 @@ export class NewShipmentWizardScenarios {
             cy.get('loglabel[ng-reflect--object-field-name="MainCarriageToPortId"]').should('not.exist');
         }
 
-        else {
-            cy.get('loglabel[ng-reflect--object-field-name="MainCarriageFromPortId"]').find('label').contains(fromPortLabel).should('be.exist');
-            cy.get('loglabel[ng-reflect--object-field-name="MainCarriageToPortId"]').find('label').contains(toPortLabel).should('be.exist');
-            Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("MainCarriageFromPortId").Type(fromPortCode);
-            Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("MainCarriageToPortId").Type(toPortCode);
+        else { 
+            //cy.get('loglabel[ng-reflect--object-field-name="MainCarriageFromPortId"]').find('label').contains(fromPortLabel).should('be.exist');
+            //cy.get('loglabel[ng-reflect--object-field-name="MainCarriageToPortId"]').find('label').contains(toPortLabel).should('be.exist');
+            //Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("MainCarriageFromPortId").Type(fromPortCode);
+            //Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("MainCarriageToPortId").Type(toPortCode);
+            if (this.levelCode == "M") {
+                cy.get('label').contains(fromPortLabel).should('be.exist');
+                cy.get('label').contains(toPortLabel).should('be.exist');
+                Resolvers.LOVResolver.Selector('#Master_MainCarriageFromPortId').Type(fromPortCode);
+                Resolvers.LOVResolver.Selector('#Master_MainCarriageToPortId').Type(toPortCode);
+            }
+            else {
+                Resolvers.LOVResolver.Selector('#Shipment_MainCarriageFromPortId').Type(fromPortCode);
+                Resolvers.LOVResolver.Selector('#Shipment_MainCarriageToPortId').Type(toPortCode);
+            }
+
         }
 
-        if (this.levelCode != "H") {
-            cy.get('loglabel[ng-reflect--object-field-name="MainCarriageCarrierId"]').find('label').contains(carrierLabel).should('be.exist');
-            cy.get('loglabel[ng-reflect--object-field-name="MainCarriageCarrierNumber"]').find('label').contains(carrierNumberLabel).should('be.exist');
-            Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("MainCarriageCarrierId").Type(carrier);
-            Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("MainCarriageCarrierNumber").Type(carrierNumber);
+        if (this.levelCode == "D") {
+            //cy.get('loglabel[ng-reflect--object-field-name="MainCarriageCarrierId"]').find('label').contains(carrierLabel).should('be.exist');
+            //cy.get('loglabel[ng-reflect--object-field-name="MainCarriageCarrierNumber"]').find('label').contains(carrierNumberLabel).should('be.exist');
+            //Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("MainCarriageCarrierId").Type(carrier);
+            //Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("MainCarriageCarrierNumber").Type(carrierNumber);
+            Resolvers.LOVResolver.Selector('#Shipment_MainCarriageCarrierId').Type(carrier);
+            Resolvers.TextBoxResolver.Selector('#Shipment_MainCarriageCarrierNumber').Type(carrierNumber);
+
+        } else if (this.levelCode == "M") {
+            Resolvers.LOVResolver.Selector('#Master_MainCarriageCarrierId').Type(carrier);
+            Resolvers.TextBoxResolver.Selector('#Master_MainCarriageCarrierNumber').Type(carrierNumber);
+
         }
     }
     private FillGeneral() {
         if (this.levelCode != "M") {
-            Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("IncotermId").SelectFirst();
-            Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("MoveTypeId").SelectFirst();
+            Resolvers.LOVResolver.Selector('#Shipment_IncotermId').SelectFirst();
+            Resolvers.LOVResolver.Selector('#Shipment_MoveTypeId').SelectFirst();
+
+            //Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("IncotermId").SelectFirst();
+            //Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("MoveTypeId").SelectFirst();
         }
     }
     private FillOrderDetails() {

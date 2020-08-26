@@ -60,6 +60,14 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
             this.warehouseReleaseListExtendedService.GetNumberOfConnectedWarehouseReleasesByChildEntityReference(this.EntityPM.PickUpDeliveryNumber).subscribe((serviceResponse: any) => {
                 if (serviceResponse.Result == 0) this.DisableNewWarehouseReleaseButton = false;
             });
+            if (this.ShipmentPM.IsBondedWarehouse) {
+                this.warehouseReleaseListExtendedService.getActiveWarehouseReleaseListsByShipmentId(this.ShipmentPM.Id, this.ShipmentPM.Tenant).subscribe((serviceResponse: ServiceResponse) => {
+                    var warehouseRelease = serviceResponse.Result;
+                    if (warehouseRelease && warehouseRelease.length > 0) {
+                        this.DisableNewWarehouseReleaseButton = true;
+                    }
+                });
+            }
         }
         else this.DisableNewWarehouseReleaseButton = false;
     }

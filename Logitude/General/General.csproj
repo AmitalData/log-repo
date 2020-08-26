@@ -812,6 +812,7 @@
     <Content Include="Usefull Scripts\Detect Data Problems\Wrong Receivables Percentage Amounts.sql" />
     <Content Include="Usefull Scripts\Detect Data Problems\[Islam] shipments related with tenant zero issue.sql" />
     <Content Include="Usefull Scripts\Fill Data\Fill Shipments FirstOperationalCloseDate.sql" />
+    <Content Include="Usefull Scripts\Fill Data\Search Fields\[Abed] FillCardSearchData.sql" />
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Abed] FillDataFromFirstPickUpAndLastDelivery.sql" />
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Abed] FillDocumentSearchFields.sql" />
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] First Pickup.sql" />
@@ -1988,6 +1989,8 @@
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Calculate Shipments NumberOfHouses.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Calculate Shipments TEU.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] ShipmentPayablesReceivablesFields.sql" />
+    <Content Include="Usefull Scripts\Islam\logbox\logbox duplicated documents.sql" />
+    <Content Include="Usefull Scripts\Islam\logbox\logbox duplicated shipments fix.sql" />
     <Content Include="Usefull Scripts\Islam\bulk update shipments_new.sql" />
     <Content Include="Usefull Scripts\Islam\contact computed Key.sql" />
     <Content Include="Usefull Scripts\Islam\duplicated contacts issue script fix.sql" />

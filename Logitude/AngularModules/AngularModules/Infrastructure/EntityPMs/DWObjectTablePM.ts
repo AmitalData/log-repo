@@ -75,6 +75,16 @@ export class DWObjectTablePM {
     public set PivotFieldCode(newValue: string) { if (this.pivotFieldCode != newValue) { this.pivotFieldCode = newValue; this.MarkAsDirty("PivotFieldCode"); } }
        
 	 
+    private additionalFactCode: string;
+    public get AdditionalFactCode() { return this.additionalFactCode; }
+    public set AdditionalFactCode(newValue: string) { if (this.additionalFactCode != newValue) { this.additionalFactCode = newValue; this.MarkAsDirty("AdditionalFactCode"); } }
+       
+	 
+    private additionalFactForeignKey: string;
+    public get AdditionalFactForeignKey() { return this.additionalFactForeignKey; }
+    public set AdditionalFactForeignKey(newValue: string) { if (this.additionalFactForeignKey != newValue) { this.additionalFactForeignKey = newValue; this.MarkAsDirty("AdditionalFactForeignKey"); } }
+       
+	 
 
     public OldEntityPM: DWObjectTablePM;
 		

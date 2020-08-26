@@ -31,6 +31,7 @@ import {MultiSelectedValue, ValueDetails} from '../../../CommonModules/CommonOth
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ComponentArgs} from '../../../Infrastructure/DataContracts/ComponentArgs';
 import {ParameterComponentArgs} from '../../../Infrastructure/DataContracts/ParameterComponentArgs';
+import { DWObjectFieldExtendedPMService } from '../../Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 
 
 @Component({
@@ -51,12 +52,14 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     public ObjectFieldName: string;
     public LOVAdditionalColumns: string;
     public IsMultipleSelection: boolean;
+    public HasActiveField: boolean = false;
     public ObjectTableId: string;
     public columns: any[] = [];
     
     public ObjectFields: any[] = [];
     public AddButtonVisibility: boolean = false;
     public TenantPM: TenantPM;
+    public dWObjectFieldExtendedPMService: DWObjectFieldExtendedPMService;
     public items: any[] = [];
     public Args: CustomEntityArgs = new CustomEntityArgs();
    
@@ -98,6 +101,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         this._entityListService = new EntityListService;
         this.entityPMService = new EntityPMService;
         this.TenantPM = InfraSettings.TenantPM;
+        this.dWObjectFieldExtendedPMService = new DWObjectFieldExtendedPMService();
 
         this.PseventRowSelectEventSub = this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
             if (res == this.ObjectTableName) {
@@ -162,9 +166,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         this.ObjectFieldName = args.DisplayFieldsFromList;
         this.LOVAdditionalColumns = this.BuildAdditionalColumns(args.LOVAdditionalColumns);
         this.ViewModel = args.DataContext; 
-        if (args.IsMultipleSelection) {
-            this.SetChargesGroupArgs(args);
-        }
+        
         if (this.ViewModel) {
             this.MultiSelectedValueLists = this.ViewModel.MultiSelectedValueLists;
         }
@@ -174,16 +176,32 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
         this.SecondListHeaderItems = [];
         this.SecondListValueItems = [];
+        this.SetHasActiveField();
         this.Args = args;
         this.BuildSecondListHeader();
         this.BuildSecondListValues();
+        if (args.DataContext.IsMultipleSelection) {
+            this.SetChargesGroupArgs(args);
+        }
+    }
+
+    private SetHasActiveField() {
+        this.dWObjectFieldExtendedPMService.getDWObjectFieldsByDWTableId(this.ObjectTableName).subscribe(serviceResponse => {
+            if (!serviceResponse.HasError && serviceResponse.Result != null) {
+                var myResult = serviceResponse.Result.find(d => d.name == "InActive");
+                if (!AppTool.IsNullOrEmpty(myResult)) {
+                    this.HasActiveField = true;
+                }
+            }
+        });
     }
 
     private SetChargesGroupArgs(args: CustomEntityArgs) {
-        this.IsMultipleSelection = args.IsMultipleSelection;
-        this.ColumnName = "";//args.DisplayName;
+        this.IsMultipleSelection = args.DataContext.IsMultipleSelection;
+        this.ColumnName = (!this.SecondListValueItems || (this.SecondListValueItems && this.SecondListValueItems.length == 0)) ? '' : args.DataContext.DisplayName;
+        this.OriginalColumnName = args.DataContext.Code;
         this.SelectedFieldsDataSource = args.SelectedFieldsDataSource;
-        this.SelectedIndexOrder = args.SelectedIndexOrder;
+        this.SelectedIndexOrder = args.DataContext.IndexOrder;
         this.FirstListTitle = "All Charge Types";
         this.SecondListTitle = "Selected Charge Types";
         this.DWLogHelpText = "In this screen you choose which charge types their amounts will be summed in one group";
@@ -353,7 +371,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         if (this.IsExistColumnName()) {
             this.ValidationErrorsList.push("You should have different column name");
         }
-        if (!this.SecondListValueItems || (this.SecondListValueItems && this.SecondListValueItems.length == 0)) {
+        if (this.IsMultipleSelection && (!this.SecondListValueItems || (this.SecondListValueItems && this.SecondListValueItems.length == 0))) {
             this.ValidationErrorsList.push("You should select at least one charge type");
         }
 
@@ -382,6 +400,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
     BuildSecondListHeader() {
         var test: MultiSelectedValue[] = [];
+
 
         if (this.ObjectFieldName) {
             this.SecondListHeaderItems.push(this.ObjectFieldName.replace('[', '').replace(']', ''));
@@ -488,6 +507,15 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         }
     }
 
+    private originalColumnName: string;
+    public get OriginalColumnName() {
+        return this.originalColumnName;
+    }
+    public set OriginalColumnName(newValue: string) {
+        this.UIProperties.SetEnabled("OriginalColumnName", this.ObjectTableName, false);
+        this.originalColumnName = newValue;
+    }
+
     private columnName: string;
     public get ColumnName() {
         return this.columnName;
@@ -526,10 +554,7 @@ export class CustomEntityArgs {
     public DisplayFieldsFromList: string = null;
     public HideEdit: boolean;
     public DataContext: any;
-    public IsMultipleSelection: boolean;
-    public DisplayName: string;
     public SelectedFieldsDataSource: any;
-    public SelectedIndexOrder: string;
 }
 export class AddEntityArgs {
     public EntityPM: any;

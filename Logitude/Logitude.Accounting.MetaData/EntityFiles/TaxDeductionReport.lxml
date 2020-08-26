@@ -1273,6 +1273,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ByMonth&quot;"
     ListPropertyPath="&quot;ByMonth&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1341,6 +1342,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Month&quot;"
     ListPropertyPath="&quot;Month&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1483,7 +1485,7 @@
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;TaxDeductionReport&quot;"
       EnglishName="&quot;Created&quot;"
-      LocalName="&quot;חדש&quot;"
+      LocalName="&quot;Created&quot;"
       IsManualEntry="false"
       ShortView="true"
       IsAgentView="false"
@@ -1496,7 +1498,7 @@
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;TaxDeductionReport&quot;"
       EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;עודכן&quot;"
+      LocalName="&quot;Updated&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -1563,6 +1565,18 @@
       Code="&quot;TaxDeductionReport.O.Connected2ManyCards&quot;"
       DefaultText="&quot;is connected to more than one Operational Vendor&quot;"
       LocalDefaultText="&quot;מחובר ליותר מספק תפעולי אחד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxDeductionReport.O.ByMonth&quot;"
+      DefaultText="&quot;By Month&quot;"
+      LocalDefaultText="&quot;חודשי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxDeductionReport.O.ByYear&quot;"
+      DefaultText="&quot;By Year&quot;"
+      LocalDefaultText="&quot;שנתי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

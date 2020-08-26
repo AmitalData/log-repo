@@ -244,8 +244,11 @@ export class GLAccountMenuButtonsHandler {
                 var logitudeWindow = new LogitudeWindow();
                 logitudeWindow.Width = (screenWidth > 1024) ? (screenWidth > 1200 ? 1500 : screenWidth - 20) : 900;
                 logitudeWindow.Height = (screenHeight > 768) ? (screenHeight > 800 ? 700 : screenHeight - 70) : screenHeight - 70;
+                logitudeWindow.IsHideHeader= true;
+            //    logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Reconcile"); //"Reconcile";
+              //  !IsEditComponent && !IsFullScreen && !IsHideWindowMargin
+                 logitudeWindow.IsFullScreen= true;
 
-                logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Reconcile"); //"Reconcile";
 
                 logitudeWindow.WindowArgs = windowArgs;
                 logitudeWindow.Show('./Accounting/Components/Others/ReconcileComponent');

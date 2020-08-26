@@ -396,10 +396,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         args.DisplayFieldsFromList = this.GroupChargesAdditionalColumns.Code;
         args.LOVAdditionalColumns = this.GroupChargesAdditionalColumns.LOVAdditionalColumns;
         args.DataContext = item;
-        args.IsMultipleSelection = item.IsMultipleSelection;
-        args.DisplayName = item.DisplayName;
         args.SelectedFieldsDataSource = this.SelectedFieldsDataSource;
-        args.SelectedIndexOrder = item.indexOrder;
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 900;
@@ -648,7 +645,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         if (item.HasTree) {
             var defaultItem: any = window.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
             if (defaultItem) {
-                view.Code = defaultItem.Code;
+                view.Code = defaultItem.DWObjectTableCode == "DIM_Partners" ? "[Name]" : defaultItem.Code;
                 view.LOVAdditionalColumns = defaultItem.LOVAdditionalColumns;
             }
         }
@@ -1300,7 +1297,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             if (view.HasTree) {
                 var defaultItem: any = window.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
                 if (defaultItem) {
-                    view.Code = defaultItem.Code;
+                    view.Code = defaultItem.DWObjectTableCode == "DIM_Partners" ? "[Name]" : defaultItem.Code;
                 }
             }
             if (field.FilterItems.length == 0) {
@@ -1984,7 +1981,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                         var parentfieldCode = !AppTool.IsNullOrEmpty(DWObjectField.FieldCode) ? (DWObjectField.FieldCode.replace("[", "").replace("]", "")) : DWObjectField.DisplayName;
 
 
-                        Result.Result.forEach((field) => {
+                        Result.Result.filter(d => AppTool.IsNullOrEmpty(d.RecordType) || (!AppTool.IsNullOrEmpty(d.RecordType) && d.RecordType.split(',').indexOf(parentfieldCode) != -1)).forEach((field) => {
                             if (field.DisplayInQueryBuilder == true) {
                                 var view = new DWObjectFieldsDetails(field, this.MyParentClass);
                                 if (field.Code == '[Full Date]' || field.Code == '[Full Date US]') {

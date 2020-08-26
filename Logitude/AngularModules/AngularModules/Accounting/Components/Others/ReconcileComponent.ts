@@ -42,7 +42,7 @@ export class LineModel extends BaseComponent {
     constructor(
         private ledgerTransaction: LedgerTransactionPM,
         private parent: ReconcileComponent,
-        private myRowIndex:number
+        public myRowIndex:number
     ) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -212,6 +212,7 @@ export class LineModel extends BaseComponent {
 })
 
 export class ReconcileComponent extends BaseComponent implements OnInit {
+
     public EntityPM: LedgerTransactionPM;
     public GLAccountPM: GLAccountPM;
     public RecoPM: ReconciliationPM;
@@ -222,7 +223,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
     public ColumnsReady: EventEmitter<any> = new EventEmitter();
     public MarkIsChecked: EventEmitter<any> = new EventEmitter();
-
+    public IsAutoReconcile:boolean = false;
     public recoCallback: RecoCallback;
     public lastGroupNumber: number;
     public lastColorOperation: boolean = false;
@@ -294,7 +295,19 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             this.CheckIfThereIsDraftReconcile();
         }
     }
+   getScreenHeight() {
+        if (self.innerHeight) {
+            return self.innerHeight;
+        }
 
+        if (document.documentElement && document.documentElement.clientHeight) {
+            return document.documentElement.clientHeight;
+        }
+
+        if (document.body) {
+            return document.body.clientHeight;
+        }
+    }
     SetUIProperty() {
         if (this.GLAccountPM.IsMultiCurrency) {
             this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
@@ -328,7 +341,27 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         });
     }
 
+
     //#region Properties
+
+
+    private _isAllSelected : boolean;
+    public get isAllSelected() : boolean {
+        return this._isAllSelected;
+    }
+    public set isAllSelected(v : boolean) {
+        this._isAllSelected = v;
+
+        if (v) {
+            this.GetFirst100LedgerToReconcile();
+        } else {
+            this.ReloadScreen();
+            this.SelectedLines.Clear();
+        }
+    }
+
+
+
     private currencyId: string;
     get CurrencyId() { return this.currencyId; }
     set CurrencyId(value: string) {
@@ -946,6 +979,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             this.SelectedLines.Insert(r);
             //this.SelectedLines.push(r);
             this.CalculateTotals();
+
+            // update select all checkbox
+            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= 100)
+                this._isAllSelected = true;
         }
     }
 
@@ -955,6 +992,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this.SelectedLines.Remove(this.SelectedLines.Collection.find(c => c.Id == id));
         //ReconcileEventManager.RowUnselected.emit({ id: id });
         this.CalculateTotals();
+        this._isAllSelected = false;
     }
 
     CheckBoxValueChanged(Row) {
@@ -1018,6 +1056,64 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this.TotalsDeference = def < 0 ? def * -1 : def
     }
     //#endregion
+
+    GetFirst100LedgerToReconcile()
+    {
+        this.ValidationErrorsList = [];
+
+
+
+        //#region filters
+        var filters = new ApiQueryFilters;
+        if (this.currencyFilter) {
+            filters.AdditionalFilters.push(this.currencyFilter);
+        }
+        if (this.searchFieldFilter) {
+            filters.AdditionalFilters.push(this.searchFieldFilter);
+        }
+        if (this.openAmountFilter) {
+            filters.AdditionalFilters.push(this.openAmountFilter);
+        }
+
+        filters.PageSize = 100;
+        filters.PageIndex = 1; // decremented 1 in the service
+        filters.GetAll = true;
+        filters.GetCount = true;
+        //#endregion
+
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
+
+
+        this._LedgerTransactionExtendedListService.getFirst100LedgerForReconciliation(this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
+
+            var mm: ServiceResponse = myResult;
+            var result = mm.Result;
+            if (!mm.HasError) {
+
+                if (!AppTool.IsNullOrEmpty(result)) {
+                    this.SelectedLines.Clear();
+                    var array = [];
+                    for (var i = 0; i < result.length; i++) {
+                        var line1 = new LineModel(result[i], this,-1);
+                        array.push(line1);
+                        // this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: true, RowIndex: -1, ById: true });
+                    }
+                    this.SelectedLines.InsertCollection(array);
+
+                    for (var i = 0; i < this.SelectedLines.Collection.length; i++) {
+                        var line = this.SelectedLines.Collection[i];
+                        this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: false, RowIndex: line.myRowIndex, ById: true });
+                    }
+                    this.CalculateTotals();
+                }
+            }
+            else {
+                this.ValidationErrorsList = mm.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
+            }
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
 
     CreateReconciliation() {
         var newEntity: any = {};

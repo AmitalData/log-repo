@@ -485,6 +485,21 @@ export class ServiceHelper {
         return httpOptions;
     }
 
+    public static GetHttpHeadersForblob() {
+
+        const httpOptions = {
+            responseType: 'blob' as 'json',
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            })
+        };
+
+        if (!AppTool.IsNullOrEmpty(SessionLocator.WorkerRoleName))
+            httpOptions.headers = httpOptions.headers.append('workerrolename', SessionLocator.WorkerRoleName);
+
+        return httpOptions;
+    }
     public static GetHttpFullHeaders() {
 
         const httpOptions: { headers; observe; } = {

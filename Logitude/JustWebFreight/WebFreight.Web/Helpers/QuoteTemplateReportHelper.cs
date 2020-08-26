@@ -1406,7 +1406,7 @@ namespace Logitude.BL.Helpers
                     currencyCode = quoteSaleChargePM.CurrencyCode;
 
                     double vatAmount = quoteSaleChargePM.VatAmount != null ? (double)quoteSaleChargePM.VatAmount : 0;
-                    amount += ((quoteSaleChargePM.SaleTotalAmount) + (quotePM.IsChargesByVAT ? vatAmount : 0 ));
+                    amount += ((quoteSaleChargePM.SaleTotalAmount != null ? quoteSaleChargePM.SaleTotalAmount : 0) + (quotePM.IsChargesByVAT ? vatAmount : 0 ));
 
                 }
                 QuoteSalesTotals.Add(new QuoteSalesTotalPM() { CurrencyCode = currencyCode, Amount = amount });
@@ -3539,7 +3539,9 @@ namespace Logitude.BL.Helpers
                     {
                         var priceBreak = FormatPriceBreaksWithTwoDecimalDigits(item);
                         if (i > 1 || quoteTemplateBuildArges.QuoteTemplateSettingPM.RightToLeft) priceBreaks += "&nbsp;";
-                        priceBreaks += ((priceBreak + " " + quotePM.SaleCurrencyCode) + "<br>");
+                        priceBreaks += ((priceBreak + " " + GetChargeCurrencyCode(quotePM, chargePM)) + "<br>");
+
+
                         i += 1;
                     }
                     saleUnitPriceValues = priceBreaks;

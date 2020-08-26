@@ -49,10 +49,26 @@
                                                 </td>
                                                 <td></td>
                                             </tr>
+
+                                            <!-- Month -->
+                                            <tr class="FormFieldRow">
+                                                <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [ObjectFieldName]="'Month'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="width:200px;" *ngIf="entityPM.ByMonth">
+                                                    {{entityPM.Month | DateTimePipe:'MY'}}
+                                                </td>
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="width:200px;" *ngIf="!entityPM.ByMonth">
+                                                  All Months
+                                                </td>
+                                                <td></td>
+                                            </tr>
                                             <tr class="FormFieldRow">
 
 
-                                                <td *ngIf="Faild" [style.text-align]="isRTL ? 'right' : 'left'" >
+                                                <td *ngIf="Faild" [style.text-align]="isRTL ? 'right' : 'left'">
                                                     <button style="display: inline-block;width:100px;" class="Button" [disabled]="Building" (click)="RunService()">{{'Accounting.O.Rebuild' | TextCodeTranslationPipe}}</button>
                                                 </td>
                                                 <td></td>

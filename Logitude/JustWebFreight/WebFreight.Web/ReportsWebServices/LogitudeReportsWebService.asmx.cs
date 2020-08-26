@@ -2385,6 +2385,9 @@ namespace WebFreight.Web.ReportsWebServices
 
             shipments = shipments.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H") && !d.IsCancelled);
 
+            shipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentDataView>(new QueryOperations(), shipments, tenant);
+            shipments = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentDataView>(new QueryOperations(), shipments, tenant);
+
             if (toDate != null || FromDate != null)
             {
                 #region
@@ -2716,13 +2719,15 @@ namespace WebFreight.Web.ReportsWebServices
             List<string> cardIdsList = totalList.Select(s => s.CardId).ToList();
             cardIdsList = cardIdsList.Distinct().ToList();
 
-            List<CardEntityClass> allCardData = (from d in commonContext.Cards.Include("PaymentTerm")
+            List<CardEntityClass> allCardData = (from d in commonContext.Cards.Include("PaymentTerm").Include("PartnerType")
                                                  where d.Tenant == tenant && cardIdsList.Contains(d.Id)
                                                  select new CardEntityClass
                                                  {
                                                      Id = d.Id,
                                                      Name = d.EnglishName,
                                                      PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName,
+                                                     CardCode = d.Code,
+                                                     CardTypeName = d.PartnerType == null ? null : d.PartnerType.Name,
                                                  }).ToList();
 
             double? currencyRate = 0;
@@ -2845,6 +2850,8 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     acountsRecored.PaymentTerm = cardEntity.PaymentTerm;
                     acountsRecored.CustomerName = cardEntity.Name;
+                    acountsRecored.CardCode = cardEntity.CardCode;
+                    acountsRecored.CardTypeName = cardEntity.CardTypeName;
                 }
 
                 acountsRecored.CurrentDue = currentsum;
@@ -9459,6 +9466,8 @@ namespace WebFreight.Web.ReportsWebServices
                                               PaymentId = d.Id,
                                               ARPaymentNo = d.PaymentNo,
                                               PaymentRef = d.PaymentNo,
+                                              PaymentReference = d.ChequeOrPaymentRef,
+                                              Bank = d.Bank,
                                               ValueDate = d.ValueDate,
                                               PaymentMethodName = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
                                               IssuedByUserName = d.CreatedByUser == null ? null : d.CreatedByUser.Contact.EnglishName,
@@ -9489,6 +9498,7 @@ namespace WebFreight.Web.ReportsWebServices
                     reportAPIPayment.AmountPaid = null;
                     reportAPIPayment.OriginalAmount = null;
                     reportAPIPayment.InvocieDate = null;
+                    reportAPIPayment.DueDate = null;
 
                     item.PaidAPInvoicesList.Add(reportAPIPayment);
                 }
@@ -9513,6 +9523,7 @@ namespace WebFreight.Web.ReportsWebServices
                             reportAPIPayment.BillTo = apiInvoicePayment.ARInvoice.BillTo.LocalName;
                             reportAPIPayment.InvoiceNumber = apiInvoicePayment.ARInvoice.InvoiceNumber;
                             reportAPIPayment.InvocieDate = apiInvoicePayment.ARInvoice.InvoiceDate;
+                            reportAPIPayment.DueDate = apiInvoicePayment.ARInvoice.DueDate;
                             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                             customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, apiInvoicePayment.ARInvoice, reportAPIPayment);
 
@@ -9543,6 +9554,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         reportAPIPayment.ShipmentNumber = apiInvoicePayment.ARInvoice.MainEntityReference != null ? apiInvoicePayment.ARInvoice.MainEntityReference : "";
+                        reportAPIPayment.MasterNumber = apiInvoicePayment.ARInvoice.MasterNumber != null ? apiInvoicePayment.ARInvoice.MasterNumber : "";
                         item.PaidAPInvoicesList.Add(reportAPIPayment);
                     }
 
@@ -13534,6 +13546,8 @@ namespace WebFreight.Web.ReportsWebServices
         public string Id { get; set; }
         public string Name { get; set; }
         public string PaymentTerm { get; set; }
+        public string CardCode { get; set; }
+        public string CardTypeName { get; set; }
     }
 
     public class AgingStatemantDataItem

@@ -18,6 +18,7 @@
    declare @SourceTenant int
    declare @ParentTenant int
    declare @AutomaticLastUpdateDate as datetime
+   declare @InActive as bit
 
 	DECLARE IncotermsCursor CURSOR READ_ONLY
 	FOR
@@ -25,16 +26,16 @@
 	From dw_Incoterms
 	inner JOIN dw_DWHSettings ON dw_Incoterms.Tenant = dw_DWHSettings.Tenant
 	where dw_Incoterms.AutomaticLastUpdateDate > @LastUpdateDate	
-	OPEN IncotermsCursor FETCH NEXT FROM IncotermsCursor INTO @Id , @Name, @LocalName, @Code, 	@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
+	OPEN IncotermsCursor FETCH NEXT FROM IncotermsCursor INTO @Id , @Name, @LocalName, @Code, 	@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
 	set @Key = (select Id from DIM_Incoterms where Id = @Id)
-	if(@Key is  null) begin  insert into DIM_Incoterms (Id,Name,[Local Name],Code,[Source Tenant],[Parent Tenant],[Automatic Last Update Date]) values(@Id,@Name,@LocalName,@Code ,@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate) end
-	else begin update   DIM_Incoterms set Name =@Name,  [Local Name] =@LocalName ,  Code = @Code ,[Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate  Where Id = @Id; end
+	if(@Key is  null) begin  insert into DIM_Incoterms (Id,Name,[Local Name],Code,[Source Tenant],[Parent Tenant],[Automatic Last Update Date],[InActive]) values(@Id,@Name,@LocalName,@Code ,@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive) end
+	else begin update   DIM_Incoterms set Name =@Name,  [Local Name] =@LocalName ,  Code = @Code ,[Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate, [InActive] = @InActive  Where Id = @Id; end
     
 
-	FETCH NEXT FROM IncotermsCursor  INTO @Id , @Name, @LocalName, @Code,@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate
+	FETCH NEXT FROM IncotermsCursor  INTO @Id , @Name, @LocalName, @Code,@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 		End
 	CLOSE IncotermsCursor
 	DEALLOCATE IncotermsCursor

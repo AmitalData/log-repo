@@ -1126,14 +1126,59 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.WarehouseLegRemarks = shipment.WarehouseLegRemarks;
                     invoicedataprovider.WarehouseLegReference = shipment.WarehouseLegReference;
                     invoicedataprovider.WarehouseLegTerminalName = shipment.WarehouseLegTerminalName;
+
                     if (shipment.WarehouseLegAddressId != null)
                     {
                         Address warehouseAddress = addressRepository.GetSingleAddress(shipment.WarehouseLegAddressId, tenant);
                         invoicedataprovider.WarehouseLegAddress = DataProviders.General.GetAddress(warehouseAddress);
                     }
+
                     invoicedataprovider.WarehouseLegEntryDate = shipment.WarehouseLegEntryDate;
                     invoicedataprovider.WarehouseLegReleaseDate = shipment.WarehouseLegReleaseDate;
                     invoicedataprovider.WarehouseLegTerminalCode = shipment.WarehouseLegTerminalCode;
+
+                    invoicedataprovider.StorageFreeDays = shipment.WarehouseStorageFreeDays;
+
+                    if (shipment.WarehouseLegActualEntryDate != null && shipment.WarehouseLegActualReleaseDate != null)
+                    {
+                        if (shipment.WarehouseLegActualReleaseDate >= shipment.WarehouseLegActualEntryDate)
+                        {
+                            invoicedataprovider.StorageDays = (shipment.WarehouseLegActualReleaseDate - shipment.WarehouseLegActualEntryDate).Value.Days;
+                        }                        
+                    }
+
+                    string warehouseName = null;
+                    if (!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
+                    {
+                        Card warehouse = (from mc in commonContext.Cards
+                                          where mc.Id == shipment.WarehouseLegWarehouseId
+                                          select mc).FirstOrDefault();
+
+                        if (warehouse != null)
+                        {
+                            warehouseName = warehouse.EnglishName;
+                        }
+                    }
+
+                    if (shipment.ShipmentStoragePricings != null && shipment.ShipmentStoragePricings.Count > 0)
+                    {
+                        invoicedataprovider.ShipmentStoragePricings = new List<StoragePricing>();
+
+                        foreach (ShipmentStoragePricingPM pricing in shipment.ShipmentStoragePricings)
+                        {
+                            StoragePricing newItem = new StoragePricing();
+                            newItem.StepFrom = pricing.StepFrom;
+                            newItem.StepTo = pricing.StepTo;
+                            newItem.Days = pricing.Days;
+                            newItem.SalePrice = pricing.SalePrice;
+                            newItem.Amount = pricing.Amount;
+                            newItem.LineNumber = pricing.LineNumber;
+                            newItem.WarehouseName = warehouseName;
+
+                            invoicedataprovider.ShipmentStoragePricings.Add(newItem);
+                        }
+                    }
+
                     #endregion
 
                     #region pickups
@@ -1966,7 +2011,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (invoiceTypeCode == "CD")
                         {
-                            line_UnitPrice = line_UnitPrice * -1;
+                            bool isCreditByAutoCreditInvoice = CheckAutoCreditInvoice(currentInvoice);
+                            if (isCreditByAutoCreditInvoice)
+                            {
+                                line_UnitPrice =Math.Abs( line_UnitPrice.Value);
+                            }
+                         //   line_UnitPrice = line_UnitPrice * -1;
                             lineAmount_Foreign = lineAmount_Foreign * -1;
                             lineAmount_Invoice = lineAmount_Invoice * -1;
                             lineAmount_Local = lineAmount_Local * -1;
@@ -2636,13 +2686,19 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     invoiceDataProvider.InvoiceType_label = invoiceType != null ? invoiceType.Name : "";
                 }
-
+                bool isCreditByAutoCreditInvoice = CheckAutoCreditInvoice(entityPOCO);
                 switch (entityPOCO.ARInvoiceTypeCode)
                 {
                     case "CD":
                         {
                             if (myTenant.AccountingActivated)
                             {
+                             
+                                if (isCreditByAutoCreditInvoice)
+                                {
+                                    invoiceDataProvider.InvoiceType_labelHebrew = "חשבונית";
+                                }
+                                else
                                 invoiceDataProvider.InvoiceType_labelHebrew = "חשבונית זיכוי";
 
                             }
@@ -3087,7 +3143,10 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (entityPOCO.ARInvoiceTypeCode == "CD")
                         {
-                            line_UnitPrice = line_UnitPrice * -1;
+                            if (!isCreditByAutoCreditInvoice)
+                            {
+                                line_UnitPrice =Math.Abs(line_UnitPrice.Value);
+                            }
                             lineAmount_Foreign = lineAmount_Foreign * -1;
                             lineAmount_Invoice = lineAmount_Invoice * -1;
                             lineAmount_Local = lineAmount_Local * -1;
@@ -3797,6 +3856,20 @@ namespace WebFreight.Web.ReportsWebServices
             return invoiceDataProvider;
         }
 
+        private bool CheckAutoCreditInvoice(ARInvoice invoice)
+        {
+            if (invoice.IsAutoCredit && invoice.StatusCode == "AC" && invoice.ARInvoiceTypeCode == "CD" && invoice.CreditedByARInvoiceId != null)
+            {
+                ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(invoice.Tenant);
+                string invoiceType = aRInvoiceQuery.GetARinvoiceTypeCode(invoice.CreditedByARInvoiceId, invoice.Tenant);
+                if (invoiceType == "CD")
+                {
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
+        }
         private Contact GetLoggedContact(int tenant)
         {
             string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
