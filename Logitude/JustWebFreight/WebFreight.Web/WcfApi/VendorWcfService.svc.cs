@@ -62,7 +62,7 @@ namespace WebFreight.Web.WcfApi
                         else
                         {
                             response.HasError = true;
-                            response.ErrorMessage = "InvoiceCurrencyId field doesn't exist in the database,Upsert this entity before using it.";
+                            response.ErrorMessage = "PrimaryContactId field doesn't exist in the database,Upsert this entity before using it.";
                             return response;
                         }
                     }
