@@ -16,6 +16,7 @@ import { PendingByKeywordListService } from '../../../../Customs/Services/Standa
 
 
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { KeyValuePair } from '../CourierWorkSheet/CourierWorksheetComponent';
 
 
 @Component({
@@ -25,6 +26,8 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 export class AddEditPendingByKeywordComponent
     extends BaseComponent
     implements OnInit{
+    SearchByFieldCodes: KeyValuePair[] = [];
+    SelectedItemSearchByField: KeyValuePair;
 
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.PendingByKeyword";
@@ -40,6 +43,9 @@ export class AddEditPendingByKeywordComponent
     constructor(public entityArgs: EntityArgs) {
         super();
 
+        this.SearchByFieldCodes.push(new KeyValuePair("1", "תאור טובין"));
+        this.SearchByFieldCodes.push(new KeyValuePair("2", "שם יבואן"));
+
         SessionLocator.SelectedSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
 
@@ -49,12 +55,23 @@ export class AddEditPendingByKeywordComponent
                 this.EntityPM.Tenant = SessionLocator.Tenant;
                 this.isWindowMode = true;
                 this.isNewRecord = true;
+                this.UIProperties.SetRequired("SearchByFieldCode", this.ObjectTableName, true);
 
             } else {
                 this.EntityPM = this.entityArgs.EntityPM;
+                this.SelectedItemSearchByField = this.SearchByFieldCodes.filter(r => r.Key == this.EntityPM.SearchByFieldCode)[0];
+                this.UIProperties.SetRequired("SearchByFieldCode", this.ObjectTableName, false);
+
             }
             this.WarningMessage = "יש להזין רשימת מילות מפתח מופרדות בפסיק, ואת קוד העיכוב שיש להרים עבורן. (למשל: medicine, drug, תרופה) ניתן להזין את אותו קוד עיכוב מספר פעמים.";
         });
+    }
+    public _SearchByFieldCode: string;
+    SearchByFieldCodeClicked(evKey) {
+        this._SearchByFieldCode = evKey;
+        this.EntityPM.SearchByFieldCode = this._SearchByFieldCode;
+        this.UIProperties.SetRequired("SearchByFieldCode", this.ObjectTableName, false);
+        
     }
 
     Loaded: boolean = false;

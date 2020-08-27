@@ -515,7 +515,7 @@
   <field
     Id="&quot;f98ba7cc-6443-4e65-95af-5db73f839b78&quot;"
     FieldName="&quot;SearchByFieldCode&quot;"
-    OldNames="SearchByFieldCode,SearchByFieldCode"
+    OldNames="SearchByFieldCode"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -689,6 +689,11 @@
       <QueryColumn
         QueryCode="&quot;AllPendingByKeywords&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;SearchByFieldName&quot;"
+        ColumnWidth="300" />
+      <QueryColumn
+        QueryCode="&quot;AllPendingByKeywords&quot;"
+        IndexOrder="2"
         ObjectFieldName="&quot;CourierPendingReasonCode&quot;"
         ColumnWidth="200" />
     </QueryColumns>
