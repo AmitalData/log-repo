@@ -134,11 +134,15 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 if (!notApprovedYet)
                 {
                     avoidSign = AvoidSign(_RequestParams);
-                    if (avoidSign && _RequestParams.ForcePersonalSign)
+                    if (avoidSign)
                     {
-                        _RequestParams.ForcePersonalSign = false;
+                        _RequestParams.AvoidSign = true;
+                        if ( _RequestParams.ForcePersonalSign)
+                        {
+                            _RequestParams.ForcePersonalSign = false;
+                        }
                     }
-                    _RequestParams.AvoidSign = avoidSign;
+                    
                 }
                 if (_RequestParams.TestCase != null && !String.IsNullOrWhiteSpace(_RequestParams.TestCase.Code))
                 {
@@ -254,7 +258,13 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 bool tryConcurrentKiller = true; //ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
-                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode) 
+                        ||
+                        // eitan: בקשת מכס אחת פר ישות בו זמנית -לא תתור במקביל 
+                        // itzik : CourierMaster מלבד בישות 
+                        // בשלב ראשון ב CUSTOMS יעבור ל PROD בהמשך 
+                        "Customs.CourierMaster" != ObjectTableRepository.GetSingleObjectTableById(requestParams.LoggingObjectTableId, requestParams.Tenant).Name 
+                        )
                     {
                         if (!String.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
                             !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId))
@@ -338,7 +348,13 @@ namespace Logitude.Customs.BL.Messaging.Customs
         {
             try
             {
-
+                if (requestParams.MainInterfaceCode == "2715" //D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService
+                    &&
+                    String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
+                    CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).CompanyType == "B")//Courier
+                {
+                    return true;//in courier CompanyType -AvoidSign
+                }
                 if (!String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
                 {
                     string defValue = GDFDATAQueryService.GetDefault(_Tenant,"ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
@@ -1874,14 +1890,16 @@ After that Remove file  from DCA  .. ");
                     return SheetStatusEnum.Created;
                     break;
                 case CustomsStepEnum.CustomRequest:
-
-                    //if (this._CommunicationLogStepList.Exists(rec => rec.StepNumber == (int)CustomsStepEnum.CustomRequestSign))
-                    if (InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByCustomsAgentId
-                        || InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByPersonId
-                        || _RequestParams.ForcePersonalSign)
+                    if (!_RequestParams.AvoidSign)
                     {
-                        return SheetStatusEnum.WaitingForSigning;
-                        break;
+                        //if (this._CommunicationLogStepList.Exists(rec => rec.StepNumber == (int)CustomsStepEnum.CustomRequestSign))
+                        if (InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByCustomsAgentId
+                            || InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByPersonId
+                            || _RequestParams.ForcePersonalSign)
+                        {
+                            return SheetStatusEnum.WaitingForSigning;
+                            break;
+                        }
                     }
                     return SheetStatusEnum.InProcess;
                     break;

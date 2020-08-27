@@ -2725,7 +2725,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 }
                 case "Customs.PendingByKeyword": {
                     logWindow.Width = 430;
-                    logWindow.Height = 250;
+                    logWindow.Height = 300;
                     logWindow.ShowCloseButton = true;
                     break;
                 }

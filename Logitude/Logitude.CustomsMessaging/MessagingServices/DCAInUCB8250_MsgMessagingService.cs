@@ -92,16 +92,22 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var repo = new DeclarationCourierStatusRepository(tenant);
 
             List<DeclarationCourierStatus> listPoco = repo.GetByMasterIDDeclarationCourierStatus(tenant, CourierMasterId);
-
-            foreach (var item in listPoco)
+            if(listPoco!= null)
             {
-                var RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgress(tenant, "8250", objectTableId, item.DeclarationId, null, null, null, true);
+                List<string> Ids = listPoco.Select(x => x.DeclarationId).ToList();
+
+                //foreach (var item in listPoco)
+                //{
+                var RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgressByIds(tenant, "8250", objectTableId, Ids, true);
                 if (RequestInProgressList2 != null && RequestInProgressList2.Count > 0)
                 {
                     ///throw new System.Exception("Requestsheet  with Interface Type  = UCB8250  already in progress  !!!");
                     return "קיים מסר זהה בתהליך";
                 }
+                // }
+
             }
+
 
             string uniComm = null;
             string fileName = null;
