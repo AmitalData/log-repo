@@ -25,6 +25,7 @@ using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.Helpers;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -137,6 +138,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Airline");
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
 
             else
@@ -206,6 +208,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Airline");
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
 
             else
