@@ -225,7 +225,7 @@ namespace WebFreight.Web.App_Code
                                 else
                                 {
                                     var Failmsg = "Inserting Document Faild " + DateTime.Now;
-                                    //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(Result), null, "");
+                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(Result), null, "");
                                     return Request.CreateResponse(HttpStatusCode.BadRequest, Result);
                                 }
                             }
@@ -233,7 +233,7 @@ namespace WebFreight.Web.App_Code
                             {
                                 documentsFilingService.Create(EntityPM, null, null, true);// EntityPM.FileData);
                             }
-                            //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Insert Document To Importer Tenant Done Successfully " + DateTime.Now, null, EntityPM.Id, null, "");
+                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Insert Document To Importer Tenant Done Successfully " + DateTime.Now, null, EntityPM.Id, null, "");
 
                             return Request.CreateResponse(HttpStatusCode.OK, EntityPM.Id != null ? EntityPM.Id : DocumentFilingPM.Id);
                         }
@@ -406,7 +406,7 @@ namespace WebFreight.Web.App_Code
                                 ErrorType = "Uploading Document Error",
                                 ErrorMessage = "There was an error occured while uploading the document"
                             };
-                            //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, "Update Document At Importer Tenant Faild " + DateTime.Now, null, LogitudeXmlSerializer.SerializeObjectToXmlString(apiException), null, "");
+                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, "Update Document At Importer Tenant Faild " + DateTime.Now, null, LogitudeXmlSerializer.SerializeObjectToXmlString(apiException), null, "");
 
                             return Request.CreateResponse(HttpStatusCode.BadRequest, apiException);
                         }
@@ -478,7 +478,7 @@ namespace WebFreight.Web.App_Code
                                 else
                                 {
                                     var Failmsg = "Inserting Document Faild " + DateTime.Now;
-                                    //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(Result), null, "");
+                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(Result), null, "");
                                     return Request.CreateResponse(HttpStatusCode.BadRequest, Result);
                                 }
                             }
@@ -519,7 +519,7 @@ namespace WebFreight.Web.App_Code
                             }
 
 
-                            //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Updating Document To Importer Tenant Done Successfully " + DateTime.Now, null, ImporterDocumentFilingPM.Id, null, "");
+                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Updating Document To Importer Tenant Done Successfully " + DateTime.Now, null, ImporterDocumentFilingPM.Id, null, "");
 
                             return Request.CreateResponse(HttpStatusCode.OK, ImporterDocumentFilingPM.Id);
                         }
