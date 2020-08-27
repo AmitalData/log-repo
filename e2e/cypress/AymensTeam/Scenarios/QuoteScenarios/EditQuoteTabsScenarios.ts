@@ -10,12 +10,12 @@ export class EditQuoteTabsScenarios {
     public RoutingTab: RoutingTab = new RoutingTab();
     public ChargesTab: ChargesTab = new ChargesTab();
 
-    public RunEditTabsScenarios() {
+    public RunEditTabsScenarios(direction: string, transportMode: string,) {
         this.FillDetailsTab();
-        this.PartnersTab.RunPartnersTabScenarios()
-        this.PackagesTab.RunPackagesTabsScenarios()
-        this.RoutingTab.RunRoutingTabScenarios()
-        this.ChargesTab.RunChargesTabScenarios()
+        this.PartnersTab.RunPartnersTabScenarios(direction, transportMode);
+        this.PackagesTab.RunPackagesTabsScenarios();
+        this.RoutingTab.RunRoutingTabScenarios();
+        this.ChargesTab.RunChargesTabScenarios();
     }
 
     private FillDetailsTab() {

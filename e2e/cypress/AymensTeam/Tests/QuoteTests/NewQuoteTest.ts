@@ -15,7 +15,8 @@ describe('Quotes Modules', () => {
     });
 
     it('Test New Quote ', () => {
-        scenarios.RunScenario('E', 'A');
-        editScenarios.RunEditTabsScenarios();
+        scenarios.RunScenario('E', 'I','FTL');
+        editScenarios.RunEditTabsScenarios('E','I');
+        //editScenarios.RunEditTabsScenarios('D','I');
     });
 });
