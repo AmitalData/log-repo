@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.Server.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,7 +13,8 @@ namespace WebFreight.Web.WcfApi
     [ServiceContract]
     public interface IPaymentTermWcfService
     {
-        [OperationContract]
-        void DoWork();
+
+        [OperationContract] 
+        List<PaymentTermList> GetPaymentTerms(ref Response response, int tenant);
     }
 }
