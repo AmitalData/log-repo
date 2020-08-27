@@ -398,6 +398,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool? IsClaimable { get; set; }
         [Column("ReplacingRepairRequest")]
 	    public string ReplacingRepairRequest { get; set; }
+        [Column("AmendmentErrorXml")]
+	    public string AmendmentErrorXml { get; set; }
     }
 }
 	 

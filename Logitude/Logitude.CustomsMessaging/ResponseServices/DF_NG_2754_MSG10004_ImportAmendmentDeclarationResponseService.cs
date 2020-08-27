@@ -123,11 +123,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { GetValueIDType(declaration.ID) }, tenant).FirstOrDefault();
                     if (declarationOrg == null)
                     {
-                        declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { idOrg }, tenant).FirstOrDefault();
-
+                        declarationOrg = myQueryService.GetAcceptDeclarationAmendment(  idOrg , tenant);
+                        declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { declarationOrg.Id }, tenant).FirstOrDefault();
                     }
 
-                    if (declarationOrg.IsAmendment == true && declarationOrg.AmendmentDontDisplayInList==true)
+                    if (declarationOrg.IsAmendment == true  )
                     {
                         isFromAmendment = true;
                     }

@@ -155,7 +155,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CancelRequestRejectionReason, 
 	         CancelRequestApproveDate, 
 	         IsClaimable, 
-	         ReplacingRepairRequest,
+	         ReplacingRepairRequest, 
+	         AmendmentErrorXml,
 	      }
 
 
@@ -371,6 +372,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsClaimable, 
 	         CancelRequestStatusName, 
 	         ReplacingRepairRequest,
+	         AmendmentErrorXml,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1042,6 +1044,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReplacingRepairRequest))
             {
 				entityPOCO.ReplacingRepairRequest = entityPM.ReplacingRepairRequest;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentErrorXml))
+            {
+				entityPOCO.AmendmentErrorXml = entityPM.AmendmentErrorXml;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1720,6 +1727,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ReplacingRepairRequest = entityPOCO.ReplacingRepairRequest;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmendmentErrorXml))
+            {
+					entityPM.AmendmentErrorXml = entityPOCO.AmendmentErrorXml;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2391,6 +2403,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ReplacingRepairRequest = entityPM.ReplacingRepairRequest;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmendmentErrorXml))
+            {
+                oldEntityPM.AmendmentErrorXml = entityPM.AmendmentErrorXml;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationPM entityPM)
@@ -2495,6 +2512,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CancelRequestRejectionReason)) //T4 find type == nText 
             {
                 entityPM.CancelRequestRejectionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CancelRequestRejectionReason));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AmendmentErrorXml)) //T4 find type == nText 
+            {
+                entityPM.AmendmentErrorXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentErrorXml));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

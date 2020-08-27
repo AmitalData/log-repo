@@ -363,7 +363,7 @@ namespace Logitude.Customs.BL.BL
             {
                 foreach (CustomDocumentTypePM customDocumentTypePMItem in CustomDocumentTypePMList)
                 {
-                    CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentTypeCode == customDocumentTypePMItem.Code && d.DocumentsFilingId != null && d.DocumentStatusCode=="1" ).FirstOrDefault();
+                    CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentTypeCode == customDocumentTypePMItem.Code && d.DocumentsFilingId != null ).FirstOrDefault();
                     if (customsDocumentsTicketPM == null)
                     {
                         return true;

@@ -21,11 +21,15 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public List<string> GetCourierPendingReasonCodeBykeyWords(string keyWordsList, int tenant)
+        public List<string> GetCourierPendingReasonCodeBykeyWords(string keyWordsList,string SearchByFieldCode, int tenant)
         {
+            if (String.IsNullOrWhiteSpace(keyWordsList))
+            {
+                return new List<string>();
+            }
             keyWordsList = keyWordsList.ToLower();
             keyWordsList = keyWordsList.Replace(" ", ",");
-            char[] BAD_CHARS = new char[] { '!', '@', '#', '$', '%', '_' , ')' , '(' , '-' , '*', '&', '^', '~', '.', '"', ';', '\'', '\\', '/', '<', '>', '{', '}', '[', ']' };
+            char[] BAD_CHARS = new char[] { '!', '@', '#', '$', '%', '_' , ')' , '(' , '-' , '*', '&', '^', '~', '.', '"', ';', '\'', '\\', '/', '<', '>', '{', '}', '[', ']','\n' };
             keyWordsList = string.Concat(keyWordsList.Split(BAD_CHARS, StringSplitOptions.RemoveEmptyEntries));
             while (keyWordsList.Contains(",,"))
             {
@@ -37,7 +41,8 @@ namespace Logitude.Customs.Data.Repsitories
             {
                 string wordtemp = "," + word + ",";
                 PendingByKeyword pendingByKeyword = (from a in context.PendingByKeywords
-                                                     where a.Tenant == tenant && a.KeywordsList.Contains(wordtemp)
+                                                     where a.Tenant == tenant && a.KeywordsList.ToLower().Contains(wordtemp)
+                                                     where a.SearchByFieldCode== SearchByFieldCode
                                                      select a).FirstOrDefault();
                 if (pendingByKeyword != null && !String.IsNullOrWhiteSpace(pendingByKeyword.CourierPendingReasonCode)) pendingReasonCodeList.Add(pendingByKeyword.CourierPendingReasonCode);
             }
