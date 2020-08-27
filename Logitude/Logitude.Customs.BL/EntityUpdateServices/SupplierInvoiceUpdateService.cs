@@ -91,7 +91,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     InjectionUtil.Instance.CheckContactFeature("Customs.Declaration", "ACCUMULATION", tenant, email);
                     if (string.IsNullOrEmpty(entityPM.AccumalationStateCode)) entityPM.AccumalationStateCode = "1";
                 }
-                catch (Exception ex)
+                catch (SecurityException ex)
                 {
                     LogMessagingUtil.Instance.AppendLine("Check for ACCUMULATION Feature Failed, Message: " + ex.Message);
                     if (string.IsNullOrEmpty(entityPM.AccumalationStateCode)) entityPM.AccumalationStateCode = "3";
