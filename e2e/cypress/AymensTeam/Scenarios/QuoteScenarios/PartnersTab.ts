@@ -36,7 +36,14 @@ export class PartnersTab {
         }
     }
     private DeletePartner() {
-        Resolvers.ButtonResolver.Selector('#Delete_2').ThenConfirmButtonText("Yes").Click();
+        Resolvers.ButtonResolver.Selector('#Delete_3').ThenConfirmButtonText("Yes").Click();
+        //cy.get('iconbutton')
+        //    .find('.LogitudeIconButton')
+        //    .eq(2)
+        //    .click({ force: true })
+        //    .then(() => {
+        //        cy.get('#ConfirmWindow_Yes_0').click({ force: true })
+        //    })
 
     }
     private FillShipper(name: string) {
