@@ -66,30 +66,30 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.CreateDateTime = DateTime.Now;
             }
 
-           
+
 
             ICustomContext context = MainContext as CustomContext;
             if (string.IsNullOrWhiteSpace(entityPM.ImporterTypeCode)) entityPM.ImporterTypeCode = "1";
             if (string.IsNullOrWhiteSpace(entityPM.TransferImporterTypeCode)) entityPM.TransferImporterTypeCode = "1";
             if (string.IsNullOrWhiteSpace(entityPM.EntitleImporterTypeCode)) entityPM.EntitleImporterTypeCode = "1";
 
-           //CustomsSettingQueryService customsSettingQueryservice = new CustomsSettingQueryService(context);
+            //CustomsSettingQueryService customsSettingQueryservice = new CustomsSettingQueryService(context);
 
             ConsignmentPM consignment = null;
             ConsignmentPackagePM package = null;
             if (entityPM.Consignments.Count == 0)
             {
                 consignment = new ConsignmentPM()
-               {
-                   Tenant = entityPM.Tenant,
-                   IsLastReleaseFromWarehous = "N",
-                   DeclarationId = entityPM.Id,
-                   ///oncreate while Init ConsignmentNumber = CodeCounter.GetNumber("Customs.Consignment", entityPM.Tenant),
-                   ChangeSetOp = ChangeSetOperation.Insert,//CargoDescription = "z",
-                  
-                   //OriginCountryCode = "AD",
-                  
-               };
+                {
+                    Tenant = entityPM.Tenant,
+                    IsLastReleaseFromWarehous = "N",
+                    DeclarationId = entityPM.Id,
+                    ///oncreate while Init ConsignmentNumber = CodeCounter.GetNumber("Customs.Consignment", entityPM.Tenant),
+                    ChangeSetOp = ChangeSetOperation.Insert,//CargoDescription = "z",
+
+                    //OriginCountryCode = "AD",
+
+                };
 
                 package = new ConsignmentPackagePM()
                 {
@@ -113,12 +113,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 entityPM.AgentId = setting.CustomsAgentId.Length <= 9 ? setting.CustomsAgentId : null;
                 //if (!setting.IsConnectedToUniFreight)
-                if(!entityPM.IsConnectedToUnifreight && entityPM.IsAmendment!=true)
-                {                
+                if (!entityPM.IsConnectedToUnifreight && entityPM.IsAmendment != true)
+                {
 
                     if (string.IsNullOrEmpty(entityPM.CustomFileNo))
                     {
-                    entityPM.CustomFileNo = TableCounter.GetNumber(entityPM.Tenant, "DECL", "DC", null);
+                        entityPM.CustomFileNo = TableCounter.GetNumber(entityPM.Tenant, "DECL", "DC", null);
                     }
                     else
                     {
@@ -167,8 +167,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 // moran 31.5.15 - Task 13325 <--
             }
             entityPM.TaxationDateTime = DateTime.Now.Date;
-            
-        if (entityPM.IsAmendment==true)
+
+            if (entityPM.IsAmendment == true)
                 entityPM.ExternalDeclarationNumber = entityPM.CustomFileNo + DateTime.Now.Year;
 
 
@@ -177,7 +177,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
 
 
-            entityPM.CreatedByUserId =contact.Id;
+            entityPM.CreatedByUserId = contact.Id;
             if (!entityPM.IsConnectedToUnifreight)
             {
                 entityPM.ReferentUserId = entityPM.CreatedByUserId;
@@ -222,7 +222,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                         var allAgentRoleCodeDetails = (new DeclaraionDetails()).GetAllAgentRoleCodeDetails();
                         var allAgentRoleCodes = allAgentRoleCodeDetails.Select(r => r.Code).ToList();
-                       if (!allAgentRoleCodes.Contains(declarationPM.AgentRoleCode))
+                        if (!allAgentRoleCodes.Contains(declarationPM.AgentRoleCode))
                         {
                             throw new Exception("תפקיד סוכן - ערכים שגויים  ");
                         }
@@ -280,7 +280,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             try
             {
-                
+
                 //<--- Yuval Chalup 30.12.2015 TASK-18507
                 if (HttpContextUtil.IsCustomDomainService())
                 {
@@ -335,11 +335,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
 
-                if(entityPM.IsDiamondDeclaration)
+                if (entityPM.IsDiamondDeclaration)
                 {
                     DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
-                    entityPM.IsValidTicketsDiamond= declarationQueryService.IsValidTickets(entityPM);
+                    entityPM.IsValidTicketsDiamond = declarationQueryService.IsValidTickets(entityPM);
 
                     entityPM.IsMissMandatoryDiamond = declarationQueryService.IsMissingMandatoryFields(entityPM);
 
@@ -507,12 +507,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     var crsQS = new CustomsRequestsSheetQueryService(entityPM.Tenant);
                     var listCRS = crsQS.GetCustomsRequestsSheetByCustomFileNumber(entityPM.CustomFileNo, entityPM.Tenant);
-                    var CRS2755=  listCRS.FirstOrDefault(r => r.InterfaceTypeCode == "2755");// - מסר הגשה
+                    var CRS2755 = listCRS.FirstOrDefault(r => r.InterfaceTypeCode == "2755");// - מסר הגשה
                     if (CRS2755 != null)
                     {
                         throw new Exception(" קיימת בקשה של הגשת תשלום - לא ניתן לבצע איפוס");
                     }
-                    
+
 
                     ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
 
@@ -528,7 +528,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
 
-                        DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.Id,true,false);
+                        DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.Id, true, false);
                         declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                         declarationCourierStatusPM.CourierDeclarationStatusCode = null;
                         declarationCourierStatusPM.CourierPaymentStatusCode = null;
@@ -578,7 +578,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private bool DeclarationIsSigned(DeclarationPM entityPM)
         {
             return true;
-           // entityPM.IsSignedVersion
+            // entityPM.IsSignedVersion
         }
 
         private bool SendDeclarationMandatoryFields(DeclarationPM declarationPM)
@@ -629,10 +629,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if(IsDocumentMissing(declarationPM))
+            if (IsDocumentMissing(declarationPM))
             {
                 ticketValidStatus = "M";
-                
+
             }
 
 
@@ -644,7 +644,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             var customContext = CustomContext.GetContext(myDeclarationPM.Tenant);
             CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
-             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
 
             List<CustomDocumentTypePM> documentTypePMs = docTypeQuery.GetMandatoryCustomDocumentTypes(myDeclarationPM.Tenant);
 
@@ -654,7 +654,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
                     return true;
             }
- 
+
             return false;
 
         }
@@ -664,7 +664,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void ResetMetadataVER(DeclarationPM entityPM)
         {
-            
+
             var documentsFilingQuery = new DocumentsFilingQuery(entityPM.Tenant);
             //DocumentsFilingPM documentIn = documentsFilingQuery.GetSinglePM(_MyCustomsDocumentPM.DocumentsFilingId, requestParams.Tenant);
 
@@ -702,7 +702,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnUpdating(DeclarationPM entityPM, Declaration entityPOCO)
         {
             //mohammad insurance if taxation changed
-            
+
             ReCalculateDueTaxationDateChange(entityPM, entityPOCO);
             if (this.SuppressNewConcurrencyGUID)
             {
@@ -719,7 +719,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
             }
-
+            if (entityPM.ImporterName != entityPOCO.ImporterName)
+            {
+                
+                {
+                    UpdatePendingByKeyWordsByImporterName(entityPM, false);
+                }
+            }
             if (entityPM.IsCourierDeclaration && entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 if (CheckIfRequiredFieldForCourierHasChanged(entityPM, entityPOCO))
@@ -729,6 +735,63 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             base.OnUpdating(entityPM, entityPOCO);
+        }
+        public void UpdatePendingByKeyWordsByImporterName(DeclarationPM entityPM, Boolean IsAfterDeclarationCourierStatusInsert )
+        {
+
+            if (String.IsNullOrWhiteSpace(entityPM.ImporterName))
+            {
+                return;
+            }
+
+
+            List<string> pendingReasonCodeList = new List<string>();
+            ICustomContext context = MainContext as CustomContext;
+            DeclarationCourierStatusQueryService myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            DeclarationCourierStatusPM declarationCourierStatusPM = myDeclarationCourierStatusQueryService.GetSingle(entityPM.Id, true, false);
+            if (declarationCourierStatusPM != null)
+            {
+                var pendingByKeywordQueryService = new PendingByKeywordQueryService(entityPM.Tenant);
+                var courierReasonCodeList = pendingByKeywordQueryService.GetCourierPendingReasonCodeBykeyWords(
+                    entityPM.ImporterName,
+                     SearchByFieldCode: "2"  /*שם יבואן*/,
+                    entityPM.Tenant);
+                foreach (var courierReasonCode in courierReasonCodeList)
+                {
+
+                    if (!String.IsNullOrWhiteSpace(courierReasonCode) && !pendingReasonCodeList.Contains(courierReasonCode))
+                    {
+                        pendingReasonCodeList.Add(courierReasonCode);
+                        DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();
+                        declarationPendingPM = declarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == entityPM.Id && r.CourierPendingReasonCode == courierReasonCode).FirstOrDefault();
+                        if (declarationPendingPM != null)
+                        {
+                            if (declarationPendingPM.Status != "A")
+                            {
+                                declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
+                                declarationPendingPM.Status = "A";
+                                if (declarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                        }
+                        else
+                        {
+                            declarationPendingPM = new DeclarationPendingPM();
+                            declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
+                            declarationPendingPM.Status = "A";
+                            declarationPendingPM.DeclarationID = entityPM.Id;
+                            declarationPendingPM.Tenant = entityPM.Tenant;
+                            declarationPendingPM.CourierPendingReasonCode = courierReasonCode;
+                            declarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM);
+                            if (declarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                    }
+                }
+                if (declarationCourierStatusPM != null && declarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
+                }
+            }
         }
 
         public bool CheckIfUpdatingAllowed(DeclarationPM myDeclarationPM)
@@ -1134,6 +1197,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 ConsignmentUpdateService consignmentUpdateService = new ConsignmentUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                                 consignmentUpdateService.UpdatePendingByKeyWords(consignmentPM, true);
                             }
+                            UpdatePendingByKeyWordsByImporterName(entityPM, true);
                         }
                     }
                     
