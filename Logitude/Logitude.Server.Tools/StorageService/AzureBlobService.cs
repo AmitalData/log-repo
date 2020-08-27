@@ -54,13 +54,13 @@ namespace Logitude.Server.Tools.StorageService
             byte[] result = null;
             if (blobfile.Exists())
             {
-                BlobRequestOptions options = new BlobRequestOptions() // fix for issue# 62877
-                {
-                    DisableContentMD5Validation = true,
-                };
+                //BlobRequestOptions options = new BlobRequestOptions() // fix for issue# 62877
+                //{
+                //    DisableContentMD5Validation = true,
+                //};
                 using (MemoryStream memstream = new MemoryStream())
                 {
-                    blobfile.DownloadToStream(memstream,null, options);
+                    blobfile.DownloadToStream(memstream);
                     result = memstream.ToArray();
                 }
             }
