@@ -572,4 +572,11 @@ namespace Logitude.Server.Tools.Helpers
             return token;
         }
     }
+    public class SecurityException : Exception
+    {
+        public SecurityException(string message):base(message)
+        {
+            
+        }
+    }
 }
