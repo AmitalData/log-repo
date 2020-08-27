@@ -11,10 +11,20 @@ export class ARPayment {
             
             cy.get('li[id=FACS]').click();
             cy.get('button[id=NewARPayment]').click();
-            cy.get('input[id=ARPayment_BillToId]').type(BillToName).should("have.value", BillToName)
+
+            cy.get('.DropDownListItem:first').should('be.visible')
+            cy.get('.DropDownListItem:first').click()
+
+          /*  cy.get('input[id=ARPayment_BillToId]').type(BillToName).should("have.value", BillToName)
             cy.get('ul[id=mydatalist_ARPayment_BillToId]').contains(BillToName).then(a => {
                 a[0].click();
-            })
+            })*/
+
+
+
+
+
+            
             cy.get('input[id=ARPayment_AmountInPaymentCurrency]').type("1000").should("have.value","1000")
             cy.get('input[id=ARPayment_AccountingPaymentMethodId]').type("Cash").should("have.value","Cash")
             cy.get('ul[id=mydatalist_ARPayment_AccountingPaymentMethodId]').contains("Cash").then(a => {
