@@ -85,7 +85,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
         this.SetDatesDefaultValues();
 
-        this.FillGrid();
+       // this.FillGrid();
         this.SetUIProperties();
 
         // redraw
@@ -106,10 +106,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     private SetDatesDefaultValues() {
         if (this.AccountingDate == null)
             this.AccountingDate = new Date();
-        //if (this.DocumentDate == null)
-        //    this.DocumentDate = new Date();
-        //if (this.DueDate == null)
-        //    this.DueDate = new Date();
+        
 
     }
     public CurrentEditComponentId: string;
@@ -209,6 +206,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             journalLine.Tenant = this.EntityPM.Tenant;
             journalLine.DocumentDate = this.DocumentDate;
             journalLine.DueDate = this.DueDate;
+            journalLine.CurrencyId = this.Currency.Id;
             this.EntityPM.AddJournalLine(journalLine);
             var line = new JournalLineModel(journalLine, this);
             this.JournalLines.Insert(line);
@@ -230,6 +228,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             }
         });
         this.GetDefaultValues();
+         
 
         //set focus on accounting date
         var t = setTimeout(() => { this.forceFocus = true; }, 1);
@@ -292,11 +291,19 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         }
     }
 
-    currency: CurrencyPM;
+    currency: CurrencyList;
     get Currency() { return this.currency; }
-    set Currency(value: CurrencyPM) {
+    set Currency(value: CurrencyList) {
         if (this.currency != value) {
             this.currency = value;
+            this.CurrencyId =value? value.Id: null;
+        }
+    }
+
+    get CurrencyId() { return this.EntityPM.CurrencyId; }
+    set CurrencyId(value: string) {
+        if (this.EntityPM.CurrencyId != value) {
+            this.EntityPM.CurrencyId = value;
         }
     }
     get DocumentDate() { return this.EntityPM.DocumentDate; }
@@ -487,6 +494,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.Currency = myResponse.Result;
+                    this.FillGrid();        
                     this.localAmountHeader = "Amount (" + myResponse.Result.Code + ")";
                     console.log(">>Tenant Currency: ", myResponse.Result);
 
@@ -641,7 +649,7 @@ class JournalLineModel extends BaseComponent {
         super();
         this.EntityPM = this.parent.EntityPM;
         this.JournalLinePM = journalLine;
-
+        this.Currency = this.parent.Currency;
         if (this.JournalLinePM.AccountingDate) {
 
         } else {

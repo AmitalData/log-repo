@@ -97,6 +97,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public DateTime? DocumentDate { get; set; }
         [Column("DueDate")]
 	    public DateTime? DueDate { get; set; }
+        [Column("CurrencyId")]
+	    public string CurrencyId { get; set; }
     }
 }
 	 
