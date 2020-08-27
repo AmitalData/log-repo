@@ -381,7 +381,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
                     if (button.EventCode == "Declaration Customs Requests") {
-                        if (this.EntityPM.AmendmentDontDisplayInList == true && this.EntityPM.IsAmendment == true) {
+                        if (this.EntityPM.AmendmentDontDisplayInList == false && this.EntityPM.IsAmendment == true) {
                             button.IsDisabled = false;
                         }
                         else {
