@@ -170,6 +170,8 @@ public partial class LogitudeCustomsFile
 
     private string newFileField;
 
+    private string importerFileField;
+
     private string teamField;
 
     /// <remarks/>
@@ -936,6 +938,19 @@ public partial class LogitudeCustomsFile
         set
         {
             this.newFileField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string ImporterFile
+    {
+        get
+        {
+            return this.importerFileField;
+        }
+        set
+        {
+            this.importerFileField = value;
         }
     }
 
