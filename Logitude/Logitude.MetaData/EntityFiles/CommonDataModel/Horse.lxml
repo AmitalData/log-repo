@@ -1131,7 +1131,7 @@
     FullFieldLable="&quot;MicochipNumber&quot;"
     DefaultText="&quot;Micochip Number&quot;"
     ListFieldLable="&quot;MicochipNumberListLable&quot;"
-    ListLableDefaultText="&quot;Micochip Number&quot;"
+    ListLableDefaultText="&quot;Micochip #&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1204,7 +1204,7 @@
     FullFieldLable="&quot;PassportNumber&quot;"
     DefaultText="&quot;Passport Number&quot;"
     ListFieldLable="&quot;PassportNumberListLable&quot;"
-    ListLableDefaultText="&quot;Passport Number&quot;"
+    ListLableDefaultText="&quot;Passport #&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1900,17 +1900,17 @@
         QueryCode="&quot;HORSES&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;Name&quot;"
-        ColumnWidth="150" />
+        ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;HORSES&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;PassportNumber&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;HORSES&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;MicochipNumber&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;HORSES&quot;"
         IndexOrder="3"
@@ -1960,7 +1960,7 @@
         QueryCode="&quot;HORSES&quot;"
         IndexOrder="12"
         ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="50" />
+        ColumnWidth="80" />
     </QueryColumns>
     <QueryFilters />
   </Query>

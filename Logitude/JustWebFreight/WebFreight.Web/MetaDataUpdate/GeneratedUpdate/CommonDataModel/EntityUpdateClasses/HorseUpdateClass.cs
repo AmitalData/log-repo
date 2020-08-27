@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class HorseUpdateClass
    {  		
-		public const string HashString = "1b99daf86779eeffaa71eab8e6af86d4";
+		public const string HashString = "59187ce898ae6c63de34458fd5c6e2aa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -899,7 +899,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						FullFieldLable =  "MicochipNumber",
 					  						DefaultText =  "Micochip Number",
 					  						ListFieldLable =  "MicochipNumberListLable",
-					  						ListLableDefaultText =  "Micochip Number",
+					  						ListLableDefaultText =  "Micochip #",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -959,7 +959,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						FullFieldLable =  "PassportNumber",
 					  						DefaultText =  "Passport Number",
 					  						ListFieldLable =  "PassportNumberListLable",
-					  						ListLableDefaultText =  "Passport Number",
+					  						ListLableDefaultText =  "Passport #",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1542,11 +1542,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			  Query HORSESQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = HorseTextCode_0.Id, NameTextCodeCode = HorseTextCode_0.Code, ObjectTableName = "Horse", Code = "HORSES",  QueryGroupCode = "7c80", IndexOrder = 0, Tenant = 0, ObjectTableId = HorseObjectTable.Id, QuerySection = "Horse", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = HorseFeature_0.Id,FeatureUniqeCode= HorseFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn HORSESQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HORSESQuery.Id,QueryCode = HORSESQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Horse.Name" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn HORSESQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HORSESQuery.Id,QueryCode = HORSESQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Horse.Name" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn HORSESQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HORSESQuery.Id,QueryCode = HORSESQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Horse.PassportNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn HORSESQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HORSESQuery.Id,QueryCode = HORSESQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Horse.PassportNumber" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn HORSESQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HORSESQuery.Id,QueryCode = HORSESQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Horse.MicochipNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn HORSESQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HORSESQuery.Id,QueryCode = HORSESQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Horse.MicochipNumber" , ColumnWidth = 150 }, addedQueryColumns);
 
 			 QueryColumn HORSESQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HORSESQuery.Id,QueryCode = HORSESQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Horse.YearOfBirth" , ColumnWidth = 50 }, addedQueryColumns);
 
@@ -1566,7 +1566,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn HORSESQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HORSESQuery.Id,QueryCode = HORSESQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Horse.UpdatedByUserName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn HORSESQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HORSESQuery.Id,QueryCode = HORSESQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Horse.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn HORSESQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HORSESQuery.Id,QueryCode = HORSESQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Horse.Inactive" , ColumnWidth = 80 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

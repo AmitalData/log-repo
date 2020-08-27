@@ -1,6 +1,12 @@
 ﻿<Script DBType="Main" Module="Common">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
+
+    if not exists (select Code from Toggles where Code = 'HRS')
+    begin               
+	    insert into Toggles (Code, Name, SearchFields)
+	    values ('HRS', 'Horse', 'HRS,Horse')
+    end
 
     update Features 
     set ToggleCode = 'HRS'
