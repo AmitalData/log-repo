@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="3f3a8119-0ee7-4b4e-96d7-dfb23e063d0a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/LoginWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="LoginWcfService5.xsd" MetadataType="Schema" ID="0f846548-9394-4d53-807f-b77735967936" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/LoginWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="LoginWcfService51.xsd" MetadataType="Schema" ID="fd798845-3d81-4c57-a23e-a76e793ef125" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/LoginWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="LoginWcfService52.xsd" MetadataType="Schema" ID="0102c603-f024-439e-b74a-122ac24651f6" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/LoginWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="LoginWcfService1.wsdl" MetadataType="Wsdl" ID="32f0896d-6753-4e36-983e-83705b39cbe8" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/LoginWcfService.svc?wsdl" />
+    <MetadataFile FileName="LoginWcfService53.xsd" MetadataType="Schema" ID="5d171bb8-2b61-43f0-bb97-f8d2118bf78a" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/LoginWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="LoginWcfService1.disco" MetadataType="Disco" ID="f3a2a188-2b42-4c3c-afd2-44fa68906e9a" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/LoginWcfService.svc?disco" />
+    <MetadataFile FileName="LoginWcfService54.xsd" MetadataType="Schema" ID="d7e030a7-4a57-4da0-9b76-b1a86418b762" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/LoginWcfService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

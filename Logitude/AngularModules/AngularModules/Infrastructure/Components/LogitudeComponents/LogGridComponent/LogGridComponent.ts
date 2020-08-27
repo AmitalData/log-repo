@@ -1161,7 +1161,10 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             this.AllCheckedRecords = res.SelectedLines.Collection;
 
            for (let i=0 ; i < this.AllCheckedRecords.length ; i++){
-            var Row = this.rows.filter(a => a.rowData.Id === this.AllCheckedRecords[i].Id)[0];
+            var checkedRecord = this.AllCheckedRecords[i].Id ? this.AllCheckedRecords[i].Id:this.AllCheckedRecords[i].rowData.Id;
+
+
+            var Row = this.rows.filter(a => a.rowData.Id === checkedRecord)[0];
             if (Row) {
                Row.rowData.IsChecked = true;
                if (this.controller.cachedData[Row.rowIndex] && this.controller.cachedData[Row.rowIndex].IsChecked != null) {
@@ -1172,7 +1175,8 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
          }
          var DeleteSelected = this.rows.filter(a => a.rowData.IsChecked ==true);
          for(let i =0 ; i < DeleteSelected.length ; i++){
-            var NRow = this.AllCheckedRecords.filter(a => a.Id ===  DeleteSelected[i].rowData.Id)[0];
+            
+            var NRow =(res.AllSelected && res.SelectedLines.Length ==0)?false: (this.AllCheckedRecords.filter(a => a.rowData)[0] ?this.AllCheckedRecords.filter(a => a.rowData.Id ===  DeleteSelected[i].rowData.Id)[0]: this.AllCheckedRecords.filter(a => a.Id ===  DeleteSelected[i].rowData.Id)[0] );
             if (!NRow) {
                 var Row = this.rows.filter(a => a.rowData.Id === DeleteSelected[i].rowData.Id)[0];
                 Row.rowData.IsChecked = false;

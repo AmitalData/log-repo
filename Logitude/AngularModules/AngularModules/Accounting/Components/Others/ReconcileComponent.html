@@ -517,6 +517,9 @@
 
                             <tr class="FormFieldRow">
 
+                                <td style="width: 80px; padding: 0 35px;">
+                                    <CheckBox title="Select All" style="position: absolute; top: 10px;" [IsChecked]="isAllSelected" (Checked)="isAllSelected = $event"></CheckBox>
+                                </td>
                                 <!-- CurrencyId -->
                                 <td style="width: 70px;">
                                     <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
@@ -615,12 +618,12 @@
                     </td>
                 </tr>-->
 
-               
+
 
             </table>
         </td>
     </tr>
-  
+
 
 
     <!-- .::(1)::. First Section Lines -->

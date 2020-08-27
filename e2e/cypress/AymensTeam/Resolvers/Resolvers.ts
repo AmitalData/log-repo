@@ -8,6 +8,7 @@ import { ToggleButtonResolver } from "./ToggleButtonResolver";
 import { ButtonResolver } from "./ButtonResolver";
 import { SearchBoxResolver } from "./SearchBoxResolver";
 import { EditComponentResolver } from "./EditComponentResolver";
+import { DatePickerResolver } from "./DatePickerResolver";
 
 
 
@@ -24,6 +25,7 @@ export class Resolvers {
     public static ToggleButtonResolver: ToggleButtonResolver = new ToggleButtonResolver();
     public static SearchBoxResolver: SearchBoxResolver = new SearchBoxResolver();
     public static EditComponentResolver: EditComponentResolver = new EditComponentResolver();
+    public static DatePickerResolver: DatePickerResolver = new DatePickerResolver();
 
     constructor() {
         Resolvers.iResolvers.push(Resolvers.WindowResolver);
@@ -35,6 +37,7 @@ export class Resolvers {
         Resolvers.iResolvers.push(Resolvers.ButtonResolver);
         Resolvers.iResolvers.push(Resolvers.SearchBoxResolver);
         Resolvers.iResolvers.push(Resolvers.EditComponentResolver);
+        Resolvers.iResolvers.push(Resolvers.DatePickerResolver);
 
     }
 

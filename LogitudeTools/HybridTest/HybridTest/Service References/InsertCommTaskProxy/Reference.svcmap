@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4389cfa4-dd23-486e-ab22-f6c22c47b280" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/InsertCommTaskWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="InsertCommTaskWcfService.xsd" MetadataType="Schema" ID="957a1a0b-f7e1-480f-8e8c-bf69df63a44f" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/InsertCommTaskWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="InsertCommTaskWcfService1.xsd" MetadataType="Schema" ID="321b76fb-59dd-4f0f-ac33-5d9893d105d0" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/InsertCommTaskWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="InsertCommTaskWcfService2.xsd" MetadataType="Schema" ID="29cf997f-2508-45e6-aac0-7d604e0a8f06" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/InsertCommTaskWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="InsertCommTaskWcfService3.xsd" MetadataType="Schema" ID="52354e47-d07d-492c-92f5-6d3a02fc1d95" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/InsertCommTaskWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="InsertCommTaskWcfService.disco" MetadataType="Disco" ID="ae4bd31c-77d7-46dd-b14c-585720e360ae" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/InsertCommTaskWcfService.svc?disco" />
+    <MetadataFile FileName="InsertCommTaskWcfService.wsdl" MetadataType="Wsdl" ID="0e53e4f8-2259-434b-afd5-0d920d7b8793" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/InsertCommTaskWcfService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

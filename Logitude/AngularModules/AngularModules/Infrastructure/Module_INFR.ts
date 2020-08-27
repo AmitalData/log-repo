@@ -4,8 +4,8 @@ import {Pipes, Directives, Components, ControlsComponents, ModuleDeclarations} f
 import { ModuleProviders } from './ModuleProviders';
 //import { ScrollingModule } from '@angular/cdk-experimental/scrolling';
 //import { AutoSizeVirtualScrollStrategy } from '@angular/cdk-experimental/scrolling';
-//import { MaterialModule } from '../Infrastructure/material-module';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MaterialModule } from '../Infrastructure/material-module';
+//import { ScrollingModule } from '@angular/cdk/scrolling';
 // Services
 import {EntityArgs} from './DataContracts/EntityArgs';
 import {ServiceArgs} from './DataContracts/ServiceArgs';
@@ -20,7 +20,7 @@ import {LogitudeErrorHandler} from './Utilities/LogitudeErrorHandler'
 import {ErrorHandler} from '@angular/core';
 
 @NgModule({
-    imports: [ControlsModule,ScrollingModule],///, MaterialModule],
+    imports: [ControlsModule, MaterialModule],
   declarations: [...Pipes, ...Directives, ...Components, ...ControlsComponents],
     exports: [...Pipes, ...Directives, ...ControlsComponents, ControlsModule],
     entryComponents: [...Components, ...ControlsComponents],
