@@ -177,8 +177,6 @@ export class DeclarationReferantDataPM {
     private team: string;
     public get Team() { return this.team; }
     public set Team(newValue: string) { if (this.team != newValue) { this.team = newValue; this.MarkAsDirty("Team"); } }
-       
-	 
     private importerFile: string;
     public get ImporterFile() { return this.importerFile; }
     public set ImporterFile(newValue: string) { if (this.importerFile != newValue) { this.importerFile = newValue; this.MarkAsDirty("ImporterFile"); } }
@@ -208,4 +206,4 @@ export class DeclarationReferantDataPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

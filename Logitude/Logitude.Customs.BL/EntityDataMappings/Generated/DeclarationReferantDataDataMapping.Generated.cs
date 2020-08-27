@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LastStatusName, 
 	         LastStatusDate, 
 	         OrderMoney, 
-	         Team, 
+	         Team,
 	         ImporterFile,
 	      }
 
@@ -86,7 +86,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LastStatusName, 
 	         LastStatusDate, 
 	         OrderMoney, 
-	         Team, 
+	         Team,
 	         ImporterFile,
 	      }
 
@@ -225,7 +225,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 				entityPOCO.Team = entityPM.Team;
 			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterFile))
             {
 				entityPOCO.ImporterFile = entityPM.ImporterFile;
