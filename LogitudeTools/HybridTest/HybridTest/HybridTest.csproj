@@ -2055,6 +2055,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+    <Content Include="References\Simplog.Server.Infrastructure.dll" />
     <None Include="Service References\PaymentTermProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
