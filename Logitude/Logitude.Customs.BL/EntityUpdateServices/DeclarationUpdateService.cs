@@ -754,7 +754,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var pendingByKeywordQueryService = new PendingByKeywordQueryService(entityPM.Tenant);
                 var courierReasonCodeList = pendingByKeywordQueryService.GetCourierPendingReasonCodeBykeyWords(
                     entityPM.ImporterName,
-                     SearchByFieldCode: "2"  /*שם יבואן*/,
+                     /*SearchByFieldCode:*/ "2"  /*שם יבואן*/,
                     entityPM.Tenant);
                 foreach (var courierReasonCode in courierReasonCodeList)
                 {
