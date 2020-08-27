@@ -16368,6 +16368,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AmendmentErrorXml&quot;"
     ListPropertyPath="&quot;AmendmentErrorXml&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -18924,7 +18925,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
     <EventType
-      Code="&quot;DPR&quot;"
+      Code="&quot;DWR&quot;"
       ObjectTableName="&quot;Customs.Declaration&quot;"
       EnglishName="&quot;Amendment Waiting for customs&quot;"
       LocalName="&quot;תיקון הצהרה ממתינה לטיפול מכס&quot;"

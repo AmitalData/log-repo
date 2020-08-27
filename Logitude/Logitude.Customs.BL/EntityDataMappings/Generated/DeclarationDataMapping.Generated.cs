@@ -371,7 +371,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CancelRequestApproveDate, 
 	         IsClaimable, 
 	         CancelRequestStatusName, 
-	         ReplacingRepairRequest,
+	         ReplacingRepairRequest, 
 	         AmendmentErrorXml,
 	      }
 

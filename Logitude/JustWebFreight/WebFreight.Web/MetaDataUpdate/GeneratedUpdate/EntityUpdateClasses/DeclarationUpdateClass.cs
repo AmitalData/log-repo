@@ -76,8 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-
-		public const string HashString = "ffde7718697b6a610beb34b03c240dfe";
+		public const string HashString = "00bd84b3153753ce4bc231704d6b2333";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13365,6 +13364,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AmendmentErrorXml",
 					  						ListPropertyPath =  "AmendmentErrorXml",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -15371,7 +15371,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "DPR",
+                Code =  "DWR",
                 EnglishName =  "Amendment Waiting for customs",
                 LocalName =  "תיקון הצהרה ממתינה לטיפול מכס",
                 IsManualEntry =  false,
