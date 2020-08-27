@@ -20,7 +20,8 @@ export class ARPayment {
             cy.get('ul[id=mydatalist_ARPayment_AccountingPaymentMethodId]').contains("Cash").then(a => {
                 a[0].click();
             })
-            cy.get('input[id=ARPayment_BranchId]').type("Main Office").should("have.value","Main Office")
+            
+            cy.get('input[id=ARPayment_BranchId]').clear().type("Main Office").should("have.value","Main Office")
             cy.get('ul[id=mydatalist_ARPayment_BranchId]').contains("Main Office").then(a => {
                 a[0].click();
             })

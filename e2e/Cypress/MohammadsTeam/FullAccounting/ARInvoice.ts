@@ -32,11 +32,7 @@ export class ARInvoice {
             cy.get('ul[id=mydatalist_ARInvoiceLine_ChargesTypeId]').contains("AFT").then(a => {
                 a[0].click();
             })  
-            cy.get('input[id=ARInvoiceLine_VatTypeId]').type('Zero');
-
-            cy.get('ul[id=mydatalist_ARInvoiceLine_VatTypeId]').contains('Zero').then(a => {
-                a[0].click();
-            })         
+          
             cy.get('input[id= ARInvoiceLine_ForiegnCurrencyId]').type("NIS");
             cy.get('ul[id=mydatalist_ARInvoiceLine_ForiegnCurrencyId]').contains("NIS").then(a => {
                 a[0].click();

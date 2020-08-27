@@ -23,7 +23,7 @@ export class APPayment {
         
             cy.get('input[id=APPayment_PaymentCurrencyId]').type("NIS")
             cy.get('ul[id=mydatalist_APPayment_PaymentCurrencyId]').contains("NIS").then(a => {
-                a[0].click();
+                a[0].click({ force:true });
             })
             cy.get('button[id=APPaymentBApprove]').click();          
             cy.contains('Approved') 
