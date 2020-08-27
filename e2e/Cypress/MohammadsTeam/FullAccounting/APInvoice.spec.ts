@@ -26,6 +26,11 @@ let AP: APInvoice= new APInvoice();
       cy.get('li[id=GeneralMHFullAccounting]').click();
       AP.CreateNewAPInvoice("1000",str)
 
+
+
+
+
+      
     });
       
  

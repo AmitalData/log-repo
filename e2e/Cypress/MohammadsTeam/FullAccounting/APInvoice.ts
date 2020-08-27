@@ -12,10 +12,14 @@ export class APInvoice {
             cy.get('li[id=FACS]').click();
             cy.get('li[id=FAVND]').click();
             cy.get('button[id=NewAPInvoice]').click();
-            cy.get('input[id=APInvoice_VendorId]').type(Vendor)
+           /* 
             cy.get('ul[id=mydatalist_APInvoice_VendorId]').contains(Vendor).then(a => {
                 a[0].click();
-            })
+            })*/
+            cy.get('input[id=APInvoice_VendorId]').type(Vendor);
+            cy.get('.DropDownListItem:first').should('be.visible')
+            cy.get('.DropDownListItem:first').click()
+
             cy.get('input[id=APInvoice_InvoiceNumber]').type(InvoiceNumber,{ force: true });
             cy.get('input[id=APInvoice_AmountInInvoiceCurrency]').type('10000').should("have.value", '10000')
             cy.get('input[id=APInvoice_InvoiceCurrencyId]').type('NIS').should("have.value", 'NIS')
