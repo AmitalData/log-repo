@@ -1,5 +1,5 @@
 
-import { Login } from './Login';
+
 import  { CreateRandom } from './CreateRandom';
 import { ARInvoice } from './ARInvoice';
 import { LoginComp } from "../../login/Login.po";
@@ -7,10 +7,9 @@ export class ARPAyemntSpec {
 
   private login: LoginComp = new LoginComp();
 }
-describe('New ARPayment ', () => {
+describe('New ARInvoice ', () => {
 
- 
-let l: Login= new Login();
+
 let R: CreateRandom= new CreateRandom();
 let AR: ARInvoice= new ARInvoice();
 

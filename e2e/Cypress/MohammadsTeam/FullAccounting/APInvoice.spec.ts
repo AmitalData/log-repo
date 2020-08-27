@@ -2,7 +2,6 @@
 
 
 
-import { Login } from './Login';
 import  { CreateRandom } from './CreateRandom';
 import { APInvoice } from './APinvoice';
 import { LoginComp } from "../../login/Login.po";
@@ -13,7 +12,7 @@ export class APInvoiceSpec {
 describe('New APInvoice ', () => {
 
  
-let l: Login= new Login();
+
 let R: CreateRandom= new CreateRandom();
 let AP: APInvoice= new APInvoice();
 

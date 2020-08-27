@@ -2,7 +2,7 @@
 
 
 import { VendorGLAccount } from './Vendor';
-import { Login } from './Login';
+
 import  { CreateRandom } from './CreateRandom';
 import { LoginComp } from "../../login/Login.po";
 
@@ -13,7 +13,7 @@ export class GLASpec {
 describe('New Vendor GlAccount ', () => {
 
   let v: VendorGLAccount = new VendorGLAccount();
-let l: Login= new Login();
+
 let R: CreateRandom= new CreateRandom();
 
 

@@ -1,7 +1,7 @@
 
 
 
-import { Login } from './Login';
+
 import { CreateRandom } from './CreateRandom';
 import { BankAccount } from './BankAccount';
 import { LoginComp } from "../../login/Login.po";
@@ -13,7 +13,7 @@ export class BankSpec {
 describe('New Bank Account ', () => {
 
     let B: BankAccount = new BankAccount();
-    let l: Login = new Login();
+
     let R: CreateRandom = new CreateRandom();
 
 
