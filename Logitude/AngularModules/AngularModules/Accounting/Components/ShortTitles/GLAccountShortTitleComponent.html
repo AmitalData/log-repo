@@ -3,30 +3,13 @@
         <td>
             <div class="ShortTitleMainControl" [style.float]="isRTL ? 'right' : 'left'">
                 <div class="ShortTitleDiv" *ngIf="(EntityPM.AccountTypeCode=='3' || EntityPM.AccountTypeCode=='2') && IsConnectedCard && isRTL " style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
-                  
-                    <a *ngIf="accountCardlist.length  == 1" href="#" style="font-size:12px" (click)="OpenCardScreen()">{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</a>
-                   <span *ngIf="accountCardlist.length  > 1">
-                    {{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}
-                   </span>
-                    <LogToolTip *ngIf="accountCardlist.length  > 1"  [bottom]="5" [float]="'none'"  [direction]="isRTL?'bottomleft':'bottomright'" [name]="'OpenShipments'"
-                        [mode]="'Warning'">
-                        {{GLaccountConnectedMoreOneCardText}} 
-                    </LogToolTip>
-                   
- 
+                    <a href="#" style="font-size:12px" (click)="OpenCardScreen()">{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</a>
                 </div>
                 <div class="ShortTitleDiv" style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
                     {{EntityPM.LocalName}}
                 </div>
                 <div class="ShortTitleDiv" *ngIf="(EntityPM.AccountTypeCode=='3'|| EntityPM.AccountTypeCode=='2') && IsConnectedCard && !isRTL" style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
-                    <a *ngIf="accountCardlist.length  == 1" href="#" style="font-size:12px" (click)="OpenCardScreen()">{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</a>
-                    <span *ngIf="accountCardlist.length  > 1">
-                        {{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}
-                    </span>
-                    <LogToolTip *ngIf="accountCardlist.length  > 1"  [bottom]="5" [float]="'none'"    [direction]="isRTL?'bottomleft':'bottomright'" [name]="'OpenShipments'"
-                        [mode]="'Warning'">
-                        {{GLaccountConnectedMoreOneCardText}} 
-                    </LogToolTip>
+                    <a href="#" style="font-size:12px" (click)="OpenCardScreen()">{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</a>
                 </div>
             </div>
 
