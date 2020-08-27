@@ -13,7 +13,7 @@ export class Glaccount {
 
 
 
-    cy.get('Button[id=NewGLAccount]').click();
+    cy.get('Button[id=NewGLAccount]').click({ force:true });
     cy.get('#GLAccount_ChartOfAccountsTypeCode').type('Revenues');
     cy.get('.DropDownListItem').contains('Revenues').click();
     cy.get('#GLAccount_ChartOfAccountsId').type('Rev');

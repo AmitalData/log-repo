@@ -15,7 +15,7 @@ export class APPayment {
             cy.get('ul[id=mydatalist_APPayment_VendorId]').contains(BillToName).then(a => {
                 a[0].click();
             })
-            cy.get('input[id=APPayment_AccountingPaymentMethodId]').type("cash")       
+            cy.get('input[id=APPayment_AccountingPaymentMethodId]').type("Cash")       
             cy.get('ul[id=mydatalist_APPayment_AccountingPaymentMethodId]').contains("Cash").then(a => {
                 a[0].click();
             })

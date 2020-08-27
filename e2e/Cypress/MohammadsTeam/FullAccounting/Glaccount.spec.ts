@@ -1,7 +1,7 @@
 
 import { Glaccount }  from './Glaccount'
 import { RandomGenerator } from './RandomGenerator'
-import { Login } from './Login';
+
 import { LoginComp } from "../../login/Login.po";
 
 export class GLASpec {
@@ -13,7 +13,7 @@ describe('GLAccount Module', function () {
 
     let GL: Glaccount = new Glaccount();
     let R: RandomGenerator = new RandomGenerator();
-    let log: Login = new Login();
+
 
 
 
