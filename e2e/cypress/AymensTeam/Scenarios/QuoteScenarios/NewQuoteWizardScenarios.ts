@@ -12,9 +12,15 @@ export class NewQuoteWizardScenarios {
     public EntityNumber: string;
     public RunScenario(direction: string, transportMode: string, shipmentType: string = null) {
 
-        this.direction = direction;
-        this.transportMode = transportMode;
-        this.shipmentType = shipmentType;
+        this.direction = direction.toUpperCase();
+        this.transportMode = transportMode.toUpperCase();
+        this.shipmentType = shipmentType.toUpperCase();
+
+        if (this.shipmentType == 'FCLD' || this.shipmentType == 'FCL')
+            this.shipmentType = 'FCLD';
+        if (this.shipmentType == 'LCLD' || this.shipmentType == 'LCL')
+            this.shipmentType = 'LCLD';
+
         this.objectTable = "Quote";
 
         if ((this.transportMode == "O" && this.shipmentType == "FCLD") || (this.transportMode == "I" && this.shipmentType == "FTL")) {
