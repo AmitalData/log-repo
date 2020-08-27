@@ -1,3 +1,5 @@
+import { ServiceResponse } from './../../../../Infrastructure/DataContracts/ServiceResponse';
+import { PartnerTypeListService } from './../../../../Common/Services/StandardLists/PartnerTypeListService';
 import { GLAccountListService } from './../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { TenantPM } from './../../../../Common/EntityPMs/TenantPM';
 import {Component, AfterViewInit, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
@@ -11,7 +13,6 @@ import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {CurrencyRatesService, LastRate} from '../../../../Common/Services/CurrencyRatesService';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
@@ -30,9 +31,11 @@ import {AccountingPaymentMethodListService} from '../../../../Invoice/Services/S
 import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
 import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
+import { PartnerTypeList } from 'Common/EntityLists/PartnerTypeList';
+import { EntityListService } from 'Infrastructure/Services/EntityListService';
 declare var window: any;
 @Component({
-    
+
     templateUrl: './NewARPaymentComponent.html',
 })
 
@@ -55,13 +58,17 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     public isRTL: boolean = false;
     public accountingActivated: boolean;
     private _glaService: GLAccountListService = new GLAccountListService();
+    _PartnerTypeListService: PartnerTypeListService = new PartnerTypeListService();
     private CurrentSession = SessionLocator.SelectedSession;
+
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
-        this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response: any) => {});
+        this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {});
 
-        });
+        this.loadPartnerTypesFilter();
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.TodayDate = DateTool.GetCurrentDateAsUtc();
@@ -89,6 +96,13 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
+    }
+
+    private loadPartnerTypesFilter()
+    {
+        this.checkPartnerTypesFilterFeature();
+        if(this.isPartnerTypesFilterEnabled)
+            this.getPartnerTypes();
     }
 
     ngOnInit() {
@@ -120,7 +134,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 this.RunComponent();
             }
         }
-      
+
     }
     RunComponent() {
         if (this.viewContainerRef) {
@@ -238,8 +252,8 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 }
             }
 
-        
-     
+
+
         this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, this.RateIsEnabled);
         this.SetUIProperties_Payment();
     }
@@ -450,7 +464,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     set FechaPago(value: Date) {
         if (this.newARPaymentPM.FechaPago != value) {
             this.newARPaymentPM.FechaPago = value;
-            
+
         }
     }
 
@@ -1158,6 +1172,33 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 });
 
         });
+    }
+
+    AllowedPartnerTypesCodes: string[] = ['CS','AG','AC','AL','CG','SG','SL','TR','VD','WH'];
+    PartnerTypes: PartnerTypeList[] = [];
+    filterByPartnerTypeCode: string;
+    isPartnerTypesFilterEnabled: boolean = false;
+    getPartnerTypes(){
+        this._PartnerTypeListService.getAll().subscribe((res:ServiceResponse)=>
+        {
+            console.log('[PartnerTypeListService]');
+            var partnerTypes: PartnerTypeList[] = res.Result || [];
+            this.PartnerTypes = partnerTypes.filter(d => this.AllowedPartnerTypesCodes.indexOf(d.Id) > -1); // filter
+            this.SelectedPartnerType = partnerTypes.filter(d => d.Id == 'CS')[0]; // default
+        });
+    }
+
+    checkPartnerTypesFilterFeature(){
+        var arpaymentOT = window.ObjectTables.filter(d => d.Name === "ARPayment")[0];
+          this.isPartnerTypesFilterEnabled =  FeatureLocator.Features.filter(f => (f.Code == "NewScreenPartnerTypes") && f.ObjectTableId == arpaymentOT.Id)[0]? true : false;
+    }
+    private _SelectedPartnerType : PartnerTypeList;
+    public get SelectedPartnerType() : PartnerTypeList {
+        return this._SelectedPartnerType;
+    }
+    public set SelectedPartnerType(type : PartnerTypeList) {
+        this._SelectedPartnerType = type;
+        this.filterByPartnerTypeCode = type.Id;
     }
 
 
