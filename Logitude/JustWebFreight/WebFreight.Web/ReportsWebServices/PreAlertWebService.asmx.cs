@@ -51,6 +51,7 @@ namespace WebFreight.Web.ReportsWebServices
         CountryRepository countryRepository;
         AddressRepository addressRepository;
         PortRepository portRepository;
+        CardQuery cardQuery;
 
         [WebMethod]
         public byte[] GetPreAlertData(string shipmentid, int tenant, string documentTypeId)
@@ -101,6 +102,7 @@ namespace WebFreight.Web.ReportsWebServices
             shipmentsContext = ShipmentsContext.GetContext(tenant);
             commonContext = CommonDataContext.GetContext(tenant);
             countryRepository = new CountryRepository(commonContext);
+            cardQuery = new CardQuery(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             ShipmentPM shipmentpm = shipmentQuery.GetSinglePM(shipmentid, tenant);
@@ -113,7 +115,6 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (shipmentpm != null)
             {
-                CardQuery cardQuery = new CardQuery(tenant);
                 ContactRepository contactRepository = new ContactRepository(tenant);
                 addressRepository = new AddressRepository(tenant);
                 portRepository = new PortRepository(tenant);
@@ -164,7 +165,7 @@ namespace WebFreight.Web.ReportsWebServices
                     if (customerContact != null)
                     {
                         prealertDataProvider.ClientName = customerContact.EnglishName;
-                       
+
                         Address consigneeContactAddress = addressRepository.GetSingleAddress(shipmentpm.ConsigneeAddressId, tenant);
                         if (consigneeContactAddress != null)
                         {
@@ -179,7 +180,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 {
                                     prealertDataProvider.ClientName = customerContact.LocalName;
                                 }
-                            } 
+                            }
                         }
                     }
                 }
@@ -300,7 +301,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 #endregion
 
-                if(shipmentpm.DirectionId == "E")
+                if (shipmentpm.DirectionId == "E")
                 {
                     prealertDataProvider.OriginAgent = tenantAgent;
                     prealertDataProvider.DestinationAgent = shipmentAgent;
@@ -370,9 +371,7 @@ namespace WebFreight.Web.ReportsWebServices
                         prealertDataProvider.Shipper = shipper.EnglishName;
                     }
                 }
-                #endregion
-
-                
+                #endregion                
 
                 #region DeliveryDetails                
                 ShipmentDeliveryQuery shipmentDeliveryQuery = new ShipmentDeliveryQuery(tenant);
@@ -1321,7 +1320,7 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
                 #endregion
-                
+
                 #region Assemblies
                 if (shipmentpm.ShipmentAssemblies.Count > 0)
                 {
@@ -1806,6 +1805,59 @@ namespace WebFreight.Web.ReportsWebServices
             item.FromAddress = serviceHelper.GetDeliveryPickUpAddress(BuildPickUpAndDeliveriesArguments(pickUpDeliveryItem, true));
             item.ToAddress = serviceHelper.GetDeliveryPickUpAddress(BuildPickUpAndDeliveriesArguments(pickUpDeliveryItem, false));
             item.CarrierName = GetPickUpsAndDeliveriesCarrierName(pickUpDeliveryItem.CarrierId);
+
+            #region Empty Container
+            item.EmptyContainerReturnRef = pickUpDeliveryItem.EmptyDeliveryDepotReference;
+
+            if (!string.IsNullOrEmpty(pickUpDeliveryItem.EmptyDeliveryContainerPartnerId))
+            {
+                CardPM cardPM = cardQuery.GetSinglePM(pickUpDeliveryItem.EmptyDeliveryContainerPartnerId, tenant);
+
+                if (cardPM != null)
+                {
+                    string myEmptyContainer = null;
+                    string myEmptyContainerName = null;
+                    string myEmptyContainerAddress = null;
+
+                    myEmptyContainer = cardPM.EnglishName != null ? cardPM.EnglishName : "";
+                    myEmptyContainerName = cardPM.EnglishName != null ? cardPM.EnglishName : "";
+
+                    if (cardPM.MainAddressId != null)
+                    {
+                        Address theAddress = addressRepository.GetSingleAddress(cardPM.MainAddressId, tenant);
+
+                        if (theAddress != null)
+                        {
+                            if (theAddress.IsLocalLanguage && !string.IsNullOrEmpty(cardPM.LocalName))
+                            {
+                                myEmptyContainer = cardPM.LocalName;
+                                myEmptyContainerName = cardPM.LocalName;
+                            }
+
+                            myEmptyContainer = myEmptyContainer + Environment.NewLine + DataProviders.General.GetAddress(theAddress);
+                            myEmptyContainerAddress = DataProviders.General.GetAddress(theAddress);
+
+                            if (theAddress.PhoneNumber != null)
+                            {
+                                myEmptyContainer = myEmptyContainer + Environment.NewLine + "Phone No. : " + theAddress.PhoneNumber;
+                                myEmptyContainerAddress = myEmptyContainerAddress + Environment.NewLine + "Phone No. : " + theAddress.PhoneNumber;
+                            }
+
+                            if (theAddress.FaxNumber != null)
+                            {
+                                myEmptyContainer = myEmptyContainer + "   Fax No. : " + theAddress.FaxNumber;
+                                myEmptyContainerAddress = myEmptyContainerAddress + "   Fax No. : " + theAddress.FaxNumber;
+                            }
+                        }
+                    }
+
+                    item.EmptyContainerReturn = myEmptyContainer;
+                    item.EmptyContainerReturnName = myEmptyContainerName;
+                    item.EmptyContainerReturnAddress = myEmptyContainerAddress;
+                }
+            }
+            #endregion
+
             return item;
         }
         private string GetPickUpsAndDeliveriesCarrierName(string carrierId)
