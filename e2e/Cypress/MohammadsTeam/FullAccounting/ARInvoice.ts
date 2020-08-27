@@ -14,12 +14,16 @@ export class ARInvoice {
             cy.get('#NewGeneralInvoice').click();
             cy.get('input[id=ARInvoice_BillToId]').type(BillToName).should("have.value", BillToName)
 
-            cy.get('ul[id=mydatalist_ARInvoice_BillToId]').contains(BillToName).then(a => {
+            cy.get('.DropDownListItem:first').should('be.visible')
+            cy.get('.DropDownListItem:first').click()
+
+
+              /*   cy.get('ul[id=mydatalist_ARInvoice_BillToId]').contains(BillToName).then(a => {
                 a[0].click();
             })
 
 
-           /* cy.get('input[id=ARInvoice_InvoiceCurrencyId]').type("NIS").should("have.value","NIS");
+       cy.get('input[id=ARInvoice_InvoiceCurrencyId]').type("NIS").should("have.value","NIS");
             cy.get('ul[id=mydatalist_ARInvoice_InvoiceCurrencyId]').contains("NIS").then(a => {
                 a[0].click();
             }) */
