@@ -5,7 +5,7 @@ import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 import { NewVendor } from "./NewVendorGLaccount";*/
 import { CustomerGLA } from "./CustomerGLA";
-import { Login } from './Login';
+
 
 import { RandomGenerator } from './RandomGenerator'
 
@@ -20,7 +20,7 @@ describe('CustomerGlAccount Module', function () {
 
     let R: RandomGenerator = new RandomGenerator();
     let Cs: CustomerGLA = new CustomerGLA();
-    let log: Login = new Login();
+
     it(' New Customer GLAccount Was Created', function () {
 
   
