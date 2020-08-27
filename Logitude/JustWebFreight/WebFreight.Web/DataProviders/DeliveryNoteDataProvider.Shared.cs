@@ -194,5 +194,9 @@ namespace WebFreight.Web.DataProviders
         public string TruckerName { get; set; }
         public string CustomsClearancePointName { get; set; }
         public string DeclarationNumber { get; set; }
+
+        public string WarehouseReferenceNumber { get; set; }
+        public int? StorageFreeDays { get; set; }
+
     }
 }
