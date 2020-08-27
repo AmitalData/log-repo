@@ -1872,7 +1872,7 @@ namespace WebFreight.Web.ReportsWebServices
         }
         private void InsertItemToPickUpsAndDeliveriesList(PickUpDeliveryLine pickUpDeliveryLine, string pickUpDeliveryTypeCode)
         {
-            if (pickUpDeliveryTypeCode == "DELV")
+            if (pickUpDeliveryTypeCode == "DELV" || pickUpDeliveryTypeCode == "EMPT")
             {
                 prealertDataProvider.DeliveriesList.Add(pickUpDeliveryLine);
             }
