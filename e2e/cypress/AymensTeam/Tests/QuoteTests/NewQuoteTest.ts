@@ -7,7 +7,9 @@ describe('Quotes Modules', () => {
     let login: LoginComp = new LoginComp();
     let scenarios: NewQuoteWizardScenarios = new NewQuoteWizardScenarios();
     let editScenarios: EditQuoteTabsScenarios = new EditQuoteTabsScenarios();
-
+    var direction;
+    var transportMode;
+    var shipmentType;
 
     beforeEach(() => {
         Resolvers.MainMenuResolver.Selector('#GeneralMHCRM').Select();
@@ -15,8 +17,11 @@ describe('Quotes Modules', () => {
     });
 
     it('Test New Quote ', () => {
-        scenarios.RunScenario('E', 'I','FTL');
-        editScenarios.RunEditTabsScenarios('E','I');
+        direction = 'E';
+        transportMode = 'O';
+        shipmentType = 'fcl';
+        scenarios.RunScenario(direction, transportMode, shipmentType);
+        editScenarios.RunEditTabsScenarios(direction, transportMode, shipmentType);
         //editScenarios.RunEditTabsScenarios('D','I');
     });
 });
