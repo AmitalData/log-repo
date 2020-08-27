@@ -61,10 +61,10 @@ namespace Logitude.Accounting.BL.CoreBL
             {
 
                 myStringBuilder.Append("");
-                if (item.DeductionFileNumber != null)
+                if (data.SettingDeductionFileNumber != null)
                 {
-                    if (item.DeductionFileNumber.Length > 9) item.DeductionFileNumber = item.DeductionFileNumber.Substring(0, 9);
-                    myStringBuilder.Append(item.DeductionFileNumber.PadLeft(9, '0'));
+                    if (data.SettingDeductionFileNumber.Length > 9) data.SettingDeductionFileNumber = data.SettingDeductionFileNumber.Substring(0, 9);
+                    myStringBuilder.Append(data.SettingDeductionFileNumber.PadLeft(9, '0'));
                 }
                 else
                 {
