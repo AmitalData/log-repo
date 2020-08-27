@@ -436,6 +436,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
 
+                    if(customResponse.Response.Error!= null)
+                    {
+                        DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
+
+                        this._MyDeclarationPM.AmendmentErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO);
+
+                    }
+
 
                     if (myUpdateEventContextTagModel != null)
                         this._MyDeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
