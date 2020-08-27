@@ -14,7 +14,7 @@ namespace WebFreight.Web.WcfApi
     public interface IPaymentTermWcfService
     {
 
-        [OperationContract]
+        [OperationContract] 
         List<PaymentTermList> GetPaymentTerms(ref Response response, int tenant);
     }
 }
