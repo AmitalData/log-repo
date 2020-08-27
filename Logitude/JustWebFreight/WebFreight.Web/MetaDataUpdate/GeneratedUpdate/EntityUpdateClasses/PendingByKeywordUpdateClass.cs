@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PendingByKeywordUpdateClass
    {  		
-		public const string HashString = "ce7e79d6846598d61fb10730bf0bdcd3";
+		public const string HashString = "c1a4045a376bac49b7bec69fbb5421f7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -547,7 +547,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllPendingByKeywordsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPendingByKeywordsQuery.Id,QueryCode = AllPendingByKeywordsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PendingByKeyword.KeywordsList" , ColumnWidth = 350 }, addedQueryColumns);
 
-			 QueryColumn AllPendingByKeywordsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPendingByKeywordsQuery.Id,QueryCode = AllPendingByKeywordsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.PendingByKeyword.CourierPendingReasonCode" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn AllPendingByKeywordsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPendingByKeywordsQuery.Id,QueryCode = AllPendingByKeywordsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.PendingByKeyword.SearchByFieldName" , ColumnWidth = 300 }, addedQueryColumns);
+
+			 QueryColumn AllPendingByKeywordsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPendingByKeywordsQuery.Id,QueryCode = AllPendingByKeywordsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.PendingByKeyword.CourierPendingReasonCode" , ColumnWidth = 200 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
