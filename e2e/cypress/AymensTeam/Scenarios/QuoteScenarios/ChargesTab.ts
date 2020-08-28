@@ -3,9 +3,10 @@ import { Resolvers } from "../../Resolvers/Resolvers";
 export class ChargesTab {
 
     public RunChargesTabScenarios() {
-        cy.get('#QuoteTHCharges').click();
+        this.GoToChargesTab();
 
     }
-
-
+    private GoToChargesTab() {
+        cy.get('#QuoteTHCharges').click();
+    }
 }
