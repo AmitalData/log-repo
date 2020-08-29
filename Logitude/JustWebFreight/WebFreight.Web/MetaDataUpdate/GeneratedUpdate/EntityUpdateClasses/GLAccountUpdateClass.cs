@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "24c5001d324f72ec3c50ead7b6bcf9fb";
+		public const string HashString = "61cbd07acd7a43cd8e406dac4a9e18fc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9109,6 +9109,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOGLaccountConnectedMoreOneCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLaccountConnectedMoreOneCard", DefaultText = "the GLaccount is connected to more than one operational card",LocalDefaultText = @"הכרטסת מחוברת ליותר מכרטיס תפעולי אחד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountONoSalesman = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSalesman", DefaultText = "You cannot run this report without filling the Salesman field",LocalDefaultText = @"לא ניתן להפיק את הדוח ללא בחירת איש מכירות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOConnected10Cards = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Connected10Cards", DefaultText = "The GLAccount is connected to 10 or more operational cards.",LocalDefaultText = "כרטיס הנח''ש מחובר ליותר מ 10 כרטיסים תפעוליים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
