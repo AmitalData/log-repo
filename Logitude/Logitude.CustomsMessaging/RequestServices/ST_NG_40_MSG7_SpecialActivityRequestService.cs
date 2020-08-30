@@ -84,10 +84,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                     var attachment = new Attachment();
                     attachment.externalAttachmentID = customsDocumentPM.ExternalAttachmentId;
                     attachment.IsAttachment = "false";
-                    attachment.keywords = customsDocumentPM.Name;
-                    attachment.fileName = customsDocumentPM.Name;
+                 //   attachment.keywords = customsDocumentPM.Name;
+                //    attachment.fileName = customsDocumentPM.Name;
 
-                    attachment.documentType = customsDocumentPM.DocumentTypeCode;
+                  //  attachment.documentType = customsDocumentPM.DocumentTypeCode;
                     attachments.Add(attachment);
                 }
             }
