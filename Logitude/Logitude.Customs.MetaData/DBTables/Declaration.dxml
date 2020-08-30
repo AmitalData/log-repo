@@ -1094,7 +1094,7 @@
   <Index
     Columns="AmendmentOriginalDeclartation" />
 
-  <Index
-      Columns="CourierCustomStatusCode" />
+  <!--<Index
+      Columns="CourierCustomStatusCode" />-->
 
 </Table>
