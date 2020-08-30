@@ -575,7 +575,7 @@
                                                             <td style="height:95px;">
                                                                 <div class="EmailBoxMultiLinesText" style="height:100%;white-space: normal;max-width: 812px;overflow-y: auto;background:linear-gradient(#F2F8FF, #E6EBF0);">
                                                                     <div class="ItemBox" *ngFor="let item of SelectedFieldsDataSource" [class.SelectedItemBox]="FieldSelectedItem == item" (mouseover)="ShowOrderArrows(item)" (mouseout)="HideOrderArrows(item)" (click)="SetFieldSelectedItem(item)">
-                                                                        <div class="SelectedItemBoxContent">
+                                                                        <div class="SelectedItemBoxContent" [title]="item.IsMultipleSelection && item.MultiSelectedValueLists && item.MultiSelectedValueLists.length > 0?item.Code.substr(1,item.Code.length-2):''">
                                                                             <table>
                                                                                 <tr>
                                                                                     <td>
@@ -589,9 +589,7 @@
                                                                                     </td>
                                                                                     <td>
                                                                                        
-                                                                                        <span *ngIf="item.IsMultipleSelection && item.MultiSelectedValueLists && item.MultiSelectedValueLists.length > 0" title="{{item.Code}}"><img [class.Visible]="FieldSelectedItem == item" [class.Hidden]="FieldSelectedItem != item" src="./Images/info-black.png"  class="InfoIcon"/></span>
-                                                                                    
-                                                                                        <span style="display:block;"><img [style.margin-top]="item.IsMultipleSelection && item.MultiSelectedValueLists && item.MultiSelectedValueLists.length > 0 ?'-11px':'0px'" [class.Visible]="FieldSelectedItem == item" [class.Hidden]="FieldSelectedItem != item" (click)="btnRemove_Click(item)" src="./Images/RedX2.png" class="RemoveBtn" /></span>
+                                                                                        <span><img [class.Visible]="FieldSelectedItem == item" [class.Hidden]="FieldSelectedItem != item" (click)="btnRemove_Click(item)" src="./Images/RedX2.png" class="RemoveBtn" /></span>
                                                                                     </td>
                                                                                     <td>
                                                                                         <span style="width:20px;"><img [class.Visible]="FieldSelectedItem == item" [class.Hidden]="FieldSelectedItem != item" (click)="btnDown_Click(item)" src="./Images/ArrowRight.png" class="ArrowBtn" /></span>

@@ -491,7 +491,7 @@ namespace WebFreight.Web.Helpers
                             if (field.DataTypeCode.ToLower() == "boolean")
                             {
                                 string selectFrom = isMainSelectStmt ? "AllQuery." + field.DisplayName : "[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code;
-                                SelectStmt.Append("case WHEN " + selectFrom + "= 1 Then 'Yes' WHEN " + selectFrom + "= 0 Then 'No' End" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                                SelectStmt.Append("case WHEN " + selectFrom + "= " + (isMainSelectStmt ? "'Yes'":"1") + " Then 'Yes' WHEN " + selectFrom + "= " + (isMainSelectStmt ? "'No'" : "0") + "Then 'No' End" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
                             }
                             else
                             {
@@ -506,7 +506,7 @@ namespace WebFreight.Web.Helpers
                             if (field.DataTypeCode.ToLower() == "boolean")
                             {
                                 string selectFrom = isMainSelectStmt ? "AllQuery." + field.DisplayName : field.DWObjectTableCode + "." + field.Code;
-                                SelectStmt.Append("case WHEN " + selectFrom + "= 1 Then 'Yes' WHEN " + selectFrom + "= 0 Then 'No' End" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
+                                SelectStmt.Append("case WHEN " + selectFrom + "= " + (isMainSelectStmt ? "'Yes'" : "1") + "Then 'Yes' WHEN " + selectFrom + "= " + (isMainSelectStmt ? "'No'" : "0") + "Then 'No' End" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
                             }
                             else
                             {
