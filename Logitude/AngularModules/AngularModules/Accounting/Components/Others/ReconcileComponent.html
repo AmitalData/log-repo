@@ -647,7 +647,8 @@
                                [MarkIsChecked]="MarkIsChecked"
                                [CheckBoxFilterChanged]="CheckBoxFilterChanged"
                                (SortInvoked)="OnSortInvoked($event)"
-                               (DataLoaded)="onDataLoaded()">
+                               (DataLoaded)="onDataLoaded()"
+                               [ChangeCheckBoxesState]="ChangeCheckBoxesState">
                 </logitude-grid>
             </div>
         </td>
