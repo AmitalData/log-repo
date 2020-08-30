@@ -253,10 +253,12 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
         //"ReconcileExternalPageLinePMList": ReconcileExternalPageLinePMList,
         this._BankAccountPMId = winArgs.BankAccountPMId;
         this._SelectedReconcileExternalPageLinePMList = winArgs.ReconcileExternalPageLinePMList;
+        if (!AppTool.IsNullOrEmpty(this._SelectedReconcileExternalPageLinePMList)) {
+            let firstNote = this._SelectedReconcileExternalPageLinePMList.filter(r => !AppTool.IsNullOrEmpty(r.Notes))[0]
+            if (!AppTool.IsNullOrEmpty(firstNote) && !AppTool.IsNullOrEmpty(firstNote.Notes)) {
+                this.Notes = firstNote.Notes;
+            }
 
-        let firstNote =this._SelectedReconcileExternalPageLinePMList.filter(r => !AppTool.IsNullOrEmpty(r.Notes))[0]
-        if (!AppTool.IsNullOrEmpty(firstNote) && !AppTool.IsNullOrEmpty(firstNote.Notes)) {
-            this.Notes = firstNote.Notes;
         }
 
         this.AccountingDate = DateTool.GetDateParts(this._SelectedReconcileExternalPageLinePMList[0].ReferenceDate).DateObject;//ohad  request it 
@@ -306,7 +308,10 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
         //var AdjustAccountId: string = "1-19";
 
         let SelectedReconcileExternalPageLineIdsList: string[] = [];
-        this._SelectedReconcileExternalPageLinePMList.forEach(r => SelectedReconcileExternalPageLineIdsList.push(r.Id));
+        if (!AppTool.IsNullOrEmpty(this._SelectedReconcileExternalPageLinePMList)) {
+            this._SelectedReconcileExternalPageLinePMList.forEach(r => SelectedReconcileExternalPageLineIdsList.push(r.Id));
+        }
+        
         this._ExternalReconciliationExtendedPMService.CreateJournalReconcileAdjustBankFee(
             //this._SelectedReconcileExternalPageLinePMList.Id, //reconcileExternalPageLineIdList,
             SelectedReconcileExternalPageLineIdsList,
