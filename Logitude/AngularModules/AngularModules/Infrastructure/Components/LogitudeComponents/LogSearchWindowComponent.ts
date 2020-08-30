@@ -93,6 +93,12 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     DisplayFieldsFromList: string = null;
     PseventRowSelectEventSub: any;
     private CurrentSession = SessionLocator.SelectedSession;
+    DontApplyVirtualization: boolean = false;
+    ConstantPageSize: number = 0;
+
+
+
+
     constructor() {
         super();
         this._entityListService = new EntityListService;
@@ -141,6 +147,12 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this.HideAdd = args.HideAdd;
         this.IsAddDisabled = args.IsAddDisabled;
         this.IsEditDisabled = args.IsEditDisabled;
+
+        if (this.IsUseCardSearchMechanism()) {
+            this.DontApplyVirtualization = true;
+            this.ConstantPageSize = 100;
+        }
+
 
         if (!this.IsAddDisabled) {
             this.IsAddBtnVisible = true;
@@ -286,6 +298,17 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
     }
 
+    IsUseCardSearchMechanism() {
+        var result: boolean = false;
+        if (this.ObjectTableName == "Card") {
+            var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CST" && d.TenantNumber == SessionLocator.Tenant)[0];
+            if (featureToggle) {
+                result = true;
+            }
+        }
+        return result;
+
+    }
     //#region My Data
 
     public rowCount: number;
@@ -316,12 +339,26 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
         filters.Tenant = this.TenantPM.Id;
-        if (filters.AdditionalFilters.filter(a => a.FieldName == "SearchFields").length > 0) {
+        if (filters.AdditionalFilters.filter(a => a.FieldName == "SearchFields").length > 0 || filters.AdditionalFilters.filter(a => a.FieldName == "CompactSearchField").length > 0) {
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
+            filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "CompactSearchField");
+
         }
+
+
+
         if (searchfields) {//&& !this.UseCompactSearch
-            filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", false, true, false, "String");
+            if (this.IsUseCardSearchMechanism()) {
+              filters.addAdditionalFilter("CompactSearchField", searchfields, null, null, "Contains", false, false, false, null);
+            } else filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", false, true, false, "String");
+
         }
+
+
+
+
+
+
         var parentName = this.GetObjectTableName(this.ObjectTableName);
         var parenttable = window.ObjectTables.filter(d => d.Name === parentName)[0];
         var originalTable = this.ObjectTable;
@@ -814,7 +851,8 @@ export class CustomEntityArgs {
     public IsEditDisabled: boolean = true;
     public DisplayFieldsFromList: string = null;
     public HideEdit: boolean;
-    
+
+
 }
 export class AddEntityArgs {
     public EntityPM: any;
