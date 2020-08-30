@@ -54,7 +54,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 interestReportLinesByDateMappingParams.NextInterestTransactionGroupedByDate.GroupInterestValueDate :
                 interestReportLinesByDateMappingParams.InterestReportLinesByDateCreationParams.InterestReportPM.InterestCalculationDate;
 
-            double doubleTotalInterestDays = (interestReportLinesByDatePM.ToDate - interestReportLinesByDatePM.FromDate).TotalDays;
+            double doubleTotalInterestDays = GetTotalDays(interestReportLinesByDatePM, interestReportLinesByDateMappingParams.NextInterestTransactionGroupedByDate);
             interestReportLinesByDatePM.TotalInterestDays = Convert.ToInt32(doubleTotalInterestDays);
             interestReportLinesByDatePM.TotalAmount = interestReportLinesByDateMappingParams.CurrentInterestTransactionGroupedByDate.TotalLocalAmount;
             interestReportLinesByDatePM.AccumulatedAmount = interestReportLinesByDateMappingParams.AccumulatedAmount;
@@ -86,6 +86,17 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
             interestReportLinesByDatePM.CalculationDetails = GetCalculationEquations(interestCalculationDetails);
             return interestReportLinesByDatePM;
+        }
+
+        private double GetTotalDays(InterestReportLinesByDatePM interestReportLinesByDatePM, InterestTransactionsGroupedByDate nextInterestTransactionGroupedByDate)
+        {
+            double totalInterestDays = (interestReportLinesByDatePM.ToDate - interestReportLinesByDatePM.FromDate).TotalDays;
+            if (nextInterestTransactionGroupedByDate == null)
+            {
+                totalInterestDays = totalInterestDays + 1;
+            }
+
+            return totalInterestDays;
         }
 
         private string GetCalculationEquations(List<InterestCalculationDetails> interestCalculationDetails)
