@@ -59,6 +59,7 @@ export class DeclarationReferantDataList {
 	ImporterCode: string;
 	CustomerCode: string;
 	ImporterFile: string;
+	FileOpenDate: Date;
 	
 }
  
