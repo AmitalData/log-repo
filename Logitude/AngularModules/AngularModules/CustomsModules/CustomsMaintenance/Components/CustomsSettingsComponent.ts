@@ -231,6 +231,10 @@ export class CustomsSettingsComponent
     set UnfConnectionString(value) { this.entityPM.UnfConnectionString = value; }
 
 
+    get LastRunningDCAWS() { return this.entityPM != null ? this.entityPM.LastRunningDCAWS : null; }
+    set LastRunningDCAWS(value) { this.entityPM.LastRunningDCAWS = value; }
+
+
 
 
     
