@@ -67,7 +67,8 @@ export class CustomsSettingsComponent
         //ערכים C - דיפולטיבי (בסקריפט), או B == בלדרות - אסור ריק יאותחל עם הפצה ראשונה + DEFAULT == C
 
         this.CompanyTypeList = [];
-        
+        this.UIProperties.SetEnabled("LastRunningDCAWS", this.ObjectTableName, false);
+
         this.CompanyTypeList.push(new CodeNameClass("C", "עמילות"));
         this.CompanyTypeList.push(new CodeNameClass("B", "בלדרות"));
         this._SelectedCompanyType= this.CompanyTypeList[0];

@@ -506,30 +506,39 @@
 
                     <tr>
                         <!--SignServiceAddress-->
-                        <td style="padding:2px;">
+                        <td  style="padding:2px;">
                            
                         </td>
 
                         <!--DCAServiceAddress-->
-                        <td style="padding:2px;">
-                            <LogLabel [ObjectFieldName]="'LastRunningDCAWS'"
-                                      [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext">
+                        <td  style="padding:2px;" width="250px">
+                            <table>
+                             <tr>
+                                 <td stye=" width: 70px">
+                                     <LogLabel [ObjectFieldName]="'LastRunningDCAWS'"
+                                               [ObjectTableName]="ObjectTableName"
+                                               [DataContext]="DataContext">
 
-                            </LogLabel>
+                                     </LogLabel>
+                                 </td>
+                                 <td>
+                                     <LogTextBox [ObjectFieldName]="'LastRunningDCAWS'"
+                                                 [InputType]="'text'"
+                                                 [DataContext]="DataContext"
+                                                 [ObjectTableName]="ObjectTableName"
+                                                 [HideColumns]="true"
+                                                 [Text]="LastRunningDCAWS"></LogTextBox>
+                                 </td>
+                             </tr>
+                            </table>
+                        
 
                          
                         </td>
 
                         <!--UnfConnectionString-->
                         <td style="padding:2px;">
-                            <LogTextBox [ObjectFieldName]="'LastRunningDCAWS'"
-                                        [InputType]="'text'"
-                                        [DataContext]="DataContext"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [HideColumns]="true"
-                                        [Text]="LastRunningDCAWS"
-                                      ></LogTextBox>
+                       
                         </td>
                     </tr>
 
