@@ -18,8 +18,8 @@ describe('Quotes Modules', () => {
 
     it('Test New Quote ', () => {
         direction = 'E';
-        transportMode = 'O';
-        shipmentType = 'fcl';
+        transportMode = 'A';
+        shipmentType ='';
         scenarios.RunScenario(direction, transportMode, shipmentType);
         editScenarios.RunEditTabsScenarios(direction, transportMode, shipmentType);
         //editScenarios.RunEditTabsScenarios('D','I');
