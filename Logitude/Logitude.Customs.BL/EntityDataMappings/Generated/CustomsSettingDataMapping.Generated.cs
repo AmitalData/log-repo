@@ -45,7 +45,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AutoUnitMeasurement, 
 	         CompanyType, 
 	         IsMessagesPending, 
-	         QtyFeedbackInPendingMessage,
+	         QtyFeedbackInPendingMessage, 
+	         LastRunningDCAWS,
 	      }
 
 
@@ -77,7 +78,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AutoUnitMeasurement, 
 	         CompanyType, 
 	         IsMessagesPending, 
-	         QtyFeedbackInPendingMessage,
+	         QtyFeedbackInPendingMessage, 
+	         LastRunningDCAWS,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -199,6 +201,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QtyFeedbackInPendingMessage))
             {
 				entityPOCO.QtyFeedbackInPendingMessage = entityPM.QtyFeedbackInPendingMessage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunningDCAWS))
+            {
+				entityPOCO.LastRunningDCAWS = entityPM.LastRunningDCAWS;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -327,6 +334,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.QtyFeedbackInPendingMessage = entityPOCO.QtyFeedbackInPendingMessage;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastRunningDCAWS))
+            {
+					entityPM.LastRunningDCAWS = entityPOCO.LastRunningDCAWS;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -446,6 +458,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QtyFeedbackInPendingMessage))
             {
                 oldEntityPM.QtyFeedbackInPendingMessage = entityPM.QtyFeedbackInPendingMessage;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunningDCAWS))
+            {
+                oldEntityPM.LastRunningDCAWS = entityPM.LastRunningDCAWS;
             }
 			
 		}

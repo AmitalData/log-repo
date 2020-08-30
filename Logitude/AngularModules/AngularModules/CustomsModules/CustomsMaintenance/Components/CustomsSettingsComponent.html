@@ -504,10 +504,37 @@
 
 
 
+                    <tr>
+                        <!--SignServiceAddress-->
+                        <td style="padding:2px;">
+                           
+                        </td>
 
+                        <!--DCAServiceAddress-->
+                        <td style="padding:2px;">
+                            <LogLabel [ObjectFieldName]="'LastRunningDCAWS'"
+                                      [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext">
+
+                            </LogLabel>
+
+                         
+                        </td>
+
+                        <!--UnfConnectionString-->
+                        <td style="padding:2px;">
+                            <LogTextBox [ObjectFieldName]="'LastRunningDCAWS'"
+                                        [InputType]="'text'"
+                                        [DataContext]="DataContext"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [HideColumns]="true"
+                                        [Text]="LastRunningDCAWS"
+                                      ></LogTextBox>
+                        </td>
+                    </tr>
 
                     <tr>
-                        
+
 
                         <!--IIGServiceAddress-->
                         <td style="padding:2px;">
@@ -529,12 +556,11 @@
                         </td>
                         <!--UServerServiceAddress-->
                         <td style="padding:2px;">
-
                         </td>
                     </tr>
 
                     <tr>
-                       
+
 
                         <!--IIGServiceAddress-->
                         <td style="padding:2px;">
@@ -560,7 +586,6 @@
 
                         <!---->
                         <td style="padding:2px;">
-
                         </td>
                     </tr>
 

@@ -160,7 +160,14 @@
   </Column>
   <Column
     Name="QtyFeedbackInPendingMessage"
-    Type="int" DefaultValue="100" >
+    Type="int"
+    DefaultValue="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastRunningDCAWS"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
