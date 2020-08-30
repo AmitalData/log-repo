@@ -1,5 +1,6 @@
 ﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Horse GetSingleHorse(string id, int tenant)
         {
-            return (from record in context.Horses where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.Horses.Include("CountryOfBirth").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("UpdatedByUser").Include("UpdatedByUser.Contact") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
         
         public void Add(Horse entity)

@@ -172,6 +172,7 @@ import { NumberFormatListService } from './Services/StandardLists/NumberFormatLi
 import { WarehouseWeightMeasurementListService } from './Services/StandardLists/WarehouseWeightMeasurementListService';
 import { WarehouseWeightRoundingListService } from './Services/StandardLists/WarehouseWeightRoundingListService';
 import { HorseListService } from './Services/StandardLists/HorseListService';
+import { HorsePMService } from './Services/StandardPMs/HorsePMService';
 
 // Extended Lists
 import {CarrierExtendedListService} from './Services/ExtendedLists/CarrierExtendedListService';
@@ -412,6 +413,7 @@ export class ModuleProviders {
             case "WarehouseWeightMeasurementListService": { myResult = new WarehouseWeightMeasurementListService(); break; }
             case "WarehouseWeightRoundingListService": { myResult = new WarehouseWeightRoundingListService(); break; }
             case "HorseListService": { myResult = new HorseListService(); break; }
+            case "HorsePMService": { myResult = new HorsePMService(); break; }
         }
 
         return myResult;

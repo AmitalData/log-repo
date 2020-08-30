@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
@@ -14,15 +15,50 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
         {
             if (isNewEntity)
             {
-                // CREV
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "CRIT",
+                    UserId = loggedContactId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Horse",
+                });
             }
 
             else
             {
-                //UPEV
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPEV",
+                    UserId = loggedContactId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Horse",
+                });
 
-                //inactive: HRIN
-                //active: HRRC
+                if (entityPM.Inactive && !entityPOCO.Inactive)
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "HRIN",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Horse",
+                    });
+                }
+
+                else if (!entityPM.Inactive && entityPOCO.Inactive)
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "HRRC",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Horse",
+                    });
+                }
             }
         }
     }
