@@ -834,8 +834,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                                 var CGG_PAY_AMT_RNGDefault: string = obj['DefaultValue'];
                                                 if (CGG_PAY_AMT_RNGDefault != "" && CGG_PAY_AMT_RNGDefault != null) {
                                                     let MinAndMax = CGG_PAY_AMT_RNGDefault.split("-");
-                                                    let min = Number(MinAndMax[0].replace(",", ""));
-                                                    let max = Number(MinAndMax[1].replace(",", ""));
+                                                    let min = parseFloat(MinAndMax[0].replace(/,/g, ''));
+                                                    let max = parseFloat(MinAndMax[1].replace(/,/g, ''));
                                                     if (min < this.TotalTax && max > this.TotalTax) {
                                                         this.BetweenMinAndMax = true;
                                                     }
@@ -882,6 +882,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
     JustAutoFillPaymentScreenCash(defaultValue: string) {
+
         if (this.sumBtl != null && this.sumBtl > 0) {
             for (let method of this.PaymentMethodsList.Collection) {
                 method.Amount = this.DeclarationPM.TotalTax - this.sumBtl;
@@ -3134,6 +3135,7 @@ export class PaymentMethodModel extends BaseComponent {
                                     this.BankIsNull = true;
                                     this.methodPM.MethodTypeCode = "2";
                                     this.methodPM.PayerActivityTypeCode = "3";
+                                    this.methodPM.Amount = this.parent.DeclarationPM.TotalTax ;
                                     this.InternalBankName = null;
                                     this.InternalBankId = null;
                                     this.parent.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {

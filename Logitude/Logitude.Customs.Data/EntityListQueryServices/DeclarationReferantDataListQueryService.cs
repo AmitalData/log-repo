@@ -69,7 +69,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ArrivalDate = a.ArrivalDate != null ? a.ArrivalDate : a.EstimatedArrivalDate,
                                                                  ATAOrETA = a.ArrivalDate != null ? "ATA" : "ETA",
 
-                                                                 DeclarationStatusTypeName = d.DeclarationStatusType.LocalName,
+                                                                 DeclarationStatusTypeName = d.DeclarationStatusType == null ? null : d.DeclarationStatusType.LocalName,
 
                                                                  DeclarationStatusTypeCode = d.DeclarationStatusTypeCode,
                                                                  ExceptionReasonsList = a.ExceptionReasonsList,
