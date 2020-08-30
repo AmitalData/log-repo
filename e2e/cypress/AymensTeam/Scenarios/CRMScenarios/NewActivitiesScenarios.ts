@@ -11,8 +11,9 @@ export class NewActivitiesScenarios {
     private isInlandDomestic: boolean = false;
     public EntityId: string;
     public EntityNumber: string;
-    public RunScenario(levelCode:string) {
-
+    public RunScenario(levelCode: string) {
+        this.levelCode = levelCode;
+        this.objectTable = "Activity";
         this.OpenWizardWindow();
         this.FillGeneral();
         this.Save().then((subject: string) => {
@@ -28,7 +29,7 @@ export class NewActivitiesScenarios {
 
     private OpenWizardWindow() {
         let index: number = 0;
-
+ 
         switch (this.levelCode) {
             case "T": { index = 0; break; }
             case "P": { index = 1; break; }
@@ -47,10 +48,20 @@ export class NewActivitiesScenarios {
     }
  
     private FillGeneral() {
-       // if (this.levelCode == "T") {
+        if (this.levelCode == "T") {
+            Resolvers.TextBoxResolver.Selector('#Activity_Subject').Type("test task");
+        }
+        if (this.levelCode == "P") {
             Resolvers.TextBoxResolver.Selector('#Activity_Subject').Type("test");
-      //  }
+            Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("CallWithId").SelectFirst();
+           // Resolvers.TextBoxResolver.Selector('#Activity_CallWithId').Type(Random.GetRandomNumber());
+        }
+        if (this.levelCode == "A") {
+            Resolvers.TextBoxResolver.Selector('#Activity_Subject').Type("test app");
+        }
+
     }
+
  
     Save() {
 
