@@ -618,6 +618,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? lastRunningDCAWS ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LastRunningDCAWS  
+	   {
+	    
+	     get
+		{
+		   return lastRunningDCAWS;
+		 }
+		 set
+		 {
+		   if(lastRunningDCAWS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunningDCAWS",OldValue=lastRunningDCAWS,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   lastRunningDCAWS=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

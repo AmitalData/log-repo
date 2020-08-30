@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "00bd84b3153753ce4bc231704d6b2333";
+		public const string HashString = "79da43e4ec23f679e8fc818541dea790";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13484,6 +13484,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   TextCode DeclarationTextCode_14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.ExportDeclarationQuery", DefaultText = @"Export Declaration",LocalDefaultText = "הצהרות יצוא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.ExportDeclaration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.ExportDeclaration", NameTextCodeDefaultText = "ExportDeclaration", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode DeclarationTextCode_15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.AllCourierDeclarations", DefaultText = @"All Courier Declarations",LocalDefaultText = "כל ההצהרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DeclarationFeature_15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.AllCourierDeclarations", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.AllCourierDeclarations", NameTextCodeDefaultText = "AllCourierDeclarations", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -13911,6 +13915,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn ExportDeclarationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
 
              AdvancedQueryFilter ExportDeclarationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.DeclarationDocumentTypeCode", PredefinedValue = "2",PredefinedValue2 = null, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query AllCourierDeclarationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_15.Id, NameTextCodeCode = DeclarationTextCode_15.Code, ObjectTableName = "Customs.Declaration", Code = "AllCourierDeclarations",  QueryGroupCode = "DECL", IndexOrder = 15, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_15.Id,FeatureUniqeCode= DeclarationFeature_15.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn AllCourierDeclarationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.MAWBCourierMaster" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllCourierDeclarationsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
+
+			 QueryColumn AllCourierDeclarationsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllCourierDeclarationsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.FastIndividualProcessCode" , ColumnWidth = 140 }, addedQueryColumns);
+
+			 QueryColumn AllCourierDeclarationsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
+
+			 QueryColumn AllCourierDeclarationsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllCourierDeclarationsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 190 }, addedQueryColumns);
+
+             AdvancedQueryFilter AllCourierDeclarationsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
@@ -16562,6 +16587,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsImporterDeclarationQueryODeclarationConectDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ImporterDeclarationQuery.O.DeclarationConect.Declaration", DefaultText = "Declaration",LocalDefaultText = @"הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationTHDeclarationCancellation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DeclarationCancellation", DefaultText = "Declaration Cancellation",LocalDefaultText = @"ביטול הצהרה במכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAllCourierDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AllCourierDeclarations", DefaultText = "All Courier Declarations ",LocalDefaultText = @"כל ההצהרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
