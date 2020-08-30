@@ -11,9 +11,17 @@ export class ARPayment {
             
             cy.get('li[id=FACS]').click();
             cy.get('button[id=NewARPayment]').click();
-
+            /*cy.get('input[id=ARPayment_BillToId]').type(BillToName).should("have.value", BillToName)
             cy.get('.DropDownListItem:first').should('be.visible')
-            cy.get('.DropDownListItem:first').click()
+            cy.get('.DropDownListItem:first').click()*/
+
+           /* cy.get('#searchicon_ARPayment_BillToId').click();
+            
+            cy.get('input[id=SearchFieldsId_0_1]').type(BillToName).should("have.value", BillToName)
+            cy.get('div[id=row0col0').click({ force: true });
+
+
+
 
           /*  cy.get('input[id=ARPayment_BillToId]').type(BillToName).should("have.value", BillToName)
             cy.get('ul[id=mydatalist_ARPayment_BillToId]').contains(BillToName).then(a => {
@@ -30,11 +38,16 @@ export class ARPayment {
             cy.get('ul[id=mydatalist_ARPayment_AccountingPaymentMethodId]').contains("Cash").then(a => {
                 a[0].click();
             })
+            cy.get('input[id=ARPayment_BillToId]').type(BillToName).should("have.value", BillToName)
+            cy.get('ul[id=mydatalist_ARPayment_BillToId]').contains(BillToName).then(a => {
+                a[0].click();
             
             cy.get('input[id=ARPayment_BranchId]').clear().type("Main Office").should("have.value","Main Office")
             cy.get('ul[id=mydatalist_ARPayment_BranchId]').contains("Main Office").then(a => {
                 a[0].click();
             })
+           
+
             cy.get('button[id=ok-AddARPayment]').click();
             cy.get('#ARPaymentSpinner').should("not.be.visible");
             cy.get('button[id=ARPaymentBApprove]').click();

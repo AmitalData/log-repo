@@ -12,9 +12,12 @@ export class ARInvoice {
             cy.get('li[id=FACS]').click();
             cy.get('#NewInvoice').click();
             cy.get('#NewGeneralInvoice').click();
-            cy.get('input[id=ARInvoice_BillToId]').type(BillToName).should("have.value", BillToName)
-
-            cy.get('.DropDownListItem:first').should('be.visible')
+          /*  cy.get('#searchicon_ARInvoice_BillToId').click();
+            
+            cy.get('input[id=SearchFieldsId_0_1]').type(BillToName).should("have.value", BillToName)
+            cy.get('div[id=row0col0').click({ force: true });
+            
+           /* cy.get('.DropDownListItem:first').should('be.visible')
             cy.get('.DropDownListItem:first').click()
 
 
@@ -30,6 +33,10 @@ export class ARInvoice {
 
              
             cy.get('input[id=ARInvoice_VatNumber]').type("123");
+            cy.get('input[id=ARInvoice_BillToId]').type(BillToName);
+            
+            cy.get('.DropDownListItem:first').should('be.visible')
+            cy.get('.DropDownListItem:first').click()
             cy.get('button[id=ok-addArInvoice]').click();
             cy.get('button[id=Add]').click();
             cy.get('input[id=ARInvoiceLine_ChargesTypeId]').type("air");
