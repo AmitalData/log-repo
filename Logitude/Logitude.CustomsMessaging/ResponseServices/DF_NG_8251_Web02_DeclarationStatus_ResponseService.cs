@@ -591,12 +591,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
               var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
             _declarationPM.AvailabilityDate = DateTime.Now;
             _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-            //using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
-            {
-                myDeclarationUpdateService.Update(_declarationPM, true);
+            myDeclarationUpdateService.Update(_declarationPM, true);
 
-                 //scopeNewCRS.Complete();
-            }
             var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_declarationPM.Id, true, false);
             
 
@@ -662,7 +658,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                      SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
                                 }
 
-                                myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
 
 
                                 scopeNewCRS.Complete();
@@ -692,6 +687,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
             }
+            myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
+
 
         }
 

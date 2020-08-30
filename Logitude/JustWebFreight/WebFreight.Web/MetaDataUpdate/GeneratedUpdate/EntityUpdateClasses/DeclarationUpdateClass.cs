@@ -76,7 +76,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "6ed2ea5bcb38f742c872d25640845787";
+ 
+		public const string HashString = "79da43e4ec23f679e8fc818541dea790";
+ 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13466,6 +13468,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "AmendmentErrorXml",
+					  						ObjectTableName =  "Customs.Declaration",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  4000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  4000,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "AmendmentErrorXml",
+					  						ListPropertyPath =  "AmendmentErrorXml",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.Declaration",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "AmendmentErrorXml",
+					  						DefaultText =  "Amendment Error Xml",
+					  						FullLocalDefaultText =  "שגיאות - תיקון הצהרה",
+					  						ListFieldLable =  "AmendmentErrorXmlListLable",
+					  						ListLableDefaultText =  "Amendment Error Xml",
+					  						ListLocalDefaultText =  "שגיאות - תיקון הצהרה",
+					  						IsMaxLength =  true,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -13549,6 +13612,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   TextCode DeclarationTextCode_14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.ExportDeclarationQuery", DefaultText = @"Export Declaration",LocalDefaultText = "הצהרות יצוא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.ExportDeclaration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.ExportDeclaration", NameTextCodeDefaultText = "ExportDeclaration", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode DeclarationTextCode_15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.AllCourierDeclarations", DefaultText = @"All Courier Declarations",LocalDefaultText = "כל ההצהרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DeclarationFeature_15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.AllCourierDeclarations", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.AllCourierDeclarations", NameTextCodeDefaultText = "AllCourierDeclarations", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -13976,6 +14043,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn ExportDeclarationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
 
              AdvancedQueryFilter ExportDeclarationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.Direction", PredefinedValue = "E",PredefinedValue2 = null, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query AllCourierDeclarationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_15.Id, NameTextCodeCode = DeclarationTextCode_15.Code, ObjectTableName = "Customs.Declaration", Code = "AllCourierDeclarations",  QueryGroupCode = "DECL", IndexOrder = 15, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_15.Id,FeatureUniqeCode= DeclarationFeature_15.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn AllCourierDeclarationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.MAWBCourierMaster" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllCourierDeclarationsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
+
+			 QueryColumn AllCourierDeclarationsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllCourierDeclarationsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.FastIndividualProcessCode" , ColumnWidth = 140 }, addedQueryColumns);
+
+			 QueryColumn AllCourierDeclarationsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
+
+			 QueryColumn AllCourierDeclarationsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllCourierDeclarationsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 190 }, addedQueryColumns);
+
+             AdvancedQueryFilter AllCourierDeclarationsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
@@ -15436,7 +15524,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "DPR",
+                Code =  "DWR",
                 EnglishName =  "Amendment Waiting for customs",
                 LocalName =  "תיקון הצהרה ממתינה לטיפול מכס",
                 IsManualEntry =  false,
@@ -16636,6 +16724,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationTHDeclarationCancellation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DeclarationCancellation", DefaultText = "Declaration Cancellation",LocalDefaultText = @"ביטול הצהרה במכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 
  		   TextCode DeclarationTextCode_CustomsDeclarationFExporterCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterCode", DefaultText = "Exporter Code",LocalDefaultText = @"מספר יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterCode2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterCode2", DefaultText = "Transfer Exporter Code",LocalDefaultText = @"סוג יצואן מעביר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -16681,6 +16770,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOAbachStatement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AbachStatement", DefaultText = "Abach Declaration",LocalDefaultText = @"הצהרות אב'כ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOConnectedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConnectedDeclarations", DefaultText = "Connected Declarations",LocalDefaultText = @"הצהרות מקושרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAllCourierDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AllCourierDeclarations", DefaultText = "All Courier Declarations ",LocalDefaultText = @"כל ההצהרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 
 
    
 	    

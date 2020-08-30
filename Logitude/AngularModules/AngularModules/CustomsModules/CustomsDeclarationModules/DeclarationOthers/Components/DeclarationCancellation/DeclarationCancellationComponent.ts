@@ -1,6 +1,6 @@
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
-import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import {Component, ChangeDetectorRef, OnInit} from '@angular/core';
+import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { CustomSendOptionsArgs, RequestParamsBase, SendRequestVIA, TestCase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
@@ -13,12 +13,13 @@ import { DeclarationWebService } from '../../../../../Customs/Services/WebServic
 import { CustomMessageProgressComponent } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
+import { CustomsCollateralPM } from '../../../../../Customs/EntityPMs/CustomsCollateralPM';
 
 declare var window: any;
 
 @Component({
     selector: 'DeclarationCancellationComponent',
-
+    
     templateUrl: './DeclarationCancellationComponent.html',
     providers: [DeclarationPMService, DeclarationWebService]
 })
@@ -32,11 +33,11 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
     ValidationErrorsList: string[];
     readonly: boolean = false;
-    get CancelRequestNumber() { return this.EntityPM.CancelRequestNumber; }
+     get CancelRequestNumber() { return this.EntityPM.CancelRequestNumber; }
     set CancelRequestNumber(value: number) {
         if (this.EntityPM.CancelRequestNumber != value) {
             this.EntityPM.CancelRequestNumber = value;
-        }
+         }
     }
 
 
@@ -72,7 +73,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
     get CancelRequestStatusCode() { return this.EntityPM.CancelRequestStatusCode; }
     set CancelRequestStatusCode(value: string) {
-        if (this.EntityPM.CancelRequestStatusCode != value) {
+         if (this.EntityPM.CancelRequestStatusCode != value) {
             this.EntityPM.CancelRequestStatusCode = value;
         }
     }
@@ -100,11 +101,11 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
     }
     constructor(private EntityResourceService: EntityResourceService, private _declarationPMService: DeclarationPMService, private _DeclarationWebService: DeclarationWebService) {
         super();
-
+      
 
     }
 
-
+ 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
 
 
@@ -125,13 +126,14 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         currRequestParams.LoggingEntityId = this.EntityPM.Id;
         currRequestParams.AppicationId = this.EntityPM.Id;
         currRequestParams.LoggingEntityReference = this.EntityPM.DeclarationNumber;
-        currRequestParams.LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0].Id;
+         currRequestParams.LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0].Id;
         currRequestParams.LoggingEnabled = true;
         currRequestParams.RequestName = "Declaration Cancellation Request";
         currRequestParams.ResponseName = "Declaration Cancellation Response";
         currRequestParams.RequestVIA = this.RequestVIA;
-         this._declarationPMService.update(this.EntityPM).subscribe(x => {
 
+        this._declarationPMService.update(this.EntityPM).subscribe(x => {
+       
 
             if (customSendOptionsArgs.TestCase) {
 
@@ -185,12 +187,12 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
             else {
 
 
-                this.FillErrors();
+        this.FillErrors();
                 if (this.ValidationErrorsList.length > 0) {
                     SessionLocator.SelectedSession.StopBusyIndicator();
 
-                    return;
-                }
+            return;
+        }
                 CustomMessageProgressComponent
                     .ShowProgressBar(currRequestParams.PBId, "שליחת מסר ביטול הצהרה", true)
                     .then((res) => {
@@ -207,19 +209,20 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
                     });
                 this._DeclarationWebService.PostSendDeclarationCancellation(currRequestParams)
                     .subscribe((myServiceResponse: ServiceResponse) => {
-                        if (!myServiceResponse.HasError) {
+                        if (!myServiceResponse.HasError && myServiceResponse.Result != null && myServiceResponse.Result.HasException!=true) {
                           var messageWindow = new MessageWindow();
                         messageWindow.Width = 400;
                         messageWindow.Height = 200;
                         messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
                             messageWindow.Show("בקשת ביטול נשלחה בהצלחה.");
 
-                            SessionLocator.SelectedSession.CloseCurrentWindow();
                         }
+                        SessionLocator.SelectedSession.CloseCurrentWindow();
+
                       
                     });
             }
-
+       
             SessionLocator.SelectedSession.StopBusyIndicator();
         });
     }
@@ -234,13 +237,12 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         }
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.PaymentDate)) {
-            var msg = "לם ניתן לבטל ביטול הצהרה להצהרה שלם נמצםת בסטטוס הגשה.";//TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypeCode");
+            var msg = "לא ניתן לבטל ביטול הצהרה להצהרה שלא נמצאת בסטטוס הגשה.";//TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypeCode");
             this.ValidationErrorsList.push(msg);
         }
     }
     SetWindowArgs(args: any) {
         this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
- 
             this.EntityPM = args.Declaration as DeclarationPM;
 
             this.InitScreen();
@@ -262,17 +264,17 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
             this.readonly = true;
         }
     }
-
+    SkipCtor: boolean=false;
     ViewDocumentsComponent() {
-         
-       
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
+       // windowArgs.ObjectTableName = "Customs.CustomsCollateral";Cancellation
+       windowArgs.ObjectTableName = "Customs.Declaration";// this.ObjectTableName;
+       windowArgs.EntityParentPM = "DeclarationCancellation";
+    //    windowArgs.SkipCtor = this.SkipCtor;
 
-        windowArgs.ObjectTableName = "Customs.DeclarationCancellation";// this.ObjectTableName;
-        windowArgs.EntityParentPM = "DeclarationCancellation";
         var windowTitle = "Customs.Declaration.TH.Documents";
-    //    windowArgs.ParentEntityCode = "DeclarationCancellation";
+
         var logWindow = new LogitudeWindow();
         logWindow.IsHideHeader = true;
         logWindow.Width = 1000;
@@ -280,14 +282,34 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         logWindow.Title = windowTitle;
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
-        // logWindow.WindowClosed.subscribe(($event: any) => this.OnDocumentsWindowClosed($event));
-        //this.entityArgs.SkipCtor = true;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SkipCtor = true);
         logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
     }
+
+    //ViewDocumentsComponent() {
+         
+       
+    //     var windowArgs: any = {};
+    //    windowArgs.EntityPM = this.EntityPM;
+    //    windowArgs.ObjectTableName = "Customs.DeclarationCancellation";// this.ObjectTableName;
+    //    windowArgs.EntityParentPM = "DeclarationCancellation";
+    //    var windowTitle = "Customs.Declaration.TH.Documents";
+    ////    windowArgs.ParentEntityCode = "DeclarationCancellation";
+    //    var logWindow = new LogitudeWindow();
+    //    logWindow.IsHideHeader = true;
+    //    logWindow.Width = 1000;
+    //    logWindow.Height = 700;
+    //    logWindow.Title = windowTitle;
+    //    logWindow.ShowCloseButton = false;
+    //    logWindow.WindowArgs = windowArgs;
+    //   // logWindow.WindowClosed.subscribe(($event: any) => this.OnDocumentsWindowClosed($event));
+    //    //this.entityArgs.SkipCtor = true;
+    //    logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
+    //}
 
     ngOnInit() {
 
     }
 
-
+    
 }

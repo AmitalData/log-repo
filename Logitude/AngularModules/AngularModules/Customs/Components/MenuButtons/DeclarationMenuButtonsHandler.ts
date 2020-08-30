@@ -317,13 +317,24 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             button.IsHidden = true;
                         }
                         else {
-                            if (this.checkTransfer == "1") {
+                            if (this.checkTransfer == "1" || (this.EntityPM.AmendmentDontDisplayInList != true && this.EntityPM.IsAmendment)) {
                                 button.IsDisabled = true;
                             }
                             else {
                                 button.IsDisabled = false;
                             }
                         }
+                    }
+                    if (button.EventCode == "Copy") // moran 4.8.16 - AMI-56804
+                    {
+                        
+                            if (this.EntityPM.AmendmentDontDisplayInList != true && this.EntityPM.IsAmendment) {
+                                button.IsDisabled = true;
+                            }
+                            else {
+                                button.IsDisabled = false;
+                            }
+                         
                     }
                     if (button.EventCode == "Vehicle Modifications") {
                          if (this.EntityPM.IsCourierDeclaration) {
@@ -370,14 +381,20 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
                     if (button.EventCode == "Declaration Customs Requests") {
-                        if (this.IsDisplayOnly) {
-                            button.IsDisabled = true;
-                        }
-                        else {
+                        if (this.EntityPM.AmendmentDontDisplayInList == true && this.EntityPM.IsAmendment == true) {
                             button.IsDisabled = false;
                         }
+                        else {
+                            if (this.IsDisplayOnly) {
+                                button.IsDisabled = true;
+                            }
+                            else {
+                                button.IsDisabled = false;
+                            }
+                        }
+                      
                     }
-                    if ( this.EntityPM.AmendmentDontDisplayInList==true) {
+                    if ( this.EntityPM.AmendmentDontDisplayInList==true ) {
                         parentButton = menuButtons.filter(x => x.EventCode == "Actions")[0];
                         if (parentButton.Id == button.ParentMenuButtonId)
                         button.IsDisabled = true;
@@ -562,6 +579,21 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         }
     }
     OpenDeclarationCancellationWindow() {
+        var args: any = {
+            Declaration: this.EntityPM,
+        };
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 300;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.DeclarationCancellation");
+        logWindow.WindowArgs = args;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
+    }
+    OpenDeclarationCancellationWindow_() {
         var args: any = {
             Declaration: this.EntityPM,
         };

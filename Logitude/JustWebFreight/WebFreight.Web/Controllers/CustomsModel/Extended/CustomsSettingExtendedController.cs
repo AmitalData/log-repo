@@ -22,6 +22,7 @@ using Logitude.Customs.BL.CloseTables;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.FakeMessagingServices;
+using Logitude.Customs.BL.EntityUpdateServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -350,5 +351,51 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetLastRunningDCAWS(int tenant)
+        {
+
+            try
+            {
+  
+                ICustomContext MyContext = CustomContext.GetContext(tenant);
+
+                CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(MyContext);
+
+                var tenantMs = customsSettingQuery.GetLastRunningDCAWS(tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, tenantMs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+        public HttpResponseMessage PutLastRunningDCAWS(int tenant)
+        {
+
+            try
+            {
+ 
+                var MyContext = CustomContext.GetContext(tenant);
+
+                CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(MyContext);
+                CustomsSettingUpdateService customsSettingUpdateService = new CustomsSettingUpdateService(MyContext);
+                 var settings=   customsSettingQuery.GetSingleByTenant(tenant);
+
+                settings.LastRunningDCAWS = DateTime.Now;
+                customsSettingUpdateService.Update(settings, true);
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }

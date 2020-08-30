@@ -287,7 +287,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
 
     public OpenNewAmendment(id, declarationNumber) {
 
-        if (id == null) id = this.EntityPM.Id;
+        if (id == null) id = this.EntityPM.Id;//  !AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? this.EntityPM.AmendmentOriginalDeclartation :  this.EntityPM.Id;
         if (declarationNumber == null) declarationNumber = this.EntityPM.DeclarationNumber;
 
         var searchParams: GenericRequestParams = new GenericRequestParams();
