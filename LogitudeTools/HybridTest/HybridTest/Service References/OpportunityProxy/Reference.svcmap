@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ac49697d-60fb-4597-b9b1-d75e92775943" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:62619/WcfApi/OpportunityWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="OpportunityWcfService.xsd" MetadataType="Schema" ID="9e72552e-4deb-41c4-aee7-74c4c63e87fd" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/OpportunityWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="OpportunityWcfService4.xsd" MetadataType="Schema" ID="b0cf9998-8764-458b-a65d-4fa32b55d9cd" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/OpportunityWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="OpportunityWcfService.wsdl" MetadataType="Wsdl" ID="32ceefba-c8cd-4c57-b79e-2c89c0399449" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/OpportunityWcfService.svc?wsdl" />
+    <MetadataFile FileName="OpportunityWcfService1.xsd" MetadataType="Schema" ID="9da796a9-9860-4a0b-8c18-94f5eb364635" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/OpportunityWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="OpportunityWcfService41.xsd" MetadataType="Schema" ID="4d7f0273-3593-472a-8671-c86a543f7d74" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/OpportunityWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="OpportunityWcfService2.xsd" MetadataType="Schema" ID="34cfb54d-c4f1-4f5f-89d6-4d66eaede816" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/OpportunityWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="OpportunityWcfService3.xsd" MetadataType="Schema" ID="9e135032-4d1e-4c99-af7f-8594d84f076d" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/OpportunityWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="OpportunityWcfService.disco" MetadataType="Disco" ID="ab274d1a-b5ef-4413-84f8-5bec634fae18" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/OpportunityWcfService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

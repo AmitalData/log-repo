@@ -20,7 +20,8 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                 if (FeatureToggleHelper.HasFeatureToggle("CST", tenant))
                 { 
                     CardSearchFilter cardSearchFilter = new CardSearchFilter();
-                    entityLists =  cardSearchFilter.GetFilteredQuery(new CardSearchFilterArgs() { SeachText = compactSeachvalue != null ? compactSeachvalue.ToString() : "", Tenant = tenant, QueryOperations = queryOperations, EntityLists = entityLists , Filter = filter });
+                    entityLists =  cardSearchFilter.GetFilteredQuery(new CardSearchFilterArgs() { SeachText = compactSeachvalue != null ? compactSeachvalue.ToString() : "", Tenant = tenant, QueryOperations = queryOperations, EntityLists = entityLists , Filter = filter ,SortList = true});
+
                 }
                 else entityLists = GetCardCompactSearchResults(compactSeachvalue, queryOperations, filter, entityLists, tenant);
 

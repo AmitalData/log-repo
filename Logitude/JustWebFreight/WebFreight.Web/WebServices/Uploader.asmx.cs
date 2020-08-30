@@ -97,12 +97,12 @@ namespace WebFreight.Web.WebServices
                     }
                     ip = currentIP;
                 }
-                
+
                 if (!LogitudeSettings.IsCostomsDeploy)
                 {
-                ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "Uploader : UploadFile Method", ip);
+                    ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "Uploader : UploadFile Method", ip);
 
-            }
+                }
                 else
                 {
                     var myLogedEx = e.HandleException(User != null ? User.Identity.Name : "", "Uploader : DownloadFile Method" + ip);

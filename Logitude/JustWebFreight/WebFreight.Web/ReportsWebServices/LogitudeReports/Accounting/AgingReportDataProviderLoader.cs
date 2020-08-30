@@ -175,7 +175,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             if (showDetailedCurrencyAccounts)
                 groupedPeriodsByAccount = result.Where(d=> true || d.CurrencyCode != totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "יתרה במט''ז" : "Foreign",
+                    PeriodName = showLocals ? "סיכום תקופות" : "Foreign",
                     Total = d.Sum(x => x.Total),
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
@@ -192,7 +192,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             else
                 groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "יתרה במט''ז" : "Foreign",
+                    PeriodName = showLocals ? "סיכום תקופות" : "Foreign",
                     Total = d.Sum(x => x.Total),
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
@@ -308,7 +308,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private static List<AgingPeriod> GetTotalBalancePeriods(AccountingAgingDataProvider totalData, bool showLocals)
         {
-            var balancePeriod = showLocals ? "יתרה במט''ז" : "Foreign";
+            var balancePeriod = showLocals ? "סיכום תקופות" : "Foreign";
             List<AgingPeriod> totalBalances = totalData.AgingPeriods.Where(d => d.PeriodName == balancePeriod).ToList();
             return totalBalances;
         }
@@ -432,22 +432,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.Total = item.Total;
 
 
-                    if (GetFilterValue<string>("GroupByDate") == "filter_Due")
-                    {
-                        var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
-                        var totalBalance = item.LocalBalanceInDue;
-                        if ((GetFilterValue<string>("BalanceFilter") == "Debtors" && totalBalance > 0)
-                                ||
-                            (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && totalBalance >= Convert.ToDecimal(balanceFilterAmount)))
-                        {
-
-                            periods.Add(record);
-                        }
-                    }
-                    else
-                    {
-                        periods.Add(record);
-                    }
+                    periods.Add(record);
 
                 }
             }
@@ -470,22 +455,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                     record.Total = item.Total;
 
-                    if (GetFilterValue<string>("GroupByDate") == "filter_Due")
-                    {
-                        var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
-                        var totalBalance = item.LocalBalanceInDue;
-                        if ((GetFilterValue<string>("BalanceFilter") == "Debtors" && totalBalance > 0)
-                                ||
-                            (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && totalBalance >= Convert.ToDecimal(balanceFilterAmount)))
-                        {
-
-                            periods.Add(record);
-                        }
-                    }
-                    else
-                    {
-                        periods.Add(record);
-                    }
+                    periods.Add(record);
 
                 }
             }

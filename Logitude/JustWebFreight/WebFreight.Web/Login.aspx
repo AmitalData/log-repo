@@ -1037,11 +1037,12 @@
             }
 
             function onChange() {
+                //var combobox = $("#cmbTenants").data("kendoComboBox");
+                //var selectedItem = combobox.dataSource.view()[combobox._current.index()];
+                //selectedcompany = selectedItem;
 
-                var combobox = $("#cmbTenants").data("kendoComboBox");
-                var selectedItem = combobox.dataSource.view()[combobox._current.index()];
-                selectedcompany = selectedItem;
-                currentTenant = $('#cmbTenants').data('kendoComboBox').value();
+                currentTenant = $('#cmbTenants').data('kendoComboBox').dataItem();
+                selectedcompany = currentTenant;
                 // var logindata = userdata.UserName + ":" + userdata.CurrentTenant + ":" + userdata.CardId + ":" + userdata.CardType;
 
             }

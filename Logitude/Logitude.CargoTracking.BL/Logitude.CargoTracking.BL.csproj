@@ -76,6 +76,7 @@
     <Compile Include="EntityDataMappings\CargoTrackingIncrementalStatDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingMilestoneDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingPortDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CargoTrackingShipmentComputedDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingShipmentDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingShipmentMasterDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingShipmentSearchDataMapping.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="EntityDataMappings\Generated\CargoTrackingIncrementalStatDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingMilestoneDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingPortDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoTrackingShipmentComputedDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingShipmentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingShipmentMasterDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingShipmentSearchDataMapping.Generated.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="EntityQueryServices\Generated\CargoTrackingIncrementalStatQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingMilestoneQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingPortQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoTrackingShipmentComputedQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingShipmentMasterQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingShipmentQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingShipmentSearchQueryService.Generated.cs" />
@@ -112,6 +115,7 @@
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingIncrementalStatUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingMilestoneUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingPortUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CargoTrackingShipmentComputedUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingShipmentMasterUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingShipmentSearchUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingShipmentUpdateService.Generated.cs" />

@@ -2,6 +2,7 @@ import { TextCodeTranslator } from './../../../Utilities/TextCodeTranslator';
 import { ObjectsLocator } from './../../../Locators/ObjectsLocator';
 import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
 import { AppTool } from './../../../Tools';
+import { ControlsIdCounter } from 'Infrastructure/Utilities/ControlsIdCounter';
 
 @Component({
     selector: 'LogToolTip',
@@ -18,11 +19,22 @@ export class LogToolTipComponent implements AfterViewInit {
     @Input() public name: string = 'no1';
     @Input() public direction: string = 'bottomright';
     @Input() public mode: string = 'Info';
+    @Input() public float: string = null;
+    @Input() public bottom: number = 0;
+
+    private counterId:number;
 
     constructor() {
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
+       
+    }
+    ngOnInit(){
+        this.SetComponentId();
+    }
+    SetComponentId(){
+        this.counterId=ControlsIdCounter.GetNextControlIdCounter(name);
+        this.name+=this.counterId;
     }
     ngAfterViewInit(): void {
 

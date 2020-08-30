@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c5c793f3-49ea-418b-bc31-7191082852a7" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/HybridPartnersPermissionsWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="HybridPartnersPermissionsWcfService.xsd" MetadataType="Schema" ID="b427bacc-05d2-45c8-81bd-e101b8491ef2" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/HybridPartnersPermissionsWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="HybridPartnersPermissionsWcfService1.xsd" MetadataType="Schema" ID="25382479-871b-43e2-aa3c-f51f1f64ce84" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/HybridPartnersPermissionsWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="HybridPartnersPermissionsWcfService2.xsd" MetadataType="Schema" ID="2b1d35d4-2560-4352-85d7-180f143346a7" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/HybridPartnersPermissionsWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="HybridPartnersPermissionsWcfService3.xsd" MetadataType="Schema" ID="825234a2-2141-40fc-8553-55862864fd6e" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/HybridPartnersPermissionsWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="HybridPartnersPermissionsWcfService.disco" MetadataType="Disco" ID="d0bf1f3e-0869-487b-9e30-1763e6a30367" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/HybridPartnersPermissionsWcfService.svc?disco" />
+    <MetadataFile FileName="HybridPartnersPermissionsWcfService.wsdl" MetadataType="Wsdl" ID="f2e52f0f-4338-4704-a9c0-4a17c833539b" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/HybridPartnersPermissionsWcfService.svc?wsdl" />
+    <MetadataFile FileName="HybridPartnersPermissionsWcfService4.xsd" MetadataType="Schema" ID="027dad62-983a-47cd-afff-24de7c79570c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/HybridPartnersPermissionsWcfService.svc?xsd=xsd4" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

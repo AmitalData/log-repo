@@ -82,6 +82,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string Field10 { get; set; }           
         public string GrossWeightUnitCode { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
+        public string PickupDeliveryCWeightUnitCode { get; set; }
         public string DimensionsUnitCode { get; set; }
         public double? VolumetricWeight { get; set; }
         public double? Volume { get; set; }

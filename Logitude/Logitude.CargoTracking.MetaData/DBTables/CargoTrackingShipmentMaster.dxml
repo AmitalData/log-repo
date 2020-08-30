@@ -19,4 +19,28 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MainCarriageATD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageETD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageATA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageETA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

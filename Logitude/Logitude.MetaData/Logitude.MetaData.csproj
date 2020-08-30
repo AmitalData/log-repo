@@ -181,6 +181,7 @@
     </Content>
     <None Include="DBOthers\CommonDataModel\Procedures\ChangeVendorToTrucker.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldAuthenticationTokens.dxml" />
+    <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdateCardSearchFunction.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldAPILogs.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldCommunicationLogs.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldFilingInboxes.dxml" />
@@ -353,6 +354,7 @@
     <None Include="DBScripts\CommonModel\202007201436_FillWarehouseFieldsDefaultValues.sxml" />
     <None Include="DBScripts\CommonModel\202008051018_AddNewMeasurementAndChargesType.sxml" />
     <None Include="DBScripts\CommonModel\20200812_SetIATACodeToSRForImportStorageCharge.sxml" />
+    <None Include="DBScripts\CommonModel\202008110941_AddNewMeasurement.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingMilestoneFillValues.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingHeaderEntityTypeFillValues.sxml" />
     <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />
@@ -373,6 +375,11 @@
     <None Include="DBScripts\QuoteModel\202006151503_FillQuoteShipmentSubTypeBackward.sxml" />
     <None Include="DBScripts\QuoteModel\202007091327_UpdateAirQuotesSubType.sxml" />
     <None Include="DBScripts\QuoteModel\202007091330_UpdateNotAirQuotesSubType.sxml" />
+    <None Include="DBScripts\QuoteModel\202008211829_FillPickupDeliveryCWeightUnitCodeQuoteField.sxml" />
+    <None Include="DBScripts\QuoteModel\202008221040_FillPickupDeliveryRatioQuoteField.sxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DBScripts\QuoteModel\202008221130_FillPickupDeliveryChargeableWeightQuoteField.sxml" />
     <None Include="DBScripts\ShipmentModel\202006111511_AddAirShipmentType.sxml" />
     <None Include="DBScripts\ShipmentModel\202006111515_AddShipmentSubTypesToTenants.sxml" />
     <None Include="DBScripts\ShipmentModel\202006140958_FillAirShipmentShipmentTypeField.sxml" />

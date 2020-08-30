@@ -82,10 +82,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             CargoTableLists.Add(new CargoTable()
             {
                 TableName = "ShipmentMasterDatas",
-                FieldsDBName = "Id,Master,AutomaticLastUpdateDate",
+                FieldsDBName = "Id,Master,MainCarriageATD,MainCarriageETD,MainCarriageATA,MainCarriageETA,AutomaticLastUpdateDate",
                 KeyName = "Id",
                 ConditionKey = "Id",
-                CT_FieldsDBName = "Id,Master",
+                CT_FieldsDBName = "Id,Master,MainCarriageATD,MainCarriageETD,MainCarriageATA,MainCarriageETA",
                 DBTableName = "ShipmentMasterDatas",
                 CT_TableName = "CargoTrackingShipmentMasters",
                 Main_CT_TableName = "CargoTrackingShipmentMasters",
@@ -96,8 +96,23 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             CargoTableLists.Add(new CargoTable()
             {
+                TableName = "ShipmentComputedFields",
+                FieldsDBName = "Id,FirstPickupATD,FinalDeliveryATA,FinalDeliveryETA,AutomaticLastUpdateDate",
+                KeyName = "Id",
+                ConditionKey = "Id",
+                CT_FieldsDBName = "Id,FirstPickupATD,FinalDeliveryATA,FinalDeliveryETA",
+                DBTableName = "ShipmentComputedFields",
+                CT_TableName = "CargoTrackingShipmentComputeds",
+                Main_CT_TableName = "CargoTrackingShipmentComputeds",
+                Pre_TableName = "Pre_CargoTrackingShipmentComputeds",
+                ConditionsNumber = 1,
+
+            });
+
+            CargoTableLists.Add(new CargoTable()
+            {
                 TableName = "Shipment",
-                FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,MasterShipmentDataId,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,AutomaticLastUpdateDate,ShipmentPickUpIndex,FirstPickupETA,ShipmentLevelCode,CustomsClearanceDate,CustomFileId,CreateDateTime,SecurityKey,ConsigneeName,ShipperName,CustomerReference1,CustomerReference2",
+                FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,MasterShipmentDataId,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,AutomaticLastUpdateDate,ShipmentPickUpIndex,FirstPickupETA,ShipmentLevelCode,CustomsClearanceDate,CustomFileId,CreateDateTime,SecurityKey,ConsigneeName,ShipperName,CustomerReference1,CustomerReference2,FirstPickupETD,WarehouseLegActualEntryDate,WarehouseLegExpectedEntryDate,WarehouseLegRemarks,DeclarationDate,DirectionId",
                 KeyName = "Id",
                 ConditionKey = "EntityId",
                 DBTableName = "Shipments",
@@ -346,7 +361,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             if (buildCargoArgs.Table.Main_CT_TableName == "CargoTrackingShipments" && buildCargoArgs.Table.CurrentCondition==1)
             {
                 fieldName= " C." + fieldName.Replace(",", " ,C.");
-                cmd = "SELECT "+ fieldName+ ", P.Id as ForwardingIdForCustom " + " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName+ " C ON P.CustomFileId = C.Id";
+                cmd = "SELECT "+ fieldName+ ", P.Id as ForwardingIdForCustom,com.FinalDeliveryETA as FinalDeliveryETA,com.FinalDeliveryATA as FinalDeliveryATA ,com.FirstPickupATD as FirstPickupATD, Mas.MainCarriageATD as MainCarriageATD ,  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA , Mas.MainCarriageETA  as MainCarriageETA " + " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName+ " C ON P.CustomFileId = C.Id  Left Outer JOIN dbo.ShipmentComputedFields com on com.Id = P.Id  Left outer JOIN dbo.ShipmentMasterDatas Mas on Mas.Id = P.Id ";
                 if (CargoTrackingArguments == null)
                 {
                     LastUpdate = GetTableLastUpdate(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);
@@ -360,16 +375,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             else if (buildCargoArgs.Table.Main_CT_TableName == "CargoTrackingShipments" && buildCargoArgs.Table.CurrentCondition == 2)
             {
-                cmd = "Select "+ fieldName  + " FROM dbo. " + table.DBTableName + " Where Id not in (Select C.Id From  dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + " C ON P.CustomFileId = C.Id)";
+                fieldName = " P." + fieldName.Replace(",", " ,P.");
+                cmd = "Select " + fieldName + ", com.FinalDeliveryETA as FinalDeliveryETA,com.FinalDeliveryATA as FinalDeliveryATA ,com.FirstPickupATD as FirstPickupATD, Mas.MainCarriageATD as MainCarriageATD ,  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA , Mas.MainCarriageETA  as MainCarriageETA FROM dbo. " + table.DBTableName + " P Left Outer JOIN dbo.ShipmentComputedFields com on com.Id = P.Id  Left outer JOIN dbo.ShipmentMasterDatas Mas on Mas.Id = P.Id " + " Where P.Id not in (Select C.Id From  dbo." + table.DBTableName + " SH JOIN dbo." + table.DBTableName + " C ON SH.CustomFileId = C.Id) ";
+               
 
                 if (CargoTrackingArguments == null)
                 {
                     LastUpdate = GetTableLastUpdate(buildCargoArgs.Table.CT_TableName, buildCargoArgs.DestinationConnectionString);
-                    cmd += " and (AutomaticLastUpdateDate > '" + LastUpdate + "')";
+                    cmd += " and (P.AutomaticLastUpdateDate > '" + LastUpdate + "')";
                 }
                 else
                 {
-                    cmd += " and CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and CreateDateTime <= '" + CargoTrackingArguments.ToDate + "'";
+                    cmd += " and P.CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and P.CreateDateTime <= '" + CargoTrackingArguments.ToDate + "'";
 
                 }
 
@@ -713,6 +730,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                         SQL += CreateIndex_Pre_ShipmentSearchs(TableName);
                         break;
                     }
+                case "Pre_CargoTrackingShipmentMasters":
+                    {
+                        SQL = CreateTable_Pre_ShipmentMasters(TableName);
+                        break;
+                    }
+                case "Pre_CargoTrackingShipmentComputeds":
+                    {
+                        SQL = CreateTable_Pre_ShipmentComputeds(TableName);
+                        break;
+                    }
             }
             ExecuteSql(SQL, ConnectionString);
         }
@@ -749,7 +776,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             "[CountryId] VARCHAR(15) NOT NULL," +
                             "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])" +
                             ")" +
-                            " End";
+                            " End ";
 
             return cmd;
 
@@ -766,7 +793,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             "[LocalName] NVARCHAR(100) NULL,"+
                             "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
                             ")" +
-                            " End";
+                            " End ";
 
             return cmd;
 
@@ -783,7 +810,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             "[EnglishName] VARCHAR(120) NOT NULL,"+
                             "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
                             ")"+
-                            " End";
+                            " End ";
 
             return cmd;
 
@@ -799,7 +826,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             "[Name] VARCHAR(10) NOT NULL,"+
                             "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
                             ")"+
-                            " End";
+                            " End ";
 
             return cmd;
 
@@ -817,68 +844,109 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             "[Id] INT IDENTITY(1,1) NOT NULL,"+
                             "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
                             ")" +
-                            " \n";
+                            " ";
 
             return cmd;
 
         }
 
+
+        private string CreateTable_Pre_ShipmentComputeds(string TableName)
+        {
+            string cmd =  "If not exists (select * from sysobjects where name='" + TableName + "' and xtype='U')" +
+                          "BEGIN " +
+                          "CREATE TABLE [dbo].[" + TableName + "](" +
+                          "[Id] VARCHAR(15) NOT NULL," +
+                          "[FirstPickupATD] DATETIME NULL," +
+                          "[FinalDeliveryATA] DATETIME NULL," +
+                          "[FinalDeliveryETA] DATETIME NULL," +
+                          "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])" +
+                          ")" +
+                          " End ";
+
+            return cmd;
+        }
+
+        private string CreateTable_Pre_ShipmentMasters(string TableName)
+        {
+            string cmd = "If not exists (select * from sysobjects where name='" + TableName + "' and xtype='U')" +
+                          "BEGIN " +
+                          "CREATE TABLE [dbo].["+ TableName + "](" +
+                          "[Id] VARCHAR(16) NOT NULL,"+
+                          "[Master] VARCHAR(20) NULL,"+
+                          "[MainCarriageATD] DATETIME NULL," +
+                          "[MainCarriageETD] DATETIME NULL,"+
+                          "[MainCarriageATA] DATETIME NULL,"+
+                          "[MainCarriageETA] DATETIME NULL,"+
+                          "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
+                          ")"+
+                          " End ";
+            return cmd;
+        }
+
         private string CreateTable_Pre_Shipments(string TableName)
         {
             string cmd = "If not exists (select * from sysobjects where name='" + TableName + "' and xtype='U')" +
-                            "BEGIN " +
-                            "CREATE TABLE[dbo].["+ TableName + "]("+
-                            "[Id] INT IDENTITY(1,1) NOT NULL,"+
-                            "[Tenant] INT NOT NULL,"+
-                            "[EntityId] VARCHAR(15) NULL,"+
-                            "[ForwardingShipmentHeaderId] VARCHAR(15) NULL,"+
-                            "[CustomsShipmentHeaderId] VARCHAR(15) NULL,"+
-                            "[EntityType] VARCHAR(1) NULL,"+
-                            "[CurrentMilestoneCode] VARCHAR(2) NULL,"+
-                            "[CurrentMilestoneDate] DATETIME NULL,"+
-                            "[CustomerId] VARCHAR(15) NULL,"+
-                            "[TransportModeId] VARCHAR(15) NULL,"+
-                            "[Master] VARCHAR(20) NULL,"+
-                            "[House] VARCHAR(20) NULL,"+
-                            "[ShipmentNumber] VARCHAR(20) NULL,"+
-                            "[FromPortId] VARCHAR(15) NULL,"+
-                            "[ToPortId] VARCHAR(15) NULL,"+
-                            "[ShipperId] VARCHAR(15) NULL,"+
-                            "[ConsigneeId] VARCHAR(15) NULL,"+
-                            "[GrossWeight] FLOAT NULL,"+
-                            "[Volume] FLOAT NULL,"+
-                            "[PickupDone] BIT NULL,"+
-                            "[FromWarehouseDone] BIT NULL," +
-                            "[DepartureDone] BIT NULL," +
-                            "[ArrivalDone] BIT NULL," +
-                            "[ToWarehouseDate] DATETIME NULL," +
-                            "[DeliveredEstimationDate] DATETIME NULL," +
-                            "[ToWarehouseDone] BIT NULL," +
-                            "[CustomsPaymentDone] BIT NULL," +
-                            "[ClearanceDone] BIT NULL," +
-                            "[DeliveredDone] BIT NULL," +
-                            "[PickupDate] DATETIME NULL," +
-                            "[DeliveredDate] DATETIME NULL," +
-                            "[ArrivalDate] DATETIME NULL," +
-                            "[ArrivalEstimationDate] DATETIME NULL," +
-                            "[PickupEstimationDate] DATETIME NULL," +
-                            "[FromWarehouseEstimationDate] DATETIME NULL," +
-                            "[ToWarehouseEstimationDate] DATETIME NULL," +
-                            "[FromWarehouseDate] DATETIME NULL," +
-                            "[DepartureDate] DATETIME NULL," +
-                            "[DepartureEstimationDate] DATETIME NULL," +
-                            "[CreateDate] DATETIME NOT NULL," +
-                            "[CustomsPaymentDate] DATETIME NOT NULL," +
-                            "[ClearanceDate] DATETIME NOT NULL," +
-                            "[SecurityKey] VARCHAR(40) NULL," +
-                            "[ConsigneeName] VARCHAR(70) NULL,"+
-                            "[ShipperName] VARCHAR(70) NULL,"+
-                            "[FromWarehouseNotes] NVARCHAR(32) NULL," +
-                            "[ToWarehouseNotes] NVARCHAR(32) NULL," +
-                            "[CustomerReference] VARCHAR(101) NULL," +
-                            "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
-                            ")"+
-                            "\n";
+                             "BEGIN " +
+                             "CREATE TABLE [dbo].["+ TableName + "]("+
+                             "[Id] INT IDENTITY(1,1) NOT NULL," +
+                             "[Tenant] INT NOT NULL," +
+                             "[EntityId] VARCHAR(16) NULL," +
+                             "[ForwardingShipmentHeaderId] VARCHAR(15) NULL," +
+                             "[CustomsShipmentHeaderId] VARCHAR(15) NULL," +
+                             "[EntityType] VARCHAR(1) NULL," +
+                             "[CurrentMilestoneCode] VARCHAR(2) NULL," +
+                             "[CurrentMilestoneDate] DATETIME NULL," +
+                             "[CustomerId] VARCHAR(15) NULL," +
+                             "[TransportModeId] VARCHAR(15) NULL," +
+                             "[Master] VARCHAR(20) NULL," +
+                             "[House] VARCHAR(20) NULL," +
+                             "[ShipmentNumber] VARCHAR(20) NULL," +
+                             "[FromPortId] VARCHAR(15) NULL," +
+                             "[ToPortId] VARCHAR(15) NULL," +
+                             "[ShipperId] VARCHAR(15) NULL," +
+                             "[ConsigneeId] VARCHAR(15) NULL," +
+                             "[GrossWeight] FLOAT NULL," +
+                             "[Volume] FLOAT NULL," +
+                             "[PickupDone] BIT NULL," +
+                             "[PickupDate] DATETIME NULL," +
+                             "[CreateDate] DATETIME NOT NULL," +
+                             "[SecurityKey] VARCHAR(40) NULL," +
+                             "[ConsigneeName] VARCHAR(70) NULL," +
+                             "[ShipperName] VARCHAR(70) NULL," +
+                             "[CustomerReference] VARCHAR(101) NULL," +
+                             "[IsMainRecord] BIT DEFAULT(0) NOT NULL," +
+                             "[PickupEstimationDate] DATETIME NULL," +
+                             "[FromWarehouseDate] DATETIME NULL," +
+                             "[FromWarehouseEstimationDate] DATETIME NULL," +
+                             "[FromWarehouseNotes] NVARCHAR(32) NULL," +
+                             "[DepartureDone] BIT NULL," +
+                             "[DepartureDate] DATETIME NULL," +
+                             "[DepartureEstimationDate] DATETIME NULL," +
+                             "[ArrivalDone] BIT NULL," +
+                             "[ArrivalDate] DATETIME NULL," +
+                             "[ArrivalEstimationDate] DATETIME NULL," +
+                             "[ToWarehouseDone] BIT NULL," +
+                             "[ToWarehouseDate] DATETIME NULL," +
+                             "[ToWarehouseEstimationDate] DATETIME NULL," +
+                             "[ToWarehouseNotes] NVARCHAR(32) NULL," +
+                             "[CustomsPaymentDone] BIT NULL," +
+                             "[CustomsPaymentDate] DATETIME NULL," +
+                             "[ClearanceDone] BIT NULL," +
+                             "[ClearanceDate] DATETIME NULL," +
+                             "[DeliveredDone] BIT NULL," +
+                             "[DeliveredDate] DATETIME NULL," +
+                             "[DeliveredEstimationDate] DATETIME NULL," +
+                             "[FromWarehouseDone] BIT NULL," +
+                             "[FirstPickupETD] DATETIME NULL," +
+                             "[WarehouseLegActualEntryDate] DATETIME NULL," +
+                             "[WarehouseLegExpectedEntryDate] DATETIME NULL," +
+                             "[WarehouseLegRemarks] NVARCHAR(500) NULL," +
+                             "[DeclarationDate] DATETIME NULL," +
+                             "[CustomsClearanceDate] DATETIME NULL," +
+                             "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])" +
+                             ")"+
+                             " ";
 
             return cmd;
 

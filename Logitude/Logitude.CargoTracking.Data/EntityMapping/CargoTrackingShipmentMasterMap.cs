@@ -26,6 +26,14 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Master).HasColumnName("Master").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.MainCarriageATD).HasColumnName("MainCarriageATD");
+
+            this.Property(t => t.MainCarriageETD).HasColumnName("MainCarriageETD");
+
+            this.Property(t => t.MainCarriageATA).HasColumnName("MainCarriageATA");
+
+            this.Property(t => t.MainCarriageETA).HasColumnName("MainCarriageETA");
         }
     }
 }

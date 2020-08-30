@@ -269,6 +269,36 @@ export class CargoTrackingShipmentPM {
     public set FromWarehouseDone(newValue: boolean) { if (this.fromWarehouseDone != newValue) { this.fromWarehouseDone = newValue; this.MarkAsDirty("FromWarehouseDone"); } }
        
 	 
+    private firstPickupETD: Date;
+    public get FirstPickupETD() { return this.firstPickupETD; }
+    public set FirstPickupETD(newValue: Date) { if (this.firstPickupETD != newValue) { this.firstPickupETD = newValue; this.MarkAsDirty("FirstPickupETD"); } }
+       
+	 
+    private warehouseLegActualEntryDate: Date;
+    public get WarehouseLegActualEntryDate() { return this.warehouseLegActualEntryDate; }
+    public set WarehouseLegActualEntryDate(newValue: Date) { if (this.warehouseLegActualEntryDate != newValue) { this.warehouseLegActualEntryDate = newValue; this.MarkAsDirty("WarehouseLegActualEntryDate"); } }
+       
+	 
+    private warehouseLegExpectedEntryDate: Date;
+    public get WarehouseLegExpectedEntryDate() { return this.warehouseLegExpectedEntryDate; }
+    public set WarehouseLegExpectedEntryDate(newValue: Date) { if (this.warehouseLegExpectedEntryDate != newValue) { this.warehouseLegExpectedEntryDate = newValue; this.MarkAsDirty("WarehouseLegExpectedEntryDate"); } }
+       
+	 
+    private warehouseLegRemarks: string;
+    public get WarehouseLegRemarks() { return this.warehouseLegRemarks; }
+    public set WarehouseLegRemarks(newValue: string) { if (this.warehouseLegRemarks != newValue) { this.warehouseLegRemarks = newValue; this.MarkAsDirty("WarehouseLegRemarks"); } }
+       
+	 
+    private declarationDate: Date;
+    public get DeclarationDate() { return this.declarationDate; }
+    public set DeclarationDate(newValue: Date) { if (this.declarationDate != newValue) { this.declarationDate = newValue; this.MarkAsDirty("DeclarationDate"); } }
+       
+	 
+    private customsClearanceDate: Date;
+    public get CustomsClearanceDate() { return this.customsClearanceDate; }
+    public set CustomsClearanceDate(newValue: Date) { if (this.customsClearanceDate != newValue) { this.customsClearanceDate = newValue; this.MarkAsDirty("CustomsClearanceDate"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

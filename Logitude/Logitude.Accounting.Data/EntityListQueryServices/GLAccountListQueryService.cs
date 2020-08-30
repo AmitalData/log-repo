@@ -116,7 +116,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         Category3Name = a.Category3.EnglishName,
                                                         Category4Name = a.Category4.EnglishName,
                                                         Category5Name = a.Category5.EnglishName,
-
+                                                        ActiveForInterest =a.ActiveForInterest,
+                                                        ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
+                                                        MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
+                                                        InterestCalculationStartDate = a.InterestCalculationStartDate,
+                                                       
+                                                         
 
                                                         // Created & Updated
                                                         CreateDate = a.CreateDate,

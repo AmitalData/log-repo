@@ -123,6 +123,18 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public DateTime? DeliveredEstimationDate { get; set; }
         [Column("FromWarehouseDone")]
 	    public bool? FromWarehouseDone { get; set; }
+        [Column("FirstPickupETD")]
+	    public DateTime? FirstPickupETD { get; set; }
+        [Column("WarehouseLegActualEntryDate")]
+	    public DateTime? WarehouseLegActualEntryDate { get; set; }
+        [Column("WarehouseLegExpectedEntryDate")]
+	    public DateTime? WarehouseLegExpectedEntryDate { get; set; }
+        [Column("WarehouseLegRemarks")]
+	    public string WarehouseLegRemarks { get; set; }
+        [Column("DeclarationDate")]
+	    public DateTime? DeclarationDate { get; set; }
+        [Column("CustomsClearanceDate")]
+	    public DateTime? CustomsClearanceDate { get; set; }
     }
 }
 	 

@@ -1,0 +1,2269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{928B4241-32E4-455A-9DE7-BFF24352B4CE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HypredTest</RootNamespace>
+    <AssemblyName>HypredTest</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Json2KeyValue, Version=1.1.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Json2KeyValue.1.3.0.3\lib\net40\Json2KeyValue.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Logitude.Server.Tools">
+      <HintPath>..\..\..\Logitude\Logitude.Server.Tools\bin\Debug\Logitude.Server.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.7.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.ServiceBus.3.4.5\lib\net45-full\Microsoft.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Simplog.Server.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Simplog.Server.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiCredential.cs" />
+    <Compile Include="APICredentialsParameters.cs" />
+    <Compile Include="FileInfo.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ObjectXmlSerializer.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\ActivityProxyCloud\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ActivityProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\AddressProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\AgentProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\AirlineProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\AmitalIIGTestCustomerProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\AmitalIIGTestLoginProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\AutoSignUpProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\BranchProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CardContactProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CityProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ContactPasswordProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ContactProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CountryProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CurrencyProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CustomAgentProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CustomerProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CustomerWDProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DepartmentProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DocumentInProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DocumentsMetaDataTypeProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DocumentTypeProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\EntityStatusProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\EventTypeProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ExternalTasksQueueIIGTestProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ExternalTasksQueueProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\FeatureProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\HybridPartnerProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\HybridPartnersPermissionsProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\HybridTenantStateProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\IncotermProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\InsertCommTaskProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\LogingProxyCloud\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\LoginProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\OpportunityProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\PackageTypeProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\PaymentTermProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\PortProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\QuoteProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ServiceReference12222\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ShipmentCloudProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ShipmentProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ShippingAgentProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ShippingLineProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\TenantManagementDWProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\TruckerProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\UserProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\VendorProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\VesselProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WarehouseProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="ThreadCpuCalculator.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\Simplog.Server.Infrastructure.DataContracts.DocumentDataPM.datasource" />
+    <None Include="Properties\DataSources\WebFreight.Web.WcfApi.Response.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Service References\ActivityProxyCloud\ActivityWcfService.wsdl" />
+    <None Include="Service References\ActivityProxyCloud\ActivityWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxyCloud\ActivityWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxyCloud\ActivityWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxyCloud\ActivityWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxyCloud\ActivityWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxyCloud\ActivityWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxyCloud\ActivityWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxyCloud\ActivityWcfService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxyCloud\HypredTest.ActivityProxyCloud.ActivityPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ActivityProxyCloud\HypredTest.ActivityProxyCloud.GetActivitiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ActivityProxyCloud\HypredTest.ActivityProxyCloud.GetActivityPMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ActivityProxyCloud\HypredTest.ActivityProxyCloud.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ActivityProxy\ActivityWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxy\ActivityWcfService1.wsdl" />
+    <None Include="Service References\ActivityProxy\ActivityWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxy\ActivityWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxy\ActivityWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxy\ActivityWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxy\ActivityWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxy\ActivityWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActivityProxy\HypredTest.ActivityProxy.ActivityPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ActivityProxy\HypredTest.ActivityProxy.GetActivitiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ActivityProxy\HypredTest.ActivityProxy.GetActivityPMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ActivityProxy\HypredTest.ActivityProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AddressProxy\AddressWcfService1.wsdl" />
+    <None Include="Service References\AddressProxy\AddressWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressProxy\AddressWcfService41.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressProxy\AddressWcfService42.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressProxy\AddressWcfService43.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressProxy\AddressWcfService44.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressProxy\HypredTest.AddressProxy.AddressPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AddressProxy\HypredTest.AddressProxy.GetAddressByExternalIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AddressProxy\HypredTest.AddressProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AgentProxy\AgentWcfService.wsdl" />
+    <None Include="Service References\AgentProxy\AgentWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AgentProxy\AgentWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AgentProxy\AgentWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AgentProxy\AgentWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AgentProxy\HypredTest.AgentProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AirlineProxy\AirlineWcfService.wsdl" />
+    <None Include="Service References\AirlineProxy\AirlineWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AirlineProxy\AirlineWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AirlineProxy\AirlineWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AirlineProxy\AirlineWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AirlineProxy\HypredTest.AirlineProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\CustomerWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\CustomerWcfService1.wsdl" />
+    <None Include="Service References\AmitalIIGTestCustomerProxy\CustomerWcfService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\CustomerWcfService81.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\CustomerWcfService82.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\CustomerWcfService83.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\CustomerWcfService84.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\CustomerWcfService85.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\CustomerWcfService86.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\CustomerWcfService87.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\HypredTest.AmitalIIGTestCustomerProxy.AddressPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\HypredTest.AmitalIIGTestCustomerProxy.ContactPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\HypredTest.AmitalIIGTestCustomerProxy.CustomerList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\HypredTest.AmitalIIGTestCustomerProxy.CustomerPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\HypredTest.AmitalIIGTestCustomerProxy.GetCustomerAddressesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\HypredTest.AmitalIIGTestCustomerProxy.GetCustomerContactsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\HypredTest.AmitalIIGTestCustomerProxy.GetCustomerListByEmailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\HypredTest.AmitalIIGTestCustomerProxy.GetCustomerListByIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\HypredTest.AmitalIIGTestCustomerProxy.GetCustomerListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\HypredTest.AmitalIIGTestCustomerProxy.GetCustomerPMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\HypredTest.AmitalIIGTestCustomerProxy.GetReadyForActivationCustomerResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\HypredTest.AmitalIIGTestCustomerProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestLoginProxy\HypredTest.AmitalIIGTestLoginProxy.GetUserTenantsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestLoginProxy\HypredTest.AmitalIIGTestLoginProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestLoginProxy\HypredTest.AmitalIIGTestLoginProxy.TenantInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AmitalIIGTestLoginProxy\LoginWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AmitalIIGTestLoginProxy\LoginWcfService1.wsdl" />
+    <None Include="Service References\AmitalIIGTestLoginProxy\LoginWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AmitalIIGTestLoginProxy\LoginWcfService41.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AmitalIIGTestLoginProxy\LoginWcfService42.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AmitalIIGTestLoginProxy\LoginWcfService43.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AutoSignUpProxy\AutoSignUpWcfService.wsdl" />
+    <None Include="Service References\AutoSignUpProxy\AutoSignUpWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AutoSignUpProxy\AutoSignUpWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AutoSignUpProxy\AutoSignUpWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AutoSignUpProxy\AutoSignUpWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AutoSignUpProxy\HypredTest.AutoSignUpProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BranchProxy\BranchWcfService1.wsdl" />
+    <None Include="Service References\BranchProxy\BranchWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BranchProxy\BranchWcfService41.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BranchProxy\BranchWcfService42.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BranchProxy\BranchWcfService43.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BranchProxy\HypredTest.BranchProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CardContactProxy\CardContactWcfService1.wsdl" />
+    <None Include="Service References\CardContactProxy\CardContactWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CardContactProxy\CardContactWcfService51.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CardContactProxy\CardContactWcfService52.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CardContactProxy\CardContactWcfService53.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CardContactProxy\CardContactWcfService54.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CardContactProxy\CardContactWcfService55.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CardContactProxy\HypredTest.CardContactProxy.CardContactPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CardContactProxy\HypredTest.CardContactProxy.GetCardContactPMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CardContactProxy\HypredTest.CardContactProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CityProxy\CityWcfService.wsdl" />
+    <None Include="Service References\CityProxy\CityWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CityProxy\CityWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CityProxy\CityWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CityProxy\CityWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CityProxy\CityWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CityProxy\HypredTest.CityProxy.CountryCityList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CityProxy\HypredTest.CityProxy.GetCityListByCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CityProxy\HypredTest.CityProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ContactPasswordProxy\ContactPasswordService.wsdl" />
+    <None Include="Service References\ContactPasswordProxy\ContactPasswordService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ContactPasswordProxy\ContactPasswordService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ContactPasswordProxy\ContactPasswordService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ContactPasswordProxy\HypredTest.ContactPasswordProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ContactProxy\ContactWcfService1.wsdl" />
+    <None Include="Service References\ContactProxy\ContactWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ContactProxy\ContactWcfService61.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ContactProxy\ContactWcfService62.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ContactProxy\ContactWcfService63.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ContactProxy\ContactWcfService64.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ContactProxy\ContactWcfService65.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ContactProxy\ContactWcfService66.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ContactProxy\HypredTest.ContactProxy.ContactList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ContactProxy\HypredTest.ContactProxy.ContactPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ContactProxy\HypredTest.ContactProxy.GetContactByExternalIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ContactProxy\HypredTest.ContactProxy.GetContactListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ContactProxy\HypredTest.ContactProxy.GetContactPMByEmailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ContactProxy\HypredTest.ContactProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CountryProxy\CountryWcfService1.wsdl" />
+    <None Include="Service References\CountryProxy\CountryWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CountryProxy\CountryWcfService41.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CountryProxy\CountryWcfService42.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CountryProxy\CountryWcfService43.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CountryProxy\CountryWcfService44.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CountryProxy\CountryWcfService45.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CountryProxy\HypredTest.CountryProxy.CountryList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CountryProxy\HypredTest.CountryProxy.GetListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CountryProxy\HypredTest.CountryProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CurrencyProxy\CurrencyWcfService.wsdl" />
+    <None Include="Service References\CurrencyProxy\CurrencyWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CurrencyProxy\CurrencyWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CurrencyProxy\CurrencyWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CurrencyProxy\CurrencyWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CurrencyProxy\CurrencyWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CurrencyProxy\CurrencyWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CurrencyProxy\HypredTest.CurrencyProxy.CurrencyList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CurrencyProxy\HypredTest.CurrencyProxy.GetListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CurrencyProxy\HypredTest.CurrencyProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomAgentProxy\CustomAgentWcfService.wsdl" />
+    <None Include="Service References\CustomAgentProxy\CustomAgentWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomAgentProxy\CustomAgentWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomAgentProxy\CustomAgentWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomAgentProxy\CustomAgentWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomAgentProxy\CustomAgentWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomAgentProxy\HypredTest.CustomAgentProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerProxy\CustomerWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerProxy\CustomerWcfService1.wsdl" />
+    <None Include="Service References\CustomerProxy\CustomerWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerProxy\CustomerWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerProxy\CustomerWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerProxy\CustomerWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerProxy\CustomerWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerProxy\CustomerWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerProxy\CustomerWcfService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerProxy\CustomerWcfService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerProxy\HypredTest.CustomerProxy.AddressPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerProxy\HypredTest.CustomerProxy.ContactPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerProxy\HypredTest.CustomerProxy.CustomerList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerProxy\HypredTest.CustomerProxy.CustomerPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerProxy\HypredTest.CustomerProxy.GetCustomerAddressesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerProxy\HypredTest.CustomerProxy.GetCustomerContactsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerProxy\HypredTest.CustomerProxy.GetCustomerListByEmailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerProxy\HypredTest.CustomerProxy.GetCustomerListByIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerProxy\HypredTest.CustomerProxy.GetCustomerListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerProxy\HypredTest.CustomerProxy.GetCustomerPMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerProxy\HypredTest.CustomerProxy.GetReadyForActivationCustomerResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerProxy\HypredTest.CustomerProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerWDProxy\CustomerDWWcfService.wsdl" />
+    <None Include="Service References\CustomerWDProxy\CustomerDWWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerWDProxy\CustomerDWWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerWDProxy\CustomerDWWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerWDProxy\CustomerDWWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerWDProxy\CustomerDWWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerWDProxy\CustomerDWWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerWDProxy\CustomerDWWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomerWDProxy\HypredTest.CustomerWDProxy.CustomerDW.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerWDProxy\HypredTest.CustomerWDProxy.GetCustomersByUpdateDateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerWDProxy\HypredTest.CustomerWDProxy.GetCustomersCountByUpdateDateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerWDProxy\HypredTest.CustomerWDProxy.GetCustomersCountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerWDProxy\HypredTest.CustomerWDProxy.GetCustomersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CustomerWDProxy\HypredTest.CustomerWDProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DepartmentProxy\DepartmentWcfService.wsdl" />
+    <None Include="Service References\DepartmentProxy\DepartmentWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DepartmentProxy\DepartmentWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DepartmentProxy\DepartmentWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DepartmentProxy\DepartmentWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DepartmentProxy\HypredTest.DepartmentProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DocumentInProxy\DocumentInWcfService.wsdl" />
+    <None Include="Service References\DocumentInProxy\DocumentInWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentInProxy\DocumentInWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentInProxy\DocumentInWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentInProxy\DocumentInWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentInProxy\DocumentInWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentInProxy\DocumentInWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentInProxy\DocumentInWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentInProxy\HypredTest.DocumentInProxy.DocumentsFilingPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DocumentInProxy\HypredTest.DocumentInProxy.GetDocumentDataByExternalIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DocumentInProxy\HypredTest.DocumentInProxy.GetDocumentDataByExternalIdWithoutBinarayResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DocumentInProxy\HypredTest.DocumentInProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DocumentsMetaDataTypeProxy\DocumentsMetaDataTypeWcfService.wsdl" />
+    <None Include="Service References\DocumentsMetaDataTypeProxy\DocumentsMetadataTypeWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentsMetaDataTypeProxy\DocumentsMetadataTypeWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentsMetaDataTypeProxy\DocumentsMetadataTypeWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentsMetaDataTypeProxy\DocumentsMetadataTypeWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentsMetaDataTypeProxy\HypredTest.DocumentsMetaDataTypeProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DocumentTypeProxy\DocumentTypeWcfService1.wsdl" />
+    <None Include="Service References\DocumentTypeProxy\DocumentTypeWcfService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentTypeProxy\DocumentTypeWcfService71.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentTypeProxy\DocumentTypeWcfService72.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentTypeProxy\DocumentTypeWcfService73.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentTypeProxy\DocumentTypeWcfService74.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentTypeProxy\DocumentTypeWcfService75.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentTypeProxy\DocumentTypeWcfService76.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentTypeProxy\HypredTest.DocumentTypeProxy.DocumentTypeList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DocumentTypeProxy\HypredTest.DocumentTypeProxy.DocumentTypePM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DocumentTypeProxy\HypredTest.DocumentTypeProxy.GetDocumentTypeByCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DocumentTypeProxy\HypredTest.DocumentTypeProxy.GetDocumentTypesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DocumentTypeProxy\HypredTest.DocumentTypeProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\EntityStatusProxy\EntityStatusWcfService1.wsdl" />
+    <None Include="Service References\EntityStatusProxy\EntityStatusWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EntityStatusProxy\EntityStatusWcfService41.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EntityStatusProxy\EntityStatusWcfService42.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EntityStatusProxy\EntityStatusWcfService43.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EntityStatusProxy\EntityStatusWcfService44.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EntityStatusProxy\HypredTest.EntityStatusProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\EventTypeProxy\EventTypeWcfService.wsdl" />
+    <None Include="Service References\EventTypeProxy\EventTypeWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EventTypeProxy\EventTypeWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EventTypeProxy\EventTypeWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EventTypeProxy\EventTypeWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EventTypeProxy\HypredTest.EventTypeProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExternalTasksQueueIIGTestProxy\ExternalTasksQueueWcfService.wsdl" />
+    <None Include="Service References\ExternalTasksQueueIIGTestProxy\ExternalTasksQueueWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalTasksQueueIIGTestProxy\ExternalTasksQueueWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalTasksQueueIIGTestProxy\ExternalTasksQueueWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalTasksQueueIIGTestProxy\HypredTest.ExternalTasksQueueIIGTestProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExternalTasksQueueProxy\ExternalTasksQueueWcfService1.wsdl" />
+    <None Include="Service References\ExternalTasksQueueProxy\ExternalTasksQueueWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalTasksQueueProxy\ExternalTasksQueueWcfService41.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalTasksQueueProxy\ExternalTasksQueueWcfService42.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalTasksQueueProxy\ExternalTasksQueueWcfService43.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalTasksQueueProxy\HypredTest.ExternalTasksQueueProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FeatureProxy\FeatureWcfService.wsdl" />
+    <None Include="Service References\FeatureProxy\FeatureWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FeatureProxy\FeatureWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FeatureProxy\FeatureWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FeatureProxy\FeatureWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FeatureProxy\FeatureWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FeatureProxy\HypredTest.FeatureProxy.FeatureAccessInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FeatureProxy\HypredTest.FeatureProxy.GetActiveFeaturesForUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FeatureProxy\HypredTest.FeatureProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HybridPartnerProxy\HybridPartnerWcfService.wsdl" />
+    <None Include="Service References\HybridPartnerProxy\HybridPartnerWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridPartnerProxy\HybridPartnerWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridPartnerProxy\HybridPartnerWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridPartnerProxy\HybridPartnerWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridPartnerProxy\HybridPartnerWcfService31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridPartnerProxy\HypredTest.HybridPartnerProxy.GetMislakaPartnersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HybridPartnerProxy\HypredTest.HybridPartnerProxy.HybridPartnerList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HybridPartnerProxy\HypredTest.HybridPartnerProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HybridPartnersPermissionsProxy\HybridPartnersPermissionsWcfService.wsdl" />
+    <None Include="Service References\HybridPartnersPermissionsProxy\HybridPartnersPermissionsWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridPartnersPermissionsProxy\HybridPartnersPermissionsWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridPartnersPermissionsProxy\HybridPartnersPermissionsWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridPartnersPermissionsProxy\HybridPartnersPermissionsWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridPartnersPermissionsProxy\HybridPartnersPermissionsWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridPartnersPermissionsProxy\HypredTest.HybridPartnersPermissionsProxy.GetAllowedPartnersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HybridPartnersPermissionsProxy\HypredTest.HybridPartnersPermissionsProxy.HybridPartnerList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HybridPartnersPermissionsProxy\HypredTest.HybridPartnersPermissionsProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService.wsdl" />
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HypredTest.HybridTenantStateProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IncotermProxy\HypredTest.IncotermProxy.GetIncotermsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IncotermProxy\HypredTest.IncotermProxy.IncotermList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IncotermProxy\HypredTest.IncotermProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IncotermProxy\IncotermWcfService.wsdl" />
+    <None Include="Service References\IncotermProxy\IncotermWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\IncotermProxy\IncotermWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\IncotermProxy\IncotermWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\IncotermProxy\IncotermWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\IncotermProxy\IncotermWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\IncotermProxy\IncotermWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InsertCommTaskProxy\HypredTest.InsertCommTaskProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InsertCommTaskProxy\InsertCommTaskWcfService.wsdl" />
+    <None Include="Service References\InsertCommTaskProxy\InsertCommTaskWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InsertCommTaskProxy\InsertCommTaskWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InsertCommTaskProxy\InsertCommTaskWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InsertCommTaskProxy\InsertCommTaskWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogingProxyCloud\HypredTest.LogingProxyCloud.GetUserTenantsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\LogingProxyCloud\HypredTest.LogingProxyCloud.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\LogingProxyCloud\HypredTest.LogingProxyCloud.TenantInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\LogingProxyCloud\LoginWcfService1.wsdl" />
+    <None Include="Service References\LogingProxyCloud\LoginWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogingProxyCloud\LoginWcfService51.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogingProxyCloud\LoginWcfService52.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogingProxyCloud\LoginWcfService53.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogingProxyCloud\LoginWcfService54.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoginProxy\HypredTest.LoginProxy.GetUserTenantsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\LoginProxy\HypredTest.LoginProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\LoginProxy\HypredTest.LoginProxy.TenantInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\LoginProxy\LoginWcfService1.wsdl" />
+    <None Include="Service References\LoginProxy\LoginWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoginProxy\LoginWcfService51.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoginProxy\LoginWcfService52.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoginProxy\LoginWcfService53.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoginProxy\LoginWcfService54.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OpportunityProxy\HypredTest.OpportunityProxy.CustomerList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OpportunityProxy\HypredTest.OpportunityProxy.GetCustomerListByOpportunityIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OpportunityProxy\HypredTest.OpportunityProxy.GetOpportunityListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OpportunityProxy\HypredTest.OpportunityProxy.OpportunityList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OpportunityProxy\HypredTest.OpportunityProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OpportunityProxy\OpportunityWcfService.wsdl" />
+    <None Include="Service References\OpportunityProxy\OpportunityWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OpportunityProxy\OpportunityWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OpportunityProxy\OpportunityWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OpportunityProxy\OpportunityWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OpportunityProxy\OpportunityWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OpportunityProxy\OpportunityWcfService41.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PackageTypeProxy\HypredTest.PackageTypeProxy.GetPackageTypeListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PackageTypeProxy\HypredTest.PackageTypeProxy.PackageTypeList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PackageTypeProxy\HypredTest.PackageTypeProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PackageTypeProxy\PackageTypeWcfService.wsdl" />
+    <None Include="Service References\PackageTypeProxy\PackageTypeWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PackageTypeProxy\PackageTypeWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PackageTypeProxy\PackageTypeWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PackageTypeProxy\PackageTypeWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PackageTypeProxy\PackageTypeWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PackageTypeProxy\PackageTypeWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PaymentTermProxy\HypredTest.PaymentTermProxy.GetPaymentTermsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PaymentTermProxy\HypredTest.PaymentTermProxy.PaymentTermList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PaymentTermProxy\HypredTest.PaymentTermProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PaymentTermProxy\PaymentTermWcfService.wsdl" />
+    <None Include="Service References\PaymentTermProxy\PaymentTermWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PaymentTermProxy\PaymentTermWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PaymentTermProxy\PaymentTermWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PaymentTermProxy\PaymentTermWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PaymentTermProxy\PaymentTermWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PortProxy\HypredTest.PortProxy.GetListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PortProxy\HypredTest.PortProxy.GetPortIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PortProxy\HypredTest.PortProxy.PortList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PortProxy\HypredTest.PortProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PortProxy\PortWcfService1.wsdl" />
+    <None Include="Service References\PortProxy\PortWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PortProxy\PortWcfService61.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PortProxy\PortWcfService62.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PortProxy\PortWcfService63.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PortProxy\PortWcfService64.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PortProxy\PortWcfService65.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PortProxy\PortWcfService66.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QuoteProxy\HypredTest.QuoteProxy.GetQuoteListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QuoteProxy\HypredTest.QuoteProxy.QuoteList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QuoteProxy\HypredTest.QuoteProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QuoteProxy\QuoteWcfService.wsdl" />
+    <None Include="Service References\QuoteProxy\QuoteWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QuoteProxy\QuoteWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QuoteProxy\QuoteWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QuoteProxy\QuoteWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QuoteProxy\QuoteWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QuoteProxy\QuoteWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QuoteProxy\QuoteWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QuoteProxy\QuoteWcfService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QuoteProxy\QuoteWcfService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QuoteProxy\QuoteWcfService9.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference12222\TestService.wsdl" />
+    <None Include="Service References\ServiceReference12222\TestService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentCloudProxy\HypredTest.ShipmentCloudProxy.GetShipmentListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShipmentCloudProxy\HypredTest.ShipmentCloudProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShipmentCloudProxy\HypredTest.ShipmentCloudProxy.ShipmentList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShipmentCloudProxy\ShipmentWcfService1.wsdl" />
+    <None Include="Service References\ShipmentCloudProxy\ShipmentWcfService10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentCloudProxy\ShipmentWcfService101.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentCloudProxy\ShipmentWcfService102.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentCloudProxy\ShipmentWcfService103.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentCloudProxy\ShipmentWcfService104.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentCloudProxy\ShipmentWcfService105.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentCloudProxy\ShipmentWcfService106.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentCloudProxy\ShipmentWcfService107.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentCloudProxy\ShipmentWcfService108.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentCloudProxy\ShipmentWcfService109.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentProxy\HypredTest.ShipmentProxy.GetShipmentListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShipmentProxy\HypredTest.ShipmentProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShipmentProxy\HypredTest.ShipmentProxy.ShipmentList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShipmentProxy\ShipmentWcfService.wsdl" />
+    <None Include="Service References\ShipmentProxy\ShipmentWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentProxy\ShipmentWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentProxy\ShipmentWcfService10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentProxy\ShipmentWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentProxy\ShipmentWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentProxy\ShipmentWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentProxy\ShipmentWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentProxy\ShipmentWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentProxy\ShipmentWcfService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentProxy\ShipmentWcfService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentProxy\ShipmentWcfService9.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingAgentProxy\HypredTest.ShippingAgentProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShippingAgentProxy\ShippingAgentWcfService.wsdl" />
+    <None Include="Service References\ShippingAgentProxy\ShippingAgentWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingAgentProxy\ShippingAgentWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingAgentProxy\ShippingAgentWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingAgentProxy\ShippingAgentWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingLineProxy\HypredTest.ShippingLineProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService.wsdl" />
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TenantManagementDWProxy\HypredTest.TenantManagementDWProxy.GetTenantManagementsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TenantManagementDWProxy\HypredTest.TenantManagementDWProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TenantManagementDWProxy\HypredTest.TenantManagementDWProxy.TenantManagementDW.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TenantManagementDWProxy\TenantManagementDWWcfService.wsdl" />
+    <None Include="Service References\TenantManagementDWProxy\TenantManagementDWWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TenantManagementDWProxy\TenantManagementDWWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TenantManagementDWProxy\TenantManagementDWWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TenantManagementDWProxy\TenantManagementDWWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TenantManagementDWProxy\TenantManagementDWWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TruckerProxy\HypredTest.TruckerProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TruckerProxy\TruckerWcfService.wsdl" />
+    <None Include="Service References\TruckerProxy\TruckerWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TruckerProxy\TruckerWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TruckerProxy\TruckerWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TruckerProxy\TruckerWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserProxy\HypredTest.UserProxy.GetUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserProxy\HypredTest.UserProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserProxy\HypredTest.UserProxy.UserPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserProxy\UserWcfService.wsdl" />
+    <None Include="Service References\UserProxy\UserWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserProxy\UserWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserProxy\UserWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserProxy\UserWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserProxy\UserWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserProxy\UserWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserProxy\UserWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VendorProxy\HypredTest.VendorProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\VendorProxy\VendorWcfService.wsdl" />
+    <None Include="Service References\VendorProxy\VendorWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VendorProxy\VendorWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VendorProxy\VendorWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VendorProxy\VendorWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VendorProxy\VendorWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VesselProxy\HypredTest.VesselProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\VesselProxy\VesselWcfServcie.wsdl" />
+    <None Include="Service References\VesselProxy\VesselWcfServcie.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VesselProxy\VesselWcfServcie1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VesselProxy\VesselWcfServcie2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VesselProxy\VesselWcfServcie3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarehouseProxy\HypredTest.WarehouseProxy.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService.wsdl" />
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ActivityProxyCloud\" />
+    <WCFMetadataStorage Include="Service References\ActivityProxy\" />
+    <WCFMetadataStorage Include="Service References\AddressProxy\" />
+    <WCFMetadataStorage Include="Service References\AgentProxy\" />
+    <WCFMetadataStorage Include="Service References\AirlineProxy\" />
+    <WCFMetadataStorage Include="Service References\AmitalIIGTestCustomerProxy\" />
+    <WCFMetadataStorage Include="Service References\AmitalIIGTestLoginProxy\" />
+    <WCFMetadataStorage Include="Service References\AutoSignUpProxy\" />
+    <WCFMetadataStorage Include="Service References\BranchProxy\" />
+    <WCFMetadataStorage Include="Service References\CardContactProxy\" />
+    <WCFMetadataStorage Include="Service References\CityProxy\" />
+    <WCFMetadataStorage Include="Service References\ContactPasswordProxy\" />
+    <WCFMetadataStorage Include="Service References\ContactProxy\" />
+    <WCFMetadataStorage Include="Service References\CountryProxy\" />
+    <WCFMetadataStorage Include="Service References\CurrencyProxy\" />
+    <WCFMetadataStorage Include="Service References\CustomAgentProxy\" />
+    <WCFMetadataStorage Include="Service References\CustomerProxy\" />
+    <WCFMetadataStorage Include="Service References\CustomerWDProxy\" />
+    <WCFMetadataStorage Include="Service References\DepartmentProxy\" />
+    <WCFMetadataStorage Include="Service References\DocumentInProxy\" />
+    <WCFMetadataStorage Include="Service References\DocumentsMetaDataTypeProxy\" />
+    <WCFMetadataStorage Include="Service References\DocumentTypeProxy\" />
+    <WCFMetadataStorage Include="Service References\EntityStatusProxy\" />
+    <WCFMetadataStorage Include="Service References\EventTypeProxy\" />
+    <WCFMetadataStorage Include="Service References\ExternalTasksQueueIIGTestProxy\" />
+    <WCFMetadataStorage Include="Service References\ExternalTasksQueueProxy\" />
+    <WCFMetadataStorage Include="Service References\FeatureProxy\" />
+    <WCFMetadataStorage Include="Service References\HybridPartnerProxy\" />
+    <WCFMetadataStorage Include="Service References\HybridPartnersPermissionsProxy\" />
+    <WCFMetadataStorage Include="Service References\HybridTenantStateProxy\" />
+    <WCFMetadataStorage Include="Service References\IncotermProxy\" />
+    <WCFMetadataStorage Include="Service References\InsertCommTaskProxy\" />
+    <WCFMetadataStorage Include="Service References\LogingProxyCloud\" />
+    <WCFMetadataStorage Include="Service References\LoginProxy\" />
+    <WCFMetadataStorage Include="Service References\OpportunityProxy\" />
+    <WCFMetadataStorage Include="Service References\PackageTypeProxy\" />
+    <WCFMetadataStorage Include="Service References\PaymentTermProxy\" />
+    <WCFMetadataStorage Include="Service References\PortProxy\" />
+    <WCFMetadataStorage Include="Service References\QuoteProxy\" />
+    <WCFMetadataStorage Include="Service References\ServiceReference12222\" />
+    <WCFMetadataStorage Include="Service References\ShipmentCloudProxy\" />
+    <WCFMetadataStorage Include="Service References\ShipmentProxy\" />
+    <WCFMetadataStorage Include="Service References\ShippingAgentProxy\" />
+    <WCFMetadataStorage Include="Service References\ShippingLineProxy\" />
+    <WCFMetadataStorage Include="Service References\TenantManagementDWProxy\" />
+    <WCFMetadataStorage Include="Service References\TruckerProxy\" />
+    <WCFMetadataStorage Include="Service References\UserProxy\" />
+    <WCFMetadataStorage Include="Service References\VendorProxy\" />
+    <WCFMetadataStorage Include="Service References\VesselProxy\" />
+    <WCFMetadataStorage Include="Service References\WarehouseProxy\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\BranchProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\BranchProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\BranchProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AgentProxy\AgentWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AgentProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AgentProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AgentProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CustomerProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CustomerProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CustomerProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DepartmentProxy\DepartmentWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DepartmentProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DepartmentProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DepartmentProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CustomAgentProxy\CustomAgentWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CustomAgentProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CustomAgentProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CustomAgentProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PortProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PortProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PortProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\UserProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\UserProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\UserProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AddressProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AddressProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AddressProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AirlineProxy\AirlineWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AirlineProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AirlineProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AirlineProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CountryProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CountryProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CountryProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CurrencyProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CurrencyProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CurrencyProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\VendorProxy\VendorWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\VendorProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\VendorProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\VendorProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ShippingLineProxy\ShippingLineWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ShippingLineProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ShippingLineProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ShippingLineProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ContactProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ContactProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ContactProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CardContactProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CardContactProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CardContactProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\VesselProxy\VesselWcfServcie.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\VesselProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\VesselProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\VesselProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ActivityProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ActivityProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ActivityProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\BranchProxy\BranchWcfService1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ShippingAgentProxy\ShippingAgentWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ShippingAgentProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ShippingAgentProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ShippingAgentProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TruckerProxy\TruckerWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TruckerProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TruckerProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TruckerProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EntityStatusProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EntityStatusProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EntityStatusProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EventTypeProxy\EventTypeWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EventTypeProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EventTypeProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EventTypeProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OpportunityProxy\OpportunityWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OpportunityProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OpportunityProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OpportunityProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\QuoteProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\QuoteProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\QuoteProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HTMLPage1.html" />
+    <Content Include="References\Simplog.Server.Infrastructure.dll" />
+    <None Include="Service References\PaymentTermProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\PaymentTermProxy\configuration.svcinfo" />
+    <None Include="Service References\PaymentTermProxy\configuration91.svcinfo" />
+    <None Include="Service References\PaymentTermProxy\PaymentTermWcfService.disco" />
+    <None Include="Service References\WarehouseProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\WarehouseProxy\configuration.svcinfo" />
+    <None Include="Service References\WarehouseProxy\configuration91.svcinfo" />
+    <None Include="Service References\WarehouseProxy\WarehouseWcfService.disco" />
+    <None Include="Service References\TenantManagementDWProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\TenantManagementDWProxy\configuration.svcinfo" />
+    <None Include="Service References\TenantManagementDWProxy\configuration91.svcinfo" />
+    <None Include="Service References\TenantManagementDWProxy\TenantManagementDWWcfService.disco" />
+    <None Include="Service References\CardContactProxy\CardContactWcfService1.disco" />
+    <None Include="Service References\CurrencyProxy\CurrencyWcfService.disco" />
+    <None Include="Service References\IncotermProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\IncotermProxy\configuration.svcinfo" />
+    <None Include="Service References\IncotermProxy\configuration91.svcinfo" />
+    <None Include="Service References\IncotermProxy\IncotermWcfService.disco" />
+    <None Include="Service References\ShipmentProxy\ShipmentWcfService.disco" />
+    <None Include="Service References\LoginProxy\LoginWcfService1.disco" />
+    <None Include="Service References\HybridPartnersPermissionsProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\HybridPartnersPermissionsProxy\configuration.svcinfo" />
+    <None Include="Service References\HybridPartnersPermissionsProxy\configuration91.svcinfo" />
+    <None Include="Service References\HybridPartnersPermissionsProxy\HybridPartnersPermissionsWcfService.disco" />
+    <None Include="Service References\CustomerProxy\CustomerWcfService1.disco" />
+    <None Include="Service References\DocumentInProxy\DocumentInWcfService.disco" />
+    <None Include="Service References\LogingProxyCloud\LoginWcfService1.disco" />
+    <None Include="Service References\CustomerWDProxy\CustomerDWWcfService.disco" />
+    <None Include="Service References\CustomerWDProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\CustomerWDProxy\configuration.svcinfo" />
+    <None Include="Service References\CustomerWDProxy\configuration91.svcinfo" />
+    <None Include="Service References\LoginProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\LoginProxy\configuration.svcinfo" />
+    <None Include="Service References\LoginProxy\configuration91.svcinfo" />
+    <None Include="Service References\ShipmentProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ShipmentProxy\configuration.svcinfo" />
+    <None Include="Service References\ShipmentProxy\configuration91.svcinfo" />
+    <None Include="Service References\ExternalTasksQueueProxy\ExternalTasksQueueWcfService1.disco" />
+    <None Include="Service References\InsertCommTaskProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\InsertCommTaskProxy\configuration.svcinfo" />
+    <None Include="Service References\InsertCommTaskProxy\configuration91.svcinfo" />
+    <None Include="Service References\InsertCommTaskProxy\InsertCommTaskWcfService.disco" />
+    <None Include="Service References\HybridPartnerProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\HybridPartnerProxy\configuration.svcinfo" />
+    <None Include="Service References\HybridPartnerProxy\configuration91.svcinfo" />
+    <None Include="Service References\HybridPartnerProxy\HybridPartnerWcfService.disco" />
+    <None Include="Service References\FeatureProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\FeatureProxy\configuration.svcinfo" />
+    <None Include="Service References\FeatureProxy\configuration91.svcinfo" />
+    <None Include="Service References\FeatureProxy\FeatureWcfService.disco" />
+    <None Include="Service References\ServiceReference12222\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ServiceReference12222\configuration.svcinfo" />
+    <None Include="Service References\ServiceReference12222\configuration91.svcinfo" />
+    <None Include="Service References\ServiceReference12222\TestService.disco" />
+    <None Include="Service References\EntityStatusProxy\EntityStatusWcfService1.disco" />
+    <None Include="Service References\QuoteProxy\QuoteWcfService.disco" />
+    <None Include="Service References\HybridTenantStateProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\configuration.svcinfo" />
+    <None Include="Service References\HybridTenantStateProxy\configuration91.svcinfo" />
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService.disco" />
+    <None Include="Service References\PortProxy\PortWcfService1.disco" />
+    <None Include="Service References\UserProxy\UserWcfService.disco" />
+    <None Include="Service References\ContactProxy\ContactWcfService1.disco" />
+    <None Include="Service References\ShipmentCloudProxy\ShipmentWcfService1.disco" />
+    <None Include="Service References\ShipmentCloudProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ShipmentCloudProxy\configuration.svcinfo" />
+    <None Include="Service References\ShipmentCloudProxy\configuration91.svcinfo" />
+    <None Include="Service References\ActivityProxy\ActivityWcfService1.disco" />
+    <None Include="Service References\AddressProxy\AddressWcfService1.disco" />
+    <None Include="Service References\ExternalTasksQueueProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ExternalTasksQueueProxy\configuration.svcinfo" />
+    <None Include="Service References\ExternalTasksQueueProxy\configuration91.svcinfo" />
+    <None Include="Service References\DocumentTypeProxy\DocumentTypeWcfService1.disco" />
+    <None Include="Service References\CountryProxy\CountryWcfService1.disco" />
+    <None Include="Service References\LogingProxyCloud\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\LogingProxyCloud\configuration.svcinfo" />
+    <None Include="Service References\LogingProxyCloud\configuration91.svcinfo" />
+    <None Include="Service References\ActivityProxyCloud\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ActivityProxyCloud\configuration.svcinfo" />
+    <None Include="Service References\ActivityProxyCloud\configuration91.svcinfo" />
+    <None Include="Service References\ActivityProxyCloud\ActivityWcfService.disco" />
+    <None Include="Service References\ExternalTasksQueueIIGTestProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ExternalTasksQueueIIGTestProxy\configuration.svcinfo" />
+    <None Include="Service References\ExternalTasksQueueIIGTestProxy\configuration91.svcinfo" />
+    <None Include="Service References\ExternalTasksQueueIIGTestProxy\ExternalTasksQueueWcfService.disco" />
+    <None Include="Service References\DocumentsMetaDataTypeProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\DocumentsMetaDataTypeProxy\configuration.svcinfo" />
+    <None Include="Service References\DocumentsMetaDataTypeProxy\configuration91.svcinfo" />
+    <None Include="Service References\DocumentsMetaDataTypeProxy\DocumentsMetadataTypeWcfService.disco" />
+    <None Include="Service References\AmitalIIGTestLoginProxy\LoginWcfService1.disco" />
+    <None Include="Service References\AmitalIIGTestCustomerProxy\CustomerWcfService1.disco" />
+    <None Include="Service References\ContactPasswordProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ContactPasswordProxy\configuration.svcinfo" />
+    <None Include="Service References\ContactPasswordProxy\configuration91.svcinfo" />
+    <None Include="Service References\ContactPasswordProxy\ContactPasswordService.disco" />
+    <None Include="Service References\AmitalIIGTestCustomerProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\AmitalIIGTestCustomerProxy\configuration.svcinfo" />
+    <None Include="Service References\AmitalIIGTestCustomerProxy\configuration91.svcinfo" />
+    <None Include="Service References\AmitalIIGTestLoginProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\AmitalIIGTestLoginProxy\configuration.svcinfo" />
+    <None Include="Service References\AmitalIIGTestLoginProxy\configuration91.svcinfo" />
+    <None Include="Service References\PackageTypeProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\PackageTypeProxy\configuration.svcinfo" />
+    <None Include="Service References\PackageTypeProxy\configuration91.svcinfo" />
+    <None Include="Service References\PackageTypeProxy\PackageTypeWcfService.disco" />
+    <None Include="Service References\AutoSignUpProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\AutoSignUpProxy\configuration.svcinfo" />
+    <None Include="Service References\AutoSignUpProxy\configuration91.svcinfo" />
+    <None Include="Service References\AutoSignUpProxy\AutoSignUpWcfService.disco" />
+    <None Include="Service References\CityProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\CityProxy\configuration.svcinfo" />
+    <None Include="Service References\CityProxy\configuration91.svcinfo" />
+    <None Include="Service References\CityProxy\CityWcfService.disco" />
+    <None Include="Service References\DocumentTypeProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\DocumentTypeProxy\configuration.svcinfo" />
+    <None Include="Service References\DocumentTypeProxy\configuration91.svcinfo" />
+    <None Include="Service References\DocumentInProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\DocumentInProxy\configuration.svcinfo" />
+    <None Include="Service References\DocumentInProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

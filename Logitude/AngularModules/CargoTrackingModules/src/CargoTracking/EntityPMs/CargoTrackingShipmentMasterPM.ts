@@ -34,6 +34,26 @@ export class CargoTrackingShipmentMasterPM {
     public set Master(newValue: string) { if (this.master != newValue) { this.master = newValue; this.MarkAsDirty("Master"); } }
        
 	 
+    private mainCarriageATD: Date;
+    public get MainCarriageATD() { return this.mainCarriageATD; }
+    public set MainCarriageATD(newValue: Date) { if (this.mainCarriageATD != newValue) { this.mainCarriageATD = newValue; this.MarkAsDirty("MainCarriageATD"); } }
+       
+	 
+    private mainCarriageETD: Date;
+    public get MainCarriageETD() { return this.mainCarriageETD; }
+    public set MainCarriageETD(newValue: Date) { if (this.mainCarriageETD != newValue) { this.mainCarriageETD = newValue; this.MarkAsDirty("MainCarriageETD"); } }
+       
+	 
+    private mainCarriageATA: Date;
+    public get MainCarriageATA() { return this.mainCarriageATA; }
+    public set MainCarriageATA(newValue: Date) { if (this.mainCarriageATA != newValue) { this.mainCarriageATA = newValue; this.MarkAsDirty("MainCarriageATA"); } }
+       
+	 
+    private mainCarriageETA: Date;
+    public get MainCarriageETA() { return this.mainCarriageETA; }
+    public set MainCarriageETA(newValue: Date) { if (this.mainCarriageETA != newValue) { this.mainCarriageETA = newValue; this.MarkAsDirty("MainCarriageETA"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentMasterPM;
 		

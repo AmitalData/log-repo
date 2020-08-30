@@ -66,6 +66,98 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? mainCarriageATD ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? MainCarriageATD  
+	   {
+	    
+	     get
+		{
+		   return mainCarriageATD;
+		 }
+		 set
+		 {
+		   if(mainCarriageATD != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MainCarriageATD",OldValue=mainCarriageATD,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   mainCarriageATD=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? mainCarriageETD ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? MainCarriageETD  
+	   {
+	    
+	     get
+		{
+		   return mainCarriageETD;
+		 }
+		 set
+		 {
+		   if(mainCarriageETD != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MainCarriageETD",OldValue=mainCarriageETD,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   mainCarriageETD=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? mainCarriageATA ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? MainCarriageATA  
+	   {
+	    
+	     get
+		{
+		   return mainCarriageATA;
+		 }
+		 set
+		 {
+		   if(mainCarriageATA != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MainCarriageATA",OldValue=mainCarriageATA,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   mainCarriageATA=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? mainCarriageETA ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? MainCarriageETA  
+	   {
+	    
+	     get
+		{
+		   return mainCarriageETA;
+		 }
+		 set
+		 {
+		   if(mainCarriageETA != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MainCarriageETA",OldValue=mainCarriageETA,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   mainCarriageETA=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

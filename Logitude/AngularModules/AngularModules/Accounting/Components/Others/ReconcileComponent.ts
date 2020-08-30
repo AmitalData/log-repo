@@ -223,7 +223,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
     public ColumnsReady: EventEmitter<any> = new EventEmitter();
     public MarkIsChecked: EventEmitter<any> = new EventEmitter();
-    public IsAutoReconcile:boolean = false;
+    public IsAutoReconcile:boolean=false;
     public recoCallback: RecoCallback;
     public lastGroupNumber: number;
     public lastColorOperation: boolean = false;
@@ -357,6 +357,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         } else {
             this.ReloadScreen();
             this.SelectedLines.Clear();
+            this.CalculateTotals();
         }
     }
 

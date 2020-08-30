@@ -10,6 +10,10 @@ export class CargoTrackingShipmentMasterList {
    
 	Id: string;
 	Master: string;
+	MainCarriageATD: Date;
+	MainCarriageETD: Date;
+	MainCarriageATA: Date;
+	MainCarriageETA: Date;
 	
 }
  

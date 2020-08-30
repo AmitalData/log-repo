@@ -30,6 +30,10 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public int Countries  { get; set; }
        [DataMember]
        public int TransportModes  { get; set; }
+       [DataMember]
+       public int ShipmentComputedFields  { get; set; }
+       [DataMember]
+       public int ShipmentMasterDatas  { get; set; }
    }
 
 }

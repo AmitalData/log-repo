@@ -243,7 +243,8 @@ export class AppTool {
         var logitude_url = location.href.replace('index.html', '');
 
         if (location.href.indexOf('localhost') > -1) {
-            logitude_url = 'http://localhost:9996/';
+            logitude_url = 'http://localhost:9996/';//test.logitudeworld.com/test/';//
+
         }
 
         else {
@@ -263,7 +264,7 @@ export class AppTool {
         var logitude_url = location.href.replace('index.html', '');
 
         if (location.href.indexOf('localhost') > -1) {
-            logitude_url = 'http://localhost:9996/';
+            logitude_url = 'http://localhost:9996/';//test.logitudeworld.com/test/';
         }
 
         else {
@@ -548,6 +549,29 @@ export class AppTool {
             }
         }
 
+        return myResult;
+    }
+    public static GetPickupDeliveryRatio(shipmentTypeId: string) {
+        var myResult: number = null;
+        switch (shipmentTypeId != null && shipmentTypeId.toLowerCase()) {
+            case "air":
+            case "lcl":
+            case "lcld":
+            case "ltl":
+                {
+                    myResult = 3.3;
+                    break;
+                }
+            case "ftl":
+            case "fcl":
+            case "fcld":        
+                {
+                    myResult = 1;
+                    break;
+                }
+            default:
+                break;
+        }
         return myResult;
     }
     public static GetRatioFromDimFactor(myDimFactor: number, dimentionCode: string, weightCode: string) {

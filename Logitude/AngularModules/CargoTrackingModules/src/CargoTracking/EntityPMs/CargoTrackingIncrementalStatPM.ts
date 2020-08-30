@@ -64,6 +64,16 @@ export class CargoTrackingIncrementalStatPM {
     public set TransportModes(newValue: number) { if (this.transportModes != newValue) { this.transportModes = newValue; this.MarkAsDirty("TransportModes"); } }
        
 	 
+    private shipmentComputedFields: number;
+    public get ShipmentComputedFields() { return this.shipmentComputedFields; }
+    public set ShipmentComputedFields(newValue: number) { if (this.shipmentComputedFields != newValue) { this.shipmentComputedFields = newValue; this.MarkAsDirty("ShipmentComputedFields"); } }
+       
+	 
+    private shipmentMasterDatas: number;
+    public get ShipmentMasterDatas() { return this.shipmentMasterDatas; }
+    public set ShipmentMasterDatas(newValue: number) { if (this.shipmentMasterDatas != newValue) { this.shipmentMasterDatas = newValue; this.MarkAsDirty("ShipmentMasterDatas"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingIncrementalStatPM;
 		

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="cf8fc6e4-fa15-490c-aabe-65b42df87fe7" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:62619/WcfApi/ShippingAgentWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ShippingAgentWcfService.disco" MetadataType="Disco" ID="e6194031-9412-4045-bbcd-c147232d49d8" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/ShippingAgentWcfService.svc?disco" />
+    <MetadataFile FileName="ShippingAgentWcfService.xsd" MetadataType="Schema" ID="0fb334fa-599a-4b10-a3b5-d82b777004db" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/ShippingAgentWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ShippingAgentWcfService1.xsd" MetadataType="Schema" ID="eac0e072-9e42-4ac1-ae94-26c7b09635ac" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/ShippingAgentWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ShippingAgentWcfService2.xsd" MetadataType="Schema" ID="0b76f9fe-70a0-484c-91dc-4bc0eb9bc9e1" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/ShippingAgentWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ShippingAgentWcfService3.xsd" MetadataType="Schema" ID="76f7f8f6-6d70-4cb7-b3e9-b598e7a35fb7" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/ShippingAgentWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ShippingAgentWcfService.wsdl" MetadataType="Wsdl" ID="6f8fd2e8-2df7-414e-ac28-94870f32c9b5" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/ShippingAgentWcfService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

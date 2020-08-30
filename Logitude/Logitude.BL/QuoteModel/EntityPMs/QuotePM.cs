@@ -150,6 +150,8 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         public string GrossWeightUnitCode { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
+        public string PickupDeliveryCWeightUnitCode { get; set; }
+
         public string DimensionsUnitCode { get; set; }
         public double? VolumetricWeight { get; set; }
         public double? Volume { get; set; }

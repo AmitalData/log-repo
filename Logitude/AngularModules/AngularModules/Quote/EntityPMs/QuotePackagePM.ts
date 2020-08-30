@@ -103,16 +103,6 @@ export class QuotePackagePM {
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
-    private pickupDeliveryVolumetricWeight: number;
-    public get PickupDeliveryVolumetricWeight() { return this.pickupDeliveryVolumetricWeight; }
-    public set PickupDeliveryVolumetricWeight(newValue: number) { if (this.pickupDeliveryVolumetricWeight != newValue) { this.pickupDeliveryVolumetricWeight = newValue; this.MarkAsDirty("PickupDeliveryVolumetricWeight"); } }
-       
-	 
-    private pickupDeliveryVolume: number;
-    public get PickupDeliveryVolume() { return this.pickupDeliveryVolume; }
-    public set PickupDeliveryVolume(newValue: number) { if (this.pickupDeliveryVolume != newValue) { this.pickupDeliveryVolume = newValue; this.MarkAsDirty("PickupDeliveryVolume"); } }
-       
-	 
 
     public OldEntityPM: QuotePackagePM;
 	    

@@ -18,6 +18,14 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string Id  { get; set; }
        [DataMember]
        public string Master  { get; set; }
+       [DataMember]
+       public DateTime? MainCarriageATD  { get; set; }
+       [DataMember]
+       public DateTime? MainCarriageETD  { get; set; }
+       [DataMember]
+       public DateTime? MainCarriageATA  { get; set; }
+       [DataMember]
+       public DateTime? MainCarriageETA  { get; set; }
    }
 
 }
