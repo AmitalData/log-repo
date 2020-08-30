@@ -674,13 +674,17 @@ export class ShipmentPackagePM {
     public get WarehouseReleaseNumber() { return this.warehouseReleaseNumber; }
     public set WarehouseReleaseNumber(newValue: string) { if (this.warehouseReleaseNumber != newValue) { this.warehouseReleaseNumber = newValue; this.MarkAsDirty("WarehouseReleaseNumber"); } }
 
-
-  private warehouseReleaseId: string;
+    private warehouseReleaseId: string;
     public get WarehouseReleaseId() { return this.warehouseReleaseId; }
     public set WarehouseReleaseId(newValue: string) { if (this.warehouseReleaseId != newValue) { this.warehouseReleaseId = newValue; this.MarkAsDirty("WarehouseReleaseId"); } }
 
+    private horseId: string;
+    public get HorseId() { return this.horseId; }
+    public set HorseId(newValue: string) { if (this.horseId != newValue) { this.horseId = newValue; this.MarkAsDirty("HorseId"); } }
      
-
+    private horseName: string;
+    public get HorseName() { return this.horseName; }
+    public set HorseName(newValue: string) { if (this.horseName != newValue) { this.horseName = newValue; this.MarkAsDirty("HorseName"); } }
 
     public OldEntityPM: ShipmentPackagePM;
 

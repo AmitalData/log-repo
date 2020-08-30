@@ -77,7 +77,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentPackageHarmonizeQuery shipmentPackageHarmonizeQuery = new ShipmentPackageHarmonizeQuery(shipmentPackageHarmonizeRepository);
 
             ShipmentPackagePM myResult
-                = (from a in repository.context.ShipmentPackages.Include("PackageType").Include("LastStatus")
+                = (from a in repository.context.ShipmentPackages.Include("PackageType").Include("LastStatus").Include("Horse")
                    where a.ShipmentId == shipmentId && a.Tenant == tenant
                    select new ShipmentPackagePM()
                    {
@@ -178,16 +178,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        RoutingIds = a.RoutingIds,
                        VoyageTripNumber = a.VoyageTripNumber,
                        HasContainerException = a.HasContainerException,
-                       Make = a.Make, 
+                       Make = a.Make,
                        Year = a.Year,
-                       Model=a.Model,
-                       Color = a.Color, 
-                       ChassisNumber = a.ChassisNumber, 
-                       RegistrationNumber = a.RegistrationNumber, 
+                       Model = a.Model,
+                       Color = a.Color,
+                       ChassisNumber = a.ChassisNumber,
+                       RegistrationNumber = a.RegistrationNumber,
                        CountryId = a.CountryId,
                        WarehouseReleaseNumber = a.WarehouseReleaseNumber,
+                       HorseId = a.HorseId,
+                       HorseName = a.Horse == null ? null : a.Horse.Name,
                    }).FirstOrDefault();
-
 
             myResult.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(myResult.Id, tenant);
             myResult.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(myResult.Id, tenant);
@@ -208,7 +209,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentPackageHarmonizeQuery shipmentPackageHarmonizeQuery = new ShipmentPackageHarmonizeQuery(shipmentPackageHarmonizeRepository);
 
             List<ShipmentPackagePM> shipmentPackages
-                = (from a in repository.context.ShipmentPackages
+                = (from a in repository.context.ShipmentPackages.Include("Horse")
                    where a.ShipmentId == shipmentId && a.Tenant == tenant
                    select new ShipmentPackagePM()
                    {
@@ -305,6 +306,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        CountryId = a.CountryId,
                        //CountryName = a.Country != null ? a.Country.EnglishName : "",
                        WarehouseReleaseNumber = a.WarehouseReleaseNumber,
+                       HorseId = a.HorseId,
+                       HorseName = a.Horse == null ? null : a.Horse.Name,
                    }).ToList();
 
             var commonContext = CommonDataContext.GetContext(tenant);

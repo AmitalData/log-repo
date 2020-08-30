@@ -1,4 +1,3 @@
-
 import {Component, OnInit, Output, EventEmitter, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -30,10 +29,11 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import {WarehouseReleasePMExtendedService} from '../../../../Warehouse/Services/ExtendedPMs/WarehouseReleasePMExtendedService';
 import { PackageAmountCalculator } from '../../../../Infrastructure/Utilities/PackageAmountCalculator';
 import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
+import { HorseList } from '../../../../Common/EntityLists/HorseList';
+import { ShipmentSubTypeListService } from '../../../../shipment/services/standardlists/shipmentsubtypelistservice';
 declare var ResultAsArray: any;
 
-@Component({
-    
+@Component({    
     templateUrl: './PackagesTabComponent.html',
 })
 
@@ -54,11 +54,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsShippingInstructionsVisible: boolean = false;
     public IsDeletePackagesButtonVisible: boolean = false;
     public IsDownloadUploadPackagesVisible: boolean = false;
-
+    public HorseFieldIsVisible: boolean = false;
     private warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService;
-
-
-
     @Output() ReloadDetails = new EventEmitter();
     warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -199,9 +196,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 this.IsShowReleaseNumber = true;
             }
 
-
-            
-
+            this.CheckHorseVisiblility();
 
             if (this.IsFCLEntity) {
                 this.entityResourceService.getEntityResourceByTableName("ShipmentPackage").subscribe((res1: any) => {
@@ -222,8 +217,20 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     });
                 });
             }
-
         }
+    }
+    private CheckHorseVisiblility() {
+        var service: ShipmentSubTypeListService = new ShipmentSubTypeListService();
+        service.getSingleFromCache(this.EntityPM.ShipmentSubTypeId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var mySubType = myResponse.Result;
+
+                var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "HRS" && d.TenantNumber == SessionLocator.Tenant)[0];
+                if (FeatureToggle && mySubType && mySubType.Code == "HORSE") {
+                    this.HorseFieldIsVisible = true;
+                }
+            }
+        });       
     }
 
     public IsGroupageEntity: boolean = false;
@@ -1326,6 +1333,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     newPackage.Reference4 = item.Reference4;
                     newPackage.CommodityNumber = item.CommodityNumber;
                     newPackage.CommodityName = item.CommodityName;
+                    newPackage.HorseId = item.HorseId;
+                    newPackage.HorseName = item.HorseName;
                     this.EntityPM.AddPackage(newPackage);
                 }
             });
@@ -1959,6 +1968,7 @@ export class ShipmentPackageItem extends BaseComponent {
     public IsVehicleDetails: boolean = false;
     public IsShowReleaseNumber: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public HorseFieldIsVisible: boolean = false;
     WarehouseReleaseNumber: string;
     constructor(entity: ShipmentPackagePM, public fatherComponent: PackagesTabComponent, isNew: boolean = false) {
         super();
@@ -1967,7 +1977,9 @@ export class ShipmentPackageItem extends BaseComponent {
         this.IsLCLEntity = fatherComponent.IsLCLEntity;
         this.IsFCLEntity = fatherComponent.IsFCLEntity;
         this.IsCommodityNumberVisible = fatherComponent.IsCommodityNumberVisible;
-        this.IsCommodityNameVisible = fatherComponent.IsCommodityNameVisible;        
+        this.IsCommodityNameVisible = fatherComponent.IsCommodityNameVisible;
+        this.HorseFieldIsVisible = fatherComponent.HorseFieldIsVisible;
+
         this.IsNewEntity = isNew;
         this.SetUIProperties();
         this.BuildInsideItemsSource();
@@ -3123,6 +3135,35 @@ export class ShipmentPackageItem extends BaseComponent {
     set CountryId(newValue: string) {
         if (this.EntityPM.CountryId != newValue) {
             this.EntityPM.CountryId = newValue;
+        }
+    }
+
+    get HorseId() { return this.EntityPM.HorseId; }
+    set HorseId(newValue: string) {
+        if (this.EntityPM.HorseId != newValue) {
+            this.EntityPM.HorseId = newValue;
+        }
+    }
+
+    get HorseName() { return this.EntityPM.HorseName; }
+    set HorseName(newValue: string) {
+        if (this.EntityPM.HorseName != newValue) {
+            this.EntityPM.HorseName = newValue;
+        }
+    }
+
+    horse: HorseList;
+    get Horse() { return this.horse; }
+    set Horse(value: HorseList) {
+        if (this.horse != value) {
+            this.horse = value;
+        }
+
+        if (value != null) {
+            this.HorseName = value.Name;
+        }
+        else {
+            this.HorseName = null;
         }
     }
 

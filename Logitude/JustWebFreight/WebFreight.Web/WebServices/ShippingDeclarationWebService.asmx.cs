@@ -3104,6 +3104,14 @@ namespace WebFreight.Web.WebServices
                     packageline.Reference4 = package.Reference4;
                     packageline.CommodityNumber = package.CommodityNumber;
 
+                    if (!string.IsNullOrEmpty(package.HorseId))
+                    {
+                        Horse horse = (from pa in commonContext.Horses
+                                       where pa.Id == package.HorseId
+                                       select pa).FirstOrDefault();
+                        packageline.Horse = horse.Name;
+                    }
+
                     if (myDataProvider.HasAttachmentList == "True")
                     {
                         if (shipment.ShipmentTypeName == "My Groupage")

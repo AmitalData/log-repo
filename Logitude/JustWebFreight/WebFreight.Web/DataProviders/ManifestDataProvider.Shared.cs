@@ -384,6 +384,7 @@ namespace WebFreight.Web.DataProviders
         public string Notes { get; set; }
         public string Harmonize { get; set; }
         public double? Tare { get; set; }
+        public string Horse { get; set; }
     }
 
     public class GroupedContainersClass

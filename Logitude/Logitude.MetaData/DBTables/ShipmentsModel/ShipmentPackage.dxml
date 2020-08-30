@@ -596,6 +596,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="HorseId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"
@@ -649,6 +656,11 @@
   <Relation
     ForeignKeyColumn="CountryId"
     ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="HorseId"
+    ReferencedTable="Horses"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
