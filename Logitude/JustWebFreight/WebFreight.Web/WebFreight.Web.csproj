@@ -3177,6 +3177,7 @@
     <Content Include="css\images\kendoui.woff" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
+    <None Include="Properties\PublishProfiles\testR4.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
     <None Include="Resources\Stimulsoft Reports.Ultimate 2013.1 Trial A252_020150909133627201254900033002.mrt.txt" />
     <Content Include="Monitoring\HybridsTenantThreshold.aspx" />
