@@ -42,7 +42,6 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 })
 
 export class FCLChargesComponent extends BaseComponent implements OnDestroy {
-
     public EntityPM: QuotePM = null;
     public ObjectTableName: string = "Quote";
     public DataContext = this;
@@ -91,6 +90,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.InitializeProfit();
         this.GetQuoteType();
         this.Listen();
+        this.SetRegionalTaxVisibility();
     }
 
     GetQuoteType() {
@@ -448,6 +448,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.ItemsSource.Collection.forEach((item: FCLChargesComponent) => {
             item.SetUIProperties();
         });
+
+        this.UIProperties.SetEnabled("RegionalTaxId", this.ObjectTableName, this.IsEditingEnabled);
 
         this.SetUIProperties_Summary();
         this.SetUIProperties_Columns();
@@ -1262,6 +1264,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
 
                 else {
                     item.VatTypeId = null;
+                    item.IsRegionalTax = false;
                 }
 
                 item.SetUIProperties_VAT();
@@ -1279,89 +1282,128 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 var myCharges: QuoteChargePM[] = this.EntityPM.QuoteCharges.filter(f => f.IsAllIN == false && f.VatTypeId != null);
                 if (myCharges.length > 0) {
 
-                    var myQroups: QuoteTotalVATPM[] = [];
 
+                    // Build Group Source
+                    var group_Source: QuoteTotalVATPM[] = [];
                     myCharges.forEach(item => {
-                        if (item.VatIsMultiPercentage) {
-                            var myVatGroups = SessionLocator.AllVatTypesGroups.filter(f => f.GroupVATTypeId == item.VatTypeId);
+                        var lineVatType = this.AllVatTypes.filter(f => f.Id == item.VatTypeId)[0];
+                        if (lineVatType) {
 
-                            myVatGroups.forEach(itemGroup => {
-                                this.AddVatGroupItem(myQroups, itemGroup.SingleVATTypeId, item);
-                            });
-                        }
+                            if (AppTool.IsNullOrEmpty(item.SaleTotalAmount)) {
+                                item.SaleTotalAmount = 0;
+                            }
 
-                        else {
-                            if (item.VatPercentage != null) {
-                                this.AddVatGroupItem(myQroups, item.VatTypeId, item);
+                            if (AppTool.IsNullOrEmpty(item.SaleTotalAmountLocal)) {
+                                item.SaleTotalAmountLocal = 0;
+                            }
+
+                            if (!lineVatType.IsMultiPercentage) {
+                                if (item.VatPercentage != null) {
+                                    var myQroupItem = new QuoteTotalVATPM(null);
+                                    myQroupItem.Tenant = SessionLocator.Tenant;
+                                    myQroupItem.QuoteId = this.EntityPM.Id;
+                                    myQroupItem.Id = item.VatTypeId;
+                                    myQroupItem.VatTypeId = item.VatTypeId;
+                                    myQroupItem.VatPercent = item.VatPercentage;
+                                    myQroupItem.ExternalVATCard = lineVatType.ReceivablesExternalId;
+                                    myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
+                                    myQroupItem.QuoteCurrencyVatableAmount = item.SaleTotalAmount;
+                                    myQroupItem.LocalCurrencyVatableAmount = item.SaleTotalAmountLocal;
+
+                                    if (item.IsRegionalTax) {
+                                        myQroupItem.QuoteCurrencyVatableAmount = item.SaleTotalAmount + item.SaleTotalAmount * (this.RegionalTaxPercentage / 100);
+                                        myQroupItem.LocalCurrencyVatableAmount = item.SaleTotalAmountLocal + item.SaleTotalAmountLocal * (this.RegionalTaxPercentage / 100);
+
+                                        var regionalTaxItem = new QuoteTotalVATPM(null);
+                                        regionalTaxItem.Tenant = SessionLocator.Tenant;
+                                        regionalTaxItem.QuoteId = this.EntityPM.Id;
+                                        regionalTaxItem.Id = this.RegionalTaxId;
+                                        regionalTaxItem.VatTypeId = this.RegionalTaxId;
+                                        regionalTaxItem.VatPercent = this.RegionalTaxPercentage;
+                                        regionalTaxItem.ExternalVATCard = lineVatType.ReceivablesExternalId;
+                                        regionalTaxItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
+                                        regionalTaxItem.QuoteCurrencyVatableAmount = item.SaleTotalAmount;
+                                        regionalTaxItem.LocalCurrencyVatableAmount = item.SaleTotalAmountLocal;
+                                        group_Source.push(regionalTaxItem);
+                                    }
+
+                                    group_Source.push(myQroupItem);
+                                }
+                            }
+
+                            else {
+                                var myVatGroups = SessionLocator.AllVatTypesGroups.filter(f => f.GroupVATTypeId == item.VatTypeId);
+
+                                myVatGroups.forEach(itemGroup => {
+
+                                    var lineSingleVatType = this.AllVatTypes.filter(f => f.Id == itemGroup.SingleVATTypeId)[0];
+
+                                    if (lineSingleVatType) {
+
+                                        var myQroupItem = new QuoteTotalVATPM(null);
+                                        myQroupItem.Tenant = SessionLocator.Tenant;
+                                        myQroupItem.QuoteId = this.EntityPM.Id;
+                                        myQroupItem.Id = itemGroup.SingleVATTypeId;
+                                        myQroupItem.VatTypeId = itemGroup.SingleVATTypeId;
+                                        myQroupItem.VatPercent = this.GetVatTypePercentage(itemGroup.SingleVATTypeId);
+                                        myQroupItem.ExternalVATCard = lineSingleVatType.ReceivablesExternalId;
+                                        myQroupItem.ExternalTAXItemId = lineSingleVatType.ExternalTAXItemId;
+                                        myQroupItem.QuoteCurrencyVatableAmount = item.SaleTotalAmount;
+                                        myQroupItem.LocalCurrencyVatableAmount = item.SaleTotalAmountLocal;
+                                        group_Source.push(myQroupItem);
+                                    }
+                                });
                             }
                         }
                     });
 
-                    myQroups.forEach(itemGroup => {
-                        this.EntityPM.AddQuoteTotalVATPM(itemGroup);
+                    // Build Grouped Data
+                    var group_data: QuoteTotalVATPM[] = [];
+                    group_Source.forEach(item => {
+                        var record: QuoteTotalVATPM = group_data.filter(f => f.VatTypeId == item.VatTypeId && f.VatPercent == item.VatPercent && f.ExternalVATCard == item.ExternalVATCard && f.ExternalTAXItemId == item.ExternalTAXItemId)[0];
+                        if (record) {
+                            record.QuoteCurrencyVatableAmount += item.QuoteCurrencyVatableAmount;
+                            record.LocalCurrencyVatableAmount += item.LocalCurrencyVatableAmount;
+                        }
+
+                        else {
+                            record = new QuoteTotalVATPM(null);
+                            record.Id = item.Id;
+                            record.VatTypeId = item.VatTypeId;
+                            record.VatPercent = item.VatPercent;
+                            record.ExternalVATCard = item.ExternalVATCard;
+                            record.ExternalTAXItemId = item.ExternalTAXItemId;
+                            record.QuoteCurrencyVatableAmount = item.QuoteCurrencyVatableAmount;
+                            record.LocalCurrencyVatableAmount = item.LocalCurrencyVatableAmount;
+                            group_data.push(record);
+                        }
+                    });
+
+                    // Build Quote Total VATs
+                    group_data.forEach(item => {
+
+                        var itemVatType = this.AllVatTypes.filter(f => f.Id == item.VatTypeId)[0];
+
+                        var itemTotalVAT = new QuoteTotalVATPM(null);
+                        itemTotalVAT.Tenant = SessionLocator.Tenant;
+                        itemTotalVAT.QuoteId = this.EntityPM.Id;
+                        itemTotalVAT.VatTypeId = item.VatTypeId;
+                        itemTotalVAT.VatTypeName = itemVatType ? itemVatType.EnglishName : "";
+                        itemTotalVAT.VatPercent = AppTool.Round(item.VatPercent, 3);
+                        itemTotalVAT.VatTypeCell = itemTotalVAT.VatTypeName + " (" + itemTotalVAT.VatPercent + "%)";
+                        itemTotalVAT.ExternalVATCard = item.ExternalVATCard;
+                        itemTotalVAT.ExternalTAXItemId = item.ExternalTAXItemId;
+                        itemTotalVAT.LocalCurrencyVatableAmount = AppTool.Round(item.LocalCurrencyVatableAmount, 2);
+                        itemTotalVAT.QuoteCurrencyVatableAmount = AppTool.Round(item.QuoteCurrencyVatableAmount, 2);
+                        itemTotalVAT.LocalCurrencyVATAmount = AppTool.Round((itemTotalVAT.LocalCurrencyVatableAmount * itemTotalVAT.VatPercent / 100), 2);
+                        itemTotalVAT.QuoteCurrencyVATAmount = AppTool.Round((itemTotalVAT.QuoteCurrencyVatableAmount * itemTotalVAT.VatPercent / 100), 2);
+                        this.EntityPM.AddQuoteTotalVATPM(itemTotalVAT);
                     });
                 }
             }
         }
     }
-    AddVatGroupItem(myQroups: QuoteTotalVATPM[], vatTypeId: string, myCharge: QuoteChargePM) {
-        if (!AppTool.IsNullOrEmpty(vatTypeId)) {
-            var vat = this.AllVatTypes.filter(f => f.Id == vatTypeId)[0];
-            if (vat) {
-                var itemVatPercentage = myCharge.VatPercentage;
-                if (myCharge.VatIsMultiPercentage) {
-                    itemVatPercentage = this.GetVatTypePercentage(vatTypeId);
-                }
 
-                var itemVatTypeCell = vat.EnglishName + " (" + itemVatPercentage + "%)";
-
-                var myVatableAmount = 0
-                var myVatableAmountLocal = 0
-                var myVATAmount = 0
-                var myVATAmountLocal = 0
-
-                if (!AppTool.IsNullOrEmpty(myCharge.SaleTotalAmount)) {
-                    myVatableAmount = AppTool.Round(myCharge.SaleTotalAmount, 2);
-
-                    if (!AppTool.IsNullOrEmpty(itemVatPercentage)) {
-                        myVATAmount = AppTool.Round(itemVatPercentage * myVatableAmount / 100, 2);
-                    }
-                }
-
-                if (!AppTool.IsNullOrEmpty(myCharge.SaleTotalAmountLocal)) {
-                    myVatableAmountLocal = AppTool.Round(myCharge.SaleTotalAmountLocal, 2);
-
-                    if (!AppTool.IsNullOrEmpty(itemVatPercentage)) {
-                        myVATAmountLocal = AppTool.Round(itemVatPercentage * myVatableAmountLocal / 100, 2);
-                    }
-                }
-
-                var item = myQroups.filter(d => d.VatTypeCell == itemVatTypeCell)[0];
-                if (item == null) {
-                    item = new QuoteTotalVATPM(null);
-                    item.Tenant = SessionLocator.Tenant;
-                    item.QuoteId = this.EntityPM.Id;
-                    item.VatTypeId = vatTypeId;
-                    item.VatPercent = itemVatPercentage;
-                    item.VatTypeCell = itemVatTypeCell;
-                    item.ExternalVATCard = vat.ReceivablesExternalId;
-                    item.ExternalTAXItemId = vat.ExternalTAXItemId;
-                    item.QuoteCurrencyVatableAmount = myVatableAmount;
-                    item.LocalCurrencyVatableAmount = myVatableAmountLocal;
-                    item.QuoteCurrencyVATAmount = myVATAmount;
-                    item.LocalCurrencyVATAmount = myVATAmountLocal;
-                    myQroups.push(item);
-                }
-
-                else {
-                    item.QuoteCurrencyVatableAmount += myVatableAmount;
-                    item.LocalCurrencyVatableAmount += myVatableAmountLocal;
-                    item.QuoteCurrencyVATAmount += myVATAmount;
-                    item.LocalCurrencyVATAmount += myVATAmountLocal;
-                }
-            }
-        }
-    }
     VATDetailsClicked() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = TextCodeTranslator.Translate("Quote.O.Charges.VATDetails");
@@ -1379,6 +1421,72 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 item.SetSaleQuantity();
             }
         });
+    }
+
+    // RegionalTaxId
+    public IsRegionalTaxVisible: boolean = false;
+    private SetRegionalTaxVisibility() {
+        var isVisible: boolean = false;
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.RegionalTaxId)) {
+            isVisible = true;
+        }
+
+        else if (FeatureLocator.HasFeaturePermession("General", "REGIONALTAX")) {
+            if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) {
+                isVisible = true;
+            }
+        }
+
+        this.IsRegionalTaxVisible = isVisible;
+    }
+
+    get RegionalTaxId() { return this.EntityPM.RegionalTaxId; }
+    set RegionalTaxId(newValue: string) {
+
+        var oldValue = this.EntityPM.RegionalTaxId;
+
+        if (this.EntityPM.RegionalTaxId != newValue) {
+            this.EntityPM.RegionalTaxId = newValue;
+
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.RegionalTaxPercentage = null;
+            }
+
+            else {
+                this.RegionalTaxPercentage = this.GetVatTypePercentage(newValue);
+
+                if (AppTool.IsNullOrEmpty(oldValue)) {
+                    this.ItemsSource.Collection.filter(f => f.IsRegionalTax == false && f.VatIsMultiPercentage == false).forEach(item => {
+                        this.myChargesTypeService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                var list: ChargesTypeList = myResponse.Result;
+                                if (list != null) {
+                                    item.IsRegionalTax = list.ApplyRegionalTax;
+                                }
+                            }
+                        });
+                    });
+                }
+            }
+        }
+    }
+
+    get RegionalTaxPercentage() {
+
+        var output: number = 0;
+
+        if (this.EntityPM.RegionalTaxPercentage) {
+            output = this.EntityPM.RegionalTaxPercentage;
+        }
+
+        return output;
+    }
+    set RegionalTaxPercentage(newValue: number) {
+        if (this.EntityPM.RegionalTaxPercentage != newValue) {
+            this.EntityPM.RegionalTaxPercentage = AppTool.Round(newValue, 2);
+            this.ComputeTotals();
+        }
     }
 }
 export class FCLQuoteChargeItem extends BaseComponent {
@@ -1430,12 +1538,27 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.SetUIProperties_VAT();
         this.SetUIProperties_CostMinMax();
         this.SetUIProperties_SaleMinMax();
+        this.SetUIProperties_IsRegionalTax();
 
         this.UIProperties.SetEnabled("ChargesTypeId", this.ObjectTableName, (this.IsEditingEnabled && !this.IsAllIN) ? true : false);
         this.UIProperties.SetEnabled("CostIsFixedRate", this.ObjectTableName, (this.IsEditingEnabled && !this.IsAllIN) ? true : false);
         this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("IsChargeBySteps", this.ObjectTableName, this.IsEditingEnabled);
+    }
+
+    public IsRegionalTaxEnabled: boolean = false;
+    SetUIProperties_IsRegionalTax() {
+        var isEnabled = false;
+
+        if (this.IsEditingEnabled) {
+            if (!this.IsAllIN) {
+                isEnabled = true;
+            }
+        }
+
+        this.IsRegionalTaxEnabled = isEnabled;
+        this.UIProperties.SetEnabled("IsRegionalTax", this.ObjectTableName, isEnabled);
     }
 
     public AllInInfoTitle: string;
@@ -4257,6 +4380,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.EntityPM.IsAllIN = newValue;
             this.SetUIProperties_AllIn();
             this.ApplyAllIn();
+            this.IsRegionalTax = false;
+            this.SetUIProperties_IsRegionalTax();
         }
     }
 
@@ -4667,4 +4792,11 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.Sale5Header[2] = q5 + p5;
     }
 
+    get IsRegionalTax() { return this.EntityPM.IsRegionalTax; }
+    set IsRegionalTax(newValue: boolean) {
+        if (this.EntityPM.IsRegionalTax != newValue) {
+            this.EntityPM.IsRegionalTax = newValue;
+            this.fatherComponent.ComputeTotals();
+        }
+    }
 }
