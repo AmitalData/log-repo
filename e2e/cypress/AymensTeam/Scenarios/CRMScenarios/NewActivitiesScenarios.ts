@@ -2,55 +2,70 @@ import { Random } from "../../@e2e/core";
 import { Resolvers } from "../../Resolvers/Resolvers";
 
 export class NewActivitiesScenarios {
-    private levelCode: string;
-    private direction: string;
-    private transportMode: string;
-    private shipmentType: string;
-    private objectTable: string;
-    private isFCL: boolean = false;
-    private isInlandDomestic: boolean = false;
+    private ActivitTypes : string;
+   // private objectTable: string;
     public EntityId: string;
     public EntityNumber: string;
-    public RunScenario(levelCode:string) {
-
+    public RunScenario(ActivitTypes: string) {
+        this.ActivitTypes = ActivitTypes;
+        this.EntityNumber = Random.GetRandomNumber();
+   //     this.objectTable = "Activity";
         this.OpenWizardWindow();
-        this.FillGeneral();
-        this.Save().then((subject: string) => {
-
-        });
+        this.FillActivitTypes();
+     //   this.Save().then((subject: string) => {
+       // });
     }
 
-    public WaitPromise() {
-        return new Cypress.Promise((resolve, reject) => {
-            return this.EntityNumber;
-        });
-    }
 
     private OpenWizardWindow() {
         let index: number = 0;
-
-        switch (this.levelCode) {
+ 
+        switch (this.ActivitTypes) {
             case "T": { index = 0; break; }
             case "P": { index = 1; break; }
             case "A": { index = 2; break; }
         }
 
         Resolvers.ToggleButtonResolver.Selector('#NEWACTIVITY').SelectByIndex(index);
-        //Resolvers.ToggleButtonResolver.Selector("ToggleButton").Parent('OperationsComponent').SelectByIndex(0);
-
         Resolvers.WindowResolver.ShouldBeOpend();
 
     }
-    private CancelWizardWindow() {
-        Resolvers.ButtonResolver.Selector('Button').Text('Cancel').ThenConfirmButtonText("Don't Save").Click();
-        Resolvers.WindowResolver.ShouldBeClosed();
-    }
  
-    private FillGeneral() {
-       // if (this.levelCode == "T") {
-            Resolvers.TextBoxResolver.Selector('#Activity_Subject').Type("test");
-      //  }
+ 
+    private FillActivitTypes() {
+        if (this.ActivitTypes == "T") {
+            this.CreateTask();
+        }
+        if (this.ActivitTypes == "P") {
+            this.CreatePhoneCall();
+        }
+        if (this.ActivitTypes == "A") {
+            this.CreateAppoinment();
+        }
+
     }
+    private CreateTask() {
+      //  Resolvers.TextBoxResolver.Selector('#Activity_Subject').Type(this.EntityNumber);
+        cy.get('#Activity_Subject').type(this.EntityNumber).then(() => {
+            this.Save();
+        })
+    }
+    private CreatePhoneCall() {
+      //  Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("CallWithId").SelectFirst();
+      // Resolvers.TextBoxResolver.Selector('#Activity_CallWithId').Type(Random.GetRandomNumber());
+        Resolvers.LOVResolver.Selector('#Activity_CallWithId').SelectFirst();
+        cy.get('#Activity_Subject').type(this.EntityNumber).then(() => {
+            this.Save();
+        })
+    }
+    private CreateAppoinment() {
+       // Resolvers.TextBoxResolver.Selector('#Activity_Subject').Type("test app");
+        cy.get('#Activity_Subject').type(this.EntityNumber).then(() => {
+            this.Save();
+        })
+    }
+
+
  
     Save() {
 

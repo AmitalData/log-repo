@@ -4,7 +4,7 @@ import { LoginComp } from "../../../../Login/Login.po";
 
 describe('Activities', () => {
     let login: LoginComp = new LoginComp();
-    let senarios: NewActivitiesScenarios = new NewActivitiesScenarios();
+    let scenarios: NewActivitiesScenarios = new NewActivitiesScenarios();
 
 
     beforeEach(() => {
@@ -15,16 +15,9 @@ describe('Activities', () => {
     });
 
     it('Test New Activities', () => {
-        
-        senarios.RunScenario('T');
+        scenarios.RunScenario('T');
+        scenarios.RunScenario('P');
+        scenarios.RunScenario('A');
     
-
-      //  Resolvers.ToggleButtonResolver.Selector('#NEWACTIVITY').SelectByIndex(0);
-      //  Resolvers.WindowResolver.ShouldBeOpend();
-
-   
-        //scenarios.CreateWizardShipment('D', 'E', 'A');
-
-        //scenarios.CreateWizardShipment('D', 'E', 'A');
     });
 });
