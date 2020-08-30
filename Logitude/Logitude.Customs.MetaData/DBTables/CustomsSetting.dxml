@@ -165,6 +165,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="LastRunningDCAWS"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultNotificationAssignee"
     ReferencedTable="Users"

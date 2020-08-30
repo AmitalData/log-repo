@@ -174,6 +174,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
+        public DateTime? GetLastRunningDCAWS(int tenant)
+        {
+            var poco = repository.GetSettingByTenant(tenant);
+
+            return poco.LastRunningDCAWS;
+
+        }
+ 
 
 
     }
