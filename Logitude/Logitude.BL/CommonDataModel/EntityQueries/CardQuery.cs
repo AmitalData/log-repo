@@ -375,6 +375,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Id = a.Id,
                         Tenant = a.Tenant,
                         EnglishName = a.EnglishName,
+                        SalesmanUserId = a.SalesmanUserId,
+                        CollectorId = a.CollectorId,
 
                     }).FirstOrDefault();
         }

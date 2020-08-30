@@ -350,6 +350,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     {
                         var gLAccountPM = gLAccountQueryService.GetSingle(entityPOCO.ParentAccountId, false, true);
                         entityPM.ParentAccountName = (showLocals ? gLAccountPM.LocalName : gLAccountPM.EnglishName);
+                        entityPM.ParentName = (showLocals ? gLAccountPM.LocalName : gLAccountPM.EnglishName);
                         entityPM.ParentAccountNumber = gLAccountPM.DisplayNumber;
                     }
                     else
@@ -364,6 +365,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                         }
                     }
                 }
+ 
                 //IAccountingContext context = AccountingContext.GetContext(entityPOCO.Tenant);
 
                 //if (entityPOCO.Category1Id != null)
@@ -511,10 +513,31 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             //get cardid if exisit
             CardQuery cardQuery = new CardQuery(entityPM.Tenant);
             bool fromCache = true;
-            CardList cardList = cardQuery.GetSingleByGLAccount(entityPM.Id, entityPM.Tenant, fromCache);
+            CardList cardList = cardQuery.GetSingleByGLAccount(entityPM.Id, entityPM.Tenant, false);
             if(cardList != null)
             {
                 entityPM.CardId = cardList.Id;
+                entityPM.SalesmanUserId = cardList.SalesmanUserId;
+                entityPM.CollectorId = cardList.CollectorId;
+
+            }
+
+            if (entityPM.SalesmanUserId != null)
+            {
+                ContactPM SalesmanContact = contactQuery.GetSinglePMFromCache(entityPM.SalesmanUserId, entityPOCO.Tenant);
+                if (SalesmanContact == null)
+                    SalesmanContact = contactQuery.GetSinglePMFromCache(entityPM.SalesmanUserId, 0); // user is customer care, get it from tenant 0
+                if (SalesmanContact != null)
+                    entityPM.SalesmanName = showLocals ? SalesmanContact.LocalName : SalesmanContact.EnglishName;
+            }
+
+            if (entityPM.CollectorId != null)
+            {
+                ContactPM CollectorContact = contactQuery.GetSinglePMFromCache(entityPM.CollectorId, entityPOCO.Tenant);
+                if (CollectorContact == null)
+                    CollectorContact = contactQuery.GetSinglePMFromCache(entityPM.CollectorId, 0); // user is customer care, get it from tenant 0
+                if (CollectorContact != null)
+                    entityPM.CollectorName = showLocals ? CollectorContact.LocalName : CollectorContact.EnglishName;
             }
 
         }

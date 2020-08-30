@@ -93,6 +93,7 @@ export class CardList {
 		CreatedByPartner: string;
 		OpenShipments: number;
 		BusinessPhone: string;
+		CollectorId: string;
 		StorageFreeDays: number;
 		RankId: string;
 		IndustryId: string;

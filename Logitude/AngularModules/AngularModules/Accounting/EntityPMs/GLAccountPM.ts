@@ -639,6 +639,26 @@ export class GLAccountPM {
     public set IsSplitted(newValue: boolean) { if (this.isSplitted != newValue) { this.isSplitted = newValue; this.MarkAsDirty("IsSplitted"); } }
        
 	 
+    private salesmanName: string;
+    public get SalesmanName() { return this.salesmanName; }
+    public set SalesmanName(newValue: string) { if (this.salesmanName != newValue) { this.salesmanName = newValue; this.MarkAsDirty("SalesmanName"); } }
+       
+	 
+    private collectorName: string;
+    public get CollectorName() { return this.collectorName; }
+    public set CollectorName(newValue: string) { if (this.collectorName != newValue) { this.collectorName = newValue; this.MarkAsDirty("CollectorName"); } }
+       
+	 
+    private splitCurrencyAccount: string;
+    public get SplitCurrencyAccount() { return this.splitCurrencyAccount; }
+    public set SplitCurrencyAccount(newValue: string) { if (this.splitCurrencyAccount != newValue) { this.splitCurrencyAccount = newValue; this.MarkAsDirty("SplitCurrencyAccount"); } }
+       
+	 
+    private parentName: string;
+    public get ParentName() { return this.parentName; }
+    public set ParentName(newValue: string) { if (this.parentName != newValue) { this.parentName = newValue; this.MarkAsDirty("ParentName"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

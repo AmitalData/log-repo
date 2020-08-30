@@ -82,6 +82,7 @@ export class GLAccountList {
 	ConsolidationVat: string;
 	IsEquipmentVendor: boolean;
 	ExcludeFromDeductionReport: boolean;
+	Parent: string;
 	DeductionTypeName: string;
 	DeductionFileTypeCode: string;
 	DeductionFileTypeName: string;
@@ -108,6 +109,10 @@ export class GLAccountList {
 	NameForPrintingCheques: string;
 	Smallcashbook: boolean;
 	MinimumInterestInvoiceBilling: number;
+	SalesmanName: string;
+	CollectorName: string;
+	SplitCurrencyAccount: string;
+	ParentName: string;
 	
 }
  

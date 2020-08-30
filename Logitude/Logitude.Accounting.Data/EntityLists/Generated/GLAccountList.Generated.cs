@@ -163,6 +163,8 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public bool ExcludeFromDeductionReport  { get; set; }
        [DataMember]
+       public string Parent  { get; set; }
+       [DataMember]
        public string DeductionTypeName  { get; set; }
        [DataMember]
        public string DeductionFileTypeCode  { get; set; }
@@ -214,6 +216,14 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool Smallcashbook  { get; set; }
        [DataMember]
        public int? MinimumInterestInvoiceBilling  { get; set; }
+       [DataMember]
+       public string SalesmanName  { get; set; }
+       [DataMember]
+       public string CollectorName  { get; set; }
+       [DataMember]
+       public string SplitCurrencyAccount  { get; set; }
+       [DataMember]
+       public string ParentName  { get; set; }
    }
 
 }

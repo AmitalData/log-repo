@@ -97,6 +97,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public decimal OpenShipments { get; set; }
         public string BusinessPhone { get; set; }
 
+        public string CollectorId { get; set; }
 
         public int? StorageFreeDays { get; set; }
         public string RankId { get; set; }
