@@ -890,13 +890,15 @@ accountingValidationContextServiceProvider
 
             if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)
             {
+                // WI:48580
                 //errorsList.Add(
                 //    TranslateMyTextCode("Accounting.General.O.CurrentCurrency",0) + " " + GetCurrencyCode(myGLAccountDataProvider, jlCurrencyId, myJournalPM.Tenant) 
                 //    + TranslateMyTextCode(JournalValidator.M_ButAccountCurrencyisDifferent/*"Accounting.General.O.ButAccountCurrencyDifferent"*/, 0) + " " + GetCurrencyCode(myGLAccountDataProvider, pmAcc.CurrencyId, myJournalPM.Tenant)
                 //    + " ( " + TranslateMyTextCode("Accounting.General.O.GLAccountIs",0) + " " + GetAccountName(myGLAccountDataProvider, pmAcc.Id, myJournalPM.Tenant) + " )");
 
-                // WI:48580
-                errorsList.Add(TranslateMyTextCode("Accounting.General.O.PaymentBankAccountCurrencyDifferent", myJournalPM.Tenant));
+
+                if (myJournalPM.AccountingEntityCode != "2")
+                  errorsList.Add(TranslateMyTextCode("Accounting.General.O.PaymentBankAccountCurrencyDifferent", myJournalPM.Tenant));
             }
             if (pmAcc.IsMultiCurrency.GetValueOrDefault())
             {
