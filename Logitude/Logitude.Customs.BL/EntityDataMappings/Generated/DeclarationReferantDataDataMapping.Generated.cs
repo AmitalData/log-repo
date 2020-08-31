@@ -48,6 +48,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LastStatusName, 
 	         LastStatusDate, 
 	         OrderMoney, 
+	         Team, 
 	         ImporterFile,
 	      }
 
@@ -85,6 +86,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LastStatusName, 
 	         LastStatusDate, 
 	         OrderMoney, 
+	         Team, 
 	         ImporterFile,
 	      }
 
@@ -217,6 +219,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OrderMoney))
             {
 				entityPOCO.OrderMoney = entityPM.OrderMoney;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Team))
+            {
+				entityPOCO.Team = entityPM.Team;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterFile))
@@ -360,6 +367,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.OrderMoney = entityPOCO.OrderMoney;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Team))
+            {
+					entityPM.Team = entityPOCO.Team;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImporterFile))
             {
 					entityPM.ImporterFile = entityPOCO.ImporterFile;
@@ -496,6 +508,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.OrderMoney = entityPM.OrderMoney;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Team))
+            {
+                oldEntityPM.Team = entityPM.Team;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterFile))
             {
                 oldEntityPM.ImporterFile = entityPM.ImporterFile;
@@ -517,6 +534,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.LastStatusName)) //T4 find type == nText 
             {
                 entityPM.LastStatusName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LastStatusName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Team)) //T4 find type == nText 
+            {
+                entityPM.Team = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Team));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
