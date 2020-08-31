@@ -37,7 +37,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;שדה חובה מכס&quot;"
   DefaultText="&quot;Customs Required Field&quot;"
-  Code="&quot;73fe&quot;"
+  Code="&quot;75d0&quot;"
   Name="&quot;Customs.CustomsRequiredField Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"

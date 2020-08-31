@@ -31,6 +31,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             base.UpdateComposition(entityPM);
         }
+        protected override void OnUpdating(DeclarationPaymentPM entityPM, DeclarationPayment entityPOCO)
+        {
+            if(entityPM.AutomaticPayment!= entityPOCO.AutomaticPayment)
+            {
+                if (entityPM.AutomaticPayment == 1)
+                {
+                    SendAVAPAY(entityPM, null, UnifreightEventMode.@new);
+                }
+                else
+                {
+                    SendAVAPAY(entityPM, null, UnifreightEventMode.del);
+                }
+            }
+          
+            base.OnUpdating(entityPM, entityPOCO);
+
+        }
         protected override void OnUpdating(DeclarationPaymentPM entityPM)
         {
             //CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
@@ -45,14 +62,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 unifreightDeclarationPaymentUpdateService.Update();
             }
 
-            if(entityPM.AutomaticPayment==1)
-            {
-                SendAVAPAY(entityPM, null, UnifreightEventMode.@new);
-            }
-            else
-            {
-                SendAVAPAY(entityPM, null, UnifreightEventMode.del);
-            }
             base.OnUpdating(entityPM);
         }
 

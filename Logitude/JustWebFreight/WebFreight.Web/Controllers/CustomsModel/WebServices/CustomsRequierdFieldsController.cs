@@ -21,6 +21,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -118,7 +119,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         }
                     }
                 }
-
+                TableLastUpdateClass.UpdateTableHistory(tenant, "Customs.CustomsRequiredField");
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
             catch (Exception ex)

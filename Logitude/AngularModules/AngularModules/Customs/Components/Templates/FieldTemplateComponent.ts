@@ -14,6 +14,7 @@ import { DeclarationReferantDataList } from '../../EntityLists/DeclarationRefern
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { ResourceLoader } from '@angular/compiler';
 import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationReferantDataPMService';
+import { ExceptionReasonExtendedListService } from '../../Services/ExtendedLists/ExceptionReasonExtendedListService';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
@@ -32,6 +33,7 @@ export class FieldTemplateComponent {
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
     customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
+    exceptionReasonExtendedListService: ExceptionReasonExtendedListService = new ExceptionReasonExtendedListService();
     private _ListComponentArgs: ListComponentArgs;
     @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
     RowIndex: any;
@@ -104,6 +106,19 @@ export class FieldTemplateComponent {
         }
         var myFormats = DateTool.GetDateFormats(this.Entity.LastStatusDate);
         return myFormats.DateString;
+    }
+    get ExceptionReasonText() {
+        var ToolTipValue: string = this.Entity.ExceptionReasonsList;
+        var list = ToolTipValue.split(',').filter(Boolean);
+        if (list.length > 1) {
+            return list.toString();
+        }
+        this.exceptionReasonExtendedListService.get(list[0]).subscribe((response: ServiceResponse) => {
+            if (response) {
+                return response.Result.LocalName;
+            }
+        });
+        return "";
     }
     OpenCourierMaster() {
         //static entityResourceService: EntityResourceService = new EntityResourceService();
