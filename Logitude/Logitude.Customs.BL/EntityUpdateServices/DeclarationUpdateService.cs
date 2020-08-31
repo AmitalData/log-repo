@@ -98,7 +98,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     PackageMeasureQualifierCode = "2",
                     Tenant = entityPM.Tenant,
                     LineNumber = 1,
-                    PackageQuantity = 33,
+                  //  PackageQuantity = 33,
                     ChangeSetOp = ChangeSetOperation.Insert,
                 };
 
