@@ -44,7 +44,10 @@ export class NewQuoteWizardScenarios {
                 .eq(0)
                 .within(() => {
                     cy.get('input').type(entityNumber).then(() => {
-                        cy.get('ul > li').eq(0).click({ force: true });
+                        cy.get('ul > li').then(a => {
+                            cy.contains('td', entityNumber).click({ force: true });
+                            //cy.get('ul > li').eq(0).click({ force: true });
+                        });
                     });
                 });
         });
