@@ -115,7 +115,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
             IGlobalContext globalObjectContext = GlobalContext.GetContext();
             ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
             IQueryable<TenantManagement> iQueryable_Tenantmanagements = (from a in globalObjectContext.TenantManagements.Include("GlobalTenant")
-                                                                         where a.GlobalTenant.IsActive && a.GlobalTenant.Version != -1 && a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL"
+                                                                         where a.GlobalTenant.IsActive && a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL"
                                                                          select a);
             //IQueryable<TenantManagement> iQueryable_Tenantmanagements = globalObjectContext.TenantManagements.Where(a => a.IsRecurring == true && a.RecurringPeriodCode == "MO" && a.PaymentChannelCode == "PL");
             iQueryable_BluesnapTransactions = globalObjectContext.BluesnapTransactions;
