@@ -9,6 +9,7 @@
 
 import {GLAccountWithholdingTaxPM} from './GLAccountWithholdingTaxPM';
 import {GLAccountInterestPeriodPM} from './GLAccountInterestPeriodPM';
+import {GLAccountCurrencyPM} from './GLAccountCurrencyPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -637,6 +638,65 @@ export class GLAccountPM {
     private isSplitted: boolean;
     public get IsSplitted() { return this.isSplitted; }
     public set IsSplitted(newValue: boolean) { if (this.isSplitted != newValue) { this.isSplitted = newValue; this.MarkAsDirty("IsSplitted"); } }
+       
+	 
+    private salesmanName: string;
+    public get SalesmanName() { return this.salesmanName; }
+    public set SalesmanName(newValue: string) { if (this.salesmanName != newValue) { this.salesmanName = newValue; this.MarkAsDirty("SalesmanName"); } }
+       
+	 
+    private collectorName: string;
+    public get CollectorName() { return this.collectorName; }
+    public set CollectorName(newValue: string) { if (this.collectorName != newValue) { this.collectorName = newValue; this.MarkAsDirty("CollectorName"); } }
+       
+	 
+    private splitCurrencyAccount: string;
+    public get SplitCurrencyAccount() { return this.splitCurrencyAccount; }
+    public set SplitCurrencyAccount(newValue: string) { if (this.splitCurrencyAccount != newValue) { this.splitCurrencyAccount = newValue; this.MarkAsDirty("SplitCurrencyAccount"); } }
+       
+	 
+    private parentName: string;
+    public get ParentName() { return this.parentName; }
+    public set ParentName(newValue: string) { if (this.parentName != newValue) { this.parentName = newValue; this.MarkAsDirty("ParentName"); } }
+       
+	 
+     
+	private gLAccountCurrencies: GLAccountCurrencyPM[];
+    get  GLAccountCurrencies() {
+        if (this.gLAccountCurrencies == null) {
+            this.gLAccountCurrencies = [];
+        }
+
+        return this.gLAccountCurrencies;
+    }
+    set  GLAccountCurrencies(newValue: GLAccountCurrencyPM[]) {
+        if (this.gLAccountCurrencies != newValue) {
+            this.gLAccountCurrencies = newValue;
+        }
+    }
+    public AddGLAccountCurrency(item: GLAccountCurrencyPM) {
+        if (item != null) {
+            var index = this. GLAccountCurrencies.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. GLAccountCurrencies.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveGLAccountCurrency(item: GLAccountCurrencyPM) {
+        if (item != null) {
+            var index = this. GLAccountCurrencies.indexOf(item);
+            if (index > -1) {
+                this. GLAccountCurrencies.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public GLAccountCurrencies: Array<GLAccountCurrencyPM>= [];
+     private parentCurrencyId: string;
+    public get ParentCurrencyId() { return this.parentCurrencyId; }
+    public set ParentCurrencyId(newValue: string) { if (this.parentCurrencyId != newValue) { this.parentCurrencyId = newValue; this.MarkAsDirty("ParentCurrencyId"); } }
        
 	 
 

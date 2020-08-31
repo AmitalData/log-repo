@@ -35,6 +35,29 @@
                         <td>
                             <table>
 
+
+
+                                <!-- PartnerTypes Filter -->
+                                <tr *ngIf="isPartnerTypesFilterEnabled" class="FormFieldRow">
+                                    <td style="width:120px; ">
+                                        {{ 'ARInvoice.F.PartnerType' | TextCodeTranslationPipe }}
+                                    </td>
+
+                                    <td style="width:230px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                        <ComboBox
+                                            [ItemsSource]="PartnerTypes"
+                                            [Binding]="'Name'"
+                                            [SelectedItem]="SelectedPartnerType"
+                                            (SelectedItemChanged)="SelectedPartnerType = $event"></ComboBox>
+
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                </tr>
+
                                 <!-- BillToId -->
                                 <tr class="FormFieldRow">
                                     <td style="width:120px; ">
@@ -42,7 +65,19 @@
                                     </td>
 
                                     <td style="width:230px; ">
-                                        <LogLov [ObjectFieldName]="'BillToId'"
+
+                                        <LogLov *ngIf="isPartnerTypesFilterEnabled"
+                                                [ObjectFieldName]="'BillToId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [SelectedValue]="BillToId"
+                                                [LookUpTableName]="'Card'"
+                                                [DependencyFilter1Value]="filterByPartnerTypeCode"
+                                                >
+                                        </LogLov>
+
+                                        <LogLov *ngIf="!isPartnerTypesFilterEnabled"
+                                                [ObjectFieldName]="'BillToId'"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [SelectedValue]="BillToId"
@@ -50,6 +85,8 @@
                                                 [DependencyFilter1Value]="'CS,AG,AC,AL,CG,SG,SL,TR,VD,WH'"
                                                 [DependencyFilter1IsList]="true">
                                         </LogLov>
+
+
                                     </td>
 
                                     <td>

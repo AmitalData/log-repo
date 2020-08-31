@@ -17,8 +17,10 @@ namespace Logitude.Accounting.Data.Repositories
         
 		public List<GLAccountCurrency> GetMulti(EntityKeyFields entityKeys)
         {
+
+         GLAccountKeys myEntityKeys = entityKeys as GLAccountKeys;
+        return (from a in context.GLAccountCurrencies where a.MainGLAccountId == myEntityKeys.Id select a).ToList();
             
-			throw new NotImplementedException();
         }
         public List<GLAccountCurrency> GetRelatedCurrenciesAccountByCustomerGLAccountAll(int tenant, string GLAccountId)
         {

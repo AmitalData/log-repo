@@ -201,6 +201,7 @@ export class FieldTemplateComponent {
         }
     }
 
+    
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)

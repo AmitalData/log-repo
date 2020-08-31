@@ -79,7 +79,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "24c5001d324f72ec3c50ead7b6bcf9fb";
+
+		public const string HashString = "025a13d8f0aae4528f4fd48c9d51d958";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5288,7 +5290,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5303,6 +5305,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -5313,6 +5316,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Parent",
 					  						DefaultText =  "Parent",
+					  						FullLocalDefaultText =  "קוד אב",
+					  						ListFieldLable =  "ParentListLable",
+					  						ListLableDefaultText =  "קוד אב",
+					  						ListLocalDefaultText =  "Parent",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7102,6 +7109,354 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SalesmanName",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SalesmanName",
+					  						ListPropertyPath =  "SalesmanName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SalesmanName",
+					  						DefaultText =  "Salesman",
+					  						FullLocalDefaultText =  "איש מכירות",
+					  						ListFieldLable =  "SalesmanNameListLable",
+					  						ListLableDefaultText =  "Salesman",
+					  						ListLocalDefaultText =  "איש מכירות",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CollectorName",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CollectorName",
+					  						ListPropertyPath =  "CollectorName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CollectorName",
+					  						DefaultText =  "Collector",
+					  						FullLocalDefaultText =  "גובה",
+					  						ListFieldLable =  "CollectorNameListLable",
+					  						ListLableDefaultText =  "Collector",
+					  						ListLocalDefaultText =  "גובה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SplitCurrencyAccount",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SplitCurrencyAccount",
+					  						ListPropertyPath =  "SplitCurrencyAccount",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SplitCurrencyAccount",
+					  						DefaultText =  "Split Currency Account",
+					  						ListFieldLable =  "SplitCurrencyAccountListLable",
+					  						ListLableDefaultText =  "Split Currency Account",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ParentName",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ParentName",
+					  						ListPropertyPath =  "ParentName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ParentName",
+					  						DefaultText =  "Parent",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "GLAccountCurrencies",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "List",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "GLAccountCurrencies",
+					  						ListPropertyPath =  "GLAccountCurrencies",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  true,
+					  						MultiTableName =  "GLAccountCurrency",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "GLAccountCurrencies",
+					  						DefaultText =  "GLAccount Currencies",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ParentCurrencyId",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ParentCurrencyId",
+					  						ListPropertyPath =  "ParentCurrencyId",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ParentCurrencyId",
+					  						DefaultText =  "Parent Currency",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -7657,23 +8012,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen GLAccountHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GLAccount.HeaderScreen", Name = "Header Screen", ObjectTableId = GLAccountObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen GLAccountHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GLAccount.HeaderScreen", Name = "Header Screen", ObjectTableId = GLAccountObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
             ScreenField GLAccountGLAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.DisplayNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.LocalBalanceInDue", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.NextDueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.CurrencyCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.LocalBalanceInDue", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.NextDueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.CurrencyCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.ReconcileMethodName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.ReconcileMethodName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.InternalNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.ParentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField GLAccountGLAccountHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.SplitCurrencyAccount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField GLAccountGLAccountHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.InternalNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField GLAccountGLAccountHeaderScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.SalesmanName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField GLAccountGLAccountHeaderScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 2, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.CollectorName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    GLAccountObjectTable.HeaderScreenId = GLAccountHeaderScreenScreen0.Id;
 		    GLAccountObjectTable.HeaderScreenCode = GLAccountHeaderScreenScreen0.Code;
@@ -9109,6 +9472,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOGLaccountConnectedMoreOneCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLaccountConnectedMoreOneCard", DefaultText = "the GLaccount is connected to more than one operational card",LocalDefaultText = @"הכרטסת מחוברת ליותר מכרטיס תפעולי אחד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountONoSalesman = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSalesman", DefaultText = "You cannot run this report without filling the Salesman field",LocalDefaultText = @"לא ניתן להפיק את הדוח ללא בחירת איש מכירות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+
+ 		   TextCode GLAccountTextCode_GLAccountOConnected10Cards = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Connected10Cards", DefaultText = "The GLAccount is connected to 10 or more operational cards.",LocalDefaultText = "כרטיס הנח''ש מחובר ליותר מ 10 כרטיסים תפעוליים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Multi", DefaultText = "Multi",LocalDefaultText = @"רב", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
 
    
 	    

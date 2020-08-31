@@ -35,7 +35,7 @@ namespace WebFreight.Web.WcfApi
                 PaymentTermQuery paymentTermQuery = new PaymentTermQuery(tenant);
 
                 var paymentTerms = paymentTermRepository.GetPaymentTerms(tenant);
-                List<PaymentTermList> result = paymentTermQuery.GetIQueryableEntityList(paymentTerms).ToList();
+                List<PaymentTermList> result = paymentTermQuery.GetIQueryableEntityList(paymentTerms).ToList(); 
 
                 return result;
             }

@@ -375,8 +375,25 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Id = a.Id,
                         Tenant = a.Tenant,
                         EnglishName = a.EnglishName,
+                        SalesmanUserId = a.SalesmanUserId,
+                        CollectorId = a.CollectorId,
 
                     }).FirstOrDefault();
+        }
+
+        public List<CardList> GetAllCardsByGLAccount(string glAccountId, int tenant)
+        {
+            return (from a in repository.context.Cards
+                    where a.GLAccountId == glAccountId && a.Tenant == tenant
+                    select new CardList()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        EnglishName = a.EnglishName,
+                        SalesmanUserId = a.SalesmanUserId,
+                        CollectorId = a.CollectorId,
+
+                    }).ToList();
         }
 
         public IQueryable<CardList> GetCardListsByTenant(int tenant)
@@ -1103,6 +1120,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CreatedByPartner = card.CreatedByPartner,
                                                 RankId = card.Customer != null ? (card.Customer.Rank != null ? card.Customer.Rank.Name : null) : null,
                                                 IndustryId = card.Customer != null ? (card.Customer.Industry != null ? card.Customer.Industry.Name : null) : null,
+                                                RecordDate = card.UpdateDate != null ? card.UpdateDate : card.CreateDate,
                                             };
 
             if (myResult.Count() > 0)

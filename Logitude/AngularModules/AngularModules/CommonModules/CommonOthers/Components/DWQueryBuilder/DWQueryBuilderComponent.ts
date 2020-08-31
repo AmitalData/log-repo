@@ -587,10 +587,26 @@ export class DWQueryBuilderComponent extends BaseComponent {
     btnAdd_Click(item) {
         this.SelectedItem = item.IsMultipleSelection ? new DWObjectFieldsDetails(item) : item;
         var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
-        if (this.SelectedItem && myCurrentItem && (myCurrentItem.length == 0 || this.SelectedItem.IsMultipleSelection)) {
+        if (this.MatchAddColumnConditions(myCurrentItem)) {
             this.AddSelectedField();
             this.ClearData();
         }
+    }
+
+    private MatchAddColumnConditions(myCurrentItem: DWObjectFieldsDetails[]) {
+        return this.SelectedItem && myCurrentItem && (myCurrentItem.length == 0 || (this.SelectedItem.IsMultipleSelection && !this.IsExistColumnName(myCurrentItem)));
+    }
+
+    IsExistColumnName(myCurrentItem: DWObjectFieldsDetails[]) {
+        var isExist = false;
+        if (this.SelectedFieldsDataSource) {
+            this.SelectedFieldsDataSource.forEach(field => {
+                if (myCurrentItem.length > 0 && field.DisplayName == myCurrentItem[0].DisplayName) {
+                    isExist = true;
+                }
+            });
+        }
+        return isExist;
     }
 
     AddSelectedField() {

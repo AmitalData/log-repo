@@ -439,7 +439,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         string myContainersNumbersText = "";
-
+                        
                         foreach (ShipmentPackage item in shipmentPackagesList)
                         {
                             if (!string.IsNullOrEmpty(item.ContainerNumber))
@@ -460,6 +460,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         invoiceDataProvider.ContainersNumbersArray = myContainersNumbersText;
                         invoiceDataProvider.NumberofPackages = myNumberofPackages;
+                        invoiceDataProvider.PackageTypes = this.FillShipmentPackageTypes(shipment.Tenant, shipmentPackagesList);
                     }
 
                     #region ReleasingAgent
@@ -613,6 +614,34 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return invoiceDataProvider;
+        }
+
+        private string FillShipmentPackageTypes(int tenant, List<ShipmentPackage> shipmentPackagesList)
+        {
+            var myGroup = (from a in shipmentPackagesList
+                           where a.PackageTypeId != null
+                           group a by a.PackageTypeId into g
+                           select new
+                           {
+                               PackageTypeId = g.Key,
+                               Count = g.Count()
+                           });
+
+            string myPackagesTypesText = "";
+
+            if (myGroup.Count() > 0)
+            {
+                foreach (var s in myGroup)
+                {
+                    PackageType myPackageType = PackageTypeRepository.GetSinglePackageType(s.PackageTypeId, tenant, true);
+                    if (myPackageType != null)
+                    {
+                        myPackagesTypesText = string.IsNullOrEmpty(myPackagesTypesText) ? myPackageType.EnglishName : myPackagesTypesText + "," + myPackageType.EnglishName;
+                    }
+                }
+            }
+
+            return myPackagesTypesText;
         }
 
         private APInvoiceDataProvider GetMultipleAPInvoiceDataProvider(APInvoicePM invoice)

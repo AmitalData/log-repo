@@ -96,6 +96,11 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string CreatedByPartner { get; set; }
         public decimal OpenShipments { get; set; }
         public string BusinessPhone { get; set; }
+
+
+        public string CollectorId { get; set; }
+
+
         public int? StorageFreeDays { get; set; }
         public string RankId { get; set; }
         public string IndustryId { get; set; }
@@ -110,5 +115,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string AirWeightRoundingCode { get; set; }
         public string OceanWeightRoundingCode { get; set; }
         public string InlandWeightRoundingCode { get; set; }
+
+        public DateTime? RecordDate { get; set; }
+
+        
     }
 }

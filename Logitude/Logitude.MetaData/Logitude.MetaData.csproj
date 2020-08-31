@@ -181,6 +181,7 @@
     </Content>
     <None Include="DBOthers\CommonDataModel\Procedures\ChangeVendorToTrucker.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldAuthenticationTokens.dxml" />
+    <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdateCardSearchFunction.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldAPILogs.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldCommunicationLogs.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldFilingInboxes.dxml" />

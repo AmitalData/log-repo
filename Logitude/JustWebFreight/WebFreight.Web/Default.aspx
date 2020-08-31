@@ -25,28 +25,6 @@
     <script src="HtmlHelpers/JS/Logitude.Tools.js" type="text/javascript"></script>
     <script src="Scripts/json2.min.js" type="text/javascript"></script>
     <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
-
-    <style type="text/css">
-        span.k-icon.k-i-arrow-s {
-            background-image: url('HtmlHelpers/Images/Icons/DropArrow.png');
-            background-size: 12px 12px;
-            background-position: 0 0;
-        }
-        /*
-        #cmbTenants-list .k-item
-        {
-            background:transparent;
-            color: black;
-            border:0px;
-        }
-
-        #cmbTenants-list .k-item:hover
-        {
-            background:gray;
-            color: white;
-        } 
-    */
-    </style>
 </head>
 
 <body onload="get_cookie_data()" onkeydown="capLock( event )">

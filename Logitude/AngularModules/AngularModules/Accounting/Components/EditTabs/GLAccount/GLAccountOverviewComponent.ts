@@ -153,6 +153,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
     //#endregion
     TenantCurrency:string;
     accountCardlist: CardList[];
+    accountCardnumberLists:string[]=[];
+    GLaccountConnectedMoreOneCardText:string =TextCodeTranslator.Translate("GLAccount.O.GLaccountConnectedMoreOneCard"); 
+    Connected10CardsText:string =TextCodeTranslator.Translate("GLAccount.O.Connected10Cards"); 
+
     GetDefaultValues() {
 
         // Get GLAccountMoreData
@@ -193,8 +197,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
                     var IsAllCardHasOpenShipmentNull:boolean=true;
                     this.CreditLimitAmount=0;
                     this.OpenShipments = 0;
-                   
+                  
                     this.accountCardlist.forEach(s=>{
+                        this.accountCardnumberLists.push(s.Code);
                         if(s.OpenShipments!=null){
                             this.OpenShipments+=s.OpenShipments;
                             IsAllCardHasOpenShipmentNull=false;
@@ -204,6 +209,14 @@ export class GLAccountOverviewComponent extends BaseComponent {
                             this.CreditLimitAmount+=s.CreditLimitAmount;
                         }
                     });
+                    if(this.accountCardlist.length >= 10){
+                        this.GLaccountConnectedMoreOneCardText = this.Connected10CardsText;
+                    }
+                    else{
+                        this.GLaccountConnectedMoreOneCardText+=" ";
+                        this.GLaccountConnectedMoreOneCardText+= this.accountCardnumberLists.toString();
+                    }
+             
                     if(IsAllCardHasCriedtLimitNull){
                         this.CreditLimitAmount=null;
                     }
