@@ -30,14 +30,14 @@ namespace Logitude.Customs.Data.Repsitories
 		
 		public  ReferantTeam GetSingle(string code, int tenant)
         {
-            return (from a in context.ReferantTeam
+            return (from a in context.ReferantTeams
                     where a.Code == code && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
         public IQueryable<ReferantTeam> GetAll(int tenant)
         {
-            return from a in context.ReferantTeam  
+            return from a in context.ReferantTeams  
                    where a.Tenant == tenant
                    select a;
         }
@@ -45,7 +45,7 @@ namespace Logitude.Customs.Data.Repsitories
         public ReferantTeam GetSingle(EntityKeyFields entityKeys)
         {
             ReferantTeamKeys keys = entityKeys as ReferantTeamKeys;
-            return (from a in context.ReferantTeam
+            return (from a in context.ReferantTeams
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
@@ -54,26 +54,26 @@ namespace Logitude.Customs.Data.Repsitories
         public void Add(ReferantTeam entity)
         {
             onAdd();
-            context.ReferantTeam.Add(entity);
+            context.ReferantTeams.Add(entity);
         }
 
         public void Remove(ReferantTeam entity)
         {
-            context.ReferantTeam.Attach(entity);
-            context.ReferantTeam.Remove(entity);
+            context.ReferantTeams.Attach(entity);
+            context.ReferantTeams.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(ReferantTeam entity)
         {
             onUpdate();
-            context.ReferantTeam.Attach(entity);
+            context.ReferantTeams.Attach(entity);
             context.SetAsModified(entity);
         }
 
         public List<ReferantTeam> All()
         {
-            return context.ReferantTeam.ToList();
+            return context.ReferantTeams.ToList();
         }
 
         private ICustomContext context

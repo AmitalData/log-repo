@@ -2726,7 +2726,7 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
-	 public IDbSet<ReferantTeam> ReferantTeam 
+	 public IDbSet<ReferantTeam> ReferantTeams 
 	 {
 	      get; set;
 	 
