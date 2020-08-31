@@ -751,9 +751,10 @@ namespace WebFreight.Web.Helpers
                             string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode) ? column.ObjectFieldListLabelTextCodeCode : column.ObjectFieldFullNameTextCodeCode;
                             System.Xml.Linq.XElement col = new System.Xml.Linq.XElement(text);
                             string value = " ";
-                            if (column.ObjectFieldName == "Task")
+                            
+                            if (query.EditWizardName == "LogBoxMainComponent")
                             {
-                                value = GetLogBoxTaskFieldValue(entity);
+                                value = ResoloveLogBoxShipmentFieldValue(entity, column);
                             }
                             else
                             {
@@ -807,6 +808,37 @@ namespace WebFreight.Web.Helpers
 
         }
 
+        private string ResoloveLogBoxShipmentFieldValue(object entity, QueryColumnPM column)
+        {
+            string value = string.Empty ;
+            if (column.ObjectFieldName == "Task") value = GetLogBoxTaskFieldValue(entity);
+            else if (column.ObjectFieldName == "CustomerReference")
+            {
+                string customerReference1 = GetPropertyValue(entity, "CustomerReference1");
+                string customerReference2 = GetPropertyValue(entity, "CustomerReference2");
+                if (!string.IsNullOrEmpty(customerReference1)) value = customerReference1;
+                if (string.IsNullOrEmpty(customerReference1) && !string.IsNullOrEmpty(customerReference2)) value += customerReference2;
+                if (!string.IsNullOrEmpty(customerReference1) && !string.IsNullOrEmpty(customerReference2)) value += " / " + customerReference2;
+            }
+            else if (column.ObjectFieldName.Contains("ShipmentNumber_"))
+            {
+                value = GetPropertyValue(entity, "PartnerName") + " ";
+                if (column.ObjectFieldName.Split('_')[1] == "MyShipments") value += GetPropertyValue(entity, "CustomerReference1");
+                else value+= GetPropertyValue(entity, "ForwarderShipmentNumber");
+            }
+            else
+            {
+                PropertyInfo info = entity.GetType().GetProperty(column.ObjectFieldName);
+                if (info != null)
+                {
+                    value = info.GetValue(entity, null) != null ? info.GetValue(entity, null).ToString() : " ";
+                }
+            }
+
+
+            return string.IsNullOrEmpty(value) ? " ":value;
+        }
+
         private  string GetLogBoxTaskFieldValue(object entity)
         {
             string value = string.Empty;
@@ -844,7 +876,7 @@ namespace WebFreight.Web.Helpers
 
             }
 
-            return result;
+            return (string.IsNullOrEmpty(result) || string.IsNullOrWhiteSpace(result)) ? "":result ;
         }
 
         private static string GetValidFileName(string fileName)

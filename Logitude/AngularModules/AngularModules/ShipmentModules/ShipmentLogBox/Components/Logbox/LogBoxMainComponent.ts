@@ -384,7 +384,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             SortByName: "ShipmentNumber"
         });
 
-        this.QueryColumns.push(this.GetQueryColumn("ShipmentNumber", 'Text', 'Shipment #' ));
+        this.QueryColumns.push(this.GetQueryColumn(("ShipmentNumber_" + this.SelectedFilter.replace(" ","")), 'Text', 'Shipment #'));
 
 
         this.columns.push({
@@ -478,7 +478,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             SortByName: "CustomerReference2"
         });
 
-        this.QueryColumns.push(this.GetQueryColumn("CustomerReference2", 'Text', 'Reference #'));
+        this.QueryColumns.push(this.GetQueryColumn("CustomerReference", 'Text', 'Reference #'));
 
 
         this.columns.push({
@@ -626,115 +626,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     GetExportToExcelArgs() {
-
-
-        this.filterAgrs = new ApiQueryFilters();
-
-        if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'ImportersFilter').length > 0) {
-            this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'ImportersFilter');
-        }
-        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
-            this.filterAgrs.addAdditionalFilter("ImportersFilter", this.SearchFilter, null, null, "Contains", true, false, false, "String");
-        }
-
-        if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'IsCancelled').length > 0) {
-            this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'IsCancelled');
-        }
-        this.filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "Boolean");
-
-        if (this.SelectedTransportFilter != "All") {
-            this.filterAgrs.addAdditionalFilter("TransportModeId", this.SelectedTransportFilter, null, null, "Equals", false, true, false, "string", this.SelectedTransportFilter == "All" ? true : false);
-        }
-        else {
-            if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'TransportModeId').length > 0) {
-                this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'TransportModeId');
-            }
-        }
-        if (this.SelectedDirectionFilter != "All") {
-            this.filterAgrs.addAdditionalFilter("DirectionId", this.SelectedDirectionFilter, null, null, "Equals", false, true, false, "string", this.SelectedDirectionFilter == "All" ? true : false);
-        }
-        else {
-            if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'DirectionId').length > 0) {
-                this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'DirectionId');
-            }
-        }
-        if (this.SelectedArchiveFilter != "All") {
-            this.filterAgrs.addAdditionalFilter("IsOperationalClosed", this.SelectedArchiveFilter == "O" ? false : true, null, null, "Equals", false, true, false, "string", this.SelectedArchiveFilter == "All" ? true : false);
-        }
-        else {
-            if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'IsOperationalClosed').length > 0) {
-                this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'IsOperationalClosed');
-            }
-        }
-
-
-        if (!AppTool.IsNullOrEmpty(this.SelectedFilter)) {
-            if (this.SelectedFilter == this.AgentShipmentsLabel) {
-                if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'ForwarderShipmentsFilter').length > 0) {
-                    this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'ForwarderShipmentsFilter');
-                }
-                if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'NotForwarderShipmentsFilter').length > 0) {
-                    this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'NotForwarderShipmentsFilter');
-                }
-                this.filterAgrs.addAdditionalFilter("ForwarderShipmentsFilter", "null", null, null, "NotEqual", true, true, false, "String");
-
-                this.filterAgrs.SortBy = "StatusDate";
-                this.filterAgrs.SortDirection = "Descending";
-
-            }
-            else if (this.SelectedFilter == "Recent") {
-                this.filterAgrs.SortBy = "LastDocumentDateTime";
-                this.filterAgrs.SortDirection = "Descending";
-            }
-            else if (this.SelectedFilter == this.RequestedDocsLable) {
-                if (this.isPrivateLabel == true) {
-
-                    if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'PrivateLabelActionRequired').length > 0) {
-                        this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'PrivateLabelActionRequired');
-                    }
-                    this.filterAgrs.addAdditionalFilter("PrivateLabelActionRequired", true, null, null, "Equals", true, true, false, "Boolean");
-             
-                    this.filterAgrs.SortBy = "MainCarriageExpectedOrActual";
-                    this.filterAgrs.SortDirection = "Descending";
-                }
-                else {
-                    if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'NotPrivateLabelActionRequired').length > 0) {
-                        this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'NotPrivateLabelActionRequired');
-                    }
-                    this.filterAgrs.addAdditionalFilter("NotPrivateLabelActionRequired", true, null, null, "Equals", true, true, false, "Boolean");
-                    this.filterAgrs.SortBy = "MainCarriageExpectedOrActual";
-                    this.filterAgrs.SortDirection = "Descending";
-                }
-          
-            }
-            else if (this.SelectedFilter == "All Shipments") {
-                this.filterAgrs.SortBy = "StatusDate";
-                this.filterAgrs.SortDirection = "Descending";
-            }
-            else if (this.SelectedFilter == "My Shipments") {
-                if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'NotForwarderShipmentsFilter').length > 0) {
-                    this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'NotForwarderShipmentsFilter');
-                }
-                if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'ForwarderShipmentsFilter').length > 0) {
-                    this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'ForwarderShipmentsFilter');
-                }
-                this.filterAgrs.addAdditionalFilter("NotForwarderShipmentsFilter", "null", null, null, "Equals", true, true, false, "String");
-                this.filterAgrs.SortBy = "StatusDate";
-                this.filterAgrs.SortDirection = "Descending";
-
-            }
-        }
-        else {
-            this.filterAgrs.addAdditionalFilter("ForwarderShipmentsFilter", "null", null, null, "NotEqual", true, true, false, "String");
-            this.filterAgrs.SortBy = "StatusDate";
-            this.filterAgrs.SortDirection = "Descending";
-
-        }
-
+        this.filterAgrs = this.GetApiQueryFilters();
         this.filterAgrs.Tenant = SessionLocator.Tenant;
-        
-
-
         var logboxShipmentExportExcelArgs: LogboxShipmentExportExcelArgs = new LogboxShipmentExportExcelArgs();
         logboxShipmentExportExcelArgs.Tenant = SessionLocator.Tenant;
         logboxShipmentExportExcelArgs.AdditionalFilters = this.filterAgrs.AdditionalFilters;
@@ -745,23 +638,17 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         logboxShipmentExportExcelArgs.UserId = SessionLocator.LoggedUserId;
         logboxShipmentExportExcelArgs.SortBy = this.filterAgrs.SortBy;
         logboxShipmentExportExcelArgs.SortDirection = this.filterAgrs.SortDirection;
-        logboxShipmentExportExcelArgs.QueryName = this.QueryName;
+        logboxShipmentExportExcelArgs.QueryName = this.SelectedFilter;
         logboxShipmentExportExcelArgs.QuerySection = "Shipment";
         logboxShipmentExportExcelArgs.Filters = this.filterAgrs; 
         return logboxShipmentExportExcelArgs;
-
-
-      
-
     }
 
 
     
-    QueryName: string;
     MenuFiltersClicked(Selected) {
         this.SelectedFilter = Selected;
         this.SelectedRow = null;
-        this.QueryName = Selected;
         if (Selected == "Recent") {
             this.RecentImg = "./Images/LogBox/RecentW.png";
             this.OnImporterShipmentsFilterChanged.emit({ IsRecentSelected: true, IsRequestedSelected: false });
@@ -806,11 +693,15 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.BuildColumns();
         this.LoadQueriesCounts();
         //if (this.filterAgrs == null) {
+        
+        this.filterAgrs = this.GetApiQueryFilters();
+
+        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+    }
+
+
+    GetApiQueryFilters() {
         this.filterAgrs = new ApiQueryFilters();
-        //}
-        //if (!string.IsNullOrEmpty(SearchFilter)) {
-        //    searchValue = String.IsNullOrEmpty(SearchFilter.Trim()) ? null : SearchFilter.Trim();
-        //}
         if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'ImportersFilter').length > 0) {
             this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'ImportersFilter');
         }
@@ -941,8 +832,11 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.filterAgrs.SortDirection = "Descending";
 
         }
-        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+
+        return this.filterAgrs;
+
     }
+
     GridAfterViewInitCompleted($event) {
         this.setUserLastSettings();
         
@@ -963,7 +857,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
         windowArgs.tenant = SessionLocator.Tenant;
         windowArgs.ObjectTableName = "Shipment";
-        windowArgs.QueryName = this.QueryName;
+        windowArgs.QueryName = this.SelectedFilter;
         windowArgs.QueryType = "LogBox";
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 500;
