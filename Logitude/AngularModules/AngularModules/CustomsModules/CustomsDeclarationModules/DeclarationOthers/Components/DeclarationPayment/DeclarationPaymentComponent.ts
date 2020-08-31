@@ -1149,7 +1149,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         }
         else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
             this.ShowStorageStatusMessage = true;
-            this.ErrorMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+            this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             this.IsDisplayOnly = false;
 
 
@@ -1194,7 +1194,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             }
             else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
                 this.ShowStorageStatusMessage = true;
-                this.ErrorMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+                this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
                 this.IsDisplayOnly = false;
             }
 
