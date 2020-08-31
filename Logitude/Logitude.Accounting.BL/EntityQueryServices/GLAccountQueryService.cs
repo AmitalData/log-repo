@@ -45,6 +45,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccountInterestPeriodQueryService gLAccountInterestPeriodQueryService = new GLAccountInterestPeriodQueryService(context);
             entityPM.GLAccountInterestPeriods = gLAccountInterestPeriodQueryService.GetMulti(gLAccountKeys, true);
 
+            GLAccountCurrencyQueryService gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService  (context);
+            entityPM.GLAccountCurrencies = gLAccountCurrencyQueryService.GetMulti(gLAccountKeys, true);
+
             if (entityPM.GLAccountWithholdingTaxes.Count > 0)
             {
                 entityPM.TaxWithholdingLastLine = gLAccountWithholdingTaxQueryService.GetMaxLineNumber(entityPM.Id, entityPM.Tenant);
@@ -374,6 +377,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
             GLAccountPM pm = this.GetEntityPM(gLAccountPOCO);
             return pm;
+        }
+
+        public GLAccount  GetSingleByAccountId(string gLAccountId, int tenant)
+        {
+            GLAccount gLAccountPOCO = null;
+            gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
+          
+            return gLAccountPOCO;
         }
 
         public string GetGLAccountDisplayNoAndLocalName(string gLAccountId, int tenant)

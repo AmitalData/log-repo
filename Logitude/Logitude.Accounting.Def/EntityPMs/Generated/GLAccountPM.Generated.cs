@@ -2689,6 +2689,64 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+
+	   private List<GLAccountCurrencyPM> gLAccountCurrencies;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("GLAccountCurrencyGLAccount", "Id","MainGLAccountId")]
+	   [DataMember]
+	   public virtual List<GLAccountCurrencyPM> GLAccountCurrencies  
+	   {
+	        get
+             {
+                 if (gLAccountCurrencies == null)
+                 {
+                     gLAccountCurrencies = new List<GLAccountCurrencyPM>();
+                 }
+                 return gLAccountCurrencies;
+              }
+             set { gLAccountCurrencies = value; }
+	    }
+		   
+	   private List<GLAccountCurrencyPM>  deletedGLAccountCurrencies;
+	   public virtual List<GLAccountCurrencyPM> DeletedGLAccountCurrencies  
+	   {
+	        get
+             {
+                 if ( deletedGLAccountCurrencies == null)
+                 {
+                      deletedGLAccountCurrencies = new List<GLAccountCurrencyPM>();
+                 }
+                 return  deletedGLAccountCurrencies;
+              }
+             set {  deletedGLAccountCurrencies = value; }
+	    }
+	  	  private string parentCurrencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ParentCurrencyId  
+	   {
+	    
+	     get
+		{
+		   return parentCurrencyId;
+		 }
+		 set
+		 {
+		   if(parentCurrencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ParentCurrencyId",OldValue=parentCurrencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   parentCurrencyId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

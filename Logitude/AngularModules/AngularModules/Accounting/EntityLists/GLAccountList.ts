@@ -113,6 +113,7 @@ export class GLAccountList {
 	CollectorName: string;
 	SplitCurrencyAccount: string;
 	ParentName: string;
+	ParentCurrencyId: string;
 	
 }
  

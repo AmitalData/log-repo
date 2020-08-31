@@ -195,7 +195,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         SalesmanName, 
 	         CollectorName, 
 	         SplitCurrencyAccount, 
-	         ParentName,
+	         ParentName, 
+	         ParentCurrencyId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -224,6 +224,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string SplitCurrencyAccount  { get; set; }
        [DataMember]
        public string ParentName  { get; set; }
+       [DataMember]
+       public string ParentCurrencyId  { get; set; }
    }
 
 }
