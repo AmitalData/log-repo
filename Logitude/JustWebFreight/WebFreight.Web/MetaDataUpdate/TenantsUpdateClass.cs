@@ -1463,6 +1463,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             var newEntry = new ZipEntry(fileName + ".json");
             newEntry.DateTime = DateTime.Now;
+            ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 437;
 
             zipStream.PutNextEntry(newEntry);
 

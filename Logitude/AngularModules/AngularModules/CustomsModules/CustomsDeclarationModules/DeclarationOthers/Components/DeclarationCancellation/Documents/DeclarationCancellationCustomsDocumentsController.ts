@@ -123,7 +123,7 @@ export class DeclarationCancellationCustomsDocumentsController implements ICusto
         return false;
     }
     UpdateCustomsDocumentb4Send(customsDocument: CustomsDocumentPM) {
-        customsDocument.CollateralId = this.declarationPM.Id;
+       // customsDocument.CollateralId = this.declarationPM.Id;
     }
 
     FillDefaultMetaData(customsDocumentsTicketViewModels: CustomsDocumentTicketViewModel[]) {
