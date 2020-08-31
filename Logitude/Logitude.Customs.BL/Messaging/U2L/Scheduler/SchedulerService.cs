@@ -678,8 +678,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(user, ResolvedTenant());
 
-            var feature = features.Features.FirstOrDefault(x => x.Code == "CUSTOMREFERANT");
-            
+            //var feature = features.Features.FirstOrDefault(x => x.Code == "CUSTOMREFERANT");
+            var feature = features.Features.FirstOrDefault(x => x.Code == "IsReferant");
             var responseXML = new isReferantAddOnResponseXML();
             if (feature != null)
             {
