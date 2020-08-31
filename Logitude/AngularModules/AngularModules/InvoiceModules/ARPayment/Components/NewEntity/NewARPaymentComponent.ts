@@ -1199,6 +1199,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     public set SelectedPartnerType(type : PartnerTypeList) {
         this._SelectedPartnerType = type;
         this.filterByPartnerTypeCode = type.Id;
+        this.BillToId = null;
     }
 
 
