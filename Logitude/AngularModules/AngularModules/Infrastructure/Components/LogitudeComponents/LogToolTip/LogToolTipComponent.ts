@@ -41,7 +41,9 @@ export class LogToolTipComponent implements AfterViewInit {
 
         switch (this.mode) {
             case 'Warning':
-                this.title = TextCodeTranslator.Translate("General.O.Warning"); // "Warning";
+                if(this.title==null){
+                    this.title = TextCodeTranslator.Translate("General.O.Warning"); // "Warning";
+                }
                 break;
 
             default:
@@ -94,8 +96,14 @@ export class LogToolTipComponent implements AfterViewInit {
         switch (this.direction) {
             case 'topright':
             {
-                element.style.bottom = (this.getScreenHeight() - itemRect.top - 10) + 'px';
-                element.style.left = (itemRect.left + 15) + 'px';
+                element.style.bottom = (this.getScreenHeight() - itemRect.top + 20) + 'px';
+                element.style.left = (itemRect.left - 15) + 'px';
+                break;
+            }
+            case 'topleft':
+            {
+                element.style.bottom = (this.getScreenHeight() - itemRect.top + 20) + 'px';
+                element.style.left = (itemRect.left - 245) + 'px';
                 break;
             }
             case 'bottomright':
@@ -137,6 +145,14 @@ export class LogToolTipComponent implements AfterViewInit {
         switch (this.direction) {
             case 'topright':
             {
+
+                className += " arrow-top"
+                break;
+            }
+            case 'topleft':
+            {
+
+                className += " arrow-topleft"
                 break;
             }
             case 'bottomright':

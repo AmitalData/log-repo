@@ -128,6 +128,52 @@
       }
 
         /* ARROWS */
+
+        .arrow-top {
+
+          position: absolute;
+          left: 20px;
+          top: 36px;
+          width: 0;
+          height: 0;
+          border-left: 8px solid transparent;
+          border-right: 8px solid transparent;
+          border-top: 8px solid #151515;
+        }
+        .arrow-top2 {
+
+          position: absolute;
+          left: 20px;
+          top: 36px;
+          width: 0;
+          height: 0;
+          border-right: 8px solid transparent;
+          border-left: 8px solid transparent;
+          border-top: 8px solid #f9f9f9;
+        }
+
+        .arrow-topleft {
+
+          position: absolute;
+          left: 250px;
+          top: 36px;
+          width: 0;
+          height: 0;
+          border-left: 8px solid transparent;
+          border-right: 8px solid transparent;
+          border-top: 8px solid #151515;
+        }
+        .arrow-topleft2 {
+
+          position: absolute;
+          left: 250px;
+          top: 36px;
+          width: 0;
+          height: 0;
+          border-right: 8px solid transparent;
+          border-left: 8px solid transparent;
+          border-top: 8px solid #f9f9f9;
+        }
       .arrow-left {
 
         position: absolute;
