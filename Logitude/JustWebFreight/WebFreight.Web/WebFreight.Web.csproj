@@ -3201,7 +3201,6 @@
     <Content Include="css\kendo.common.min.css.map" />
     <Content Include="css\kendo.default.min.css.map" />
     <Content Include="css\kendo.mobile.all.min.css.map" />
-    <Content Include="js\kendo.all.min.js.map" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Properties\PublishProfiles\testR4.pubxml" />
