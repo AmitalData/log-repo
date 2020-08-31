@@ -2433,6 +2433,130 @@ namespace WebFreight.Web.GlobalModel
 
         #endregion
 
+
+        #region BluesnapContractType
+
+        [Query(HasSideEffects = true)]
+        public IQueryable<BluesnapContractTypeList> GetBluesnapContractTypeFilters(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+            BluesnapContractTypeRepository BluesnapContractTypeRepository = new BluesnapContractTypeRepository(tenant);
+            BluesnapContractTypeQuery BluesnapContractTypeQuery = new BluesnapContractTypeQuery(BluesnapContractTypeRepository);
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<BluesnapContractType> iQueryable = BluesnapContractTypeRepository.GetBluesnapContractTypes();
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<BluesnapContractType>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<BluesnapContractTypeList> query2 = BluesnapContractTypeQuery.GetIQueryableEntityList(iQueryable);
+            query2 = filter.GetFilteredQuery<BluesnapContractTypeList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(BluesnapContractTypeList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("BluesnapContractType", tenant).ToList();
+
+                ObjectField objectField = (from a in shipmentObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+                    switch (objectField.DataTypeCode.ToLower())
+                    {
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<BluesnapContractTypeList, string>(queryOperations, query2);
+                                break;
+                            }
+
+                        case "ntext":
+                            {
+                                query2 = sortClass.GetSorterQuery<BluesnapContractTypeList, string>(queryOperations, query2);
+                                break;
+                            }
+                        case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<BluesnapContractTypeList, double>(queryOperations, query2);
+                                break;
+                            }
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<BluesnapContractTypeList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<BluesnapContractTypeList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<BluesnapContractTypeList, bool>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderByDescending(d => d.Code);
+                                break;
+                            }
+                    }
+                }
+            }
+
+            else
+            {
+                query2 = query2.OrderByDescending(d => d.Code);
+            }
+
+            query2 = query2.Skip(skippedPorts);
+            query2 = query2.Take(queryOperations.PageSize);
+            return query2;
+        }
+
+        public int GetBluesnapContractTypeFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+            BluesnapContractTypeRepository BluesnapContractTypeRepository = new BluesnapContractTypeRepository(tenant);
+            BluesnapContractTypeQuery BluesnapContractTypeQuery = new BluesnapContractTypeQuery(BluesnapContractTypeRepository);
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<BluesnapContractType> iQueryable = BluesnapContractTypeRepository.GetBluesnapContractTypes();
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<BluesnapContractType>(nonListQueryOperation, iQueryable);
+
+            IQueryable<BluesnapContractTypeList> query2 = BluesnapContractTypeQuery.GetIQueryableEntityList(iQueryable);
+            query2 = filter.GetFilteredQuery<BluesnapContractTypeList>(listQueryOperation, query2);
+
+            int count = query2.Count();
+            return count;
+        }
+        #endregion
+
         public void LoadDataBases()
         {
             if (LogitudeSettings.DeploymentStage != "Dev")

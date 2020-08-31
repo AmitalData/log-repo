@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.GlobalModel.EntityLists;
 using Logitude.BL.GlobalModel.EntityPMs;
+using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
@@ -14,6 +15,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
     public class BluesnapContractTypeQuery
     {
         BluesnapContractTypeRepository repository;
+
         public BluesnapContractTypeQuery()
         {
             repository = new BluesnapContractTypeRepository();
@@ -43,7 +45,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     select new BluesnapContractTypePM() { Code = a.Code, Name = a.Name, SearchFields = a.SearchFields, }).FirstOrDefault();
         }
 
-        public BluesnapContractTypePM GetSinglePMByCode(string code, int tenant)
+        public BluesnapContractTypePM GetSinglePMByCode(string code)
         {
             return (from a in repository.context.BluesnapContractTypes
                     where a.Code == code
@@ -57,8 +59,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     where a.Code == code
                     select new BluesnapContractTypePM() { Code = a.Code, Name = a.Name, SearchFields = a.SearchFields, }).FirstOrDefault();
         }
-
-
 
 
         public IQueryable<BluesnapContractTypeList> GetIQueryableEntityList(IQueryable<BluesnapContractType> iQueryable)
