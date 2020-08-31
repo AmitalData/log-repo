@@ -23,6 +23,7 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.FakeMessagingServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -268,15 +269,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                                         .ToList();
                                 }
                                 break;
-                            case "SincroSendDeclarationCancellation":
-                                {
-                                    mySincroTestCaseDetailList =
-                                    queryService.GetAllSincroTestCaseDetails()
-                                        .Where(r => r.Entity == "DeclarationCancellation")
-                                        .Where(r => !r.IsDCA)
-                                        .ToList();
-                                }
-                                break;
+                       
                             default:
                                 throw new Exception($"SincroScreen is not valid (SincroScreen)");
                                 break;
@@ -352,12 +345,17 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetLastRunningDCAWS(int tenant)
+        public HttpResponseMessage GetLastRunningDCAWS()
         {
 
             try
             {
-  
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                 SecurityUtility.AuthenticationOnTenant(tenant);
+
+
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
 
                 CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(MyContext);
@@ -373,20 +371,22 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-
-        public HttpResponseMessage PutLastRunningDCAWS(int tenant)
+         public HttpResponseMessage GetUpdateLastRunningDCA([FromUri]int tenant )
         {
 
             try
             {
- 
+               // int tenant = 1;
+
+
                 var MyContext = CustomContext.GetContext(tenant);
 
                 CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(MyContext);
-                CustomsSettingUpdateService customsSettingUpdateService = new CustomsSettingUpdateService(MyContext);
-                 var settings=   customsSettingQuery.GetSingleByTenant(tenant);
+                CustomsSettingUpdateService customsSettingUpdateService = new CustomsSettingUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                var settings=   customsSettingQuery.GetSingleByTenant(tenant);
 
                 settings.LastRunningDCAWS = DateTime.Now;
+                settings.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 customsSettingUpdateService.Update(settings, true);
                 return Request.CreateResponse(HttpStatusCode.OK, "ok");
             }
