@@ -31,6 +31,7 @@ using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.BL.EntityPMs;
 using WebFreight.Web.DataContracts;
 using Logitude.Server.Tools;
+using System.Drawing;
 
 namespace WebFreight.Web.Helpers
 {
@@ -596,6 +597,12 @@ namespace WebFreight.Web.Helpers
             DataTable dataTable = QBHelper.GetDWQueryData(sqlCommandDefinition);
 
             var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(biReportEntityPM.AGGridOptionsXML);
+            List<string> MeasurmentColumns = null;
+            List<ExcelTotals> excelTotals = new List<ExcelTotals>();
+            if (bIReportXMLData.IncludeTotals)
+            {
+                MeasurmentColumns = bITabularViewSettings.Columns.Where(c => c.DataTypeCode == "Double" || c.DataTypeCode == "Decimal").Select(c => c.Code).ToList();
+            }
 
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
             ExcelEngine excelEngine = new ExcelEngine();
@@ -612,6 +619,12 @@ namespace WebFreight.Web.Helpers
             foreach (var columnName in columnNames)
             {
                 dataTable.Columns[columnName].SetOrdinal(columnIndex);
+
+                if (bIReportXMLData.IncludeTotals)
+                {
+                    var measurmentColumn = MeasurmentColumns.Where(c => c == columnName).FirstOrDefault();
+                    if(measurmentColumn != null) excelTotals.Add(new ExcelTotals(measurmentColumn, 0, columnIndex));
+                }
                 columnIndex++;
             }
 
@@ -680,6 +693,7 @@ namespace WebFreight.Web.Helpers
             foreach (DataRow row in dataTable.Rows)
             {
                 int cellCol = 1;
+                int excelTotalCount = 0;
                 for (int j = 1; j <= dataTable.Columns.Count; j++)
                 {
                     var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[j - 1].ColumnName).FirstOrDefault();
@@ -690,13 +704,30 @@ namespace WebFreight.Web.Helpers
                             string value = Convert.ToString(row[agColumn.Name]);
                             sheet.Range[cellRow, cellCol].Text = value;
                         }
+                        else if (bIReportXMLData.IncludeTotals && (agColumn.DataTypeCode == "Double" || agColumn.DataTypeCode == "Decimal"))
+                        {
+                            string value = row[agColumn.Name].ToString();
+                            if (!string.IsNullOrEmpty(value))
+                            {
+                                excelTotals[excelTotalCount].Total += Int32.Parse(value);
+                            }
+                            excelTotalCount += 1;
+                        }
                     }
                     cellCol++;
 
                 }
                 cellRow++;
             }
-            
+            if (bIReportXMLData.IncludeTotals)
+            {
+                foreach (var ex in excelTotals)
+                {
+                    sheet.Range[rows + 2, ex.IndexOrder + 1].Cells[0].CellStyle.Color = Color.Orange;
+                    sheet.Range[rows + 2, ex.IndexOrder + 1].Value = ex.Total.ToString();
+                }
+            }
+
             workbook.SaveAs(memory);
             workbook.Close();
             excelEngine.Dispose();
@@ -875,4 +906,17 @@ class ReflectionProperties
     public MethodInfo CountMethodInfo { get; set; }
     public object context { get; set; }
 
+}
+
+class ExcelTotals
+{
+    public ExcelTotals(string fieldCode, double total, int indexOrder)
+    {
+        FieldCode = fieldCode;
+        Total = total;
+        IndexOrder = indexOrder;
+    }
+    public string FieldCode { get; set; }
+    public double Total { get; set; }
+    public int IndexOrder { get; set; }
 }
