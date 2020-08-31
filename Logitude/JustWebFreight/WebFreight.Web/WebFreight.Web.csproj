@@ -607,6 +607,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\asp.css" />
+    <Content Include="css\fonts\DejaVu\LICENSE.txt" />
+    <Content Include="css\fonts\glyphs\KendoUIGlyphs.svg" />
+    <Content Include="css\fonts\glyphs\WebComponentsIcons.svg" />
     <Content Include="css\images\back.png" />
     <Content Include="css\images\kendoui.svg" />
     <Content Include="css\images\wp8_icons.png" />
@@ -3176,6 +3179,29 @@
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.InterestReport.cs" />
     <Content Include="css\images\kendoui.ttf" />
     <Content Include="css\images\kendoui.woff" />
+    <Content Include="css\fonts\DejaVu\DejaVuSans-Bold.ttf" />
+    <Content Include="css\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
+    <Content Include="css\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
+    <Content Include="css\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
+    <Content Include="css\fonts\DejaVu\DejaVuSans.ttf" />
+    <Content Include="css\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
+    <Content Include="css\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
+    <Content Include="css\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
+    <Content Include="css\fonts\DejaVu\DejaVuSansMono.ttf" />
+    <Content Include="css\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
+    <Content Include="css\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
+    <Content Include="css\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
+    <Content Include="css\fonts\DejaVu\DejaVuSerif.ttf" />
+    <Content Include="css\fonts\glyphs\KendoUIGlyphs.eot" />
+    <Content Include="css\fonts\glyphs\KendoUIGlyphs.ttf" />
+    <Content Include="css\fonts\glyphs\KendoUIGlyphs.woff" />
+    <Content Include="css\fonts\glyphs\WebComponentsIcons.eot" />
+    <Content Include="css\fonts\glyphs\WebComponentsIcons.ttf" />
+    <Content Include="css\fonts\glyphs\WebComponentsIcons.woff" />
+    <Content Include="css\kendo.common.min.css.map" />
+    <Content Include="css\kendo.default.min.css.map" />
+    <Content Include="css\kendo.mobile.all.min.css.map" />
+    <Content Include="js\kendo.all.min.js.map" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Properties\PublishProfiles\testR4.pubxml" />
