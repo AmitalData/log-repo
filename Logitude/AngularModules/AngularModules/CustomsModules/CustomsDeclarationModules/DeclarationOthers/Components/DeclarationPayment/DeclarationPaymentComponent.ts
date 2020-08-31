@@ -565,7 +565,6 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         //}
     }
     loadPaymentCompleted() {
-
         this.FillGridsData();
 
         // create new entity if there is no payment
@@ -853,7 +852,6 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
    
     JustAutoFillPaymentScreen() {
-
         if (this.sumBtl != null && this.sumBtl > 0) {
             for (let method of this.PaymentMethodsList.Collection) {
                 method.Amount = this.DeclarationPM.TotalTax - this.sumBtl;
@@ -882,7 +880,6 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
     JustAutoFillPaymentScreenCash(defaultValue: string) {
-
         if (this.sumBtl != null && this.sumBtl > 0) {
             for (let method of this.PaymentMethodsList.Collection) {
                 method.Amount = this.DeclarationPM.TotalTax - this.sumBtl;
