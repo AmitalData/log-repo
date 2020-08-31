@@ -62,6 +62,7 @@ import { DeclarationCourierStatusListService } from '../../../../../Customs/Serv
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { Observable } from 'rxjs';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
+import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 @Component({
 
     templateUrl: './DeclarationPaymentComponent.html',
@@ -244,7 +245,12 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.DeclarationPayment')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
-        customsRequiredFieldListService.getAllFromCache(filters, isExport).subscribe((response: ServiceResponse) => {
+
+        var customsRequiredFieldExtendedListService: CustomsRequiredFieldExtendedListService = new CustomsRequiredFieldExtendedListService();
+        filters = customsRequiredFieldExtendedListService.GetFilter(filters, isExport)
+
+
+        customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
                 var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];

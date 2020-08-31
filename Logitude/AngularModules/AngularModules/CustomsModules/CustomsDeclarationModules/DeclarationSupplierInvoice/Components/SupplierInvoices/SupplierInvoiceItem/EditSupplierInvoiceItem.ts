@@ -29,6 +29,7 @@ import {LuhnAlgorithm} from '../../../../../../Customs/Utilities/LuhnAlgorithm';
 import {ObjectsLocator} from '../../../../../../Infrastructure/Locators/ObjectsLocator';
 import { SupplierInvoiceItemsPricePM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsPricePM';
 import { SuppInvoiceItemsAbachStatementPM } from '../../../../../../Customs/EntityPMs/SuppInvoiceItemsAbachStatementPM';
+import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 
 
 @Component({
@@ -182,7 +183,11 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.SupplierInvoiceItem')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
-        customsRequiredFieldListService.getAllFromCache(filters, isExport).subscribe((response: any) => {
+        var customsRequiredFieldExtendedListService: CustomsRequiredFieldExtendedListService = new CustomsRequiredFieldExtendedListService();
+        filters = customsRequiredFieldExtendedListService.GetFilter(filters, isExport)
+
+
+        customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: any) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
                 var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];

@@ -28,6 +28,7 @@ import { CouriersVatExtendedPMService } from '../../../../../../Customs/Services
 import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
 import { WindowArgs } from '../../../../../../Infrastructure/DataContracts/WindowArgs';
+import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -835,7 +836,12 @@ export class ConsigmentTabContentComponent
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.Consignment')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
-        customsRequiredFieldListService.getAllFromCache(filters, isExport).subscribe((response: ServiceResponse) => {
+
+        var customsRequiredFieldExtendedListService: CustomsRequiredFieldExtendedListService = new CustomsRequiredFieldExtendedListService();
+        filters = customsRequiredFieldExtendedListService.GetFilter(filters, isExport)
+
+
+        customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
                 var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
