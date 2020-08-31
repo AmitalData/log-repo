@@ -267,11 +267,7 @@ export class CustomsSettingsComponent
     set LastRunningDCAWS(value: string) { this._LastRunningDCAWS = value; }
 
 
-    get LastRunningDCAWS() { return this.entityPM != null ? this.entityPM.LastRunningDCAWS : null; }
-    set LastRunningDCAWS(value) { this.entityPM.LastRunningDCAWS = value; }
-
-
-
+    
 
     
     //#endregion
