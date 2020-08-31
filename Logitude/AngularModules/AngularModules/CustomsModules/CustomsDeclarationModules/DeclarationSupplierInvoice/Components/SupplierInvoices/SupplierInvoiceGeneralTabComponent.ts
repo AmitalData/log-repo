@@ -53,6 +53,7 @@ import { CustomsCountryListService } from '../../../../../Customs/Services/Stand
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
 import { DecimalPipe } from '@angular/common';
 import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
+import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 
 @Component({
     
@@ -700,7 +701,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.SupplierInvoice')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
-        customsRequiredFieldListService.getAllFromCache(filters, isExport).subscribe((response: ServiceResponse) => {
+        var customsRequiredFieldExtendedListService: CustomsRequiredFieldExtendedListService = new CustomsRequiredFieldExtendedListService();
+        filters = customsRequiredFieldExtendedListService.GetFilter(filters, isExport)
+
+        customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
              requiredFields.forEach((field) => {
                 var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];

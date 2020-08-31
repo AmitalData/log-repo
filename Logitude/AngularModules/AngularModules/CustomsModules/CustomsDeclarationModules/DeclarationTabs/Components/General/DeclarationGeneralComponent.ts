@@ -32,6 +32,7 @@ import { CustomsRequestMenuService } from '../../../../../Customs/Services/Other
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { DeclarationExportRecipientPM } from '../../../../../Customs/EntityPMs/DeclarationExportRecipientPM';
+import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 
 @Component({
     
@@ -1431,7 +1432,12 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.Declaration')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
-        customsRequiredFieldListService.getAllFromCache(filters, isExport).subscribe((response: ServiceResponse) => {
+
+        var customsRequiredFieldExtendedListService: CustomsRequiredFieldExtendedListService = new CustomsRequiredFieldExtendedListService();
+        filters = customsRequiredFieldExtendedListService.GetFilter(filters, isExport)
+
+
+        customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
                 var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
@@ -1464,7 +1470,12 @@ export class DeclarationExportRecipientModel extends BaseComponent {
             var table = window.ObjectTables.filter(d => d.Name == 'Customs.DeclarationExportRecipient')[0];
             var filters = new ApiQueryFilters();
             filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
-            customsRequiredFieldListService.getAllFromCache(filters, true).subscribe((response: ServiceResponse) => {
+
+            var customsRequiredFieldExtendedListService: CustomsRequiredFieldExtendedListService = new CustomsRequiredFieldExtendedListService();
+            filters = customsRequiredFieldExtendedListService.GetFilter(filters,true)
+
+
+            customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
                 var requiredFields = response.Result;
                 requiredFields.forEach((field) => {
                     var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
