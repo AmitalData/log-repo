@@ -13,9 +13,15 @@ export class ChargesTab {
         Resolvers.ButtonResolver.Selector('#AddCharges').Click();
         Resolvers.LOVResolver.Selector('#QuoteCharge_ChargesTypeId').Type('fre');
 
-        cy.get('#CostPrice').click({ force: true }).then(() => {
+        cy.get('#CostPrice').focus().then(() => {
+            cy.get('logtextbox')
+                .find('#textboxdiv_QuoteCharge_CostUnitPrice')
+                .eq(0)
+                .within(() => {
+                    cy.get('input').type('5');
+                });
             //Resolvers.TextBoxResolver.Selector('#QuoteCharge_CostUnitPrice').Type('10');
-            cy.get('#QuoteCharge_CostUnitPrice').type('10');
+            //cy.get('#QuoteCharge_CostUnitPrice').type('10');
         });
 
         //textboxdiv_QuoteCharge_CostContainerType1UnitPrice
