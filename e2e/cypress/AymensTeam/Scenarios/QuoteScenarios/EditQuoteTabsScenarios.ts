@@ -11,11 +11,11 @@ export class EditQuoteTabsScenarios {
     public ChargesTab: ChargesTab = new ChargesTab();
 
     public RunEditTabsScenarios(direction: string, transportMode: string, shipmentType: string=null) {
-        //this.FillDetailsTab();
-        //this.PartnersTab.RunPartnersTabScenarios(direction, transportMode);
-        //this.PackagesTab.RunPackagesTabsScenarios(shipmentType);
-        //this.RoutingTab.RunRoutingTabScenarios();
-        this.ChargesTab.RunChargesTabScenarios();
+        this.FillDetailsTab();
+        this.PartnersTab.RunPartnersTabScenarios(direction, transportMode);
+        this.PackagesTab.RunPackagesTabsScenarios(shipmentType);
+        this.RoutingTab.RunRoutingTabScenarios();
+        //this.ChargesTab.RunChargesTabScenarios();
     }
 
     private FillDetailsTab() {

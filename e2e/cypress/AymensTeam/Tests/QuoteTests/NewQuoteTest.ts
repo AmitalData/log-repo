@@ -2,11 +2,15 @@ import { Resolvers } from "../../Resolvers/Resolvers";
 import { LoginComp } from "../../../Login/Login.po";
 import { NewQuoteWizardScenarios } from '../../Scenarios/QuoteScenarios/NewQuoteWizardScenarios';
 import { EditQuoteTabsScenarios } from '../../Scenarios/QuoteScenarios/EditQuoteTabsScenarios';
+import { QuoteActions } from '../../Scenarios/QuoteScenarios/QuoteActions';
+
 
 describe('Quotes Modules', () => {
     let login: LoginComp = new LoginComp();
     let scenarios: NewQuoteWizardScenarios = new NewQuoteWizardScenarios();
     let editScenarios: EditQuoteTabsScenarios = new EditQuoteTabsScenarios();
+    let quoteActions: QuoteActions = new QuoteActions();
+
     var direction;
     var transportMode;
     var shipmentType;
@@ -22,6 +26,7 @@ describe('Quotes Modules', () => {
         shipmentType ='';
         scenarios.RunScenario(direction, transportMode, shipmentType);
         editScenarios.RunEditTabsScenarios(direction, transportMode, shipmentType);
-        //editScenarios.RunEditTabsScenarios('D','I');
+        quoteActions.RunQuoteActions();
+
     });
 });
