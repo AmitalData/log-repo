@@ -76,6 +76,12 @@
 
         private string fileStatusField;
 
+        private string lastStatusNameField;
+
+        private string lastStatusDateField;
+
+        private string orderMoneyField;
+
         /// <remarks/>
         public string Id
         {
@@ -216,6 +222,45 @@
             set
             {
                 this.fileStatusField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string LastStatusName
+        {
+            get
+            {
+                return this.lastStatusNameField;
+            }
+            set
+            {
+                this.lastStatusNameField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string LastStatusDate
+        {
+            get
+            {
+                return this.lastStatusDateField;
+            }
+            set
+            {
+                this.lastStatusDateField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string OrderMoney
+        {
+            get
+            {
+                return this.orderMoneyField;
+            }
+            set
+            {
+                this.orderMoneyField = value;
             }
         }
     }

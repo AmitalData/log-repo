@@ -26,6 +26,8 @@ using Unifreight.Data.AmitalModel;
 using Logitude.Customs.Data.EntityPOCOs;
 //using Simplog.Infrastructure.SimplogUtilities;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
@@ -840,12 +842,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             {
                 this._DeclarationReferantDataPM.Weight = myGrossMassMeasure;
             }
-            var arrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.ArrivalDateTime, "AmitalCustomsFile.ArrivalDateTime");
-            if (arrivalDate.HasValue) this._DeclarationReferantDataPM.ArrivalDate = arrivalDate.Value;
+            this._DeclarationReferantDataPM.ArrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.ArrivalDateTime, "AmitalCustomsFile.ArrivalDateTime");
             this._DeclarationReferantDataPM.VendorId = TranslateVendor(_AmitalCustomsFile.VendorId);
 
-            var estimatedTimeOfArrival = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.EstimatedTimeOfArrival, "AmitalCustomsFile.EstimatedTimeOfSrrival");
-            if (estimatedTimeOfArrival.HasValue) this._DeclarationReferantDataPM.EstimatedArrivalDate = estimatedTimeOfArrival.Value;
+            this._DeclarationReferantDataPM.EstimatedArrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.EstimatedTimeOfArrival, "AmitalCustomsFile.EstimatedTimeOfSrrival");
             this._DeclarationReferantDataPM.OrderNumber = _AmitalCustomsFile.OrderNumber;
             if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.WithPaper) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.WithPaper) && _AmitalCustomsFile.WithPaper.ToLower() != "true"))
             {
@@ -865,7 +865,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             {
                 this._DeclarationReferantDataPM.NewFile = true;
             }
-            
+            this._DeclarationReferantDataPM.ImporterFile = _AmitalCustomsFile.ImporterFile;
+            this._DeclarationReferantDataPM.Team = TranslateTeam(_AmitalCustomsFile.Team); 
+
             this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
             
@@ -890,6 +892,32 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             }
             AppendLogLine("No vendor found for vendorId " + amitalvendorId);
             return null;
+        }
+
+
+        private string TranslateTeam(string amitalTeamId)
+        {
+            if (String.IsNullOrWhiteSpace(amitalTeamId))
+            {
+                AppendLogLine("amitalTeamId is null");
+                return null;
+            }
+            string referantTeamCode = null;
+            ReferantTeamListQueryService ReferantTeamListQuery = new ReferantTeamListQueryService(_context);
+            ReferantTeamList ReferantTeam = ReferantTeamListQuery.GetSingle(amitalTeamId);
+            if (ReferantTeam != null && !ReferantTeam.Inactive)
+            {
+                referantTeamCode = ReferantTeam.Code;
+            }
+            else
+            {
+                AppendLogLine("amitalTeamId = " + amitalTeamId + " could not translate to Logitude Id");
+                return null;
+            }
+            AppendLogLine("amitalTeamId = " + amitalTeamId + " Translated to " + referantTeamCode);
+            return referantTeamCode;
+
+            
         }
 
         private string TranslateAirline(string airlineId)

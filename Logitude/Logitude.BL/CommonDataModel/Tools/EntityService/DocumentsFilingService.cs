@@ -1129,12 +1129,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             TrySendBondedCustomDocument(extDocPM);
             if (!string.IsNullOrWhiteSpace(this.MetaDataVersionValue))
             {
-                DocumentsFilingMetaDataValueQuery.UpSert(extDocPM, "VER", this.MetaDataVersionValue);
+                DocumentsFilingMetaDataValueQuery.UpSert_Del(extDocPM, "VER", this.MetaDataVersionValue);
             }
 
             if 
                 (
-                LogitudeSettings.IsCostomsDeploy ||
+                (!extDocPM.IsHybrid   && LogitudeSettings.IsCostomsDeploy) ||
                 (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && (!extDocPM.IsHybrid || (extDocPM.IsAttachment))
                 && LogitudeSettings.DeploymentStage != "Simplog" && !extDocPM.NoAddToTasksQueue)
                 )

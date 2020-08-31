@@ -144,6 +144,46 @@ export class DeclarationReferantDataPM {
     public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
        
 	 
+    private classifiedUserName: string;
+    public get ClassifiedUserName() { return this.classifiedUserName; }
+    public set ClassifiedUserName(newValue: string) { if (this.classifiedUserName != newValue) { this.classifiedUserName = newValue; this.MarkAsDirty("ClassifiedUserName"); } }
+       
+	 
+    private controllerUserName: string;
+    public get ControllerUserName() { return this.controllerUserName; }
+    public set ControllerUserName(newValue: string) { if (this.controllerUserName != newValue) { this.controllerUserName = newValue; this.MarkAsDirty("ControllerUserName"); } }
+       
+	 
+    private collectorUserName: string;
+    public get CollectorUserName() { return this.collectorUserName; }
+    public set CollectorUserName(newValue: string) { if (this.collectorUserName != newValue) { this.collectorUserName = newValue; this.MarkAsDirty("CollectorUserName"); } }
+       
+	 
+    private lastStatusName: string;
+    public get LastStatusName() { return this.lastStatusName; }
+    public set LastStatusName(newValue: string) { if (this.lastStatusName != newValue) { this.lastStatusName = newValue; this.MarkAsDirty("LastStatusName"); } }
+       
+	 
+    private lastStatusDate: Date;
+    public get LastStatusDate() { return this.lastStatusDate; }
+    public set LastStatusDate(newValue: Date) { if (this.lastStatusDate != newValue) { this.lastStatusDate = newValue; this.MarkAsDirty("LastStatusDate"); } }
+       
+	 
+    private orderMoney: boolean;
+    public get OrderMoney() { return this.orderMoney; }
+    public set OrderMoney(newValue: boolean) { if (this.orderMoney != newValue) { this.orderMoney = newValue; this.MarkAsDirty("OrderMoney"); } }
+       
+	 
+    private team: string;
+    public get Team() { return this.team; }
+    public set Team(newValue: string) { if (this.team != newValue) { this.team = newValue; this.MarkAsDirty("Team"); } }
+       
+	 
+    private importerFile: string;
+    public get ImporterFile() { return this.importerFile; }
+    public set ImporterFile(newValue: string) { if (this.importerFile != newValue) { this.importerFile = newValue; this.MarkAsDirty("ImporterFile"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

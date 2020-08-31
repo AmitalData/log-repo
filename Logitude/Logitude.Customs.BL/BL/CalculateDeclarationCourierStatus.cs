@@ -363,7 +363,7 @@ namespace Logitude.Customs.BL.BL
             {
                 foreach (CustomDocumentTypePM customDocumentTypePMItem in CustomDocumentTypePMList)
                 {
-                    CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentTypeCode == customDocumentTypePMItem.Code && d.DocumentsFilingId != null && d.DocumentStatusCode=="1" ).FirstOrDefault();
+                    CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentTypeCode == customDocumentTypePMItem.Code && d.DocumentsFilingId != null ).FirstOrDefault();
                     if (customsDocumentsTicketPM == null)
                     {
                         return true;
@@ -479,7 +479,7 @@ namespace Logitude.Customs.BL.BL
             DeclarationPendingPM declarationPendingPM_902 = null;
             if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
             {
-                declarationPendingPM_902 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == myDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == "902").FirstOrDefault();
+                declarationPendingPM_902 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == "902").FirstOrDefault();
             }
             if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 150 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
             { 

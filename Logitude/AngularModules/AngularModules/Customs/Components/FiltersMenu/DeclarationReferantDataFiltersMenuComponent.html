@@ -71,7 +71,9 @@
                             [DataContext]="DataContext"
                             [HideColumns]="true"
                             [LookUpTableName]="'Department'"
-                            [DisplayMemberPath]="'LocalName'">
+                            [DisplayMemberPath]="'LocalName'"
+                            [DisplayFieldsFromList]="'Code,LocalName'">
+
                     </LogLov>
                 </span>
             </MultiSelectLOV>

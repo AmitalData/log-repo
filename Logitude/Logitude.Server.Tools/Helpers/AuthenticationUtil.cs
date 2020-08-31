@@ -195,7 +195,7 @@ namespace Logitude.Server.Tools.Helpers
             var contact = contactRep.GetSingleContactByEmail(resolveUserIdentityName, Tenant, false);
             if (contact == null)
             {
-                throw new BusinessErrorException("could not ResolveUserId from  Tenant");
+                throw new BusinessErrorException($" resolveUserIdentityName :{resolveUserIdentityName} could not ResolveUserId from  Tenant:{Tenant}");
             }
             return contact.Id;
         }
@@ -570,6 +570,13 @@ namespace Logitude.Server.Tools.Helpers
             token = Convert.ToBase64String(rndArray);
 
             return token;
+        }
+    }
+    public class SecurityException : Exception
+    {
+        public SecurityException(string message):base(message)
+        {
+            
         }
     }
 }

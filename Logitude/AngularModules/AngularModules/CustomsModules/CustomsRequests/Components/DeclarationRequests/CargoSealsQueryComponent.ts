@@ -13,7 +13,7 @@ import { ClientList } from '../../../../Customs/EntityLists/ClientList';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from '../../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
-import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs, SendRequestVIA } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { CargoSealPM } from '../../../../Customs/EntityPMs/CargoSealPM';
@@ -22,6 +22,10 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { AmendmentTypeList } from '../../../../Customs/EntityLists/AmendmentTypeList';
 import { AmendmentTypeListService } from '../../../../Customs/Services/StandardLists/AmendmentTypeListService';
+import { CargoQueryRequestParams } from '../../../../Customs/DataContract/RequestParams/CargoQueryRequestParams';
+import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
+import { forEachChild } from 'typescript';
+import { KeyValuePair } from '../../../CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
 
 @Component({
      templateUrl: './CargoSealsQueryComponent.html',
@@ -49,6 +53,11 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
     private _IsFromDeclaration: boolean = false;
 
     public CargoSealObslist: ObservableCollection;
+    public Containerslist: ObservableCollection;
+    public RowNumberslist: ObservableCollection;
+    public containers: KeyValuePair[] = [];
+
+    public containerSelected: KeyValuePair;
     public AmendmentTypes: AmendmentTypeList[];
     text: any;
     IsRePackingApproval: any;
@@ -56,9 +65,12 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
     constructor(private EntityResourceService: EntityResourceService, public amendmentTypeListService: AmendmentTypeListService) {
         super();
         this.CargoSealObslist = new ObservableCollection([]);
+
+ 
         this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSealIdentifier").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSeal").subscribe(response => {
                 this.IsReady = true;
+
             });
         });
     }
@@ -66,6 +78,125 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
     ngOnInit() {
         super.ngOnInit();
     }
+    _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
+
+
+    SendCargoQueryRequest(isClick: boolean) {
+        var errors: string[] = [];
+          this.ValidationErrorsList = errors;
+
+        if (isClick) {
+       if (this.CargoIdentifierTypeCode!="11") {
+            //  var msg = TextCodeTranslator.Translate("מזהה מטען 1 שדה חובה");
+            this.ValidationErrorsList.push("חיפוש לפי מזהי מטען אפשרי רק במזהה עסקה ימי ");
+            }
+
+        if (AppTool.IsNullOrEmpty(this.CargoIdentifierKey1)) {
+          //  var msg = TextCodeTranslator.Translate("מזהה מטען 1 שדה חובה");
+            this.ValidationErrorsList.push("מזהה מטען 1 שדה חובה");
+        }
+
+
+        if (AppTool.IsNullOrEmpty(this.CargoIdentifierKey2)) {
+           // var msg = TextCodeTranslator.Translate("Customs.CargoSealsQuery.F.CargoIdentifierKey2Mandatory");
+            this.ValidationErrorsList.push("מזהה מטען 2 שדה חובה");
+        }
+
+        }
+    
+  
+        if (this.ValidationErrorsList.length > 0) return;
+
+
+
+        if (this.CargoIdentifierTypeCode != "11" || AppTool.IsNullOrEmpty(this.CargoIdentifierKey1) || AppTool.IsNullOrEmpty(this.CargoIdentifierKey2)) return;
+
+        //this.Containerslist = new ObservableCollection([]);
+        //this.RowNumberslist = new ObservableCollection([]);
+
+
+        this.containers = [];
+
+        var currRequestParams = new CargoQueryRequestParams();///Force new GUID On Each Send !!
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
+        currRequestParams.ForcePersonalSign = false;
+
+        currRequestParams.AppicationId =   this.DeclarationId;
+        currRequestParams.DeclarationId = this.DeclarationId;
+         currRequestParams.DeclarationNumber = this.DeclarationNumber;
+        currRequestParams.CustomsFile = this.CustomFileNo;
+
+        currRequestParams.CargoTypeCode = this.CargoIdentifierTypeCode;
+        currRequestParams.ManifestNumber = this.CargoIdentifierKey1;
+        currRequestParams.SecondCargoID = this.CargoIdentifierKey2;
+        currRequestParams.ThirdCargoID = this.CargoIdentifierKey3;
+        currRequestParams.RequestName = "Manifest Status Query";
+        currRequestParams.ResponseName = "Manifest Status Query";
+
+        //CustomMessageProgressComponent
+        //    .ShowProgressBar(currRequestParams.PBId,
+        //        "שליחת שאילתא למצהר"
+        //        , true)
+        //    .then((res) => {
+        //        this.ResponseData = res;
+        //        if (this._IsFromDeclaration && this.ResponseData.HasException == false) {
+        //            if (this.CurrentSession.CurrentEditComponent != null) {
+        //                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        //            }
+        //        }
+        //        this.OnMassageDisplayMethod();
+        //    }
+        //    ).catch((err) => {
+        //        this.ValidationErrorsList.push(err);
+        //    });
+        this.CurrentSession.StartBusyIndicatorLoading();
+         this._IIGGeneralMessagesService.PostCargoQueryRequestParams(currRequestParams)
+            .subscribe((myServiceResponse: ServiceResponse) => {
+          
+                if (myServiceResponse.Result != null) {
+                    if (myServiceResponse.Result.CargoItemResultList != null) {
+
+
+                        //this.Containerslist.Insert("");
+                        //this.RowNumberslist.Insert("");
+                        myServiceResponse.Result.CargoItemResultList.forEach(
+                            x => {
+                                var container = new KeyValuePair(x.RowNumber, x.ContainerNumber);
+                                //_LOVContainers.ContainerNumber = x.ContainerNumber;
+                                //_LOVContainers.RowNumber = ;
+                                this.containers.push(container);
+                              //  this.RowNumberslist.Insert(x.RowNumber);
+                            }
+                        );    
+                    }
+                }
+
+                 this.containerSelected = this.containers.filter(x => x.Key == this.CargoRowNumber) ? this.containers.filter(x => x.Key == this.CargoRowNumber)[0] : null;
+                if (this.containerSelected == null && this.containers.length == 1) {
+                    this.containerSelected = this.containers[0];
+                    this.CargoRowNumber = this.containerSelected.Key;
+                    this.ContainerNumber = this.containerSelected.Value;
+                }
+                     
+                this.CurrentSession.StopBusyIndicator();
+
+                this.IsReady = true;
+
+            });
+    }
+
+    SetContainerNumber($event) {
+        this.CargoRowNumber = $event.Key;
+        this.ContainerNumber = $event.Value;
+        this.containerSelected = new KeyValuePair($event.Key, $event.Value);
+        //this.containerSelected.Value = 
+    }
+
+
+ 
 
     @ViewChild(CustomMessageWrapperComponent)
     SuperCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
@@ -125,6 +256,7 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
             var result = response.Result;
             if (!AppTool.IsNullOrEmpty(result)) {
                 this.CurrentEntity = result;
+
                 this._IsNew = false;
                 this.CargoRowNumber = this.CurrentEntity.CargoRowNumber;
                 this.DeclarationId = this.CurrentEntity.DeclarationId;
@@ -159,9 +291,16 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
                     this.SetFieldsEnabled(false);
                 }
             }
+
+
+            this.Containerslist = new ObservableCollection([]);
+            this.RowNumberslist = new ObservableCollection([]);
             if (this.CustomFileNo != null && (this.CurrentEntity == null || this.CurrentEntity.Status == null))
                 this.CustomFileNoTextChanged(this.CustomFileNo);
-
+           
+            if (this.CargoIdentifierTypeCode == "11" && !AppTool.IsNullOrEmpty(this.CargoIdentifierKey1) && !AppTool.IsNullOrEmpty(this.CargoIdentifierKey2)) 
+               this.SendCargoQueryRequest(false);
+ 
         });
 
     }
@@ -228,6 +367,8 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
     set CargoIdentifierKey1(value: string) {
         if (this.RequestParams.CargoIdentifierKey1 != value) {
             this.RequestParams.CargoIdentifierKey1 = value;
+            //this.SendCargoQueryRequest(false);
+
         }
         //if (value) {
         //    this.UIProperties.SetRequired("CargoIdentifierKey1", this.ObjectTableName, false);
@@ -241,6 +382,8 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
     set CargoIdentifierKey2(value: string) {
         if (this.RequestParams.CargoIdentifierKey2 != value) {
             this.RequestParams.CargoIdentifierKey2 = value;
+        //    this.SendCargoQueryRequest(false);
+
         }
         //if (value) {
         //    this.UIProperties.SetRequired("CargoIdentifierKey2", this.ObjectTableName, false);
@@ -317,7 +460,7 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
     get IsResponseMessageVisibility() { return this._IsResponseMessageVisibility; }
     set IsResponseMessageVisibility(newValue: boolean) {
         if (this._IsResponseMessageVisibility != newValue) {
-            this._IsResponseMessageVisibility = newValue;
+            this._IsResponseMessageVisibility = newValue; 
         }
     }
 
@@ -535,8 +678,7 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
     }
 
     CustomFileNoTextChanged(searchtext) {
-
-        if (!AppTool.IsNullOrEmpty(this.CustomFileNo)) {
+         if (!AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             this.CurrentSession.StartBusyIndicator("")
             this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
                 .subscribe((myDeclarationResponse: ServiceResponse) => {
@@ -545,18 +687,23 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
                     this._LastFetchDeclarationList = myDeclarationResponse.Result;
                     if (AppTool.IsNullOrEmpty(this._LastFetchDeclarationList)) {
                         this.SetFieldsEnabled(true);
+                        this.IsReady = true;
+
                     } else {
                         this.CurrentSession.StartBusyIndicator("")
                         this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
                             .subscribe((myResponse: ServiceResponse) => {
                                 this.CurrentSession.StopBusyIndicator();
                                 this.FetchConsignment(myResponse, false);
- 
+
                             });
                     }
 
                 });
 
+        }
+        else {
+            this.IsReady = true;
         }
     }
 
@@ -603,6 +750,10 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
             this.CargoIdentifierKey1 = pm.ManifestNumber;
             this.CargoIdentifierKey2 = pm.SecondCargoID;
             this.CargoIdentifierKey3 = pm.ThirdCargoID;
+ 
+          //  this.SendCargoQueryRequest();
+ 
+
             this.SetFieldsEnabled(false);
 
         } else {
@@ -698,4 +849,10 @@ export class CargoSealComponent extends BaseComponent {
         }
 
      }
+}
+
+
+export class LOVContainers {
+    ContainerNumber: string;
+    RowNumber: string;
 }

@@ -161,6 +161,39 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="LastStatusName"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastStatusDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OrderMoney"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Team"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ImporterFile"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"
@@ -181,4 +214,9 @@
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Team"
+    ReferencedTable="ReferantTeam"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

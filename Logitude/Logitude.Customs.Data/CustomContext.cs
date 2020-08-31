@@ -572,6 +572,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ReferantExceptionMap());
 	
+            modelBuilder.Configurations.Add(new ReferantTeamMap());
+	
             modelBuilder.Configurations.Add(new RefundCustomerActivityTypeMap());
 	
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
@@ -2719,6 +2721,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ReferantException> ReferantExceptions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ReferantTeam> ReferantTeams 
 	 {
 	      get; set;
 	 

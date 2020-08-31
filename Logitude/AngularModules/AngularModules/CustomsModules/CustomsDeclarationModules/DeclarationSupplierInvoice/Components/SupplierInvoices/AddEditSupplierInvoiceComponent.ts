@@ -1702,7 +1702,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         this.DropdownDisplayClose();
 
     }
-    ForceSave: boolean=false;
+    ForceSave: boolean = false;
+    notToCheckFeature: boolean = true;
     InitiateNewInstance() {
         this.ForceSave = true;
         var itemPM = new SupplierInvoicePM();
@@ -1735,12 +1736,18 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         this.NextPreviousVisible = false;
         this.Difference = 0;
         this.TotalForeignCurrency = 0;
-        this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
-        if (this.accumulationFeature == null) {
+        
+        if (this.notToCheckFeature) {
             itemPM.AccumalationStateCode = "3";
         }
         else {
-            itemPM.AccumalationStateCode = "1";
+            this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
+            if (this.accumulationFeature == null) {
+                itemPM.AccumalationStateCode = "3";
+            }
+            else {
+                itemPM.AccumalationStateCode = "1";
+            }
         }
         itemPM.IsAccumalated = false;
         this.TotalForeignCurrency = 0;
