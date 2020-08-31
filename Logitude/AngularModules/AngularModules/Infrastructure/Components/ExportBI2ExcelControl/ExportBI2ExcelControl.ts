@@ -41,6 +41,7 @@ export class ExportBI2ExcelControl {
     queryCode: string;
     reportId: string;
     userid: string;
+    IncludeTotals: boolean;
     BIReportXMLData: BIReportXMLData = null;
     SetWindowArgs(args: any) {
         this.queryId = args.queryId;
@@ -49,6 +50,7 @@ export class ExportBI2ExcelControl {
         this.reportId = args.reportId;
         this.queryName = args.reportName;
         this.BIReportXMLData = args.BIReportXMLData;
+        this.IncludeTotals = args.IncludeTotals;
         this.BIReportXMLData.UserId = SessionInfo.LoggedUserId;
         this.StartBuildStimulReportViaWorkerRole();
     }

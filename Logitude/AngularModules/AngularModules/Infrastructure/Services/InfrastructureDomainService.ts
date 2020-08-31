@@ -882,6 +882,7 @@ export class BIReportXMLData {
     public BITabularViewSettings: BITabularViewSettings;
     public UserId: string;
     public BIReportKey: string;
+    public IncludeTotals: boolean;
 }
 
 export class BITabularViewSettings {
