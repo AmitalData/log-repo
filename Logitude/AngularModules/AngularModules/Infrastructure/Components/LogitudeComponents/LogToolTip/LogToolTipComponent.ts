@@ -21,7 +21,8 @@ export class LogToolTipComponent implements AfterViewInit {
     @Input() public mode: string = 'Info';
     @Input() public float: string = null;
     @Input() public bottom: number = 0;
-
+    @Input() public Scrollable: boolean = false;
+ 
     private counterId:number;
 
     constructor() {

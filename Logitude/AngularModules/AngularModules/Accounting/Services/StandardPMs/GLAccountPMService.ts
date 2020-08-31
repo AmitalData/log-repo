@@ -23,6 +23,7 @@ import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
 
 import {GLAccountWithholdingTaxPM} from '../../EntityPMs/GLAccountWithholdingTaxPM';
 import {GLAccountInterestPeriodPM} from '../../EntityPMs/GLAccountInterestPeriodPM';
+import {GLAccountCurrencyPM} from '../../EntityPMs/GLAccountCurrencyPM';
 import {GLAccountValidator} from '../../Validators/GLAccountValidator';
 
 @Injectable()
@@ -198,6 +199,7 @@ export class GLAccountPMService {
 			
                this.MapGLAccountWithholdingTaxes(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapGLAccountInterestPeriods(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapGLAccountCurrencies(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -220,6 +222,15 @@ export class GLAccountPMService {
 						
 							 
             entityPM.OldEntityPM.GLAccountInterestPeriods.push(newGLAccountInterestPeriodPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.GLAccountCurrencies = [];
+            for (var item in entityPM.GLAccountCurrencies) {
+            var myGLAccountCurrencyPM = entityPM.GLAccountCurrencies[item];
+            var newGLAccountCurrencyPM: GLAccountCurrencyPM = this.clone(myGLAccountCurrencyPM);
+						
+							 
+            entityPM.OldEntityPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
             }
 			   
 		}
@@ -406,6 +417,96 @@ export class GLAccountPMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.GLAccountInterestPeriods.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapGLAccountCurrencies(entityPM: GLAccountPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldGLAccountCurrencies: GLAccountCurrencyPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldGLAccountCurrencies = entityPM.OldEntityPM.GLAccountCurrencies;
+        }
+
+        entityPM.GLAccountCurrencies = new Array<GLAccountCurrencyPM>();
+        for (var item in jsonPM.GLAccountCurrencies) {
+            var jItem = jsonPM.GLAccountCurrencies[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newGLAccountCurrencyPM: GLAccountCurrencyPM;
+	  
+            if (mapParent) {
+                newGLAccountCurrencyPM = new GLAccountCurrencyPM(entityPM);
+            }
+            else
+            {
+                newGLAccountCurrencyPM = new GLAccountCurrencyPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newGLAccountCurrencyPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newGLAccountCurrencyPM.UniqueKey = Guid.newGuid();
+                newGLAccountCurrencyPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newGLAccountCurrencyPM.OldEntityPM = this.clone(newGLAccountCurrencyPM);
+
+				
+            }
+            else {
+                if (newGLAccountCurrencyPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newGLAccountCurrencyPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newGLAccountCurrencyPM.ChangeSetOp = "Insert";
+                }
+ 
+                newGLAccountCurrencyPM.OldEntityPM = null;
+                newGLAccountCurrencyPM.EntityParentPM = null;
+            }
+			
+			 newGLAccountCurrencyPM.IsDirty = false;
+            entityPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
+        }
+        if (oldGLAccountCurrencies) {
+            
+            for (var itemKey in oldGLAccountCurrencies) {
+                if (entityPM.GLAccountCurrencies.filter(p=> p.UniqueKey === oldGLAccountCurrencies[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldGLAccountCurrencies[itemKey]) {
+                        //oldGLAccountCurrencies[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.GLAccountCurrencies.push(oldGLAccountCurrencies[itemKey]);
+						var oldItemJson = oldGLAccountCurrencies[itemKey];
+                        var deletedPM: GLAccountCurrencyPM = new GLAccountCurrencyPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.GLAccountCurrencies.push(deletedPM);
                     }
                 }
             }
