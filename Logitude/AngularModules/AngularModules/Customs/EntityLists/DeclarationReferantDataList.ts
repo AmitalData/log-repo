@@ -50,6 +50,7 @@ export class DeclarationReferantDataList {
 	LastStatusName: string;
 	LastStatusDate: Date;
 	OrderMoney: boolean;
+	Team: string;
 	ImporterFile: string;
 	
 }
