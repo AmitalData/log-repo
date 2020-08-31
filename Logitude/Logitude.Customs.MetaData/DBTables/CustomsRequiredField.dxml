@@ -48,6 +48,5 @@
     ForeignKeyColumn="ObjectfieldId"
     ReferencedTable="ObjectFields"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo"
-    Ignore="true"/>
+    ReferencedTableSchema="dbo" />
 </Table>
