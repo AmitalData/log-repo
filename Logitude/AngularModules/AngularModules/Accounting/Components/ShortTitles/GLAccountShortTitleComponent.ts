@@ -26,7 +26,8 @@ import { PartnerTypeList } from '../../../Common/EntityLists/PartnerTypeList';
 export class GLAccountShortTitleComponent {
     public EntityPM: GLAccountPM;
     public isRTL: boolean = false;
-    public IsConnectedCard: boolean = false;
+    public IsConnectedToOneCard: boolean = false;
+    public IsConnectedToMoreThanOneCard:boolean= false;
     private CurrentSession = SessionLocator.SelectedSession;
     GLAccountPMService: GLAccountPMService = new GLAccountPMService();
     _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
@@ -42,7 +43,7 @@ export class GLAccountShortTitleComponent {
 
         this.SetObjectTableNameAndTabCode();
         this.CheckIsConnectedCard(this.EntityPM.CustomerGLAccountId || this.EntityPM.Id);
-
+        this.GetConnectedCards(this.EntityPM.CustomerGLAccountId || this.EntityPM.Id);
 
         console.log("[GLAccountShortTitleComponent]");
 
@@ -67,18 +68,29 @@ export class GLAccountShortTitleComponent {
     }
     ObjectTableName: string;
     SelectedTabCode: string;
-
+    public ConnectedCards:CardList[]=[];
     _PartnerTypeListService: PartnerTypeListService = new PartnerTypeListService();
-    OpenCardScreen()
+    OpenCardScreen(cardId:string)
     {
-        var accountId = this.EntityPM.CustomerGLAccountId || this.EntityPM.Id; // if GLAccount is splitted, (EntityPM.CustomerGLAccountId) is filled
-        this.GetConnectedCards(accountId).then((connectedCards: CardList[]) => {
-            var firstConnectedCard = connectedCards[0];
+        var selectedCard;
+        if(this.ConnectedCards.length==1){
+             selectedCard = this.ConnectedCards[0];
+        }
+        else{
+            selectedCard = this.ConnectedCards.filter(d=> d.Id== cardId)[0];
+         }
+      //  var accountId = this.EntityPM.CustomerGLAccountId || this.EntityPM.Id; // if GLAccount is splitted, (EntityPM.CustomerGLAccountId) is filled
+       // this.GetConnectedCards(accountId).then((connectedCards: CardList[]) => {
+          //  var firstConnectedCard = connectedCards[0];
+          
+           // var partnerTypeObjectTableName = this.GetPartnerTypeObjectTableName(firstConnectedCard.PartnerTypeId);
+         //   this.OpenCard(firstConnectedCard.Id, partnerTypeObjectTableName);
 
-            var partnerTypeObjectTableName = this.GetPartnerTypeObjectTableName(firstConnectedCard.PartnerTypeId);
-            this.OpenCard(firstConnectedCard.Id, partnerTypeObjectTableName);
+      //  });
+      
+      var partnerTypeObjectTableName = this.GetPartnerTypeObjectTableName(selectedCard.PartnerTypeId);
+      this.OpenCard(selectedCard.Id, partnerTypeObjectTableName);
 
-        });
     }
 
     private OpenCard(connectedCardId: string, partnerTypeName: string)
@@ -119,9 +131,9 @@ export class GLAccountShortTitleComponent {
                 .subscribe((myResponse: ServiceResponse) =>
                 {
                     this.CurrentSession.StopBusyIndicator();
-                    var connectedCards = myResponse.Result;
-                    if (connectedCards)
-                        resolve(connectedCards);
+                   this.ConnectedCards = myResponse.Result;
+                    if ( this.ConnectedCards)
+                        resolve( this.ConnectedCards);
                 });
         });
     }
@@ -146,7 +158,10 @@ export class GLAccountShortTitleComponent {
         this._GLAccountExtendedPMService.GetConnectedCardsForGLAccount(accountId).subscribe((myResponse: ServiceResponse) => {
             var connectedCards = myResponse.Result;
             if (connectedCards.length == 1) {
-                this.IsConnectedCard = true;
+                this.IsConnectedToOneCard = true;
+            }
+            else if(connectedCards.length >1){
+                this.IsConnectedToMoreThanOneCard = true;
             }
             });
 
