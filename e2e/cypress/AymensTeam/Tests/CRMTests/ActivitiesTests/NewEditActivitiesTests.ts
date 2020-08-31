@@ -5,16 +5,11 @@ import { LoginComp } from "../../../../Login/Login.po";
 describe('Activities', () => {
     let login: LoginComp = new LoginComp();
     let scenarios: NewEditActivitiesScenarios = new NewEditActivitiesScenarios();
-
-
     beforeEach(() => {
-
         Resolvers.MainMenuResolver.Selector('#GeneralMHCRM').Select();
         Resolvers.MainMenuResolver.Selector('#CRMACT').Select();
-
     });
-
-    it('Test New Activities', () => {
+ it('Test New Activities', () => {
         scenarios.RunScenario('T');
         scenarios.RunScenario('P');
         scenarios.RunScenario('A');
