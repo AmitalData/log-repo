@@ -100,6 +100,7 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneePhoneNumber { get; set; }
         public string FirstPickupTrucker{ get; set; }
         public string LastDeliveryTrucker{ get; set; }
+        public string PackageTypes { get; set; }
 
         public List<APReportInvoiceLine> APInvoiceLinesList { get; set; }
         public List<APTotalVat> APTotalVatList { get; set; }
