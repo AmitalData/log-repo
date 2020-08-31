@@ -33,19 +33,19 @@ export class CustomsRequiredFieldListService {
     }
 
 	getSingle(id: string) {
-	   
+
 		var callTime = new Date();
 
 		return defer(() => {
 			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
-				.pipe(			
+				.pipe(
 					map((response: HttpResponse<any>) => {
 
-						var list = response.body;                   
+						var list = response.body;                    
 						var entity: CustomsRequiredFieldList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
-						}   
+						}
 
 						var serviceResponse: ServiceResponse = new ServiceResponse(); 
 						serviceResponse.Result = entity;  
@@ -56,7 +56,7 @@ export class CustomsRequiredFieldListService {
 
 						return serviceResponse;
 					}),
-			
+					
 					catchError(ServiceHelper.HandleServiceError));
 		});
 	}
@@ -73,43 +73,43 @@ export class CustomsRequiredFieldListService {
 						var allLists = response.body;
 						var _mappedListsArray: Array<CustomsRequiredFieldList> = [];
 						if (allLists) {
-							for (var key in allLists) {				
+							for (var key in allLists) {			
 								var entity: CustomsRequiredFieldList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
 
 						var serviceResponse: ServiceResponse = new ServiceResponse(); 
-						serviceResponse.Result = _mappedListsArray;
+						serviceResponse.Result = _mappedListsArray;  
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsRequiredField", "GetAllLists", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsRequiredField", "GetAll", ""); 
 
 						return serviceResponse;
 					}),
-			
+
 					catchError(ServiceHelper.HandleServiceError));
 		});
 	}
 	
 	getByFilters(filters: ApiQueryFilters) {
 
-		var callTime = new Date();		                        
+		var callTime = new Date();       
 		var urlparameters = '/getbyfilters?';
-		var mykeys = Object.keys(filters);
-		var addtionalFiltersValues = null;
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
 
-		for (var i in mykeys) {
+        for (var i in mykeys) {
 			var propName = mykeys[i];
 			var propValue = filters[propName];
 			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
 
             if (urlparameters != "?") {
-				urlparameters = urlparameters.concat('&');
+                urlparameters = urlparameters.concat('&');
             }
 
-            if (!ignoreFilter) {
+			if (!ignoreFilter) {
 				propValue = encodeURIComponent(propValue);
 				urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
 			}
@@ -119,9 +119,9 @@ export class CustomsRequiredFieldListService {
 			}
         }
 
-		if (addtionalFiltersValues) {
-			urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
-		}
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
 
 		var callUrl = this._apiUrl.concat(urlparameters);
         		
@@ -140,216 +140,137 @@ export class CustomsRequiredFieldListService {
 							}
 						}   
 
-						serviceResponse.Result = _mappedListsArray;       
+						serviceResponse.Result = _mappedListsArray;      
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsRequiredField", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
-				           
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsRequiredField", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+                 								            
 						return serviceResponse;
 					}),
-			
+
 					catchError(ServiceHelper.HandleServiceError));
-		});        
+		});
 	}
 
 	getSingleFromCache(id: string) {
 
-		var callTime = new Date();
+		var callTime = new Date(); 	    
 
 		if (!SessionLocator.UseCachedData) {
             return this.getSingle(id);
         }
-	    
-		var exists = CustomsRequiredFieldListService.CachedData.filter(a => a.Id === id).length;
 
-        var serviceResponse: ServiceResponse = new ServiceResponse(); 
+        var serviceResponse: ServiceResponse = new ServiceResponse();
 
-        if (exists === 0) {
+		if (CustomsRequiredFieldListService.CachedData.length > 0) {
 			return defer(() => {
-				var cacheKey = "CustomsRequiredField_CachedData_" + SessionLocator.Tenant;
-				var _mappedListsArray: Array<CustomsRequiredFieldList> = [];
-                var cachedString = LocalStorageManager.GetItem(cacheKey);
+				var filteredData = CustomsRequiredFieldListService.CachedData.filter(a => a.Id === id)[0];
+				serviceResponse.CallTime = callTime;
+				serviceResponse.Result = filteredData; 
+                return of(serviceResponse);
+            });
+        }
 
-                if (cachedString) {
-                    var cachedJson = JSON.parse(cachedString);
-                    for (var key in cachedJson) {
-                        var entity: CustomsRequiredFieldList = this.MapJsonToEntityList(cachedJson[key]);
-                        _mappedListsArray.push(entity);
-                    }
+        else {
+            return CachedDataManager.GetClosedTableData("Customs.CustomsRequiredField").pipe(
+				map((cachedJson:any) => {
 
-                    CustomsRequiredFieldListService.CachedData = _mappedListsArray;
-                    serviceResponse = new ServiceResponse();
-                    
-                    var filteredData = CustomsRequiredFieldListService.CachedData.filter(a => a.Id === id)[0];
-                    serviceResponse.Result = filteredData;
+					var _mappedListsArray: Array<CustomsRequiredFieldList> = [];
+
+					if (cachedJson) {
+						for (var key in cachedJson) {
+							var entity: CustomsRequiredFieldList = this.MapJsonToEntityList(cachedJson[key]);
+							_mappedListsArray.push(entity);
+						}
+					}
+
+					CustomsRequiredFieldListService.CachedData = _mappedListsArray;
+
+					var filteredData = CustomsRequiredFieldListService.CachedData.filter(a => a.Id === id)[0];
+					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
- 
-                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CustomsRequiredField", "GetSingleListFromCache", 'id=' + id); 
+			     
+					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CustomsRequiredField", "GetSingleListFromCache", 'id=' + id); 
 
-                    return of(serviceResponse);                    
-                }
+					return serviceResponse;
+				}),
 
-				else {
-					return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
-							var list = response.body;
-                    
-							var entity: CustomsRequiredFieldList;
-							if (list)
-							{
-								entity = this.MapJsonToEntityList(list);
-							}   
+				catchError(ServiceHelper.HandleServiceError));
+        }
+    }
 
-							serviceResponse.Result = entity;
-							serviceResponse.CallTime = callTime;
-
-							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsRequiredField", "GetSingleList", 'id=' + id); 
-                                      
-							return serviceResponse;
-						}), 
-						
-						catchError(ServiceHelper.HandleServiceError));
-				}
-			});
-		}
-
-		else {
-		   var filteredData = CustomsRequiredFieldListService.CachedData.filter(a => a.Id === id)[0];
-		    serviceResponse.Result = filteredData;
-			serviceResponse.CallTime = callTime;
-		   return of(serviceResponse);
-		}
-	}
-
-    getAllFromCache(filters: ApiQueryFilters = new ApiQueryFilters(true)) {
+    getAllFromCache(filters: ApiQueryFilters= new ApiQueryFilters(true)) {
 
 		var callTime = new Date();
 
 		if (!SessionLocator.UseCachedData) {
 			return this.getByFilters(filters);
-		}
+        }
 
-		var exists = CustomsRequiredFieldListService.CachedData.length;
-		var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
 
         for (var i in mykeys) {
             var propName = mykeys[i];
             var propValue = filters[propName];
-            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
-
-            if (urlparameters != "?") {
-                urlparameters = urlparameters.concat('&');
-            }
-
-            if (!ignoreFilter) {
-				if (exists === 0 || filters.ForceCacheRefresh) {
-					propValue = encodeURIComponent(propValue);
-				}
-
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-			}
 
             if (propName == "AdditionalFilters" && propValue.length > 0) {
                 addtionalFiltersValues = JSON.stringify(propValue);
 			}
         }
 
-        if (addtionalFiltersValues) {
-            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
-        }
+        var serviceResponse: ServiceResponse = new ServiceResponse();
 
-        var callUrl = this._apiUrl.concat(urlparameters);       
-       
-        if (exists === 0 || filters.ForceCacheRefresh) {
-            var cacheKey = "CustomsRequiredField_CachedData_" + filters.Tenant;
-            var _mappedListsArray: Array<CustomsRequiredFieldList> = [];
-            var serviceResponse: ServiceResponse;
+        if (CustomsRequiredFieldListService.CachedData.length > 0) {
+            return defer(() => {
+                if (filters.GetAll) {
+					serviceResponse.Result = CustomsRequiredFieldListService.CachedData; 
+				}
 
-            if (!filters.ForceCacheRefresh) {
-                var cachedString = LocalStorageManager.GetItem(cacheKey);
-                if (cachedString) {
-                    var cachedJson = JSON.parse(cachedString);
-
-                    for (var key in cachedJson) {
-                        var entity: CustomsRequiredFieldList = this.MapJsonToEntityList(cachedJson[key]);
-                        _mappedListsArray.push(entity);
-                    }
-
-                    CustomsRequiredFieldListService.CachedData = _mappedListsArray;
-                    serviceResponse = new ServiceResponse();
-
-                     if (!filters.GetAll) {
-                        _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
-                    }
-
-                    serviceResponse.Result = _mappedListsArray;
+				else {
+					var filteredData = InfraGenericFilter.GetFilteredArray(CustomsRequiredFieldListService.CachedData, filters);
+					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
-                    
-                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CustomsRequiredField", "GetAllFromCache", "");                     
-                }
-            }
+				}
 
-            if (serviceResponse) {
                 return of(serviceResponse);
-            }
-
-            else {
-                return defer(() => {
-                    return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
-						.pipe(
-							map((response: HttpResponse<any>) => {
-
-								var serviceResponse: ServiceResponse;
-								serviceResponse = response.body;
-                        
-								if (serviceResponse.Result) {
-									for (var key in serviceResponse.Result) {
-										var entity: CustomsRequiredFieldList = this.MapJsonToEntityList(serviceResponse.Result[key]);
-										_mappedListsArray.push(entity);
-									}
-								}
-
-								if (filters.GetAll) {
-									LocalStorageManager.SetItem(cacheKey, JSON.stringify(_mappedListsArray))
-									CustomsRequiredFieldListService.CachedData = _mappedListsArray;
-								}
-
-								else {
-							
-									_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
-								}
-
-								serviceResponse.Result = _mappedListsArray;
-								serviceResponse.CallTime = callTime;
-						
-								var servertime = response.headers.get('ServerExecutionTime');
-								PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsRequiredField", "GetAll", ""); 
-
-								return serviceResponse;
-							}),
-							
-							catchError(ServiceHelper.HandleServiceError));
-                });
-            }
+            });
         }
 
         else {
-            var filteredData = CustomsRequiredFieldListService.CachedData;
-            if (!filters.GetAll) {
-	
-                filteredData = InfraGenericFilter.GetFilteredArray(filteredData, filters);
-            }
+            return CachedDataManager.GetClosedTableData("Customs.CustomsRequiredField").pipe(
+				map((cachedJson:any) => {
 
-            var serviceResponse: ServiceResponse = new ServiceResponse();
-            serviceResponse.Result = filteredData;
-			serviceResponse.CallTime = callTime;
-            return of(serviceResponse);
-        }
+					var _mappedListsArray: Array<CustomsRequiredFieldList> = [];
+					if (cachedJson) {
+						for (var key in cachedJson) {
+							var entity: CustomsRequiredFieldList = this.MapJsonToEntityList(cachedJson[key]);
+							_mappedListsArray.push(entity);
+						}
+					}
+
+					CustomsRequiredFieldListService.CachedData = _mappedListsArray;
+
+					if (filters.GetAll) {
+						serviceResponse.Result = _mappedListsArray; 
+					}
+
+					else {
+
+						_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
+
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CustomsRequiredField", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
+                 	
+						serviceResponse.Result = _mappedListsArray; 
+						serviceResponse.CallTime = callTime;
+					}
+
+					return serviceResponse;
+				}),
+			
+				catchError(ServiceHelper.HandleServiceError));
+        }		 
     }
 	
 	    MapJsonToEntityList(jsonList: any) {
