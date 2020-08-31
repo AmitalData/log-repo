@@ -118,7 +118,6 @@ export class FieldTemplateComponent {
                 return response.Result.LocalName;
             }
         });
-        return "";
     }
     OpenCourierMaster() {
         //static entityResourceService: EntityResourceService = new EntityResourceService();
