@@ -381,10 +381,13 @@ namespace WebFreight.Web.Helpers
                     if (myDocType == null)
                     {
                         var docType = tenantZeroDocumentTypePmsUsedInAutomation.Where(d => d.Id == automationDocumentTypeClass.DocumentTypeTemplateId).FirstOrDefault();
-                        newDocType = CreateNewDocumentType(docType, documentTypeRepository, tenant);
+                        if (docType != null)
+                        {
+                            newDocType = CreateNewDocumentType(docType, documentTypeRepository, tenant);
 
-                        myDocType = new DocumentTypePM() { Code = newDocType.Code, Id = newDocType.Id, Tenant = newDocType.Tenant };
-                        myDocumentTypeListsUsedInAutomation.Add(myDocType);
+                            myDocType = new DocumentTypePM() { Code = newDocType.Code, Id = newDocType.Id, Tenant = newDocType.Tenant };
+                            myDocumentTypeListsUsedInAutomation.Add(myDocType);
+                        }
                         isChange = true;
                     }
                     #endregion
