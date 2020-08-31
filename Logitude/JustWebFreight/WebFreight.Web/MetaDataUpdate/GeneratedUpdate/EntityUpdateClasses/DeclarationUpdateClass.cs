@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "9e2878c0f010bbd2c99f7483b2ada578";
+		public const string HashString = "ee9d2f6cfbd33bef5b6f4d4af9777b4c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15472,6 +15472,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 Code =  "CPO",
                 EnglishName =  "Declaration Cancel Sent",
                 LocalName =  "נשלחה בקשה לביטול הצהרה",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DeclarationObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "SCH",
+                EnglishName =  "נדרש לטפל בהזנת סגר",
+                LocalName =  "נדרש לטפל בהזנת סגר",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
