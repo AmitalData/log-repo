@@ -28,7 +28,7 @@
                  <td style="width:20px;" *ngIf="IsConnectedToMoreThanOneCard">
                     <div  >
                   
-                        <LogToolTip float-start [direction]="isRTL?'bottomleft':'bottomright'" *ngIf="IsConnectedToMoreThanOneCard">
+                        <LogToolTip [Scrollable]="true" [float]="'left'" [mode]="'Info'" float-start [direction]="isRTL?'bottomleft':'bottomright'" *ngIf="IsConnectedToMoreThanOneCard">
                           <span style="font-size: bold;">
                               <div>
                                   <ul style="list-style: none;">
