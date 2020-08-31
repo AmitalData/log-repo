@@ -394,7 +394,7 @@ namespace WebFreight.Web.Helpers
 
                     #region DocumentTypeTemplate
                     DocumentTypeTemplatePM myDocumentTypeTemplatePM = myDocumentTypeTempaltesUsedInAutomation.Where(d => d.OriginalTemplateId == automationDocumentTypeClass.DocumentTypeTemplateId).FirstOrDefault();
-                    if (myDocumentTypeTemplatePM == null)
+                    if (myDocumentTypeTemplatePM == null && myDocType != null)
                     {
                         isChange = true;
                         var tenantZeroDocumentTypeTemplate = tenantZeroDocumentTypeTemplatePmsUsedInAutomation.Where(d => d.Id == automationDocumentTypeClass.DocumentTypeTemplateId).FirstOrDefault();
@@ -409,9 +409,11 @@ namespace WebFreight.Web.Helpers
                         }
                     }
                     #endregion
-
-                    AutomationDocumentTypeClass automationDocumentType = CreateNewAutomationDocumentTypeClass(automationDocumentTypeClass, myDocType, myDocumentTypeTemplatePM);
-                    myAutomationDocumentTypeClassLists.Add(automationDocumentType);
+                    if (myDocType != null)
+                    {
+                        AutomationDocumentTypeClass automationDocumentType = CreateNewAutomationDocumentTypeClass(automationDocumentTypeClass, myDocType, myDocumentTypeTemplatePM);
+                        myAutomationDocumentTypeClassLists.Add(automationDocumentType);
+                    }
 
                 }
 
