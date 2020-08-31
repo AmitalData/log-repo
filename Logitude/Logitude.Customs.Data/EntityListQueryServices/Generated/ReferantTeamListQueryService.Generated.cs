@@ -30,7 +30,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<ReferantTeam> iQueryable = (from a in context.ReferantTeam
+            IQueryable<ReferantTeam> iQueryable = (from a in context.ReferantTeams
                                               
                    where a.Tenant == tenant select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
@@ -132,7 +132,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public ReferantTeamList GetSingle(string code)
         {
-            IQueryable<ReferantTeam> ReferantTeamQuery = (from a in context.ReferantTeam
+            IQueryable<ReferantTeam> ReferantTeamQuery = (from a in context.ReferantTeams
                                                        where a.Code == code
                                                        select a);
 
@@ -148,7 +148,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<ReferantTeam> iQueryable = (from a in context.ReferantTeam 
+            IQueryable<ReferantTeam> iQueryable = (from a in context.ReferantTeams 
                    where a.Tenant == tenant select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
