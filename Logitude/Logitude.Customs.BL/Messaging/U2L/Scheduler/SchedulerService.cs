@@ -30,6 +30,8 @@ using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.BL.Validators;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Security;
+using Logitude.Customs.Def.Messaging.Customs;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 {
@@ -671,25 +673,32 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
         private void CheckIsReferantAddOn()
         {
-            string user = this.MyCommunicationsParams.LoggingUserId;
-            if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
-
-            FeatureQuery featureQuery = new FeatureQuery();
-
-            var features = featureQuery.GetAllowedFeaturesForLoggedUser(user, ResolvedTenant());
-
-            var feature = features.Features.FirstOrDefault(x => x.Code == "CUSTOMREFERANT");
-            
-            var responseXML = new isReferantAddOnResponseXML();
-            if (feature != null)
+            try
             {
+                int tenant = ResolvedTenant();
+                string email = AuthenticationUtil.ResolveUserIdentityName(tenant);
+                string id = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+
+                if (!string.IsNullOrWhiteSpace(id))
+                {
+                    ContactRepository contactrep = new ContactRepository(tenant);
+                    var contact = contactrep.GetSingleContact(id, tenant);
+                    email = contact.Email;
+
+                }
+                InjectionUtil.Instance.CheckContactFeature("General", "CUSTOMREFERANT", tenant, email);
+
+                var responseXML = new isReferantAddOnResponseXML();
                 responseXML.isReferantAddOn = "T";
+                if (responseXML != null)
+                {
+                    var xml = XmlGenericUtil<isReferantAddOnResponseXML>.SerializeObject(responseXML);
+                    MyGenericResponseObj.ResponseXml = xml;
+                }
             }
-
-            if (responseXML != null)
+            catch (SecurityException ex)
             {
-                var xml = XmlGenericUtil<isReferantAddOnResponseXML>.SerializeObject(responseXML);
-                MyGenericResponseObj.ResponseXml = xml;
+                AppendLogLine("Check for CUSTOMREFERANT Feature Failed, Referant related features will not be shown, Message: " + ex.Message);
             }
         }
 
