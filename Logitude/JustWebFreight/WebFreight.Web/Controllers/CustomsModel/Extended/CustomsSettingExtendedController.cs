@@ -345,12 +345,17 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetLastRunningDCAWS(int tenant)
+        public HttpResponseMessage GetLastRunningDCAWS()
         {
 
             try
             {
-  
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                 SecurityUtility.AuthenticationOnTenant(tenant);
+
+
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
 
                 CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(MyContext);
