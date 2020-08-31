@@ -140,7 +140,10 @@ namespace WebFreight.Web.DataProviders
         public double? InvoiceAmountInInvoiceCurrency { get; set; }
         public double? AmountPaidInInvoiceCurrency { get; set; }
         
-
+        public string PaymentStatus { get; set; }
+        public double? OriginalAmount { get; set; }
+        public string ShipmentNumber { get; set; }
+        public string ShipmentDirection { get; set; }
     }
 
     public class StatmentAging
