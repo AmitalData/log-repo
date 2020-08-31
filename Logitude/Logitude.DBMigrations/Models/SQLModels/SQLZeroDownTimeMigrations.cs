@@ -173,10 +173,11 @@ namespace Logitude.DBMigrations.Models
             return defaultValue;
         }
 
-        protected override List<DBMigrationsDataScript> GetDBMigrationsDataScripts(bool preScripts)
+        protected override List<DBMigrationsDataScript> GetDBMigrationsDataScripts(bool preScripts, List<string> statuses)
         {
-            string queryString = "SELECT * FROM [dbo].[DBMigrationsDataScripts] WHERE [Status] <> 'Done' AND [IsPreSxml] = " + (preScripts ? "1" : "0") + " ORDER BY [ScriptExecutionNumber]";
-
+            string statusesQueryString = string.Join(",", statuses.Select(s => "'" + s + "'").ToArray());
+            string queryString = "SELECT * FROM [dbo].[DBMigrationsDataScripts] WHERE [Status] IN (" + statusesQueryString + ") AND [IsPreSxml] = " + (preScripts ? "1" : "0") + " ORDER BY [ScriptExecutionNumber]";
+            
             List<DBMigrationsDataScript> dbMigrationsDataScripts = new List<DBMigrationsDataScript>();
 
             SqlDataReader reader = null;

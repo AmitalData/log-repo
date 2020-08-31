@@ -9,11 +9,25 @@ namespace Logitude.DBMigrations.Models
 {
     public abstract class ZeroDownTimeMigrations
     {
+        protected bool ServiceMode;
+
         public void Start()
         {
+            ServiceMode = false;
             StartZeroDownTimeForDataScripts(true);
             StartZeroDownTimeForDefaultValues();
             StartZeroDownTimeForDataScripts(false);
+        }
+
+        public void StartAsService()
+        {
+            ServiceMode = true;
+
+            while (true)
+            {
+                StartZeroDownTimeForDataScripts(true);
+                StartZeroDownTimeForDataScripts(false);
+            }
         }
 
         protected void StartZeroDownTimeForDefaultValues()
@@ -29,7 +43,8 @@ namespace Logitude.DBMigrations.Models
 
         protected void StartZeroDownTimeForDataScripts(bool preScripts)
         {
-            List<DBMigrationsDataScript> dbMigrationsDataScripts = GetDBMigrationsDataScripts(preScripts);
+            List<string> dataScriptsStatuses = !ServiceMode ? new List<string>() { "Waiting", "FullBuild" } : new List<string>() { "IncrementalBuild" };
+            List<DBMigrationsDataScript> dbMigrationsDataScripts = GetDBMigrationsDataScripts(preScripts, dataScriptsStatuses);
 
             foreach (var dbMigrationsDataScript in dbMigrationsDataScripts)
             {
@@ -54,14 +69,22 @@ namespace Logitude.DBMigrations.Models
         {
             CreateDBMigrationsLastScriptColumn(dbMigrationsDataScript.TargetTableName);
 
-            UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "Status", "InProgress");
+            if (!ServiceMode)
+            {
+                UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "Status", "FullBuild");
+            }
+            
             dbMigrationsDataScript.StartDate = DateTime.Now;
             UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "StartDate", dbMigrationsDataScript.StartDate.ToString());
             ExecuteScriptAsBatches(dbMigrationsDataScript);
             dbMigrationsDataScript.EndDate = DateTime.Now;
             UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "EndDate", dbMigrationsDataScript.EndDate.ToString());
-            UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "Status", "Done");
-            InsertIntoDBScriptsHistory(dbMigrationsDataScript);
+
+            if (!ServiceMode)
+            {
+                UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "Status", "IncrementalBuild");
+                InsertIntoDBScriptsHistory(dbMigrationsDataScript);
+            }
         }
 
         protected void ExitZeroDownTimeMigrations(string message)
@@ -72,7 +95,7 @@ namespace Logitude.DBMigrations.Models
 
         protected abstract List<DBMigrationsSetDefaultValue> GetDBMigrationsSetDefaultValues();
 
-        protected abstract List<DBMigrationsDataScript> GetDBMigrationsDataScripts(bool preScripts);
+        protected abstract List<DBMigrationsDataScript> GetDBMigrationsDataScripts(bool preScripts, List<string> statuses);
 
         protected abstract void SetDefaultValueAsBatches(DBMigrationsSetDefaultValue dbMigrationsSetDefaultValue);
         

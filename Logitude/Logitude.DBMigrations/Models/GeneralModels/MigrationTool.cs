@@ -41,17 +41,24 @@ namespace Logitude.DBMigrations.Models
 
         public void RunTool()
         {
-            string[] dxmlFiles = GetDXMLFilesFromRoot(Root);
-            string[] sxmlFiles = GetSXMLFilesFromRoot(Root);
+            if (!ToolArguments.IsArgumentProvided(Arguments.SERVICE))
+            {
+                string[] dxmlFiles = GetDXMLFilesFromRoot(Root);
+                string[] sxmlFiles = GetSXMLFilesFromRoot(Root);
 
-            ValidateDBFiles(dxmlFiles, sxmlFiles);
-            PrepareRequiredData();
+                ValidateDBFiles(dxmlFiles, sxmlFiles);
+                PrepareRequiredData();
 
-            GeneratedScript scriptsToSave = GenerateAndExecuteDBScripts(dxmlFiles, sxmlFiles);
-            SaveScripts(scriptsToSave);
-            ExportMissingIndexesWarnings();
+                GeneratedScript scriptsToSave = GenerateAndExecuteDBScripts(dxmlFiles, sxmlFiles);
+                SaveScripts(scriptsToSave);
+                ExportMissingIndexesWarnings();
 
-            StartZeroDownTimeMigrations();
+                StartZeroDownTimeMigrations();
+            }
+            else
+            {
+                StartZeroDownTimeService();
+            }
         }
 
         protected void ValidateDBFiles(string[] dxmlFiles, string[] sxmlFiles)
@@ -1400,7 +1407,10 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    InsertIntoDBMigrationsDataScripts(scriptDefinition);
+                    if (!IsSxmlInDBMigrationsDataScripts(scriptDefinition.SxmlFileName))
+                    {
+                        InsertIntoDBMigrationsDataScripts(scriptDefinition);
+                    }
                 }
             }
 
@@ -1994,28 +2004,31 @@ namespace Logitude.DBMigrations.Models
 
         protected void ValidateAndReadRoot()
         {
-            if (ToolArguments.IsArgumentProvided(Arguments.ROOT) || RunSettings.DebugMode)
+            if (!ToolArguments.IsArgumentProvided(Arguments.SERVICE))
             {
-                string root = !RunSettings.DebugMode ? GetRoot() : RunSettings.Root;
-                if (String.IsNullOrEmpty(root))
+                if (ToolArguments.IsArgumentProvided(Arguments.ROOT) || RunSettings.DebugMode)
                 {
-                    ExitTool("Error: There Is No Root Found For Looking About Files");
-                }
-                else
-                {
-                    if (!Directory.Exists(root))
+                    string root = !RunSettings.DebugMode ? GetRoot() : RunSettings.Root;
+                    if (String.IsNullOrEmpty(root))
                     {
-                        ExitTool("Error: Cannot Find The Provided Root Path");
+                        ExitTool("Error: There Is No Root Found For Looking About Files");
                     }
                     else
                     {
-                        Root = root;
+                        if (!Directory.Exists(root))
+                        {
+                            ExitTool("Error: Cannot Find The Provided Root Path");
+                        }
+                        else
+                        {
+                            Root = root;
+                        }
                     }
                 }
-            }
-            else
-            {
-                ExitTool("Error: There Is No Root Found For Looking About Files");
+                else
+                {
+                    ExitTool("Error: There Is No Root Found For Looking About Files");
+                }
             }
         }
 
@@ -2049,6 +2062,13 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
+        protected void StartZeroDownTimeService()
+        {
+            Console.WriteLine("Zero Down Time Service Started");
+            ZeroDownTimeMigrations zeroDownTimeMigrations = CreateZeroDownTimeMigrations();
+            zeroDownTimeMigrations.StartAsService();
+        }
+
         protected ZeroDownTimeMigrations CreateZeroDownTimeMigrations()
         {
             if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
@@ -2058,6 +2078,44 @@ namespace Logitude.DBMigrations.Models
 
             ZeroDownTimeMigrations sqlZeroDownTimeMigrations = new SQLZeroDownTimeMigrations();
             return sqlZeroDownTimeMigrations;
+        }
+
+        private bool IsSxmlInDBMigrationsDataScripts(string sxmlFileName)
+        {
+            bool result = false;
+
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            {
+
+            }
+            else
+            {
+                string queryString = "SELECT * FROM [dbo].[DBMigrationsDataScripts] WHERE [SxmlFileName] = '" + sxmlFileName + "';";
+                SqlDataReader reader = null;
+                SqlConnection connection = new SqlConnection(ToolConfigurations.MainConnectionString);
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        result = true;
+                    }
+                    reader.Close();
+                    connection.Close();
+                }
+                catch (Exception exception)
+                {
+                    if (reader != null)
+                    {
+                        reader.Close();
+                    }
+                    connection.Close();
+                    ExitTool(exception.Message);
+                }
+            }
+            return result;
         }
 
         protected void InsertIntoDBMigrationsDataScripts(ScriptDefinition scriptDefinition)

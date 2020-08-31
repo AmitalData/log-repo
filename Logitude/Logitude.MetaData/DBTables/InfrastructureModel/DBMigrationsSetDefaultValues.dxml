@@ -21,7 +21,7 @@
     <Constraints Nullable="false" />
   </Column>
 
-  <Column Name="Status" Type="varchar" Size="15">
+  <Column Name="Status" Type="varchar" Size="25">
     <Constraints Nullable="false" />
   </Column>
 
