@@ -99,6 +99,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool OrderMoney  { get; set; }
        [DataMember]
+       public string Team  { get; set; }
+       [DataMember]
        public string ImporterFile  { get; set; }
    }
 

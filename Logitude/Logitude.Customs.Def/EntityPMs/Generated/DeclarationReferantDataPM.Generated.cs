@@ -710,6 +710,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string team ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Team  
+	   {
+	    
+	     get
+		{
+		   return team;
+		 }
+		 set
+		 {
+		   if(team != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Team",OldValue=team,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   team=value;
+		   }
+			
+		 }
+	   }
 	  private string importerFile ;
 	  	  
        

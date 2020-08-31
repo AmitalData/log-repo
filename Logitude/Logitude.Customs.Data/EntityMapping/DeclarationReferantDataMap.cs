@@ -75,6 +75,8 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.OrderMoney).HasColumnName("OrderMoney");
 
+            this.Property(t => t.Team).HasColumnName("Team").HasMaxLength(15).IsUnicode(true);
+
             this.Property(t => t.ImporterFile).HasColumnName("ImporterFile").HasMaxLength(30).IsUnicode(false);
         }
     }
