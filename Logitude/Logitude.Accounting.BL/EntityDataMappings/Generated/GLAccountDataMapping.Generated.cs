@@ -76,7 +76,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InterestCreditLimit, 
 	         NameForPrintingCheques, 
 	         Smallcashbook, 
-	         MinimumInterestInvoiceBilling,
+	         MinimumInterestInvoiceBilling, 
+	         ReportingAsAnotherDocument,
 	      }
 
 
@@ -191,7 +192,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         NameForPrintingCheques, 
 	         Smallcashbook, 
 	         MinimumInterestInvoiceBilling, 
-	         IsSplitted,
+	         IsSplitted, 
+	         ReportingAsAnotherDocument,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -468,6 +470,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinimumInterestInvoiceBilling))
             {
 				entityPOCO.MinimumInterestInvoiceBilling = entityPM.MinimumInterestInvoiceBilling;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReportingAsAnotherDocument))
+            {
+				entityPOCO.ReportingAsAnotherDocument = entityPM.ReportingAsAnotherDocument;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -751,6 +758,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.MinimumInterestInvoiceBilling = entityPOCO.MinimumInterestInvoiceBilling;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReportingAsAnotherDocument))
+            {
+					entityPM.ReportingAsAnotherDocument = entityPOCO.ReportingAsAnotherDocument;
+            }
+
 		}
 
 		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
@@ -1025,6 +1037,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinimumInterestInvoiceBilling))
             {
                 oldEntityPM.MinimumInterestInvoiceBilling = entityPM.MinimumInterestInvoiceBilling;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReportingAsAnotherDocument))
+            {
+                oldEntityPM.ReportingAsAnotherDocument = entityPM.ReportingAsAnotherDocument;
             }
 			
 		}

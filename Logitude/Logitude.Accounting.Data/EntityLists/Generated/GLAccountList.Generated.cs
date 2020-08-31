@@ -214,6 +214,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool Smallcashbook  { get; set; }
        [DataMember]
        public int? MinimumInterestInvoiceBilling  { get; set; }
+       [DataMember]
+       public bool ReportingAsAnotherDocument  { get; set; }
    }
 
 }

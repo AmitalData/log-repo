@@ -67,7 +67,11 @@ namespace Logitude.Accounting.BL.Validators
             {
                 return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.InternalNumberAlreadyExists", myGLAccountPM.Tenant, showLocals));
             }
+            if(myGLAccountPM.Smallcashbook && myGLAccountPM.ReportingAsAnotherDocument)
+            {
+                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccount.O.SmallCashbookAndReportingValidation", myGLAccountPM.Tenant, showLocals));
 
+            }
             //if (!String.IsNullOrWhiteSpace(myGLAccountPM.ClientId))
             //{
             //    bool clientExists = CheckClientAndCurrency(myGLAccountPM.ClientId, myGLAccountPM.CurrencyId, myGLAccountPM.InternalNumber, myGLAccountPM.Tenant);

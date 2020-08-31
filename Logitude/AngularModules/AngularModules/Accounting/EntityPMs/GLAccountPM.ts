@@ -639,6 +639,11 @@ export class GLAccountPM {
     public set IsSplitted(newValue: boolean) { if (this.isSplitted != newValue) { this.isSplitted = newValue; this.MarkAsDirty("IsSplitted"); } }
        
 	 
+    private reportingAsAnotherDocument: boolean;
+    public get ReportingAsAnotherDocument() { return this.reportingAsAnotherDocument; }
+    public set ReportingAsAnotherDocument(newValue: boolean) { if (this.reportingAsAnotherDocument != newValue) { this.reportingAsAnotherDocument = newValue; this.MarkAsDirty("ReportingAsAnotherDocument"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

@@ -108,6 +108,7 @@ export class GLAccountList {
 	NameForPrintingCheques: string;
 	Smallcashbook: boolean;
 	MinimumInterestInvoiceBilling: number;
+	ReportingAsAnotherDocument: boolean;
 	
 }
  

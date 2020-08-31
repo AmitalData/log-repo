@@ -171,7 +171,13 @@ export class NewGLAccountComponent extends BaseComponent {
 
         }
     }
+    get ReportingAsAnotherDocument() { return this.EntityPM.ReportingAsAnotherDocument }
+    set ReportingAsAnotherDocument(value: boolean) {
+        if (this.EntityPM.ReportingAsAnotherDocument != value) {
+            this.EntityPM.ReportingAsAnotherDocument = value;
 
+        }
+    }
     IsVendor: boolean = false;
     IsMultiCurrencyCheckboxEnabled: boolean = true;
     get ChartOfAccountsTypeCode() { return this.EntityPM.ChartOfAccountsTypeCode; }
