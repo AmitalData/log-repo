@@ -371,7 +371,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-         public HttpResponseMessage GetLastRunningDCA([FromUri]int tenant )
+         public HttpResponseMessage GetUpdateLastRunningDCA([FromUri]int tenant )
         {
 
             try

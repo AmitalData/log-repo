@@ -249,8 +249,8 @@ export class CustomsSettingsComponent
     get LastRunningDCAWS() {
        // if (this.entityPM != null) {
           //  if (this.entityPM.LastRunningDCAWS != null) {
-        if (this.LastRunningDCAWS != null) {
-        var myFormats = DateTool.GetDateFormats(new Date(this.LastRunningDCAWS));
+        if (this._LastRunningDCAWS != null) {
+            var myFormats = DateTool.GetDateFormats(new Date(this._LastRunningDCAWS));
                 return myFormats.DateString + " " + myFormats.ShortTimeString;
 
         }
@@ -261,7 +261,7 @@ export class CustomsSettingsComponent
 
        //return this.entityPM != null ? this.entityPM.LastRunningDCAWS : null;
     }
-    set LastRunningDCAWS(value: string) { this.LastRunningDCAWS = value; }
+    set LastRunningDCAWS(value: string) { this._LastRunningDCAWS = value; }
 
 
 
