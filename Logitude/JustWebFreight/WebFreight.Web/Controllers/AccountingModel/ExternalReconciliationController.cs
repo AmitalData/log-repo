@@ -66,9 +66,10 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
 
+
                 #region Trans filters
 
-              
+
                 QueryOperations queryOperationsTrans = new QueryOperations()
                 {
                     ObjectTableName = "LedgerTransaction",
@@ -140,6 +141,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 }
                 #endregion
 
+
                 #region Bank lines filters
 
                 
@@ -202,7 +204,11 @@ namespace WebFreight.Web.Controllers.AccountingModel
                             filter.FieldName = filter.FieldName.Replace("CreateDate", "ReferenceDate");
                         }
 
-                        if (filter.FieldName == "IsExternalReconcile")
+                        if (filter.FieldName == "IsExternalReconcile"
+                            || filter.FieldName == "DueDate"
+                            || filter.FieldName == "DUMMY_TransferAccountId"
+                            || filter.FieldName == "InReconcileProgress"
+                            || filter.FieldName == "InProgressExternalReconcile")
                             continue;
 
                         //
@@ -227,6 +233,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     }
                 }
                 #endregion
+
+                string TransferGlAccountId = GetAndRemoveFilter(queryOperationsTrans, "DUMMY_TransferAccountId");
 
                 var args = new AutoExternalReconcileArgs()
                 {
@@ -256,6 +264,15 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
+
+        private static string GetAndRemoveFilter(QueryOperations queryOperations, string fieldName)
+        {
+            QueryFilterItem filterItem = queryOperations.QueryFilterItems.Find(d => d.FieldName == fieldName);
+            string TransferGlAccountId = filterItem?.FieldValue.ToString();
+            queryOperations.QueryFilterItems.Remove(filterItem);
+            return TransferGlAccountId;
+        }
+
 
         public HttpResponseMessage GetGenerateTestRecordsForExternalReco(string glAccountId, string bankAccountId, string type)
         {
