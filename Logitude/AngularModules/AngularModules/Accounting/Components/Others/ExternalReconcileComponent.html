@@ -437,10 +437,10 @@
                                     {{'Accounting.O.ReconcileAccordingTo' | TextCodeTranslationPipe}}:</li>
 
                                 <!-- Amount Checkbox -->
-                                <li float-start style="padding: 0 8px;padding-top: 5px;">
-                                    <CheckBox [IsEnabled]="true" [IsChecked]="AmountCheckBoxChecked"
+                                <li float-start style="padding: 0 8px;padding-top: 5px;"> 
+                                    <CheckBox [IsChecked]="AmountCheckBoxChecked"
                                         (Checked)="AmountCheckBoxChecked = $event"></CheckBox>
-                                </li>
+                                </li> 
                                 <li float-start [style.padding-left]="isRTL ? '30px' : 'initial'"
                                     [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">
                                     {{'Accounting.General.O.Amount' | TextCodeTranslationPipe}}</li>
