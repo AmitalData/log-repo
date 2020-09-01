@@ -286,7 +286,7 @@ namespace Logitude.Server.Tools.StorageService
                             }
                         }
 
-                        if (fileInfo.FileName != "test update failed")
+                        //if (fileInfo.FileName != "test update failed")
                             blobstream.Write(result, 0, (int)result.Length);
 
                     }
