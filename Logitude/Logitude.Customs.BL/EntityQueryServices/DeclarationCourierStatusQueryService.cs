@@ -290,6 +290,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             declarationCourierStatusSummary.PendingPaymentCount = declarationCourierStatuses.Where(x => x.CourierPendingReasonList.Contains("900")).Count();
             declarationCourierStatusSummary.PendingCustomsCount = declarationCourierStatuses.Where(x => x.IsClosedForFollowUp == false && x.Declaration.CourierCustomStatusCode =="2").Count();
             declarationCourierStatusSummary.PendingCount = declarationCourierStatuses.Where(x => !string.IsNullOrEmpty( x.CourierPendingReasonList )).Count();
+            declarationCourierStatusSummary.AllCourierDeclarationsCount = declarationCourierStatuses.Count();
 
             declarationCourierStatusSummary.CourierMasterOpenIndividualCount = declarationCourierStatuses.Where(x => x.IsClosedForFollowUp == false && x.FastIndividualProcessCode=="I").Count();
             declarationCourierStatusSummary.UnReleasedIndividualCount = declarationCourierStatuses.Where(x => x.FastIndividualProcessCode == "I" && (x.Declaration.HatraDate == null || x.Declaration.HatraDate == DateTime.MinValue)).Count();

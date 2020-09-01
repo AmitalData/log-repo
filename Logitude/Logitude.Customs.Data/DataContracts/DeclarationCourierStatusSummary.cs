@@ -22,6 +22,7 @@ namespace Logitude.Customs.Data.DataContracts
         public int PendingCount { get; set; }
         public int CourierMasterOpenIndividualCount { get; set; }
         public int UnReleasedIndividualCount { get; set; }
+        public int AllCourierDeclarationsCount { get; set; }
 
     }
 }

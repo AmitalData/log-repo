@@ -371,7 +371,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-         public HttpResponseMessage GetUpdateLastRunningDCA([FromUri]int tenant )
+         public HttpResponseMessage GetUpdateLastRunningDCA([FromUri]int tenant , int NumOfMessages)
         {
 
             try
@@ -386,6 +386,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 var settings=   customsSettingQuery.GetSingleByTenant(tenant);
 
                 settings.LastRunningDCAWS = DateTime.Now;
+                settings.LastNumOfMessagesDCAWS = NumOfMessages;
                 settings.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 customsSettingUpdateService.Update(settings, true);
                 return Request.CreateResponse(HttpStatusCode.OK, "ok");
