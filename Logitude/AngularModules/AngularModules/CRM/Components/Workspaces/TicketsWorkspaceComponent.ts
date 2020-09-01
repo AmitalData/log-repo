@@ -17,6 +17,7 @@ export class TicketsWorkspaceComponent implements AfterViewInit {
     public IsMenuVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
+
         this.selectedItem = "TIW";
     }
 
@@ -25,8 +26,10 @@ export class TicketsWorkspaceComponent implements AfterViewInit {
         if (FeatureLocator.HasFeaturePermession("Ticket", "TicketDashboard.Menu")) {
             this.IsTicketDashboardVisible = true;
             this.IsMenuVisible = true;
-            this.SelectionChanged();
+           
         }
+
+        this.SelectionChanged();
     }
 
   
