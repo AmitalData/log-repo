@@ -322,6 +322,20 @@ declare @DIM_MoveTypesInActiveNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_MoveTypesInActiveNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_MoveTypesInActiveNewId,0,'DIM_MoveTypes','[InActive]','InActive','Boolean','false',0,0,'false','false','true','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
+declare @DIM_OBLTypeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_OBLTypeNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_OBLTypeNewId,0,'DIM_OBLType','DIM_OBLType','Dimension','true','[Name]','false')  
+--Fields --
+declare @DIM_OBLTypeCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_OBLTypeCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_OBLTypeCodeNewId,0,'DIM_OBLType','[Code]','Code','Text','true',0,4,'false','false','true','[Name]','false','false','false','true','false')  
+declare @DIM_OBLTypeNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_OBLTypeNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_OBLTypeNameNewId,0,'DIM_OBLType','[Name]','Name','Text','true',0,25,'true','false','true','[Code]','false','false','false','false','false')  
+declare @DIM_OBLTypeAutomaticLastUpdateDateNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_OBLTypeAutomaticLastUpdateDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_OBLTypeAutomaticLastUpdateDateNewId,0,'DIM_OBLType','[Automatic Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','false','false','false','false','true','false')  
+------------------------------------------------------------------------------------
 declare @DIM_PartnersNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PartnersNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_PartnersNewId,0,'DIM_Partners','DIM_Partners','Dimension','false','[Name]','false')  
@@ -1607,3 +1621,6 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ShipmentsArrivalNoticeSentNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsArrivalNoticeSentNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ShipmentsArrivalNoticeSentNewId,0,'Fact_Shipments','[Arrival Notice Sent]','Arrival Notice Sent Date','DateTime','false',0,0,'false','false','true','KPI','false','false','false','ShipmentComputedFields.ArrivalNoticeSent','false','false')  
+declare @Fact_ShipmentsOBLTypeNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsOBLTypeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,Category2,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ShipmentsOBLTypeNewId,0,'Fact_Shipments','[OBL Type]','OBL Type','Dimension','false',0,0,'DIM_OBLType','false','false','true','Routings','Operational','false','false','false','false','false')  
