@@ -2077,7 +2077,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         var myVolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
         var myGrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
         var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.EntityPM.TransportModeId);
-        var myPickupDeliveryChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.EntityPM.TransportModeId);
+        var myPickupDeliveryChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode("O");
         if (this.EntityPM.DirectionId == "D") {
             if (!AppTool.IsNullOrEmpty(SessionLocator.TenantPM.CountryCode)) {
                 if (SessionLocator.TenantPM.CountryCode.toUpperCase() == "US") {
