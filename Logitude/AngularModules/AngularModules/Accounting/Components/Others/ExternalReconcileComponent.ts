@@ -1060,7 +1060,20 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             filters.GetAll = true;
             filters.GetCount = true;
 
+
             filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
+            // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
+            filters.addAdditionalFilter("DueDate", new Date(), null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
+
+            if(this.ObjectTableName == "BankAccount")
+                filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
+
+            if (!this.showInProgessLines){
+                    filters.addAdditionalFilter("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean");
+                    filters.addAdditionalFilter("InProgressExternalReconcile", false, null, null, "Equals", false, false, false, "boolean");
+
+            }
+
             //#endregion
 
             this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
