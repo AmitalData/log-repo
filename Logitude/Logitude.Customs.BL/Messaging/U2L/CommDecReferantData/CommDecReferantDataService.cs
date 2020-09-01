@@ -144,7 +144,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                     _DeclarationReferantDataPM.ControllerStatus = _LogitudeDeclarationReferantData.QueueStatus;
                     if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.QueueRemarks)) _DeclarationReferantDataPM.IsControllerRemarks = true;
                 }
-
+                else if (_LogitudeDeclarationReferantData.QueueType == "Q9")
+                {
+                    _DeclarationReferantDataPM.CollectionOfMoneyStatus = _LogitudeDeclarationReferantData.QueueStatus;
+                }
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.FollowUpStatus)) _DeclarationReferantDataPM.IsClosedForFollowUp = _LogitudeDeclarationReferantData.FollowUpStatus;
 
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.PreClassification)) _DeclarationReferantDataPM.PreClassification = _LogitudeDeclarationReferantData.PreClassification;
