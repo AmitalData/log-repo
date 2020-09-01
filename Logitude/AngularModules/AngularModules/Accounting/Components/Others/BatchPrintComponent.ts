@@ -57,6 +57,7 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
   @Output() MenuHeaderchangeevent = new EventEmitter();
   //public MarkIsChecked: EventEmitter<any> = new EventEmitter();
     public ColumnsReady: EventEmitter<any> = new EventEmitter();
+    public MarkIsChecked: EventEmitter<any> = new EventEmitter();
   ngOnInit() {
     this.InitializeDate();
     this.BuildColumns();
@@ -69,6 +70,8 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
     // this.TransactionSelectedLines = new ObservableCollection([]);
     // this.ExtPageSelectedLines = new ObservableCollection([]);
 }
+
+private selectedItems:ObservableCollection;
     ReloadData() {
       
       this.SelectedItemsCount = 0;
@@ -218,8 +221,8 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
 
                 this.onCheckBoxChecked($event);
                 this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
-                /// this.MarkIsChecked.emit({ MyRecord: row });
-            }
+                this.MarkIsChecked.emit({ MyRecord: row,AllSelected:this.AllSelected });
+              }
         });
 
     }
@@ -251,10 +254,13 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
   private EnabledDataCount: number;
     OnDataLoaded(result) {
         if (result) {
-            this.DataCount = this.DataSource.rowCount;
-          this.EnabledDataCount = result.filter(d => d.InterestReportStatusCode != "8").length;
+          result = new ObservableCollection(result);
+          this.DataCount = this.DataSource.rowCount;
+          this.EnabledDataCount = result.Collection.filter(d => d.InterestReportStatusCode != "8").length;
           this.SelectedItemsCountText = "selected 0 of " + this.DataCount;
         } 
+        var selectedLines = this.AllSelected?result: this.selectedItems;
+        this.MarkIsChecked.emit({ SelectedLines:selectedLines,AllSelected: this.AllSelected});
     }
      today: Date = new Date();
      lastmonth:any = this.today.setDate(this.today.getDay() - 30);
@@ -309,6 +315,8 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
         } else {
             this.IsSelectedItemsTextVisibile = false;
             this.SelectedItemsCount = 0;
+            this.selectedItems.Clear();
+            this.MarkIsChecked.emit({ SelectedLines:this.selectedItems,AllSelected: value});
         }
         this.SetCreateInvoiceButtonText();
     }
@@ -352,7 +360,7 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
    // this.ReloadData();
 
     }
-    private selectedItems: ObservableCollection;
+  
   public SelectedItemsCount: number=0;
     onCheckBoxChecked($event:any)
     {
