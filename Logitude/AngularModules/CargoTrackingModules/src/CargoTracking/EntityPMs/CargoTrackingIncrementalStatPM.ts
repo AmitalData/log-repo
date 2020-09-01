@@ -24,11 +24,6 @@ export class CargoTrackingIncrementalStatPM {
       }
  	 
     
-    private id: number;
-    public get Id() { return this.id; }
-    public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-       
-	 
     private startDate: Date;
     public get StartDate() { return this.startDate; }
     public set StartDate(newValue: Date) { if (this.startDate != newValue) { this.startDate = newValue; this.MarkAsDirty("StartDate"); } }
@@ -72,6 +67,11 @@ export class CargoTrackingIncrementalStatPM {
     private shipmentMasterDatas: number;
     public get ShipmentMasterDatas() { return this.shipmentMasterDatas; }
     public set ShipmentMasterDatas(newValue: number) { if (this.shipmentMasterDatas != newValue) { this.shipmentMasterDatas = newValue; this.MarkAsDirty("ShipmentMasterDatas"); } }
+       
+	 
+    private id: number;
+    public get Id() { return this.id; }
+    public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
 

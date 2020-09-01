@@ -25,7 +25,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                 TableName = "Port",
                 FieldsDBName = "Id,Tenant,Code,CountryId,EnglishName,AutomaticLastUpdateDate",
-                CT_FieldsDBName = "Id,Code,EnglishName,CountryId",
+                CT_FieldsDBName = "Id,Code,EnglishName,CountryId,Tenant",
                 KeyName = "Id",
                 ConditionKey = "Id",
                 DBTableName = "Ports",
@@ -41,7 +41,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 FieldsDBName = "Id,Tenant,Code,LocalName,EnglishName,AutomaticLastUpdateDate",
                 KeyName = "Id",
                 ConditionKey = "Id",
-                CT_FieldsDBName = "Id,Code,EnglishName,LocalName",
+                CT_FieldsDBName = "Id,Code,EnglishName,LocalName,Tenant",
                 DBTableName = "Cards",
                 CT_TableName = "CargoTrackingCards",
                 Main_CT_TableName = "CargoTrackingCards",
@@ -67,10 +67,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             CargoTableLists.Add(new CargoTable()
             {
                 TableName = "Countries",
-                FieldsDBName = "Id,LocalName,Code,EnglishName,AutomaticLastUpdateDate",
+                FieldsDBName = "Id,LocalName,Code,EnglishName,Tenant,AutomaticLastUpdateDate",
                 KeyName = "Id",
                 ConditionKey = "Id",
-                CT_FieldsDBName = "Id,LocalName,Code,EnglishName",
+                CT_FieldsDBName = "Id,LocalName,Code,EnglishName,Tenant",
                 DBTableName = "Countries",
                 CT_TableName = "CargoTrackingCountries",
                 Main_CT_TableName = "CargoTrackingCountries",
@@ -82,10 +82,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             CargoTableLists.Add(new CargoTable()
             {
                 TableName = "ShipmentMasterDatas",
-                FieldsDBName = "Id,Master,MainCarriageATD,MainCarriageETD,MainCarriageATA,MainCarriageETA,AutomaticLastUpdateDate",
+                FieldsDBName = "Id,Master,MainCarriageATD,MainCarriageETD,MainCarriageATA,MainCarriageETA,Tenant,AutomaticLastUpdateDate",
                 KeyName = "Id",
                 ConditionKey = "Id",
-                CT_FieldsDBName = "Id,Master,MainCarriageATD,MainCarriageETD,MainCarriageATA,MainCarriageETA",
+                CT_FieldsDBName = "Id,Tenant,Master,MainCarriageATD,MainCarriageETD,MainCarriageATA,MainCarriageETA",
                 DBTableName = "ShipmentMasterDatas",
                 CT_TableName = "CargoTrackingShipmentMasters",
                 Main_CT_TableName = "CargoTrackingShipmentMasters",
@@ -97,10 +97,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             CargoTableLists.Add(new CargoTable()
             {
                 TableName = "ShipmentComputedFields",
-                FieldsDBName = "Id,FirstPickupATD,FinalDeliveryATA,FinalDeliveryETA,AutomaticLastUpdateDate",
+                FieldsDBName = "Id,FirstPickupATD,FinalDeliveryATA,FinalDeliveryETA,Tenant,AutomaticLastUpdateDate",
                 KeyName = "Id",
                 ConditionKey = "Id",
-                CT_FieldsDBName = "Id,FirstPickupATD,FinalDeliveryATA,FinalDeliveryETA",
+                CT_FieldsDBName = "Id,FirstPickupATD,FinalDeliveryATA,Tenant,FinalDeliveryETA",
                 DBTableName = "ShipmentComputedFields",
                 CT_TableName = "CargoTrackingShipmentComputeds",
                 Main_CT_TableName = "CargoTrackingShipmentComputeds",
@@ -771,6 +771,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             "BEGIN " +
                             "CREATE TABLE [dbo].[" + TableName + "](" +
                             "[Id] VARCHAR(15) NOT NULL," +
+                            "[Tenant] INT NOT NULL,"+
                             "[Code] VARCHAR(3) NOT NULL," +
                             "[EnglishName] VARCHAR(40) NULL," +
                             "[CountryId] VARCHAR(15) NOT NULL," +
@@ -788,7 +789,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             "BEGIN " +
                             "CREATE TABLE[dbo].["+ TableName + "]("+
                             "[Id] VARCHAR(15) NOT NULL,"+
-                            "[Code] VARCHAR(15) NOT NULL,"+
+                            "[Tenant] INT NOT NULL," +
+                            "[Code] VARCHAR(15) NOT NULL," +
                             "[EnglishName] VARCHAR(70) NULL,"+
                             "[LocalName] NVARCHAR(100) NULL,"+
                             "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
@@ -805,7 +807,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             "BEGIN " +
                             "CREATE TABLE[dbo].["+ TableName + "]("+
                             "[Id] VARCHAR(15) NOT NULL,"+
-                            "[LocalName] NVARCHAR(120) NULL,"+
+                            "[Tenant] INT NOT NULL," +
+                            "[LocalName] NVARCHAR(120) NULL," +
                             "[Code] CHAR(2) NOT NULL,"+
                             "[EnglishName] VARCHAR(120) NOT NULL,"+
                             "CONSTRAINT[PK_"+ TableName + "] PRIMARY KEY([Id])"+
@@ -857,6 +860,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                           "BEGIN " +
                           "CREATE TABLE [dbo].[" + TableName + "](" +
                           "[Id] VARCHAR(15) NOT NULL," +
+                          "[Tenant] INT NOT NULL," +
                           "[FirstPickupATD] DATETIME NULL," +
                           "[FinalDeliveryATA] DATETIME NULL," +
                           "[FinalDeliveryETA] DATETIME NULL," +
@@ -873,7 +877,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                           "BEGIN " +
                           "CREATE TABLE [dbo].["+ TableName + "](" +
                           "[Id] VARCHAR(16) NOT NULL,"+
-                          "[Master] VARCHAR(20) NULL,"+
+                          "[Tenant] INT NOT NULL," +
+                          "[Master] VARCHAR(20) NULL," +
                           "[MainCarriageATD] DATETIME NULL," +
                           "[MainCarriageETD] DATETIME NULL,"+
                           "[MainCarriageATA] DATETIME NULL,"+

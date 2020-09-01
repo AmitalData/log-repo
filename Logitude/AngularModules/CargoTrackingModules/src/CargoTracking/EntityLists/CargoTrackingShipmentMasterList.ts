@@ -14,6 +14,7 @@ export class CargoTrackingShipmentMasterList {
 	MainCarriageETD: Date;
 	MainCarriageATA: Date;
 	MainCarriageETA: Date;
+	Tenant: number;
 	
 }
  

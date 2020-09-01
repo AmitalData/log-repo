@@ -5,14 +5,6 @@
   DBType="CargoTracking"
   Module="CargoTracking">
   <Column
-    Name="Id"
-    Type="int"
-    Identity="true">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Tenant"
     Type="int">
     <Constraints
@@ -356,6 +348,14 @@
     Type="datetime">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="Id"
+    Type="int"
+	Identity="true">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="EntityType"

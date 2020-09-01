@@ -218,6 +218,7 @@ export class CargoTrackingPortPMService {
 	  public GetNewEntityPM() {		 
 		    var entityPM: CargoTrackingPortPM;
 			entityPM = new CargoTrackingPortPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
 		 

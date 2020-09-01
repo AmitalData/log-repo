@@ -33,19 +33,19 @@ export class CargoTrackingTransportModeListService {
     }
 
 	getSingle(id: string) {
-	   
+
 		var callTime = new Date();
 
 		return defer(() => {
 			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
-				.pipe(			
+				.pipe(
 					map((response: HttpResponse<any>) => {
 
-						var list = response.body;                   
+						var list = response.body;                    
 						var entity: CargoTrackingTransportModeList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
-						}   
+						}
 
 						var serviceResponse: ServiceResponse = new ServiceResponse(); 
 						serviceResponse.Result = entity;  
@@ -56,7 +56,7 @@ export class CargoTrackingTransportModeListService {
 
 						return serviceResponse;
 					}),
-			
+					
 					catchError(ServiceHelper.HandleServiceError));
 		});
 	}
@@ -73,43 +73,43 @@ export class CargoTrackingTransportModeListService {
 						var allLists = response.body;
 						var _mappedListsArray: Array<CargoTrackingTransportModeList> = [];
 						if (allLists) {
-							for (var key in allLists) {				
+							for (var key in allLists) {			
 								var entity: CargoTrackingTransportModeList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
 
 						var serviceResponse: ServiceResponse = new ServiceResponse(); 
-						serviceResponse.Result = _mappedListsArray;
+						serviceResponse.Result = _mappedListsArray;  
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CargoTrackingTransportMode", "GetAllLists", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CargoTrackingTransportMode", "GetAll", ""); 
 
 						return serviceResponse;
 					}),
-			
+
 					catchError(ServiceHelper.HandleServiceError));
 		});
 	}
 	
 	getByFilters(filters: ApiQueryFilters) {
 
-		var callTime = new Date();		                        
+		var callTime = new Date();       
 		var urlparameters = '/getbyfilters?';
-		var mykeys = Object.keys(filters);
-		var addtionalFiltersValues = null;
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
 
-		for (var i in mykeys) {
+        for (var i in mykeys) {
 			var propName = mykeys[i];
 			var propValue = filters[propName];
 			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
 
             if (urlparameters != "?") {
-				urlparameters = urlparameters.concat('&');
+                urlparameters = urlparameters.concat('&');
             }
 
-            if (!ignoreFilter) {
+			if (!ignoreFilter) {
 				propValue = encodeURIComponent(propValue);
 				urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
 			}
@@ -119,9 +119,9 @@ export class CargoTrackingTransportModeListService {
 			}
         }
 
-		if (addtionalFiltersValues) {
-			urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
-		}
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
 
 		var callUrl = this._apiUrl.concat(urlparameters);
         		
@@ -140,19 +140,138 @@ export class CargoTrackingTransportModeListService {
 							}
 						}   
 
-						serviceResponse.Result = _mappedListsArray;       
+						serviceResponse.Result = _mappedListsArray;      
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CargoTrackingTransportMode", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
-				           
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CargoTrackingTransportMode", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+                 								            
 						return serviceResponse;
 					}),
-			
+
 					catchError(ServiceHelper.HandleServiceError));
-		});        
+		});
 	}
 
+	getSingleFromCache(id: string) {
+
+		var callTime = new Date(); 	    
+
+		if (!SessionLocator.UseCachedData) {
+            return this.getSingle(id);
+        }
+
+        var serviceResponse: ServiceResponse = new ServiceResponse();
+
+		if (CargoTrackingTransportModeListService.CachedData.length > 0) {
+			return defer(() => {
+				var filteredData = CargoTrackingTransportModeListService.CachedData.filter(a => a.Id === id)[0];
+				serviceResponse.CallTime = callTime;
+				serviceResponse.Result = filteredData; 
+                return of(serviceResponse);
+            });
+        }
+
+        else {
+            return CachedDataManager.GetClosedTableData("CargoTrackingTransportMode").pipe(
+				map((cachedJson:any) => {
+
+					var _mappedListsArray: Array<CargoTrackingTransportModeList> = [];
+
+					if (cachedJson) {
+						for (var key in cachedJson) {
+							var entity: CargoTrackingTransportModeList = this.MapJsonToEntityList(cachedJson[key]);
+							_mappedListsArray.push(entity);
+						}
+					}
+
+					CargoTrackingTransportModeListService.CachedData = _mappedListsArray;
+
+					var filteredData = CargoTrackingTransportModeListService.CachedData.filter(a => a.Id === id)[0];
+					serviceResponse.Result = filteredData; 
+					serviceResponse.CallTime = callTime;
+			     
+					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CargoTrackingTransportMode", "GetSingleListFromCache", 'id=' + id); 
+
+					return serviceResponse;
+				}),
+
+				catchError(ServiceHelper.HandleServiceError));
+        }
+    }
+
+    getAllFromCache(filters: ApiQueryFilters= new ApiQueryFilters(true)) {
+
+		var callTime = new Date();
+
+		if (!SessionLocator.UseCachedData) {
+			return this.getByFilters(filters);
+        }
+
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+
+            if (propName == "AdditionalFilters" && propValue.length > 0) {
+                addtionalFiltersValues = JSON.stringify(propValue);
+			}
+        }
+
+        var serviceResponse: ServiceResponse = new ServiceResponse();
+
+        if (CargoTrackingTransportModeListService.CachedData.length > 0) {
+            return defer(() => {
+                if (filters.GetAll) {
+					serviceResponse.Result = CargoTrackingTransportModeListService.CachedData; 
+				}
+
+				else {
+					var filteredData = InfraGenericFilter.GetFilteredArray(CargoTrackingTransportModeListService.CachedData, filters);
+					serviceResponse.Result = filteredData; 
+					serviceResponse.CallTime = callTime;
+				}
+
+                return of(serviceResponse);
+            });
+        }
+
+        else {
+            return CachedDataManager.GetClosedTableData("CargoTrackingTransportMode").pipe(
+				map((cachedJson:any) => {
+
+					var _mappedListsArray: Array<CargoTrackingTransportModeList> = [];
+					if (cachedJson) {
+						for (var key in cachedJson) {
+							var entity: CargoTrackingTransportModeList = this.MapJsonToEntityList(cachedJson[key]);
+							_mappedListsArray.push(entity);
+						}
+					}
+
+					CargoTrackingTransportModeListService.CachedData = _mappedListsArray;
+
+					if (filters.GetAll) {
+						serviceResponse.Result = _mappedListsArray; 
+					}
+
+					else {
+
+						_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
+
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CargoTrackingTransportMode", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
+                 	
+						serviceResponse.Result = _mappedListsArray; 
+						serviceResponse.CallTime = callTime;
+					}
+
+					return serviceResponse;
+				}),
+			
+				catchError(ServiceHelper.HandleServiceError));
+        }		 
+    }
 	
 	    MapJsonToEntityList(jsonList: any) {
        

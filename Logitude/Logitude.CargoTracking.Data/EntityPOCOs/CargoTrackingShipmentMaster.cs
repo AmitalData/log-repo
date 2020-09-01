@@ -31,6 +31,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public DateTime? MainCarriageATA { get; set; }
         [Column("MainCarriageETA")]
 	    public DateTime? MainCarriageETA { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
     }
 }
 	 

@@ -37,11 +37,11 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<CargoTrackingPort> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CargoTrackingPort> iQueryable)
+		private IQueryable<CargoTrackingPort> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CargoTrackingPort> iQueryable, int tenant)
         {
 			throw new NotImplementedException();
 		}
-				private IQueryable<CargoTrackingPort> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<CargoTrackingPort> iQueryable)
+				private IQueryable<CargoTrackingPort> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<CargoTrackingPort> iQueryable, int tenant)
         {
 			return iQueryable;
 		}

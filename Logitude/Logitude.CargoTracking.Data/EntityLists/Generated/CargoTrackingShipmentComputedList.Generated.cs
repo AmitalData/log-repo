@@ -22,6 +22,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public DateTime? FinalDeliveryATA  { get; set; }
        [DataMember]
        public DateTime? FinalDeliveryETA  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
    }
 
 }

@@ -44,6 +44,11 @@ export class CargoTrackingCardPM {
     public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
        
 	 
+    private tenant: number;
+    public get Tenant() { return this.tenant; }
+    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingCardPM;
 		

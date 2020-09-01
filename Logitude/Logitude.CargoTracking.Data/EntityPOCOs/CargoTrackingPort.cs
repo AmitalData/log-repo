@@ -27,6 +27,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string EnglishName { get; set; }
         [Column("CountryId")]
 	    public string CountryId { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
     }
 }
 	 

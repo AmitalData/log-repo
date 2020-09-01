@@ -55,19 +55,15 @@ namespace Logitude.CargoTracking.BL.EntityUpdateServices
         }
 
 		
-		protected override void FillDefaultValuesOnCreate(CargoTrackingIncrementalStatPM entityPM)
-        {     
-  
-		
-		   // entityPM.Id = IdCounter.GetNumber("CargoTrackingIncrementalStat", entityPM.Tenant); 
-					
-	    }
-        
+	    protected override void FillDefaultValuesOnCreate(CargoTrackingIncrementalStatPM entityPM)
+        {
+ 
+		}
 		protected override void FillDefaultValuesOnUpdate(CargoTrackingIncrementalStatPM entityPM)
-        {       
-           
-        }
-		  
+		{
+ 
+		}
+		
 		 
 	 
    }

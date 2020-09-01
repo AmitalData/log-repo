@@ -59,7 +59,7 @@ namespace Logitude.CargoTracking.BL.EntityUpdateServices
         {     
   
 		
-		 //   entityPM.Id = IdCounter.GetNumber("CargoTrackingShipmentMaster", entityPM.Tenant); 
+		    entityPM.Id = IdCounter.GetNumber("CargoTrackingShipmentMaster", entityPM.Tenant); 
 					
 	    }
         

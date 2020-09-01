@@ -18,10 +18,7 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [Column("Id")]
-	    public int Id { get; set; }
-        [Column("Tenant")]
+           [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("EntityId")]
 	    public string EntityId { get; set; }
@@ -135,6 +132,9 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public DateTime? DeclarationDate { get; set; }
         [Column("CustomsClearanceDate")]
 	    public DateTime? CustomsClearanceDate { get; set; }
+     [Key]
+        [Column("Id")]
+	    public int Id { get; set; }
     }
 }
 	 

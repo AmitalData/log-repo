@@ -18,32 +18,7 @@ namespace Logitude.CargoTracking.Def.EntityPMs
    [DataContract]
    public partial class CargoTrackingIncrementalStatPM : EntityPM
    {
-   	  private int id ;
-	  
-       [Key]
-	  
-       
-	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int Id  
-	   {
-	    
-	     get
-		{
-		   return id;
-		 }
-		 set
-		 {
-		   if(id != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   id=value;
-		   }
-			
-		 }
-	   }
-	  private DateTime startDate ;
+   	  private DateTime startDate ;
 	  	  
        
 	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
@@ -246,6 +221,31 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentMasterDatas",OldValue=shipmentMasterDatas,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   shipmentMasterDatas=value;
+		   }
+			
+		 }
+	   }
+	  private int id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   id=value;
 		   }
 			
 		 }

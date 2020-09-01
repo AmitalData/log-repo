@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CargoTrackingWatermarkUpdateClass
    {  		
-		public const string HashString = "d738a8b28ce10807065c268c4d117579";
+		public const string HashString = "1bdf2088384023c08bfcdbe1e96715fc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -100,13 +100,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsNewWizard =  false,
 			      				    KeyPropertyPath =  "TableName",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  false,
+			      				    IsClosed =  true,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
+			      				    IsMain =  false,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "TableName",
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CargoTrackingWatermark",
-			      				    Code =  "4546",
+			      				    Code =  "e7db",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "CargoTracking",
@@ -274,6 +274,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LastRun",
 					  						ListPropertyPath =  "LastRun",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -333,13 +334,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CargoTrackingWatermarkObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CargoTrackingWatermark" && d.Tenant == 0).FirstOrDefault(); 
-
-		   Feature CargoTrackingWatermarkFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingWatermarkObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingWatermark.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingWatermarkObjectTable);
-		   Feature CargoTrackingWatermarkFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingWatermarkObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingWatermark.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingWatermarkObjectTable);
-		   Feature CargoTrackingWatermarkFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingWatermarkObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingWatermark.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingWatermarkObjectTable);
-		   Feature CargoTrackingWatermarkFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingWatermarkObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingWatermark.Features.PackageFeature", NameTextCodeDefaultText = "CargoTrackingWatermark Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingWatermarkObjectTable);    
+	    {     
 	    
 		}
 

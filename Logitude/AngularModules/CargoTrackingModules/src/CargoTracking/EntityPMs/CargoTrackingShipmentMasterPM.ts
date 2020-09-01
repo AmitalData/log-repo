@@ -54,6 +54,11 @@ export class CargoTrackingShipmentMasterPM {
     public set MainCarriageETA(newValue: Date) { if (this.mainCarriageETA != newValue) { this.mainCarriageETA = newValue; this.MarkAsDirty("MainCarriageETA"); } }
        
 	 
+    private tenant: number;
+    public get Tenant() { return this.tenant; }
+    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentMasterPM;
 		

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CargoTrackingTransportModeUpdateClass
    {  		
-		public const string HashString = "59641c9be107614a11cbb1b41b2864b1";
+		public const string HashString = "00f5ce2ec9f741c289fa19236d8bc229";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,13 +101,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LookUp1 =  "Name",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  false,
+			      				    IsClosed =  true,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
+			      				    IsMain =  false,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    InActive =  false,
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CargoTracking Transport Mode",
-			      				    Code =  "8f0a",
+			      				    Code =  "7452",
 			      				    Name =  "TransportMode",
 			      				    CloseTableName =  "Name",
 			      				    GenerateDomainService =  false,
@@ -269,7 +269,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CargoTrackingTransportModeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CargoTrackingTransportMode" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CargoTrackingTransportModeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CargoTrackingTransportMode").ToList();
+		       
+	      
+
+	         Screen CargoTrackingTransportModeCargoTrackingTransportModeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CargoTrackingTransportMode.HeaderScreen", Name = "CargoTrackingTransportModeHeaderScreen", ObjectTableId = CargoTrackingTransportModeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CargoTrackingTransportModeObjectTable.HeaderScreenId = CargoTrackingTransportModeCargoTrackingTransportModeHeaderScreenScreen0.Id;
+		    CargoTrackingTransportModeObjectTable.HeaderScreenCode = CargoTrackingTransportModeCargoTrackingTransportModeHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -278,19 +290,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CargoTrackingTransportModeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CargoTrackingTransportMode" && d.Tenant == 0).FirstOrDefault(); 
-
-		   Feature CargoTrackingTransportModeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingTransportModeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingTransportMode.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingTransportModeObjectTable);
-		   Feature CargoTrackingTransportModeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingTransportModeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingTransportMode.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingTransportModeObjectTable);
-		   Feature CargoTrackingTransportModeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingTransportModeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingTransportMode.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingTransportModeObjectTable);
-		   Feature CargoTrackingTransportModeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CargoTrackingTransportModeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoTrackingTransportMode.Features.PackageFeature", NameTextCodeDefaultText = "CargoTrackingTransportMode Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CargoTrackingTransportModeObjectTable);    
+	    {     
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable CargoTrackingTransportModeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CargoTrackingTransportMode" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = CargoTrackingTransportModeObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = CargoTrackingTransportModeObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
