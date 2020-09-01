@@ -17615,7 +17615,7 @@
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllCourierDeclarations&quot;"
-        IndexOrder="1"
+        IndexOrder="8"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="180" />
       <QueryColumn
