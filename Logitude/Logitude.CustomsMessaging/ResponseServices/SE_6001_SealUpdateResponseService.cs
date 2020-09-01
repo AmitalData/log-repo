@@ -53,46 +53,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyResponseData.HasException = true;
                 this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
 
-
-                foreach (var exception in customResponse.ResponseContentHeader.Exception)
-                {
-                    if(exception.ExeptionType== 13931 && requestParams.DeclarationID!=null)
-                    {
-                        DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
-
-                      var declaration=  declarationQueryService.GetSingleDeclarationById(requestParams.DeclarationID, requestParams.Tenant);
-
-                        if(declaration!= null)
-                        {
-                            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                            {
-                                Tenant = declaration.Tenant,
-                                objectTableName = "Customs.Declaration",
-                                EventCode = "SCH",
-                                notes = null,
-                                CommunicationLoggingEntityReference = declaration.DeclarationNumber,
-                                EntityId = declaration.Id,
-                                UserId = requestParams.LoggingUserId,
-
-                                CommunicationSubject = "FU Status SCH from logitude ",
-                                MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                                {
-                                    entname = "CFIFILEM",
-                                    primary_number = declaration.CustomFileNo,
-                                    status = "new",
-                                    xml_status = "new",
-                                    status_id = "SCH",
-                                    status_DateTime = DateTime.Now,
-                                    comments = null,
-                                }
-                            };
-
-                            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
-
-                        }
-
-                    }
-                }
+ 
 
             }
             else
