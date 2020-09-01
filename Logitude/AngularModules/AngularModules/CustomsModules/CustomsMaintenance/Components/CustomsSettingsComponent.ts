@@ -70,6 +70,7 @@ export class CustomsSettingsComponent
 
         this.CompanyTypeList = [];
         this.UIProperties.SetEnabled("LastRunningDCAWS", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("LastNumOfMessagesDCAWS", this.ObjectTableName, false);
 
         this.CompanyTypeList.push(new CodeNameClass("C", "עמילות"));
         this.CompanyTypeList.push(new CodeNameClass("B", "בלדרות"));
@@ -94,22 +95,16 @@ export class CustomsSettingsComponent
                                         this.entityPM = myResponse.Result;
                                         if (AppTool.IsNullOrEmpty(this.entityPM.QtyFeedbackInPendingMessage)) this.entityPM.QtyFeedbackInPendingMessage = 100;
                                         this.Loaded = true;
-                                        //this.customsSettingExtendedListService.GetLastRunningDCAWS().subscribe((response: ServiceResponse) => {
-
-                                        //    this.LastRunningDCAWS = response.Result;
-                                        //    this.LastNumOfMessagesDCAWS = response
-                                        //});
+                                    
+                                        this.LastRunningDCAWS = this.entityPM.LastRunningDCAWS.toString();
 
                                         this.interval = setInterval(() => {
-                                            //this.customsSettingExtendedListService.GetLastRunningDCAWS().subscribe((response: ServiceResponse) => {
-
-                                            //    this.LastRunningDCAWS = response.Result;
-
-                                            //});
+               
                                             this._CustomsSettingPMService.get(this._TenantCustomsSettingList.Id).subscribe((response: ServiceResponse) => {
 
-                                                this.LastRunningDCAWS = response.Result;
-                                                
+                                                this.LastRunningDCAWS = response.Result.LastRunningDCAWS;
+                                                this.LastNumOfMessagesDCAWS = response.Result.LastNumOfMessagesDCAWS;
+
                                             });
                                         }, 30000);
                                         this.ValidScreen()
