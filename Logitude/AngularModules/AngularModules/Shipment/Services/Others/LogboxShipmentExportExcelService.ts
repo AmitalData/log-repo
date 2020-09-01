@@ -1,5 +1,4 @@
-﻿/// <reference path="../../../shipmentmodules/shipmentlogbox/components/logbox/logboxmaincomponent.ts" />
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
