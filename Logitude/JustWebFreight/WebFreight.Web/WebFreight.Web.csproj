@@ -3111,7 +3111,6 @@
     <Content Include="Integration Test\LoginVars\Master\TeamIslam\LoginVars.csv" />
     <Content Include="Integration Test\LoginVars\Production\Cloud\TeamAyman\CloudLoginVars.csv" />
     <Content Include="Integration Test\LoginVars\Production\Logitude\TeamIslam\LoginVars.csv" />
-    <Content Include="Integration Test\BIReports\AccountingDomainService.InterestReport.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.InterestReport.cs" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
@@ -6573,6 +6572,7 @@
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
+    <Folder Include="Integration Test\BIReports\" />
     <Folder Include="JustConfig\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />
