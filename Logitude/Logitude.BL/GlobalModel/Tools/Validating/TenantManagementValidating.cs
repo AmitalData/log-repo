@@ -56,44 +56,53 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
         }
         private static void ValidateNumberOfUsers(TenantManagementPM entityPM)
         {
-            if (!entityPM.IsMultiPackage)
+            int tenantUsers = 0;
+            int totalUsers = 0;
+            string usersType = "active";
+
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                int? totalUsers = entityPM.NumberOfUsers == null ? 0 : entityPM.NumberOfUsers;
-                if (entityPM.FreeUsers != null)
+                UserRepository userRepository = new UserRepository(entityPM.Id);
+                IQueryable<User> allTenantUsers = userRepository.GetUsers(entityPM.Id);
+
+                allTenantUsers = allTenantUsers.Where(d => d.Contact.Email.ToLower() != "customercare@logitudeworld.com" && d.Contact.InActive == false);
+
+                if (entityPM.ManageLicencesPerUser)
                 {
-                    totalUsers += entityPM.FreeUsers;
-                }
-                
-                int tenantUsers = 0;
-                string usersType = "active";
-
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-                    UserRepository userRepository = new UserRepository(entityPM.Id);
-                    IQueryable<User> allTenantUsers = userRepository.GetUsers(entityPM.Id);
-
-                    allTenantUsers = allTenantUsers.Where(d => d.Contact.Email.ToLower() != "customercare@logitudeworld.com" && d.Contact.InActive == false);
-
-                    if (entityPM.ManageLicencesPerUser)
-                    {
-                        allTenantUsers = allTenantUsers.Where(d => d.LicencedUser == true);
-                        usersType = "licenced";
-                    }
-
-                    if (entityPM.MainAdditionalPackageApplied)
-                    {
-                        allTenantUsers = allTenantUsers.Where(d => !d.AdditionalPackagesOnly);
-                    }
-
-                    tenantUsers = allTenantUsers.Count();
-
-                    scope.Complete();
+                    allTenantUsers = allTenantUsers.Where(d => d.LicencedUser == true);
+                    usersType = "licenced";
                 }
 
-                if (tenantUsers > totalUsers)
+                if (entityPM.MainAdditionalPackageApplied)
                 {
-                    throw new Exception("You can't change the number of users to less than " + tenantUsers + " (Number of " + usersType + " users)");
-                }                
+                    allTenantUsers = allTenantUsers.Where(d => !d.AdditionalPackagesOnly);
+                }
+
+                tenantUsers = allTenantUsers.Count();
+
+                scope.Complete();
+            }
+
+            int num1 = entityPM.TotalFreeUsers == null ? 0 : entityPM.TotalFreeUsers.Value;
+            int num2 = entityPM.TotalNumberOfUsers == null ? 0 : entityPM.TotalNumberOfUsers.Value;
+            totalUsers = num1 + num2;
+
+            //if (entityPM.MainAdditionalPackageApplied)
+            //{
+
+
+            //}
+
+            //else
+            //{
+            //    int num1 = entityPM.TotalFreeUsers == null ? 0 : entityPM.TotalFreeUsers.Value;
+            //    int num2 = entityPM.TotalNumberOfUsers == null ? 0 : entityPM.TotalNumberOfUsers.Value;
+            //    totalUsers = num1 + num2; 
+            //}
+
+            if (tenantUsers > totalUsers)
+            {
+                throw new Exception("You can't change the number of users to less than " + tenantUsers + " (Number of " + usersType + " users)");
             }
         }
         private static void ValidateConnectedAirline(TenantManagementPM entityPM, TenantManagementRepository entityRepository)
