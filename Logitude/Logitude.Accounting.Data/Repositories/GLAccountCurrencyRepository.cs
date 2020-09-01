@@ -19,7 +19,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
 
          GLAccountKeys myEntityKeys = entityKeys as GLAccountKeys;
-        return (from a in context.GLAccountCurrencies where a.MainGLAccountId == myEntityKeys.Id select a).ToList();
+        return (from a in context.GLAccountCurrencies.Include("GLAccount") where a.MainGLAccountId == myEntityKeys.Id && a.GLAccount.Inactive ==false select a).ToList();
             
         }
         public List<GLAccountCurrency> GetRelatedCurrenciesAccountByCustomerGLAccountAll(int tenant, string GLAccountId)

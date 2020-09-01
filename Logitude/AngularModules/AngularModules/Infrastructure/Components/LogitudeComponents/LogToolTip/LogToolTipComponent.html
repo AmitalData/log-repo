@@ -11,7 +11,7 @@
         <div *ngIf="title" text-start class="tooltip-header blue-title">
             {{title}}
         </div>
-        <div [style.max-height]="Scrollable? '200px':'auto'"   class="tooltip-text" [style.padding]="isRTL?'0 3px 0 20px' : '0 20px 0 3px'" style="max-width: 900px; white-space: initial;overflow-y: auto;">
+        <div [style.max-height]="Scrollable? '200px':'auto'"   class="tooltip-text" [style.padding]="isRTL?'1px 3px 1px 20px' : '1px 20px 1px 3px'" style="max-width: 900px; white-space: initial;overflow-y: auto;">
 
             <div [attr.id]="'tooltip-arrow'+this.name" [className]="GetArrowClassName()"></div>
             <div [attr.id]="'tooltip-arrow2'+this.name" [className]="GetArrowClassName()+'2'"></div>
@@ -37,7 +37,7 @@
         <div *ngIf="title" text-start class="tooltip-header blue-title">
             {{title}}
         </div>
-        <div [style.max-height]="Scrollable? '200px':'auto'"   class="tooltip-text" [style.padding]="isRTL?'0 3px 0 20px' : '0 20px 0 3px'" style="max-width: 900px; white-space: initial;overflow-y: auto;">
+        <div [style.max-height]="Scrollable? '200px':'auto'"   class="tooltip-text" [style.padding]="isRTL?'1px 3px 1px 20px' : '1px 20px 1px 3px'" style="max-width: 900px; white-space: initial;overflow-y: auto;">
 
             <div [attr.id]="'tooltip-arrow'+this.name" [className]="GetArrowClassName()"></div>
             <div [attr.id]="'tooltip-arrow2'+this.name" [className]="GetArrowClassName()+'2'"></div>
