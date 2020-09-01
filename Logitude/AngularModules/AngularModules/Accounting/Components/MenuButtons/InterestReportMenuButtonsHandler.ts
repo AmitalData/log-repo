@@ -339,10 +339,10 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         //     _ARInvoiceLinePM.VatTypeId =  this.cardList.VatTypeId; 
         //  }
         //  else{
-            _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList.VatTypeId; 
+            _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList?this.chargesTypeList.VatTypeId:null; 
 
         //  }
-         _ARInvoiceLinePM.GLAccountId = this.chargesTypeList.ReceivableCreditGLAccountId;
+         _ARInvoiceLinePM.GLAccountId = this.chargesTypeList?this.chargesTypeList.ReceivableCreditGLAccountId:null;
         _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
          var objectTable = window.ObjectTables.filter(d => d.Name === "InterestReport")[0];
         var objectTableId = objectTable.Id;
@@ -437,6 +437,7 @@ public VatTypeName:string;
         var filters = new ApiQueryFilters(true);
         filters.addAdditionalFilter("Code", "INT", null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("Tenant", this.TenantPM.Id, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
         this.CurrentSession.StartBusyIndicatorLoading();
         this.ChargesTypePMService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
