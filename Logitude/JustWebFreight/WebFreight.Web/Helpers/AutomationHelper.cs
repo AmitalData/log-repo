@@ -544,7 +544,7 @@ namespace WebFreight.Web.Helpers
             AutomationRepository automationRepository = new AutomationRepository(tenant);
             AutomationQuery automationQuery = new AutomationQuery(tenant);
             List<string> myAutomationListsCodes = automationQuery.GetAutomationCodeLists(tenant);
-            List<Automation> automations = automationRepository.GetAutomations(0).Where(d => d.ResultCode == "EMAIL" && !string.IsNullOrEmpty(d.Code) && !myAutomationListsCodes.Contains(d.Code)).ToList();
+            List<Automation> automations = automationRepository.GetAutomations(0).Where(d => d.ResultCode == "EMAIL" && !d.Inactive && !string.IsNullOrEmpty(d.Code) && !myAutomationListsCodes.Contains(d.Code)).ToList();
             return automations;
         }
 
