@@ -27,6 +27,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public DateTime? FinalDeliveryATA { get; set; }
         [Column("FinalDeliveryETA")]
 	    public DateTime? FinalDeliveryETA { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
     }
 }
 	 

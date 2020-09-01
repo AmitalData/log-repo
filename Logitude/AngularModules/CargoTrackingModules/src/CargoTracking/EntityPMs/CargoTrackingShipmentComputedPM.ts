@@ -44,6 +44,11 @@ export class CargoTrackingShipmentComputedPM {
     public set FinalDeliveryETA(newValue: Date) { if (this.finalDeliveryETA != newValue) { this.finalDeliveryETA = newValue; this.MarkAsDirty("FinalDeliveryETA"); } }
        
 	 
+    private tenant: number;
+    public get Tenant() { return this.tenant; }
+    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentComputedPM;
 		

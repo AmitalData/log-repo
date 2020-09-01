@@ -22,6 +22,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string Code  { get; set; }
        [DataMember]
        public string EnglishName  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
    }
 
 }

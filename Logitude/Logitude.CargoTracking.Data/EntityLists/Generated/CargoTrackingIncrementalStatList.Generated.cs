@@ -12,11 +12,7 @@ namespace Logitude.CargoTracking.Data.EntityLists
    [DataContract]
    public partial class CargoTrackingIncrementalStatList
    {
-   
-       [Key]
-       [DataMember]
-       public int Id  { get; set; }
-       [DataMember]
+          [DataMember]
        public DateTime StartDate  { get; set; }
        [DataMember]
        public DateTime EndDate  { get; set; }
@@ -34,6 +30,10 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public int ShipmentComputedFields  { get; set; }
        [DataMember]
        public int ShipmentMasterDatas  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int Id  { get; set; }
    }
 
 }

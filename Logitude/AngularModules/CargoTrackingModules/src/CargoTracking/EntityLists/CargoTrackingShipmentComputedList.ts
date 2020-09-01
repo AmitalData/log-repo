@@ -12,6 +12,7 @@ export class CargoTrackingShipmentComputedList {
 	FirstPickupATD: Date;
 	FinalDeliveryATA: Date;
 	FinalDeliveryETA: Date;
+	Tenant: number;
 	
 }
  

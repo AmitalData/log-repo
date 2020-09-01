@@ -12,6 +12,7 @@ export class CargoTrackingCountryList {
 	LocalName: string;
 	Code: string;
 	EnglishName: string;
+	Tenant: number;
 	
 }
  

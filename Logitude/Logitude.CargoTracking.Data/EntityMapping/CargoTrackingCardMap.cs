@@ -30,6 +30,8 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(70).IsUnicode(false);
 
             this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
         }
     }
 }

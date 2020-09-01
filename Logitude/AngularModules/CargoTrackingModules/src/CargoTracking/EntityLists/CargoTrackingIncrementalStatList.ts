@@ -8,7 +8,6 @@
 
 export class CargoTrackingIncrementalStatList {
    
-	Id: number;
 	StartDate: Date;
 	EndDate: Date;
 	Shipments: number;
@@ -18,6 +17,7 @@ export class CargoTrackingIncrementalStatList {
 	TransportModes: number;
 	ShipmentComputedFields: number;
 	ShipmentMasterDatas: number;
+	Id: number;
 	
 }
  

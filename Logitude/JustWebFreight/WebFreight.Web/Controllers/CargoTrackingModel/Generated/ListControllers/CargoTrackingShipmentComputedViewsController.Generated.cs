@@ -199,7 +199,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = cargoTrackingShipmentComputedQuery.GetListCount(queryOperations);
+                    int count = cargoTrackingShipmentComputedQuery.GetListCount(queryOperations, tenant);
                     response.Count = count;
                 }
 

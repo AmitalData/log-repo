@@ -8,7 +8,6 @@
 
 export class CargoTrackingShipmentList {
    
-	Id: number;
 	Tenant: number;
 	EntityId: string;
 	ForwardingShipmentHeaderId: string;
@@ -62,6 +61,7 @@ export class CargoTrackingShipmentList {
 	WarehouseLegRemarks: string;
 	DeclarationDate: Date;
 	CustomsClearanceDate: Date;
+	Id: number;
 	
 }
  
