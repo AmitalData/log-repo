@@ -542,11 +542,11 @@ export class CommonDomainService {
         });
     }
 
-    GetUserListsByidsString(ids: string) {
+    GetUserListsByidsString(ids: string, includeTenantZeroEmails: boolean = false) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetUserListsByidsString?ids=' + ids,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetUserListsByidsString?ids=' + ids + '&includeTenantZeroEmails=' + includeTenantZeroEmails,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

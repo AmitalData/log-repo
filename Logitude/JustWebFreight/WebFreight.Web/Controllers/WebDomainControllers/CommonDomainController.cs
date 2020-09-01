@@ -1484,7 +1484,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetUserListsByidsString(string ids)
+        public HttpResponseMessage GetUserListsByidsString(string ids, bool includeTenantZeroEmails)
         {
             try
             {
@@ -1494,7 +1494,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 List<UserList> myResult = new List<UserList>();
                 UserQuery query = new UserQuery(tenant);
-                myResult = query.GetUserListsByidsString(ids, tenant);
+                myResult = query.GetUserListsByidsString(ids, includeTenantZeroEmails, tenant);
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);

@@ -13,7 +13,7 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
     
     templateUrl: './EmailSearchTextBox.html',
     selector: "EmailSearchTextBox",
-    inputs: ['Watermark', 'EmailsText', 'IsUsersList', 'IsDisabled', 'SelectedValuePath', 'ExcludedResult', 'DontInCludeInactive', 'AllowFreeEmails'],
+    inputs: ['Watermark', 'EmailsText', 'IsUsersList', 'IsDisabled', 'SelectedValuePath', 'ExcludedResult', 'DontInCludeInactive', 'AllowFreeEmails', 'IncludeTenantZeroEmails'],
 
 })
 
@@ -35,6 +35,7 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
     }
     public IsUsersList: boolean = false;
     public AllowFreeEmails: boolean = false;
+    public IncludeTenantZeroEmails: boolean = false;
     public DropDownHeight: number = 200;
     public DropDownWidth: number = 300;
     public ItemsSource: EmailSearchTextBoxItem[] = [];
@@ -79,7 +80,7 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
 
                 if (this.SelectedValuePath == "Id") {
 
-                    myDomainService.GetUserListsByidsString(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
+                    myDomainService.GetUserListsByidsString(this.EmailsText, this.IncludeTenantZeroEmails).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
                             this.SelectedItems = myResponse.Result;
                             this.SelectedItems.forEach(item => {
