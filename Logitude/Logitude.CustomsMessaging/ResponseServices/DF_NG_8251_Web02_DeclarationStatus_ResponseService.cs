@@ -208,7 +208,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                 LogMessagingUtil.Instance.AppendLine("HAWB Received");
 
-                                if (!string.IsNullOrWhiteSpace(availableStatus))
+                                if (!string.IsNullOrWhiteSpace(availableStatus) && declarationPM.AvailabilityDate==null)
                                 {
                                     if (availableStatus == "SMG" && declarationPM.TransportModeId == "A")
                                     {
@@ -583,6 +583,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void SendPayment(DeclarationPM declarationPM,ICustomContext dbContext, DeclarationStatusRequestParams requestParams)
         {
+            if (declarationPM.AvailabilityDate != null) return;
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
             var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant); ;
 
