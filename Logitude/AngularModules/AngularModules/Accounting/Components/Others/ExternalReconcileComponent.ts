@@ -1523,7 +1523,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                 if (myResponse != null) {
                     var res = myResponse.Result;
                     this.FullAccountingSetting = res;
-
+ 
                     this.GetAutoRecoMethod();
 
                     switch (this.FullAccountingSetting.ExternalReconciliationDefault) {
@@ -1570,36 +1570,35 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                         this.AutoRecoMethod = res;
                         if (this.AutoRecoMethod) {
                             switch (this.AutoRecoMethod.Code) {
-                                case '1': // 1- Amount
-                                    {
-                                        this.AmountCheckBoxChecked = true;
-                                        this.ReferenceCheckBoxChecked = false;
-                                        this.ReferenceDateCheckBoxChecked = false;
-                                        break;
-                                    }
-                                case '2': // 2- Reference
-                                    {
-                                        this.AmountCheckBoxChecked = true;
-                                        this.ReferenceCheckBoxChecked = true;
-                                        this.ReferenceDateCheckBoxChecked = false;
-                                        break;
-                                    }
-                                case '3': // 3- Reference Date + Reference
-                                    {
-                                        this.AmountCheckBoxChecked = true;
-                                        this.ReferenceCheckBoxChecked = true;
-                                        this.ReferenceDateCheckBoxChecked = true;
-                                        break;
-                                    }
-                                case '4': // 4- Amount + Reference + Reference Date
-                                    {
-                                        this.AmountCheckBoxChecked = true;
-                                        this.ReferenceCheckBoxChecked = true;
-                                        this.ReferenceDateCheckBoxChecked = true;
-                                        break;
-                                    }
-
+                                case '1': { // Amount
+                                    this.AmountCheckBoxChecked = true;
+                                    this.ReferenceDateCheckBoxChecked = false;
+                                    this.ReferenceCheckBoxChecked = false;
+                                    break;
+                                }
+                                case '2': { // Reference
+                                    this.AmountCheckBoxChecked = false;
+                                    this.ReferenceDateCheckBoxChecked = false;
+                                    this.ReferenceCheckBoxChecked = true;
+                                    break;
+                                }
+                                case '3': { // Reference Date + Reference
+                                    this.AmountCheckBoxChecked = false;
+                                    this.ReferenceDateCheckBoxChecked = true;
+                                    this.ReferenceCheckBoxChecked = true;
+                                    break;
+                                }
+                                case '4': { // Amount + Reference + Reference Date
+                                    this.AmountCheckBoxChecked = true;
+                                    this.ReferenceDateCheckBoxChecked = true;
+                                    this.ReferenceCheckBoxChecked = true;
+                                    break;
+                                }
+        
+                                default:
+                                    break;
                             }
+
                         }
 
                     }
