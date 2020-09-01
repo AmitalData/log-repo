@@ -31,6 +31,7 @@ update  CustomerSizes set AutomaticLastUpdateDate =GETDATE() where AutomaticLast
 update  Industries set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  ShipmentComputedFields set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  LeadSources set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+update  OBLTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 
 
 

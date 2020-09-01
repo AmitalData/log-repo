@@ -66610,7 +66610,7 @@
     MinLength="0"
     MaxLength="4"
     IsRequired="false"
-    CopyToDW="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"

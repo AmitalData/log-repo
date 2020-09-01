@@ -301,6 +301,14 @@ IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_
  end
 
 
+   --OBLType
+ IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_AutomaticLastUpdateDateOBLTypes'))
+ Begin
+ declare @SQLOBLType as varchar(8000)
+         SET @SQLOBLType ='CREATE TRIGGER Trigger_AutomaticLastUpdateDateOBLTypes ON OBLTypes AFTER UPDATE  AS  BEGIN UPDATE OBLTypes SET AutomaticLastUpdateDate = GETDATE() WHERE Code IN (SELECT DISTINCT Code FROM Inserted)  END;'
+         EXEC (@SQLOBLType);
+ end
+
   --____________________________________ Fact Charge_____________________________________
       --ShipmentPayables
  IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_AutomaticLastUpdateDateShipmentPayables'))

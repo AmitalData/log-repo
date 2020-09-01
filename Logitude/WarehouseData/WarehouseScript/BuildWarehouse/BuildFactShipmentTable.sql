@@ -288,7 +288,7 @@
     inner JOIN NewDIM_TransportModes TransportModes ON dw_Shipments.TransportModeId = TransportModes.Code
 	inner JOIN NewDIM_Levels ON dw_Shipments.ShipmentLevelCode = NewDIM_Levels.Code
 	inner JOIN NewDIM_Types ON dw_Shipments.ShipmentTypeId = NewDIM_Types.Code
-    inner JOIN NewDIM_OBLTypes ON dw_Shipments.OBLTypeCode = NewDIM_OBLTypes.Code
+    inner JOIN NewDIM_OBLTypes ON dw_ShipmentMasterDatas.OBLTypeCode = NewDIM_OBLTypes.Code
 
 	inner JOIN NewDIM_Departments ON dw_Shipments.DepartmentId = NewDIM_Departments.Id
 	inner JOIN NewDIM_Branches ON dw_Shipments.BranchId =NewDIM_Branches.Id

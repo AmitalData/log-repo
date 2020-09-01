@@ -237,6 +237,12 @@ ON [dbo].[ShipmentComputedFields]([AutomaticLastUpdateDate])
   end   
 
 
+IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_OBLTypes_AutomaticLastUpdateDate' 
+    AND object_id = OBJECT_ID('[dbo].[OBLTypes]'))
+  begin
+    CREATE NONCLUSTERED INDEX [IX_OBLTypes_AutomaticLastUpdateDate]
+ON [dbo].[OBLTypes]([AutomaticLastUpdateDate])
+  end
 
  --____________________________________ Fact Charge_____________________________________
 
