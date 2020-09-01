@@ -1,4 +1,7 @@
-
+﻿<Script DBType="Main">
+  <Sql Version="1">
+    <![CDATA[
+   
 drop view [dbo].[CustomersDataView]
 
 /****** Object:  View [dbo].[CustomersDataView]    Script Date: 05/08/2014 15:04:04 ******/
@@ -70,3 +73,8 @@ FROM            dbo.Customers Inner join
 						
 						 
 where dbo.Cards.PartnerTypeId <> 'AC'
+ 
+   
+    ]]>       
+  </Sql>
+</Script>

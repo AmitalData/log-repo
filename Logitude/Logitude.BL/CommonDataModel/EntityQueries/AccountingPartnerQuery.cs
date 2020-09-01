@@ -20,8 +20,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class AccountingPartnerQuery
     {
         AccountingPartnerRepository repository;
-        IAccountingContext accountingContext;
- 
+  
         public AccountingPartnerQuery()
         {
             repository = new AccountingPartnerRepository(); 
@@ -30,7 +29,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public AccountingPartnerQuery(int tenant)
         {
             repository = new AccountingPartnerRepository(tenant);
-            accountingContext = AccountingContext.GetContext(tenant);
         }
 
         public AccountingPartnerQuery(AccountingPartnerRepository repository)
@@ -389,20 +387,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<AccountingPartnerList> GetIQueryableEntityList(IQueryable<AccountingPartner> iQueryable)
         {
+ 
 
-            bool isFullAccounting = false;
-            Tenant myTenant = TenantRepository.GetSingleTenant(iQueryable, true);
-            if (myTenant != null)
-            {
-                isFullAccounting = myTenant.AccountingActivated;
-                if (isFullAccounting == true)
-                {
-
-                }
-            }
-
-            IQueryable<AccountingPartnerList> result = from a in iQueryable.Include("Card").Include("Card")
-                                                       select new AccountingPartnerList()
+            IQueryable<AccountingPartnerList> result = (from a in iQueryable.Include("Card").Include("Card") select a).AsEnumerable().
+                                                       Select(a=> new AccountingPartnerList()
                                                        {
                                                            Code = a.Card.Code,
                                                            EnglishName = a.Card.EnglishName,
@@ -434,14 +422,24 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            PrimaryContactName = a.PrimaryContactName,
                                                            PrimaryContactEmail = a.PrimaryContactEmail,
                                                            PrimaryContactPhone = a.PrimaryContactPhone,
-                                                           GLAccountNumber = accountingContext == null ? null : ((from q in accountingContext.GLAccounts
-                                                                                                                  where q.Id == a.Card.GLAccountId && q.Tenant == a.Tenant
-                                                                                                                  select q.DisplayNumber).FirstOrDefault()),
-                                                       };
+                                                           GLAccountNumber = GetDisplayNumberFromGLAccount(a.Card.GLAccountId, a.Tenant),
+
+                                                       }).AsQueryable();
 
 
             return result;
 
+        }
+        private string GetDisplayNumberFromGLAccount(string GLAccountId, int tenant)
+        {
+            string DisplayNumber = null;
+            if (!string.IsNullOrEmpty(GLAccountId) && tenant != null)
+            {
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                DisplayNumber = glAccountQuery.GetDisplayNumberByGLAccountId(GLAccountId, tenant);
+
+            }
+            return DisplayNumber;
         }
         public AccountingPartnerPM GetSingleAccountingPartnerPMByCode(string code, int tenant)
         {

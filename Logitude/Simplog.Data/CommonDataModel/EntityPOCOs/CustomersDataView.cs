@@ -137,5 +137,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string LeadSourceName { get; set; }
         public string CreatedByPartner { get; set; }
         public string StateName { get; set; }
+        public string GLAccountId { get; set; }
+
     }
 }

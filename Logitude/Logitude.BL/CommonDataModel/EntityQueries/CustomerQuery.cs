@@ -2300,8 +2300,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<CustomerList> GetIQueryableEntityList(IQueryable<CustomersDataView> iQueryable)
         {
-            IQueryable<CustomerList> result = from customer in iQueryable
-                                              select new CustomerList()
+            IQueryable<CustomerList> result = ((from customer in iQueryable select customer).AsEnumerable().
+                                              Select(customer => new CustomerList()
                                               {
                                                   Code = customer.Code,
                                                   EnglishName = customer.EnglishName,
@@ -2430,17 +2430,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   ActivationRequestedByUserName = customer.ActivationRequestedByUserName,
                                                   CreatedByPartner = customer.CreatedByPartner,
                                                   StateName = customer.StateName,
-                                                //  GLAccountNumber = GetDisplayNumberFromGLAccount(customer.GLAccountId, customer.Tenant),
-                                              };
+                                                  GLAccountNumber = GetDisplayNumberFromGLAccount(customer.GLAccountId, customer.Tenant),
+                                              })).AsQueryable();
 
 
             return result;
         }
         private string GetDisplayNumberFromGLAccount(string GLAccountId, int tenant)
         {
-            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-            string DisplayNumber = glAccountQuery.GetDisplayNumberByGLAccountId(GLAccountId, tenant);
+            string DisplayNumber = null;
+            if (!string.IsNullOrEmpty(GLAccountId) && tenant!=null)
+            {
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                DisplayNumber = glAccountQuery.GetDisplayNumberByGLAccountId(GLAccountId, tenant);
 
+            }
             return DisplayNumber;
         }
 

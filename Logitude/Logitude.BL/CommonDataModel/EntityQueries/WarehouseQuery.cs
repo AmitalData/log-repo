@@ -273,8 +273,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<WarehouseList> GetIQueryableEntityList(IQueryable<Warehouse> iQueryable)
         {
-            IQueryable<WarehouseList> result = from a in iQueryable.Include("Card")
-                                               select new WarehouseList()
+            IQueryable<WarehouseList> result = (from a in iQueryable.Include("Card") select a).AsEnumerable().
+                                               Select(a=> new WarehouseList()
                                                {
                                                    Code = a.Card.Code,
                                                    EnglishName = a.Card.EnglishName,
@@ -320,19 +320,22 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    OceanWeightRoundingCode = a.OceanWeightRoundingCode,
                                                    InlandWeightRoundingCode = a.InlandWeightRoundingCode,
                                                    GLAccountNumber = GetDisplayNumberFromGLAccount(a.Card.GLAccountId, a.Tenant),
-                                               };
+                                               }).AsQueryable();
 
 
             return result;
         }
         private string GetDisplayNumberFromGLAccount(string GLAccountId, int tenant)
         {
-            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-            string DisplayNumber = glAccountQuery.GetDisplayNumberByGLAccountId(GLAccountId, tenant);
+            string DisplayNumber = null;
+            if (!string.IsNullOrEmpty(GLAccountId) && tenant != null)
+            {
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                DisplayNumber = glAccountQuery.GetDisplayNumberByGLAccountId(GLAccountId, tenant);
 
+            }
             return DisplayNumber;
         }
-
         public WarehousePM GetSinglePMByCode(string code, int tenant)
         {
             var warehouse = (from a in repository.context.Warehouses.Include("Card")

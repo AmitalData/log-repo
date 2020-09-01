@@ -389,8 +389,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<VendorList> GetIQueryableEntityList(IQueryable<Vendor> iQueryable)
         {
-            IQueryable<VendorList> result = from a in iQueryable.Include("Card")
-                                            select new VendorList()
+            IQueryable<VendorList> result = (from a in iQueryable.Include("Card") select a).AsEnumerable().
+                                            Select(a=> new VendorList()
                                             {
                                                 Code = a.Card.Code,
                                                 EnglishName = a.Card.EnglishName,
@@ -425,16 +425,20 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CreatedByPartner = a.Card.CreatedByPartner,
                                                 StateName = a.Card.StateName,
                                                 GLAccountNumber = GetDisplayNumberFromGLAccount(a.Card.GLAccountId, a.Tenant),
-                                            };
+                                            }).AsQueryable();
 
 
             return result;
         }
         private string GetDisplayNumberFromGLAccount(string GLAccountId, int tenant)
         {
-            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-            string DisplayNumber = glAccountQuery.GetDisplayNumberByGLAccountId(GLAccountId, tenant);
+            string DisplayNumber = null;
+            if (!string.IsNullOrEmpty(GLAccountId) && tenant != null)
+            {
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                DisplayNumber = glAccountQuery.GetDisplayNumberByGLAccountId(GLAccountId, tenant);
 
+            }
             return DisplayNumber;
         }
         public VendorPM GetSingleVendorPMByCode(string code, int tenant)
