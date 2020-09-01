@@ -379,7 +379,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     }).FirstOrDefault();
         }
 
-        public IQueryable<CardList> GetCardPMsByTenant(int tenant)
+        public IQueryable<CardList> GetCardListsByTenant(int tenant)
         {
             AddressRepository addressRepository = new AddressRepository(tenant);
             AddressQuery addressQuery = new AddressQuery(tenant);
@@ -2123,6 +2123,28 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return cards;
         }
+
+        public List<CardList> GetCardsByGLAccountIds(List<string> glAccountIds, int tenant)
+        {
+            List<CardList> cards = (from a in repository.context.Cards
+                                                    where a.Tenant == tenant && glAccountIds.Contains( a.GLAccountId)
+                                                    select new CardList()
+                                                    {
+                                                        Id = a.Id,
+                                                        Code = a.Code,
+                                                        EnglishName = a.EnglishName,
+                                                        LocalName = a.LocalName,
+                                                        VatNumber = a.VatNumber,
+                                                        CountryCode = a.CountryCode,
+                                                        CountryName = a.CountryName,
+                                                        Tenant = a.Tenant,
+                                                        CityName = a.CityName,
+                                                        GLAccountId = a.GLAccountId,
+                                                        PartnerTypeId = a.PartnerTypeId,
+                                                    }).ToList();
+            return cards;
+        }
+
 
         public List<CardList> GetCustomerCardsWithoutGLAccount(int tenant)
         {

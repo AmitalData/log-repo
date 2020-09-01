@@ -156,7 +156,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
                                 }
                                 else
                                 {
-                                    newItem.ExternalVatCard = lineVatType.ReceivablesExternalId;
+                                    newItem.ExternalVatCard = lineVatType.PayablesExternalId;
                                 }
                             }
 
@@ -203,7 +203,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
                                     }
                                     else if (vatType != null)
                                     {
-                                        newItem.ExternalVatCard = vatType.ReceivablesExternalId;
+                                        newItem.ExternalVatCard = vatType.PayablesExternalId;
                                     }
                                 }
 
@@ -248,7 +248,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
                                 }
                                 else
                                 {
-                                    newItem.ExternalVatCard = lineVatType.ReceivablesExternalId;
+                                    newItem.ExternalVatCard = lineVatType.PayablesExternalId;
                                 }
                             }
 
@@ -295,7 +295,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
                                     }
                                     else if (vatType != null)
                                     {
-                                        newItem.ExternalVatCard = vatType.ReceivablesExternalId;
+                                        newItem.ExternalVatCard = vatType.PayablesExternalId;
                                     }
                                 }
 

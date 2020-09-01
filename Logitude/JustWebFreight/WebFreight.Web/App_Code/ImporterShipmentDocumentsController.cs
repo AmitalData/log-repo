@@ -196,7 +196,7 @@ namespace WebFreight.Web.App_Code
                             EntityPM.CreatedByUserId = loggedContact.Id;
                             EntityPM.OwnerId = loggedContact.Id;
                             EntityPM.UpdatedByUserId = loggedContact.Id;
-                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Start Inserting Document To Importer Tenant " + DateTime.Now, LogitudeXmlSerializer.SerializeObjectToXmlString(EntityAM), null, null, "");
+                            //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Start Inserting Document To Importer Tenant " + DateTime.Now, LogitudeXmlSerializer.SerializeObjectToXmlString(EntityAM), null, null, "");
                             ICommonDataContext objectContext = CommonDataContext.GetContext(EntityPM.Tenant);
                             DocumentsFilingService documentsFilingService = new DocumentsFilingService(objectContext, EntityPM.Tenant);
                             documentsFilingService.SetChangeSet(EntityPM.DocumentsFilingMetaDataValues);
@@ -397,7 +397,7 @@ namespace WebFreight.Web.App_Code
                         {
                             EntityAM.FileInfo.DocumentId = ImporterDocumentFilingPM.DocumentId;
                         }
-                       
+
                         var DocId = UploadDocumentByte(EntityAM.FileInfo, ImporterDocumentFilingPM);
                         if (DocId == "Error")
                         {
@@ -420,7 +420,7 @@ namespace WebFreight.Web.App_Code
                     {
                         if (Result == null)
                         {
-                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Start Updating Document at Importer Tenant " + DateTime.Now, LogitudeXmlSerializer.SerializeObjectToXmlString(EntityAM), null, null, "");
+                            //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Start Updating Document at Importer Tenant " + DateTime.Now, LogitudeXmlSerializer.SerializeObjectToXmlString(EntityAM), null, null, "");
 
                             ICommonDataContext objectContext = CommonDataContext.GetContext(ImporterDocumentFilingPM.Tenant);
                             DocumentsFilingService documentsFilingService = new DocumentsFilingService(objectContext, ImporterDocumentFilingPM.Tenant);
@@ -470,10 +470,10 @@ namespace WebFreight.Web.App_Code
                                                 }
                                             }
 
-                                          
+
                                         }
                                     }
-                                   
+
                                 }
                                 else
                                 {
@@ -486,7 +486,7 @@ namespace WebFreight.Web.App_Code
                             {
                                 if (ImporterDocumentFilingPM.FileData == null)
                                 {
-                                    documentsFilingService.Update(ImporterDocumentFilingPM, null,null,true);
+                                    documentsFilingService.Update(ImporterDocumentFilingPM, null, null, true);
                                 }
                                 else
                                 {
@@ -517,7 +517,7 @@ namespace WebFreight.Web.App_Code
                                     }
                                 }
                             }
-                          
+
 
                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Updating Document To Importer Tenant Done Successfully " + DateTime.Now, null, ImporterDocumentFilingPM.Id, null, "");
 
@@ -772,7 +772,7 @@ namespace WebFreight.Web.App_Code
             {
                 foreach (var item in EntityAM.DocumentsFilingMetaDataValues)
                 {
-                    
+
                     var DocMetaDataTypeId = DocumentTypeMetaDataTypePropertiesMapping.GetDocumentTypeMetaDataTypeProperties(EntityAM.ImporterTenant, item.DocumentsMetaDataType);
                     if (!string.IsNullOrEmpty(DocMetaDataTypeId))
                     {
@@ -782,7 +782,7 @@ namespace WebFreight.Web.App_Code
                         if (!string.IsNullOrEmpty(EntityAM.CustomerDocumentId))
                         {
                             MYValue = ValuesQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTypeTenant(EntityAM.CustomerDocumentId, DocMetaDataTypeId, EntityAM.ImporterTenant);
-                            
+
                         }
                         if (MYValue != null)
                         {
@@ -820,7 +820,7 @@ namespace WebFreight.Web.App_Code
                                 DocumentsMetaDataTypeId = DocMetaDataTypeId,
                                 ChangeSetOp = MyChangeSetOp
                             });
-                        } 
+                        }
                     }
                     else
                     {

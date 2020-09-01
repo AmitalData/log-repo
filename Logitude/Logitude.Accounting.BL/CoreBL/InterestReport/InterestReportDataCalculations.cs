@@ -20,19 +20,21 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         private string interestReportId;
         private int tenant;
         IInterestReportCalculationPreparations interestReportCalculationPreparations;
+        private bool recalculateData;
         public InterestReportDataCalculations(InterestReportArgs interestReportArgs)
         {
             interestReportId = interestReportArgs.InterestReportId;
             tenant = interestReportArgs.Tenant;
             interestReportCalculationPreparations =  new InterestReportCalculationPreparations();
             interestReportPM = interestReportArgs.InterestReport;
+            recalculateData = interestReportArgs.RecalculateData;
         }
 
         public void StartCalculations()
         {
             try
             {
-                interestReportPM = interestReportPM ?? interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
+                interestReportPM = interestReportPM !=null?interestReportPM: interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
                 DateTime? interestCalculationStartDate = GetInterestCalculationStartDate();
                 List<string> glaccountIds = GetSplittedByCurrencyAcountsIds(interestReportPM.GLAccountId, tenant);
                 glaccountIds.Add(interestReportPM.GLAccountId);
@@ -42,7 +44,10 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    ClearOldDataForInterestReport();
+                    if (recalculateData)
+                    {
+                        ClearOldDataForInterestReport();
+                    }
                     CalculateDataForInterestReport();
                     scope.Complete();
                 }
@@ -94,7 +99,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         private void CalculateDataForInterestReport()
         {
             CreateInterestReportLines();
-            interestReportPM.OpenBalance = GetInterestReportOpenBalance();
+            interestReportPM.OpenBalance = recalculateData ? interestReportPM.OpenBalance : GetInterestReportOpenBalance();
             List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = CreateInterestReportLinesByDate();
             interestReportPM.CloseBalance = GetInterestReportCloseBalance(interestReportLinesByDatePMs);
             interestReportPM.TotalAmount = GetInterestReportTotalAmount(interestReportLinesByDatePMs);
@@ -148,6 +153,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             interestReportPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
             InterestReportUpdateService interestReportUpdateService = new InterestReportUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+            interestReportPM.IsUpdatedFromBatch = true;
             interestReportUpdateService.Update(interestReportPM, true);
         }
 

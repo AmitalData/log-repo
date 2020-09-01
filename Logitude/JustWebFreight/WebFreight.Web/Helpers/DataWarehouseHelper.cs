@@ -51,14 +51,14 @@ namespace WebFreight.Web.Helpers
                 var valuesBetweenDateArray = fieldValue.Split('^');
 
                 betweenDateValue1 = string.Format("{0:yyyy-MM-dd}", DateTime.Parse(valuesBetweenDateArray[0]));
-                betweenDateValue2 = valuesBetweenDateArray.Length > 1 ? string.Format("{0:yyyy-MM-dd}", DateTime.Parse(valuesBetweenDateArray[1])) : null;
+                betweenDateValue2 = valuesBetweenDateArray.Length > 1 ? !isSample ? string.Format("{0:yyyy-MM-dd}", DateTime.Parse(valuesBetweenDateArray[1]).AddDays(1)) : string.Format("{0:yyyy-MM-dd}", DateTime.Parse(valuesBetweenDateArray[1])) : null;
 
 
                 if (!isSample)
                 {
                     if (!string.IsNullOrEmpty(betweenDateValue1) && !string.IsNullOrEmpty(betweenDateValue2))
                     {
-                        result = fieldName + ">= '" + betweenDateValue1 + "' and " + fieldName + "<= '" + betweenDateValue2 + "'";
+                        result = fieldName + ">= '" + betweenDateValue1 + "' and " + fieldName + "< '" + betweenDateValue2 + "'";
                     }
                     else
                     {

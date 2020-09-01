@@ -298,12 +298,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         IsMultiTAX = myline.VatType == null ? false : myline.VatType.IsMultiPercentage,
                     };
 
-                    VatType LineVat = VatTypeRepository.GetSingleVatType(myline.VatTypeId, item.Tenant, true);
-                    if (LineVat != null)
-                    {
-                        lineElement.VATExternalId = LineVat.PayablesExternalId;
-                    }
-
                     if (tenant == 303 || tenant == 814)
                     {
                         lineElement.Quantity = 0;
@@ -315,15 +309,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         if (currency != null)
                         {
                             lineElement.OriginalCurrency = currency.Code;
-                        }
-                    }
-
-                    if (string.IsNullOrEmpty(lineElement.TaxCode))
-                    {
-                        VatType vatType = VatTypeRepository.GetSingleVatType(myline.VatTypeId, tenant, true);
-                        if (vatType != null)
-                        {
-                            lineElement.TaxCode = vatType.Code;
                         }
                     }
 
@@ -383,49 +368,51 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     }
 
                     lineElement.TaxDetails = new List<LineTaxDetailsElement>();
-                    if (LineVat != null)
+                    VatType lineVatType = VatTypeRepository.GetSingleVatType(myline.VatTypeId, item.Tenant, true);
+
+                    if (lineVatType != null)
                     {
-                        if (LineVat.IsMultiPercentage)
+                        if (string.IsNullOrEmpty(lineElement.TaxCode))
                         {
-                            double multiVatPercentage = 0;
+                            lineElement.TaxCode = lineVatType.Code;
+                        }
 
-                            List<VATTypesGroup> myVATTypesGroups = allVATTypesGroups.Where(d => d.GroupVATTypeId == LineVat.Id).ToList();
-                            foreach (VATTypesGroup vATGroupItem in myVATTypesGroups)
+                        if (!lineVatType.IsMultiPercentage)
+                        {
+                            APInvoiceTotalVAT totalVAT = myTotalVATs.Where(d => d.VatTypeId == lineVatType.Id).FirstOrDefault();
+                            lineElement.TaxPercentage = (decimal)totalVAT.VatPercent;
+                            lineElement.VATExternalId = totalVAT.ExternalVATCard;
+
+                            lineElement.TaxDetails.Add(new LineTaxDetailsElement()
                             {
-                                APInvoiceTotalVAT myTotalVAT = myTotalVATs.Where(d => d.VatTypeId == vATGroupItem.SingleVATTypeId).FirstOrDefault();
-                                VatTypePercentage percentageItem = vatTypePercentageRepository.GetVatTypePercentageByDate(vATGroupItem.SingleVATTypeId, tenant, item.InvoiceDate);
-
-                                if (percentageItem != null)
-                                {
-                                    if (percentageItem.Percentage != null)
-                                    {
-                                        multiVatPercentage += percentageItem.Percentage.Value;
-                                    }
-
-                                    lineElement.TaxDetails.Add(new LineTaxDetailsElement()
-                                    {
-                                        TaxCode = percentageItem.VatType == null ? null : percentageItem.VatType.Code,
-                                        TaxPercentage = percentageItem.Percentage == null ? 0 : (decimal)percentageItem.Percentage,
-                                        VATExternalId = percentageItem.VatType != null ? percentageItem.VatType.PayablesExternalId : (myTotalVAT == null ? null : myTotalVAT.ExternalVATCard),
-                                    });
-                                }
-                            }
-
-                            lineElement.TaxPercentage = (decimal)multiVatPercentage;
+                                TaxCode = lineVatType.Code,
+                                TaxPercentage = (decimal)totalVAT.VatPercent,
+                                VATExternalId = totalVAT.ExternalVATCard,
+                            });
                         }
 
                         else
                         {
-                            APInvoiceTotalVAT myTotalVAT = myTotalVATs.Where(d => d.VatTypeId == LineVat.Id).FirstOrDefault();
-                            lineElement.TaxPercentage = myline.VatPercentage == null ? 0 : (decimal)myline.VatPercentage;
+                            double multiVatPercentage = 0;
+                            List<VATTypesGroup> myVATTypesGroups = allVATTypesGroups.Where(d => d.GroupVATTypeId == lineVatType.Id).ToList();
 
-                            lineElement.TaxDetails.Add(new LineTaxDetailsElement()
+                            foreach (VATTypesGroup vATGroupItem in myVATTypesGroups)
                             {
-                                TaxCode = LineVat.Code,
-                                TaxPercentage = myline.VatPercentage == null ? 0 : (decimal)myline.VatPercentage,
-                                VATExternalId = !string.IsNullOrEmpty(LineVat.ReceivablesExternalId) ? LineVat.ReceivablesExternalId : (myTotalVAT == null ? null : myTotalVAT.ExternalVATCard),
-                            });
-                        }
+                                APInvoiceTotalVAT totalVAT = myTotalVATs.Where(d => d.VatTypeId == vATGroupItem.SingleVATTypeId).FirstOrDefault();
+                                VatType lineSingleVatType = VatTypeRepository.GetSingleVatType(vATGroupItem.SingleVATTypeId, item.Tenant, true);
+
+                                multiVatPercentage += totalVAT.VatPercent;
+                                
+                                lineElement.TaxDetails.Add(new LineTaxDetailsElement()
+                                {
+                                    TaxCode = lineSingleVatType.Code,
+                                    TaxPercentage = (decimal)totalVAT.VatPercent,
+                                    VATExternalId = totalVAT.ExternalVATCard
+                                });
+                            }
+
+                            lineElement.TaxPercentage = (decimal)multiVatPercentage;
+                        }                        
                     }
 
                     invoiceElement.InvoiceLines.Add(lineElement);

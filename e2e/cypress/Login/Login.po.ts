@@ -34,6 +34,7 @@ it('Login Successfully', () => {
     }
 
     else if ( Env == 'FATest'){
+        URL=Cypress.env("TestStagingURL");
         Email = Cypress.env("FATestEmail");
         Password = Cypress.env("FATestPassword");
        }

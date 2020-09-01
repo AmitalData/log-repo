@@ -45,7 +45,7 @@ export class ClaimsRelatedEntityExtendedPMService {
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
                 return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                         var pm = res;
                         if (pm) {
                             var mappedResult: ClaimsRelatedEntityPM;
@@ -85,7 +85,7 @@ export class ClaimsRelatedEntityExtendedPMService {
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
                 return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                         var pm = res;
                         if (pm) {
                             var mappedResult: ClaimsRelatedEntityPM;

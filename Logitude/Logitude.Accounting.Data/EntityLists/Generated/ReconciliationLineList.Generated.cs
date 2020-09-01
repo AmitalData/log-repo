@@ -45,9 +45,9 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public DateTime DueDate  { get; set; }
        [DataMember]
-       public decimal ForeignAmountDebit  { get; set; }
+       public decimal AmountDebit  { get; set; }
        [DataMember]
-       public decimal ForeignAmountCredit  { get; set; }
+       public decimal AmountCredit  { get; set; }
        [DataMember]
        public string Reference1  { get; set; }
        [DataMember]

@@ -18,6 +18,8 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -213,13 +215,19 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         void SetGLAccountFields(ARPaymentPM paymentPM)
         {
-            GLAccountPM glaccount = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
-            if (glaccount != null)
+
+            if (paymentPM.IsFullAccounting)
             {
-                paymentPM.GLAccountId = glaccount.Id;
-                paymentPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
-                paymentPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
+                GLAccountPM glaccount = getGLAccount(paymentPM.BillToId, paymentPM);
+                if (glaccount != null)
+                {
+                    paymentPM.GLAccountId = glaccount.Id;
+                    paymentPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
+                    paymentPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
+                }
+
             }
+           
         }
         private ARPaymentPM SetJournalFields(ARPaymentPM payment)
         {
@@ -242,21 +250,33 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         }
 
+        private string GetAccountIdForGLAccountCurrency(GLAccountPM gLAccount, string paymentCurrencyId)
+        {
+            GLAccountCurrencyRepository glAccountCurrencyRepository = new GLAccountCurrencyRepository(gLAccount.Tenant);
+            GLAccountCurrency gLAccountCurrency = glAccountCurrencyRepository.GetEntityByCurrencyAndGLAccountId(gLAccount.Id, paymentCurrencyId, gLAccount.Tenant);
+            if (gLAccountCurrency != null)
+            {
+                return gLAccountCurrency.GLAccountId;
+            }
+            else return gLAccount.Id;
 
-
-
-
-
-
-        private GLAccountPM getGLAccount(string billToId, int tenant)
+        }
+        
+        private GLAccountPM getGLAccount(string billToId, ARPaymentPM payment)
         {
             GLAccountPM glaAccount = null;
-            CardRepository cardRep = new CardRepository(tenant);
-            Card card = cardRep.GetSingleCard(billToId, tenant);
+            CardRepository cardRep = new CardRepository(payment.Tenant);
+            Card card = cardRep.GetSingleCard(billToId, payment.Tenant);
             if (card != null)
             {
                 IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-                glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
+                glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, payment.Tenant);
+                if (glaAccount.IsMultiCurrency.Value)
+                {
+                    string splitByCurrencyAccountId = GetAccountIdForGLAccountCurrency(glaAccount, payment.PaymentCurrencyId);
+                    glaAccount = glAccountQuery.GetSingleGLAccountPM(splitByCurrencyAccountId, payment.Tenant);
+                }
+                else return glaAccount;
             }
 
             return glaAccount;

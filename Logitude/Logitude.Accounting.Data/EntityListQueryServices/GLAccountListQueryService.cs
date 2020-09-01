@@ -37,6 +37,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         Id = a.Id,
                                                         Tenant = a.Tenant,
                                                         InternalNumber = a.InternalNumber,
+                                                        InterestCreditLimit = a.InterestCreditLimit,
                                                         AccountTypeCode = a.AccountTypeCode,
                                                         DisplayNumber = a.DisplayNumber,
                                                         EnglishName = a.EnglishName,
@@ -116,6 +117,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         Category4Name = a.Category4.EnglishName,
                                                         Category5Name = a.Category5.EnglishName,
 
+                                                         
+
                                                         // Created & Updated
                                                         CreateDate = a.CreateDate,
                                                         CreatedByLocalName =    a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,
@@ -134,7 +137,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             GLAccountCustomFilter filters = new GLAccountCustomFilter(tenant);
 
-            iQueryable = filters.GetFilteredQuery(queryOperations, iQueryable);
+            iQueryable = filters.GetFilteredQuery(queryOperations, iQueryable, context);
 
             return iQueryable;
 		}

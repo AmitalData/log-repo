@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Ledger Transaction&quot;"
-  Code="&quot;7892&quot;"
+  Code="&quot;d3d0&quot;"
   Name="&quot;LedgerTransaction Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -4064,5 +4064,15 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;SalesmanLTRP&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;LedgerTransaction.Features.SalesmanLTRP&quot;"
+      FeatureDefaultText="&quot;Ledger Transaction Report Salesman Restrictions&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>

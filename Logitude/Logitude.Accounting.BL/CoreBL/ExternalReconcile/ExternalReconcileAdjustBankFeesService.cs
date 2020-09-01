@@ -13,12 +13,17 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 {
     /// <summary>
     /// *** התאמת עמלות בנק **
+    //1---  //   ניתן לבחור שורה אחת או יותר מדפי בנק - חובה וגם זכות
+    // ללא תנעות !!!!
+
+
+    // 2 ****change***  Task 69959: התאמה חיצונית - תמיכה בסגירת הפרש בין כרטיס ודף בנק
     //  ניתן לבחור שורה אחת מדפי בנק - חובה וגם זכות
-    //
-    // ****change***  Task 69959: התאמה חיצונית - תמיכה בסגירת הפרש בין כרטיס ודף בנק
     //כנגד השורה הנל ניתן לבחור רשימה של תנעות  
     //התנעות כולם אמורות להיות מהעוש  
     //  לללללא מלשלם!!!!
+
+
 
     //  יפתח מסך נתוני התאמה
     //כרטיס לבחירה כל הסוגים למעט 6- עובדים
@@ -54,7 +59,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         public const string M_WhileCreating_All_NotInProgressExternalReconcile = "אחת השורות בתהליך התאמה חצונית";
         public const string M_WhileStreaming_All_InProgressExternalReconcile = "אחת השורות לא מסומנת -בתהליך התאמה חצונית";
         public const string M_AccountShouldBeTheSameToBank = "הכרטיס בדף אמור להיות זהה ";
-
+        public const string M_AdjustLadgerOnly1ExternalPageLineId = "בהתאמת תנועות יש לספק רק שורת דף בנק אחת";
         public JournalPM TheNewJournal { get; private set; }
         public ChangeSetOperation ChangeSetOp { get; private set; }
 
@@ -63,20 +68,20 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             _ExternalReconcileDataProvider = externalReconcileDataProvider;
         }
         //const string MyNotes = "פרעון שיק מהתאמה";
-        public void CreateJournalWithExtReconcile(int tenant ,string reconcileExternalPageLineId,string adjustGLAccountId,string screenNotes
+        public void CreateJournalWithExtReconcile(int tenant , List<string> reconcileExternalPageLineIdList, string adjustGLAccountId,string screenNotes
             , DateTime accountingDate
             , List<string> ledgerTransactionIds =null
             )
         {
             ledgerTransactionIds = ledgerTransactionIds ?? new List<string>();
-            if (screenNotes.Equals("null", StringComparison.OrdinalIgnoreCase)){
-                screenNotes = string.Empty;
-            }
-            if (string.IsNullOrWhiteSpace(screenNotes))
+            //if (screenNotes.Equals("null", StringComparison.OrdinalIgnoreCase)){
+            //    screenNotes = string.Empty;
+            //}
+            if (string.IsNullOrWhiteSpace(screenNotes) || screenNotes.Equals("NULL", StringComparison.OrdinalIgnoreCase))
             {
                 screenNotes = "התאמת דף בנק (עמלה)";
             }
-            List<string> reconcileExternalPageLineIdList = new List<string>() { reconcileExternalPageLineId };
+            ///List<string> reconcileExternalPageLineIdList = new List<string>() { reconcileExternalPageLineId };
             List<ReconcileExternalPageLineList> listOfpageLineList;
             List<ReconcileExternalPageList> listOfpageList;
             string accountingCurrencyId = null;// _ExternalReconcileDataProvider.GetaccountingCurrencyId(tenant);
@@ -419,6 +424,10 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
             if (ledgerTransactionIds.Count() > 0)
             {
+                if (reconcileExternalPageLineIdList.Count()!=1)
+                {
+                    _ErrorList.Add(M_AdjustLadgerOnly1ExternalPageLineId);
+                }
                 AllLedgerAreExistAndSameBankAccount(tenant, ledgerTransactionIds, ledgerTransactionList);
                 AllLedgerCheckInProgressByWhileStreaming(ledgerTransactionList, CheckWhileStreaming);
                 if (ledgerTransactionList.First().AccountId != listOfpageList.First().GLAccountId)
@@ -546,7 +555,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
     }
     public interface IExternalReconcileAdjustBankFeesService
     {
-        void CreateJournalWithExtReconcile(int tenant, string reconcileExternalPageLineId, string adjustGLAccountId, string screenNotes, DateTime accountingDate
+        void CreateJournalWithExtReconcile(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, string screenNotes, DateTime accountingDate
             , List<string> ledgerTransactionIds = null);
         void MustInit(IExternalReconcileDataProvider externalReconcileDataProvider);
         JournalPM TheNewJournal { get; }

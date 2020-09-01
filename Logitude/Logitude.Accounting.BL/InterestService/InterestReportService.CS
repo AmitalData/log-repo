@@ -43,14 +43,18 @@ namespace Logitude.Accounting.BL.InterestService
 
             IQueryable<InterestTransactionList> IQueryable_InterestTransactionLists = GetIQueryableInterestTransactionLists(ReportId, Tenant, MyContext);
 
-            List<InterestTransactionList> interestTransactionLists = IQueryable_InterestTransactionLists.ToList();
+            List<InterestTransactionList> interestTransactionLists = null;
 
-            if (InterestCalculationDate!=null)
+            if (InterestCalculationDate != null)
             {
-              interestTransactionLists = IQueryable_InterestTransactionLists.Where(a => DbFunctions.TruncateTime(a.InterestValueDate) == DbFunctions.TruncateTime(InterestCalculationDate)).ToList();
+                interestTransactionLists = IQueryable_InterestTransactionLists.Where(a => DbFunctions.TruncateTime(a.InterestValueDate) == DbFunctions.TruncateTime(InterestCalculationDate)).ToList();
+            }
+            else
+            {
+                interestTransactionLists = IQueryable_InterestTransactionLists.ToList();
+
             }
  
-
             interestTransactionsWithTotal = MappingDataInterestTransaction(interestTransactionLists,Tenant);
 
             return interestTransactionsWithTotal;
@@ -467,8 +471,8 @@ namespace Logitude.Accounting.BL.InterestService
                 MyContext = AccountingContext.GetContext(Tenant);
             }
 
-            IQueryable<InterestTransactionList> interestTransactionLists = (from a in MyContext.InterestReportLines
-                                                                            where a.Tenant == Tenant && a.InterestReportId == ReportId && a.InterestTransaction.IsCancelled==false
+            IQueryable<InterestTransactionList> interestTransactionLists = (from a in MyContext.InterestReportLines.Include("InterestTransaction").Include("InterestTransaction.GLAccount")
+                                                                            where a.Tenant == Tenant  &&a.InterestReportId == ReportId && a.InterestTransaction.GLAccountId !=null && a.InterestTransaction.GLAccount.ActiveForInterest ==true   && a.InterestTransaction.IsCancelled == false
                                                                             select new InterestTransactionList()
                                                                             {
                                                                                 Tenant = a.Tenant,

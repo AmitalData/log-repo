@@ -338,6 +338,20 @@
 
                 <!-- InterestReport -->
                 <div *ngIf="ObjectTableName == 'InterestReport'">
+
+                    <div *ngIf="FieldName == 'ARInvoiceNumber'">
+
+                   <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;"  
+                        [style.text-align]="isRTL ? 'right' : 'left'">
+                        <a href="#" (click)="OpenARInvoice(Entity.ARinvoiceId)">{{FieldValue}}</a>
+                   </div>
+                   <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;"  
+                        [style.text-align]="isRTL ? 'right' : 'left'">
+                        {{FieldValue}} 
+                   </div>
+ 
+                    </div>
+
                     <div *ngIf="FieldName == 'InterestReportStatusName'">
                         <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;" [style.color]="textColor"
                              [style.text-align]="isRTL ? 'right' : 'left'">

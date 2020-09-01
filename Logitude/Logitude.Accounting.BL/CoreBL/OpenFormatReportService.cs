@@ -490,14 +490,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             AddressQuery addressQuery = new AddressQuery(tenant);
             CardQuery cardQuery = new CardQuery(tenant);
-            List<CardList> cardPMs = cardQuery.GetCardPMsByTenant(tenant).ToList() ;
-            List<string> cardIds = cardQuery.GetCardIdsByTenant(tenant);
-
-
-            List<AddressList> addreses = addressQuery.GetAddressesByCardIds(cardIds,tenant);
-
-
-
+           
             var trailReportParam = new TrailReportParam()
             {
                 Tenant = tenant,
@@ -531,16 +524,14 @@ namespace Logitude.Accounting.BL.CoreBL
             var result = res.Where(d => d.Key != null).ToDictionary(x => x.Key, x => x);
             b110Data = b110Data.Where(d => includedGLAccounts.Contains(d.GLAccountId)).ToList();
 
-
+            List<CardList> cardLists = cardQuery.GetCardsByGLAccountIds(includedGLAccounts.Where(d=> d!=null).ToList(),tenant).ToList();        
+            List<AddressList> addreses = addressQuery.GetAddressesByCardIds(cardLists.Select(d=> d.Id).ToList(), tenant);
             foreach (B110Data item in b110Data)
             {
                 counter++;
                 B110Count++;
-                if(item.DisplayNumber == "70013")
-                {
-
-                }
-                CardList card = cardPMs.Where(d => d.GLAccountId == item.GLAccountId).FirstOrDefault();
+              
+                CardList card = cardLists.Where(d => d.GLAccountId == item.GLAccountId).FirstOrDefault();
                 myStringBuilder.Append("B110");
 
                 if (counter.ToString().Length > 9)
@@ -613,7 +604,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     var accountCurrency = gLAccountCurrencies.Where(d => d.GLAccountId == item.GLAccountId).FirstOrDefault();
                     if(accountCurrency != null)
                     {
-                        card = cardPMs.Where(d => d.GLAccountId == accountCurrency.MainGLAccountId).FirstOrDefault();
+                        card = cardLists.Where(d => d.GLAccountId == accountCurrency.MainGLAccountId).FirstOrDefault();
                     }
 
 
@@ -989,68 +980,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(' ', 15);
                     }
 
-                   /* item.TotalDebitInForeignCurrency = trailReportM != null ? trailReportM.Select(d => d.ForeignDebit).Sum() : null;
-                    if (item.TotalDebitInForeignCurrency != null)
-                    {
-                        string TotalDebitInForeignCurrency = Format(item.TotalDebitInForeignCurrency.Value); // Math.Abs((decimal) item.TotalDebitInForeignCurrency).ToString();
-                        if(item.TotalDebitInForeignCurrency < 0)
-                        {
-                            myStringBuilder.Append(a);
-                            myStringBuilder.Append("-");
-                            if (TotalDebitInForeignCurrency.Length > 14) { TotalDebitInForeignCurrency = TotalDebitInForeignCurrency.Substring(0, 14); }
-                            myStringBuilder.Append(TotalDebitInForeignCurrency.PadLeft(14, '0'));
-                        }
-                       else if (item.TotalDebitInForeignCurrency > 0)
-                        {
-                            myStringBuilder.Append(a);
-                            myStringBuilder.Append("+");
-                            if (TotalDebitInForeignCurrency.Length > 14) { TotalDebitInForeignCurrency = TotalDebitInForeignCurrency.Substring(0, 14); }
-                            myStringBuilder.Append( TotalDebitInForeignCurrency.PadLeft(14, '0'));
-                        }
-                        else
-                        {
-                            myStringBuilder.Append(a);
-                            myStringBuilder.Append('0', 15);
-                        }
-                    }
-                    else
-                    {
-                        myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 15);
-                    }
 
-                    item.TotalCreditInForeignCurrency = trailReportM != null ? trailReportM.Select(d => d.ForeignCredit).Sum() : null;
-                    if (item.TotalCreditInForeignCurrency != null)
-                    {
-                        string TotalCreditInForeignCurrency = Format(item.TotalCreditInForeignCurrency.Value); //  Math.Abs((decimal)item.TotalCreditInForeignCurrency).ToString();
-
-                        if(item.TotalCreditInForeignCurrency < 0)
-                        {
-                            myStringBuilder.Append(a);
-                            myStringBuilder.Append("-");
-                            if (TotalCreditInForeignCurrency.Length > 14) { TotalCreditInForeignCurrency = TotalCreditInForeignCurrency.Substring(0, 14); }
-                            myStringBuilder.Append( TotalCreditInForeignCurrency.PadLeft(14, '0'));
-                        }
-                        else if (item.TotalCreditInForeignCurrency > 0)
-                        {
-                            myStringBuilder.Append(a);
-                            myStringBuilder.Append("+");
-                            if (TotalCreditInForeignCurrency.Length > 14) { TotalCreditInForeignCurrency = TotalCreditInForeignCurrency.Substring(0, 14); }
-                            myStringBuilder.Append( TotalCreditInForeignCurrency.PadLeft(14, '0'));
-                        }
-                        else
-                        {
-                            myStringBuilder.Append(a);
-                            myStringBuilder.Append('0', 15);
-                        }
-
-                     
-                    }
-                    else
-                    {
-                        myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 15);
-                    }*/
                     if (item.CurrencyCode != null)
                     {
                         if (item.CurrencyCode.Length > 3) { item.CurrencyCode= item.CurrencyCode.Substring(0, 3); }
@@ -1143,13 +1073,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('0', 9);
                 }
                 myStringBuilder.Append(item.DocumentType);
-
-                if(item.DocumentReference == "1-254")
-                {
-
-                }
-              
-
+                
                 if (item.DocumentReference != null)
                 {
                     if (item.DocumentReference.Length > 20) { item.DocumentReference = item.DocumentReference.Substring(0, 20); }
@@ -1527,21 +1451,6 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
 
-
-
-
-
-
-                //if (item.CreatedbyUser != null)
-                //{
-                //    if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
-                //    myStringBuilder.Append(a + item.CreatedbyUser.PadLeft(9, ' '));
-                //}
-                //else
-                //{
-                //    myStringBuilder.Append(a);
-                //    myStringBuilder.Append(' ', 9);
-                //}
                 string c100 = C100Count.ToString();
                  if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
                     myStringBuilder.Append(a + c100.PadLeft(7, '0'));
@@ -1579,10 +1488,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
                     myStringBuilder.Append(item.DocumentType);
-                    if (item.DocumentReference == "11111")
-                    {
-
-                    }
+                  
                     if (item.DocumentReference != null)
                     {
                         if (item.DocumentReference.Length > 20) { item.DocumentReference = item.DocumentReference.Substring(0, 20); }
@@ -2402,21 +2308,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append('0', 15);
                     }
 
-                    //myStringBuilder.Append(a);
-                    //myStringBuilder.Append('0', 15);
-
-                    //if (line.UnitPrice != null)
-                    //{
-                    //    string UnitPrice = line.UnitPrice.ToString();
-                    //    if (UnitPrice.Length > 15) { UnitPrice = UnitPrice.Substring(0, 15); }
-                    //    myStringBuilder.Append(a + UnitPrice.PadLeft(15, '0'));
-                    //}
-                    //else
-                    //{
-                    //    myStringBuilder.Append(a);
-                    //    myStringBuilder.Append('0', 15);
-                    //}
-
+                
 
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 15);
@@ -2504,11 +2396,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 C100Count++;
                 counter++;
                 myStringBuilder.Append("C100");
-                if(item.DocumentReference== "ARP2319")
-                {
-
-                }
-
+                
                 if (counter.ToString().Length > 9)
                 {
                     counter.ToString().Substring(0, 9);
@@ -2945,10 +2833,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         myStringBuilder.Append("400");
 
-                        if (item.DocumentReference == "ARP2320")
-                        {
-
-                        }
                         if (item.DocumentReference != null)
                         {
                             if (item.DocumentReference.Length > 20) { item.DocumentReference = item.DocumentReference.Substring(0, 20); }
@@ -3070,16 +2954,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 myStringBuilder.Append('0', 10);
 
                             }
-                            //if (line.ChequeNumber != null)
-                            //{
-                            //    if (line.ChequeNumber.Length > 10)
-                            //    {
-
-                            //        line.ChequeNumber = line.ChequeNumber.Substring(0, 10);
-                            //    }
-
-                            //    myStringBuilder.Append(a + line.ChequeNumber.PadLeft(10, '0'));
-                            //}
+                        
                             var valueDate = String.Format("{0:yyyyMMdd}", line.ValueDate);
                             if (valueDate != null)
                             {

@@ -162,7 +162,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 try
                 {
                     var msg = "Start Inserting Shipment To Importer Tenant " + DateTime.Now;
-                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, LogPM.Status, 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(Shipment), null, null, "");
+                    //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, LogPM.Status, 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(Shipment), null, null, "");
                     // Insert Importer Shipment
                     var ImporterShipment = new ShipmentPM() { NewConcurrencyGUID = Guid.NewGuid().ToString() };//shipmentQuery.GetSinglePMWithoutComposition(Shipment.Id, Shipment.Tenant);
                     if (!string.IsNullOrEmpty(Shipment.CustomerShipmentNumber))
@@ -335,7 +335,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 try
                 {
                     var msg = "Start updating Shipment At Importer Tenant " + DateTime.Now;
-                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, LogPM.Status, 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(Shipment), null, null, "");
+                    //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, LogPM.Status, 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(Shipment), null, null, "");
                     ShipmentPM ImporterShipment = null;
                     var IsNew = false;
                     if (!string.IsNullOrEmpty(Shipment.CustomerShipmentNumber))
@@ -343,7 +343,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         ImporterShipment = shipmentQuery.GetSingleShipmentPMByNumber(Shipment.CustomerShipmentNumber, Shipment.ImporterTenant);
                         if (ImporterShipment == null)
                         {
-                            ImporterShipment = shipmentQuery.GetSingleShipmentPMByForwarderNumber(Shipment.ForwarderShipmentNumber, Shipment.ImporterTenant, Shipment.Tenant); 
+                            ImporterShipment = shipmentQuery.GetSingleShipmentPMByForwarderNumber(Shipment.ForwarderShipmentNumber, Shipment.ImporterTenant, Shipment.Tenant);
                         }
                     }
                     else

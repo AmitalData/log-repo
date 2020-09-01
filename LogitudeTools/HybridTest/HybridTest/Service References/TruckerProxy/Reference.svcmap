@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="87c39b1a-a475-4214-952e-f6951e23f9a6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:62619/WcfApi/TruckerWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="TruckerWcfService.xsd" MetadataType="Schema" ID="d61fcb47-ade9-403e-a1f7-1d77b197c168" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/TruckerWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="TruckerWcfService1.xsd" MetadataType="Schema" ID="c32c07a1-4d28-4828-a461-1b838806139c" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/TruckerWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="TruckerWcfService2.xsd" MetadataType="Schema" ID="8f166f85-b931-49cd-ab3c-ce4faa3bda36" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/TruckerWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="TruckerWcfService3.xsd" MetadataType="Schema" ID="ee5c840b-68b5-4539-ba16-c66e942b96f0" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/TruckerWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="TruckerWcfService.wsdl" MetadataType="Wsdl" ID="f90d17f4-7833-47ac-9f93-76c007b1e4d8" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/TruckerWcfService.svc?wsdl" />
+    <MetadataFile FileName="TruckerWcfService.disco" MetadataType="Disco" ID="baad3b2e-f041-40c2-9432-ff08a01954d1" SourceId="1" SourceUrl="http://localhost:62619/WcfApi/TruckerWcfService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

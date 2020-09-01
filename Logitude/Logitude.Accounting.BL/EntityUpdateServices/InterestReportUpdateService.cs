@@ -32,15 +32,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         protected override void OnCreating(InterestReportPM entityPM, EntityPM entityParentPM)
         {
-          
             if (!entityPM.IsCreatedFromBatch)
             {
                 CreateBatchTaskExecution(entityPM);
             }
         }
-
-         
-        
 
         protected override void UpdateComposition(InterestReportPM entityPM)
         {
@@ -73,7 +69,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 CancelInterestReport(entityPOCO, entityPM);
             }
-            
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update && !entityPM.IsUpdatedFromBatch)
+            {
+                if (entityPM.InterestCalculationDate != entityPOCO.InterestCalculationDate)
+                {
+                    
+                    CreateBatchTaskExecutionForRecalculatingData(entityPM);
+                }
+
+                if (entityPM.OpenBalance != entityPOCO.OpenBalance)
+                {
+                    CreateBatchTaskExecutionForRecalculatingData(entityPM);
+                }
+            }
+
         }
 
         protected override void Trace(InterestReportPM entityPM, InterestReport entityPOCO, string changesXml)
@@ -303,7 +313,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             // 1- create BTE record
             BatchTaskExecutionPM taskExe;
 
-            InterestReportArgs args = new InterestReportArgs() { Tenant = entityPM.Tenant, InterestReportId = entityPM.Id};
+            InterestReportArgs args = new InterestReportArgs() { Tenant = entityPM.Tenant, InterestReportId = entityPM.Id, RecalculateData = entityPM.RecalculateData };
             var stringwriter = new System.IO.StringWriter();
             var serializer = new XmlSerializer(typeof(InterestReportArgs));
             serializer.Serialize(stringwriter, args);
@@ -335,6 +345,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", entityPM.Tenant.ToString() }
                 }, Tenant);
+        }
+
+        private void CreateBatchTaskExecutionForRecalculatingData(InterestReportPM entityPM)
+        {
+            entityPM.InterestReportStatusCode = "5";
+            entityPM.RecalculateData = true;
+            CreateBatchTaskExecution(entityPM);
         }
         protected override void Validate(InterestReportPM entityPM)
         {

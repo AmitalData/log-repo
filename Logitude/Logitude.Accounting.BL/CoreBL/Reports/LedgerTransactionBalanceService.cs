@@ -23,6 +23,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         private bool _IsAccountingCurrencyRequested;
         private IQueryable<string> _allIdAccounts;
         private string _SearchByFilter;
+        private Stopwatch _sw;
+
         //private string _ForeignCurrencyId = null;
         public LedgerTransactionBalanceService(IAccountingContext accountingContext ,LedgerTransactionBalanceFilter param)
         {
@@ -46,6 +48,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public void Run()
         {
             var sw = Stopwatch.StartNew();
+            _sw = Stopwatch.StartNew();
             DateTime? maxCreateDate = null;
             
             this.Response = new LedgerTransactionBalanceResponse();
@@ -61,7 +64,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
                 _SearchByFilter = null;
-
+                LogIt("start");
                 if (_Param.CallBack != null)
                 {
                     maxCreateDate = _Param.CallBack.MaxCreateAt;
@@ -74,6 +77,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 }
                 else
                 {
+                   
                     _SearchByFilter = _Param.SearchFields;
                     var myGLAccountQueryService = new GLAccountQueryService(_AccountingContext);
 
@@ -92,17 +96,19 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     bool includeAccoutingDateLTransaction = false;
                     var startAccountBalanceService = GetStartAccountBalance(//includeChildAccounts, 
     includeAccoutingDateLTransaction);
+                    LogIt("GetStartAccountBalance");
                     includeAccoutingDateLTransaction = true;
                     var endAccountBalanceService = GetEndAccountBalance(//includeChildAccounts, 
                         includeAccoutingDateLTransaction
                         );
+                    LogIt("GetEndAccountBalance");
                     this.Response.YearTransferLedgerTransactionIds = startAccountBalanceService.YearTransferLedgerTransactionIds;
 
                     QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = RemoveYearTransferLedgerTrans(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
 
                     BuildCallBack(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
                         startAccountBalanceService, endAccountBalanceService);
-
+                    LogIt("BuildCallBack");
 
                 }
                 else // if callback
@@ -114,6 +120,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                 //int pageSize = 100; int curPageZeroBase = 0;
                 var list = Translate2ListMode(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+                LogIt("Translate2ListMode");
                 if (!this.Response.OmitAllBalance)
                 {
 
@@ -132,7 +139,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     CumulativeLocalAmount += myBlance.SumLocalAmount;
                     CumulativeForeignAmount += myBlance.SumForeignAmount;
 
-
+                    LogIt("b4 list");
                     list.ForEach(rec =>
                     {
                         decimal LocalAmountDebit = rec.LocalAmountDebit;
@@ -148,13 +155,25 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         }
 
                     });
+                    LogIt("after list");
                     //}
                 }
                 Response.MyLedgerTransactionList = list;
             }
             this.Response.TookMS = sw.ElapsedMilliseconds;
+            Debug.WriteLine("Response.TookMS:" + Response.TookMS.ToString());
         }
 
+        
+        private void LogIt(string mess)
+        {
+
+            mess = mess + ":Took:" + _sw.Elapsed.ToString();
+            Debug.WriteLine(mess);
+
+            _sw.Restart();
+            //_StringBuilder.AppendLine(mess);
+        }
         private IQueryable<Data.EntityPOCOs.LedgerTransaction> RemoveYearTransferLedgerTrans(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)
         {
             if (this.Response.YearTransferLedgerTransactionIds != null && this.Response.YearTransferLedgerTransactionIds.Count > 0)
@@ -267,6 +286,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 , AccountBalanceM startAccountBalanceService,
 AccountBalanceM endAccountBalanceService)
         {
+            var sw = Stopwatch.StartNew();
             bool includeChildAccounts = false;
             
             //var BeginOfYearLocalAmountBalance = GetBeginOfYearLocalAmountBalance(_AccountingContext,_Param.From);
@@ -287,6 +307,7 @@ AccountBalanceM endAccountBalanceService)
             var myStatstic4period = qGperiod
                 //.First()  = fail : Sequence contains no elements
                     .FirstOrDefault();
+            Debug.WriteLine("BuildCallBack:" + sw.ElapsedMilliseconds);
             DateTime periodMaxCreateDate = DateTime.Now;
             decimal periodSumLocalAmount = 0;
             decimal periodSumForeignAmount = 0;
