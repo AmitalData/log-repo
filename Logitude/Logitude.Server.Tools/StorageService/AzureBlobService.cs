@@ -253,6 +253,8 @@ namespace Logitude.Server.Tools.StorageService
             {
                 var finalcloudBlockBlob = blobContainer.GetBlockBlobReference(localPath);
 
+                //finalcloudBlockBlob.Properties.ContentMD5 = "12121";
+
                 MemoryStream memorystream = new MemoryStream(buffer);
                 tempcloudBlockBlob.PutBlock(blockIdsList[bufferNumber], memorystream, null);
 
@@ -284,7 +286,8 @@ namespace Logitude.Server.Tools.StorageService
                             }
                         }
 
-                        blobstream.Write(result, 0, (int)result.Length);
+                        if (fileInfo.FileName != "test update failed")
+                            blobstream.Write(result, 0, (int)result.Length);
 
                     }
 
