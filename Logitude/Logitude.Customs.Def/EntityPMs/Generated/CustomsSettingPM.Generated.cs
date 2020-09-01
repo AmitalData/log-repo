@@ -641,6 +641,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? lastNumOfMessagesDCAWS ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? LastNumOfMessagesDCAWS  
+	   {
+	    
+	     get
+		{
+		   return lastNumOfMessagesDCAWS;
+		 }
+		 set
+		 {
+		   if(lastNumOfMessagesDCAWS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastNumOfMessagesDCAWS",OldValue=lastNumOfMessagesDCAWS,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   lastNumOfMessagesDCAWS=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

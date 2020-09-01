@@ -42,12 +42,13 @@ export class InvoiceQueueComponent
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                 this.GetData();
+                this.GetData();
 
             });
         });
     }
     private GetData() {
+        this.InvoiceLineList.Clear();
         this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
         //this._declarationPMService.get("1-5705").subscribe(data => {
             this.declaration = data.Result;

@@ -27,6 +27,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                              join e in context.Cards.Include("CustomerCard")
                                                              on d.CustomerId equals e.Customer.Id
+
+                                                             join c in context.Clients.Include("Client")
+                                                             on d.ImporterCode equals c.Code
                                                              select new DeclarationReferantDataList()
                                                              {
                                                                  Tenant = a.Tenant,
@@ -96,8 +99,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  CustomerCode = d.CustomerCard == null ? null : d.CustomerCard.Code,
                                                                  ImporterCode=d.ImporterCode,
                                                                   ProcedureCurrentCode = d.ProcedureCurrentCode,
-                                                                 ImporterFile=a.ImporterFile
-
+                                                                 ImporterFile=a.ImporterFile,
+                                                                 AEOImporter=c.FacilitationTypeCode,
 
 
 
