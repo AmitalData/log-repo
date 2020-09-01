@@ -15,6 +15,7 @@ namespace WebFreight.Web.DataContracts
         public BIReportPM BIReportPM { get; set; }
         public BITabularViewSettings BITabularViewSettings { get; set; }
         public string BIReportKey { get; set; }
+        public bool IncludeTotals { get; set; }
     }
 
     [XmlRoot("BITabularViewSettings")]

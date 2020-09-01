@@ -184,11 +184,74 @@
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 130px;">
+                                            <!--<td style="width: 130px;">
                                                 <button [disabled]="IsNewEntity || HasValidationError" class="Button" style="width:130px;float:left;" (click)="ExportToExcelClicked()">
-                                                    <img style="margin-left:2px;margin-right:2px;" class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png"/>
+                                                    <img style="margin-left:2px;margin-right:2px;" class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" />
                                                     <span style="line-height: 19px;margin-left:2px;margin-right:2px;">Download Excel</span>
                                                 </button>
+                                            </td>-->
+
+
+                                            <td style="width: 115px;">
+                                                <div style="vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
+                                                    <div sstyle="background-color:#D1D6D8">
+
+                                                        <table class="LeftCenter">
+                                                            <tr>
+                                                                <td style="width:5px">
+                                                                    <div style="width:5px"></div>
+                                                                </td>
+
+                                                                <td style="width:20px">
+                                                                    <img style="left:0" title="Export To Excel" src="./Images/Buttons/excelicon.png" />
+                                                                </td>
+
+
+                                                                <td>
+                                                                    <span style="line-height: 19px;margin-left:2px;margin-right:2px;">Download</span>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width:10px">
+
+
+                                                                    <img style="margin-left:10px" src="./Images/ToggleIcon.png" />
+                                                                    <div style="float:right;left:-65px;width:140px" class="ToggleButtonMenu">
+
+                                                                        <button [disabled]="IsNewEntity || HasValidationError" (click)="ExportToExcelClicked()">
+                                                                            <div>Excel File</div>
+                                                                        </button>
+
+
+                                                                        <button [disabled]="IsNewEntity || HasValidationError" (click)="ExportToExcelAdvancedButtonClick()">
+                                                                            <div>Excel File (Advanced)</div>
+                                                                        </button>
+
+
+                                                                    </div>
+
+                                                                </td>
+                                                                <td style="width:5px">
+                                                                    <div style="width:5px"></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+
+
+
+
+
+                                                    </div>
+
+
+
+
+
+
+                                                </div>
                                             </td>
 
                                             <td style="width: 5px;">
