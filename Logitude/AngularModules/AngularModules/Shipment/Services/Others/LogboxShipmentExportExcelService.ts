@@ -11,7 +11,6 @@ import { AgentSharedManifestPM } from '../../../Common/EntityPMs/AgentSharedMani
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { LogboxShipmentExportExcelArgs } from '../../../ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxMainComponent';
 
 @Injectable()
 
@@ -26,7 +25,7 @@ export class LogboxShipmentExportExcelService {
 
 
 
-    GetQueryToExcelData(logboxShipmentExportExcelArgs: LogboxShipmentExportExcelArgs) {
+    GetQueryToExcelData(logboxShipmentExportExcelArgs: any) {
 
         return defer(() => {
             return this._httpClient.post(this._apiUrl + '/PostGetQueryToExcelData', JSON.stringify(logboxShipmentExportExcelArgs), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
