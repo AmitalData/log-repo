@@ -48,5 +48,6 @@ export class ShippingLineList {
 		CBSA: string;
 		CAAT: string;
 		StateName: string;
+		GLAccountNumber: string;
 	
 }

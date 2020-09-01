@@ -27,6 +27,8 @@ using System.IO;
 using System.Xml.Serialization;
 using Logitude.BL.CommonDataModel.CustomFilters;
 using System.Reflection;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -2428,9 +2430,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   ActivationRequestedByUserName = customer.ActivationRequestedByUserName,
                                                   CreatedByPartner = customer.CreatedByPartner,
                                                   StateName = customer.StateName,
+                                                //  GLAccountNumber = GetDisplayNumberFromGLAccount(customer.GLAccountId, customer.Tenant),
                                               };
 
+
             return result;
+        }
+        private string GetDisplayNumberFromGLAccount(string GLAccountId, int tenant)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            string DisplayNumber = glAccountQuery.GetDisplayNumberByGLAccountId(GLAccountId, tenant);
+
+            return DisplayNumber;
         }
 
         public CustomerList GetSingleCustomerList(string id, int tenant)

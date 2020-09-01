@@ -16,6 +16,8 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BookingLib.Data.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Microsoft.Practices.Unity;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -638,8 +640,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  PrimaryContactEmail = a.PrimaryContactEmail,
                                                  PrimaryContactPhone = a.PrimaryContactPhone,
                                                  StateName = a.Card.StateName,
+                                                 GLAccountNumber = GetDisplayNumberFromGLAccount(a.Card.GLAccountId, a.Tenant),
                                              };
+
+
             return result;
+        }
+        private string GetDisplayNumberFromGLAccount(string GLAccountId, int tenant)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            string DisplayNumber = glAccountQuery.GetDisplayNumberByGLAccountId(GLAccountId, tenant);
+
+            return DisplayNumber;
         }
     }
 }

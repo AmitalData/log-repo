@@ -145,5 +145,6 @@ export class CustomerList {
 		CreatedByPartner: string;
 		StateName: string;
 		StorageFreeDays: number;
+		GLAccountNumber: string;
 	
 }

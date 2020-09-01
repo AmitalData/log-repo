@@ -420,5 +420,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string StateName { get; set; }
         [DataMember]
         public int? StorageFreeDays { get; set; }
+
+        public string GLAccountNumber { get; set; }
+
     }
 }

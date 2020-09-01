@@ -9,13 +9,19 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using Logitude.Accounting.Data;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
     public class AccountingPartnerQuery
     {
         AccountingPartnerRepository repository;
-
+        IAccountingContext accountingContext;
+ 
         public AccountingPartnerQuery()
         {
             repository = new AccountingPartnerRepository(); 
@@ -24,6 +30,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public AccountingPartnerQuery(int tenant)
         {
             repository = new AccountingPartnerRepository(tenant);
+            accountingContext = AccountingContext.GetContext(tenant);
         }
 
         public AccountingPartnerQuery(AccountingPartnerRepository repository)
@@ -382,43 +389,60 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<AccountingPartnerList> GetIQueryableEntityList(IQueryable<AccountingPartner> iQueryable)
         {
-            IQueryable<AccountingPartnerList> result = from a in iQueryable.Include("Card")
-                                            select new AccountingPartnerList()
-                                            {
-                                                Code = a.Card.Code,
-                                                EnglishName = a.Card.EnglishName,
-                                                LocalName = a.Card.LocalName,
-                                                ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
-                                                PayablesAccountingCard = a.Card.PayablesAccountingCard,
-                                                InActive = a.Card.InActive,
-                                                Notes = a.Card.Notes,
-                                                PaymentTermEnglishName = (a.Card.PaymentTerm != null ? a.Card.PaymentTerm.EnglishName : ""),
-                                                Id = a.Id,
-                                                Tenant = a.Tenant,
-                                                VatNumber = a.Card.VatNumber,
-                                                PaymentTermId = a.Card.PaymentTermId,
-                                                InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
-                                                VatTypeId = a.Card.VatTypeId,
-                                                Website = a.Card.Website,
-                                                SearchFields = a.Card.SearchFields,
-                                                EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
-                                                CityName = a.Card.CityName,
-                                                CountryId = a.Card.CountryId,
-                                                CountryCode = a.Card.CountryCode,
-                                                CountryName = a.Card.CountryName,
-                                                ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
-                                                PaymentMethodCode = a.Card.SATPaymentMethodCode,
-                                                ExternalId2 = a.Card.ExternalId2,
-                                                SATForeignRFC = a.Card.SATForeignRFC,
-                                                MetodoPagoCode = a.Card.MetodoPagoCode,
-                                                UsoCFDICode = a.Card.UsoCFDICode,
-                                                PrimaryContactName = a.PrimaryContactName,
-                                                PrimaryContactEmail = a.PrimaryContactEmail,
-                                                PrimaryContactPhone = a.PrimaryContactPhone,
-                                            };
-            return result;
-        }
 
+            bool isFullAccounting = false;
+            Tenant myTenant = TenantRepository.GetSingleTenant(iQueryable, true);
+            if (myTenant != null)
+            {
+                isFullAccounting = myTenant.AccountingActivated;
+                if (isFullAccounting == true)
+                {
+
+                }
+            }
+
+            IQueryable<AccountingPartnerList> result = from a in iQueryable.Include("Card").Include("Card")
+                                                       select new AccountingPartnerList()
+                                                       {
+                                                           Code = a.Card.Code,
+                                                           EnglishName = a.Card.EnglishName,
+                                                           LocalName = a.Card.LocalName,
+                                                           ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                                           PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                                           InActive = a.Card.InActive,
+                                                           Notes = a.Card.Notes,
+                                                           PaymentTermEnglishName = (a.Card.PaymentTerm != null ? a.Card.PaymentTerm.EnglishName : ""),
+                                                           Id = a.Id,
+                                                           Tenant = a.Tenant,
+                                                           VatNumber = a.Card.VatNumber,
+                                                           PaymentTermId = a.Card.PaymentTermId,
+                                                           InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
+                                                           VatTypeId = a.Card.VatTypeId,
+                                                           Website = a.Card.Website,
+                                                           SearchFields = a.Card.SearchFields,
+                                                           EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
+                                                           CityName = a.Card.CityName,
+                                                           CountryId = a.Card.CountryId,
+                                                           CountryCode = a.Card.CountryCode,
+                                                           CountryName = a.Card.CountryName,
+                                                           ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
+                                                           PaymentMethodCode = a.Card.SATPaymentMethodCode,
+                                                           ExternalId2 = a.Card.ExternalId2,
+                                                           SATForeignRFC = a.Card.SATForeignRFC,
+                                                           MetodoPagoCode = a.Card.MetodoPagoCode,
+                                                           UsoCFDICode = a.Card.UsoCFDICode,
+                                                           PrimaryContactName = a.PrimaryContactName,
+                                                           PrimaryContactEmail = a.PrimaryContactEmail,
+                                                           PrimaryContactPhone = a.PrimaryContactPhone,
+                                                           GLAccountNumber = accountingContext == null ? null : ((from q in accountingContext.GLAccounts
+                                                                                                                  where q.Id == a.Card.GLAccountId && q.Tenant == a.Tenant
+                                                                                                                  select q.DisplayNumber).FirstOrDefault()),
+                                                       };
+
+
+            return result;
+
+        }
         public AccountingPartnerPM GetSingleAccountingPartnerPMByCode(string code, int tenant)
         {
             AccountingPartnerPM AccountingPartner = (from a in repository.context.AccountingPartners.Include("Card")

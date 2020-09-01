@@ -394,6 +394,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             string result = gLAccountPOCO.DisplayNumber + ',' + gLAccountPOCO.LocalName;
             return result;
         }
+        public string GetDisplayNumberByGLAccountId(string gLAccountId, int tenant)
+        {
+           string result = repository.GetDisplayNumberByGLAccountId(gLAccountId, tenant);
+            return result;
+        }
 
         public GLAccountPM GetSinglePMByInternalNumber(string internalNumber, int tenant)
         {
