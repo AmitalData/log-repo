@@ -292,7 +292,7 @@ namespace Logitude.DBMigrations.Models
                     return column;
                 case "C":
                 case "CHECK":
-                    if(constraintName.ToLower() == ("CK_" + column.Name + "_NotNull").ToLower())
+                    if(constraintName.StartsWith("CK_NotNull_"))
                     {
                         column.Constraints.HasNotNullCheckConstraint = true;
                     }

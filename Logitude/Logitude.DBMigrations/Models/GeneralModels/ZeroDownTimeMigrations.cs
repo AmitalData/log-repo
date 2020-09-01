@@ -68,7 +68,7 @@ namespace Logitude.DBMigrations.Models
         protected void HandleDBMigrationsDataScript(DBMigrationsDataScript dbMigrationsDataScript)
         {
             CreateDBMigrationsLastScriptColumn(dbMigrationsDataScript.TargetTableName);
-
+            
             if (!ServiceMode)
             {
                 UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "Status", "FullBuild");

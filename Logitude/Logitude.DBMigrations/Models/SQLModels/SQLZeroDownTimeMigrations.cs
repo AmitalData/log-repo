@@ -141,7 +141,7 @@ namespace Logitude.DBMigrations.Models
             string schemaName = dbMigrationsSetDefaultValue.SchemaName;
             string tableName = dbMigrationsSetDefaultValue.TableName;
             string columnName = dbMigrationsSetDefaultValue.ColumnName;
-            string checkConstraintName = "CK_" + columnName + "_NotNull";
+            string checkConstraintName = "CK_NotNull_" + columnName;
 
             string queryString = "ALTER TABLE [" + schemaName + "].[" + tableName + "] WITH NOCHECK ADD CONSTRAINT [" + checkConstraintName + "] CHECK([" + columnName + "] IS NOT NULL);";
 
@@ -291,7 +291,7 @@ namespace Logitude.DBMigrations.Models
                     }
 
                     string data = batchNumberCounter.ToString() + "," + batchStartTime.ToString() + "," + batchEndTime.ToString() + "," + elapsedTime.ToString() + "," + affectedRows.ToString() + "\n";
-                    AppendToCSVFile(csvFileName, data);
+                    //AppendToCSVFile(csvFileName, data);
 
                     Thread.Sleep(1000);
                 }
