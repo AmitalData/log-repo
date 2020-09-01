@@ -116,6 +116,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CustomerCode  { get; set; }
        [DataMember]
        public string ImporterFile  { get; set; }
+       [DataMember]
+       public string AEOImporter  { get; set; }
    }
 
 }
