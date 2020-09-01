@@ -200,6 +200,7 @@ namespace Logitude.Accounting.BL.Utils
                         else
                         {
                             decimal actualDifference = getNextGroupArgs.ActualDifference;
+
                             success = ProcessOneReconciableLT_List(tenant, myGLAccountId, reconciableLT_List, reconciliationStageCArg.MaximalDifference, actualDifference);
                             if (success)
                             {
@@ -238,7 +239,7 @@ namespace Logitude.Accounting.BL.Utils
                 IQueryable<JournalLineLedgerTransactionAccDTO> journalLine_LT_DTOs;
                 journalLine_LT_DTOs = journalLineQueryService.GetQJournalLinesByLTList(tenant, reconciableLT_List);
 
-                List<JournalLineLedgerTransactionAccDTO> journalLine_LT_DTOsList = journalLine_LT_DTOs.ToList().OrderBy(l => l.AccId).ToList();
+                List<JournalLineLedgerTransactionAccDTO> journalLine_LT_DTOsList = journalLine_LT_DTOs.ToList();//.OrderBy(l => l.AccId).ToList();
                 var journalLineGroups = journalLine_LT_DTOsList.GroupBy(l => l.AccId);
                 // IQueryable<IGrouping<String, JournalLineLedgerTransactionDTO>> journalLineGroups = journalLineQueryService.GetQGJournalLinesByExternalRecoFromTo(tenant, fromExtNum, toExtNum);
                 LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(context);
@@ -253,26 +254,79 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         journalLineList.Add(new JournalLineReco(journalLineLedgerTransactionDTO.JournalLine, journalLineLedgerTransactionDTO.LedgerTransaction));
                     }
-                    List<JournalLineReco> jLL = journalLineList.OrderByDescending(rec => rec._oneLineLedger.DueDate).ThenByDescending(rec => Math.Abs(rec._oneLineLedger.AmountToReconcile)).ToList();
+                    string id = "";
+                    List<JournalLineReco> jLL = journalLineList;//.OrderByDescending(rec => rec._oneLineLedger.DueDate).ThenByDescending(rec => Math.Abs(rec._oneLineLedger.AmountToReconcile)).ToList();
+
+                    decimal ad = actualDifference;
                     if (actualDifference != 0m)
                     {
+                        decimal first_amount = jLL.ElementAt(0)._oneLineLedger.AmountToReconcile;
+                        jLL.Reverse();
+                        while ((first_amount < actualDifference && actualDifference < 0m) || (first_amount > actualDifference && actualDifference > 0m))
+                        {
+                            int i = 0;
+                            int j = 0;
+                            int k = jLL.Count;
+                            decimal maximum = 0m;
+                            decimal minimum = 0m;
+                            bool found_to_remove = false;
+                            jLL.ForEach(item =>
+                            {
+
+                                if (item._oneLineLedger.AmountToReconcile > 0m && actualDifference > 0m && item._oneLineLedger.AmountToReconcile <= actualDifference)
+                                {
+                                    if (item._oneLineLedger.AmountToReconcile > maximum)
+                                    {
+                                        maximum = item._oneLineLedger.AmountToReconcile;
+                                        j = i;
+                                    }
+                                    else if (!found_to_remove)
+                                        j = i;
+                                    found_to_remove = true;
+                                }
+                                else if (item._oneLineLedger.AmountToReconcile < 0m && actualDifference < 0m && item._oneLineLedger.AmountToReconcile >= actualDifference)
+                                {
+                                    if (item._oneLineLedger.AmountToReconcile < minimum)
+                                    {
+                                        minimum = item._oneLineLedger.AmountToReconcile;
+                                        j = i;
+                                    }
+                                    else if (!found_to_remove)
+                                        j = i;
+                                    found_to_remove = true;
+                                }
+                                i++;
+                            });
+                            if (found_to_remove && j != k -1) // do not remove the very first (originally) element
+                            {
+                                actualDifference -= jLL.ElementAt(j)._oneLineLedger.AmountToReconcile;
+                                jLL.RemoveAt(j);
+                            }
+                            else
+                                break;
+
+                        }
+
                         jLL.ForEach(item =>
                         {
                             if (actualDifference != 0m)
                             {
-                                if (item._oneLineLedger.AmountToReconcile > actualDifference && actualDifference > 0)
+                                if (item._oneLineLedger.AmountToReconcile > actualDifference && actualDifference > 0m)
                                 {
                                     item._oneLineLedger.AmountToReconcile -= actualDifference;
+                                    id = item._oneLineLedger.Id;
                                     actualDifference = 0m; //break
                                 }
-                                else if (item._oneLineLedger.AmountToReconcile < actualDifference && actualDifference < 0)
+                                else if (item._oneLineLedger.AmountToReconcile < actualDifference && actualDifference < 0m)
                                 {
                                     item._oneLineLedger.AmountToReconcile -= actualDifference;
+                                    id = item._oneLineLedger.Id;
                                     actualDifference = 0m; //break 
                                 }
                             }
     
                         });
+                        jLL.Reverse();
                     }
                     if (actualDifference != 0m)
                     {
@@ -280,6 +334,8 @@ namespace Logitude.Accounting.BL.Utils
                     }
                     else if (IsGroupReconciable(jLL, groupKey, maximalDifference, context, tenant))
                     {
+                      //  if (ad != 0m)
+                      //     jLL.Where(item => item._oneLineLedger.Id == id).FirstOrDefault()._oneLineLedger.AmountToReconcile += ad; 
                         ReconciableGroup recoGroup = new ReconciableGroup(groupKey, jLL);
                         reconciableGroupList.Add(recoGroup);
                         goodList.Add(groupKey);

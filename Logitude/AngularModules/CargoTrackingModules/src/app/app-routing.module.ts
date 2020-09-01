@@ -5,16 +5,15 @@ import { SearchComponent } from 'src/CargoTracking/Components/Search/search.comp
 import { ShipmentComponent } from 'src/CargoTracking/Components/Shipment/shipment.component';
 
 const routes: Routes = [
-
-    {path: 'search', redirectTo: 'search/', pathMatch: 'full'},
-    { path: 'search/:searchKey', component: SearchComponent },
+    
+    {path: ':Tenant', redirectTo: '/:Tenant/search/', pathMatch: 'full'},
+    {path: ':Tenant/search', redirectTo: '/:Tenant/search/', pathMatch: 'full'},
+    {path: ':Tenant/search/:searchKey', component: SearchComponent },
     // { path: 'pageb', component: PageBComponent },
     // { path: 'login', component: LoginComponent },
-    {
-        path: 'shipment/:shipmentId', component: ShipmentComponent
-    },
-    { path: '', redirectTo: '/search/', pathMatch: 'full' },
-    { path: '**', redirectTo: '/search/', pathMatch: 'full' },
+    {path: ':Tenant/shipment/:SecurityKey', component: ShipmentComponent},    
+    {path: '', component: SearchComponent , pathMatch: 'full' },
+    {path: '**',component: SearchComponent, pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -154,6 +154,26 @@ export class CargoTrackingIncrementalStatistics extends BaseComponent implements
         });
 
         this.columns.push({
+            FieldName: 'ShipmentComputedFields',
+            DataTypeCode: 'Number',
+            Display: 'ShipmentComputedFields',  
+            Styles: { width: '100px' },
+            HtmlListComponentName: 'CargoTrackingIncrementalStatListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/CargoTrackingIncrementalStatListTemplate',
+            IsCustomTemplate: true
+        });
+
+        this.columns.push({
+            FieldName: 'ShipmentMasterDatas',
+            DataTypeCode: 'Number',
+            Display: 'ShipmentMasterDatas',  
+            Styles: { width: '100px' },
+            HtmlListComponentName: 'CargoTrackingIncrementalStatListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/CargoTrackingIncrementalStatListTemplate',
+            IsCustomTemplate: true
+        });
+
+        this.columns.push({
             FieldName: 'TransportModes',
             DataTypeCode: 'Number', 
             Display: 'TransportModes',  

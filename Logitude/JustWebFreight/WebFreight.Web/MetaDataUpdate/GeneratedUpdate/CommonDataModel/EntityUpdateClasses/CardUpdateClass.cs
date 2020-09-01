@@ -71,12 +71,17 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CardUpdateClass
    {  		
-		public const string HashString = "67f45828a71a2111f451d905780d6f3b";
+
+		public const string HashString = "feb60001e5d78a4d8375b89f5b2ced2b";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -124,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Card",
-			      				    Code =  "6973",
+			      				    Code =  "c684",
 			      				    Name =  "Card",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -191,7 +196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SalesmanUserId",
-					  						DefaultText =  "SalesmanUser",
+					  						DefaultText =  "Salesman",
 					  						FullLocalDefaultText =  "SalesmanUserId",
 					  						ListFieldLable =  "SalesmanUserIdListLable",
 					  						ListLableDefaultText =  "SalesmanUserId",
@@ -201,7 +206,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  true,
-					  						AutomationEmailRecipient =  false,
+					  						AutomationEmailRecipient =  true,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						RecordType =  "Customer",
@@ -2434,7 +2439,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountManagerUserId",
-					  						DefaultText =  "AccountManagerUserId",
+					  						DefaultText =  "Account Manager",
 					  						FullLocalDefaultText =  "AccountManagerUserId",
 					  						ListFieldLable =  "AccountManagerUserIdListLable",
 					  						ListLableDefaultText =  "AccountManagerUserId",
@@ -2444,7 +2449,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  true,
-					  						AutomationEmailRecipient =  false,
+					  						AutomationEmailRecipient =  true,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HtmlListComponentUrl =  "Customer",

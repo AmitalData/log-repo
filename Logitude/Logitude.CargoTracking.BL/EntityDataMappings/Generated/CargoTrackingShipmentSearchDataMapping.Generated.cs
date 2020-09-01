@@ -24,9 +24,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 		     None,  
 	         Tenant, 
 	         SearchFields, 
-	         ShipmentId, 
 	         ShipmentDate, 
-	         Id,
+	         Id, 
+	         SecurityKey,
 	      }
 
 
@@ -35,9 +35,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 		     None,  
 	         Tenant, 
 	         SearchFields, 
-	         ShipmentId, 
 	         ShipmentDate, 
-	         Id,
+	         Id, 
+	         SecurityKey,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -56,14 +56,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 				entityPOCO.SearchFields = entityPM.SearchFields;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentId))
-            {
-				entityPOCO.ShipmentId = entityPM.ShipmentId;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentDate))
             {
 				entityPOCO.ShipmentDate = entityPM.ShipmentDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecurityKey))
+            {
+				entityPOCO.SecurityKey = entityPM.SecurityKey;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -82,11 +82,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.SearchFields = entityPOCO.SearchFields;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentId))
-            {
-					entityPM.ShipmentId = entityPOCO.ShipmentId;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentDate))
             {
 					entityPM.ShipmentDate = entityPOCO.ShipmentDate;
@@ -95,6 +90,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
             {
 					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SecurityKey))
+            {
+					entityPM.SecurityKey = entityPOCO.SecurityKey;
             }
 
 		}
@@ -113,14 +113,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.SearchFields = entityPM.SearchFields;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentId))
-            {
-                oldEntityPM.ShipmentId = entityPM.ShipmentId;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentDate))
             {
                 oldEntityPM.ShipmentDate = entityPM.ShipmentDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecurityKey))
+            {
+                oldEntityPM.SecurityKey = entityPM.SecurityKey;
             }
 			
 		}

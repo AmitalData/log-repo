@@ -71,12 +71,17 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class ARPaymentUpdateClass
    {  		
-		public const string HashString = "246b99a34c08a58d06abb986d980ef5f";
+
+		public const string HashString = "dedd9cd09114fba35579a1d423a4b1e2";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6174,6 +6179,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 		   Feature ARPaymentFeature_ARPaymentEditExchangeRate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentEditExchangeRate", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.EditExchangeRate", NameTextCodeDefaultText = @"Edit Exchange Rate" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARPaymentObjectTable);
 
+		   Feature ARPaymentFeature_NewScreenPartnerTypes = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NewScreenPartnerTypes", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.NewScreenPartnerTypes", NameTextCodeDefaultText = @"Partner Types Filter On New Screen" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARPaymentObjectTable);
+
    
 	    
 		}
@@ -6185,7 +6192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
             {
                 Code =  "R2CB",
                 EnglishName =  "Returned to Cashbook",
-                LocalName =  "המחאה הוצאה מהפקדה",
+                LocalName =  "Returned to Cashbook",
                 IsManualEntry =  false,
                 ShortView =  true,
                 EventTypeCategoryCode =  "OPE",
@@ -6204,7 +6211,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
             {
                 Code =  "R2CS",
                 EnglishName =  "Returned to Customer",
-                LocalName =  "המחאה הוצאה מהפקדה והוחזרה ללקוח",
+                LocalName =  "Returned to Customer",
                 IsManualEntry =  false,
                 ShortView =  true,
                 EventTypeCategoryCode =  "OPE",

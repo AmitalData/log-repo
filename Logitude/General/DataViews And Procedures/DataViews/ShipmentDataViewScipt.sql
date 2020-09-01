@@ -120,7 +120,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
                          dbo.EventTypes.EnglishName as LastSharedEventName,
 						 WarehouseLegCard.CountryCode AS WarehouseLegAddressCountryCode,
 						 WarehouseLegCard.CountryName AS WarehouseLegAddressCountryName,
-
+						 dbo.Shipments.WarehouseStorageFreeDays AS WarehouseStorageFreeDays,
 						 --ShipperCards.EnglishName AS ShipperName,
 						 MainCarriageFromPorts.Code AS MainCarriageFromPortCode, MainCarriageToPorts.Code AS MainCarriageToPortCode, 
                          Transshipment1FromPorts.Code AS Transshipment1FromPortCode, Transshipment1ToPorts.Code AS Transshipment1ToPortCode, 

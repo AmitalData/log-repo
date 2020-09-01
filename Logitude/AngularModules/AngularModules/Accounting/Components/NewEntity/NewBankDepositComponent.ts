@@ -47,10 +47,16 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.DepositDate = new Date();
         this.EntityPM.DepositNumber = 0;
-
+        this.SetUIProperties();
         this.GetClosedMonth();
 
 
+    }
+
+    SetUIProperties() {
+            this.UIProperties.SetRequired("CashBookId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.CashBookId));
+        //    this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AccountingDate));
+            this.UIProperties.SetRequired("DepositBankAccountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DepositBankAccountId));
     }
 
     SetWindowArgs(args: any) {
@@ -72,8 +78,9 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     set AccountingDate(value: Date) {
         if (this.EntityPM.AccountingDate != value) {
             this.EntityPM.AccountingDate = value;
-
             this.EntityPM.DepositDate = value;
+          //  this.SetUIProperties();
+            this.AccountingDateLostFocus();
         }
     }
 
@@ -81,13 +88,16 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     set CashBookId(value: string) {
         if (this.EntityPM.CashBookId != value) {
             this.EntityPM.CashBookId = value;
+            this.SetUIProperties();
         }
+        
     }
 
     get DepositBankAccountId() { return this.EntityPM.DepositBankAccountId; }
     set DepositBankAccountId(value: string) {
         if (this.EntityPM.DepositBankAccountId != value) {
             this.EntityPM.DepositBankAccountId = value;
+            this.SetUIProperties();
         }
     }
 
@@ -117,10 +127,10 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
 
 
         // Required check
-        if (AppTool.IsNullOrEmpty(this.DepositBankAccountId) || AppTool.IsNullOrEmpty(this.CashBookId)) {
+        if (AppTool.IsNullOrEmpty(this.DepositBankAccountId) || AppTool.IsNullOrEmpty(this.CashBookId) ||  AppTool.IsNullOrEmpty(this.AccountingDate)) {
             errors.push(TextCodeTranslator.Translate("Accounting.General.O.AllFieldsRequired"));
         }
-        if (this.EntityPM.DepositCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+        else if (this.EntityPM.DepositCurrencyId != SessionLocator.TenantPM.CurrencyId) {
             //check rate
             this.CurrentSession.CurrentWindow.StartBusyIndicator("...");
             this.ratesTableExtendedListService.getClosestRate(SessionLocator.TenantPM.CurrencyId, this.EntityPM.DepositCurrencyId).subscribe((myResponse: ServiceResponse) => {
@@ -140,13 +150,15 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
                 }
             });
 
-            if (errors.length > 0) {
-                this.ValidationErrorsList = errors;
-                this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            }
+        
         } else {
             //continu saving
             this.CheckIfThereIsCheques(this.CashBookId);
+        }
+
+        if (errors.length > 0) {
+            this.ValidationErrorsList = errors;
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
 
     }
@@ -256,8 +268,15 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
 
     //#region closed month
     validateAccountingPeriod()
-    {
-        var isValid = this.IsMonthOpenForAccountingDate();
+    {   var isValid :boolean=false;
+        if(AppTool.IsNullOrEmpty(this.AccountingDate)){
+            this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AccountingDate))
+        }
+        else{
+
+            this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AccountingDate))
+
+          isValid = this.IsMonthOpenForAccountingDate();
         if (!isValid) {
             //this.ValidationErrorsList = [];
             //this.ValidationErrorsList.push("חודש סגור!"); // closed month
@@ -265,6 +284,7 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
         } else {
             this.UIProperties.SetValidity("AccountingDate", this.ObjectTableName, true, "");
         }
+    }
         return isValid;
     }
     IsMonthOpenForAccountingDate()
@@ -274,7 +294,7 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
             valid = false;
             //errorsList.Add(transText);
         }
-        else {
+        else if(this.EntityPM.AccountingDate) {
             var accountingDateMonth = this.EntityPM.AccountingDate.getMonth() + 1;
 
             if (accountingDateMonth > this.accountingPeriod.ClosedMonth) {
@@ -298,6 +318,9 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
                 //errorsList.Add(transText);
             }
         }
+        else {
+            valid = false;
+        }
         return valid;
     }
 
@@ -308,6 +331,7 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.accountingPeriod = myResponse.Result;
+                    this.AccountingDateLostFocus();
                 }
             }
         });

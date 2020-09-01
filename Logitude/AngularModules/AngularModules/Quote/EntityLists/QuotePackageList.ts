@@ -18,7 +18,5 @@ export class QuotePackageList {
 		Width: number;
 		Length: number;
 		PackageTypeName: string;
-		PickupDeliveryVolumetricWeight: number;
-		PickupDeliveryVolume: number;
 	
 }

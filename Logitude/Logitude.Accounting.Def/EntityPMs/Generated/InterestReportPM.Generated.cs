@@ -837,6 +837,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isUpdatedFromBatch ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsUpdatedFromBatch  
+	   {
+	    
+	     get
+		{
+		   return isUpdatedFromBatch;
+		 }
+		 set
+		 {
+		   if(isUpdatedFromBatch != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUpdatedFromBatch",OldValue=isUpdatedFromBatch,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isUpdatedFromBatch=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

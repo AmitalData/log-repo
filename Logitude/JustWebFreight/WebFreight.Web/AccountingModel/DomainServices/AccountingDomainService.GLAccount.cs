@@ -275,7 +275,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
             GLAccountCustomFilter customfilters = new GLAccountCustomFilter(tenant);
 
-            gLAccounts = customfilters.GetFilteredQuery(queryOperations, gLAccounts);
+            gLAccounts = customfilters.GetFilteredQuery(queryOperations, gLAccounts, accountingContext);
             gLAccounts = filter.GetFilteredQuery<GLAccount>(nonListQueryOperation, gLAccounts);
 
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", tenant);

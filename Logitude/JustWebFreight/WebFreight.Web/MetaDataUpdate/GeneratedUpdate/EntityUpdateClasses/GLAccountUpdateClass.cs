@@ -71,12 +71,17 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "7ae41d9145650be326a2daa2c7719cc4";
+
+		public const string HashString = "025a13d8f0aae4528f4fd48c9d51d958";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4229,7 +4234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4244,6 +4249,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -5284,7 +5290,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5299,6 +5305,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -5309,6 +5316,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Parent",
 					  						DefaultText =  "Parent",
+					  						FullLocalDefaultText =  "קוד אב",
+					  						ListFieldLable =  "ParentListLable",
+					  						ListLableDefaultText =  "קוד אב",
+					  						ListLocalDefaultText =  "Parent",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6572,12 +6583,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6591,6 +6603,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -6602,6 +6615,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "ActiveForInterest",
 					  						DefaultText =  "Active for Interest",
 					  						FullLocalDefaultText =  "פעיל לריבית",
+					  						ListFieldLable =  "ActiveForInterestListLable",
+					  						ListLableDefaultText =  "Active for Interest",
+					  						ListLocalDefaultText =  "פעיל לריבית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6629,12 +6645,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6648,6 +6665,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -6659,6 +6677,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "InterestCalculationStartDate",
 					  						DefaultText =  "Interest Calculation Start Date",
 					  						FullLocalDefaultText =  "תאריך לחישוב ריבית",
+					  						ListFieldLable =  "InterestCalculationStartDateListLable",
+					  						ListLableDefaultText =  "Interest Calculation Start Date",
+					  						ListLocalDefaultText =  "תאריך לחישוב ריבית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6686,12 +6707,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6705,6 +6727,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -6716,6 +6739,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "ActiveForInterestCreditInvoice",
 					  						DefaultText =  "Active for Interest Credit invoice",
 					  						FullLocalDefaultText =  "פעיל לחשבונית זיכוי",
+					  						ListFieldLable =  "ActiveForInterestCreditInvoiceListLable",
+					  						ListLableDefaultText =  "Active for Interest Credit invoice",
+					  						ListLocalDefaultText =  "פעיל לחשבונית זיכוי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6800,12 +6826,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6819,6 +6846,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -6832,6 +6860,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "InterestCreditLimit",
 					  						DefaultText =  "Interest Credit",
 					  						FullLocalDefaultText =  "אשראי לריבית",
+					  						ListFieldLable =  "InterestCreditLimitListLable",
+					  						ListLableDefaultText =  "Interest Credit",
+					  						ListLocalDefaultText =  "אשראי לריבית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6973,12 +7004,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6992,6 +7024,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -7003,6 +7036,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "MinimumInterestInvoiceBilling",
 					  						DefaultText =  "Minimum Interest Invoice billing",
 					  						FullLocalDefaultText =  "מינימום חיוב בחשבונית ריבית",
+					  						ListFieldLable =  "MinimumInterestInvoiceBillingListLable",
+					  						ListLableDefaultText =  "Minimum Interest Invoice billing",
+					  						ListLocalDefaultText =  "מינימום חיוב בחשבונית ריבית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7059,6 +7095,354 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsSplitted",
 					  						DefaultText =  "IsSplitted",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SalesmanName",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SalesmanName",
+					  						ListPropertyPath =  "SalesmanName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SalesmanName",
+					  						DefaultText =  "Salesman",
+					  						FullLocalDefaultText =  "איש מכירות",
+					  						ListFieldLable =  "SalesmanNameListLable",
+					  						ListLableDefaultText =  "Salesman",
+					  						ListLocalDefaultText =  "איש מכירות",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CollectorName",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CollectorName",
+					  						ListPropertyPath =  "CollectorName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CollectorName",
+					  						DefaultText =  "Collector",
+					  						FullLocalDefaultText =  "גובה",
+					  						ListFieldLable =  "CollectorNameListLable",
+					  						ListLableDefaultText =  "Collector",
+					  						ListLocalDefaultText =  "גובה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SplitCurrencyAccount",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SplitCurrencyAccount",
+					  						ListPropertyPath =  "SplitCurrencyAccount",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SplitCurrencyAccount",
+					  						DefaultText =  "Split Currency Account",
+					  						ListFieldLable =  "SplitCurrencyAccountListLable",
+					  						ListLableDefaultText =  "Split Currency Account",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ParentName",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ParentName",
+					  						ListPropertyPath =  "ParentName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ParentName",
+					  						DefaultText =  "Parent",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "GLAccountCurrencies",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "List",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "GLAccountCurrencies",
+					  						ListPropertyPath =  "GLAccountCurrencies",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  true,
+					  						MultiTableName =  "GLAccountCurrency",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "GLAccountCurrencies",
+					  						DefaultText =  "GLAccount Currencies",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ParentCurrencyId",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ParentCurrencyId",
+					  						ListPropertyPath =  "ParentCurrencyId",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ParentCurrencyId",
+					  						DefaultText =  "Parent Currency",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7628,23 +8012,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen GLAccountHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GLAccount.HeaderScreen", Name = "Header Screen", ObjectTableId = GLAccountObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen GLAccountHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GLAccount.HeaderScreen", Name = "Header Screen", ObjectTableId = GLAccountObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
             ScreenField GLAccountGLAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.DisplayNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.LocalBalanceInDue", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.NextDueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.CurrencyCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.LocalBalanceInDue", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.NextDueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.CurrencyCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.ReconcileMethodName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.ReconcileMethodName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GLAccountGLAccountHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.InternalNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GLAccountGLAccountHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.ParentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField GLAccountGLAccountHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.SplitCurrencyAccount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField GLAccountGLAccountHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.InternalNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField GLAccountGLAccountHeaderScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.SalesmanName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField GLAccountGLAccountHeaderScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 2, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.CollectorName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    GLAccountObjectTable.HeaderScreenId = GLAccountHeaderScreenScreen0.Id;
 		    GLAccountObjectTable.HeaderScreenCode = GLAccountHeaderScreenScreen0.Code;
@@ -7793,7 +8185,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "GLPC",
                 EnglishName =  "Parent GLAccount updated",
-                LocalName =  "כרטיס אב עודכן",
+                LocalName =  "Parent GLAccount updated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
@@ -7812,7 +8204,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CTCH",
                 EnglishName =  "Chart Of Account Type Changed",
-                LocalName =  "סוג קבוצת מאזן עודכן",
+                LocalName =  "Chart Of Account Type Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
@@ -7831,7 +8223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "ADD",
                 EnglishName =  "Splitted GLAccount added",
-                LocalName =  "נוסף כרטיס פיצול לפני מטבע",
+                LocalName =  "Splitted GLAccount added",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -7850,7 +8242,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "INGL",
                 EnglishName =  "Splitted GLAccount deactivated",
-                LocalName =  "כרטיס הפיצול נחסם",
+                LocalName =  "Splitted GLAccount deactivated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -7869,7 +8261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DISC",
                 EnglishName =  "Child GLAccount was disconnected",
-                LocalName =  "כרטיס בן נותק",
+                LocalName =  "Child GLAccount was disconnected",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -7888,7 +8280,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CHID",
                 EnglishName =  "Child GLAccount was added",
-                LocalName =  "הכרטיס נוסף ככרטיס בן ",
+                LocalName =  "Child GLAccount was added",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -7907,7 +8299,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "SGAC",
                 EnglishName =  "Splitted GLAccount was activated",
-                LocalName =  "כרטיס הפיצול מוּפעָל",
+                LocalName =  "Splitted GLAccount was activated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -7926,7 +8318,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "LIAC",
                 EnglishName =  "Line activated",
-                LocalName =  "שורה הופעלה",
+                LocalName =  "Line activated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -7945,7 +8337,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DETV",
                 EnglishName =  "Line deactivated",
-                LocalName =  "שורה מספר נחסמה",
+                LocalName =  "Line deactivated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -8002,7 +8394,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "ACR",
                 EnglishName =  "Created",
-                LocalName =  "חדש",
+                LocalName =  "Created",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -8021,7 +8413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "ACH",
                 EnglishName =  "Account Number Changed",
-                LocalName =  "שינוי מספר חשבון",
+                LocalName =  "Account Number Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -8040,7 +8432,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "NCH",
                 EnglishName =  "Account Name Changed",
-                LocalName =  "שינוי שם חשבון",
+                LocalName =  "Account Name Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -8059,7 +8451,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CHCH",
                 EnglishName =  "Chart of Accounts Changed",
-                LocalName =  "שינוי קבוצת מאזן",
+                LocalName =  "Chart of Accounts Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -8078,7 +8470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "BLK",
                 EnglishName =  "Account Inactivated",
-                LocalName =  "הכרטיס נחסם",
+                LocalName =  "Account Inactivated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -8097,7 +8489,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "UBLK",
                 EnglishName =  "Account Activated",
-                LocalName =  "הכרטיס הופעל",
+                LocalName =  "Account Activated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -8116,7 +8508,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "GLRC",
                 EnglishName =  "Account Reactivated",
-                LocalName =  "הכרטיס הופעל מחדש",
+                LocalName =  "Account Reactivated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8134,7 +8526,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CAT1",
                 EnglishName =  "Category 1 Changed",
-                LocalName =  "שינוי  מזהה קטגוריה 1 ",
+                LocalName =  "Category 1 Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8152,7 +8544,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CAT2",
                 EnglishName =  "Category 2 Changed",
-                LocalName =  "שינוי  מזהה קטגוריה 2 ",
+                LocalName =  "Category 2 Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8170,7 +8562,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CAT3",
                 EnglishName =  "Category 3 Changed",
-                LocalName =  "שינוי  מזהה קטגוריה 3 ",
+                LocalName =  "Category 3 Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8188,7 +8580,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CAT4",
                 EnglishName =  "Category 4 Changed",
-                LocalName =  "שינוי  מזהה קטגוריה 4 ",
+                LocalName =  "Category 4 Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8206,7 +8598,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "RVUP",
                 EnglishName =  "Revaluation Enabled Changed",
-                LocalName =  "שינוי שערוך אוטומטי ",
+                LocalName =  "Revaluation Enabled Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8224,7 +8616,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CAT5",
                 EnglishName =  "Category 5 Changed",
-                LocalName =  "שינוי  מזהה קטגוריה 5 ",
+                LocalName =  "Category 5 Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8242,7 +8634,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "MLUP",
                 EnglishName =  "Is Multi Currency Changed",
-                LocalName =  "שינוי רב מטבעי ",
+                LocalName =  "Is Multi Currency Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8260,7 +8652,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "RMUP",
                 EnglishName =  "Reconcile Method Changed",
-                LocalName =  " שינוי שיטת התאמה ",
+                LocalName =  "Reconcile Method Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8278,7 +8670,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "ARCP",
                 EnglishName =  "Automatic Reconcile Method Changed",
-                LocalName =  " שינוי התאמה אוטומטית  ",
+                LocalName =  "Automatic Reconcile Method Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8296,7 +8688,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VAEX",
                 EnglishName =  "Is Vat Eexcempt Changed",
-                LocalName =  "שדה פטור מע”מ שונה",
+                LocalName =  "Is Vat Eexcempt Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8314,7 +8706,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DIST",
                 EnglishName =  "Card was disconnected",
-                LocalName =  "נותק מכרטיס תפעולי",
+                LocalName =  "Card was disconnected",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8332,7 +8724,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "NTAD",
                 EnglishName =  "New Note",
-                LocalName =  "הערה חדשה נוספה",
+                LocalName =  "New Note",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8350,7 +8742,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "NTUP",
                 EnglishName =  "Note Edited",
-                LocalName =  "הערה עודכנה",
+                LocalName =  "Note Edited",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8368,7 +8760,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "NTDL",
                 EnglishName =  "Note Deleted",
-                LocalName =  "הערה נמחקה",
+                LocalName =  "Note Deleted",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8386,7 +8778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "AFIT",
                 EnglishName =  "Active for interest",
-                LocalName =  "הופעל במערכת ריבית",
+                LocalName =  "Active for interest",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8404,7 +8796,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "IFIT",
                 EnglishName =  "Inactive for interest",
-                LocalName =  "לא פעיל  במערכת ריבית",
+                LocalName =  "Inactive for interest",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8422,7 +8814,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "ISDT",
                 EnglishName =  "Interest Start Date",
-                LocalName =  "עודכנו נתוני ריבית",
+                LocalName =  "Interest Start Date",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8440,7 +8832,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "AFIC",
                 EnglishName =  "Active For Interest Credit Invoice",
-                LocalName =  " פעיל בזיכוי ריבית",
+                LocalName =  "Active For Interest Credit Invoice",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8458,7 +8850,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "MIIB",
                 EnglishName =  "Minimum Interest Invoice Billing",
-                LocalName =  "עודכן סכום מינימום לריבית",
+                LocalName =  "Minimum Interest Invoice Billing",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8476,7 +8868,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "LUPD",
                 EnglishName =  "Line Updated",
-                LocalName =  " עודכנה שורת ריבית ",
+                LocalName =  "Line Updated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8494,7 +8886,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "SCBC",
                 EnglishName =  "Small cashbook changed",
-                LocalName =  "שדה קופה קטנה שונה",
+                LocalName =  "Small cashbook changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8512,7 +8904,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "GLCC",
                 EnglishName =  "GLAccount.currency conected",
-                LocalName =  "חיבור כרטסת מטבעית בוצעה",
+                LocalName =  "GLAccount.currency conected",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8530,7 +8922,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "GLDD",
                 EnglishName =  "GLAccount.currency disconnected",
-                LocalName =  "ניתוק כרטסת מטבעית בוצע",
+                LocalName =  "GLAccount.currency disconnected",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -9080,6 +9472,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOGLaccountConnectedMoreOneCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLaccountConnectedMoreOneCard", DefaultText = "the GLaccount is connected to more than one operational card",LocalDefaultText = @"הכרטסת מחוברת ליותר מכרטיס תפעולי אחד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountONoSalesman = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSalesman", DefaultText = "You cannot run this report without filling the Salesman field",LocalDefaultText = @"לא ניתן להפיק את הדוח ללא בחירת איש מכירות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+
+ 		   TextCode GLAccountTextCode_GLAccountOConnected10Cards = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Connected10Cards", DefaultText = "The GLAccount is connected to 10 or more operational cards.",LocalDefaultText = "כרטיס הנח''ש מחובר ליותר מ 10 כרטיסים תפעוליים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Multi", DefaultText = "Multi",LocalDefaultText = @"רב", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
 
    
 	    

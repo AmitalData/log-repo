@@ -1,20 +1,67 @@
-<table style="height: 24px">
+<style>
+    tr td:first-child{
+    width:1%;
+    white-space:nowrap;
+}
+</style>
+
+
+<table style="height: 24px;width:100%">
     <tr>
         <td>
-            <div class="ShortTitleMainControl" [style.float]="isRTL ? 'right' : 'left'">
-                <div class="ShortTitleDiv" *ngIf="(EntityPM.AccountTypeCode=='3' || EntityPM.AccountTypeCode=='2') && IsConnectedCard && isRTL " style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
-                    <a href="#" style="font-size:12px" (click)="OpenCardScreen()">{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</a>
-                </div>
-                <div class="ShortTitleDiv" style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
-                    {{EntityPM.LocalName}}
-                </div>
-                <div class="ShortTitleDiv" *ngIf="(EntityPM.AccountTypeCode=='3'|| EntityPM.AccountTypeCode=='2') && IsConnectedCard && !isRTL" style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
-                    <a href="#" style="font-size:12px" (click)="OpenCardScreen()">{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</a>
-                </div>
-            </div>
+            <table>
+             <tr>
+                <td >
+                    <div  style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
+                        {{EntityPM.LocalName}}
+                    </div>
+                 </td>
+                 <td style="width:20px;">
+                    <div  *ngIf="(EntityPM.AccountTypeCode=='3' || EntityPM.AccountTypeCode=='2') && IsConnectedToOneCard  " style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
+                        <a href="#" style="font-size:12px" (click)="OpenCardScreen(null)">{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</a>
+                    </div>
+                 </td>
+                 <td style="width:40px;" *ngIf="IsConnectedToMoreThanOneCard">
+                    <div> <span>{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</span></div>
 
-            <!-- Cancelled -->
-            <div *ngIf="EntityPM.Inactive" class="ShortTitleControl" float-start style="padding: 0px 5px;background: #e66464;"><span style="color: white;"> {{'Accounting.O.Inactive' | TextCodeTranslationPipe}}</span></div>
+                 </td>
+                 <td style="width:20px;" *ngIf="IsConnectedToMoreThanOneCard">
+                    <div  >
+                  
+                        <LogToolTip [Scrollable]="true" [float]="'left'" [mode]="'Info'" float-start [direction]="isRTL?'bottomleft':'bottomright'" *ngIf="IsConnectedToMoreThanOneCard">
+                          <span style="font-size: bold;">
+                              <div>
+                                  <ul style="list-style: none;">
+                                      <li *ngFor="let card of ConnectedCards; let i=index;">
+                                          <div>
+                                              <a href="#" style="font-size:12px" (click)="OpenCardScreen(card.Id)">{{card.LocalName}}</a>
+      
+                                              <div style="clear: both;"></div>
+      
+                                          </div>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </span>
+      
+                       </LogToolTip>
+                   
+                      </div>
+                 </td>
+               
+                
+                 <td style="width:70px;">
+                      <!-- Cancelled -->
+                  <div *ngIf="EntityPM.Inactive" class="ShortTitleControl" float-start style="padding: 0px 5px;background: #e66464;"><span style="color: white;"> {{'Accounting.O.Inactive' | TextCodeTranslationPipe}}</span></div>
+                 </td>
+                 <td></td>
+             </tr>
+
+            </table>
+            
+         
+
+           
         </td>
     </tr>
 </table>

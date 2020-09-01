@@ -29,6 +29,7 @@ export class AddEditFCLChargeComponent implements OnDestroy {
     public ObjectTableName: string = "QuoteCharge";
     public ItemsSource: ObservableCollection;
     public ChargeTypesQueryFilters: ApiQueryFilters;
+    public MeasurementsQueryFilters: ApiQueryFilters;
     public IsVATVisible: boolean = false;
     public ValidationErrorsList: string[] = [];
     public CheckChargeTypeDuplicationFlag: boolean = false;
@@ -83,8 +84,10 @@ export class AddEditFCLChargeComponent implements OnDestroy {
         this.ItemsSource.Insert(this.DataContext);
     }
     BuildQueryFilters() {
-        this.ChargeTypesQueryFilters = new ApiQueryFilters();
+        this.MeasurementsQueryFilters = new ApiQueryFilters();
+        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
 
+        this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
 
         switch (this.QuotePM.TransportModeId) {

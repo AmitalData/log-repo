@@ -19,7 +19,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
         {
             if (isNewEntity)
             {
-                entityPOCO.BluesnapContractQTY = entityPM.NumberOfUsers;
+                entityPOCO.BluesnapContractQTY = entityPM.NumberOfUsers == null ? 0 : entityPM.NumberOfUsers.Value;
                 entityPOCO.BluesnapCRMContractQTY = 1;
                 entityPOCO.BluesnapEAWBContractQTY = 1;
                 entityPOCO.BluesnapEAWBSContractQTY = 1;

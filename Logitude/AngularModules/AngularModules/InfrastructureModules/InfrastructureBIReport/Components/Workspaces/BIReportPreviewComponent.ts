@@ -380,7 +380,19 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     }
 
 
+    ExportToExcelAdvancedButtonClick() {
 
+        var windowArgs: any = {};
+        var logWindow = new LogitudeWindow();
+        windowArgs.BIReportPreviewComponent = this;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 310;
+        logWindow.Height = 160;
+        logWindow.Title = "Export Advanced Settings";
+
+        logWindow.Show("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIExportSettingAdvanceComponent");
+
+    }
 
     public methodFromParent(cell) {
         this.StartBusyIndicator("Loading ...");
@@ -741,6 +753,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Infrastructure/Components/ExportBI2ExcelControl/ExportBI2ExcelControl');
+        logitudeWindow.WindowClosed.subscribe(() => {
+            this.BIReportXMLData.IncludeTotals = false;
+        });
     }
     CountClicked() {
         alert("Count : " + this.agGrid.api.getDisplayedRowCount());

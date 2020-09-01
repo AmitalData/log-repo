@@ -35,6 +35,10 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public int Countries { get; set; }
         [Column("TransportModes")]
 	    public int TransportModes { get; set; }
+        [Column("ShipmentComputedFields")]
+	    public int ShipmentComputedFields { get; set; }
+        [Column("ShipmentMasterDatas")]
+	    public int ShipmentMasterDatas { get; set; }
     }
 }
 	 

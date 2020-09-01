@@ -28,14 +28,40 @@ export class CargoTrackingShipmentList {
 	GrossWeight: number;
 	Volume: number;
 	PickupDone: boolean;
-	ClearanceDone: boolean;
 	PickupDate: Date;
-	ClearanceDate: Date;
 	CreateDate: Date;
 	SecurityKey: string;
 	ConsigneeName: string;
 	ShipperName: string;
 	CustomerReference: string;
+	PickupEstimationDate: Date;
+	FromWarehouseDate: Date;
+	FromWarehouseEstimationDate: Date;
+	FromWarehouseNotes: string;
+	DepartureDone: boolean;
+	DepartureDate: Date;
+	DepartureEstimationDate: Date;
+	ArrivalDone: boolean;
+	ArrivalDate: Date;
+	ArrivalEstimationDate: Date;
+	ToWarehouseDone: boolean;
+	ToWarehouseDate: Date;
+	ToWarehouseEstimationDate: Date;
+	ToWarehouseNotes: string;
+	CustomsPaymentDone: boolean;
+	CustomsPaymentDate: Date;
+	ClearanceDone: boolean;
+	ClearanceDate: Date;
+	DeliveredDone: boolean;
+	DeliveredDate: Date;
+	DeliveredEstimationDate: Date;
+	FromWarehouseDone: boolean;
+	FirstPickupETD: Date;
+	WarehouseLegActualEntryDate: Date;
+	WarehouseLegExpectedEntryDate: Date;
+	WarehouseLegRemarks: string;
+	DeclarationDate: Date;
+	CustomsClearanceDate: Date;
 	
 }
  

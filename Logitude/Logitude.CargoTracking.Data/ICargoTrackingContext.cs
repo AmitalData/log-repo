@@ -24,6 +24,8 @@ namespace Logitude.CargoTracking.Data
 		 IDbSet<CargoTrackingMilestone> CargoTrackingMilestones { get; }
 		 IDbSet<CargoTrackingPort> CargoTrackingPorts { get; }
 		 IDbSet<CargoTrackingShipment> CargoTrackingShipments { get; }
+		 IDbSet<CargoTrackingShipmentComputed> CargoTrackingShipmentComputeds { get; }
+		 IDbSet<CargoTrackingShipmentMaster> CargoTrackingShipmentMasters { get; }
 		 IDbSet<CargoTrackingShipmentSearch> CargoTrackingShipmentSearches { get; }
 		 IDbSet<CargoTrackingTransportMode> CargoTrackingTransportModes { get; }
 		 IDbSet<CargoTrackingWatermark> CargoTrackingWatermarks { get; }

@@ -54,7 +54,7 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
   @Output() onQueryChangeEvent = new EventEmitter();
   public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
   @Output() MenuHeaderchangeevent = new EventEmitter();
-  //public MarkIsChecked: EventEmitter<any> = new EventEmitter();
+ public MarkIsChecked: EventEmitter<any> = new EventEmitter();
     public ColumnsReady: EventEmitter<any> = new EventEmitter();
   ngOnInit() {
     this.InitializeDate();
@@ -62,6 +62,7 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     this.ReloadData();
 
   }
+ private selectedItems:ObservableCollection;
     ReloadData() {
       
       this.SelectedItemsCount = 0;
@@ -111,18 +112,21 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
           Display: TextCodeTranslator.Translate("InterestReport.F.ReportNumber"),
             Styles: { width: '80px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
+           
             HtmlListComponentName: 'InterestReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportListTemplate',
-
+            ServerSideSortable: true,
+            SortByName: 'ReportNumber'
         });
 
         this.Columns.push({
           FieldName: 'GLAccountLocalName',
             DataTypeCode: 'String',
           Display: TextCodeTranslator.Translate("InterestReport.F.GLAccountLocalName"), // 'Source',
-            Styles: { width: '130px' },
+            Styles: { width: '300px' },
             IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'GLAccountLocalName'
         });
 
       this.Columns.push({
@@ -132,7 +136,9 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
         Styles: { width: '120px' },
         HtmlListComponentName: 'InterestReportListTemplate',
         HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportListTemplate',
-        IsCustomTemplate: true
+        IsCustomTemplate: true,
+        ServerSideSortable: true,
+        SortByName: 'InterestCalculationDate'
       });
         this.Columns.push({
           FieldName: 'GLAccountInterestCreditLimit',
@@ -140,16 +146,17 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
           Display: TextCodeTranslator.Translate("InterestReport.F.GLAccountInterestCreditLimit"),
             Styles: { width: '150px' },
             IsCustomTemplate: true,
-           
+            ServerSideSortable: true,
+           SortByName: 'GLAccountInterestCreditLimit'
         });
         this.Columns.push({
           FieldName: 'TotalAmount',
             DataTypeCode: 'number',
           Display: TextCodeTranslator.Translate("InterestReport.F.TotalAmount"), 
             Styles: { width: '100px' },
-            IsCustomTemplate: true
-            ,
-           
+            IsCustomTemplate: true ,
+             ServerSideSortable: true,
+            SortByName: 'TotalAmount'
         });
         this.Columns.push({
           FieldName: 'InterestReportStatusName',
@@ -159,7 +166,8 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
             IsCustomTemplate: true,
             HtmlListComponentName: 'InterestReportListTemplate',
           HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportListTemplate',
-        
+           ServerSideSortable: true,
+            SortByName: 'InterestReportStatusName'
            
         }); this.ColumnsReady.emit(this.Columns); 
         this.CurrentSession.InterestReportCheckBoxCheckedEvent.subscribe(($event) => {
@@ -171,7 +179,7 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
 
                 this.onCheckBoxChecked($event);
                 this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
-                /// this.MarkIsChecked.emit({ MyRecord: row });
+                 this.MarkIsChecked.emit({ MyRecord: row,AllSelected:this.AllSelected });
             }
         });
 
@@ -204,10 +212,15 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
   private EnabledDataCount: number;
     OnDataLoaded(result) {
         if (result) {
+           result = new ObservableCollection(result);
+
             this.DataCount = this.DataSource.rowCount;
-          this.EnabledDataCount = result.filter(d => d.InterestReportStatusCode != "8").length;
+          this.EnabledDataCount = result.Collection.filter(d => d.InterestReportStatusCode != "8").length;
           this.SelectedItemsCountText = "selected 0 of " + this.DataCount;
-        } 
+        }
+   var selectedLines = this.AllSelected?result: this.selectedItems;
+  this.MarkIsChecked.emit({ SelectedLines:selectedLines,AllSelected: this.AllSelected});
+
     }
      today: Date = new Date();
      lastmonth:any = this.today.setDate(this.today.getDay() - 30);
@@ -266,6 +279,9 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
         } else {
             this.IsSelectedItemsTextVisibile = false;
             this.SelectedItemsCount = 0;
+        this.selectedItems.Clear();
+         this.MarkIsChecked.emit({ SelectedLines:this.selectedItems,AllSelected: value});
+
         }
         this.SetCreateInvoiceButtonText();
     }
@@ -273,7 +289,7 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
   DataSource = {
     pageSize: 30,
     rowCount: null,
-    sortingCol: "InterestCalculationDate",
+    sortingCol: "ReportNumber",
     sortingDir: "Descending",
     getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
       var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
@@ -314,7 +330,7 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
    // this.ReloadData();
 
     }
-    private selectedItems: ObservableCollection;
+
   public SelectedItemsCount: number=0;
     onCheckBoxChecked($event:any)
     {

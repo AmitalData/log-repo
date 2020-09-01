@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c491d310-69f2-4f9e-8992-06bd97c507b8" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://system.logitudeworld.com/WcfApi/CustomerDWWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CustomerDWWcfService.xsd" MetadataType="Schema" ID="c0fe9804-ac71-4f7b-9be0-61f184ffbc5c" SourceId="1" SourceUrl="http://system.logitudeworld.com/WcfApi/CustomerDWWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="CustomerDWWcfService.disco" MetadataType="Disco" ID="ffa00d57-b509-430c-a11e-967160385712" SourceId="1" SourceUrl="http://system.logitudeworld.com/WcfApi/CustomerDWWcfService.svc?disco" />
+    <MetadataFile FileName="CustomerDWWcfService1.xsd" MetadataType="Schema" ID="92345d61-739c-4559-8e54-0207ed947a7b" SourceId="1" SourceUrl="http://system.logitudeworld.com/WcfApi/CustomerDWWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="CustomerDWWcfService2.xsd" MetadataType="Schema" ID="c01ee4fa-1b72-45a8-bb11-19ca351918cd" SourceId="1" SourceUrl="http://system.logitudeworld.com/WcfApi/CustomerDWWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="CustomerDWWcfService3.xsd" MetadataType="Schema" ID="d6ed7cb3-5765-4bcd-82d0-3435bacf7905" SourceId="1" SourceUrl="http://system.logitudeworld.com/WcfApi/CustomerDWWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="CustomerDWWcfService4.xsd" MetadataType="Schema" ID="c6bd2d34-21d3-4c0b-909a-a89759c70a1b" SourceId="1" SourceUrl="http://system.logitudeworld.com/WcfApi/CustomerDWWcfService.svc?xsd=xsd6" />
+    <MetadataFile FileName="CustomerDWWcfService5.xsd" MetadataType="Schema" ID="b7d3e89a-7a42-438c-819a-469ac422d070" SourceId="1" SourceUrl="http://system.logitudeworld.com/WcfApi/CustomerDWWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="CustomerDWWcfService.wsdl" MetadataType="Wsdl" ID="a84e4be4-8bf8-4405-a875-a91f42fa1e71" SourceId="1" SourceUrl="http://system.logitudeworld.com/WcfApi/CustomerDWWcfService.svc?wsdl" />
+    <MetadataFile FileName="CustomerDWWcfService6.xsd" MetadataType="Schema" ID="0d2719c7-26a7-4888-b178-52bee4267a9b" SourceId="1" SourceUrl="http://system.logitudeworld.com/WcfApi/CustomerDWWcfService.svc?xsd=xsd5" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

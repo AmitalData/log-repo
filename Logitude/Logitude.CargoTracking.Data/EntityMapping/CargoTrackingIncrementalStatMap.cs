@@ -38,6 +38,10 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.Countries).HasColumnName("Countries").IsRequired();
 
             this.Property(t => t.TransportModes).HasColumnName("TransportModes").IsRequired();
+
+            this.Property(t => t.ShipmentComputedFields).HasColumnName("ShipmentComputedFields").IsRequired();
+
+            this.Property(t => t.ShipmentMasterDatas).HasColumnName("ShipmentMasterDatas").IsRequired();
         }
     }
 }

@@ -21,6 +21,8 @@ namespace CargoTrackingWinService.Helper
         public static int Cards { get; set; }
         public static int Countries { get; set; }
         public static int TransportModes { get; set; }
+        public static int ShipmentComputedFields { get; set; }
+        public static int ShipmentMasterDatas { get; set; }
 
     }
 }

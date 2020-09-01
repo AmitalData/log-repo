@@ -421,7 +421,14 @@ export class DocumentsFilingPM {
     public get IsUpdateSharedDocument() { return this.isUpdateSharedDocument; }
     public set IsUpdateSharedDocument(newValue: boolean) { if (this.isUpdateSharedDocument != newValue) { this.isUpdateSharedDocument = newValue; this.MarkAsDirty("IsUpdateSharedDocument"); } }
        
-	 
+
+
+
+    private isUoloadedField: boolean;
+    public get IsUoloadedField() { return this.isUoloadedField; }
+    public set IsUoloadedField(newValue: boolean) { if (this.isUoloadedField != newValue) { this.isUoloadedField = newValue; this.MarkAsDirty("IsUoloadedField"); } }
+
+
      
 	private documentsFilingMetaDataValues: DocumentsFilingMetaDataValuePM[];
     get  DocumentsFilingMetaDataValues() {

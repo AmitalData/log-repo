@@ -116,7 +116,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                 SecurityUtility.CheckContactFeature("WarehouseEntry", "READ", tenant);
 
                 WarehouseEntryQueryService warehouseEntryQueryService = new WarehouseEntryQueryService(tenant);
-                List<WarehouseEntryList> warehouseEntries = warehouseEntryQueryService.GetWarehouseEntryListsByshipmentId(shipmentId, tenant);
+                List<WarehouseEntryList> warehouseEntries = warehouseEntryQueryService.GetActiveWarehouseEntryListsByshipmentId(shipmentId, tenant);
                 
                 return Request.CreateResponse(HttpStatusCode.OK, warehouseEntries);
             }

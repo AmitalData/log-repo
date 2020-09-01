@@ -10,11 +10,17 @@ export class NewQuoteWizardScenarios {
     private isInlandDomestic: boolean = false;
     public EntityId: string;
     public EntityNumber: string;
-    public RunScenario(transportMode: string, direction: string, shipmentType: string = null) {
+    public RunScenario(direction: string, transportMode: string, shipmentType: string = null) {
 
-        this.direction = direction;
-        this.transportMode = transportMode;
-        this.shipmentType = shipmentType;
+        this.direction = direction.toUpperCase();
+        this.transportMode = transportMode.toUpperCase();
+        this.shipmentType = shipmentType.toUpperCase();
+
+        if (this.shipmentType == 'FCLD' || this.shipmentType == 'FCL')
+            this.shipmentType = 'FCLD';
+        if (this.shipmentType == 'LCLD' || this.shipmentType == 'LCL')
+            this.shipmentType = 'LCLD';
+
         this.objectTable = "Quote";
 
         if ((this.transportMode == "O" && this.shipmentType == "FCLD") || (this.transportMode == "I" && this.shipmentType == "FTL")) {
@@ -32,6 +38,20 @@ export class NewQuoteWizardScenarios {
         this.FillMainCarriage();
 
         //this.FillOrderDetails();
+        this.Save().then((entityNumber: string) => {
+            cy.get('quicksearchtextbox')
+                .find('.LogitudeQuickSearchTextBox')
+                .eq(0)
+                .within(() => {
+                    cy.get('input').type(entityNumber).then(() => {
+                        cy.get('ul > li').then(a => {
+                            cy.contains('td', entityNumber).click({ force: true });
+                            //cy.get('ul > li').eq(0).click({ force: true });
+                        });
+                    });
+                });
+        });
+
 
         //this.Save();
         //this.OpenWizardWindow();
@@ -39,7 +59,8 @@ export class NewQuoteWizardScenarios {
     }
 
     private OpenWizardWindow() {
-        Resolvers.ButtonResolver.Selector('Button').Text('New').Click();
+        Resolvers.ButtonResolver.Selector('#NewQuote').Click();
+        //Resolvers.ButtonResolver.Selector('Button').Text('New').Click();
         Resolvers.WindowResolver.ShouldBeOpend();
     }
     private CancelWizardWindow() {
@@ -96,18 +117,29 @@ export class NewQuoteWizardScenarios {
         }
     }
     private FillShipper(name: string) {
-        Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("ShipperId").Type(name);
-        Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ShipperReference1").Type(Random.GetRandomNumber());
-        Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ShipperReference2").Type(Random.GetRandomNumber());
+        Resolvers.LOVResolver.Selector('#Quote_ShipperId').Type(name);
+        Resolvers.TextBoxResolver.Selector("#Quote_ShipperReference1").Type(Random.GetRandomNumber());
+        Resolvers.TextBoxResolver.Selector("#Quote_ShipperReference2_1").Type(Random.GetRandomNumber());
+
+        //Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("ShipperId").Type(name);
+        //Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ShipperReference1").Type(Random.GetRandomNumber());
+        //Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ShipperReference2").Type(Random.GetRandomNumber());
     }
     private FillConsignee(name: string) {
-        Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("ConsigneeId").Type(name);
-        Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ConsigneeReference1").Type(Random.GetRandomNumber());
-        Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ConsigneeReference2").Type(Random.GetRandomNumber());
+        Resolvers.LOVResolver.Selector('#Quote_ConsigneeId').Type(name);
+        Resolvers.TextBoxResolver.Selector("#Quote_ConsigneeReference1").Type(Random.GetRandomNumber());
+        Resolvers.TextBoxResolver.Selector("#Quote_ConsigneeReference2_1").Type(Random.GetRandomNumber());
+
+        //Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("ConsigneeId").Type(name);
+        //Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ConsigneeReference1").Type(Random.GetRandomNumber());
+        //Resolvers.TextBoxResolver.ObjectTable(this.objectTable).ObjectField("ConsigneeReference2").Type(Random.GetRandomNumber());
     }
     private FillGeneral() {
-        Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("IncotermId").SelectFirst();
-        Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("MoveTypeId").SelectFirst();
+        Resolvers.LOVResolver.Selector("#Quote_IncotermId").SelectFirst();
+        Resolvers.LOVResolver.Selector("#Quote_MoveTypeId").SelectFirst();
+
+        //Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("IncotermId").SelectFirst();
+        //Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("MoveTypeId").SelectFirst();
     }
     private FillMainCarriage() {
 
@@ -144,22 +176,27 @@ export class NewQuoteWizardScenarios {
                 break;
             }
         }
-
-        if (this.isInlandDomestic) {
-            cy.get('label').contains('Include PickUp').should('not.exist');
-            cy.get('label').contains('Include Delivery').should('not.exist');
-            cy.get('loglabel[ng-reflect--object-field-name="FromPortId"]').find('label').contains(fromPortLabel).should('not.exist');
-            cy.get('loglabel[ng-reflect--object-field-name="ToPortId"]').find('label').contains(toPortLabel).should('not.exist');
+        if (!this.isInlandDomestic) {
+            Resolvers.LOVResolver.Selector("#Quote_FromPortId").Type(fromPortCode);
+            Resolvers.LOVResolver.Selector("#Quote_ToPortId").Type(toPortCode);
+            Resolvers.LOVResolver.Selector("#Quote_MainCarriageCarrierId").Type(carrier);
         }
 
-        else {
-            cy.get('loglabel[ng-reflect--object-field-name="FromPortId"]').find('label').contains(fromPortLabel).should('be.exist');
-            cy.get('loglabel[ng-reflect--object-field-name="ToPortId"]').find('label').contains(toPortLabel).should('be.exist');
-            cy.get('loglabel[ng-reflect--object-field-name="MainCarriageCarrierId"]').find('label').contains(carrierLabel).should('be.exist');
-            Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("FromPortId").Type(fromPortCode);
-            Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("ToPortId").Type(toPortCode);
-            Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("MainCarriageCarrierId").Type(carrier);
-        }
+        //if (this.isInlandDomestic) {
+        //    cy.get('label').contains('Include PickUp').should('not.exist');
+        //    cy.get('label').contains('Include Delivery').should('not.exist');
+        //    cy.get('loglabel[ng-reflect--object-field-name="FromPortId"]').find('label').contains(fromPortLabel).should('not.exist');
+        //    cy.get('loglabel[ng-reflect--object-field-name="ToPortId"]').find('label').contains(toPortLabel).should('not.exist');
+        //}
+
+        //else {
+        //    cy.get('loglabel[ng-reflect--object-field-name="FromPortId"]').find('label').contains(fromPortLabel).should('be.exist');
+        //    cy.get('loglabel[ng-reflect--object-field-name="ToPortId"]').find('label').contains(toPortLabel).should('be.exist');
+        //    cy.get('loglabel[ng-reflect--object-field-name="MainCarriageCarrierId"]').find('label').contains(carrierLabel).should('be.exist');
+        //    Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("FromPortId").Type(fromPortCode);
+        //    Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("ToPortId").Type(toPortCode);
+        //    Resolvers.LOVResolver.ObjectTable(this.objectTable).ObjectField("MainCarriageCarrierId").Type(carrier);
+        //}
     }
     private FillOrderDetails() {
 

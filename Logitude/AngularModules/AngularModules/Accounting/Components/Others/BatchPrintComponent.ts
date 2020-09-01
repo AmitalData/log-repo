@@ -8,7 +8,7 @@ import { ApiQueryFilters, FilterItem } from '../../../Infrastructure/DataContrac
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
-import { InterestReportExtendedListService } from '../../../Accounting/Services/ExtendedLists/InterestReportExtendedListService';
+import { InterestReportExtendedListService, PDFDocumentInvoices } from '../../../Accounting/Services/ExtendedLists/InterestReportExtendedListService';
 import { InterestReportArguments, SelectItem } from '../../DataContracts/InterestReportArgs';
 import { InterestReportEventManager } from '../../Utilities/InterestReportEventManager';
 import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
@@ -57,12 +57,21 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
   @Output() MenuHeaderchangeevent = new EventEmitter();
   //public MarkIsChecked: EventEmitter<any> = new EventEmitter();
     public ColumnsReady: EventEmitter<any> = new EventEmitter();
+    public MarkIsChecked: EventEmitter<any> = new EventEmitter();
   ngOnInit() {
     this.InitializeDate();
     this.BuildColumns();
     this.ReloadData();
 
   }
+
+  
+  OnSortInvoked(event){
+    // this.TransactionSelectedLines = new ObservableCollection([]);
+    // this.ExtPageSelectedLines = new ObservableCollection([]);
+}
+
+private selectedItems:ObservableCollection;
     ReloadData() {
       
       this.SelectedItemsCount = 0;
@@ -106,10 +115,10 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
       this.Columns.push({
           FieldName: 'InvoiceNumber',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("ARInvoice.F.InvoiceNumber"),
+            Display: TextCodeTranslator.Translate("InterestReport.CH.ARInvoiceNumberListLable"),
             Styles: { width: '130px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
+            ServerSideSortable: true,
             HtmlListComponentName: 'InterestInvoiceListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestInvoiceListTemplate',
 
@@ -121,6 +130,7 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
             Display: TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate"),
             Styles: { width: '130px' },
             IsCustomTemplate: true,
+            ServerSideSortable: true,
             HtmlListComponentName: 'InterestInvoiceListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestInvoiceListTemplate',
         });
@@ -130,6 +140,7 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
         DataTypeCode: 'String',
         Display: TextCodeTranslator.Translate("ARInvoice.F.StatusName"),
         Styles: { width: '120px' },
+        ServerSideSortable: true,
         HtmlListComponentName: 'InterestInvoiceListTemplate',
         HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestInvoiceListTemplate',
         IsCustomTemplate: true
@@ -138,8 +149,9 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
      this.Columns.push({
             FieldName: 'BillToName',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("ARInvoice.F.BillToName"),
+            Display: TextCodeTranslator.Translate("ARInvoice.F.BillToId"),
             Styles: { width: '150px' },
+            ServerSideSortable: true,
             HtmlListComponentName: 'InterestInvoiceListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestInvoiceListTemplate',
             IsCustomTemplate: true
@@ -152,6 +164,7 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
           Display: TextCodeTranslator.Translate("ARInvoice.F.InvoiceCurrencyCode"), 
             Styles: { width: '100px' },
             IsCustomTemplate: true,
+            ServerSideSortable: true,
             HtmlListComponentName: 'InterestInvoiceListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestInvoiceListTemplate',
            
@@ -164,6 +177,7 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
           Display: TextCodeTranslator.Translate("ARInvoice.F.AmountInInvoiceCurrency"), 
             Styles: { width: '130px' },
             IsCustomTemplate: true,
+            ServerSideSortable: true,
             HtmlListComponentName: 'InterestInvoiceListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestInvoiceListTemplate',
            
@@ -177,6 +191,7 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
           Display: TextCodeTranslator.Translate("ARInvoice.F.AmountDue"),
           Styles: { width: '130px' },
           IsCustomTemplate: true,
+          ServerSideSortable: true,
           HtmlListComponentName: 'InterestInvoiceListTemplate',
           HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestInvoiceListTemplate',
       });
@@ -188,6 +203,7 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
           Display: TextCodeTranslator.Translate("ARInvoice.F.IsPrinted"),
           Styles: { width: '40px' },
           IsCustomTemplate: true,
+          ServerSideSortable: true,
           HtmlListComponentName: 'InterestInvoiceListTemplate',
           HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestInvoiceListTemplate',
           ColumnHeaderTemplateName: 'PrintedListHeaderTemplate',
@@ -205,8 +221,8 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
 
                 this.onCheckBoxChecked($event);
                 this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
-                /// this.MarkIsChecked.emit({ MyRecord: row });
-            }
+                this.MarkIsChecked.emit({ MyRecord: row,AllSelected:this.AllSelected });
+              }
         });
 
     }
@@ -238,10 +254,13 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
   private EnabledDataCount: number;
     OnDataLoaded(result) {
         if (result) {
-            this.DataCount = this.DataSource.rowCount;
-          this.EnabledDataCount = result.filter(d => d.InterestReportStatusCode != "8").length;
+          result = new ObservableCollection(result);
+          this.DataCount = this.DataSource.rowCount;
+          this.EnabledDataCount = result.Collection.filter(d => d.InterestReportStatusCode != "8").length;
           this.SelectedItemsCountText = "selected 0 of " + this.DataCount;
         } 
+        var selectedLines = this.AllSelected?result: this.selectedItems;
+        this.MarkIsChecked.emit({ SelectedLines:selectedLines,AllSelected: this.AllSelected});
     }
      today: Date = new Date();
      lastmonth:any = this.today.setDate(this.today.getDay() - 30);
@@ -296,6 +315,8 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
         } else {
             this.IsSelectedItemsTextVisibile = false;
             this.SelectedItemsCount = 0;
+            this.selectedItems.Clear();
+            this.MarkIsChecked.emit({ SelectedLines:this.selectedItems,AllSelected: value});
         }
         this.SetCreateInvoiceButtonText();
     }
@@ -339,7 +360,7 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
    // this.ReloadData();
 
     }
-    private selectedItems: ObservableCollection;
+  
   public SelectedItemsCount: number=0;
     onCheckBoxChecked($event:any)
     {
@@ -387,27 +408,6 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
 
     } this.SetCreateInvoiceButtonText();
   }
-  // CreateInvoiceButtonClicked() {
-  //     var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
-  //     this.CurrentSession.StartBusyIndicatorLoading();
-  //     this.interestReportExtendedListService.PutBatchPrint(interestReportArgs).subscribe((response: ServiceResponse) => {
-  //     this.CurrentSession.StopBusyIndicator();
-  //       var mm: ServiceResponse = response;
-  //       if (!mm.HasError) {
-  //           this.BatchId= mm.Result;
-  //           this.CancelButtonClicked();
-  //       }
-  //       else {
-  //         if(mm.ErrorsArray){
-  //           var msg = new MessageWindow();
-  //           msg.RTL = this.isRTL;
-  //           msg.Width = 400;
-  //           msg.Show(mm.ErrorsArray[0]);
-  //       }
-  //       }
-
-  //     });
-  // }
   
   PrintInterestInvoice(){
     this.ValidationErrorsList = [];
@@ -426,21 +426,22 @@ var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();
   }
 
 
-  CreateInvoiceButtonClicked() {
-  
-    this.CurrentSession.StartBusyIndicatorLoading();
-    var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
-    this.interestReportExtendedListService.PutBatchPrint(interestReportArgs).subscribe((response: ServiceResponse) => {
+  CreateInvoiceButtonClicked(interestReportArgs: InterestReportArguments) {
+     this.interestReportExtendedListService.PutBatchPrint(interestReportArgs).subscribe((response: ServiceResponse) => {
       this.CurrentSession.StopBusyIndicator();
       var mm: ServiceResponse = response;
       if (!mm.HasError) {
         let file = new Blob([mm.Result], { type: 'application/pdf' });
-        let url =  URL.createObjectURL(file);
-        let newWindow = window.open();//OPEN WINDOW FIRST ON SUBMIT THEN POPULATE PDF
-        newWindow.location.href = url;//POPULATING PDF 
-        this.Refresh();
+        let url =  URL.createObjectURL(file);       
+
+        this.ShowBtatchPrintConfirmComponent(url);
+       
       }
       else {
+        // if(this.newWindow){
+        //   this.newWindow.blur();
+        //   this.newWindow.close();
+        // }
         if(mm.ErrorsArray){
           var msg = new MessageWindow();
           msg.RTL = this.isRTL;
@@ -450,6 +451,109 @@ var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();
       }
 
     });
+  
+}
+
+// private OpenWindow(){
+//   this.newWindow = window.open('', '_blank');//OPEN WINDOW FIRST ON SUBMIT THEN POPULATE PDF
+//   this.newWindow.document.write("<html><head> </head><body> <style> body { padding: 10em 0; } .loading { font-size: 84px; font-family: 'Montserrat', sans-serif; font-weight: 800; text-align: center; } .loading span { display: inline-block; margin: 0 -0.05em; } .loading07 span { position: relative; color: rgba(0, 0, 0, 0.2); } .loading07 span::after { position: absolute; top: 0; left: 0; content: attr(data-text); color: #grey; opacity: 0; transform: scale(1.5); animation: loading07 3s infinite; } .loading07 span:nth-child(2)::after { animation-delay: 0.1s; } .loading07 span:nth-child(3)::after { animation-delay: 0.2s; } .loading07 span:nth-child(4)::after { animation-delay: 0.3s; } .loading07 span:nth-child(5)::after { animation-delay: 0.4s; } .loading07 span:nth-child(6)::after { animation-delay: 0.5s; } .loading07 span:nth-child(7)::after { animation-delay: 0.6s; } @keyframes loading07 { 0%, 75%, 100% { transform: scale(1.5); opacity: 0; } 25%, 50% { transform: scale(1); opacity: 1; } } </style> <section> <div class='loading loading07'> <span data-text='I'>I</span> <span data-text='n'>n</span> <span data-text=''> </span> <span data-text='P'>P</span> <span data-text='r'>r</span> <span data-text='o'>o</span> <span data-text='g'>g</span> <span data-text='r'>r</span> <span data-text='e'>e</span> <span data-text='s'>s</span> <span data-text='s'>s</span> <span data-text='.'>.</span> <span data-text='.'>.</span> <span data-text='.'>.</span> </div> </section> </body></html>");
+ 
+// }
+
+GetNumberOfDocumentNotPrinted() {
+  this.ValidationErrorsList = [];
+  if (this.SelectedItemsCount == 0) {
+    this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
+  } else { 
+    //  this.OpenWindow();
+    var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
+    this.interestReportExtendedListService.GetNumberOfDocumentNotPrinted(interestReportArgs).subscribe((response: ServiceResponse) => {
+    this.CurrentSession.StopBusyIndicator();
+    var mm: ServiceResponse = response;
+    if (!mm.HasError) {
+    var pDFDocumentInvoices:PDFDocumentInvoices = mm.Result;
+    if((!AppTool.IsNullOrEmpty(pDFDocumentInvoices.ARInvoiceNumbersNotPrinted) && pDFDocumentInvoices.ARInvoiceNumbersNotPrinted.length>0 ) ||  (!AppTool.IsNullOrEmpty(pDFDocumentInvoices.InterestReportNumbersNotPrinted) && pDFDocumentInvoices.InterestReportNumbersNotPrinted.length >0 )){
+      // if(this.newWindow){
+      //   this.newWindow.blur();
+      //   this.newWindow.close();
+      // }
+      this.ShowBtatchPrintWarningComponent(pDFDocumentInvoices,interestReportArgs);
+    }
+    else{
+      this.CurrentSession.StartBusyIndicatorLoading();
+      setTimeout(() =>  this.CreateInvoiceButtonClicked(interestReportArgs),200);
+    }
+    
+    }
+    else {
+      // if(this.newWindow){
+      //   this.newWindow.blur();
+      //   this.newWindow.close();
+      // }
+      if(mm.ErrorsArray){
+        var msg = new MessageWindow();
+        msg.RTL = this.isRTL;
+        msg.Width = 400;
+        msg.Show(mm.ErrorsArray[0]);
+    }
+    }
+
+  });
+}
+}
+
+// public newWindow:any;
+
+ ShowBtatchPrintWarningComponent(DataContext:PDFDocumentInvoices,interestReportArgs: InterestReportArguments) {
+  var logWindow = new LogitudeWindow();
+  logWindow.Title = TextCodeTranslator.Translate("General.O.Warning");
+  var myPath = "./Accounting/Components/Packages/Others/BtatchPrintWarningComponent";
+  logWindow.Width = 650;
+  logWindow.Height = 260;
+  DataContext.Document =  this.SelectedItemsCount;
+  logWindow.DataContext = DataContext;
+  logWindow.IsShowCloseButton = true;
+  logWindow.Show(myPath);
+  logWindow.WindowClosed.subscribe(s => {
+      if (s!=null) {
+        // this.OpenWindow();
+         this.CurrentSession.StartBusyIndicatorLoading();
+          this.CreateInvoiceButtonClicked(interestReportArgs);
+      }
+  })
+}
+
+ShowBtatchPrintConfirmComponent(URL) {
+  var logWindow = new LogitudeWindow();
+  logWindow.Title = TextCodeTranslator.Translate("InterestReport.O.BatchPrint");
+  var myPath = "./Accounting/Components/Packages/Others/BtatchPrintConfirmComponent";
+  logWindow.Width = 560;
+  logWindow.Height = 160;
+  logWindow.DataContext = URL;
+  logWindow.Show(myPath);
+  logWindow.IsShowCloseButton = true;
+  logWindow.WindowClosed.subscribe(s => {
+    if (s!=null) {
+      this.Refresh();
+    }
+  
+  });
+  // logWindow.WindowClosed.subscribe(s => {
+  //     if (s!=null) {
+  //       if(s=="View"){
+  //          window.open(URL,  '_blank');
+  //        }
+  //       else{
+  //         var a = document.createElement("a");
+  //         a.href = URL;
+  //         a.download = "InterestInvoices.pdf"; 
+  //         a.click();
+  //          window.URL.revokeObjectURL(URL);        
+          
+  //         }
+    
+  //     }
+  // })
 }
 
   InitializeDate(){
@@ -475,25 +579,6 @@ var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();
 
     return date;
 }
-ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices:number,interestReportArgs: InterestReportArguments) {
-      var confirmWindow = new ConfirmWindow();
-      confirmWindow.Width = 390;
-      var NumberIdsSelected:number=0;
-      if(interestReportArgs.AllSelected){
-          NumberIdsSelected = this.DataCount - interestReportArgs.ExcludedIds.length;
-      }
-      else{
-          NumberIdsSelected = interestReportArgs.SelectedIds.length;
-      }
-      confirmWindow.Show(  NumberOfReportsWithoutInvoices+" "+TextCodeTranslator.Translate("InterestReport.O.OutOf")+" " + this.SelectedItemsCount + " " +TextCodeTranslator.Translate("InterestReport.O.SelectedReportsWillNotHaveAnInvoice"));
-      confirmWindow.WindowClosed.subscribe((event: any) => {
-          if (confirmWindow.Yes) {
-             this.CreateInvoiceButtonClicked();
-          } else if (confirmWindow.No) {
-
-          }
-      });
-}  
  
   
 SetCreateInvoiceButtonText(){

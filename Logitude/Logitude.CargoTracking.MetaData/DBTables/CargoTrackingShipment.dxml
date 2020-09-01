@@ -21,7 +21,7 @@
   <Column
     Name="EntityId"
     Type="varchar"
-    Size="16">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -141,19 +141,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ClearanceDone"
-    Type="bit">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="PickupDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ClearanceDate"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -189,6 +177,183 @@
     Name="CustomerReference"
     Type="varchar"
     Size="101">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsMainRecord"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PickupEstimationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FromWarehouseDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FromWarehouseEstimationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FromWarehouseNotes"
+    Type="nvarchar"
+    Size="32">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DepartureDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DepartureDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DepartureEstimationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ArrivalDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ArrivalDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ArrivalEstimationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToWarehouseDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToWarehouseDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToWarehouseEstimationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToWarehouseNotes"
+    Type="nvarchar"
+    Size="32">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsPaymentDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsPaymentDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ClearanceDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ClearanceDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeliveredDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeliveredDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeliveredEstimationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FromWarehouseDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FirstPickupETD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseLegActualEntryDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseLegExpectedEntryDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseLegRemarks"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeclarationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsClearanceDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>

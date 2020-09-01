@@ -27,11 +27,11 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(100).IsUnicode(true);
 
-            this.Property(t => t.ShipmentId).HasColumnName("ShipmentId").IsRequired().HasMaxLength(15).IsUnicode(false);
-
             this.Property(t => t.ShipmentDate).HasColumnName("ShipmentDate").IsRequired();
 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.SecurityKey).HasColumnName("SecurityKey").HasMaxLength(40).IsUnicode(false);
         }
     }
 }

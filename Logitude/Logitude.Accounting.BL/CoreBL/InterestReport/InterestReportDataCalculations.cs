@@ -34,7 +34,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         {
             try
             {
-                interestReportPM = interestReportPM ?? interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
+                interestReportPM = interestReportPM !=null?interestReportPM: interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
                 DateTime? interestCalculationStartDate = GetInterestCalculationStartDate();
                 List<string> glaccountIds = GetSplittedByCurrencyAcountsIds(interestReportPM.GLAccountId, tenant);
                 glaccountIds.Add(interestReportPM.GLAccountId);
@@ -153,6 +153,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             interestReportPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
             InterestReportUpdateService interestReportUpdateService = new InterestReportUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+            interestReportPM.IsUpdatedFromBatch = true;
             interestReportUpdateService.Update(interestReportPM, true);
         }
 

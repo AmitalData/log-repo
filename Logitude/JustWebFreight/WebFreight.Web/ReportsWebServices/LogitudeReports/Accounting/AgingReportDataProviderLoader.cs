@@ -48,23 +48,25 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private AccountingAgingDataProvider BuildDataProvider(List<PeriodMExtended> resultedPeriods)
         {
+            List<PeriodMExtended> filteredPeriods = FilterPeriods(resultedPeriods);
+
             AccountingAgingDataProvider dataProvider = new AccountingAgingDataProvider();
 
             dataProvider.Month = GetFilterValue<DateTime>("AgingForDate");
             dataProvider.PrintedByUser = GetLoggedContactName();
             dataProvider.CustomerFilterValue = GetCustomerFilterTitle();
-            dataProvider.AgingPeriods = BuildAgingPeriods(resultedPeriods);
+            dataProvider.AgingPeriods = BuildAgingPeriods(filteredPeriods);
 
             SetLocalCurrency(dataProvider);
-            AddTotalBalancePeriods(resultedPeriods, dataProvider);
-            AddTotalLocalBalancePeriods(resultedPeriods, dataProvider);
+            AddTotalBalancePeriods(filteredPeriods, dataProvider);
+            AddTotalLocalBalancePeriods(filteredPeriods, dataProvider);
             CalculateReportLocalBalanceTotal(dataProvider);
 
-            FilterCustomerPeriodsOnBalance(dataProvider);
+            //FilterCustomerPeriodsOnBalance(dataProvider);
             FixSplitAccountData(dataProvider);
 
-            SetOrderForPeriods(resultedPeriods, dataProvider);
-            SetPeriodsTotal(resultedPeriods, dataProvider);
+            SetOrderForPeriods(filteredPeriods, dataProvider);
+            SetPeriodsTotal(filteredPeriods, dataProvider);
 
             ResharpPeriodsName(dataProvider);
 
@@ -72,11 +74,56 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         private void CheckSalesmanAbilities(AgingReportParam args)
         {
-            bool isSalsmanRestrictionsEnabled = SecurityUtility.CheckFeature("GLAccount", "SalesmanAging", args.Tenant);
-            if (isSalsmanRestrictionsEnabled && args.SalesmanId == null)
-                throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.NoSalesman", args.Tenant,LoggedContactResolver.GetLoggedContactShowLocal(args.Tenant)));
+            bool isSalsmanRestrictionsEnabled = SecurityUtility.CheckFeature("GLAccount", "SalesmanAging", tenant);
+            UserPM loggedUser = GetLoggerUser();
+
+            if (isSalsmanRestrictionsEnabled && loggedUser?.IsSalesman == true && args.SalesmanId == null)
+                throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.NoSalesman", args.Tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant)));
 
         }
+
+        private UserPM GetLoggerUser()
+        {
+            UserPM loggedUser;
+            UserQuery userQuery = new UserQuery(tenant);
+            if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            { // user set and passed from from WR
+                loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
+            }
+            else
+            {
+                ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+                loggedUser = userQuery.GetSinglePM(loggedContact.Id, tenant);
+            }
+            return loggedUser;
+        }
+
+        private List<PeriodMExtended> FilterPeriods(List<PeriodMExtended> resultedPeriods)
+        {
+            string groupBy = GetFilterValue<string>("GroupByDate"); // filter_Due, filter_Accounting
+            string filterBy = GetFilterValue<string>("BalanceFilter"); // Debtors, DebtAbove, filter_All
+            decimal balanceFilterAmount = Convert.ToDecimal(GetFilterValue<decimal>("BalanceFilterValue"));
+
+            if (groupBy == "filter_Due")
+            {
+                if(filterBy == "Debtors")
+                    resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue > 0).ToList();
+                else if (filterBy == "DebtAbove")
+                    resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue >= balanceFilterAmount).ToList();
+
+            }
+            else
+            {
+                if (filterBy == "Debtors")
+                    resultedPeriods = resultedPeriods.Where(d => d.BalanceInLocalCurrency > 0).ToList();
+                else if (filterBy == "DebtAbove")
+                    resultedPeriods = resultedPeriods.Where(d => d.BalanceInLocalCurrency >= balanceFilterAmount).ToList();
+
+            }
+
+            return resultedPeriods;
+        }
+
         private void FixSplitAccountData(AccountingAgingDataProvider totalData)
         {
             bool showDetailedCurrencyAccounts = GetFilterValue<bool>("Detailed");
@@ -95,17 +142,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         private void FilterCustomerPeriodsOnBalance(AccountingAgingDataProvider totalData)
         {
-            List<AgingPeriod> totalBalances = GetTotalBalancePeriods(totalData, showLocals);
+            //if (GetFilterValue<string>("GroupByDate") != "filter_Due")
+            //{
+            //    List<AgingPeriod> totalBalances = GetTotalBalancePeriods(totalData, showLocals);
 
-            var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
+            //    var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
 
-            foreach (var totalBalance in totalBalances)
-            {
-                if (GetFilterValue<string>("BalanceFilter") == "Debtors" && !(totalBalance.Total > 0))
-                    RemoveCustomerPeriods(totalData, totalBalance);
-                else if (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && !(totalBalance.Total >= Convert.ToDecimal(balanceFilterAmount)))
-                    RemoveCustomerPeriods(totalData, totalBalance);
-            }
+            //    foreach (var totalBalance in totalBalances)
+            //    {
+            //        if (GetFilterValue<string>("BalanceFilter") == "Debtors" && !(totalBalance.Total > 0))
+            //            RemoveCustomerPeriods(totalData, totalBalance);
+            //        else if (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && !(totalBalance.Total >= Convert.ToDecimal(balanceFilterAmount)))
+            //            RemoveCustomerPeriods(totalData, totalBalance);
+            //    }
+            //}
+
         }
 
         private void RemoveCustomerPeriods(AccountingAgingDataProvider totalData, AgingPeriod totalBalance)
@@ -124,7 +175,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             if (showDetailedCurrencyAccounts)
                 groupedPeriodsByAccount = result.Where(d=> true || d.CurrencyCode != totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "יתרה במט''ז" : "Foreign",
+                    PeriodName = showLocals ? "סיכום תקופות" : "Foreign",
                     Total = d.Sum(x => x.Total),
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
@@ -141,7 +192,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             else
                 groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "יתרה במט''ז" : "Foreign",
+                    PeriodName = showLocals ? "סיכום תקופות" : "Foreign",
                     Total = d.Sum(x => x.Total),
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
@@ -257,7 +308,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private static List<AgingPeriod> GetTotalBalancePeriods(AccountingAgingDataProvider totalData, bool showLocals)
         {
-            var balancePeriod = showLocals ? "יתרה במט''ז" : "Foreign";
+            var balancePeriod = showLocals ? "סיכום תקופות" : "Foreign";
             List<AgingPeriod> totalBalances = totalData.AgingPeriods.Where(d => d.PeriodName == balancePeriod).ToList();
             return totalBalances;
         }
@@ -380,7 +431,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                     record.Total = item.Total;
 
+
                     periods.Add(record);
+
                 }
             }
             else
@@ -403,6 +456,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.Total = item.Total;
 
                     periods.Add(record);
+
                 }
             }
 

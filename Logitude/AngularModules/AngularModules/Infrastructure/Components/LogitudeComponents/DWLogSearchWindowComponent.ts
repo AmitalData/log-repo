@@ -31,6 +31,7 @@ import {MultiSelectedValue, ValueDetails} from '../../../CommonModules/CommonOth
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ComponentArgs} from '../../../Infrastructure/DataContracts/ComponentArgs';
 import {ParameterComponentArgs} from '../../../Infrastructure/DataContracts/ParameterComponentArgs';
+import { DWObjectFieldExtendedPMService } from '../../Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 
 
 @Component({
@@ -51,12 +52,14 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     public ObjectFieldName: string;
     public LOVAdditionalColumns: string;
     public IsMultipleSelection: boolean;
+    public HasActiveField: boolean = false;
     public ObjectTableId: string;
     public columns: any[] = [];
     
     public ObjectFields: any[] = [];
     public AddButtonVisibility: boolean = false;
     public TenantPM: TenantPM;
+    public dWObjectFieldExtendedPMService: DWObjectFieldExtendedPMService;
     public items: any[] = [];
     public Args: CustomEntityArgs = new CustomEntityArgs();
    
@@ -98,6 +101,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         this._entityListService = new EntityListService;
         this.entityPMService = new EntityPMService;
         this.TenantPM = InfraSettings.TenantPM;
+        this.dWObjectFieldExtendedPMService = new DWObjectFieldExtendedPMService();
 
         this.PseventRowSelectEventSub = this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
             if (res == this.ObjectTableName) {
@@ -172,12 +176,24 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
         this.SecondListHeaderItems = [];
         this.SecondListValueItems = [];
+        this.SetHasActiveField();
         this.Args = args;
         this.BuildSecondListHeader();
         this.BuildSecondListValues();
         if (args.DataContext.IsMultipleSelection) {
             this.SetChargesGroupArgs(args);
         }
+    }
+
+    private SetHasActiveField() {
+        this.dWObjectFieldExtendedPMService.getDWObjectFieldsByDWTableId(this.ObjectTableName).subscribe(serviceResponse => {
+            if (!serviceResponse.HasError && serviceResponse.Result != null) {
+                var myResult = serviceResponse.Result.find(d => d.name == "InActive");
+                if (!AppTool.IsNullOrEmpty(myResult)) {
+                    this.HasActiveField = true;
+                }
+            }
+        });
     }
 
     private SetChargesGroupArgs(args: CustomEntityArgs) {
@@ -355,7 +371,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         if (this.IsExistColumnName()) {
             this.ValidationErrorsList.push("You should have different column name");
         }
-        if (!this.SecondListValueItems || (this.SecondListValueItems && this.SecondListValueItems.length == 0)) {
+        if (this.IsMultipleSelection && (!this.SecondListValueItems || (this.SecondListValueItems && this.SecondListValueItems.length == 0))) {
             this.ValidationErrorsList.push("You should select at least one charge type");
         }
 
@@ -384,6 +400,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
     BuildSecondListHeader() {
         var test: MultiSelectedValue[] = [];
+
 
         if (this.ObjectFieldName) {
             this.SecondListHeaderItems.push(this.ObjectFieldName.replace('[', '').replace(']', ''));

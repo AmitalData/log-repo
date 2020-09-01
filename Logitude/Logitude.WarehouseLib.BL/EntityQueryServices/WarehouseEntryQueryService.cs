@@ -69,7 +69,19 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             return myResult;
         }
 
+        public List<WarehouseEntryList> GetActiveWarehouseEntryListsByshipmentId(string shipmentId, int tenant)
+        {
 
+            List<WarehouseEntryList> myResult = (from a in context.WarehouseEntries
+                                                 where a.ShipmentId == shipmentId && a.Tenant == tenant && a.StatusCode != "CAEA"
+                                                 select new WarehouseEntryList()
+                                                 {
+                                                     Id = a.Id,
+                                                     EntryNumber = a.EntryNumber,
+                                                     CreateDate = a.CreateDate,
+                                                 }).ToList();
+            return myResult;
+        }
 
         public override void GetComposition(EntityKeyFields entityKeys, WarehouseEntryPM entityPM)
         {

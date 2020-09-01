@@ -1,4 +1,4 @@
-﻿import {TenantManagementPM} from '../EntityPMs/TenantManagementPM';
+import {TenantManagementPM} from '../EntityPMs/TenantManagementPM';
 import {AppTool} from '../Tools';
 import {Validator} from './Validator';
 import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
@@ -6,10 +6,7 @@ import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
 export class TenantManagementValidator {
 
     public Validate(entityPM: TenantManagementPM) {
-        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         var errors = [];
-        var objectTableName: "TenantManagement";
-        var isInlandDomestic: boolean = false;
 
         if (entityPM != null) {
             if (entityPM.IsMultiPackage) {
@@ -60,6 +57,16 @@ export class TenantManagementValidator {
             if (entityPM.TenantTypeCode == "AIR") {
 
             }
+
+            if (AppTool.IsNullOrZero(entityPM.NumberOfUsers) && AppTool.IsNullOrZero(entityPM.FreeUsers)) {
+                errors.push("You should enter Number of Users or Free Users");
+            }
+
+            entityPM.TenantManagementLicenses.forEach(item => {
+                if (AppTool.IsNullOrZero(item.NumberOfUsers) && AppTool.IsNullOrZero(item.FreeUsers)) {
+                    errors.push("You should enter Number of Users or Free Users for " + item.PackageCode);
+                }                
+            });
         }
 
         return errors;

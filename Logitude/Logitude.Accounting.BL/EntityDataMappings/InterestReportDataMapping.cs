@@ -56,10 +56,20 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPOCO.ReportNumber = entityPM.ReportNumber;
                 entityPOCO.InterestReportStatusCode = entityPM.InterestReportStatusCode;
                 entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
-            }
-           
 
-           
+            }
+            if (entityPM.CustomerId != null)
+            {
+                CustomerQuery customerQuery = new CustomerQuery(entityPM.Tenant);
+                CustomerPM customerPM = customerQuery.GetBasicSinglePM(entityPM.CustomerId, entityPM.Tenant, true);
+                entityPM.CustomerName = customerPM.EnglishName;
+                entityPM.CustomerLocalName = customerPM.LocalName;
+
+            }
+
+            FillSearchFields(entityPM);
+
+
         }
 
         public void CustomPOCOToPM(InterestReportPM entityPM, InterestReport entityPOCO)
@@ -147,24 +157,23 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
 
         }
+
+        private void FillSearchFields(InterestReportPM entityPM)
+        {
+            entityPM.SearchFields = entityPM.ReportNumber + "," + entityPM.CustomerName + "," + entityPM.CustomerLocalName;
+        }
+
         private static string GetLoggedContactId(InterestReportPM entityPM)
         {
             ContactPM loggedContact = null;
             string loggedContactId = null;
-            // commented for future use
-            //if (!entityPM.IsCreatedFromBatch)
-            //{
+ 
                 loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
                 loggedContactId = loggedContact.Id;
-            //}
-            //else
-            //{
-            //    ContactQuery contactQuery = new ContactQuery(entityPM.Tenant);
-            //    loggedContactId = contactQuery.GetContactIdByEmail(entityPM.BatchReportUserEmail, entityPM.Tenant);
-            //}
 
             return loggedContactId;
         }
+
 
         private static ContactPM GetLoggedContact(int tenant)
         {

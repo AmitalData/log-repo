@@ -45,9 +45,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
             if (tenantManagement != null)
             {
-                myResult.LicensesCount = tenantManagement.NumberOfUsers;
+                myResult.LicensesCount = tenantManagement.NumberOfUsers == null ? 0 : tenantManagement.NumberOfUsers.Value;
             }
-
 
             UserRepository userRepository = new UserRepository(tenant);
 

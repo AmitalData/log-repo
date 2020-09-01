@@ -1390,7 +1390,7 @@ export class PackageItem extends BaseComponent{
         }
     }
     private SetUIProperties_NumberOfUsers() {
-        this.UIProperties.SetRequired("NumberOfUsers", this.ObjectTableName, AppTool.IsNullOrZero(this.NumberOfUsers));
+        //this.UIProperties.SetRequired("NumberOfUsers", this.ObjectTableName, AppTool.IsNullOrZero(this.NumberOfUsers));
 
     }
 

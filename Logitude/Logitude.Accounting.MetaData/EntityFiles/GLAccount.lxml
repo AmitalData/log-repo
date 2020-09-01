@@ -3446,7 +3446,7 @@
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -5195,7 +5195,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="15"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -5210,6 +5210,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -6494,7 +6495,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="15"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -6509,6 +6510,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -6519,6 +6521,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;Parent&quot;"
     DefaultText="&quot;Parent&quot;"
+    FullLocalDefaultText="&quot;קוד אב&quot;"
+    ListFieldLable="&quot;ParentListLable&quot;"
+    ListLableDefaultText="&quot;קוד אב&quot;"
+    ListLocalDefaultText="&quot;Parent&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -6528,7 +6534,7 @@
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -8071,13 +8077,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -8091,6 +8098,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -8102,6 +8110,9 @@
     FullFieldLable="&quot;ActiveForInterest&quot;"
     DefaultText="&quot;Active for Interest&quot;"
     FullLocalDefaultText="&quot;פעיל לריבית&quot;"
+    ListFieldLable="&quot;ActiveForInterestListLable&quot;"
+    ListLableDefaultText="&quot;Active for Interest&quot;"
+    ListLocalDefaultText="&quot;פעיל לריבית&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -8141,13 +8152,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;GreaterThanOrEqual&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -8161,6 +8173,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -8172,6 +8185,9 @@
     FullFieldLable="&quot;InterestCalculationStartDate&quot;"
     DefaultText="&quot;Interest Calculation Start Date&quot;"
     FullLocalDefaultText="&quot;תאריך לחישוב ריבית&quot;"
+    ListFieldLable="&quot;InterestCalculationStartDateListLable&quot;"
+    ListLableDefaultText="&quot;Interest Calculation Start Date&quot;"
+    ListLocalDefaultText="&quot;תאריך לחישוב ריבית&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -8211,13 +8227,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -8231,6 +8248,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -8242,6 +8260,9 @@
     FullFieldLable="&quot;ActiveForInterestCreditInvoice&quot;"
     DefaultText="&quot;Active for Interest Credit invoice&quot;"
     FullLocalDefaultText="&quot;פעיל לחשבונית זיכוי&quot;"
+    ListFieldLable="&quot;ActiveForInterestCreditInvoiceListLable&quot;"
+    ListLableDefaultText="&quot;Active for Interest Credit invoice&quot;"
+    ListLocalDefaultText="&quot;פעיל לחשבונית זיכוי&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -8354,13 +8375,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;GreaterThanOrEqual&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -8374,6 +8396,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -8387,6 +8410,9 @@
     FullFieldLable="&quot;InterestCreditLimit&quot;"
     DefaultText="&quot;Interest Credit&quot;"
     FullLocalDefaultText="&quot;אשראי לריבית&quot;"
+    ListFieldLable="&quot;InterestCreditLimitListLable&quot;"
+    ListLableDefaultText="&quot;Interest Credit&quot;"
+    ListLocalDefaultText="&quot;אשראי לריבית&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -8566,13 +8592,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;GreaterThanOrEqual&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -8586,6 +8613,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -8597,6 +8625,9 @@
     FullFieldLable="&quot;MinimumInterestInvoiceBilling&quot;"
     DefaultText="&quot;Minimum Interest Invoice billing&quot;"
     FullLocalDefaultText="&quot;מינימום חיוב בחשבונית ריבית&quot;"
+    ListFieldLable="&quot;MinimumInterestInvoiceBillingListLable&quot;"
+    ListLableDefaultText="&quot;Minimum Interest Invoice billing&quot;"
+    ListLocalDefaultText="&quot;מינימום חיוב בחשבונית ריבית&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -8676,6 +8707,435 @@
     IsMaxLength="false"
     NoMetaDataField="false"
     GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;62e3487e-adf9-4137-8373-cfff3aa74d95&quot;"
+    FieldName="&quot;SalesmanName&quot;"
+    OldNames="SalesmanName"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;GLAccount&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;SalesmanName&quot;"
+    ListPropertyPath="&quot;SalesmanName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;SalesmanName&quot;"
+    DefaultText="&quot;Salesman&quot;"
+    FullLocalDefaultText="&quot;איש מכירות&quot;"
+    ListFieldLable="&quot;SalesmanNameListLable&quot;"
+    ListLableDefaultText="&quot;Salesman&quot;"
+    ListLocalDefaultText="&quot;איש מכירות&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;65a259fa-22fc-4c4c-adf7-ba6eae50b29d&quot;"
+    FieldName="&quot;CollectorName&quot;"
+    OldNames="CollectorName"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;GLAccount&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;CollectorName&quot;"
+    ListPropertyPath="&quot;CollectorName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;CollectorName&quot;"
+    DefaultText="&quot;Collector&quot;"
+    FullLocalDefaultText="&quot;גובה&quot;"
+    ListFieldLable="&quot;CollectorNameListLable&quot;"
+    ListLableDefaultText="&quot;Collector&quot;"
+    ListLocalDefaultText="&quot;גובה&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;c7109ff7-d7b7-4766-bb0f-a20122942cce&quot;"
+    FieldName="&quot;SplitCurrencyAccount&quot;"
+    OldNames="SplitCurrencyAccount"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;GLAccount&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;SplitCurrencyAccount&quot;"
+    ListPropertyPath="&quot;SplitCurrencyAccount&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;SplitCurrencyAccount&quot;"
+    DefaultText="&quot;Split Currency Account&quot;"
+    ListFieldLable="&quot;SplitCurrencyAccountListLable&quot;"
+    ListLableDefaultText="&quot;Split Currency Account&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="true"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;b2ff72af-439c-4ef1-970a-069b8f7c086a&quot;"
+    FieldName="&quot;ParentName&quot;"
+    OldNames="ParentName"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;GLAccount&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;ParentName&quot;"
+    ListPropertyPath="&quot;ParentName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;ParentName&quot;"
+    DefaultText="&quot;Parent&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="true"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;2740e347-e4ca-4b0b-92c4-5c61b5cb5df9&quot;"
+    FieldName="&quot;GLAccountCurrencies&quot;"
+    OldNames="GLAccountCurrencies"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;GLAccount&quot;"
+    FieldsDataType="&quot;List&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;GLAccountCurrencies&quot;"
+    ListPropertyPath="&quot;GLAccountCurrencies&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="true"
+    MultiTableName="&quot;GLAccountCurrency&quot;"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;GLAccountCurrencies&quot;"
+    DefaultText="&quot;GLAccount Currencies&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    ThisKey="&quot;Id&quot;"
+    OtherKey="&quot;MainGLAccountId&quot;"
+    AssociationName="&quot;GLAccountCurrencyGLAccount&quot;"
+    IsComposition="true"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;9ae278b4-3455-40ea-8b1b-3185c25e4544&quot;"
+    FieldName="&quot;ParentCurrencyId&quot;"
+    OldNames="ParentCurrencyId"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;GLAccount&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="15"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="15"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;ParentCurrencyId&quot;"
+    ListPropertyPath="&quot;ParentCurrencyId&quot;"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;ParentCurrencyId&quot;"
+    DefaultText="&quot;Parent Currency&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -9999,7 +10459,7 @@
     IsHeaderScreen="true"
     Code="&quot;GLAccount.HeaderScreen&quot;"
     NumberOfColumns="5"
-    NumberOfRows="2">
+    NumberOfRows="3">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -10009,12 +10469,17 @@
       <ScreenField
         Column="0"
         Row="1"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="0"
+        Row="2"
         ObjectFieldName="&quot;BalanceInLocalCurrency&quot;"
         ScreenName="Header Screen" />
       <ScreenField
         Column="1"
         Row="0"
-        ObjectFieldName="&quot;LocalName&quot;"
+        ObjectFieldName="&quot;NextDueDate&quot;"
         ScreenName="Header Screen" />
       <ScreenField
         Column="1"
@@ -10029,17 +10494,32 @@
       <ScreenField
         Column="2"
         Row="1"
-        ObjectFieldName="&quot;NextDueDate&quot;"
+        ObjectFieldName="&quot;ReconcileMethodName&quot;"
         ScreenName="Header Screen" />
       <ScreenField
         Column="3"
         Row="0"
-        ObjectFieldName="&quot;ReconcileMethodName&quot;"
+        ObjectFieldName="&quot;ParentName&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="3"
+        Row="1"
+        ObjectFieldName="&quot;SplitCurrencyAccount&quot;"
         ScreenName="Header Screen" />
       <ScreenField
         Column="4"
         Row="0"
         ObjectFieldName="&quot;InternalNumber&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="4"
+        Row="1"
+        ObjectFieldName="&quot;SalesmanName&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="4"
+        Row="2"
+        ObjectFieldName="&quot;CollectorName&quot;"
         ScreenName="Header Screen" />
     </ScreenFields>
   </Screen>
@@ -10222,7 +10702,7 @@
       Code="&quot;GLPC&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Parent GLAccount updated&quot;"
-      LocalName="&quot;כרטיס אב עודכן&quot;"
+      LocalName="&quot;Parent GLAccount updated&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;OPE&quot;"
@@ -10236,7 +10716,7 @@
       Code="&quot;CTCH&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Chart Of Account Type Changed&quot;"
-      LocalName="&quot;סוג קבוצת מאזן עודכן&quot;"
+      LocalName="&quot;Chart Of Account Type Changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;OPE&quot;"
@@ -10250,7 +10730,7 @@
       Code="&quot;ADD&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Splitted GLAccount added&quot;"
-      LocalName="&quot;נוסף כרטיס פיצול לפני מטבע&quot;"
+      LocalName="&quot;Splitted GLAccount added&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;LOG&quot;"
@@ -10264,7 +10744,7 @@
       Code="&quot;INGL&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Splitted GLAccount deactivated&quot;"
-      LocalName="&quot;כרטיס הפיצול נחסם&quot;"
+      LocalName="&quot;Splitted GLAccount deactivated&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;LOG&quot;"
@@ -10278,7 +10758,7 @@
       Code="&quot;DISC&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Child GLAccount was disconnected&quot;"
-      LocalName="&quot;כרטיס בן נותק&quot;"
+      LocalName="&quot;Child GLAccount was disconnected&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;LOG&quot;"
@@ -10292,7 +10772,7 @@
       Code="&quot;CHID&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Child GLAccount was added&quot;"
-      LocalName="&quot;הכרטיס נוסף ככרטיס בן &quot;"
+      LocalName="&quot;Child GLAccount was added&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;LOG&quot;"
@@ -10306,7 +10786,7 @@
       Code="&quot;SGAC&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Splitted GLAccount was activated&quot;"
-      LocalName="&quot;כרטיס הפיצול מוּפעָל&quot;"
+      LocalName="&quot;Splitted GLAccount was activated&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;LOG&quot;"
@@ -10320,7 +10800,7 @@
       Code="&quot;LIAC&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Line activated&quot;"
-      LocalName="&quot;שורה הופעלה&quot;"
+      LocalName="&quot;Line activated&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;LOG&quot;"
@@ -10334,7 +10814,7 @@
       Code="&quot;DETV&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Line deactivated&quot;"
-      LocalName="&quot;שורה מספר נחסמה&quot;"
+      LocalName="&quot;Line deactivated&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;LOG&quot;"
@@ -10376,7 +10856,7 @@
       Code="&quot;ACR&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Created&quot;"
-      LocalName="&quot;חדש&quot;"
+      LocalName="&quot;Created&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;LOG&quot;"
@@ -10390,7 +10870,7 @@
       Code="&quot;ACH&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Account Number Changed&quot;"
-      LocalName="&quot;שינוי מספר חשבון&quot;"
+      LocalName="&quot;Account Number Changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;LOG&quot;"
@@ -10404,7 +10884,7 @@
       Code="&quot;NCH&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Account Name Changed&quot;"
-      LocalName="&quot;שינוי שם חשבון&quot;"
+      LocalName="&quot;Account Name Changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;LOG&quot;"
@@ -10418,7 +10898,7 @@
       Code="&quot;CHCH&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Chart of Accounts Changed&quot;"
-      LocalName="&quot;שינוי קבוצת מאזן&quot;"
+      LocalName="&quot;Chart of Accounts Changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;LOG&quot;"
@@ -10432,7 +10912,7 @@
       Code="&quot;BLK&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Account Inactivated&quot;"
-      LocalName="&quot;הכרטיס נחסם&quot;"
+      LocalName="&quot;Account Inactivated&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;LOG&quot;"
@@ -10446,7 +10926,7 @@
       Code="&quot;UBLK&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Account Activated&quot;"
-      LocalName="&quot;הכרטיס הופעל&quot;"
+      LocalName="&quot;Account Activated&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;LOG&quot;"
@@ -10460,7 +10940,7 @@
       Code="&quot;GLRC&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Account Reactivated&quot;"
-      LocalName="&quot;הכרטיס הופעל מחדש&quot;"
+      LocalName="&quot;Account Reactivated&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10473,7 +10953,7 @@
       Code="&quot;CAT1&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Category 1 Changed&quot;"
-      LocalName="&quot;שינוי  מזהה קטגוריה 1 &quot;"
+      LocalName="&quot;Category 1 Changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10486,7 +10966,7 @@
       Code="&quot;CAT2&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Category 2 Changed&quot;"
-      LocalName="&quot;שינוי  מזהה קטגוריה 2 &quot;"
+      LocalName="&quot;Category 2 Changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10499,7 +10979,7 @@
       Code="&quot;CAT3&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Category 3 Changed&quot;"
-      LocalName="&quot;שינוי  מזהה קטגוריה 3 &quot;"
+      LocalName="&quot;Category 3 Changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10512,7 +10992,7 @@
       Code="&quot;CAT4&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Category 4 Changed&quot;"
-      LocalName="&quot;שינוי  מזהה קטגוריה 4 &quot;"
+      LocalName="&quot;Category 4 Changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10525,7 +11005,7 @@
       Code="&quot;RVUP&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Revaluation Enabled Changed&quot;"
-      LocalName="&quot;שינוי שערוך אוטומטי &quot;"
+      LocalName="&quot;Revaluation Enabled Changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10538,7 +11018,7 @@
       Code="&quot;CAT5&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Category 5 Changed&quot;"
-      LocalName="&quot;שינוי  מזהה קטגוריה 5 &quot;"
+      LocalName="&quot;Category 5 Changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10551,7 +11031,7 @@
       Code="&quot;MLUP&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Is Multi Currency Changed&quot;"
-      LocalName="&quot;שינוי רב מטבעי &quot;"
+      LocalName="&quot;Is Multi Currency Changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10564,7 +11044,7 @@
       Code="&quot;RMUP&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Reconcile Method Changed&quot;"
-      LocalName="&quot; שינוי שיטת התאמה &quot;"
+      LocalName="&quot;Reconcile Method Changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10577,7 +11057,7 @@
       Code="&quot;ARCP&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Automatic Reconcile Method Changed&quot;"
-      LocalName="&quot; שינוי התאמה אוטומטית  &quot;"
+      LocalName="&quot;Automatic Reconcile Method Changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10590,7 +11070,7 @@
       Code="&quot;VAEX&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Is Vat Eexcempt Changed&quot;"
-      LocalName="&quot;שדה פטור מע”מ שונה&quot;"
+      LocalName="&quot;Is Vat Eexcempt Changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10603,7 +11083,7 @@
       Code="&quot;DIST&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Card was disconnected&quot;"
-      LocalName="&quot;נותק מכרטיס תפעולי&quot;"
+      LocalName="&quot;Card was disconnected&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10616,7 +11096,7 @@
       Code="&quot;NTAD&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;New Note&quot;"
-      LocalName="&quot;הערה חדשה נוספה&quot;"
+      LocalName="&quot;New Note&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10629,7 +11109,7 @@
       Code="&quot;NTUP&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Note Edited&quot;"
-      LocalName="&quot;הערה עודכנה&quot;"
+      LocalName="&quot;Note Edited&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10642,7 +11122,7 @@
       Code="&quot;NTDL&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Note Deleted&quot;"
-      LocalName="&quot;הערה נמחקה&quot;"
+      LocalName="&quot;Note Deleted&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10655,7 +11135,7 @@
       Code="&quot;AFIT&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Active for interest&quot;"
-      LocalName="&quot;הופעל במערכת ריבית&quot;"
+      LocalName="&quot;Active for interest&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10668,7 +11148,7 @@
       Code="&quot;IFIT&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Inactive for interest&quot;"
-      LocalName="&quot;לא פעיל  במערכת ריבית&quot;"
+      LocalName="&quot;Inactive for interest&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10681,7 +11161,7 @@
       Code="&quot;ISDT&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Interest Start Date&quot;"
-      LocalName="&quot;עודכנו נתוני ריבית&quot;"
+      LocalName="&quot;Interest Start Date&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10694,7 +11174,7 @@
       Code="&quot;AFIC&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Active For Interest Credit Invoice&quot;"
-      LocalName="&quot; פעיל בזיכוי ריבית&quot;"
+      LocalName="&quot;Active For Interest Credit Invoice&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10707,7 +11187,7 @@
       Code="&quot;MIIB&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Minimum Interest Invoice Billing&quot;"
-      LocalName="&quot;עודכן סכום מינימום לריבית&quot;"
+      LocalName="&quot;Minimum Interest Invoice Billing&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10720,7 +11200,7 @@
       Code="&quot;LUPD&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Line Updated&quot;"
-      LocalName="&quot; עודכנה שורת ריבית &quot;"
+      LocalName="&quot;Line Updated&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10733,7 +11213,7 @@
       Code="&quot;SCBC&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Small cashbook changed&quot;"
-      LocalName="&quot;שדה קופה קטנה שונה&quot;"
+      LocalName="&quot;Small cashbook changed&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10746,7 +11226,7 @@
       Code="&quot;GLCC&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;GLAccount.currency conected&quot;"
-      LocalName="&quot;חיבור כרטסת מטבעית בוצעה&quot;"
+      LocalName="&quot;GLAccount.currency conected&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10759,7 +11239,7 @@
       Code="&quot;GLDD&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;GLAccount.currency disconnected&quot;"
-      LocalName="&quot;ניתוק כרטסת מטבעית בוצע&quot;"
+      LocalName="&quot;GLAccount.currency disconnected&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -10843,7 +11323,8 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Tenant&quot;"
         FieldName="&quot;Tenant&quot;"
@@ -10857,7 +11338,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;InternalNumber&quot;"
         FieldName="&quot;InternalNumber&quot;"
@@ -10871,7 +11353,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;GLAccountType&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -10886,7 +11369,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;DisplayNumber&quot;"
         FieldName="&quot;DisplayNumber&quot;"
@@ -10900,7 +11384,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalName&quot;"
         FieldName="&quot;LocalName&quot;"
@@ -10914,7 +11399,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;EnglishName&quot;"
         FieldName="&quot;EnglishName&quot;"
@@ -10928,7 +11414,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;IsMultiCurrency&quot;"
         FieldName="&quot;IsMultiCurrency&quot;"
@@ -10942,7 +11429,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Currency&quot;"
         FieldName="&quot;CurrencyId&quot;"
@@ -10956,7 +11444,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChartOfAccount&quot;"
         FieldName="&quot;ChartOfAccountsId&quot;"
@@ -10970,7 +11459,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Inactive&quot;"
         FieldName="&quot;Inactive&quot;"
@@ -10984,7 +11474,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AccountTypeName&quot;"
         FieldName="&quot;AccountTypeName&quot;"
@@ -10998,7 +11489,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CurrencyName&quot;"
         FieldName="&quot;CurrencyName&quot;"
@@ -11012,7 +11504,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChartOfAccountsName&quot;"
         FieldName="&quot;ChartOfAccountsName&quot;"
@@ -11026,7 +11519,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChartOfAccountsType&quot;"
         FieldName="&quot;ChartOfAccountsTypeCode&quot;"
@@ -11040,7 +11534,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChartOfAccountsTypeName&quot;"
         FieldName="&quot;ChartOfAccountsTypeName&quot;"
@@ -11054,7 +11549,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CurrencyCode&quot;"
         FieldName="&quot;CurrencyCode&quot;"
@@ -11068,7 +11564,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ReconcileMethod&quot;"
         FieldName="&quot;ReconcileMethodCode&quot;"
@@ -11082,7 +11579,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ReconcileMethodName&quot;"
         FieldName="&quot;ReconcileMethodName&quot;"
@@ -11096,7 +11594,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ControlAccount&quot;"
         FieldName="&quot;ControlAccountId&quot;"
@@ -11110,7 +11609,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ControlAccountName&quot;"
         FieldName="&quot;ControlAccountName&quot;"
@@ -11124,7 +11624,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ControlAccountNumber&quot;"
         FieldName="&quot;ControlAccountNumber&quot;"
@@ -11138,7 +11639,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ActiveStatusName&quot;"
         FieldName="&quot;ActiveStatusName&quot;"
@@ -11152,7 +11654,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;OldCurrencyId&quot;"
         FieldName="&quot;OldCurrencyId&quot;"
@@ -11166,7 +11669,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;OldIsMultiCurrency&quot;"
         FieldName="&quot;OldIsMultiCurrency&quot;"
@@ -11180,7 +11684,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AutomaticReconcileMethod&quot;"
         FieldName="&quot;AutomaticReconcileId&quot;"
@@ -11194,7 +11699,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AutomaticReconcileName&quot;"
         FieldName="&quot;AutomaticReconcileName&quot;"
@@ -11208,7 +11714,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PreviousEnglishName&quot;"
         FieldName="&quot;PreviousEnglishName&quot;"
@@ -11222,7 +11729,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PreviousLocalName&quot;"
         FieldName="&quot;PreviousLocalName&quot;"
@@ -11236,7 +11744,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PreviousNumber&quot;"
         FieldName="&quot;PreviousNumber&quot;"
@@ -11250,7 +11759,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PreviousChartOfAccount&quot;"
         FieldName="&quot;PreviousChartOfAccountsId&quot;"
@@ -11264,7 +11774,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CustomerGLAccount&quot;"
         FieldName="&quot;CustomerGLAccountId&quot;"
@@ -11278,7 +11789,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CustomerGLAccountName&quot;"
         FieldName="&quot;CustomerGLAccountName&quot;"
@@ -11292,7 +11804,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CustomerGLAccountNumber&quot;"
         FieldName="&quot;CustomerGLAccountNumber&quot;"
@@ -11306,7 +11819,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;BalanceInLocalCurrency&quot;"
         FieldName="&quot;BalanceInLocalCurrency&quot;"
@@ -11320,7 +11834,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;RevaluationEnabled&quot;"
         FieldName="&quot;RevaluationEnabled&quot;"
@@ -11334,7 +11849,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ParentAccount&quot;"
         FieldName="&quot;ParentAccountId&quot;"
@@ -11348,7 +11864,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ParentAccountName&quot;"
         FieldName="&quot;ParentAccountName&quot;"
@@ -11362,7 +11879,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ParentAccountNumber&quot;"
         FieldName="&quot;ParentAccountNumber&quot;"
@@ -11376,7 +11894,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CustomerGLAccountInternalNumber&quot;"
         FieldName="&quot;CustomerGLAccountInternalNumber&quot;"
@@ -11390,7 +11909,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category1&quot;"
         FieldName="&quot;Category1Id&quot;"
@@ -11404,7 +11924,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category1Name&quot;"
         FieldName="&quot;Category1Name&quot;"
@@ -11418,7 +11939,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category2&quot;"
         FieldName="&quot;Category2Id&quot;"
@@ -11432,7 +11954,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category2Name&quot;"
         FieldName="&quot;Category2Name&quot;"
@@ -11446,7 +11969,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category3&quot;"
         FieldName="&quot;Category3Id&quot;"
@@ -11460,7 +11984,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category3Name&quot;"
         FieldName="&quot;Category3Name&quot;"
@@ -11474,7 +11999,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category4&quot;"
         FieldName="&quot;Category4Id&quot;"
@@ -11488,7 +12014,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category4Name&quot;"
         FieldName="&quot;Category4Name&quot;"
@@ -11502,7 +12029,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category5&quot;"
         FieldName="&quot;Category5Id&quot;"
@@ -11516,7 +12044,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Category5Name&quot;"
         FieldName="&quot;Category5Name&quot;"
@@ -11530,7 +12059,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;IsVATExempt&quot;"
         FieldName="&quot;IsVATExempt&quot;"
@@ -11544,7 +12074,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChartOfAccountsCode&quot;"
         FieldName="&quot;ChartOfAccountsCode&quot;"
@@ -11558,7 +12089,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CustomerCode&quot;"
         FieldName="&quot;CustomerCode&quot;"
@@ -11572,7 +12104,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ParentAccountByCurrency&quot;"
         FieldName="&quot;ParentAccountByCurrency&quot;"
@@ -11586,7 +12119,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;VatNumber&quot;"
         FieldName="&quot;VatNumber&quot;"
@@ -11600,7 +12134,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PaymentTermId&quot;"
         FieldName="&quot;PaymentTermId&quot;"
@@ -11614,7 +12149,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Collector&quot;"
         FieldName="&quot;CollectorId&quot;"
@@ -11628,7 +12164,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;SalesmanUserId&quot;"
         FieldName="&quot;SalesmanUserId&quot;"
@@ -11642,7 +12179,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;NewGLAccountCardId&quot;"
         FieldName="&quot;NewGLAccountCardId&quot;"
@@ -11656,7 +12194,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalBalanceInDue&quot;"
         FieldName="&quot;LocalBalanceInDue&quot;"
@@ -11670,7 +12209,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;NextDueDate&quot;"
         FieldName="&quot;NextDueDate&quot;"
@@ -11684,7 +12224,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CurrencySign&quot;"
         FieldName="&quot;CurrencySign&quot;"
@@ -11698,7 +12239,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ConnectedItems&quot;"
         FieldName="&quot;ConnectedItems&quot;"
@@ -11712,7 +12254,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Type&quot;"
         FieldName="&quot;Type&quot;"
@@ -11726,7 +12269,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;DeductionFileTypeId&quot;"
         FieldName="&quot;DeductionFileTypeId&quot;"
@@ -11740,7 +12284,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;DeductionFileNumber&quot;"
         FieldName="&quot;DeductionFileNumber&quot;"
@@ -11754,7 +12299,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AssessingOfficeCode&quot;"
         FieldName="&quot;AssessingOfficeCode&quot;"
@@ -11768,7 +12314,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Occupation&quot;"
         FieldName="&quot;Occupation&quot;"
@@ -11782,7 +12329,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;DeductionTypeId&quot;"
         FieldName="&quot;DeductionTypeId&quot;"
@@ -11796,7 +12344,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ConsolidationVat&quot;"
         FieldName="&quot;ConsolidationVat&quot;"
@@ -11810,7 +12359,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;RevenueExpenseType&quot;"
         FieldName="&quot;RevenueExpenseType&quot;"
@@ -11824,7 +12374,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="true"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Parent&quot;"
         FieldName="&quot;Parent&quot;"
@@ -11838,7 +12389,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CardCode&quot;"
         FieldName="&quot;CardCode&quot;"
@@ -11852,7 +12404,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PartnerTypeId&quot;"
         FieldName="&quot;PartnerTypeId&quot;"
@@ -11866,7 +12419,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
@@ -13096,6 +13650,21 @@
       LocalDefaultText="&quot;לא ניתן להפיק את הדוח ללא בחירת איש מכירות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+
+    <TextCode
+      Code="&quot;GLAccount.O.Connected10Cards&quot;"
+      DefaultText="&quot;The GLAccount is connected to 10 or more operational cards.&quot;"
+      LocalDefaultText="&quot;כרטיס הנח&quot;ש מחובר ליותר מ 10 כרטיסים תפעוליים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+
+    <TextCode
+      Code="&quot;GLAccount.O.Multi&quot;"
+      DefaultText="&quot;Multi&quot;"
+      LocalDefaultText="&quot;רב&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

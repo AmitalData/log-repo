@@ -71,12 +71,15 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses
 {
    public class BluesnapContractTypeUpdateClass
    {  		
-		public const string HashString = "ca5afa8ce82b0c60af13ffc79889cd4f";
+		public const string HashString = "f483e53f21add3c74bd93f285fbddefa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	             				    ObjectTableName =  "BluesnapContractType",
 			      				    IsNew =  false,
 			      				    DBTableName =  "BluesnapContractTypes",
-			      				    OldDBTableName =  "BluesnapContractTypes",
 			      				    ObjectTableSingular =  "Bluesnap Contract Type",
 			      				    ObjectTablePlural =  "BluesnapContractTypes",
 			      				    HasCustomFilter =  false,
@@ -97,6 +99,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Name",
+			      				    LookUp2 =  "Name",
 			      				    LovDisplayMemberPath =  "Name",
 			      				    LovDisplayMemberPathLocal =  "Name",
 			      				    KeyPropertyPath =  "Code",
@@ -107,7 +110,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
+			      				    IsMain =  false,
 			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Name",
@@ -120,7 +123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Bluesnap Contract Type",
-			      				    Code =  "156c",
+			      				    Code =  "7aba",
 			      				    Name =  "BluesnapContractType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -133,6 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "BluesnapContractType,BluesnapContractTypes,,Code,",
 			      				    HashString =  BluesnapContractTypeUpdateClass.HashString,
 			                    
@@ -146,7 +150,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "BluesnapContractType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -198,6 +201,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
@@ -210,7 +214,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "BluesnapContractType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -228,7 +231,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
 					  						DisplayInLookUpIndex =  0,
@@ -262,6 +265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
@@ -274,7 +278,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "BluesnapContractType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -324,6 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -337,7 +341,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable BluesnapContractTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BluesnapContractType" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> BluesnapContractTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BluesnapContractType").ToList();
+		       
+	      
+
+	         Screen BluesnapContractTypeBluesnapContractTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BluesnapContractType.HeaderScreen", Name = "BluesnapContractTypeHeaderScreen", ObjectTableId = BluesnapContractTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    BluesnapContractTypeObjectTable.HeaderScreenId = BluesnapContractTypeBluesnapContractTypeHeaderScreenScreen0.Id;
+		    BluesnapContractTypeObjectTable.HeaderScreenCode = BluesnapContractTypeBluesnapContractTypeHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

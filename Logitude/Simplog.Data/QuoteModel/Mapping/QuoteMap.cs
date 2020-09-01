@@ -48,7 +48,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.Field9).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field10).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.DimensionsUnitCode).HasMaxLength(3).IsUnicode(false);          
-            this.Property(t => t.GrossWeightUnitCode).HasMaxLength(3).IsUnicode(false);           
+            this.Property(t => t.GrossWeightUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.VolumeUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.ShipmentTypeId).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ShipperId).HasMaxLength(15).IsUnicode(false);
@@ -84,6 +84,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.DeliveryAddress).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.SearchFields).HasMaxLength(1500).IsUnicode(true);
             this.Property(t => t.ChargeableWeightUnitCode).HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.PickupDeliveryCWeightUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.ConcurrencyGUID).IsRequired().HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.FromPartnerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ToPartnerId).HasMaxLength(15).IsUnicode(false);
@@ -234,6 +235,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.IsSaleCurrencySameAsCost).HasColumnName("IsSaleCurrencySameAsCost");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.ChargeableWeightUnitCode).HasColumnName("ChargeableWeightUnitCode");
+            this.Property(t => t.PickupDeliveryCWeightUnitCode).HasColumnName("PickupDeliveryCWeightUnitCode");
             this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID");
             this.Property(t => t.FromPartnerId).HasColumnName("FromPartnerId");
             this.Property(t => t.ToPartnerId).HasColumnName("ToPartnerId");

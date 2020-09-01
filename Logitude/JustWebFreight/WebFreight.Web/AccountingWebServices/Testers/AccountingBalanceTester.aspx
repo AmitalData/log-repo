@@ -10,7 +10,7 @@
    border: 1px solid black;
 }
     </style>
-    <script src="<% =  Page.ResolveUrl("~/HtmlHelpers/JS/jquery.min.js") %>"></script>
+    <script src="<% =  Page.ResolveUrl("~/js/jquery-3.5.1.min.js") %>"></script>
 
     <script lang="javascript" >
 

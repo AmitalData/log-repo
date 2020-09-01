@@ -63,11 +63,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.PickupDone).HasColumnName("PickupDone");
 
-            this.Property(t => t.ClearanceDone).HasColumnName("ClearanceDone");
-
             this.Property(t => t.PickupDate).HasColumnName("PickupDate");
-
-            this.Property(t => t.ClearanceDate).HasColumnName("ClearanceDate");
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 
@@ -78,6 +74,64 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.ShipperName).HasColumnName("ShipperName").HasMaxLength(70).IsUnicode(false);
 
             this.Property(t => t.CustomerReference).HasColumnName("CustomerReference").HasMaxLength(101).IsUnicode(false);
+
+            this.Property(t => t.IsMainRecord).HasColumnName("IsMainRecord").IsRequired();
+
+            this.Property(t => t.PickupEstimationDate).HasColumnName("PickupEstimationDate");
+
+            this.Property(t => t.FromWarehouseDate).HasColumnName("FromWarehouseDate");
+
+            this.Property(t => t.FromWarehouseEstimationDate).HasColumnName("FromWarehouseEstimationDate");
+
+            this.Property(t => t.FromWarehouseNotes).HasColumnName("FromWarehouseNotes").HasMaxLength(32).IsUnicode(true);
+
+            this.Property(t => t.DepartureDone).HasColumnName("DepartureDone");
+
+            this.Property(t => t.DepartureDate).HasColumnName("DepartureDate");
+
+            this.Property(t => t.DepartureEstimationDate).HasColumnName("DepartureEstimationDate");
+
+            this.Property(t => t.ArrivalDone).HasColumnName("ArrivalDone");
+
+            this.Property(t => t.ArrivalDate).HasColumnName("ArrivalDate");
+
+            this.Property(t => t.ArrivalEstimationDate).HasColumnName("ArrivalEstimationDate");
+
+            this.Property(t => t.ToWarehouseDone).HasColumnName("ToWarehouseDone");
+
+            this.Property(t => t.ToWarehouseDate).HasColumnName("ToWarehouseDate");
+
+            this.Property(t => t.ToWarehouseEstimationDate).HasColumnName("ToWarehouseEstimationDate");
+
+            this.Property(t => t.ToWarehouseNotes).HasColumnName("ToWarehouseNotes").HasMaxLength(32).IsUnicode(true);
+
+            this.Property(t => t.CustomsPaymentDone).HasColumnName("CustomsPaymentDone");
+
+            this.Property(t => t.CustomsPaymentDate).HasColumnName("CustomsPaymentDate");
+
+            this.Property(t => t.ClearanceDone).HasColumnName("ClearanceDone");
+
+            this.Property(t => t.ClearanceDate).HasColumnName("ClearanceDate");
+
+            this.Property(t => t.DeliveredDone).HasColumnName("DeliveredDone");
+
+            this.Property(t => t.DeliveredDate).HasColumnName("DeliveredDate");
+
+            this.Property(t => t.DeliveredEstimationDate).HasColumnName("DeliveredEstimationDate");
+
+            this.Property(t => t.FromWarehouseDone).HasColumnName("FromWarehouseDone");
+
+            this.Property(t => t.FirstPickupETD).HasColumnName("FirstPickupETD");
+
+            this.Property(t => t.WarehouseLegActualEntryDate).HasColumnName("WarehouseLegActualEntryDate");
+
+            this.Property(t => t.WarehouseLegExpectedEntryDate).HasColumnName("WarehouseLegExpectedEntryDate");
+
+            this.Property(t => t.WarehouseLegRemarks).HasColumnName("WarehouseLegRemarks").HasMaxLength(500).IsUnicode(true);
+
+            this.Property(t => t.DeclarationDate).HasColumnName("DeclarationDate");
+
+            this.Property(t => t.CustomsClearanceDate).HasColumnName("CustomsClearanceDate");
         }
     }
 }

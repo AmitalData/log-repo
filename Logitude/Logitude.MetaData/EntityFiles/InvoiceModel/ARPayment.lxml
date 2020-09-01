@@ -10073,7 +10073,7 @@
       Code="&quot;R2CB&quot;"
       ObjectTableName="&quot;ARPayment&quot;"
       EnglishName="&quot;Returned to Cashbook&quot;"
-      LocalName="&quot;המחאה הוצאה מהפקדה&quot;"
+      LocalName="&quot;Returned to Cashbook&quot;"
       IsManualEntry="false"
       ShortView="true"
       EventTypeCategoryCode="&quot;OPE&quot;"
@@ -10087,7 +10087,7 @@
       Code="&quot;R2CS&quot;"
       ObjectTableName="&quot;ARPayment&quot;"
       EnglishName="&quot;Returned to Customer&quot;"
-      LocalName="&quot;המחאה הוצאה מהפקדה והוחזרה ללקוח&quot;"
+      LocalName="&quot;Returned to Customer&quot;"
       IsManualEntry="false"
       ShortView="true"
       EventTypeCategoryCode="&quot;OPE&quot;"
@@ -10310,7 +10310,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Tenant&quot;"
         FieldName="&quot;Tenant&quot;"
@@ -10324,7 +10325,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PaymentNo&quot;"
         FieldName="&quot;PaymentNo&quot;"
@@ -10338,7 +10340,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AccountingPaymentMethod&quot;"
         FieldName="&quot;AccountingPaymentMethodId&quot;"
@@ -10352,7 +10355,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AmountInLocalCurrency&quot;"
         FieldName="&quot;AmountInLocalCurrency&quot;"
@@ -10366,7 +10370,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AmountInPaymentCurrency&quot;"
         FieldName="&quot;AmountInPaymentCurrency&quot;"
@@ -10380,7 +10385,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PaidBy&quot;"
         FieldName="&quot;PaidBy&quot;"
@@ -10394,7 +10400,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PaymentCurrencyExchangeRate&quot;"
         FieldName="&quot;PaymentCurrencyExchangeRate&quot;"
@@ -10408,7 +10415,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ExchangeRateDate&quot;"
         FieldName="&quot;ExchangeRateDate&quot;"
@@ -10422,7 +10430,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CreatedByUser&quot;"
         FieldName="&quot;CreatedByUserId&quot;"
@@ -10436,7 +10445,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalCurrencyCode&quot;"
         FieldName="&quot;LocalCurrencyCode&quot;"
@@ -10450,7 +10460,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Branch&quot;"
         FieldName="&quot;BranchId&quot;"
@@ -10464,7 +10475,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PaymentCurrency&quot;"
         FieldName="&quot;PaymentCurrencyId&quot;"
@@ -10478,7 +10490,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;BillTo&quot;"
         FieldName="&quot;BillToId&quot;"
@@ -10492,7 +10505,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChequeOrPaymentRef&quot;"
         FieldName="&quot;ChequeOrPaymentRef&quot;"
@@ -10506,7 +10520,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Bank&quot;"
         FieldName="&quot;Bank&quot;"
@@ -10520,7 +10535,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;BankBranch&quot;"
         FieldName="&quot;BankBranch&quot;"
@@ -10534,7 +10550,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Account&quot;"
         FieldName="&quot;Account&quot;"
@@ -10548,7 +10565,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ValueDate&quot;"
         FieldName="&quot;ValueDate&quot;"
@@ -10562,7 +10580,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;RegisterDate&quot;"
         FieldName="&quot;RegisterDate&quot;"
@@ -10576,7 +10595,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CreditCardType&quot;"
         FieldName="&quot;CreditCardTypeId&quot;"
@@ -10590,7 +10610,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PaymentCurrencyCode&quot;"
         FieldName="&quot;PaymentCurrencyCode&quot;"
@@ -10604,7 +10625,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CreateDate&quot;"
         FieldName="&quot;CreateDate&quot;"
@@ -10618,7 +10640,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PaymentInvoices&quot;"
         FieldName="&quot;PaymentInvoices&quot;"
@@ -10633,7 +10656,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ARPaymentCheques&quot;"
         FieldName="&quot;ARPaymentChequeReplicas&quot;"
@@ -10648,7 +10672,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;BankAccountNumber&quot;"
         FieldName="&quot;BankAccountNumber&quot;"
@@ -10662,7 +10687,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;CancelationNotes&quot;"
         FieldName="&quot;CancelationNotes&quot;"
@@ -10676,7 +10702,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;AccountingCancelationDate&quot;"
         FieldName="&quot;AccountingCancelationDate&quot;"
@@ -10690,7 +10717,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Status&quot;"
         FieldName="&quot;StatusCode&quot;"
@@ -10704,7 +10732,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
@@ -11027,6 +11056,15 @@
       FeatureTextCodeCode="&quot;ARPayment.Features.EditExchangeRate&quot;"
       FeatureDefaultText="&quot;Edit Exchange Rate&quot;"
       IsPackagable="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;NewScreenPartnerTypes&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;ARPayment.Features.NewScreenPartnerTypes&quot;"
+      FeatureDefaultText="&quot;Partner Types Filter On New Screen&quot;"
+      IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />

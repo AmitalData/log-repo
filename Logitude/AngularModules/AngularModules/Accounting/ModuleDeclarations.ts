@@ -12,6 +12,8 @@ import { MiscPageComponent } from './Components/Workspaces/Misc/MiscPageComponen
 import { InterestPageComponent } from './Components/Workspaces/Interest/InterestPageComponent';
 import { BatchInvoicesComponent } from './Components/Others/BatchInvoicesComponent';
 import { BatchPrintComponent } from './Components/Others/BatchPrintComponent';
+import { BtatchPrintWarningComponent } from './Components/Others/BtatchPrintWarningComponent';
+import { BtatchPrintConfirmComponent } from './Components/Others/BtatchPrintConfirmComponent';
 
 import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
 import {NewChartOfAccountComponent} from './Components/NewEntity/NewChartOfAccountComponent';
@@ -260,10 +262,21 @@ export const Components =
         CargoTrackingIncrementalStatistics,
         CreateInterestReportsForCustomersComponent,
 
+
+
         CargoTrackingIncrementalStatListTemplate,
 
+     
+        InterestReportEditCalculationDateComponent,
+
+      
+
         InterestReportEditOpenBalanceComponent,
-        InterestReportEditCalculationDateComponent
+        BtatchPrintWarningComponent,
+        BtatchPrintConfirmComponent
+
+      
+
 
     ];
 
@@ -372,6 +385,7 @@ export class ModuleDeclarations {
             case "CargoTrackingBuildShipmentComponent" :{myResult =CargoTrackingBuildShipmentComponent; break;}
             case "CargoTrackingIncrementalStatistics" :{myResult =CargoTrackingIncrementalStatistics; break;}
             case "CargoTrackingServiceComponent": { myResult = CargoTrackingServiceComponent; break; }
+            case "BtatchPrintConfirmComponent": { myResult = BtatchPrintConfirmComponent; break; }
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }
             case "ReconciledMessage": { myResult = ReconciledMessage; break; }
             case "OutOfDepositMessage": { myResult = OutOfDepositMessage; break; }
@@ -405,6 +419,7 @@ export class ModuleDeclarations {
             case "InterestReportShortTitleComponent": { myResult = InterestReportShortTitleComponent; break;}
             case "BatchInvoicesComponent" :{myResult =BatchInvoicesComponent; break;}
             case "BatchPrintComponent" :{myResult =BatchPrintComponent; break;}
+            case "BtatchPrintWarningComponent" :{myResult =BtatchPrintWarningComponent; break;}
 
         }
 

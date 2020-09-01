@@ -59,7 +59,7 @@
                             </tr>
 
                             <!-- IsBondedWarehouse -->
-                            <tr class="FormFieldRow">
+                            <tr class="FormFieldRow" *ngIf="IsImportShipment">
                                 <td style="width: 120px;">
                                     <LogLabel [ObjectFieldName]="'IsBondedWarehouse'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -430,7 +430,7 @@
                                                                             </td>
                                                                             <td>
                                                                                 <div class="Label">
-                                                                                    {{StorageFee}}
+                                                                                    {{StorageFee | NumbersPipe:'N2'}}
                                                                                 </div>
                                                                             </td>
                                                                         </tr>

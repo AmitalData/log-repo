@@ -7,17 +7,17 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {LedgerTransactionList} from '../../EntityLists/LedgerTransactionList';
 import { catchError, map } from 'rxjs/operators';
- 
+
 
 @Injectable()
 export class LedgerTransactionExtendedListService {
- 
+
     private httpClient: HttpClient;
     private _apiUrl: string;
     private _reconciliationUrl: string;
 
     constructor() {
-    
+
         this.httpClient=ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/LedgerTransactions';
         this._reconciliationUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconciliationOp';
@@ -27,7 +27,7 @@ export class LedgerTransactionExtendedListService {
 
         var urlparameters = '/GetFirstLedgerTransaction?AccountId=' + AccountId;
 
-      
+
         var callUrl = this._apiUrl.concat(urlparameters);
         return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
             map((response : ServiceResponse)=> {
@@ -37,7 +37,7 @@ export class LedgerTransactionExtendedListService {
             }),
             catchError(ServiceHelper.HandleServiceError));
 
-  
+
     }
 
     getByFilters(filters: ApiQueryFilters) {
@@ -78,7 +78,7 @@ export class LedgerTransactionExtendedListService {
             }),
             catchError(ServiceHelper.HandleServiceError));
 
-     
+
     }
 
     getBalanceByFilters(filters: ApiQueryFilters) {
@@ -117,12 +117,12 @@ export class LedgerTransactionExtendedListService {
                  return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-       
-     
+
+
     }
 
     getOpenReconciliationsByFilter(accountId: string, filters: ApiQueryFilters) {
-       
+
 
         var url = this._reconciliationUrl + "/GetOpenReconciliationsByFilters";
 
@@ -166,13 +166,13 @@ export class LedgerTransactionExtendedListService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-     
+
     }
 
 
     // External Reconciliations
     getReconciliationsByFilter(accountId: string, filters: ApiQueryFilters) {
-    
+
         var url = this._reconciliationUrl + "/GetReconciliationsByFilter";
 
         var urlparameters = '?gLAccountId=' + accountId
@@ -188,7 +188,7 @@ export class LedgerTransactionExtendedListService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-     
+
     }
 
     private parseFiltersToURL(filters: ApiQueryFilters, urlparameters: string) {
@@ -216,7 +216,7 @@ export class LedgerTransactionExtendedListService {
     }
 
     getAutomaticReconcileByFilter(method1: string, method2: string, method3: string, accountId: string, filters: ApiQueryFilters) {
-        
+
 
         var url = this._reconciliationUrl + "/GetAutomaticReconcileByFilter";
 
@@ -264,11 +264,11 @@ export class LedgerTransactionExtendedListService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-     
+
     }
 
     getLedgerTransactionsByIds(Ids: string[]) {
-      
+
         var params: string = "";
         for (var id of Ids) {
             params += "Ids[]=" + id + "&";
@@ -282,11 +282,62 @@ export class LedgerTransactionExtendedListService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-      
+
     }
 
+
+    getFirst100LedgerForReconciliation(accountId: string, filters: ApiQueryFilters) {
+
+
+        var url = this._reconciliationUrl + "/GetFirst100LedgerForReconciliation";
+
+        var urlparameters = '?gLAccountId=' + accountId
+            + '&tenant=' + SessionInfo.LoggedUserTenant;
+
+
+
+        //#region Parse Filters into URI
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+
+
+        }
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+        //#endregion End Parse
+
+
+        var callUrl = url.concat(urlparameters);
+        return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
+
+
     getLast10TransactionsForAccount(accountId: string) {
-       
+
         var url = this._apiUrl + '/GetLast10TransactionsForAccount?AccountId=' + accountId;
         return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
             map((response: ServiceResponse) => {
@@ -295,12 +346,12 @@ export class LedgerTransactionExtendedListService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-      
+
     }
 
     getTransactionsForARPayment(arpaymentId: string, billToGLAccountId: string, paymentCurrencyId:string) {
 
-       
+
 
         var url = this._apiUrl + '/GetTransactionsForARPayment?arpaymentId=' + arpaymentId
             + '&billToGLAccountId=' + billToGLAccountId + '&paymentCurrencyId=' + paymentCurrencyId;
@@ -312,7 +363,7 @@ export class LedgerTransactionExtendedListService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-       
+
     }
 
     GetTransactionsCurrencies(AccountId:string) {
@@ -328,7 +379,7 @@ export class LedgerTransactionExtendedListService {
             }),
             catchError(ServiceHelper.HandleServiceError));
 
-    
+
     }
 
 

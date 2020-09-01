@@ -29,6 +29,8 @@ import { CurrencyListService } from '../../../../Common/Services/StandardLists/C
 import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
 import { WarehouseEntryListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseEntryListExtendedService';
+import { WarehouseExtendedListService } from '../../../../Common/Services/ExtendedLists/WarehouseExtendedListService';
+import { ShipmentStoragePricingPM } from '../../../../Shipment/EntityPMs/ShipmentStoragePricingPM';
 
 @Component({
     moduleId: './ShipmentModules/ShipmentRouting/Components/Routings/',
@@ -69,11 +71,13 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     private cardService: CardPMService;
     private cardListService: CardListService;
     private warehouseEntryListExtendedService: WarehouseEntryListExtendedService;
+    private warehouseExtendedListService: WarehouseExtendedListService;
     InitServices() {
         this.myAddressListService = new AddressListService();
         this.cardService = new CardPMService();
         this.cardListService = new CardListService();
         this.warehouseEntryListExtendedService = new WarehouseEntryListExtendedService();
+        this.warehouseExtendedListService = new WarehouseExtendedListService();
     }
 
     GetShipmentDirection() {
@@ -113,61 +117,81 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
             this.GetShipmentDirection();
             this.SetStorageDays();
+            this.ComputeStorageFee();
+
             if (this.IsBondedWarehouse && this.IsImportShipment) {
                 this.SetIsBondedWarehouseProperities();
             }
-        }
-         
-        this.ObjectTableName = args['ObjectTableName'];
-        this.FatherComponent = args['FatherComponent'];
-        this.WarehouseAddressList = this.FatherComponent.WarehouseAddressList;
-        this.SetUIProperties();
-        this.Clone();
-         
-        if (this.IsNewLeg) {
-            if (this.LegType == "WarehouseLeg_Pickups") {
-                if (this.EntityPM.ShipmentPickUps.length > 0) {
-                    var FirstPickup: ShipmentPickUpPM = this.EntityPM.ShipmentPickUps.sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; })[0];
-                    if (FirstPickup) {
-                        this.WarehouseLegExpectedEntryDate = FirstPickup.ETA
-                        this.WarehouseLegActualEntryDate = FirstPickup.ATA;
-                    }
-                }
-            }
-            this.GetShipmentDirection();
-            this.InitFreeDaysStorage();
-        }
 
-        if (!AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId)) {
-            this.cardListService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
-                if (myResponse != null) {
-                    if (!myResponse.HasError) {
-                        var result: CardList = myResponse.Result;
-                        if (result) {
-                            if (result.WarehouseTypeCode == "BO") {
-                                this.StoragePricingEnabled = true;
-                                this.StoragePricingMessageVisible = false;
-                            }
-                            else {
-                                this.StoragePricingEnabled = false;
-                                this.StoragePricingMessageVisible = true;
-                            }
+            this.ObjectTableName = args['ObjectTableName'];
+            this.FatherComponent = args['FatherComponent'];
+            this.WarehouseAddressList = this.FatherComponent.WarehouseAddressList;
+            this.SetUIProperties();
+            this.Clone();
 
-                            this.SetUIProperties_Storage();
+            if (this.IsNewLeg) {
+                if (this.LegType == "WarehouseLeg_Pickups") {
+                    if (this.EntityPM.ShipmentPickUps.length > 0) {
+                        var FirstPickup: ShipmentPickUpPM = this.EntityPM.ShipmentPickUps.sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; })[0];
+                        if (FirstPickup) {
+                            this.WarehouseLegExpectedEntryDate = FirstPickup.ETA
+                            this.WarehouseLegActualEntryDate = FirstPickup.ATA;
                         }
                     }
                 }
-            });
+                this.GetShipmentDirection();
+                this.InitFreeDaysStorage();
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId)) {
+                this.cardListService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
+                    if (myResponse != null) {
+                        if (!myResponse.HasError) {
+                            var result: CardList = myResponse.Result;
+                            if (result) {
+                                if (result.WarehouseTypeCode == "BO") {
+                                    this.StoragePricingEnabled = true;
+                                    this.StoragePricingMessageVisible = false;
+                                }
+                                else {
+                                    this.StoragePricingEnabled = false;
+                                    this.StoragePricingMessageVisible = true;
+                                }
+
+                                this.SetUIProperties_Storage();
+                            }
+                        }
+                    }
+                });
+            }
         }
     }
 
     SetIsBondedWarehouseProperities() {
-        this.warehouseEntryListExtendedService.GetWarehouseEntriesByShipmentId(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
-            var warehouseEntries = serviceResponse.Result;
-            if (warehouseEntries && warehouseEntries.length > 0) {
-                this.DisableNewWarehouseEntryButton = true;
-            }
-        });
+        if (!this.EntityPM.IsBondedWarehouseChanged)
+            this.warehouseExtendedListService.GetWarehouseTypeById(this.WarehouseLegWarehouseId).subscribe((serviceResponse: ServiceResponse) => {
+                var warehouseType = serviceResponse.Result;
+                if (warehouseType == "Bonded") {
+                    this.IsBondedWarehouse = true;
+                    this.SetNewWarehouseEntryButtonProperty();
+                }
+                else this.IsBondedWarehouse = false;
+                this.EntityPM.IsBondedWarehouseChanged = true;
+            });
+        else if (this.IsBondedWarehouse) {
+            this.SetNewWarehouseEntryButtonProperty();
+        }
+    }
+
+    SetNewWarehouseEntryButtonProperty() {
+        if (this.IsBondedWarehouse) {
+            this.warehouseEntryListExtendedService.GetActiveWarehouseEntriesByShipmentId(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
+                var warehouseEntries = serviceResponse.Result;
+                if (warehouseEntries && warehouseEntries.length > 0) {
+                    this.DisableNewWarehouseEntryButton = true;
+                }
+            });
+        }
     }
 
     public IsEditingEnabled: boolean = true;
@@ -259,6 +283,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.WarehouseLegAddressId = null;
                 this.FatherComponent.WarehouseLegTerminalName = "";
             }
+            this.EntityPM.IsBondedWarehouseChanged = false;
+            this.SetIsBondedWarehouseProperities();
 
             this.SetUIProperties();
         }         
@@ -272,6 +298,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                     if (result) {
                         this.WarehouseLegAddressId = result.MainAddressId;
                         this.FatherComponent.WarehouseLegTerminalName = result.EnglishName;
+                        this.FatherComponent.EntityPM.WarehouseLegTerminalName = result.EnglishName;
                         this.WarehouseLegTerminalCode = result.FirmCode;
 
                         if (result.WarehouseTypeCode == "BO") {
@@ -302,7 +329,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         myService.GetWarehouseStoragePricingForWarehouse(this.EntityPM.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
-                    this.warehouseStoragePricings = myResponse.Result;                    
+                    this.warehouseStoragePricings = myResponse.Result;
+                    this.FillDefaultPricings();
                 }
 
                 this.CurrentSession.StopBusyIndicator();
@@ -344,6 +372,24 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.EntityPM.WeightMeasurementCode = null;
             this.EntityPM.WeightRoundingCode = null;
             this.EntityPM.ShipmentStoragePricings = [];
+        }
+    }
+    private FillDefaultPricings() {        
+        if (this.warehouseStoragePricings != null && this.warehouseStoragePricings.length > 0) {
+            var count: number = 1;
+            this.warehouseStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
+                var defaultItem: ShipmentStoragePricingPM = new ShipmentStoragePricingPM(this.EntityPM);
+                defaultItem.Tenant = SessionLocator.Tenant;
+                defaultItem.ShipmentId = this.EntityPM.Id;
+                defaultItem.WarehouseId = this.EntityPM.WarehouseLegWarehouseId;
+                defaultItem.StepFrom = item.StepFrom;
+                defaultItem.StepTo = item.StepTo;
+                defaultItem.Days = item.Days;
+                defaultItem.SalePrice = item.SalePrice;
+                defaultItem.LineNumber = count++;
+
+                this.EntityPM.AddShipmentStoragePricing(defaultItem);
+            });
         }
     }
 
@@ -505,9 +551,16 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     set IsBondedWarehouse(value: boolean) {
         if (this.EntityPM.IsBondedWarehouse != value) {
             this.EntityPM.IsBondedWarehouse = value;
-            if (value && this.IsImportShipment) {
+            if (this.IsImportShipment) {
                 this.SetIsBondedWarehouseProperities();
             }
+        }
+    }
+
+    get IsBondedWarehouseChanged() { return this.EntityPM.IsBondedWarehouseChanged; }
+    set IsBondedWarehouseChanged(value: boolean) {
+        if (this.EntityPM.IsBondedWarehouseChanged != value) {
+            this.EntityPM.IsBondedWarehouseChanged = value;
         }
     }
 
@@ -524,11 +577,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         entityResourceService.getEntityResourceByTableName("ShipmentStoragePricing").subscribe((res1: any) => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Title = "Storage Pricing";
-            logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, DefaultPricings: this.warehouseStoragePricings };
+            logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName };
             logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s == "PricesChanged") {
                     this.PricesChanged = true;
+                    this.CheckStorageProperties();
                 }
             });
         });
@@ -579,6 +633,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.StorageDays = null;
                 this.Days = null;
             }
+        }
+    }
+    private ComputeStorageFee() {
+        var storageReceivables: ShipmentReceivablePM[] = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE");
+        if (storageReceivables.length > 0) {
+            this.StorageFee = ArrayTool.Sum(storageReceivables, "TotalAmount");
         }
     }
     
@@ -645,18 +705,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            //var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-
             this.CheckStorageProperties();
-
-            //if (this.PricesChanged && storageReceivable) {
-            //    this.UpdateStorageReceivable(storageReceivable);
-            //}
-
-            //else {
-            //    this.CheckStorageProperties();
-            //}
-
             this.FatherComponent.BuildItemsCollection();
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
@@ -691,6 +740,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.CurrentSession.FireEvent("StorageReceivableRemoved");
             }
         }
+
+        this.ComputeStorageFee();
     }
     private ComputeReceivableAmount(): number {
         var myResult: number = ShipmentTool.ComputeImportStorageReceivableAmount(this.StorageDays, this.EntityPM);

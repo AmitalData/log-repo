@@ -259,8 +259,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
 
                 }
-                bool showInActive = filters.Filter3Value == "true";
-                if (Tabel == "DIM_Partners" && !showInActive) {
+                bool showActive = filters.Filter3Value != "true";
+                DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(tenant);
+                bool hasActiveField = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, Tabel).Where(dwField => dwField.Name == "InActive").Any();
+                if (hasActiveField && showActive) {
                     WhereStmt = WhereStmt + " and " + Tabel + ".[InActive] = 0"; 
                 }
 

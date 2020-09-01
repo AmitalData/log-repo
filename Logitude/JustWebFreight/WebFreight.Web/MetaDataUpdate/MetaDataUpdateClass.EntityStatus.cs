@@ -49,13 +49,17 @@ namespace WebFreight.Web.MetaDataUpdate
             AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "ICCL", StatusWeight = 200, Name = "Import Custom Clearance", ObjectTableId = shipmentObject.Id, Tenant = 0,DisplayName = "Import Custom Clearance" }, EntityStatusRepository, tenantEntityStatus);
             AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "SHCL", StatusWeight = 200, Name = "Cleared", ObjectTableId = shipmentObject.Id, Tenant = 0,DisplayName = "Cleared" }, EntityStatusRepository, tenantEntityStatus);
             AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "SAFD", StatusWeight = 210, Name = "Available for Delivery", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Available for Delivery" }, EntityStatusRepository, tenantEntityStatus);
-            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "INWH", StatusWeight = 220, Name = "In Warehouse", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "In Warehouse" }, EntityStatusRepository, tenantEntityStatus);
             AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "SDLY", StatusWeight = 230, Name = "Delivery", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Delivery Departed" }, EntityStatusRepository, tenantEntityStatus);
             AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "SDL2", StatusWeight = 230, Name = "Delivery", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Delivery Arranged" }, EntityStatusRepository, tenantEntityStatus);
             AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "SDLD", StatusWeight = 240, Name = "Delivered", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Delivered" }, EntityStatusRepository, tenantEntityStatus);
             AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "INPS", StatusWeight = 250, Name = "In Progress", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "In Progress" }, EntityStatusRepository, tenantEntityStatus);
             AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "DDAP", StatusWeight = 250, Name = "Declaration Data Approved", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Declaration Data Approved" }, EntityStatusRepository, tenantEntityStatus);
             AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "DDDE", StatusWeight = 250, Name = "Declaration Data Denied", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Declaration Data Denied" }, EntityStatusRepository, tenantEntityStatus);
+
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "INWH", StatusWeight = 205, Name = "Storage Entry", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Storage Entry" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "SEEX", StatusWeight = 40, Name = "Storage Entry", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Storage Entry" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "SRIM", StatusWeight = 225, Name = "Storage Released", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Storage Released" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "SREX", StatusWeight = 50, Name = "Storage Released", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Storage Released" }, EntityStatusRepository, tenantEntityStatus);
             #endregion
 
             #region Customer Status

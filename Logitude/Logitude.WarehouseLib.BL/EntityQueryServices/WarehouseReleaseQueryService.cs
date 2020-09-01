@@ -282,6 +282,25 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             return numberofConnectedWarehouse;
         }
 
+        public List<WarehouseReleaseList> GetActiveWarehouseReleaseListsByshipmentId(string shipmentId, int tenant)
+        {
+
+            List<WarehouseReleaseList> myResult = (from a in context.WarehouseReleases.Include("WarehouseReleaseStatus")
+                                                   where a.ShipmentId == shipmentId && a.Tenant == tenant && a.StatusCode!= "CARE"
+                                                   select new WarehouseReleaseList()
+                                                   {
+                                                       Id = a.Id,
+                                                       ReleaseNumber = a.ReleaseNumber,
+                                                       ActualReleaseDate = a.ActualReleaseDate,
+                                                       ReleaseBy = a.ReleaseBy,
+                                                       StatusName = a.WarehouseReleaseStatus != null ? a.WarehouseReleaseStatus.Name : "",
+                                                       ExpectedReleaseDate = a.ExpectedReleaseDate,
+                                                       CreateDate = a.CreateDate,
+
+                                                   }).ToList();
+            return myResult;
+        }
+
         public List<WarehouseReleaseList> GetWarehouseReleasesByEntryId(string entityId, int tenant)
         {
             List<WarehouseReleaseList> warehouseReleaseLists = null;

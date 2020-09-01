@@ -242,8 +242,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         var errors: string[] = [];
 
         // Local Validate
-        if (this.totalDifference != 0) {
-            if (this.ExtPageSelectedLines.Length == 1 && this.TransactionSelectedLines.Length >= 0) { // only ONE ROW external pages adjustments WITH ZERO OR MANY TransactionSelectedLines
+        if (Math.abs(this.totalDifference) > 0.001) {//if (this.totalDifference != 0) {
+            if (this.ExtPageSelectedLines.Length >= 1 && this.TransactionSelectedLines.Length >= 0) { // only ONE ROW external pages adjustments WITH ZERO OR MANY TransactionSelectedLines
 
             //if (this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length == 0) { // only external pages adjustments
             // if (this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length >= 0) { // to enable ledgertransactions and external page adjustments
@@ -318,9 +318,13 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
     AdjustBankFeeWithNewJournalScreen(): void {
         //throw new Error("Method not implemented.");
-        if (this.ExtPageSelectedLines.Length != 1) {
+        if (this.ExtPageSelectedLines.Length < 1) {
             console.error("(this.ExtPageSelectedLines.Length != 1)")
-            this.ValidationErrorsList.push("to adjust bank fees, select only one row External page line ");
+            this.ValidationErrorsList.push("to adjust bank fees, select one or more row External page line ");
+            return;
+        }
+        if (this.ExtPageSelectedLines.Length > 1 && this.TransactionSelectedLines.Length > 0) {
+            this.ValidationErrorsList.push("to adjust bank fees with Transaction select only one page line  ");
             return;
         }
         let LedgerTransactionIdList: string[] = [];
@@ -330,8 +334,13 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         });
         let myExtPageLineModel: ExtPageLineModel = this.ExtPageSelectedLines.Collection[0];
-        
-        
+        let ReconcileExternalPageLinePMList: ReconcileExternalPageLinePM[] = [];
+        this.ExtPageSelectedLines.Collection.forEach(r /*: ExtPageLineModel*/ => {
+            let a: ReconcileExternalPageLinePM = r.PageLinePM;
+            ReconcileExternalPageLinePMList.push(a);
+        });
+
+
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 390;
         confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
@@ -344,7 +353,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                         logitudeWindow.Height = 400;
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.B.Adjust");
 
-                        logitudeWindow.WindowArgs = { "ExtPageSelectedLine": myExtPageLineModel.PageLinePM, "LedgerTransactionIdList": LedgerTransactionIdList, "BankAccountPMId": this.BankAccountPM.Id };
+                        //logitudeWindow.WindowArgs = { "ExtPageSelectedLine": myExtPageLineModel.PageLinePM, "LedgerTransactionIdList": LedgerTransactionIdList, "BankAccountPMId": this.BankAccountPM.Id };
+                        logitudeWindow.WindowArgs = { "ReconcileExternalPageLinePMList": ReconcileExternalPageLinePMList, "LedgerTransactionIdList": LedgerTransactionIdList, "BankAccountPMId": this.BankAccountPM.Id };
 
                         logitudeWindow.Show('./Accounting/Components/Others/ExtReconcileAdjustBankFeeComponent');
                         logitudeWindow.WindowClosed
@@ -1014,7 +1024,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //    // Show prompt
         //    var confirmWindow = new ConfirmWindow();
         //    confirmWindow.Width = 390;
-        //    confirmWindow.Show("Automatic Reconcile will clear all selected lines, continue?"); // "קיימות תנועות שנבחרו , האם להמשיך בהתאמה אוטומטית ?"
+        //    confirmWindow.Show("Automatic Reconcile will clear all selected lines, continue?"); // "קיימות תנועות שנבחרו , הםם להמשיך בהתםמה םוטומטית ?"
 
         //    confirmWindow.WindowClosed.subscribe((event: any) => {
         //        if (confirmWindow.Yes) {

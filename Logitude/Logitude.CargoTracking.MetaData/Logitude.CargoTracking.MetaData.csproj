@@ -98,6 +98,8 @@
     <None Include="DBTables\CargoTrackingMilestone.dxml" />
     <None Include="DBTables\CargoTrackingPort.dxml" />
     <None Include="DBTables\CargoTrackingShipment.dxml" />
+    <None Include="DBTables\CargoTrackingShipmentComputed.dxml" />
+    <None Include="DBTables\CargoTrackingShipmentMaster.dxml" />
     <None Include="DBTables\CargoTrackingShipmentSearch.dxml" />
     <None Include="DBTables\CargoTrackingTransportMode.dxml" />
     <None Include="DBTables\CargoTrackingWatermark.dxml" />
@@ -107,6 +109,8 @@
     <None Include="EntityFiles\CargoTrackingMilestone.lxml" />
     <None Include="EntityFiles\CargoTrackingPort.lxml" />
     <None Include="EntityFiles\CargoTrackingShipment.lxml" />
+    <None Include="EntityFiles\CargoTrackingShipmentComputed.lxml" />
+    <None Include="EntityFiles\CargoTrackingShipmentMaster.lxml" />
     <None Include="EntityFiles\CargoTrackingShipmentSearch.lxml">
       <SubType>Designer</SubType>
     </None>

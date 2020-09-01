@@ -411,10 +411,10 @@ using Simplog.Data.ShipmentsModel;
 				   
 				   temp.MAWBDate = MyEntityPM.MAWBOBLDate;
 				   temp.Ratio = MyEntityPM.Ratio;
-				if(MyEntityPM.Transshipments != null && MyEntityPM.Transshipments.Count > 0)
+				if(MyEntityPM.MainCarriageLegs != null && MyEntityPM.MainCarriageLegs.Count > 0)
 				{
-					 TransshipmentQueryService TransshipmentService28 = new TransshipmentQueryService(Tenant);
-					 temp.Transshipments = TransshipmentService28.TransshipmentDataMapping(MyEntityPM.Transshipments,Tenant);
+					 MainCarriageLegQueryService MainCarriageLegService28 = new MainCarriageLegQueryService(Tenant);
+					 temp.MainCarriageLegs = MainCarriageLegService28.MainCarriageLegDataMapping(MyEntityPM.MainCarriageLegs,Tenant);
 				}
 
 							 					
@@ -1314,16 +1314,16 @@ using Simplog.Data.ShipmentsModel;
 
 					temp.Ratio = MyEntity.Ratio; 
 
-					if(MyEntity.Transshipments != null && MyEntity.Transshipments.Count > 0)
+					if(MyEntity.MainCarriageLegs != null && MyEntity.MainCarriageLegs.Count > 0)
 					{
-						TransshipmentQueryService TransshipmentService28 = new TransshipmentQueryService(Tenant);
+						MainCarriageLegQueryService MainCarriageLegService28 = new MainCarriageLegQueryService(Tenant);
 						  
 						if(IsUpdate)
 						{
-								throw new ApplicationException("Transshipments Can't be update"); 
+								throw new ApplicationException("MainCarriageLegs Can't be update"); 
 						}  
 
-						temp.Transshipments = TransshipmentService28.TransshipmentDataMappingAndValidatin(MyEntity.Transshipments,Tenant,ComputingPartnerName);
+						temp.MainCarriageLegs = MainCarriageLegService28.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName);
 						
 					}
 

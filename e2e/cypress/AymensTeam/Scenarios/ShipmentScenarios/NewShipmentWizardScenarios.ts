@@ -38,7 +38,16 @@ export class NewShipmentWizardScenarios {
         //this.Save(this);
 
         this.Save().then((entityNumber: string) => {
-            Resolvers.SearchBoxResolver.Selector('#SearchBoxDivId1').Type(entityNumber);
+            cy.get('searchbox')
+                .find('#SearchBoxDivId1')
+                .eq(0)
+                .within(() => {
+                    cy.get('input').type(entityNumber).then(() => {
+                        cy.get('ul > li').eq(0).click({ force: true });
+                    });
+                });
+
+            //Resolvers.SearchBoxResolver.Selector('#SearchBoxDivId1').Type(entityNumber);
             //Resolvers.SearchBoxResolver.Workspace("Operations").Type(entityNumber);
             //Resolvers.EditComponentResolver.ShouldBeOpend();
             //Resolvers.EditComponentResolver.Tab('Overview').ShouldBeSelected();

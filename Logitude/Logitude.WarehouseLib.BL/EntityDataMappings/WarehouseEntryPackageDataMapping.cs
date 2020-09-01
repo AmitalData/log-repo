@@ -40,7 +40,7 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 
         private static void UpdateInUseShipmentPackages(WarehouseEntryPackagePM entityPM, WarehouseEntryPackage entityPOCO)
         {
-            int ChangedQuantity = entityPM.Quantity - entityPOCO.Quantity;
+            int ChangedQuantity = entityPM.Quantity - (entityPOCO.Quantity - entityPOCO.OverManifest);
             if (ChangedQuantity != 0)
             {
                 ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(entityPM.Tenant);
@@ -52,6 +52,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 
                     shipmentPackageRepository.Update(shipmentPackage);
                     shipmentPackageRepository.SubmitChanges();
+
+                    if (entityPM.Quantity == 0 && entityPM.OverManifest > 0) entityPM.OverManifest = 0;
                 }
             }
         }

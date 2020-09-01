@@ -54,7 +54,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
                 CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
 
-                List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant);
+                List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s=>s.CreateDate).ToList();
 
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
@@ -69,7 +69,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [HttpGet]
-        public HttpResponseMessage GetShipment(string shipmentId, int tenant)
+        public HttpResponseMessage GetShipment(string SecurityKey, int tenant)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
                 CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(MyContext);
 
-                CargoTrackingShipmentList shipment = shipmentsQuery.GetShipment(shipmentId, tenant);
+                CargoTrackingShipmentList shipment = shipmentsQuery.GetShipment(SecurityKey, tenant);
 
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipment);

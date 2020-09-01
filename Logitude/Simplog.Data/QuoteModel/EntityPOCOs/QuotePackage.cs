@@ -30,9 +30,5 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         [ForeignKey("QuoteId")]
         public Quote Quote { get; set; }
 
-        public double? PickupDeliveryVolumetricWeight { get; set; }
-
-        public double? PickupDeliveryVolume { get; set; }
-
     }
 }

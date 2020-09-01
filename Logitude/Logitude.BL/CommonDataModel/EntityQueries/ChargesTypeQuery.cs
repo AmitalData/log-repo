@@ -335,6 +335,77 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return securedPm;
         }
 
+
+
+        public ChargesTypePM GetSingleActiveChargesType(string code, int tenant)
+        {
+
+
+            ChargesTypePM entity = (from a in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement")
+                              where a.Code == code && a.Tenant == tenant && a.InActive==false
+                              select new ChargesTypePM()
+                              {
+                                  AddedManually = a.AddedManually,
+                                  Code = a.Code,
+                                  MeasurementId = a.MeasurementId,
+                                  MeasurementCode = a.Measurement.Code,
+                                  MeasurementShortName = a.Measurement.ShortName,
+                                  Id = a.Id,
+                                  InActive = a.InActive,
+                                  LocalName = a.LocalName,
+                                  ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                  EnglishName = a.EnglishName,
+                                  Tenant = a.Tenant,
+                                  AWBPrintDescription = a.AWBPrintDescription,
+                                  ChargesGroupCode = a.ChargesGroupCode,
+                                  ChargesGroupId = a.ChargesGroupId,
+                                  IATACodeId = a.IATACodeId,
+                                  Description = a.Description,
+                                  IsAir = a.IsAir,
+                                  IsOcean = a.IsOcean,
+                                  IsInland = a.IsInland,
+                                  IsAutoDisplayInConsolidation = a.IsAutoDisplayInConsolidation,
+                                  IsAutoDisplayInShipment = a.IsAutoDisplayInShipment,
+                                  IsPayable = a.IsPayable,
+                                  IsReceivable = a.IsReceivable,
+                                  VatTypeId = a.VatTypeId,
+                                  DueTypeCode = a.DueTypeCode,
+                                  IsAutoDisplayInQuote = a.IsAutoDisplayInQuote,
+                                  ContainerMeasurementId = a.ContainerMeasurementId,
+                                  ContainerMeasurementCode = a.ContainerMeasurement != null ? a.ContainerMeasurement.Code : null,
+                                  ViewOrder = a.ViewOrder,
+                                  SearchFields = a.SearchFields,
+                                  ReceivableAccountId = a.ReceivableAccountId,
+                                  PayableAccountId = a.PayableAccountId,
+                                  AccountingVATSplit = a.AccountingVATSplit,
+                                  ReceivableCreditAccount = a.ReceivableCreditAccount,
+                                  PayableDebitAccount = a.PayableDebitAccount,
+                                  ReceivablesChargesTypeExternalCode = a.ReceivablesChargesTypeExternalCode,
+                                  PayablesChargesTypeExternalCode = a.PayablesChargesTypeExternalCode,
+                                  PayableDebitGLAcountId = a.PayableDebitGLAcountId,
+                                  ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
+                                  IsAutoDisplayInCustoms = a.IsAutoDisplayInCustoms,
+                                  IsCustoms = a.IsCustoms,
+                                  IsBackToBack = a.IsBackToBack,
+                                  SATExternalId = a.SATExternalId,
+                                  IsExpense = a.IsExpense,
+                                  IsDomestic = a.IsDomestic,
+                                  IsImport = a.IsImport,
+                                  IsDrop = a.IsDrop,
+                                  IsExport = a.IsExport,
+                                  ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
+                                  PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
+                                  ApplyRegionalTax = a.ApplyRegionalTax,
+                                  HasPickup = a.HasPickup,
+                                  HasDelivery = a.HasDelivery,
+                              }).FirstOrDefault();
+
+            return entity;
+
+
+
+        }
+
         public IQueryable<ChargesTypePM> GetChargesTypePMsByTenant(int tenant)
         {
             IQueryable<ChargesTypePM> charges = from a in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount")

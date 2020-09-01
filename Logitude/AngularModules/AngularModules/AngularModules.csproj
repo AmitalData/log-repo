@@ -311,6 +311,7 @@
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierDeclarationWorkspaceListTemplate.html" />
     <TypeScriptCompile Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingBuildShipmentComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingIncrementalStatistics.ts" />
+    <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\BankCodeExtendedPMService.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsCustoms.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\ChargesTypeByProductsService.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\DeclarationListTemplate.ts" />
@@ -399,6 +400,7 @@
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DateSampleComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWAskUserFiltersComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIExportSettingAdvanceComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessProcessQueue\QueueNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessRoleNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Team\TeamGeneralTabComponent.html" />
@@ -1148,6 +1150,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DateSampleComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWAskUserFiltersComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIExportSettingAdvanceComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\ModuleInfrastructureBIReport.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessRoleNewComponent.ts" />
@@ -1192,6 +1195,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\btnUpdateComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Templates\MyTemplate.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomatedBackup.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationArgs.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationCondition.ts" />
@@ -1352,6 +1356,7 @@
     <Content Include="Infrastructure\Components\QueryColumnsComponents\btnUpdateComponent.html" />
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.html" />
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.html" />
+    <Content Include="Infrastructure\Components\Templates\MyTemplate.html" />
     <Content Include="InvoiceModules\APInvoice\Components\Others\APInvoiceTotalVATOnlyComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentCancelationDetailsComponent.html" />
@@ -6819,6 +6824,7 @@
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\FBLStockExtenedPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\ShipmentComputedFieldExtendedService.ts" />
     <TypeScriptCompile Include="Shipment\Services\INTRAWebService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\Others\LogboxShipmentExportExcelService.ts" />
     <TypeScriptCompile Include="Shipment\Services\Others\LogBoxSignatureClientService.ts" />
     <TypeScriptCompile Include="Shipment\Services\Others\ShipmentAdditionalCloudDataService.ts" />
     <TypeScriptCompile Include="Shipment\Services\Others\SharedAgentManifestService.ts" />

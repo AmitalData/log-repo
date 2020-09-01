@@ -63,7 +63,7 @@ CREATE TABLE #temp_Quotes (
 				ShipmentTypeId = #temp_Quotes.ShipmentTypeId
 				FROM Quotes
 				INNER JOIN #temp_Quotes
-				on Quotes.Id = #temp_Quotes.Id
+				on Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 
 				truncate table #temp_Quotes
 				set @Count = 0
@@ -85,7 +85,7 @@ CREATE TABLE #temp_Quotes (
 				ShipmentTypeId = #temp_Quotes.ShipmentTypeId
 				FROM Quotes
 				INNER JOIN #temp_Quotes
-				on Quotes.Id = #temp_Quotes.Id
+				on Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_Quotes.Id COLLATE SQL_Latin1_General_CP1_CI_AS
 	end
 
 	

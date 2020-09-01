@@ -39,6 +39,8 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
         public string PrintNotes { get; set; }
         public string AccountDisplayNumber { get; set; }
         public DateTime? PrintDate { get; set; }
+        public string BranchNumberPrint { get; set; }
+        public string BankAccountNumberPrint { get; set; }
     }
 
     

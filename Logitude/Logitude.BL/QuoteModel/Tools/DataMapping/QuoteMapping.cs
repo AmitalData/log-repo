@@ -71,6 +71,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.DimensionsUnitCode = entityPM.DimensionsUnitCode;
             entityPoco.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
             entityPoco.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
+            entityPoco.PickupDeliveryCWeightUnitCode = entityPM.PickupDeliveryCWeightUnitCode;
             entityPoco.Volume = entityPM.Volume;
             entityPoco.VolumetricWeight = entityPM.VolumetricWeight;
             entityPoco.VolumeInCBM = GetVolumeInCBM(entityPM.VolumeUnitCode, entityPM.Volume);

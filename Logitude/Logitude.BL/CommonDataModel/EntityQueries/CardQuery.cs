@@ -375,11 +375,28 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Id = a.Id,
                         Tenant = a.Tenant,
                         EnglishName = a.EnglishName,
+                        SalesmanUserId = a.SalesmanUserId,
+                        CollectorId = a.CollectorId,
 
                     }).FirstOrDefault();
         }
 
-        public IQueryable<CardList> GetCardPMsByTenant(int tenant)
+        public List<CardList> GetAllCardsByGLAccount(string glAccountId, int tenant)
+        {
+            return (from a in repository.context.Cards
+                    where a.GLAccountId == glAccountId && a.Tenant == tenant
+                    select new CardList()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        EnglishName = a.EnglishName,
+                        SalesmanUserId = a.SalesmanUserId,
+                        CollectorId = a.CollectorId,
+
+                    }).ToList();
+        }
+
+        public IQueryable<CardList> GetCardListsByTenant(int tenant)
         {
             AddressRepository addressRepository = new AddressRepository(tenant);
             AddressQuery addressQuery = new AddressQuery(tenant);
@@ -1103,6 +1120,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CreatedByPartner = card.CreatedByPartner,
                                                 RankId = card.Customer != null ? (card.Customer.Rank != null ? card.Customer.Rank.Name : null) : null,
                                                 IndustryId = card.Customer != null ? (card.Customer.Industry != null ? card.Customer.Industry.Name : null) : null,
+                                                RecordDate = card.UpdateDate != null ? card.UpdateDate : card.CreateDate,
                                             };
 
             if (myResult.Count() > 0)
@@ -2137,6 +2155,28 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return cards;
         }
+
+        public List<CardList> GetCardsByGLAccountIds(List<string> glAccountIds, int tenant)
+        {
+            List<CardList> cards = (from a in repository.context.Cards
+                                                    where a.Tenant == tenant && glAccountIds.Contains( a.GLAccountId)
+                                                    select new CardList()
+                                                    {
+                                                        Id = a.Id,
+                                                        Code = a.Code,
+                                                        EnglishName = a.EnglishName,
+                                                        LocalName = a.LocalName,
+                                                        VatNumber = a.VatNumber,
+                                                        CountryCode = a.CountryCode,
+                                                        CountryName = a.CountryName,
+                                                        Tenant = a.Tenant,
+                                                        CityName = a.CityName,
+                                                        GLAccountId = a.GLAccountId,
+                                                        PartnerTypeId = a.PartnerTypeId,
+                                                    }).ToList();
+            return cards;
+        }
+
 
         public List<CardList> GetCustomerCardsWithoutGLAccount(int tenant)
         {

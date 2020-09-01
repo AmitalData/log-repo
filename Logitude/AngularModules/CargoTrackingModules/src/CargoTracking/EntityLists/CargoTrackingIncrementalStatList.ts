@@ -16,6 +16,8 @@ export class CargoTrackingIncrementalStatList {
 	Ports: number;
 	Countries: number;
 	TransportModes: number;
+	ShipmentComputedFields: number;
+	ShipmentMasterDatas: number;
 	
 }
  

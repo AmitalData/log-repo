@@ -15,8 +15,10 @@
 </div> -->
 
 
-<div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'InvoiceNumber' ">
-        {{ rowData['InvoiceNumber'] }}
+<div   [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'InvoiceNumber' ">
+
+    <a href="#" (click)="OpenARInvoice(rowData['Id'])">{{ rowData['InvoiceNumber'] }}</a>
+        
 </div>
 <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'InvoiceDate' ">
     {{ rowData['InvoiceDate'] | DateTimePipe:'SD' }}

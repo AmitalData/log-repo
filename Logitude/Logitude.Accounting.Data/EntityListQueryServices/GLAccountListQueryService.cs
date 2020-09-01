@@ -37,6 +37,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         Id = a.Id,
                                                         Tenant = a.Tenant,
                                                         InternalNumber = a.InternalNumber,
+                                                        InterestCreditLimit = a.InterestCreditLimit,
                                                         AccountTypeCode = a.AccountTypeCode,
                                                         DisplayNumber = a.DisplayNumber,
                                                         EnglishName = a.EnglishName,
@@ -115,8 +116,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         Category3Name = a.Category3.EnglishName,
                                                         Category4Name = a.Category4.EnglishName,
                                                         Category5Name = a.Category5.EnglishName,
-
-                                                        InterestCreditLimit = a.InterestCreditLimit,
+                                                        ActiveForInterest =a.ActiveForInterest,
+                                                        ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
+                                                        MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
+                                                        InterestCalculationStartDate = a.InterestCalculationStartDate,
+                                                       
+                                                         
 
                                                         // Created & Updated
                                                         CreateDate = a.CreateDate,
@@ -136,7 +141,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             GLAccountCustomFilter filters = new GLAccountCustomFilter(tenant);
 
-            iQueryable = filters.GetFilteredQuery(queryOperations, iQueryable);
+            iQueryable = filters.GetFilteredQuery(queryOperations, iQueryable, context);
 
             return iQueryable;
 		}

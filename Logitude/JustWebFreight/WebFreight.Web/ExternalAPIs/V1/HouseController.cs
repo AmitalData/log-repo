@@ -274,56 +274,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     break;
                                 }
                         }
+                        
+                        this.ValidateUnitCodes(entityPM);
 
-                        if (string.IsNullOrEmpty(entityPM.VolumeUnitCode))
-                        {
-                            throw new ApplicationException("Missing volume unit code");
-                        }
-
-                        if (string.IsNullOrEmpty(entityPM.DimensionsUnitCode))
-                        {
-                            throw new ApplicationException("Missing dimensions unit code");
-                        }
-
-                        if (string.IsNullOrEmpty(entityPM.GrossWeightUnitCode))
-                        {
-                            throw new ApplicationException("Missing gross weight unit code");
-                        }
-
-                        if (string.IsNullOrEmpty(entityPM.ChargeableWeightUnitCode))
-                        {
-                            throw new ApplicationException("Missing chargeable weight unit code");
-                        }
-
-                        switch (entityPM.VolumeUnitCode)
-                        {
-                            case "CBF":
-                                {
-                                    if (entityPM.DimensionsUnitCode == "Cm")
-                                    {
-                                        throw new ApplicationException("When volume unit is CBF, dimensions unit should be Inch or Ft");
-                                    }
-                                    break;
-                                }
-
-                            case "CBI":
-                                {
-                                    if (entityPM.DimensionsUnitCode != "Inc")
-                                    {
-                                        throw new ApplicationException("When volume unit is CBI, dimensions unit should be Inch");
-                                    }
-                                    break;
-                                }
-
-                            case "CBM":
-                                {
-                                    if (entityPM.DimensionsUnitCode != "Cm")
-                                    {
-                                        throw new ApplicationException("When volume unit is CBM, dimensions unit should be Cm");
-                                    }
-                                    break;
-                                }
-                        }
+                        AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
+                        this.SetPartnersAddresses(entityPM, addressRepository, authToken.Tenant);
+                        this.ValidateAndSetCustomerData(entityPM, addressRepository, authToken.Tenant);
 
                         if (!string.IsNullOrEmpty(entityPM.IncotermId))
                         {
@@ -335,99 +291,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
                             }
                         }
-
-                        AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
-                        if (!string.IsNullOrEmpty(entityPM.CustomerId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomerId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.CustomerAddressId = address.Id;
-                            }
-
-                            CardRepository cardRepository = new CardRepository(entityPM.Tenant);
-                            Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
-                            if (customer != null)
-                            {
-                                if (string.IsNullOrEmpty(entityPM.SalesmanUserId))
-                                {
-                                    entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
-                                }
-
-                                if (string.IsNullOrEmpty(entityPM.AccountManagerUserId))
-                                {
-                                    entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            throw new ApplicationException("Customer is missing");
-                        }
-
-                        if (!string.IsNullOrEmpty(entityPM.ShipperId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.ShipperAddressId = address.Id;
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.ConsigneeAddressId = address.Id;
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(entityPM.ShipperNotExporterId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperNotExporterId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.ShipperNotExporterAddressId = address.Id;
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(entityPM.AgentId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.AgentId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.AgentAddressId = address.Id;
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(entityPM.CustomAgentImportId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomAgentImportId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.CustomAgentImportAddressId = address.Id;
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(entityPM.ReleasingAgentId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ReleasingAgentId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.ReleasingAgentAddressId = address.Id;
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(entityPM.FreightForwarderId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.FreightForwarderId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.FreightForwarderAddressId = address.Id;
-                            }
-                        }
-
+                        
                         if (entityPM.ShipmentPackages.Count > 0)
                         {
                             foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
@@ -492,11 +356,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         APIReceivablePayableHelper receivablePayableHelper = new APIReceivablePayableHelper(entityPM, authToken.Tenant);
                         receivablePayableHelper.ValidateReceivablesAndPayables();
                         receivablePayableHelper.ComputeReceivablesPayablesTotals();
-
-                        APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(entityPM, authToken.Tenant);
-                        aPITransshipmentHelper.ValidateTransshipments();
-                        aPITransshipmentHelper.MapTransshipments();
-
+                        
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {
                             ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(authToken.Tenant);
@@ -528,6 +388,225 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
                 APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "House API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+        private void ValidateUnitCodes(ShipmentPM entityPM)
+        {
+            if (string.IsNullOrEmpty(entityPM.VolumeUnitCode))
+            {
+                throw new ApplicationException("Missing volume unit code");
+            }
+
+            if (string.IsNullOrEmpty(entityPM.DimensionsUnitCode))
+            {
+                throw new ApplicationException("Missing dimensions unit code");
+            }
+
+            if (string.IsNullOrEmpty(entityPM.GrossWeightUnitCode))
+            {
+                throw new ApplicationException("Missing gross weight unit code");
+            }
+
+            if (string.IsNullOrEmpty(entityPM.ChargeableWeightUnitCode))
+            {
+                throw new ApplicationException("Missing chargeable weight unit code");
+            }
+
+            switch (entityPM.VolumeUnitCode)
+            {
+                case "CBF":
+                    {
+                        if (entityPM.DimensionsUnitCode == "Cm")
+                        {
+                            throw new ApplicationException("When volume unit is CBF, dimensions unit should be Inch or Ft");
+                        }
+                        break;
+                    }
+
+                case "CBI":
+                    {
+                        if (entityPM.DimensionsUnitCode != "Inc")
+                        {
+                            throw new ApplicationException("When volume unit is CBI, dimensions unit should be Inch");
+                        }
+                        break;
+                    }
+
+                case "CBM":
+                    {
+                        if (entityPM.DimensionsUnitCode != "Cm")
+                        {
+                            throw new ApplicationException("When volume unit is CBM, dimensions unit should be Cm");
+                        }
+                        break;
+                    }
+            }
+        }
+        private void SetPartnersAddresses(ShipmentPM entityPM, AddressRepository addressRepository, int tenant)
+        {
+            if (!string.IsNullOrEmpty(entityPM.ShipperId))
+            {
+                Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, tenant);
+                if (address != null)
+                {
+                    entityPM.ShipperAddressId = address.Id;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
+            {
+                Address address = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, tenant);
+                if (address != null)
+                {
+                    entityPM.ConsigneeAddressId = address.Id;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.ShipperNotExporterId))
+            {
+                Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperNotExporterId, tenant);
+                if (address != null)
+                {
+                    entityPM.ShipperNotExporterAddressId = address.Id;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.AgentId))
+            {
+                Address address = addressRepository.GetMainAddressByCardId(entityPM.AgentId, tenant);
+                if (address != null)
+                {
+                    entityPM.AgentAddressId = address.Id;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.CustomAgentImportId))
+            {
+                Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomAgentImportId, tenant);
+                if (address != null)
+                {
+                    entityPM.CustomAgentImportAddressId = address.Id;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.ReleasingAgentId))
+            {
+                Address address = addressRepository.GetMainAddressByCardId(entityPM.ReleasingAgentId, tenant);
+                if (address != null)
+                {
+                    entityPM.ReleasingAgentAddressId = address.Id;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.FreightForwarderId))
+            {
+                Address address = addressRepository.GetMainAddressByCardId(entityPM.FreightForwarderId, tenant);
+                if (address != null)
+                {
+                    entityPM.FreightForwarderAddressId = address.Id;
+                }
+            }
+        }
+        private void ValidateAndSetCustomerData(ShipmentPM entityPM, AddressRepository addressRepository, int tenant)
+        {
+            if (!string.IsNullOrEmpty(entityPM.CustomerId))
+            {
+                if (entityPM.CustomerId == entityPM.ShipperId
+                    || entityPM.CustomerId == entityPM.ConsigneeId
+                    || entityPM.CustomerId == entityPM.ShipperNotExporterId
+                    || entityPM.CustomerId == entityPM.AgentId
+                    || entityPM.CustomerId == entityPM.CustomAgentImportId
+                    || entityPM.CustomerId == entityPM.ReleasingAgentId
+                    || entityPM.CustomerId == entityPM.FreightForwarderId)
+                {
+                    this.SetCustomerTypeCode(entityPM);
+
+                    Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomerId, tenant);
+                    if (address != null)
+                    {
+                        entityPM.CustomerAddressId = address.Id;
+                    }
+
+                    CardRepository cardRepository = new CardRepository(tenant);
+                    Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, tenant);
+                    if (customer != null)
+                    {
+                        if (string.IsNullOrEmpty(entityPM.SalesmanUserId))
+                        {
+                            entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
+                        }
+
+                        if (customer.Customer != null)
+                        {
+                            if (string.IsNullOrEmpty(entityPM.AccountManagerUserId))
+                            {
+                                entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
+                            }
+                        }
+                    }
+                }
+
+                else
+                {
+                    throw new ApplicationException("The sent customer is not one of the sent partners");
+                }
+            }
+
+            else
+            {
+                if (entityPM.DirectionId == "I")
+                {
+                    entityPM.CustomerId = entityPM.ConsigneeId;
+                    entityPM.ShipmentCustomerTypeCode = "CON";
+                }
+
+                else
+                {
+                    entityPM.CustomerId = entityPM.ShipperId;
+                    entityPM.ShipmentCustomerTypeCode = "SHI";
+                }
+
+                if (string.IsNullOrEmpty(entityPM.CustomerId))
+                {
+                    throw new ApplicationException("The customer is required");
+                }
+            }
+        }
+        private void SetCustomerTypeCode(ShipmentPM entityPM)
+        {
+            if (entityPM.CustomerId == entityPM.ShipperId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "SHI";
+            }
+
+            else if (entityPM.CustomerId == entityPM.ConsigneeId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "CON";
+            }
+
+            else if (entityPM.CustomerId == entityPM.ShipperNotExporterId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "SNE";
+            }
+
+            else if (entityPM.CustomerId == entityPM.AgentId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "AGT";
+            }
+
+            else if (entityPM.CustomerId == entityPM.CustomAgentImportId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "CAI";
+            }
+
+            else if (entityPM.CustomerId == entityPM.ReleasingAgentId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "REA";
+            }
+
+            else if (entityPM.CustomerId == entityPM.FreightForwarderId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "FOR";
             }
         }
 

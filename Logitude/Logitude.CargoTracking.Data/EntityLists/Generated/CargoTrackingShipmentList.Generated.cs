@@ -55,11 +55,7 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [DataMember]
        public bool? PickupDone  { get; set; }
        [DataMember]
-       public bool? ClearanceDone  { get; set; }
-       [DataMember]
        public DateTime? PickupDate  { get; set; }
-       [DataMember]
-       public DateTime? ClearanceDate  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
@@ -70,6 +66,62 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string ShipperName  { get; set; }
        [DataMember]
        public string CustomerReference  { get; set; }
+       [DataMember]
+       public DateTime? PickupEstimationDate  { get; set; }
+       [DataMember]
+       public DateTime? FromWarehouseDate  { get; set; }
+       [DataMember]
+       public DateTime? FromWarehouseEstimationDate  { get; set; }
+       [DataMember]
+       public string FromWarehouseNotes  { get; set; }
+       [DataMember]
+       public bool? DepartureDone  { get; set; }
+       [DataMember]
+       public DateTime? DepartureDate  { get; set; }
+       [DataMember]
+       public DateTime? DepartureEstimationDate  { get; set; }
+       [DataMember]
+       public bool? ArrivalDone  { get; set; }
+       [DataMember]
+       public DateTime? ArrivalDate  { get; set; }
+       [DataMember]
+       public DateTime? ArrivalEstimationDate  { get; set; }
+       [DataMember]
+       public bool? ToWarehouseDone  { get; set; }
+       [DataMember]
+       public DateTime? ToWarehouseDate  { get; set; }
+       [DataMember]
+       public DateTime? ToWarehouseEstimationDate  { get; set; }
+       [DataMember]
+       public string ToWarehouseNotes  { get; set; }
+       [DataMember]
+       public bool? CustomsPaymentDone  { get; set; }
+       [DataMember]
+       public DateTime? CustomsPaymentDate  { get; set; }
+       [DataMember]
+       public bool? ClearanceDone  { get; set; }
+       [DataMember]
+       public DateTime? ClearanceDate  { get; set; }
+       [DataMember]
+       public bool? DeliveredDone  { get; set; }
+       [DataMember]
+       public DateTime? DeliveredDate  { get; set; }
+       [DataMember]
+       public DateTime? DeliveredEstimationDate  { get; set; }
+       [DataMember]
+       public bool? FromWarehouseDone  { get; set; }
+       [DataMember]
+       public DateTime? FirstPickupETD  { get; set; }
+       [DataMember]
+       public DateTime? WarehouseLegActualEntryDate  { get; set; }
+       [DataMember]
+       public DateTime? WarehouseLegExpectedEntryDate  { get; set; }
+       [DataMember]
+       public string WarehouseLegRemarks  { get; set; }
+       [DataMember]
+       public DateTime? DeclarationDate  { get; set; }
+       [DataMember]
+       public DateTime? CustomsClearanceDate  { get; set; }
    }
 
 }

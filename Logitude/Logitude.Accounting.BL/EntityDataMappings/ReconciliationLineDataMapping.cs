@@ -35,8 +35,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.CurrencySign);
 
             this.CustomMappedPMProperties.Add(PMPropertyNames.DueDate);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.ForeignAmountCredit);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.ForeignAmountDebit);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.AmountCredit);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.AmountDebit);
             this.CustomMappedPMProperties.Add(PMPropertyNames.Reference1);
             this.CustomMappedPMProperties.Add(PMPropertyNames.Reference2);
             this.CustomMappedPMProperties.Add(PMPropertyNames.Reference3);
@@ -70,8 +70,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 {
                     entityPM.CreateDate = transaction.CreateDate;
                     entityPM.DueDate = transaction.DueDate;
-                    entityPM.ForeignAmountCredit = transaction.ForeignAmountCredit;
-                    entityPM.ForeignAmountDebit = transaction.ForeignAmountDebit;
+                    entityPM.AmountCredit = transaction.ForeignAmountCredit;
+                    entityPM.AmountDebit = transaction.ForeignAmountDebit;
                     entityPM.Reference1 = transaction.Reference1;
                     entityPM.Reference2 = transaction.Reference2;
                     entityPM.Reference3 = transaction.Reference3;

@@ -117,14 +117,14 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                            VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
                             InvoiceAmount = invoice.TotaVatableAmountForTaxReport != null ? invoice.TotaVatableAmountForTaxReport : 0;
-                            if (invoice.InvoiceNumber.Length > 9)
-                            {
-                                outputreference = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 9);
-                            }
-                            else
-                            {
+                            //if (invoice.InvoiceNumber.Length > 9)
+                            //{
+                            //    outputreference = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 9);
+                            //}
+                            //else
+                            //{
                                 outputreference = invoice.InvoiceNumber;
-                            }
+                            //}
                            SetReferenceFields(outputreference);
                             if (!string.IsNullOrEmpty(invoice.VatNumber))
                             {
@@ -239,7 +239,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }               
                 VatNumber = VatNumber == null? "000000000": VatNumber;
                 SetVatAmounts(a);
-            
+
                 SetReferenceFields(a.Reference);
                 string transmitStatusCode = SetTransmitStatusByDocumentDate(a.ReferenceDate);
                 TaxReportLinePM taxReportLine = new TaxReportLinePM()

@@ -226,6 +226,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
             interestReportPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             InterestReportUpdateService service = new InterestReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
+            interestReportPM.IsUpdatedFromBatch = true;
             service.Update(interestReportPM, true);
 
         }
@@ -237,7 +238,16 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(interestReportArgs.Tenant);
             ObjectTableQuery objectTableQuery = new ObjectTableQuery(interestReportArgs.Tenant);
             CardPM cardPM = cardQueryService.GetSinglePM(interestReport.CustomerId, interestReportArgs.Tenant);
-            ChargesTypePM chargesType = chargesTypeQuery.GetSinglePMByCode("INT", interestReportArgs.Tenant);
+            ChargesTypePM chargesType = chargesTypeQuery.GetSingleActiveChargesType("INT", interestReportArgs.Tenant);
+            if (chargesType==null)
+            { 
+                    ContactPM contactLocal = GetLoggedContact(interestReportArgs.Tenant);
+                    bool showLocals = !contactLocal.DontShowLocal;
+                    string ErrorMessage = TextCodesTranslator.TranslateText("General.M.FieldIsRequired", interestReportArgs.Tenant, showLocals);
+                    ErrorMessage = ErrorMessage.Replace("%FieldName", TextCodesTranslator.TranslateText("ARInvoiceLine.F.ChargesTypeId", interestReportArgs.Tenant, showLocals));
+                    throw new Exception(ErrorMessage);
+
+            }
             TenantPM tenantPM = tenantQuery.GetSinglePM(interestReportArgs.Tenant);
             string email = "system@tenant" + interestReportArgs.Tenant.ToString() + ".com";
             AuthenticationUtil.AuthenticatedUserEmail = email;
@@ -246,7 +256,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             ARInvoicePM aRInvoicePM = MappingARInvoice(interestReportArgs, interestReport, tenantPM, userPM, cardPM);
             ARInvoiceEntityPM aRInvoiceEntityPM = MappingARInvoiceEntity(interestReportArgs, ObjectTableId);
-            ARInvoiceLinePM aRInvoiceLinePM = MappingARInvoiceLine(interestReport, tenantPM, chargesType, vatTypePercentagePM);
+            ARInvoiceLinePM aRInvoiceLinePM = MappingARInvoiceLine(interestReport, tenantPM, chargesType, vatTypePercentagePM, aRInvoicePM);
 
             aRInvoicePM.InvoiceEntities.Add(aRInvoiceEntityPM);
             aRInvoicePM.InvoiceLines.Add(aRInvoiceLinePM);
@@ -285,7 +295,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoicePM.IsGeneralInvoice = true;
             aRInvoicePM.IsFullAccounting = true;
             aRInvoicePM.SetApproved = true;
-
+            //aRInvoicePM.DueDate = aRInvoicePM.InvoiceDate;
             if (!string.IsNullOrEmpty(cardPM.SATPaymentMethodCode))
             {
                 aRInvoicePM.SATPaymentMethodCode = cardPM.SATPaymentMethodCode;
@@ -358,7 +368,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoiceEntityPM.ObjectTableId = ObjectTableId;
             return aRInvoiceEntityPM;
         }
-        private ARInvoiceLinePM MappingARInvoiceLine(InterestReportPM interestReport, TenantPM tenantPM, ChargesTypePM chargesType, VatTypePercentagePM vatTypePercentagePM)
+        private ARInvoiceLinePM MappingARInvoiceLine(InterestReportPM interestReport, TenantPM tenantPM, ChargesTypePM chargesType, VatTypePercentagePM vatTypePercentagePM, ARInvoicePM aRInvoicePM)
         {
             ARInvoiceLinePM aRInvoiceLinePM = new ARInvoiceLinePM();
             aRInvoiceLinePM.Tenant = tenantPM.Id;
@@ -366,6 +376,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoiceLinePM.ForiegnCurrencyCode = tenantPM.CurrencyCode;
             aRInvoiceLinePM.InvoiceCurrencyCode = tenantPM.CurrencyCode;
             aRInvoiceLinePM.ForiegnCurrencyId = tenantPM.CurrencyId;
+            aRInvoiceLinePM.DateForInterest = aRInvoicePM.InvoiceDate;
             if (interestReport.TotalAmount == null)
             {
                 aRInvoiceLinePM.UnitPrice = 0;
@@ -388,7 +399,14 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoiceLinePM.ChargesTypeId = chargesType.Id;
             aRInvoiceLinePM.VatTypeId = chargesType.VatTypeId;
             aRInvoiceLinePM.VatPercentage = vatTypePercentagePM.Percentage;
-            aRInvoiceLinePM.GLAccountId = interestReport.GLAccountId;
+            if (string.IsNullOrEmpty(chargesType.ReceivableCreditGLAccountId))
+            { 
+                    ContactPM contactLocal = GetLoggedContact(tenantPM.Id);
+                    bool showLocals = !contactLocal.DontShowLocal;
+                    string ErrorMessage = TextCodesTranslator.TranslateText("ARInvoice.O.TheReceivableGLAccountOfTheChargeNULL", tenantPM.Id, showLocals);
+                    throw new Exception(ErrorMessage);
+            }
+            aRInvoiceLinePM.GLAccountId = chargesType.ReceivableCreditGLAccountId;
             if (aRInvoiceLinePM.ForiegnCurrencyAmount == null || aRInvoiceLinePM.LocalCurrencyAmount == null || aRInvoiceLinePM.LocalCurrencyAmount == 0)
             {
                 aRInvoiceLinePM.ForiegnExchangeRate = 0;
