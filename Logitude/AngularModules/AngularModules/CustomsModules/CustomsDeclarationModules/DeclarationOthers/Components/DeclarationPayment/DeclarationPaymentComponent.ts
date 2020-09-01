@@ -786,30 +786,32 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         if (this.sumBtl != null && this.sumBtl > 0) {
             this.JustAutoFillPaymentScreen();
         }
-
-        if (!AppTool.IsNullOrEmpty(this.GetCreditInternalBankId)) {
-            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
-                this.JustAutoFillPaymentScreen();
-                return;
+        else {
+            if (!AppTool.IsNullOrEmpty(this.GetCreditInternalBankId)) {
+                if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                    this.JustAutoFillPaymentScreen();
+                    return;
+                }
             }
-        }
 
-        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAYCASH_FIL", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant)
-            .subscribe((response: ServiceResponse) => {
-                let obj = response.Result;
-                if (obj) {
-                    let DefaultValue = obj['DefaultValue'];
-                    if (!AppTool.IsNullOrEmpty(DefaultValue)) {
-                        if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
-                            this.JustAutoFillPaymentScreenCash(DefaultValue);
+            this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAYCASH_FIL", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant)
+                .subscribe((response: ServiceResponse) => {
+                    let obj = response.Result;
+                    if (obj) {
+                        let DefaultValue = obj['DefaultValue'];
+                        if (!AppTool.IsNullOrEmpty(DefaultValue)) {
+                            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                                this.JustAutoFillPaymentScreenCash(DefaultValue);
+                            }
+                        }
+                        else {
+                            this.AutoFillPaymentScreen();
                         }
                     }
-                    else {
-                        this.AutoFillPaymentScreen();
-                    }
-                }
-            });
+                });
 
+
+        }
     }
 
     AutoFillPaymentScreen() {
