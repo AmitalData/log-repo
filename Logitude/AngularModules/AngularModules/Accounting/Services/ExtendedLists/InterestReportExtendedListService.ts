@@ -63,7 +63,7 @@ export class InterestReportExtendedListService {
 
  
     PutInterestReortStatus(interestReportArgs: InterestReportArguments) {
-        return this.httpClient.put(this._apiUrl + "/PutInterestReportStatus", JSON.stringify(interestReportArgs), ServiceHelper.GetHttpHeaders()).pipe(
+        return this.httpClient.put(this._apiUrl + "/PutCreateInterestReportInvoiceBatch", JSON.stringify(interestReportArgs), ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

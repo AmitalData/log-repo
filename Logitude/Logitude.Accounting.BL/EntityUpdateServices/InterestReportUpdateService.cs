@@ -32,20 +32,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         protected override void OnCreating(InterestReportPM entityPM, EntityPM entityParentPM)
         {
-            MapInterestReportDefaultsOnCreating(entityPM); // remove this it was moved to data mapping
+          
             if (!entityPM.IsCreatedFromBatch)
             {
                 CreateBatchTaskExecution(entityPM);
             }
         }
 
-
-        private void MapInterestReportDefaultsOnCreating(InterestReportPM entityPM)
-        {
-
-           
-        }
-
+         
         
 
         protected override void UpdateComposition(InterestReportPM entityPM)

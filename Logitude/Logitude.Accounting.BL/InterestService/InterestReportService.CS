@@ -18,6 +18,13 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Resolvers;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Accounting.BL.InterestService.HelperClasses;
+using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Server.Tools.QueueService;
+using System.Xml.Serialization;
 
 namespace Logitude.Accounting.BL.InterestService
 {
@@ -61,11 +68,156 @@ namespace Logitude.Accounting.BL.InterestService
                 interestReportPM = GetSingleInterestReportPM(MainContext, Tenant, InvoiceEntitiId, AmountInLocalCurrency, ARInvoiceId, InvoiceNumber);
             }
 
-            interestReportPM = UpdateInterestReportWhenConfirmInvoice(interestReportPM, Tenant, MainContext); //CloseInterestReportWithoutInvoice
+            interestReportPM = CloseInterestReportWithoutInvoice(interestReportPM, Tenant, MainContext);  
 
             return interestReportPM;
         }
 
+        public InterestLastBatchServicePM GetInterestLastBatchServiceByTenant(int tenant)
+        {
+            InterestLastBatchServiceQueryService interestLastBatchServiceQueryService = new InterestLastBatchServiceQueryService(tenant);
+            InterestLastBatchServicePM InterestLastBatchService = interestLastBatchServiceQueryService.CheckInterestLastBatchServicesByTenant(tenant);
+
+            if (InterestLastBatchService != null && !string.IsNullOrEmpty(InterestLastBatchService.CreateInvoicesBatchId))
+            {
+                BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
+                BatchTaskExecutionPM batchTaskExecutionPM = batchTaskExecutionQueryService.GetSingle(InterestLastBatchService.CreateInvoicesBatchId, false, false);
+
+                if (batchTaskExecutionPM.StatusCode != "D" && batchTaskExecutionPM.StatusCode != "F")
+                {
+                    ContactPM contact = GetLoggedContact(tenant);
+                    bool showLocals = !contact.DontShowLocal;
+                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
+                }
+            }
+
+            return InterestLastBatchService;
+        }
+        public string CheckLastBatchAndCreateInvoiceBatch(InterestReportArguments interestReportArgs, int tenant, string email)// reduce the method lines by moving common things DRY
+        {
+            string BatchId = null;
+            InterestLastBatchServiceQueryService interestLastBatchServiceQueryService = new InterestLastBatchServiceQueryService(tenant);
+            InterestLastBatchServicePM InterestLastBatchService = interestLastBatchServiceQueryService.CheckInterestLastBatchServicesByTenant(tenant);
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            InterestLastBatchServiceUpdateService interestLastBatchServiceUpdateService = new InterestLastBatchServiceUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+
+            if (InterestLastBatchService != null && !string.IsNullOrEmpty(InterestLastBatchService.CreateInvoicesBatchId))
+            {
+                BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
+                BatchTaskExecutionPM batchTaskExecutionPM = batchTaskExecutionQueryService.GetSingle(InterestLastBatchService.CreateInvoicesBatchId, false, false);
+
+                if (batchTaskExecutionPM.StatusCode == "D" || batchTaskExecutionPM.StatusCode == "F")
+                {
+                    BatchId = CreateBatchInvoice(interestReportArgs, tenant, email);
+                    InterestLastBatchService.CreateInvoicesBatchId = BatchId;
+                    InterestLastBatchService.ChangeSetOp = ChangeSetOperation.Update;
+                    interestLastBatchServiceUpdateService.Update(InterestLastBatchService, true);
+                }
+                else
+                {
+                    ContactPM contact = GetLoggedContact(tenant);
+                    bool showLocals = !contact.DontShowLocal;
+                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
+                }
+            }
+            else if (InterestLastBatchService != null && string.IsNullOrEmpty(InterestLastBatchService.CreateInvoicesBatchId))
+            {
+                BatchId = CreateBatchInvoice(interestReportArgs, tenant, email);
+                InterestLastBatchService.CreateInvoicesBatchId = BatchId;
+                InterestLastBatchService.ChangeSetOp = ChangeSetOperation.Update;
+                interestLastBatchServiceUpdateService.Update(InterestLastBatchService, true);
+
+            }
+
+            else if (InterestLastBatchService == null)
+            {
+                BatchId = CreateBatchInvoice(interestReportArgs, tenant, email);
+                InterestLastBatchService = new InterestLastBatchServicePM();
+                InterestLastBatchService.Tenant = tenant;
+                InterestLastBatchService.CreateInvoicesBatchId = BatchId;
+                InterestLastBatchService.ChangeSetOp = ChangeSetOperation.Insert;
+                interestLastBatchServiceUpdateService.Update(InterestLastBatchService, true);
+
+            }
+
+            return BatchId;
+
+        }
+        public int CheckNumberOfInterestReportInvoicingWithoutInvoice(InterestReportArguments interestReportArgs,int tenant,string email)
+        {
+
+            InterestLastBatchServiceQueryService interestLastBatchServiceQueryService = new InterestLastBatchServiceQueryService(tenant);
+            InterestLastBatchServicePM InterestLastBatchService = interestLastBatchServiceQueryService.CheckInterestLastBatchServicesByTenant(tenant);
+
+            if (InterestLastBatchService != null && !string.IsNullOrEmpty(InterestLastBatchService.CreateInvoicesBatchId))
+            {
+                BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
+                BatchTaskExecutionPM batchTaskExecutionPM = batchTaskExecutionQueryService.GetSingle(InterestLastBatchService.CreateInvoicesBatchId, false, false);
+
+                if (batchTaskExecutionPM.StatusCode != "D" && batchTaskExecutionPM.StatusCode != "F")
+                {
+                    ContactPM contact = GetLoggedContact(tenant);
+                    bool showLocals = !contact.DontShowLocal;
+                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
+                }
+            }
+            interestReportArgs.Tenant = tenant;
+            interestReportArgs.Email = email;
+
+            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
+            int NumberOfInterestReportsWithoutInvoice = interestReportQueryService.GetInterestReportsBySelectedIds(interestReportArgs).Count();
+
+            return NumberOfInterestReportsWithoutInvoice;
+        }
+        public string CreateBatchInvoice(InterestReportArguments interestReportArgs, int tenant, string email)// move it with CheckLastBatchAndCreateInvoiceBatch
+        {
+            string BatchId = null;
+            interestReportArgs.Tenant = tenant;
+            interestReportArgs.Email = email;
+            BatchId = CreateBatchTaskExecution(interestReportArgs, "Create Batch Invoice", "Logitude.Accounting.BL.CoreBL.Batch.BatchInterestReportInvoiceService,Logitude.Accounting.BL");
+
+            return BatchId;
+        }
+        private string CreateBatchTaskExecution(InterestReportArguments args, string Subject, string ClassName)
+        {
+            // 1- create BTE record
+            BatchTaskExecutionPM taskExe;
+
+            var stringwriter = new System.IO.StringWriter();
+            var serializer = new XmlSerializer(typeof(InterestReportArguments));
+            serializer.Serialize(stringwriter, args);
+            string xmlParameters = stringwriter.ToString();
+
+
+            taskExe = new BatchTaskExecutionPM()
+            {
+                Subject = Subject,
+                Tenant = args.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ClassName = ClassName,
+                CreateDate = DateTime.Now,
+                PrametersXml = xmlParameters,
+                StatusCode = "C",
+
+            };
+
+
+            IInfrastructureContext MyContext = InfrastructureContext.GetContext(args.Tenant);
+            BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), args.Tenant);
+            bteUpdateService.Update(taskExe, true);
+
+            // 2- Send to queue
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+            queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", taskExe.Id },
+                    { "Tenant",  args.Tenant.ToString() }
+                }, args.Tenant);
+
+
+            return taskExe.Id;
+        }
         public void CancelInterestTransactionsByARPayment(string EntityId, int Tenant)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(Tenant);
@@ -184,7 +336,7 @@ namespace Logitude.Accounting.BL.InterestService
             return interestTransactionLists.JournalNumber;
         }
    
-        private InterestReportPM UpdateInterestReportWhenConfirmInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext)
+        private InterestReportPM CloseInterestReportWithoutInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext)
         {
             ContactQuery contactQuery = new ContactQuery(Tenant);
             ContactPM contact = GetLoggedContact(Tenant) ?? new ContactPM();
@@ -349,6 +501,9 @@ namespace Logitude.Accounting.BL.InterestService
             ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
         }
+
+
+
 
 
     }

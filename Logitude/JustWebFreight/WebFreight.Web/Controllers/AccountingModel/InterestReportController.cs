@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.InterestService;
 using Logitude.Accounting.BL.InterestService.HelperClasses;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
@@ -66,15 +67,14 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        public HttpResponseMessage PutInterestReportStatus(InterestReportArguments interestReportArgs) // PutCreateInterestReportInvoiceBatch pay attention it will affect the client
+        public HttpResponseMessage PutCreateInterestReportInvoiceBatch(InterestReportArguments interestReportArgs)  
         {
             try
             {
                 int tenant = AuthinticateTenant();
                 string email = HttpContext.Current.User.Identity.Name;
-                string BatchId = null;
-
-                BatchId = CheckLastBatchAndCreateInvoiceBatch(interestReportArgs, tenant, email); // move this logic to another class to keep the controller clean
+                InterestReportService interestReportService = new InterestReportService();
+                string BatchId = interestReportService.CheckLastBatchAndCreateInvoiceBatch(interestReportArgs, tenant, email);  
                 return Request.CreateResponse(HttpStatusCode.OK, BatchId);
             }
             catch (Exception ex)
@@ -83,89 +83,16 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
-        private string CheckLastBatchAndCreateInvoiceBatch(InterestReportArguments interestReportArgs,int tenant, string email)// reduce the method lines by moving common things DRY
-        {
-            string BatchId=null;
-            InterestLastBatchServiceQueryService interestLastBatchServiceQueryService = new InterestLastBatchServiceQueryService(tenant);
-            InterestLastBatchServicePM InterestLastBatchService = interestLastBatchServiceQueryService.CheckInterestLastBatchServicesByTenant(tenant);
-            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-            InterestLastBatchServiceUpdateService interestLastBatchServiceUpdateService = new InterestLastBatchServiceUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-
-            if (InterestLastBatchService != null && !string.IsNullOrEmpty(InterestLastBatchService.CreateInvoicesBatchId))
-            {
-                BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
-                BatchTaskExecutionPM batchTaskExecutionPM = batchTaskExecutionQueryService.GetSingle(InterestLastBatchService.CreateInvoicesBatchId, false, false);
-
-                if (batchTaskExecutionPM.StatusCode == "D" || batchTaskExecutionPM.StatusCode == "F")
-                {
-                    BatchId = CreateBatchInvoice(interestReportArgs, tenant, email);
-                    InterestLastBatchService.CreateInvoicesBatchId = BatchId;
-                    InterestLastBatchService.ChangeSetOp = ChangeSetOperation.Update;
-                    interestLastBatchServiceUpdateService.Update(InterestLastBatchService, true);
-                }
-                else
-                {
-                    ContactPM contact = GetLoggedContact(tenant);
-                    bool showLocals = !contact.DontShowLocal;
-                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
-                }
-            }
-            else if (InterestLastBatchService != null && string.IsNullOrEmpty(InterestLastBatchService.CreateInvoicesBatchId))
-            {
-                BatchId= CreateBatchInvoice(interestReportArgs, tenant, email);
-                InterestLastBatchService.CreateInvoicesBatchId = BatchId;
-                InterestLastBatchService.ChangeSetOp = ChangeSetOperation.Update;
-                interestLastBatchServiceUpdateService.Update(InterestLastBatchService, true);
-
-            }
-
-            else if (InterestLastBatchService == null)
-            {
-                BatchId= CreateBatchInvoice(interestReportArgs, tenant, email);
-               InterestLastBatchService = new InterestLastBatchServicePM();
-                InterestLastBatchService.Tenant = tenant;
-                InterestLastBatchService.CreateInvoicesBatchId = BatchId;
-                InterestLastBatchService.ChangeSetOp = ChangeSetOperation.Insert;
-                interestLastBatchServiceUpdateService.Update(InterestLastBatchService, true);
-
-            }
-
-            return BatchId;
-
-        }
-
-
-
-
-        public string CreateBatchInvoice(InterestReportArguments interestReportArgs, int tenant, string email)// move it with CheckLastBatchAndCreateInvoiceBatch
-        {
-            string BatchId = null;
-            interestReportArgs.Tenant = tenant;
-            interestReportArgs.Email = email;
-            BatchId = CreateBatchTaskExecution(interestReportArgs, "Create Batch Invoice", "Logitude.Accounting.BL.CoreBL.Batch.BatchInterestReportInvoiceService,Logitude.Accounting.BL");
-
-            return BatchId;
-        }
+     
+ 
+     
         public HttpResponseMessage GetInterestLastBatchServiceByTenant()
         {
             try
             {
                 int tenant = AuthinticateTenant();
-                InterestLastBatchServiceQueryService interestLastBatchServiceQueryService = new InterestLastBatchServiceQueryService(tenant);
-                InterestLastBatchServicePM InterestLastBatchService = interestLastBatchServiceQueryService.CheckInterestLastBatchServicesByTenant(tenant);
-
-                if (InterestLastBatchService != null && !string.IsNullOrEmpty(InterestLastBatchService.CreateInvoicesBatchId))
-                {
-                    BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
-                    BatchTaskExecutionPM batchTaskExecutionPM = batchTaskExecutionQueryService.GetSingle(InterestLastBatchService.CreateInvoicesBatchId, false, false);
-
-                    if (batchTaskExecutionPM.StatusCode != "D" && batchTaskExecutionPM.StatusCode != "F")
-                    {
-                        ContactPM contact = GetLoggedContact(tenant);
-                        bool showLocals = !contact.DontShowLocal;
-                        throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
-                    }
-                }
+                InterestReportService interestReportService = new InterestReportService();
+                InterestLastBatchServicePM InterestLastBatchService = interestReportService.GetInterestLastBatchServiceByTenant(tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, InterestLastBatchService);
             }
@@ -183,27 +110,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 int tenant = AuthinticateTenant();
                 string email = HttpContext.Current.User.Identity.Name;
 
-
-                InterestLastBatchServiceQueryService interestLastBatchServiceQueryService = new InterestLastBatchServiceQueryService(tenant);
-                InterestLastBatchServicePM InterestLastBatchService = interestLastBatchServiceQueryService.CheckInterestLastBatchServicesByTenant(tenant);
-
-                if (InterestLastBatchService != null && !string.IsNullOrEmpty(InterestLastBatchService.CreateInvoicesBatchId))
-                {
-                    BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
-                    BatchTaskExecutionPM batchTaskExecutionPM = batchTaskExecutionQueryService.GetSingle(InterestLastBatchService.CreateInvoicesBatchId, false, false);
-
-                    if (batchTaskExecutionPM.StatusCode != "D" && batchTaskExecutionPM.StatusCode != "F")
-                    {
-                        ContactPM contact = GetLoggedContact(tenant);
-                        bool showLocals = !contact.DontShowLocal;
-                        throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
-                    }
-                }
-                interestReportArgs.Tenant = tenant;
-                interestReportArgs.Email = email;
-
-                InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-                int NumberOfInterestReportsWithoutInvoice = interestReportQueryService.GetInterestReportsBySelectedIds(interestReportArgs).Count();
+                InterestReportService interestReportService = new InterestReportService();
+                int NumberOfInterestReportsWithoutInvoice = interestReportService.CheckNumberOfInterestReportInvoicingWithoutInvoice(interestReportArgs, tenant, email);
 
                 return Request.CreateResponse(HttpStatusCode.OK, NumberOfInterestReportsWithoutInvoice);
             }
@@ -213,39 +121,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
-
-        private void  UpdateStatusForALLNotInvoicedInterestReports(InterestReportArguments interestReportArgs, int tenant)// delete this method it is not refrenced
-        {            
-            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-            
-            List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArgs.FromDate , interestReportArgs.ToDate, tenant);
-           
-            if (interestReportArgs.ExcludedIds != null)
-            {
-                interestReports = (from a in interestReports
-                                   where !interestReportArgs.ExcludedIds.Contains(a.Id)
-                                   select a).ToList();
-            }
-            UpdateInterestReports(interestReports, tenant);
-        }
-        private void UpdateStatusForSelectedInterestReport(InterestReportArguments interestReportArgs,int tenant)// delete this method it is not refrenced
-        {
-            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-            List<InterestReportPM> interestReports = interestReportQueryService.GetInterestReportsByIds(interestReportArgs.SelectedIds, tenant);
-            UpdateInterestReports(interestReports,tenant);
-
-        }
-        private void UpdateInterestReports(List<InterestReportPM> interestReports, int tenant) // remove this one also because it is used for UpdateStatusForSelectedInterestReport
-        {
-            var accountingContext = AccountingContext.GetContext(tenant);
-            foreach (InterestReportPM report in interestReports)
-            {
-                report.InterestReportStatusCode = "8";
-                report.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                InterestReportUpdateService service = new InterestReportUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
-                service.Update(report, true);
-            }
-        }
+   
         private static int AuthinticateTenant()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -299,58 +175,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
             return queryOperations;
         }
 
-        private string CreateBatchTaskExecution(InterestReportArguments args,string Subject , string ClassName)
-        {
-            // 1- create BTE record
-            BatchTaskExecutionPM taskExe;
-
-            var stringwriter = new System.IO.StringWriter();
-            var serializer = new XmlSerializer(typeof(InterestReportArguments));
-            serializer.Serialize(stringwriter, args);
-            string xmlParameters = stringwriter.ToString();
-
-
-            taskExe = new BatchTaskExecutionPM()
-            {
-                Subject = Subject,
-                Tenant = args.Tenant,
-                ChangeSetOp = ChangeSetOperation.Insert,
-                ClassName = ClassName,
-                CreateDate = DateTime.Now,
-                PrametersXml = xmlParameters,
-                StatusCode = "C",
-
-            };
-
-
-            IInfrastructureContext MyContext = InfrastructureContext.GetContext(args.Tenant);
-            BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), args.Tenant);
-            bteUpdateService.Update(taskExe, true);
-
-            // 2- Send to queue
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
-            queueservice.Send(new Dictionary<string, string>()
-                {
-                    { "BatchTaskExecutionId", taskExe.Id },
-                    { "Tenant",  args.Tenant.ToString() }
-                }, args.Tenant);
-
-
-            return taskExe.Id;
-        }
-
-        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
-        public static ContactPM GetLoggedContact(int tenant)
-        {
-            if (OverrideGetLoggedContactFunc != null)
-            {
-                return OverrideGetLoggedContactFunc(tenant);
-            }
-            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
-            return loggedcontact;
-        }
-
+   
+ 
 
     }
 }
