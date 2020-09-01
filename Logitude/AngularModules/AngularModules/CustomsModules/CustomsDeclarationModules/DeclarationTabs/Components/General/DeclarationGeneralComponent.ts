@@ -79,7 +79,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                                     this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
                                         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response: any) => {
                                             this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationExportRecipient").subscribe((response: any) => {
-                                              
+                                                debugger;
                                                 this.EntityPM = this.entityArgs.EntityPM;
                                                  this.ObjectTableName = this.entityArgs.ObjectTableName;
                                                 this.Listen();
@@ -213,7 +213,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                 this.IsWindowMode = true;
 
                 // initialize consignment tabs
+
                 if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
+                    this.BuildRecipientsList()
+
                     this.BuildConsignments();  // [!] in the pilot branch, you should enable this line to work!!
                     //this.ConsigmentTabs = [];
                     //// create consignment tabs from entity
@@ -244,6 +247,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                 // initialize consignment tabs
                 if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
                     this.BuildConsignments();
+                    this.BuildRecipientsList()
                     //// create consignment tabs from entity
                     //for (let item of this.EntityPM.Consignments) {
                     //    var tab;
@@ -408,6 +412,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                     if (isSaveSuccess) {
                         this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                         this.BuildConsignments();
+                        this.BuildRecipientsList()
+
                     }
                 })
             );
@@ -422,6 +428,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                         this.timerToken = setTimeout(() => {
                             this.RefreshDatePicker = true;
                         }, 200);
+                        this.BuildRecipientsList()
 
                         this.BuildConsignments();
                         this.DisplayOnlyCheck();

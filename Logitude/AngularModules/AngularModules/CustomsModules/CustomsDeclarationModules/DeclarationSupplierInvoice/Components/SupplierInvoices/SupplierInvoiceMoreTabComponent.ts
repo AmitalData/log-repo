@@ -187,8 +187,7 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
         //        return;
         //    }
         //}
-
-        // 2- get counter
+         // 2- get counter
         var ucrCounter = 0;
         if (this.PaymentsList.Length > 0) {
             ucrCounter = this.getMax(this.UCRList.Collection, "SequenceNumeric");
@@ -280,7 +279,7 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
 
     getMax(list: any[], propertyName: string) {
         var max = -99999;
-        var maxObj = list ? list.reduce(function (prev, current) { return (prev[propertyName] > current[propertyName]) ? prev : current }) : null;
+        var maxObj = list && list.length>0 ? list.reduce(function (prev, current) { return (prev[propertyName] > current[propertyName]) ? prev : current }) : null;
         if (maxObj != null)
             if (max <= maxObj[propertyName])
                 max = maxObj[propertyName];

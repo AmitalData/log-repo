@@ -1745,7 +1745,7 @@
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="IsDisplayOnly" [ItemSource]="AbachsList">
 
                                     <!-- DeclarationTypeCode -->
-                                    <log-column [header]="'Customs.SuppInvoiceItemsAbachStatement.F.StatementTypeCode' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="'right'" [binding]="'StatementTypeCode'">
+                                    <log-column [header]="'Customs.SuppInvoiceItemsAbachStatement.F.StatementTypeCode' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'right'" [binding]="'StatementTypeCode'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">

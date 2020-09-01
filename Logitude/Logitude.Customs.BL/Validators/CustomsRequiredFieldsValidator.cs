@@ -440,11 +440,11 @@ namespace Logitude.Customs.BL.Validators
                 #region SupplierInvoiceFreightAmount
 
 
-                if ((supplierInvoicePayments == null || supplierInvoicePayments.Count() == 0) && isExport == "E")
-                {
-                    requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = supplierInvoice.InvoiceCounterKey.ToString(), FieldName = "פרטי תשלום", TableName = "Customs.SupplierInvoice" });
+                //if ((supplierInvoicePayments == null || supplierInvoicePayments.Count() == 0) && isExport == "E")
+                //{
+                //    requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = supplierInvoice.InvoiceCounterKey.ToString(), FieldName = "פרטי תשלום", TableName = "Customs.SupplierInvoice" });
 
-                }
+                //}
 
 
                 ObjectTable supplierInvoicePaymentObjectTable = objectTabelRepository.GetObjectTableByName("Customs.SupplierInvoicePayment", 0, fromCache);
