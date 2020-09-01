@@ -23,10 +23,18 @@ namespace Logitude.CargoTracking.Data.Repositories
 
         public IQueryable<CargoTrackingShipment> GetBySecurityKeies(List<string> shipmentsSecurityKeies, int tenant)
         {
+            IQueryable<CargoTrackingShipment> shipmentsIsNotMain = (from shipment in currentContext.CargoTrackingShipments
+                                                                    where
+                                                                       shipmentsSecurityKeies.Contains(shipment.SecurityKey)
+                                                                       && shipment.Tenant == tenant
+                                                                       && shipment.IsMainRecord ==false
+                                                                    select shipment);
+
             IQueryable<CargoTrackingShipment> shipments = (from shipment in currentContext.CargoTrackingShipments
                                                                  where
-                                                                    shipmentsSecurityKeies.Contains(shipment.SecurityKey)
-                                                                    && shipment.Tenant == tenant
+                                                                     (shipment.IsMainRecord ==true || shipmentsIsNotMain.Select(s=>s.EntityId).Contains(shipment.CustomsShipmentHeaderId)) 
+                                                                     && shipmentsSecurityKeies.Contains(shipment.SecurityKey)
+                                                                     && shipment.Tenant == tenant
                                                                  select shipment);
 
             return shipments;
