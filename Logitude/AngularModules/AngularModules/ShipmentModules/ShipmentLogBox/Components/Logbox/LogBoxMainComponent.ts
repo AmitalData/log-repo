@@ -9,7 +9,6 @@ import { LogGridComponent } from '../../../../Infrastructure/Components/Logitude
 import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { LogBoxDocumentsComponent } from './LogBoxDocumentsComponent';
 import { ShipmentDomainService, ImporterQueriesDataCounts } from '../../../../Shipment/Services/ShipmentDomainService';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
