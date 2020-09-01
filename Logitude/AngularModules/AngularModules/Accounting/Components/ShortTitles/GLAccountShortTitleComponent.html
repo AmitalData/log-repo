@@ -28,22 +28,10 @@
                  <td style="width:20px;" *ngIf="IsConnectedToMoreThanOneCard">
                     <div  >
                   
-                        <LogToolTip [Scrollable]="true" [float]="'left'" [mode]="'Info'" float-start [direction]="isRTL?'bottomleft':'bottomright'" *ngIf="IsConnectedToMoreThanOneCard">
-                          <span style="font-size: bold;">
-                              <div>
-                                  <ul style="list-style: none;">
-                                      <li *ngFor="let card of ConnectedCards; let i=index;">
-                                          <div>
-                                              <a href="#" style="font-size:12px" (click)="OpenCardScreen(card.Id)">{{card.LocalName}}</a>
-      
-                                              <div style="clear: both;"></div>
-      
-                                          </div>
-                                      </li>
-                                  </ul>
-                              </div>
-                          </span>
-      
+                        <LogToolTip [Scrollable]="true" [float]="'left'" [mode]="'Info'" float-start [direction]="isRTL?'bottomleft':'bottomright'" *ngIf="IsConnectedToMoreThanOneCard">                         
+                            <div *ngFor="let card of ConnectedCards">
+                                <a href="#" style="font-size:12px" (click)="OpenCardScreen(card.Id)">{{card.LocalName}}</a>                           
+                             </div>
                        </LogToolTip>
                    
                       </div>
