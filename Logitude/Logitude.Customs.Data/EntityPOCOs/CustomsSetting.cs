@@ -75,6 +75,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int? QtyFeedbackInPendingMessage { get; set; }
         [Column("LastRunningDCAWS")]
 	    public DateTime? LastRunningDCAWS { get; set; }
+        [Column("LastNumOfMessagesDCAWS")]
+	    public int? LastNumOfMessagesDCAWS { get; set; }
     }
 }
 	 
