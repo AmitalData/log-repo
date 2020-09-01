@@ -21,7 +21,6 @@ import { UserLastSettingsPM } from '../../../../Common/EntityPMs/UserLastSetting
 import { UserLastSettingsPMService } from '../../../../Common/Services/StandardPMs/UserLastSettingsPMService';
 import { UserLastSettingsExtendedPMService } from '../../../../Common/Services/ExtendedPMs/UserLastSettingsExtendedPMService';
 import { QueryColumnPM} from '../../../../Infrastructure/EntityPMs/QueryColumnPM';
-import { LogboxShipmentExportExcelService } from '../../../../Shipment/Services/Others/LogboxShipmentExportExcelService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 
@@ -43,7 +42,6 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public ToggleIsExportShipments: boolean = false;
     public _UserLastSettingsPMService: UserLastSettingsPMService;
     public _UserLastSettingsExtendedPMService: UserLastSettingsExtendedPMService;
-    public logboxShipmentExportExcelService: LogboxShipmentExportExcelService;
 
     RefTemplateWidth: string = '220px';
     constructor(private _entityListService: EntityListService) {
@@ -52,7 +50,6 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this._ShipmentPMService = new ShipmentPMService();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
 
-        this.logboxShipmentExportExcelService = new LogboxShipmentExportExcelService();
         this._UserLastSettingsPMService = new UserLastSettingsPMService();
         this._UserLastSettingsExtendedPMService = new UserLastSettingsExtendedPMService();
         var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX" && d.TenantNumber == SessionLocator.Tenant)[0];
