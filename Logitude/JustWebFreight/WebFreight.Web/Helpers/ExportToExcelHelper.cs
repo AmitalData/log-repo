@@ -726,7 +726,7 @@ namespace WebFreight.Web.Helpers
                             string value = row[agColumn.Name].ToString();
                             if (!string.IsNullOrEmpty(value))
                             {
-                                excelTotals[excelTotalCount].Total += Int32.Parse(value);
+                                excelTotals[excelTotalCount].Total += Double.Parse(value);
                             }
                             excelTotalCount += 1;
                         }
