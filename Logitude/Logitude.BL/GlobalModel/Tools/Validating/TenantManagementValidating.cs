@@ -86,20 +86,7 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
             int num1 = entityPM.TotalFreeUsers == null ? 0 : entityPM.TotalFreeUsers.Value;
             int num2 = entityPM.TotalNumberOfUsers == null ? 0 : entityPM.TotalNumberOfUsers.Value;
             totalUsers = num1 + num2;
-
-            //if (entityPM.MainAdditionalPackageApplied)
-            //{
-
-
-            //}
-
-            //else
-            //{
-            //    int num1 = entityPM.TotalFreeUsers == null ? 0 : entityPM.TotalFreeUsers.Value;
-            //    int num2 = entityPM.TotalNumberOfUsers == null ? 0 : entityPM.TotalNumberOfUsers.Value;
-            //    totalUsers = num1 + num2; 
-            //}
-
+            
             if (tenantUsers > totalUsers)
             {
                 throw new Exception("You can't change the number of users to less than " + tenantUsers + " (Number of " + usersType + " users)");
