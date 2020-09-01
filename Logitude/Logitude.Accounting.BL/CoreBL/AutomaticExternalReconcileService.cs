@@ -333,7 +333,7 @@ namespace Logitude.Accounting.BL.CoreBL
             else if (refNumber == 3)
                 groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => x.Reference3?.TrimStart('0')).ToList();
 
-            var groupedTransactionsDictionary_ref3 = groupedTransactions_ref3.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
+            var groupedTransactionsDictionary_ref3 = groupedTransactions_ref3.Where(d=>d.Key != null).ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
             return groupedTransactionsDictionary_ref3;
         }
 
