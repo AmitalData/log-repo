@@ -274,7 +274,7 @@ namespace Logitude.Server.Tools.StorageService
 
                     using (Stream blobstream = finalcloudBlockBlob.OpenWrite())
                     {
-
+                        bool skippfileTest = false;
                         if (fileInfo.FolderName != "logos")
                         {
                             DocumentRepository documentRepository = new DocumentRepository(fileInfo.Tenant);
@@ -283,10 +283,12 @@ namespace Logitude.Server.Tools.StorageService
                             {
                                 AesFunction aesFunction = new AesFunction();
                                 result = aesFunction.EncryptData(result, fileInfo.Tenant);
+
+                                skippfileTest =  (document.FileName  == "test update failed");
                             }
                         }
 
-                        //if (fileInfo.FileName != "test update failed")
+                        if (!skippfileTest)
                             blobstream.Write(result, 0, (int)result.Length);
 
                     }
