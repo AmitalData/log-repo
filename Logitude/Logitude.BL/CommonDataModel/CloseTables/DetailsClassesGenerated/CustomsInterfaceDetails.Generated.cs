@@ -47,14 +47,6 @@ namespace Logitude.BL.CommonDataModel
 			 
             all.Add(new CustomsInterfaceDetails()
             {    
-                Code = "CMN", 
-                SearchFields = "CMN,Maman Courier", 
-                InterfaceType = "IM", 
-                Name = "Maman Courier", 
-			});
-			 
-            all.Add(new CustomsInterfaceDetails()
-            {    
                 Code = "NO", 
                 SearchFields = "NO,None", 
                 InterfaceType = "NO", 
