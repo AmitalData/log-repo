@@ -367,7 +367,7 @@
                         </ng-template>
                     </log-column>
 
-                    <log-column [header]="'Customs.SupplierInvoicePayment.F.PaymentAmount' | TextCodeTranslationPipe" [width]="'60'" [Alignment]="'right'" [binding]="'PaymentAmount'">
+                    <log-column [header]="'Customs.SupplierInvoicePayment.F.PaymentAmount' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="'right'" [binding]="'PaymentAmount'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate>
                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
@@ -400,12 +400,12 @@
 
         </td>
 
-        <td style="width: 50px;"></td>
-        <td colspan="2" style="height: 100%;">
+        <td style="width: 30px;"></td>
+        <td colspan="2" style="height: 100%;width:120px">
             <div class="CellContent">
                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="IsDisplayOnly" [ItemSource]="UCRList">
 
-                    <log-column [header]="'Customs.SupplierInvoiceUCR.F.SupplierChargeID' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="'right'" [binding]="'SupplierChargeID'">
+                    <log-column [header]="'Customs.SupplierInvoiceUCR.F.SupplierChargeID' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'right'" [binding]="'SupplierChargeID'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate>
                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
@@ -421,7 +421,7 @@
                     </log-column>
 
                     <!-- CurrencyTypeCode -->
-                    <log-column [header]="'Customs.SupplierInvoiceUCR.F.AgentChargeID' | TextCodeTranslationPipe" [width]="'60'" [Alignment]="'right'" [binding]="'AgentChargeID'">
+                    <log-column [header]="'Customs.SupplierInvoiceUCR.F.AgentChargeID' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'right'" [binding]="'AgentChargeID'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate>
                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
