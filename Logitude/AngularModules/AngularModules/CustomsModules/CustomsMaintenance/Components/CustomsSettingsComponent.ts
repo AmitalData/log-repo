@@ -94,16 +94,22 @@ export class CustomsSettingsComponent
                                         this.entityPM = myResponse.Result;
                                         if (AppTool.IsNullOrEmpty(this.entityPM.QtyFeedbackInPendingMessage)) this.entityPM.QtyFeedbackInPendingMessage = 100;
                                         this.Loaded = true;
-                                        this.customsSettingExtendedListService.GetLastRunningDCAWS().subscribe((response: ServiceResponse) => {
+                                        //this.customsSettingExtendedListService.GetLastRunningDCAWS().subscribe((response: ServiceResponse) => {
 
-                                            this.LastRunningDCAWS =  response.Result;
-                                        });
+                                        //    this.LastRunningDCAWS = response.Result;
+                                        //    this.LastNumOfMessagesDCAWS = response
+                                        //});
 
                                         this.interval = setInterval(() => {
-                                            this.customsSettingExtendedListService.GetLastRunningDCAWS().subscribe((response: ServiceResponse) => {
+                                            //this.customsSettingExtendedListService.GetLastRunningDCAWS().subscribe((response: ServiceResponse) => {
+
+                                            //    this.LastRunningDCAWS = response.Result;
+
+                                            //});
+                                            this._CustomsSettingPMService.get(this._TenantCustomsSettingList.Id).subscribe((response: ServiceResponse) => {
 
                                                 this.LastRunningDCAWS = response.Result;
-
+                                                
                                             });
                                         }, 30000);
                                         this.ValidScreen()
@@ -247,6 +253,10 @@ export class CustomsSettingsComponent
 
     get UnfConnectionString() { return this.entityPM != null ? this.entityPM.UnfConnectionString : null; }
     set UnfConnectionString(value) { this.entityPM.UnfConnectionString = value; }
+
+    get LastNumOfMessagesDCAWS() { return this.entityPM != null ? this.entityPM.LastNumOfMessagesDCAWS : null; }
+    set LastNumOfMessagesDCAWS(value) { this.entityPM.LastNumOfMessagesDCAWS = value; }
+
 
     _LastRunningDCAWS: string;
     get LastRunningDCAWS() {
