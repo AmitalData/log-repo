@@ -36,7 +36,8 @@ export class NewEditActivitiesScenarios {
 
     }
     private CreateTask(TaskNumber: string) {
-        cy.get('#Activity_Subject').type(TaskNumber).then(() => {
+        cy.get('#Activity_Subject').type(TaskNumber, { force: true }).then(() => {
+            Resolvers.LOVResolver.Selector('#Activity_PriorityCode').SelectFirst();
             this.Save();
         })
         this.SearchAboutActivity(TaskNumber);
@@ -44,14 +45,16 @@ export class NewEditActivitiesScenarios {
     }
     private CreatePhoneCall(TaskNumber: string) {
         Resolvers.LOVResolver.Selector('#Activity_CallWithId').SelectFirst();
-        cy.get('#Activity_Subject').type(TaskNumber).then(() => {
+        cy.get('#Activity_Subject').type(TaskNumber, { force: true }).then(() => {
+        Resolvers.LOVResolver.Selector('#Activity_PriorityCode').SelectFirst();
             this.Save();
         })
         this.SearchAboutActivity(TaskNumber);
         this.EditPhoneCall(TaskNumber);
     }
     private CreateAppoinment(TaskNumber: string) {
-        cy.get('#Activity_Subject').type(TaskNumber).then(() => {
+        cy.get('#Activity_Subject').type(TaskNumber, { force: true }).then(() => {
+            Resolvers.LOVResolver.Selector('#Activity_PriorityCode').SelectFirst();
             this.Save();  
         })
         this.SearchAboutActivity(TaskNumber);
