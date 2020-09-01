@@ -1,4 +1,3 @@
-
 import { ShipmentArchiveFilter } from '../../../../Controls/ShipmentArchiveFilter';
 import { TransportsFilter } from '../../../../Controls/TransportsFilter';
 import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
@@ -22,6 +21,7 @@ import { UserLastSettingsPMService } from '../../../../Common/Services/StandardP
 import { UserLastSettingsExtendedPMService } from '../../../../Common/Services/ExtendedPMs/UserLastSettingsExtendedPMService';
 import { QueryColumnPM} from '../../../../Infrastructure/EntityPMs/QueryColumnPM';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { LogboxShipmentExportExcelArgs } from '../../../../Shipment/DataContract/LogboxShipmentExportExcelArgs';
 
 
 @Component({
@@ -976,19 +976,3 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 }
 
-export class LogboxShipmentExportExcelArgs {
-
-QueryColumns:QueryColumnPM[];
-Tenant:number;
-UserId:string;
-ObjectTableName: string;
-QueryName: string;
-AdditionalFilters: FilterItem[] = [];
-PageSize: number;
-PageIndex: number;
-QuerySection: string;
-SortBy: string;
-SortDirection: string;
-    Filters: ApiQueryFilters;
-
-}
