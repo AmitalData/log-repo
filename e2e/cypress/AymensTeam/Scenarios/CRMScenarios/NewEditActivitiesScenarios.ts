@@ -47,6 +47,7 @@ export class NewEditActivitiesScenarios {
         Resolvers.LOVResolver.Selector('#Activity_PriorityCode').SelectFirst();
     }
     private CreatePhoneCall(EntityNumber: string) {
+        this.WaitLoaded('contactviews/getbyfilters?');
         Resolvers.LOVResolver.Selector('#Activity_CustomerId').Type('Customer Activity');
         Resolvers.LOVResolver.Selector('#Activity_CallWithId').SelectFirst();
 
@@ -59,7 +60,7 @@ export class NewEditActivitiesScenarios {
         Resolvers.TextBoxResolver.Selector('#Activity_Description').Type('Description for Appoinment # : ' + EntityNumber);
         Resolvers.LOVResolver.Selector('#Activity_PriorityCode').SelectFirst();
     }
-    Save() {
+    private Save() {
         return new Cypress.Promise((resolve, reject) => {
             cy.server();
             cy.route({
@@ -75,7 +76,7 @@ export class NewEditActivitiesScenarios {
             });
         });
     }
-    SaveAndSearchActivity() {
+    private SaveAndSearchActivity() {
         this.Save().then((entityNumber: string) => {
             cy.get('quicksearchtextbox')
                 .find('.LogitudeQuickSearchTextBox')
@@ -86,28 +87,54 @@ export class NewEditActivitiesScenarios {
                 });
         });
     }
-    EditAppoinment(EntityNumber: string) {
+    private EditAppoinment(EntityNumber: string) {
         let today = new Date().toLocaleDateString();
         Resolvers.DatePickerResolver.Selector('#date_Activity_StartDateTime').Type(today);
         Resolvers.DatePickerResolver.Selector('#time_Activity_StartDateTime').Type('10:00 AM');
         Resolvers.LOVResolver.Selector("#Activity_CustomerId").SelectFirst();
         Resolvers.TextBoxResolver.Selector('#Activity_Description').Type('Edit Appointment # : ' + EntityNumber);
         cy.get('#Activity-SaveClose').click();
+        this.WaitLoaded('CRMDomain/GetUpcomigActivities?');
     }
-    EditPhoneCall(EntityNumber: string) {
+    private EditPhoneCall(EntityNumber: string) {
         let today = new Date().toLocaleDateString();
         Resolvers.DatePickerResolver.Selector('#date_Activity_DueDate').Type(today);
         Resolvers.DatePickerResolver.Selector('#time_Activity_DueDate').Type('10:00 AM');
         Resolvers.LOVResolver.Selector("#Activity_PriorityCode").SelectFirst();
         Resolvers.TextBoxResolver.Selector('#Activity_Description').Type('Edit PhoneCall # : ' + EntityNumber);
         cy.get('#Activity-SaveClose').click();
+        this.WaitLoaded('CRMDomain/GetUpcomigActivities?');
     }
-    EditTask(EntityNumber: string) {   
+    private EditTask(EntityNumber: string) {   
         let today = new Date().toLocaleDateString();
         Resolvers.DatePickerResolver.Selector('#date_Activity_StartDateTime').Type(today);
         Resolvers.DatePickerResolver.Selector('#time_Activity_StartDateTime').Type('10:00 AM');
         Resolvers.LOVResolver.Selector("#Activity_CustomerId").SelectFirst();
         Resolvers.TextBoxResolver.Selector('#Activity_Description').Type('Edit Task # : ' + EntityNumber);
         cy.get('#Activity-SaveClose').click();
+        this.WaitLoaded('CRMDomain/GetUpcomigActivities?');
+    }
+    //private WaitActivityWorkspaceLoaded() {
+    //    cy.server();
+    //    cy.route({
+    //        method: 'GET',
+    //        url: '**/CRMDomain/GetUpcomigActivities?**',
+    //        onResponse: (xhr) => {
+    //            expect(xhr.status).to.eq(200);
+    //        }
+    //    }).as('ActivitiesWorkSpace');
+
+    //    cy.wait('@ActivitiesWorkSpace');
+    //}
+    private WaitLoaded(url: string) {
+        cy.server();
+        cy.route({
+            method: 'GET',
+            url: '**/' + url+'**',
+            onResponse: (xhr) => {
+                expect(xhr.status).to.eq(200);
+            }
+        }).as('entityLoaded');
+        cy.wait('@entityLoaded');
     }
 }
