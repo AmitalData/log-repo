@@ -95,7 +95,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     PageType: string;
     CurrentEntityPM: AutomationPM;
-    IcludeTenantZeroEmails: boolean = false;
     DataViewModel: AutomationsSettingsComponent;
     Mode: string;
     ObjectTableId: string;
@@ -163,7 +162,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.DataViewModel = args.DataViewModel;
         this.PageType = args.PageType;
         this.CurrentEntityPM = args.AutomationPM;
-        if (this.CurrentEntityPM) this.IcludeTenantZeroEmails = this.CurrentEntityPM.CreatedByUserName == "System" ? true : false;
         this.Mode = args.Mode;
         this.ObjectTableName = args.ObjectTableName;
         this.IsNewEntity = args.IsNewEntity;
