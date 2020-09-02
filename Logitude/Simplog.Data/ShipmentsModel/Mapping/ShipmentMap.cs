@@ -317,6 +317,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ComputedShipmentNumber).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.SLAC).HasMaxLength(5).IsUnicode(false);
             this.Property(t => t.ShipmentSubTypeId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ChargeStorageCurrencyId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.WeightMeasurementCode).HasMaxLength(4).IsUnicode(false);
+            this.Property(t => t.WeightRoundingCode).HasMaxLength(4).IsUnicode(false);
 
             //    .HasColumnAnnotation(
             //IndexAnnotation.AnnotationName,
@@ -717,6 +720,12 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
             this.Property(t => t.SLAC).HasColumnName("SLAC");
             this.Property(t => t.ShipmentSubTypeId).HasColumnName("ShipmentSubTypeId");
+            this.Property(t => t.ChargeStorage).HasColumnName("ChargeStorage");
+            this.Property(t => t.ChargeStorageCurrencyId).HasColumnName("ChargeStorageCurrencyId");
+            this.Property(t => t.WeightMeasurementCode).HasColumnName("WeightMeasurementCode");
+            this.Property(t => t.WeightRoundingCode).HasColumnName("WeightRoundingCode");
+            this.Property(t => t.IsBondedWarehouse).HasColumnName("IsBondedWarehouse");
+            this.Property(t => t.IsBondedWarehouseChanged).HasColumnName("IsBondedWarehouseChanged");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -928,6 +937,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.FreightPayer).WithMany().HasForeignKey(d => d.FreightPayerId);
             this.HasOptional(t => t.FreightPayerAddress).WithMany().HasForeignKey(d => d.FreightPayerAddressId);
             this.HasOptional(t => t.ShipmentSubType).WithMany().HasForeignKey(d => d.ShipmentSubTypeId);
+            this.HasOptional(t => t.ChargeStorageCurrency).WithMany().HasForeignKey(d => d.ChargeStorageCurrencyId);
+            this.HasOptional(t => t.WeightMeasurement).WithMany().HasForeignKey(d => d.WeightMeasurementCode);
+            this.HasOptional(t => t.WeightRounding).WithMany().HasForeignKey(d => d.WeightRoundingCode);
         }
     }
 }

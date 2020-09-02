@@ -365,10 +365,11 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
                                     this.CurrentDocument.FileExtension = this.FileExtension;
                                     this.CurrentDocument.FileSize = result.FileSize;
                                     this.CurrentDocument.FileName = this.FileName;
-
                                     this.CurrentDocument.ReceivedByUserName = SessionLocator.LoggedUserPM.EnglishName;
 
                                     if (this.RequsetPageName == "DocIn") this.CurrentDocument.IsUoloadedField = true;
+
+
 
                                     if (this.RequsetPageName == "DocIn" || this.RequsetPageName == "SharedDocument") {
                                         if (this.CurrentDocument.IsSharedOut) {
@@ -392,6 +393,11 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
                                                 if ((this.RequsetPageName == "DocIn" || this.RequsetPageName == "SharedDocument") && this.TiggerViewModel) {
                                                     if (this.RequsetPageName == "DocIn") this.TiggerViewModel.OnUploadComplete();
                                                     else if (this.RequsetPageName == "SharedDocument") this.TiggerViewModel.OnUploadComplete(this.Entity);
+
+
+
+
+
                                                 }
                                             }
                                         }

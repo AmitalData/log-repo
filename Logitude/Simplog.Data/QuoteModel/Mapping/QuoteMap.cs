@@ -48,7 +48,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.Field9).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field10).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.DimensionsUnitCode).HasMaxLength(3).IsUnicode(false);          
-            this.Property(t => t.GrossWeightUnitCode).HasMaxLength(3).IsUnicode(false);           
+            this.Property(t => t.GrossWeightUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.VolumeUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.ShipmentTypeId).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ShipperId).HasMaxLength(15).IsUnicode(false);
@@ -84,6 +84,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.DeliveryAddress).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.SearchFields).HasMaxLength(1500).IsUnicode(true);
             this.Property(t => t.ChargeableWeightUnitCode).HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.PickupDeliveryCWeightUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.ConcurrencyGUID).IsRequired().HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.FromPartnerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ToPartnerId).HasMaxLength(15).IsUnicode(false);
@@ -157,6 +158,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ChargeableWeight).HasColumnName("ChargeableWeight");
             this.Property(t => t.GrossWeight).HasColumnName("GrossWeight");
             this.Property(t => t.ChargeableWeightInKG).HasColumnName("ChargeableWeightInKG");
+            this.Property(t => t.PickupDeliveryChargeableWeight).HasColumnName("PickupDeliveryChargeableWeight");
             this.Property(t => t.VolumeInCBM).HasColumnName("VolumeInCBM");
             this.Property(t => t.LastModified).HasColumnName("LastModified");
             this.Property(t => t.Field1).HasColumnName("Field1");
@@ -175,6 +177,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.NumberOfContainers).HasColumnName("NumberOfContainers");
             this.Property(t => t.NumberOfPackages).HasColumnName("NumberOfPackages");
             this.Property(t => t.Ratio).HasColumnName("Ratio");
+            this.Property(t => t.PickupDeliveryRatio).HasColumnName("PickupDeliveryRatio");
             this.Property(t => t.DimFactor).HasColumnName("DimFactor");
             this.Property(t => t.VolumeUnitCode).HasColumnName("VolumeUnitCode");
             this.Property(t => t.ShipmentTypeId).HasColumnName("ShipmentTypeId");
@@ -232,6 +235,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.IsSaleCurrencySameAsCost).HasColumnName("IsSaleCurrencySameAsCost");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.ChargeableWeightUnitCode).HasColumnName("ChargeableWeightUnitCode");
+            this.Property(t => t.PickupDeliveryCWeightUnitCode).HasColumnName("PickupDeliveryCWeightUnitCode");
             this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID");
             this.Property(t => t.FromPartnerId).HasColumnName("FromPartnerId");
             this.Property(t => t.ToPartnerId).HasColumnName("ToPartnerId");
@@ -322,6 +326,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ProfitCurrencyId).HasColumnName("ProfitCurrencyId");
             this.Property(t => t.ProfitExchangeRate).HasColumnName("ProfitExchangeRate");
             this.Property(t => t.ShipmentSubTypeId).HasColumnName("ShipmentSubTypeId");
+            this.Property(t => t.PickupDeliveryVolumetricWeight).HasColumnName("PickupDeliveryVolumetricWeight");
 
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);

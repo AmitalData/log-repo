@@ -100,8 +100,14 @@ export class QueryColumnPM {
     public set ObjectFieldCode(newValue: string) { this.objectFieldCode = newValue; }
 
 
-
     private displayText: string;
     public get DisplayText() { return this.displayText; }
     public set DisplayText(newValue: string) { this.displayText = newValue; }
+
+    
+
+
+
+
+
 }

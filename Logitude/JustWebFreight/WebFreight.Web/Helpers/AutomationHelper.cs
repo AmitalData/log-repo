@@ -2,6 +2,8 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -17,10 +19,12 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 using System.Web;
 
 namespace WebFreight.Web.Helpers
@@ -300,7 +304,9 @@ namespace WebFreight.Web.Helpers
                         OnUpdateAutomationOrder += 1;
                         automation.Order = OnUpdateAutomationOrder;
                     }
-
+                    if (LogitudeSettings.DeploymentStage != "logboxwe1") {
+                        newAutomationPM.Inactive = true;
+                    }
                     service.Create(newAutomationPM);
 
                 }

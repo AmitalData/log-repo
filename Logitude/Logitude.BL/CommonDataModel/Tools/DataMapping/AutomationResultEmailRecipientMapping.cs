@@ -24,6 +24,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.AutomationsId = entityPM.AutomationsId;
             entityPOCO.RecipientType = entityPM.RecipientType;
             entityPOCO.RecipientValue = entityPM.RecipientValue;
+            entityPOCO.PartnerObjectFieldCode = entityPM.PartnerObjectFieldCode;
 
 
 

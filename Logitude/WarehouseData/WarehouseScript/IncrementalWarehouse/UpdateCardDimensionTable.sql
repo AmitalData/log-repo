@@ -1,11 +1,11 @@
- declare @AutomaticLastUpdateDate as datetime
+ declare @MaxAutomaticLastUpdateDate as datetime
  declare @LastUpdateDate as datetime
 
  set @LastUpdateDate = (select top(1) LastUpdateDate from dw_WaterMarks  where TableName = 'Card' )
- set @AutomaticLastUpdateDate = (select  MAX( AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_Partners )
+ set @MaxAutomaticLastUpdateDate = (select  MAX( AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_Partners )
 
  
- if(@AutomaticLastUpdateDate > @LastUpdateDate)
+ if(@MaxAutomaticLastUpdateDate > @LastUpdateDate)
 
  begin
 
@@ -33,22 +33,22 @@
    declare @address2 as varchar(65)
    declare @Phone as varchar(40)
 
-      declare @Region as varchar(100)
-	declare @CustomerSize as nvarchar(60)
-    declare @Industry as nvarchar(60)
-	declare @VatNumber as varchar(20)
-		declare @CreditLimitAmount as float
-    declare @CreditLimitOpenBalance as float 
+   declare @Region as varchar(100)
+   declare @CustomerSize as nvarchar(60)
+   declare @Industry as nvarchar(60)
+   declare @VatNumber as varchar(20)
+   declare @CreditLimitAmount as float
+   declare @CreditLimitOpenBalance as float 
 
-		declare @LeadSource as varchar(60)
-
+   declare @LeadSource as varchar(60)
+   declare @AutomaticLastUpdateDate as datetime
 	
-
+   declare @InActive as bit
 
 	DECLARE PartnersCursor CURSOR READ_ONLY
 	FOR
 	SELECT dw_Partners.Id,dw_Partners.Code, dw_Partners.EnglishName,dw_Partners.LocalName , dw_Partners.CityName, dw_Partners.CountryName , dw_States.EnglishName , dw_Partners.ZipCode, dw_Contacts.EnglishName ,accountManagerUser.EnglishName, salesmanUser.EnglishName ,dw_Ranks.Name,dw_PartnerTypes.Name, dw_Partners.Tenant, dw_DWHSettings.ParentTenant,dw_Countries.Code,dw_Contacts.Email , dw_Partners.ReceivablesAccountingCard,dw_Partners.address1,dw_Partners.address2, dw_Partners.Phone
-	 ,dw_Regions.Name , dw_CustomerSizes.Name ,dw_Industries.Name , dw_Partners.VatNumber ,dw_Customers.CreditLimitAmount , dw_Customers.CreditLimitOpenBalance,dw_LeadSources.Name
+	 ,dw_Regions.Name , dw_CustomerSizes.Name ,dw_Industries.Name , dw_Partners.VatNumber ,dw_Customers.CreditLimitAmount , dw_Customers.CreditLimitOpenBalance,dw_LeadSources.Name, dw_Partners.AutomaticLastUpdateDate, dw_Partners.InActive
 	From dw_Partners
 
 	left JOIN dw_Customers ON dw_Partners.Id = dw_Customers.Id
@@ -68,20 +68,20 @@
 	inner JOIN dw_Countries ON dw_Partners.CountryId = dw_Countries.Id
 	where dw_Partners.AutomaticLastUpdateDate > @LastUpdateDate	
 
-	OPEN PartnersCursor FETCH NEXT FROM PartnersCursor INTO @Id ,@Code, @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,@CountryCode,@PrimaryContactEmail , @ReceivablesAccountingCard,@address1, @address2, @Phone, @Region,@CustomerSize,@Industry ,@VatNumber,@CreditLimitAmount , @CreditLimitOpenBalance,@LeadSource
+	OPEN PartnersCursor FETCH NEXT FROM PartnersCursor INTO @Id ,@Code, @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,@CountryCode,@PrimaryContactEmail , @ReceivablesAccountingCard,@address1, @address2, @Phone, @Region,@CustomerSize,@Industry ,@VatNumber,@CreditLimitAmount , @CreditLimitOpenBalance,@LeadSource, @AutomaticLastUpdateDate, @InActive
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
 	set @Key = (select Id from DIM_Partners where Id = @Id)
 
-	if(@Key is  null) begin insert into DIM_Partners (Id,Code,Name,[Local Name],City,Country,[State Name],[Zip Code],[Primary Contact],[Account Manager],Salesman,[Customer Rank],[Partner Type],[Source Tenant],[Parent Tenant] ,[Country Code],[Primary Contact Email] , [Receivables Accounting Card]  ,[Address1],[Address2],[Phone] ,[Region],[Customer Size],[Industry],[Vat Number] , [Credit Limit Amount (Local)] , [Open Balance (Local)] , [Lead Source]) values(@Id,@Code, @Name,@LocalName ,@City,@Country, @State, @ZipCode , @PrimaryContact , @AccountManager , @Salesman ,@Rank , @PartnerType,  @SourceTenant , @ParentTenant,@CountryCode,@PrimaryContactEmail, @ReceivablesAccountingCard,@address1, @address2,@Phone,@Region,@CustomerSize,@Industry ,@VatNumber,@CreditLimitAmount , @CreditLimitOpenBalance , @LeadSource)end
-	else begin update   DIM_Partners set Name =@Name,Code= @Code, [Local Name] =@LocalName ,  City = @City , Country = @Country,  [State Name] = @State, [Zip Code] = @ZipCode ,  [Primary Contact] = @PrimaryContact,[Account Manager] = @AccountManager,Salesman = @Salesman, [Customer Rank] = @Rank,[Partner Type] = @PartnerType , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant ,[Country Code] = @CountryCode,[Primary Contact Email] = @PrimaryContactEmail , [Receivables Accounting Card] = @ReceivablesAccountingCard , [Address1] = @address1, [Address2] = @address2, [Phone] = @Phone ,[Region] =@Region ,[Customer Size]=@CustomerSize ,[Industry]=@Industry,[Vat Number]=@VatNumber ,[Credit Limit Amount (Local)]=@CreditLimitAmount , [Open Balance (Local)]=@CreditLimitOpenBalance , [Lead Source] =@LeadSource  where Id = @Id; end
+	if(@Key is  null) begin insert into DIM_Partners (Id,Code,Name,[Local Name],City,Country,[State Name],[Zip Code],[Primary Contact],[Account Manager],Salesman,[Customer Rank],[Partner Type],[Source Tenant],[Parent Tenant] ,[Country Code],[Primary Contact Email] , [Receivables Accounting Card]  ,[Address1],[Address2],[Phone] ,[Region],[Customer Size],[Industry],[Vat Number] , [Credit Limit Amount (Local)] , [Open Balance (Local)] , [Lead Source], [Automatic Last Update Date], [InActive]) values(@Id,@Code, @Name,@LocalName ,@City,@Country, @State, @ZipCode , @PrimaryContact , @AccountManager , @Salesman ,@Rank , @PartnerType,  @SourceTenant , @ParentTenant,@CountryCode,@PrimaryContactEmail, @ReceivablesAccountingCard,@address1, @address2,@Phone,@Region,@CustomerSize,@Industry ,@VatNumber,@CreditLimitAmount , @CreditLimitOpenBalance , @LeadSource, @AutomaticLastUpdateDate, @InActive)end
+	else begin update   DIM_Partners set Name =@Name,Code= @Code, [Local Name] =@LocalName ,  City = @City , Country = @Country,  [State Name] = @State, [Zip Code] = @ZipCode ,  [Primary Contact] = @PrimaryContact,[Account Manager] = @AccountManager,Salesman = @Salesman, [Customer Rank] = @Rank,[Partner Type] = @PartnerType , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant ,[Country Code] = @CountryCode,[Primary Contact Email] = @PrimaryContactEmail , [Receivables Accounting Card] = @ReceivablesAccountingCard , [Address1] = @address1, [Address2] = @address2, [Phone] = @Phone ,[Region] =@Region ,[Customer Size]=@CustomerSize ,[Industry]=@Industry,[Vat Number]=@VatNumber ,[Credit Limit Amount (Local)]=@CreditLimitAmount , [Open Balance (Local)]=@CreditLimitOpenBalance , [Lead Source] =@LeadSource, [Automatic Last Update Date] = @AutomaticLastUpdateDate, [InActive] = @InActive  where Id = @Id; end
 
-	FETCH NEXT FROM PartnersCursor INTO @Id ,@Code, @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant ,@CountryCode,@PrimaryContactEmail , @ReceivablesAccountingCard,@address1, @address2, @Phone, @Region,@CustomerSize,@Industry ,@VatNumber , @CreditLimitAmount , @CreditLimitOpenBalance,@LeadSource
+	FETCH NEXT FROM PartnersCursor INTO @Id ,@Code, @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant ,@CountryCode,@PrimaryContactEmail , @ReceivablesAccountingCard,@address1, @address2, @Phone, @Region,@CustomerSize,@Industry ,@VatNumber , @CreditLimitAmount , @CreditLimitOpenBalance,@LeadSource, @AutomaticLastUpdateDate, @InActive
 		End
 	CLOSE PartnersCursor
 	DEALLOCATE PartnersCursor
 	
 End
 
-	update dw_WaterMarks set LastUpdateDate = @AutomaticLastUpdateDate where TableName = 'Card'
+	update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'Card'

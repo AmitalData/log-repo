@@ -183,7 +183,9 @@
                         </td>
 
                         <td>
-                            <div></div>
+                            <div *ngIf="HasActionBar()" style="width: 5px;"></div>
+                            <div *ngIf="HasActionBar()" id="ActionBar"  LocationDirective Code="MNA" ></div>
+                            <div *ngIf="!HasActionBar()" ></div>
                         </td>
 
                         <td style="width: 480px;">
@@ -389,14 +391,14 @@
                 <div class="CellContent">
                     <!--<div class="GeneratedGridContainer">-->
                     <!--*ngIf="!DestroyMe" only in customs-->
-                    <logitude-grid [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
+                    <logitude-grid *ngIf="!UsingLogGridV2" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
                                       [rows]="items" [SearchFieldchangeevent]="SearchFieldchangeevent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                       [columns]="columns" (ColumnResisedevent)="ColumnResisedevent($event)" (MenuHeaderchanged)="onMenuHeaderchanged($event)"
                                       [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition"
                                       [rowCount]="rowCount" [searchFields]="searchFields" [queryId]="SelectedQueryId" [queryCode]="SelectedQueryCode" (rowSelectedEvent)="onRowSelected($event)"
                                       (AfterViewInitCompleted)="ViewInitCompleted($event)" [ReattachToDetection]="ReattachToDetection" [MyScrollTop]="MyScrollTop" [MySelectedRowIndex]="MySelectedRowIndex" [SortServerProp]="SortServerProp" (SortInvoked)="OnSortInvoked($event)">
                     </logitude-grid>
-                    <logitude-grid-v2 *ngIf="false" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
+                    <logitude-grid-v2 *ngIf="UsingLogGridV2" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
                                       [rows]="items" [SearchFieldchangeevent]="SearchFieldchangeevent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                       [columns]="columns" (ColumnResisedevent)="ColumnResisedevent($event)" (MenuHeaderchanged)="onMenuHeaderchanged($event)"
                                       [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition"

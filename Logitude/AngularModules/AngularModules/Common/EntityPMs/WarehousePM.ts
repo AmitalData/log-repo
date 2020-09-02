@@ -13,6 +13,8 @@ import {AddressPM} from './AddressPM';
 import {ContactPM} from './ContactPM';
 
 import {CardExternalCodeByCurrencyPM} from './CardExternalCodeByCurrencyPM';
+
+import {WarehouseStoragePricingPM} from './WarehouseStoragePricingPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -377,7 +379,88 @@ export class WarehousePM {
     public set AccountingVATSplit(newValue: boolean) { if (this.accountingVATSplit != newValue) { this.accountingVATSplit = newValue; this.MarkAsDirty("AccountingVATSplit"); } }
        
 	 
+    private uploadingUniqueKey: string;
+    public get UploadingUniqueKey() { return this.uploadingUniqueKey; }
+    public set UploadingUniqueKey(newValue: string) { if (this.uploadingUniqueKey != newValue) { this.uploadingUniqueKey = newValue; this.MarkAsDirty("UploadingUniqueKey"); } }
+       
+	 
+    private chargeStorage: boolean;
+    public get ChargeStorage() { return this.chargeStorage; }
+    public set ChargeStorage(newValue: boolean) { if (this.chargeStorage != newValue) { this.chargeStorage = newValue; this.MarkAsDirty("ChargeStorage"); } }
+       
+	 
+    private currencyId: string;
+    public get CurrencyId() { return this.currencyId; }
+    public set CurrencyId(newValue: string) { if (this.currencyId != newValue) { this.currencyId = newValue; this.MarkAsDirty("CurrencyId"); } }
+       
+	 
+    private airWeightMeasurementCode: string;
+    public get AirWeightMeasurementCode() { return this.airWeightMeasurementCode; }
+    public set AirWeightMeasurementCode(newValue: string) { if (this.airWeightMeasurementCode != newValue) { this.airWeightMeasurementCode = newValue; this.MarkAsDirty("AirWeightMeasurementCode"); } }
+       
+	 
+    private oceanWeightMeasurementCode: string;
+    public get OceanWeightMeasurementCode() { return this.oceanWeightMeasurementCode; }
+    public set OceanWeightMeasurementCode(newValue: string) { if (this.oceanWeightMeasurementCode != newValue) { this.oceanWeightMeasurementCode = newValue; this.MarkAsDirty("OceanWeightMeasurementCode"); } }
+       
+	 
+    private inlandWeightMeasurementCode: string;
+    public get InlandWeightMeasurementCode() { return this.inlandWeightMeasurementCode; }
+    public set InlandWeightMeasurementCode(newValue: string) { if (this.inlandWeightMeasurementCode != newValue) { this.inlandWeightMeasurementCode = newValue; this.MarkAsDirty("InlandWeightMeasurementCode"); } }
+       
+	 
+    private airWeightRoundingCode: string;
+    public get AirWeightRoundingCode() { return this.airWeightRoundingCode; }
+    public set AirWeightRoundingCode(newValue: string) { if (this.airWeightRoundingCode != newValue) { this.airWeightRoundingCode = newValue; this.MarkAsDirty("AirWeightRoundingCode"); } }
+       
+	 
+    private oceanWeightRoundingCode: string;
+    public get OceanWeightRoundingCode() { return this.oceanWeightRoundingCode; }
+    public set OceanWeightRoundingCode(newValue: string) { if (this.oceanWeightRoundingCode != newValue) { this.oceanWeightRoundingCode = newValue; this.MarkAsDirty("OceanWeightRoundingCode"); } }
+       
+	 
+    private inlandWeightRoundingCode: string;
+    public get InlandWeightRoundingCode() { return this.inlandWeightRoundingCode; }
+    public set InlandWeightRoundingCode(newValue: string) { if (this.inlandWeightRoundingCode != newValue) { this.inlandWeightRoundingCode = newValue; this.MarkAsDirty("InlandWeightRoundingCode"); } }
+       
+	 
+     
+	private warehouseStoragePricings: WarehouseStoragePricingPM[];
+    get  WarehouseStoragePricings() {
+        if (this.warehouseStoragePricings == null) {
+            this.warehouseStoragePricings = [];
+        }
 
+        return this.warehouseStoragePricings;
+    }
+    set  WarehouseStoragePricings(newValue: WarehouseStoragePricingPM[]) {
+        if (this.warehouseStoragePricings != newValue) {
+            this.warehouseStoragePricings = newValue;
+        }
+    }
+    public AddWarehouseStoragePricingPM(item: WarehouseStoragePricingPM) {
+        if (item != null) {
+            var index = this.WarehouseStoragePricings.indexOf(item);
+            if (index == -1) {
+
+                item.EntityParentPM = this;
+
+                this. WarehouseStoragePricings.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveWarehouseStoragePricingPM(item: WarehouseStoragePricingPM) {
+        if (item != null) {
+            var index = this.WarehouseStoragePricings.indexOf(item);
+            if (index > -1) {
+                this. WarehouseStoragePricings.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+	    //public WarehouseStoragePricings: Array<WarehouseStoragePricingPMPM>= [];
+ 
     public OldEntityPM: WarehousePM;
 		
     public IsDirty: boolean;

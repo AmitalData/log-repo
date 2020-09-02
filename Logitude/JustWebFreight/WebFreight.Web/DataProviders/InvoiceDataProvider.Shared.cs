@@ -519,7 +519,6 @@ namespace WebFreight.Web.DataProviders
         public string AgentReference1 { get; set; }
         public string AgentReference2 { get; set; }
 
-
         public string TenantCBSA { get; set; }
         public string TenantCAAT { get; set; }
         public string CarrierCBSA { get; set; }
@@ -537,6 +536,12 @@ namespace WebFreight.Web.DataProviders
         public string BillToBillingAddress { get; set; }
         public string ShipmentSubTypeName { get; set; }
         public string TrailerNumber { get; set; }
+        public int WarehouseFreeDays { get; set; }
+        public string PreCarriageVessel { get; set; }
+
+        public int? StorageFreeDays { get; set; }
+        public int? StorageDays { get; set; }
+        public List<StoragePricing> ShipmentStoragePricings { get; set; }
     }
 
     public class SAT
@@ -689,5 +694,17 @@ namespace WebFreight.Web.DataProviders
 
         public double? TotalVatAmountInLocalCurrency_Double { get; set; }
         public double? TotalVatAmountInInvoiceCurrency_Double { get; set; }
+    }
+
+    public class StoragePricing
+    {
+        public string Id { get; set; }
+        public string WarehouseName { get; set; }
+        public int StepFrom { get; set; }
+        public int? StepTo { get; set; }
+        public int? Days { get; set; }
+        public decimal? SalePrice { get; set; }
+        public decimal? Amount { get; set; }
+        public int LineNumber { get; set; }
     }
 }

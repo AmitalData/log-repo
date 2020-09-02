@@ -692,7 +692,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return chargesTypeList;
         }
 
-
         public IQueryable<ChargesTypeList> GetChargesTypeLists(int tenant, int skip, int take)
         {
             IQueryable<ChargesTypeList> query = (from f in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("VatType").Include("ChargesGroup")
@@ -775,7 +774,68 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return charges;
         }
 
+        public ChargesTypeList GetSingleChargesTypeListByCode(string code, int tenant)
+        {
+            ChargesTypeList chargesTypeList = (from f in repository.context.ChargesTypes.Include("Measurement").Include("VatType").Include("ChargesGroup")
+                                               where f.Tenant == tenant && f.Code == code
+                                               select new ChargesTypeList()
+                                               {
+                                                   AddedManually = f.AddedManually,
+                                                   Id = f.Id,
+                                                   InActive = f.InActive,
+                                                   LocalName = f.LocalName,
+                                                   EnglishName = f.EnglishName,
+                                                   Code = f.Code,
+                                                   Tenant = f.Tenant,
+                                                   MeasurementId = f.MeasurementId,
+                                                   MeasurementCode = f.Measurement != null ? f.Measurement.Code : null,
+                                                   MeasurementShortName = f.Measurement != null ? f.Measurement.ShortName : null,
+                                                   AWBPrintDescription = f.AWBPrintDescription,
+                                                   ChargesGroupCode = f.ChargesGroupCode,
+                                                   ChargesGroupId = f.ChargesGroupId,
+                                                   IATACodeId = f.IATACodeId,
+                                                   Description = f.Description,
+                                                   IsAir = f.IsAir,
+                                                   IsOcean = f.IsOcean,
+                                                   IsInland = f.IsInland,
+                                                   IsAutoDisplayInConsolidation = f.IsAutoDisplayInConsolidation,
+                                                   IsAutoDisplayInShipment = f.IsAutoDisplayInShipment,
+                                                   IsPayable = f.IsPayable,
+                                                   IsReceivable = f.IsReceivable,
+                                                   VatTypeId = f.VatTypeId,
+                                                   VatTypeName = f.VatType == null ? "" : f.VatType.EnglishName,
+                                                   VatIsMultiPercentage = f.VatType == null ? false : f.VatType.IsMultiPercentage,
+                                                   DueTypeCode = f.DueTypeCode,
+                                                   DueTypeName = f.DueType != null ? f.DueType.Name : null,
+                                                   IsAutoDisplayInQuote = f.IsAutoDisplayInQuote,
+                                                   ContainerMeasurementId = f.ContainerMeasurementId,
+                                                   ViewOrder = f.ViewOrder,
+                                                   ChargesGroupName = f.ChargesGroup == null ? null : f.ChargesGroup.Name,
+                                                   SearchFields = f.SearchFields,
+                                                   AccountingVATSplit = f.AccountingVATSplit,
+                                                   ReceivableCreditAccount = f.ReceivableCreditAccount,
+                                                   PayableDebitAccount = f.PayableDebitAccount,
+                                                   ReceivablesChargesTypeExternalCode = f.ReceivablesChargesTypeExternalCode,
+                                                   PayablesChargesTypeExternalCode = f.PayablesChargesTypeExternalCode,
+                                                   PayableDebitGLAcountId = f.PayableDebitGLAcountId,
+                                                   ReceivableCreditGLAccountId = f.ReceivableCreditGLAccountId,
+                                                   IsBackToBack = f.IsBackToBack,
+                                                   IsAutoDisplayInCustoms = f.IsAutoDisplayInCustoms,
+                                                   IsCustoms = f.IsCustoms,
+                                                   SATExternalId = f.SATExternalId,
+                                                   IsExpense = f.IsExpense,
+                                                   IsDomestic = f.IsDomestic,
+                                                   IsImport = f.IsImport,
+                                                   IsDrop = f.IsDrop,
+                                                   IsExport = f.IsExport,
+                                                   ReceivablesDefaultCurrencyId = f.ReceivablesDefaultCurrencyId,
+                                                   PayablesDefaultCurrencyId = f.PayablesDefaultCurrencyId,
+                                                   ApplyRegionalTax = f.ApplyRegionalTax,
+                                                   HasPickup = f.HasPickup,
+                                                   HasDelivery = f.HasDelivery,
+                                               }).FirstOrDefault();
 
-
+            return chargesTypeList;
+        }
     }
 }

@@ -40,6 +40,10 @@ import {ShippingLinePMService} from '../../../Common/Services/StandardPMs/Shippi
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {EntityListService} from '../../../Infrastructure/Services/EntityListService';
 import { ChildDirective } from '../../../Infrastructure/Directives/ChildDirective';
+import { ContactInputTemplateArgs } from '../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
+import { ShipmentSubTypeListService } from '../../services/standardlists/shipmentsubtypelistservice';
+import { ShipmentSubTypeList } from '../../EntityLists/ShipmentSubTypeList';
+import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({
     templateUrl: './NewShipmentComponent.html',
@@ -77,6 +81,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
     }
 
+    public SubTypeFeatureToggle: FeatureToggleList;
     public ScreenIsReady: boolean = false;
     ngOnInit() {
         var listservice: EntityListService = new EntityListService();
@@ -89,7 +94,9 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                     this.OnFiltersChanged();
                 }
 
+                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB" && d.TenantNumber == SessionLocator.Tenant)[0];                
                 this.LoadAllowedAirline();
+                this.LoadShipmentSubTypes();
                 this.ScreenIsReady = true;
                 this.ListenToPropertyChanged();
             });
@@ -148,6 +155,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     private myPartnersDomainService: PartnersDomainService;
     private myShipmentPMService: ShipmentPMService;
     private myShippingLineService: ShippingLinePMService;
+    private myShipmentSubTypeListService: ShipmentSubTypeListService;
     InitializeServices() {
         this.myPortListService = new PortListService();
         this.myCardListService = new CardListService();
@@ -157,6 +165,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.myPartnersDomainService = new PartnersDomainService();
         this.myShipmentPMService = new ShipmentPMService();
         this.myShippingLineService = new ShippingLinePMService();
+        this.myShipmentSubTypeListService = new ShipmentSubTypeListService();
     }
     LoadAllowedAirline() {
         if (SessionLocator.TenantManagementJS.IsRestrictedByAirline) {
@@ -187,6 +196,18 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
     }
 
+    private allShipmentSubTypes: ShipmentSubTypeList[] = [];
+    LoadShipmentSubTypes() {
+        this.allShipmentSubTypes = [];
+
+        this.myShipmentSubTypeListService.getAll().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.allShipmentSubTypes = myResponse.Result;
+                this.BuildShipmentSubTypes();
+            }
+        });
+    }
+
     public SourceEntityPM: ShipmentPM;
     public IsShipmentLevelFixed: boolean = false;
     public IsBuildFromQuote: boolean = false;
@@ -214,6 +235,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public TransportModesList: FilterClass[] = [];
     public ShipmentTypesList: FilterClass[] = [];
     public ShipmentLevelsList: FilterClass[] = [];
+    public ShipmentSubTypesList: FilterClass[] = [];
     BuildFiltersLists() {
         this.DirectionsList = [];
         this.TransportModesList = [];
@@ -275,7 +297,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                     break;
                 }
             }
-        }
+        }        
     }
     BuildShipmentLevels() {
         this.ShipmentLevelsList = [];
@@ -283,6 +305,56 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         if (this.ShowShipmentLevels) {
             this.ShipmentLevelsList.push(new FilterClass("D", "Direct"));
             this.ShipmentLevelsList.push(new FilterClass("H", "House"));
+        }
+    }    
+    BuildShipmentSubTypes() {
+        this.ShipmentSubTypesList = [];
+
+        this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId).forEach(item => {
+            this.ShipmentSubTypesList.push(new FilterClass(item.Id, item.Name));
+        });
+
+        if (AppTool.IsNullOrEmpty(this.ShipmentSubTypeId)) {
+            this.SetDefaultSubType();
+        }
+    }
+    private SetDefaultSubType() {
+        var subTypeCode: string = null;
+        switch (this.ShipmentTypeId) {
+            case "Air":
+                {
+                    subTypeCode = "Air";                    
+                    break;
+                }
+
+            case "FCLD":
+                {
+                    subTypeCode = "FCL"; 
+                    break;
+                }
+
+            case "LCLD":
+                {
+                    subTypeCode = "LCL"; 
+                    break;
+                }
+
+            case "FTL":
+                {
+                    subTypeCode = "FTL"; 
+                    break;
+                }
+
+            case "LTL":
+                {
+                    subTypeCode = "LTL"; 
+                    break;
+                }
+        }
+
+        var subType: ShipmentSubTypeList = this.allShipmentSubTypes.filter(d => d.Code == subTypeCode)[0];
+        if (subType) {
+            this.ShipmentSubTypeId = subType.Id;
         }
     }
 
@@ -386,11 +458,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public IsFCLEntity: boolean = false;
     public IsInlandDomestic: boolean = false;
     OnFiltersChanged() {
-
         if (!this.IsCreatedFromMasterHouses) {
             this.IsDirectionListEnabled = true;
             this.IsTransportModesListEnabled = AppTool.IsNullOrEmpty(this.DirectionId) ? false : true;
             this.IsShipmentTypesListEnabled = true;
+            this.IsShipmentSubTypesListEnabled = true;
         }
 
         this.SetScreenEnabled();
@@ -447,6 +519,14 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
     }
 
+    private isShipmentSubTypesListEnabled: boolean = false;
+    get IsShipmentSubTypesListEnabled() { return this.isShipmentSubTypesListEnabled; }
+    set IsShipmentSubTypesListEnabled(value: boolean) {
+        if (this.isShipmentSubTypesListEnabled != value) {
+            this.isShipmentSubTypesListEnabled = value;
+        }
+    }
+
     get DirectionId() { return this.EntityPM.DirectionId; }
     set DirectionId(newValue: string) {
         if (this.EntityPM.DirectionId != newValue) {
@@ -462,10 +542,17 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         if (this.EntityPM.TransportModeId != newValue) {
             this.EntityPM.TransportModeId = newValue;
 
+            if (newValue == "A") {
+                this.EntityPM.ShipmentTypeId = "Air";
+            }
+
+            else {
+                this.EntityPM.ShipmentTypeId = null;
+            }
+
             this.MainCarriageFromPortId = null;
             this.MainCarriageToPortId = null;
-            this.MainCarriageCarrierId = null;
-            this.EntityPM.ShipmentTypeId = null;
+            this.MainCarriageCarrierId = null;            
             this.MoveTypeId = null;
 
             if (!this.IsShipmentLevelFixed) {
@@ -479,6 +566,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.DelOrderDetails();
             this.OnFiltersChanged();
             this.BuildShipmentTypes();
+            this.BuildShipmentSubTypes();
             this.LoadAllowedAirline();
             this.ValidateMasterField();
         }
@@ -503,8 +591,10 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+
+            this.BuildShipmentSubTypes();
             this.DelOrderDetails();
-            this.OnFiltersChanged();
+            this.OnFiltersChanged();            
         }
     }
 
@@ -524,6 +614,13 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.DelOrderDetails();
             this.ValidateMasterField();
             this.SetTransportModes();
+        }
+    }
+
+    get ShipmentSubTypeId() { return this.EntityPM.ShipmentSubTypeId; }
+    set ShipmentSubTypeId(newValue: string) {
+        if (this.EntityPM.ShipmentSubTypeId != newValue) {
+            this.EntityPM.ShipmentSubTypeId = newValue;
         }
     }
 
@@ -2761,6 +2858,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.DirectionId = this.SourceEntityPM.DirectionId;
             this.TransportModeId = this.SourceEntityPM.TransportModeId;
             this.ShipmentTypeId = this.SourceEntityPM.ShipmentTypeId;
+            this.ShipmentSubTypeId = this.SourceEntityPM.ShipmentSubTypeId;
             this.ShipmentCustomerTypeCode = this.SourceEntityPM.ShipmentCustomerTypeCode;
             this.CustomerId = this.SourceEntityPM.CustomerId;
 
@@ -3671,7 +3769,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                     ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, activity);
                 }
 
-
                 this.CurrentSession.CloseCurrentWindowEmit('OK');
 
                 if (this.IsBuildFromQuote || this.IsCopyFromShipment) {
@@ -3707,6 +3804,33 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 }
             }
         });
+    }
+
+    AddContact(partnerId: string, type: string) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.Title = "New Contact";
+        var args = new ContactInputTemplateArgs();
+        args.CustomerId = partnerId;
+        args.CardDependencyProperty1 = this.CardDependencyProperty1;
+        args.CustomerLable = type == "SH" ? "Shipper" : "Consignee";
+        args.ComponentName = "Partners";
+        logWindow.WindowArgs = args;
+        logWindow.Show('./CommonModules/CommonPartners/Components/NewEntity/NewContactComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewContactWindowClosed($event, type));
+    }
+
+    OnNewContactWindowClosed(arg: any, type: string) {
+        if (arg != 'cancel') {
+            if (type == "SH") {
+                this.ShipperContactId = arg;
+            }
+            else {
+                this.ConsigneeContactId = arg;
+            }
+
+        }
     }
 }
 

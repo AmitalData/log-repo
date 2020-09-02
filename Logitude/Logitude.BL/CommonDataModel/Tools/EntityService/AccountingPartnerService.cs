@@ -23,6 +23,7 @@ using System.Transactions;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.Helpers;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -99,12 +100,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             else
             {
-                this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
+                this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
                 this.entityCard = new Card()
                 {
                     Id = entityPM.Id,
                     Tenant = tenant,
                     PartnerTypeId = "AC",
+                    UploadingUniqueKey = entityPM.UploadingUniqueKey,
                 };
             }
 
@@ -153,6 +155,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "AccountingPartner");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
@@ -222,6 +225,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "AccountingPartner");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+
         }
 
         private void InitializeComponent()

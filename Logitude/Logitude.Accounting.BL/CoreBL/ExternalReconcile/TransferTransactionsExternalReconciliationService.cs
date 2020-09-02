@@ -128,9 +128,11 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
         private List<ExternalReconciliationLinePM> GetRecoLinesOfTransferAccount()
         {
+
             List<ExternalReconciliationLinePM> transferAccountTransactions = new List<ExternalReconciliationLinePM>();
-            if(bankAccountPM.TransferGLAcccountId != null)
+            if (bankAccountPM.TransferGLAcccountId != null)
                 transferAccountTransactions = externalRecoPM.ExternalReconciliationLines.Where(d => d.LedgerGLAccountId == bankAccountPM.TransferGLAcccountId).ToList();
+
             return transferAccountTransactions;
         }
 

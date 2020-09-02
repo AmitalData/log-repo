@@ -498,6 +498,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                          AccountTermLocalName = card.PaymentTerm.LocalName,
 
+
+                         //CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
+
+
+
                          CurrencyCode = acc.CurrencyCode,
                          CreditLimitAmount =
                          //cust!=null?(double)cust.CreditLimitAmount:0,
@@ -508,7 +513,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                          LocalBalanceInDue = moredata != null ? (decimal)moredata.LocalBalanceInDue : 0.00m,
                          CustomerVatNumber = card.VatNumber,
-                         GLAccountStandardInterestRate = (decimal)(glaPeriod.StandardAddInterestPercent == null ? 0 : glaPeriod.StandardAddInterestPercent+basePeriod.InterestRate),
+                         GLAccountStandardInterestRate = (decimal)(glaPeriod.StandardAddInterestPercent == null ? 0  : basePeriod.InterestRate ==null? glaPeriod.StandardAddInterestPercent : glaPeriod.StandardAddInterestPercent+basePeriod.InterestRate),
 
 
                             //CreditStatusAmount= 

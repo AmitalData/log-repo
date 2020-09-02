@@ -24,7 +24,8 @@ namespace Logitude.CRM.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return OpportunityId+'_'+OpportunityProductTypeCode;
+                 return OpportunityId+'_'+OpportunityProductTypeCode ;
+                 
       }
 
       public override string GetEntityPMName()

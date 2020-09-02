@@ -111,8 +111,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.TemperatureUnitCode = entityPM.TemperatureUnitCode;
             poco.NumberFormatCode = entityPM.NumberFormatCode;
             poco.DefaultSLAId = entityPM.DefaultSLAId;
-         
-       
+            poco.IsIncrementalBuildRunning = entityPM.IsIncrementalBuildRunning;
+
+
             poco.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
             poco.CBSA = entityPM.CBSA;
             poco.CAAT = entityPM.CAAT;

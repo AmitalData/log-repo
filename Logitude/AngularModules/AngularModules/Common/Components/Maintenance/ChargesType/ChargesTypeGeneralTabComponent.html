@@ -85,7 +85,8 @@
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Measurement'"
                                                             [DependencyFilter2Value]="false"
-                                                            [HideLastColumn]="true">
+                                                            [HideLastColumn]="true"
+                                                            [QueryFilterItems]="MeasurementsQueryFilters">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -99,7 +100,8 @@
                                                     <LogLov [ObjectFieldName]="'ContainerMeasurementId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Measurement'">
+                                                            [LookUpTableName]="'Measurement'"
+                                                            [QueryFilterItems]="MeasurementsQueryFilters">
                                                     </LogLov>
                                                 </td>
                                             </tr>

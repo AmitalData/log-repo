@@ -122,7 +122,15 @@ import { InterestReportLinesByDateListTemplate } from './Components/ListTemplate
 import { InterestReportShortTitleComponent } from './Components/ShortTiTles/InterestReportShortTitleComponent';
 import { ConnectWithGLAccountComponent } from './Components/EditTabs/GLAccount/ConnectWithGLAccountComponent';
 import { InterestReportEditOpenBalanceComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportEditOpenBalance/InterestReportEditOpenBalanceComponent';
+
+import { CargoTrackingServiceComponent } from './Components/Others/CargoTrackingService/CargoTrackingServiceComponent';
+import { CargoTrackingBuildShipmentComponent } from './Components/Others/CargoTrackingService/CargoTrackingBuildShipmentComponent';
+import { CargoTrackingIncrementalStatistics } from './Components/Others/CargoTrackingService/CargoTrackingIncrementalStatistics';
+import { CargoTrackingIncrementalStatListTemplate } from './Components/ListTemplates/CargoTrackingIncrementalStatListTemplate';
+
 import { InterestReportEditCalculationDateComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportEditCalculationDate/InterestReportEditCalculationDateComponent';
+
+
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
 
@@ -244,16 +252,31 @@ export const Components =
         InterestBasesTypeShortTitleComponent,
         ExtReconcileAdjustBankFeeComponent,
         NewInterestReportComponent,
+        CargoTrackingServiceComponent,
         InterestReportGeneralTabComponent,
         InterestReportLineByDateDetailsComponent,
         InterestReportLinesByDateListTemplate,
         InterestReportShortTitleComponent,
+        InterestReportEditOpenBalanceComponent,
+        CargoTrackingBuildShipmentComponent,
+        CargoTrackingIncrementalStatistics,
         CreateInterestReportsForCustomersComponent,
 
-        InterestReportEditOpenBalanceComponent,
+
+
+        CargoTrackingIncrementalStatListTemplate,
+
+     
         InterestReportEditCalculationDateComponent,
+
+      
+
+        InterestReportEditOpenBalanceComponent,
         BtatchPrintWarningComponent,
         BtatchPrintConfirmComponent
+
+      
+
 
     ];
 
@@ -353,11 +376,15 @@ export class ModuleDeclarations {
             case "CashBookLineListTemplate": { myResult = CashBookLineListTemplate; break; }
             case "InterestReportLinesByDateListTemplate": { myResult = InterestReportLinesByDateListTemplate; break; }
             case "InterestReportListTemplate": { myResult = InterestReportListTemplate; break;}
+            case "CargoTrackingIncrementalStatListTemplate": { myResult = CargoTrackingIncrementalStatListTemplate; break;}
             case "InterestInvoiceListTemplate" :{myResult =InterestInvoiceListTemplate; break;}
             case "PrintedListHeaderTemplate" :{myResult =PrintedListHeaderTemplate; break;}
 
 
             //Others
+            case "CargoTrackingBuildShipmentComponent" :{myResult =CargoTrackingBuildShipmentComponent; break;}
+            case "CargoTrackingIncrementalStatistics" :{myResult =CargoTrackingIncrementalStatistics; break;}
+            case "CargoTrackingServiceComponent": { myResult = CargoTrackingServiceComponent; break; }
             case "BtatchPrintConfirmComponent": { myResult = BtatchPrintConfirmComponent; break; }
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }
             case "ReconciledMessage": { myResult = ReconciledMessage; break; }

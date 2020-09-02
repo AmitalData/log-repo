@@ -20,7 +20,16 @@ export class WarehouseReleaseListExtendedService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/WarehouseReleaseExtended';
     }
 
+    GetNumberOfConnectedWarehouseReleasesByChildEntityReference(childEntityReference: string) {
 
+        return this._http.get(this._apiUrl + '/GetNumberOfConnectedWarehouseReleasesByChildEntityReference?' + 'childEntityReference=' + childEntityReference, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var serviceresponse: ServiceResponse;
+            serviceresponse = new ServiceResponse();
+
+            serviceresponse.Result = response;
+            return serviceresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
 
 
     getWarehouseReleaseListsByShipmentId(shipmentId: string, tenant: number) {
@@ -34,6 +43,20 @@ export class WarehouseReleaseListExtendedService {
             pmresponse.Result = response;
             return pmresponse;
         }),catchError(ServiceHelper.HandleServiceError));
+    }
+
+
+    getActiveWarehouseReleaseListsByShipmentId(shipmentId: string, tenant: number) {
+
+
+        return this._http.get(this._apiUrl + '/GetActiveWarehouseReleaseListsByShipmentId/?' + 'shipmentId=' + shipmentId + '&tenant=' + tenant + '&s=true', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = response;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
     }
 
     GetRecentWarehouseReleases() {

@@ -1193,6 +1193,52 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private int overManifest ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int OverManifest  
+	   {
+	    
+	     get
+		{
+		   return overManifest;
+		 }
+		 set
+		 {
+		   if(overManifest != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OverManifest",OldValue=overManifest,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   overManifest=value;
+		   }
+			
+		 }
+	   }
+	  private int oldQuantity ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int OldQuantity  
+	   {
+	    
+	     get
+		{
+		   return oldQuantity;
+		 }
+		 set
+		 {
+		   if(oldQuantity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OldQuantity",OldValue=oldQuantity,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   oldQuantity=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

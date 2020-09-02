@@ -1181,14 +1181,16 @@ export class NewARInvoiceComponent extends BaseComponent {
         var filteredReceivables: ShipmentReceivablePM[] = this.EntityReceivables.filter(d => d.ShipmentReceivableParentId == null);
 
         if (this.EntityPM.ARInvoiceTypeCode != "MN") {
-            filteredReceivables = filteredReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" && f.Quantity != null && f.UnitPrice != null && f.ARInvoiceId == null && f.ARInvoiceLineId == null);
+            filteredReceivables = filteredReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT"
+                && ((f.MeasurementCode == "STFE" && f.ChargesTypeCode == "ISTOR") ||(  f.Quantity != null && f.UnitPrice != null))
+                && f.ARInvoiceId == null && f.ARInvoiceLineId == null);
 
             switch (this.EntityPM.ARInvoiceTypeCode) {
                 case "IN":
                 case "CI":
                     {
                         if (!SessionLocator.AccountingSettingPM.AllowMinusInvoicelines) {
-                            filteredReceivables = filteredReceivables.filter(f => f.UnitPrice > 0);
+                            filteredReceivables = filteredReceivables.filter(f => (f.MeasurementCode == "STFE" && f.ChargesTypeCode == "ISTOR") || f.UnitPrice > 0);
                         }
 
                         break;
@@ -1198,7 +1200,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                 case "CC":
                     {
                     if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsInTheCreditNote) {
-                        filteredReceivables = filteredReceivables.filter(f => f.UnitPrice < 0);
+                        filteredReceivables = filteredReceivables.filter(f => (f.MeasurementCode == "STFE" && f.ChargesTypeCode == "ISTOR") || f.UnitPrice < 0);
                     }
 
                     break;

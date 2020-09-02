@@ -171,7 +171,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-
+					
 
 
                 }
@@ -208,6 +208,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+								                
+                QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CompactSearchField").FirstOrDefault();
+                queryOperations.QueryFilterItems.Remove(item);
+                string seachvalue = item != null ? item.FieldValue!=null ? !string.IsNullOrEmpty(item.FieldValue.ToString()) ? item.FieldValue.ToString() :null :null : null;
+				
+				
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 CardRepository  cardRepository = new CardRepository(MyContext);
                 IQueryable<Card> entityPocos = cardRepository.GetCards(tenant);
@@ -228,7 +234,16 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 entityLists = genericFilter.GetFilteredQuery<CardList>(listQueryOperation, entityLists);
 
-		 
+		      
+			  								             
+			 if (!string.IsNullOrEmpty(seachvalue))
+                {
+                    CardSearchFilter cardSearchFilter = new CardSearchFilter();
+                    entityLists = cardSearchFilter.GetFilteredQuery(new CardSearchFilterArgs() { SeachText = seachvalue, Tenant = tenant, QueryOperations = queryOperations, EntityLists = entityLists, Filter = genericFilter });
+                }
+		     
+ 
+ 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(CardList).GetProperty(queryOperations.SortByColumnName);
@@ -292,11 +307,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     }
 				 }
                 }
-            }
-		    else
+            }					  						
+	       else
             {
                 entityLists = entityLists.OrderBy(d => d.EnglishName);
-            }
+            } 
 
 			ServiceResponse response = new ServiceResponse();
 			

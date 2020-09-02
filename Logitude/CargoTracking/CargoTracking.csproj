@@ -56,9 +56,7 @@
     <Compile Include="CargoTracking.BL\Services\CargoTrackingUpdatedAfterFinishMapping.cs" />
     <Compile Include="CargoTracking.BL\Services\CargoTrackingTableLogicService.cs" />
     <Compile Include="CargoTracking.BL\Services\CargoTrackingMainService.cs" />
-    <Compile Include="CargoTrackingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="CargoTrackingForm.cs" />
     <Compile Include="CargoTrackingForm.Designer.cs">
       <DependentUpon>CargoTrackingForm.cs</DependentUpon>
     </Compile>

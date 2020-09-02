@@ -497,12 +497,12 @@
                                                                                                             <td>
                                                                                                                 <div style="height:50px;width:100%;" class="ScrollViewer">
                                                                                                                     <div class="ScrollContent" style="margin-left:6px;">
-                                                                                                                        <div *ngFor="let item of EmailRecipientFieldLists" style="height:20px;width:150px;background-color:white;float:left;margin-left:0px;margin-bottom:4px;vertical-align:central">
+                                                                                                                        <div *ngFor="let item of EmailRecipientFieldLists" style="height:20px;width:175px;background-color:white;float:left;margin-left:0px;margin-bottom:4px;vertical-align:central">
 
 
                                                                                                                             <table style="vertical-align:top">
                                                                                                                                 <tr>
-                                                                                                                                    <td style="width:125px">
+                                                                                                                                    <td>
 
                                                                                                                                         <div class="CheckBox">
                                                                                                                                             <input class="LeftCenter" style="text-align:center" (change)="item.CheckedResultEmailRecipient(item)" [attr.id]="item.Key" [(ngModel)]="item.IsChecked" type="checkbox" />

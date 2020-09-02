@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .PartnerTemplateRow, .PartnerTemplateRow td, .PartnerTemplateRow td div, .PartnerTemplateRow td span {
         color: #6E7172;
@@ -282,9 +282,14 @@
                                                                                 [ObjectTableName]="ObjectTableName"
                                                                                 [DataContext]="DataContext"
                                                                                 [LookUpTableName]="'Contact'"
-                                                                                [DependencyFilter1Value]="DataContext.PartnerId">
+                                                                                [DependencyFilter1Value]="DataContext.PartnerId" [HideLastColumn]="true">
                                                                         </LogLov>
                                                                     </td>
+
+                                                                    <td style="width: 20px;">
+                                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="DataContext.AddContact()" [IsEnabled]="DataContext.IsEditingEnabled && DataContext.PartnerId"></IconButton>
+                                                                    </td>
+
 
                                                                     <td>
                                                                         <div></div>

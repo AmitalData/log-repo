@@ -86,10 +86,26 @@
                                             <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="EntityPM" [IsEnabled]="IsEditingEnabled"></RatioBox>
                                         </div>
 
+                                        <div *ngIf="IsHybrid" style="width: 120px; display: block; float:left; margin-left: 15px;">
+                                            <LogLabel [HideColumns]="true" [ObjectFieldName]="'PickupDeliveryRatio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <RatioBox [ObjectFieldName]="'PickupDeliveryRatio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="EntityPM" [IsEnabled]="IsEditingEnabled"></RatioBox>
+                                        </div>
+
+                                        <div  *ngIf="IsHybrid" style="width: 170px; display: block; float:left; margin-left: 15px;">
+                                            <LogLabel [HideColumns]="true" [ObjectFieldName]="'PickupDeliveryCWeightUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLov [ObjectFieldName]="'PickupDeliveryCWeightUnitCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'WeightUnit'"
+                                                    [SelectedValue]="PickupDeliveryCWeightUnitCode"
+                                                    [HideColumns]="true">
+                                            </LogLov>
+                                        </div>
+
                                         <!--<div style="width: 110px; display: block; float:left; margin-left: 2px;">
-                                            <LogLabel [ObjectFieldName]="'DimFactor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
-                                            <LogTextBox [ObjectFieldName]="'DimFactor'" [Text]="DimFactor" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                        </div>-->
+        <LogLabel [ObjectFieldName]="'DimFactor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'DimFactor'" [Text]="DimFactor" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+    </div>-->
                                     </td>
                                 </tr>
 

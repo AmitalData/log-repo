@@ -55,7 +55,9 @@ import {LogCalendarComponent} from './Components/LogitudeComponents/LogCalendarC
 import {TimeSelectComponent} from './Components/LogitudeComponents/TimeSelectComponent';
 import {LogCheckboxComponent} from './Components/LogitudeComponents/LogCheckboxComponent';
 import {CustomDatePickerComponent} from './Components/CustomControls/CustomDatePickerComponent';
-import {ObjectFieldTemplate} from './Components/Templates/ObjectFieldTemplate';
+import { ObjectFieldTemplate } from './Components/Templates/ObjectFieldTemplate';
+import { MyTemplate } from './Components/Templates/MyTemplate';
+
 import {StimulsoftViewerComponent} from './Components/StimulsoftComponent/StimulsoftViewerComponent';
 import {ListComponent} from './Components/ListComponent/ListComponent';
 import { LogGridComponent } from './Components/LogitudeComponents/LogGridComponent/LogGridComponent';
@@ -228,6 +230,7 @@ export const ControlsComponents =
         LogCheckboxComponent,
         CustomDatePickerComponent,
         ObjectFieldTemplate,
+        MyTemplate,
         StimulsoftViewerComponent,
 
         ListComponent,

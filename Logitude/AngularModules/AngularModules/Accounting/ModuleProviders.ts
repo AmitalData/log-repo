@@ -142,6 +142,7 @@ import { InterestReportListService } from './Services/StandardLists/InterestRepo
 import { InterestReportLineListService } from './Services/StandardLists/InterestReportLineListService';
 import { InterestReportStatuseListService } from './Services/StandardLists/InterestReportStatuseListService';
 import { InterestReportLinesByDateListService } from './Services/StandardLists/InterestReportLinesByDateListService';
+import { CargoTrackingIncrementalStatExtendedListService } from './Services/ExtendedLists/CargoTrackingIncrementalStatExtendedListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -283,6 +284,7 @@ export class ModuleProviders {
             case "IntegrityCheckStatusListService": { myResult = new IntegrityCheckStatusListService; break; }
             case "GLAccountOpService": { myResult = new AccountingOpService(); break; }
             case "InterestTransactionExtendedListService": { myResult = new InterestTransactionExtendedListService(); break; }
+            case "CargoTrackingIncrementalStatExtendedListService": { myResult = new CargoTrackingIncrementalStatExtendedListService(); break; }
 
             //Menu Buttons
             case "JournalMenuButtonsHandler": { myResult = new JournalMenuButtonsHandler; break; }

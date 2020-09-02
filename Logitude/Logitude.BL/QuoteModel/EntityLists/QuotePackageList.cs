@@ -20,5 +20,6 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public double? Width { get; set; }
         public double? Length { get; set; }
         public string PackageTypeName { get; set; }
+
     }
 }

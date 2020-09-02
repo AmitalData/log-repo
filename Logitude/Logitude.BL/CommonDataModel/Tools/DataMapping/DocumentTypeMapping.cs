@@ -66,6 +66,16 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             documentType.IsSystemAdditionalPrintingFields = documentTypePM.IsSystemAdditionalPrintingFields;
             documentType.PrintingFieldsScreenCode = documentTypePM.PrintingFieldsScreenCode;
             documentType.AddedManually = documentTypePM.AddedManually;
+
+            documentType.OnPrintPopulateDateFieldName = documentTypePM.OnPrintPopulateDateFieldName;
+
+            documentType.OnSendPopulateDateFieldName = documentTypePM.OnSendPopulateDateFieldName;
+
+            documentType.OnUploadPopulateDateFieldName = documentTypePM.OnUploadPopulateDateFieldName;
+
+
+
+
         }
     }
 }

@@ -91,6 +91,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool AccountingActivated { get; set; }
         public bool IsInternalTicketByDefault { get; set; }
         public bool ProrateMasterReceivables { get; set; }
+        public bool IsIncrementalBuildRunning { get; set; }
 
         public string SCACCode { get; set; }
         public bool ExportQuotationsToIntegratedSystem { get; set; }

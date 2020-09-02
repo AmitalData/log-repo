@@ -22,7 +22,21 @@ namespace DW_Editor_Tool.ViewModels
         public string Name { get { return name; } set { name = value; FirePropertyChanged("Name"); } }
 
         private string typeCode;
-        public string TypeCode { get { return typeCode; } set { typeCode = value; FirePropertyChanged("TypeCode"); } }
+        public string TypeCode { get { return typeCode; } set { typeCode = value; IsFactTable = ((value == "Fact") ? Visibility.Visible : Visibility.Collapsed); FirePropertyChanged("TypeCode"); } }
+        
+        private string pivotFieldCode;
+        public string PivotFieldCode { get { return pivotFieldCode; } set { pivotFieldCode = value; FirePropertyChanged("PivotFieldCode"); } }
+
+
+        private string additionalFactCode;
+        public string AdditionalFactCode { get { return additionalFactCode; } set { additionalFactCode = value; FirePropertyChanged("AdditionalFactCode"); } }
+
+        private string additionalFactForeignKey;
+        public string AdditionalFactForeignKey { get { return additionalFactForeignKey; } set { additionalFactForeignKey = value; FirePropertyChanged("AdditionalFactForeignKey"); } }
+
+        
+
+
 
         bool isClosed;
         public bool IsClosed
@@ -31,9 +45,18 @@ namespace DW_Editor_Tool.ViewModels
             set { isClosed = value; FirePropertyChanged("IsClosed"); }
         }
 
+        bool hasPivotColumn;
+        public bool HasPivotColumn
+        {
+            get { return hasPivotColumn; }
+            set { hasPivotColumn = value; PivotFieldCodeVisisbilty = (value ? Visibility.Visible : Visibility.Collapsed); FirePropertyChanged("HasPivotColumn"); }
+        }
+
         private string defaultFilterBy;
         public string DefaultFilterBy { get { return defaultFilterBy; } set { defaultFilterBy = value; FirePropertyChanged("DefaultFilterBy"); } }
-        
+
+        private string dataViewName;
+        public string DataViewName { get { return dataViewName; } set { dataViewName = value; FirePropertyChanged("DataViewName"); } }
 
         public List<DWTableType> DWTableTypes { get { return new List<DWTableType> { new DWTableType("Fact", "Fact"), new DWTableType("Dimension", "Dimension") }; } }
 
@@ -79,6 +102,34 @@ namespace DW_Editor_Tool.ViewModels
                 selectedObjectField = value;
                 // FieldLength = value.Length;
                 FirePropertyChanged("SelectedObjectField");
+            }
+        }
+
+        public Visibility isFactTable = Visibility.Collapsed;
+        public Visibility IsFactTable
+        {
+            get
+            {
+                return isFactTable;
+            }
+            set
+            {
+                isFactTable = value;
+                FirePropertyChanged("IsFactTable");
+            }
+        }
+
+        public Visibility pivotFieldCodeVisisbilty = Visibility.Collapsed;
+        public Visibility PivotFieldCodeVisisbilty
+        {
+            get
+            {
+                return pivotFieldCodeVisisbilty;
+            }
+            set
+            {
+                pivotFieldCodeVisisbilty = value;
+                FirePropertyChanged("PivotFieldCodeVisisbilty");
             }
         }
 

@@ -43,6 +43,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string CarrierName { get; set; }
         public double? ChargeableWeight { get; set; }
         public double? ChargeableWeightInKG { get; set; }
+        public double? PickupDeliveryChargeableWeight { get; set; }
         public double? GrossWeight { get; set; }
         public double? GrossWeightInKG { get; set; }
         public double? GrossWeightPerTon { get; set; }
@@ -210,5 +211,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
 
         public string ShipmentSubTypeId { get; set; }
         public string ShipmentSubTypeName { get; set; }
+        public double? PickupDeliveryVolumetricWeight { get; set; }
+
     }
 }

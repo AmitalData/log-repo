@@ -95,43 +95,54 @@ export class AutomationsSettingsComponent implements OnInit {
                 });
             }
         }
+
     }
+
+
+
+
+
+
 
     public EntityObjectAutomationFieldLists: any[];
     LoadEntityAuomationAllowedinAutomationConditionsObjectFields(tableName: string) {
-        var entityObjectTableIds: string = "";
-
+        var entityObjectTable: string[] =[];
         var tableId: string = this.ObjectTableId; 
         if (this.ObjectTableName == "Master") {
             var table = window.ObjectTables.filter(d => d.Name == "Shipment")[0];
-            if (table) {
-                tableId = table.Id;;
-            }
+            if (table) tableId = table.Id;
         }
-
-
 
         window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == tableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == tableName)[0]))).forEach((objectField) => {
             if (objectField.LookUpTableId) {
-                if (entityObjectTableIds) entityObjectTableIds += ",";
-                entityObjectTableIds += objectField.LookUpTableId;
+                if (entityObjectTable.indexOf(objectField.ObjectTable_LookUpTableName) == -1) {
+                    entityObjectTable.push(objectField.ObjectTable_LookUpTableName);
+                }
             }
         });
 
-        if (entityObjectTableIds) {
-            this.objectFieldPMExtendedService.GetEntityAuomationAllowedinAutomationConditionsObjectFieldPMsByEntityTableIds(entityObjectTableIds, SessionLocator.Tenant).subscribe((res: ServiceResponse) => {
-                var pmResponse: ServiceResponse = res;
-                if (pmResponse.Result) {
-                    this.EntityObjectAutomationFieldLists = pmResponse.Result;//pmResponse.Result.filter(d => entityObjectTableIds.split(',').indexOf(d.ObjectTableId) != -1);
-                    this.Start();
-                }
-            });
-        } else this.Start();
+        if (entityObjectTable.length > 0) this.LoadAdditionalEntityResource(entityObjectTable);
+        else this.Start();
+
 
     }
 
 
+    NumberOfLeadedAdditionalEntityResource: number = 0;
+    LoadAdditionalEntityResource(additionalentityObjectTableNames: string[]) {
+        this.NumberOfLeadedAdditionalEntityResource = 0;
+        var additionalentityObjectTableCount: number = additionalentityObjectTableNames.length;
 
+            additionalentityObjectTableNames.forEach((objectTableName) => {
+                this._entityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response: any) => { this.NumberOfLeadedAdditionalEntityResource += 1; this.CompleteLoadAdditionalEntityResource(additionalentityObjectTableCount) });
+
+        });
+    }
+
+    CompleteLoadAdditionalEntityResource(additionalentityObjectTableCount:number) {
+
+        if (additionalentityObjectTableCount == this.NumberOfLeadedAdditionalEntityResource) this.Start();
+    }
 
     Start() {
 

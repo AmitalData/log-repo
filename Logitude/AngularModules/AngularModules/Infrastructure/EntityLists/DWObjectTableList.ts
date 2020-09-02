@@ -14,5 +14,10 @@ export class DWObjectTableList {
 		TypeCode: string;
 		IsClosed: boolean;
 		DefaultFilterBy: string;
+		DataViewName: string;
+		HasPivotColumn: boolean;
+		PivotFieldCode: string;
+		AdditionalFactCode: string;
+		AdditionalFactForeignKey: string;
 	
 }

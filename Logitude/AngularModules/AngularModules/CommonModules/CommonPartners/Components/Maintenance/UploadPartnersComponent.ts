@@ -6,8 +6,13 @@ import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelpe
 import { BatchTaskExecutionPM } from '../../../../Infrastructure/EntityPMs/BatchTaskExecutionPM';
 import { BatchTaskExecutionListService } from '../../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from '../../../../Infrastructure/EntityLists/BatchTaskExecutionList';
-import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { CommonDomainService, PartnersUploadExcelParameter } from '../../../../Common/Services/CommonDomainService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { AppTool } from '../../../../Infrastructure/Tools';
+
+declare var ResultAsArray: any;
 
 @Component({
     selector: 'UploadPartnersComponent',
@@ -18,31 +23,21 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 export class UploadPartnersComponent extends BaseComponent implements OnDestroy {
     public DataContext = this;
     private CommonDomainService: CommonDomainService;
-    ValidationErrorsList = [];
+    public ValidationErrorsList = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    public ErrorsList = [];
 
     constructor() {
         super();
         this.CommonDomainService = new CommonDomainService();
     }
 
+    ngOnDestroy() {
+        this.StopTimer();
+    }
     // Commands
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
-    }
-
-    private batchEntity: BatchTaskExecutionPM;
-    public IsResponseProgressVisible: boolean = false;
-    UploadPartnersClicked() {
-
-        var errors: string[] = [];
-
-        this.ValidationErrorsList = errors;
-
-        if (this.ValidationErrorsList.length == 0) {
-            this.Retries = 0;
-
-        }
     }
 
     DownloadUploadPartnersTemplate() {
@@ -58,85 +53,160 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
         });
     }
 
-    // Timer
-    private timerSeconds: number = 10;
-    timer: any;
-    private Retries: number = 0;
-    private IncreaseTimer() {
-        clearTimeout(this.timer);
-        this.timer = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
-    }
-    private AdjustTimerSpeed() {
-        if (this.Retries <= 60) {
-            if (this.timerSeconds != 1) {
-                this.timerSeconds = 1;
-                this.IncreaseTimer();
-            }
-        }
+    OnFileChanged(fileEvent) {
+        var file = fileEvent.target.files[0];
 
-        else if (this.Retries <= 120) {
-            if (this.timerSeconds != 5) {
-                this.timerSeconds = 5;
-                this.IncreaseTimer();
-            }
-        }
+        if (file) {
+            var extension: string = file.name.split('.')[1];
 
-        else if (this.Retries <= 180) {
-            if (this.timerSeconds != 60) {
-                this.timerSeconds = 60;
-                this.IncreaseTimer();
-            }
-        }
-
-        else {
-            this.StopTimer();
-        }
-    }
-    private RunTimerFunction() {
-        this.Retries++;
-        this.GetBTE();
-
-    }
-    public StopTimer() {
-        if (this.timer) {
-            clearTimeout(this.timer);
-        }
-        this.IsResponseProgressVisible = false;
-    }
-    ngOnDestroy() {
-        this.StopTimer();
-    }
-
-    private bteList: BatchTaskExecutionList;
-    GetBTE() {
-        var batchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-        batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe((myResponse: ServiceResponse) => {
-
-            if (myResponse.HasError) {
-                this.StopTimer();
-                this.ValidationErrorsList = myResponse.ErrorsArray;
+            if (extension.includes("xls")) {
+                this.SelectExcelFile(fileEvent);
             }
 
             else {
-                this.bteList = myResponse.Result;
-
-                if (this.bteList.StatusCode == "D") // D- Done
-                {
-                    this.StopTimer();
-                    var window: MessageWindow = new MessageWindow();
-                    window.Show("Get TM Projects Completed Succesfully");
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show("You have to upload excel files only");
+            }
+        }
+    }
+    FileName: string;
+    SelectExcelFile(fileEvent) {
+        var file = fileEvent.target.files[0];
+        this.FileName = null;
+        if (!AppTool.IsNullOrEmpty(file.name)) {
+            var name = file.name.split('.');
+            if (name.length == 2) {
+                this.FileName = name[0];
+            }
+        }
+        if (file && file.size > 0) {
+            var documentExtendedService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+            documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    var myResult = response.Result;
+                    if (myResult) {
+                        this.StartUploadingExcelFile(file);
+                    }
                 }
+            });
+        }
+    }
+    StartUploadingExcelFile(file: any) {
+        if (file && file.size > 0) {
+            var filebuffer = file.slice(0, file.size);
+            this.ConvertArrayBufferToBase64(filebuffer, this);
+        }
+    }
+    public partnersUploadExcelParameter: PartnersUploadExcelParameter;
+    ConvertArrayBufferToBase64(file: any, context: any) {
+        var reader: FileReader = new FileReader();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var binary = '';
+            var bytes = new Uint8Array(ResultAsArray(e));
+            var len = bytes.byteLength;
 
-                else if (this.bteList.StatusCode == "F") // F- Failed
-                {
-                    this.StopTimer();
-                    var window: MessageWindow = new MessageWindow();
-                    window.Show("Faild: " + this.bteList.ErrorLog);
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+
+            context.partnersUploadExcelParameter = new PartnersUploadExcelParameter();
+            context.partnersUploadExcelParameter.FileData = window.btoa(binary);
+            context.partnersUploadExcelParameter.FileName = context.FileName;
+            context.SendExcelToServer(context.partnersUploadExcelParameter);
+        };
+
+        reader.onerror = function (e) {
+            console.log(e);
+        };
+        reader.readAsArrayBuffer(file);
+    }
+    SendExcelToServer(filter: any) {
+        this.CommonDomainService.PostUploadPartnersExcelFile(filter).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+               var batchEntity = myResponse.Result;
+                if (batchEntity != null) {
+                   
+                    this.IsResponseProgressVisible = true;
+                    this.CheckBatchTaskExecution(batchEntity.Id);
                 }
-
-                this.AdjustTimerSpeed();
+            }
+            else {
+                this.StopTimer();
+                var window = new MessageWindow();
+                window.Show(myResponse.ErrorsArray[0]);
             }
         });
+    }
+
+    // Timer
+    public batchEntity: BatchTaskExecutionList;
+    private timer: any;
+    public IsResponseProgressVisible: boolean = false;
+    public DoneMsg: string;
+    public IsDone = false;
+    CheckBatchTaskExecution(BatchTaskExecutionId: string) {
+        this.ValidationErrorsList = [];
+        this.ErrorsList = [];
+        this.DoneMsg = "";
+        this.IsDone = false;
+        var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+        iBatchService.getSingle(BatchTaskExecutionId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: BatchTaskExecutionList = myResponse.Result;
+                this.batchEntity = list;
+                if (list.StatusCode == "D") {
+                    this.StopTimer();
+                    if (list.ProgressMessage != null && list.ProgressMessage.indexOf(',') > -1) {
+                        this.ErrorsList = list.ProgressMessage.split(',');
+                    }
+                    else if (list.ProgressMessage != null && list.ProgressMessage.indexOf("continue?") > -1) {
+                        var myConfirmWindow = new ConfirmWindow();
+                        myConfirmWindow.Width = 400;
+                        myConfirmWindow.Show(list.ProgressMessage);
+                        myConfirmWindow.WindowClosed.subscribe(s => {
+                            if (myConfirmWindow.Yes) {
+                                var parameter = new PartnersUploadExcelParameter();
+                                parameter.FileData = this.partnersUploadExcelParameter.FileData;
+                                parameter.IsConfirmationByUser = true;
+                                parameter.FileName = this.partnersUploadExcelParameter.FileName;
+                                parameter.DocumentId = this.partnersUploadExcelParameter.DocumentId;
+                                this.SendExcelToServer(parameter);
+                            }
+                        });
+                    }
+                    else {
+                        this.DoneMsg = list.ProgressMessage;
+                        this.IsDone = true;
+                    }
+                }
+
+                else if (list.StatusCode == "F") {
+                    this.StopTimer();
+                    if (list.ProgressMessage != null && list.ProgressMessage.indexOf(',') > -1) {
+                        this.ErrorsList = list.ProgressMessage.split(',');
+                    }
+                }
+
+                else {
+                    this.CurrentSession.StartBusyIndicator("Uploading Partners... " + list.ProgressPercentage + "%");
+                    this.CheckBatchTaskExecution(BatchTaskExecutionId);
+                }
+            }
+
+            else {
+                this.StopTimer();
+                var window = new MessageWindow();
+                window.Show(myResponse.ErrorsArray[0]);
+            }
+        });
+    }
+    StopTimer() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+        this.IsResponseProgressVisible = false;
+        this.CurrentSession.StopBusyIndicator();
     }
 
     CloseResponseProgressClicked() {

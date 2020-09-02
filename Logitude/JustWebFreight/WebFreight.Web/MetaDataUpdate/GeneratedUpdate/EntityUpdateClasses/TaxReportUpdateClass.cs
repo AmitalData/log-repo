@@ -71,12 +71,15 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "2ab8ace3e6597e6a38762b64b54d0589";
+		public const string HashString = "466a52f9b7a10579c53399fecfa54bef";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2246,7 +2249,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CNCL",
                 EnglishName =  "Cancelled",
-                LocalName =  "בוטל",
+                LocalName =  "Cancelled",
                 IsManualEntry =  true,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -2264,7 +2267,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "APRV",
                 EnglishName =  "Approved",
-                LocalName =  "מאושר",
+                LocalName =  "Approved",
                 IsManualEntry =  true,
                 ShortView =  false,
                 IsAgentView =  false,

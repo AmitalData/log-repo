@@ -78,9 +78,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         DeliveryDate = a.DeliveryDate,
                         OnHandDate = a.OnHandDate,
                         PODDate = a.PODDate,
+                        BookingConfirmationSent = a.BookingConfirmationSent,
+                        PreAlertSent = a.PreAlertSent,
+                        ArrivalNoticeSent = a.ArrivalNoticeSent,
+                        DeliveryNoticeSent = a.DeliveryNoticeSent,
+                        ExpectedArrivalNoticeSent = a.ExpectedArrivalNoticeSent,
+                        T1Received = a.T1Received,
 
-
-                    }).FirstOrDefault();
+    }).FirstOrDefault();
         }
 
         public IQueryable<ShipmentComputedFieldsList> GetIQueryableEntityList(IQueryable<ShipmentComputedFields> iQueryable)
@@ -135,6 +140,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                  DeliveryDate = a.DeliveryDate,
                                                                  OnHandDate = a.OnHandDate,
                                                                  PODDate = a.PODDate,
+                                                                 BookingConfirmationSent = a.BookingConfirmationSent,
+                                                                 PreAlertSent = a.PreAlertSent,
+                                                                 ArrivalNoticeSent = a.ArrivalNoticeSent,
+                                                                 DeliveryNoticeSent = a.DeliveryNoticeSent,
+                                                                 ExpectedArrivalNoticeSent = a.ExpectedArrivalNoticeSent,
+                                                                 T1Received = a.T1Received,
                                                              });
             return result;
         }
