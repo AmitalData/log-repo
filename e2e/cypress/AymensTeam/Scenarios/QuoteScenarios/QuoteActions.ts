@@ -22,6 +22,7 @@ export class QuoteActions {
         Resolvers.ButtonResolver.Selector('#ConfrimApproved').Click();
         cy.get('#BusyIndicator_0').should('not.be.visible');
         Resolvers.WindowResolver.ShouldBeClosed();
+        this.WaitLoaded('addressviews/getsingle/?');
     }
     private ReactivateQuote() {
         Resolvers.ButtonResolver.Selector('#MenuButtons').Click();
@@ -29,6 +30,7 @@ export class QuoteActions {
         Resolvers.ButtonResolver.Selector('#ConfrimApproved').Click();
         cy.get('#BusyIndicator_0').should('not.be.visible');
         Resolvers.WindowResolver.ShouldBeClosed();
+        this.WaitLoaded('quotes');
 
     }
     private QuoteAccepted() {
@@ -36,6 +38,8 @@ export class QuoteActions {
         Resolvers.WindowResolver.ShouldBeOpend();
         Resolvers.ButtonResolver.Selector('#ConfrimApproved').Click();
         Resolvers.WindowResolver.ShouldBeClosed();
+        this.WaitLoaded('quotes');
+
     }
     private QuoteDeclined() {
         Resolvers.ButtonResolver.Selector('#QuoteBDecline').Click();
@@ -62,10 +66,24 @@ export class QuoteActions {
         Resolvers.ButtonResolver.Selector('#CreateQuote').Click();
         cy.get('#BusyIndicator_0').should('not.be.visible');
         Resolvers.WindowResolver.ShouldBeClosed();
+        //this.WaitLoaded('testyyyyyyy');
     }
     private BuildShipmentFromQuote() {
         Resolvers.ButtonResolver.Selector('#QuoteBBuildShipment_1').Click();
         cy.contains('button', 'Accept and Build').click();
 
+    }
+    private WaitLoaded(url: string) {
+        cy.server();
+        //cy.route({
+        //    method: 'GET',
+        //    url: '**/' + url + '**',
+        //    onResponse: (xhr) => {
+        //        expect(xhr.status).to.eq(200);
+        //    }
+        //}).as('entityLoaded');
+        cy.route('**/' + url + '**').as('entityLoaded');
+
+        cy.wait('@entityLoaded');
     }
 }
