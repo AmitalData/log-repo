@@ -342,7 +342,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
 
             List<ChargesTypePM> Entities = (from a in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement")
-                              where a.Code == code && a.Tenant == tenant && a.InActive==false
+                              where a.Code == code && a.Tenant == tenant  
                               select new ChargesTypePM()
                               {
 
