@@ -71,7 +71,7 @@
 
 
   <Index
-  Columns="Tenant,RecordDate" />
+  Columns="Tenant,Weight" />
 
   <Index
 Columns="Tenant,CardId" />

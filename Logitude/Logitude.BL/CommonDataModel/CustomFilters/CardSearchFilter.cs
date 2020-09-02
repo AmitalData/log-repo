@@ -31,8 +31,9 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
 
                 ICommonDataContext commonDataContext = CommonDataContext.GetContext(cardSearchFilterArgs.Tenant);
                 List<string> cardIds = (from a in commonDataContext.CardSearches
-                                        where a.Tenant == cardSearchFilterArgs.Tenant && partnerTypeCodeLists.Contains(a.PartnerTypeId) && a.InActive == inactive && a.Keyword.StartsWith(cardSearchFilterArgs.SeachText)
-                                        select a).GroupBy(d => d.CardId).Select(d => d.FirstOrDefault()).OrderByDescending(d => d.RecordDate).Take(cardSearchFilterArgs.QueryOperations.PageSize).Select(d => d.CardId).ToList();
+                                              where a.Tenant == cardSearchFilterArgs.Tenant && partnerTypeCodeLists.Contains(a.PartnerTypeId) && a.InActive == inactive && a.Keyword.StartsWith(cardSearchFilterArgs.SeachText)
+                                              select a).GroupBy(d => d.CardId).Select(d => d.FirstOrDefault()).OrderByDescending(d => d.Weight).Take(cardSearchFilterArgs.QueryOperations.PageSize).Select(d => d.CardId).ToList();
+
 
                 entityLists = entityLists.Where(d => cardIds.Contains(d.Id));
                 if (cardSearchFilterArgs.SortList) entityLists = SortDataLists(cardSearchFilterArgs , entityLists);
