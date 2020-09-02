@@ -117,6 +117,9 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
         for (let i = startPage; i <= endPage; i++) {
             this._fetchPage(i);
         }
+        if (this.myMetaData.cd) {
+            this.myMetaData.cd.detectChanges();
+        }
     }
 
     disconnect(): void {
@@ -137,18 +140,19 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
     private _fetchPage(page: number) {
         if (this.fetchedPages.has(page)) {
             if (!this.fetchedPages.has(page + 1)) {
-                this.getPageData(page + 1);
+                this._fetchPage(page + 1);
                 if (!this.fetchedPages.has(page + 2)) {  
-                    this.getPageData(page + 2);
+                    this._fetchPage(page + 2);
                 } 
             } 
-            else {
+            //else {
             //this.dataStream.next(this.cachedData);
             //if (this.myMetaData.cd) {
             //    this.myMetaData.cd.detectChanges();
             //}
+            this.dataStream.next(this.cachedData);
             return;
-            }
+            //}
         }
         this.getPageData(page)
     }
@@ -170,7 +174,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
                         this.mycachedData = Array.from<any>({ length: jsonlist.length });
                         this.cachedData = Array.from<any>({ length: jsonlist.length });
                     }
-                    else if (this.cachedData.length < this.pageSize) {
+                    else if (this.cachedData.length < this.pageSize && page == 0) {
                         this.mycachedData = Array.from<any>({ length: this.length });
                         this.cachedData = Array.from<any>({ length: this.length });
                     }
