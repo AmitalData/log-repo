@@ -102,8 +102,11 @@ export class LogToolTipComponent implements AfterViewInit {
             }
             case 'topleft':
             {
+                var bodyItem = document.getElementById("tooltip-body" + this.name);
+                var bodyItemRect = bodyItem.getBoundingClientRect();
+
                 element.style.bottom = (this.getScreenHeight() - itemRect.top + 20) + 'px';
-                element.style.left = (itemRect.left - 245) + 'px';
+                element.style.left = (itemRect.right - bodyItemRect.width  + 20) + 'px';
                 break;
             }
             case 'bottomright':
