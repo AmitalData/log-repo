@@ -284,7 +284,7 @@ namespace Logitude.Server.Tools.StorageService
                                 AesFunction aesFunction = new AesFunction();
                                 result = aesFunction.EncryptData(result, fileInfo.Tenant);
 
-                                skippfileTest =  (document.FileName  == "test update failed");
+                                skippfileTest = (document != null && document.FileName == "test update failed");
                             }
                         }
 
