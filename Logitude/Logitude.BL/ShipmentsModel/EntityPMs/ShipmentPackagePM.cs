@@ -34,10 +34,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string PackageTypeLocalName { get; set; }
         public decimal PackageTypeVolume { get; set; }
         public bool IsPackageAddedManually { get; set; }
-
         public string WarehouseReleaseNumber { get; set; }
-
-
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ContainerNumber { get; set; }
@@ -412,5 +409,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CountryId { get; set; }
         public string CountryName { get; set; }
         public bool IsVehicle { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string HorseId { get; set; }
+        public string HorseName { get; set; }
     }
 }

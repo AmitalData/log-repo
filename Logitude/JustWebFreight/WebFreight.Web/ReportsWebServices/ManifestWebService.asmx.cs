@@ -1369,6 +1369,7 @@ namespace WebFreight.Web.ReportsWebServices
                 packageDetail.Notes = package.Notes;
                 packageDetail.Harmonize = package.Harmonize;
                 packageDetail.Tare = package.Tare;
+                packageDetail.Horse = package.HorseName;
                 newDetail.PackageDetails.Add(packageDetail);
 
                 #region commented Code

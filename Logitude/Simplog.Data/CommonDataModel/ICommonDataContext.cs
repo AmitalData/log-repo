@@ -229,9 +229,8 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<WarehouseWeightMeasurement> WarehouseWeightMeasurements { get; set; }
         IDbSet<WarehouseWeightRounding> WarehouseWeightRoundings { get; set; }
         IDbSet<WarehouseStoragePricing> WarehouseStoragePricings { get; set; }
-
         IDbSet<CardSearch> CardSearches { get; set; }
-
+        IDbSet<Horse> Horses { get; set; }
 
 
         void SetAsModified(object entity);

@@ -54,7 +54,8 @@ import {CountryCityGeneralTabComponent} from './Components/Maintenance/CountryCi
 import {VesselGeneralTabComponent} from './Components/Maintenance/Vessel/VesselGeneralTabComponent';
 import {CustomsShipperFiltersMenuComponent} from './Components/FiltersMenu/CustomsShipperFiltersMenuComponent';
 import { GLAccountSelectComponent } from './Components/AccountingTab/GLAccountSelectWindow/GLAccountSelectComponent';
-
+import { NewHorseComponent } from './Components/Maintenance/Horse/NewHorseComponent';
+import { HorseGeneralTabComponent } from './Components/Maintenance/Horse/HorseGeneralTabComponent';
 
 export const Components =
     [
@@ -114,6 +115,8 @@ export const Components =
         DocumentFilingEmailSettingsComponent,
         CustomsShipperFiltersMenuComponent,
         TransmissionLogAuditTabComponent,
+        NewHorseComponent,
+        HorseGeneralTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -180,8 +183,8 @@ export class ModuleDeclarations {
             case "DocumentFilingEmailSettingsComponent": { myResult = DocumentFilingEmailSettingsComponent; break; }
             case "CustomsShipperFiltersMenuComponent": { myResult = CustomsShipperFiltersMenuComponent; break; }
             case "TransmissionLogAuditTabComponent": { myResult = TransmissionLogAuditTabComponent; break; }
-
-
+            case "NewHorseComponent": { myResult = NewHorseComponent; break; }
+            case "HorseGeneralTabComponent": { myResult = HorseGeneralTabComponent; break; }
         }
 
         return myResult;

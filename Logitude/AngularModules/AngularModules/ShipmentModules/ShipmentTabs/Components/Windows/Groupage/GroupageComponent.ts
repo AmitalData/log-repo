@@ -226,6 +226,8 @@ export class GroupageComponent {
                 newPackage.Reference4 = item.EntityPM.Reference4;
                 newPackage.CommodityNumber = item.EntityPM.CommodityNumber;
                 newPackage.CommodityName = item.EntityPM.CommodityName;
+                newPackage.HorseId = item.EntityPM.HorseId;
+                newPackage.HorseName = item.EntityPM.HorseName;
                 this.EntityPM.AddPackage(newPackage);
 
                 item.EntityPM.InsideShipmentPackages.forEach(insideItem => {

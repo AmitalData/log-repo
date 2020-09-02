@@ -54,7 +54,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Routing).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.RoutingIds).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.VoyageTripNumber).HasMaxLength(10).IsUnicode(false);
-
             this.Property(t => t.Make).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.Model).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.Year).HasMaxLength(100).IsUnicode(false);
@@ -63,7 +62,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.RegistrationNumber).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.CountryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.WarehouseReleaseNumber).HasMaxLength(15).IsUnicode(false);
-
+            this.Property(t => t.HorseId).HasMaxLength(15).IsUnicode(false);
 
 
             // Table & Column Mappings
@@ -146,7 +145,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.RoutingIds).HasColumnName("RoutingIds");
             this.Property(t => t.VoyageTripNumber).HasColumnName("VoyageTripNumber");
             this.Property(t => t.HasContainerException).HasColumnName("HasContainerException");
-
             this.Property(t => t.Make).HasColumnName("Make");
             this.Property(t => t.Model).HasColumnName("Model");
             this.Property(t => t.Year).HasColumnName("Year");
@@ -156,7 +154,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CountryId).HasColumnName("CountryId");
             this.Property(t => t.WarehouseReleaseNumber).HasColumnName("WarehouseReleaseNumber");
             this.Property(t => t.InUse).HasColumnName("InUse");
-
+            this.Property(t => t.HorseId).HasColumnName("HorseId");
 
 
             this.HasOptional(t => t.Shipment).WithMany().HasForeignKey(d => d.ShipmentId);
@@ -169,9 +167,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.DeliveryTransportMode).WithMany().HasForeignKey(d => d.DeliveryTransportModeCode);
             this.HasOptional(t => t.ECRTransportMode).WithMany().HasForeignKey(d => d.ECRTransportModeCode);
             this.HasOptional(t => t.FlashPointTemperatureUnit).WithMany().HasForeignKey(d => d.FlashPointTemperatureUnitCode);
-
             this.HasOptional(t => t.Country).WithMany().HasForeignKey(d => d.CountryId);
-
+            this.HasOptional(t => t.Horse).WithMany().HasForeignKey(d => d.HorseId);
         }
     }
 }
