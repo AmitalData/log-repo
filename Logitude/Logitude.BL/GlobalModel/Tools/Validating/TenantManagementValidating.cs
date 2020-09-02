@@ -56,41 +56,63 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
         }
         private static void ValidateNumberOfUsers(TenantManagementPM entityPM)
         {
-            int tenantUsers = 0;
-            int totalUsers = 0;
-            string usersType = "active";
-
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                UserRepository userRepository = new UserRepository(entityPM.Id);
-                IQueryable<User> allTenantUsers = userRepository.GetUsers(entityPM.Id);
-
-                allTenantUsers = allTenantUsers.Where(d => d.Contact.Email.ToLower() != "customercare@logitudeworld.com" && d.Contact.InActive == false);
-
-                if (entityPM.ManageLicencesPerUser)
+                if (entityPM.IsMultiPackage)
                 {
-                    allTenantUsers = allTenantUsers.Where(d => d.LicencedUser == true);
-                    usersType = "licenced";
+                    UserLicenseRepository userLicenseRepository = new UserLicenseRepository(entityPM.Id);
+                    IQueryable<UserLicense> allTenantLicenses = userLicenseRepository.GetUserLicenses(entityPM.Id);
+
+                    foreach(TenantManagementLicensePM item in entityPM.TenantManagementLicenses)
+                    {
+                        int licensesCount = allTenantLicenses.Where(d => d.PackageCode == item.PackageCode).Count();
+
+                        int num1 = item.FreeUsers == null ? 0 : item.FreeUsers.Value;
+                        int num2 = item.NumberOfUsers == null ? 0 : item.NumberOfUsers.Value;
+                        
+                        if (licensesCount > (num1 + num2))
+                        {
+                            throw new Exception("You can't change the number of users to less than " + licensesCount + " for package " + item.PackageCode);
+                        }
+                    }
                 }
 
-                if (entityPM.MainAdditionalPackageApplied)
+                else
                 {
-                    allTenantUsers = allTenantUsers.Where(d => !d.AdditionalPackagesOnly);
-                }
+                    int tenantUsers = 0;
+                    int totalUsers = 0;
+                    string usersType = "active";
 
-                tenantUsers = allTenantUsers.Count();
+                    UserRepository userRepository = new UserRepository(entityPM.Id);
+                    IQueryable<User> allTenantUsers = userRepository.GetUsers(entityPM.Id);
+
+                    allTenantUsers = allTenantUsers.Where(d => d.Contact.Email.ToLower() != "customercare@logitudeworld.com" && d.Contact.InActive == false);
+
+                    if (entityPM.ManageLicencesPerUser)
+                    {
+                        allTenantUsers = allTenantUsers.Where(d => d.LicencedUser == true);
+                        usersType = "licenced";
+                    }
+
+                    if (entityPM.MainAdditionalPackageApplied)
+                    {
+                        allTenantUsers = allTenantUsers.Where(d => !d.AdditionalPackagesOnly);
+                    }
+
+                    tenantUsers = allTenantUsers.Count();
+
+                    int num1 = entityPM.TotalFreeUsers == null ? 0 : entityPM.TotalFreeUsers.Value;
+                    int num2 = entityPM.TotalNumberOfUsers == null ? 0 : entityPM.TotalNumberOfUsers.Value;
+                    totalUsers = num1 + num2;
+
+                    if (tenantUsers > totalUsers)
+                    {
+                        throw new Exception("You can't change the number of users to less than " + tenantUsers + " (Number of " + usersType + " users)");
+                    }
+                }                
 
                 scope.Complete();
-            }
-
-            int num1 = entityPM.TotalFreeUsers == null ? 0 : entityPM.TotalFreeUsers.Value;
-            int num2 = entityPM.TotalNumberOfUsers == null ? 0 : entityPM.TotalNumberOfUsers.Value;
-            totalUsers = num1 + num2;
-            
-            if (tenantUsers > totalUsers)
-            {
-                throw new Exception("You can't change the number of users to less than " + tenantUsers + " (Number of " + usersType + " users)");
-            }
+            }            
         }
         private static void ValidateConnectedAirline(TenantManagementPM entityPM, TenantManagementRepository entityRepository)
         {
@@ -112,7 +134,7 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
 
                         if (tenants.Where(d => d.TenantConnectedToAirlineCode == entityPM.TenantConnectedToAirlineCode && d.Id != entityPM.Id).Any())
                         {
-                            throw new Exception("The Airline you are trying to connect have been connected to another tenant");
+                            throw new Exception("The Airline you are trying to connect has been connected to another tenant");
                         }
 
                         else
