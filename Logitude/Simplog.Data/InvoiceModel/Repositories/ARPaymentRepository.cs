@@ -70,7 +70,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public IQueryable<ARPayment> GetOpenedARPayments(int tenant)
         {
-            return (from d in context.ARPayments.Include("AccountingPaymentMethod")
+            return (from d in context.ARPayments.Include("AccountingPaymentMethod").Include("Status")
                     where d.Tenant == tenant && d.StatusCode != "DR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsClosed == false
                     select d);
         }

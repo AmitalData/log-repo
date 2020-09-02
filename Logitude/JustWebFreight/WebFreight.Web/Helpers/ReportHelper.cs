@@ -34,6 +34,7 @@ using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.CRM;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Operational;
@@ -1014,7 +1015,8 @@ namespace WebFreight.Web.Helpers
 
                 case "RSTA":
                     {
-                        dataProvider = logitudeReportsWebService.LoadStatementData(filters, reportFliter.tenant);
+                        StatementReportManager manager = new StatementReportManager(filters, reportFliter.tenant);
+                        dataProvider = manager.GetData();
                         break;
                     }
 
@@ -1034,7 +1036,6 @@ namespace WebFreight.Web.Helpers
                     {
                         StatisticsByCustomerManager manager = new StatisticsByCustomerManager(filters, reportFliter.tenant);
                         dataProvider = manager.GetData();
-                        //dataProvider = logitudeReportsWebService.LoadStatisticsByClientData(filters, reportFliter.CurrentCurrencyCodeType, reportFliter.IncludeOperationalyClosed, reportFliter.tenant);
                         break;
                     }
 
