@@ -42,15 +42,19 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             {
                 TenantQuery tenantQuery = new TenantQuery(Tenant);
                 UserQuery userQuery = new UserQuery(Tenant);
+                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(Tenant);
+
                 TenantPM MyTenantPM = tenantQuery.GetSinglePM(Tenant);
                 UserPM MyUserPM = userQuery.GetSingleUserPMByEmail("system@tenant" + Tenant + ".com", Tenant, false);
 
-                ShipmentPM temp =DirectDataMappingAndValidatin(MyEntity, Tenant, ComputingPartnerCode);
+                ShipmentPM temp = DirectDataMappingAndValidatin(MyEntity, Tenant, ComputingPartnerCode);
                 temp.NewConcurrencyGUID = Guid.NewGuid().ToString();
                 temp.Tenant = Tenant;
                 temp.ShipmentLevelCode = "D";
                 temp.MainCarriageFromPortId = temp.FromPortId;
                 temp.MainCarriageToPortId = temp.ToPortId;
+                temp.FinalDistenationPortId = temp.ToPortId;
+                temp.MainCarriageFinalDestinationPortId = temp.ToPortId;
                 temp.FHLStatusCode = "NSEN";
                 temp.FWBStatusCode = "NSEN";
                 temp.FHLStatusName = "Not Sent";
@@ -127,7 +131,11 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                         }
                 }
 
-                temp.Ratio = this.GetRatio(temp.DirectionId, temp.TransportModeId, temp.ShipmentTypeId, MyTenantPM.CountryCode);
+                if (temp.Ratio == null || temp.Ratio == 0)
+                {
+                    temp.Ratio = this.GetRatio(temp.DirectionId, temp.TransportModeId, temp.ShipmentTypeId, MyTenantPM.CountryCode);
+                }
+
                 temp.DimFactor = this.GetDimFactorFromRatio(temp.Ratio, temp.DimensionsUnitCode, temp.ChargeableWeightUnitCode);
 
                 if (string.IsNullOrEmpty(temp.CreatedByUserId))
@@ -195,8 +203,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                         item.PickUpDeliveryToTypeCode = "PORT";
                     }
                 }
-
-                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(Tenant);
+                
                 foreach (ShipmentReceivablePM item in temp.ShipmentReceivables)
                 {
                     if(string.IsNullOrEmpty(item.CurrencyId))
@@ -220,7 +227,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                         }
                     }
                 }
-
+                
                 return temp;
             }
 

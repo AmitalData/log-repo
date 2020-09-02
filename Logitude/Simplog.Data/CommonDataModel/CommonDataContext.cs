@@ -455,7 +455,14 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new CustomerOpenFilesAmountMap());
             modelBuilder.Configurations.Add(new TariffCarrierTranslationMap());
             modelBuilder.Configurations.Add(new VatUniquePartnerTypeMap());
+            modelBuilder.Configurations.Add(new WarehouseWeightMeasurementMap());
+            modelBuilder.Configurations.Add(new WarehouseWeightRoundingMap());
+            modelBuilder.Configurations.Add(new WarehouseStoragePricingMap());
+            modelBuilder.Configurations.Add(new CardSearchMap());
 
+
+
+            
             base.OnModelCreating(modelBuilder);
         }
 
@@ -525,7 +532,9 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
         public IDbSet<DWHBuildStatus> DWHBuildStatus { get; set; }
         public IDbSet<UserLastSettings> UserLastSettings { get; set; }
-
+        public IDbSet<WarehouseWeightMeasurement> WarehouseWeightMeasurements { get; set; }
+        public IDbSet<WarehouseWeightRounding> WarehouseWeightRoundings { get; set; }
+        public IDbSet<WarehouseStoragePricing> WarehouseStoragePricings { get; set; }
 
         public IDbSet<Warehouse> Warehouses
         {
@@ -1013,6 +1022,11 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins { get; set; }
         public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
         public IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get; set; }
+        public IDbSet<CardSearch> CardSearches { get; set; }
+
+
+
+
 
         public DbConnection GetConnection()
         {

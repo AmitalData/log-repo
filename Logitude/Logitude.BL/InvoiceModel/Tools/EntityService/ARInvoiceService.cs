@@ -274,11 +274,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             CheckLinesVatExcempt(entityPM, isApprovingInvoice);
 
             ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
-            helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
+            helper.ARInvoiceQuickbooksValidating(invoice, entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
 
             SetSatStatus();
 
-            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice  , EntityPM = entityPM , ChangeTrackingPM = new ARInvoicePM(),  AutomationType = "OnCreate", ObjectTableName = "ARInvoice" ,  Tenant =entityPM.Tenant});
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice  , EntityPM = entityPM , OldEntityPM = new ARInvoicePM(),  AutomationType = "OnCreate", ObjectTableName = "ARInvoice" ,  Tenant =entityPM.Tenant});
             entityAutomationService.RunAutomation();
 
 
@@ -516,19 +516,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
                 if (entityPM.SetReSendQBO)
                 {
-                    helper.ARInvoiceQuickbooksValidating(entityPM, true, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
+                    helper.ARInvoiceQuickbooksValidating(invoice, entityPM, true, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
 
                 }
                 else
                 {
-                    helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
+                    helper.ARInvoiceQuickbooksValidating(invoice, entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
                 }
 
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
 
-                EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, ChangeTrackingPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant });
-                entityAutomationService.RunAutomation();
+                EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant });
 
                 ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
                 invoiceRepository.Update(invoice);
@@ -559,8 +558,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 this.BuildSearchFields();
 
+                entityAutomationService.RunAutomation();
 
             }
+
 
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
@@ -574,7 +575,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     ARPaymentRepository repository = new ARPaymentRepository(tenant);
                     ARPayment payment = repository.GetSingleARPayment(paymentPM.Id, tenant);
-                    service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, paymentPM.SetReSendQBO, false);
+                    bool isErrorInTransfer = payment.TransferStatusCode == "ET" ? true : false;
+
+                    service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, paymentPM.SetReSendQBO, isErrorInTransfer, false);
                 }
             }
 
@@ -1939,51 +1942,59 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         // Amount
                         double? TotalAmount = 0;
-                        if (item.Quantity != null && item.UnitPrice != null)
+                        if (item.MeasurementCode == "STFE")
                         {
-                            if (string.IsNullOrEmpty(item.MeasurementCode))
+                            TotalAmount = item.ForiegnCurrencyAmount;
+                        }
+
+                        else
+                        {
+                            if (item.Quantity != null && item.UnitPrice != null)
                             {
-                                if (item.MeasurementId != null)
+                                if (string.IsNullOrEmpty(item.MeasurementCode))
                                 {
-                                    Measurement myMeasurement = (from d in myCommonContext.Measurements
-                                                                 where d.Id == item.MeasurementId
-                                                                 && d.Tenant == tenant
-                                                                 select d).FirstOrDefault();
-
-                                    if (myMeasurement != null)
+                                    if (item.MeasurementId != null)
                                     {
-                                        item.MeasurementCode = myMeasurement.Code;
-                                    }
-                                }
-                            }
+                                        Measurement myMeasurement = (from d in myCommonContext.Measurements
+                                                                     where d.Id == item.MeasurementId
+                                                                     && d.Tenant == tenant
+                                                                     select d).FirstOrDefault();
 
-                            if (item.MeasurementCode == "PRVL" || item.MeasurementCode == "PRFR")
-                            {
-                                var price = item.UnitPrice / 100;
-                                TotalAmount = item.Quantity * price;
-                            }
-
-                            else
-                            {
-                                TotalAmount = item.Quantity * item.UnitPrice;
-                            }
-
-                            /* MinMax Quote */
-                            if (TotalAmount != null)
-                            {
-                                if (myReceivable.QuoteSaleMinAmount != null)
-                                {
-                                    if (TotalAmount < myReceivable.QuoteSaleMinAmount)
-                                    {
-                                        TotalAmount = myReceivable.QuoteSaleMinAmount;
+                                        if (myMeasurement != null)
+                                        {
+                                            item.MeasurementCode = myMeasurement.Code;
+                                        }
                                     }
                                 }
 
-                                if (myReceivable.QuoteSaleMaxAmount != null)
+                                if (item.MeasurementCode == "PRVL" || item.MeasurementCode == "PRFR")
                                 {
-                                    if (TotalAmount > myReceivable.QuoteSaleMaxAmount)
+                                    var price = item.UnitPrice / 100;
+                                    TotalAmount = item.Quantity * price;
+                                }
+
+                                else
+                                {
+                                    TotalAmount = item.Quantity * item.UnitPrice;
+                                }
+
+                                /* MinMax Quote */
+                                if (TotalAmount != null)
+                                {
+                                    if (myReceivable.QuoteSaleMinAmount != null)
                                     {
-                                        TotalAmount = myReceivable.QuoteSaleMaxAmount;
+                                        if (TotalAmount < myReceivable.QuoteSaleMinAmount)
+                                        {
+                                            TotalAmount = myReceivable.QuoteSaleMinAmount;
+                                        }
+                                    }
+
+                                    if (myReceivable.QuoteSaleMaxAmount != null)
+                                    {
+                                        if (TotalAmount > myReceivable.QuoteSaleMaxAmount)
+                                        {
+                                            TotalAmount = myReceivable.QuoteSaleMaxAmount;
+                                        }
                                     }
                                 }
                             }
@@ -3582,6 +3593,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                     CurrencyId = g.Key.ForiegnCurrencyId,
                                                     ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
                                                     ExchangeRate = (decimal?)g.Sum(a => a.ForiegnExchangeRate) / g.Count(),//(decimal)g.Key.ForiegnExchangeRate,
+
                                                     Reference1 = invoice.InvoiceNumber,
                                                     Reference2 = invoice.MainEntityReference,
                                                     Reference3 = !string.IsNullOrEmpty(invoice.HouseNumber) ? invoice.HouseNumber : invoice.MasterNumber,

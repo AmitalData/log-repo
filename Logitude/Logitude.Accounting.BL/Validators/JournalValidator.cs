@@ -897,8 +897,12 @@ accountingValidationContextServiceProvider
                 //    + " ( " + TranslateMyTextCode("Accounting.General.O.GLAccountIs",0) + " " + GetAccountName(myGLAccountDataProvider, pmAcc.Id, myJournalPM.Tenant) + " )");
 
 
-                if (myJournalPM.AccountingEntityCode != "2")
-                  errorsList.Add(TranslateMyTextCode("Accounting.General.O.PaymentBankAccountCurrencyDifferent", myJournalPM.Tenant));
+
+
+                // WI:48580
+                if(myJournalPM.AccountingEntityCode != "2")
+                errorsList.Add(TranslateMyTextCode("Accounting.General.O.PaymentBankAccountCurrencyDifferent", myJournalPM.Tenant));
+
             }
             if (pmAcc.IsMultiCurrency.GetValueOrDefault())
             {

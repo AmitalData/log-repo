@@ -12,6 +12,9 @@ using Logitude.Server.Tools.Helpers;
 using System.Threading.Tasks;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using System.Threading;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Data.CommonDataModel;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 
 namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 {
@@ -69,6 +72,10 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                     string result = exportDocumentHelper.ExportDocument2Pdf(exportDocumentArgs, documentTypeCopyId);
                 });
+                UpdateDocumentOut(exportDocumentArgs);
+                DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
+                documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
+
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StatusCode = "D", DoneDate = DateTime.Now });
                 queueService.Complete();
             }
@@ -76,6 +83,25 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             {
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = new Exception("RequestXML is null"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
                 queueService.Complete();
+            }
+        }
+
+        private void UpdateDocumentOut(ExportDocumentArgs exportDocumentArgs)
+        {
+            DocumentOutQuery documentOutQuery = new DocumentOutQuery(exportDocumentArgs.Tenant);
+            DocumentOutPM documentOutPM = documentOutQuery.GetSinglePM(exportDocumentArgs.CurrentDocumentOutId, exportDocumentArgs.Tenant);
+            if (documentOutPM != null)
+            {
+                documentOutPM.Issued = true;
+                documentOutPM.NeedsRebuild = false;
+                documentOutPM.Issued = true;
+                documentOutPM.IssuedByUserId = exportDocumentArgs.LoggedContactId;
+                documentOutPM.IsChangeIssuedDate = true;
+                documentOutPM.DocumentTemplateId = exportDocumentArgs.DocumentTypeTemplateId;
+                documentOutPM.DocumentTemplateEditorTool = exportDocumentArgs.DocumentTemplateEditorTool;
+                ICommonDataContext objectContext = CommonDataContext.GetContext(documentOutPM.Tenant);
+                DocumentOutService service = new DocumentOutService(objectContext, documentOutPM.Tenant);
+                service.Update(documentOutPM, documentOutPM.DocumentOutCopies);
             }
         }
 

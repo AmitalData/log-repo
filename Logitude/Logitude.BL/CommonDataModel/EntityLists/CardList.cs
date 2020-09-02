@@ -87,7 +87,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string SATForeignRFC { get; set; }
         public string MetodoPagoCode { get; set; }
         public string UsoCFDICode { get; set; }
-        public string FirmCode { get; set; }
+        public string FirmCode { get; set; }        
         public string StateName { get; set; }
         public bool IsInternationalPartner { get; set; }
         public bool IsAutonomy { get; set; }
@@ -96,13 +96,23 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string CreatedByPartner { get; set; }
         public decimal OpenShipments { get; set; }
         public string BusinessPhone { get; set; }
-
-
         public int? StorageFreeDays { get; set; }
         public string RankId { get; set; }
         public string IndustryId { get; set; }
-
         public bool AccountingVATSplit { get; set; }
 
+        public string WarehouseTypeCode { get; set; }
+        public bool ChargeStorage { get; set; }
+        public string ChargeStorageCurrencyId { get; set; }
+        public string AirWeightMeasurementCode { get; set; }
+        public string OceanWeightMeasurementCode { get; set; }
+        public string InlandWeightMeasurementCode { get; set; }
+        public string AirWeightRoundingCode { get; set; }
+        public string OceanWeightRoundingCode { get; set; }
+        public string InlandWeightRoundingCode { get; set; }
+
+        public DateTime? RecordDate { get; set; }
+
+        
     }
 }

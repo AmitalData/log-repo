@@ -31,6 +31,7 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Microsoft.Practices.Unity;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -155,13 +156,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void Create()
         {
             this.isNewEntity = true;
-            this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
+            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
 
             this.entityCard = new Card()
             {
                 Id = entityPM.Id,
                 Tenant = tenant,
-                SharedLogisticsInvitationStatusCode = 1
+                SharedLogisticsInvitationStatusCode = 1,
+                UploadingUniqueKey = entityPM.UploadingUniqueKey,
             };
 
             this.entityPOCO = new Customer()
@@ -275,6 +277,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Customer");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+
         }
 
         public void Update()
@@ -462,6 +466,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Customer");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+
         }
 
         private void UpdateGLAccount(CustomerPM entityPM, Customer entityPOCO)

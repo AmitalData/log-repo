@@ -142,6 +142,19 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <!-- Shipment Sub Types -->
+                                        <div style="margin: 10px;" *ngIf="DirectionId && TransportModeId && ShipmentTypeId && SubTypeFeatureToggle">
+                                            <div style="font-size: 13px; color: #6E7172;">{{'Shipment.F.ShipmentSubTypeId' | TextCodeTranslationPipe}}:</div>
+                                            <div style="margin-top: -2px;">
+                                                <div class="RadioButton" *ngFor="let item of ShipmentSubTypesList" [attr.id]="'ShipmentSubTypeRadio_Div_' + SessionIndex + item.Code">
+                                                    <input [attr.id]="'ShipmentSubTypeRadio_' + SessionIndex + item.Code" [attr.name]="'ShipmentSubTypesRadio' + SessionIndex" type="radio" [checked]="ShipmentSubTypeId == item.Code" (click)="ShipmentSubTypeId = item.Code" [disabled]="!IsShipmentSubTypesListEnabled" />
+                                                    <label [attr.for]="'ShipmentSubTypeRadio_' + SessionIndex + item.Code" style="text-indent: 20px; font-size: 12px" [ngStyle]="{color: ShipmentSubTypeId == item.Code ? '#287828':'#282E30'}">
+                                                        {{item.Name}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
 
@@ -305,7 +318,7 @@
                                                                         <td>
                                                                             <div style="margin-left: 2px;">
                                                                                 <!--<IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('S')" [disabled]="!AgentAddressId"></IconButton>
-                                                                                <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('S')"></IconButton>-->
+            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('S')"></IconButton>-->
                                                                             </div>
                                                                         </td>
                                                                         <td [style.width.px]="LabelColumnWidth">
@@ -319,6 +332,9 @@
                                                                                     [LookUpTableName]="'Contact'"
                                                                                     [DependencyFilter1Value]="AgentId">
                                                                             </LogLov>
+                                                                        </td>
+                                                                        <td style="width: 20px;">
+                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddContact(AgentId)"></IconButton>
                                                                         </td>
                                                                     </tr>
 
@@ -346,6 +362,11 @@
                                                                                 </p>
                                                                             </div>
                                                                         </td>
+
+
+                                                                        <td style="width: 20px;">
+                                                                            <div></div>
+                                                                        </td>
                                                                     </tr>
 
                                                                     <tr class="FormFieldRow">
@@ -363,6 +384,10 @@
                                                                         </td>
                                                                         <td [style.width.px]="ControlColumnWidth">
                                                                             <LogTextBox [ObjectFieldName]="'AgentReference2'" [Text]="AgentReference2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+
+                                                                        <td style="width: 20px;">
+                                                                            <div></div>
                                                                         </td>
                                                                     </tr>
                                                                 </table>

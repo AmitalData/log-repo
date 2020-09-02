@@ -209,6 +209,9 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace <#= UpdateClassnamespacestring #>
 {
@@ -878,9 +881,9 @@ private void WriteAddMenuButtonsFeaturesMethod(XElement MButtonAtt,string TblNam
 
       
 	string feaureItemName =TblName.Trim('"')+"Feature_MB"+index.ToString();
-	if(!AddedMenuButtonsFeatures.Keys.Contains(EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')) && MenuButtonTypeAtt.Trim('"') != "dropdownbutton")
+	if(!AddedMenuButtonsFeatures.Keys.Contains(EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')) && (MenuButtonTypeAtt.Trim('"') != "dropdownbutton" || FeatureCodeAtt != null))
 		{AddedMenuButtonsFeatures.Add(EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"') ,feaureItemName);}
-        if(MenuButtonTypeAtt.Trim('"') != "dropdownbutton"){
+        if(MenuButtonTypeAtt.Trim('"') != "dropdownbutton" || FeatureCodeAtt != null){
 #>      
     
 			   Feature <#= feaureItemName #> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = <#= FeatureCode #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= TextCodeCode #>", NameTextCodeDefaultText = "<#= DefaultText #>", FeatureTypeCode = "ACT", Packagable = <#= Packagable.ToLower() #> }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,<#= TblName.Trim('"') #>ObjectTable);
@@ -978,7 +981,7 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 	    string featureClassName = "null";
 		string featureCodeClassName = "null";
         
-        if (MenuButtonType.Trim('"') != "dropdownbutton")
+        if (MenuButtonType.Trim('"') != "dropdownbutton" || FeatureCodeAtt != null)
         {
                         featureClassName = AddedMenuButtonsFeatures[EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')] + ".Id";
                         featureCodeClassName = AddedMenuButtonsFeatures[EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')] + ".FeatureUniqeCode";

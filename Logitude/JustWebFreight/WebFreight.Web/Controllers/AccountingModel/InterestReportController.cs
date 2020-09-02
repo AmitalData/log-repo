@@ -106,6 +106,23 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
+        public HttpResponseMessage GetInterestReportStatusCode(string InterestReportId)
+        {
+            try
+            {
+                int tenant = AuthinticateTenant();
+                string email = HttpContext.Current.User.Identity.Name;
+                InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
+                string InterestReportStatus = interestReportQueryService.GetInterestReportStatusCode(InterestReportId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, InterestReportStatus);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         public HttpResponseMessage PutBatchPrint(InterestReportArguments interestReportArgs)
         {
             try

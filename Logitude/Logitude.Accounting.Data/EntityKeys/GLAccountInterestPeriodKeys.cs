@@ -24,7 +24,8 @@ namespace Logitude.Accounting.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return LineNumber+'_'+GLAccountId;
+                 return LineNumber+'_'+GLAccountId ;
+                 
       }
 
       public override string GetEntityPMName()

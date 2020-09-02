@@ -411,7 +411,7 @@ export class EditComponent implements OnDestroy {
             if (this.EntityPM.ShipmentLevelCode == "C") {
                 this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe((response:any) => {
 
-                    
+
                     const masterObjectTable = window.ObjectTables.filter(x => x.Name === "Master")[0];
                     const shipmentObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
 
@@ -1499,6 +1499,10 @@ export class EditComponent implements OnDestroy {
                                 this.StopBusyIndicator();
                                 this.UpdateComponentMembers();
                                 this.LoadCompleted.emit(true);
+                                if (this.ObjectTableName == "Shipment") {
+                                    this.CurrentSession.FireEvent("FollowupsChanged")
+                                }
+
                             });
                         }
                     });

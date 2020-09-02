@@ -92,6 +92,7 @@ export class TenantList {
 		AccountingActivated: boolean;
 		IsInternalTicketByDefault: boolean;
 		ProrateMasterReceivables: boolean;
+		IsIncrementalBuildRunning: boolean;
 		SCACCode: string;
 		ExportQuotationsToIntegratedSystem: boolean;
 		TenantVATManagement: boolean;

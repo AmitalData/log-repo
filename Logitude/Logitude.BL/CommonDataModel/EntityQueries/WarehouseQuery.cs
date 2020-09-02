@@ -72,22 +72,34 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          MyWarehouse = a.MyWarehouse,
                                          UsoCFDICode = a.Card.UsoCFDICode,
                                          SATForeignRFC = a.Card.SATForeignRFC,
-                                        
+                                         ChargeStorage = a.ChargeStorage,
+                                         CurrencyId = a.CurrencyId,
+                                         AirWeightMeasurementCode = a.AirWeightMeasurementCode,
+                                         OceanWeightMeasurementCode = a.OceanWeightMeasurementCode,
+                                         InlandWeightMeasurementCode = a.InlandWeightMeasurementCode,
+                                         AirWeightRoundingCode = a.AirWeightRoundingCode,
+                                         OceanWeightRoundingCode = a.OceanWeightRoundingCode,
+                                         InlandWeightRoundingCode = a.InlandWeightRoundingCode,
+
                                          Card = new CardPM()
                                          {
                                              Id = a.Id,
                                              Tenant = a.Tenant,
                                              EnglishName = a.Card.EnglishName,
                                              PrimaryContactId = a.Card.PrimaryContactId,
-                                             PartnerTypeId =a.Card.PartnerTypeId,
-                                             Code= a.Card.Code,
+                                             PartnerTypeId = a.Card.PartnerTypeId,
+                                             Code = a.Card.Code,
                                          },
                                      }).FirstOrDefault();
 
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             warehouse.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(warehouse.Id, warehouse.Tenant);
-          
+
+            WarehouseStoragePricingRepository warehouseStoragePricingRepository = new WarehouseStoragePricingRepository(repository.context);
+            WarehouseStoragePricingQuery warehouseStoragePricingQuery = new WarehouseStoragePricingQuery(warehouseStoragePricingRepository);
+            warehouse.WarehouseStoragePricings = warehouseStoragePricingQuery.GetWarehouseStoragePricingPMsByWarehouseId(warehouse.Id, warehouse.Tenant);
+
             if (warehouse != null)
             {
                 warehouse.IsExternal = false;
@@ -151,6 +163,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          MyWarehouse = a.MyWarehouse,
                                          UsoCFDICode = a.Card.UsoCFDICode,
                                          SATForeignRFC = a.Card.SATForeignRFC,
+                                         ChargeStorage = a.ChargeStorage,
+                                         CurrencyId = a.CurrencyId,
+                                         AirWeightMeasurementCode = a.AirWeightMeasurementCode,
+                                         OceanWeightMeasurementCode = a.OceanWeightMeasurementCode,
+                                         InlandWeightMeasurementCode = a.InlandWeightMeasurementCode,
+                                         AirWeightRoundingCode = a.AirWeightRoundingCode,
+                                         OceanWeightRoundingCode = a.OceanWeightRoundingCode,
+                                         InlandWeightRoundingCode = a.InlandWeightRoundingCode,
+
                                          Card = new CardPM()
                                          {
                                              Id = a.Id,
@@ -228,6 +249,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        MyWarehouse = a.MyWarehouse,
                        UsoCFDICode = a.Card.UsoCFDICode,
                        SATForeignRFC = a.Card.SATForeignRFC,
+                       ChargeStorage = a.ChargeStorage,
+                       CurrencyId = a.CurrencyId,
+                       AirWeightMeasurementCode = a.AirWeightMeasurementCode,
+                       OceanWeightMeasurementCode = a.OceanWeightMeasurementCode,
+                       InlandWeightMeasurementCode = a.InlandWeightMeasurementCode,
+                       AirWeightRoundingCode = a.AirWeightRoundingCode,
+                       OceanWeightRoundingCode = a.OceanWeightRoundingCode,
+                       InlandWeightRoundingCode = a.InlandWeightRoundingCode,
+
                        Card = new CardPM()
                        {
                            Id = a.Id,
@@ -278,6 +308,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    PrimaryContactEmail = a.PrimaryContactEmail,
                                                    PrimaryContactPhone = a.PrimaryContactPhone,
                                                    StateName = a.Card.StateName,
+                                                   ChargeStorage = a.ChargeStorage,
+                                                   CurrencyId = a.CurrencyId,
+                                                   AirWeightMeasurementCode = a.AirWeightMeasurementCode,
+                                                   OceanWeightMeasurementCode = a.OceanWeightMeasurementCode,
+                                                   InlandWeightMeasurementCode = a.InlandWeightMeasurementCode,
+                                                   AirWeightRoundingCode = a.AirWeightRoundingCode,
+                                                   OceanWeightRoundingCode = a.OceanWeightRoundingCode,
+                                                   InlandWeightRoundingCode = a.InlandWeightRoundingCode,
                                                };
             return result;
         }
@@ -323,6 +361,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                MyWarehouse = a.MyWarehouse,
                                UsoCFDICode = a.Card.UsoCFDICode,
                                SATForeignRFC = a.Card.SATForeignRFC,
+                               ChargeStorage = a.ChargeStorage,
+                               CurrencyId = a.CurrencyId,
+                               AirWeightMeasurementCode = a.AirWeightMeasurementCode,
+                               OceanWeightMeasurementCode = a.OceanWeightMeasurementCode,
+                               InlandWeightMeasurementCode = a.InlandWeightMeasurementCode,
+                               AirWeightRoundingCode = a.AirWeightRoundingCode,
+                               OceanWeightRoundingCode = a.OceanWeightRoundingCode,
+                               InlandWeightRoundingCode = a.InlandWeightRoundingCode,
+
                                Card = new CardPM()
                                {
                                    Id = a.Id,
@@ -334,6 +381,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
 
             return warehouse;
+        }
+    
+        public string GetWarehouseTypeById(string warehouseId, int tenant)
+        {
+            return repository.GetWarehouseTypeById(warehouseId, tenant);
         }
     }
 }

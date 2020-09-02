@@ -552,7 +552,23 @@ if (response != null) {
     }
 
     VoidClicked() {
+        var isQuickBooks: boolean = false;
+        var isTransferingToQuickBooks: boolean = false;
+
         if (SessionLocator.AccountingSystemPM.Code == "QBO" || SessionLocator.AccountingSystemPM.Code == "QBOG") {
+            isQuickBooks = true;
+            isTransferingToQuickBooks = true;
+
+            if (this.EntityPM.StatusCode == null || this.EntityPM.StatusCode == "WA") {
+                isTransferingToQuickBooks = false;
+            }
+
+            else if (this.EntityPM.TransferStatusCode == "ET") {
+                isTransferingToQuickBooks = false;
+            }
+        }
+
+        if (isQuickBooks && isTransferingToQuickBooks) {
             var messageWindow = new MessageWindow();
             messageWindow.Show("Please notice that QBO are not supporting void transmission for the APInvoice, you can void it manually from QBO");
             messageWindow.WindowClosed.subscribe(p => {

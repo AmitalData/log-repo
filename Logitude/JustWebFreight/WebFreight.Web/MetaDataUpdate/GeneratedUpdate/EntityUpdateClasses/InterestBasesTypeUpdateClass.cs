@@ -71,12 +71,15 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestBasesTypeUpdateClass
    {  		
-		public const string HashString = "cdcd46be2c30e03db77cab7decc13a99";
+		public const string HashString = "c87f360c9faa1739484fa4b6a2a16754";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "InterestBasesType",
 			      				    IsNew =  true,
 			      				    DBTableName =  "InterestBasesTypes",
-			      				    OldDBTableName =  "InterestBasesTypes",
 			      				    ObjectTableSingular =  "InterestBasesType",
 			      				    ObjectTablePlural =  "InterestBasesTypes",
 			      				    DescriptionDefaultText =  "Table of interest bases",
@@ -149,7 +151,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "InterestBasesType",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -211,7 +212,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "InterestBasesType",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -269,7 +269,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "InterestBasesType",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -331,7 +330,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "InterestBasesType",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -389,7 +387,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "InterestBasesType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -449,7 +446,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "InterestBasesType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -511,7 +507,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "InterestBasesType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -573,7 +568,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "InterestBasesType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -635,7 +629,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Description",
-					  						OldFieldName =  "Description",
 					  						ObjectTableName =  "InterestBasesType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -697,7 +690,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "InterestBasesType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -759,7 +751,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestBasesPeriods",
-					  						OldFieldName =  "InterestBasesPeriods",
 					  						ObjectTableName =  "InterestBasesType",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -922,7 +913,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "INEV",
                 EnglishName =  "Inactive",
-                LocalName =  "לא פעיל",
+                LocalName =  "Inactive",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -940,7 +931,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "PUEV",
                 EnglishName =  "Base Period Updated",
-                LocalName =  "טבלת בסיס עודכנה",
+                LocalName =  "Base Period Updated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -958,7 +949,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "PCEV",
                 EnglishName =  "Base Period Created",
-                LocalName =  "טבלת בסיס נוצרה",
+                LocalName =  "Base Period Created",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -976,7 +967,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CDEV",
                 EnglishName =  "Created",
-                LocalName =  "נוצר",
+                LocalName =  "Created",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -994,7 +985,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "UDEV",
                 EnglishName =  "Updated",
-                LocalName =  "עדכון",
+                LocalName =  "Updated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,

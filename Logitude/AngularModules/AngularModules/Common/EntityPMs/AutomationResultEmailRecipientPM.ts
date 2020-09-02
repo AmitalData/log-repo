@@ -50,6 +50,11 @@ export class AutomationResultEmailRecipientPM {
     public set RecipientType(newValue: string) { if (this.recipientType != newValue) { this.recipientType = newValue; this.MarkAsDirty("RecipientType"); } }
        
 	 
+    private partnerObjectFieldCode: string;
+    public get PartnerObjectFieldCode() { return this.partnerObjectFieldCode; }
+    public set PartnerObjectFieldCode(newValue: string) { if (this.partnerObjectFieldCode != newValue) { this.partnerObjectFieldCode = newValue; this.MarkAsDirty("PartnerObjectFieldCode"); } }
+       
+	 
 
     public OldEntityPM: AutomationResultEmailRecipientPM;
 		

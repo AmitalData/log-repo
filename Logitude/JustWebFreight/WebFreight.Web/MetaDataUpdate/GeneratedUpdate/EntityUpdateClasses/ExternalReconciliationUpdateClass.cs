@@ -71,12 +71,15 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExternalReconciliationUpdateClass
    {  		
-		public const string HashString = "203c3f9e936280d440756176a54a66a5";
+		public const string HashString = "59951d2bfb12e80e6386b8b9134a1460";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "External Reconciliation",
-			      				    Code =  "0676",
+			      				    Code =  "4e81",
 			      				    Name =  "ExternalReconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1003,7 +1006,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CREV",
                 EnglishName =  "Reconciliation Created",
-                LocalName =  "התאמה נוצרה",
+                LocalName =  "Reconciliation Created",
                 IsManualEntry =  false,
                 ShortView =  true,
                 EventTypeCategoryCode =  "OPE",
@@ -1041,7 +1044,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "ERCN",
                 EnglishName =  "Reconciliation Cancelled",
-                LocalName =  "בוטלה התאמה",
+                LocalName =  "Reconciliation Cancelled",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,

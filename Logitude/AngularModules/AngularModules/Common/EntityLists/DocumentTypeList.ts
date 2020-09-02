@@ -47,6 +47,9 @@ export class DocumentTypeList {
 		IsAgentSharedInDirect: boolean;
 		IsAgentSharedInHouse: boolean;
 		SharedDocumentTypeCopyId: string;
+		OnSendPopulateDateFieldName: string;
+		OnUploadPopulateDateFieldName: string;
+		OnPrintPopulateDateFieldName: string;
 		OrderBy: number;
 		OrderedDisplayName: string;
 		IsSystemAdditionalPrintingFields: boolean;

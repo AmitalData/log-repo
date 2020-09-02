@@ -6452,6 +6452,19 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;OVMA&quot;"
+      ObjectTableName="&quot;WarehouseEntry&quot;"
+      EnglishName="&quot;Over Manifest&quot;"
+      LocalName="&quot;Over Manifest&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons

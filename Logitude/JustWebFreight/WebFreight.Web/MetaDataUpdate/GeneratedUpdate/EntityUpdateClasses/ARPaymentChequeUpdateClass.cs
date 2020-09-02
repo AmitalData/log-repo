@@ -71,12 +71,15 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ARPaymentChequeUpdateClass
    {  		
-		public const string HashString = "67aa1415128ac3fe6e9ecfe23b6f8b95";
+		public const string HashString = "1f0b4a6df75b602a1e62395fe56cee35";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "ARPaymentCheque",
 			      				    IsNew =  false,
 			      				    DBTableName =  "ARPaymentCheques",
-			      				    OldDBTableName =  "ARPaymentCheques",
 			      				    ObjectTableSingular =  "ARPaymentCheque",
 			      				    ObjectTablePlural =  "ARPaymentCheques",
 			      				    DescriptionDefaultText =  "Cheque Line",
@@ -121,7 +123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "שורת המחאה",
 			      				    DefaultText =  "Cheque Line",
-			      				    Code =  "c6f6",
+			      				    Code =  "3735",
 			      				    Name =  "ARPaymentCheque Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Accounting",
@@ -145,7 +147,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -193,6 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -204,7 +206,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentId",
-					  						OldFieldName =  "PaymentId",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ARPayment",
@@ -256,6 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -267,7 +269,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentNumber",
-					  						OldFieldName =  "PaymentNumber",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -318,6 +319,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -329,7 +331,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LineNumber",
-					  						OldFieldName =  "LineNumber",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -380,6 +381,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -391,7 +393,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ChequeNumber",
-					  						OldFieldName =  "ChequeNumber",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -442,6 +443,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -453,7 +455,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ValueDate",
-					  						OldFieldName =  "ValueDate",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -504,6 +505,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -515,7 +517,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyId",
-					  						OldFieldName =  "CurrencyId",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -567,6 +568,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -578,7 +580,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyCode",
-					  						OldFieldName =  "CurrencyCode",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -629,6 +630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -640,7 +642,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyName",
-					  						OldFieldName =  "CurrencyName",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -691,6 +692,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -702,7 +704,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalAmount",
-					  						OldFieldName =  "LocalAmount",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -755,6 +756,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -766,7 +768,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ForeignAmount",
-					  						OldFieldName =  "ForeignAmount",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -819,6 +820,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -830,7 +832,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BankId",
-					  						OldFieldName =  "BankId",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -881,6 +882,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -892,7 +894,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BankNumber",
-					  						OldFieldName =  "BankNumber",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -943,6 +944,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -954,7 +956,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BankName",
-					  						OldFieldName =  "BankName",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1005,6 +1006,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1016,7 +1018,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BankBranch",
-					  						OldFieldName =  "BankBranch",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1067,6 +1068,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1078,7 +1080,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BankAccount",
-					  						OldFieldName =  "BankAccount",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1129,6 +1130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1140,7 +1142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StatusCode",
-					  						OldFieldName =  "StatusCode",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ARPaymentChequeStatus",
@@ -1191,6 +1192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1202,7 +1204,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExchangeRate",
-					  						OldFieldName =  "ExchangeRate",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1251,6 +1252,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1262,7 +1264,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StatusName",
-					  						OldFieldName =  "StatusName",
 					  						ObjectTableName =  "ARPaymentCheque",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1307,6 +1308,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1320,7 +1322,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable ARPaymentChequeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARPaymentCheque" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ARPaymentChequeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ARPaymentCheque").ToList();
+		       
+	      
+
+	         Screen ARPaymentChequeARPaymentChequeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARPaymentCheque.HeaderScreen", Name = "ARPaymentChequeHeaderScreen", ObjectTableId = ARPaymentChequeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    ARPaymentChequeObjectTable.HeaderScreenId = ARPaymentChequeARPaymentChequeHeaderScreenScreen0.Id;
+		    ARPaymentChequeObjectTable.HeaderScreenCode = ARPaymentChequeARPaymentChequeHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -1364,7 +1378,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "ARPR",
                 EnglishName =  "Out of deposit, returned to cashbook",
-                LocalName =  "המחאה הוצאה מהפקדה",
+                LocalName =  "Out of deposit, returned to cashbook",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,

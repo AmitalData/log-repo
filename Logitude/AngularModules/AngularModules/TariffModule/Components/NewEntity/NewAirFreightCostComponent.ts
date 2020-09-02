@@ -38,6 +38,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     public VisibleContainerTypeAreaInOFS: boolean = false;
     public ChargeTypesQueryFilters: ApiQueryFilters;
     public FreightChargeTypesQueryFilters: ApiQueryFilters;
+    public MeasurementsQueryFilters: ApiQueryFilters;
     private chargesTypePMService: ChargesTypeListService;
     private packageTypeListService: PackageTypeListService;
     private IdProps: string[] = [];
@@ -192,6 +193,10 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             EntityType = "IsOcean";
             this.SellerDependancy = "SL";
         }
+
+        this.MeasurementsQueryFilters = new ApiQueryFilters();
+        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter(EntityType, true, null, null, "Equals", false, false, false, "Boolean");

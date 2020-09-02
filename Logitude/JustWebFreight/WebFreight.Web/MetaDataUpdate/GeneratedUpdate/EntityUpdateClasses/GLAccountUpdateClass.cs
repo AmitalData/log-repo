@@ -71,17 +71,15 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-
-
-
-		public const string HashString = "04637b1a8a0939a79e7881a3dce76d4b";
-
-
+		public const string HashString = "61cbd07acd7a43cd8e406dac4a9e18fc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6578,12 +6576,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6597,6 +6596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -6608,6 +6608,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "ActiveForInterest",
 					  						DefaultText =  "Active for Interest",
 					  						FullLocalDefaultText =  "פעיל לריבית",
+					  						ListFieldLable =  "ActiveForInterestListLable",
+					  						ListLableDefaultText =  "Active for Interest",
+					  						ListLocalDefaultText =  "פעיל לריבית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6635,12 +6638,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6654,6 +6658,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -6665,6 +6670,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "InterestCalculationStartDate",
 					  						DefaultText =  "Interest Calculation Start Date",
 					  						FullLocalDefaultText =  "תאריך לחישוב ריבית",
+					  						ListFieldLable =  "InterestCalculationStartDateListLable",
+					  						ListLableDefaultText =  "Interest Calculation Start Date",
+					  						ListLocalDefaultText =  "תאריך לחישוב ריבית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6692,12 +6700,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6711,6 +6720,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -6722,6 +6732,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "ActiveForInterestCreditInvoice",
 					  						DefaultText =  "Active for Interest Credit invoice",
 					  						FullLocalDefaultText =  "פעיל לחשבונית זיכוי",
+					  						ListFieldLable =  "ActiveForInterestCreditInvoiceListLable",
+					  						ListLableDefaultText =  "Active for Interest Credit invoice",
+					  						ListLocalDefaultText =  "פעיל לחשבונית זיכוי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6806,12 +6819,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6825,6 +6839,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -6838,6 +6853,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "InterestCreditLimit",
 					  						DefaultText =  "Interest Credit",
 					  						FullLocalDefaultText =  "אשראי לריבית",
+					  						ListFieldLable =  "InterestCreditLimitListLable",
+					  						ListLableDefaultText =  "Interest Credit",
+					  						ListLocalDefaultText =  "אשראי לריבית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6979,12 +6997,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6998,6 +7017,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -7009,6 +7029,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "MinimumInterestInvoiceBilling",
 					  						DefaultText =  "Minimum Interest Invoice billing",
 					  						FullLocalDefaultText =  "מינימום חיוב בחשבונית ריבית",
+					  						ListFieldLable =  "MinimumInterestInvoiceBillingListLable",
+					  						ListLableDefaultText =  "Minimum Interest Invoice billing",
+					  						ListLocalDefaultText =  "מינימום חיוב בחשבונית ריבית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7742,8 +7765,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature GLAccountFeature_RECONCILE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RECONCILE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reconcile", NameTextCodeDefaultText = @"Reconcile" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GLAccountObjectTable);
 
-		   Feature GLAccountFeature_MOREGLACCOUNT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREGLACCOUNT", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.More", NameTextCodeDefaultText = @"More Buttons" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GLAccountObjectTable);
-
 		   Feature GLAccountFeature_YEARTRANSFERMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "YEARTRANSFERMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "YearTransfer.Features.YearTransferMenu", NameTextCodeDefaultText = @"YearTransfer" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GLAccountObjectTable);
 
 		   Feature GLAccountFeature_GEN1000MENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GEN1000MENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "YearTransfer.Features.GEN1000MENU", NameTextCodeDefaultText = @"Generate a vendor file for the system 1000" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GLAccountObjectTable);
@@ -7801,7 +7822,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "GLPC",
                 EnglishName =  "Parent GLAccount updated",
-                LocalName =  "כרטיס אב עודכן",
+                LocalName =  "Parent GLAccount updated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
@@ -7820,7 +7841,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CTCH",
                 EnglishName =  "Chart Of Account Type Changed",
-                LocalName =  "סוג קבוצת מאזן עודכן",
+                LocalName =  "Chart Of Account Type Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
@@ -7839,7 +7860,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "ADD",
                 EnglishName =  "Splitted GLAccount added",
-                LocalName =  "נוסף כרטיס פיצול לפני מטבע",
+                LocalName =  "Splitted GLAccount added",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -7858,7 +7879,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "INGL",
                 EnglishName =  "Splitted GLAccount deactivated",
-                LocalName =  "כרטיס הפיצול נחסם",
+                LocalName =  "Splitted GLAccount deactivated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -7877,7 +7898,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DISC",
                 EnglishName =  "Child GLAccount was disconnected",
-                LocalName =  "כרטיס בן נותק",
+                LocalName =  "Child GLAccount was disconnected",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -7896,7 +7917,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CHID",
                 EnglishName =  "Child GLAccount was added",
-                LocalName =  "הכרטיס נוסף ככרטיס בן ",
+                LocalName =  "Child GLAccount was added",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -7915,7 +7936,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "SGAC",
                 EnglishName =  "Splitted GLAccount was activated",
-                LocalName =  "כרטיס הפיצול מוּפעָל",
+                LocalName =  "Splitted GLAccount was activated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -7934,7 +7955,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "LIAC",
                 EnglishName =  "Line activated",
-                LocalName =  "שורה הופעלה",
+                LocalName =  "Line activated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -7953,7 +7974,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DETV",
                 EnglishName =  "Line deactivated",
-                LocalName =  "שורה מספר נחסמה",
+                LocalName =  "Line deactivated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -8010,7 +8031,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "ACR",
                 EnglishName =  "Created",
-                LocalName =  "חדש",
+                LocalName =  "Created",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -8029,7 +8050,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "ACH",
                 EnglishName =  "Account Number Changed",
-                LocalName =  "שינוי מספר חשבון",
+                LocalName =  "Account Number Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -8048,7 +8069,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "NCH",
                 EnglishName =  "Account Name Changed",
-                LocalName =  "שינוי שם חשבון",
+                LocalName =  "Account Name Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -8067,7 +8088,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CHCH",
                 EnglishName =  "Chart of Accounts Changed",
-                LocalName =  "שינוי קבוצת מאזן",
+                LocalName =  "Chart of Accounts Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -8086,7 +8107,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "BLK",
                 EnglishName =  "Account Inactivated",
-                LocalName =  "הכרטיס נחסם",
+                LocalName =  "Account Inactivated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -8105,7 +8126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "UBLK",
                 EnglishName =  "Account Activated",
-                LocalName =  "הכרטיס הופעל",
+                LocalName =  "Account Activated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -8124,7 +8145,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "GLRC",
                 EnglishName =  "Account Reactivated",
-                LocalName =  "הכרטיס הופעל מחדש",
+                LocalName =  "Account Reactivated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8142,7 +8163,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CAT1",
                 EnglishName =  "Category 1 Changed",
-                LocalName =  "שינוי  מזהה קטגוריה 1 ",
+                LocalName =  "Category 1 Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8160,7 +8181,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CAT2",
                 EnglishName =  "Category 2 Changed",
-                LocalName =  "שינוי  מזהה קטגוריה 2 ",
+                LocalName =  "Category 2 Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8178,7 +8199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CAT3",
                 EnglishName =  "Category 3 Changed",
-                LocalName =  "שינוי  מזהה קטגוריה 3 ",
+                LocalName =  "Category 3 Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8196,7 +8217,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CAT4",
                 EnglishName =  "Category 4 Changed",
-                LocalName =  "שינוי  מזהה קטגוריה 4 ",
+                LocalName =  "Category 4 Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8214,7 +8235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "RVUP",
                 EnglishName =  "Revaluation Enabled Changed",
-                LocalName =  "שינוי שערוך אוטומטי ",
+                LocalName =  "Revaluation Enabled Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8232,7 +8253,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CAT5",
                 EnglishName =  "Category 5 Changed",
-                LocalName =  "שינוי  מזהה קטגוריה 5 ",
+                LocalName =  "Category 5 Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8250,7 +8271,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "MLUP",
                 EnglishName =  "Is Multi Currency Changed",
-                LocalName =  "שינוי רב מטבעי ",
+                LocalName =  "Is Multi Currency Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8268,7 +8289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "RMUP",
                 EnglishName =  "Reconcile Method Changed",
-                LocalName =  " שינוי שיטת התאמה ",
+                LocalName =  "Reconcile Method Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8286,7 +8307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "ARCP",
                 EnglishName =  "Automatic Reconcile Method Changed",
-                LocalName =  " שינוי התאמה אוטומטית  ",
+                LocalName =  "Automatic Reconcile Method Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8304,7 +8325,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "VAEX",
                 EnglishName =  "Is Vat Eexcempt Changed",
-                LocalName =  "שדה פטור מע”מ שונה",
+                LocalName =  "Is Vat Eexcempt Changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8322,7 +8343,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DIST",
                 EnglishName =  "Card was disconnected",
-                LocalName =  "נותק מכרטיס תפעולי",
+                LocalName =  "Card was disconnected",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8340,7 +8361,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "NTAD",
                 EnglishName =  "New Note",
-                LocalName =  "הערה חדשה נוספה",
+                LocalName =  "New Note",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8358,7 +8379,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "NTUP",
                 EnglishName =  "Note Edited",
-                LocalName =  "הערה עודכנה",
+                LocalName =  "Note Edited",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8376,7 +8397,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "NTDL",
                 EnglishName =  "Note Deleted",
-                LocalName =  "הערה נמחקה",
+                LocalName =  "Note Deleted",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8394,7 +8415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "AFIT",
                 EnglishName =  "Active for interest",
-                LocalName =  "הופעל במערכת ריבית",
+                LocalName =  "Active for interest",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8412,7 +8433,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "IFIT",
                 EnglishName =  "Inactive for interest",
-                LocalName =  "לא פעיל  במערכת ריבית",
+                LocalName =  "Inactive for interest",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8430,7 +8451,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "ISDT",
                 EnglishName =  "Interest Start Date",
-                LocalName =  "עודכנו נתוני ריבית",
+                LocalName =  "Interest Start Date",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8448,7 +8469,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "AFIC",
                 EnglishName =  "Active For Interest Credit Invoice",
-                LocalName =  " פעיל בזיכוי ריבית",
+                LocalName =  "Active For Interest Credit Invoice",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8466,7 +8487,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "MIIB",
                 EnglishName =  "Minimum Interest Invoice Billing",
-                LocalName =  "עודכן סכום מינימום לריבית",
+                LocalName =  "Minimum Interest Invoice Billing",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8484,7 +8505,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "LUPD",
                 EnglishName =  "Line Updated",
-                LocalName =  " עודכנה שורת ריבית ",
+                LocalName =  "Line Updated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8502,7 +8523,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "SCBC",
                 EnglishName =  "Small cashbook changed",
-                LocalName =  "שדה קופה קטנה שונה",
+                LocalName =  "Small cashbook changed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8520,7 +8541,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "GLCC",
                 EnglishName =  "GLAccount.currency conected",
-                LocalName =  "חיבור כרטסת מטבעית בוצעה",
+                LocalName =  "GLAccount.currency conected",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8538,7 +8559,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "GLDD",
                 EnglishName =  "GLAccount.currency disconnected",
-                LocalName =  "ניתוק כרטסת מטבעית בוצע",
+                LocalName =  "GLAccount.currency disconnected",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -8561,6 +8582,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   ObjectTable GLAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "GLAccount" && d.Tenant == 0).FirstOrDefault();       
     
 			   Feature GLAccountFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RECOCILE", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reconcile", NameTextCodeDefaultText = "Reconcile", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
+
+      
+    
+			   Feature GLAccountFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREGLACCOUNT", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.More", NameTextCodeDefaultText = "More Buttons", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
 
 			   Feature GLAccountFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACITVE", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
              			   Feature GLAccountFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTCARDINDEX", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.PrintCardIndex", NameTextCodeDefaultText = "Print Card Index", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
@@ -8598,7 +8623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton GLAccountMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 100, 
+						Index = 1, 
 						IsActive = false,
 						LabelTextCodeCode = "GLAccount.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -8606,10 +8631,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = GLAccountMenuButtonGroup.Id,
 						ObjectTableId = GLAccountObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = null,
+						FeatureId = GLAccountFeature_MB1.Id,
 						Style = null,
 						LocalDefaultText = "נוספים",
-						FeatureUniqeCode = null,
+						FeatureUniqeCode = GLAccountFeature_MB1.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton GLAccountMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -9084,6 +9109,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOGLaccountConnectedMoreOneCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLaccountConnectedMoreOneCard", DefaultText = "the GLaccount is connected to more than one operational card",LocalDefaultText = @"הכרטסת מחוברת ליותר מכרטיס תפעולי אחד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountONoSalesman = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSalesman", DefaultText = "You cannot run this report without filling the Salesman field",LocalDefaultText = @"לא ניתן להפיק את הדוח ללא בחירת איש מכירות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOConnected10Cards = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Connected10Cards", DefaultText = "The GLAccount is connected to 10 or more operational cards.",LocalDefaultText = "כרטיס הנח''ש מחובר ליותר מ 10 כרטיסים תפעוליים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

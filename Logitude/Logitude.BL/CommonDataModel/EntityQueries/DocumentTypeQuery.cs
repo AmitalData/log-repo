@@ -99,6 +99,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                     PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                     AddedManually = a.AddedManually,
+                                    OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                    OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                    OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
                                 }).FirstOrDefault();
         }
 
@@ -159,6 +162,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                     PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                     AddedManually = a.AddedManually,
+                                    OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                    OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                    OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
                                 }).FirstOrDefault();
 
@@ -225,6 +231,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                     PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                     AddedManually = a.AddedManually,
+                                    OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                    OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                    OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
                                 }).FirstOrDefault();
 
@@ -290,6 +299,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                           PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                           AddedManually = a.AddedManually,
+                                          OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                          OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                          OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
                                       }).ToList();
 
@@ -359,6 +371,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                             PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                             AddedManually = a.AddedManually,
+                                            OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                            OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                            OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
                                         }).FirstOrDefault();
 
@@ -427,6 +442,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                             PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                             AddedManually = a.AddedManually,
+                                            OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                            OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                            OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
                                         }).FirstOrDefault();
 
@@ -523,6 +541,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                             PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                             AddedManually = a.AddedManually,
+                                            OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                            OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                            OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
                                         }).FirstOrDefault();
 
@@ -552,6 +573,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           OrderBy = a.OrderBy,
                                           FileName = a.FileName,
                                           AddedManually = a.AddedManually,
+                                          OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                          OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                          OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
 
                                       }).ToList();
@@ -575,6 +599,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             DocumentTypeDefaultReportTemplateId = a.DocumentTypeDefaultReportTemplateId,
                                             FileName = a.FileName,
                                             AddedManually = a.AddedManually,
+                                            OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                            OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                            OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
                                         }).ToList();
             return d;
@@ -632,6 +659,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                           PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                             AddedManually = a.AddedManually,
+                                            OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                            OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                            OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
                                         }).ToList();
             return d;
@@ -700,7 +730,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                 PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                 AddedManually = a.AddedManually,
-
+                                OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
 
                             };
@@ -758,6 +790,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                 PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                 AddedManually = a.AddedManually,
+                                OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
                             };
                         break;
@@ -814,6 +849,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                 PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                 AddedManually = a.AddedManually,
+                                OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
                             };
                         break;
@@ -891,6 +929,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsSystemAdditionalPrintingFields = documentType.IsSystemAdditionalPrintingFields,
                     PrintingFieldsScreenCode = documentType.PrintingFieldsScreenCode,
                     AddedManually = documentType.AddedManually,
+                    OnPrintPopulateDateFieldName = documentType.OnPrintPopulateDateFieldName,
+                    OnSendPopulateDateFieldName = documentType.OnSendPopulateDateFieldName,
+                    OnUploadPopulateDateFieldName = documentType.OnUploadPopulateDateFieldName,
 
 
                 };
@@ -952,6 +993,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                             PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                             AddedManually = a.AddedManually,
+                                            OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                            OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                            OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
                                         }).FirstOrDefault();
 
@@ -1016,6 +1060,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                  PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                  AddedManually = a.AddedManually,
+                                 OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                 OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                 OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
 
                              });
@@ -1143,6 +1190,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                  PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                  AddedManually = a.AddedManually,
+                                 OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                 OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                 OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
 
                              });
@@ -1270,6 +1320,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                           PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                           AddedManually = a.AddedManually,
+                                          OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                          OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                          OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
                                       }).ToList();
             return d;
@@ -1339,6 +1392,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                                             PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                                             AddedManually = a.AddedManually,
+                                                            OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                                            OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                                            OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
 
                                                         }).ToList();
@@ -1395,6 +1451,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                             PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                               AddedManually = a.AddedManually,
+                                              OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                              OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                              OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
                                           }).FirstOrDefault();
 
@@ -1513,6 +1572,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                           PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
                                           AddedManually = a.AddedManually,
+                                          OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                          OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                          OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
                                       }).ToList();
 

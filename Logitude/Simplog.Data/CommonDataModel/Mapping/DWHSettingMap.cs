@@ -34,6 +34,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(200)
                 .IsUnicode(false);
 
+            this.Property(t => t.PrivateUserName)
+                .HasMaxLength(200)
+               .IsUnicode(false);
+
             this.ToTable("DWHSettings");
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
@@ -43,6 +47,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Password).HasColumnName("Password");
             this.Property(t => t.Catalog).HasColumnName("Catalog");
             this.Property(t => t.IsParentTenant).HasColumnName("IsParentTenant");
+            this.Property(t => t.PrivateUserName).HasColumnName("PrivateUserName");
 
 
         }

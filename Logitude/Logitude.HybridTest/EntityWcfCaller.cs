@@ -12,6 +12,10 @@ namespace Logitude.HybridTest.WcfCallers
             {
                 serviceName = serviceName.Substring(7);
             }
+            if (serviceName == "DocumentsFiling")
+            {
+                serviceName = "DocumentIn";
+            }
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = serviceName,

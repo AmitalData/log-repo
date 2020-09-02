@@ -1,0 +1,150 @@
+﻿
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
+using Simplog.Data.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+ 
+
+namespace CargoTrackingWinService.Helper
+{
+    public class CargoTrackingHeadService
+    {
+        string sourceConnectionString = string.Empty;
+        string destinationConnectionString = string.Empty;
+
+        CargoTrackingServiceHelper cargoTrackingServiceHelper;
+        CargoTrackingMainService cargoTrackingMainService;
+
+        public CargoTrackingHeadService()
+        {
+
+            cargoTrackingMainService = new CargoTrackingMainService();
+            cargoTrackingServiceHelper = new CargoTrackingServiceHelper();
+            BuildConnectionString();
+        }
+
+        public void UpdateCargoTracking()
+        {
+
+            while (true)
+            {
+                try
+                {
+                    if (!ApplicationInfo.RunCargoTrackingImmediately)
+                    {
+                        if (!cargoTrackingServiceHelper.CheckIsUpgradingSystem(sourceConnectionString))
+                        {
+                            if (ApplicationInfo.UpdateCounter == 0)
+                            {
+                                ApplicationInfo.StartDate = TenantServerConfigration.GetCurrentDateTime(0);
+                                ApplicationInfo.Ports = 0;
+                                ApplicationInfo.Shipments = 0;
+                                ApplicationInfo.TransportModes = 0;
+                                ApplicationInfo.Cards = 0;
+                                ApplicationInfo.Countries = 0;
+                            }
+                            cargoTrackingMainService.CheckAndUpdateWaterMark(destinationConnectionString,sourceConnectionString);
+                            bool IsFromBuild = AddAllTablesToThread(cargoTrackingMainService.FillCargoTableList());
+                            ApplicationInfo.UpdateCounter++;
+                            if (ApplicationInfo.UpdateCounter==10)
+                            {
+                                ApplicationInfo.UpdateCounter = 0;
+                                ApplicationInfo.EndDate = TenantServerConfigration.GetCurrentDateTime(0);
+                                if (!IsFromBuild)
+                                {
+                                    CargoTrackingServiceHelper.AddRecordToCargoTrackingIncrementalStats(destinationConnectionString);
+
+                                }
+                            }
+                            Thread.Sleep(ApplicationInfo.UpdateCargoTrackingSleepTime);
+                        }
+                        else Thread.Sleep(new TimeSpan(0, 5, 0));
+                    }
+                    else Thread.Sleep(new TimeSpan(0, 5, 0));
+                }
+
+                catch (Exception ex)
+                {
+                    Thread.Sleep(ApplicationInfo.UpdateCargoTrackingSleepTime);
+                }
+            }
+        }
+
+        private RecordUpdated UpdateCargoDataBase(CargoTable table)
+        {
+            RecordUpdated RecordUpdatedNumber = cargoTrackingMainService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },1000);
+            return RecordUpdatedNumber;
+        }
+
+
+        private bool AddAllTablesToThread(List<CargoTable> CargoTableLists)
+        {
+            RecordUpdated RecordUpdatedNumber = new RecordUpdated();
+            foreach (CargoTable table in CargoTableLists)
+            {
+
+                RecordUpdatedNumber = UpdateCargoDataBase(table);
+                UpdaeNumberOfRecordsUpdated(table.CT_TableName, RecordUpdatedNumber.NumberOfRecordUpdated);
+
+            }
+
+            return RecordUpdatedNumber.IsFromBuild;
+
+        }
+
+
+        private void UpdaeNumberOfRecordsUpdated(string TableName, int RecordUpdatedNumber)
+        {
+            switch (TableName)
+            {
+                case "CargoTrackingShipments":
+                    {
+                        ApplicationInfo.Shipments+= RecordUpdatedNumber;
+                        break;
+                    }
+                case "CargoTrackingCards":
+                    {
+                        ApplicationInfo.Cards+= RecordUpdatedNumber;
+                        break;
+                    }
+                case "CargoTrackingPorts":
+                    {
+                        ApplicationInfo.Ports+= RecordUpdatedNumber;
+                        break;
+                    }
+                case "CargoTrackingCountries":
+                    {
+                        ApplicationInfo.Countries+= RecordUpdatedNumber;
+                        break;
+                    }
+                case "CargoTrackingTransportModes":
+                    {
+                        ApplicationInfo.TransportModes+= RecordUpdatedNumber;
+                        break;
+                    }
+
+            }
+        }
+
+        private void BuildConnectionString()
+        {
+            string[] sourceConnectionArray = ApplicationInfo.SourceConnection.Split(',');
+            string[] destinationConnectionArray = ApplicationInfo.DestinationConnection.Split(',');
+            sourceConnectionString = cargoTrackingServiceHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+            destinationConnectionString = cargoTrackingServiceHelper.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+        }
+ 
+    }
+
+ 
+
+
+}

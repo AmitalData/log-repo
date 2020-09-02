@@ -119,6 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 		ShipmentPickUpDeliveryPackageUpdateClass  ShipmentPickUpDeliveryPackageUpdateClass = new ShipmentPickUpDeliveryPackageUpdateClass();
 		ShipmentReceivableUpdateClass  ShipmentReceivableUpdateClass = new ShipmentReceivableUpdateClass();
 		ShipmentReceivableStatusUpdateClass  ShipmentReceivableStatusUpdateClass = new ShipmentReceivableStatusUpdateClass();
+		ShipmentStoragePricingUpdateClass  ShipmentStoragePricingUpdateClass = new ShipmentStoragePricingUpdateClass();
 		ShipmentSubTypeUpdateClass  ShipmentSubTypeUpdateClass = new ShipmentSubTypeUpdateClass();
 		ShipmentTypeUpdateClass  ShipmentTypeUpdateClass = new ShipmentTypeUpdateClass();
 		SpecialServicesTypeUpdateClass  SpecialServicesTypeUpdateClass = new SpecialServicesTypeUpdateClass();
@@ -322,6 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 			TablesHashStrings.Add("ShipmentPickUpDeliveryPackage",  ShipmentPickUpDeliveryPackageUpdateClass.HashString);
 			TablesHashStrings.Add("ShipmentReceivable",  ShipmentReceivableUpdateClass.HashString);
 			TablesHashStrings.Add("ShipmentReceivableStatus",  ShipmentReceivableStatusUpdateClass.HashString);
+			TablesHashStrings.Add("ShipmentStoragePricing",  ShipmentStoragePricingUpdateClass.HashString);
 			TablesHashStrings.Add("ShipmentSubType",  ShipmentSubTypeUpdateClass.HashString);
 			TablesHashStrings.Add("ShipmentType",  ShipmentTypeUpdateClass.HashString);
 			TablesHashStrings.Add("SpecialServicesType",  SpecialServicesTypeUpdateClass.HashString);
@@ -1891,6 +1893,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
  
 			}
 
+			if(MetadataUpdateUtility.IsChangedMetadataTable("ShipmentStoragePricing", ObjectTables, ShipmentStoragePricingUpdateClass.HashString))
+			{
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("ShipmentStoragePricing");
+					ShipmentStoragePricingUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					List<ObjectField> addedFields = new List<ObjectField>();
+					List<TextCode> addedTextCodes = new List<TextCode>();
+					ShipmentStoragePricingUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes);
+					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+					SqlBulkInsert.BulkInsert("ObjectFields", addedFields);					
+					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
+					//this.ObjectContext.ObjectFields.AddRange(addedFields);
+					//this.ObjectContext.SaveChanges();
+					ShipmentStoragePricingUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
+					ShipmentStoragePricingUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					ShipmentStoragePricingUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					ShipmentStoragePricingUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					//this.ObjectContext.SaveChanges();
+					ShipmentStoragePricingUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					ShipmentStoragePricingUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					ShipmentStoragePricingUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
+			}
+
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ShipmentSubType", ObjectTables, ShipmentSubTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -2086,6 +2121,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 	
 	   	   ShipmentReceivableStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   ShipmentStoragePricingUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
 	   	   ShipmentSubTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   ShipmentTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
@@ -2188,6 +2225,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 	
 	   	   //ShipmentReceivableStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   //ShipmentStoragePricingUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   //ShipmentSubTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   //ShipmentTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
@@ -2288,6 +2327,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 	   	   ShipmentReceivableUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
 	   	   ShipmentReceivableStatusUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
+	
+	   	   ShipmentStoragePricingUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
 	   	   ShipmentSubTypeUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
@@ -2390,6 +2431,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 	
 	   	   ShipmentReceivableStatusUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   ShipmentStoragePricingUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   ShipmentSubTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   ShipmentTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -2490,6 +2533,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 	   	   ShipmentReceivableUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   ShipmentReceivableStatusUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   ShipmentStoragePricingUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   ShipmentSubTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
@@ -2592,6 +2637,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 	
 	   	   ShipmentReceivableStatusUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
+	   	   ShipmentStoragePricingUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
+	
 	   	   ShipmentSubTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
 	   	   ShipmentTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
@@ -2693,6 +2740,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 	
 	   	   ShipmentReceivableStatusUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   ShipmentStoragePricingUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   ShipmentSubTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   ShipmentTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -2792,6 +2841,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 	   	   ShipmentReceivableUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   ShipmentReceivableStatusUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   ShipmentStoragePricingUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   ShipmentSubTypeUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
@@ -2893,6 +2944,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 	
 	   	   ShipmentReceivableStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   ShipmentStoragePricingUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   ShipmentSubTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   ShipmentTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -2968,6 +3021,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 	   
 	   	   ShipmentReceivableStatusUpdateClass.FillShipmentReceivableStatus();
 	
+	   
 	   
 	   
 	   

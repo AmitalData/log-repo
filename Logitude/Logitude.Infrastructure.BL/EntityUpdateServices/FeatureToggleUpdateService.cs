@@ -37,6 +37,13 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
             string featureToggle = "featuretoggle" + entityPM.ToggleCode + entityPM.TenantNumber;
             if (CacheManager.CacheWrapper.Get(featureToggle) != null) CacheManager.CacheWrapper.Invalidate(featureToggle);
 
+
+            if (EntityPOCO != null)
+            {
+                featureToggle = "featuretoggle" + EntityPOCO.ToggleCode + EntityPOCO.TenantNumber;
+                if (CacheManager.CacheWrapper.Get(featureToggle) != null) CacheManager.CacheWrapper.Invalidate(featureToggle);
+            }
+
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);

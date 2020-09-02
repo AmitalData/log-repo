@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;6b42&quot;"
+  Code="&quot;2a2c&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -360,13 +360,17 @@
       Name="&quot;Run Report on Secondary DB&quot;"
       SearchFields="&quot;RRS,Run Report on Secondary DB&quot;" />
     <Record
-      Name="&quot;Charges DWH&quot;"
-      Code="&quot;CWH&quot;"
-      SearchFields="&quot;CWH,Charges DWH&quot;" />
-    <Record
       Code="&quot;LV2&quot;"
       Name="&quot;LogGrid V2&quot;"
       SearchFields="&quot;LGV2,LogGrid V2&quot;" />
+    <Record
+      Name="&quot;Card Searchs Toggle&quot;"
+      Code="&quot;CST&quot;"
+      SearchFields="&quot;CST,Card Searchs Toggle&quot;" />
+    <Record
+      Code="&quot;SUB&quot;"
+      Name="&quot;Shipment Sub Type&quot;"
+      SearchFields="&quot;SUB,Shipment Sub Type&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

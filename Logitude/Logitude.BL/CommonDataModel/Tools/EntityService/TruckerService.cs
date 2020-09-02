@@ -20,6 +20,7 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -82,13 +83,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.entityPM = entityPM;
             this.isNewEntity = true;
-            this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
+            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
 
             this.entityCard = new Card()
             {
                 Id = entityPM.Id,
                 Tenant = tenant,
-                PartnerTypeId = "TR",                
+                PartnerTypeId = "TR",
+                UploadingUniqueKey = entityPM.UploadingUniqueKey,
             };
 
             this.entityPOCO = new Trucker()
@@ -125,7 +127,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
-            entityRepository.SubmitChanges(); 
+            entityRepository.SubmitChanges();
 
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
@@ -133,7 +135,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
                 this.UpdateContactSearchField(itemPM);
-        }
+            }
+            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
         }
 
         public void Update(TruckerPM entityPM, bool mapComposition = false)
@@ -180,6 +183,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
+            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
         }
 
         private void InitializeComponent()

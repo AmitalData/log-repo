@@ -141,6 +141,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return query;
         }
 
+        public IQueryable<Country> GetAllCountries()
+        {
+            IQueryable<Country> query = (from a in repository.context.Countries select a);
+                                           
+            return query;
+        }
+
+
         public IQueryable<CountryPM> GetCountriesByCodeOrName(string code, string name, int tenant)
         {
             string codeNew = "";

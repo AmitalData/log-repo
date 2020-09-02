@@ -14,6 +14,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.BL.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Linq;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -32,9 +33,21 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ContactRepository contactRepository;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
 
-        public ShippingLineService(ICommonDataContext objectContext,int tenant)
+        public ShippingLineService(ICommonDataContext objectContext, ShippingLinePM entityPM, string loggedContactId)
         {
-            
+            this.entityPM = entityPM;
+            this.tenant = entityPM.Tenant;
+            this.objectContext = objectContext;
+            this.entityRepository = new ShippingLineRepository(objectContext);
+            this.cardRepository = new CardRepository(objectContext);
+            this.contactRepository = new ContactRepository(objectContext);
+            this.cardQuery = new CardQuery(cardRepository);
+            this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
+            this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
+        }
+        public ShippingLineService(ICommonDataContext objectContext, int tenant)
+        {
+
             this.tenant = tenant;
             this.objectContext = objectContext;
             this.entityRepository = new ShippingLineRepository(objectContext);
@@ -70,6 +83,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 Id = entityPM.Id,
                 Tenant = tenant,
                 PartnerTypeId = "SL",
+                UploadingUniqueKey = entityPM.UploadingUniqueKey,
             };
 
             this.entityPOCO = new ShippingLine()
@@ -99,6 +113,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ShippingLine");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
+            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+
         }
 
         public void Update(ShippingLinePM entityPM, bool mapComposition = false)
@@ -149,6 +165,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ShippingLine");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
+            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+
         }
 
         private void InitializeComponent()

@@ -71,12 +71,15 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class IncotermUpdateClass
    {  		
-		public const string HashString = "cf1c31a8f83ec56e05c554895f4a5124";
+		public const string HashString = "fb1f9f830d1d885b431bd26a6e4f46f3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -602,7 +605,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,

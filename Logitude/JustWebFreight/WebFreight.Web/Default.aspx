@@ -2,221 +2,31 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head id="Head1" runat="server">
     <meta http-equiv="x-ua-compatible" content="IE=11">
     <link id="logolink" rel="shortcut icon" />
     <title></title>
+           	   
+    <link href="css/asp.css" rel="stylesheet" type="text/css"/>
+    <link href="css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/kendo.default.min.css" rel="stylesheet" type="text/css"/>
+    <script src="js/jquery-3.5.1.min.js" type="text/javascript"></script>
+    <script src="js/kendo.all.min.js" type="text/javascript"></script>
+    <script src="js/knockout-3.5.1.js" type="text/javascript"></script>
+    <script src="js/knockout-kendo.min.js" type="text/javascript"></script>
 
-    <script src="HtmlHelpers/JS/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <link href="HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>    
+    <link href="HtmlHelpers/CSS/sunburst.css" rel="stylesheet" type="text/css"/>
+    <link href="HtmlHelpers/CSS/app.css" rel="stylesheet" type="text/css"/>
+    <link href="HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css"/>     
     <script src="HtmlHelpers/JS/Logitude.Tools.js" type="text/javascript"></script>
+    <script src="Scripts/json2.min.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
 
     <style type="text/css">
-.cmdSubmitVerifcation {
-	-moz-box-shadow: 0px 1px 0px 0px #f0f7fa;
-	-webkit-box-shadow: 0px 1px 0px 0px #f0f7fa;
-	box-shadow: 0px 1px 0px 0px #f0f7fa;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #33bdef), color-stop(1, #0980ab));
-	background:-moz-linear-gradient(top, #33bdef 5%, #0980ab 100%);
-	background:-webkit-linear-gradient(top, #33bdef 5%, #0980ab 100%);
-	background:-o-linear-gradient(top, #33bdef 5%, #0980ab 100%);
-	background:-ms-linear-gradient(top, #33bdef 5%, #0980ab 100%);
-	background:linear-gradient(to bottom, #33bdef 5%, #0980ab 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bdef', endColorstr='#0980ab',GradientType=0);
-	background-color:#33bdef;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
-	border:1px solid #057fd0;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:8px 20px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #5b6178;
-}
-.cmdSubmitVerifcation:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0980ab), color-stop(1, #33bdef));
-	background:-moz-linear-gradient(top, #0980ab 5%, #33bdef 100%);
-	background:-webkit-linear-gradient(top, #0980ab 5%, #33bdef 100%);
-	background:-o-linear-gradient(top, #0980ab 5%, #33bdef 100%);
-	background:-ms-linear-gradient(top, #0980ab 5%, #33bdef 100%);
-	background:linear-gradient(to bottom, #0980ab 5%, #33bdef 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0980ab', endColorstr='#33bdef',GradientType=0);
-	background-color:#0980ab;
-}
-.cmdSubmitVerifcation:active {
-	position:relative;
-	top:1px;
-}
-
-
-        .cmdSubmit {
-            -moz-box-shadow: inset 0px 1px 0px 0px #caefab;
-            -webkit-box-shadow: inset 0px 1px 0px 0px #caefab;
-            box-shadow: inset 0px 1px 0px 0px #caefab;
-            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #77d42a), color-stop(1, #5cb811) );
-            background: -moz-linear-gradient( center top, #77d42a 5%, #5cb811 100% );
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#77d42a', endColorstr='#5cb811');
-            background-color: #77d42a;
-            -moz-border-radius: 6px;
-            -webkit-border-radius: 6px;
-            border-radius: 6px;
-            border: 1px solid #268a16;
-            display: inline-block;
-            color: #ffffff;
-            font-family: arial;
-            font-size: 15px;
-            font-weight: bold;
-            padding: 6px 24px;
-            text-decoration: none;
-            text-shadow: 1px 1px 0px #aade7c;
-            width: 100px;
-            margin-top: 2px;
-        }
-
-            .cmdSubmit:hover {
-                background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a) );
-                background: -moz-linear-gradient( center top, #5cb811 5%, #77d42a 100% );
-                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cb811', endColorstr='#77d42a');
-                background-color: #5cb811;
-            }
-
-            .cmdSubmit:active {
-                position: relative;
-                top: 1px;
-            }
-
-        .loginButton {
-            -moz-box-shadow: inset 0px 1px 0px 0px #f29c93;
-            -webkit-box-shadow: inset 0px 1px 0px 0px #f29c93;
-            box-shadow: inset 0px 1px 0px 0px #f29c93;
-            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #cc0029) );
-            background: -moz-linear-gradient( center top, #fe1a00 5%, #cc0029 100% );
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#cc0029');
-            background-color: #fe1a00;
-            -moz-border-radius: 6px;
-            -webkit-border-radius: 6px;
-            border-radius: 6px;
-            border: 1px solid #d83526;
-            display: inline-block;
-            color: #ffffff;
-            font-family: arial;
-            font-size: 15px;
-            font-weight: bold;
-            padding: 6px 24px;
-            text-decoration: none;
-            text-shadow: 1px 1px 0px #b03466;
-            width: 100px;
-        }
-
-            .loginButton:hover {
-                background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #cc0029), color-stop(1, #fe1a00) );
-                background: -moz-linear-gradient( center top, #cc0029 5%, #fe1a00 100% );
-                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc0029', endColorstr='#fe1a00');
-                background-color: #cc0029;
-            }
-
-            .loginButton:active {
-                position: relative;
-                top: 1px;
-            }
-
-
-
-
-        .promptButton {
-            display: inline-block;
-            outline: none;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            font: 14px/100% Arial, Helvetica, sans-serif;
-            padding: .5em 2em .55em;
-            text-shadow: 0 1px 1px rgba(0,0,0,.3);
-            -webkit-border-radius: .5em;
-            -moz-border-radius: .5em;
-            border-radius: .5em;
-            -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-            box-shadow: 0 1px 2px rgba(0,0,0,.2);
-        }
-
-            .promptButton:hover {
-                text-decoration: none;
-            }
-
-            .promptButton:active {
-                position: relative;
-                top: 1px;
-            }
-
-
-
-
-
-
-
-
-
-        /* This imageless css button was generated by CSSButtonGenerator.com */
-    </style>
-
-    <style type="text/css">
-        body, html {
-            padding: 0;
-            margin: 0;
-            border: 0;
-            height: 100%;
-        }
-
-        body {
-            min-width: 980px;
-            background: url("images/LoginScreen/map.png") no-repeat 50% 180px;
-        }
-
-        #mapBackground {
-            background-image: url("images/LoginScreen/map.png");
-            text-align: center;
-            background-repeat: no-repeat;
-            background-size: 100%;
-            width: 907px;
-            height: 466px;
-            margin-top: 15px;
-            background-position: center;
-        }
-
-
-
-        .auto-style1 {
-            background: #dbdbdb; /* Old browsers */
-            /* IE9 SVG, needs conditional override of 'filter' to 'none' */
-            background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2RiZGJkYiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjI4JSIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQxJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-            background: -moz-linear-gradient(top, #dbdbdb 0%, #f2f2f2 28%, #ffffff 41%, #ffffff 100%); /* FF3.6+ */
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dbdbdb), color-stop(28%,#f2f2f2), color-stop(41%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
-            background: -webkit-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
-            background: -o-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Opera 11.10+ */
-            background: -ms-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* IE10+ */
-            background: linear-gradient(to bottom, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* W3C */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
-            font-family: tahoma, arial, sans-serif;
-            width: 260px;
-            height: 25px;
-            font-size: 13px;
-        }
-
-        .column1 {
-            text-align: left;
-            width: 300px;
-            font-family: "Myriad Pro";
-            font-size: 14px;
-            color: #4B4A4A;
-        }
-
         span.k-icon.k-i-arrow-s {
             background-image: url('HtmlHelpers/Images/Icons/DropArrow.png');
             background-size: 12px 12px;
@@ -237,34 +47,12 @@
         } 
     */
     </style>
-
-    <link href="HtmlHelpers/Kendo.2013.2.918/kendo.common.min.css" rel="stylesheet" type="text/css"/>
-    <link href="HtmlHelpers/Kendo.2013.2.918/kendo.default.min.css" rel="stylesheet" type="text/css"/>
-    <link href="HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>    
-    <link href="HtmlHelpers/CSS/sunburst.css" rel="stylesheet" type="text/css"/>
-    <link href="HtmlHelpers/CSS/app.css" rel="stylesheet" type="text/css"/>
-    <link href="HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css"/>
-     
-    <!--  AmitalBrowserWpfApplication\Views\GatewayUserControl.cs GOOD (Itzik )-->        	
-    
-    <script src="Scripts/json2.min.js" type="text/javascript"></script>
-<%--	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.js" type="text/javascript"></script>
-    <script src="http://cdn.kendostatic.com/2012.1.322/js/kendo.all.min.js" type="text/javascript"></script>--%>
-
-    <!--  AmitalBrowserWpfApplication\Views\GatewayUserControl.cs Bad (Itzik )-->        	
-   
-     
-    <script type="text/javascript" src="HtmlHelpers/JS/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="HtmlHelpers/Kendo.2013.2.918/kendo.all.min.js"></script>
 </head>
 
 <body onload="get_cookie_data()" onkeydown="capLock( event )">
     
-    <script src="HtmlHelpers/JS/knockout-2.2.0.js" type="text/javascript"></script>
-    <script src="HtmlHelpers/JS/knockout-kendo.min.js" type="text/javascript"></script>
-    <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
     <script src="HtmlHelpers/JS/app.js" type="text/javascript"></script>
+
     <% if (Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment == "customs")
         {%>
         <script type="text/javascript" src="HtmlHelpers/JS/Amital.GatewayControl.js"></script>
@@ -899,7 +687,7 @@
 
     <script type="text/javascript">
 
-        
+
         function getTwoFactorKeys() {
             var allKeys = [];
             for (var key in window.localStorage) {
@@ -1083,11 +871,11 @@
 
         window.history.forward();
         var url = window.location.href;
-   
+
 
         var companyList;
         var password;
-       var captchaKey
+        var captchaKey
         var email;
         var currentTenant;
         var Technology = null;//"Angular";
@@ -1150,21 +938,21 @@
 
         onCaptchaInPutChanged = function () {
 
-            if ( document.getElementById("errorsList").innerHTML == "Please re-enter the characters you see in the image above") {
+            if (document.getElementById("errorsList").innerHTML == "Please re-enter the characters you see in the image above") {
                 if ($("#captchaTextBox").val())
                     $("#errorsList").hide();
             }
         }
-   
+
 
         //data-bind="event: {blur: getContacts}"
 
         onPasswordChanged = function () {
-    
-            if (document.getElementById("errorsList").innerHTML !="Please re-enter the characters you see in the image above") {
-                  $("#errorsList").hide();
+
+            if (document.getElementById("errorsList").innerHTML != "Please re-enter the characters you see in the image above") {
+                $("#errorsList").hide();
             }
- 
+
             var emailstring = $("#Password").val();
             if (emailstring) {
 
@@ -1189,7 +977,7 @@
             $("#errorsList").hide();
             var emailstring = $("#Email").val();
             if (emailstring) {
-                  $("#Email").val($.trim(emailstring));
+                $("#Email").val($.trim(emailstring));
 
                 if (email != $("#Email").val()) {
 
@@ -1200,9 +988,9 @@
                         captchaKey = "";
                     }
 
-       
+
                 }
-              
+
 
             }
             //$("#cmbTenants").hide();
@@ -1223,11 +1011,11 @@
             }
 
             function onChange() {
-
-                var combobox = $("#cmbTenants").data("kendoComboBox");
-                var selectedItem = combobox.dataSource.view()[combobox._current.index()];
-                selectedcompany = selectedItem;
-                currentTenant = $('#cmbTenants').data('kendoComboBox').value();
+                //var combobox = $("#cmbTenants").data("kendoComboBox");
+                //var selectedItem = combobox.dataSource.view()[combobox._current.index()];
+                //selectedcompany = selectedItem;
+                currentTenant = $('#cmbTenants').data('kendoComboBox').dataItem();
+                selectedcompany = currentTenant;
                 // var logindata = userdata.UserName + ":" + userdata.CurrentTenant + ":" + userdata.CardId + ":" + userdata.CardType;
 
             }
@@ -1243,36 +1031,36 @@
             }
 
             function showTenantsCombo(companies) {
-             
+
                 companyList = companies;
 
 
                 $("#cmbTenants").kendoComboBox(
-                {
-                    dataTextField: "CompanyName",
-                    dataValueField: "Tenant",
-                    placeholder: "Choose your company",
-                    //index: 0,
-                    //select: onSelectedTenantChanged,
-                    change: onChange,
-                    filter: "contains",
-                    suggest: false,
-
-
-                    // template:
-                    //     '<dd>${ CompanyName }</dd>'
-                    //,
-
-                    dataSource:
                     {
-                        //type: "odata",
-                        data: companies
-                        //serverFiltering: true,
-                        //serverPaging: true,
-                        //pageSize: 20,
-                    }
-                    //template: kendo.template($("#partnerTemplate").html())
-                });
+                        dataTextField: "CompanyName",
+                        dataValueField: "Tenant",
+                        placeholder: "Choose your company",
+                        //index: 0,
+                        //select: onSelectedTenantChanged,
+                        change: onChange,
+                        filter: "contains",
+                        suggest: false,
+
+
+                        // template:
+                        //     '<dd>${ CompanyName }</dd>'
+                        //,
+
+                        dataSource:
+                        {
+                            //type: "odata",
+                            data: companies
+                            //serverFiltering: true,
+                            //serverPaging: true,
+                            //pageSize: 20,
+                        }
+                        //template: kendo.template($("#partnerTemplate").html())
+                    });
 
 
 
@@ -1290,7 +1078,7 @@
                 //$("#busyIndicator").hide();
             }
 
-      
+
             this.validateMethod = function () {
 
                 password = $("#Password").val();
@@ -1304,9 +1092,9 @@
                     document.getElementById("BusyindicatorArea").style.height = "0px";
                 }
 
-                
+
                 var persist = false;
-                
+
 
                 var validatable = $("#myform").kendoValidator().data("kendoValidator");
 
@@ -1321,7 +1109,7 @@
                 }
 
 
-          
+
 
                 var BusyindicatorAreawidthHeight = "50px";
 
@@ -1355,7 +1143,7 @@
                     this.CaptchaCode = document.getElementById("captchaTextBox").value;
                 };
 
-                
+
                 var param = new LoginParameters();
                 LoginParametersData = param;
 
@@ -1386,8 +1174,8 @@
                             else {
 
                                 captchaKey = userdata.CaptchaKey;
-                           
-                           
+
+
                                 if (userdata.MustChangePassword) {
 
                                     document.location.href = "PasswordChangePage.aspx?email=" + email
@@ -1404,13 +1192,13 @@
 
                                 else {
 
-                                  
+
 
                                     if (userdata.InValidCaptcha) {
                                         if (areacaptcha.style.display == "block") {
                                             document.getElementById("captchaTextBox").value = "";
                                         }
-                                    
+
                                         areacaptcha.style.display = "block";
                                         $("#CaptchaImage").attr("src", userdata.CaptchaImage);
                                         document.getElementById("divMayus").style.display = "none";
@@ -1421,16 +1209,16 @@
 
                                     var errorMessage = "";
 
-                                        if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
-                                        if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                                        if (userdata.Unlicensed)  errorMessage = "Your account is unlicensed!" + "<br/>" + "please contact your administrator.";
-                                        if (userdata.InValidMailOrPassword)  errorMessage = "Login failed! invalid user name or password." + "<br/>";
+                                    if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
+                                    if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                                    if (userdata.Unlicensed) errorMessage = "Your account is unlicensed!" + "<br/>" + "please contact your administrator.";
+                                    if (userdata.InValidMailOrPassword) errorMessage = "Login failed! invalid user name or password." + "<br/>";
 
                                     if (!errorMessage) errorMessage = "Please re-enter the characters you see in the image above";
-                              
-                                
 
-                                   
+
+
+
                                     document.getElementById("errorsList").innerHTML = errorMessage;
                                     // $("#errorsList").text(errorMessage);
                                     $("#errorsList").show();
@@ -1474,7 +1262,7 @@
 
 
             this.promptPasswordExpirationButtonYes = function () {
-                window.sessionStorage.setItem("PasswordChange","ShowLink");
+                window.sessionStorage.setItem("PasswordChange", "ShowLink");
                 document.location.href = "PasswordChangePage.aspx?email=" + email
 
             };
@@ -1526,7 +1314,7 @@
                     }
                 }
                 else {
-                
+
                     showTenantsCombo(userdata.CompanyLogins);
                 }
 
@@ -1538,14 +1326,14 @@
 
 
         LoginToSliverLight = function (userdata) {
-          
+
 
             if (SilverlightEndDate) {
                 alert("Please note that the Silverlight version won't be supported any more after  " + SilverlightEndDate + ".\n" + "Please start to use the HTML5 version.");
                 // alert("Silverlight version won't be supported any more after " + SilverlightEndDate);
             }
             Technology = "SL";
-           
+
             var logindata = userdata.UserName + ":" + userdata.CurrentTenant + ":" + userdata.CardId + ":" + userdata.CardType + ":" + userdata.IsBrandingEnabled;
             logindata = UserDataPrompt.UserName + ":" + UserDataPrompt.Id + ":" + UserDataPrompt.CurrentTenant;
             document.location.href = "default.aspx?userdata=" + logindata;
@@ -1612,7 +1400,7 @@
                     }
                 }
             }
-            
+
 
             //if (navigator.sayswho && navigator.sayswho.toString().indexOf("Safari") > -1) {
             //    var issafari = true;
@@ -1654,12 +1442,11 @@
             document.location.href = angularUrl;
 
             $("#loginBusyindicator").hide();
-          
+
         };
 
 
-        function ShowVerificationForm(userdata)
-        {
+        function ShowVerificationForm(userdata) {
             $("#verificationForm").show();
 
             $("#loginForm").hide();
@@ -1668,10 +1455,10 @@
             $("#loginBusyindicator").hide();
 
             if (userdata.UserMobileNumber) {
-                document.getElementById("VerificationMessage").innerHTML = "We just sent an SMS with a verification code to " + userdata.UserMobileNumber + " Enter that code below." + 
-                     "<br />The verification code expires in 10 minutes";
-                
-               
+                document.getElementById("VerificationMessage").innerHTML = "We just sent an SMS with a verification code to " + userdata.UserMobileNumber + " Enter that code below." +
+                    "<br />The verification code expires in 10 minutes";
+
+
             }
             else {
                 document.getElementById("VerificationMessage").innerHTML = "A verification code is needed in order to complete the login" + ".Please contact your system administrator to fill your mobile number in order to get the verification code.";
@@ -1679,7 +1466,7 @@
         }
 
 
-        
+
         function RunLogin(userdata) {
 
             if (!Technology) Technology = userdata.Technology;
@@ -1689,7 +1476,7 @@
                 if (Technology != "PR") {
 
                     if (Technology && Technology == "AG") {
-                       // if (userdata.ContactsCount == 1)
+                        // if (userdata.ContactsCount == 1)
                         LoginToAngular(userdata);
                     }
                     else LoginToSliverLight(userdata);
@@ -1700,7 +1487,7 @@
                     document.getElementById("verificationForm").style.display = "none";
                     document.getElementById("PasswordExpirationDateView").style.display = "none";
                     document.getElementById("PromptView").style.display = "block";
-                  
+
                 }
 
             }
@@ -1735,7 +1522,7 @@
             var param = new LoginParameters();
             LoginParametersData = param;
             LoginParametersData.Tenant = companyLogin.Tenant;
-            var twoFactorKey =getTwoFactorKeys();
+            var twoFactorKey = getTwoFactorKeys();
 
             $.ajax({
                 url: url,
@@ -1769,20 +1556,19 @@
 
                         UserDataPrompt = userdata;
 
-                       
+
 
                         if (userdata.IsTwoFactorAuthenticationRequired == true) {
 
                             ShowVerificationForm(userdata);
-                             
+
                         }
-                        else
-                        {
+                        else {
                             RunLogin(userdata);
                         }
 
 
-                       
+
 
                     }
                     else {
@@ -1835,7 +1621,7 @@
 
         navigator.sayswho = (function () {
             var ua = navigator.userAgent, tem,
-            M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+                M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
             if (/trident/i.test(M[1])) {
                 tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
                 return 'IE';
@@ -1968,9 +1754,9 @@
     </script>
 
     <script type="text/javascript">
- 
+
         document.onkeypress = capLock;
-   
+
         function capLock(e) {
 
             var s = "";
@@ -2060,10 +1846,11 @@
                     },
                 });
             }
-
-
+           
             _LoginViewModel = new LoginViewModel();
-            ko.applyBindings(_LoginViewModel);
+            var bindingNode = document.getElementById('Container');
+            ko.cleanNode(bindingNode);
+            ko.applyBindings(_LoginViewModel, bindingNode);
 
             $("#Password").keyup(function (e) {
                 if (e.which == 13) {
@@ -2073,7 +1860,7 @@
 
         }
 
-  
+
         function OnLoad() {
 
             var url = window.location.href;
@@ -2096,7 +1883,7 @@
                             document.location.href = "WebPages/UpgradeScreen.aspx";
                         }
                         else BrandingFunction();
-         
+
                     }
                     else {
                         IsShowUpgradeScreen = false;
@@ -2111,13 +1898,13 @@
                             if (Containerelem) {
                                 Containerelem.style.display = 'block';
                             }
-                           
-      
-                          
+
+
+
 
                         }
-                      
-                     
+
+
                     }
                 },
 
@@ -2134,43 +1921,43 @@
         function DSVLogin(myDomain) {
 
 
-                var myLogoMethodUrl = "api/PrivateLable/getisprivatelableurl/?url=" + myDomain;
-                $.ajax({
-                    url: myLogoMethodUrl,
-                    type: 'GET',
-                    contentType: 'application/json',
+            var myLogoMethodUrl = "api/PrivateLable/getisprivatelableurl/?url=" + myDomain;
+            $.ajax({
+                url: myLogoMethodUrl,
+                type: 'GET',
+                contentType: 'application/json',
 
-                    success: function (result) {
-                        if (result) IsPrivateLabel = result.EnablePrivateLable;
-                        if (IsPrivateLabel == true) {
-                            window.sessionStorage.setItem("ContactEmail", result.ContactUsEmail);
-                            window.sessionStorage.setItem("IsPrivateLabel", IsPrivateLabel);
-                            window.sessionStorage.setItem("SmallLogoURL", result.SmallLogoURL);
-                            window.sessionStorage.setItem("LogoURL", result.LogoURL);
-                            window.sessionStorage.setItem("PrivateLabelUrl", result.PrivateLabelUrl);
-                            window.sessionStorage.setItem("PrivateLabelShortName", result.PrivateLabelShortName);
+                success: function (result) {
+                    if (result) IsPrivateLabel = result.EnablePrivateLable;
+                    if (IsPrivateLabel == true) {
+                        window.sessionStorage.setItem("ContactEmail", result.ContactUsEmail);
+                        window.sessionStorage.setItem("IsPrivateLabel", IsPrivateLabel);
+                        window.sessionStorage.setItem("SmallLogoURL", result.SmallLogoURL);
+                        window.sessionStorage.setItem("LogoURL", result.LogoURL);
+                        window.sessionStorage.setItem("PrivateLabelUrl", result.PrivateLabelUrl);
+                        window.sessionStorage.setItem("PrivateLabelShortName", result.PrivateLabelShortName);
 
-                            //$("#BackToLogin").attr("href", "Login.aspx?tenant=" + BrandingTenant);
+                        //$("#BackToLogin").attr("href", "Login.aspx?tenant=" + BrandingTenant);
 
-                        }
-                        var urlMenu = "";
-                        var mypageUrl = document.URL;
-                        if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
-                            urlMenu = mypageUrl.split("Menu=")[1];
-                            document.location.href = "AngularLogin" + "/index.html" + ("?Menu=" + urlMenu);
-                        }
-                        else {
+                    }
+                    var urlMenu = "";
+                    var mypageUrl = document.URL;
+                    if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
+                        urlMenu = mypageUrl.split("Menu=")[1];
+                        document.location.href = "AngularLogin" + "/index.html" + ("?Menu=" + urlMenu);
+                    }
+                    else {
 
-                            document.location.href = "AngularLogin" + "/index.html";
-                        }
-                        //document.location.href = "AngularLogin" + "/index.html";
-                    },
-                });
+                        document.location.href = "AngularLogin" + "/index.html";
+                    }
+                    //document.location.href = "AngularLogin" + "/index.html";
+                },
+            });
 
-    
-  
+
+
         }
-      
+
         function ComplateLoadProess() {
             ExternalTenant = "";
             var urlPage = window.location.href;
@@ -2266,10 +2053,10 @@
 
         if (!expires) { expires = new Date() }
         document.cookie = name + "=" + escape(value) +
-        ((expires == null) ? "" : "; expires=" + expires.toGMTString()) +
-        ((path == null) ? "" : "; path=" + path) +
-        ((domain == null) ? "" : "; domain=" + domain) +
-        ((secure == null) ? "" : "; secure");
+            ((expires == null) ? "" : "; expires=" + expires.toGMTString()) +
+            ((path == null) ? "" : "; path=" + path) +
+            ((domain == null) ? "" : "; domain=" + domain) +
+            ((secure == null) ? "" : "; secure");
     }
 
     function get_cookie(name) {
@@ -2300,9 +2087,9 @@
     function delete_cookie(name, path, domain) {
 
         document.cookie = name + "=" +
-        ((path == null) ? "" : "; path=" + path) +
-        ((domain == null) ? "" : "; domain=" + domain) +
-        "; expires=Thu, 01-Jan-00 00:00:01 GMT";
+            ((path == null) ? "" : "; path=" + path) +
+            ((domain == null) ? "" : "; domain=" + domain) +
+            "; expires=Thu, 01-Jan-00 00:00:01 GMT";
     }
 
     // ********** Pass the data to the cookie ********** 
@@ -2392,7 +2179,7 @@
                 default: {
                     $("#LayerImage").css("display", "inline");
                     $("#DirectlyLayerImage").css("display", "inline");
-                    
+
                     $("#imglink").css("display", "inline");
                     break;
                 }

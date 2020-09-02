@@ -204,6 +204,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.ShipmentLevelCode = "H";
                 temp.MainCarriageFromPortId = temp.FromPortId;
                 temp.MainCarriageToPortId = temp.ToPortId;
+                temp.MainCarriageToPortId = temp.ToPortId;
+                temp.FinalDistenationPortId = temp.ToPortId;
+                temp.MainCarriageFinalDestinationPortId = temp.ToPortId;
                 temp.FHLStatusCode = "NSEN";
                 temp.FWBStatusCode = "NSEN";
                 temp.FHLStatusName = "Not Sent";
@@ -278,9 +281,13 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 
                             break;
                         }
-                }               
+                }
 
-                temp.Ratio = this.GetRatio(temp.DirectionId, temp.TransportModeId, temp.ShipmentTypeId, MyTenantPM.CountryCode);
+                if (temp.Ratio == null || temp.Ratio == 0)
+                {
+                    temp.Ratio = this.GetRatio(temp.DirectionId, temp.TransportModeId, temp.ShipmentTypeId, MyTenantPM.CountryCode);
+                }
+
                 temp.DimFactor = this.GetDimFactorFromRatio(temp.Ratio, temp.DimensionsUnitCode, temp.ChargeableWeightUnitCode);
 
                 if (string.IsNullOrEmpty(temp.CreatedByUserId))
@@ -521,6 +528,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     temp.ShipmentLevelCode = "H";
                     temp.MainCarriageFromPortId = temp.FromPortId;
                     temp.MainCarriageToPortId = temp.ToPortId;
+                    temp.MainCarriageToPortId = temp.ToPortId;
+                    temp.FinalDistenationPortId = temp.ToPortId;
+                    temp.MainCarriageFinalDestinationPortId = temp.ToPortId;
                     temp.FHLStatusCode = "NSEN";
                     temp.FWBStatusCode = "NSEN";
                     temp.FHLStatusName = "Not Sent";

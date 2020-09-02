@@ -270,5 +270,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public bool AccountingVATSplit { get; set; }
 
+        [DataMember]
+        public string UploadingUniqueKey { get; set; }
     }
 }

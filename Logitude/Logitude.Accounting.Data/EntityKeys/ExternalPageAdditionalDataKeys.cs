@@ -24,7 +24,8 @@ namespace Logitude.Accounting.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return ObjectTableId+'_'+EntityId;
+                 return ObjectTableId+'_'+EntityId ;
+                 
       }
 
       public override string GetEntityPMName()

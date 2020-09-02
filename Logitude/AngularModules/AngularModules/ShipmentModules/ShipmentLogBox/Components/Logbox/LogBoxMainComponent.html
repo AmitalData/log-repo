@@ -127,6 +127,18 @@
                                                 <IconButton [Name]="'Refresh'" (click)="RefreshBtnClick()"></IconButton>
                                             </td>
 
+
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 21px;">
+                                                <button class="Button" (click)="btnExcelCLicked()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                                            </td>
+
+
+
+
                                             <td style="width: 5px;">
                                                 <div></div>
                                             </td>
@@ -150,8 +162,8 @@
                                             <td *ngIf="ToggleIsExportShipments" style="width: 10px;">
                                                 <div></div>
                                             </td>
-                                            <td *ngIf="ToggleIsExportShipments" style="width: 117px; vertical-align: middle; position:relative;">
-                                                <DirectionsFilter [SelectedValue]="SelectedDirectionFilter" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
+                                            <td *ngIf="ToggleIsExportShipments" style="width: 63px; vertical-align: middle; position:relative;">
+                                                <DirectionsFilter [ShowCustomFilter]="true" [HideAMANACFilters]="true" [SelectedValue]="SelectedDirectionFilter" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
                                             </td>
 
                                             <td *ngIf="ToggleIsExportShipments" style="width: 7px;">

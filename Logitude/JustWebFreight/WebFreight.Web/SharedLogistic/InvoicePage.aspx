@@ -8,18 +8,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Invoice</title>
 
+    <link href="../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/kendo.default.min.css" rel="stylesheet" type="text/css"/>
+    <script src="../js/jquery-3.5.1.min.js" type="text/javascript"></script>
+    <script src="../js/jquery.dateFormat-1.0.js" type="text/javascript"></script>
+    <script src="../js/kendo.all.min.js" type="text/javascript"></script>
+    <script src="../js/knockout-3.5.1.js" type="text/javascript"></script>
+    <script src="../js/knockout-kendo.min.js" type="text/javascript"></script>
+
     <link href="../HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="../HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>    
     <link href="../HtmlHelpers/CSS/sunburst.css" rel="stylesheet" type="text/css"/>
     <link href="../HtmlHelpers/CSS/app.css" rel="stylesheet" type="text/css"/>
-    <link href="../HtmlHelpers/CSS/kendo.dataviz.min.css" rel="stylesheet" type="text/css" />
-    <link href="../HtmlHelpers/Kendo.2013.2.918/kendo.common.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../HtmlHelpers/Kendo.2013.2.918/kendo.default.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css"/>
-
-    <script src="../HtmlHelpers/JS/jquery-1.9.1.min.js" type="text/javascript"></script>
-    <script src="../HtmlHelpers/JS/jquery.dateFormat-1.0.js" type="text/javascript"></script>
-    <script src="../HtmlHelpers/Kendo.2013.2.918/kendo.all.min.js" type="text/javascript"></script>
+    <link href="../HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css"/>   
     <script src="../HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/Logitude.Entites.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/ContactActivityLog.js" type="text/javascript"></script>
@@ -64,8 +65,6 @@
 
 <body>
 
-    <script src="../HtmlHelpers/JS/knockout-2.2.0.js" type="text/javascript"></script>
-    <script src="../HtmlHelpers/JS/knockout-kendo.min.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/app.js" type="text/javascript"></script>
 

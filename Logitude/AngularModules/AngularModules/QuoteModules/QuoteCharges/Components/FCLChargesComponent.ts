@@ -33,6 +33,7 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalFormatter';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { QuoteTool } from '../../../Quote/Tools';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
     selector: 'FCLChargesComponent',
@@ -712,6 +713,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     }
     PriceCheck() {
         this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+            ServiceLocator.SendTotangoUserActivity("Tariff", "Generate from Quote");
+
             var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
 
             if (this.EntityPM.DirectionId == "I") {
@@ -1529,6 +1532,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "PRFR":
                 case "GWTN":
                 case "QTY":
+                case "PDCW":
                     {
                         isEnabled_CostQuantity = false;
                         break;
@@ -1634,6 +1638,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "PRFR":
                 case "GWTN":
                 case "QTY":
+                case "PDCW":
                     {
                         isEnabled_SaleQuantity = false;
                         break;
@@ -2640,7 +2645,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
                 case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
-
+                case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
                 default:
                     {
                         if (!AppTool.IsNullOrEmpty(this.CostMeasurementId)) {
@@ -3059,6 +3064,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
                 case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
+                case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
                 default:
                     {
                         if (!AppTool.IsNullOrEmpty(this.SaleMeasurementId)) {

@@ -60,6 +60,31 @@ export class DWObjectTablePM {
     public set DefaultFilterBy(newValue: string) { if (this.defaultFilterBy != newValue) { this.defaultFilterBy = newValue; this.MarkAsDirty("DefaultFilterBy"); } }
        
 	 
+    private dataViewName: string;
+    public get DataViewName() { return this.dataViewName; }
+    public set DataViewName(newValue: string) { if (this.dataViewName != newValue) { this.dataViewName = newValue; this.MarkAsDirty("DataViewName"); } }
+       
+	 
+    private hasPivotColumn: boolean;
+    public get HasPivotColumn() { return this.hasPivotColumn; }
+    public set HasPivotColumn(newValue: boolean) { if (this.hasPivotColumn != newValue) { this.hasPivotColumn = newValue; this.MarkAsDirty("HasPivotColumn"); } }
+       
+	 
+    private pivotFieldCode: string;
+    public get PivotFieldCode() { return this.pivotFieldCode; }
+    public set PivotFieldCode(newValue: string) { if (this.pivotFieldCode != newValue) { this.pivotFieldCode = newValue; this.MarkAsDirty("PivotFieldCode"); } }
+       
+	 
+    private additionalFactCode: string;
+    public get AdditionalFactCode() { return this.additionalFactCode; }
+    public set AdditionalFactCode(newValue: string) { if (this.additionalFactCode != newValue) { this.additionalFactCode = newValue; this.MarkAsDirty("AdditionalFactCode"); } }
+       
+	 
+    private additionalFactForeignKey: string;
+    public get AdditionalFactForeignKey() { return this.additionalFactForeignKey; }
+    public set AdditionalFactForeignKey(newValue: string) { if (this.additionalFactForeignKey != newValue) { this.additionalFactForeignKey = newValue; this.MarkAsDirty("AdditionalFactForeignKey"); } }
+       
+	 
 
     public OldEntityPM: DWObjectTablePM;
 		
