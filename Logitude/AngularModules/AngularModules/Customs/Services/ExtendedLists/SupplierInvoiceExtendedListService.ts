@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
@@ -16,6 +16,38 @@ export class SupplierInvoiceExtendedListService {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SupplierInvoice';
     }
+
+    
+    public GetSupplierInvoiceItemsClasifiedRemarks(declarationId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        var url = this._apiUrl + '/GetSupplierInvoiceItemsForInvoice';
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetSupplierInvoiceItemsClasifiedRemarks/?' + 'declarationId=' + declarationId  , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                var _mappedListsArray: Array<SupplierInvoiceItemList> = [];
+                if (serviceResponse.Result) {
+                    for (var key in serviceResponse.Result) {
+
+                        var entity: SupplierInvoiceItemList;
+                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                        _mappedListsArray.push(entity);
+
+                    }
+                }
+
+                serviceResponse.Result = _mappedListsArray;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+
 
     GetSupplierInvoiceItemsForInvoice(declarationId: string, counterkey: number) {
         var authHeader = new Headers();
