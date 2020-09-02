@@ -1496,14 +1496,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return users;
         }
 
-        public List<UserList> GetUserListsByidsString(string ids, bool includeTenantZeroEmails, int tenant)
+        public List<UserList> GetUserListsByidsString(string ids, int tenant)
         {
             List<UserList> users = new List<UserList>();
             List<string> emailsList = ids.Split(';').Select(p => p.Trim()).ToList().Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
             if (emailsList.Count() > 0)
             {
                 users = (from a in repository.context.Users.Include("Contact")
-                         where emailsList.Contains(a.Contact.Id) && (includeTenantZeroEmails?(a.Tenant == tenant || a.Tenant == 0):a.Tenant == tenant)
+                         where emailsList.Contains(a.Contact.Id) && a.Tenant == tenant
                          select new UserList()
                          {
                              Id = a.Id,
@@ -1518,7 +1518,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 #region SetInActiveUsers
                 ContactQuery contactQuery = new ContactQuery(tenant);
                 List<string> contactId = users.Select(d => d.Id).ToList();
-                List<ContactList> contactLists = contactQuery.GetContactListsByListIds(contactId, tenant, includeTenantZeroEmails).Where(d=>d.InActive).ToList();
+                List<ContactList> contactLists = contactQuery.GetContactListsByListIds(contactId, tenant).Where(d=>d.InActive).ToList();
                 foreach(ContactList contact in contactLists)
                 {
                     var user = users.Where(d => d.Id == contact.Id).FirstOrDefault();

@@ -1609,10 +1609,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
-        public IQueryable<ContactList> GetContactListsByListIds(List<string> contactIds, int tenant, bool includeTenantZeroEmails = false)
+        public IQueryable<ContactList> GetContactListsByListIds(List<string> contactIds, int tenant)
         {
             IQueryable<ContactList> contactLists = (from a in repository.context.Contacts
-                                                    where contactIds.Contains(a.Id) && (includeTenantZeroEmails ? (a.Tenant == tenant || a.Tenant == 0) : a.Tenant == tenant)
+                                                    where contactIds.Contains(a.Id) &&  a.Tenant == tenant
                                                     select new ContactList()
                                                     {
                                                         Id = a.Id,
