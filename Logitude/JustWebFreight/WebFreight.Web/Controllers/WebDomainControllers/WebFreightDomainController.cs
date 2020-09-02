@@ -266,7 +266,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 FilterSerializer serializer = new FilterSerializer();
                 byte[] arrayOfBytes = serializer.SerializeFilterItems(queryOperations);
-                var data = new ExportToExcelHelper().ExportQueryToExcel(arrayOfBytes, queryCode, tenant, userid, null);
+                var data = new ExportToExcelHelper().ExportQueryToExcel(new ExportToExcelArgs() { XmlFilters = arrayOfBytes, QueryCode = queryCode, Tenant = tenant, UserId = userid, TypeName = null });
                 //Uploader uploaderService = new Uploader();
                 //string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
                 //string result = uploaderService.UploadFile(ObjectTableName + DateTime.Now.ToShortDateString() + ".xls", data, data.Length, data.Length, blockIdlist, 0, null, tenant, "others", null);
