@@ -16,7 +16,6 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {NewEntityArgs} from '../../../../Infrastructure/Args';
 import {AppTool} from '../../../../Infrastructure/Tools';
-import { ContactInputTemplateArgs } from '../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 
 @Component({
     selector: 'PartnersTabComponent',
@@ -1338,27 +1337,6 @@ export class PartnerItem extends BaseComponent {
             this.Reference1 = this.Reference1_Origin;
             this.Reference2 = this.Reference2_Origin;
             this.IsReseting = false;
-        }
-    }
-
-    AddContact() {
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
-        logWindow.Height = 570;
-        logWindow.Title = "New Contact";
-        var args = new ContactInputTemplateArgs();
-        args.CustomerId = this.PartnerId;
-        args.CardDependencyProperty1 = this.CardDependencyProperty1;
-        args.CustomerLable = this.PartnerTypeName;
-        args.ComponentName = "Partners";
-        logWindow.WindowArgs = args;
-        logWindow.Show('./CommonModules/CommonPartners/Components/NewEntity/NewContactComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewContactWindowClosed($event));
-    }
-
-    OnNewContactWindowClosed(arg: any) {
-        if (arg != 'cancel') {
-            this.ContactId = arg;
         }
     }
 }

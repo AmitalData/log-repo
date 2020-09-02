@@ -24,8 +24,7 @@ namespace Logitude.Accounting.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return InterestBaseTypeId+'_'+LineNumber ;
-                 
+          return InterestBaseTypeId+'_'+LineNumber;
       }
 
       public override string GetEntityPMName()

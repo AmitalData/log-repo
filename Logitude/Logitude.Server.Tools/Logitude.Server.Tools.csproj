@@ -258,7 +258,6 @@
     <Compile Include="Helpers\AesFunction.cs" />
     <Compile Include="Helpers\AmitalConvertUtil.cs" />
     <Compile Include="Helpers\AuthenticationUtil.cs" />
-    <Compile Include="Helpers\DocumentPopulateAutomaticDateUpdateService.cs" />
     <Compile Include="Helpers\DropBoxActionsHelper.cs" />
     <Compile Include="Helpers\EmailLimitationHelper.cs" />
     <Compile Include="Helpers\EntityChangeHelper.cs" />
@@ -292,7 +291,6 @@
     <Compile Include="Helpers\TraceEventResponse.cs" />
     <Compile Include="Helpers\TranslateTextsClass.cs" />
     <Compile Include="Helpers\UpdateEventCustomFieldService.cs" />
-    <Compile Include="Helpers\UploadTool.cs" />
     <Compile Include="Interfaces\IDomainServiceUpdateClass.cs" />
     <Compile Include="EntityValidateService.cs" />
     <Compile Include="Interfaces\IIdCounterUtil.cs" />

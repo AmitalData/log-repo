@@ -17,6 +17,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             return myResult;
         }
 
+
         public static double? ComputeInsideVolume(InsideShipmentPackagePM package, ShipmentPM entityPM)
         {
             double? myResult = null;
@@ -98,7 +99,9 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             return myResult;
         }
-               
+
+
+
         public static double? ComputePackageVolume(double? quantity, double? width, double? height, double? length, double? weight, double? ratio, string dimentionCode, string volumeCode, string fromWeightCode)
         {
             double? myWidth = null;
@@ -311,7 +314,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             return myResult;
         }
-        
+
+
         public static double? ComputeInsideVolumetricWeight(InsideShipmentPackagePM package, ShipmentPM entityPM)
         {
             double? myResult = null;

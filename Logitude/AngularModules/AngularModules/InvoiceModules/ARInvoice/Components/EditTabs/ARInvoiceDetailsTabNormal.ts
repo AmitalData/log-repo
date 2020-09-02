@@ -1761,25 +1761,20 @@ export class ARInvoiceLineItem extends BaseComponent {
             this.IsEditExchangeRateVisible = true;
         }
 
-        var isQuantityEnabled = false;
-        var isUnitPriceEnabled = false;
+        //if (this.EntityPM.IsBackToBack) {
+        //    this.IsEditingEnabled = false;
+        //} else {
+        //    this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
+        //}
 
         this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
-
-        if (this.IsEditingEnabled) {
-            if (this.MeasurementCode != "STFE") {
-                isQuantityEnabled = true;
-                isUnitPriceEnabled = true;
-            }
-        }
-
         this.UIProperties.SetEnabled("ForiegnCurrencyAmount", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("LocalCurrencyAmount", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("InvoiceCurrencyAmount", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("LocalDescription", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, isQuantityEnabled);
-        this.UIProperties.SetEnabled("UnitPrice", this.ObjectTableName, isUnitPriceEnabled);
+        this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("UnitPrice", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("IsRegionalTax", this.ObjectTableName, this.IsEditingEnabled);
 

@@ -9,7 +9,7 @@ LEFT OUTER JOIN   dbo.ShipmentMasterDatas ON dbo.ShipmentMasterDatas.Id = dbo.Sh
 LEFT OUTER JOIN dbo.EntityStatus AS ShipmentMasterDataEntityStatus ON dbo.ShipmentMasterDatas.StatusId = ShipmentMasterDataEntityStatus.Id 
  LEFT OUTER JOIN dbo.EntityStatus ON dbo.Shipments.StatusId = dbo.EntityStatus.Id
 
-WHERE (CustomFileId is null or  CustomFileId !='') and ( Shipments.ComputedStatusId!= CASE 
+WHERE CustomFileId is null and ( Shipments.ComputedStatusId!= CASE 
    WHEN (MasterShipmentDataId IS NOT NULL) THEN 
       CASE 
         WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Id 

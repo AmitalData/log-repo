@@ -109,7 +109,6 @@ export class QuoteTool {
                                 case "CWKG": { myCostQuantity = entityPM.ChargeableWeightInKG; break; }
                                 case "GWKG": { myCostQuantity = entityPM.GrossWeightInKG; break; }
                                 case "VCBM": { myCostQuantity = entityPM.VolumeInCBM; break; }
-                                case "PDCW": { myCostQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
                                 default: { break; }
                             }
 
@@ -127,7 +126,6 @@ export class QuoteTool {
                                 case "CWKG": { mySaleQuantity = entityPM.ChargeableWeightInKG; break; }
                                 case "GWKG": { mySaleQuantity = entityPM.GrossWeightInKG; break; }
                                 case "VCBM": { mySaleQuantity = entityPM.VolumeInCBM; break; }
-                                case "PDCW": { mySaleQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
                                 default: { break; }
                             }
 
@@ -260,16 +258,6 @@ export class QuoteTool {
                     myResult = true;
                 }
                 else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "VCBM" && f.SaleQuantity != entityQuantity).length > 0) {
-                    myResult = true;
-                }
-
-
-                // PDCW
-                entityQuantity = entityPM.PickupDeliveryChargeableWeight;
-                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PDCW" && f.CostQuantity != entityQuantity).length > 0) {
-                    myResult = true;
-                }
-                else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PDCW" && f.SaleQuantity != entityQuantity).length > 0) {
                     myResult = true;
                 }
 

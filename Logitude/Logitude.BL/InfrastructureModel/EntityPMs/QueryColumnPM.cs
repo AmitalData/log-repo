@@ -28,9 +28,5 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ObjectFieldCode { get; set; }
         public string DisplayText { get; set; }
 
-
-        
-
-
     }
 }

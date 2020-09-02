@@ -82,6 +82,5 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string TMPersonalAccessToken { get; set; }
 
         public string LogitudeDemoTenants { get; set; }
-        public DateTime? TMPersonalAccessExpirationDate { get; set; }
     }
 }

@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CargoTrackingShipmentSearchForm.cs" />
+    <Compile Include="CargoTrackingShipmentSearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CargoTrackingShipmentSearchForm.Designer.cs">
       <DependentUpon>CargoTrackingShipmentSearchForm.cs</DependentUpon>
     </Compile>

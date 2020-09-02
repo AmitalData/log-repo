@@ -20,8 +20,7 @@ namespace Logitude.WarehouseLib.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return Code ;
-                 
+          return Code;
       }
 
       public override string GetEntityPMName()

@@ -742,23 +742,6 @@ export class ARInvoiceMenuButtonsHandler {
         }
     }
     VoidClicked() {
-
-        var isQuickBooks: boolean = false;
-        var isTransferingToQuickBooks: boolean = false;
-
-        if (SessionLocator.AccountingSystemPM.Code == "QBO" || SessionLocator.AccountingSystemPM.Code == "QBOG") {
-            isQuickBooks = true;
-            isTransferingToQuickBooks = true;
-
-            if (this.EntityPM.StatusCode == null || this.EntityPM.StatusCode == "DR") {
-                isTransferingToQuickBooks = false;
-            }
-
-            else if (this.EntityPM.TransferStatusCode == "ET") {
-                isTransferingToQuickBooks = false;
-            }
-        }
-
         if (this.EntityPM.TransferStatusCode == "TR" && SessionLocator.AccountingSettingPM.AccountingSystemCode != "QBO" && SessionLocator.AccountingSettingPM.AccountingSystemCode != "QBOG") {
             var messageWindow = new MessageWindow();
             messageWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.AlreadyTransferredInvoicesMsg"));
@@ -782,7 +765,7 @@ export class ARInvoiceMenuButtonsHandler {
 
             if (this.isValid) {
 
-                if ((this.EntityPM.ARInvoiceTypeCode == "CD" || this.EntityPM.ARInvoiceTypeCode == "CC") && isQuickBooks && isTransferingToQuickBooks) {
+                if ((this.EntityPM.ARInvoiceTypeCode == "CD" || this.EntityPM.ARInvoiceTypeCode == "CC") && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG")) {
                     var messageWindow = new MessageWindow();
                     messageWindow.Show("Please notice that QBO are not supporting void transmission for the credit note, you can void it manually from QBO");
                     messageWindow.WindowClosed.subscribe(p => {

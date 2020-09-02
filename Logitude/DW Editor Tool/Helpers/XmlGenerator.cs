@@ -35,14 +35,6 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("TypeCode", GetStringValue(tableViewModel.TypeCode), entityElement);
                 SetAttribute("IsClosed", tableViewModel.IsClosed.ToString().ToLower(), entityElement);
                 SetAttribute("DefaultFilterBy", GetStringValue(tableViewModel.DefaultFilterBy), entityElement);
-                SetAttribute("DataViewName", GetStringValue(tableViewModel.DataViewName), entityElement);
-                SetAttribute("HasPivotColumn", tableViewModel.HasPivotColumn.ToString().ToLower(), entityElement);
-                SetAttribute("PivotFieldCode", GetStringValue(tableViewModel.PivotFieldCode), entityElement);
-
-                SetAttribute("AdditionalFactCode", GetStringValue(tableViewModel.AdditionalFactCode), entityElement);
-                SetAttribute("AdditionalFactForeignKey", GetStringValue(tableViewModel.AdditionalFactForeignKey), entityElement);
-
-
                 XmlElement fieldsTagElement = doc.CreateElement("fields");
                 entityElement.AppendChild(fieldsTagElement);
                 BuildFieldTags(tableViewModel, doc, fieldsTagElement);
@@ -105,13 +97,8 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("HelpText", GetStringValue(fieldViewModel.HelpText), fieldElement);
                 SetAttribute("IsCustom", fieldViewModel.IsCustom.ToString().ToLower(), fieldElement);
                 SetAttribute("OriginalObjectFieldCode", GetStringValue(fieldViewModel.OriginalObjectFieldCode), fieldElement);
-                SetAttribute("ViewFieldDisplayName", GetStringValue(fieldViewModel.ViewFieldDisplayName), fieldElement);
-                SetAttribute("DontDisplayInView", fieldViewModel.DontDisplayInView.ToString().ToLower(), fieldElement);
-                SetAttribute("IsMultipleSelection", fieldViewModel.IsMultipleSelection.ToString().ToLower(), fieldElement);
-                SetAttribute("DimensionDataViewName", GetStringValue(fieldViewModel.DimensionDataViewName), fieldElement);
-                SetAttribute("RecordType", GetStringValue(fieldViewModel.RecordType), fieldElement);
 
-
+                
 
             }
 
@@ -140,14 +127,6 @@ namespace DW_Editor_Tool.Helpers
                         tableViewModel.TypeCode = GetAttributeStringValue(entity.Attributes["TypeCode"]);
                         tableViewModel.IsClosed = GetAttributeBoolValue(entity.Attributes["IsClosed"]);
                         tableViewModel.DefaultFilterBy = GetAttributeStringValue(entity.Attributes["DefaultFilterBy"]);
-                        tableViewModel.DataViewName = GetAttributeStringValue(entity.Attributes["DataViewName"]);
-                        tableViewModel.HasPivotColumn = GetAttributeBoolValue(entity.Attributes["HasPivotColumn"]);
-                        tableViewModel.PivotFieldCode = GetAttributeStringValue(entity.Attributes["PivotFieldCode"]);
-
-                        tableViewModel.AdditionalFactCode = GetAttributeStringValue(entity.Attributes["AdditionalFactCode"]);
-                        tableViewModel.AdditionalFactForeignKey = GetAttributeStringValue(entity.Attributes["AdditionalFactForeignKey"]);
-
-
 
                         List<DWObjectFieldViewModel> fieldsList = new List<DWObjectFieldViewModel>();
                         foreach (XmlNode childNode in entity.ChildNodes)
@@ -213,15 +192,6 @@ namespace DW_Editor_Tool.Helpers
             fieldViewModel.HelpText = GetAttributeStringValue(fieldNode.Attributes["HelpText"]);
             fieldViewModel.IsCustom = GetAttributeBoolValue(fieldNode.Attributes["IsCustom"]);
             fieldViewModel.OriginalObjectFieldCode = GetAttributeStringValue(fieldNode.Attributes["OriginalObjectFieldCode"]);
-            fieldViewModel.ViewFieldDisplayName = GetAttributeStringValue(fieldNode.Attributes["ViewFieldDisplayName"]);
-            fieldViewModel.DontDisplayInView = GetAttributeBoolValue(fieldNode.Attributes["DontDisplayInView"]);
-            fieldViewModel.IsMultipleSelection = GetAttributeBoolValue(fieldNode.Attributes["IsMultipleSelection"]);
-            fieldViewModel.DimensionDataViewName = GetAttributeStringValue(fieldNode.Attributes["DimensionDataViewName"]);
-            fieldViewModel.RecordType = GetAttributeStringValue(fieldNode.Attributes["RecordType"]);
-
-            
-
-
 
             return fieldViewModel;
         }
@@ -247,7 +217,6 @@ namespace DW_Editor_Tool.Helpers
 
         private static string GetStringValue(object value)
         {
-
             if (value != null)
             {
                 if (string.IsNullOrEmpty(value.ToString())) value = null;

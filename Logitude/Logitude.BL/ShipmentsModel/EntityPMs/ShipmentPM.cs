@@ -2133,7 +2133,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string WarehouseLegReference { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        [DataMember]
         public string WarehouseLegTerminalName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2465,7 +2464,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MasterProjectNumber { get; set; }
 
 
-
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentSubTypeId { get; set; }
         public string ShipmentSubTypeName { get; set; }
@@ -2473,74 +2471,5 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsUpdateEntityException { get; set; }
         public string MasterHousesNumbers { get; set; }
         public string HousesDescriptionofGoods { get; set; }
-
-
-
-
-
-        public DateTime? BookingConfirmationSentDate { get; set; }
-        public DateTime? PreAlertSentDate { get; set; }
-        public DateTime? DeliveryNoticeSentDate { get; set; }
-        public DateTime? ExpectedArrivalNoticeSentDate { get; set; }
-        public DateTime? ArrivalNoticeSentDate { get; set; }
-        public DateTime? T1ReceivedDate { get; set; }
-
-
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool ChargeStorage { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ChargeStorageCurrencyId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WeightMeasurementCode { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WeightRoundingCode { get; set; }
-
-        private List<ShipmentStoragePricingPM> shipmentStoragePricings;
-        [Include]
-        [Association("shipmentStoragePricingShipment", "Id", "ShipmentId")]
-        [Composition]
-        public virtual List<ShipmentStoragePricingPM> ShipmentStoragePricings
-        {
-            get
-            {
-                if (this.shipmentStoragePricings == null)
-                {
-                    shipmentStoragePricings = new List<ShipmentStoragePricingPM>();
-                }
-                return this.shipmentStoragePricings;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    shipmentStoragePricings = value;
-                }
-            }
-        }
-
-        public List<TransshipmentLeg> MainCarriageLegs { get; set; }
-        public bool IsBondedWarehouse { get; set; }
-        public bool IsBondedWarehouseChanged { get; set; }
-    }
-
-    public class TransshipmentLeg
-    {
-        public string Id { get; set; }
-        public int LegIndex { get; set; }
-        public string FromPortId { get; set; }
-        public string ToPortId { get; set; }
-        public string CarrierId { get; set; }
-        public string CarrierNumber { get; set; }
-        public string VesselId { get; set; }        
-        public string MasterNumber { get; set; }
-        public DateTime? ETD { get; set; }
-        public DateTime? ETA { get; set; }
-        public DateTime? ATD { get; set; }
-        public DateTime? ATA { get; set; }
     }
 }

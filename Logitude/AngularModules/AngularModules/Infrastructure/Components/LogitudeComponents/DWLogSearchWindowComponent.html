@@ -63,46 +63,15 @@
     <tr style="height: 21px;">
         <td style="height: 21px;">
             <table>
-                <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-                    <td>
-                        <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-                    </td>
-                </tr>
-                <tr *ngIf="IsMultipleSelection">
-                    <td style="width: 400px;height:20px;">
-                        <LogLabel [NoObjectField]="true" [Text]="DWLogHelpText" [DataContext]="DataContext"></LogLabel>
-                    </td>
-                </tr>
                 <tr>
-                    <td>
-                        <table>
-                            <tr>
-                                <td *ngIf="IsMultipleSelection" style="width: 100px;">
-                                    <LogLabel [ObjectFieldName]="'ColumnName'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true" [Text]="'Column Name'" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td *ngIf="IsMultipleSelection" style="width: 180px;">
-                                    <LogTextBox [ObjectFieldName]="'ColumnName'" [HideColumns]="true" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </td>
-                                <td *ngIf="IsMultipleSelection" style="width: 150px;">
-                                    <LogLabel [ObjectFieldName]="'OriginalColumnName'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true" [Text]="'Original Column Name'" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td *ngIf="IsMultipleSelection" style="width: 21%;">
-                                    <LogTextBox [ObjectFieldName]="'OriginalColumnName'" [HideColumns]="true" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </td>
-                                <td *ngIf="IsMultipleSelection" style="width:10%"></td>
-                                <td style="width: 230px; vertical-align:middle;">
-                                    <SearchTextBox [ObjectTableName]="ParentTableName"
-                                                   (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
-                                </td>
-                                <td> </td>
-                            </tr>
-                        </table>
+                    <td style="width: 230px; vertical-align:middle;">
+                        <SearchTextBox [ObjectTableName]="ParentTableName"
+                                       (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                     </td>
+                    <td> </td>
                 </tr>
 
-                <tr *ngIf="!IsMultipleSelection" style="height:10px"></tr>
+                <tr style="height:10px"></tr>
 
             </table>
         </td>
@@ -138,7 +107,7 @@
                                                                                     <table>
                                                                                         <tr>
                                                                                             <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                                            <td style="width:50px;"><div style="width:50px;">{{FirstListTitle}}</div></td>
+                                                                                            <td style="width:50px;"><div style="width:50px;">All Partners</div></td>
                                                                                             <td></td>
                                                                                         </tr>
                                                                                     </table>
@@ -191,7 +160,7 @@
                                                                                     <table>
                                                                                         <tr>
                                                                                             <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                                            <td style="width:50px;"><div style="width:50px;">{{SecondListTitle}}</div></td>
+                                                                                            <td style="width:50px;"><div style="width:50px;">Selected Partners</div></td>
                                                                                             <td></td>
                                                                                         </tr>
                                                                                     </table>
@@ -311,10 +280,6 @@
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
-                    <td *ngIf="HasActiveField" style="width: 1px;">
-                        <CheckBox [IsChecked]="ShowInactive" (Checked)="ShowInactive = $event" [Text]="'Show Inactive'"></CheckBox>
-                    </td>
-
                     <td>
                         <div></div>
                     </td>

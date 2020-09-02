@@ -20,8 +20,7 @@ namespace Logitude.BookingLib.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return Id ;
-                 
+          return Id;
       }
 
       public override string GetEntityPMName()

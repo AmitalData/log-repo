@@ -74,20 +74,6 @@ export class InterestReportExtendedListService {
             }),
             catchError(ServiceHelper.HandleServiceError));
     }
-
-    GetInterestReportStatusCode(InterestReportId:string) {
-      return this.httpClient.get(this._apiUrl + "/GetInterestReportStatusCode?InterestReportId="+InterestReportId,   ServiceHelper.GetHttpHeaders()).pipe(
-          map(res => {
-              var serviceResponse: ServiceResponse;
-              serviceResponse = new ServiceResponse();
-              var result = res;
-              serviceResponse.Result = result;
-
-              return serviceResponse;
-          }),
-          catchError(ServiceHelper.HandleServiceError));
-  }
-
     GetNumberOfDocumentNotPrinted(interestReportArgs: InterestReportArguments) {
       return this.httpClient.put(this._apiUrl + "/PutNumberOfDocumentNotPrinted", JSON.stringify(interestReportArgs),  ServiceHelper.GetHttpHeaders()).pipe(
           map(res => {

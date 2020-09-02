@@ -64,7 +64,6 @@ namespace WebFreight.Web.ReportsWebServices
                 myDataProvider.MAWBFull = shipmentPM.Master != null ? shipmentPM.Master : "";
                 myDataProvider.HAWBFull = shipmentPM.House != null ? shipmentPM.House : "";
                 myDataProvider.BookingNumber = shipmentPM.BookingConfirmationNumber != null ? shipmentPM.BookingConfirmationNumber : "";
-                myDataProvider.FlightNumber = shipmentPM.MainCarriageCarrierNumber != null ? shipmentPM.MainCarriageCarrierNumber : "";
 
                 if (!string.IsNullOrEmpty(shipmentPM.LongMaster))
                 {
@@ -237,7 +236,6 @@ namespace WebFreight.Web.ReportsWebServices
                     newlabel.UserName = myDataProvider.UserName;
                     newlabel.ConsigneePhoneNumber = myDataProvider.ConsigneePhoneNumber;
                     newlabel.AirlineLogo = myDataProvider.AirlineLogo;
-                    newlabel.FlightNumber = myDataProvider.FlightNumber;
 
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentPM, newlabel);

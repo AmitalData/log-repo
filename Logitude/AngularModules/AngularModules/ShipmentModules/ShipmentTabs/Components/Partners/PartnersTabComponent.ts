@@ -20,7 +20,6 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
 import {AddEditPartnerArgs} from '../../../../Shipment/Args';
 import {ShipmentTool} from '../../../../Shipment/Tools';
-import { ContactInputTemplateArgs } from '../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 
 @Component({
     
@@ -496,7 +495,7 @@ export class PartnerItem extends BaseComponent {
 
                         if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
                             myResult = "CS,AG";
-                        }
+                        }                        
                     }
 
                     else {
@@ -523,7 +522,7 @@ export class PartnerItem extends BaseComponent {
             case "FRTFR":
             case "COLOD":
                 {
-                    myResult = "AG";
+                    myResult = "AG";                    
                     break;
                 }
 
@@ -559,7 +558,7 @@ export class PartnerItem extends BaseComponent {
                     myResult = "WH";
                     break;
                 }
-
+          
             default: {
                 myResult = "CS";
                 break;
@@ -587,7 +586,7 @@ export class PartnerItem extends BaseComponent {
                             myResult = true;
                         }
                     }
-
+                    
                     break
                 }
 
@@ -1060,7 +1059,7 @@ export class PartnerItem extends BaseComponent {
             case "COLOD": { this.ColoaderId = newValue; break; }
             case "CLERN": { this.CustomClearancePointId = newValue; break; }
             case "CONSL": { this.ConsolidatorId = newValue; break; }
-            case "REAGT": { this.ReleasingAgentId = newValue; break; }
+            case "REAGT": { this.ReleasingAgentId = newValue; break;}
         }
     }
 
@@ -1451,7 +1450,7 @@ export class PartnerItem extends BaseComponent {
             this.GetPartnerAddress();
         }
     }
-
+    
     // ContactId
     get PartnerContactIdProperty() {
         switch (this.Code) {
@@ -1667,7 +1666,7 @@ export class PartnerItem extends BaseComponent {
             this.GetPartnerContact();
         }
     }
-
+    
     // Reference1
     get HasReference1() {
         var myResult: boolean = false;
@@ -1899,7 +1898,7 @@ export class PartnerItem extends BaseComponent {
             case "SHIPR":
             case "CONSI":
             case "AGENT":
-            case "REAGT":
+            case"REAGT":
             case "CSTMR":
                 {
                     myResult = true;
@@ -1934,7 +1933,7 @@ export class PartnerItem extends BaseComponent {
             case "CONSI": { this.ConsigneeReference2 = newValue; break; }
             case "AGENT": { this.AgentReference2 = newValue; break; }
             case "CSTMR": { this.CustomerReference2 = newValue; break; }
-            case "REAGT": { this.ReleasingAgentReference2 = newValue; break; }
+            case "REAGT": { this.ReleasingAgentReference2 = newValue; break;  }
         }
     }
 
@@ -2186,7 +2185,7 @@ export class PartnerItem extends BaseComponent {
 
         else {
             var myPerspective: string = null;
-            var myComponentPath: string = null;
+            var myComponentPath: string = null;            
 
             if (this.CardDependencyProperty1 == "AG") {
                 myComponentPath = "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent";
@@ -2202,7 +2201,7 @@ export class PartnerItem extends BaseComponent {
 
             else {
                 myComponentPath = "./CommonModules/CommonCustomer/Components/NewEntity/NewCustomerComponent";
-
+                
                 if (!this.IsCustomer) {
                     myPerspective = "ShippersAndConsignees";
                 }
@@ -2427,7 +2426,7 @@ export class PartnerItem extends BaseComponent {
                             else {
                                 this.EntityPM.IssuingCarrierAddressId = myAddressId;
                                 this.GetPartnerCard();
-                            }
+                            } 
                         }
 
                         else {
@@ -2435,7 +2434,7 @@ export class PartnerItem extends BaseComponent {
                             if (this.Name != cmp.CardEnglishName) {
                                 this.Name = cmp.CardEnglishName;
                             }
-
+                                
                             if (this.IssuingCarrierAddressId != myAddressId) {
                                 this.IssuingCarrierAddressId = myAddressId;
                             }
@@ -2447,27 +2446,6 @@ export class PartnerItem extends BaseComponent {
                     }
                 });
             });
-        }
-    }
-
-    AddContact() {
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
-        logWindow.Height = 570;
-        logWindow.Title = "New Contact";
-        var args = new ContactInputTemplateArgs();
-        args.CustomerId = this.PartnerId;
-        args.CardDependencyProperty1 = this.CardDependencyProperty1;
-        args.CustomerLable = this.PartnerTypeName;
-        args.ComponentName = "Partners";
-        logWindow.WindowArgs = args;
-        logWindow.Show('./CommonModules/CommonPartners/Components/NewEntity/NewContactComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewContactWindowClosed($event));
-    }
-
-    OnNewContactWindowClosed(arg: any) {
-        if (arg != 'cancel') {
-            this.ContactId = arg;
         }
     }
 }

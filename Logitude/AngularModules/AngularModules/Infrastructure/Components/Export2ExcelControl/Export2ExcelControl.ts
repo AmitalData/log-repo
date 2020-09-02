@@ -15,7 +15,7 @@ import { HttpClient } from '@angular/common/http';
 import {LogboxShipmentExportExcelService} from '../../../Shipment/Services/Others/LogboxShipmentExportExcelService';
 
 @Component({
-    
+
 
     templateUrl: './Export2ExcelControl.html',
     //pipes: [TextCodeTranslationPipe],
@@ -30,7 +30,7 @@ export class Export2ExcelControl {
     url: string;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);//true;
     private CurrentSession = SessionLocator.SelectedSession;
-  constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
 
     }
     ObjectTableName: string;
@@ -72,7 +72,7 @@ export class Export2ExcelControl {
         }
     }
 
-    CompleteExcelData(myResult:any) {
+    CompleteExcelData(myResult: any) {
         if (myResult == "Faild") {
             this.btnRetryVisibile = true;
             this.busyExportingVisibile = false;
@@ -94,14 +94,14 @@ export class Export2ExcelControl {
     SaveExcelFile(tenant: number, FileName: string, OTName: string) {
         var tempDate = new Date();
         var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
-        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() +  "&qname=" + this.queryName + "_" + MyDate;
+        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + this.queryName + "_" + MyDate;
         //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
         //    AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseOpenNewBrowser(url);
         //} else
         {
             window.open(url);
         }
-        
+
         this.CurrentSession.CloseCurrentWindow();
     }
 

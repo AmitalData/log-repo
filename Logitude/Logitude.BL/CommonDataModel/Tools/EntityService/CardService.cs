@@ -11,7 +11,6 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
-using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -67,7 +66,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPM = entityPM;
             this.tenant = entityPM.Tenant;
             this.Create();
-            RunStoredProcedures();
 
         }
         public void Create()
@@ -120,9 +118,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPM = entityPM;
             this.tenant = entityPM.Tenant;
             this.Update();
-            RunStoredProcedures();
-        }
 
+        }
         public void Update()
         {
             this.isNewEntity = false;
@@ -152,15 +149,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-
-
-        private void RunStoredProcedures()
-        {
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-        }
-
-
-
         private void Initialize()
         {
             if (isNewEntity)
@@ -177,7 +165,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.UpdatedByUserId = loggedContact.Id;
             }
         }
-
         private void CacheEntity()
         {
             if (CacheManager.CacheWrapper != null)

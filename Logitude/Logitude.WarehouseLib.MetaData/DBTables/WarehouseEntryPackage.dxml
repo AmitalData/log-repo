@@ -221,13 +221,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="OverManifest"
-    Type="int"
-    DefaultValue="0">
-    <Constraints
-      Nullable="false" />
-  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

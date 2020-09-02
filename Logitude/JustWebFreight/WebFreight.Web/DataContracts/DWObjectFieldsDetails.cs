@@ -43,8 +43,7 @@ namespace WebFreight.Web.DataContracts
         public bool HideTree { get; set; }
         public bool IsCustom { get; set; }
         public string CustomPickListCode { get; set; }
-        public bool IsMultipleSelection { get; set; }
-
+        
         public List<MultiSelectedValue> MultiSelectedValueLists { get; set; }
       
     }

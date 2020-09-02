@@ -45,29 +45,6 @@ namespace Logitude.BL.DataContracts
             }
 
         }
-
-
-        public static  void UpdateCardSearcsRecords(string cardId, int tenant)
-        {
-            string strConnString = GetConnection(tenant);
-            using (SqlConnection cn = new SqlConnection(strConnString))
-            {
-                SqlCommand cmd = new SqlCommand("usp_UpdateCardSearchFunction", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                SqlParameter param1 = new SqlParameter("@CardId", SqlDbType.VarChar);
-                param1.Direction = ParameterDirection.Input;
-                param1.Value = cardId;
-                cmd.Parameters.Add(param1);
-
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            }
-        }
-
-
-
         public static void UpdateShipmentOperationalDate(string shipmentId, int tenant)
         {
             string strConnString = GetConnection(tenant);
@@ -200,7 +177,6 @@ namespace Logitude.BL.DataContracts
             }
         }
 
-      
         public static void UpdateCustomConnectToShipment(string shipmentId, int tenant)
         {
             string strConnString = GetConnection(tenant);

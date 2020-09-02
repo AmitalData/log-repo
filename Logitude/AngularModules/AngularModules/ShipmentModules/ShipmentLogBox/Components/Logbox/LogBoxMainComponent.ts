@@ -25,7 +25,7 @@ import { LogboxShipmentExportExcelArgs } from '../../../../Shipment/DataContract
 
 
 @Component({
-    
+
     templateUrl: './LogBoxMainComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })
@@ -133,9 +133,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                     let me: any = SessionLocator.ExternalParams;
                     if (me.ForwarderShipmentNumber) {
                         this.SearchFilter = me.ForwarderShipmentNumber;
-                        this._ShipmentPMService.getSingleByForwarderShipmentNumber(me.ForwarderShipmentNumber).subscribe((myResult:any) => {
+                        this._ShipmentPMService.getSingleByForwarderShipmentNumber(me.ForwarderShipmentNumber).subscribe((myResult: any) => {
                             if (!myResult.HasError) {
-                                this._ShipmentAdditionalCloudDataService.get(myResult.Result.Id).subscribe((AdditionalResult:any) => {
+                                this._ShipmentAdditionalCloudDataService.get(myResult.Result.Id).subscribe((AdditionalResult: any) => {
                                     //this.CurrentSession.StopBusyIndicator();
                                     var newWindow = new LogitudeWindow();
                                     newWindow.Width = 665;
@@ -149,7 +149,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                                     windowArgs.AdditionalData = AdditionalResult.Result
                                     newWindow.WindowArgs = windowArgs;
                                     //newWindow.Add(control); 
-                                  newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');
+                                    newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');
                                     newWindow.WindowClosed.subscribe(($event: any) => {
                                         this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                                         //if ($event == "MyShipmentAdded") {
@@ -169,7 +169,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             }
         }
         //this.setUserLastSettings();
-        
+
 
     }
     ngAfterViewInit() {
@@ -251,13 +251,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             console.log("4");
             this.SaveUserLastSettings("SelectedArchiveFilter", this.mySelectedArchiveFilter);
             ServiceLocator.SendTotangoUserActivity("LogBox", "Open/Close filter changed");
-           
+
         }
     }
 
     SaveUserLastSettings(FilterName: string, FilterValue: string) {
-       
-        this._UserLastSettingsExtendedPMService.getsingleByUserIdFilterName(SessionLocator.LoggedUserId, FilterName).subscribe((Result:any) => {
+
+        this._UserLastSettingsExtendedPMService.getsingleByUserIdFilterName(SessionLocator.LoggedUserId, FilterName).subscribe((Result: any) => {
             if (!Result.HasError && Result.Result == null) {
                 var myFilterSettings = new UserLastSettingsPM();
                 myFilterSettings.FilterName = FilterName;
@@ -265,7 +265,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 myFilterSettings.ControlNameSpace = "ShipmentModules.ShipmentLogBox.LogBoxMainComponent";
                 myFilterSettings.Tenant = SessionLocator.Tenant;
                 myFilterSettings.UserId = SessionLocator.LoggedUserId;
-                this._UserLastSettingsPMService.insert(myFilterSettings).subscribe((myResult:any) => {
+                this._UserLastSettingsPMService.insert(myFilterSettings).subscribe((myResult: any) => {
                 });
             }
             else if (!Result.HasError && Result.Result != null) {
@@ -275,19 +275,19 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 myUpdatedFilterSettings.ControlNameSpace = "ShipmentModules.ShipmentLogBox.LogBoxMainComponent";
                 myUpdatedFilterSettings.Tenant = SessionLocator.Tenant;
                 myUpdatedFilterSettings.UserId = SessionLocator.LoggedUserId;
-                this._UserLastSettingsPMService.update(myUpdatedFilterSettings).subscribe((myResult:any) => {
+                this._UserLastSettingsPMService.update(myUpdatedFilterSettings).subscribe((myResult: any) => {
                 });
             }
         });
-        
+
     }
 
     setUserLastSettings() {
 
-        this._UserLastSettingsExtendedPMService.getallByUserIdNameSpace(SessionLocator.LoggedUserId, "ShipmentModules.ShipmentLogBox.LogBoxMainComponent").subscribe((Result:any) => {
+        this._UserLastSettingsExtendedPMService.getallByUserIdNameSpace(SessionLocator.LoggedUserId, "ShipmentModules.ShipmentLogBox.LogBoxMainComponent").subscribe((Result: any) => {
             if (!Result.HasError && Result.Result != null) {
                 var myFiltersSettings = Result.Result;
-           
+
                 var myArchiveFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedArchiveFilter');
                 var myDirectionFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedDirectionFilter');
                 var myTransportFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedTransportFilter');
@@ -300,7 +300,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 }
                 if (myTransportFilter.length > 0) {
                     this.mySelectedTransportFilter = myTransportFilter[0].FilterValue;
-                } 
+                }
             }
             this.LoadImporterShipments();
             //this.LoadImporterShipments();
@@ -349,14 +349,14 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     };
 
 
-    GetQueryColumn(fieldName: string, dataTypeCode: string, displayText:string) {
+    GetQueryColumn(fieldName: string, dataTypeCode: string, displayText: string) {
         var queryColum: QueryColumnPM = new QueryColumnPM();
         queryColum.ObjectFieldDataTypeCode = dataTypeCode;
         queryColum.ObjectFieldName = fieldName;
         queryColum.DisplayText = displayText;
         queryColum.ObjectFieldListLabelTextCodeCode = fieldName;
         return queryColum;
-        
+
 
     }
 
@@ -380,7 +380,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             SortByName: "ShipmentNumber"
         });
 
-        this.QueryColumns.push(this.GetQueryColumn(("ShipmentNumber_" + this.SelectedFilter.replace(" ","")), 'Text', 'Shipment #'));
+        this.QueryColumns.push(this.GetQueryColumn(("ShipmentNumber_" + this.SelectedFilter.replace(" ", "")), 'Text', 'Shipment #'));
 
 
         this.columns.push({
@@ -444,7 +444,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                     ServerSideSortable: true,
                     SortByName: "StatusDate"
                 });
-                this.QueryColumns.push(this.GetQueryColumn("StatusDate", 'DateTime', 'Status Date' ));
+                this.QueryColumns.push(this.GetQueryColumn("StatusDate", 'DateTime', 'Status Date'));
 
             }
             else {
@@ -489,7 +489,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             SortByName: "IsOperationalClosed"
         });
 
-        this.QueryColumns.push(this.GetQueryColumn("IsOperationalClosed", 'Boolean', 'Operational Closed' ));
+        this.QueryColumns.push(this.GetQueryColumn("IsOperationalClosed", 'Boolean', 'Operational Closed'));
 
 
         if (this.SelectedFilter == "My Shipments") {
@@ -636,12 +636,12 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         logboxShipmentExportExcelArgs.SortDirection = this.filterAgrs.SortDirection;
         logboxShipmentExportExcelArgs.QueryName = this.SelectedFilter;
         logboxShipmentExportExcelArgs.QuerySection = "Shipment";
-        logboxShipmentExportExcelArgs.Filters = this.filterAgrs; 
+        logboxShipmentExportExcelArgs.Filters = this.filterAgrs;
         return logboxShipmentExportExcelArgs;
     }
 
 
-    
+
     MenuFiltersClicked(Selected) {
         this.SelectedFilter = Selected;
         this.SelectedRow = null;
@@ -667,7 +667,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         if (this.RowSelectedTimerToken) {
             clearTimeout(this.RowSelectedTimerToken);
         }
-        this.RowSelectedTimerToken = setTimeout(() => this.TriggerShipmentSelectedEvent(CurrentRow), 500); 
+        this.RowSelectedTimerToken = setTimeout(() => this.TriggerShipmentSelectedEvent(CurrentRow), 500);
     }
 
     TriggerShipmentSelectedEvent(CurrentRow) {
@@ -683,13 +683,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     private LoadImporterShipments() {
         console.log("LoadImporterShipments");
-        
+
         this.SelectedRow = null;
         this.ShipmentSelectedEvent.emit(this.SelectedRow);
         this.BuildColumns();
         this.LoadQueriesCounts();
         //if (this.filterAgrs == null) {
-        
+
         this.filterAgrs = this.GetApiQueryFilters();
 
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
@@ -835,7 +835,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     GridAfterViewInitCompleted($event) {
         this.setUserLastSettings();
-        
+
         console.log("8");
     }
     timerToken: any;
@@ -885,10 +885,10 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         //newWindow.Add(control);
         if (SessionLocator.PrivateLableSettings) {
             newWindow.Height = 376;
-          newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
+            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
         }
         else {
-          newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterShipmentComponent');
+            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterShipmentComponent');
         }
         newWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "MyShipmentAdded") {
@@ -939,7 +939,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         //newWindow.WindowArgs = windowArgs;
         //newWindow.Add(control);
 
-      newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DigitalSignDocTypeComponent');
+        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DigitalSignDocTypeComponent');
 
         newWindow.WindowClosed.subscribe(($event: any) => {
             //if ($event == "MyShipmentAdded") {
@@ -953,7 +953,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         SessionLocator.LoggedUserPM.ShowLogBoxToolTip = true;
         var myPM = SessionLocator.LoggedUserPM;
         this.DontShowLogboxToolTip = true;
-        this.myUserPMService.update(myPM).subscribe((myResult:any) => {
+        this.myUserPMService.update(myPM).subscribe((myResult: any) => {
 
         });
     }
@@ -969,7 +969,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         //windowArgs.SourceEntity = myResult.Result;//this.rowData;
         //windowArgs.HasSharedDocs = this.HasSharedDocs;
         newWindow.WindowArgs = windowArgs;
-      newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/MultiArchiveShipmentsComponent');
+        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/MultiArchiveShipmentsComponent');
         newWindow.WindowClosed.subscribe(($event: any) => {
             this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
         });

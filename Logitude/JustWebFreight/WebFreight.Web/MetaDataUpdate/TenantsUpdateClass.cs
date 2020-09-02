@@ -55,14 +55,8 @@ using Microsoft.VisualStudio.Services.Common;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
-
     public class TenantsUpdateClass
     {
-        private static void WriteLogMessage(string message)
-        {
-            Console.WriteLine(message);
-        }
-
         private static bool runOldUpdateCode = false;
         private static PerformanceTimerLogger performanceTimerLogger = new PerformanceTimerLogger();
         public static void UpdateDataForTenant(int tenant, string message, bool runOldCode = false)
@@ -83,65 +77,46 @@ namespace WebFreight.Web.MetaDataUpdate
                       
                       case "updatetenantzeronew":
                         {
-                            WriteLogMessage("Update started ...");
-
                             performanceTimerLogger = new PerformanceTimerLogger();
                             performanceTimerLogger.Start(); 
                             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
                             UpdateAllOldModules(updateClass, context);
 
-                            WriteLogMessage("Updating Accounting Module ...");
+
                             UpdateAccountingModule(context, false);
-
-                            WriteLogMessage("Updating Tarrif Module ...");
                             UpdateTariffModule(context, false);
-
-                            WriteLogMessage("Updating Time Management Module ...");
                             UpdateTimeManagementModule(context, false);
-
-                            WriteLogMessage("Updating Warehouse Module ...");
                             UpdateWarehouseModule(context, false);
-
-                            WriteLogMessage("Updating Social Module ...");
                             UpdateSocialModule(context, false);
-
-                            WriteLogMessage("Updating Booking Module ...");
                             UpdateBookingModule(context, false);
-
-                            WriteLogMessage("Updating CRM Module ...");
                             UpdateCRMModule(context, false);
 
-                            WriteLogMessage("Updating Menus tables ...");
                             updateClass.LoadMenustables();
                             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadMenustables");
 
-                            WriteLogMessage("Updating Default Reports ...");
                             updateClass.LoadDefaultReports();
                             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadDefaultReports");
 
                             //updateClass.LoadHelpResources();
                             //performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadHelpResources");
-                            WriteLogMessage("Updating Master Counters ...");
+
                             updateClass.CreateMasterCounter(0);
                             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.CreateMasterCounter");
 
-                            WriteLogMessage("Updating Email Alerts ...");
                             updateClass.LoadEmailAlertSettings();
                             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadEmailAlertSettings");
 
                             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
                             {
-                                WriteLogMessage("Updating Logbox Automation fields ...");
                                 updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
                                 performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.UpdateShipmentLogboxAuomationObjectFields");
                             }
 
+                          
 
-                            WriteLogMessage("Updating Rules ...");
                             updateClass.LoadObjectTableRulesANDFieldsValidations();
                             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTableRulesANDFieldsValidations");
 
-                            WriteLogMessage("Reconecting Metadata fields with Ids ...");
                             MetadataUpdateUtility.RunPostDeleteProcedure();
                             performanceTimerLogger.LogMessage("Manual" + ",MetadataUpdateUtility.RunPostDeleteProcedure");
 
@@ -314,12 +289,6 @@ namespace WebFreight.Web.MetaDataUpdate
                         }
 
 
-                    case "cargotracking":
-                        {
-                            UpdateCargoTrackingModule(context, true);
-
-                            break;
-                        }
                     case "accounting":
                         {
                             UpdateAccountingModule(context, true);
@@ -585,10 +554,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
                 AzureLog.SaveLogsInStorage("(" + message + ")" + " Update Tenant 0 Elapsed Time : " + ts.ToString(), "P", DateTime.Now, "", "", 0, null, null, null);
 
-                WriteLogMessage("Updating All closed tables history ...");
                 TableLastUpdateClass.UpdateAllClosedTablesHistory();
-
-                WriteLogMessage("Updateing System metadata history ...");
                 TableLastUpdateClass.UpdateSystemMetaDataHistory();
 
                 //TenantsUpdateClass.GenerateBackupData();
@@ -821,16 +787,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
             performanceTimerLogger.LogMessage("Generated" + ",InvoiceModelUpdateClass");
         }
-        private static void UpdateCargoTrackingModule(IWebFreightContext context, bool runPostDeleteProcedure)
-        {
-            CargoTrackingUpdateClass modelUpdateClass = new CargoTrackingUpdateClass();
-            //if (runOldUpdateCode)
-            //    modelUpdateClass.LoadObjectsTenantZero(context);
-            //else
-                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
-
-            performanceTimerLogger.LogMessage("Generated" + ",CargoTrackingModelUpdateClass");
-        }
 
         private static void UpdateQuoteModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
@@ -850,8 +806,6 @@ namespace WebFreight.Web.MetaDataUpdate
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTablesToTenantZero");
             //updateClass.LoadObjectTablesMetadata(context);
 
-            updateClass.LoadEntityStatus();
-
             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
             if (runOldUpdateCode)
                 shipmentModelUpdateClass.LoadObjectsTenantZero(context);
@@ -859,6 +813,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 shipmentModelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
 
             performanceTimerLogger.LogMessage("Generated" + ",ShipmentsModelUpdateClass");
+
+
+
 
             MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
             if (runOldUpdateCode)
@@ -1043,41 +1000,20 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private static void UpdateAllOldModules(MetaDataUpdateClass updateClass, IWebFreightContext context)
         {
-            WriteLogMessage("Loading object tables ...");
+             
             updateClass.LoadObjectTablesToTenantZero(context);
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTablesToTenantZero");
             //updateClass.UpgradeClosedTablesForTenantZero();
 
-            WriteLogMessage("Initializing Infrastructure Module ...");
             InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
-
-            WriteLogMessage("Initializing System Logs Module ...");
             SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
-
-            WriteLogMessage("Initializing Shipment Module ...");
             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
-
-            WriteLogMessage("Initializing Master Module ...");
             MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
-
-            WriteLogMessage("Initializing Quote Module ...");
             QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
-
-            WriteLogMessage("Initializing Invoice Module ...");
             InvoiceModelUpdateClass invoicemodelUpdateClass = new InvoiceModelUpdateClass();
-
-            WriteLogMessage("Initializing Common Module ...");
             CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
-
-            WriteLogMessage("Initializing Global Module ...");
             GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
-
-            WriteLogMessage("Initializing Business Infrastructure Module ...");
             InfrastructureUpdateClass businessInfraUpdateClass = new InfrastructureUpdateClass();
-
-            WriteLogMessage("Updating Entity Status...");
-            updateClass.LoadEntityStatus();
-
             if (runOldUpdateCode)
             {
                
@@ -1094,85 +1030,61 @@ namespace WebFreight.Web.MetaDataUpdate
             }
             else
             {
-                WriteLogMessage("Updating Infrastructure Module ...");
                 inframodelUpdateClass.LoadObjectTablesMetadata(context,false);
                 performanceTimerLogger.LogMessage("Generated" + ",InfrastructureModelUpdateClass");
-
-                WriteLogMessage("Updating System Logs Module ...");
                 systemLogsModelUpdateClass.LoadObjectTablesMetadata(context,false);
                 performanceTimerLogger.LogMessage("Generated" + ",SystemLogsModelUpdateClass");
-
-                WriteLogMessage("Updating Shipment Module ...");
                 shipmentModelUpdateClass.LoadObjectTablesMetadata(context, false);
                 performanceTimerLogger.LogMessage("Generated" + ",ShipmentsModelUpdateClass");
-
-                WriteLogMessage("Updating Master Module ...");
                 masterModelUpdateClass.LoadObjectTablesMetadata(context, false);
                 performanceTimerLogger.LogMessage("Generated" + ",MasterModelUpdateClass");
-
-                WriteLogMessage("Updating Quote Module ...");
                 quotemodelUpdateClass.LoadObjectTablesMetadata(context, false);
                 performanceTimerLogger.LogMessage("Generated" + ",QuoteModelUpdateClass");
-
-                WriteLogMessage("Updating Invoice Module ...");
                 invoicemodelUpdateClass.LoadObjectTablesMetadata(context, false);
                 performanceTimerLogger.LogMessage("Generated" + ",InvoiceModelUpdateClass");
-
-                WriteLogMessage("Updating Common Module ...");
                 commonmodelUpdateClass.LoadObjectTablesMetadata(context, false);
                 performanceTimerLogger.LogMessage("Generated" + ",CommonDataModelUpdateClass");
-
-                WriteLogMessage("Updating Global Module ...");
                 globalmodelUpdateClass.LoadObjectTablesMetadata(context, false);
                 performanceTimerLogger.LogMessage("Generated" + ",GlobalModelUpdateClass");
-
-                WriteLogMessage("Updating Business Infrastructure Module ...");
                 businessInfraUpdateClass.LoadObjectTablesMetadata(context, false);
                 performanceTimerLogger.LogMessage("Generated" + ",InfrastructureUpdateClass");
             }
 
             //
-            WriteLogMessage("Updating Table Counters & Tips ...");
             updateClass.LoadUpdateTenantZero(context, false);
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadUpdateTenantZero");
 
             //updateClass.LoadOtherFields(context);
-            WriteLogMessage("Updating Translation Headers ...");
             updateClass.LoadTranslationHeaders();
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadTranslationHeaders");
 
-            WriteLogMessage("Updating Measurements ...");
             updateClass.LoadMeasurements();
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadMeasurements");
 
-            WriteLogMessage("Updating Credit Card Types ...");
             updateClass.LoadCreditCardTypes();
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadCreditCardTypes");
 
-            WriteLogMessage("Updating Move Types ...");
             updateClass.LoadMoveTypes();
             context.SaveChanges();
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadMoveTypes");
             //updateClass.loadQueries();
             //updateClass.loadScreens();
             //updateClass.LoadObjectTableTabs();
-
+           
             //performanceTimerLogger.LogMessage("Manual" + ",context.SaveChanges()");
 
             //updateClass.LoadRolesAndFeatures(0);
             //performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadRolesAndFeatures");
-            WriteLogMessage("Updating Table Helper Controls ...");
+
             updateClass.LoadObjectTableHelperControls();
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTableHelperControls");
 
-           
+            updateClass.LoadEntityStatus();
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadEntityStatus");
 
-            WriteLogMessage("Updating Event Types ...");
             updateClass.LoadEventTypes();
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadEventTypes");
 
-            WriteLogMessage("Updating Ranks ...");
             updateClass.LoadRanks();
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadRanks");
             //updateClass.LoadMenustables();
@@ -1983,7 +1895,7 @@ namespace WebFreight.Web.MetaDataUpdate
                                 DocumentTypeDefaultReportTemplateId = docType.DocumentTypeDefaultReportTemplateId,
                                 IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
                                 PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
-                                OrderBy = docType.OrderBy
+
                             };
                             documentTypeRepository.Add(newDocType);
 

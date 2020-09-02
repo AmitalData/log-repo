@@ -29,7 +29,6 @@ import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/Ex
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import {WarehouseReleasePMExtendedService} from '../../../../Warehouse/Services/ExtendedPMs/WarehouseReleasePMExtendedService';
 import { PackageAmountCalculator } from '../../../../Infrastructure/Utilities/PackageAmountCalculator';
-import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
 declare var ResultAsArray: any;
 
 @Component({
@@ -640,36 +639,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         else {
             weightPerStorageDays = this.EntityPM.ChargeableWeight * (StorageDays - this.EntityPM.WarehouseStorageFreeDays);
         }
-
         this.GrossWeightPerStorageDays = weightPerStorageDays < 0 ? 0 : weightPerStorageDays;
-
-        this.CheckStorageReceivableAmount();
-    }
-    private CheckStorageReceivableAmount() {
-        var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-
-        if (storageReceivable) {
-            var storageDays: number = null;
-            if (this.EntityPM.WarehouseLegActualEntryDate != null && this.EntityPM.WarehouseLegActualReleaseDate != null) {
-                if (DateTool.GetDateFromDate(this.EntityPM.WarehouseLegActualReleaseDate) >= DateTool.GetDateFromDate(this.EntityPM.WarehouseLegActualEntryDate)) {
-                    var days = DateTool.GetDaysBetweenDates(this.EntityPM.WarehouseLegActualEntryDate, this.EntityPM.WarehouseLegActualReleaseDate);
-                    storageDays = days;
-                }
-            }
-
-            var amount: number = ShipmentTool.ComputeImportStorageReceivableAmount(storageDays, this.EntityPM);
-
-            storageReceivable.TotalAmount = amount;
-            storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
-
-            if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
-                storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
-            }
-
-            else {
-                storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
-            }
-        }
     }
 
     get NumberOfPackages() {

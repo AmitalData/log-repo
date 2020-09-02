@@ -25,7 +25,6 @@ using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.Helpers;
-using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -44,18 +43,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CardRepository cardRepository;
         private CardQuery cardQuery;
         private ContactRepository contactRepository;
-        public AirlineService(ICommonDataContext objectContext, AirlinePM entityPM, string loggedContactId)
-        {
-            this.entityPM = entityPM;
-            this.tenant = entityPM.Tenant;
-            this.objectContext = objectContext;
-            this.entityRepository = new AirlineRepository(objectContext);
-            this.cardRepository = new CardRepository(objectContext);
-            this.contactRepository = new ContactRepository(objectContext);
-            this.cardQuery = new CardQuery(cardRepository);
-            this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
-            this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
-        }
 
         public AirlineService(ICommonDataContext objectContext, int tenant)
         {
@@ -100,7 +87,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     Id = entityPM.Id,
                     Tenant = tenant,
                     PartnerTypeId = "AL",
-                    UploadingUniqueKey = entityPM.UploadingUniqueKey,
                 };
 
                 this.entityPOCO = new Airline()
@@ -138,7 +124,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Airline");
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
 
             else
@@ -208,7 +193,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Airline");
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
 
             else

@@ -10,7 +10,6 @@ import { DocumentsFilingExtendedPMService } from '../../../Common/Services/Exten
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { TariffList } from '../../EntityLists/TariffList';
-import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
     selector: 'CostComponent',
@@ -87,8 +86,6 @@ export class CostWorkspaceComponent implements OnInit {
 
     CheckPrice(type: string) {
         this._entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
-            ServiceLocator.SendTotangoUserActivity("Tariff", "Price Check");
-
             var logWindow = new LogitudeWindow();
             logWindow.IsFillScreenHeight = true;
             logWindow.Width = 1200;
@@ -176,8 +173,6 @@ export class CostWorkspaceComponent implements OnInit {
             }
         }
 
-        ServiceLocator.SendTotangoUserActivity("Tariff", windowTitle);
-
         logWindow.Title = windowTitle;
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.LoadQueriesCounts();
@@ -199,67 +194,119 @@ export class CostWorkspaceComponent implements OnInit {
         }
     }
 
-    public ViewTariffs(code: string) {        
-        var queryCode: string;
-        var displayTitle: string;
+    public ViewTariffs(code: string) {
+
         switch (code) {
             case "A": {
-                queryCode = "Air Freight Cost Tariffs";
-                displayTitle = "Air Freight Cost Tariffs";
+                var listArgs = new ListComponentArgs();
+                listArgs.QueryCode = "Air Freight Cost Tariffs";
+                listArgs.ObjectTableName = "Tariff";
+                listArgs.DisplayTitle = "Air Freight Cost Tariffs";
+                listArgs.BackButtonTitle = "Tariff";
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run(listArgs);
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                            this.CurrentSession.AddMenuReference(cmpRef);
+                        });
+                });
                 break;
             }
 
-            case "AS": {
-                queryCode = "Air Surcharges Cost Tariffs";
-                displayTitle = "Air Surcharges Cost";
+            case  "AS":{
+                var listArgs = new ListComponentArgs();
+                listArgs.QueryCode = "Air Surcharges Cost Tariffs";
+                listArgs.ObjectTableName = "Tariff";
+                listArgs.DisplayTitle = "Air Surcharges Cost";
+                listArgs.BackButtonTitle = "Tariff";
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run(listArgs);
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                            this.CurrentSession.AddMenuReference(cmpRef);
+                        });
+                });
                 break;
             }
 
-            case "OSC": {               
-                queryCode = "Ocean.LCL.Surcharges.Cost";
-                displayTitle = TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost");               
+            case "OSC": {
+                var listArgs = new ListComponentArgs();
+                listArgs.QueryCode = "Ocean.LCL.Surcharges.Cost";
+                listArgs.ObjectTableName = "Tariff";
+                listArgs.DisplayTitle = TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost");
+                listArgs.BackButtonTitle = "Tariff";
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run(listArgs);
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                            this.CurrentSession.AddMenuReference(cmpRef);
+                        });
+                });
                 break;
             }
 
             case "OLC": {
-                queryCode = "Ocean LCL Freight Cost";
-                displayTitle = "Ocean LCL Freight Cost";                
+                var listArgs = new ListComponentArgs();
+                listArgs.QueryCode = "Ocean LCL Freight Cost";
+                listArgs.ObjectTableName = "Tariff";
+                listArgs.DisplayTitle = "Ocean LCL Freight Cost";
+                listArgs.BackButtonTitle = "Tariff";
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run(listArgs);
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                            this.CurrentSession.AddMenuReference(cmpRef);
+                        });
+                });
                 break;
             }
-
             case "OFC": {
-                queryCode = "Ocean FCL Freight Cost";
-                displayTitle = "Ocean FCL Freight Cost";
+                var listArgs = new ListComponentArgs();
+                listArgs.QueryCode = "Ocean FCL Freight Cost";
+                listArgs.ObjectTableName = "Tariff";
+                listArgs.DisplayTitle = "Ocean FCL Freight Cost";
+                listArgs.BackButtonTitle = "Tariff";
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run(listArgs);
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                            this.CurrentSession.AddMenuReference(cmpRef);
+                        });
+                });
                 break;
             }
-
             case "OFS": {
-                queryCode = "Ocean FCL Surcharges Cost";
-                displayTitle = "Ocean FCL Surcharges Cost";
+                var listArgs = new ListComponentArgs();
+                listArgs.QueryCode = "Ocean FCL Surcharges Cost";
+                listArgs.ObjectTableName = "Tariff";
+                listArgs.DisplayTitle = "Ocean FCL Surcharges Cost";
+                listArgs.BackButtonTitle = "Tariff";
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run(listArgs);
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                            this.CurrentSession.AddMenuReference(cmpRef);
+                        });
+                });
                 break;
             }
-
             default: {
                 break;
             }
+
         }
-
-        ServiceLocator.SendTotangoUserActivity("Tariff", "View " + queryCode + " Query");
-
-        var listArgs = new ListComponentArgs();
-        listArgs.QueryCode = queryCode;
-        listArgs.ObjectTableName = "Tariff";
-        listArgs.DisplayTitle = displayTitle;
-        listArgs.BackButtonTitle = "Tariff";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run(listArgs);
-                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                    this.CurrentSession.AddMenuReference(cmpRef);
-                });
-        });        
     }
 
     private Retries: number = 0;

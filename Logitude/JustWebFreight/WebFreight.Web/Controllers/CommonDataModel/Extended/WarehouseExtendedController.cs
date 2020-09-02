@@ -272,29 +272,5 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        public HttpResponseMessage GetWarehouseTypeById(string warehouseId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
-
-                WarehouseQuery warehouseQuery = new WarehouseQuery(tenant);
-                string warehouseType = warehouseQuery.GetWarehouseTypeById(warehouseId, tenant);
-
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, warehouseType);
-
-
-                return reponseMessage;
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
     }
 }

@@ -67,13 +67,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
 
 
-        public DateTime? BookingConfirmationSent { get; set; }
-        public DateTime? PreAlertSent { get; set; }
-        public DateTime? DeliveryNoticeSent { get; set; }
-        public DateTime? ExpectedArrivalNoticeSent { get; set; }
-        public DateTime? ArrivalNoticeSent { get; set; }
-        public DateTime? T1Received  { get; set; }
-
 
 
 

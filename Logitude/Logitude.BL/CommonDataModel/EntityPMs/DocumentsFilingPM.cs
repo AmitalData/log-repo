@@ -111,9 +111,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public int LastVersion { get; set; }// field for Itzik-----Mohammad.
 
 
-        public bool IsUoloadedField { get; set; }// field for Itzik-----Mohammad.
 
-
+        
         public DateTime? LastShareDate { get; set; }
         public bool IsSharedIn { get; set; }
         public bool IsSharedOut { get; set; }

@@ -1,4 +1,6 @@
-﻿import { Injectable } from '@angular/core';
+﻿
+
+import { Injectable } from '@angular/core';
 import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -10,6 +12,9 @@ import { AgentSharedManifestPM } from '../../../Common/EntityPMs/AgentSharedMani
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
+
+
+
 
 @Injectable()
 
@@ -29,13 +34,13 @@ export class LogboxShipmentExportExcelService {
         return defer(() => {
             return this._httpClient.post(this._apiUrl + '/PostGetQueryToExcelData', JSON.stringify(logboxShipmentExportExcelArgs), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
-             
+
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
                 pmresponse.Result = result;
                 return pmresponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         }
 
         );

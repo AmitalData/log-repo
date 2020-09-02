@@ -224,11 +224,6 @@ void SaveDetailsClassOutput(string outputFileName)
 	   entityPMsPath="Logitude.Customs.Def.EntityPMs;";
 	}
 
-	if(pocosspacestring.Contains("CargoTracking"))
-	{
-	   entityPMsPath="Logitude.CargoTracking.Def.EntityPMs;";
-	}
-
 	string pmsspacestring =   entityPMsPath;
 	 string dataprojectnamespace = "Simplog.Data." + modelFolderName + ";";//detailsnamespacestring.ToString().Substring(0,detailsnamespacestring.ToString().LastIndexOf('.')).Replace("BL","Data;");
 	 

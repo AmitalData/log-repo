@@ -155,14 +155,6 @@ namespace Logitude.BL.InfrastructureModel
                 SearchFields = "GLAccountsCSVTask, GLAccount", 
                 Description = "Send Updated GLAccounts list to hybrid", 
 			});
-			 
-            all.Add(new SchedulerProcedureDetails()
-            {    
-                Code = "QuoteAutomaticallyClosingTask", 
-                Name = "QuoteAutomaticallyClosingTask", 
-                SearchFields = "QuoteAutomaticallyClosingTask", 
-                Description = "QuoteAutomaticallyClosingTask", 
-			});
 			
             return all;
        }

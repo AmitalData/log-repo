@@ -46,9 +46,7 @@ using Simplog.Data.ShipmentsModel;
 				{
 				   
 				   var temp = new InsidePackage(); 
-				   temp.Id = item.Id; 
-
-			  
+				   temp.Id = item.Id;			  
 				   if(item.PackageTypeId != null)
 				   {
 					   PackageTypeQueryService PackageTypeService0 = new PackageTypeQueryService(Tenant);
@@ -80,7 +78,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public List<InsideShipmentPackagePM> InsidePackageDataMappingAndValidatin(List<InsidePackage> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public List<InsideShipmentPackagePM> InsidePackageDataMappingAndValidatin(List<InsidePackage> MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -98,7 +96,6 @@ using Simplog.Data.ShipmentsModel;
 					{   
 					    throw new ApplicationException("InsideShipmentPackage with Id " + item.Id + " doesn't exist");
 					} 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -117,110 +114,30 @@ using Simplog.Data.ShipmentsModel;
 					if(item.PackageType != null)
 					{
 						var myPackageTypePM = PackageTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.PackageType,Tenant,ComputingPartnerName);
-						
-						if(myPackageTypePM != null)
-						{ 
-
-						 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("PackageType Can't be update"); 
-							}  
-
+												if(myPackageTypePM != null)
+						{
 							temp.PackageTypeId = myPackageTypePM.Id;
-						} 
-
+						}
+						 
 					}
 			
 					
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Quantity Can't be update"); 
-					}  
-
 					temp.Quantity = item.Quantity;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Width Can't be update"); 
-					}  
-
 					temp.Width = item.Width;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Length Can't be update"); 
-					}  
-
 					temp.Length = item.Length;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Height Can't be update"); 
-					}  
-
 					temp.Height = item.Height;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Volume Can't be update"); 
-					}  
-
 					temp.Volume = item.Volume;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("GrossWeight Can't be update"); 
-					}  
-
 					temp.Weight = item.GrossWeight;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Commodity Can't be update"); 
-					}  
-
 					temp.CommodityNumber = item.Commodity;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Reference1 Can't be update"); 
-					}  
-
 					temp.Reference1 = item.Reference1;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Reference2 Can't be update"); 
-					}  
-
 					temp.Reference2 = item.Reference2;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Reference3 Can't be update"); 
-					}  
-
 					temp.Reference3 = item.Reference3;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Reference4 Can't be update"); 
-					}  
-
 					temp.Reference4 = item.Reference4;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Description Can't be update"); 
-					}  
-
 					temp.Description = item.Description;					   
 						MyList.Add(temp);
 					}
 						
-					return MyList;
+					   return MyList;
 		    }
             catch (Exception ex)
             {

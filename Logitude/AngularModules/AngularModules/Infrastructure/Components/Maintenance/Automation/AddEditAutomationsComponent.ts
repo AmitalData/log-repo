@@ -58,7 +58,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     ObjectFieldsLists: ObjectFieldPM[] = [];
     AllowedinAutomationConditionsFieldLists: ObjectFieldPM[] = [];
-    AutomationEmailRecipientFieldLists: AutomationEmailRecipientFieldItem[] = [];
+    AutomationEmailRecipientFieldLists: ObjectFieldPM[] = [];
     AutomationSetValuebjectFieldLists: ObjectFieldPM[] = [];
     AutomationHistoryLists: AutomationHistoryPM[];
     IsLoadPage: boolean = false;
@@ -716,7 +716,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
 
             if (objectField.AutomationEmailRecipient && (objectField.ObjectTable_LookUpTableName == "User" || objectField.ObjectTable_LookUpTableName == "Contact" || objectField.DataTypeCode == "Emails")) {
-                this.AutomationEmailRecipientFieldLists.push(new AutomationEmailRecipientFieldItem(objectField));
+                this.AutomationEmailRecipientFieldLists.push(objectField);
             }
 
             if (objectField.CanAutomateSetValue && !objectField.IsCustom) this.AutomationSetValuebjectFieldLists.push(objectField);
@@ -737,25 +737,17 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         });
 
 
-        //Additional Automation Entity
-        //AutomationCondition
-        window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == this.ObjectTableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == this.ObjectTableName)[0]))).forEach((otherEntityObjectField) => {
-            window.ObjectFields.filter(f => f.AllowedinAutomationConditions || f.IsCustom == true && f.ObjectTableId == otherEntityObjectField.LookUpTableId).forEach((item) => {
-                this.AllowedinAutomationConditionsFieldLists.push(item);
-            });
 
-        });
+        if (this.DataViewModel.EntityObjectAutomationFieldLists && this.DataViewModel.EntityObjectAutomationFieldLists.length > 0) {
+            this.DataViewModel.EntityObjectAutomationFieldLists.forEach((objectField) => {
 
-
-
-       //AutomationEmailRecipientFieldLists
-        if (this.ObjectTableName == "Ticket") {
-            window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == this.ObjectTableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == this.ObjectTableName)[0]))).forEach((otherEntityObjectField) => {
-                window.ObjectFields.filter(f => f.AutomationEmailRecipient == true && f.ObjectTableId == otherEntityObjectField.LookUpTableId && (f.ObjectTable_LookUpTableName == "User" || f.ObjectTable_LookUpTableName == "Contact" || f.DataTypeCode == "Emails")).forEach((item) => {
-                    this.AutomationEmailRecipientFieldLists.push(new AutomationEmailRecipientFieldItem(item, otherEntityObjectField.FieldCode));
-                });
+                if (!this.AllowedinAutomationConditionsFieldLists.filter(d => d.FieldCode == objectField.FieldCode)[0]) {
+                    this.AllowedinAutomationConditionsFieldLists.push(objectField);
+                }
             });
         }
+
+
 
 
 
@@ -1221,12 +1213,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                         automationResultEmailRecipientPM.RecipientValue = fieldCode,
                         automationResultEmailRecipientPM.Tenant = SessionLocator.Tenant;
                     automationResultEmailRecipientPM.AutomationsId = this.CurrentEntityPM.Id
-                    var automationEmailRecipientFieldItem: AutomationEmailRecipientFieldItem = this.AutomationEmailRecipientFieldLists.filter(d => d.ObjectFieldPM.FieldCode == fieldCode)[0];
-                    if (automationEmailRecipientFieldItem != null) {
-                        var objectFieldPM = automationEmailRecipientFieldItem.ObjectFieldPM;
-                        automationResultEmailRecipientPM.PartnerObjectFieldCode = automationEmailRecipientFieldItem.PartnerObjectFieldCode;
-                        if (objectFieldPM.DataTypeCode == "Emails") automationResultEmailRecipientPM.RecipientType = "Emails";
 
+                    var objectFieldPM: ObjectFieldPM = this.AutomationEmailRecipientFieldLists.filter(d => d.FieldCode == fieldCode)[0];
+                    if (objectFieldPM != null) {
+                        if (objectFieldPM.DataTypeCode == "Emails") {
+                            automationResultEmailRecipientPM.RecipientType = "Emails";
+                        }
                     }
 
                     if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientType == automationResultEmailRecipientPM.RecipientType && d.RecipientValue == automationResultEmailRecipientPM.RecipientValue)[0]) {
@@ -1518,16 +1510,4 @@ class ResultCode {
         this.Name = name;
 
     }
-}
-
-export class AutomationEmailRecipientFieldItem {
- 
-    PartnerObjectFieldCode: string;
-    ObjectFieldPM: ObjectFieldPM;
-    constructor(objectFieldPM: ObjectFieldPM, partnerObjectFieldCode: string = null) {
-        this.PartnerObjectFieldCode = partnerObjectFieldCode;
-        this.ObjectFieldPM = objectFieldPM;
-
-    }
-
 }

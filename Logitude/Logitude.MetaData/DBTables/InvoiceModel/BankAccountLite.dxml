@@ -19,11 +19,16 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="-1">
+    Name="CreateDate"
+    Type="datetime">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="LocalName"
@@ -40,18 +45,18 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="AccountNumber"
-    Type="varchar"
-    Size="30">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="BranchNumber"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="AccountNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="IBAN"
@@ -75,13 +80,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="BranchAddress"
-    Type="nvarchar"
-    Size="60">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="CurrencyId"
     Type="varchar"
     Size="15">
@@ -89,22 +87,24 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CreateDate"
-    Type="datetime">
+    Name="BranchAddress"
+    Type="nvarchar"
+    Size="60">
     <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="UpdateDate"
-    Type="datetime">
-    <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Inactive"
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="VatNumber"

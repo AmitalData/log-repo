@@ -42,7 +42,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.Length).HasColumnName("Length");
             this.Property(t => t.QuoteId).HasColumnName("QuoteId");
             this.Property(t => t.VolumetricWeight).HasColumnName("VolumetricWeight");
-           
+
             // Relationships
             this.HasOptional(t => t.PackageType)
                 .WithMany()

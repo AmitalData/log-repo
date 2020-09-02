@@ -190,10 +190,6 @@ void SaveMappingClassOutput(string outputFileName,bool isCustom)
 	{
 	   entityPMsPath="Logitude.Customs.Def.EntityPMs;";
 	}
-    if(pocosspacestring.Contains("CargoTracking"))
-	{
-	   entityPMsPath="Logitude.CargoTracking.Def.EntityPMs;";
-	}
 
 	string pmsspacestring =   entityPMsPath;
      
@@ -290,10 +286,6 @@ namespace <#= mapnamespacestring #>
 	   entityPMsPath="Logitude.Customs.Def.EntityPMs;";
 	}
 
-    if(pocosspacestring.Contains("CargoTracking"))
-	{
-	   entityPMsPath="Logitude.CargoTracking.Def.EntityPMs;";
-	}
 	string pmsspacestring =   entityPMsPath;
 	 string dataprojectnamespace = mapnamespacestring.ToString().Substring(0,mapnamespacestring.ToString().LastIndexOf('.')).Replace("BL","Data;");
 	 

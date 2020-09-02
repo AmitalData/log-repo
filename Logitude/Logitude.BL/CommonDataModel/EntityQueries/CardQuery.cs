@@ -878,13 +878,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     SATForeignRFC = entityPOCO.SATForeignRFC,
                     MetodoPagoCode = entityPOCO.MetodoPagoCode,
                     UsoCFDICode = entityPOCO.UsoCFDICode,
-                    //FirmCode = entityPOCO.Warehouse != null ? entityPOCO.Warehouse.FirmCode : null,
+                    FirmCode = entityPOCO.Warehouse != null ? entityPOCO.Warehouse.FirmCode : null,
                     StateName = entityPOCO.StateName,
                     IsInternationalPartner = entityPOCO.IsInternationalPartner,
                     IsAutonomy = entityPOCO.IsAutonomy,
                     CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
                     CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
-                    CreatedByPartner = entityPOCO.CreatedByPartner,                    
+                    CreatedByPartner = entityPOCO.CreatedByPartner,
                 };
 
                 if (entityPOCO.Customer != null)
@@ -957,20 +957,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     entityList.OpenShipments = SetCustomerOpenShipments(entityList);
                     #endregion
-                }
-
-                else if (entityPOCO.Warehouse != null)
-                {
-                    entityList.FirmCode = entityPOCO.Warehouse.FirmCode;
-                    entityList.WarehouseTypeCode = entityPOCO.Warehouse.TypeCode;
-                    entityList.ChargeStorage = entityPOCO.Warehouse.ChargeStorage;
-                    entityList.ChargeStorageCurrencyId = entityPOCO.Warehouse.CurrencyId;
-                    entityList.AirWeightMeasurementCode = entityPOCO.Warehouse.AirWeightMeasurementCode;
-                    entityList.OceanWeightMeasurementCode = entityPOCO.Warehouse.OceanWeightMeasurementCode;
-                    entityList.InlandWeightMeasurementCode = entityPOCO.Warehouse.InlandWeightMeasurementCode;
-                    entityList.AirWeightRoundingCode = entityPOCO.Warehouse.AirWeightRoundingCode;
-                    entityList.OceanWeightRoundingCode = entityPOCO.Warehouse.OceanWeightRoundingCode;
-                    entityList.InlandWeightRoundingCode = entityPOCO.Warehouse.InlandWeightRoundingCode;
                 }
 
                 if (entityPOCO.PartnerTypeId == "AL")
@@ -1120,7 +1106,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CreatedByPartner = card.CreatedByPartner,
                                                 RankId = card.Customer != null ? (card.Customer.Rank != null ? card.Customer.Rank.Name : null) : null,
                                                 IndustryId = card.Customer != null ? (card.Customer.Industry != null ? card.Customer.Industry.Name : null) : null,
-                                                RecordDate = card.UpdateDate != null ? card.UpdateDate : card.CreateDate,
                                             };
 
             if (myResult.Count() > 0)
@@ -2240,15 +2225,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          };
 
             return cards.ToList();
-        }
-
-
-        public IQueryable<Card> GetAllCards()
-        {
-            IQueryable<Card> cards = (from a in repository.context.Cards select a);
-                                       
-
-            return cards ;
         }
 
         public IQueryable<CardList> GetCardsByTenant(int tenant)

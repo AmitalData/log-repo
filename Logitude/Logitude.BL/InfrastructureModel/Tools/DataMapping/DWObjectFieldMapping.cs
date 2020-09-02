@@ -38,11 +38,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.HelpText = entityPM.HelpText;
             entityPOCO.IsCustom = entityPM.IsCustom;
             entityPOCO.OriginalObjectFieldCode = entityPM.OriginalObjectFieldCode;
-            entityPOCO.DontDisplayInView = entityPM.DontDisplayInView;
-            entityPOCO.ViewFieldDisplayName = entityPM.ViewFieldDisplayName;
-            entityPOCO.DimensionDataViewName = entityPM.DimensionDataViewName;
-            entityPOCO.IsMultipleSelection = entityPM.IsMultipleSelection;
-            entityPOCO.RecordType = entityPM.RecordType;
 
 
 

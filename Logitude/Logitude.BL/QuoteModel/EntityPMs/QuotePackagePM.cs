@@ -50,6 +50,5 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public virtual QuotePM Quote { get; set; }
 
         public ChangeSetOperation ChangeSetOp { get; set; }
-
     }
 }

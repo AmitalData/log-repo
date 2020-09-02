@@ -327,42 +327,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="BookingConfirmationSent"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PreAlertSent"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DeliveryNoticeSent"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ExpectedArrivalNoticeSent"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="T1Received"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ArrivalNoticeSent"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Shipments"

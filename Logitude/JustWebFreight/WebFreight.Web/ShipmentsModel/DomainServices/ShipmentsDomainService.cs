@@ -361,22 +361,8 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             }
             #endregion
 
-            #region ShipmentStoragePricings
-            List<ShipmentStoragePricingPM> shipmentStoragePricingsChangeSet = ChangeSet.GetAssociatedChanges(entityPM, d => d.ShipmentStoragePricings).Cast<ShipmentStoragePricingPM>().ToList();
-            foreach (ShipmentStoragePricingPM itemPM in shipmentStoragePricingsChangeSet)
-            {
-                switch (ChangeSet.GetChangeOperation(itemPM))
-                {
-                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
-                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
-                    case ChangeOperation.Update: { itemPM.ChangeSetOp = ChangeSetOperation.Update; break; }
-                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
-                }
-            }
-            #endregion
-
             ShipmentService service = new ShipmentService(objectContext, entityPM, ServiceContext.User.Identity.Name);
-            service.SetChangeSet(shipmentPackagesChangeSet, shipmentOrderPackagesChangeSet, shipmentPickUpsChangeSet, shipmentDeliveriesChangeSet, shipmentReceivablesChangeSet, shipmentPayablesChangeSet, shipmentFollowUpsChangeSet, shipmentAWBPrintOnliesChangeSet, shipmentConsoleShipmentsChangeSet, shipmentCarrierStatusesChangeSet, aWBOCIPMChangeSet, shipmentCommoditiesChangeSet, shipmentAssembliesChangeSet, shipmentStoragePricingsChangeSet);
+            service.SetChangeSet(shipmentPackagesChangeSet, shipmentOrderPackagesChangeSet, shipmentPickUpsChangeSet, shipmentDeliveriesChangeSet, shipmentReceivablesChangeSet, shipmentPayablesChangeSet, shipmentFollowUpsChangeSet, shipmentAWBPrintOnliesChangeSet, shipmentConsoleShipmentsChangeSet, shipmentCarrierStatusesChangeSet, aWBOCIPMChangeSet, shipmentCommoditiesChangeSet, shipmentAssembliesChangeSet);
             service.Update();
 
             //if (this.ChangeSet != null)

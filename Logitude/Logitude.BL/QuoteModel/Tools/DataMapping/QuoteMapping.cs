@@ -71,7 +71,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.DimensionsUnitCode = entityPM.DimensionsUnitCode;
             entityPoco.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
             entityPoco.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
-            entityPoco.PickupDeliveryCWeightUnitCode = entityPM.PickupDeliveryCWeightUnitCode;
             entityPoco.Volume = entityPM.Volume;
             entityPoco.VolumetricWeight = entityPM.VolumetricWeight;
             entityPoco.VolumeInCBM = GetVolumeInCBM(entityPM.VolumeUnitCode, entityPM.Volume);
@@ -80,9 +79,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
             entityPoco.ChargeableWeight = entityPM.ChargeableWeight;
             entityPoco.ChargeableWeightInKG = entityPM.ChargeableWeightInKG = GetChargeableWeightInKG(entityPM.ChargeableWeightUnitCode, entityPM.ChargeableWeight);
-            entityPoco.PickupDeliveryChargeableWeight = entityPM.PickupDeliveryChargeableWeight;
             entityPoco.Ratio = entityPM.Ratio;
-            entityPoco.PickupDeliveryRatio = entityPM.PickupDeliveryRatio;
             entityPoco.DimFactor = entityPM.DimFactor;
             entityPoco.NumberOfPackages = entityPM.NumberOfPackages;
             entityPoco.NumberOfContainers = entityPM.NumberOfContainers;
@@ -209,14 +206,13 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.ProfitExchangeRate = entityPM.ProfitExchangeRate;
             entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
             entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
-            entityPoco.PickupDeliveryVolumetricWeight = entityPM.PickupDeliveryVolumetricWeight;
-
+            
             BuildSearchField(entityPM, entityPoco);
 
             entityPM.ConvertToLCL = false;
             entityPM.ConvertToFCL = false;
         }
-
+        
         private static void BuildSearchField(QuotePM entityPM, Quote entityPoco)
         {
             string mySearchFields = "";

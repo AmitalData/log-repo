@@ -71,15 +71,12 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
-using Logitude.CargoTracking.Data.Repositories;
-using Logitude.CargoTracking.BL;
-using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class AirlineUpdateClass
    {  		
-		public const string HashString = "9e35d3de02f813a0bb375f3ef22dbee6";
+		public const string HashString = "839a4ddc1dc5cc63a64d628d8e238b6b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5675,7 +5672,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
                 Code =  "ALDS",
                 EnglishName =  "GLAccount was disconnected",
-                LocalName =  "GLAccount was disconnected",
+                LocalName =  "נותק כרטיס הנהח\"ש",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,

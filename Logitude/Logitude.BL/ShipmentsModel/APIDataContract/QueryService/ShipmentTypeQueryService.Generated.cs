@@ -72,7 +72,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public ShipmentTypePM ShipmentTypeDataMappingAndValidatin(ShipmentType MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public ShipmentTypePM ShipmentTypeDataMappingAndValidatin(ShipmentType MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -86,7 +86,6 @@ using Simplog.Data.ShipmentsModel;
 					{   
 					    throw new ApplicationException("ShipmentType with Code " + MyEntity.Code + " doesn't exist");
 					} 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -101,14 +100,8 @@ using Simplog.Data.ShipmentsModel;
 
 						//}
 					}
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Name Can't be update"); 
-					}  
-
 					temp.Name = MyEntity.Name;					   
-					return temp;
+					   return temp;
 		    }
             catch (Exception ex)
             {

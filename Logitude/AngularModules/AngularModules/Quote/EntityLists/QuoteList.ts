@@ -42,7 +42,6 @@ export class QuoteList {
 		CarrierName: string;
 		ChargeableWeight: number;
 		ChargeableWeightInKG: number;
-		PickupDeliveryChargeableWeight: number;
 		GrossWeight: number;
 		GrossWeightInKG: number;
 		GrossWeightPerTon: number;
@@ -190,6 +189,5 @@ export class QuoteList {
 		EstimatedProfitInProfit: number;
 		ShipmentSubTypeId: string;
 		ShipmentSubTypeName: string;
-		PickupDeliveryVolumetricWeight: number;
 	
 }

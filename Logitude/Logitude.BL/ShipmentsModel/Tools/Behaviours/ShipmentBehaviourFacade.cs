@@ -27,13 +27,5 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
             updateShipmentComputedFields.Handle();
             updateCrossDocks.Handle();
         }
-
-
-        public void Save()
-        {
-            updateShipmentComputedFields.Save();
-            updateCrossDocks.Save();
-
-        }
     }
 }

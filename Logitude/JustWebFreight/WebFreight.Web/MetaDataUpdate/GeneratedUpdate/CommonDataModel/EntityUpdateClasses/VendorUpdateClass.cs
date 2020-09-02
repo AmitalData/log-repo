@@ -71,15 +71,12 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
-using Logitude.CargoTracking.Data.Repositories;
-using Logitude.CargoTracking.BL;
-using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class VendorUpdateClass
    {  		
-		public const string HashString = "ca505a9a8033ae000ec8a9a21de7ca0d";
+		public const string HashString = "79cbe7309f57e2c6df81c0cc85d4b8a6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2826,7 +2823,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
                 Code =  "VDDS",
                 EnglishName =  "GLAccount was disconnected",
-                LocalName =  "GLAccount was disconnected",
+                LocalName =  "נותק כרטיס הנהח\"ש",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,

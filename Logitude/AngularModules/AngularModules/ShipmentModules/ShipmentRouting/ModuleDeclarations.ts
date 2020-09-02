@@ -21,7 +21,6 @@ import {DeliveryPackagesChooseComponent} from './Components/Routings/DeliveryTab
 import {DeliveryPackagesConnectComponent} from './Components/Routings/DeliveryTabs/DeliveryPackagesConnectComponent';
 import {OnCarriageDateComponent} from './Components/Routings/OnCarriageDateComponent';
 import { AddEditPackageHarmonizeComponent } from './Components/Routings/AddEditPackageHarmonizeComponent';
-import { WarehouseStoragePricingComponent } from './Components/Routings/WarehouseStoragePricingComponent';
 
 export const Components =
     [
@@ -47,7 +46,6 @@ export const Components =
         DeliveryPackagesChooseComponent,       
         DeliveryPackagesConnectComponent,
         AddEditPackageHarmonizeComponent,
-        WarehouseStoragePricingComponent,
     ];
 
 export const ControlsComponents =
@@ -84,7 +82,6 @@ export class ModuleDeclarations {
             case "DeliveryPackagesChooseComponent": { myResult = DeliveryPackagesChooseComponent; break; }
             case "DeliveryPackagesConnectComponent": { myResult = DeliveryPackagesConnectComponent; break; }
             case "AddEditPackageHarmonizeComponent": { myResult = AddEditPackageHarmonizeComponent; break; }
-            case "WarehouseStoragePricingComponent": { myResult = WarehouseStoragePricingComponent; break; }
         }
 
         return myResult;

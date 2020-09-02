@@ -141,7 +141,6 @@ export class WarehouseHelper {
         warehouseEntryPackagePM.Length = item.Length;
         warehouseEntryPackagePM.Description = item.Description;
         warehouseEntryPackagePM.Quantity = item.Quantity - inUse;
-        warehouseEntryPackagePM.OldQuantity = item.Quantity - inUse;
         warehouseEntryPackagePM.Volume = item.Volume;
         warehouseEntryPackagePM.Weight = item.Weight;
         warehouseEntryPackagePM.ContainerNumber = item.ContainerNumber;

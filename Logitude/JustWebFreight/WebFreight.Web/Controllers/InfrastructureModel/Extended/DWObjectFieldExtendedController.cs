@@ -74,12 +74,15 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+
+                //SecurityUtility.CheckContactFeature("DWObjectField", "READ", authToken.Tenant);
+                DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(authToken.Tenant);
+                //var Category1Group = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, DWOTId).GroupBy(a => a.Category1);
+                //var Category2Group = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, DWOTId).GroupBy(a => a.Category2);
+                var CategoryGroup = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, DWOTId).GroupBy(a => a.Category);
 
 
 
-                var factFields = new DWObjectFieldAdditionalFactService(new DWObjectFieldAdditionalFactArgs() { FactTableCode = DWOTId,Tenant = authToken.Tenant, GroupedByCategory = true }).DWObjectFieldPMs;
-                var CategoryGroup = factFields.GroupBy(a => a.Category);
 
                 DWHSettingRepository dWHSettingRepository = new DWHSettingRepository(authToken.Tenant);
                 var isParentTenant =   dWHSettingRepository.IsParentTenant(authToken.Tenant);

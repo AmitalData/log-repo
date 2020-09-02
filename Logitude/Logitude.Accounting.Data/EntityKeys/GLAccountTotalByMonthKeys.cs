@@ -36,8 +36,7 @@ namespace Logitude.Accounting.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return AccountId+'_'+DateTypeCode+'_'+Year+'_'+Month+'_'+CurrencyId ;
-                 
+          return AccountId+'_'+DateTypeCode+'_'+Year+'_'+Month+'_'+CurrencyId;
       }
 
       public override string GetEntityPMName()

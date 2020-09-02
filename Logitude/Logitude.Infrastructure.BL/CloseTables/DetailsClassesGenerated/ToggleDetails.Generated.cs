@@ -93,23 +93,16 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
+                Name = "Charges DWH", 
+                Code = "CWH", 
+                SearchFields = "CWH,Charges DWH", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
                 Code = "LV2", 
                 Name = "LogGrid V2", 
                 SearchFields = "LGV2,LogGrid V2", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Name = "Card Searchs Toggle", 
-                Code = "CST", 
-                SearchFields = "CST,Card Searchs Toggle", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "SUB", 
-                Name = "Shipment Sub Type", 
-                SearchFields = "SUB,Shipment Sub Type", 
 			});
 			
             return all;

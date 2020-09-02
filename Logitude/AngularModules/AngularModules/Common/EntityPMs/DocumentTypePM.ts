@@ -246,21 +246,6 @@ export class DocumentTypePM {
     public set IsInlandDigitalSignRequired(newValue: boolean) { if (this.isInlandDigitalSignRequired != newValue) { this.isInlandDigitalSignRequired = newValue; this.MarkAsDirty("IsInlandDigitalSignRequired"); } }
        
 	 
-    private onSendPopulateDateFieldName: string;
-    public get OnSendPopulateDateFieldName() { return this.onSendPopulateDateFieldName; }
-    public set OnSendPopulateDateFieldName(newValue: string) { if (this.onSendPopulateDateFieldName != newValue) { this.onSendPopulateDateFieldName = newValue; this.MarkAsDirty("OnSendPopulateDateFieldName"); } }
-       
-	 
-    private onUploadPopulateDateFieldName: string;
-    public get OnUploadPopulateDateFieldName() { return this.onUploadPopulateDateFieldName; }
-    public set OnUploadPopulateDateFieldName(newValue: string) { if (this.onUploadPopulateDateFieldName != newValue) { this.onUploadPopulateDateFieldName = newValue; this.MarkAsDirty("OnUploadPopulateDateFieldName"); } }
-       
-	 
-    private onPrintPopulateDateFieldName: string;
-    public get OnPrintPopulateDateFieldName() { return this.onPrintPopulateDateFieldName; }
-    public set OnPrintPopulateDateFieldName(newValue: string) { if (this.onPrintPopulateDateFieldName != newValue) { this.onPrintPopulateDateFieldName = newValue; this.MarkAsDirty("OnPrintPopulateDateFieldName"); } }
-       
-	 
      
 	private documentTypeCustomFields: DocumentTypeCustomFieldPM[];
     get  DocumentTypeCustomFields() {

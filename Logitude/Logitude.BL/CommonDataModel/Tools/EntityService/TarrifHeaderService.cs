@@ -174,7 +174,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 foreach (TarrifFromToPM r in tarrrifFromToList)
                 {
-                    switch (r.ChangeSetOp)
+                    switch (r.changeOp)
                     {
                         case ChangeSetOperation.Insert:
                             {

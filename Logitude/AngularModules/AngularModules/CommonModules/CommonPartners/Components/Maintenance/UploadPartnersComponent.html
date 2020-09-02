@@ -1,4 +1,3 @@
-
 <style type="text/css">
     .ResponseProgressLayout {
         position: absolute;
@@ -49,15 +48,10 @@
 </style>
 
 <table>
-    <tr style="height:1px;">
+
+    <tr>
         <td>
             <table>
-                <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-                    <td colspan="3">
-                        <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-                    </td>
-                </tr>
-
                 <tr class="FormFieldRow">
                     <td style="width:280px;">
                         <div style="margin-left:5px;">
@@ -66,7 +60,7 @@
                     </td>
 
                     <td style="width:70px;">
-                        <Hyperlink [FontSize]="12" (click)="DownloadUploadPartnersTemplate()" [Text]="'from here'"></Hyperlink>
+                        <Hyperlink  [FontSize]="12" (click)="DownloadUploadPartnersTemplate()" [Text]="'from here'"></Hyperlink>
                     </td>
 
                     <td>
@@ -74,6 +68,7 @@
                     </td>
                 </tr>
 
+           
                 <tr class="FormFieldRow">
                     <td colspan="2">
                         <table>
@@ -84,15 +79,7 @@
                                     </div>
                                 </td>
                                 <td style="width: 57px;">
-                                    <div>
-                                        <input class="upload" style="display: none;width:65px; cursor:pointer;"
-                                               type="file" (change)="OnFileChanged($event)"
-                                               (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
-                                               #fileInput>
-                                        <a href="#" style="text-decoration:none">
-                                            <button class="Button" (click)="fileInput.click()">Upload Partners</button>
-                                        </a>
-                                    </div>
+                                    <button class="Button" (click)="UploadPartnersClicked()">Upload Partners</button>
                                 </td>
                                 <td>
                                     <div></div>
@@ -106,59 +93,37 @@
                     </td>
                 </tr>
 
+       
                 <tr>
                     <td colspan="3">
                         <div></div>
                     </td>
                 </tr>
+
             </table>
-        </td>
-    </tr>
 
-    <tr>
-        <td style="width:500px;">
-            <div class="MediaFill">
-                <ScrollViewer>
-                    <table>
+            <div class="ResponseProgressLayout" *ngIf="IsResponseProgressVisible">
+                <div class="FillContent">
+                    <div class="ResponseProgressWindow">
+                        <table>
+                            <tr style="height: 25px;">
+                                <td>
+                                    <div class="ResponseProgressWindowHeader">
+                                        Waiting for response
+                                    </div>
+                                </td>
+                            </tr>
 
-                        <tr *ngIf="ErrorsList != null && ErrorsList.length > 0" style="vertical-align:top;">
-                            <td style="margin-left:20px;width:500px;">
-                                <table>
-                                    <tr class="FormFieldRow">
-                                        <td style="color:red;padding-left:10px;width:450px;">
-                                            Errors in uploaed file: (first 10)
-                                        </td>
-                                    </tr>
-                                    <tr class="FormFieldRow" style="color:red;" *ngFor="let item of ErrorsList; let i=index;">
-                                        <td style="color:red; padding-left:10px;">
-                                            - {{item}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <tr class="FormFieldRow" *ngIf="IsDone">
-                            <td style="color:green;padding-left:10px;width:550px;">
-                                <div style="width:100%;white-space: pre-line; font-size: 11px;line-height: 12px;">
-                                    {{DoneMsg}}
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-
-                    </table>
-                </ScrollViewer>
+                            <tr>
+                                <td>
+                                    <div class="ResponseProgressWindowBody">
+                                        <!-- waitting for response-->
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
         </td>
     </tr>

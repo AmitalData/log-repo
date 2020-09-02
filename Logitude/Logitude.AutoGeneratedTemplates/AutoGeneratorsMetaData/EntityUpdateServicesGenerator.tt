@@ -113,7 +113,7 @@ void SaveEntityServiceOutput(string outputFileName)
 	
 	         string[] namespacearr = pmnamespacestring.ToString().Split('.');
 		     string projectname = namespacearr[1].Replace("Lib","");
-        if (projectname != "Accounting" && projectname != "Booking"&& projectname != "Warehouse" && projectname != "TimeManagement" && projectname != "TariffModule"&& projectname != "CargoTracking")
+        if (projectname != "Accounting" && projectname != "Booking"&& projectname != "Warehouse" && projectname != "TimeManagement" && projectname != "TariffModule")
         {
 		 iswrongname = true;
         }
@@ -141,11 +141,6 @@ void SaveEntityServiceOutput(string outputFileName)
 	if(servicenamespacestring.Contains("Customs"))
 	{
 	   entityPMsPath="Logitude.Customs.Def.EntityPMs;";
-	}
-	
-	if(pocosspacestring.Contains("CargoTracking"))
-	{
-	   entityPMsPath="Logitude.CargoTracking.Def.EntityPMs;";
 	}
 
 	string pmsspacestring =   entityPMsPath;

@@ -52,7 +52,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string FeatureUniqeCode { get; set; }
         public string DisplayText { get; set; }
 
-
         private List<SharedUserQueryPM> sharedUserQueries;
         [Include]
         [Association("QueryPMSharedUserQueryPM", "Id", "QueryId")]
