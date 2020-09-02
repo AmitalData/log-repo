@@ -3177,7 +3177,6 @@
     <Content Include="Integration Test\LoginVars\Production\Cloud\TeamAyman\CloudLoginVars.csv" />
     <Content Include="Integration Test\LoginVars\Production\Logitude\TeamIslam\LoginVars.csv" />
     <Content Include="Integration Test\BIReports\BIRports.postman_collection.json" />
-    <Content Include="Integration Test\BIReports\AccountingDomainService.InterestReport.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.InterestReport.cs" />
     <Content Include="css\images\kendoui.ttf" />
     <Content Include="css\images\kendoui.woff" />
