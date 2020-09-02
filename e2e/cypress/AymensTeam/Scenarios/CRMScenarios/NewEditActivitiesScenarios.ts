@@ -56,6 +56,7 @@ export class NewEditActivitiesScenarios {
         Resolvers.LOVResolver.Selector('#Activity_PriorityCode').SelectFirst();
     }
     private CreateAppoinment(EntityNumber: string) {
+        this.WaitLoaded('cardviews/getbyfilters?');
         Resolvers.TextBoxResolver.Selector('#Activity_Subject').Type('Appoinment # : ' + EntityNumber);
         Resolvers.TextBoxResolver.Selector('#Activity_Description').Type('Description for Appoinment # : ' + EntityNumber);
         Resolvers.LOVResolver.Selector('#Activity_PriorityCode').SelectFirst();
