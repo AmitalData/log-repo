@@ -36,27 +36,34 @@ namespace WebFreight.Web.Helpers
 {
     public class ExportToExcelHelper
     {
-        public byte[] ExportQueryToExcel(byte[] xmlFilters, string queryCode, int tenant, string userid, string typename)
+        public byte[] ExportQueryToExcel(ExportToExcelArgs exportToExcelArgs)
         {
             string xmlData = "";
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
-            //try
-            //{
+
+            int tenant = exportToExcelArgs.Tenant;
+            byte[] xmlFilters = exportToExcelArgs.XmlFilters;
+            string typename = exportToExcelArgs.TypeName;
+
             FilterSerializer filterSerializer = new FilterSerializer();
             QueryRepository queryRep = new QueryRepository(tenant);
             QueryColumnRepository queryColumnRep = new QueryColumnRepository(tenant);
             QueryQuery queryQuery = new QueryQuery(queryRep);
-            QueryPM query = queryQuery.GetSingleQueryPM(queryCode, tenant);
+            QueryPM query = exportToExcelArgs.QueryPM != null ? exportToExcelArgs.QueryPM : queryQuery.GetSingleQueryPM(exportToExcelArgs.QueryCode, tenant);
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRep);
-            List<QueryColumnPM> queryColumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, userid, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
-            if (queryColumns.Count == 0)
-            {
-                queryColumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(0, userid, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
-            }
+            List<QueryColumnPM> queryColumns = exportToExcelArgs.QueryColumns != null ? exportToExcelArgs.QueryColumns : queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, exportToExcelArgs.UserId, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
 
-            if (queryColumns.Count == 0)
+            if (exportToExcelArgs.QueryColumns == null)
             {
-                queryColumns = queryColumnQuery.GetZeroQueryColumnsByQueryCode(0, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
+                if (queryColumns.Count == 0)
+                {
+                    queryColumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(0, exportToExcelArgs.UserId, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
+                }
+
+                if (queryColumns.Count == 0)
+                {
+                    queryColumns = queryColumnQuery.GetZeroQueryColumnsByQueryCode(0, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
+                }
             }
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
@@ -316,7 +323,7 @@ namespace WebFreight.Web.Helpers
 
                 var queryResult = getListMethodInfo.Invoke(context, parameters);
                 querableEntities = queryResult as IQueryable;
-                IEnumerator datalist =null;
+                IEnumerator datalist = null;
                 if (querableEntities == null)
                 {
                     //var queryResult = getListMethodInfo.Invoke(context, parameters);
@@ -333,9 +340,9 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
-                     datalist = querableEntities.GetEnumerator();
+                    datalist = querableEntities.GetEnumerator();
                 }
-                
+
 
                 if (datalist != null)
                 {
@@ -358,14 +365,14 @@ namespace WebFreight.Web.Helpers
                     //The first worksheet object in the worksheets collection is accessed.
                     IWorksheet sheet = workbook.Worksheets[0];
                     //****************************** Creating excel from xml string *****************************
-          
+
                     //sheet.Range["A2:H2"].Merge();
                     //sheet.Range["A1:P1"].Merge();
                     //sheet.Range["A1:H2"].Merge();
                     //sheet.Range["A2:H2"].CellStyle.FillBackground = ExcelKnownColors.LightGreen;
 
                     sheet.Range["A2:C2"].Merge();
-                    sheet.Range["A2:C2"].Text = TextCodesTranslator.TranslateText(query.NameTextCodeCode, tenant);//query.Code; //+ " " + (query.Code.Contains(query.ObjectTableName)?"": query.ObjectTableName + "s");//"First Flight";
+                    sheet.Range["A2:C2"].Text = !string.IsNullOrEmpty(query.DisplayText) ? query.DisplayText : TextCodesTranslator.TranslateText(query.NameTextCodeCode, tenant);
                     sheet.Range["A2:C2"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
                     sheet.Range["A2:C2"].CellStyle.Font.Bold = true;
                     sheet.Range["A2:C2"].CellStyle.Font.Color = ExcelKnownColors.Black;
@@ -405,10 +412,20 @@ namespace WebFreight.Web.Helpers
                     }
 
                     int[,] array = new int[,] { { 65, 0 } };
-                    
+
                     foreach (XmlNode node in entitiesList.Item(0).ChildNodes)
                     {
                         string nodename = TranslateTextsClass.Translate(node.Name, tenant);
+                        QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == node.Name || q.ObjectFieldFullNameTextCodeCode == node.Name).FirstOrDefault();
+                        if (column != null)
+                        {
+                            if (!string.IsNullOrEmpty(column.DisplayText))
+                            {
+
+                                nodename = column.DisplayText;
+                            }
+                        }
+
                         nodename = nodename != null ? nodename : "";
                         nodename = nodename.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "");
                         int start = 65;
@@ -454,7 +471,7 @@ namespace WebFreight.Web.Helpers
                         //sheet.Range.NumberFormat = "yyyy-mm-dd;@";
                         range.CellStyle.Font.FontName = "Times New Roman";
                         range.CellStyle.Font.Bold = true;
-                      
+
                     }
                     //TenantRepository tenantRepoitory = new TenantRepository(tenant);
                     //var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
@@ -468,7 +485,7 @@ namespace WebFreight.Web.Helpers
                         {
 
                             QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == childNode.Name || q.ObjectFieldFullNameTextCodeCode == childNode.Name).FirstOrDefault();
-                           
+
                             switch (column.ObjectFieldDataTypeCode)
                             {
                                 case "Text":
@@ -552,7 +569,7 @@ namespace WebFreight.Web.Helpers
                             cellCol++;
                         }
                         cellRow++;
-                        
+
 
                     }
 
@@ -639,11 +656,11 @@ namespace WebFreight.Web.Helpers
             var rows = dataTable.Rows.Count;
             for (int j = 1; j <= dataTable.Columns.Count; j++)
             {
-                var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[j-1].ColumnName).FirstOrDefault();
+                var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[j - 1].ColumnName).FirstOrDefault();
                 if (agColumn != null)
                 {
 
-                    var writeRange = sheet.Range[2,j, rows+1, j];
+                    var writeRange = sheet.Range[2, j, rows + 1, j];
                     switch (agColumn.DataTypeCode)
                     {
                         case "Constant":
@@ -696,12 +713,13 @@ namespace WebFreight.Web.Helpers
                 }
                 cellRow++;
             }
-            
+
             workbook.SaveAs(memory);
             workbook.Close();
             excelEngine.Dispose();
             return memory.ToArray();
         }
+
 
         private string ConvertDataList2Xml(IEnumerator dataList, QueryPM query, List<QueryColumnPM> queryColumns, int tenant)
         {
@@ -709,7 +727,7 @@ namespace WebFreight.Web.Helpers
             TextCodeRepository textCodeRepoitory = new TextCodeRepository(tenant);
             TenantRepository tenantRepoitory = new TenantRepository(tenant);
             var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
-            string queryName = TranslateTextsClass.Translate(query.NameTextCodeCode, tenant).Replace(" ", "_") + "_" + query.ObjectTableName + "s";
+            string queryName = !string.IsNullOrEmpty(query.DisplayText) ? query.DisplayText : TranslateTextsClass.Translate(query.NameTextCodeCode, tenant).Replace(" ", "_") + "_" + query.ObjectTableName + "s";
 
             queryName = ExportToExcelHelper.GetValidFileName(queryName);//queryName.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace("'", "");
             queryName = queryName.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace("'", "");
@@ -734,25 +752,24 @@ namespace WebFreight.Web.Helpers
                             string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode) ? column.ObjectFieldListLabelTextCodeCode : column.ObjectFieldFullNameTextCodeCode;
                             System.Xml.Linq.XElement col = new System.Xml.Linq.XElement(text);
                             string value = " ";
-                            PropertyInfo info = entity.GetType().GetProperty(column.ObjectFieldName);
-                            if (info != null)
+                            if (column.ObjectFieldName == "Task")
                             {
-                                value = info.GetValue(entity, null) != null ? info.GetValue(entity, null).ToString() : " ";
+                                value = GetLogBoxTaskFieldValue(entity);
                             }
-                            var temp = Fix(value);
-                            //if (column.ObjectFieldDataTypeCode == "Date" || column.ObjectFieldDataTypeCode == "DateTime")
-                            //{
-                            //    string datetimeformat = @"dd\/MM\/yyyy";
-                            //    if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
-                            //    {
-                            //        datetimeformat = CurTenant.DateTimeFormat;
-                            //    }
-                            //    temp = string.Format(datetimeformat, info.GetValue(entity, null));
-                            //}
+                            else
+                            {
+                                PropertyInfo info = entity.GetType().GetProperty(column.ObjectFieldName);
+                                if (info != null)
+                                {
+                                    value = info.GetValue(entity, null) != null ? info.GetValue(entity, null).ToString() : " ";
+                                }
+                            }
 
+                            var temp = Fix(value);
                             col.Value = temp;
 
                             table.Add(col);
+
                         }
 
 
@@ -780,12 +797,55 @@ namespace WebFreight.Web.Helpers
                     entities.Add(table);
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+
+            }
 
             return entities.ToString();
 
 
 
+        }
+
+        private string GetLogBoxTaskFieldValue(object entity)
+        {
+            string value = string.Empty;
+            if (GetPropertyValue(entity, "IsRequestedDocuments") == "True" || (!string.IsNullOrEmpty(GetPropertyValue(entity, "RequestedDocumentsCount")) && GetPropertyValue(entity, "RequestedDocumentsCount") != "0"))
+            {
+                value = (!string.IsNullOrEmpty(value) ? (value + " \\ Requested Document") : "Requested Document");
+            }
+
+            if (GetPropertyValue(entity, "IsImporterApprovalRequried") == "True")
+            {
+                value = (!string.IsNullOrEmpty(value) ? (value + " \\ Declaration Approval") : "Declaration Approval");
+            }
+
+
+            if (GetPropertyValue(entity, "IsDigitalSignRequired") == "True")
+            {
+                value = (!string.IsNullOrEmpty(value) ? (value + " \\ Sign Required") : "Sign Required");
+            }
+
+            if (GetPropertyValue(entity, "IsDepositionRequired") == "True")
+            {
+                value = (!string.IsNullOrEmpty(value) ? (value + " \\ Deposition Required") : "Deposition Required");
+            }
+
+            return value;
+        }
+
+        private static string GetPropertyValue(object entity, string fieldName)
+        {
+            string result = string.Empty;
+            PropertyInfo info = entity.GetType().GetProperty(fieldName);
+            if (info != null)
+            {
+                result = info.GetValue(entity, null) != null ? info.GetValue(entity, null).ToString() : " ";
+
+            }
+
+            return result;
         }
 
         private static string GetValidFileName(string fileName)
@@ -812,7 +872,6 @@ namespace WebFreight.Web.Helpers
             else fixed_data = ControlChars.Value.Replace(data.ToString(), FixData_Replace);
             return fixed_data;
         }
-
         private ReflectionProperties getMethodsInfo(string ContextName, QueryPM query)
         {
             Type contextType = Type.GetType(ContextName);
@@ -869,10 +928,32 @@ namespace WebFreight.Web.Helpers
         }
     }
 }
+
+
+
 class ReflectionProperties
 {
     public MethodInfo ListMethodInfo { get; set; }
     public MethodInfo CountMethodInfo { get; set; }
     public object context { get; set; }
+
+}
+
+
+
+public class ExportToExcelArgs
+{
+
+    public byte[] XmlFilters { get; set; }
+    public string QueryCode { get; set; }
+
+    public int Tenant { get; set; }
+
+    public string UserId { get; set; }
+    public string TypeName { get; set; }
+
+    public QueryPM QueryPM { get; set; }
+    public List<QueryColumnPM> QueryColumns { get; set; }
+
 
 }
