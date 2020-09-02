@@ -318,6 +318,10 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
          _ARInvoicePM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
         _ARInvoicePM.ProfitCurrencyCode = SessionLocator.TenantPM.ProfitCurrencyCode;
         // _ARInvoicePM.DueDate = _ARInvoicePM.InvoiceDate;
+
+        if(this.chargesTypeList!=null){
+            
+        
         var _ARInvoiceLinePM: ARInvoiceLinePM = new ARInvoiceLinePM(_ARInvoicePM);
         _ARInvoiceLinePM.DateForInterest = _ARInvoicePM.InvoiceDate;
         _ARInvoiceLinePM.Tenant = this.TenantPM.Id;
@@ -344,10 +348,6 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         //  }
          _ARInvoiceLinePM.GLAccountId = this.chargesTypeList?this.chargesTypeList.ReceivableCreditGLAccountId:null;
         _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
-         var objectTable = window.ObjectTables.filter(d => d.Name === "InterestReport")[0];
-        var objectTableId = objectTable.Id;
-        _ARInvoiceEntityPM.ObjectTableId = objectTableId;
-        _ARInvoicePM.InvoiceEntities.push(_ARInvoiceEntityPM);
         this.getVatTypePercentegeListByDates().then(res => {
             _ARInvoiceLinePM.VatPercentage = this.GetVatTypePercentage(_ARInvoiceLinePM.VatTypeId);
             this.GetVatTypeName( _ARInvoiceLinePM.VatTypeId).then(res => {
@@ -355,6 +355,12 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
             _ARInvoicePM.InvoiceLines.push(_ARInvoiceLinePM);
         }); 
         }); 
+    }
+         var objectTable = window.ObjectTables.filter(d => d.Name === "InterestReport")[0];
+        var objectTableId = objectTable.Id;
+        _ARInvoiceEntityPM.ObjectTableId = objectTableId;
+        _ARInvoicePM.InvoiceEntities.push(_ARInvoiceEntityPM);
+      
     }); 
         return _ARInvoicePM;
   }
