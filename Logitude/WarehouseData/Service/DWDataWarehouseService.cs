@@ -214,6 +214,7 @@ namespace WarehouseData.Service
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainCarriageVesselId DEFAULT '-1' FOR MainCarriageVesselId;"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment1VesselId DEFAULT '-1' FOR Transshipment1VesselId"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment1CarrierId DEFAULT '-1' FOR Transshipment1CarrierId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OBLTypeCode DEFAULT '-1' FOR OBLTypeCode"
                      + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "StatusId DEFAULT '-1' FOR StatusId"
 
                         ;
@@ -292,7 +293,7 @@ namespace WarehouseData.Service
             else if (table.DBTableName == "ShipmentTypes" || table.DBTableName == "PartnerTypes") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Name, AutomaticLastUpdateDate)values('-1','' ,GETDATE());";
             else if (table.DBTableName == "ShipmentMasterDatas")
             {
-                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,Master,MainCarriageATD, MainCarriageToPortId,Transshipment1ToPortId, Transshipment2ToPortId , Transshipment3ToPortId,AutomaticLastUpdateDate)values('-1'," + tenant + ",'',null,'-1' , '-1','-1','-1', GETDATE())";
+                cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,Master,MainCarriageATD, MainCarriageToPortId,Transshipment1ToPortId, Transshipment2ToPortId , Transshipment3ToPortId, OBLTypeCode,AutomaticLastUpdateDate)values('-1'," + tenant + ",'',null,'-1' , '-1','-1','-1','-1', GETDATE())";
             }
             else if (table.DBTableName == "DWHSettings")
             {

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class OBLTypeUpdateClass
    {  		
-		public const string HashString = "3126e82a3c810a591f741bce907bc734";
+		public const string HashString = "a71bf6f28d76e1a36f5c5c6464120d99";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	             				    ObjectTableName =  "OBLType",
 			      				    IsNew =  false,
 			      				    DBTableName =  "OBLTypes",
-			      				    OldDBTableName =  "OBLTypes",
 			      				    ObjectTableSingular =  "OBL Type",
 			      				    ObjectTablePlural =  "OBL Types",
 			      				    HasCustomFilter =  false,
@@ -120,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "OBL Type",
-			      				    Code =  "0005",
+			      				    Code =  "539a",
 			      				    Name =  "OBLType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -147,7 +146,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "OBLType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -211,7 +209,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "OBLType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -275,7 +272,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "OBLType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
