@@ -2843,28 +2843,5 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        public HttpResponseMessage GetWarehouseStoragePricingForWarehouse(string warehouseId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                WarehouseStoragePricingQuery warehouseStoragePricingQuery = new WarehouseStoragePricingQuery(tenant);
-                List<WarehouseStoragePricingPM> myResult = warehouseStoragePricingQuery.GetWarehouseStoragePricingPMsByWarehouseId(warehouseId, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-
-        }
     }
 }

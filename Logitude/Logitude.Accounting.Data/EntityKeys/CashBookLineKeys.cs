@@ -24,8 +24,7 @@ namespace Logitude.Accounting.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return CashBookId+'_'+ARPChequeId ;
-                 
+          return CashBookId+'_'+ARPChequeId;
       }
 
       public override string GetEntityPMName()

@@ -12,7 +12,6 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow'; 
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     moduleId: './Report/Components/Workspaces/',
@@ -24,19 +23,11 @@ export class BIFolderReportComponent {
     private folderListService: BIReportFolderExtendedListService;
     private reportListService: BIReportListService;
     public _InfrastructureDomainService: InfrastructureDomainService;
-    public IsNewBIReportButtonDisabled: boolean = false;
-    public IsNewBIReportFolderButtonDisabled: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.folderListService = new BIReportFolderExtendedListService();
         this.reportListService = new BIReportListService();
         this._InfrastructureDomainService = new InfrastructureDomainService();
-        if (!FeatureLocator.HasEntityPermessions("BIReport", "NEW", false)) {
-            this.IsNewBIReportButtonDisabled = true;
-        }
-        if (!FeatureLocator.HasEntityPermessions("BIReportFolder", "NEW", false)) {
-            this.IsNewBIReportFolderButtonDisabled = true;
-        }
         this.LoadData();
         this.Listen();
     }

@@ -11,7 +11,7 @@ import { ChildDirective } from '../../Directives/ChildDirective';
 
   templateUrl: "./ObjectFieldTemplate.html",
   selector: 'ObjectFieldTemplate',
-    inputs: ['ObjectTable', 'ObjectField', 'FieldName', 'Entity', 'IsHeaderScreenTemplate', 'IsListColumnCellTemplate', 'IsListColumnHeaderTemplate', 'IsSpotLightTemplate', 'SpotlightDataTemplate','FieldValue'],
+  inputs: ['ObjectTable', 'ObjectField', 'FieldName', 'Entity', 'IsHeaderScreenTemplate', 'IsListColumnCellTemplate', 'IsListColumnHeaderTemplate', 'IsSpotLightTemplate', 'SpotlightDataTemplate'],
 })
 
 // https://github.com/angular/angular/issues/10762

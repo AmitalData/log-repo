@@ -70,19 +70,6 @@ export class WarehouseExtendedListService {
         );
     }
 
-    GetWarehouseTypeById(warehouseId) {
-
-        return this._http.get(this._apiUrl + '/GetWarehouseTypeById/?' + 'warehouseId=' + warehouseId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-
-            pmresponse.Result = response;
-            return pmresponse;
-        }), catchError(ServiceHelper.HandleServiceError));
-    }
-
-
     MapJsonToEntityList(jsonList: any) {
 
         var entityList: CardList;

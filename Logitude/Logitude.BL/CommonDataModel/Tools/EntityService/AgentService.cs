@@ -19,7 +19,6 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.Helpers;
-using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -82,15 +81,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPM = entityPM;
             this.isNewEntity = true;
 
-            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
+            this.entityPM.Id = IdCounter.GetNumber("Card", entityPM.Tenant).ToString();
 
             this.entityCard = new Card()
             {
                 Id = entityPM.Id,
                 Tenant = tenant,
                 PartnerTypeId = "AG",
-                SharedLogisticsInvitationStatusCode = 1,
-                UploadingUniqueKey = entityPM.UploadingUniqueKey,
+                SharedLogisticsInvitationStatusCode = 1
             };
 
             this.entityPOCO = new Agent()
@@ -129,7 +127,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
 
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
 
@@ -182,7 +179,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
 
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
         }

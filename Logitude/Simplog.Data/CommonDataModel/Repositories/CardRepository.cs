@@ -582,12 +582,5 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where record.Tenant == tenant && record.PartnerTypeId == "AL"
                     select record);
         }
-
-        public bool IsUploadingUniqueKeyExist(string uniqueCode)
-        {
-            return (from a in context.Cards
-                    where a.UploadingUniqueKey == uniqueCode
-                    select a).Any();
-        }
     }
 }

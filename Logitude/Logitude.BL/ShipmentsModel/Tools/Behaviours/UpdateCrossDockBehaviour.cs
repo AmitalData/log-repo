@@ -44,6 +44,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             UpdateCrossDockReleaseStatus();
             UpdateWareHouseEntryPartners();
             ConnectWarehouseReleaseToShipment();
+
+            SaveEntity();
         }
         private void UpdateShipmentWarehouseLegData() 
         {
@@ -74,7 +76,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             UpdateActualExpectedWarehouseReleasesDates();
             UpdateActualExpectedShipmentWarehouseLegDates();
         }
-        public void Save()
+        private void SaveEntity()
         {
             warehouseContext.SaveChanges();
         }
@@ -232,7 +234,5 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             }
             shipmentPM.WarehouseReleasesIds = null;
         }
-
-      
     }
 }

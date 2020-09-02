@@ -24,8 +24,7 @@ namespace Logitude.CRM.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return QuestionnaireAnswerId+'_'+QuestionNumber ;
-                 
+          return QuestionnaireAnswerId+'_'+QuestionNumber;
       }
 
       public override string GetEntityPMName()

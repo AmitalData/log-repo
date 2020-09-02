@@ -83,6 +83,5 @@ namespace WebFreight.Web.DataProviders
         public string UserName { get; set; }
         public string ConsigneePhoneNumber { get; set; }
         public byte[] AirlineLogo { get; set; }
-        public string FlightNumber { get; set; }
     }
 }

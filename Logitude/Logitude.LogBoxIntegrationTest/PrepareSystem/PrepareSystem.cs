@@ -15,7 +15,7 @@ namespace Logitude.LogboxIntegrationTest.PrepareSystem
         public static void PrepareSystemVars(TestContext context)
         {
             GetAuthenticationCloudTenantToken();
-            GetAuthenticationLogboxTenantToken();
+            //GetAuthenticationLogboxTenantToken();
         }
         private static void GetAuthenticationCloudTenantToken()
         {
@@ -44,16 +44,11 @@ namespace Logitude.LogboxIntegrationTest.PrepareSystem
         private static void GetAuthenticationLogboxTenantToken()
         {
             var apiCred = new APICredentialsParameters() { PrimaryKey = EnvironmentParams.LogboxTenant_APICredential_PrimaryKey, SecondaryKey = EnvironmentParams.LogboxTenant_APICredential_SecondaryKey, Tenant = EnvironmentParams.LogboxTenant };
-            AdditionalIncludedData includedData = new AdditionalIncludedData
-            {
-                URL = EnvironmentParams.LogboxServerURL
-            };
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Login",
                 ServiceOperation = "LoginByCredential",
                 ServiceType = typeof(APICredentialsParameters),
-                IncludedData = includedData
             };
 
             Response serviceResponse = new Response();

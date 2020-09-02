@@ -20,7 +20,6 @@ export class AddEditReceivableComponent {
     public ShipmentLevelCode: string = null;    
     public ValidationErrorsList: string[] = [];
     public ChargeTypesQueryFilters: ApiQueryFilters;
-    public MeasurementsQueryFilters: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
                
@@ -54,9 +53,7 @@ export class AddEditReceivableComponent {
         this.MeasurementDependencyProperty2 = myMeasurementDependencyProperty2;
     }
 
-    private BuildQueryFilters() {        
-        this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true,true);
+    private BuildQueryFilters() {
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");

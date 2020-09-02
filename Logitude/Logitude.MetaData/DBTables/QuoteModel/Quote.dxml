@@ -1199,31 +1199,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="PickupDeliveryRatio"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PickupDeliveryChargeableWeight"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PickupDeliveryVolumetricWeight"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PickupDeliveryCWeightUnitCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"
     ReferencedTable="QuoteTemplates"

@@ -132,10 +132,6 @@ export class TenantManagementList {
 		IsTestTenant: boolean;
 		MainAdditionalPackageApplied: boolean;
 		TotalPrice: number;
-		MainColor: string;
-		SecondaryColor: string;
-		Opacity: number;
-		BackgroundId: string;
 		TotalNumberOfUsers: number;
 		TotalFreeUsers: number;
 		AveragePrice: number;

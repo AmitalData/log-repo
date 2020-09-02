@@ -1,0 +1,18 @@
+﻿<Script DBType="Main" Pre="false">
+  <Sql Version="1">
+    <![CDATA[
+ Insert Into CargoTrackingMilestones (Code,LocalName,SearchFields,EnglishName,Inactive) values ('1','','1,Booking','Booking',0)
+Insert Into CargoTrackingMilestones (Code,LocalName,SearchFields,EnglishName,Inactive) values ('2','','2,Pickup','Pickup',0)
+Insert Into CargoTrackingMilestones (Code,LocalName,SearchFields,EnglishName,Inactive) values ('3','','3,From Warehouse','From Warehouse',0)
+Insert Into CargoTrackingMilestones (Code,LocalName,SearchFields,EnglishName,Inactive) values ('4','','4,Departure','Departure',0)
+Insert Into CargoTrackingMilestones (Code,LocalName,SearchFields,EnglishName,Inactive) values ('5','','5,Arrival','Arrival',0)
+Insert Into CargoTrackingMilestones (Code,LocalName,SearchFields,EnglishName,Inactive) values ('6','','6,To Warehouse','To Warehouse',0)
+Insert Into CargoTrackingMilestones (Code,LocalName,SearchFields,EnglishName,Inactive) values ('7','','7,Customs Process','Customs Process',0)
+Insert Into CargoTrackingMilestones (Code,LocalName,SearchFields,EnglishName,Inactive) values ('8','','8,Customs Payment','Customs Payment',0)
+Insert Into CargoTrackingMilestones (Code,LocalName,SearchFields,EnglishName,Inactive) values ('9','','9,Clearance','Clearance',0)
+Insert Into CargoTrackingMilestones (Code,LocalName,SearchFields,EnglishName,Inactive) values ('10','','10,Assigned to Trucker','Assigned to Trucker',0)
+Insert Into CargoTrackingMilestones (Code,LocalName,SearchFields,EnglishName,Inactive) values ('11','','11,Delivered','Delivered',0)
+Insert Into CargoTrackingMilestones (Code,LocalName,SearchFields,EnglishName,Inactive) values ('12','','12,Invoiced','Invoiced',0)
+    ]]>
+  </Sql>
+</Script>

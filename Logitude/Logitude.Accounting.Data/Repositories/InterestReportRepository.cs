@@ -62,13 +62,6 @@ namespace Logitude.Accounting.Data.Repositories
             return interestReport;
         }
 
-        public string GetInterestReportStatusCode(string InterestReportId, int tenant)
-        {
-            string InterestReportStatus = (from a in context.InterestReports
-                                             where a.Tenant == tenant && a.Id == InterestReportId
-                                             select a.InterestReportStatusCode).FirstOrDefault();
-            return InterestReportStatus;
-        }
     }
 
 }

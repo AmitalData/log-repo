@@ -135,34 +135,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(60)
                 .IsUnicode(false);
 
-
-
-
-
-            this.Property(t => t.OnSendPopulateDateFieldName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-
-
-
-            this.Property(t => t.OnUploadPopulateDateFieldName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-
-
-            this.Property(t => t.OnPrintPopulateDateFieldName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-
-
-
-  
-
-
-
-
-
-
             
             // Table & Column Mappings
             this.ToTable("DocumentTypes");
@@ -206,13 +178,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsInlandDigitalSignRequired).HasColumnName("IsInlandDigitalSignRequired");
             this.Property(t => t.AddedManually).HasColumnName("AddedManually");
 
-            this.Property(t => t.OnSendPopulateDateFieldName).HasColumnName("OnSendPopulateDateFieldName");
-            this.Property(t => t.OnUploadPopulateDateFieldName).HasColumnName("OnUploadPopulateDateFieldName");
-
-            this.Property(t => t.OnPrintPopulateDateFieldName).HasColumnName("OnPrintPopulateDateFieldName");
-
-
-            
 
             this.Property(t => t.PrintingFieldsScreenCode).HasColumnName("PrintingFieldsScreenCode");
            

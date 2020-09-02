@@ -41,19 +41,6 @@ export class CommonDomainService {
         });
     }
 
-    PostUploadPartnersExcelFile(filter: PartnersUploadExcelParameter) {
-        return defer(() => {
-            return this._http.post(this._apiUrl + "/PostUploadPartnersExcelFile", JSON.stringify(filter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
-                var pmresponse: ServiceResponse;
-                pmresponse = new ServiceResponse();
-                pmresponse.Result = result;
-                return pmresponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        }
-        );
-    }
-
     InvokeUpdateAutoDisplay(chargeTypeId: string, propertyTypeCode: string, isAutoDisplay: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -527,6 +514,7 @@ export class CommonDomainService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+
 
     GetSingleCustomerTenantAccess(CustomerId: string) {
         var authHeader = new Headers();
@@ -1245,17 +1233,6 @@ export class CommonDomainService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-
-    GetChargesTypeByCode(code: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + "/GetChargesTypeByCode" + '?code=' + code, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
-            return pmresponse;
-        }), catchError(ServiceHelper.HandleServiceError));
-    }
 }
 
 export class TranslationHeader {
@@ -1465,11 +1442,4 @@ export class FilingInboxAttachItem {
     public Description: string;
     public IsSharedWithAgent: boolean;
     public IsDigitallySign: boolean;
-}
-export class PartnersUploadExcelParameter {
-    Tenant: number;
-    FileData: string;
-    FileName: string;
-    IsConfirmationByUser: boolean;
-    DocumentId: string;
 }

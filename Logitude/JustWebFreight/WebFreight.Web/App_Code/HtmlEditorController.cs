@@ -206,12 +206,6 @@ namespace WebFreight.Web.App_Code
 
                         reslut = htmlEditorHelper.SendEmailOutActivityForEntity(bytedata, bytePlainTextdata, filter.Tenant, filter.ToEmail, filter.Subject, filter.Cc, filter.Bcc, filter.UserId, filter.EntityId, filter.CustomerId, filter.ObjectTableId, filter.Attachments, filter.EntityReference, filter.DocumentTypeCode, filter.EventTypeCode);
                     }
-
-
-                    DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
-                    documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = filter.EntityId, ObjectTableName = filter.ObjectTableName, DocumentTypeCode = filter.DocumentTypeCode, ProcessType = "Send", Tenant = filter.Tenant });
-
-
                 }
                 else throw new Exception("Sorry you’re not authenticated to send this email");
                 return Request.CreateResponse(HttpStatusCode.OK, reslut);

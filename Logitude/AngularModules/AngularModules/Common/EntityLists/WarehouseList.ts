@@ -42,13 +42,5 @@ export class WarehouseList {
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
 		StateName: string;
-		ChargeStorage: boolean;
-		CurrencyId: string;
-		AirWeightMeasurementCode: string;
-		OceanWeightMeasurementCode: string;
-		InlandWeightMeasurementCode: string;
-		AirWeightRoundingCode: string;
-		OceanWeightRoundingCode: string;
-		InlandWeightRoundingCode: string;
 	
 }

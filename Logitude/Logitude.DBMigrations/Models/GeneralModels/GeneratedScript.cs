@@ -11,6 +11,5 @@ namespace Logitude.DBMigrations.Models
         public string GlobalScript { get; set; }
         public string MainScript { get; set; }
         public string SystemLogsScript { get; set; }
-        public string CargoTrackingScript { get; set; }
     }
 }

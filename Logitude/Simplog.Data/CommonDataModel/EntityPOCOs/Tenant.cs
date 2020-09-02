@@ -39,7 +39,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string MasterImportFreightPrepaidCollectId { get; set; }
         public string MasterImportOtherPrepaidCollectId { get; set; }
         public bool IsHybrid { get; set; }
-        public bool IsIncrementalBuildRunning { get; set; }
         public bool IsQuoteSubjectEdited { get; set; }
         public string DefaultQuestionnaireId { get; set; }
         public string FreightCurrencyId { get; set; }

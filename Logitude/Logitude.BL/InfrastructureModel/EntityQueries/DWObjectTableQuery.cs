@@ -40,13 +40,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode =a.TypeCode,
                         Code = a.Code,
                         IsClosed=  a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy,
-                        DataViewName = a.DataViewName,
-                        HasPivotColumn = a.HasPivotColumn,
-                        PivotFieldCode = a.PivotFieldCode,
-                        AdditionalFactCode = a.AdditionalFactCode,
-                        AdditionalFactForeignKey = a.AdditionalFactForeignKey,
-
+                        DefaultFilterBy = a.DefaultFilterBy
                     }).FirstOrDefault();
         }
 
@@ -63,13 +57,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode = a.TypeCode,
                         Code = a.Code,
                         IsClosed = a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy,
-                        DataViewName = a.DataViewName,
-                        HasPivotColumn = a.HasPivotColumn,
-                        PivotFieldCode = a.PivotFieldCode,
-                        AdditionalFactCode = a.AdditionalFactCode,
-                        AdditionalFactForeignKey = a.AdditionalFactForeignKey,
-                    });
+                        DefaultFilterBy = a.DefaultFilterBy
+                    }
+                  );
         }
 
         public DWObjectTablePM GetSinglePM(string id, int tenant)
@@ -84,12 +74,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode = a.TypeCode,
                         Code = a.Code,
                         IsClosed = a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy,
-                        DataViewName = a.DataViewName,
-                        HasPivotColumn = a.HasPivotColumn,
-                        PivotFieldCode = a.PivotFieldCode,
-                        AdditionalFactCode = a.AdditionalFactCode,
-                        AdditionalFactForeignKey = a.AdditionalFactForeignKey,
+                        DefaultFilterBy = a.DefaultFilterBy
                     }).FirstOrDefault();
         }
 
@@ -105,12 +90,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode = a.TypeCode,
                         Code = a.Code,
                         IsClosed = a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy,
-                        DataViewName = a.DataViewName,
-                        HasPivotColumn = a.HasPivotColumn,
-                        PivotFieldCode = a.PivotFieldCode,
-                        AdditionalFactCode = a.AdditionalFactCode,
-                        AdditionalFactForeignKey = a.AdditionalFactForeignKey,
+                        DefaultFilterBy = a.DefaultFilterBy
                     });
         }
 
@@ -125,12 +105,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   TypeCode = a.TypeCode,
                                                   Code = a.Code,
                                                   IsClosed = a.IsClosed,
-                                                  DefaultFilterBy = a.DefaultFilterBy,
-                                                  DataViewName = a.DataViewName,
-                                                  HasPivotColumn = a.HasPivotColumn,
-                                                  PivotFieldCode = a.PivotFieldCode,
-                                                  AdditionalFactCode = a.AdditionalFactCode,
-                                                  AdditionalFactForeignKey = a.AdditionalFactForeignKey,
+                                                  DefaultFilterBy = a.DefaultFilterBy
                                               };
 
             return result;

@@ -23,22 +23,22 @@ namespace Logitude.BL.QuoteModel.EntityQueries
         public QuotePackagePM GetSinglePM(string id, int tenant)
         {
             QuotePackagePM quotePackages = (from a in repository.context.QuotePackages.Include("PackageType")
-                                            where a.Tenant == tenant && a.Id == id
+                                                  where a.Tenant == tenant && a.Id == id
                                             select new QuotePackagePM()
-                                            {
-                                                Height = a.Height,
-                                                Id = a.Id,
-                                                Length = a.Length,
-                                                PackageTypeId = a.PackageTypeId,
-                                                PackageTypeName = a.PackageType != null ? a.PackageType.EnglishName : null,
-                                                Quantity = a.Quantity,
-                                                QuoteId = a.QuoteId,
-                                                Tenant = a.Tenant,
-                                                Volume = a.Volume,
-                                                GrossWeight = a.GrossWeight,
-                                                Width = a.Width,
-                                                VolumetricWeight = a.VolumetricWeight,
-                                            }).FirstOrDefault();
+                                                  {
+                                                      Height = a.Height,
+                                                      Id = a.Id,
+                                                      Length = a.Length,
+                                                      PackageTypeId = a.PackageTypeId,
+                                                      PackageTypeName = a.PackageType != null ? a.PackageType.EnglishName : null,
+                                                      Quantity = a.Quantity,                                                      
+                                                      QuoteId = a.QuoteId,
+                                                      Tenant = a.Tenant,
+                                                      Volume = a.Volume,
+                                                      GrossWeight = a.GrossWeight,
+                                                      Width = a.Width,
+                                                      VolumetricWeight = a.VolumetricWeight,
+                                                  }).FirstOrDefault();
 
             return quotePackages;
         }
@@ -60,7 +60,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                                  Volume = a.Volume,
                                                                  GrossWeight = a.GrossWeight,
                                                                  Width = a.Width,
-                                                                 VolumetricWeight = a.VolumetricWeight,                                                       };
+                                                                 VolumetricWeight = a.VolumetricWeight,
+                                                             };
             return quotePackages;
         }
 

@@ -344,18 +344,6 @@
       <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
       <Name>Logitude.BL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Logitude.CargoTracking.BL\Logitude.CargoTracking.BL.csproj">
-      <Project>{6b7fb227-28d2-45b8-b079-2e2f4251510d}</Project>
-      <Name>Logitude.CargoTracking.BL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logitude.CargoTracking.Data\Logitude.CargoTracking.Data.csproj">
-      <Project>{7281a115-2213-41a3-a39a-22476f5a8db8}</Project>
-      <Name>Logitude.CargoTracking.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logitude.CargoTracking.Def\Logitude.CargoTracking.Def.csproj">
-      <Project>{1602a405-278e-4ff9-b7b5-dfc6e525b497}</Project>
-      <Name>Logitude.CargoTracking.Def</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
       <Project>{4733f914-0e16-4412-84df-d98232dd43e9}</Project>
       <Name>Logitude.CRM.Data</Name>

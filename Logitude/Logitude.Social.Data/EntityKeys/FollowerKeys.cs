@@ -24,8 +24,7 @@ namespace Logitude.Social.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return FolloweeUserId+'_'+FollowerUserId ;
-                 
+          return FolloweeUserId+'_'+FollowerUserId;
       }
 
       public override string GetEntityPMName()

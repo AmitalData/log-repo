@@ -63,9 +63,7 @@ namespace WebFreight.Web.WebServices
             byte[] bytes = null; 
             try
             {
-
-                bytes = new ExportToExcelHelper().ExportQueryToExcel(new ExportToExcelArgs() { XmlFilters = xmlFilters, QueryCode = queryId, Tenant = tenant, UserId = userid, TypeName = typename });
-
+                bytes = new ExportToExcelHelper().ExportQueryToExcel(xmlFilters, queryId, tenant, userid, typename).ToArray();
                 //FilterSerializer filterSerializer = new FilterSerializer();
                 //QueryRepository queryRep = new QueryRepository(tenant);
                 //QueryColumnRepository queryColumnRep = new QueryColumnRepository(tenant);

@@ -24,8 +24,7 @@ namespace Logitude.WarehouseLib.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return EntryPackageId+'_'+ReleasePackageId ;
-                 
+          return EntryPackageId+'_'+ReleasePackageId;
       }
 
       public override string GetEntityPMName()

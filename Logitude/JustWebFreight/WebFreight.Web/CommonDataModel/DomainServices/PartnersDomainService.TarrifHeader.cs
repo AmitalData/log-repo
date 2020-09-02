@@ -384,7 +384,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 {
                     case ChangeOperation.Insert:
                         {
-                            r.ChangeSetOp = ChangeSetOperation.Insert;
+                            r.changeOp = ChangeSetOperation.Insert;
                             //r.Id = IdCounter.GetNumber("TarrifFromTo", currentEntity.Tenant).ToString();
                             //TarrifFromTo newFt = new TarrifFromTo()
                             //{
@@ -397,7 +397,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
                     case ChangeOperation.Update:
                         {
-                            r.ChangeSetOp = ChangeSetOperation.Update;
+                            r.changeOp = ChangeSetOperation.Update;
                             //TarrifFromTo ft = tarrifFromToRepository.GetSingleTarrifFromTo(r.Id);
                             //MapTarrifFromToPMTarrifFromTo(r, ft);
                             //tarrifFromToRepository.Update(ft);
@@ -406,7 +406,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
                     case ChangeOperation.Delete:
                         {
-                            r.ChangeSetOp = ChangeSetOperation.Delete;
+                            r.changeOp = ChangeSetOperation.Delete;
                             //TarrifFromTo ft = tarrifFromToRepository.GetSingleTarrifFromTo(r.Id);
                             //tarrifFromToRepository.Remove(ft);
                             break;

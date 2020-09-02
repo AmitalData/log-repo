@@ -59,7 +59,6 @@
     <Compile Include="EnvironmentParams.cs" />
     <Compile Include="CloudVariables.cs" />
     <Compile Include="PrepareSystem\PrepareSystem.cs" />
-    <Compile Include="Senarios\OngoingDocumentsUNItoLogboxViaCloud.cs" />
     <Compile Include="Senarios\OngoingShipmentsUNItoLogboxViaCloud.cs" />
     <Compile Include="ShipmentWcfFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

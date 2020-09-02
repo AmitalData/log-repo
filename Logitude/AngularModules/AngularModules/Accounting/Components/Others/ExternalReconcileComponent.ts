@@ -1024,7 +1024,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //    // Show prompt
         //    var confirmWindow = new ConfirmWindow();
         //    confirmWindow.Width = 390;
-        //    confirmWindow.Show("Automatic Reconcile will clear all selected lines, continue?"); // "קיימות תנועות שנבחרו , הםם להמשיך בהתםמה םוטומטית ?"
+        //    confirmWindow.Show("Automatic Reconcile will clear all selected lines, continue?"); // "קיימות תנועות שנבחרו , האם להמשיך בהתאמה אוטומטית ?"
 
         //    confirmWindow.WindowClosed.subscribe((event: any) => {
         //        if (confirmWindow.Yes) {

@@ -107,11 +107,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return result;
         }
 
-        public IQueryable<TransportMode> GetAllTransportModes()
-        {
-            IQueryable<TransportMode> result = (from a in repository.context.TransportModes select a);
-            return result;
-        }
+
 
     }
 }

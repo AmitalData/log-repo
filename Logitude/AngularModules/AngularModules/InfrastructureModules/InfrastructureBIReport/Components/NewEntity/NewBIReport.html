@@ -86,7 +86,7 @@
                 </tr>
 
                 <!-- FactTableName -->
-                <tr class="FormFieldRow">
+                <tr class="FormFieldRow" *ngIf="HasChargesDWHFeature">
                     <td>
                         <LogLabel [ObjectFieldName]="'FactTableName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
@@ -137,7 +137,7 @@
                 </tr>
 
                 <!-- FactTableName -->
-                <tr class="FormFieldRow">
+                <tr class="FormFieldRow" *ngIf="HasChargesDWHFeature">
                     <td>
                         <LogLabel [ObjectFieldName]="'FactTableName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>

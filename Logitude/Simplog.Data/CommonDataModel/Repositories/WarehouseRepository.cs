@@ -47,18 +47,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                    select a;
         }
 
-        public string GetWarehouseTypeById(string warehouseId, int tenant)
-        {
-            string warehouseTypeName = "";
-            WarehouseType warehouseType = (from a in context.Warehouses.Include("Card")
-                   where a.Tenant == tenant && a.Id == warehouseId
-                   select a.WarehouseType).FirstOrDefault();
-            if (warehouseType != null) warehouseTypeName = warehouseType.Name;
 
-            return warehouseTypeName;
-        }
-
-
+        
 
         public void Add(Warehouse entity)
         {

@@ -1,0 +1,10 @@
+
+SELECT [Id_Number]  as [Key]
+      ,[Name]
+      ,[Code] 
+      ,[Local Name]
+      ,[UN Loc Code]
+      ,[Country]
+      ,[State Name]
+      ,[Source Tenant] as [Tenant]
+  FROM [dbo].[DIM_Ports]

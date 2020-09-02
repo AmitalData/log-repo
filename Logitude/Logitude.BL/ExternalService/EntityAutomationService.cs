@@ -26,8 +26,7 @@ namespace Logitude.BL.ExternalService
         private List<ObjectFieldPM> automationObjectFields = null;
         private int tenant;
         private string automationType = string.Empty;
-        private object oldEntityPM = null;
-        private EntityChangeHelper entityChangeHelper = null;
+        private object changeTrackingPM = null;
         public EntityAutomationService(EntityAutomationArgs args)
         {
             this.entityPM = args.EntityPM;
@@ -35,24 +34,29 @@ namespace Logitude.BL.ExternalService
             this.tenant = args.Tenant;
             this.objectTableName = args.ObjectTableName;
             this.automationType = args.AutomationType;
-            entityChangeHelper = new EntityChangeHelper();
-
-            if (automationType != "OnCreate")
-            {
-                this.automationObjectFields = GetObjectFieldsUsedInAutomation();
-                this.oldEntityPM = args.OldEntityPM;
-                MapAutomationFieldsFormPocoToEntityPM(poco, this.oldEntityPM);
-            }
-
+            this.changeTrackingPM = args.ChangeTrackingPM;
+            this.automationObjectFields = GetObjectFieldsUsedInAutomation();
         }
 
 
         public void RunAutomation()
         {
-            string entityChangeFieldXml = automationType == "OnCreate" ? "" : GetEntityChangeFieldXml();
-            entityChangeHelper.AddEntityChange(entityPM, oldEntityPM, automationType, entityChangeFieldXml, objectTableName, DateTime.Now);
+            EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
+            if (automationType == "OnCreate")
+            {
+                entityChangeHelper.AddEntityChange(entityPM, null, automationType, "", objectTableName, DateTime.Now);
+            }
+            else
+            {
+                EntityChangeTracking entityChangeTracking = BuildEntityChangeTracking();
+                entityChangeHelper.AddEntityChange(entityPM, entityChangeTracking.ChangeTrackingPM, automationType, entityChangeTracking.EntityChangeFieldXml, objectTableName, DateTime.Now);
+            }
         }
 
+        private string GetAutomationProessType()
+        {
+            return poco == null ? "OnCreate" : "OnUpdate";
+        }
 
         private List<ObjectFieldPM> GetObjectFieldsUsedInAutomation()
         {
@@ -67,15 +71,18 @@ namespace Logitude.BL.ExternalService
             return objectFieldLists;
         }
 
-        private string GetEntityChangeFieldXml()
+        public EntityChangeTracking BuildEntityChangeTracking()
         {
-            var notifyPropertyChangeValuesLists = BuildChangedProperties(entityPM, oldEntityPM);
-            return EntityPMChangeTrackingHelper.GetChangesDetectedXml(notifyPropertyChangeValuesLists);
+            EntityChangeTracking entityChangeTracking = new EntityChangeTracking() { ChangeTrackingPM = GetChangeTrackingPM(poco)};
+            entityChangeTracking.NotifyPropertyChangeValuesLists = BuildChangedProperties(entityPM, entityChangeTracking.ChangeTrackingPM);
+            entityChangeTracking.EntityChangeFieldXml = EntityPMChangeTrackingHelper.GetChangesDetectedXml(entityChangeTracking.NotifyPropertyChangeValuesLists);
+            return entityChangeTracking;
         }
 
 
-        private void MapAutomationFieldsFormPocoToEntityPM( object poco , object entityPM)
+        private object GetChangeTrackingPM( object poco)
         {
+            object result = this.changeTrackingPM;
             if (automationObjectFields != null)
             {
                 foreach (ObjectFieldPM objectFieldPM in automationObjectFields)
@@ -85,10 +92,13 @@ namespace Logitude.BL.ExternalService
                     {
                         value = new CustomFieldClass(objectFieldPM.FieldName, objectTableName, value!=null ? value.ToString():"");
                     }
-                    PropertyInfo propInfo = entityPM.GetType().GetProperty(objectFieldPM.FieldName);
-                    propInfo.SetValue(entityPM, value, null);
+                    PropertyInfo propInfo = result.GetType().GetProperty(objectFieldPM.FieldName);
+                    propInfo.SetValue(result, value, null);
                 }
             }
+
+
+            return result;
 
         }
 
@@ -104,14 +114,14 @@ namespace Logitude.BL.ExternalService
             return value;
         }
 
-        public List<NotifyPropertyChangeValues> BuildChangedProperties(object entityPM, object oldEntityPM)
+        public List<NotifyPropertyChangeValues> BuildChangedProperties(object entityPM, object changeTrackingPM)
         {
             List<NotifyPropertyChangeValues> notifyPropertyChangeValuesLists = new List<NotifyPropertyChangeValues>();
             if (automationObjectFields != null)
             {
                 foreach (ObjectFieldPM objectFieldPM in automationObjectFields)
                 {
-                    object oldValue = GetPropertyValue(oldEntityPM, objectFieldPM.FieldName);
+                    object oldValue = GetPropertyValue(changeTrackingPM, objectFieldPM.FieldName);
                     object newValue = GetPropertyValue(entityPM, objectFieldPM.FieldName);
                     NotifyPropertyChangeValues notifyPropertyChangeValues = GetNotifyPropertyChangeValues(new NotifyPropertyChangeArgs() { PropertyName = objectFieldPM.FieldName, PropertyType = objectFieldPM.DataTypeCode, OldValue = oldValue, NewValue = newValue, IsCustom = objectFieldPM.IsCustom });
                     if (notifyPropertyChangeValues != null) notifyPropertyChangeValuesLists.Add(notifyPropertyChangeValues);
@@ -150,7 +160,12 @@ namespace Logitude.BL.ExternalService
     }
 
 
-  
+    public class EntityChangeTracking
+    {
+        public object ChangeTrackingPM { get; set; }
+        public string EntityChangeFieldXml { get; set; }
+        public List<NotifyPropertyChangeValues> NotifyPropertyChangeValuesLists { get; set; }
+    }
 
 
     public class NotifyPropertyChangeArgs
@@ -165,7 +180,7 @@ namespace Logitude.BL.ExternalService
     public class EntityAutomationArgs
     {
         public object EntityPM { get; set; }
-        public object OldEntityPM { get; set; }
+        public object ChangeTrackingPM { get; set; }
 
         public object Poco { get; set; }
 

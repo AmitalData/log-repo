@@ -38,6 +38,7 @@ export class NewBIReport extends BaseComponent {
     public IsTenantZero: boolean = false;
     public IsOneRowSelected: boolean = false;
     public HasCopyFeature: boolean = false;
+    public HasChargesDWHFeature: boolean = false;
     public CopyFromTitle: string;
     public FactTables: string[] = [];
     public BIReportFolders: string[] = [];
@@ -64,6 +65,9 @@ export class NewBIReport extends BaseComponent {
         this.EntityPM.TypeCode = "EXL";
         this.FillFactTableNamesList();
         this.FillBIReportFolderNamesList();
+        var DefineChargesDWHFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CWH" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (DefineChargesDWHFeatureToggle) { this.HasChargesDWHFeature = true; }
+        else { this.FactTableSelectionChanged("Shipments"); }
         this.myService = new BIReportPMService();
         this.SetUIProperties();
         this.CheckTenantZero();

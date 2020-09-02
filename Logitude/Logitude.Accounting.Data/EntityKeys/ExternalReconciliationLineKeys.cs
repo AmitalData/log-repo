@@ -24,8 +24,7 @@ namespace Logitude.Accounting.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return ReconciliationId+'_'+Line ;
-                 
+          return ReconciliationId+'_'+Line;
       }
 
       public override string GetEntityPMName()

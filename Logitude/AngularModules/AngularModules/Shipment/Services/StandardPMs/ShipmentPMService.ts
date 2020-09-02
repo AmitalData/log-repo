@@ -28,8 +28,7 @@ import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {ShipmentPMInitService} from '../../EntityPMInitServices/ShipmentPMInitService';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass';
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
-import { ShipmentAssemblyPM } from '../../EntityPMs/ShipmentAssemblyPM';
-import { ShipmentStoragePricingPM } from '../../EntityPMs/ShipmentStoragePricingPM';
+import {ShipmentAssemblyPM} from '../../EntityPMs/ShipmentAssemblyPM';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { PickUpDeliveryPackageHarmonizePM } from '../../EntityPMs/PickUpDeliveryPackageHarmonizePM';
 
@@ -496,7 +495,6 @@ export class ShipmentPMService {
         this.MapShipmentDeliveries(entityPM, jsonPM, mapParent);
         this.MapShipmentFollowups(entityPM, jsonPM, mapParent);
         this.MapShipmentAssemblies(entityPM, jsonPM, mapParent);
-        this.MapShipmentStoragePricings(entityPM, jsonPM, mapParent);
 
         entityPM.IsDirty = false;
         if (mapParent) {
@@ -628,11 +626,6 @@ export class ShipmentPMService {
             entityPM.OldEntityPM.ShipmentAssemblies = [];
             for (var item in entityPM.ShipmentAssemblies) {
                 entityPM.OldEntityPM.ShipmentAssemblies.push(this.clone(entityPM.ShipmentAssemblies[item]));
-            }
-
-            entityPM.OldEntityPM.ShipmentStoragePricings = [];
-            for (var item in entityPM.ShipmentStoragePricings) {
-                entityPM.OldEntityPM.ShipmentStoragePricings.push(this.clone(entityPM.ShipmentStoragePricings[item]));
             }
         }
 
@@ -1602,77 +1595,7 @@ export class ShipmentPMService {
             }
         }
     }
-    MapShipmentStoragePricings(entityPM: ShipmentPM, jsonPM: any, mapParent: boolean = true) {
-        var oldShipmentStoragePricings: ShipmentStoragePricingPM[] = [];
-        if (entityPM.OldEntityPM && !mapParent) {
-            oldShipmentStoragePricings = entityPM.OldEntityPM.ShipmentStoragePricings;
-        }
 
-        entityPM.ShipmentStoragePricings = new Array<ShipmentStoragePricingPM>();
-
-        for (var pack in jsonPM.ShipmentStoragePricings) {
-
-            var itemJson = jsonPM.ShipmentStoragePricings[pack];
-            if (mapParent && (itemJson.ChangeSetOp == "Delete" || itemJson.ChangeSetOp == 3)) {
-                continue;
-            }
-            var itemPM: ShipmentStoragePricingPM;
-            if (mapParent) { // get mapping
-                itemPM = new ShipmentStoragePricingPM(entityPM);
-
-            }
-            else {// update mapping
-
-                itemPM = new ShipmentStoragePricingPM(null);
-
-
-            }
-            var pmKeys = Object.keys(itemJson);
-            for (var key in pmKeys) {
-
-                if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties") {
-                    continue;
-                }
-                var property = pmKeys[key];
-                itemPM[property] = itemJson[property];
-            }
-
-            if (mapParent) {
-                itemPM.OldEntityPM = this.clone(itemPM);
-                itemPM.UniqueKey = Guid.newGuid();
-                itemPM.ChangeSetOp = "None";
-                itemJson.ChangeSetOp = "None";
-            }
-            else {
-
-                if (itemPM.UniqueKey) {
-
-                    if (itemJson.IsDirty)
-                        itemPM.ChangeSetOp = "Update";
-                }
-                else {
-                    itemPM.ChangeSetOp = "Insert";
-                }
-
-                itemPM.OldEntityPM = null;
-            }
-            itemPM.IsDirty = false;
-            entityPM.ShipmentStoragePricings.push(itemPM);
-
-        }
-
-        if (oldShipmentStoragePricings) {
-
-            for (var pack in oldShipmentStoragePricings) {
-                if (entityPM.ShipmentStoragePricings.filter(p => p.UniqueKey === oldShipmentStoragePricings[pack].UniqueKey).length === 0) {
-                    if (oldShipmentStoragePricings[pack]) {
-                        oldShipmentStoragePricings[pack].ChangeSetOp = "Delete";
-                        entityPM.ShipmentStoragePricings.push(oldShipmentStoragePricings[pack]);
-                    }
-                }
-            }
-        }
-    }
     MapInsideShipmentPackages(entityPM: ShipmentPackagePM, jsonPM: any, mapParent: boolean = true) {
 
         var oldCollection: InsideShipmentPackagePM[] = [];

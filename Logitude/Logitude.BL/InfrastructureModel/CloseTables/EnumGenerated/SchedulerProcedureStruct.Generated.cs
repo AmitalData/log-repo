@@ -29,7 +29,6 @@ namespace Logitude.BL.InfrastructureModel.CloseTables
        public const string UpdateTimeManagementDurations = "UpdateTimeManagementDurations";  
        public const string TestLogToFileTask = "TestLogToFileTask";  
        public const string GLAccountsCSVTask = "GLAccountsCSVTask";  
-       public const string QuoteAutomaticallyClosingTask = "QuoteAutomaticallyClosingTask";  
     }
 }
 

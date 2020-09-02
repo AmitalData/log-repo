@@ -9,8 +9,5 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
     interface IShipmentBehaviour
     {
         void Handle();
-
-        void Save();
-
     }
 }

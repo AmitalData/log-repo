@@ -29,6 +29,5 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         [ForeignKey("QuoteId")]
         public Quote Quote { get; set; }
-
     }
 }

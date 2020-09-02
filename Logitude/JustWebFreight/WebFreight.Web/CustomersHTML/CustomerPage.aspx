@@ -6,13 +6,11 @@
 <head runat="server">
     <title>Customer</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    
-    <link href="../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../css/kendo.default.min.css" rel="stylesheet" type="text/css"/>
-    <script src="../js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="../js/jquery.dateFormat-1.0.js" type="text/javascript"></script>
-    <script src="../js/kendo.all.min.js" type="text/javascript"></script>
-
+    <link href="../HtmlHelpers/Kendo.2013.2.918/kendo.common.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../HtmlHelpers/Kendo.2013.2.918/kendo.default.min.css" rel="stylesheet" type="text/css"/>
+    <script src="../HtmlHelpers/JS/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="../HtmlHelpers/Kendo.2013.2.918/kendo.all.min.js" type="text/javascript"></script>
+    <script src="../HtmlHelpers/JS/jquery.dateFormat-1.0.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
 
     <style type="text/css">

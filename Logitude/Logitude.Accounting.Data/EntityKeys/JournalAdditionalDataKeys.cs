@@ -20,8 +20,7 @@ namespace Logitude.Accounting.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return JournalId ;
-                 
+          return JournalId;
       }
 
       public override string GetEntityPMName()

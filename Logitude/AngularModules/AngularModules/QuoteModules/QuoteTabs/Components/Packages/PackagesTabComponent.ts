@@ -33,13 +33,10 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public TransportModeId: string;
     public QuoteIsFCL: boolean = true;    
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsHybrid: boolean;
-
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
-        this.IsHybrid = SessionLocator.TenantPM.IsHybrid;
         this.Listen();
     }
 
@@ -150,8 +147,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.UIProperties.SetEnabled("DimFactor", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("IsDangerous", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("DescriptionOfGoods", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PickupDeliveryRatio", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PickupDeliveryCWeightUnitCode", this.ObjectTableName, this.IsEditingEnabled);
     }
 
 
@@ -378,15 +373,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    get PickupDeliveryCWeightUnitCode() { return this.EntityPM.PickupDeliveryCWeightUnitCode; }
-    set PickupDeliveryCWeightUnitCode(newValue: string) {
-        if (this.EntityPM.PickupDeliveryCWeightUnitCode != newValue) {
-            this.EntityPM.PickupDeliveryCWeightUnitCode = newValue;
-            this.OnMeasurmentsSettingsChanged();
-        }
-    }
-
-
     get DimensionsUnitCode() { return this.EntityPM.DimensionsUnitCode; }
     set DimensionsUnitCode(newValue: string) {
         if (this.EntityPM.DimensionsUnitCode != newValue) {
@@ -419,14 +405,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             this.ComputeDimFactor();
             QuoteUtilities.OnQuoteRatioChanged(this.EntityPM);
-        }
-    }
-
-    get PickupDeliveryRatio() { return this.EntityPM.PickupDeliveryRatio; }
-    set PickupDeliveryRatio(newValue: number) {
-        if (this.EntityPM.PickupDeliveryRatio != newValue) {
-            this.EntityPM.PickupDeliveryRatio = newValue;
-            QuoteUtilities.OnQuotePickupDeliveryRatioChanged(this.EntityPM);
         }
     }
 
@@ -855,8 +833,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.NumberOfPackages = null;
             this.GrossWeightEdited = false;
             this.ChargeableWeightEdited = false;
-            this.PickupDeliveryChargeableWeight = null;
-            this.PickupDeliveryVolumetricWeight = null;
         }
 
         else {
@@ -864,6 +840,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             var myVolume: number = 0;
             var myGrossWeight: number = 0;
             var myVolumetricWeight: number = 0;
+
             this.EntityPM.QuotePackages.forEach((item) => {
 
                 if (!AppTool.IsNullOrEmpty(item.Quantity)) {
@@ -886,11 +863,11 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.NumberOfPackages = myNumberOfPackages;
             this.Volume = myVolume;
             this.VolumetricWeight = AppTool.Round(myVolumetricWeight, 3);
-            this.PickupDeliveryVolumetricWeight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.GrossWeight, this.PickupDeliveryRatio, this.DimensionsUnitCode, this.VolumeUnitCode, this.GrossWeightUnitCode, this.PickupDeliveryCWeightUnitCode);
-            this.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(this.GrossWeight, this.PickupDeliveryVolumetricWeight, this.GrossWeightUnitCode, this.PickupDeliveryCWeightUnitCode, this.EntityPM.DirectionId, this.TransportModeId);
+
             if (!this.GrossWeightEdited) {
                 this.GrossWeight = AppTool.Round(myGrossWeight, 3);
             }
+
             if (!this.ChargeableWeightEdited) {
                 this.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
             }
@@ -924,13 +901,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
     ComputeChargeableWeight() {
         this.ChargeableWeight = AppTool.CalculateChargeableWeight(this.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
-        this.ComputePickupDeliveryChargeableWeight();
     }
-
-    ComputePickupDeliveryChargeableWeight() {
-        this.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(this.GrossWeight, this.PickupDeliveryVolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.PickupDeliveryCWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
-    }
-
     ComputeVolumetricWeight() {
         var myResult = null;
 
@@ -943,21 +914,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
 
         this.VolumetricWeight = myResult;
-        this.ComputePickupDeliveryVolumetricWeight();
-    }
-
-    ComputePickupDeliveryVolumetricWeight() {
-        var myResult = null;
-
-        if (this.Volume != null) {
-            myResult = AppTool.GetWeightFromVolume(this.EntityPM.VolumeUnitCode, this.EntityPM.PickupDeliveryCWeightUnitCode, this.Volume, this.EntityPM.PickupDeliveryRatio);
-        }
-
-        else if (this.GrossWeight != null) {
-            myResult = AppTool.GetWeightFromWeight(this.EntityPM.GrossWeightUnitCode, this.EntityPM.PickupDeliveryCWeightUnitCode, this.EntityPM.GrossWeight);
-        }
-
-        this.PickupDeliveryVolumetricWeight = myResult;
     }
 
     private ComputeVolume_CBM() {
@@ -990,31 +946,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             if (this.EntityPM.QuotePackages.length == 0) {
                 this.EntityPM.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
-            }
-        }
-    }
-
-    get PickupDeliveryVolumetricWeight() { return this.EntityPM.PickupDeliveryVolumetricWeight == null ? 0 : this.EntityPM.PickupDeliveryVolumetricWeight; }
-    set PickupDeliveryVolumetricWeight(newValue: number) {
-        if (this.EntityPM.PickupDeliveryVolumetricWeight != newValue) {
-            this.EntityPM.PickupDeliveryVolumetricWeight = AppTool.Round(newValue, 3);
-
-            if (this.EntityPM.QuotePackages.length == 0) {
-                this.EntityPM.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(this.GrossWeight, this.EntityPM.PickupDeliveryVolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.PickupDeliveryCWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
-            }
-        }
-    }
-
-    get PickupDeliveryChargeableWeight() { return AppTool.IsNullOrZero(this.EntityPM.PickupDeliveryChargeableWeight) ? null : this.EntityPM.PickupDeliveryChargeableWeight; }
-    set PickupDeliveryChargeableWeight(newValue: number) {
-        if (this.EntityPM.PickupDeliveryChargeableWeight != newValue) {
-            var result = AppTool.Round(newValue, 2);
-            this.EntityPM.PickupDeliveryChargeableWeight = result;
-
-            if (this.GrossWeight == null && this.EntityPM.PickupDeliveryVolumetricWeight == null) {
-                this.EntityPM.PickupDeliveryVolumetricWeight = result;
-                this.EntityPM.GrossWeight = AppTool.GetWeightFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeightUnitCode, result);
-                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.EntityPM.PickupDeliveryRatio);
             }
         }
     }
@@ -1431,14 +1362,13 @@ export class QuotePackageItem extends BaseComponent {
         }
     }
 
-    private ComputeVolume() {
+    private ComputeVolume() {        
         if (this.fatherComponent.Ratio == null) {
             this.fatherComponent.Ratio = AppTool.GetRatio(this.QuotePM.DirectionId, this.QuotePM.TransportModeId, this.QuotePM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
         }
 
         this.Volume = AppTool.ComputePackageVolume(this.Quantity, this.Width, this.Height, this.Length, this.GrossWeight, this.QuotePM.Ratio, this.QuotePM.DimensionsUnitCode, this.QuotePM.VolumeUnitCode, this.QuotePM.GrossWeightUnitCode);
     }
-
     private ComputeVolumetricWeight() {
         if (this.fatherComponent.Ratio == null) {
             this.fatherComponent.Ratio = AppTool.GetRatio(this.QuotePM.DirectionId, this.QuotePM.TransportModeId, this.QuotePM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);

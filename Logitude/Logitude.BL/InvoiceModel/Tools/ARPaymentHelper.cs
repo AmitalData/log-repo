@@ -75,68 +75,52 @@ namespace Logitude.BL.InvoiceModel.Tools
                 myObjectTableId = objectTable.Id;
             }
         }
-        public  void ARPaymentQuickbooksValidating(ARPaymentPM entityPM, Boolean IsSetApproved, Boolean isNewEntity, ARPayment entityPOCO, IInvoiceContext invoiceContext, ICommonDataContext CommonContext, Boolean isSetVoided,bool setCancelApproved,bool SetReSendQBO, bool isErrorInTransfer, bool SystemWorkerRole=false)
+        public  void ARPaymentQuickbooksValidating(ARPaymentPM entityPM, Boolean IsSetApproved, Boolean isNewEntity, ARPayment payment, IInvoiceContext invoiceContext, ICommonDataContext CommonContext, Boolean isSetVoided,bool setCancelApproved,bool SetReSendQBO, bool SystemWorkerRole=false)
         {
             if (isSetVoided || (entityPM.StatusCode == "VD" && SetReSendQBO == true))
             {
-                bool isTransferingVoiding = true;
-
-                if (entityPOCO.StatusCode == null || entityPOCO.StatusCode == "DR")
-                {
-                    isTransferingVoiding = false;
-                }
-
-                else if (isErrorInTransfer)
-                {
-                    isTransferingVoiding = false;
-                }
-
-                if (isTransferingVoiding)
-                {
-                    commonContext = CommonContext;
-                    Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
-                    tenant = loggedTenant.Id;
-                    tenantName = loggedTenant.Company;
-                    AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
-                    AccountingSystemQuery query = new AccountingSystemQuery(tenant);
-                    AccountingSystemPM AccountingSystemPM = query.GetSingleAccountingSystemPM(AccountingSystemCode);
-                    if (loggedTenant.AccountingSetting != null)
-                        if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsARPaymentsTransferEnabled && AccountingSystemPM.AllowARPaymentsTransfer)
+                commonContext = CommonContext;
+                Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
+                tenant = loggedTenant.Id;
+                tenantName = loggedTenant.Company;
+                AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
+                AccountingSystemQuery query = new AccountingSystemQuery(tenant);
+                AccountingSystemPM AccountingSystemPM = query.GetSingleAccountingSystemPM(AccountingSystemCode);
+                if (loggedTenant.AccountingSetting != null)
+                    if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsARPaymentsTransferEnabled && AccountingSystemPM.AllowARPaymentsTransfer)
+                    {
+                        if (entityPM.ExternalAccountingEntityId != null)
                         {
-                            if (entityPM.ExternalAccountingEntityId != null)
+                            ARPayment = entityPM;
+                            ARPaymentId = entityPM.Id;
+                            GetObjectTableData();
+                            documentRepository = new DocumentRepository(commonContext);
+                            communicationLogRepository = new CommunicationLogRepository(commonContext);
+                            ContactRepository contactRepository = new ContactRepository(commonContext);
+                            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact;
+                            if (SystemWorkerRole)
                             {
-                                ARPayment = entityPM;
-                                ARPaymentId = entityPM.Id;
-                                GetObjectTableData();
-                                documentRepository = new DocumentRepository(commonContext);
-                                communicationLogRepository = new CommunicationLogRepository(commonContext);
-                                ContactRepository contactRepository = new ContactRepository(commonContext);
-                                Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact;
-                                if (SystemWorkerRole)
-                                {
-                                    loggedContact = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant, true);
-                                }
-                                else
-                                {
-                                    loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
-                                }
-                                LoggedContactId = loggedContact.Id;
-
-                                entityPM.TransferStatusCode = "IP";
-                                entityPM.TransferError = null;
-                                this.SendXMLFileInvoiceVoid(entityPM.ExternalAccountingEntityId, "QBO");
+                                loggedContact = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant, true);                                 
                             }
                             else
                             {
-                                throw new ApplicationException("This Payment is not transfered yet to quickbooks online.");
-
+                                loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
                             }
+                            LoggedContactId = loggedContact.Id;
 
+                            entityPM.TransferStatusCode = "IP";
+                            entityPM.TransferError = null;
+                            this.SendXMLFileInvoiceVoid(entityPM.ExternalAccountingEntityId, "QBO");
+                        }
+                        else
+                        {
+                            throw new ApplicationException("This Invoice is not transfered yet to quickbooks online.");
 
                         }
-                }
-            }
 
+
+                    }
+            }
             else if (IsSetApproved && setCancelApproved == false)
             {
                 if (entityPM.TransferStatusCode == "RD" && entityPM.AccountingPaymentMethodCode == "FS")
@@ -154,7 +138,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     if (loggedTenant.AccountingSetting != null)
                         if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsARPaymentsTransferEnabled && AccountingSystemPM.AllowARPaymentsTransfer)
                         {
-                            entityPM.ExternalAccountingEntityId = entityPOCO.ExternalAccountingEntityId;
+                            entityPM.ExternalAccountingEntityId = payment.ExternalAccountingEntityId;
                             ARPayment = entityPM;
                             ARPaymentId = entityPM.Id;
                             documentRepository = new DocumentRepository(commonContext);
@@ -263,8 +247,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                             {
                                 entityPM.TransferStatusCode = "IP";
                                 entityPM.TransferError = null;
-                                entityPOCO.TransferStatusCode = "IP";
-                                entityPOCO.TransferError = null;
+                                payment.TransferStatusCode = "IP";
+                                payment.TransferError = null;
                                 Run(entityPM);
                             }
 
@@ -272,8 +256,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                             {
                                 entityPM.TransferStatusCode = "NR";
                                 entityPM.TransferError = myError;
-                                entityPOCO.TransferStatusCode = "IP";
-                                entityPOCO.TransferError = myError;
+                                payment.TransferStatusCode = "IP";
+                                payment.TransferError = myError;
                                 throw new ApplicationException(myError);
                             }
                             #endregion

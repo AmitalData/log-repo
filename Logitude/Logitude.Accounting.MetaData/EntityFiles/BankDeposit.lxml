@@ -2734,7 +2734,7 @@
       Code="&quot;BDRC&quot;"
       ObjectTableName="&quot;BankDeposit&quot;"
       EnglishName="&quot;Cheque returned to cashbook&quot;"
-      LocalName="&quot;Cheque returned to cashbook&quot;"
+      LocalName="&quot;המחאה הוצאה מהפקדה&quot;"
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;OPE&quot;"
@@ -2748,7 +2748,7 @@
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;BankDeposit&quot;"
       EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      LocalName="&quot;יצירה&quot;"
       IsManualEntry="false"
       ShortView="true"
       EventTypeCategoryCode="&quot;OPE&quot;"
@@ -2776,7 +2776,7 @@
       Code="&quot;CNEV&quot;"
       ObjectTableName="&quot;BankDeposit&quot;"
       EnglishName="&quot;Cancelled&quot;"
-      LocalName="&quot;Cancelled&quot;"
+      LocalName="&quot;ביטול&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -2956,20 +2956,29 @@
     <Feature
       Code="&quot;DETAILS&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;BankDeposit.Features.Details&quot;"
-      FeatureDefaultText="&quot;Details Tab&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;BankDeposit.Features.Details&quot;"
+      FeatureDefaultText="&quot;Details Tab&quot;" />
     <Feature
       Code="&quot;BANKDEPOSITMENU&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;BankDeposit.Features.BankDepositMenu&quot;"
-      FeatureDefaultText="&quot;Bank Deposit&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;BankDeposit.Features.BankDepositMenu&quot;"
+      FeatureDefaultText="&quot;Bank Deposit&quot;" />
+    <Feature
+      Code="&quot;MOREBNKDPST&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;BankDeposit.Features.More&quot;"
+      FeatureDefaultText="&quot;More Buttons&quot;" />
   </AdditionalFeatures>
 </entity>

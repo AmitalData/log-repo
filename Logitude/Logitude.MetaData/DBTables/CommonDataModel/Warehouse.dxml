@@ -65,61 +65,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="ChargeStorage"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CurrencyId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AirWeightMeasurementCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OceanWeightMeasurementCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="InlandWeightMeasurementCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AirWeightRoundingCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OceanWeightRoundingCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="InlandWeightRoundingCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Cards"
@@ -128,41 +73,6 @@
   <Relation
     ForeignKeyColumn="TypeCode"
     ReferencedTable="WarehouseTypes"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CurrencyId"
-    ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="AirWeightMeasurementCode"
-    ReferencedTable="WarehouseWeightMeasurements"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="OceanWeightMeasurementCode"
-    ReferencedTable="WarehouseWeightMeasurements"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="InlandWeightMeasurementCode"
-    ReferencedTable="WarehouseWeightMeasurements"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="AirWeightRoundingCode"
-    ReferencedTable="WarehouseWeightRoundings"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="OceanWeightRoundingCode"
-    ReferencedTable="WarehouseWeightRoundings"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="InlandWeightRoundingCode"
-    ReferencedTable="WarehouseWeightRoundings"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
 </Table>

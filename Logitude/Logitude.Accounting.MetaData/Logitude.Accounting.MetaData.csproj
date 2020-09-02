@@ -71,7 +71,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
-    <None Include="DBScripts\202008241136_EventTypesConverteLocalNameToEnglishName.sxml" />
     <None Include="DBTables\AccountingCompanyType.dxml" />
     <None Include="DBTables\AccountingEntity.dxml" />
     <None Include="DBTables\AccountingIntegrityCheck.dxml" />

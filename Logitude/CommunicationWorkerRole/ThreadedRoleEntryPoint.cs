@@ -43,9 +43,6 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Stimulsoft.Base;
 using System.Xml;
 using System.Xml.Linq;
-using WebFreight.Web.Helpers;
-using Simplog.Server.Infrastructure.DataContracts;
-using Logitude.Customs.BL.Messaging.Amital;
 
 namespace CommunicationWorkerRole
 {
@@ -233,32 +230,6 @@ namespace CommunicationWorkerRole
 
             AccountingRegistrations.Register();
 
-            Func<IAmitalRestrictOwnerService> createAmitalRestrictOwnerModelService = null;
-
-            if (LogitudeSettings.IsCostomsDeploy)
-            {
-                createAmitalRestrictOwnerModelService = () =>
-                {
-                    var amitalRestrictOwnerService = new AmitalRestrictOwnerService();
-                    return amitalRestrictOwnerService;
-                };
-            }
-            Func<int> getTenantFromToken = () =>
-            {
-
-                return 0;
-
-            };
-
-
-            InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, SecurityUtility.CheckContactFeature,
-               () => (new ByteCompressorUtil()) as IByteCompressorUtil,
-               new IISManager(),
-               () => (new HtmlEditorHelper()) as IHtmlEditorHelper,
-               () => (new EntityUpdateReflectorService()) as IEntityUpdateReflectorService
-               );
-
-           
 
 
 
@@ -434,9 +405,6 @@ namespace CommunicationWorkerRole
             //    //    }
             //    //}
             //}
-            RemoveSchedular(BatchServicesDefinitionsTemp);
-            
-
             if (BatchServicesDefinitions == null)
             {
                 BatchServicesDefinitions = BatchServicesDefinitionsTemp;
@@ -528,16 +496,6 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private static void RemoveSchedular(List<BatchServicesDefinitionPM> BatchServicesDefinitions)
-        {
-            if (Debugger.IsAttached && LogitudeSettings.WorkerRoleName.ToLower() != "development")
-            {
-                var schedularWorkerRole = BatchServicesDefinitions.FirstOrDefault(b => b.ClassName == "SchedularWorkerRole");
-                if (schedularWorkerRole != null)
-                    BatchServicesDefinitions.Remove(schedularWorkerRole);
-            }
-        }
-
         public bool ISSameList(List<BatchServicesDefinitionPM> aListA, List<BatchServicesDefinitionPM> aListB)
         {
             if (aListA.Count != aListB.Count)
@@ -617,7 +575,6 @@ namespace CommunicationWorkerRole
             {
                 BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => Services.Select(s => s.SarviceName).Contains(a.Code)).ToList();
             }
-            RemoveSchedular(BatchServicesDefinitionsTemp);
             //}
             return BatchServicesDefinitionsTemp;
         }

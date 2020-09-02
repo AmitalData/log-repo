@@ -587,17 +587,6 @@ namespace Logitude.Server.Tools.Helpers
                     {
                         customObjectFieldLists.Add(objectField);
                     }
-
-
-                    ObjectField partnerObjectField = objectFieldLists.Where(d => d.FieldCode == automationResultEmailRecipient.PartnerObjectFieldCode).FirstOrDefault();
-                    if (partnerObjectField != null && !customObjectFieldLists.Contains(partnerObjectField))
-                    {
-                        customObjectFieldLists.Add(partnerObjectField);
-                    }
-
-
-
-
                 }
 
                 #endregion
@@ -855,8 +844,7 @@ namespace Logitude.Server.Tools.Helpers
 
             else if (item.DataTypeCode.Trim() == "DateTime" || item.DataTypeCode.Trim() == "Date")
             {
-                var dateSplitParts = item.Value.Split('*');
-                result = ConvertToDate(dateSplitParts[dateSplitParts.Length - 1]);
+                result = ConvertToDate(item.Value);
             }
 
             else if (item.DataTypeCode.Trim() == "Boolean")

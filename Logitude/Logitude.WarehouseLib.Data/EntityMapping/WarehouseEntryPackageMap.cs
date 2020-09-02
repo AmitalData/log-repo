@@ -86,8 +86,6 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
             this.Property(t => t.CommodityNumber).HasColumnName("CommodityNumber").HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.ShipmentPackageId).HasColumnName("ShipmentPackageId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.OverManifest).HasColumnName("OverManifest");
         }
     }
 }

@@ -1,4 +1,3 @@
-
 <table>
     <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
         <td>
@@ -26,7 +25,7 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Warehouse'"
                                             [HideMaintenanceIcon]="true">
-                                    </LogLov>
+                                    </LogLov>                               
                                 </td>
                             </tr>
 
@@ -58,17 +57,6 @@
                                 </td>
                             </tr>
 
-                            <!-- IsBondedWarehouse -->
-                            <tr class="FormFieldRow" *ngIf="IsImportShipment">
-                                <td style="width: 120px;">
-                                    <LogLabel [ObjectFieldName]="'IsBondedWarehouse'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogCheckBox [Checked]="IsBondedWarehouse" [ObjectFieldName]="'IsBondedWarehouse'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                </td>
-                            </tr>
-
                             <!-- WarehouseLegReference -->
                             <tr class="FormFieldRow">
                                 <td>
@@ -91,7 +79,7 @@
                                         <tr>
                                             <td>
                                                 <LogTextBox [ObjectFieldName]="'WarehouseLegTerminalCode'" [HideColumns]="true" [Text]="WarehouseLegTerminalCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                            </td>
+                                             </td>
 
                                             <td style="width: 18px;">
                                                 <HelpIcon *ngIf="IsFirmCodeVisible" [IconSize]="14" [HideHeader]="true" [Text]="'Firm Code in the US'"></HelpIcon>
@@ -123,7 +111,7 @@
                                     <LogLabel [ObjectFieldName]="'WarehouseLegRemarks'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegRemarks'"></LogLabel>
                                 </td>
 
-                                <td>
+                                <td >
                                     <table>
                                         <tr>
                                             <td style="height:85px;">
@@ -131,9 +119,7 @@
                                                     <LogTextBox [ObjectFieldName]="'WarehouseLegRemarks'" [Text]="WarehouseLegRemarks" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
+                                            <td><div></div></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -293,6 +279,23 @@
                                 </td>
                             </tr>
 
+                            <!-- LastFreeDate -->
+                            <tr class="FormFieldRow" *ngIf="LegType == 'WarehouseLeg'">
+                                <td>
+                                    <div></div>
+                                </td>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'WarehouseLegLastFreeDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegLastFreeDate'"></LogLabel>
+                                </td>
+
+                                <td colspan="3">
+                                    <LogDatePicker [ObjectFieldName]="'WarehouseLegLastFreeDate'" [SelectedDateValue]="WarehouseLegLastFreeDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
                             <!-- TerminalAvailable -->
                             <tr class="FormFieldRow" *ngIf="LegType == 'WarehouseLeg'">
                                 <td>
@@ -309,156 +312,49 @@
                                     <div></div>
                                 </td>
                             </tr>
+                            <tr class="FormFieldRow" *ngIf="IsImportShipment">
+                                <td>
+                                    <div></div>
+                                </td>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'WarehouseStorageFreeDays'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
 
-                            <!-- Storage -->
-                            <tr style="height:5px;" *ngIf="IsImportShipment">
+                                <td colspan="3">
+                                    <LogTextBox [ObjectFieldName]="'WarehouseStorageFreeDays'" [Text]="WarehouseStorageFreeDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'unsinteger'" [HideColumns]="true"></LogTextBox>
+                                </td>
                                 <td>
                                     <div></div>
                                 </td>
                             </tr>
-
-                            <tr *ngIf="IsImportShipment">
+                            <tr class="FormFieldRow" *ngIf="IsImportShipment">
                                 <td>
                                     <div></div>
                                 </td>
+                                <td>
+                                    <LogLabel [NoObjectField]="true" [Text]="'Storage Days'" [DataContext]="DataContext"></LogLabel>
+                                </td>
 
-                                <td colspan="5">
-                                    <table class="FixedTable">
+                                <td colspan="3">
+                                    <table>
                                         <tr>
+                                            <td style="width:6px;">
+                                                <div></div>
+                                            </td>
                                             <td>
-                                                <SectionBox [Scrolling]="true">
-                                                    <SectionHead>Storage</SectionHead>
-                                                    <SectionBody>
-                                                        <table>
-                                                            <tr class="FormFieldRow">
-                                                                <td style="width: 120px;">
-                                                                    <LogLabel [ObjectFieldName]="'WarehouseStorageFreeDays'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                </td>
-
-                                                                <td style="width: 202px;">
-                                                                    <LogTextBox [ObjectFieldName]="'WarehouseStorageFreeDays'" [Text]="WarehouseStorageFreeDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'unsinteger'" [HideColumns]="true"></LogTextBox>
-                                                                </td>
-
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr class="FormFieldRow" *ngIf="LegType == 'WarehouseLeg'">
-                                                                <td>
-                                                                    <LogLabel [ObjectFieldName]="'WarehouseLegLastFreeDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegLastFreeDate'"></LogLabel>
-                                                                </td>
-
-                                                                <td>
-                                                                    <LogDatePicker [ObjectFieldName]="'WarehouseLegLastFreeDate'" [SelectedDateValue]="WarehouseLegLastFreeDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                                </td>
-
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr class="FormFieldRow">
-                                                                <td>
-                                                                    <LogLabel [NoObjectField]="true" [Text]="'Storage Days'" [DataContext]="DataContext"></LogLabel>
-                                                                </td>
-
-                                                                <td>
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td style="width:6px;">
-                                                                                <div></div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="Label">
-                                                                                    {{StorageDays}} {{Days}}
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr style="height:25px;" *ngIf="StoragePricingMessageVisible">
-                                                                <td colspan="3">
-                                                                    <div class="OrangeInfo" style="margin: 5px;">
-                                                                        <label>Active for bonded warehouse only</label>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr class="FormFieldRow">
-                                                                <td colspan="3">
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td style="width:10px;">
-                                                                                <div></div>
-                                                                            </td>
-
-                                                                            <td style="width:120px;">
-                                                                                <LogCheckBox [Checked]="ChargeStorage" [ObjectFieldName]="'ChargeStorage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Charge Storage'"></LogCheckBox>
-                                                                            </td>
-
-                                                                            <td style="width: 40px;vertical-align:central;">
-                                                                                <div>
-                                                                                    <span style="float:left" class="hyperlink" [class.HyperlinkDisabled]="!StoragePricingEnabled" (click)="StoragePricingClicked()">Storage Pricing</span>
-                                                                                </div>
-                                                                            </td>
-
-                                                                            <td>
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr class="FormFieldRow">
-                                                                <td>
-                                                                    <LogLabel [NoObjectField]="true" [Text]="'Storage Fee'" [DataContext]="DataContext"></LogLabel>
-                                                                </td>
-
-                                                                <td>
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td style="width:6px;">
-                                                                                <div></div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="Label">
-                                                                                    {{StorageFee | NumbersPipe:'N2'}}
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-
-                                                        </table>
-                                                    </SectionBody>
-                                                </SectionBox>
+                                                <div class="Label">
+                                                    {{StorageDays}} {{Days}}
+                                                </div>
                                             </td>
                                         </tr>
                                     </table>
                                 </td>
-                            </tr>
-
-                            <tr *ngIf="!IsImportShipment">
                                 <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
                                     <div></div>
                                 </td>
                             </tr>
@@ -476,15 +372,15 @@
                     <td>
                         <div></div>
                     </td>
-                    <td *ngIf="IsShowNewWarehouseEntryButton" style="width: 130px;">
-                        <button [disabled]="DisableNewWarehouseEntryButton" style="width:130px;float:right;" class="Button" (click)="NewWarehouseEntryButtonClicked()">New Cross Dock Entry</button>
+                    <td *ngIf="IsShowNewWarehouseEntryButton"  style="width: 130px;">
+                        <button style="width:130px;float:right;" class="Button" (click)="NewWarehouseEntryButtonClicked()">New Cross Dock Entry</button>
                     </td>
 
                     <td *ngIf="IsShowNewWarehouseEntryButton" style="width: 5px;">
                         <div></div>
                     </td>
                     <td style="width: 57px;">
-                        <button class="Button" id="{{ 'WarehouseCancelBtn' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{ 'WarehouseCancelBtn' | IdGeneratorPipe}}"  (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">

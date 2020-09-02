@@ -1,0 +1,8 @@
+SELECT [Id_Number] as  [Key] 
+      ,[Name]
+      ,[Local Name]
+      ,[Email]
+      ,[Department]
+      ,[Branch]
+      ,[Source Tenant] as [Tenant]
+  FROM [dbo].[DIM_Users]

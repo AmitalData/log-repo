@@ -24,7 +24,6 @@ export class AddEditPayableComponent implements OnDestroy {
     public ShipmentLevelCode: string = null;
     public ValidationErrorsList: string[] = [];
     public ChargeTypesQueryFilters: ApiQueryFilters;
-    public MeasurementsQueryFilters: ApiQueryFilters;
     public IsOrangeInfoVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     private PropertyChangedEvent: any = null;
@@ -68,8 +67,6 @@ export class AddEditPayableComponent implements OnDestroy {
     }
 
     private BuildQueryFilters() {
-        this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
