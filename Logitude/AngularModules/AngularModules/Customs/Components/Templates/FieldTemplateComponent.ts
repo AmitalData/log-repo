@@ -39,7 +39,7 @@ export class FieldTemplateComponent {
     private _ListComponentArgs: ListComponentArgs;
     @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
     RowIndex: any;
-    constructor(private CD: ChangeDetectorRef) {
+    constructor(private CD: ChangeDetectorRef, private entityResourceService: EntityResourceService) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
         } else {
@@ -170,19 +170,31 @@ export class FieldTemplateComponent {
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Height = 400;
-        logitudeWindow.Width = 700;
+        logitudeWindow.Height = 700;//400;
+        logitudeWindow.Width = 800;
         logitudeWindow.ShowCloseButton = true;
         if (this.Entity.IsClassificationRemarks) {
-            _declarationRemarksService.GetSVCOrSRVStatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
-                .subscribe((response: any) => {
-                    windowArgs.EntityPM = response.Result;
-                    windowArgs.length = response.Result.length;
-                    windowArgs.title = "  הערות מסווג  ";
-                    logitudeWindow.Title = windowArgs.length + "  הערות מסווג  ";
-                    logitudeWindow.WindowArgs = windowArgs;
-                    logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
+
+            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+                this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response: any) => {
+                    this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
+
+
+                        _declarationRemarksService.GetSVCOrSRVStatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
+                            .subscribe((response: any) => {
+                                windowArgs.EntityPM = response.Result;
+                                windowArgs.length = response.Result.length;
+                                windowArgs.title = "  הערות מסווג  ";
+                                windowArgs.IsSivug = true;
+                                windowArgs.DeclarationId = this.Entity.DeclarationId;
+
+                                logitudeWindow.Title = windowArgs.length + "  הערות מסווג  ";
+                                logitudeWindow.WindowArgs = windowArgs;
+                                logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
+                            });
+                    });
                 });
+            });
         }
     }
     OpenControllerRemarks() {
@@ -200,6 +212,9 @@ export class FieldTemplateComponent {
                     windowArgs.title = "  הערות מבקר  ";
                     let counter = response.Result.length;
                     logitudeWindow.Title = counter + "  הערות מבקר  ";
+                    windowArgs.IsSivug = false;
+                    windowArgs.DeclarationId = this.Entity.DeclarationId;
+
                     logitudeWindow.WindowArgs = windowArgs;
                     logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
                 });
