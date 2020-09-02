@@ -48,7 +48,6 @@ export class InvoiceQueueComponent
         });
     }
     private GetData() {
-        this.InvoiceLineList.Clear();
         this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
         //this._declarationPMService.get("1-5705").subscribe(data => {
             this.declaration = data.Result;
@@ -61,6 +60,7 @@ export class InvoiceQueueComponent
                 this.InvoiceLineList = new ObservableCollection([]);
                 this.IntegratedInvoiceList = new ObservableCollection([]);
                 this.StatusList = new ObservableCollection([]);
+                this.InvoiceListList = new ObservableCollection([]);
                 if ((data.Result.Invoice as AllInvoices).InvoiceLines != null) {
                     (data.Result.Invoice as AllInvoices).InvoiceLines.forEach(x => {
                         x = this.setClientForwarder(x);
