@@ -601,7 +601,7 @@ namespace WebFreight.Web.Helpers
             List<ExcelTotals> excelTotals = new List<ExcelTotals>();
             if (bIReportXMLData.IncludeTotals)
             {
-                MeasurmentColumns = bITabularViewSettings.Columns.Where(c => c.DataTypeCode == "Double" || c.DataTypeCode == "Decimal").Select(c => c.Code).ToList();
+                MeasurmentColumns = bITabularViewSettings.Columns.Where(c => c.DataTypeCode == "Double" || c.DataTypeCode == "Decimal" || c.DataTypeCode == "Integer").Select(c => c.Code).ToList();
             }
 
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
@@ -704,7 +704,7 @@ namespace WebFreight.Web.Helpers
                             string value = Convert.ToString(row[agColumn.Name]);
                             sheet.Range[cellRow, cellCol].Text = value;
                         }
-                        else if (bIReportXMLData.IncludeTotals && (agColumn.DataTypeCode == "Double" || agColumn.DataTypeCode == "Decimal"))
+                        else if (bIReportXMLData.IncludeTotals && (agColumn.DataTypeCode == "Double" || agColumn.DataTypeCode == "Decimal" || agColumn.DataTypeCode == "Integer"))
                         {
                             string value = row[agColumn.Name].ToString();
                             if (!string.IsNullOrEmpty(value))
