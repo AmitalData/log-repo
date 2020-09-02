@@ -101,7 +101,7 @@ namespace WebFreight.Web.WebServices
                 if (!LogitudeSettings.IsCostomsDeploy)
                 {
                     ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "Uploader : UploadFile Method", ip);
-
+                    throw (e);
                 }
                 else
                 {
@@ -647,10 +647,10 @@ namespace WebFreight.Web.WebServices
 
         }
 
-       
+
 
         [WebMethod]
-        public byte[] DownloadFile(string documentId, string documentExtension, string fileLocation, int tenant , bool withOutTenant = false)
+        public byte[] DownloadFile(string documentId, string documentExtension, string fileLocation, int tenant, bool withOutTenant = false)
         {
             if (fileLocation == "logos" || fileLocation == "images")
             {
@@ -667,35 +667,15 @@ namespace WebFreight.Web.WebServices
                         FolderName = fileLocation,
                         Extension = documentExtension,
                         Tenant = tenant,
-                         
+
 
                     };
                     datainByte = storageservice.Read(fileInfo);
-                         
-                    
+
+
 
                     return datainByte;
-                    //blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
 
-
-                    //var blobfile = blobContainer.GetBlockBlobReference(StorageAcountDetails.GetBlobNameByLocation(filename, fileLocation));
-
-                    //if (blobfile.Exists())
-                    //{
-                    //    using (MemoryStream memstream = new MemoryStream())
-                    //    {
-
-                    //        blobfile.DownloadToStream(memstream);
-                    //        datainByte = memstream.ToArray();
-
-                    //    }
-
-                    //    return datainByte;
-                    //}
-
-                    //else
-                    //    return null;
-                    //// }
                 }
                 catch (Exception e)
                 {
@@ -721,11 +701,11 @@ namespace WebFreight.Web.WebServices
                                      where doc.Id == documentId && doc.Tenant == tenant
                                      select doc).FirstOrDefault();
 
-                if(document == null && withOutTenant)
+                if (document == null && withOutTenant)
                 {
-                     document = (from doc in commonContext.Documents
-                                         where doc.Id == documentId 
-                                         select doc).FirstOrDefault();
+                    document = (from doc in commonContext.Documents
+                                where doc.Id == documentId
+                                select doc).FirstOrDefault();
                 }
 
 
@@ -748,33 +728,11 @@ namespace WebFreight.Web.WebServices
                         //string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(fileName.ToLower(), document.Folder);
                         IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                         datainByte = storageservice.Read(fileInfo);
-                         
+
 
                         return datainByte;
 
-                        //string filename = document.Id + "." + document.Extension;
 
-                        //blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
-
-
-                        //var blobfile = blobContainer.GetBlockBlobReference(StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder));
-
-                        //if (blobfile.Exists())
-                        //{
-                        //    using (MemoryStream memstream = new MemoryStream())
-                        //    {
-
-                        //        blobfile.DownloadToStream(memstream);
-                        //        datainByte = memstream.ToArray();
-
-                        //    }
-
-                        //    return datainByte;
-                        //}
-
-                        //else
-                        //    return null;
-                        //// }
                     }
                     catch (Exception e)
                     {
@@ -791,8 +749,8 @@ namespace WebFreight.Web.WebServices
 
                         if (!LogitudeSettings.IsCostomsDeploy)
                         {
-                        ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "Uploader : DownloadFile Method", ip);
-                         
+                            ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "Uploader : DownloadFile Method", ip);
+
                         }
                         else
                         {
@@ -803,7 +761,7 @@ namespace WebFreight.Web.WebServices
                             }
                         }
                         return null;
-                        
+
 
                     }
                 }
@@ -1093,7 +1051,9 @@ namespace WebFreight.Web.WebServices
 
 
 
-        private string UploadFileData(string generatedfilename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, string externalDocumentId, int tenant, string fileLocation, string filename, ref bool isDigitallySigned, ref string signersList)
+        private string UploadFileData(string generatedfilename, byte[] buffer, long fileSize, long sentBytes, 
+            string[] blockIdsList, int bufferNumber, string externalDocumentId, int tenant, 
+            string fileLocation, string filename, ref bool isDigitallySigned, ref string signersList)
         {
             if (string.IsNullOrEmpty(fileLocation))
             {
@@ -1163,7 +1123,7 @@ namespace WebFreight.Web.WebServices
 
                     byte[] filedata = DownloadFile(extDocPM.DocumentId, fileName.ToLower(), filelocation, tenant);
 
-                    if (filedata != null)
+                    if (filedata != null && filedata.Length > 0)
                     {
                         if (extDocPM.FileExtension.ToLower() == "pdf")
                         {
@@ -1233,6 +1193,21 @@ namespace WebFreight.Web.WebServices
                             //logParams.ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
                             //Communications.AddCommunicationLog(logParams);
                         }
+                    }
+                    else
+                    {
+                        DocumentRepository docRepository = new DocumentRepository(tenant);
+                        var document = docRepository.GetSingleDocument(tenant, extDocPM.DocumentId);
+                        document.HasFile = false;
+                        document.FileName = null;
+                        document.FileSize = 0;
+                        document.Extension = null;
+                        document.CalculatedFileName = null;
+
+                        docRepository.Update(document);
+                        docRepository.SubmitChanges();
+
+                        throw new Exception("File was not uploaded successfully. Please retry again.");
                     }
                 }
             }

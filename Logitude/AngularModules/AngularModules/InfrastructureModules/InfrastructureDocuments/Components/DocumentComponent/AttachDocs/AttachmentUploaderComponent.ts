@@ -172,7 +172,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
     }
     public ShowMessage(message: string) {
 
-        var messageWindow: MessageWindow = new MessageWindow();
+        const messageWindow: MessageWindow = new MessageWindow();
         messageWindow.Show(message);
     }
 
@@ -330,101 +330,115 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
 
             var pmResponse: ServiceResponse = res;
             var result= null;
-            if (!pmResponse.HasError) {
+            if (!pmResponse.HasError && pmResponse.Result) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
                     result = myResult;
-                }
-            }
-
-            if (result) {
-                this.filterImageParameter = result;
-                var ChunkSize = 100000;
-                if (result.FileSize > 2000000) {
-                    ChunkSize = 1000000;
-                }
-                if (result.SentSize < result.FileSize && !this.IsUploadCanceled) {
-                    var filebuffer = null;
-                    if ((result.FileSize - result.SentSize) >= ChunkSize ) {
-                        filebuffer = this.File.slice(result.SentSize, result.SentSize + ChunkSize);
-                    }
-                    else {
-                        filebuffer = this.File.slice(result.SentSize, result.FileSize);
-                    }
-
-                    this.ArrayBufferToBase64(filebuffer, this);
-                    this.IsUploadInProgress = true;
-
-                }
-                else {
-                    if (result.Result) {
-
-                        if (this.CurrentDocument) {
-                            this.CurrentDocument.DocumentId = result.Result.split('.')[0];
-                            this.CurrentDocument.HasFile = true;
-                            this.CurrentDocument.Received = true;
-                            this.CurrentDocument.ReceivedDate = DateTool.GetCurrentDateAsUtc();
-                            this.CurrentDocument.ReceivedByUserId = SessionLocator.LoggedUserId;
-                            this.CurrentDocument.FileExtension = this.FileExtension;
-                            this.CurrentDocument.FileSize = result.FileSize;
-                            this.CurrentDocument.FileName = this.FileName;
-                            this.CurrentDocument.ReceivedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-
-                            if (this.RequsetPageName == "DocIn") this.CurrentDocument.IsUoloadedField = true;
-
-
-
-                            if (this.RequsetPageName == "DocIn" || this.RequsetPageName == "SharedDocument") {
-                                if (this.CurrentDocument.IsSharedOut) {
-
-                                    this.CurrentDocument.IsUpdateSharedDocument = true;
-                                }
+                    if (result) {
+                        this.filterImageParameter = result;
+                        var ChunkSize = 100000;
+                        if (result.FileSize > 2000000) {
+                            ChunkSize = 1000000;
+                        }
+                        if (result.SentSize < result.FileSize && !this.IsUploadCanceled) {
+                            var filebuffer = null;
+                            if ((result.FileSize - result.SentSize) >= ChunkSize) {
+                                filebuffer = this.File.slice(result.SentSize, result.SentSize + ChunkSize);
                             }
-                            this.documentsFilingPMService.update(this.CurrentDocument).subscribe((myownResult: ServiceResponse) => {
+                            else {
+                                filebuffer = this.File.slice(result.SentSize, result.FileSize);
+                            }
 
-                                var pmResponse: ServiceResponse = myownResult;
+                            this.ArrayBufferToBase64(filebuffer, this);
+                            this.IsUploadInProgress = true;
 
-                                if (!pmResponse.HasError) {
-                                    var myResult1 = pmResponse.Result;
-                                    if (myResult1) {
-                                        this.CurrentDocument.IsUpdateSharedDocument = false;
-                                        this.IsCloseButtonVisibile = true;
-                                        this.IsCancelVisibile = false;
-                                        this.IsUploadDone = true;
-                                        this.IsUploadInProgress = false;
-                                        this.UploadedSuccessfully = true;
-                                        if ((this.RequsetPageName == "DocIn" || this.RequsetPageName == "SharedDocument") &&  this.TiggerViewModel) {
-                                            if (this.RequsetPageName == "DocIn") this.TiggerViewModel.OnUploadComplete();
-                                            else if (this.RequsetPageName == "SharedDocument") this.TiggerViewModel.OnUploadComplete(this.Entity);
+                        }
+                        else {
+                            if (result.Result) {
+
+                                if (this.CurrentDocument) {
+                                    this.CurrentDocument.DocumentId = result.Result.split('.')[0];
+                                    this.CurrentDocument.HasFile = true;
+                                    this.CurrentDocument.Received = true;
+                                    this.CurrentDocument.ReceivedDate = DateTool.GetCurrentDateAsUtc();
+                                    this.CurrentDocument.ReceivedByUserId = SessionLocator.LoggedUserId;
+                                    this.CurrentDocument.FileExtension = this.FileExtension;
+                                    this.CurrentDocument.FileSize = result.FileSize;
+                                    this.CurrentDocument.FileName = this.FileName;
+                                    this.CurrentDocument.ReceivedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+
+                                    if (this.RequsetPageName == "DocIn") this.CurrentDocument.IsUoloadedField = true;
 
 
 
+                                    if (this.RequsetPageName == "DocIn" || this.RequsetPageName == "SharedDocument") {
+                                        if (this.CurrentDocument.IsSharedOut) {
 
-
+                                            this.CurrentDocument.IsUpdateSharedDocument = true;
                                         }
                                     }
+                                    this.documentsFilingPMService.update(this.CurrentDocument).subscribe((myownResult: ServiceResponse) => {
+
+                                        var pmResponse: ServiceResponse = myownResult;
+
+                                        if (!pmResponse.HasError) {
+                                            var myResult1 = pmResponse.Result;
+                                            if (myResult1) {
+                                                this.CurrentDocument.IsUpdateSharedDocument = false;
+                                                this.IsCloseButtonVisibile = true;
+                                                this.IsCancelVisibile = false;
+                                                this.IsUploadDone = true;
+                                                this.IsUploadInProgress = false;
+                                                this.UploadedSuccessfully = true;
+                                                if ((this.RequsetPageName == "DocIn" || this.RequsetPageName == "SharedDocument") && this.TiggerViewModel) {
+                                                    if (this.RequsetPageName == "DocIn") this.TiggerViewModel.OnUploadComplete();
+                                                    else if (this.RequsetPageName == "SharedDocument") this.TiggerViewModel.OnUploadComplete(this.Entity);
+
+
+
+
+
+                                                }
+                                            }
+                                        }
+                                        else {
+
+                                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                                                this.ShowMessage(pmResponse.ErrorsArray[0]);
+                                            }
+
+                                        }
+
+
+
+
+
+                                    });
                                 }
-                                else {
-
-                                    if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length>0) {
-                                        this.ShowMessage(pmResponse.ErrorsArray[0]);
-                                    }
-                                    
-                                }
 
 
+                            }
 
-                               
-
-                            });
                         }
-                   
-
+                        this.IncreaseProgressBar(result);
                     }
-                  
                 }
-                this.IncreaseProgressBar(result);
             }
+            else {
+
+
+                this.IsCloseButtonVisibile = true;
+                this.IsCancelVisibile = false;
+
+                let error = "Upload file Failed"; 
+                if(pmResponse.HasError && pmResponse.ErrorsArray &&pmResponse.ErrorsArray.length > 0)
+                    error = error + ": " + pmResponse.ErrorsArray[0];
+
+                this.ShowMessage(error);
+                
+            }
+
+           
 
         });
 
