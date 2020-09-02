@@ -32,10 +32,11 @@ namespace Logitude.CargoTracking.Data.Repositories
 
             IQueryable<CargoTrackingShipment> shipments = (from shipment in currentContext.CargoTrackingShipments
                                                                  where
-                                                                     (shipment.IsMainRecord ==true || shipmentsIsNotMain.Select(s=>s.EntityId).Contains(shipment.CustomsShipmentHeaderId)) 
+                                                                     ((shipment.IsMainRecord ==true 
                                                                      && shipmentsSecurityKeies.Contains(shipment.SecurityKey)
-                                                                     && shipment.Tenant == tenant
-                                                                 select shipment);
+                                                                     && shipment.Tenant == tenant)
+                                                                     || shipmentsIsNotMain.Select(s => s.CustomsShipmentHeaderId).Contains(shipment.EntityId))
+                                                           select shipment);
 
             return shipments;
         }
