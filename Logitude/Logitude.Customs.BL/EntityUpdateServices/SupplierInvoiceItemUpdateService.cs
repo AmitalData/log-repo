@@ -201,6 +201,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             else
             {
+                if(!string.IsNullOrWhiteSpace(entityPM.ClasifiedRemarks))
+                {
+                    DeclarationReferantDataUpdate(entityPM);
+                }
                 if (entityPM.IsItemChanged && !string.IsNullOrWhiteSpace(entityPM.ItemCode))
                 {
                     //var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
@@ -337,6 +341,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 throw new BusinessErrorException("Tenant '" + entityPM.Tenant + "' Can't be less than 1 (OnUpdating)");
             }
+        }
+
+        private void DeclarationReferantDataUpdate(SupplierInvoiceItemPM entityPM)
+        {
+            if (string.IsNullOrWhiteSpace(entityPM.ClasifiedRemarks)) return;
+
+            ICustomContext _context = this.MainContext as CustomContext;
+            var myDeclarationReferantDataQueryService = new DeclarationReferantDataQueryService(_context);
+            DeclarationReferantDataPM declarationReferantDataPM = myDeclarationReferantDataQueryService.GetSingle(entityPM.DeclarationId, true, false);
+            
+            if (declarationReferantDataPM == null)return;
+
+            if(declarationReferantDataPM.IsClassificationRemarks) return;
+
+            var myDeclarationReferantDataUpdateService = new DeclarationReferantDataUpdateService(_context, new Dictionary<string, IContext>(), entityPM.Tenant);
+            declarationReferantDataPM.IsClassificationRemarks = true;
+            declarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Update;
+            myDeclarationReferantDataUpdateService.Update(declarationReferantDataPM, true);
+
         }
 
         private void UpsertCustomsPartnersItems(AmitalContext myAmitalContext, SupplierInvoiceItemPM supplierInvoiceItem)
