@@ -14894,7 +14894,7 @@
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
-    AllowedinAutomationConditions="true"
+    AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
@@ -17978,23 +17978,6 @@
       LocalDefaultText="&quot;ביטול של חשבונית זיכוי מחייב את הלקוח ומסמן את חשבונית הזיכוי כמבוטלת, האם להמשיך?&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
- 
-
-    <TextCode
-      Code="&quot;ARInvoice.O.AutoCreditInvoice&quot;"
-      DefaultText="&quot;Auto Credit for Invoice %InvoiceNumber&quot;"
-      LocalDefaultText="&quot;ביטול של חשבונית %InvoiceNumber&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-
-    <TextCode
-      Code="&quot;ARInvoice.O.CreditARInvoiceForCreditNote&quot;"
-      DefaultText="&quot;Auto Credit for Credit Note %InvoiceNumber&quot;"
-      LocalDefaultText="&quot;ביטול של חשבונית זיכוי %InvoiceNumber&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-
- 
     <TextCode
       Code="&quot;ARInvoice.O.TheReceivableGLAccountOfTheChargeNULL&quot;"
       DefaultText="&quot;The Receivable GLAccount of the Charge Type Interest is NULL&quot;"
@@ -18013,7 +17996,6 @@
       LocalDefaultText="&quot;ביטול של חשבונית זיכוי %InvoiceNumber&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
- 
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

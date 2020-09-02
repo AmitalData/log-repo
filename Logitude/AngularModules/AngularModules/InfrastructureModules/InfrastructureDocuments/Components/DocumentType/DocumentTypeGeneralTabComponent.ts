@@ -277,8 +277,6 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
     }
 
     ObjectTableValueChanged(table: any) {
-        var oldTalbeId: string = this.EntityPM.ObjectTableId; 
-        var newTableID = table != null ? table.Id : null;
         if (table) {
             this.EntityPM.ObjectTableName = table.Name;
             this.EntityPM.ObjectTableId = table.Id;
@@ -289,12 +287,6 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         } else {
             this.EntityPM.ObjectTableId = null;
             this.SelectedObjectTable = null;
-        }
-
-        if (newTableID != oldTalbeId) {
-            this.EntityPM.OnSendPopulateDateFieldName = null;
-            this.EntityPM.OnPrintPopulateDateFieldName = null;
-            this.EntityPM.OnUploadPopulateDateFieldName = null;
         }
 
     }

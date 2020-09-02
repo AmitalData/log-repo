@@ -71,15 +71,12 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
-using Logitude.CargoTracking.Data.Repositories;
-using Logitude.CargoTracking.BL;
-using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AccountingPeriodUpdateClass
    {  		
-		public const string HashString = "871517f59037c3ed1bb101b8e1ebbad9";
+		public const string HashString = "9398d5e14d46f03e0478f66d2b3669c5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,6 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "AccountingPeriod",
 			      				    IsNew =  false,
 			      				    DBTableName =  "AccountingPeriods",
+			      				    OldDBTableName =  "AccountingPeriods",
 			      				    ObjectTableSingular =  "Accounting Period",
 			      				    ObjectTablePlural =  "Accounting Periods",
 			      				    DescriptionDefaultText =  "Define your accounting periods",
@@ -124,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הגדרות תקופות חשבונאיות",
 			      				    DefaultText =  "Accounting Period",
-			      				    Code =  "ca8b",
+			      				    Code =  "d24c",
 			      				    Name =  "AccountingPeriod Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -148,6 +146,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Year",
+					  						OldFieldName =  "Year",
 					  						ObjectTableName =  "AccountingPeriod",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -210,6 +209,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PeriodTypeCode",
+					  						OldFieldName =  "PeriodTypeCode",
 					  						ObjectTableName =  "AccountingPeriod",
 					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
@@ -272,6 +272,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PeriodTypeName",
+					  						OldFieldName =  "PeriodTypeName",
 					  						ObjectTableName =  "AccountingPeriod",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -334,6 +335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpenMonth",
+					  						OldFieldName =  "OpenMonth",
 					  						ObjectTableName =  "AccountingPeriod",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -396,6 +398,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ClosedMonth",
+					  						OldFieldName =  "ClosedMonth",
 					  						ObjectTableName =  "AccountingPeriod",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -619,7 +622,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "PUPD",
                 EnglishName =  "Changed",
-                LocalName =  "Changed",
+                LocalName =  "שינוי",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -638,7 +641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "PCR",
                 EnglishName =  "Created",
-                LocalName =  "Created",
+                LocalName =  "חדש",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -657,7 +660,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "PDL",
                 EnglishName =  "Deleted",
-                LocalName =  "Deleted",
+                LocalName =  "נמחק",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",

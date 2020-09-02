@@ -64,8 +64,6 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string DescriptionOfGoods { get; set; }
         public double? ChargeableWeight { get; set; }
         public double? ChargeableWeightInKG { get; set; }
-
-        public double? PickupDeliveryChargeableWeight { get; set; }
         public double? VolumeInCBM { get; set; }
         public double? GrossWeight { get; set; }        
         public byte[] LastModified { get; set; }
@@ -82,14 +80,12 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string Field10 { get; set; }           
         public string GrossWeightUnitCode { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
-        public string PickupDeliveryCWeightUnitCode { get; set; }
         public string DimensionsUnitCode { get; set; }
         public double? VolumetricWeight { get; set; }
         public double? Volume { get; set; }
         public int? NumberOfPackages { get; set; }
         public int? NumberOfContainers { get; set; }
         public double? Ratio { get; set; }
-        public double? PickupDeliveryRatio { get; set; }
         public double? DimFactor { get; set; }
         public string VolumeUnitCode { get; set; }
         public bool IsDangerous { get; set; }
@@ -373,7 +369,5 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         public string ShipmentSubTypeId { get; set; }
         public virtual ShipmentSubType ShipmentSubType { get; set; }
-
-        public double? PickupDeliveryVolumetricWeight { get; set; }
     }
 }

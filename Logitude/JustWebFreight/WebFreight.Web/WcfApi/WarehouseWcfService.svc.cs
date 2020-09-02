@@ -77,7 +77,7 @@ namespace WebFreight.Web.WcfApi
                     else
                     {
                         entityPM.Id = entity.Id;
-                        service.SetChangeSet(entityPM.CardExternalCodeByCurrencies, entityPM.WarehouseStoragePricings);
+                        service.SetChangeSet(entityPM.CardExternalCodeByCurrencies);
                         service.Update(entityPM);
                     }
 

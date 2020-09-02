@@ -68,7 +68,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public List<ShipmentCommodityPM> CommodityDataMappingAndValidatin(List<Commodity> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public List<ShipmentCommodityPM> CommodityDataMappingAndValidatin(List<Commodity> MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -86,7 +86,6 @@ using Simplog.Data.ShipmentsModel;
 					{   
 					    throw new ApplicationException("ShipmentCommodity with Id " + item.Id + " doesn't exist");
 					} 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -101,73 +100,19 @@ using Simplog.Data.ShipmentsModel;
 
 						//}
 					}
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("DescriptionOfGoods Can't be update"); 
-					}  
-
 					temp.DescriptionOfGoods = item.DescriptionOfGoods;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("ChargeableWeight Can't be update"); 
-					}  
-
 					temp.ChargeableWeight = item.ChargeableWeight;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("ChargeRate Can't be update"); 
-					}  
-
 					temp.ChargeRate = item.ChargeRate;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("ChargeAmount Can't be update"); 
-					}  
-
 					temp.ChargeAmount = item.ChargeAmount;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("CommodityNumber Can't be update"); 
-					}  
-
 					temp.CommodityNumber = item.CommodityNumber;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("NumberOfPackages Can't be update"); 
-					}  
-
 					temp.NumberOfPackages = item.NumberOfPackages;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("GrossWeight Can't be update"); 
-					}  
-
 					temp.GrossWeight = item.GrossWeight;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Volume Can't be update"); 
-					}  
-
 					temp.Volume = item.Volume;
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("VolumetricWeight Can't be update"); 
-					}  
-
 					temp.VolumetricWeight = item.VolumetricWeight;					   
 						MyList.Add(temp);
 					}
 						
-					return MyList;
+					   return MyList;
 		    }
             catch (Exception ex)
             {

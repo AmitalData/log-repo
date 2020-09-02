@@ -18,7 +18,6 @@ import {AddressList} from '../../../../Common/EntityLists/AddressList';
 import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
 import {AddressListService} from '../../../../Common/Services/StandardLists/AddressListService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
 
 @Component({
     
@@ -590,12 +589,6 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                             this.EntityPM.WarehouseStorageFreeDays = null;
                             this.EntityPM.GrossWeightPerStorageDays = null;
                             ShipmentTool.OnWarehouseStorageFreeDaysChanged(this.EntityPM);
-
-                            var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-                            if (storageReceivable) {
-                                this.EntityPM.RemoveReceivable(storageReceivable);
-                                this.CurrentSession.FireEvent("StorageReceivableRemoved");
-                            }
 
                             var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
                             followups = followups.filter(f => f.LegType.indexOf("WarehouseLeg") > -1);

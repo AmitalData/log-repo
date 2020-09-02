@@ -98,8 +98,6 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public string CommodityNumber { get; set; }
         [Column("ShipmentPackageId")]
 	    public string ShipmentPackageId { get; set; }
-        [Column("OverManifest")]
-	    public int OverManifest { get; set; }
     }
 }
 	 

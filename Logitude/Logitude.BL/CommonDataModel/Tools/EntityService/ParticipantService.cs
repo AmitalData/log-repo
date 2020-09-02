@@ -2,7 +2,6 @@
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
-using Logitude.BL.DataContracts;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
@@ -124,8 +123,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 cardRepository.Add(entityCard);
                 entityRepository.Add(entityPOCO);
                 entityRepository.SubmitChanges();
-
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
         }
 
@@ -197,10 +194,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 cardRepository.Update(entityCard);
                  entityRepository.Update(entityPOCO);
                  entityRepository.SubmitChanges();
-
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-
-            }
+             }
         }
 
         private void InitializeComponent()

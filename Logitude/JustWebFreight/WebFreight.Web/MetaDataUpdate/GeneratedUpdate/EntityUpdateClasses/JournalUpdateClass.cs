@@ -71,15 +71,12 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
-using Logitude.CargoTracking.Data.Repositories;
-using Logitude.CargoTracking.BL;
-using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "ca6ab147dd0c68cb0dfc539d72a240cc";
+		public const string HashString = "1b3fc975473cd64b5e90872dde1ab346";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3099,7 +3096,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "JCL",
                 EnglishName =  "Journal Closed",
-                LocalName =  "Journal Closed",
+                LocalName =  "סגור פקודת יומן",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -3117,7 +3114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "JVD",
                 EnglishName =  "Journal Voided",
-                LocalName =  "Journal Voided",
+                LocalName =  "בטלה פקודת יומן",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -3135,7 +3132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CREV",
                 EnglishName =  "Created",
-                LocalName =  "Created",
+                LocalName =  "נוצר",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -3153,7 +3150,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "UPEV",
                 EnglishName =  "Updated",
-                LocalName =  "Updated",
+                LocalName =  "עדכון",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -3171,7 +3168,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "JCR",
                 EnglishName =  "Journal Created",
-                LocalName =  "Journal Created",
+                LocalName =  "פתיחת פקודת יומן",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -3189,7 +3186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "JUP",
                 EnglishName =  "Journal Updated",
-                LocalName =  "Journal Updated",
+                LocalName =  "עדכון פקודת יומן",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -3207,7 +3204,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "JSV",
                 EnglishName =  "Journal Waiting For Approval",
-                LocalName =  "Journal Waiting For Approval",
+                LocalName =  "שמירת פקודת יומן",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -3225,7 +3222,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "JAP",
                 EnglishName =  "Journal Approved",
-                LocalName =  "Journal Approved",
+                LocalName =  "אישור פקודת יומן",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,

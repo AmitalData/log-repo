@@ -67,18 +67,7 @@ namespace Logitude.Infrastructure.Data.EntityMapping
 
             this.Property(t => t.DoneDateTime).HasColumnName("DoneDateTime");
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.ProgressMessage).HasMaxLength(2000);
-			}
-            else
-            {
-              this.Property(t => t.ProgressMessage).HasMaxLength(4000);
-			}
-
-
-            this.Property(t => t.ProgressMessage).HasColumnName("ProgressMessage").IsUnicode(true);
+            this.Property(t => t.ProgressMessage).HasColumnName("ProgressMessage").HasMaxLength(120).IsUnicode(true);
 
             this.Property(t => t.ProgressPercentage).HasColumnName("ProgressPercentage");
 

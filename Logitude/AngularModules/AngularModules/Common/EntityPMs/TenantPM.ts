@@ -575,11 +575,6 @@ export class TenantPM {
     public set ExportQuotationsToIntegratedSystem(newValue: boolean) { if (this.exportQuotationsToIntegratedSystem != newValue) { this.exportQuotationsToIntegratedSystem = newValue; this.MarkAsDirty("ExportQuotationsToIntegratedSystem"); } }
        
 	 
-    private isIncrementalBuildRunning: boolean;
-    public get IsIncrementalBuildRunning() { return this.isIncrementalBuildRunning; }
-    public set IsIncrementalBuildRunning(newValue: boolean) { if (this.isIncrementalBuildRunning != newValue) { this.isIncrementalBuildRunning = newValue; this.MarkAsDirty("IsIncrementalBuildRunning"); } }
-       
-	 
     private sCACCode: string;
     public get SCACCode() { return this.sCACCode; }
     public set SCACCode(newValue: string) { if (this.sCACCode != newValue) { this.sCACCode = newValue; this.MarkAsDirty("SCACCode"); } }

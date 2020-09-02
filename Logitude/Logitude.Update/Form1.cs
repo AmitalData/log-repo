@@ -84,8 +84,6 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Simplog.Data.Helpers;
 using Logitude.BL.CommonDataModel.EntityOtherServices;
-using Logitude.CargoTracking.Data;
-using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace Logitude.Update
 {
@@ -4468,17 +4466,6 @@ User/Pass",
             return mySearchFields;
         }
 
-        private void CargoTrackingTestBtn_Click(object sender, EventArgs e)
-        {
-            ICargoTrackingContext cargoTrackingContext = CargoTrackingContext.GetContext(1);
-         }
-
-        private void button50_Click(object sender, EventArgs e)
-        {
-            Thread thread = new Thread(() => UpdateModule(0, "CargoTracking", UpdateCargoTrackingLabel));
-            thread.IsBackground = true;
-            thread.Start();
-        }
     }
 
     public class TenantMailBox

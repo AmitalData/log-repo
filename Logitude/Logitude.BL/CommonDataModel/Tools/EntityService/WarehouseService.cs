@@ -20,7 +20,6 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
-using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -39,7 +38,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CardContactRepository cardContactRepository;
         private ICommonDataContext objectContext;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
-        private WarehouseStoragePricingRepository warehouseStoragePricingRepository;
 
         public WarehouseService(ICommonDataContext objectContext,int tenant)
         {
@@ -51,7 +49,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.contactRepository = new ContactRepository(objectContext);
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
-            this.warehouseStoragePricingRepository = new WarehouseStoragePricingRepository(objectContext);
             this.GetLoggedContact();
         }
 
@@ -66,10 +63,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.contactRepository = new ContactRepository(objectContext);
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
-            this.warehouseStoragePricingRepository = new WarehouseStoragePricingRepository(objectContext);
             this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
         }
         
+
         private void GetLoggedContact()
         {
             string email = HttpContext.Current.User.Identity.Name;
@@ -77,11 +74,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
 
         private List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet;
-        private List<WarehouseStoragePricingPM> warehouseStoragePricingChangeSet;
-        public void SetChangeSet(List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet, List<WarehouseStoragePricingPM> warehouseStoragePricingChangeSet)
+        public void SetChangeSet(List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet)
         {
             this.cardExternalCodeByCurrencyChangeSet = cardExternalCodeByCurrencyChangeSet;
-            this.warehouseStoragePricingChangeSet = warehouseStoragePricingChangeSet;
         }
 
         public void Create(WarehousePM entityPM)
@@ -89,15 +84,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPM = entityPM;
             this.isNewEntity = true;
 
-            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
-
+            this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
 
             this.entityCard = new Card()
             {
                 Id = entityPM.Id,
                 Tenant = tenant,
                 PartnerTypeId = "WH",
-                UploadingUniqueKey = entityPM.UploadingUniqueKey,
             };
 
             this.entityPOCO = new Warehouse()
@@ -124,11 +117,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 this.CreateCardExternalCodeByCurrency(itemPM);
             }
 
-            foreach (WarehouseStoragePricingPM itemPM in entityPM.WarehouseStoragePricings)
-            {
-                this.CreateWarehouseStoragePricing(itemPM);
-            }
-
             if (!entityPM.IsHybrid)
             {
                 WarehouseTracing.Trace(entityPM, entityPOCO, isNewEntity);
@@ -139,14 +127,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
-            entityRepository.SubmitChanges();
-            
+            entityRepository.SubmitChanges(); 
+
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Warehouse");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
                 this.UpdateContactSearchField(itemPM);
-            }
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-
+        }
         }
 
         public void Update(WarehousePM entityPM, bool mapComposition = false)
@@ -161,7 +150,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (mapComposition)
             {
-                this.SetChangeSet(this.entityPM.CardExternalCodeByCurrencies, this.entityPM.WarehouseStoragePricings);
+                this.SetChangeSet(this.entityPM.CardExternalCodeByCurrencies);
             }
 
             if (CacheManager.CacheWrapper != null)
@@ -180,7 +169,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.UpdateCardExternalCodeByCurrencyCollection();
-            this.UpdateWarehouseStoragePricingCollection();
 
             if (!entityPM.IsHybrid)
             {
@@ -192,10 +180,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
-            entityRepository.SubmitChanges();
+            entityRepository.SubmitChanges();       
 
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Warehouse");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
         }
 
         private void InitializeComponent()
@@ -316,37 +304,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
-        private void UpdateWarehouseStoragePricingCollection()
-        {
-            if (warehouseStoragePricingChangeSet != null)
-            {
-                foreach (WarehouseStoragePricingPM itemPM in warehouseStoragePricingChangeSet)
-                {
-                    switch (itemPM.ChangeSetOp)
-                    {
-                        case ChangeSetOperation.Insert:
-                            {
-                                this.CreateWarehouseStoragePricing(itemPM);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Update:
-                            {
-                                this.UpdateWarehouseStoragePricing(itemPM);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Delete:
-                            {
-                                this.DeleteWarehouseStoragePricing(itemPM);
-                                break;
-                            }
-
-                        default: { break; }
-                    }
-                }
-            }
-        }
 
         private void CreateCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
@@ -385,38 +342,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 cardExternalCodeByCurrencyRepository.Remove(itemPoco);
             }
         }
-
-        private void CreateWarehouseStoragePricing(WarehouseStoragePricingPM itemPM)
-        {
-            itemPM.Id = IdCounter.GetNumber("WarehouseStoragePricing", tenant).ToString();
-            itemPM.WarehouseId = this.entityPM.Id;
-            itemPM.Tenant = tenant;
-
-            WarehouseStoragePricing itemPoco = new WarehouseStoragePricing()
-            {
-                Id = itemPM.Id,
-                Tenant = tenant,
-            };
-
-            WarehouseStoragePricingMapping.MapEntity(itemPM, itemPoco, true);
-            warehouseStoragePricingRepository.Add(itemPoco);
-        }
-        private void UpdateWarehouseStoragePricing(WarehouseStoragePricingPM itemPM)
-        {
-            WarehouseStoragePricing itemPoco = warehouseStoragePricingRepository.GetSingleWarehouseStoragePricing(itemPM.Id, tenant);
-            WarehouseStoragePricingMapping.MapEntity(itemPM, itemPoco, false);
-
-            warehouseStoragePricingRepository.Update(itemPoco);
-        }
-        private void DeleteWarehouseStoragePricing(WarehouseStoragePricingPM itemPM)
-        {
-            WarehouseStoragePricing itemPoco = warehouseStoragePricingRepository.GetSingleWarehouseStoragePricing(itemPM.Id, tenant);
-            if (itemPoco != null)
-            {
-                warehouseStoragePricingRepository.Remove(itemPoco);
-            }
-        }
-
+      
         private void CreateAddress(AddressPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("Address", tenant).ToString();

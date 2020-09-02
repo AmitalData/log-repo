@@ -56,11 +56,5 @@ export class ShipmentComputedFieldsList {
 		DeliveryDate: Date;
 		OnHandDate: Date;
 		PODDate: Date;
-		BookingConfirmationSent: Date;
-		PreAlertSent: Date;
-		DeliveryNoticeSent: Date;
-		ExpectedArrivalNoticeSent: Date;
-		ArrivalNoticeSent: Date;
-		T1Received: Date;
 	
 }

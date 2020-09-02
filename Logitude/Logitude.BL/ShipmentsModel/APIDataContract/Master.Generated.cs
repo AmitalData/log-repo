@@ -96,38 +96,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public List<Payable> Payables { get; set; }
     
     public DimensionsUnit DimensionsUnit { get; set; }
-    
-    public int? OrderNumberOfPackages { get; set; }
-    
-    public double? OrderGrossWeight { get; set; }
-    
-    public double? OrderVolume { get; set; }
-    
-    public double? OrderChargeableWeight { get; set; }
-    
-    public bool OrderIsDangerouseGoods { get; set; }
-    
-    public string MainHarmonize { get; set; }
-    
-    public User SalesmanUser { get; set; }
-    
-    public User AccountManagerUser { get; set; }
-    
-    public SpecialServicesType SpecialServicesType { get; set; }
-    
-    public Card ShipperNotExporter { get; set; }
-    
-    public Card CustomAgentImport { get; set; }
-    
-    public Card ReleasingAgent { get; set; }
-    
-    public Card FreightForwarder { get; set; }
-    
-    public DateTime? MAWBDate { get; set; }
-    
-    public double? Ratio { get; set; }
-    
-    public List<MainCarriageLeg> MainCarriageLegs { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

@@ -400,8 +400,7 @@ namespace MeatadataGeneratorTool
             DxmlDatabaseTypes = new List<DxmlDatabaseType>() {
                 new DxmlDatabaseType { Code = "Main", Name = "Main Database" },
                 new DxmlDatabaseType { Code = "Global", Name = "Global Database" },
-                new DxmlDatabaseType() { Code = "SystemLogs", Name = "SystemLogs Database" },
-                new DxmlDatabaseType() { Code = "CargoTracking", Name = "CargoTracking Database" } };
+                new DxmlDatabaseType() { Code = "SystemLogs", Name = "SystemLogs Database" } };
             DxmlDatabaseSchemas = new List<DxmlDatabaseSchema>() {
                 new DxmlDatabaseSchema { Code = "dbo", Name = "Dbo Schema" },
                 new DxmlDatabaseSchema() { Code = "Customs", Name = "Customs Schema" } };

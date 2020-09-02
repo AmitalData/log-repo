@@ -30,14 +30,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.PrimaryContactName = entityPM.PrimaryContactName;
             entityPOCO.PrimaryContactEmail = entityPM.PrimaryContactEmail;
             entityPOCO.PrimaryContactPhone = entityPM.PrimaryContactPhone;
-            entityPOCO.ChargeStorage = entityPM.ChargeStorage;
-            entityPOCO.CurrencyId = entityPM.CurrencyId;
-            entityPOCO.AirWeightMeasurementCode = entityPM.AirWeightMeasurementCode;
-            entityPOCO.OceanWeightMeasurementCode = entityPM.OceanWeightMeasurementCode;
-            entityPOCO.InlandWeightMeasurementCode = entityPM.InlandWeightMeasurementCode;
-            entityPOCO.AirWeightRoundingCode = entityPM.AirWeightRoundingCode;
-            entityPOCO.OceanWeightRoundingCode = entityPM.OceanWeightRoundingCode;
-            entityPOCO.InlandWeightRoundingCode = entityPM.InlandWeightRoundingCode;
 
             entityCard.UpdateDate = entityPM.UpdateDate;
             entityCard.UpdatedByUserId = entityPM.UpdatedByUserId;
@@ -73,6 +65,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             {
                 entityCard.PrimaryContactId = entityPM.PrimaryContactId;
             }
+
 
             BuildSearchFields(entityPM, entityCard);
         }

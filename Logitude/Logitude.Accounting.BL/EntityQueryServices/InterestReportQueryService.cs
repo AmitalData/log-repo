@@ -186,13 +186,5 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             
             return interestReportPM;
         }
-
-        public string GetInterestReportStatusCode(string InterestReportId,   int tenant)
-        {
-            InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
-            string InterestReportStatusCode = interestReportRepository.GetInterestReportStatusCode(InterestReportId, tenant);
-            return InterestReportStatusCode;
-
-        }
     }
 }

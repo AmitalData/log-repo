@@ -445,12 +445,12 @@
     FieldName="&quot;AccountNumber&quot;"
     OldNames="AccountNumber"
     IsNew="false"
-    IsChecked="true"
+    IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;BankAccountLite&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="30"
+    MaxLength="15"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="true"
@@ -1574,11 +1574,11 @@
     <Feature
       Code="&quot;BANKACCOUNTLITE&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;BankAccount.Features.BankAccountLiteMenu&quot;"
-      FeatureDefaultText="&quot;Bank Accounts Lite&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;BankAccount.Features.BankAccountLiteMenu&quot;"
+      FeatureDefaultText="&quot;Bank Accounts Lite&quot;" />
   </AdditionalFeatures>
 </entity>

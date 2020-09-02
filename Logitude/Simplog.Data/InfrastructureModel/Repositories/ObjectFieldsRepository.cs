@@ -232,7 +232,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 if (entityAutomationObjectTableIds.Count > 0)
                 {
                     automationEntityObjectFieldLists = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
-                                                        where (a.Tenant == tenant) && entityAutomationObjectTableIds.Contains(a.ObjectTableId) && (a.AllowedinAutomationConditions == true || a.AutomationEmailRecipient == true)
+                                                        where (a.Tenant == tenant) && entityAutomationObjectTableIds.Contains(a.ObjectTableId) && a.AllowedinAutomationConditions == true
                                                         select a).ToList();
                 }
             }

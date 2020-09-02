@@ -14,7 +14,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
     {
         public static void MapEntity(DocumentOutPM docPM, DocumentOut doc, bool isNewState)
         {
-            ContactPM loggedContact = new ContactQuery(docPM.Tenant).GetContactByEmailOnly(AuthenticationUtil.GetLoggedUserEmail(docPM.Tenant), docPM.Tenant);
+            ContactPM loggedContact = new ContactQuery(docPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), docPM.Tenant);
 
             if (isNewState)
             {

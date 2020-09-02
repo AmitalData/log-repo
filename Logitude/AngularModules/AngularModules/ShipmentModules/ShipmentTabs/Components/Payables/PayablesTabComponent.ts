@@ -34,7 +34,6 @@ import { QuotePMService } from '../../../../Quote/Services/StandardPMs/QuotePMSe
 import { CardList } from '../../../../Common/EntityLists/CardList';
 import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
 import { TariffDomainService, TariffSearchSummary, SurchargeSummary } from '../../../../TariffModule/Services/TariffDomainService';
-import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 
 
 @Component({
@@ -218,8 +217,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
     PriceCheck() {
         this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
-            ServiceLocator.SendTotangoUserActivity("Tariff", "Generate from Shipment");
-
             var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
             if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageATD)) {
                 betweenDate = this.EntityPM.MainCarriageATD;

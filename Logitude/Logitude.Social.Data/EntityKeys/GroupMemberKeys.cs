@@ -24,8 +24,7 @@ namespace Logitude.Social.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return GroupId+'_'+UserId ;
-                 
+          return GroupId+'_'+UserId;
       }
 
       public override string GetEntityPMName()

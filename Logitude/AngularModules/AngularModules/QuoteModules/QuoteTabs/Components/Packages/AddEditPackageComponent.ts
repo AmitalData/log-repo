@@ -87,8 +87,6 @@ export class AddEditPackageComponent {
         this.myCloner.AddField('Height');
         this.myCloner.AddField('Volume');
         this.myCloner.AddField('VolumetricWeight');
-        this.myCloner.AddField('PickupDeliveryVolume');
-        this.myCloner.AddField('PickupDeliveryVolumetricWeight');
         this.myCloner.AddField('Weight');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.QuotePM);

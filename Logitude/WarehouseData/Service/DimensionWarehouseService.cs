@@ -73,10 +73,6 @@ namespace WarehouseData.Helper
             {
                 fieldValue = field.FieldName == "[Tenant Number]" ? "-1" : "0";
             }
-            else if(field.DataTypeCode == "DateTime")
-            {
-                fieldValue = "null";
-            }
 
             return fieldValue;
         }

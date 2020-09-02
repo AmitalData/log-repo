@@ -1,0 +1,10 @@
+﻿<Script DBType="Main" Pre="false">
+  <Sql Version="1">
+    <![CDATA[
+Insert Into CargoTrackingHeaderEntityTypes (Code,LocalName,SearchFields,EnglishName,Inactive) values ('O','','O,Order','Order',0)
+Insert Into CargoTrackingHeaderEntityTypes (Code,LocalName,SearchFields,EnglishName,Inactive) values ('F','','F,Forwarding Shipment','Forwarding Shipment',0)
+Insert Into CargoTrackingHeaderEntityTypes (Code,LocalName,SearchFields,EnglishName,Inactive) values ('C','','C,Customs Shipment','Customs Shipment',0)
+ 
+    ]]>
+  </Sql>
+</Script>

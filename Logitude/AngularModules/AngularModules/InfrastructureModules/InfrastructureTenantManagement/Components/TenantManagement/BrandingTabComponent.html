@@ -1,4 +1,4 @@
-<div style="height:100%;width:100%">
+﻿<div style="height:100%;width:100%">
 
 
     <table style="height:100%;vertical-align:top" *ngIf="IsVisibile">
@@ -27,10 +27,7 @@
                     <tr style="vertical-align:top;height:33px">
                         <td style="width:8px"><div></div></td>
                         <td style="width:200px;"><LogLabel [ObjectFieldName]="'EnableBranding'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel></td>
-                        <td style="width:230px;text-align:left">
-                            <CheckBox [IsEnabled]="true" (Checked)="EnableBrandingChange($event)" [IsChecked]="EnableBranding"></CheckBox>
-                           
-                        </td>
+                        <td style="width:230px;text-align:left"><LogCheckBox (ValueChanged)="EnableBrandingChange($event)" [LogitudeForm]="myForm" [ObjectFieldName]="'EnableBranding'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogCheckBox></td>
                         <td><div></div></td>
                     </tr>
 

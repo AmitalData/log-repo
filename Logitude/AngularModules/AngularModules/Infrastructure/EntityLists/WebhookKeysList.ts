@@ -17,6 +17,5 @@ export class WebhookKeysList {
 		UpdatedByUserName: string;
 		UpdateDate: Date;
 		Description: string;
-		SearchFields: string;
 	
 }

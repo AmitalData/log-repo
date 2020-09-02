@@ -72,7 +72,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public ShipmentLevelPM ShipmentLevelDataMappingAndValidatin(ShipmentLevel MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public ShipmentLevelPM ShipmentLevelDataMappingAndValidatin(ShipmentLevel MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -85,26 +85,13 @@ using Simplog.Data.ShipmentsModel;
 					{   
 					    throw new ApplicationException("ShipmentLevel with Code " + MyEntity.Code + " doesn't exist");
 					} 
-					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						 
-						if(IsUpdate)
-						{
-								throw new ApplicationException("Code Can't be update"); 
-						}  
-
 						temp.Code = MyEntity.Code;
 					}
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Name Can't be update"); 
-					}  
-
 					temp.Name = MyEntity.Name;					   
-					return temp;
+					   return temp;
 		    }
             catch (Exception ex)
             {

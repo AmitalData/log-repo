@@ -114,7 +114,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         filters.GetAll = false;
         filters.GetCount = true;
         filters.addAdditionalFilter("InterestReportId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-        return this._entityListService.getByFilters("InterestReportLinesByDate", filters); 
+        return this._entityListService.getByFilters("InterestReportLinesByDate", filters);//this.ledgerTransactionListExtendedService.getByFilters(filters);
     }
 
     EditCalculationDate(){

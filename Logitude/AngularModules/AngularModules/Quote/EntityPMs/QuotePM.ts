@@ -358,11 +358,6 @@ export class QuotePM {
     public set ChargeableWeightInKG(newValue: number) { if (this.chargeableWeightInKG != newValue) { this.chargeableWeightInKG = newValue; this.MarkAsDirty("ChargeableWeightInKG"); } }
        
 	 
-    private pickupDeliveryChargeableWeight: number;
-    public get PickupDeliveryChargeableWeight() { return this.pickupDeliveryChargeableWeight; }
-    public set PickupDeliveryChargeableWeight(newValue: number) { if (this.pickupDeliveryChargeableWeight != newValue) { this.pickupDeliveryChargeableWeight = newValue; this.MarkAsDirty("PickupDeliveryChargeableWeight"); } }
-       
-	 
     private grossWeight: number;
     public get GrossWeight() { return this.grossWeight; }
     public set GrossWeight(newValue: number) { if (this.grossWeight != newValue) { this.grossWeight = newValue; this.MarkAsDirty("GrossWeight"); } }
@@ -463,11 +458,6 @@ export class QuotePM {
     public set ChargeableWeightUnitCode(newValue: string) { if (this.chargeableWeightUnitCode != newValue) { this.chargeableWeightUnitCode = newValue; this.MarkAsDirty("ChargeableWeightUnitCode"); } }
        
 	 
-    private pickupDeliveryCWeightUnitCode: string;
-    public get PickupDeliveryCWeightUnitCode() { return this.pickupDeliveryCWeightUnitCode; }
-    public set PickupDeliveryCWeightUnitCode(newValue: string) { if (this.pickupDeliveryCWeightUnitCode != newValue) { this.pickupDeliveryCWeightUnitCode = newValue; this.MarkAsDirty("PickupDeliveryCWeightUnitCode"); } }
-       
-	 
     private dimensionsUnitCode: string;
     public get DimensionsUnitCode() { return this.dimensionsUnitCode; }
     public set DimensionsUnitCode(newValue: string) { if (this.dimensionsUnitCode != newValue) { this.dimensionsUnitCode = newValue; this.MarkAsDirty("DimensionsUnitCode"); } }
@@ -496,11 +486,6 @@ export class QuotePM {
     private ratio: number;
     public get Ratio() { return this.ratio; }
     public set Ratio(newValue: number) { if (this.ratio != newValue) { this.ratio = newValue; this.MarkAsDirty("Ratio"); } }
-       
-	 
-    private pickupDeliveryRatio: number;
-    public get PickupDeliveryRatio() { return this.pickupDeliveryRatio; }
-    public set PickupDeliveryRatio(newValue: number) { if (this.pickupDeliveryRatio != newValue) { this.pickupDeliveryRatio = newValue; this.MarkAsDirty("PickupDeliveryRatio"); } }
        
 	 
     private dimFactor: number;
@@ -1646,11 +1631,6 @@ export class QuotePM {
     private deliveryZipCode: string;
     public get DeliveryZipCode() { return this.deliveryZipCode; }
     public set DeliveryZipCode(newValue: string) { if (this.deliveryZipCode != newValue) { this.deliveryZipCode = newValue; this.MarkAsDirty("DeliveryZipCode"); } }
-       
-	 
-    private pickupDeliveryVolumetricWeight: number;
-    public get PickupDeliveryVolumetricWeight() { return this.pickupDeliveryVolumetricWeight; }
-    public set PickupDeliveryVolumetricWeight(newValue: number) { if (this.pickupDeliveryVolumetricWeight != newValue) { this.pickupDeliveryVolumetricWeight = newValue; this.MarkAsDirty("PickupDeliveryVolumetricWeight"); } }
        
 	 
 

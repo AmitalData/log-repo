@@ -11,7 +11,6 @@ import {ChargesGroupListService} from '../../../../Infrastructure/Services/Stand
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {VatTypeList} from '../../../EntityLists/VatTypeList';
 import {VatTypeListService} from '../../../Services/StandardLists/VatTypeListService';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     
@@ -23,7 +22,6 @@ export class NewChargesTypeComponent extends BaseComponent {
     public ObjectTableName: string = "ChargesType";
     public EntityPM: ChargesTypePM;
     private CurrentSession = SessionLocator.SelectedSession;
-    public MeasurementsQueryFilters: ApiQueryFilters;
     constructor() {
         super();
 
@@ -51,13 +49,7 @@ export class NewChargesTypeComponent extends BaseComponent {
             });
         }
 
-        this.BuildQueryFilters(); 
         this.SetUIProperties();
-    }
-
-    private BuildQueryFilters() {
-        this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
     }
 
     public CustomsFieldsIsVisible: boolean = false;

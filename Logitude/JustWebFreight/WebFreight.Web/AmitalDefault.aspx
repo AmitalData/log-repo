@@ -1,14 +1,15 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AmitalDefault.aspx.cs" Inherits="WebFreight.Web.AmitalDefault" %>
 
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
-
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <meta http-equiv="x-ua-compatible" content="IE=11">
-    <link id="logolink" rel="shortcut icon" />  
+<link id="logolink" rel="shortcut icon" />
+
     <title>Logitude</title>
+
         
     <style type="text/css">
     
@@ -47,12 +48,21 @@
    
     <!--  AmitalBrowserWpfApplication\Views\GatewayUserControl.cs GOOD (Itzik )-->        	
     
-    <script src="js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="Scripts/json2.min.js" type="text/javascript"></script>        
+    <script src="Scripts/json2.min.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/jquery-1.7.1.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/kendo.all.min.js" type="text/javascript"></script>
+    
+    <script type="text/javascript" src="HtmlHelpers/JS/jquery.dateFormat-1.0.js"></script>
+    <!--  AmitalBrowserWpfApplication\Views\GatewayUserControl.cs Bad (Itzik )-->        	
+<!--
+
+    <script type="text/javascript" src="HtmlHelpers/JS/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="HtmlHelpers/Kendo.2013.2.918/kendo.all.min.js"></script>
+-->
+        
     <script type="text/javascript" src="HtmlHelpers/JS/Logitude.Converters.js"></script>
     <script type="text/javascript" src="HtmlHelpers/JS/Logitude.Entites.js"></script>
     <script type="text/javascript" src="HtmlHelpers/JS/ContactActivityLog.js"></script>
-    
     <% if (Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment == "customs") {%>
         <script type="text/javascript" src="HtmlHelpers/JS/Amital.GatewayControl.js"></script>
     <%  }%>

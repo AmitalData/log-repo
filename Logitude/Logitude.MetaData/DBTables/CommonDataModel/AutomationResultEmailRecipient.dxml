@@ -2,10 +2,8 @@
 <Table
   Name="AutomationResultEmailRecipients"
   ShortName="AutomationResultEmailRecips"
-  OldNames="AutomationResultEmailRecips"
   Schema="dbo"
-  DBType="Main"
-  Module="Common">
+  DBType="Main">
   <Column
     Name="Id"
     Type="varchar"
@@ -36,13 +34,6 @@
   </Column>
   <Column
     Name="RecipientValue"
-    Type="varchar"
-    Size="200">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PartnerObjectFieldCode"
     Type="varchar"
     Size="200">
     <Constraints

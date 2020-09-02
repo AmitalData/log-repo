@@ -270,36 +270,6 @@ export class ShipmentComputedFieldsPM {
     public set PODDate(newValue: Date) { if (this.pODDate != newValue) { this.pODDate = newValue; this.MarkAsDirty("PODDate"); } }
        
 	 
-    private bookingConfirmationSent: Date;
-    public get BookingConfirmationSent() { return this.bookingConfirmationSent; }
-    public set BookingConfirmationSent(newValue: Date) { if (this.bookingConfirmationSent != newValue) { this.bookingConfirmationSent = newValue; this.MarkAsDirty("BookingConfirmationSent"); } }
-       
-	 
-    private preAlertSent: Date;
-    public get PreAlertSent() { return this.preAlertSent; }
-    public set PreAlertSent(newValue: Date) { if (this.preAlertSent != newValue) { this.preAlertSent = newValue; this.MarkAsDirty("PreAlertSent"); } }
-       
-	 
-    private deliveryNoticeSent: Date;
-    public get DeliveryNoticeSent() { return this.deliveryNoticeSent; }
-    public set DeliveryNoticeSent(newValue: Date) { if (this.deliveryNoticeSent != newValue) { this.deliveryNoticeSent = newValue; this.MarkAsDirty("DeliveryNoticeSent"); } }
-       
-	 
-    private expectedArrivalNoticeSent: Date;
-    public get ExpectedArrivalNoticeSent() { return this.expectedArrivalNoticeSent; }
-    public set ExpectedArrivalNoticeSent(newValue: Date) { if (this.expectedArrivalNoticeSent != newValue) { this.expectedArrivalNoticeSent = newValue; this.MarkAsDirty("ExpectedArrivalNoticeSent"); } }
-       
-	 
-    private arrivalNoticeSent: Date;
-    public get ArrivalNoticeSent() { return this.arrivalNoticeSent; }
-    public set ArrivalNoticeSent(newValue: Date) { if (this.arrivalNoticeSent != newValue) { this.arrivalNoticeSent = newValue; this.MarkAsDirty("ArrivalNoticeSent"); } }
-       
-	 
-    private t1Received: Date;
-    public get T1Received() { return this.t1Received; }
-    public set T1Received(newValue: Date) { if (this.t1Received != newValue) { this.t1Received = newValue; this.MarkAsDirty("T1Received"); } }
-       
-	 
 
     public OldEntityPM: ShipmentComputedFieldsPM;
 		

@@ -13,7 +13,7 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
     
     templateUrl: './EmailSearchTextBox.html',
     selector: "EmailSearchTextBox",
-    inputs: ['Watermark', 'EmailsText', 'IsUsersList', 'IsDisabled', 'SelectedValuePath', 'ExcludedResult', 'DontInCludeInactive', 'AllowFreeEmails'],
+    inputs: ['Watermark', 'EmailsText', 'IsUsersList', 'IsDisabled', 'SelectedValuePath', 'ExcludedResult', 'DontInCludeInactive'],
 
 })
 
@@ -34,7 +34,6 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
         }
     }
     public IsUsersList: boolean = false;
-    public AllowFreeEmails: boolean = false;
     public DropDownHeight: number = 200;
     public DropDownWidth: number = 300;
     public ItemsSource: EmailSearchTextBoxItem[] = [];
@@ -119,8 +118,7 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
                                         if (this.SelectedItems.filter(f => f.Email != null && f.Email.toLowerCase() == email.toLowerCase()).length == 0) {
                                             var newItem = new ContactList();
                                             newItem.Email = email;
-                                            if (this.AllowFreeEmails) newItem.EnglishName = email.split("@")[0];
-                                            else newItem.EnglishName = email;
+                                            newItem.EnglishName = email;
                                             if (!AppTool.IsNullOrEmpty(email) && email != "undefined" && email != "null")
                                                 this.SelectedItems.push(newItem);
                                         }
@@ -306,21 +304,6 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
 
                             if (myCurrentSelectedItem != null) {
                                 this.AddItem(myCurrentSelectedItem);
-                            }
-                        }
-                        else if (this.ItemsSource.length == 0 && this.AllowFreeEmails) {
-                            var myCurrentInsertedItem: EmailSearchTextBoxItem;
-                            var myCurrentInsertedItemIndex: number;
-                            if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-                                myCurrentInsertedItem = new EmailSearchTextBoxItem(null, 0);
-                                myCurrentInsertedItemIndex = this.SelectedItems.length;
-                                myCurrentInsertedItem.Email = this.SearchText;
-                                myCurrentInsertedItem.EnglishName = this.SearchText.split("@")[0];
-                                myCurrentInsertedItem.Index = myCurrentInsertedItemIndex;
-                                myCurrentInsertedItem.Id = "1-" + myCurrentInsertedItemIndex;
-                                myCurrentInsertedItem.ElementId = "EmailSearchTextBoxItem_1-" + myCurrentInsertedItemIndex.toString();
-                                myCurrentInsertedItem.Selected = true;
-                                this.AddItem(myCurrentInsertedItem);
                             }
                         }
                     }

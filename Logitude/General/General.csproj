@@ -812,7 +812,6 @@
     <Content Include="Usefull Scripts\Detect Data Problems\Wrong Receivables Percentage Amounts.sql" />
     <Content Include="Usefull Scripts\Detect Data Problems\[Islam] shipments related with tenant zero issue.sql" />
     <Content Include="Usefull Scripts\Fill Data\Fill Shipments FirstOperationalCloseDate.sql" />
-    <Content Include="Usefull Scripts\Fill Data\Search Fields\[Abed] FillCardSearchData.sql" />
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Abed] FillDataFromFirstPickUpAndLastDelivery.sql" />
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Abed] FillDocumentSearchFields.sql" />
     <Content Include="Usefull Scripts\Fill Data\ShipmentComputedFields\[Ayman] First Pickup.sql" />

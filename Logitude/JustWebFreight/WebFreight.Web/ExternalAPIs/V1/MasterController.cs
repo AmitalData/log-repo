@@ -139,22 +139,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
                     }
 
-                    if (entity.FromPort != null && entity.ToPort != null)
-                    {
-                        if (entity.MainCarriageLegs != null && entity.MainCarriageLegs.Count > 0)
-                        {
-                            throw new ApplicationException("You can't use the From Port/ To Port with the Main Carriage Legs");
-                        }
-                    }
-
-                    else
-                    {
-                        if (entity.MainCarriageLegs == null || entity.MainCarriageLegs.Count == 0)
-                        {
-                            throw new ApplicationException("You must send the From Port/ To Port or the Main Carriage Legs");
-                        }
-                    }
-
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.MasterCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
@@ -540,42 +524,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             }
                         }
 
-                        if (!string.IsNullOrEmpty(entityPM.ShipperNotExporterId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperNotExporterId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.ShipperNotExporterAddressId = address.Id;
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(entityPM.CustomAgentImportId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomAgentImportId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.CustomAgentImportAddressId = address.Id;
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(entityPM.ReleasingAgentId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ReleasingAgentId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.ReleasingAgentAddressId = address.Id;
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(entityPM.FreightForwarderId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.FreightForwarderId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.FreightForwarderAddressId = address.Id;
-                            }
-                        }
-
                         if (entityPM.ShipmentPackages.Count > 0)
                         {
                             foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
@@ -586,22 +534,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
 
                         ComputeHelper.ComputeTotals(entityPM);
-
                         APIReceivablePayableHelper receivablePayableHelper = new APIReceivablePayableHelper(entityPM, authToken.Tenant);
                         receivablePayableHelper.ValidateReceivablesAndPayables();
                         receivablePayableHelper.ComputeReceivablesPayablesTotals();
-
-                        APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(entityPM, authToken.Tenant);
-                        aPITransshipmentHelper.ValidateTransshipments();
-                        aPITransshipmentHelper.MapTransshipments();
-
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {
                             ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(authToken.Tenant);
                             var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, authToken.Tenant);
                             entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
-                        }
 
+                        }
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 

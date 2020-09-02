@@ -98,7 +98,7 @@ namespace WebFreight.Web.QuoteModel
             quotesContext = QuotesContext.GetContext(tenant);
             IQueryable<Quote> allQuotes = (from d in quotesContext.Quotes
                                            where d.IsAutomaticallyClosed && !d.IsClosed && d.AutomaticallyCloseDate != null
-                                           && System.Data.Entity.DbFunctions.TruncateTime(d.AutomaticallyCloseDate) <= System.Data.Entity.DbFunctions.TruncateTime(todayDate)
+                                           && System.Data.Entity.DbFunctions.TruncateTime(d.AutomaticallyCloseDate) == System.Data.Entity.DbFunctions.TruncateTime(todayDate)
                                            && d.Tenant == tenant
                                            select d);
 
@@ -133,7 +133,7 @@ namespace WebFreight.Web.QuoteModel
             quotesContext = QuotesContext.GetContext(0);
             IQueryable<Quote> allQuotes = (from d in quotesContext.Quotes
                                            where d.IsAutomaticallyClosed && !d.IsClosed && d.AutomaticallyCloseDate != null
-                                           && System.Data.Entity.DbFunctions.TruncateTime(d.AutomaticallyCloseDate) <= System.Data.Entity.DbFunctions.TruncateTime(todayDate)
+                                           && System.Data.Entity.DbFunctions.TruncateTime(d.AutomaticallyCloseDate) == System.Data.Entity.DbFunctions.TruncateTime(todayDate)
                                            select d);
 
             var list = allQuotes.ToList();

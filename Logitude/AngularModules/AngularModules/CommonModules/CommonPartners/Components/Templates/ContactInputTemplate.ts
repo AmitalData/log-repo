@@ -84,22 +84,16 @@ export class ContactInputTemplate extends BaseComponent {
         this.IsCustomerVisible = args.IsCustomerVisible;
         this.CardId = args.CardId;
         this.ShowSearchContacts = args.ShowSearchContacts;
-
-        if (!AppTool.IsNullOrEmpty(args.CustomerLable)) {
-            this.CustomerLable = args.CustomerLable;
-            this.CardDependencyProperty1 = args.CardDependencyProperty1;
-        }
+               
         if (!AppTool.IsNullOrEmpty(args.CustomerId)) {
             this.CustomerId = args.CustomerId;
-         
         }
-        if (args.ComponentName == "Partners") {
-            this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, false);
-        }
+
         if (args.ComponentName == "Ticket") {
             this.CardId = args.CustomerId;
             this.EntityPM.CustomerId = args.CustomerId;
             this.CardDependencyProperty1 = args.CustomerId;
+            this.CustomerLable = args.CustomerLable;
             this.DependencyFilter1IsList = args.CardDependencyProperty1IsList;
             this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, false);
         }

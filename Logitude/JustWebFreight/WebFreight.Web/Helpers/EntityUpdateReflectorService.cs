@@ -4,7 +4,6 @@ using Logitude.BookingLib.Data;
 using Logitude.CRM.Data;
 using Logitude.Customs.Data;
 using Logitude.Infrastructure.Data;
-using Logitude.Server.Tools.Helpers;
 using Logitude.WarehouseLib.Data;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel;
@@ -24,10 +23,8 @@ namespace WebFreight.Web.Helpers
     public class EntityUpdateReflectorService: IEntityUpdateReflectorService
     {
 
-        int tenant = 0;
         public  void UpdateEntity(object entityPM, string entityName, int tenant)
         {
-            this.tenant = tenant;
             UpdateEntityServiceParameter prepareUpdateEntityResult = GetUpdateEntityServiceParameter(entityName, tenant);
             if (prepareUpdateEntityResult.Type != null)
             {
@@ -156,7 +153,7 @@ namespace WebFreight.Web.Helpers
             object entityService = null;
             if (entityName == "Shipment")
             {
-                entityService = Activator.CreateInstance(PrepareUpdateEntityResult.Type, new object[] { PrepareUpdateEntityResult.ObjectContext, entityPM, AuthenticationUtil.GetLoggedUserEmail(this.tenant) });
+                entityService = Activator.CreateInstance(PrepareUpdateEntityResult.Type, new object[] { PrepareUpdateEntityResult.ObjectContext, entityPM, SecurityUtility.GetAuthenticatedUser() });
             }
             else if (PrepareUpdateEntityResult.IsNewModule)
             {

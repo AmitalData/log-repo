@@ -25,7 +25,6 @@ import {DeclarationShortTitleComponent} from './Components/ShortTitles/Declarati
 
 import {CustomsSpotlightComponent} from './Components/Spotlight/CustomsSpotlightComponent';
 
-import { DeclarationReferantDataListActionBarComponent } from './Components/ListActionBar/DeclarationReferantDataListActionBarComponent';
 
 export const CustomsControlsComponents =
     [
@@ -72,8 +71,7 @@ export const Components =
         
 
      
-        DeclarationReferantDataListActionBarComponent,
-        
+       
     ];
 
 export class ModuleDeclarations {
@@ -100,7 +98,7 @@ export class ModuleDeclarations {
           
             case "CustomsSpotlightComponent": { myResult = CustomsSpotlightComponent; break; }
 
-            case "DeclarationReferantDataListActionBarComponent": { myResult = DeclarationReferantDataListActionBarComponent; break; }
+                
         }
 
         return myResult;

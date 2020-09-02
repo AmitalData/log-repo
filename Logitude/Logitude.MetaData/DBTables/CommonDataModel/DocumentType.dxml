@@ -307,28 +307,6 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column
-    Name="OnSendPopulateDateFieldName"
-    OldNames="OnSendPolpulateDateFieldName"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OnUploadPopulateDateFieldName"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OnPrintPopulateDateFieldName"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="CustomerRoleId"
     ReferencedTable="Roles"

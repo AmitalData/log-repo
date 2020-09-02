@@ -1,4 +1,3 @@
-import { ApiQueryFiltersAddParams } from './ApiQueryFiltersAddParams';
 export class ApiQueryFilters {
 
     constructor(getAll: boolean = false) {
@@ -27,48 +26,32 @@ export class ApiQueryFilters {
         IsCacheOnClient: boolean = false,
         ForceEnableAdd:boolean = false) {
 
-          let params=new ApiQueryFiltersAddParams();
-          params.FieldName=FieldName;
-          params.FieldValue=FieldValue;
-          params.FieldValue2=FieldValue2;
-          params.FieldValue3=FieldValue3;
-          params.Operator=Operator;
-          params.IsCustom=IsCustom;
-          params.DisplayInList=DisplayInList;
-          params.IsCustomField=IsCustomField;
-          params.FieldDataType=FieldDataType;
-          params.IgnoreFilter=IgnoreFilter;
-          params.IsCacheOnClient=IsCacheOnClient;
-          params.ForceEnableAdd=ForceEnableAdd;
-          this.pushAdditionalFilter(params);
-
-
-        // if (!IsCacheOnClient) {
-        //     if (typeof (FieldValue) === "string") {
-        //         if (FieldValue)
-        //         FieldValue = this.myReplace(FieldValue);//FieldValue.replace('"', '\\"');
-        //         if (FieldName != "ImportersFilter")
-        //         FieldValue = encodeURIComponent(FieldValue)
-        //         //FieldValue = FieldValue.replace("%22", "\%22");
-        //     }
-        //     if (typeof (FieldValue2) === "string") {
-        //       if (FieldValue)
-        //         FieldValue2 = this.myReplace(FieldValue2);//.replace('"', '\\"');
-        //         FieldValue2 = encodeURIComponent(FieldValue2)
-        //         //FieldValue = FieldValue.replace("%20", " ");
-        //     }
-        //     if (typeof (FieldValue3) === "string") {
-        //         if (FieldValue)
-        //           FieldValue3 = this.myReplace(FieldValue3);//FieldValue3.replace('"', '\\"');
-        //         FieldValue3 = encodeURIComponent(FieldValue3)
-        //         //FieldValue = FieldValue.replace("%20", " ");
-        //     }
-        // }
-        // var existedItem = this.AdditionalFilters.find(d => d.FieldName == FieldName);
-        // if (!existedItem || ForceEnableAdd) {
-        //     var item = new FilterItem(FieldName, FieldValue, FieldValue2, FieldValue3, Operator, IsCustom, DisplayInList, IsCustomField, FieldDataType, IgnoreFilter, IsCacheOnClient);
-        //     this.AdditionalFilters.push(item);
-        // }
+        if (!IsCacheOnClient) {
+            if (typeof (FieldValue) === "string") {
+                if (FieldValue)
+                FieldValue = this.myReplace(FieldValue);//FieldValue.replace('"', '\\"');
+                if (FieldName != "ImportersFilter")
+                FieldValue = encodeURIComponent(FieldValue)
+                //FieldValue = FieldValue.replace("%22", "\%22");
+            }
+            if (typeof (FieldValue2) === "string") {
+              if (FieldValue)
+                FieldValue2 = this.myReplace(FieldValue2);//.replace('"', '\\"');
+                FieldValue2 = encodeURIComponent(FieldValue2)
+                //FieldValue = FieldValue.replace("%20", " ");
+            }
+            if (typeof (FieldValue3) === "string") {
+                if (FieldValue)
+                  FieldValue3 = this.myReplace(FieldValue3);//FieldValue3.replace('"', '\\"');
+                FieldValue3 = encodeURIComponent(FieldValue3)
+                //FieldValue = FieldValue.replace("%20", " ");
+            }
+        }
+        var existedItem = this.AdditionalFilters.find(d => d.FieldName == FieldName);
+        if (!existedItem || ForceEnableAdd) {
+            var item = new FilterItem(FieldName, FieldValue, FieldValue2, FieldValue3, Operator, IsCustom, DisplayInList, IsCustomField, FieldDataType, IgnoreFilter, IsCacheOnClient);
+            this.AdditionalFilters.push(item);
+        }
     }
   myReplace(myString: string) {
       var myNewString  = "";
@@ -84,52 +67,11 @@ export class ApiQueryFilters {
     return myNewString;
     }
     removeAdditionalFilter(FieldName: string) {
-        var item = this.AdditionalFilters.filter(d=> d.FieldName == FieldName && d.IsLookUpfilter==true)[0];
+        var item = this.AdditionalFilters.filter(d=> d.FieldName == FieldName)[0];
         if (item) {
             var index = this.AdditionalFilters.indexOf(item);
             this.AdditionalFilters.splice(index, 1);
         }
-    }
-    
-    pushAdditionalFilter(params:ApiQueryFiltersAddParams){
-      if (!params.IsCacheOnClient) {
-        if (typeof (params.FieldValue) === "string") {
-            if (params.FieldValue)
-            params.FieldValue = this.myReplace(params.FieldValue);//FieldValue.replace('"', '\\"');
-            if (params.FieldName != "ImportersFilter")
-            params.FieldValue = encodeURIComponent(params.FieldValue)
-            //FieldValue = FieldValue.replace("%22", "\%22");
-        }
-        if (typeof (params.FieldValue2) === "string") {
-          if (params.FieldValue)
-          params.FieldValue2 = this.myReplace(params.FieldValue2);//.replace('"', '\\"');
-          params.FieldValue2 = encodeURIComponent(params.FieldValue2)
-            //FieldValue = FieldValue.replace("%20", " ");
-        }
-        if (typeof (params.FieldValue3) === "string") {
-            if (params.FieldValue)
-            params.FieldValue3 = this.myReplace(params.FieldValue3);//FieldValue3.replace('"', '\\"');
-            params.FieldValue3 = encodeURIComponent(params.FieldValue3)
-            //FieldValue = FieldValue.replace("%20", " ");
-        }
-    }
-    var existedItem = this.AdditionalFilters.find(d => d.FieldName == params.FieldName);
-    if (!existedItem || params.ForceEnableAdd) {
-        var item = new FilterItem(
-          params.FieldName,
-          params.FieldValue, 
-          params.FieldValue2,
-          params.FieldValue3,
-          params.Operator,
-          params.IsCustom,
-          params.DisplayInList,
-          params.IsCustomField, 
-          params.FieldDataType,
-          params.IgnoreFilter,
-          params.IsCacheOnClient,
-          params.IsLookUpFilter);
-        this.AdditionalFilters.push(item);
-    }
     }
 
     public queryId: string;
@@ -206,8 +148,7 @@ export class FilterItem {
         public IsCustomField: boolean,
         public FieldDataType: string,
         public IgnoreFilter: boolean,
-        public IsCacheOnClient: boolean = false,
-        public IsLookUpfilter:boolean=false) { }
+        public IsCacheOnClient: boolean = false) { }
         
 
 }

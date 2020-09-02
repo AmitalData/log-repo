@@ -70,9 +70,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string PrintingFieldsScreenCode { get; set; }
         public bool AddedManually { get; set; }
 
-        public string OnSendPopulateDateFieldName { get; set; }
-        public string OnUploadPopulateDateFieldName { get; set; }
-        public string OnPrintPopulateDateFieldName { get; set; }
+
 
 
 

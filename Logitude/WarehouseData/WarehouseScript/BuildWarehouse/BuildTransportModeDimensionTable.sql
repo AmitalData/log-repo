@@ -2,19 +2,18 @@
 
    declare @Id as varchar(1)
    declare @Name as varchar(10)
-   declare @AutomaticLastUpdateDate as datetime
 
 	DECLARE TransportModesCursor CURSOR READ_ONLY
 	FOR
-	SELECT Id, Name, AutomaticLastUpdateDate
+	SELECT Id, Name
 	From dw_TransportModes
-	OPEN TransportModesCursor FETCH NEXT FROM TransportModesCursor INTO @Id , @Name, @AutomaticLastUpdateDate
+	OPEN TransportModesCursor FETCH NEXT FROM TransportModesCursor INTO @Id , @Name
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-    insert into #DIM_TransportModesTemp  (Code,Name,[Automatic Last Update Date]) values(@Id,@Name,@AutomaticLastUpdateDate)
+    insert into #DIM_TransportModesTemp  (Code,Name) values(@Id,@Name)
 
-	FETCH NEXT FROM TransportModesCursor INTO @Id , @Name, @AutomaticLastUpdateDate
+	FETCH NEXT FROM TransportModesCursor INTO @Id , @Name
 		End
 	CLOSE TransportModesCursor
 	DEALLOCATE TransportModesCursor
