@@ -4,7 +4,7 @@
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 import { NewVendor } from "./NewVendorGLaccount";*/
-import { CustomerGLA } from "./CustomerGLA";
+
 
 
 import { RandomGenerator } from './RandomGenerator'
@@ -19,7 +19,7 @@ export class CustomerSpec {
 describe('CustomerGlAccount Module', function () {
 
     let R: RandomGenerator = new RandomGenerator();
-    let Cs: CustomerGLA = new CustomerGLA();
+ 
 
     it(' New Customer GLAccount Was Created', function () {
 
@@ -27,9 +27,39 @@ describe('CustomerGlAccount Module', function () {
        // cy.get('li[id=GeneralMHMaintenance]', { timeout: 60000 })
         // this was the only way that worked well :/
         var code = R.GenerateRandomNumberACC();
-        Cs.createCustomer('Test Customer GLAccount' + code);
-        Cs.activatecustomer('Test Customer GLAccount' + code);
 
+
+// create new customer 
+        cy.get('li[id="GeneralMHCustomers"]').click();
+        cy.get('Button[id="NewButton_Customer"]').click();
+
+        cy.get('#Address_Address1').type('Ramallah');
+        cy.get('#Address_Address2').type('Nablus');
+        cy.get('#Address_ZipCode').type('00970');
+        cy.get('#Address_CountryId').type('ps');
+        cy.get('#Address_LocalName').type('Test Customer GLAccount' + code);
+        cy.get('#textboxdiv_Address_Name').type('Test Customer GLAccount' + code);
+        cy.get('#Address_City').type('Nablus');
+        cy.get('#Address_CountryId').type('ps');
+        cy.get('.DropDownListItem').contains(' State Of Palestine ').click();
+        cy.get('#Ok-AddCustomer').click();
+
+
+      
+      // edit teh customer 
+        cy.get('#SearchFieldsId_0_0').type('Test Customer GLAccount' + code,{ force: true });
+        cy.get('div[id=ListDataLoaded]').should('exist');
+        cy.get('div[id=LogGrid_0_0row0]').click({ force: true });
+        cy.get('li[id=CustomerTHGeneral]').click();
+        cy.get('#Customer_EnglishName');      
+        cy.get('.TextTrimming').contains('Accounting').click(); 
+        cy.get('#Activate').click();
+        cy.get('#GLAccount_ChartOfAccountsId').type('cust');
+        cy.get('.DropDownListItem').contains('Customer').click(); 
+        cy.get('#GLAccount_CurrencyId').type('Nis');
+        cy.get('.DropDownListItem').contains(' NIS ').click(); 
+        cy.get('#Ok-AddGLAccount').click();
+        cy.get('td').contains('Dispaly transactions').click();
 
 
 
