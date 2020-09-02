@@ -235,7 +235,7 @@
                         <table>
                             <!-- ParentAccountId -->
                             <tr class="FormFieldRow">
-                                <td style="width: 150px;">
+                                <td style="width: 220px;">
                                     <LogLabel [ObjectFieldName]="'ParentAccountId'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -255,7 +255,7 @@
 
                             <!-- Category1Id -->
                             <tr class="FormFieldRow">
-                                <td style="width: 150px;">
+                                <td style="width: 220px;">
                                     <LogLabel [ObjectFieldName]="'Category1Id'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -274,7 +274,7 @@
 
                             <!-- Category2Id -->
                             <tr class="FormFieldRow">
-                                <td style="width: 150px;">
+                                <td style="width: 220px;">
                                     <LogLabel [ObjectFieldName]="'Category2Id'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -293,7 +293,7 @@
 
                             <!-- Category3Id -->
                             <tr class="FormFieldRow">
-                                <td style="width: 150px;">
+                                <td style="width: 220px;">
                                     <LogLabel [ObjectFieldName]="'Category3Id'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -312,7 +312,7 @@
 
                             <!-- Category4Id -->
                             <tr class="FormFieldRow">
-                                <td style="width: 150px;">
+                                <td style="width: 220px;">
                                     <LogLabel [ObjectFieldName]="'Category4Id'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -331,7 +331,7 @@
 
                             <!-- Category5Id -->
                             <tr class="FormFieldRow">
-                                <td style="width: 150px;">
+                                <td style="width: 220px;">
                                     <LogLabel [ObjectFieldName]="'Category5Id'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -350,7 +350,7 @@
 
                             <!-- RevaluationEnabled -->
                             <tr class="FormFieldRow">
-                                <td style="width: 150px;">
+                                <td style="width: 220px;">
                                     <LogLabel [ObjectFieldName]="'RevaluationEnabled'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -362,7 +362,7 @@
 
                             <!-- Smallcashbook -->
                             <tr *ngIf="ChartOfAccountsTypeCode=='4'" class="FormFieldRow">
-                                <td style="width: 150px;">
+                                <td style="width: 220px;">
                                     <LogLabel [ObjectFieldName]="'Smallcashbook'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -371,7 +371,17 @@
                                 </td>
                                 <td><div></div></td>
                             </tr>
-
+                            <!-- ReportingAsAnotherDocument -->
+                            <tr class="FormFieldRow" *ngIf="IsVendor">
+                                <td style="width: 22px;">
+                                    <LogLabel [ObjectFieldName]="'ReportingAsAnotherDocument'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <CheckBox [IsChecked]="ReportingAsAnotherDocument" (Checked)="ReportingAsAnotherDocument = $event"></CheckBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
                             <tr><td><div></div></td></tr>
                         </table>
                     </td>

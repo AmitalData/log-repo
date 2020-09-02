@@ -152,6 +152,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.Smallcashbook).HasColumnName("Smallcashbook");
 
             this.Property(t => t.MinimumInterestInvoiceBilling).HasColumnName("MinimumInterestInvoiceBilling");
+
+            this.Property(t => t.ReportingAsAnotherDocument).HasColumnName("ReportingAsAnotherDocument");
         }
     }
 }

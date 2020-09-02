@@ -420,6 +420,18 @@
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>
+
+                                            <!-- ReportingAsAnotherDocument -->
+                                            <tr class="FormFieldRow" *ngIf="IsVendor">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'ReportingAsAnotherDocument'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <CheckBox [IsChecked]="ReportingAsAnotherDocument" (Checked)="ReportingAsAnotherDocument = $event"></CheckBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
                                             <tr><td><div></div></td></tr>
                                         </table>
                                     </td>

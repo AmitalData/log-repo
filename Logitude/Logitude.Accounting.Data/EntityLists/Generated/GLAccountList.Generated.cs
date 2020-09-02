@@ -216,6 +216,7 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool Smallcashbook  { get; set; }
        [DataMember]
        public int? MinimumInterestInvoiceBilling  { get; set; }
+
        [DataMember]
        public string SalesmanName  { get; set; }
        [DataMember]
@@ -226,6 +227,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ParentName  { get; set; }
        [DataMember]
        public string ParentCurrencyId  { get; set; }
+
+       [DataMember]
+       public bool ReportingAsAnotherDocument  { get; set; }
+
    }
 
 }

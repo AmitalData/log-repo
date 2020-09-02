@@ -639,7 +639,6 @@ export class GLAccountPM {
     public get IsSplitted() { return this.isSplitted; }
     public set IsSplitted(newValue: boolean) { if (this.isSplitted != newValue) { this.isSplitted = newValue; this.MarkAsDirty("IsSplitted"); } }
        
-	 
     private salesmanName: string;
     public get SalesmanName() { return this.salesmanName; }
     public set SalesmanName(newValue: string) { if (this.salesmanName != newValue) { this.salesmanName = newValue; this.MarkAsDirty("SalesmanName"); } }
@@ -697,6 +696,10 @@ export class GLAccountPM {
      private parentCurrencyId: string;
     public get ParentCurrencyId() { return this.parentCurrencyId; }
     public set ParentCurrencyId(newValue: string) { if (this.parentCurrencyId != newValue) { this.parentCurrencyId = newValue; this.MarkAsDirty("ParentCurrencyId"); } }
+    private reportingAsAnotherDocument: boolean;
+    public get ReportingAsAnotherDocument() { return this.reportingAsAnotherDocument; }
+    public set ReportingAsAnotherDocument(newValue: boolean) { if (this.reportingAsAnotherDocument != newValue) { this.reportingAsAnotherDocument = newValue; this.MarkAsDirty("ReportingAsAnotherDocument"); } }
+
        
 	 
 
@@ -723,4 +726,4 @@ export class GLAccountPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

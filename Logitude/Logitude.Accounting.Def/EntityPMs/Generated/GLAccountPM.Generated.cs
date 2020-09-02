@@ -2597,6 +2597,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+
 	  private string salesmanName ;
 	  	  
        
@@ -2747,6 +2748,31 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+
+	  private bool reportingAsAnotherDocument ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ReportingAsAnotherDocument  
+	   {
+	    
+	     get
+		{
+		   return reportingAsAnotherDocument;
+		 }
+		 set
+		 {
+		   if(reportingAsAnotherDocument != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReportingAsAnotherDocument",OldValue=reportingAsAnotherDocument,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   reportingAsAnotherDocument=value;
+		   }
+			
+		 }
+	   }
+
    }
    
 }

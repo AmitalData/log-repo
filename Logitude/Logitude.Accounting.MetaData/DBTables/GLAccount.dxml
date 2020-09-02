@@ -373,6 +373,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ReportingAsAnotherDocument"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="AccountTypeCode"
     ReferencedTable="GLAccountTypes"
