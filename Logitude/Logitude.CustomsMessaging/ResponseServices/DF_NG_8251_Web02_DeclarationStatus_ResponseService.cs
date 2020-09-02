@@ -687,8 +687,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
                 }
+                myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
+
             }
-            myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
 
 
         }
