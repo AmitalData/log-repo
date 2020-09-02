@@ -11,7 +11,7 @@ import { AgentSharedManifestPM } from '../../../Common/EntityPMs/AgentSharedMani
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { LogboxShipmentExportExcelArgs } from '../../../DataContract/LogboxShipmentExportExcelArgs';
+import { LogboxShipmentExportExcelArgs } from '../../DataContract/LogboxShipmentExportExcelArgs';
 
 @Injectable()
 
