@@ -9,10 +9,6 @@ import { SessionLocator } from "../../../Infrastructure/Utilities/SessionLocator
 import { ObservableCollection } from "../../../Infrastructure/Utilities/ObservableCollection";
 import { DateTool } from "../../../Infrastructure/Tools";
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
-import { SupplierInvoiceExtendedListService } from '../../../Customs/Services/ExtendedLists/SupplierInvoiceExtendedListService';
-import { SupplierInvoiceItemList } from '../../../Customs/EntityLists/Extended/SupplierInvoiceItemList';
 
 @Component({
     selector: 'DeclarationRemarksComponent',
@@ -22,18 +18,13 @@ export class DeclarationRemarksComponent
     extends BaseComponent {
     public DataContext: any = this;
     public DeclarationRemarksQueryObservableList: ObservableCollection;
-    public SupplierInvoiceItemList: ObservableCollection;
     private CurrentSession = SessionLocator.SelectedSession;
     private Entity: DeclarationRemarks[] = [];
 
     _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
-    DeclarationId: string;
-    IsSivug: boolean;
-    SupplierInvoiceItemListLoaded: boolean;
-    constructor(private _entityListService: EntityListService) {
+    constructor() {
         super();
         this.DeclarationRemarksQueryObservableList = new ObservableCollection([]);
-        this.SupplierInvoiceItemList = new ObservableCollection([]);
     }
     title: any;
     SetWindowArgs(args: any) {
@@ -50,31 +41,7 @@ export class DeclarationRemarksComponent
             entity.StatusTime = myFormats.ShortTimeString;
         }
         this.title = args.title;
-        this.IsSivug = args.IsSivug;
-        if (args.IsSivug) {
-            this.DeclarationId = args.DeclarationId;
-
-
-            let supplierInvoiceExtendedListService: SupplierInvoiceExtendedListService = new SupplierInvoiceExtendedListService;
-            //this.InvoiceItemsList.Clear();
-
-            supplierInvoiceExtendedListService.GetSupplierInvoiceItemsClasifiedRemarks(this.DeclarationId)
-                .subscribe((response: any) => {
-                    if (response) {
-                        var TempInvoiceItemsList = [];
-                        for (let item of response.Result) {
-                            
-                            
-                            this.SupplierInvoiceItemList.Insert(item);
-
-
-                        }
-                    }
-                    this.SupplierInvoiceItemListLoaded = true;
-                });
-        }
     }
-    
     ExpandComment(entity: any, $event: any) {
         var windowArgs: any = {};
         var logitudeWindow = new LogitudeWindow();
@@ -82,18 +49,6 @@ export class DeclarationRemarksComponent
         logitudeWindow.Width = 700;
         logitudeWindow.ShowCloseButton = true;
         windowArgs.remarks = entity.StatusComment;
-        logitudeWindow.Title = this.title;
-        logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.Show('./CustomsModules/CustomsReferant/Components/RemarksPopUp');
-    }
-
-    SupplierInvoiceItemExpandComment(entity: any, $event: any) {
-        var windowArgs: any = {};
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Height = 400;
-        logitudeWindow.Width = 700;
-        logitudeWindow.ShowCloseButton = true;
-        windowArgs.remarks = entity.ClasifiedRemarks;
         logitudeWindow.Title = this.title;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsReferant/Components/RemarksPopUp');
