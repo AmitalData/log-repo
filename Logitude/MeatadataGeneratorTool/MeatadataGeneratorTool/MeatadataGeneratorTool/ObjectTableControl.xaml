@@ -2938,6 +2938,7 @@
                                                 <RowDefinition Height="30" />
                                                 <RowDefinition Height="30" />
                                                 <RowDefinition Height="30" />
+                                                <RowDefinition Height="30" />
                                                 <RowDefinition Height="*" />
                                             </Grid.RowDefinitions>
                                             <TextBlock Grid.Row="0"
@@ -3075,6 +3076,26 @@
                                  VerticalAlignment="Center"
                                  Text="{Binding SelectedDataContract.SelectedDCField.CloseTableCode,
                                                 Mode=TwoWay}" />
+                                            <TextBlock Grid.Row="12"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   Text="Is Update Allowed:" />
+                                            <CheckBox Grid.Row="12" Grid.Column="1"
+                                      Margin="2"
+                                      VerticalAlignment="Center"
+                                      IsChecked="{Binding SelectedDataContract.SelectedDCField.IsUpdateAllowed,
+                                                          Mode=TwoWay}" />
+                                            <TextBlock Grid.Row="13"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   Text="Is Nullable:" />
+                                            <CheckBox Grid.Row="13" Grid.Column="1"
+                                      Margin="2"
+                                      VerticalAlignment="Center"
+                                      IsChecked="{Binding SelectedDataContract.SelectedDCField.IsNullable,
+                                                          Mode=TwoWay}" />
 
                                         </Grid>
                                     </Grid>

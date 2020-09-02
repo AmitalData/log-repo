@@ -13,6 +13,8 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ShipmentAssemblyPM} from '../../../../Shipment/EntityPMs/ShipmentAssemblyPM';
 import { WarehouseHelper } from '../../../../Warehouse/Helpers/WarehouseHelper';
 import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
+import { WarehouseEntryListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseEntryListExtendedService';
+import { WarehouseReleaseListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleaseListExtendedService';
 
 @Component({
     
@@ -23,7 +25,8 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public EntityPM: ShipmentPM;
     public ObjectTableName: string;
     private myDomainService: ShipmentDomainService;
-
+    warehouseEntryListExtendedService: WarehouseEntryListExtendedService;
+    warehouseReleaseListExtendedService: WarehouseReleaseListExtendedService;
     public IsNoDataTextVisible: boolean = false;
 
     public ItemsSource: ShipmentConnectedEntityItem[] = [];
@@ -42,11 +45,15 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public IsDisconnectQuoteVisible: boolean = false;
     public IsMasterGridVisible: boolean = false;
     public IsNewMasterVisible: boolean = false;
+    public DisableNewWarehouseEntryButton: boolean = false;
+    public DisableNewWarehouseReleaseButton: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.myDomainService = new ShipmentDomainService();
+        this.warehouseEntryListExtendedService = new WarehouseEntryListExtendedService();
+        this.warehouseReleaseListExtendedService = new WarehouseReleaseListExtendedService();
 
         if (FeatureLocator.HasFeaturePermession("WarehouseEntry", "Module")) {
             if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
@@ -169,6 +176,26 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                 }
             }
             this.CurrentSession.StopBusyIndicator();
+        });
+        if (this.EntityPM.IsBondedWarehouse && this.EntityPM.DirectionId == "I") {
+            this.SetIsBondedWarehouseProperities();
+        }
+    }
+
+    SetIsBondedWarehouseProperities() {
+        this.DisableNewWarehouseEntryButton = false;
+        this.DisableNewWarehouseReleaseButton = false;
+        this.warehouseEntryListExtendedService.GetActiveWarehouseEntriesByShipmentId(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
+            var warehouseEntries = serviceResponse.Result;
+            if (warehouseEntries && warehouseEntries.length > 0) {
+                this.DisableNewWarehouseEntryButton = true;
+            }
+        });
+        this.warehouseReleaseListExtendedService.getActiveWarehouseReleaseListsByShipmentId(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((serviceResponse: ServiceResponse) => {
+            var warehouseRelease = serviceResponse.Result;
+            if (warehouseRelease && warehouseRelease.length > 0) {
+                this.DisableNewWarehouseReleaseButton = true;
+            }
         });
     }
 

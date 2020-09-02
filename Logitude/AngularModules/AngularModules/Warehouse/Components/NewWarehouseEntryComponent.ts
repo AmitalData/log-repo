@@ -36,6 +36,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     warehouseHelper: WarehouseHelper = new WarehouseHelper();
     public ValidationErrorsList: string[];
+    public ValidationWarningsList: string[];
     public IsNoPackagesAvaliable: boolean = false;
     IsNotSetWarehouseIdForWarehouseLegShipment: boolean = false;
     DataContext: any = this;
@@ -48,6 +49,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
     ObjectTableId: string;
     IsFromShipment: boolean = true;
     IsLoadPage: boolean = false;
+    private PageChild_WEPD: any = null;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -56,6 +58,11 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
 
         var table = window.ObjectTables.filter(d=> d.Name == "WarehouseEntry")[0];
         if (table) this.ObjectTableId = table.Id;
+        this.CurrentSession.SessionEvent.subscribe(($event: any) => {
+            if ($event && $event.Name == "QuantityChanged") {
+                this.WarningQuantityChanged();
+            }
+        });
 
     } ngOnInit() {
 
@@ -99,8 +106,21 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
 
     }
 
-  
+    WarningQuantityChanged() {
+        if (this.PageChild_WEPD != null) {
+            this.ValidationWarningsList = [];
+            this.PageChild_WEPD.WarehouseEntryPackagesLists.forEach(entryPackage => {
+                if (entryPackage.OverManifest > 0)
+                    this.ValidationWarningsList.push(this.GetOverManifestWarningMessage(entryPackage.OverManifest, entryPackage.OldQuantity));
+            });
+        }
+    }
 
+    GetOverManifestWarningMessage(overManifest: number, oldQuantity: number) {
+        var isOrAre: string = overManifest == 1 ? "is" : "are";
+        var warningMessage: string = overManifest + " out of " + oldQuantity + " packages " + isOrAre + " over manifest";
+        return warningMessage;
+    }
 
     SetValue(args: any) {
 
@@ -229,7 +249,8 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
         if (warehouseEntryPackagesDetailsComponenttLocation != null) {
             SessionLocator.DynamicLoader.Load('./Warehouse/Components/WarehouseEntryPackagesDetailsComponent', warehouseEntryPackagesDetailsComponenttLocation.viewContainerRef)
                     .then(cmpRef => {
-                        var windowArgs: any = { WarehouseEntryPM: this.warehouseEntryPM, ViewModelTrigger: this};
+                        var windowArgs: any = { WarehouseEntryPM: this.warehouseEntryPM, ViewModelTrigger: this };
+                        this.PageChild_WEPD = cmpRef.instance;
                         cmpRef.instance.SetWindowArgs(windowArgs);
                   
                     });
@@ -261,11 +282,11 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
             this.ShipmentPM.ShipmentPackages.forEach(shipmentPackage => {
                 this.warehouseEntryPM.WarehouseEntryPackages.forEach(entryPackage => {
                     if (entryPackage.ShipmentPackageId == shipmentPackage.Id) {
-                        shipmentPackage.InUse += entryPackage.Quantity;
-                        //if (shipmentPackage.InUse > shipmentPackage.Quantity) {
-                        //    shipmentPackage.InUse -= entryPackage.Quantity;
-                        //    this.IsSelectedPackagesMoreThanAvaliable = true;
-                        //}
+                        var overManifestPacakge = AppTool.IsNullOrEmpty(entryPackage.OverManifest) ? 0 : entryPackage.OverManifest;
+                        shipmentPackage.InUse += entryPackage.Quantity - overManifestPacakge;
+                        if (shipmentPackage.InUse > shipmentPackage.Quantity) {
+                            entryPackage.OverManifest = shipmentPackage.InUse - shipmentPackage.Quantity;
+                        }
                     }
                 });
             });

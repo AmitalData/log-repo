@@ -71,12 +71,15 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class DocumentTypeUpdateClass
    {  		
-		public const string HashString = "ec5f64460cd9ef10e14c7c508f0bc6c8";
+		public const string HashString = "95d7f67a42bbc4b3bbe2fe89e9f749d7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2169,6 +2172,174 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "OnSendPopulateDateFieldName",
+					  						ObjectTableName =  "DocumentType",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "OnSendPopulateDateFieldName",
+					  						ListPropertyPath =  "OnSendPopulateDateFieldName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "OnSendPopulateDateFieldName",
+					  						DefaultText =  "Send Date",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "OnUploadPopulateDateFieldName",
+					  						ObjectTableName =  "DocumentType",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "OnUploadPopulateDateFieldName",
+					  						ListPropertyPath =  "OnUploadPopulateDateFieldName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "OnUploadPopulateDateFieldName",
+					  						DefaultText =  "Upload Date",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "OnPrintPopulateDateFieldName",
+					  						ObjectTableName =  "DocumentType",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "OnPrintPopulateDateFieldName",
+					  						ListPropertyPath =  "OnPrintPopulateDateFieldName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "OnPrintPopulateDateFieldName",
+					  						DefaultText =  "Print Date",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -2294,8 +2465,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature DocumentTypeCustomFieldsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMEFIELD", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.CustomFields", NameTextCodeDefaultText = "Custom Fields", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentTypeObjectTable);
  
                  
-			   TextCode DocumentTypePrintingOptionsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.PrintingOptions", DefaultText = "Printing Options",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentTypePrintingOptionsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTINGOPTIONS", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.PRINTINGOPTIONS", NameTextCodeDefaultText = "Printing Options", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentTypeObjectTable);
+			   TextCode DocumentTypeAdvancedOptionsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.PrintingOptions", DefaultText = "Advanced Options",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature DocumentTypeAdvancedOptionsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTINGOPTIONS", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.PRINTINGOPTIONS", NameTextCodeDefaultText = "Printing Options", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentTypeObjectTable);
  
                  
 			   TextCode DocumentTypeCopiesTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Copies", DefaultText = "Copies",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
@@ -2315,7 +2486,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTCF",HtmlComponentName = "DocumentTypeCustomFieldsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/DocumentTypeCustomFieldsComponent", FeatureId = DocumentTypeCustomFieldsFeature_TH2.Id,FeatureUniqeCode = DocumentTypeCustomFieldsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.DocumentTypeCustomFieldsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeCustomFieldsTextCode_TH2.Id, TabNameTextCodeCode = DocumentTypeCustomFieldsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTPO",HtmlComponentName = "PrintingOptionsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/PrintingOptionsComponent", FeatureId = DocumentTypePrintingOptionsFeature_TH3.Id,FeatureUniqeCode = DocumentTypePrintingOptionsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.PrintingOptionsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypePrintingOptionsTextCode_TH3.Id, TabNameTextCodeCode = DocumentTypePrintingOptionsTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTPO",HtmlComponentName = "PrintingOptionsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/PrintingOptionsComponent", FeatureId = DocumentTypeAdvancedOptionsFeature_TH3.Id,FeatureUniqeCode = DocumentTypeAdvancedOptionsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.PrintingOptionsControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeAdvancedOptionsTextCode_TH3.Id, TabNameTextCodeCode = DocumentTypeAdvancedOptionsTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DTCP",HtmlComponentName = "DocumentTypeCopiesComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/DocumentTypeCopiesComponent", FeatureId = DocumentTypeCopiesFeature_TH4.Id,FeatureUniqeCode = DocumentTypeCopiesFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Documents.DocumentTypes.DocumentTypeCopiesControl", ObjectTableId = DocumentTypeObjectTable.Id, TabNameTextCodeId = DocumentTypeCopiesTextCode_TH4.Id, TabNameTextCodeCode = DocumentTypeCopiesTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    

@@ -59,6 +59,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
 
 
+
+
             // Table & Column Mappings
             this.ToTable("ShipmentComputedFields");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -87,6 +89,17 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PickupTrailerNumber).HasColumnName("PickupTrailerNumber");
             this.Property(t => t.DeliveryNotes).HasColumnName("DeliveryNotes");
             this.Property(t => t.PickupNotes).HasColumnName("PickupNotes");
+            this.Property(t => t.BookingConfirmationSent).HasColumnName("BookingConfirmationSent");
+            this.Property(t => t.PreAlertSent).HasColumnName("PreAlertSent");
+            this.Property(t => t.DeliveryNoticeSent).HasColumnName("DeliveryNoticeSent");
+            this.Property(t => t.ExpectedArrivalNoticeSent).HasColumnName("ExpectedArrivalNoticeSent");
+            this.Property(t => t.ArrivalNoticeSent).HasColumnName("ArrivalNoticeSent");
+            this.Property(t => t.T1Received).HasColumnName("T1Received");
+
+
+
+
+
 
 
 

@@ -19,6 +19,7 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using System.Transactions;
 using Logitude.BL.Helpers;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -37,6 +38,21 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CardContactRepository cardContactRepository;
         private ICommonDataContext objectContext;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
+
+        public CustomAgentService(ICommonDataContext objectContext, CustomAgentPM entityPM, string loggedContactId)
+        {
+            this.entityPM = entityPM;
+            this.tenant = entityPM.Tenant;
+            this.objectContext = objectContext;
+            this.entityRepository = new CustomAgentRepository(objectContext);
+            this.cardRepository = new CardRepository(objectContext);
+            this.addressRepository = new AddressRepository(objectContext);
+            this.contactRepository = new ContactRepository(objectContext);
+            this.cardContactRepository = new CardContactRepository(objectContext);
+            this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
+            this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
+        }
+
         public CustomAgentService(ICommonDataContext objectContext, int tenant, Contact loggedContact = null)
         {
             
@@ -75,13 +91,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPM = entityPM;
             this.isNewEntity = true;
 
-            this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
+            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
 
             this.entityCard = new Card()
             {
                 Id = entityPM.Id,
                 Tenant = tenant,
                 PartnerTypeId = "CG",
+                UploadingUniqueKey = entityPM.UploadingUniqueKey,
             };
 
             this.entityPOCO = new CustomAgent()
@@ -126,7 +143,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
                 this.UpdateContactSearchField(itemPM);
-        }
+            }
+            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+
         }
 
         public void Update(CustomAgentPM entityPM, bool mapComposition = false)
@@ -171,7 +190,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
-            entityRepository.SubmitChanges();            
+            entityRepository.SubmitChanges();
+
+            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
 
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomAgent");
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");

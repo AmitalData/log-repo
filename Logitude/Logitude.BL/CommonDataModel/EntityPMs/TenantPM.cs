@@ -336,6 +336,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public bool ExportQuotationsToIntegratedSystem { get; set; }
 
+        public bool IsIncrementalBuildRunning { get; set; }
 
         //[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         //public string DropBoxAccessToken { get; set; }

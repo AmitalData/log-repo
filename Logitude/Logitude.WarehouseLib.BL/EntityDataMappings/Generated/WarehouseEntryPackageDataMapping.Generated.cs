@@ -53,7 +53,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         RegistrationNumber, 
 	         CountryId, 
 	         CommodityNumber, 
-	         ShipmentPackageId,
+	         ShipmentPackageId, 
+	         OverManifest,
 	      }
 
 
@@ -110,7 +111,9 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         CommodityNumber, 
 	         ReleasesNumber, 
 	         WarehouseEntryNumber, 
-	         ShipmentPackageId,
+	         ShipmentPackageId, 
+	         OverManifest, 
+	         OldQuantity,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -272,6 +275,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentPackageId))
             {
 				entityPOCO.ShipmentPackageId = entityPM.ShipmentPackageId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OverManifest))
+            {
+				entityPOCO.OverManifest = entityPM.OverManifest;
 			}
 			}
 
@@ -438,6 +446,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.ShipmentPackageId = entityPOCO.ShipmentPackageId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OverManifest))
+            {
+					entityPM.OverManifest = entityPOCO.OverManifest;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseEntryPackagePM entityPM, WarehouseEntryPackagePM oldEntityPM)
@@ -597,6 +610,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentPackageId))
             {
                 oldEntityPM.ShipmentPackageId = entityPM.ShipmentPackageId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OverManifest))
+            {
+                oldEntityPM.OverManifest = entityPM.OverManifest;
             }
 			
 		}

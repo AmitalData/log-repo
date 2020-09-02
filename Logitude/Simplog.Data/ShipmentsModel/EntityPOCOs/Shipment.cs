@@ -797,5 +797,16 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string ShipmentSubTypeId { get; set; }
         public virtual ShipmentSubType ShipmentSubType { get; set; }
+
+        public bool ChargeStorage { get; set; }
+        public string ChargeStorageCurrencyId { get; set; }
+        public string WeightMeasurementCode { get; set; }
+        public string WeightRoundingCode { get; set; }
+        public bool IsBondedWarehouse { get; set; }
+        public bool IsBondedWarehouseChanged { get; set; }
+
+        public virtual Currency ChargeStorageCurrency { get; set; }
+        public virtual WarehouseWeightMeasurement WeightMeasurement { get; set; }
+        public virtual WarehouseWeightRounding WeightRounding { get; set; }
     }
 }

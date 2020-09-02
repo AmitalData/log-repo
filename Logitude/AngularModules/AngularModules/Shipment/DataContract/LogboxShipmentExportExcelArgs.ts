@@ -1,7 +1,8 @@
-﻿
-import { ApiQueryFilters, FilterItem } from '../../Infrastructure/DataContracts/ApiQueryFilters';
-import { QueryColumnPM } from '../../Infrastructure/EntityPMs/QueryColumnPM';
+﻿import {QueryColumnPM} from '../../Infrastructure/EntityPMs/QueryColumnPM';
+import { ApiQueryFilters, FilterItem} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 
+import {Injectable} from '@angular/core';
+@Injectable()
 
 export class LogboxShipmentExportExcelArgs {
 

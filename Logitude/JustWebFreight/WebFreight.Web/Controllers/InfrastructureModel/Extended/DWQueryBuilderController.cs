@@ -259,6 +259,13 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
 
                 }
+                bool showActive = filters.Filter3Value != "true";
+                DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(tenant);
+                bool hasActiveField = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, Tabel).Where(dwField => dwField.Name == "InActive").Any();
+                if (hasActiveField && showActive) {
+                    WhereStmt = WhereStmt + " and " + Tabel + ".[InActive] = 0"; 
+                }
+
                 if (!string.IsNullOrEmpty(SearchData))
                 {
                     WhereStmt = WhereStmt + " and (" + (Field + " like " + "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString() + ")");

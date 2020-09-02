@@ -1,5 +1,0 @@
-SELECT [Id_Number]  as [Key]
-      ,[Name]
-      ,[Local Name]
-      ,[Source Tenant] as [Tenant]
-  FROM [dbo].[DIM_Departments]

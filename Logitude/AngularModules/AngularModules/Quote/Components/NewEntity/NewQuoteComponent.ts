@@ -27,6 +27,10 @@ import {QuoteDomainService} from '../../Services/QuoteDomainService';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { ChildDirective } from '../../../Infrastructure/Directives/ChildDirective';
+import { ContactInputTemplateArgs } from '../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
+import { ShipmentSubTypeListService } from '../../../Shipment/services/standardlists/shipmentsubtypelistservice';
+import { ShipmentSubTypeList } from '../../../Shipment/EntityLists/ShipmentSubTypeList';
+import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({
     templateUrl: './NewQuoteComponent.html',
@@ -64,17 +68,20 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.IsAddAgentVisible = true;
         }
     }
-    public ScreenIsReady: boolean = false;
 
+    public ScreenIsReady: boolean = false;
+    public SubTypeFeatureToggle: FeatureToggleList;
     ngOnInit() {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
             res.subscribe((resp: any) => {
+                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB" && d.TenantNumber == SessionLocator.Tenant)[0]; 
                 this.ScreenIsReady = true;
                 this.BuildFiltersLists();
                 this.OnFiltersChanged();
                 this.LoadAllowedAirline();
+                this.LoadShipmentSubTypes();
                 this.GetQuoteSetting();
             });
         });
@@ -107,12 +114,14 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     private myCardListService: CardListService;
     private myAddressListService: AddressListService;
     private myPartnersDomainService: PartnersDomainService;
+    private myShipmentSubTypeListService: ShipmentSubTypeListService;
     InitializeServices() {
         this.myPortListService = new PortListService();
         this.myQuotePMService = new QuotePMService();
         this.myCardListService = new CardListService();
         this.myAddressListService = new AddressListService();
         this.myPartnersDomainService = new PartnersDomainService();
+        this.myShipmentSubTypeListService = new ShipmentSubTypeListService();
     }
 
     LoadAllowedAirline() {
@@ -136,6 +145,17 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                 }
             }
         }
+    }
+
+    private allShipmentSubTypes: ShipmentSubTypeList[] = [];
+    LoadShipmentSubTypes() {
+        this.allShipmentSubTypes = [];
+
+        this.myShipmentSubTypeListService.getAll().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.allShipmentSubTypes = myResponse.Result;
+            }
+        });
     }
 
     public sourceEntityPM: QuotePM;
@@ -475,6 +495,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     public DirectionsList: FilterClass[] = [];
     public TransportModesList: FilterClass[] = [];
     public ShipmentTypesList: FilterClass[] = [];
+    public ShipmentSubTypesList: FilterClass[] = [];
     BuildFiltersLists() {
         this.DirectionsList = [];
         this.TransportModesList = [];
@@ -531,6 +552,54 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             }
         }
     }
+    BuildShipmentSubTypes() {
+        this.ShipmentSubTypesList = [];
+
+        this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId).forEach(item => {
+            this.ShipmentSubTypesList.push(new FilterClass(item.Id, item.Name));
+        });
+
+        this.SetDefaultSubType();
+    }
+    private SetDefaultSubType() {
+        var subTypeCode: string = null;
+        switch (this.ShipmentTypeId) {
+            case "Air":
+                {
+                    subTypeCode = "Air";
+                    break;
+                }
+
+            case "FCLD":
+                {
+                    subTypeCode = "FCL";
+                    break;
+                }
+
+            case "LCLD":
+                {
+                    subTypeCode = "LCL";
+                    break;
+                }
+
+            case "FTL":
+                {
+                    subTypeCode = "FTL";
+                    break;
+                }
+
+            case "LTL":
+                {
+                    subTypeCode = "LTL";
+                    break;
+                }
+        }
+
+        var subType: ShipmentSubTypeList = this.allShipmentSubTypes.filter(d => d.Code == subTypeCode)[0];
+        if (subType) {
+            this.ShipmentSubTypeId = subType.Id;
+        }
+    }
 
     get TicketCreateDate() { return this.EntityPM.TicketCreateDate; }
     set TicketCreateDate(value: Date) {
@@ -566,7 +635,14 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.FromPortId = null;
             this.ToPortId = null;
             this.MainCarriageCarrierId = null;
-            this.ShipmentTypeId = null;
+
+            if (newValue == "A") {
+                this.ShipmentTypeId = "Air";
+            }
+
+            else {
+                this.ShipmentTypeId = null;
+            }
 
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = !this.IsLCLEntity;
@@ -574,6 +650,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             //this.DelOrderDetails();
             this.OnFiltersChanged();
             this.BuildShipmentTypes();
+            this.BuildShipmentSubTypes();
             this.LoadAllowedAirline();
         }
     }
@@ -598,8 +675,16 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = !this.IsLCLEntity;
 
+            this.BuildShipmentSubTypes();
             this.SetupOrderDetails();
             this.OnFiltersChanged();
+        }
+    }
+
+    get ShipmentSubTypeId() { return this.EntityPM.ShipmentSubTypeId; }
+    set ShipmentSubTypeId(newValue: string) {
+        if (this.EntityPM.ShipmentSubTypeId != newValue) {
+            this.EntityPM.ShipmentSubTypeId = newValue;
         }
     }
 
@@ -1742,8 +1827,39 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         }
     }
 
+    get PickupDeliveryVolumetricWeight() { return this.EntityPM.PickupDeliveryVolumetricWeight == null ? 0 : this.EntityPM.PickupDeliveryVolumetricWeight; }
+    set PickupDeliveryVolumetricWeight(newValue: number) {
+        if (this.EntityPM.PickupDeliveryVolumetricWeight != newValue) {
+            this.EntityPM.PickupDeliveryVolumetricWeight = AppTool.Round(newValue, 3);
+
+            if (this.EntityPM.QuotePackages.length == 0) {
+                this.EntityPM.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(this.GrossWeight, this.EntityPM.PickupDeliveryVolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.PickupDeliveryCWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            }
+        }
+    }
+
+    get PickupDeliveryChargeableWeight() { return AppTool.IsNullOrZero(this.EntityPM.PickupDeliveryChargeableWeight) ? null : this.EntityPM.PickupDeliveryChargeableWeight; }
+    set PickupDeliveryChargeableWeight(newValue: number) {
+        if (this.EntityPM.PickupDeliveryChargeableWeight != newValue) {
+            var result = AppTool.Round(newValue, 2);
+            this.EntityPM.PickupDeliveryChargeableWeight = result;
+
+            if (this.GrossWeight == null && this.EntityPM.PickupDeliveryVolumetricWeight == null) {
+                this.EntityPM.PickupDeliveryVolumetricWeight = result;
+                this.EntityPM.GrossWeight = AppTool.GetWeightFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeightUnitCode, result);
+                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.EntityPM.Ratio);
+            }
+        }
+    }
+
+
     ComputeChargeableWeight() {
         this.ChargeableWeight = AppTool.CalculateChargeableWeight(this.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+        this.ComputePickupDeliveryChargeableWeight();
+    }
+
+    ComputePickupDeliveryChargeableWeight() {
+        this.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(this.GrossWeight, this.PickupDeliveryVolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.PickupDeliveryCWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
     }
     ComputeVolumetricWeight() {
         var myResult = null;
@@ -1757,6 +1873,21 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         }
 
         this.VolumetricWeight = myResult;
+        this.ComputePickupDeliveryVolumetricWeight();
+    }
+
+    ComputePickupDeliveryVolumetricWeight() {
+        var myResult = null;
+
+        if (this.EntityPM.Volume != null) {
+            myResult = AppTool.GetWeightFromVolume(this.EntityPM.VolumeUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.Volume, this.EntityPM.PickupDeliveryRatio);
+        }
+
+        else if (this.GrossWeight != null) {
+            myResult = AppTool.GetWeightFromWeight(this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeight);
+        }
+
+        this.PickupDeliveryVolumetricWeight = myResult;
     }
 
     get NumberOfPackages() { return this.EntityPM.NumberOfPackages; }
@@ -2026,7 +2157,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         var myVolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
         var myGrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
         var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.EntityPM.TransportModeId);
-
+        var myPickupDeliveryChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.EntityPM.TransportModeId);
         if (this.EntityPM.DirectionId == "D") {
             if (!AppTool.IsNullOrEmpty(SessionLocator.TenantPM.CountryCode)) {
                 if (SessionLocator.TenantPM.CountryCode.toUpperCase() == "US") {
@@ -2052,9 +2183,15 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             }
 
             this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
+            this.EntityPM.PickupDeliveryCWeightUnitCode = myPickupDeliveryChargeableWeightUnitCode;
 
             if (this.EntityPM.Ratio == null) {
                 this.EntityPM.Ratio = AppTool.GetRatio(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+            }
+
+
+            if (this.EntityPM.PickupDeliveryRatio == null) {
+                this.EntityPM.PickupDeliveryRatio = AppTool.GetPickupDeliveryRatio(this.EntityPM.ShipmentTypeId);
             }
 
             if (this.EntityPM.DimFactor == null) {
@@ -2068,9 +2205,11 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
             this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
             this.EntityPM.Ratio = AppTool.GetRatio(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+            this.EntityPM.PickupDeliveryRatio = AppTool.GetPickupDeliveryRatio(this.EntityPM.ShipmentTypeId);
             this.EntityPM.DimFactor = AppTool.GetDimFactorFromRatio(this.EntityPM.Ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.ChargeableWeightUnitCode);
             this.EntityPM.VolumetricWeight = QuoteUtilities.ComputeVolumetricWeight(this.EntityPM);
             this.EntityPM.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
+            this.EntityPM.PickupDeliveryCWeightUnitCode = myPickupDeliveryChargeableWeightUnitCode;
         }
     }
     private SetPartners() {
@@ -2566,6 +2705,32 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             });
     }
 
+    AddContact(partnerId: string, type: string) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.Title = "New Contact";
+        var args = new ContactInputTemplateArgs();
+        args.CustomerId = partnerId;
+        args.CardDependencyProperty1 = this.CardDependencyProperty1;
+        args.CustomerLable = type == "SH" ? "Shipper" : "Consignee";
+        args.ComponentName = "Partners";
+        logWindow.WindowArgs = args;
+        logWindow.Show('./CommonModules/CommonPartners/Components/NewEntity/NewContactComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewContactWindowClosed($event, type));
+    }
+
+    OnNewContactWindowClosed(arg: any, type: string) {
+        if (arg != 'cancel') {
+            if (type == "SH") {
+                this.ShipperContactId = arg;
+            }
+            else {
+                this.ConsigneeContactId = arg;
+            }
+           
+        }
+    }
     //Copy Mode
     public ButtonContent: string = TextCodeTranslator.Translate("Quote.B.Create");
     public DirectionImageSRC: string;

@@ -1,5 +1,5 @@
 <Configurations>
 
-<Config Name="DBConfigFileName" Value="2020R3.DBConfig.config"></Config>
+<Config Name="DBConfigFileName" Value="Master.DBConfig.config"></Config>
 
 </Configurations>

@@ -1,11 +1,12 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {WarehousePM} from '../../../../../Common/EntityPMs/WarehousePM';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 
-@Component({
-    
+@Component({    
     templateUrl: './WarehouseGeneralTabComponent.html',
 })
 
@@ -69,6 +70,16 @@ export class WarehouseGeneralTabComponent extends BaseComponent {
     set TypeCode(newValue: string) {
         if (this.EntityPM.TypeCode != newValue) {
             this.EntityPM.TypeCode = newValue;
+
+            if (newValue == "BO") {
+                this.EntityPM.AirWeightMeasurementCode = "GRWT";
+                this.EntityPM.OceanWeightMeasurementCode = "GRWT";
+                this.EntityPM.InlandWeightMeasurementCode = "GRWT";
+
+                this.EntityPM.AirWeightRoundingCode = "NON";
+                this.EntityPM.OceanWeightRoundingCode = "NON";
+                this.EntityPM.InlandWeightRoundingCode = "NON";
+            }
         }
     }
 
@@ -77,5 +88,15 @@ export class WarehouseGeneralTabComponent extends BaseComponent {
         if (this.EntityPM.FirmCode != newValue) {
             this.EntityPM.FirmCode = newValue;
         }
+    }
+
+    StorageDefaultsClicked() {
+        var entityResourceService: EntityResourceService = new EntityResourceService();
+        entityResourceService.getEntityResourceByTableName("WarehouseStoragePricing").subscribe((res1: any) => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = "Storage Defaults";
+            logitudeWindow.WindowArgs = this.EntityPM;
+            logitudeWindow.Show("./CommonModules/CommonPartners/Components/EditTabs/Warehouse/StorageDefaultsComponents");
+        });
     }
 }

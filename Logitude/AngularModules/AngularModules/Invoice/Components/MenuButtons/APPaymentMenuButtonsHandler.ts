@@ -645,28 +645,40 @@ export class APPaymentMenuButtonsHandler {
             return;
         }
 
-
         var errors = this.customValidator.Validate(this.EntityPM);
         var isValid = true;
         if (errors != null && errors.length > 0) {
             isValid = false;
         }
+
         if (isValid) {
 
+            var isQuickBooks: boolean = false;
+            var isTransferingToQuickBooks: boolean = false;
 
-            if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
+            if (SessionLocator.AccountingSystemPM.Code == "QBO" || SessionLocator.AccountingSystemPM.Code == "QBOG") {
+                isQuickBooks = true;
+                isTransferingToQuickBooks = true;
+
+                if (this.EntityPM.StatusCode == null || this.EntityPM.StatusCode == "WA") {
+                    isTransferingToQuickBooks = false;
+                }
+
+                else if (this.EntityPM.TransferStatusCode == "ET") {
+                    isTransferingToQuickBooks = false;
+                }
+            }
+
+            if (isQuickBooks && isTransferingToQuickBooks) {
                 var messageWindow = new MessageWindow();
                 messageWindow.Show("Please notice that QBO are not supporting void transmission for the APpayment, you can void it manually from QBO");
                 messageWindow.WindowClosed.subscribe(p => {
                     this.VoidingAPPayment(null);
                 });
             }
+
             else if (SessionLocator.TenantPM.AccountingActivated) {
-
-
-
                 this.OpenCancelAPPaymentScreen();
-
             }
 
             else { this.VoidingAPPayment(null); }

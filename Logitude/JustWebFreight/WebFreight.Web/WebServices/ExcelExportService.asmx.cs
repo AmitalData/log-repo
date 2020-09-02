@@ -63,7 +63,9 @@ namespace WebFreight.Web.WebServices
             byte[] bytes = null; 
             try
             {
+
                 bytes = new ExportToExcelHelper().ExportQueryToExcel(new ExportToExcelArgs() { XmlFilters = xmlFilters, QueryCode = queryId, Tenant = tenant, UserId = userid, TypeName = typename });
+
                 //FilterSerializer filterSerializer = new FilterSerializer();
                 //QueryRepository queryRep = new QueryRepository(tenant);
                 //QueryColumnRepository queryColumnRep = new QueryColumnRepository(tenant);
@@ -101,7 +103,7 @@ namespace WebFreight.Web.WebServices
                 //if (getCountMethodInfo == null)
                 //{
                 //    getCountMethodInfo = query.ObjectTableName.Contains("Customs.") ? context.GetType().GetMethod("Get" + query.ObjectTableName.Split('.')[1] + "FiltersCount") : context.GetType().GetMethod("Get" + query.ObjectTableName + "Count");
-
+                
                 //}
                 //System.Linq.IQueryable querableEntities = null;
 
@@ -137,7 +139,7 @@ namespace WebFreight.Web.WebServices
 
                 //    if (querableEntities != null)
                 //    {
-
+                         
                 //        IEnumerator datalist = querableEntities.GetEnumerator();
                 //        xmlData = ConvertDataList2Xml(datalist, query, queryColumns,tenant);
 
@@ -171,21 +173,21 @@ namespace WebFreight.Web.WebServices
                 //        sheet.Range["A2:C2"].CellStyle.Font.FontName = "Thoma";
                 //        sheet.Range["A2:Z2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
                 //        sheet.Range["A3:Z3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
-
+                   
 
                 //        foreach (QueryColumnPM column in queryColumns)
                 //        {
                 //            sheet.AutofitColumn(column.IndexOrder + 1);
-
+                           
                 //        }
-
+                      
                 //        XmlReader reader = XmlReader.Create(new StringReader(xmlData));
                 //        XmlDataDocument doc = new XmlDataDocument();
                 //        doc.Load(reader);
 
                 //        doc.GetElementsByTagName(query.ObjectTableName);
                 //        XmlNodeList entitiesList = doc.GetElementsByTagName(query.ObjectTableName);
-
+                    
                 //        if (entitiesList.Count == 0)
                 //        {
                 //            string ip = "";
@@ -247,7 +249,7 @@ namespace WebFreight.Web.WebServices
                 //            {
 
                 //                QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == childNode.Name || q.ObjectFieldFullNameTextCodeCode == childNode.Name).FirstOrDefault();
-
+                                
                 //                switch (column.ObjectFieldDataTypeCode)
                 //                {
                 //                    case "Text":

@@ -1,14 +1,14 @@
 
 
 	
- declare @AutomaticLastUpdateDate as datetime
+ declare @MaxAutomaticLastUpdateDate as datetime
  declare @LastUpdateDate as datetime
 
  set @LastUpdateDate = (select top(1) LastUpdateDate from dw_WaterMarks  where TableName = 'SpecialServicesType' )
- set @AutomaticLastUpdateDate = (select  MAX( AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_SpecialServicesTypes )
+ set @MaxAutomaticLastUpdateDate = (select  MAX( AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_SpecialServicesTypes )
 
  
- if(@AutomaticLastUpdateDate > @LastUpdateDate)
+ if(@MaxAutomaticLastUpdateDate > @LastUpdateDate)
 
  begin
    declare @Key as varchar(15)
@@ -18,30 +18,32 @@
    declare @LocalName as nvarchar(40)
    declare @SourceTenant int
    declare @ParentTenant int
+   declare @AutomaticLastUpdateDate as datetime
+   declare @InActive as bit
 
 	DECLARE SpecialServicesTypesCursor CURSOR READ_ONLY
 	FOR
-    SELECT Id,Code, EnglishName , LocalName , dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant
+    SELECT Id,Code, EnglishName , LocalName , dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant, dw_SpecialServicesTypes.AutomaticLastUpdateDate, dw_SpecialServicesTypes.InActive
 	From dw_SpecialServicesTypes
 	inner JOIN dw_DWHSettings ON dw_SpecialServicesTypes.Tenant = dw_DWHSettings.Tenant
 	where dw_SpecialServicesTypes.AutomaticLastUpdateDate > @LastUpdateDate	
-	OPEN SpecialServicesTypesCursor FETCH NEXT FROM SpecialServicesTypesCursor INTO  @Id ,@Code, @EnglishName, @LocalName,  @SourceTenant , @ParentTenant
+	OPEN SpecialServicesTypesCursor FETCH NEXT FROM SpecialServicesTypesCursor INTO  @Id ,@Code, @EnglishName, @LocalName,  @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
 	set @Key = (select Id from DIM_SpecialServicesTypes where Id = @Id)
 	
-	if(@Key is  null) begin     insert into DIM_SpecialServicesTypes (Id, Code ,[English Name] ,[Local Name], [Source Tenant],[Parent Tenant]) values(@Id ,@Code, @EnglishName, @LocalName,  @SourceTenant , @ParentTenant) end
-	else begin update   DIM_SpecialServicesTypes set [Code] =@Code, [English Name] =@EnglishName, [Local Name] =@LocalName , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant Where Id = @Id end
+	if(@Key is  null) begin     insert into DIM_SpecialServicesTypes (Id, Code ,[English Name] ,[Local Name], [Source Tenant],[Parent Tenant],[Automatic Last Update Date],[InActive]) values(@Id ,@Code, @EnglishName, @LocalName,  @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive) end
+	else begin update   DIM_SpecialServicesTypes set [Code] =@Code, [English Name] =@EnglishName, [Local Name] =@LocalName , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate, [InActive] = @InActive Where Id = @Id end
 
 
-	FETCH NEXT FROM SpecialServicesTypesCursor INTO  @Id ,@Code, @EnglishName, @LocalName, @SourceTenant , @ParentTenant
+	FETCH NEXT FROM SpecialServicesTypesCursor INTO  @Id ,@Code, @EnglishName, @LocalName, @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 		End
 	CLOSE SpecialServicesTypesCursor
 	DEALLOCATE SpecialServicesTypesCursor
 
 
-	    update dw_WaterMarks set LastUpdateDate = @AutomaticLastUpdateDate where TableName = 'SpecialServicesType'
+	    update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'SpecialServicesType'
 End
 
 

@@ -148,6 +148,7 @@ namespace Logitude.DBMigrations.Models
                 scriptsToSave.GlobalScript += toolTablesScript.GlobalScript;
                 scriptsToSave.MainScript += toolTablesScript.MainScript;
                 scriptsToSave.SystemLogsScript += toolTablesScript.SystemLogsScript;
+                scriptsToSave.CargoTrackingScript += toolTablesScript.CargoTrackingScript;
             }
 
             if (preGeneralScript != null)
@@ -155,6 +156,7 @@ namespace Logitude.DBMigrations.Models
                 scriptsToSave.GlobalScript += preGeneralScript.GlobalScript;
                 scriptsToSave.MainScript += preGeneralScript.MainScript;
                 scriptsToSave.SystemLogsScript += preGeneralScript.SystemLogsScript;
+                scriptsToSave.CargoTrackingScript += preGeneralScript.CargoTrackingScript;
             }
 
             if (migrationsScript != null)
@@ -162,6 +164,7 @@ namespace Logitude.DBMigrations.Models
                 scriptsToSave.GlobalScript += migrationsScript.GlobalScript;
                 scriptsToSave.MainScript += migrationsScript.MainScript;
                 scriptsToSave.SystemLogsScript += migrationsScript.SystemLogsScript;
+                scriptsToSave.CargoTrackingScript += migrationsScript.CargoTrackingScript;
             }
 
             if (postGeneralScript != null)
@@ -169,6 +172,7 @@ namespace Logitude.DBMigrations.Models
                 scriptsToSave.GlobalScript += postGeneralScript.GlobalScript;
                 scriptsToSave.MainScript += postGeneralScript.MainScript;
                 scriptsToSave.SystemLogsScript += postGeneralScript.SystemLogsScript;
+                scriptsToSave.CargoTrackingScript += postGeneralScript.CargoTrackingScript;
             }
 
             return scriptsToSave;
@@ -269,7 +273,7 @@ namespace Logitude.DBMigrations.Models
 
                 if (IsDXMLFileForHistoryTable(dxmlTable.DXMLFileName))
                 {
-                    string[] dbTypes = new string[] { "Global", "Main", "SystemLogs" };
+                    string[] dbTypes = new string[] { "Global", "Main", "SystemLogs","CargoTracking" };
                     foreach (var dbType in dbTypes)
                     {
                         dxmlTable.TableDefinition.DBType = dbType;
@@ -392,6 +396,7 @@ namespace Logitude.DBMigrations.Models
             string globalScript = !String.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "";
             string mainScript = !String.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "";
             string systemLogsScript = !String.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "";
+            string cargoTrackingScript = !String.IsNullOrEmpty(generatedScript.CargoTrackingScript) ? generatedScript.CargoTrackingScript.Replace(ScriptSemicolonCode, ";") : "";
 
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             if (IsArgumentProvided(ToolArguments.DEPLOYMENT))
@@ -403,6 +408,7 @@ namespace Logitude.DBMigrations.Models
             string globalScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\GlobalScript.sql");
             string mainScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\MainScript.sql");
             string systemLogsScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\SystemLogsScript.sql");
+            string cargoTrackingScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\CargoTrackingScript.sql");
 
             if (!Directory.Exists(generatedScriptDirectoryPath))
             {
@@ -412,6 +418,7 @@ namespace Logitude.DBMigrations.Models
             File.WriteAllText(globalScriptFilePath, globalScript);
             File.WriteAllText(mainScriptFilePath, mainScript);
             File.WriteAllText(systemLogsScriptFilePath, systemLogsScript);
+            File.WriteAllText(cargoTrackingScriptFilePath, cargoTrackingScript);
 
             if (IsGeneratedScriptsEmpty(generatedScript))
             {
@@ -430,6 +437,7 @@ namespace Logitude.DBMigrations.Models
                 ExecuteScript(generatedScript.GlobalScript, "Global");
                 ExecuteScript(generatedScript.MainScript, "Main");
                 ExecuteScript(generatedScript.SystemLogsScript, "SystemLogs");
+                ExecuteScript(generatedScript.CargoTrackingScript, "CargoTracking");
             }
         }
         
@@ -545,6 +553,10 @@ namespace Logitude.DBMigrations.Models
             {
                 connectionString = DBConfig.SystemLogsConnectionString;
             }
+            else if (dbType == "CargoTracking")
+            {
+                connectionString = DBConfig.CargoTrackingConnectionString;
+            }
             else
             {
                 connectionString = null;
@@ -572,6 +584,12 @@ namespace Logitude.DBMigrations.Models
                     generatedScript.SystemLogsScript += script + "\n";
                     return generatedScript;
                 }
+                else if (dbType == "CargoTracking")
+                {
+                    generatedScript.CargoTrackingScript += script;
+                    generatedScript.CargoTrackingScript += "\n";
+                    return generatedScript;
+                }
                 else
                 {
                     return generatedScript;
@@ -586,6 +604,7 @@ namespace Logitude.DBMigrations.Models
             targetGeneratedScript.GlobalScript += sourceGeneratedScript.GlobalScript;
             targetGeneratedScript.MainScript += sourceGeneratedScript.MainScript;
             targetGeneratedScript.SystemLogsScript += sourceGeneratedScript.SystemLogsScript;
+            targetGeneratedScript.CargoTrackingScript += sourceGeneratedScript.CargoTrackingScript;
             return targetGeneratedScript;
         }
 
@@ -766,7 +785,7 @@ namespace Logitude.DBMigrations.Models
 
         private bool IsGeneratedScriptsEmpty(GeneratedScript generatedScript)
         {
-            return String.IsNullOrEmpty(generatedScript.GlobalScript) && String.IsNullOrEmpty(generatedScript.MainScript) && String.IsNullOrEmpty(generatedScript.SystemLogsScript);
+            return String.IsNullOrEmpty(generatedScript.GlobalScript) && String.IsNullOrEmpty(generatedScript.MainScript) && String.IsNullOrEmpty(generatedScript.SystemLogsScript) && String.IsNullOrEmpty(generatedScript.CargoTrackingScript);
         }
 
         private string GetScriptFromViewDefinition(ViewDefinition viewDefinition, string dxmlFileName)
@@ -1548,7 +1567,7 @@ namespace Logitude.DBMigrations.Models
         {
             List<ExecutedSxmlFile> executedSxmlFiles = new List<ExecutedSxmlFile>();
 
-            string[] dbTypes = new string[] { "Global", "Main", "SystemLogs" };
+            string[] dbTypes = new string[] { "Global", "Main", "SystemLogs","CargoTracking" };
 
             foreach (var dbType in dbTypes)
             {
@@ -1902,7 +1921,9 @@ namespace Logitude.DBMigrations.Models
             string globalConnectionString = DBConfig.GlobalConnectionString;
             string mainConnectionString = DBConfig.MainConnectionString;
             string systemLogsConnectionString = DBConfig.SystemLogsConnectionString;
+            string cargoTrackingConnectionString = DBConfig.CargoTrackingConnectionString;
             string globalDB, globalSource, mainDB, mainSource, systemLogsDB, systemLogsSource, databaseTypeMessage, databaseNameMessage;
+            string cargoTrackingDB = null, cargoTrackingSource = null;
 
             if (databaseType.ToLower() == "oracle")
             {
@@ -1917,20 +1938,34 @@ namespace Logitude.DBMigrations.Models
                 systemLogsSource = systemLogsConnectionStringBuilder.DataSource;
                 databaseTypeMessage = "Oracle";
                 databaseNameMessage = "User ID";
+                if (!string.IsNullOrEmpty(cargoTrackingConnectionString))
+                {
+                    OracleConnectionStringBuilder cargoTrackingConnectionStringBuilder = new OracleConnectionStringBuilder(cargoTrackingConnectionString);
+                    cargoTrackingDB = cargoTrackingConnectionStringBuilder.UserID;
+                    cargoTrackingSource = cargoTrackingConnectionStringBuilder.DataSource;
+                }
             }
             else
             {
                 SqlConnectionStringBuilder globalConnectionStringBuilder = new SqlConnectionStringBuilder(globalConnectionString);
                 SqlConnectionStringBuilder mainConnectionStringBuilder = new SqlConnectionStringBuilder(mainConnectionString);
                 SqlConnectionStringBuilder systemLogsConnectionStringBuilder = new SqlConnectionStringBuilder(systemLogsConnectionString);
+                
                 globalDB = globalConnectionStringBuilder.InitialCatalog;
                 globalSource = globalConnectionStringBuilder.DataSource;
                 mainDB = mainConnectionStringBuilder.InitialCatalog;
                 mainSource = mainConnectionStringBuilder.DataSource;
                 systemLogsDB = systemLogsConnectionStringBuilder.InitialCatalog;
                 systemLogsSource = systemLogsConnectionStringBuilder.DataSource;
+              
                 databaseTypeMessage = "MSQL";
                 databaseNameMessage = "Initial Catalog";
+                if (!string.IsNullOrEmpty(cargoTrackingConnectionString))
+                {
+                    SqlConnectionStringBuilder cargoTrackingConnectionStringBuilder = new SqlConnectionStringBuilder(cargoTrackingConnectionString);
+                    cargoTrackingDB = cargoTrackingConnectionStringBuilder.InitialCatalog;
+                    cargoTrackingSource = cargoTrackingConnectionStringBuilder.DataSource;
+                }
             }
 
             string appSettingsMessage = "Tool Database Settings\nDatabase Type: " + databaseTypeMessage + "\n" +
@@ -1938,6 +1973,13 @@ namespace Logitude.DBMigrations.Models
                                         "Global Database: " + databaseNameMessage + " = " + "\"" + globalDB + "\"" + " And Data Source = " + "\"" + globalSource + "\"" + "\n" +
                                         "Main Database: " + databaseNameMessage + " = " + "\"" + mainDB + "\"" + " And Data Source = " + "\"" + mainSource + "\"" + "\n" +
                                         "SystemLogs Database: " + databaseNameMessage + " = " + "\"" + systemLogsDB + "\"" + " And Data Source = " + "\"" + systemLogsSource + "\"" + "\n";
+
+            if (!string.IsNullOrEmpty(cargoTrackingDB))
+            {
+                appSettingsMessage = appSettingsMessage + "CargoTracking Database: " + databaseNameMessage + " = " + "\"" + cargoTrackingDB + "\"" + " And Data Source = " + "\"" + cargoTrackingSource + "\"" + "\n";
+            }
+
+
 
             Console.WriteLine(appSettingsMessage);
 

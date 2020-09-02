@@ -18438,7 +18438,7 @@
       Code="&quot;CSDS&quot;"
       ObjectTableName="&quot;Customer&quot;"
       EnglishName="&quot;GLAccount was disconnected&quot;"
-      LocalName="&quot;נותק כרטיס הנהח\&quot;ש&quot;"
+      LocalName="&quot;GLAccount was disconnected&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"

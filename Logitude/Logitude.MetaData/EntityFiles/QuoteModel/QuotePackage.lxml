@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Quote"
   DefaultText="&quot;QuotePackage&quot;"
-  Code="&quot;b6d1&quot;"
+  Code="&quot;6a2e&quot;"
   Name="&quot;QuotePackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Quote&quot;"

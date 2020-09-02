@@ -63,8 +63,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             FilterSerializer serializer = new FilterSerializer();
             byte[] arrayOfBytes = serializer.SerializeFilterItems(queryOperations);
 
-            var data = new ExportToExcelHelper().ExportQueryToExcel(new ExportToExcelArgs() { XmlFilters = arrayOfBytes, QueryCode = null, Tenant = tenant, UserId = userid, TypeName = null, QueryColumns = logboxShipmentExportExcelArgs.QueryColumns, QueryPM = new QueryPM() { QuerySection = "Shipment", ObjectTableName = "Shipment", DisplayText = logboxShipmentExportExcelArgs.QueryName } });
-
+            var data = new ExportToExcelHelper().ExportQueryToExcel(new ExportToExcelArgs() { XmlFilters = arrayOfBytes, QueryCode = null, Tenant = tenant, UserId = userid, TypeName = null, QueryColumns = logboxShipmentExportExcelArgs.QueryColumns, QueryPM = new QueryPM() { QuerySection  = "Shipment", ObjectTableName = "Shipment" , DisplayText = logboxShipmentExportExcelArgs.QueryName , EditWizardName = "LogBoxMainComponent" } });
+            
 
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
@@ -80,6 +80,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
 
             return Request.CreateResponse(HttpStatusCode.OK, fileInfo.FileName);
+
+
 
 
         }
@@ -102,7 +104,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
         public string QuerySection { get; set; }
         public string QueryName { get; set; }
 
-
+        
         public string SortBy { get; set; }
         public string SortDirection { get; set; }
         public List<QueryFilterItem> AdditionalFilters { get; set; }
