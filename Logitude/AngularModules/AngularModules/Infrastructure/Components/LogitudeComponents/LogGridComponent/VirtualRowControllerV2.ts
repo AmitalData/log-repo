@@ -174,7 +174,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
                         this.mycachedData = Array.from<any>({ length: jsonlist.length });
                         this.cachedData = Array.from<any>({ length: jsonlist.length });
                     }
-                    else if (this.cachedData.length < this.pageSize) {
+                    else if (this.cachedData.length < this.pageSize && page == 0) {
                         this.mycachedData = Array.from<any>({ length: this.length });
                         this.cachedData = Array.from<any>({ length: this.length });
                     }

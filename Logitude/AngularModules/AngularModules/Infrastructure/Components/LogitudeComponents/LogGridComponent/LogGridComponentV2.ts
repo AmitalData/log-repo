@@ -534,6 +534,8 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                     myRow.rowData = res.Data;
                     //this.cd.detectChanges();
                     this.controller.UpdateRecord(myRow);
+                    this.SelectedRow = myRow.rowData;
+                    if (this.cd) this.cd.detectChanges();
                     //**this.updateDisplayList();
                 }
             });

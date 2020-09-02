@@ -1,11 +1,12 @@
 
 <table>
     <tr>
-        <td>
+        
+        <td style="width:50%;">
             <div class="MediaFill">
                 <div class="MediaFillRelative">
 
-                    <div  class="MediaFillAbsolute" [hidden]="!this.ShowChildTemplate" style="overflow: hidden;">
+                    <div class="MediaFillAbsolute" [hidden]="!this.ShowChildTemplate" style="overflow: hidden;">
                         <div class="LocationDirective" ChildDirective></div>
                     </div>
 
@@ -13,10 +14,10 @@
 
                         <div class="MediaFillRelative" *ngIf="!IsAutoFormat">
 
-                            <div   class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="ObjectField.DataTemplateName" title="{{FieldValue}}">{{FieldValue}}</div>
+                            <div class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="ObjectField.DataTemplateName" title="{{FieldValue}}">{{FieldValue}}</div>
 
                             <div class="MediaFill" *ngIf="!ObjectField.DataTemplateName">
-                                <div  class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="!IsHeaderScreenTemplate">{{FieldValue}}</div>
+                                <div class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="!IsHeaderScreenTemplate">{{FieldValue}}</div>
 
                                 <div class="MediaFill" *ngIf="IsHeaderScreenTemplate">
 
@@ -51,9 +52,9 @@
                                         <div *ngIf="!FieldValue">{{'General.O.No' | TextCodeTranslationPipe}}</div>
 
                                         <!--
-                                        <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
-                                        <div *ngIf="!FieldValue">{{'General.O.False' | TextCodeTranslationPipe}}</div>
-                                        -->
+                                    <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
+                                    <div *ngIf="!FieldValue">{{'General.O.False' | TextCodeTranslationPipe}}</div>
+                                    -->
 
                                     </div>
 
@@ -79,15 +80,15 @@
                                             <div *ngIf="!FieldValue">{{'General.O.No' | TextCodeTranslationPipe}}</div>
 
                                             <!--
-        <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
-        <div *ngIf="!FieldValue">{{'General.O.False' | TextCodeTranslationPipe}}</div>
-        -->
+                                        <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
+                                        <div *ngIf="!FieldValue">{{'General.O.False' | TextCodeTranslationPipe}}</div>
+                                        -->
 
                                         </div>
 
                                         <!-- <div *ngIf=!IsHeaderScreenTemplate [style.textAlign]="TextAlign">
-                                            <img *ngIf="CustomField.ResolvedValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
-                                        </div> -->
+                                        <img *ngIf="CustomField.ResolvedValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
+                                    </div> -->
 
                                     </div>
                                 </div>
@@ -100,13 +101,13 @@
                                     <div *ngIf="DataTypeCode == 'Boolean'">
 
                                         <!-- <div *ngIf=IsHeaderScreenTemplate>
-                                            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
-                                            <div *ngIf="!FieldValue">{{FieldValue}}</div>
-                                        </div> -->
+                                        <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
+                                        <div *ngIf="!FieldValue">{{FieldValue}}</div>
+                                    </div> -->
 
-                                         
-                                            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
-                                         
+
+                                        <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
+
 
                                     </div>
                                 </div>
