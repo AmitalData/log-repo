@@ -63,7 +63,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             FilterSerializer serializer = new FilterSerializer();
             byte[] arrayOfBytes = serializer.SerializeFilterItems(queryOperations);
 
-            var data = new ExportToExcelHelper().ExportQueryToExcel(new ExportToExcelArgs() { XmlFilters = arrayOfBytes, QueryCode = null, Tenant = tenant, UserId = userid, TypeName = null, QueryColumns = logboxShipmentExportExcelArgs.QueryColumns, QueryPM = new QueryPM() { QuerySection = "Shipment", ObjectTableName = "Shipment", DisplayText = logboxShipmentExportExcelArgs.QueryName } });
+            var data = new ExportToExcelHelper().ExportQueryToExcel(new ExportToExcelArgs() { XmlFilters = arrayOfBytes, QueryCode = null, Tenant = tenant, UserId = userid, TypeName = null, QueryColumns = logboxShipmentExportExcelArgs.QueryColumns, QueryPM = new QueryPM() { QuerySection = "Shipment", ObjectTableName = "Shipment", DisplayText = logboxShipmentExportExcelArgs.QueryName , EditWizardName = "LogBoxMainComponent" } });
 
 
             BlobFileInfo fileInfo = new BlobFileInfo()

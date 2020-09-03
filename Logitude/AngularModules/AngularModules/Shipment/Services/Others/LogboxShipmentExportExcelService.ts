@@ -1,5 +1,4 @@
 ﻿
-
 import { Injectable } from '@angular/core';
 import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
