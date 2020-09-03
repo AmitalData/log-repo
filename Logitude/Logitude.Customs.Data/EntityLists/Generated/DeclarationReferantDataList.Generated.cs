@@ -118,8 +118,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string AEOImporter  { get; set; }
        public string Team  { get; set; }
-       [DataMember]
-       public string ImporterFile  { get; set; }
+ 
    }
 
 }
