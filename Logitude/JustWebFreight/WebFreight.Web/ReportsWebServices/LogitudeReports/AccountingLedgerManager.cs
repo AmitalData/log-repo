@@ -277,6 +277,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             List<AccountingLedger> OpeningAccounts = new List<AccountingLedger>();
             List<AccountingLedger> lastLedgers = new List<AccountingLedger>();
             double? Openbalance = 0;
+            double? Openbalance_local = 0;
 
             #region AR/ Invoice
             foreach (ARInvoice openARinvoice in iQueryable_ARInvoice_Open)
@@ -512,6 +513,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 foreach (var ledgerGroup in OpenledgerGroups)
                 {
                     Openbalance = 0;
+                    Openbalance_local = 0;
                     foreach (AccountingLedger ledger in ledgerGroup.Items)
                     {
                         switch (ledger.ReferenceType)
@@ -521,8 +523,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             case "A\\P Credit Note":
                                 {
                                     Openbalance = Openbalance + ledger.Debit;
+                                    Openbalance_local = Openbalance_local + ledger.DebitInLocalCurrency;
                                     ledger.AccountBanalnce = Openbalance;
-                                    ledger.AccountBalanceInLocalCurrency = Openbalance + ledger.DebitInLocalCurrency;
+                                    ledger.AccountBalanceInLocalCurrency = Openbalance_local;
                                     break;
                                 }
 
@@ -533,8 +536,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             case "External Payment":
                                 {
                                     Openbalance = Openbalance - ledger.Credits;
+                                    Openbalance_local = Openbalance_local - ledger.CreditInLocalCurrency;
                                     ledger.AccountBanalnce = Openbalance;
-                                    ledger.AccountBalanceInLocalCurrency = Openbalance - ledger.CreditInLocalCurrency;
+                                    ledger.AccountBalanceInLocalCurrency = Openbalance_local;
                                     break;
                                 }
                         }
@@ -975,6 +979,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 }
 
                 double? balance = 0;
+                double? balance_local = 0;
                 var ledgerGroups = from item in item_customer.CustomerItems
                                    group item by item.Currency into g
                                    select new { CurrencyCode = g.Key, Items = g };
@@ -982,6 +987,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 foreach (var ledgerGroup in ledgerGroups)
                 {
                     balance = 0;
+                    balance_local = 0;
 
                     foreach (AccountingLedger ledger in ledgerGroup.Items)
                     {
@@ -992,8 +998,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             case "A\\P Credit Note":
                                 {
                                     balance = balance + ledger.Debit;
+                                    balance_local = balance_local + ledger.DebitInLocalCurrency;
                                     ledger.AccountBanalnce = balance;
-                                    ledger.AccountBalanceInLocalCurrency = balance + ledger.DebitInLocalCurrency;
+                                    ledger.AccountBalanceInLocalCurrency = balance_local;
                                     break;
                                 }
 
@@ -1003,8 +1010,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             case "External Payment":
                                 {
                                     balance = balance - ledger.Credits;
+                                    balance_local = balance_local - ledger.CreditInLocalCurrency;
                                     ledger.AccountBanalnce = balance;
-                                    ledger.AccountBalanceInLocalCurrency = balance - ledger.CreditInLocalCurrency;
+                                    ledger.AccountBalanceInLocalCurrency = balance_local;
                                     break;
                                 }
                         }
