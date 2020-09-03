@@ -49,7 +49,7 @@ namespace Logitude.Server.Tools.Helpers
                     {
                         Contact contact = contactRepository.GetSingleContactByEmail(toEmail, tenant);
                         string toContactName = contact != null ? " " + contact.EnglishName : "";
-                        string From = "no-reply@cloud.amital.co.il";
+                        string From = "reply@amital.co.il";
 
                         if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "simplog")
                         {
