@@ -1881,6 +1881,9 @@ namespace WebFreight.Web.InfrastructureModel
                             //IsCustomerView = docType.IsCustomerView,
                             IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
                             PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
+                            OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName,
+                            OnSendPopulateDateFieldName = docType.OnSendPopulateDateFieldName,
+                            OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName,
                         };
                         foreach (DocumentTypeCopyPM copy in docType.DocumentTypeCopies)
                         {
