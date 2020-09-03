@@ -425,6 +425,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="GLAccountDisplayNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="InvoiceCurrencyId"
     ReferencedTable="Currencies"

@@ -1613,7 +1613,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void AfterUpdating(GLAccountPM entityPM, EntityPM entityParentPM)
         {
             base.AfterUpdating(entityPM, entityParentPM);
-            // Update Card GLAccountId [Maheera]
+            // Update Card GLAccountId [Maheera]  //
             UpdateCardGLAccountId(entityPM.Tenant, entityPM.NewGLAccountCardId, entityPM.Id);
             SendHybridTask(entityPM);
         }
