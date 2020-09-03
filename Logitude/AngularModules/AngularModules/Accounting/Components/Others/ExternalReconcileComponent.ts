@@ -687,10 +687,12 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if (this.IsAutoReconcile) {
             // 1- find id of opposit line
             var transactionRow = this.TransactionSelectedLines.Collection.find(d => d.Id == id);
-            var oppositLine = this.ExtPageSelectedLines.Collection.find(d => d.GroupHash == transactionRow.GroupHash);
+            var transactionMatchedRows = this.TransactionSelectedLines.Collection.filter(d => d.GroupHash == transactionRow.GroupHash) || [];
+            var oppositLines = this.ExtPageSelectedLines.Collection.filter(d => d.GroupHash == transactionRow.GroupHash) || [];
 
             // 2- popline
-            if (!specialCase) this.ExtPagePopLine(oppositLine.Id, true);
+            if(oppositLines.length == 1 && transactionMatchedRows.length == 1)
+                if (!specialCase) this.ExtPagePopLine(oppositLines[0].Id, true);
         }
         //
 
@@ -938,10 +940,13 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if (this.IsAutoReconcile) {
             // 1- find id of opposit line
             var pageLineRow = this.ExtPageSelectedLines.Collection.find(d => d.Id == id);
-            var oppositLine = this.TransactionSelectedLines.Collection.find(d => d.GroupHash == pageLineRow.GroupHash);
+            var pageLineMatchedRows = this.ExtPageSelectedLines.Collection.filter(d => d.GroupHash == pageLineRow.GroupHash) || [];
+            var oppositLines = this.TransactionSelectedLines.Collection.filter(d => d.GroupHash == pageLineRow.GroupHash) || [];
+
 
             // 2- popline
-            if (!specialCase) this.PopLine(oppositLine.Id, true);
+            if(oppositLines.length == 1 && pageLineMatchedRows.length == 1)
+            if (!specialCase) this.PopLine(oppositLines[0].Id, true);
         }
         //
 
@@ -1058,9 +1063,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             filters.PageSize = 30;
             filters.PageIndex = 0;
             filters.GetAll = true;
-            filters.GetCount = true; 
+            filters.GetCount = true;
 
-            
+
             filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
             // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
             filters.addAdditionalFilter("DueDate", new Date(), null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
@@ -1536,7 +1541,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                 if (myResponse != null) {
                     var res = myResponse.Result;
                     this.FullAccountingSetting = res;
- 
+
                     this.GetAutoRecoMethod();
 
                     switch (this.FullAccountingSetting.ExternalReconciliationDefault) {
@@ -1607,7 +1612,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                                     this.ReferenceCheckBoxChecked = true;
                                     break;
                                 }
-        
+
                                 default:
                                     break;
                             }
