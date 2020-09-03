@@ -4,7 +4,7 @@
   ObjectTableName="&quot;Customs.ReferantTeam&quot;"
   IsNew="true"
   DBTableName="&quot;Customs.ReferantTeams&quot;"
-  DBTableOldNames="Customs.Teams,Customs.ReferantTeam,Customs.ReferantTeams"
+  DBTableOldNames="Customs.ReferantTeam,Customs.ReferantTeams"
   ObjectTableSingular="&quot;ReferantTeam&quot;"
   ObjectTablePlural="&quot;ReferantTeams&quot;"
   HasCustomFilter="false"
