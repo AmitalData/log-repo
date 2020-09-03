@@ -187,7 +187,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-
   <Column
     Name="ImporterFile"
     Type="varchar"
@@ -217,7 +216,7 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="Team"
-    ReferencedTable="ReferantTeams"
+    ReferencedTable="ReferantTeam"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>
