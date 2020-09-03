@@ -1,0 +1,107 @@
+﻿<Script DBType="Main" Module="Shipment">
+  <Sql Version="1">
+    <![CDATA[
+    
+      
+If(OBJECT_ID('tempdb..#temp') Is Not Null)
+Begin
+    Drop Table #temp
+End
+
+If(OBJECT_ID('tempdb..#tempGrouped') Is Not Null)
+Begin
+    Drop Table #tempGrouped
+End
+
+
+If(OBJECT_ID('tempdb..#temp_ShipmentComputedFields') Is Not Null)
+Begin
+    Drop Table #temp_ShipmentComputedFields
+End
+
+CREATE TABLE #temp_ShipmentComputedFields
+(
+	Id varchar(15) not null,
+	ContainersNumbersandTypesArray varchar(1000) null
+)
+
+
+
+select
+Shipments.Id, ShipmentPackages.ContainerNumber as ContainerNumber, PackageTypes.Code as PackageTypeCode
+into #temp
+from Shipments
+left outer join ShipmentPackages on Shipments.Id = ShipmentPackages.ShipmentId
+left outer join PackageTypes on ShipmentPackages.PackageTypeId = PackageTypes.Id
+
+
+SELECT DISTINCT temp3.Id, 
+    SUBSTRING(
+        (
+            SELECT ','+temp1.ContainerNumber+'['+temp1.PackageTypeCode+']'
+            FROM #temp temp1
+            WHERE temp1.Id = temp3.Id
+            ORDER BY temp1.Id
+            FOR XML PATH ('')
+        ), 2, 1000) ContainersNumbersandTypesArray
+into #tempGrouped
+FROM #temp temp3
+
+
+go
+
+	declare @Id as varchar(15)
+	declare @ContainersNumbersandTypesArray as varchar(1000)
+
+	
+	declare @Count as int
+	set @Count = 0;
+
+	DECLARE DataCursor CURSOR READ_ONLY
+	FOR
+	SELECT Id, ContainersNumbersandTypesArray
+	FROM #tempGrouped	
+	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @ContainersNumbersandTypesArray
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+
+		insert into #temp_ShipmentComputedFields(Id, ContainersNumbersandTypesArray) values(@Id, @ContainersNumbersandTypesArray)
+
+		set @Count = @Count + 1;
+		if(@Count = 1000)
+		begin		
+			update ShipmentComputedFields
+			set ContainersNumbersandTypesArray = #temp_ShipmentComputedFields.ContainersNumbersandTypesArray
+						 
+			FROM ShipmentComputedFields
+			INNER JOIN #temp_ShipmentComputedFields
+			on ShipmentComputedFields.Id = #temp_ShipmentComputedFields.Id
+
+			truncate table #temp_ShipmentComputedFields
+			set @Count = 0
+		end
+	FETCH NEXT FROM DataCursor INTO @Id, @ContainersNumbersandTypesArray
+	END
+	CLOSE DataCursor
+	DEALLOCATE DataCursor
+
+	if (@Count > 0)
+	begin
+			update ShipmentComputedFields
+			set ContainersNumbersandTypesArray = #temp_ShipmentComputedFields.ContainersNumbersandTypesArray
+			
+			FROM ShipmentComputedFields
+			INNER JOIN #temp_ShipmentComputedFields
+			on ShipmentComputedFields.Id = #temp_ShipmentComputedFields.Id
+	end
+
+drop table #temp
+drop table #tempGrouped
+drop table #temp_ShipmentComputedFields
+      
+    ]]>
+  </Sql>
+</Script>
+
+
+
