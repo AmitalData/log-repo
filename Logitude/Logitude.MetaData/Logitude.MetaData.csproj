@@ -354,10 +354,10 @@
     <None Include="DBScripts\CommonModel\202007201436_FillWarehouseFieldsDefaultValues.sxml" />
     <None Include="DBScripts\CommonModel\202008051018_AddNewMeasurementAndChargesType.sxml" />
     <None Include="DBScripts\CommonModel\20200812_SetIATACodeToSRForImportStorageCharge.sxml" />
-    <None Include="DBScripts\CommonModel\202008110941_AddNewMeasurement.sxml" />\
-    <None Include="DBScripts\CommonModel\202009011450_ImportToUSADropMaman.sxml" />\
+    <None Include="DBScripts\CommonModel\202008110941_AddNewMeasurement.sxml" />
+    <None Include="DBScripts\CommonModel\202009011450_ImportToUSADropMaman.sxml" />
     <None Include="DBScripts\CommonModel\202008261425_SetToggleCodeForHorsesFeature.sxml" />
-    <None Include="DBScripts\CommonModel\202008300915_AddHorsesEventTypesToTenants.sxml" />\
+    <None Include="DBScripts\CommonModel\202008300915_AddHorsesEventTypesToTenants.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingMilestoneFillValues.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingHeaderEntityTypeFillValues.sxml" />
     <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />
