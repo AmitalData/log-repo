@@ -273,9 +273,9 @@
                                     <tr>
                                         <td style="position: relative; vertical-align:top; padding-top: 2px; padding-bottom: 2px;">
                                             <ul>
-                                                <li class="ValidationItem"  *ngFor="let item of this.EMessagesList.Collection" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+                                                <li class="ValidationItem"  *ngFor="let item of this.EMessagesList.Collection" [style.float]="'right'">
                                                     <img  src="./Images/SimplogIcons/Warning.png"   style="width:15px;height:15px"/>
-                                                    <span [style.text-align]="LayoutDirection=='rtl' ? 'left' : 'right' ">{{item.E}}</span>
+                                                    <span [style.text-align]="'right'">{{item.E}}</span>
                                                 </li>
                                             </ul>
                                         </td>
@@ -303,9 +303,9 @@
                                     <tr>
                                         <td style="position: relative; vertical-align:top; padding-top: 2px; padding-bottom: 2px;">
                                             <ul>
-                                                <li class="ValidationItem"  *ngFor="let item of this.WMessagesList.Collection" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+                                                <li class="ValidationItem"  *ngFor="let item of this.WMessagesList.Collection" [style.float]="'right'">
                                                     <img src="./Images/Error.png"  style="width:15px;height:15px" />
-                                                    <span  [style.text-align]="LayoutDirection=='rtl' ? 'left' : 'right' ">{{item.W}}</span>
+                                                    <span  [style.text-align]="'right' ">{{item.W}}</span>
                                                 </li>
                                             </ul>
                                         </td>
