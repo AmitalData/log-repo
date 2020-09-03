@@ -24,6 +24,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FinalDeliveryATD).IsOptional();
             this.Property(t => t.FinalDeliveryATA).IsOptional();
             this.Property(t => t.ContainersNumbers).HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.ContainersNumbersAndTypesArray).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.Commodity).HasMaxLength(15).IsUnicode(true);
             this.Property(t => t.FirstPickupLocation).HasMaxLength(100).IsUnicode(true);
 
@@ -116,6 +117,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FirstPickupLocation).HasColumnName("FirstPickupLocation");
             this.Property(t => t.Commodity).HasColumnName("Commodity");
             this.Property(t => t.ContainersNumbers).HasColumnName("ContainersNumbers");
+            this.Property(t => t.ContainersNumbersAndTypesArray).HasColumnName("ContainersNumbersAndTypesArray");
             this.Property(t => t.FirstPickupATD).HasColumnName("FirstPickupATD");
             this.Property(t => t.FirstPickupATA).HasColumnName("FirstPickupATA");
             this.Property(t => t.FinalDeliveryETD).HasColumnName("FinalDeliveryETD");
