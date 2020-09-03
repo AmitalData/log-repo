@@ -631,15 +631,13 @@ namespace WebFreight.Web.Helpers
             }
             string PagingString = "";
             string offsetPagingString = "";
-            if (LogitudeSettings.LogitudeURL != "http://localhost:9996")
+
+            if (LogitudeSettings.LogitudeURL != "http://localhost:9996" && DWQueryParam.PageSize != 0)
             {
                 PagingString = " ORDER BY " + OrderByString;
-                if (LogitudeSettings.LogitudeURL != "http://localhost:9996" && DWQueryParam.PageSize != 0)
-                {
-                    offsetPagingString = (" OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY");
-                }
+                offsetPagingString = (" OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY");
             }
-
+            
             string FinalQuery = "";
             if (Filters != null)
             {
