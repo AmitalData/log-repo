@@ -46,6 +46,39 @@
                                     </td>
 
                                     <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="MediaFill">
+                                                        <table *ngIf="IsRegionalTaxVisible && IsChargesByVAT">
+                                                            <tr class="FormFieldRow">
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width: 100px;">
+                                                                    <LogLabel [ObjectFieldName]="'RegionalTaxId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                </td>
+
+                                                                <td style="width: 170px;">
+                                                                    <LogLov [ObjectFieldName]="'RegionalTaxId'"
+                                                                            [SelectedValue]="RegionalTaxId"
+                                                                            [ObjectTableName]="ObjectTableName"
+                                                                            [DataContext]="DataContext"
+                                                                            [LookUpTableName]="'VatType'"
+                                                                            [HideColumns]="true"
+                                                                            [DependencyFilter2Value]="true">
+                                                                    </LogLov>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 5px;">
                                         <div></div>
                                     </td>
 
@@ -865,6 +898,19 @@
                                                             </td>
                                                         </tr>
                                                     </table>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- IsRegionalTax -->
+                                    <log-column [width]="'90'" [header]="'QuoteCharge.F.IsRegionalTax' | TextCodeTranslationPipe" *ngIf="IsRegionalTaxVisible && IsChargesByVAT">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div style="height: 100%; width: 100%; position:relative;">
+                                                    <div class="CenterCenter" style="width: 16px;">
+                                                        <CheckBox [IsChecked]="item.IsRegionalTax" (Checked)="item.IsRegionalTax = $event" [IsEnabled]="item.IsRegionalTaxEnabled"></CheckBox>
+                                                    </div>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

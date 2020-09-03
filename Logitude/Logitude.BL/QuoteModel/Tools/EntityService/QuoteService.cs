@@ -1801,7 +1801,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             {
                 if (entityPM.IsChargesByVAT)
                 {
-                    List<QuoteChargePM> myDataLines = this.entityPM.QuoteCharges.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
+                    List<QuoteChargePM> myDataLines = this.entityPM.QuoteCharges.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null && d.IsAllIN == false).ToList();
+
                     if (myDataLines.Count > 0)
                     {
                         double? myProfitCurrencyRate = null;
@@ -1812,9 +1813,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                             myProfitCurrencyRate = MethodHelper.Round(lastRate.Rate, 5);
                         }
 
-                        List<VATTypesGroup> allVatGroups = (from d in myCommonContext.VATTypesGroups
-                                                            where d.Tenant == this.tenant
-                                                            select d).ToList();
+                        List<VATTypesGroup> allVatGroups = (from d in myCommonContext.VATTypesGroups where d.Tenant == this.tenant select d).ToList();
 
                         List<QuoteTotalsClass> group_Source = new List<QuoteTotalsClass>();
 
@@ -1837,6 +1836,26 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         ExternalVATCard = lineVatType.ReceivablesExternalId,
                                         ExternalTAXItemId = lineVatType.ExternalTAXItemId,
                                     };
+
+                                    if (item.IsRegionalTax)
+                                    {
+                                        newItem.QuoteCurrencyAmount = item.SaleTotalAmount + item.SaleTotalAmount * (entityPM.RegionalTaxPercentage / 100);
+                                        newItem.LocalCurrencyAmount = item.SaleTotalAmountLocal + item.SaleTotalAmountLocal * (entityPM.RegionalTaxPercentage / 100);
+
+                                        QuoteTotalsClass newRegionalTaxItem = new QuoteTotalsClass()
+                                        {
+                                            Id = entityPM.RegionalTaxId,
+                                            VatTypeId = entityPM.RegionalTaxId,
+                                            VatTypePercentage = entityPM.RegionalTaxPercentage,
+                                            QuoteCurrencyAmount = item.SaleTotalAmount,
+                                            LocalCurrencyAmount = item.SaleTotalAmountLocal,
+                                            ExternalVATCard = newItem.ExternalVATCard,
+                                            ExternalTAXItemId = newItem.ExternalTAXItemId,
+                                            //IsRegionalTax = true,
+                                        };
+
+                                        group_Source.Add(newRegionalTaxItem);
+                                    }
 
                                     group_Source.Add(newItem);
                                 }
@@ -1886,7 +1905,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                  ExternalTAXItemId = g.Key.ExternalTAXItemId,
                                  QuoteCurrencyAmount = g.Sum(s => s.QuoteCurrencyAmount),
                                  LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
-                                 //ProfitCurrencyAmount = g.Sum(s => s.SaleTotalAmount),
                              }).ToList();                       
 
                         foreach (var item in group_data)

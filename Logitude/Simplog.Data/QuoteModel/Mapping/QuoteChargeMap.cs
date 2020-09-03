@@ -97,6 +97,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.TariffNumber).HasColumnName("TariffNumber");
             this.Property(t => t.TariffId).HasColumnName("TariffId");
             this.Property(t => t.TariffVersion).HasColumnName("TariffVersion");
+            this.Property(t => t.IsRegionalTax).HasColumnName("IsRegionalTax");
 
             // Relationships
             this.HasOptional(t => t.VendorCard).WithMany().HasForeignKey(d => d.VendorId);

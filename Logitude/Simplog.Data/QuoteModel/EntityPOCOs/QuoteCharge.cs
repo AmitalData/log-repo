@@ -129,5 +129,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         [ForeignKey("VatTypeId")]
         public virtual VatType VatType { get; set; }
 
+        public bool IsRegionalTax { get; set; }
+
     }
 }

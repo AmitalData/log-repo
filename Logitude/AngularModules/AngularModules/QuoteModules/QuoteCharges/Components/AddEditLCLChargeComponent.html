@@ -105,6 +105,17 @@
                                             </td>
                                         </tr>
 
+                                        <!-- IsRegionalTax -->
+                                        <tr class="FormFieldRow" *ngIf="IsRegionalTaxVisible">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'IsRegionalTax'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogCheckBox [ObjectFieldName]="'IsRegionalTax'" [Checked]="DataContext.IsRegionalTax" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                            </td>
+                                        </tr>
+
                                         <tr>
                                             <td colspan="2">
                                                 <div></div>

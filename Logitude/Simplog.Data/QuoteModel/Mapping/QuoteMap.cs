@@ -141,6 +141,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.CountryForStatisticsId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ProfitCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentSubTypeId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.RegionalTaxId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Quotes");
@@ -327,6 +328,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ProfitExchangeRate).HasColumnName("ProfitExchangeRate");
             this.Property(t => t.ShipmentSubTypeId).HasColumnName("ShipmentSubTypeId");
             this.Property(t => t.PickupDeliveryVolumetricWeight).HasColumnName("PickupDeliveryVolumetricWeight");
+            this.Property(t => t.RegionalTaxId).HasColumnName("RegionalTaxId");
+            this.Property(t => t.RegionalTaxPercentage).HasColumnName("RegionalTaxPercentage");
 
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);
@@ -383,6 +386,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.HasOptional(t => t.CountryForStatistics).WithMany().HasForeignKey(d => d.CountryForStatisticsId);
             this.HasOptional(t => t.ProfitCurrency).WithMany().HasForeignKey(d => d.ProfitCurrencyId);
             this.HasOptional(t => t.ShipmentSubType).WithMany().HasForeignKey(d => d.ShipmentSubTypeId);
+            this.HasOptional(t => t.RegionalTax).WithMany().HasForeignKey(d => d.RegionalTaxId);
+
         }
     }
 }

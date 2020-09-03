@@ -191,5 +191,7 @@ export class QuoteList {
 		ShipmentSubTypeId: string;
 		ShipmentSubTypeName: string;
 		PickupDeliveryVolumetricWeight: number;
+		RegionalTaxId: string;
+		RegionalTaxPercentage: number;
 	
 }
