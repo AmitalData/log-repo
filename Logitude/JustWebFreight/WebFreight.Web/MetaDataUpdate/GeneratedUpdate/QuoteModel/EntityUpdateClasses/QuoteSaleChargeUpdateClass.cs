@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteSaleChargeUpdateClass
    {  		
-		public const string HashString = "16fcd4a03e3a96c6c6f95878f86fab34";
+		public const string HashString = "d6421e8a6ad9344e8001144c48aecc03";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Quote Sales Charge",
-			      				    Code =  "b7e2",
+			      				    Code =  "7c27",
 			      				    Name =  "QuoteSaleCharge",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Quote",
@@ -2030,6 +2030,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsRegionalTax",
 					  						ListPropertyPath =  "IsRegionalTax",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

@@ -60,5 +60,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string ContainerType3MarkUpText { get; set; }
         public string ContainerType4MarkUpText { get; set; }
         public string ContainerType5MarkUpText { get; set; }
+        public bool IsRegionalTax { get; set; }
     }
 }
