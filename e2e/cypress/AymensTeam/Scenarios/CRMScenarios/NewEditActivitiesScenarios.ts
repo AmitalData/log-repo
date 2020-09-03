@@ -56,6 +56,8 @@ export class NewEditActivitiesScenarios {
         Resolvers.LOVResolver.Selector('#Activity_PriorityCode').SelectFirst();
     }
     private CreateAppoinment(EntityNumber: string) {
+        cy.wait(500)
+
         this.WaitLoaded('cardviews/getbyfilters?');
         Resolvers.TextBoxResolver.Selector('#Activity_Subject').Type('Appoinment # : ' + EntityNumber);
         Resolvers.TextBoxResolver.Selector('#Activity_Description').Type('Description for Appoinment # : ' + EntityNumber);
@@ -127,11 +129,11 @@ export class NewEditActivitiesScenarios {
 
     //    cy.wait('@ActivitiesWorkSpace');
     //}
-    private WaitLoaded(url: string) {
+    private WaitLoaded(urls: string) {
         cy.server();
         cy.route({
             method: 'GET',
-            url: '**/' + url+'**',
+            url: '**/' + urls+'**',
             onResponse: (xhr) => {
                 expect(xhr.status).to.eq(200);
             }
