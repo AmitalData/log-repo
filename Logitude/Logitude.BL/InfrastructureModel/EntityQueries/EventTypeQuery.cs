@@ -404,7 +404,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    IsFollowUp = eventType.IsFollowUp,
                                                    InActive = eventType.InActive,
                                                    EntityStatusName = eventType.EntityStatus != null ? eventType.EntityStatus.Name : null,
-                                                   EntityStatusWeight = eventType.EntityStatus != null ? eventType.EntityStatus.StatusWeight : null,
+                                                   EntityStatusWeight = eventType.EntityStatus != null ? eventType.EntityStatus.StatusWeight : (int?)null,
                                                    EventTypeCategoryCode = eventType.EventTypeCategoryCode,
                                                    IsAgentView = eventType.IsAgentView,
                                                    IsCustomerView = eventType.IsCustomerView,
