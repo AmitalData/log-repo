@@ -29,6 +29,7 @@ using Simplog.Server.Infrastructure;
 using System.Transactions;
 using Logitude.Server.Tools.Utils;
 using System.Configuration;
+using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
 
 namespace CustomsWorkerRole
 {
@@ -228,6 +229,8 @@ namespace CustomsWorkerRole
                 {
                     LogMessagingUtilWR.Instance.Clear();
                     LogMessagingUtil.Instance.Clear();
+
+                    DateTime QueueStartDate = DateTime.Now;
                     //throw new Exception("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
                     LogMessagingUtilWR.Instance.AppendLine("TransactionFactory.GetTransaction");
                     using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
@@ -259,6 +262,9 @@ namespace CustomsWorkerRole
                             break;
                         }
 
+                        PerformanceM.EnqueueLastInstance();
+                        PerformanceM.LastInstance.QueueStartDate = QueueStartDate;
+                        PerformanceM.LastInstance.QueueReceiveDate = DateTime.Now;
 
                         LastActivity = DateTime.UtcNow;
                         proccesDone = true;
@@ -269,6 +275,7 @@ namespace CustomsWorkerRole
                         {
                             _CustomDbQueueService.SafeComplete();
                             Queue_scope.Complete();
+                            PerformanceM.LastInstance.QueueSuccessComplete = true;
                         }
                         else if (!successProcessMessage)/// IF FAILED USE NEW TRANS !!!!
                         {
@@ -293,10 +300,13 @@ namespace CustomsWorkerRole
                                 _CustomDbQueueService.SafeAbandon();
                                 Abandon_Queue_scope.Complete();
                             }
+                            
                         }
                         LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
                         LogDoneItemInMemory();
                         LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
+                        PerformanceM.LastInstance.QueueEndDate = DateTime.Now;
+                        PerformanceM.EnqueueLastInstance();
 
                         string logItMessagingUtilWR = ConfigurationManager.AppSettings.Get("LogMessagingUtilWR");
 
@@ -320,9 +330,10 @@ namespace CustomsWorkerRole
             {
                 int tenant = -1;
                 string analyzeClass = msgResponse.Properties["InterfaceTypeCode"].ToString();
-                
 
                 
+
+
                 if (String.IsNullOrWhiteSpace(analyzeClass))
                 {
                     //_CustomDbQueueService.SafeAbandon();
@@ -361,6 +372,9 @@ namespace CustomsWorkerRole
                 {
                     throw new Exception("Enum.TryParse<CustomsCommandEnum>(s, out myCustomsCommandEnum)");
                 }
+                PerformanceM.LastInstance.InterfaceTypeCode = analyzeClass;
+                PerformanceM.LastInstance.RequestSheetID = correlationId;
+                PerformanceM.LastInstance.QueueDefinitionCode = myCustomsCommandEnum.ToString();
                 LogMessagingUtilWR.Instance.AppendLine("ResolveAndExecute");
                 MessagingServiceFactoryHelper.ResolveAndExecute(analyzeClass, tenant, correlationId, myCustomsCommandEnum);
 
