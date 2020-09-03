@@ -102,7 +102,8 @@ declare  @InActive bit
 	 DECLARE  @newId varchar(100) ;
 
 	  declare  @RecordDate datetime
-    set @RecordDate = @CreateDate
+		 set @RecordDate = @UpdateDate;
+		 if(@RecordDate is null) set @RecordDate = @CreateDate
 
 			 BEGIN TRY  
 
