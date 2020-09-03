@@ -557,7 +557,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     {
                         IsSalesmanUserIdSameOnAllCards = false;
                     }
-                    if (card.CollectorId != FirstCollectorId || card.SalesmanUserId == null)
+                    if (card.CollectorId != FirstCollectorId || card.CollectorId == null)
                     {
                         IsCollectorIdSameOnAllCards = false;
                     }
