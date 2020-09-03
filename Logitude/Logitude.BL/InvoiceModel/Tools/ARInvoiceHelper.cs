@@ -116,6 +116,11 @@ namespace Logitude.BL.InvoiceModel.Tools
         }
         public  void ARInvoiceQuickbooksValidating(ARInvoice entityPOCO, ARInvoicePM entityPM, Boolean IsSetApproved, Boolean isNewEntity, IInvoiceContext InvoiceContext, ICommonDataContext CommonContext,Boolean isSetVoided)
         {
+            if (entityPM.TransferStatusCode == "BL")
+            {
+                return;
+            }
+
             if ((isSetVoided && entityPM.ARInvoiceTypeCode != "CD" && entityPM.ARInvoiceTypeCode != "CC") || (entityPM.StatusCode == "VD" && entityPM.SetReSendQBO == true))
             {
                 bool isTransferingVoiding = true;
