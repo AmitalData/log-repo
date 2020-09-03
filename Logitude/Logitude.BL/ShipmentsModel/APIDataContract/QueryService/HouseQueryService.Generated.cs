@@ -391,7 +391,6 @@ using Simplog.Data.ShipmentsModel;
 			       
 					   				   }
 				   
-				   temp.MAWBDate = MyEntityPM.MAWBOBLDate;
 				   temp.Ratio = MyEntityPM.Ratio;					
 				   return temp;
 			}
@@ -1234,13 +1233,6 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    
-					if(IsUpdate)
-					{
-							throw new ApplicationException("MAWBDate Can't be update"); 
-					}  
-
-					temp.MAWBOBLDate = MyEntity.MAWBDate;
                     
 					if(IsUpdate)
 					{

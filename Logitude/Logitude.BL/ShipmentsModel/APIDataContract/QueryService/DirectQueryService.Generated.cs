@@ -409,7 +409,7 @@ using Simplog.Data.ShipmentsModel;
 			       
 					   				   }
 				   
-				   temp.MAWBDate = MyEntityPM.MAWBOBLDate;
+				   temp.MasterDate = MyEntityPM.MAWBOBLDate;
 				   temp.Ratio = MyEntityPM.Ratio;
 				if(MyEntityPM.MainCarriageLegs != null && MyEntityPM.MainCarriageLegs.Count > 0)
 				{
@@ -1302,10 +1302,10 @@ using Simplog.Data.ShipmentsModel;
                     
 					if(IsUpdate)
 					{
-							throw new ApplicationException("MAWBDate Can't be update"); 
+							throw new ApplicationException("MasterDate Can't be update"); 
 					}  
 
-					temp.MAWBOBLDate = MyEntity.MAWBDate;
+					temp.MAWBOBLDate = MyEntity.MasterDate;
                     
 					if(IsUpdate)
 					{
