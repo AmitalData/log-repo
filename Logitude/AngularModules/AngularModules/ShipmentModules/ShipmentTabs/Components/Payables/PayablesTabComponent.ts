@@ -842,8 +842,23 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                     feightPayable.TariffNumber = loadedResult.TariffNumber;
                     feightPayable.TariffVersion = +loadedResult.VersionId;
 
-                    if (feightPayable.UnitPrice != loadedResult.ActualPrice) {                        
-                        feightPayable.UnitPrice = loadedResult.ActualPrice;
+                    var quantity = 1;
+                    var originalPayable: ShipmentPayablePM = originalPayables.filter(d => d.ChargesTypeCode == feightPayable.ChargesTypeCode)[0];
+                    if (originalPayable) {
+                        quantity = originalPayable.Quantity;
+                    }
+
+                    var newPrice: number = 0;                    
+                    if (feightPayable.MeasurementCode == "PRVL" || feightPayable.MeasurementCode == "PRFR") {
+                        var price = loadedResult.ActualPrice * 100;
+                        newPrice = AppTool.Round(price / quantity, 3);
+                    }
+                    else {
+                        newPrice = loadedResult.ActualPrice != null ? AppTool.Round(loadedResult.ActualPrice / quantity, 3) : null;
+                    }
+
+                    if (feightPayable.UnitPrice != newPrice) {                        
+                        feightPayable.UnitPrice = newPrice;
 
                         if (AppTool.IsNullOrEmpty(codes)) {
                             codes = feightPayable.ChargesTypeCode;
@@ -878,9 +893,24 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                             surchargePayable.TariffId = item.TariffId;
                             surchargePayable.TariffNumber = item.TariffNumber;
 
-                            if (surchargePayable.UnitPrice != item.ActualPrice) {
+                            var quantity = 1;
+                            var originalPayable: ShipmentPayablePM = originalPayables.filter(d => d.ChargesTypeCode == surchargePayable.ChargesTypeCode)[0];
+                            if (originalPayable) {
+                                quantity = originalPayable.Quantity;
+                            }
+
+                            var newPrice: number = 0;
+                            if (surchargePayable.MeasurementCode == "PRVL" || surchargePayable.MeasurementCode == "PRFR") {
+                                var price = item.ActualPrice * 100;
+                                newPrice = AppTool.Round(price / quantity, 3);
+                            }
+                            else {
+                                newPrice = item.ActualPrice != null ? AppTool.Round(item.ActualPrice / quantity, 3) : null;
+                            }
+
+                            if (surchargePayable.UnitPrice != newPrice) {
                                 surchargePayable.TariffVersion = +item.VersionId;
-                                surchargePayable.UnitPrice = item.ActualPrice;
+                                surchargePayable.UnitPrice = newPrice;
 
                                 if (AppTool.IsNullOrEmpty(codes)) {
                                     codes = surchargePayable.ChargesTypeCode;
