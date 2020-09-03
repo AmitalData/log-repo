@@ -2118,7 +2118,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         CostMaxAmount = item.CostMaxAmount,
                         SaleMinAmount = item.SaleMinAmount,
                         SaleMaxAmount = item.SaleMaxAmount,
-
+                        IsRegionalTax = item.IsRegionalTax,
                         MarkUpText = this.GetMarkUpText(item.MarkUpValue, item.MarkUpTypeCode),
                         ContainerType1MarkUpText = this.GetMarkUpText(item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode),
                         ContainerType2MarkUpText = this.GetMarkUpText(item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode),
@@ -2597,7 +2597,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 CostMaxAmount = item.CostMaxAmount,
                 SaleMinAmount = item.SaleMinAmount,
                 SaleMaxAmount = item.SaleMaxAmount,
-
+                IsRegionalTax = item.IsRegionalTax,
                 MarkUpText = this.GetMarkUpText(item.MarkUpValue, item.MarkUpTypeCode),
                 ContainerType1MarkUpText = this.GetMarkUpText(item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode),
                 ContainerType2MarkUpText = this.GetMarkUpText(item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode),
