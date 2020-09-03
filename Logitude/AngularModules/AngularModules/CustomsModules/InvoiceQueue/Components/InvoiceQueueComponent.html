@@ -1,4 +1,45 @@
 <style type="text/css">
+    .ValidationSummary span {
+        text-align: left;
+        width: calc(100% - 25px);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .ValidationSummary .ValidationItem {
+        display: block;
+        float: left;
+        width: 100%;
+        height: 18px;
+        line-height: 20px;
+        position: relative;
+    }
+
+    .ValidationSummary ul {
+        max-height: 80px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .ValidationSummary {
+        height: 100%;
+        width: 100%;
+        border-radius: 5px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .SingleError {
+        white-space: normal;
+        max-height: 40px;
+        padding-top: 2px;
+    }
     .container {
         text-align: right;
         height: 23px;
@@ -201,7 +242,7 @@
         <div tabindex="-1" class="ToggleButton" style="width:115px;height: 1px; border:unset; ">
             <!--background:white; -->
             <div>
-                <table >
+                <table>
                     <tr>
                         <td class="LeftCenter" style="width: 80px;">
                             <label style="width: 80px; font-size:14px; color: #4db6ea;">פעולות נוספות</label> <!--{{'Customs.CourierMaster.O.MoreActions' | TextCodeTranslationPipe}}-->
@@ -219,38 +260,71 @@
                 <button style="text-align:right" (click)="ShowDisbursement()">בילינג</button>
                 <button style="text-align:right" (click)="ShowPayments()">רשימת הוצאות</button>
             </div>
-            <!--
-                <div *ngIf="FieldName == 'Actions'" (click)="ButtonClick()">
-                    <div (click)="ButtonClick()">
-                        <courier-filter-button #MyDropdownMenuFilterComponent
-                                               [IsDisabled]="IsDisplayOnly" [DivLeft]="20">
-                            <div class="class-filter-content">
-                                <div>
-                                    <img style="width: 14px; height: 14px; position: center;" src="./Images/Icons/Actions.png" />
-                                </div>
-                            </div>
-
-                            <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose()">
-                                <ul class="P-button-drop-menu" style="text-align:right; left:250px;">
-                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowDisbursement();  ">
-                                        <span>בילינג</span>
-                                    </li>
-                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();  ShowPayments();">
-                                        <span>רשימת הוצאות</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </courier-filter-button>
-                    </div>
-                </div>
-            </div>
-                    -->
         </div>
     </div>
     <table>
+        <tr *ngIf="WarningMessages">
+            <td colspan="13">
+                <table style="min-height: 25px;">
+                    <tr>
+                        <td>
+                            <div class="ValidationSummary" style="max-height:25px; overflow-y:auto; overflow-x:hidden">
+                                <table>
+                                    <tr>
+                                        <td style="position: relative; vertical-align:top; padding-top: 2px; padding-bottom: 2px;">
+                                            <ul>
+                                                <li class="ValidationItem" [ngStyle]="{width: ItemWidth}" *ngFor="let item of this.EMessagesList.Collection" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+                                                    <img [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" src="./Images/SimplogIcons/Warning.png"   style="width:15px;height:15px"/>
+                                                    <span [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" [style.text-align]="LayoutDirection=='rtl' ? 'left' : 'right' ">{{item.E}}</span>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr *ngIf="ErrorMessages">
+            <td colspan="13">
+                <table style="min-height: 25px;">
+                    <tr>
+                        <td>
+                            <div class="ValidationSummary" style="max-height:25px; overflow-y:auto; overflow-x:hidden">
+                                <table>
+                                    <tr>
+                                        <td style="position: relative; vertical-align:top; padding-top: 2px; padding-bottom: 2px;">
+                                            <ul>
+                                                <li class="ValidationItem" [ngStyle]="{width: ItemWidth}" *ngFor="let item of this.WMessagesList.Collection" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+                                                    <img [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" src="./Images/Error.png"  style="width:15px;height:15px" />
+                                                    <span [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" [style.text-align]="LayoutDirection=='rtl' ? 'left' : 'right' ">{{item.W}}</span>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
         <tr>
             <td>
-    
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
                     מספר תיק
                 </span>
@@ -295,7 +369,7 @@
 
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px;">
                     {{declaration.PaymentDate | DateTimeToDatePipe}}
-                </span> 
+                </span>
 
             </td>
             <td></td>
@@ -452,7 +526,7 @@
                     <br />
                     <br />
 
-                    <div class="GeneratedGridContainer" style="width: 100% ; height :60%">
+                    <div class="GeneratedGridContainer" style="width: 100% ; height :50%">
 
 
                         <logitude-edit-grid [IsDarkHeader]="'true'" GridWidth="100%" [GridHeight]="10" [ItemSource]="StatusList">
@@ -530,7 +604,7 @@
         </tr>
 
         <tr style="height:150px">
-           
+
             <td style="width: 35%;">
                 <div style="height : 100%">
 
@@ -683,7 +757,7 @@
     <div style="float:left ;width:150px;margin-left: 5%;">
         <button class="x-button"
                 (click)="CreateQInvoice()" style="min-width: 120px; border-radius: 5px 5px 5px 0px;">
-הפקת חשבונית
+            הפקת חשבונית
         </button>
     </div>
 </div>
