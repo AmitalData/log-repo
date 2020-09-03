@@ -1224,6 +1224,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="RegionalTaxId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RegionalTaxPercentage"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"
     ReferencedTable="QuoteTemplates"
@@ -1492,6 +1505,11 @@
   <Relation
     ForeignKeyColumn="ShipmentSubTypeId"
     ReferencedTable="ShipmentSubTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="RegionalTaxId"
+    ReferencedTable="VatTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

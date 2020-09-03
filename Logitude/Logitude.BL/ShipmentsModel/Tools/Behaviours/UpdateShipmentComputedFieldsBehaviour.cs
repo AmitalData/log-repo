@@ -134,6 +134,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         private void MapContainersNumbers()
         {
             string myContainersNumbers = null;
+            string myContainersNumbersAndTypesArray = null;
 
             if (shipmentPM.ShipmentPackages != null)
             {
@@ -142,10 +143,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                     if (string.IsNullOrEmpty(myContainersNumbers))
                     {
                         myContainersNumbers = packagePM.ContainerNumber;
+                        myContainersNumbersAndTypesArray = packagePM.ContainerNumber + "[" + packagePM.PackageTypeCode + "]";
                     }
                     else
                     {
                         myContainersNumbers += ", " + packagePM.ContainerNumber;
+                        myContainersNumbersAndTypesArray += ", " + packagePM.ContainerNumber + "[" + packagePM.PackageTypeCode + "]";
                     }
                 }
 
@@ -156,6 +159,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             }
 
             entity.ContainersNumbers = myContainersNumbers;
+            entity.ContainersNumbersAndTypesArray = myContainersNumbersAndTypesArray;
         }
         private void MapFirstPickUp()
         {

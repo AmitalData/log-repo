@@ -23,6 +23,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Commodity { get; set; }
         public string FirstPickupLocation { get; set; }
         public string ContainersNumbers { get; set; }
+        public string ContainersNumbersAndTypesArray { get; set; }
         public DateTime? FirstPickupATD { get; set; }
         public DateTime? FirstPickupATA { get; set; }
         public DateTime? FinalDeliveryETD { get; set; }

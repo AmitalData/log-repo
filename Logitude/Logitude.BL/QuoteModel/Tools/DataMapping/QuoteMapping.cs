@@ -210,6 +210,8 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
             entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
             entityPoco.PickupDeliveryVolumetricWeight = entityPM.PickupDeliveryVolumetricWeight;
+            entityPoco.RegionalTaxId = entityPM.RegionalTaxId;
+            entityPoco.RegionalTaxPercentage = entityPM.RegionalTaxPercentage;
 
             BuildSearchField(entityPM, entityPoco);
 

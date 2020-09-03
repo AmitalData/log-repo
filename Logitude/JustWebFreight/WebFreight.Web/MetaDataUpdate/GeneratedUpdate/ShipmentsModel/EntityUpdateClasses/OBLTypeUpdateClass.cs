@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class OBLTypeUpdateClass
    {  		
-		public const string HashString = "7a9f1f7aa80cdaf7575aa403ab319c8b";
+		public const string HashString = "a71bf6f28d76e1a36f5c5c6464120d99";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "OBL Type",
-			      				    Code =  "1720",
+			      				    Code =  "539a",
 			      				    Name =  "OBLType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",

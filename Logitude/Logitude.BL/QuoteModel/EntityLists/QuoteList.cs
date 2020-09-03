@@ -213,5 +213,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string ShipmentSubTypeName { get; set; }
         public double? PickupDeliveryVolumetricWeight { get; set; }
 
+        public string RegionalTaxId { get; set; }
+        public double? RegionalTaxPercentage { get; set; }
     }
 }

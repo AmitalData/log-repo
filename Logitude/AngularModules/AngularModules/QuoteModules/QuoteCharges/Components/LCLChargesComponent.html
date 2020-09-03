@@ -45,6 +45,39 @@
                                     </td>
 
                                     <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="MediaFill">
+                                                        <table *ngIf="IsRegionalTaxVisible && IsChargesByVAT">
+                                                            <tr class="FormFieldRow">
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width: 100px;">
+                                                                    <LogLabel [ObjectFieldName]="'RegionalTaxId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                </td>
+
+                                                                <td style="width: 170px;">
+                                                                    <LogLov [ObjectFieldName]="'RegionalTaxId'"
+                                                                            [SelectedValue]="RegionalTaxId"
+                                                                            [ObjectTableName]="ObjectTableName"
+                                                                            [DataContext]="DataContext"
+                                                                            [LookUpTableName]="'VatType'"
+                                                                            [HideColumns]="true"
+                                                                            [DependencyFilter2Value]="true">
+                                                                    </LogLov>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 5px;">
                                         <div></div>
                                     </td>
 
@@ -86,7 +119,7 @@
                                 <logitude-edit-grid GridWidth="100%" [HeaderHeight]="35" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
 
                                     <!-- Charges Type -->
-                                    <log-column [width]="'150'"  [SortFieldName]="'ChargesTypeCodeName'" [header]="'QuoteCharge.CH.ChargesTypeIdListLable' | TextCodeTranslationPipe">
+                                    <log-column [width]="'150'" [SortFieldName]="'ChargesTypeCodeName'" [header]="'QuoteCharge.CH.ChargesTypeIdListLable' | TextCodeTranslationPipe">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false">
                                                 {{item.ChargesTypeCodeName}}
@@ -139,7 +172,7 @@
                                         </ng-template>
 
                                         <ng-template let-item>
-                                            <log-cell-template #logcelltemplate  [IsEnabled]="item.IsEnabled_CostQuantity">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsEnabled_CostQuantity">
                                                 <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                                                     {{item.CostQuantity | NumbersPipe:'N3'}}
                                                 </div>
@@ -152,7 +185,7 @@
                                     </log-column>
 
                                     <!-- Cost Price -->
-                                    <log-column [SortFieldName]="'CostUnitPrice'"  [width]="'70'">
+                                    <log-column [SortFieldName]="'CostUnitPrice'" [width]="'70'">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -227,9 +260,9 @@
                                                                 <img style="left:-10px;" src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.CostMinMaxIconTitle" />
                                                             </td>
 
-                                                        <td style="width:16px;" *ngIf="item.IsCostAllIn">
-                                                            <img style="left:2px;" src="./Images/Icons/A-icon.png" width="16" height="16" title="All In" />
-                                                        </td>
+                                                            <td style="width:16px;" *ngIf="item.IsCostAllIn">
+                                                                <img style="left:2px;" src="./Images/Icons/A-icon.png" width="16" height="16" title="All In" />
+                                                            </td>
 
                                                             <td>
                                                                 <div></div>
@@ -247,26 +280,26 @@
 
                                     <!-- Tariff Link -->
                                     <log-column *ngIf="IsPriceCheckVisible" [SortFieldName]="'TariffNumber'" [header]="'Tariff'" [width]="'80'" [Alignment]="'center'">
-                                      <ng-template let-item>
-                                        <log-cell-template [TabIndex]="-1" [Alignment]="'center'">
-                                          <div style="width: 100%; height: 100%; position: relative;">
-                                            <table>
-                                                <tr *ngIf="item.TariffNumber != null">
-                                                    <td >
-                                                        <div class="MediaFill">
-                                                            <Hyperlink class="CenterCenter" [FontSize]="12" (click)="EditTariffClicked(item)">{{ item.TariffNumber}}</Hyperlink>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="deleteIcon" style="height: 20px;" [class.Disable]="!item.IsEditingEnabled">
-                                                            <img class="LeftCenter" style="width: 14px; height: 14px; cursor: pointer;" src="./Images/RedX2.png" (click)="DeleteTariff(item)" />
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                          </div>
-                                        </log-cell-template>
-                                      </ng-template>
+                                        <ng-template let-item>
+                                            <log-cell-template [TabIndex]="-1" [Alignment]="'center'">
+                                                <div style="width: 100%; height: 100%; position: relative;">
+                                                    <table>
+                                                        <tr *ngIf="item.TariffNumber != null">
+                                                            <td>
+                                                                <div class="MediaFill">
+                                                                    <Hyperlink class="CenterCenter" [FontSize]="12" (click)="EditTariffClicked(item)">{{ item.TariffNumber}}</Hyperlink>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="deleteIcon" style="height: 20px;" [class.Disable]="!item.IsEditingEnabled">
+                                                                    <img class="LeftCenter" style="width: 14px; height: 14px; cursor: pointer;" src="./Images/RedX2.png" (click)="DeleteTariff(item)" />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Sale Quantity -->
@@ -351,59 +384,8 @@
                                         </ng-template>
                                     </log-column>
 
-                                    <!-- Sale Min Amount -->
-                                    <!--<log-column [width]="'100'" [header]="'Sale Min Amount'">
-        <log-header-template template="let item">
-            <div class="GridHeaderCellTemplate">
-                <table>
-                    <tr>
-                        <td style="text-align: center;">
-                            <div style="font-size:11px;">{{SaleMinAmountHeader[0]}}</div>
-                            <div style="font-size:11px;">{{SaleMinAmountHeader[1]}}</div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </log-header-template>
-
-        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_SaleMinAmount">
-            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
-                {{item.SaleMinAmount | NumbersPipe:'N3'}}
-            </div>
-
-            <div *ngIf="logcelltemplate.IsEditMode">
-                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'SaleMinAmount'" [Text]="item.SaleMinAmount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-            </div>
-        </log-cell-template>
-    </log-column>-->
-                                    <!-- Sale Max Amount -->
-                                    <!--<log-column [width]="'100'" [header]="'Sale Max Amount'">
-        <log-header-template template="let item">
-            <div class="GridHeaderCellTemplate">
-                <table>
-                    <tr>
-                        <td style="text-align: center;">
-                            <div style="font-size:11px;">{{SaleMaxAmountHeader[0]}}</div>
-                            <div style="font-size:11px;">{{SaleMaxAmountHeader[1]}}</div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </log-header-template>
-
-        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_SaleMinAmount">
-            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
-                {{item.SaleMaxAmount | NumbersPipe:'N3'}}
-            </div>
-
-            <div *ngIf="logcelltemplate.IsEditMode">
-                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'SaleMaxAmount'" [Text]="item.SaleMaxAmount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-            </div>
-        </log-cell-template>
-    </log-column>-->
-
                                     <!-- Sale Amount -->
-                                    <log-column [SortFieldName]="'SaleTotalAmount'"  [width]="'100'" *ngIf="IsAdhoc">
+                                    <log-column [SortFieldName]="'SaleTotalAmount'" [width]="'100'" *ngIf="IsAdhoc">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -555,6 +537,19 @@
                                                             </td>
                                                         </tr>
                                                     </table>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- IsRegionalTax -->
+                                    <log-column [width]="'90'" [header]="'QuoteCharge.F.IsRegionalTax' | TextCodeTranslationPipe" *ngIf="IsRegionalTaxVisible && IsChargesByVAT">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div style="height: 100%; width: 100%; position:relative;">
+                                                    <div class="CenterCenter" style="width: 16px;">
+                                                        <CheckBox [IsChecked]="item.IsRegionalTax" (Checked)="item.IsRegionalTax = $event" [IsEnabled]="item.IsRegionalTaxEnabled"></CheckBox>
+                                                    </div>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

@@ -689,5 +689,11 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string DeliveryZipCode { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? PickupDeliveryVolumetricWeight { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string RegionalTaxId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? RegionalTaxPercentage { get; set; }
     }
 }

@@ -21,6 +21,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.QuoteModel.Tools.Validating
 {
@@ -64,6 +65,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
             ValidateDomesticQuote(entityPM);
             ValidateQuoteCharges(entityPM);
             ValidateShipmentSubType(entityPM);
+            ValidateRegionalTax(entityPM);
         }
 
         private static void ValidateConvertQuote(QuotePM entityPM)
@@ -527,6 +529,50 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 }
             }
         }
+        private static void ValidateRegionalTax(QuotePM entityPM)
+        {
+            List<QuoteChargePM> allRegionalTaxLines = entityPM.QuoteCharges.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.IsRegionalTax).ToList();
+
+            if (allRegionalTaxLines.Count > 0)
+            {
+                if (allRegionalTaxLines.Where(d => d.VatIsMultiPercentage).Any())
+                {
+                    throw new ApplicationException("Can't set regional Tax for multi VAT");
+                }
+
+                else if (entityPM.RegionalTaxId == null)
+                {
+                    throw new ApplicationException("Quote regional tax field is required");
+                }
+
+                else
+                {
+                    var groupedIds = (from d in allRegionalTaxLines
+                                      where d.VatTypeId != null
+                                      group d by d.VatTypeId into g
+                                      select g.Key).ToList();
+
+                    if (groupedIds.Count > 1)
+                    {
+                        throw new ApplicationException("Can't set regional tax for different VATs");
+                    }
+
+                    else
+                    {
+                        var groupedPercentages = (from d in allRegionalTaxLines
+                                                  where d.VatTypeId != null
+                                                  group d by new { d.VatTypeId, d.VatPercentage } into g
+                                                  select g.Key).ToList();
+
+                        if (groupedPercentages.Count > 1)
+                        {
+                            throw new ApplicationException("Can't set different regional Tax percentages");
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     public class DomesticCountry

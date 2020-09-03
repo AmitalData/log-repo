@@ -31,6 +31,7 @@
                             <tr>
                                 <td style="width:370px;">
                                     <table class="FixedTable">
+
                                         <!-- ChargesTypeId -->
                                         <tr class="FormFieldRow">
                                             <td style="width: 150px;">
@@ -113,8 +114,25 @@
                                             </td>
                                         </tr>
 
+                                        <!-- IsRegionalTax -->
+                                        <tr class="FormFieldRow" *ngIf="IsRegionalTaxVisible">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'IsRegionalTax'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogCheckBox [ObjectFieldName]="'IsRegionalTax'" [Checked]="DataContext.IsRegionalTax" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
                                         <tr>
-                                            <td></td>
+                                            <td colspan="3">
+                                                <div></div>
+                                            </td>
                                         </tr>
                                     </table>
                                 </td>

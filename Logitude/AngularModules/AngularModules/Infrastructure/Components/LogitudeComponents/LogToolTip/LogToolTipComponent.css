@@ -155,7 +155,7 @@
         .arrow-topleft {
 
           position: absolute;
-          left: 250px;
+          right: 25px;
           top: 36px;
           width: 0;
           height: 0;
@@ -166,7 +166,7 @@
         .arrow-topleft2 {
 
           position: absolute;
-          left: 250px;
+          right: 25px;
           top: 36px;
           width: 0;
           height: 0;
