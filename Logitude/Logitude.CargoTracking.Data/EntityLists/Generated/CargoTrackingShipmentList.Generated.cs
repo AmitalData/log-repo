@@ -122,6 +122,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [Key]
        [DataMember]
        public int Id  { get; set; }
+       [DataMember]
+       public string SearchReferences  { get; set; }
    }
 
 }

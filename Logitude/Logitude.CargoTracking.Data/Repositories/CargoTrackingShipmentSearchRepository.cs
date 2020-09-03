@@ -35,8 +35,19 @@ namespace Logitude.CargoTracking.Data.Repositories
             return shipmentsSearchEntities;
         }
 
+        public List<CargoTrackingShipmentSearch> GetShipmentSearchBySecurityKeys(string securityKey, int tenant)
+        {
+            List<CargoTrackingShipmentSearch> shipmentsSearchEntities = (from searchEntity in currentContext.CargoTrackingShipmentSearches
+                                                                               where
+                                                                                  searchEntity.SecurityKey == securityKey
+                                                                                  && searchEntity.Tenant == tenant
+                                                                               orderby searchEntity.ShipmentDate descending
+                                                                               select searchEntity  ).ToList();
 
-   }
+            return shipmentsSearchEntities;
+        }
+
+    }
 
 }
    

@@ -1285,6 +1285,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string searchReferences ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SearchReferences  
+	   {
+	    
+	     get
+		{
+		   return searchReferences;
+		 }
+		 set
+		 {
+		   if(searchReferences != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchReferences",OldValue=searchReferences,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   searchReferences=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

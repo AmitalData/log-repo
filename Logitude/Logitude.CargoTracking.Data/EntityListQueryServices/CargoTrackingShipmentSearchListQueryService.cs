@@ -59,6 +59,16 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
             List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetShipments(shipmentsSecurityKeies, tenant);
 
+
+            //foreach (CargoTrackingShipmentList shipment in shipments)
+            //{
+            //  List< CargoTrackingShipmentSearch> shipmentSeachEntities=  repo.GetShipmentSearchBySecurityKeys(shipment.SecurityKey, shipment.Tenant);
+            //    string[] references = shipmentSeachEntities.Select(d => d.SearchFields).ToArray();
+            //    shipment.SearchReferences = String.Join(",", references);
+            //    CargoTrackingTransportModeListQueryService cargoTrackingTransportModeListQueryService = new CargoTrackingTransportModeListQueryService(tenant);
+            //      cargoTrackingTransportModeListQueryService.GetSingle(shipment.TransportModeId);
+                
+            //}
             return shipments;
         }
 

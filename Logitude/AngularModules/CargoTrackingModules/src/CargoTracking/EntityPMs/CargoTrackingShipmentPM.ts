@@ -299,6 +299,11 @@ export class CargoTrackingShipmentPM {
     public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
+    private searchReferences: string;
+    public get SearchReferences() { return this.searchReferences; }
+    public set SearchReferences(newValue: string) { if (this.searchReferences != newValue) { this.searchReferences = newValue; this.MarkAsDirty("SearchReferences"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

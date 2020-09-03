@@ -62,6 +62,7 @@ export class CargoTrackingShipmentList {
 	DeclarationDate: Date;
 	CustomsClearanceDate: Date;
 	Id: number;
+	SearchReferences: string;
 	
 }
  
