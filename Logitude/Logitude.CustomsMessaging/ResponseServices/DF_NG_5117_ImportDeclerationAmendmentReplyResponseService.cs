@@ -89,8 +89,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 }
              
-                //var key = "ResponseService,declarationNumber:" + declarationNumber + ",tenant:" + requestParams.Tenant.ToString();
-                string functionalReferenceID = "";
+                 string functionalReferenceID = "";
                 if (customResponse.Response.FunctionalReferenceID != null)
                     functionalReferenceID = customResponse.Response.FunctionalReferenceID.Value;
                 else
@@ -104,6 +103,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declaration != null)
                 {
                     _MyDeclarationPM = declaration;
+                  //  _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, true);
 
                 }
                 else
@@ -115,9 +115,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, true);
 
-                        //_MyDeclarationPM.AmendmentCorrectedByUserId = requestParams.LoggingUserId;
-                        //_MyDeclarationPM.AmendmentDontDisplayInList = false;
-                        //_MyDeclarationPM.IsAmendment = true;
+                   
                     }
 
                     else if(customResponse.Response.Declaration!= null)
@@ -143,6 +141,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                      return;
                 }
 
+           
 
 
                 if (customResponse.ProceduralFaults != null)
@@ -156,15 +155,36 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     var ResponseService_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsgResponseService();
                     ResponseService_8218.Update(customResponse_8218, requestParams);
-                }
 
+
+                    //update id original after create faults
+                    var proceduralFaultQueryService = new ProceduralFaultQueryService(requestParams.Tenant);
+                    var proceduralFaultUpdateService = new ProceduralFaultUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                    foreach (var proceduralFaultItem in customResponse_8218.ProceduralFaultDetails)
+                    {
+                        string faultId = proceduralFaultQueryService.GetFaultIdByFaultNumber(proceduralFaultItem.proceduralFaultNumber.ToString(), requestParams.Tenant);
+                      var  proceduralFaultPM = new ProceduralFaultPM();
+ 
+                        EventContextTagModel myInsertEventContextTagModel = new EventContextTagModel();
+                        myInsertEventContextTagModel.MyNotificationPM = new NotificationPM();
+
+                        if (!string.IsNullOrWhiteSpace(faultId))
+                        {
+                            proceduralFaultPM = proceduralFaultQueryService.GetSingle(faultId, true, false);
+                            proceduralFaultPM.ChangeSetOp = ChangeSetOperation.Update;
+                            proceduralFaultPM.DeclarationId = _MyDeclarationPM.Id;
+                            proceduralFaultUpdateService.Update(proceduralFaultPM, true);
+                         }
+                    }
+                      
+                }
 
 
 
                 var declarationQueryService = new DeclarationQueryService(_MyDeclarationPM.Tenant);
                 _MyDeclarationPMOrg = declarationQueryService.GetSingle(_MyDeclarationPM.AmendmentOriginalDeclartation, true, false);
 
- 
+
                 string loggingUserId = "";
                 UserRepository userRepository = new UserRepository(_MyDeclarationPM.Tenant);
                 var user = userRepository.GetSingleUserByCode("MEHES", _MyDeclarationPM.Tenant, true);
