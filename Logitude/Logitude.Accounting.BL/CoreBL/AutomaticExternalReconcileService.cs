@@ -252,7 +252,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             return externalPageLines
                 .GroupBy(d => d.Reference)
-                .Where(d => d.Count() > 1).ToList();
+                .Where(d => d.Count() > 1 && d.Key != null).ToList();
         }
 
         private List<IGrouping<RefRefDateKey, MyPageLine>> GetGroupedPageLinesByReferenceAndRefDate()
