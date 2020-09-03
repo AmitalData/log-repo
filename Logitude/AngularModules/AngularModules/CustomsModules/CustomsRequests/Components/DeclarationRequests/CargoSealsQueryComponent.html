@@ -123,7 +123,7 @@
                                                             (ValueChanged)="SendCargoQueryRequest(false)"></LogTextBox>
                                             </td>
 
-                                            <td  *ngIf="CargoIdentifierTypeCode==11">
+                                            <td  *ngIf="CargoIdentifierTypeCode=='11'">
  
                                                     <IconButton style="float:left;" [IsSmall]="true" [Name]="'search'"
                                                                 [IsIconOnly]="true"
@@ -154,7 +154,7 @@
                                     <LogLabel [ObjectFieldName]="'CargoRowNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width: 120px;">
-                                    <div *ngIf="CargoIdentifierTypeCode==11">
+                                    <div *ngIf="CargoIdentifierTypeCode=='11'">
 
                                         <ComboBox [ItemsSource]="containers" class="LogLovContainer LogLOVControl LogLovInputDiv"
                                                   [SelectedItem]="containerSelected" [Binding]="'Key'"
@@ -164,7 +164,7 @@
                                     <!--<select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 200px; cursor:pointer;" #selectControl (change)="CargoRowNumber=selectControl.value">
                                     <option *ngFor="let c of RowNumberslist .Collection" [value]="c" [selected]="c==CargoRowNumber">{{c}}</option>
                                 </select>-->
-                                <div *ngIf="CargoIdentifierTypeCode!=11">
+                                <div *ngIf="CargoIdentifierTypeCode!='11'">
 
                                     <LogTextBox [ObjectFieldName]="'CargoRowNumber'"
                                                 [InputType]="text"
@@ -180,7 +180,7 @@
             <LogLabel [ObjectFieldName]="'ContainerNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
         </td>
         <td style="width: 120px;">
-            <div *ngIf="CargoIdentifierTypeCode==11">
+            <div *ngIf="CargoIdentifierTypeCode=='11'">
 
                 <ComboBox [ItemsSource]="containers" class="LogLovContainer LogLOVControl LogLovInputDiv"
                           [SelectedItem]="containerSelected" [Binding]="'Value'"
@@ -191,7 +191,7 @@
             <!--<select  class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 200px; cursor:pointer;" #selectControl1 (change)="ContainerNumber=selectControl1.value">
             <option *ngFor="let c of Containerslist.Collection" [value]="c" [selected]="c==ContainerNumber">{{c}}</option>
         </select>-->
-            <div *ngIf="CargoIdentifierTypeCode!=11">
+            <div *ngIf="CargoIdentifierTypeCode!='11'">
 
                 <LogTextBox [ObjectFieldName]="'ContainerNumber'"
                             [InputType]="text"
