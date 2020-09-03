@@ -273,9 +273,9 @@
                                     <tr>
                                         <td style="position: relative; vertical-align:top; padding-top: 2px; padding-bottom: 2px;">
                                             <ul>
-                                                <li class="ValidationItem" [ngStyle]="{width: ItemWidth}" *ngFor="let item of this.EMessagesList.Collection" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
-                                                    <img [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" src="./Images/SimplogIcons/Warning.png"   style="width:15px;height:15px"/>
-                                                    <span [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" [style.text-align]="LayoutDirection=='rtl' ? 'left' : 'right' ">{{item.E}}</span>
+                                                <li class="ValidationItem"  *ngFor="let item of this.EMessagesList.Collection" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+                                                    <img  src="./Images/SimplogIcons/Warning.png"   style="width:15px;height:15px"/>
+                                                    <span [style.text-align]="LayoutDirection=='rtl' ? 'left' : 'right' ">{{item.E}}</span>
                                                 </li>
                                             </ul>
                                         </td>
@@ -303,9 +303,9 @@
                                     <tr>
                                         <td style="position: relative; vertical-align:top; padding-top: 2px; padding-bottom: 2px;">
                                             <ul>
-                                                <li class="ValidationItem" [ngStyle]="{width: ItemWidth}" *ngFor="let item of this.WMessagesList.Collection" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
-                                                    <img [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" src="./Images/Error.png"  style="width:15px;height:15px" />
-                                                    <span [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" [style.text-align]="LayoutDirection=='rtl' ? 'left' : 'right' ">{{item.W}}</span>
+                                                <li class="ValidationItem"  *ngFor="let item of this.WMessagesList.Collection" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+                                                    <img src="./Images/Error.png"  style="width:15px;height:15px" />
+                                                    <span  [style.text-align]="LayoutDirection=='rtl' ? 'left' : 'right' ">{{item.W}}</span>
                                                 </li>
                                             </ul>
                                         </td>
