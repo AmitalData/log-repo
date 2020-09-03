@@ -216,7 +216,7 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="Team"
-    ReferencedTable="ReferantTeam"
+    ReferencedTable="ReferantTeams"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>
