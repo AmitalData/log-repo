@@ -48,7 +48,7 @@ into #tempGrouped
 FROM #temp temp3
 
 
-go
+
 
 	declare @Id as varchar(15)
 	declare @ContainersNumbersandTypesArray as varchar(1000)
