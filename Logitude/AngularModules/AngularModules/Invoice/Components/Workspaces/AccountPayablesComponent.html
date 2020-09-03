@@ -43,7 +43,7 @@
                                             </table>
                                         </div>
 
-                                        <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
+                                        <div *ngIf="IsNewEntityVisibile" [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
                                             <button class="Button" (click)="NewEntityClicked('APInvoiceMultiple')">{{'General.O.New' | TextCodeTranslationPipe}}</button>
                                         </div>
 
