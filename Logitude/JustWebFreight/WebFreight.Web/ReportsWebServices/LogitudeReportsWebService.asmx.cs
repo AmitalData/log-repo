@@ -6653,7 +6653,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (!string.IsNullOrEmpty(AgentId))
             {
-                iQueryable = iQueryable.Where(d => d.AgentId == AgentId);
+                iQueryable = iQueryable.Where(d => d.AgentComputed == AgentId);
 
                 Card agent = CardRepository.GetSingleCard(AgentId, tenant, true);
                 dataProvider.Agent = agent.EnglishName;
