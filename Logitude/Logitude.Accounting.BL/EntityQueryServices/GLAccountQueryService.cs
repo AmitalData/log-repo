@@ -1075,6 +1075,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 CheckConnectCards(args.AccountId, args.CardId, args.Tenant);
 
             cardPM.GLAccountId = args.AccountId;
+            cardPM.GLAccountDisplayNumber =  GetDisplayNumberByGLAccountId(args.AccountId, args.Tenant);
             SubmitCard(cardPM);
 
 

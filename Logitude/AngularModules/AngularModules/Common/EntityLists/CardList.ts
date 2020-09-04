@@ -38,6 +38,7 @@ export class CardList {
 		IBANNumber: string;
 		PrimaryContactId: string;
 		IsActiveForMobile: boolean;
+		GLAccountDisplayNumber: string;
 		InUse: boolean;
 		RecentlyAdded: string;
 		InvitationDate: Date;

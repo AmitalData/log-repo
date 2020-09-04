@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         private void UpdateCard(CardPM card)
         {
             card.GLAccountId = null;
+            card.GLAccountDisplayNumber = null;
             ICommonDataContext commonContext = CommonDataContext.GetContext(authToken.Tenant);
             CardService cardService = new CardService(commonContext, authToken.Tenant);
             cardService.Update(card);

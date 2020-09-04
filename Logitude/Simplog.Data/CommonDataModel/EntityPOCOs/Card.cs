@@ -49,6 +49,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string Phone { get; set; }
+        public string GLAccountDisplayNumber { get; set; }
 
         [ForeignKey("SalesmanUserId")]
         public virtual User SalesmanUser { get; set; }

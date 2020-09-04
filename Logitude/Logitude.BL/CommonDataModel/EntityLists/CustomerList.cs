@@ -233,8 +233,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         [DataMember]
         public bool IsCustomer { get; set; }
 
-
-
         [DataMember]
         public bool IsActiveForMobile { get; set; }
 
@@ -390,8 +388,10 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public string SATForeignRFC { get; set; }
+
         [DataMember]
         public string MetodoPagoCode { get; set; }
+
         [DataMember]
         public string UsoCFDICode { get; set; }
 
@@ -400,7 +400,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public string Address1 { get; set; }
-
 
         [DataMember]
         public string Address2 { get; set; }
@@ -414,13 +413,16 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         [DataMember]
         public string LeadSourceName { get; set; }
 
+        [DataMember]
         public string CreatedByPartner { get; set; }
 
         [DataMember]
         public string StateName { get; set; }
+
         [DataMember]
         public int? StorageFreeDays { get; set; }
 
+        [DataMember]
         public string GLAccountNumber { get; set; }
 
     }

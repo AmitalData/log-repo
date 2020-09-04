@@ -273,69 +273,59 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<WarehouseList> GetIQueryableEntityList(IQueryable<Warehouse> iQueryable)
         {
-            IQueryable<WarehouseList> result = (from a in iQueryable.Include("Card") select a).AsEnumerable().
-                                               Select(a=> new WarehouseList()
-                                               {
-                                                   Code = a.Card.Code,
-                                                   EnglishName = a.Card.EnglishName,
-                                                   LocalName = a.Card.LocalName,
-                                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
-                                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
-                                                   InActive = a.Card.InActive,
-                                                   Remark = a.Card.Notes,
-                                                   Id = a.Id,
-                                                   Tenant = a.Tenant,
-                                                   VatNumber = a.Card.VatNumber,
-                                                   AddedManually = a.AddedManually,
-                                                   PaymentTermId = a.Card.PaymentTermId,
-                                                   SearchFields = a.Card.SearchFields,
-                                                   Notes = a.Card.Notes,
-                                                   Website = a.Card.Website,
-                                                   InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
-                                                   VatTypeId = a.Card.VatTypeId,
-                                                   EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
-                                                   CityName = a.Card.CityName,
-                                                   CountryId = a.Card.CountryId,
-                                                   CountryCode = a.Card.CountryCode,
-                                                   CountryName = a.Card.CountryName,
-                                                   ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
-                                                   PaymentMethodCode = a.Card.SATPaymentMethodCode,
-                                                   ExternalId2 = a.Card.ExternalId2,
-                                                   MetodoPagoCode = a.Card.MetodoPagoCode,
-                                                   FirmCode = a.FirmCode,
-                                                   TypeCode = a.TypeCode,
-                                                   MyWarehouse = a.MyWarehouse,
-                                                   UsoCFDICode = a.Card.UsoCFDICode,
-                                                   SATForeignRFC = a.Card.SATForeignRFC,
-                                                   PrimaryContactName = a.PrimaryContactName,
-                                                   PrimaryContactEmail = a.PrimaryContactEmail,
-                                                   PrimaryContactPhone = a.PrimaryContactPhone,
-                                                   StateName = a.Card.StateName,
-                                                   ChargeStorage = a.ChargeStorage,
-                                                   CurrencyId = a.CurrencyId,
-                                                   AirWeightMeasurementCode = a.AirWeightMeasurementCode,
-                                                   OceanWeightMeasurementCode = a.OceanWeightMeasurementCode,
-                                                   InlandWeightMeasurementCode = a.InlandWeightMeasurementCode,
-                                                   AirWeightRoundingCode = a.AirWeightRoundingCode,
-                                                   OceanWeightRoundingCode = a.OceanWeightRoundingCode,
-                                                   InlandWeightRoundingCode = a.InlandWeightRoundingCode,
-                                                   GLAccountNumber = GetDisplayNumberFromGLAccount(a.Card.GLAccountId, a.Tenant),
-                                               }).AsQueryable();
+            IQueryable<WarehouseList> result = (from a in iQueryable.Include("Card")
+                                                select new WarehouseList()
+                                                {
+                                                    Code = a.Card.Code,
+                                                    EnglishName = a.Card.EnglishName,
+                                                    LocalName = a.Card.LocalName,
+                                                    ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                                    PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                                    InActive = a.Card.InActive,
+                                                    Remark = a.Card.Notes,
+                                                    Id = a.Id,
+                                                    Tenant = a.Tenant,
+                                                    VatNumber = a.Card.VatNumber,
+                                                    AddedManually = a.AddedManually,
+                                                    PaymentTermId = a.Card.PaymentTermId,
+                                                    SearchFields = a.Card.SearchFields,
+                                                    Notes = a.Card.Notes,
+                                                    Website = a.Card.Website,
+                                                    InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
+                                                    VatTypeId = a.Card.VatTypeId,
+                                                    EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
+                                                    CityName = a.Card.CityName,
+                                                    CountryId = a.Card.CountryId,
+                                                    CountryCode = a.Card.CountryCode,
+                                                    CountryName = a.Card.CountryName,
+                                                    ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
+                                                    PaymentMethodCode = a.Card.SATPaymentMethodCode,
+                                                    ExternalId2 = a.Card.ExternalId2,
+                                                    MetodoPagoCode = a.Card.MetodoPagoCode,
+                                                    FirmCode = a.FirmCode,
+                                                    TypeCode = a.TypeCode,
+                                                    MyWarehouse = a.MyWarehouse,
+                                                    UsoCFDICode = a.Card.UsoCFDICode,
+                                                    SATForeignRFC = a.Card.SATForeignRFC,
+                                                    PrimaryContactName = a.PrimaryContactName,
+                                                    PrimaryContactEmail = a.PrimaryContactEmail,
+                                                    PrimaryContactPhone = a.PrimaryContactPhone,
+                                                    StateName = a.Card.StateName,
+                                                    ChargeStorage = a.ChargeStorage,
+                                                    CurrencyId = a.CurrencyId,
+                                                    AirWeightMeasurementCode = a.AirWeightMeasurementCode,
+                                                    OceanWeightMeasurementCode = a.OceanWeightMeasurementCode,
+                                                    InlandWeightMeasurementCode = a.InlandWeightMeasurementCode,
+                                                    AirWeightRoundingCode = a.AirWeightRoundingCode,
+                                                    OceanWeightRoundingCode = a.OceanWeightRoundingCode,
+                                                    InlandWeightRoundingCode = a.InlandWeightRoundingCode,
+                                                    GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                                });
 
 
             return result;
         }
-        private string GetDisplayNumberFromGLAccount(string GLAccountId, int tenant)
-        {
-            string DisplayNumber = null;
-            if (!string.IsNullOrEmpty(GLAccountId) && tenant != null)
-            {
-                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-                DisplayNumber = glAccountQuery.GetDisplayNumberByGLAccountId(GLAccountId, tenant);
-
-            }
-            return DisplayNumber;
-        }
+    
         public WarehousePM GetSinglePMByCode(string code, int tenant)
         {
             var warehouse = (from a in repository.context.Warehouses.Include("Card")

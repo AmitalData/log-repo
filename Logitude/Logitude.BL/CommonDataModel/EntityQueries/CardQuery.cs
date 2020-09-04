@@ -1115,6 +1115,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 StateName = card.StateName,
                                                 IsInternationalPartner = card.IsInternationalPartner,
                                                 IsAutonomy = card.IsAutonomy,
+                                                GLAccountDisplayNumber = card.GLAccountDisplayNumber,
                                                 CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
                                                 CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
                                                 CreatedByPartner = card.CreatedByPartner,

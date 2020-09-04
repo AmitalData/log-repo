@@ -147,4 +147,4 @@ export class CustomerList {
 		StorageFreeDays: number;
 		GLAccountNumber: string;
 	
-}
+}
