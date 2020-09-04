@@ -14,6 +14,7 @@ import { BatchInvoicesComponent } from './Components/Others/BatchInvoicesCompone
 import { BatchPrintComponent } from './Components/Others/BatchPrintComponent';
 import { BtatchPrintWarningComponent } from './Components/Others/BtatchPrintWarningComponent';
 import { BtatchPrintConfirmComponent } from './Components/Others/BtatchPrintConfirmComponent';
+import { InvoiceDateForBatchInvoicesComponent } from './Components/Others/InvoiceDateForBatchInvoicesComponent';
 
 import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
 import {NewChartOfAccountComponent} from './Components/NewEntity/NewChartOfAccountComponent';
@@ -253,8 +254,8 @@ export const Components =
         InterestReportEditOpenBalanceComponent,
         InterestReportEditCalculationDateComponent,
         BtatchPrintWarningComponent,
-        BtatchPrintConfirmComponent
-
+        BtatchPrintConfirmComponent,
+        InvoiceDateForBatchInvoicesComponent
     ];
 
 export class ModuleDeclarations {
@@ -392,6 +393,7 @@ export class ModuleDeclarations {
             case "InterestReportShortTitleComponent": { myResult = InterestReportShortTitleComponent; break;}
             case "BatchInvoicesComponent" :{myResult =BatchInvoicesComponent; break;}
             case "BatchPrintComponent" :{myResult =BatchPrintComponent; break;}
+            case "InvoiceDateForBatchInvoicesComponent" :{myResult =InvoiceDateForBatchInvoicesComponent; break;}
             case "BtatchPrintWarningComponent" :{myResult =BtatchPrintWarningComponent; break;}
 
         }

@@ -8,6 +8,7 @@ export class InterestReportArguments {
   public Tenant:number;
   public Email:string;
   public tempId:string;
+  public InvoiceDate:Date;
   public securityId:string;
   public Entities:any[];
   public ShowPrintedInvoice:boolean;

@@ -1,0 +1,67 @@
+import { Component} from '@angular/core';
+import { InterestReportPMService } from 'Accounting/Services/StandardPMs/InterestReportPMService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { AppTool } from 'Infrastructure/Tools';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+ 
+
+
+@Component({
+    
+    templateUrl: './InvoiceDateForBatchInvoicesComponent.html',
+})
+
+export class InvoiceDateForBatchInvoicesComponent extends BaseComponent{
+    private CurrentSession = SessionLocator.SelectedSession;
+    public ObjectTableName: string = "ARInvoice";
+    public DataContext: InvoiceDateForBatchInvoicesComponent = this;
+    public isRTL: boolean = false;
+    public ValidationErrorsList: string[]=[];
+    constructor() {
+        super();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.InvoiceDate = new Date();
+    }
+ 
+    SetUIProperties(){
+        if(AppTool.IsNullOrEmpty(this.InvoiceDate)){
+            this.UIProperties.SetRequired("InvoiceDate", this.ObjectTableName, true);
+        }
+        else{
+            this.UIProperties.SetRequired("InvoiceDate", this.ObjectTableName, false);
+        }
+        
+    }
+
+    SetDataContext() {
+         
+    }
+    CancelButtonClicked() {
+        this.CurrentSession.CloseCurrentWindow();
+    }
+    OkButtonClicked() {
+        if(!AppTool.IsNullOrEmpty(this.InvoiceDate)){
+            this.CurrentSession.CloseCurrentWindowEmit(this.invoiceDate+"");
+        }
+        else{
+            var FIELD_IS_REQUIERD: string = null;
+            FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+            FIELD_IS_REQUIERD=FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate")); 
+            this.ValidationErrorsList.push(FIELD_IS_REQUIERD);
+        }
+    }
+    private invoiceDate:Date; 
+    get InvoiceDate(){
+        return this.invoiceDate;
+    }
+    set InvoiceDate(val: Date){
+         this.invoiceDate=val;
+         this.SetUIProperties();
+    }
+    
+}
+ 
+ 
