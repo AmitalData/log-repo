@@ -1613,10 +1613,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void AfterUpdating(GLAccountPM entityPM, EntityPM entityParentPM)
         {
             base.AfterUpdating(entityPM, entityParentPM);
-            // Update Card GLAccountId [Maheera]
+            // Update Card GLAccountId [Maheera]  //
             UpdateCardGLAccountId(entityPM.Tenant, entityPM.NewGLAccountCardId, entityPM.Id);
             SendHybridTask(entityPM);
         }
+
+        private string GetDisplayNumberFromGLAccount(string GLAccountId,int tenant)
+        {
+            GLAccountQueryService query = new  GLAccountQueryService(tenant);
+            return query.GetDisplayNumberByGLAccountId(GLAccountId, tenant);
+        }
+
         public bool FullAccountingProvider { get; set; }
         protected override void Validate(GLAccountPM entityPM)
         {
@@ -2087,6 +2094,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CardService service = new CardService(CommonDataContext.GetContext(tenant), tenant);
                 CardPM card = query.GetSinglePM(cardId, tenant);
                 card.GLAccountId = glAccountId;
+                card.GLAccountDisplayNumber = GetDisplayNumberFromGLAccount(glAccountId, tenant);
                 service.Update(card);
             }
         }

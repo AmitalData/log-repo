@@ -58,6 +58,12 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
             return query.GetGLAccountDisplayNoAndLocalName(id, tenant);
         }
 
+        public string GetDisplayNumberByGLAccountId(string id, int tenant)
+        {
+            EntityQueryServices.GLAccountQueryService query = new EntityQueryServices.GLAccountQueryService(tenant);
+            return query.GetDisplayNumberByGLAccountId(id, tenant);
+        }
+
         public APIDataContract.ApiV1.GLAccount GLAccountDataMappingAndValidatin(GLAccountPM MyEntity, int Tenant, string ComputingPartnerName = "")
         {
             APIDataContract.ApiV1.GLAccountQueryService query = new APIDataContract.ApiV1.GLAccountQueryService(Tenant);

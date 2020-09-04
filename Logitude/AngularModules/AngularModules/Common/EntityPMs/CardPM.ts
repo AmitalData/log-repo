@@ -79,6 +79,11 @@ export class CardPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
+    private gLAccountDisplayNumber: string;
+    public get GLAccountDisplayNumber() { return this.gLAccountDisplayNumber; }
+    public set GLAccountDisplayNumber(newValue: string) { if (this.gLAccountDisplayNumber != newValue) { this.gLAccountDisplayNumber = newValue; this.MarkAsDirty("GLAccountDisplayNumber"); } }
+       
+	 
     private vatNumber: string;
     public get VatNumber() { return this.vatNumber; }
     public set VatNumber(newValue: string) { if (this.vatNumber != newValue) { this.vatNumber = newValue; this.MarkAsDirty("VatNumber"); } }

@@ -39,5 +39,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string PrimaryContactPhone { get; set; }
         public string CreatedByPartner { get; set; }
         public string StateName { get; set; }
+
+        public string GLAccountNumber { get; set; }
+
     }
 }

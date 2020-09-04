@@ -42,5 +42,6 @@ export class ShippingAgentList {
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
 		StateName: string;
+		GLAccountNumber: string;
 	
 }

@@ -81,5 +81,6 @@ export class AirlineList {
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
 		StateName: string;
+		GLAccountNumber: string;
 	
 }

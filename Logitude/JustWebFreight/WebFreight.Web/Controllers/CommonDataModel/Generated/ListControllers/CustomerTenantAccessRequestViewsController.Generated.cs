@@ -178,7 +178,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-
+					
 
 
                 }
@@ -215,6 +215,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 CustomerTenantAccessRequestRepository  customerTenantAccessRequestRepository = new CustomerTenantAccessRequestRepository(MyContext);
                 IQueryable<CustomerTenantAccessRequest> entityPocos = customerTenantAccessRequestRepository.GetCustomerTenantAccessRequests(tenant);
@@ -232,7 +233,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 entityLists = genericFilter.GetFilteredQuery<CustomerTenantAccessRequestList>(listQueryOperation, entityLists);
 
-		 
+		      
+			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(CustomerTenantAccessRequestList).GetProperty(queryOperations.SortByColumnName);
@@ -296,11 +298,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     }
 				 }
                 }
-            }
-		    else
+            }					  						
+	       else
             {
                 entityLists = entityLists.OrderBy(d => d.Id);
-            }
+            } 
 
 			ServiceResponse response = new ServiceResponse();
 			

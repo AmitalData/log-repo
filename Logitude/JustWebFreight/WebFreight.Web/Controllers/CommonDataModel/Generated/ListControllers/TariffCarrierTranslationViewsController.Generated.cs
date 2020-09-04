@@ -174,7 +174,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-
+					
 
 
                 }
@@ -211,6 +211,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 TariffCarrierTranslationRepository  tariffCarrierTranslationRepository = new TariffCarrierTranslationRepository(MyContext);
                 IQueryable<TariffCarrierTranslation> entityPocos = tariffCarrierTranslationRepository.GetTariffCarrierTranslations(tenant);
@@ -228,7 +229,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 entityLists = genericFilter.GetFilteredQuery<TariffCarrierTranslationList>(listQueryOperation, entityLists);
 
-		 
+		      
+			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(TariffCarrierTranslationList).GetProperty(queryOperations.SortByColumnName);
@@ -292,11 +294,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     }
 				 }
                 }
-            }
-		    else
+            }					  						
+	       else
             {
                 entityLists = entityLists.OrderByDescending(d => d.CreateDate);
-            }
+            } 
 
 			ServiceResponse response = new ServiceResponse();
 			
