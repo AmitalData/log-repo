@@ -769,7 +769,11 @@ namespace WebFreight.Web.WcfApi
 
                     }
 
-                    // RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
+                    if (entityPM != null)
+                    {
+                        RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
+                    }
+
                     response.Result = entityPM.Id;
                     response.Result2 = entityPM.SecurityKey;
 
@@ -1036,7 +1040,6 @@ namespace WebFreight.Web.WcfApi
                                 shipmentRepository.Update(entityPoco);
                                 shipmentsContext.SaveChanges();
 
-                                RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
                                 RunStoredProcedureClass.CreateShipmentQueue(entityPM.Id, entityPM.Tenant);
                             }
 
@@ -1073,6 +1076,8 @@ namespace WebFreight.Web.WcfApi
 
 
                         }
+
+                        RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
 
                         response.Result = entityPoco.StatusId;
                     }
@@ -1240,7 +1245,6 @@ namespace WebFreight.Web.WcfApi
                                     shipmentRepository.Update(entityPoco);
                                     shipmentsContext.SaveChanges();
 
-                                    RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
                                     RunStoredProcedureClass.CreateShipmentQueue(entityPM.Id, entityPM.Tenant);
                                 }
 
@@ -1314,6 +1318,9 @@ namespace WebFreight.Web.WcfApi
                                 response.ErrorMessage = eventResponse.ErrorMessage;
                             }
                         }
+
+                        RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
+
 
                         if (!response.HasError)
                         {
@@ -1512,8 +1519,8 @@ namespace WebFreight.Web.WcfApi
                             //ShipmentTracing.DeleteShipmentTraceEvent(entityPM, traceEvent.Id, tenant, true);
                             this.DeleteShipmentTraceEvent(entityPM, traceEvent.Id, tenant, true);
 
-                            RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
                             RunStoredProcedureClass.CreateShipmentQueue(entityPM.Id, entityPM.Tenant);
+                            RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
 
                             response.Result = entityPM.StatusId;
                         }
