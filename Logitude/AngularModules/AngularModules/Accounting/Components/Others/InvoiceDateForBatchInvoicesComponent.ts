@@ -20,10 +20,12 @@ export class InvoiceDateForBatchInvoicesComponent extends BaseComponent{
     public DataContext: InvoiceDateForBatchInvoicesComponent = this;
     public isRTL: boolean = false;
     public ValidationErrorsList: string[]=[];
+    public EntertheInvoiceDateText = TextCodeTranslator.Translate("InterestReport.O.EntertheInvoiceDate");
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-        this.InvoiceDate = new Date();
+        //this.InvoiceDate = new Date();
+        this.SetUIProperties();
     }
  
     SetUIProperties(){
