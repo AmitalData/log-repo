@@ -29,7 +29,7 @@ namespace Logitude.Accounting.BL.InterestService
         byte[] datainByte;
 
 
-        public MemoryStream CheckValidCopiesForInvoicesAndPrint(InterestReportArguments interestReportArgs,int tenant,string email)
+        public PdfDocument CheckValidCopiesForInvoicesAndPrint(InterestReportArguments interestReportArgs,int tenant,string email)
         {
             PdfDocument pdfDoc = new PdfDocument();
             InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
@@ -62,12 +62,8 @@ namespace Logitude.Accounting.BL.InterestService
                 }
 
             }
-
-            MemoryStream memoryStream = new MemoryStream();
-            pdfDoc.Save(memoryStream);
-            var dataBytes = memoryStream.ToArray();
-            var dataStream = new MemoryStream(dataBytes);
-            return dataStream;
+ 
+            return pdfDoc;
         }
 
         public PDFDocumentInvoices GetNumberOfDocumentNotPrinted(InterestReportArguments interestReportArgs, int tenant,string email)

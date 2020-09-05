@@ -112,7 +112,11 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 int tenant = AuthinticateTenant();
                 string email = HttpContext.Current.User.Identity.Name;
                 InteretInvoiceBatchPrint interetInvoiceBatchPrint = new InteretInvoiceBatchPrint();
-                var dataStream = interetInvoiceBatchPrint.CheckValidCopiesForInvoicesAndPrint(interestReportArgs, tenant, email);
+                PdfDocument pdfDoc = interetInvoiceBatchPrint.CheckValidCopiesForInvoicesAndPrint(interestReportArgs, tenant, email);
+                MemoryStream memoryStream = new MemoryStream();
+                pdfDoc.Save(memoryStream);
+                var dataBytes = memoryStream.ToArray();
+                var dataStream = new MemoryStream(dataBytes);
                 var response = new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
