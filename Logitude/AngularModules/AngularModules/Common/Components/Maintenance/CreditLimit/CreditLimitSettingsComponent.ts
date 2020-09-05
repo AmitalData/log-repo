@@ -80,7 +80,7 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
         this.UIProperties.SetEnabled('ShippingLinesInvoicesBlock', this.ObjectTableName, this.IsCreditLimitEnabled);
         this.UIProperties.SetEnabled('TruckersInvoicesBlock', this.ObjectTableName, this.IsCreditLimitEnabled);
         this.UIProperties.SetEnabled('VendorsInvoicesBlock', this.ObjectTableName, this.IsCreditLimitEnabled);
-        this.UIProperties.SetEnabled('WarehousesInvoicesBlock', this.ObjectTableName, this.IsCreditLimitEnabled);
+        this.UIProperties.SetEnabled('WarehousesInvoicesBlock', this.ObjectTableName, this.IsCreditLimitEnabled); 
     }
 
     get IsCreditLimitEnabled() { return this.EntityPM.IsCreditLimitEnabled; }
