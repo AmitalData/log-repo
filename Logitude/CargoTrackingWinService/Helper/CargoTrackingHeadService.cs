@@ -80,7 +80,15 @@ namespace CargoTrackingWinService.Helper
 
         private RecordUpdated UpdateCargoDataBase(CargoTable table)
         {
-            RecordUpdated RecordUpdatedNumber = cargoTrackingMainService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },1000);
+            CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs = new CargoTrackingUpdateDataBaseArgs()
+            {
+                buildCargoArgs = new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },
+                NumberOfBulkPerTime = 1000,
+                IsUpdateFromBuild = false,
+                CargoTrackingArguments = null,
+                IsUpdateAfterFinished = null,
+            };
+            RecordUpdated RecordUpdatedNumber = cargoTrackingMainService.UpdateCargoTrackingDataBase(cargoTrackingDataBaseArgs);
             return RecordUpdatedNumber;
         }
 
