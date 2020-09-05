@@ -33,6 +33,7 @@ import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 import { VatTypePercentagePM } from '../../../Common/EntityPMs/VatTypePercentagePM';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { InterestReportExtendedListService } from 'Accounting/Services/ExtendedLists/InterestReportExtendedListService';
 
 export class InterestReportMenuButtonsHandler extends BaseComponent  {
     public EntityPM: InterestReportPM;
@@ -45,7 +46,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
     private CurrentSession = SessionLocator.SelectedSession;
     private myCurrencyRatesService: CurrencyRatesService;
     private myCardListService: CardListService;
-    private myGLAccountPMService: GLAccountPMService;
+    private interestReportExtendedListService: InterestReportExtendedListService;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -55,7 +56,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         this.ChargesTypePMService = new ChargesTypeListService();
         this.myCurrencyRatesService = new CurrencyRatesService();
         this.myCardListService = new CardListService();
-        this.myGLAccountPMService = new GLAccountPMService();
+        this.interestReportExtendedListService = new InterestReportExtendedListService();
 
      }
  
@@ -73,7 +74,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                             }
                         case "CreateInvoice":
                             {
-                                if (this.EntityPM.InterestReportStatusCode == "1")
+                                if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "9")
                                     button.IsDisabled = false;
                                 else
                                     button.IsDisabled = true;
@@ -94,6 +95,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         return menuButtons;
     }
 
+
     public MenuButtonClick(menuButton: MenuButtonPM) {
         var errors = [];
 
@@ -106,15 +108,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                     }
                 case "CreateInvoice":
                     {
-                        if ((!this.EntityPM.TotalAmount) ||
-                            (!this.EntityPM.TotalAmount && !this.EntityPM.GLAccountMinimumInterest) ||
-                            (this.EntityPM.GLAccountMinimumInterest && this.EntityPM.GLAccountMinimumInterest >= this.EntityPM.TotalAmount)) {
-                            this.ConfirmCreateInvoice();
-                        }
-                        else {
-                            this.GeTARInvoice();
-
-                        }
+                        this.CheckInterestReportStatusCodeAndCreateInvoice();
                         break;
                     }
                 case "IRCN": {
@@ -236,6 +230,44 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
             }
         });
     }
+
+    
+    private CheckInterestReportStatusCodeAndCreateInvoice(){
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.interestReportExtendedListService.GetInterestReportStatusCode(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            var response: ServiceResponse = myResult;
+            if (!response.HasError) {
+               var InterestReportStatusCode:string =response.Result;
+               if(InterestReportStatusCode=="1" || InterestReportStatusCode=="9"){
+
+                if ((!this.EntityPM.TotalAmount) ||
+                   (!this.EntityPM.TotalAmount && !this.EntityPM.GLAccountMinimumInterest) ||
+                   (this.EntityPM.GLAccountMinimumInterest && this.EntityPM.GLAccountMinimumInterest >= this.EntityPM.TotalAmount)) {
+                      
+                       this.ConfirmCreateInvoice();
+                    }
+               
+                else {
+
+                     this.GeTARInvoice();
+
+                  }
+               }
+               else{
+
+                  this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate('InterestReport.O.CreatingInvoicepermitted'));
+                  this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+               }
+            }
+            else {
+
+                this.entityArgs.EditComponent.ValidationErrorsList = response.ErrorsArray;
+            }
+        });
+    }
+
     get ARInvoicePMWithLine(): ARInvoicePM {
         var _ARInvoicePM: ARInvoicePM = new ARInvoicePM();
         _ARInvoicePM.ARInvoiceTypeCode = "IT";
