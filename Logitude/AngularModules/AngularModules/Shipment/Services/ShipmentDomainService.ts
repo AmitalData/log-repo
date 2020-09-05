@@ -16,11 +16,28 @@ import { catchError, map } from 'rxjs/operators';
 @Injectable()
 
 export class ShipmentDomainService {
+    
     private _httpClient: HttpClient;
     private _apiUrl: string;
     constructor() {
         this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain';
+    }
+
+    GetCustomerCreditLimitDetails(customerId: string,quoteId: string, isBuildFromQuote: boolean) {
+        var url = this._apiUrl + '/GetCustomerCreditLimitDetails?customerId=' + customerId + '&quoteId=' + quoteId + '&isBuildFromQuote=' + isBuildFromQuote;
+
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+                map(response => {
+                    var serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }),
+
+                // catchErrro operator inside pipe
+                catchError(ServiceHelper.HandleServiceError));
+        });
     }
 
     GetShipmentsCounts(myDirectionId: string, myTransportModeId: string) {

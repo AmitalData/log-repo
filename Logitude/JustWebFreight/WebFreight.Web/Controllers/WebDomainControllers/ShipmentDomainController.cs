@@ -30,6 +30,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
@@ -65,6 +67,82 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class ShipmentDomainController : ApiController
     {
+        public HttpResponseMessage GetCustomerCreditLimitDetails(string customerId, string quoteId, bool isBuildFromQuote)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                var limitWarningMsg = "";
+                ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+
+                string mySettingsId = tenant.ToString();
+                CreditLimitSetting mySettings = (from d in myCommonContext.CreditLimitSettings where d.Id == mySettingsId select d).FirstOrDefault();
+                CustomerRepository myCustomerRepository = new CustomerRepository(myCommonContext);
+                Customer myCustomer = myCustomerRepository.GetSingleCustomer(customerId, tenant, false);
+                var IsCreditLimitActivated = mySettings.IsCreditLimitEnabled;
+                var IsCreditLimitHasAction = (mySettings.ShipmentCreationBlock == false && mySettings.ShipmentCreationWarning == true) ? true : false;
+
+                if (isBuildFromQuote && IsCreditLimitActivated && IsCreditLimitHasAction && myCustomer != null && myCustomer.IsCreditLimitEnabled && !myCustomer.BlockNewShipmentCreation)
+                {
+                    if (myCustomer.CreditLimitAmount != null)
+                    {
+                        IInvoiceContext myContext = InvoiceContext.GetContext(tenant);
+                        ARInvoiceRepository invoiceRepository = new ARInvoiceRepository(myContext);
+                        ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(invoiceRepository);
+                        double? myResult = invoiceQuery.GetCustomerCreditLimitActualAmount(customerId, tenant);
+                        double LimitAmount = myCustomer.CreditLimitAmount == null ? 0 : myCustomer.CreditLimitAmount.Value;
+                        double ActualBalance = myResult == null ? 0 : myResult.Value;
+                        int? WarningPercentage = myCustomer.CreditLimitWarningPercentage;
+
+                        if (myCustomer.CreditLimitOpenBalance != null)
+                        {
+                            ActualBalance += myCustomer.CreditLimitOpenBalance.Value;
+                        }
+
+                        if (isBuildFromQuote && quoteId != null)
+                        {
+                            IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
+                            double? quoteSaleLocalAmount = (from d in quotesContext.QuoteCharges
+                                                            where d.QuoteId == quoteId
+                                                            select d.SaleTotalAmountLocal).Sum();
+
+                            if (quoteSaleLocalAmount != null)
+                            {
+                                ActualBalance += quoteSaleLocalAmount.Value;
+                            }
+                        }
+
+                        LimitAmount = MethodHelper.Roundd(LimitAmount, 2);
+                        ActualBalance = MethodHelper.Roundd(ActualBalance, 2);
+
+                        if (ActualBalance > LimitAmount)
+                        {
+                            limitWarningMsg = "The customer exceeded the credit limit available.";
+                        }
+                        else if (WarningPercentage != null && (ActualBalance > (WarningPercentage * LimitAmount / 100)))
+                        {
+                            if (mySettings.ShipmentCreationWarning)
+                            {
+                                var RemainingLimit = LimitAmount - ActualBalance;
+                                limitWarningMsg = "The remaining credit limit for this customer is (" + RemainingLimit + ")";
+                            }
+                        }
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, limitWarningMsg);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetRecentShipments()
         {
             try

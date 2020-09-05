@@ -44,6 +44,7 @@ import { ContactInputTemplateArgs } from '../../../CommonModules/CommonPartners/
 import { ShipmentSubTypeListService } from '../../services/standardlists/shipmentsubtypelistservice';
 import { ShipmentSubTypeList } from '../../EntityLists/ShipmentSubTypeList';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     templateUrl: './NewShipmentComponent.html',
@@ -1437,6 +1438,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 this.CustomerAddressId = null;
                 this.myCustomerSalesmanId = null;
                 this.myCustomerAccountManagerUserId = null;
+                this.IsCustomerCreditLimitEnabled = false;
                 this.SetSalesman();
             }
 
@@ -1451,6 +1453,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                             this.CustomerAddressId = myCardList.MainAddressId;
                             this.myCustomerSalesmanId = myCardList.SalesmanUserId;
                             this.myCustomerAccountManagerUserId = myCardList.AccountManagerUserId;
+                            this.IsCustomerCreditLimitEnabled = myCardList.IsCreditLimitEnabled;
                             this.SetSalesman();
                             this.SetCustomerPartner();
                         }
@@ -3748,6 +3751,68 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     }
 
     SubmitCreatingShipment() {
+        var isCheckCreditLimit = this.IsCheckCreditLimit();
+        if (isCheckCreditLimit) {
+            this.ValidateCreditLimit();
+        }
+        else {
+            this.CompleteSubmitCreatingShipment();
+        }
+    }
+
+    private IsCustomerCreditLimitEnabled = false;
+    IsCheckCreditLimit() {
+        var isCheck = false;
+        var HasCreditLimitFeature: boolean = false;
+        var IsCreditLimitActivated: boolean = false;
+        var IsCreditLimitHasAction: boolean = false;
+        HasCreditLimitFeature = FeatureLocator.HasFeaturePermession("CreditLimitSetting", "Module");
+        if (HasCreditLimitFeature) {
+            IsCreditLimitActivated = ObjectsLocator.CreditLimitSettingPM.IsCreditLimitEnabled;
+            IsCreditLimitHasAction = (ObjectsLocator.CreditLimitSettingPM.ShipmentCreationBlock == false && ObjectsLocator.CreditLimitSettingPM.ShipmentCreationWarning == true) ? true : false;
+        }
+
+        if (this.IsBuildFromQuote && HasCreditLimitFeature && IsCreditLimitActivated && IsCreditLimitHasAction && this.IsCustomerCreditLimitEnabled) {
+            isCheck = true;
+        }
+        return isCheck;
+    }
+
+    ValidateCreditLimit() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        if (this.myShipmentDomainService == null) {
+            this.myShipmentDomainService = new ShipmentDomainService();
+        }
+        this.myShipmentDomainService.GetCustomerCreditLimitDetails(this.CustomerId, this.EntityPM.QuoteId, this.IsBuildFromQuote).subscribe((myResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (!myResponse.HasError) {
+                var warnings: string = myResponse.Result;
+                if (!AppTool.IsNullOrEmpty(warnings)) {
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Width = 450;
+                    confirmWindow.Height = 200;
+                    confirmWindow.ShowCancelButton = false;
+                    confirmWindow.YesButtonText = "Continue";
+                    confirmWindow.NoButtonText = "Cancel";
+                    confirmWindow.Title = "Credit limit";
+                    confirmWindow.Show(warnings);
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                        if (confirmWindow.Yes) {
+                            this.CompleteSubmitCreatingShipment();
+                        }
+                        else if (confirmWindow.No) {
+                            //nth
+                        }
+                    });
+                }
+                else {
+                    this.CompleteSubmitCreatingShipment();
+                }
+            }
+        });
+    }
+
+    CompleteSubmitCreatingShipment() {
         this.CurrentSession.StartBusyIndicator("Creating...");
 
         this.SetDataOnFinish();
@@ -3805,6 +3870,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             }
         });
     }
+
 
     AddContact(partnerId: string, type: string) {
         var logWindow = new LogitudeWindow();
