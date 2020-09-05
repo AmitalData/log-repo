@@ -49,7 +49,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return result;
         }
-        public List<InterestReportPM> GetNotInvoicedInterestReportsByDates(DateTime fromDate, DateTime toDate, int tenant)
+        public List<InterestReportPM> GetNotInvoicedInterestReportsByDates(DateTime fromDate, DateTime toDate, int tenant, List<string> ExcludedIds)
         {
             
             return (from a in context.InterestReports

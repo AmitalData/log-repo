@@ -63,7 +63,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 {
                     userPM = userQuery.GetSinglePMByEmail(interestReportArgs.Email, 0);
                 }
-                CreateBatchesInvoice(interestReportArgs);
+                CreateInvoicesForInterestReports(interestReportArgs);
             }
             catch (Exception e)
             {
@@ -227,6 +227,16 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             return aRInvoicePM;
 
+        }
+        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
+        public static ContactPM GetLoggedContact(int tenant)
+        {
+            if (OverrideGetLoggedContactFunc != null)
+            {
+                return OverrideGetLoggedContactFunc(tenant);
+            }
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
         private List<LastRate> GetCurrenciesExchangeRateByValueDate(int tenant, string baseCurrencyId, DateTime? date)
         {
