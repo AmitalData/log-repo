@@ -1,7 +1,7 @@
 ﻿<Script DBType="Main" Module="Quote">
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
-				If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
+					If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
 				Begin
 					Drop Table #tempTable
 				End
@@ -30,22 +30,22 @@
 		FROM Quotes where StageId in (select id from QuoteStages where code in ('QTCR','QTDR'))
 			declare @Tenant as int
 				declare @EntityId as varchar(15)
-			declare @PickupDelivaryRatio as decimal
+			declare @PickupDelivaryRatio as float
 			declare @Count as int
-			DECLARE @Volume as decimal
-			DECLARE @Weight as decimal
-			DECLARE @VolumeCBM as decimal
-			DECLARE @VolumeKG as decimal
-			DECLARE @Volumetric as decimal
-			DECLARE @PickupDeliveryChargeableWeight as decimal
+			DECLARE @Volume as float
+			DECLARE @Weight as float
+			DECLARE @VolumeCBM as float
+			DECLARE @VolumeKG as float
+			DECLARE @Volumetric as float
+			DECLARE @PickupDeliveryChargeableWeight as float
 			DECLARE @VolumeUnitCode as varchar(3)
 			DECLARE @GrossWeightUnitCode as varchar(3)
 			DECLARE @PickupDeliveryCWeightUnitCode as varchar(3)
 			DECLARE @TransportModeId as varchar(1)
-			Declare @GrossWeightKG as decimal
-			Declare @GrossWeightInVolumeUnitCode as decimal
+			Declare @GrossWeightKG as float
+			Declare @GrossWeightInVolumeUnitCode as float
 			declare @DirectionId as varchar(4)
-			declare @Decimal as decimal
+			declare @Decimal as float
 			declare @Integer as int
 
 				set @Count = 0;
@@ -153,7 +153,7 @@
 
 				if(@PickupDeliveryCWeightUnitCode != 'MT' and @DirectionId = 'E' and @TransportModeId = 'A')
 				begin 
-						set @Decimal =(@PickupDeliveryChargeableWeight%1)
+						set @Decimal =CAST(CAST(@PickupDeliveryChargeableWeight AS decimal(38,19)) % 1 AS float) 
 						set @Integer = cast(@PickupDeliveryChargeableWeight AS int)
 			
 						 if (@Decimal <= 0.5) 
@@ -174,7 +174,8 @@
 				begin 
 					update Quotes
 					set
-					PickupDeliveryVolumetricWeight = #temp_Quotes.PickupDeliveryVolumetricWeight
+					PickupDeliveryVolumetricWeight = #temp_Quotes.PickupDeliveryVolumetricWeight, 
+					PickupDeliveryChargeableWeight = #temp_Quotes.PickupDeliveryChargeableWeight
 					FROM Quotes
 					INNER JOIN #temp_Quotes
 					on Quotes.Id = #temp_Quotes.Id
@@ -195,7 +196,8 @@
 		begin
 			update Quotes
 			set
-			PickupDeliveryVolumetricWeight = #temp_Quotes.PickupDeliveryVolumetricWeight
+			PickupDeliveryVolumetricWeight = #temp_Quotes.PickupDeliveryVolumetricWeight,
+			PickupDeliveryChargeableWeight = #temp_Quotes.PickupDeliveryChargeableWeight
 			FROM Quotes
 			INNER JOIN #temp_Quotes
 			on Quotes.Id = #temp_Quotes.Id
@@ -203,7 +205,6 @@
 
 		drop table #tempTable
 		drop table #temp_Quotes
-
     ]]>
   </Sql>
 </Script>
