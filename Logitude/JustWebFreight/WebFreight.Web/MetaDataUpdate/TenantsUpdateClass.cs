@@ -1948,10 +1948,11 @@ namespace WebFreight.Web.MetaDataUpdate
 
                     if (!currentTenantDocumentTypes.Keys.Contains(docType.Code + docType.ObjectTableId))
                     {
-                        bool codeExists = (from a in currentTenantDocumentTypes.Values
-                                           where a.Code.Trim().ToUpper() == docType.Code.Trim().ToUpper()
-                                           select a).Any();
-                        if (!codeExists)
+                        var documentType = (from a in currentTenantDocumentTypes.Values
+                                            where a.Code.Trim().ToUpper() == docType.Code.Trim().ToUpper()
+                                            select a).FirstOrDefault();
+
+                        if (documentType == null)
                         {
                             List<DocumentTypeCustomField> zeroCustomFields = tenantZeroCustomFields.Where(d => d.DocumentTypeId == docType.Id).ToList();
                             DocumentType newDocType = new DocumentType()
@@ -2087,6 +2088,14 @@ namespace WebFreight.Web.MetaDataUpdate
                                 }
                             }
 
+                        }
+                        else
+                        {
+
+                            documentType.OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName;
+                            documentType.OnSendPopulateDateFieldName = docType.OnSendPopulateDateFieldName;
+                            documentType.OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName;
+                            documentTypeRepository.Update(documentType);
                         }
                     }
 
