@@ -35,6 +35,7 @@ export class AccountPayablesComponent {
     public myViewsQueryVisibility = false;
     public APInvoiceErrorInTransferVisibility: boolean = false;
     public APPaymentErrorInTransferVisibility: boolean = false;
+    public IsNewEntityVisibile: boolean = false;
 
     public PayablesChartId: string = "PayablesChartId";
     FilterList: DashBoardFilters[] = [];
@@ -158,6 +159,7 @@ export class AccountPayablesComponent {
         this.LoadAllScreenData();
         this.APInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoice.Q.ErrorInTransfer")) ? true : false;
         this.APPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APPayment", "APPayment.Q.ErrorInTransfer")) ? true : false;
+        this.IsNewEntityVisibile = (FeatureLocator.HasFeaturePermession("APInvoice", "Module")) ? true : false;
     }
 
     LoadAllScreenData() {
