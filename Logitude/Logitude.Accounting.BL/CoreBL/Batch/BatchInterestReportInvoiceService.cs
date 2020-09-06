@@ -100,6 +100,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             InterestReportArgs args = new InterestReportArgs();
             args.Tenant = interestReportArguments.Tenant;
             args.Email = interestReportArguments.Email;
+            args.InvoiceDate = interestReportArguments.InvoiceDate;
             if (interestReportArguments.AllSelected)
             {
                 List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant);
@@ -272,7 +273,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoicePM.AmountInInvoiceCurrency = (double?)interestReport.TotalAmount;
             aRInvoicePM.AmountInProfitCurrency = (double?)interestReport.TotalAmount;
             aRInvoicePM.BranchId = userPM.BranchId;
-            aRInvoicePM.InvoiceDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
+            aRInvoicePM.InvoiceDate = interestReportArgs.InvoiceDate;
             aRInvoicePM.CreateDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
             aRInvoicePM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
             aRInvoicePM.IssuedByUserId = userPM.Id;
