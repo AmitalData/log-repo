@@ -1771,7 +1771,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (this.entityPM.DirectionId == "I")
             {
-                if (entityPoco.WarehouseLegActualEntryDate == null && entityPM.WarehouseLegActualEntryDate != null)
+                if (entityPoco.WarehouseLegActualEntryDate != entityPM.WarehouseLegActualEntryDate)
                 {
                     this.CreateTraceEvent("WHED", entityPM.WarehouseLegActualEntryDate);
                 }
@@ -1781,7 +1781,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     this.DeleteTraceEvent("WHED");
                 }
 
-                if (entityPoco.WarehouseLegActualReleaseDate == null && entityPM.WarehouseLegActualReleaseDate != null)
+                if (entityPoco.WarehouseLegActualReleaseDate != entityPM.WarehouseLegActualReleaseDate)
                 {
                     this.CreateTraceEvent("WHRD", entityPM.WarehouseLegActualReleaseDate);
                 }
@@ -1793,7 +1793,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
             else
             {
-                if (entityPoco.WarehouseLegActualEntryDate == null && entityPM.WarehouseLegActualEntryDate != null)
+                if (entityPoco.WarehouseLegActualEntryDate != entityPM.WarehouseLegActualEntryDate)
                 {
                     this.CreateTraceEvent("WEDE", entityPM.WarehouseLegActualEntryDate);
                 }
@@ -1803,7 +1803,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     this.DeleteTraceEvent("WEDE");
                 }
 
-                if (entityPoco.WarehouseLegActualReleaseDate == null && entityPM.WarehouseLegActualReleaseDate != null)
+                if (entityPoco.WarehouseLegActualReleaseDate != entityPM.WarehouseLegActualReleaseDate)
                 {
                     this.CreateTraceEvent("WRDE", entityPM.WarehouseLegActualReleaseDate);
                 }
