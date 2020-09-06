@@ -58,10 +58,44 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
+                int tenantUsers = 0;
+                int totalUsers = 0;
+                string usersType = "active";
+
+                UserRepository userRepository = new UserRepository(entityPM.Id);
+                IQueryable<User> allTenantUsers = userRepository.GetUsers(entityPM.Id);
+
+                allTenantUsers = allTenantUsers.Where(d => d.Contact.Email.ToLower() != "customercare@logitudeworld.com" && d.Contact.InActive == false);
+
+                if (entityPM.ManageLicencesPerUser)
+                {
+                    allTenantUsers = allTenantUsers.Where(d => d.LicencedUser == true);
+                    usersType = "licenced";
+                }
+
+                if (entityPM.MainAdditionalPackageApplied)
+                {
+                    allTenantUsers = allTenantUsers.Where(d => !d.AdditionalPackagesOnly);
+                }
+
+                tenantUsers = allTenantUsers.Count();
+                
                 if (entityPM.IsMultiPackage)
                 {
                     UserLicenseRepository userLicenseRepository = new UserLicenseRepository(entityPM.Id);
                     IQueryable<UserLicense> allTenantLicenses = userLicenseRepository.GetUserLicenses(entityPM.Id);
+
+                    if(entityPM.MainAdditionalPackageApplied)
+                    {
+                        int num1 = entityPM.FreeUsers == null ? 0 : entityPM.FreeUsers.Value;
+                        int num2 = entityPM.NumberOfUsers == null ? 0 : entityPM.NumberOfUsers.Value;
+                        totalUsers = num1 + num2;
+
+                        if (tenantUsers > totalUsers)
+                        {
+                            throw new Exception("You can't change the number of users to less than " + tenantUsers + " for main package (" + entityPM.PackageCode + ")");
+                        }
+                    }
 
                     foreach(TenantManagementLicensePM item in entityPM.TenantManagementLicenses)
                     {
@@ -79,28 +113,6 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
 
                 else
                 {
-                    int tenantUsers = 0;
-                    int totalUsers = 0;
-                    string usersType = "active";
-
-                    UserRepository userRepository = new UserRepository(entityPM.Id);
-                    IQueryable<User> allTenantUsers = userRepository.GetUsers(entityPM.Id);
-
-                    allTenantUsers = allTenantUsers.Where(d => d.Contact.Email.ToLower() != "customercare@logitudeworld.com" && d.Contact.InActive == false);
-
-                    if (entityPM.ManageLicencesPerUser)
-                    {
-                        allTenantUsers = allTenantUsers.Where(d => d.LicencedUser == true);
-                        usersType = "licenced";
-                    }
-
-                    if (entityPM.MainAdditionalPackageApplied)
-                    {
-                        allTenantUsers = allTenantUsers.Where(d => !d.AdditionalPackagesOnly);
-                    }
-
-                    tenantUsers = allTenantUsers.Count();
-
                     int num1 = entityPM.TotalFreeUsers == null ? 0 : entityPM.TotalFreeUsers.Value;
                     int num2 = entityPM.TotalNumberOfUsers == null ? 0 : entityPM.TotalNumberOfUsers.Value;
                     totalUsers = num1 + num2;
