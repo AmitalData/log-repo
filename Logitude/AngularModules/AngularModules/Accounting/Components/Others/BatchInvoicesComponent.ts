@@ -179,7 +179,7 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
 
                 this.onCheckBoxChecked($event);
                 this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
-                 this.MarkIsChecked.emit({ MyRecord: row,AllSelected:this.AllSelected });
+                 this.MarkIsChecked.emit({ MyRecord: row,AllSelected:this.AllSelected , ExcludedLines:this.ExcludedItems});
             }
         });
 
@@ -218,8 +218,10 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
           this.EnabledDataCount = result.Collection.filter(d => d.InterestReportStatusCode != "8").length;
           this.SelectedItemsCountText = "selected 0 of " + this.DataCount;
         }
-   var selectedLines = this.AllSelected?result: this.selectedItems;
-  this.MarkIsChecked.emit({ SelectedLines:selectedLines,AllSelected: this.AllSelected});
+   var selectedLines:ObservableCollection = this.AllSelected?result: this.selectedItems;
+
+ 
+  this.MarkIsChecked.emit({ SelectedLines:selectedLines,AllSelected: this.AllSelected , ExcludedLines:this.ExcludedItems });
 
     }
      today: Date = new Date();
@@ -274,13 +276,15 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
         if (value) {
             this.IsSelectedItemsTextVisibile = true;
             this.SelectedItemsCountText = "selected " + this.DataSource.rowCount + " of " + this.DataSource.rowCount;
+            this.ExcludedItems.Clear();
             this.SelectedItemsCount = this.DataSource.rowCount;
 
         } else {
             this.IsSelectedItemsTextVisibile = false;
             this.SelectedItemsCount = 0;
-        this.selectedItems.Clear();
-         this.MarkIsChecked.emit({ SelectedLines:this.selectedItems,AllSelected: value});
+            this.selectedItems.Clear();
+            this.ExcludedItems.Clear();
+         this.MarkIsChecked.emit({ SelectedLines:this.selectedItems,AllSelected: value, ExcludedLines:this.ExcludedItems });
 
         }
         this.SetCreateInvoiceButtonText();
