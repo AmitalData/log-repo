@@ -140,7 +140,26 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     doTask = false;
                 }
             }
-            if(dirtyDeclarationPM.DepositionStatusCode == "L" && dbOccDeclarationPM.DepositionStatusCode != "L")
+
+            if (dirtyDeclarationPM.AmendmentDontDisplayInList == true)
+            {
+                var eventContextTagModel2 = dirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
+                if (eventContextTagModel2 != null)
+                {
+                    if (eventContextTagModel2.CallProccessID != EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
+                    {
+                        doTask = false;
+
+                    }
+                    //if (dirtyDeclarationPM.HatraDate != dbOccDeclarationPM.HatraDate)
+                    //{
+                    //  //  doTask = true;
+                    //}
+
+                }
+            }
+
+            if (dirtyDeclarationPM.DepositionStatusCode == "L" && dbOccDeclarationPM.DepositionStatusCode != "L")
             {
                 OpenLogBoxUnifreighTask(dirtyDeclarationPM, "LDR2C", "", false, "");
                 return;
