@@ -99,7 +99,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool OrderMoney  { get; set; }
        [DataMember]
-       [DataMember]
        public string StorageSiteName  { get; set; }
        [DataMember]
        public DateTime? TaxationDateTime  { get; set; }
