@@ -291,7 +291,7 @@ namespace Logitude.DBMigrations.Models
                     }
 
                     string data = batchNumberCounter.ToString() + "," + batchStartTime.ToString() + "," + batchEndTime.ToString() + "," + elapsedTime.ToString() + "," + affectedRows.ToString() + "\n";
-                    //AppendToCSVFile(csvFileName, data);
+                    AppendToCSVFile(csvFileName, data);
 
                     Thread.Sleep(1000);
                 }

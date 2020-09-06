@@ -1,4 +1,4 @@
-﻿<Script DBType="Main">
+﻿<Script DBType="Main" Module="Infrastructure" AOT="true" TargetTableName="EventTypes">
   <Sql Version="2">
     <![CDATA[
    
@@ -21,7 +21,7 @@ CREATE TABLE #temp_EventTypes (
 	
 	select  Id, EnglishName,LocalName
 	into #tempTable
-	FROM EventTypes
+	FROM EventTypes where $LastCounterWhere$
 	
    CREATE INDEX IDX_tempTable_Id ON dbo.#tempTable(Id)
    CREATE INDEX IDX_tempTable_EnglishName ON dbo.#tempTable(EnglishName)

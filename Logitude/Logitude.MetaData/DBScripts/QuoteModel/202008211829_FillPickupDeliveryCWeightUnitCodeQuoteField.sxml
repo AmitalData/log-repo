@@ -1,4 +1,4 @@
-﻿<Script DBType="Main" Module="Quote">
+﻿<Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes">
   <Sql Version="2">
     <![CDATA[
     
@@ -20,7 +20,8 @@
 	TransportModeId
 
 	into #tempTable
-	FROM Quotes
+	FROM Quotes where $LastCounterWhere$
+  
 	  declare @Tenant as int
       declare @EntityId as varchar(15)
 	  declare @TransportModeId as varchar(4)
@@ -58,7 +59,7 @@
 
 				truncate table #temp_Quotes
         
-        WAITFOR DELAY '00:00:01'
+        --WAITFOR DELAY '00:00:01'
 				set @Count = 0
 			end
 		
