@@ -71,6 +71,9 @@ using Logitude.Infrastructure.BL;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUpdateClasses
 {
@@ -921,10 +924,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 	    {  
 		   ObjectTable BatchServicesLogObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BatchServicesLog" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature BatchServicesLogFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BatchServicesLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "BatchServicesLog.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BatchServicesLogObjectTable);
-		   Feature BatchServicesLogFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BatchServicesLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "BatchServicesLog.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BatchServicesLogObjectTable);
-		   Feature BatchServicesLogFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BatchServicesLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "BatchServicesLog.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BatchServicesLogObjectTable);
-		   Feature BatchServicesLogFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BatchServicesLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "BatchServicesLog.Features.PackageFeature", NameTextCodeDefaultText = "BatchServicesLog Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BatchServicesLogObjectTable);    
+		   Feature BatchServicesLogFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = BatchServicesLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "BatchServicesLog.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BatchServicesLogObjectTable);
+		   Feature BatchServicesLogFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = BatchServicesLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "BatchServicesLog.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BatchServicesLogObjectTable);
+		   Feature BatchServicesLogFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = BatchServicesLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "BatchServicesLog.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BatchServicesLogObjectTable);
+		   Feature BatchServicesLogFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = BatchServicesLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "BatchServicesLog.Features.PackageFeature", NameTextCodeDefaultText = "BatchServicesLog Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BatchServicesLogObjectTable);    
 	    
 		}
 
