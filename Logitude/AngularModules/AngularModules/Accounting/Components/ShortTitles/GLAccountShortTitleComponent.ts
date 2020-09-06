@@ -120,7 +120,7 @@ export class GLAccountShortTitleComponent {
         }
 
     }
-
+    
     GetConnectedCards(accountId: string)
     {
 
@@ -132,6 +132,7 @@ export class GLAccountShortTitleComponent {
                 {
                     this.CurrentSession.StopBusyIndicator();
                    this.ConnectedCards = myResponse.Result;
+                   
                     if ( this.ConnectedCards)
                         resolve( this.ConnectedCards);
                 });
