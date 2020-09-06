@@ -7,13 +7,12 @@ namespace Logitude.DBMigrations.Models
 {
     public class SQLDatabaseMigrations : DatabaseMigrations
     {
-        public SQLDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables, string dxmlFileName, bool isBasicArgumentProvided)
+        public SQLDatabaseMigrations(DatabaseMigrationSettings databaseMigrationSettings)
         {
-            ConnectionString = connectionString;
-            DXMLTable = dxmlTable;
-            DXMLTables = dxmlTables;
-            DXMLFileName = dxmlFileName;
-            IsBasicArgumentProvided = isBasicArgumentProvided;
+            DXMLFileName = databaseMigrationSettings.DxmlFileName;
+            DXMLTable = databaseMigrationSettings.DxmlTableDefinition;
+            DXMLTables = databaseMigrationSettings.DxmlTablesDefinitions;
+            ConnectionString = ToolConfigurations.GetConnectionString(databaseMigrationSettings.DxmlTableDefinition.DBType);
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
@@ -380,7 +379,7 @@ namespace Logitude.DBMigrations.Models
             string columnScript = "[" + columnDefinition.Name + "]" + " ";
             columnScript += GetDataTypeScript(columnDefinition.Type, columnDefinition.Size, columnDefinition.Precision, columnDefinition.Scale);
             columnScript += ((columnDefinition.Identity && columnDefinition.Constraints.PrimaryKey) ? " IDENTITY(1,1)" : null);
-            columnScript += GetDefaultValueScript(columnDefinition.Constraints.Nullable, columnDefinition.Type, columnDefinition.DefaultValue);
+            columnScript += GetDefaultValueScript(columnDefinition.Type, columnDefinition.DefaultValue);
             columnScript += (columnDefinition.Constraints.Nullable ? " NULL" : " NOT NULL");
             columnScript += ",";
             return columnScript;
@@ -689,25 +688,45 @@ namespace Logitude.DBMigrations.Models
             addScript += "ALTER TABLE " + tableNameWithSchema + " ";
             addScript += "ADD " + "[" + columnName + "]" + " ";
             addScript += columnDataTypeScript;
-            addScript += GetDefaultValueScript(columnMigration.NewColumn.Constraints.Nullable, columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
-
-            string initialValueScript = columnMigration.NewColumn.InitialValueScript;
-            if (String.IsNullOrEmpty(initialValueScript))
+            
+            if (!ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
             {
-                addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
-                addScript += ";\n\n";
+                addScript += GetDefaultValueScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
+
+                string initialValueScript = columnMigration.NewColumn.InitialValueScript;
+                if (String.IsNullOrEmpty(initialValueScript))
+                {
+                    addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
+                    addScript += ";\n\n";
+                }
+                else
+                {
+                    addScript += " NULL;\n";
+                    addScript += (initialValueScript.EndsWith(";") ? initialValueScript : initialValueScript + ";") + "\n";
+                    if (!columnMigration.NewColumn.Constraints.Nullable)
+                    {
+                        addScript += "ALTER TABLE " + tableNameWithSchema + " ALTER COLUMN " + "[" + columnName + "] " + columnDataTypeScript + " NOT NULL;\n";
+                    }
+                    addScript += "\n";
+                }
             }
             else
             {
-                addScript += " NULL;\n";
-                addScript += (initialValueScript.EndsWith(";") ? initialValueScript : initialValueScript + ";") + "\n";
+                string defaultValue = GetDefaultValue(columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
+                if (defaultValue == null && !columnMigration.NewColumn.Constraints.Nullable)
+                {
+                    ExitDatabaseMigrations("Cannot Use Zero Down Time Mode To Add Not Null Column Without Default Value, The Issue In Column [" + columnName + "] Inside [" + DXMLFileName + "]");
+                }
+
+                addScript += GetDefaultValueScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
+                addScript += " NULL;\n\n";
+
                 if (!columnMigration.NewColumn.Constraints.Nullable)
                 {
-                    addScript += "ALTER TABLE " + tableNameWithSchema + " ALTER COLUMN " + "[" + columnName + "] " + columnDataTypeScript + " NOT NULL;\n";
+                    InsertIntoDBMigrationsSetDefaultValues(columnName, defaultValue);
                 }
-                addScript += "\n";
             }
-
+            
             string addWithHistoryScript = addScript + GetInsertScriptForMigrationsHistory("Add Column", TableMigrations.DxmlTableName, columnName, addScript);
 
             return addWithHistoryScript;
@@ -1005,6 +1024,8 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateRelationScript(RelationDefinition relation)
         {
+            bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME);
+
             string createRelationScript = "-- Add Foreign Key Constraint For Column " + relation.ForeignKeyColumn + " In Table " + DXMLTable.Name + " As Reference To Column " + relation.ReferencedColumn + " In Table " + relation.ReferencedTable + "\n";
             string foreignKeyColumns = relation.ForeignKeyColumn.Contains(",") ? string.Join(",", relation.ForeignKeyColumn.Split(',').Select(c => "[" + c + "]").ToArray()) : "[" + relation.ForeignKeyColumn + "]";
             string referencedColumns = relation.ReferencedColumn.Contains(",") ? string.Join(",", relation.ReferencedColumn.Split(',').Select(c => "[" + c + "]").ToArray()) : "[" + relation.ReferencedColumn + "]";
@@ -1042,7 +1063,9 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            return createRelationWithHistoryScript + createIndexScript;
+            string createRelationAndIndexScript = isZeroDownTimeArgumentProvided ? (createIndexScript + createRelationWithHistoryScript) : (createRelationWithHistoryScript + createIndexScript);
+
+            return createRelationAndIndexScript;
         }
 
         protected override string GetDropRelationScript(RelationDefinition relation)
@@ -1084,13 +1107,8 @@ namespace Logitude.DBMigrations.Models
             return null;
         }
 
-        protected override string GetDefaultValueScript(bool nullable, string type, string defaultValue)
+        protected override string GetDefaultValueScript(string type, string defaultValue)
         {
-            if (nullable)
-            {
-                return null;
-            }
-
             if (type == "bit" && String.IsNullOrEmpty(defaultValue))
             {
                 return " DEFAULT(0)";
@@ -1139,6 +1157,9 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateIndexScript(IndexDefinition index)
         {
+            bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME);
+            string indexOnlineOption = isZeroDownTimeArgumentProvided ? (ToolConfigurations.AOTCreateIndexWithOnline ? " WITH (ONLINE = ON)" : null) : null;
+
             string indexColumns = !index.Columns.Contains(",") ? "[" + index.Columns + "]" : string.Join(",", index.Columns.Split(',').Select(c => "[" + c + "]").ToArray());
             string includeColumns = String.IsNullOrEmpty(index.Include) ? null : (!index.Include.Contains(",") ? "[" + index.Include + "]" : string.Join(",", index.Include.Split(',').Select(c => "[" + c + "]").ToArray()));
             string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
@@ -1151,11 +1172,11 @@ namespace Logitude.DBMigrations.Models
 
             if (includeColumns != null)
             {
-                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")')";
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")" + indexOnlineOption + "')";
             }
             else
             {
-                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ")')";
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ")" + indexOnlineOption + "')";
             }
 
             createIndexScript += ";\n\n";
@@ -1211,10 +1232,14 @@ namespace Logitude.DBMigrations.Models
 
         protected bool IsColumnDataTypeChanged(ColumnDefinition dbColumn, ColumnDefinition dxmlColumn)
         {
-            return (dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !IsBasicArgumentProvided) ||
-                   (dbColumn.Type != dxmlColumn.Type) ||
-                   (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) ||
-                   (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale));
+            bool isBasicArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.BASIC);
+            bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME);
+            bool isColumnDataTypeChanged = ((dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !isBasicArgumentProvided) ||
+                                            (dbColumn.Type != dxmlColumn.Type) ||
+                                            (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) ||
+                                            (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale)));
+
+            return (isColumnDataTypeChanged && !isZeroDownTimeArgumentProvided);
         }
 
         protected Func<RelationDefinition, bool> IsRelationInRelationsList(RelationDefinition relation)
@@ -1223,5 +1248,136 @@ namespace Logitude.DBMigrations.Models
                          r.ReferencedTable.ToLower() == relation.ReferencedTable.ToLower() &&
                          r.ReferencedColumn.ToLower() == relation.ReferencedColumn.ToLower());
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        protected string GetDefaultValue(string type, string defaultValue)
+        {
+            if (type == "bit" && String.IsNullOrEmpty(defaultValue))
+            {
+                return "0";
+            }
+
+            if (!String.IsNullOrEmpty(defaultValue))
+            {
+                return defaultValue;
+            }
+
+            return null;
+        }
+
+        protected void InsertIntoDBMigrationsSetDefaultValues(string columnName, string defaultValue)
+        {
+            UpdateTableSetValueCounter();
+            int updateNumber = GetTableSetValueCounter();
+            string databaseType = DXMLTable.DBType;
+            string schemaName = TableMigrations.DxmlTableSchema;
+            string tableName = TableMigrations.DxmlTableName;
+
+            string queryString = "INSERT INTO [dbo].[DBMigrationsSetDefaultValues]([Id], [DatabaseType], [SchemaName], [TableName], [ColumnName], [Status], [DefaultValue], [UpdateNumber], " +
+                "[DoneRecordsCount], [StartDate], [EndDate], [LastBatchElapsedTime]) " +
+                "VALUES('" + Guid.NewGuid().ToString() + "', '" + databaseType + "', '" + schemaName + "', '" + tableName + "', '" + columnName + "', 'Waiting', " +
+                "'" + defaultValue.Replace("'", "''") + "', " + updateNumber + ", 0, NULL, NULL, 0);";
+
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+
+            try
+            {
+                sqlConnection.Open();
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.Connection = sqlConnection;
+                sqlCommand.CommandText = queryString;
+                sqlCommand.ExecuteNonQuery();
+                sqlConnection.Close();
+            }
+            catch (Exception exception)
+            {
+                sqlConnection.Close();
+                ExitDatabaseMigrations(exception.Message);
+            }
+        }
+
+        protected void UpdateTableSetValueCounter()
+        {
+            string tableName = TableMigrations.DxmlTableName;//format name length for oracle using table short name
+
+            string queryString = "EXEC('IF (SELECT COUNT(*) FROM [dbo].[DBMigrationsSetValueCounters] WHERE [TableName] = ''" + tableName + "'') = 0 " +
+                                 "INSERT INTO [dbo].[DBMigrationsSetValueCounters]([TableName], [LastCounter]) VALUES(''" + tableName + "'', 1); " +
+                                 "ELSE " +
+                                 "UPDATE [dbo].[DBMigrationsSetValueCounters] SET [LastCounter] = [LastCounter] + 1 WHERE [TableName] = ''" + tableName + "''');";
+
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+
+            try
+            {
+                sqlConnection.Open();
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.Connection = sqlConnection;
+                sqlCommand.CommandText = queryString;
+                sqlCommand.ExecuteNonQuery();
+                sqlConnection.Close();
+            }
+            catch (Exception exception)
+            {
+                sqlConnection.Close();
+                ExitDatabaseMigrations(exception.Message);
+            }
+        }
+
+        protected int GetTableSetValueCounter()
+        {
+            string tableName = TableMigrations.DxmlTableName;//format name length for oracle using table short name
+
+            int lastCounter = 0;
+            string queryString = "SELECT [LastCounter] FROM [dbo].[DBMigrationsSetValueCounters] WHERE [TableName] = '" + tableName + "'";
+
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                reader.Read();
+
+                if (reader.HasRows)
+                {
+                    lastCounter = Convert.ToInt32(reader["LastCounter"].ToString());
+                }
+
+                reader.Close();
+                connection.Close();
+            }
+            catch (Exception exception)
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                connection.Close();
+                ExitDatabaseMigrations(exception.Message);
+            }
+
+            return lastCounter;
+        }
+
     }
 }

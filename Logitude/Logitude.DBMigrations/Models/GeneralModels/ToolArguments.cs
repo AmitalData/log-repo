@@ -8,11 +8,12 @@ namespace Logitude.DBMigrations.Models
 {
     public static class ToolArguments
     {
-        public const string ROOT = "-root";
-        public const string EXE = "-exe";
-        public const string DEPLOYMENT = "-deployment";
-        public const string BASIC = "-basic";
-        public const string IGNOREHASH = "-ignorehash";
-        public const string IGNORESETTINGSCHECK = "-ignoresettingscheck";
+        public static string[] Arguments;
+
+        public static bool IsArgumentProvided(string arg)
+        {
+            string[] arguments = Array.ConvertAll(Arguments, a => a.ToLower());
+            return (Array.IndexOf(arguments, arg) != -1);
+        }
     }
 }

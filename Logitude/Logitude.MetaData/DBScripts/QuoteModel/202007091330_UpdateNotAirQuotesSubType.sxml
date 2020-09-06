@@ -1,4 +1,4 @@
-﻿<Script DBType="Main">
+﻿<Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes">
   <Sql Version="2">
     <![CDATA[
     
@@ -33,7 +33,7 @@ CREATE TABLE #temp_Quotes (
 	 ) as ShipmentSubTypeId
 
 	into #tempTable
-	FROM Quotes where TransportModeId <> 'A'
+	FROM Quotes where TransportModeId <> 'A' and $LastCounterWhere$
 		
 	  declare @Tenant as int
       declare @EntityId as varchar(15)
