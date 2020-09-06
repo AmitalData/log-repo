@@ -63,6 +63,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     private declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService;
     private declarationPMService: DeclarationPMService = new DeclarationPMService;
     private CurrentSession = SessionLocator.SelectedSession;
+    TabsSource: any[] = [];
+    SelectedTab: string = "";
 
     public get AmendmentRequestNumber() { return this.EntityPM ? this.EntityPM.AmendmentRequestNumber : null; }
     public set AmendmentRequestNumber(newValue: string) { this.EntityPM.AmendmentRequestNumber = newValue; }
@@ -115,6 +117,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         this.Listen();
 
                         console.log("Declaration", this.EntityPM);
+                        this.BuildTabs();
 
                         this.ReloadDeclarationCorrection();
 
@@ -133,6 +136,27 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
  
 
     }
+    SelectionChanged(tab: any) {
+
+        this.TabsSource.forEach(item => { // reset selection
+            item.isSelected = false;
+        });
+
+        var index = this.TabsSource.indexOf(tab);
+        if (index < 0) {
+            console.log("The tab was not found, cant not delete it :( ", tab); return;
+        }
+        var item = this.TabsSource[index];
+        item.isSelected = true;
+        this.SelectedTab = item.Name;
+    }
+    BuildTabs() {
+        this.SelectedTab = "Details";
+        this.TabsSource.push({ Name: "Details", isSelected: true, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Details") });
+        this.TabsSource.push({ Name: "Errors", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Declarations") });
+    }
+
+
     DisplayOnlyCheck() {
 
          var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
