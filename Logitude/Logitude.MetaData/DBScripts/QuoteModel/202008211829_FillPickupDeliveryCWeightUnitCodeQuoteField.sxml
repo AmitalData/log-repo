@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes">
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
     
   If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
@@ -23,13 +23,11 @@
 	FROM Quotes where $LastCounterWhere$
   
 	  declare @Tenant as int
-      declare @EntityId as varchar(15)
+    declare @EntityId as varchar(15)
 	  declare @TransportModeId as varchar(4)
 	  declare @PickupDelivaryChargeableWeightUnitCode as varchar(3)
-	  declare @TenantChargeableWeightUnitCode as varchar(3)
-	    declare @TenantPMWeightMeasurementUnitCode as varchar(3)
 	  declare @Count as int
-      set @Count = 0;
+    set @Count = 0;
     BEGIN
        DECLARE DataCursor CURSOR READ_ONLY
        FOR
@@ -39,11 +37,7 @@
        WHILE @@FETCH_STATUS = 0
        BEGIN
        
-      set @TenantChargeableWeightUnitCode = (select ChargeableWeightUnitCode from Tenants where Id = @Tenant) 
-			set @TenantPMWeightMeasurementUnitCode = (select WeightMeasurementUnitCode  from Tenants where Id = @Tenant)
-
-			if (@TransportModeId = 'A') set @PickupDelivaryChargeableWeightUnitCode = @TenantChargeableWeightUnitCode
-			else if (@TransportModeId = 'O') set @PickupDelivaryChargeableWeightUnitCode = @TenantPMWeightMeasurementUnitCode
+			set @PickupDelivaryChargeableWeightUnitCode = (select WeightMeasurementUnitCode  from Tenants where Id = @Tenant)
 
       insert into #temp_Quotes(Id, PickupDeliveryCWeightUnitCode) values (@EntityId, @PickupDelivaryChargeableWeightUnitCode)
        			
