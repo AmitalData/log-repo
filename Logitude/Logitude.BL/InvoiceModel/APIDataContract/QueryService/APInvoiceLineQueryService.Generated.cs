@@ -140,26 +140,26 @@ using Simplog.Data.InvoiceModel;
 					
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(item.APInvoiceId))
-					{
-							//throw new ApplicationException("APInvoiceId Can't be update"); 
+					{							//throw new ApplicationException("APInvoiceId Can't be update"); 
 							temp.APInvoiceId = item.APInvoiceId;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && item.LineNumber != null)
-					{
-							//throw new ApplicationException("LineNumber Can't be update"); 
+					{							//throw new ApplicationException("LineNumber Can't be update"); 
 							temp.LineNumber = item.LineNumber;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && item.Tenant != null)
-					{
-							//throw new ApplicationException("Tenant Can't be update"); 
+					{							//throw new ApplicationException("Tenant Can't be update"); 
 							temp.Tenant = item.Tenant;
-					}  
+
+										}  
 
 					
 					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
@@ -172,9 +172,9 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{
-								//throw new ApplicationException("ChargesType Can't be update"); 
+							{								//throw new ApplicationException("ChargesType Can't be update"); 
 								temp.ChargesTypeId = myChargesTypePM.Id;
+						  
 							}  
 
 							
@@ -185,26 +185,26 @@ using Simplog.Data.InvoiceModel;
 					
                     
 					if(!IsUpdate)// && item.InvoiceCurrencyAmount != null)
-					{
-							//throw new ApplicationException("InvoiceCurrencyAmount Can't be update"); 
+					{							//throw new ApplicationException("InvoiceCurrencyAmount Can't be update"); 
 							temp.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && item.LocalCurrencyAmount != null)
-					{
-							//throw new ApplicationException("LocalCurrencyAmount Can't be update"); 
+					{							//throw new ApplicationException("LocalCurrencyAmount Can't be update"); 
 							temp.LocalCurrencyAmount = item.LocalCurrencyAmount;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && item.ProfitCurrencyAmount != null)
-					{
-							//throw new ApplicationException("ProfitCurrencyAmount Can't be update"); 
+					{							//throw new ApplicationException("ProfitCurrencyAmount Can't be update"); 
 							temp.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
-					}  
+
+										}  
 
 					
 					VatTypeQueryService VatTypeVatTypeService = new VatTypeQueryService(Tenant);
@@ -217,9 +217,9 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{
-								//throw new ApplicationException("VatType Can't be update"); 
+							{								//throw new ApplicationException("VatType Can't be update"); 
 								temp.VatTypeId = myVatTypePM.Id;
+						  
 							}  
 
 							
@@ -230,18 +230,18 @@ using Simplog.Data.InvoiceModel;
 					
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Notes))
-					{
-							//throw new ApplicationException("Notes Can't be update"); 
+					{							//throw new ApplicationException("Notes Can't be update"); 
 							temp.Notes = item.Notes;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && item.VatPercentage != null)
-					{
-							//throw new ApplicationException("VatPercentage Can't be update"); 
+					{							//throw new ApplicationException("VatPercentage Can't be update"); 
 							temp.VatPercentage = item.VatPercentage;
-					}  
+
+										}  
 
 					
 					CurrencyQueryService ForiegnCurrencyCurrencyService = new CurrencyQueryService(Tenant);
@@ -254,9 +254,9 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{
-								//throw new ApplicationException("ForiegnCurrency Can't be update"); 
+							{								//throw new ApplicationException("ForiegnCurrency Can't be update"); 
 								temp.ForiegnCurrencyId = myForiegnCurrencyPM.Id;
+						  
 							}  
 
 							
@@ -267,50 +267,50 @@ using Simplog.Data.InvoiceModel;
 					
                     
 					if(!IsUpdate)// && item.ForiegnExchangeRate != null)
-					{
-							//throw new ApplicationException("ForiegnExchangeRate Can't be update"); 
+					{							//throw new ApplicationException("ForiegnExchangeRate Can't be update"); 
 							temp.ForiegnExchangeRate = item.ForiegnExchangeRate;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && item.ForiegnCurrencyAmount != null)
-					{
-							//throw new ApplicationException("ForiegnCurrencyAmount Can't be update"); 
+					{							//throw new ApplicationException("ForiegnCurrencyAmount Can't be update"); 
 							temp.ForiegnCurrencyAmount = item.ForiegnCurrencyAmount;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(item.DebitAccount))
-					{
-							//throw new ApplicationException("DebitAccount Can't be update"); 
+					{							//throw new ApplicationException("DebitAccount Can't be update"); 
 							temp.DebitAccount = item.DebitAccount;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Description))
-					{
-							//throw new ApplicationException("Description Can't be update"); 
+					{							//throw new ApplicationException("Description Can't be update"); 
 							temp.Description = item.Description;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(item.LocalDescription))
-					{
-							//throw new ApplicationException("LocalDescription Can't be update"); 
+					{							//throw new ApplicationException("LocalDescription Can't be update"); 
 							temp.LocalDescription = item.LocalDescription;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(item.ChargeTypeGLAccountId))
-					{
-							//throw new ApplicationException("ChargeTypeGLAccountId Can't be update"); 
+					{							//throw new ApplicationException("ChargeTypeGLAccountId Can't be update"); 
 							temp.ChargeTypeGLAccountId = item.ChargeTypeGLAccountId;
-					}  
+
+										}  
 
 					
 					PrepaidCollectQueryService PrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
@@ -323,9 +323,9 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{
-								//throw new ApplicationException("PrepaidCollect Can't be update"); 
+							{								//throw new ApplicationException("PrepaidCollect Can't be update"); 
 								temp.PrepaidCollectId = myPrepaidCollectPM.Id;
+						  
 							}  
 
 							
@@ -336,10 +336,10 @@ using Simplog.Data.InvoiceModel;
 					
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(item.ExternalVATCard))
-					{
-							//throw new ApplicationException("ExternalVATCard Can't be update"); 
+					{							//throw new ApplicationException("ExternalVATCard Can't be update"); 
 							temp.ExternalVATCard = item.ExternalVATCard;
-					}  
+
+										}  
 
 					
 					PackageTypeQueryService ContainerTypePackageTypeService = new PackageTypeQueryService(Tenant);
@@ -352,9 +352,9 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{
-								//throw new ApplicationException("ContainerType Can't be update"); 
+							{								//throw new ApplicationException("ContainerType Can't be update"); 
 								temp.ContainerTypeId = myContainerTypePM.Id;
+						  
 							}  
 
 							
@@ -365,10 +365,10 @@ using Simplog.Data.InvoiceModel;
 					
                     
 					if(!IsUpdate)// && item.Quantity != null)
-					{
-							//throw new ApplicationException("Quantity Can't be update"); 
+					{							//throw new ApplicationException("Quantity Can't be update"); 
 							temp.Quantity = item.Quantity;
-					}  
+
+										}  
 
 										   
 						MyList.Add(temp);

@@ -706,8 +706,22 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
                     ShipmentPM MasterPM = mappingService.MasterDataMappingAndValidatin(entity, authToken.Tenant, "", true);
-                    ShipmentService service = new ShipmentService(MyContext, MasterPM, SecurityUtility.GetAuthenticatedUser());
-                    service.Update(true);
+
+                    if (MasterPM != null)
+                    {
+                        if (MasterPM.IsOperationalClosed)
+                        {
+                            throw new ApplicationException("Can't update operationally closed shipments");
+                        }
+
+                        if (MasterPM.IsCancelled)
+                        {
+                            throw new ApplicationException("Can't update operationally cancelled shipments");
+                        }
+
+                        ShipmentService service = new ShipmentService(MyContext, MasterPM, SecurityUtility.GetAuthenticatedUser());
+                        service.Update(true);
+                    }
                     
                     var result = mappingService.GetMasterById(MasterPM.Id, authToken.Tenant);
                     APIHelper.AddCommunicationLog("D", entity, result, "Shipment", MasterPM.Id, "Master API", authToken.Tenant);

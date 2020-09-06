@@ -46,10 +46,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetDirectById(id, tenant);
+                Direct Result = Service.GetDirectById(id, tenant);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
+
             catch (Exception ex)
             {
                 var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
@@ -67,8 +68,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetDirectByShipmentNumber(number, tenant);
-                //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
+                Direct Result = Service.GetDirectByShipmentNumber(number, tenant);                
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
@@ -602,9 +602,23 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);                    
                     ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, authToken.Tenant, "", true);
-                    ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
-                    service.Update(true);
 
+                    if(directPM != null)
+                    {
+                        if(directPM.IsOperationalClosed)
+                        {
+                            throw new ApplicationException("Can't update operationally closed shipments");
+                        }
+
+                        if (directPM.IsCancelled)
+                        {
+                            throw new ApplicationException("Can't update operationally cancelled shipments");
+                        }
+
+                        ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
+                        service.Update(true);
+                    }
+                    
                     var result = mappingService.GetDirectById(directPM.Id, authToken.Tenant);
                     APIHelper.AddCommunicationLog("D", entity, result, "Shipment", directPM.Id, "Direct API", authToken.Tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, result);

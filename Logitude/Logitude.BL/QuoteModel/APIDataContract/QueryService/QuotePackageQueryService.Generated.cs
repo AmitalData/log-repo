@@ -109,7 +109,6 @@ using Simplog.Data.QuoteModel;
 						//} 
 
 						
-
 					}
 					PackageTypeQueryService PackageTypePackageTypeService = new PackageTypeQueryService(Tenant);
 					if(item.PackageType != null)
@@ -121,9 +120,9 @@ using Simplog.Data.QuoteModel;
 
 						 
 							if(!IsUpdate)
-							{
-								//throw new ApplicationException("PackageType Can't be update"); 
+							{								//throw new ApplicationException("PackageType Can't be update"); 
 								temp.PackageTypeId = myPackageTypePM.Id;
+						  
 							}  
 
 							
@@ -134,58 +133,58 @@ using Simplog.Data.QuoteModel;
 					
                     
 					if(!IsUpdate)// && item.Quantity != null)
-					{
-							//throw new ApplicationException("Quantity Can't be update"); 
+					{							//throw new ApplicationException("Quantity Can't be update"); 
 							temp.Quantity = item.Quantity;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && item.GrossWeight != null)
-					{
-							//throw new ApplicationException("GrossWeight Can't be update"); 
+					{							//throw new ApplicationException("GrossWeight Can't be update"); 
 							temp.GrossWeight = item.GrossWeight;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && item.Volume != null)
-					{
-							//throw new ApplicationException("Volume Can't be update"); 
+					{							//throw new ApplicationException("Volume Can't be update"); 
 							temp.Volume = item.Volume;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && item.Height != null)
-					{
-							//throw new ApplicationException("Height Can't be update"); 
+					{							//throw new ApplicationException("Height Can't be update"); 
 							temp.Height = item.Height;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && item.Width != null)
-					{
-							//throw new ApplicationException("Width Can't be update"); 
+					{							//throw new ApplicationException("Width Can't be update"); 
 							temp.Width = item.Width;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && item.Length != null)
-					{
-							//throw new ApplicationException("Length Can't be update"); 
+					{							//throw new ApplicationException("Length Can't be update"); 
 							temp.Length = item.Length;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && item.VolumetricWeight != null)
-					{
-							//throw new ApplicationException("VolumetricWeight Can't be update"); 
+					{							//throw new ApplicationException("VolumetricWeight Can't be update"); 
 							temp.VolumetricWeight = item.VolumetricWeight;
-					}  
+
+										}  
 
 										   
 						MyList.Add(temp);

@@ -133,7 +133,6 @@ using Simplog.Data.ShipmentsModel;
 						//} 
 
 						
-
 					}
 					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
 					if(item.ChargesType != null)
@@ -145,9 +144,9 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{
-								//throw new ApplicationException("ChargesType Can't be update"); 
+							{								//throw new ApplicationException("ChargesType Can't be update"); 
 								temp.ChargesTypeId = myChargesTypePM.Id;
+						  
 							}  
 
 							
@@ -166,9 +165,9 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{
-								//throw new ApplicationException("Measurement Can't be update"); 
+							{								//throw new ApplicationException("Measurement Can't be update"); 
 								temp.MeasurementId = myMeasurementPM.Id;
+						  
 							}  
 
 							
@@ -179,18 +178,18 @@ using Simplog.Data.ShipmentsModel;
 					
                     
 					if(!IsUpdate)// && item.Quantity != null)
-					{
-							//throw new ApplicationException("Quantity Can't be update"); 
+					{							//throw new ApplicationException("Quantity Can't be update"); 
 							temp.Quantity = item.Quantity;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && item.UnitPrice != null)
-					{
-							//throw new ApplicationException("UnitPrice Can't be update"); 
+					{							//throw new ApplicationException("UnitPrice Can't be update"); 
 							temp.UnitPrice = item.UnitPrice;
-					}  
+
+										}  
 
 					
 					CurrencyQueryService CurrencyCurrencyService = new CurrencyQueryService(Tenant);
@@ -203,9 +202,9 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{
-								//throw new ApplicationException("Currency Can't be update"); 
+							{								//throw new ApplicationException("Currency Can't be update"); 
 								temp.CurrencyId = myCurrencyPM.Id;
+						  
 							}  
 
 							
@@ -216,10 +215,10 @@ using Simplog.Data.ShipmentsModel;
 					
                     
 					if(!IsUpdate)// && item.Rate != null)
-					{
-							//throw new ApplicationException("Rate Can't be update"); 
+					{							//throw new ApplicationException("Rate Can't be update"); 
 							temp.Rate = item.Rate;
-					}  
+
+										}  
 
 					
 					PrepaidCollectQueryService PrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
@@ -232,9 +231,9 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{
-								//throw new ApplicationException("PrepaidCollect Can't be update"); 
+							{								//throw new ApplicationException("PrepaidCollect Can't be update"); 
 								temp.PrepaidCollectId = myPrepaidCollectPM.Id;
+						  
 							}  
 
 							
@@ -245,10 +244,10 @@ using Simplog.Data.ShipmentsModel;
 					
                     
 					if(!IsUpdate)// && item.Amount != null)
-					{
-							//throw new ApplicationException("Amount Can't be update"); 
+					{							//throw new ApplicationException("Amount Can't be update"); 
 							temp.ExpectedAmount = item.Amount;
-					}  
+
+										}  
 
 										   
 						MyList.Add(temp);

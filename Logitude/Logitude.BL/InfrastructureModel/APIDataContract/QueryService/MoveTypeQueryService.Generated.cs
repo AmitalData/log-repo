@@ -108,7 +108,6 @@ using Simplog.Data.InfrastructureModel;
 						//} 
 
 						
-
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
@@ -117,25 +116,27 @@ using Simplog.Data.InfrastructureModel;
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
 						{
 								//throw new ApplicationException("Code Can't be update"); 
-								temp.Code = MyEntity.Code;						}  
+								temp.Code = MyEntity.Code;
+								
+						
+						}  
 
 						
-
 					}
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.MoveTypeEnglishName))
-					{
-							//throw new ApplicationException("MoveTypeEnglishName Can't be update"); 
+					{							//throw new ApplicationException("MoveTypeEnglishName Can't be update"); 
 							temp.MoveTypeEnglishName = MyEntity.MoveTypeEnglishName;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.MoveTypeLocalName))
-					{
-							//throw new ApplicationException("MoveTypeLocalName Can't be update"); 
+					{							//throw new ApplicationException("MoveTypeLocalName Can't be update"); 
 							temp.MoveTypeLocalName = MyEntity.MoveTypeLocalName;
-					}  
+
+										}  
 
 										   
 					return temp;

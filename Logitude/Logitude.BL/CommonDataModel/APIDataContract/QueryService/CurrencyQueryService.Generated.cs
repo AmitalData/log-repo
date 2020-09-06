@@ -149,7 +149,6 @@ using Simplog.Data.CommonDataModel;
 						//} 
 
 						
-
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
@@ -158,25 +157,27 @@ using Simplog.Data.CommonDataModel;
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
 						{
 								//throw new ApplicationException("Code Can't be update"); 
-								temp.Code = MyEntity.Code;						}  
+								temp.Code = MyEntity.Code;
+								
+						
+						}  
 
 						
-
 					}
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
-					{
-							//throw new ApplicationException("EnglishName Can't be update"); 
+					{							//throw new ApplicationException("EnglishName Can't be update"); 
 							temp.EnglishName = MyEntity.EnglishName;
-					}  
+
+										}  
 
 					
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
-					{
-							//throw new ApplicationException("LocalName Can't be update"); 
+					{							//throw new ApplicationException("LocalName Can't be update"); 
 							temp.LocalName = MyEntity.LocalName;
-					}  
+
+										}  
 
 					
 					if(string.IsNullOrEmpty(temp.Code))
@@ -186,10 +187,12 @@ using Simplog.Data.CommonDataModel;
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
 						{
 								//throw new ApplicationException("PartnerCode Can't be update"); 
-								temp.Code = MyEntity.PartnerCode;						}  
+								temp.Code = MyEntity.PartnerCode;
+								
+						
+						}  
 
 						
-
 					}					   
 					return temp;
 		    }
