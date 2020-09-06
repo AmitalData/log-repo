@@ -39,5 +39,6 @@ export class VendorList {
 		PrimaryContactPhone: string;
 		CreatedByPartner: string;
 		StateName: string;
+		GLAccountNumber: string;
 	
 }

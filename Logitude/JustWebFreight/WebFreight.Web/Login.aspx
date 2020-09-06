@@ -10,15 +10,8 @@
     <title></title>
 
 
-    <style type="text/css">
-        span.k-icon.k-i-arrow-s {
-            background-image: url('HtmlHelpers/Images/Icons/DropArrow.png');
-            background-size: 12px 12px;
-            background-position: 0 0;
-        }
-    </style>
 
-    <link href="css/asp.css" rel="stylesheet" type="text/css"/>
+
     <link href="css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
     <link href="css/kendo.default.min.css" rel="stylesheet" type="text/css"/>
     <script src="js/jquery-3.5.1.min.js" type="text/javascript"></script>
@@ -35,6 +28,16 @@
     <script src="Scripts/json2.min.js" type="text/javascript"></script>
     <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>     	
        
+        
+    <link href="css/asp.css" rel="stylesheet" type="text/css"/>
+
+    <style type="text/css">
+        span.k-icon.k-i-arrow-s {
+            background-image: url('HtmlHelpers/Images/Icons/DropArrow.png');
+            background-size: 12px 12px;
+            background-position: 0 0;
+        }
+    </style>
 </head>
 
 <body onload="get_cookie_data()" onkeydown="capLock( event )">
@@ -127,10 +130,13 @@
                                           <table id="loginForm" style="display:normal">
 
                                          <tr>
-                                            <td class="column1">e-mail: 
-                                                <br /> 
-                                                                <input autocomplete="on"  size="10"  class="auto-style1" id="Email" type="email" name="Email" runat="server"  placeholder="e.g. myname@example.net"  required data-email-msg="Email format is not valid"  onblur="onEmailBlur()"/>
-                                                     
+                                            <td class="column1">
+                                                e-mail: 
+                                                <br />
+
+                                                <div style="height: 33px; width: 267px; border: 1px solid lightgray; border-radius: 4px;" class="InputShow">
+                                                    <input  class="auto-style1" style="width: 258px; border: 0px; height: 25px;" autocomplete="on" size="10" id="Email" type="email" name="Email" runat="server" placeholder="e.g. myname@example.net" required data-email-msg="Email format is not valid" onblur="onEmailBlur()" />
+                                                </div>
                                             </td>
                                                
                                             
@@ -139,11 +145,14 @@
 
                                         <tr>
                         
-                                            <td class="column1"> Password: <br />
-                                    <div  style="height:33px;width:267px;border:1px solid lightgray;border-radius:4px;" class="InputShow">
-                                                           <input  style="width:230px;border:0px;" class="auto-style1" id="Password" type="password" autocomplete="off" runat="server" oninput="onPasswordChanged()" required data-email-msg="password is required!" onkeypress="capLock(event)"/>
-                                                           <img  src="images/LoginScreen/password_eye_closed.png" id="ShowHidePasswordImageId" title="Show Password" alt="Show Password" style="padding-left:2px;font-size:12px;vertical-align:central;font-family:Arial; cursor:pointer;text-decoration:none;float:right;margin-top:5px;margin-right:2px;" onclick="ShowHidePasswordClick()"/>
-                                                    </div>
+                                            <td class="column1">
+                                                Password: 
+                                                <br />
+
+                                                <div style="height: 33px; width: 267px; border: 1px solid lightgray; border-radius: 4px;" class="InputShow">
+                                                    <input class="auto-style1" style="width: 230px; border: 0px; height: 25px;"  id="Password" type="password" autocomplete="off" runat="server" oninput="onPasswordChanged()" required data-email-msg="password is required!" onkeypress="capLock(event)" />
+                                                    <img src="images/LoginScreen/password_eye_closed.png" id="ShowHidePasswordImageId" title="Show Password" alt="Show Password" style="padding-left: 2px; font-size: 12px; vertical-align: central; font-family: Arial; cursor: pointer; text-decoration: none; float: right; margin-top: 5px; margin-right: 2px;" onclick="ShowHidePasswordClick()" />
+                                                </div>
                                             </td>
 
                                                   <%--          <td class="column1">Password: <br /><input class="auto-style1" id="Password" type="password" autocomplete="off" runat="server" oninput="onPasswordChanged()" required data-email-msg="password is required!" onkeypress="capLock(event)"/>
@@ -213,13 +222,13 @@
                                                
                                              
                                         </tr>
-                                             <tr>
-                                                            <td class="column1"> 
-                                                                <div style="margin-top:5px"><input class="k-dropdown" id="cmbTenants" runat="server" style="display:normal;width:250px;margin-top:0px"/></div>
-                                                            </td>                    
-                                      
-                                               
-                                                   </tr>
+                                            <tr>
+                                                <td class="column1">
+                                                    <div style="margin-top: 5px">
+                                                        <input class="k-dropdown" id="cmbTenants" runat="server" style="width: 258px; border: 0px; height: 25px;" /></div>
+                                                </td>
+                                            </tr>
+
                                             <tr>
                                                <td></td>
                                             </tr>

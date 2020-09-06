@@ -22,7 +22,7 @@ export class PrintingOptionsComponent extends BaseComponent implements OnInit {
     ObjectTableId: string;
     DataContext: any = this;
 
-    IsShowPopulateAutomaticDate : boolean = true;
+    IsShowPopulateAutomaticDate : boolean = false;
 
 
     constructor(public entityArgs: EntityArgs) {

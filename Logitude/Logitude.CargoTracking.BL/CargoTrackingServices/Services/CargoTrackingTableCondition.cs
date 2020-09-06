@@ -1,4 +1,5 @@
-﻿ 
+﻿
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,46 +10,46 @@ using System.Threading.Tasks;
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 {
-    public class CargoTrackingTableCondition
+    public class CargoTrackingTableBuildWhereCondition
     {
 
-        public static string Condition(string TableName, string LastUpdate,CargoTrackingArguments CargoTrackingArguments = null, string Condition = null)
+        public static string BuildWhereCondition(BuildWhereConditionArgs buildWhereConditionArg)
         {
-            string condition = " where (AutomaticLastUpdateDate > '" + LastUpdate + "')";
+            string condition = " where (AutomaticLastUpdateDate > '" + buildWhereConditionArg.LastUpdate + "')";
             //if (LastUpdate!=null)
             //{
             //    condition = " where (AutomaticLastUpdateDate > '"+ LastUpdate+"')";
             //}
-            if (Condition != null && CargoTrackingArguments!=null)
+            if (buildWhereConditionArg.Condition != null && buildWhereConditionArg.CargoTrackingArguments != null)
             {
-                condition = " where "+Condition;
+                condition = " where "+ buildWhereConditionArg.Condition;
             }
-            else if (Condition != null && CargoTrackingArguments == null)
+            else if (buildWhereConditionArg.Condition != null && buildWhereConditionArg.CargoTrackingArguments == null)
             {
                  
-                   condition += " and "+ Condition;
+                   condition += " and "+ buildWhereConditionArg.Condition;
             }
-            if (CargoTrackingArguments != null)
+            if (buildWhereConditionArg.CargoTrackingArguments != null)
             {
-                if(TableName== "CargoTrackingShipments" || TableName == "CargoTrackingShipmentSearches")
+                if(buildWhereConditionArg.TableName == "CargoTrackingShipments" || buildWhereConditionArg.TableName == "CargoTrackingShipmentSearches")
                 {
-                    if (CargoTrackingArguments.Tenant!=null)
+                    if (buildWhereConditionArg.CargoTrackingArguments.Tenant!=null)
                     {
-                       condition = " where Tenant=" + CargoTrackingArguments.Tenant + " and CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and CreateDateTime <= '" + CargoTrackingArguments.ToDate+"'";
+                       condition = " where Tenant=" + buildWhereConditionArg.CargoTrackingArguments.Tenant + " and CreateDateTime >= '" + buildWhereConditionArg.CargoTrackingArguments.FromDate + "' and CreateDateTime <= '" + buildWhereConditionArg.CargoTrackingArguments.ToDate+"'";
 
                     }
                     else 
                     {
-                        condition += " and CreateDateTime >= '" + CargoTrackingArguments.FromDate + "' and CreateDateTime <= '" + CargoTrackingArguments.ToDate+"'";
+                        condition += " and CreateDateTime >= '" + buildWhereConditionArg.CargoTrackingArguments.FromDate + "' and CreateDateTime <= '" + buildWhereConditionArg.CargoTrackingArguments.ToDate+"'";
 
                     }
 
                 }
                 else
                 {
-                    if (CargoTrackingArguments.Tenant != null)
+                    if (buildWhereConditionArg.CargoTrackingArguments.Tenant != null)
                     {
-                        condition = " where Tenant = " + CargoTrackingArguments.Tenant;
+                        condition = " where Tenant = " + buildWhereConditionArg.CargoTrackingArguments.Tenant;
                     }
                     else
                     {

@@ -37,6 +37,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string IBANNumber { get; set; }
         public string PrimaryContactId { get; set; }
         public bool IsActiveForMobile { get; set; }
+        public string GLAccountDisplayNumber { get; set; }
+
         // by islam
         public bool InUse { get; set; }
         public string RecentlyAdded { get; set; }

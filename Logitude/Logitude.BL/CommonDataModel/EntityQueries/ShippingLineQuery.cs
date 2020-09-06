@@ -9,6 +9,9 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -319,52 +322,56 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<ShippingLineList> GetIQueryableEntityList(IQueryable<ShippingLine> iQueryable)
         {
-            IQueryable<ShippingLineList> result = from a in iQueryable.Include("Card").Include("ShippingAgent")
-                                                  select new ShippingLineList()
-                                                  {
-                                                      Code = a.Card.Code,
-                                                      EnglishName = a.Card.EnglishName,
-                                                      LocalName = a.Card.LocalName,
-                                                      ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
-                                                      PayablesAccountingCard = a.Card.PayablesAccountingCard,
-                                                      InActive = a.Card.InActive,
-                                                      Remark = a.Card.Notes,
-                                                      SCACCode = a.SCACCode,
-                                                      PaymentTermId = a.Card.PaymentTermId,
-                                                      Id = a.Id,
-                                                      Tenant = a.Tenant,
-                                                      VatNumber = a.Card.VatNumber,
-                                                      AddedManually = a.AddedManually,
-                                                      OurCreditNumber = a.OurCreditNumber,
-                                                      SearchFields = a.Card.SearchFields,
-                                                      Website = a.Card.Website,
-                                                      Notes = a.Card.Notes,
-                                                      InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
-                                                      VatTypeId = a.Card.VatTypeId,
-                                                      EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
-                                                      CityName = a.Card.CityName,
-                                                      CountryId = a.Card.CountryId,
-                                                      CountryCode = a.Card.CountryCode,
-                                                      CountryName = a.Card.CountryName,
-                                                      ShippingAgentEnglishName = a.ShippingAgent != null ? (a.ShippingAgent.Card != null ? a.ShippingAgent.Card.EnglishName:""):"",
-                                                      PaymentTermEnglishName = "",
-                                                      ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
-                                                      PaymentMethodCode = a.Card.SATPaymentMethodCode,
-                                                      ExternalId2 = a.Card.ExternalId2,
-                                                      SATForeignRFC = a.Card.SATForeignRFC,
-                                                      MetodoPagoCode = a.Card.MetodoPagoCode,
-                                                      UsoCFDICode = a.Card.UsoCFDICode,
-                                                      IsINTTRARegistered = a.IsINTTRARegistered,
-                                                      INTTRARegistrationNotes = a.INTTRARegistrationNotes,
-                                                      INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
-                                                      PrimaryContactName = a.PrimaryContactName,
-                                                      PrimaryContactEmail = a.PrimaryContactEmail,
-                                                      PrimaryContactPhone = a.PrimaryContactPhone,
-                                                      CAAT = a.CAAT,
-                                                      CBSA = a.CBSA,
-                                                      StateName = a.Card.StateName,
-                                                  };
+            IQueryable<ShippingLineList> result = (from a in iQueryable.Include("Card").Include("ShippingAgent")
+                                                   select   new ShippingLineList()
+                                                   {
+                                                       Code = a.Card.Code,
+                                                       EnglishName = a.Card.EnglishName,
+                                                       LocalName = a.Card.LocalName,
+                                                       ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                                       PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                                       InActive = a.Card.InActive,
+                                                       Remark = a.Card.Notes,
+                                                       SCACCode = a.SCACCode,
+                                                       PaymentTermId = a.Card.PaymentTermId,
+                                                       Id = a.Id,
+                                                       Tenant = a.Tenant,
+                                                       VatNumber = a.Card.VatNumber,
+                                                       AddedManually = a.AddedManually,
+                                                       OurCreditNumber = a.OurCreditNumber,
+                                                       SearchFields = a.Card.SearchFields,
+                                                       Website = a.Card.Website,
+                                                       Notes = a.Card.Notes,
+                                                       InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
+                                                       VatTypeId = a.Card.VatTypeId,
+                                                       EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
+                                                       CityName = a.Card.CityName,
+                                                       CountryId = a.Card.CountryId,
+                                                       CountryCode = a.Card.CountryCode,
+                                                       CountryName = a.Card.CountryName,
+                                                       ShippingAgentEnglishName = a.ShippingAgent != null ? (a.ShippingAgent.Card != null ? a.ShippingAgent.Card.EnglishName : "") : "",
+                                                       PaymentTermEnglishName = "",
+                                                       ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
+                                                       PaymentMethodCode = a.Card.SATPaymentMethodCode,
+                                                       ExternalId2 = a.Card.ExternalId2,
+                                                       SATForeignRFC = a.Card.SATForeignRFC,
+                                                       MetodoPagoCode = a.Card.MetodoPagoCode,
+                                                       UsoCFDICode = a.Card.UsoCFDICode,
+                                                       IsINTTRARegistered = a.IsINTTRARegistered,
+                                                       INTTRARegistrationNotes = a.INTTRARegistrationNotes,
+                                                       INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
+                                                       PrimaryContactName = a.PrimaryContactName,
+                                                       PrimaryContactEmail = a.PrimaryContactEmail,
+                                                       PrimaryContactPhone = a.PrimaryContactPhone,
+                                                       CAAT = a.CAAT,
+                                                       CBSA = a.CBSA,
+                                                       StateName = a.Card.StateName,
+                                                       GLAccountNumber = a.Card.GLAccountDisplayNumber
+                                                   });
+
+
             return result;
         }
+ 
     }
 }

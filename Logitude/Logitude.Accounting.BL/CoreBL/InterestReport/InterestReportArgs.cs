@@ -15,6 +15,6 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         public string ReportNumber { get; set; }
         public string Email { get; set; }
         public bool RecalculateData { get; set; }
-
+        public DateTime InvoiceDate { get; set; }
     }
 }

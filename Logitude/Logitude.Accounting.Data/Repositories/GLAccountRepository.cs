@@ -53,6 +53,13 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).FirstOrDefault();
         }
 
+        public string GetDisplayNumberByGLAccountId(string GLAccountId, int tenant)
+        {
+            return (from a in context.GLAccounts
+                    where a.Id == GLAccountId && a.Tenant == tenant
+                    select a.DisplayNumber).FirstOrDefault();
+        }
+
         public GLAccount GetGLAccountByDisplayNoAndTenant(string displayNo, int tenant)
         {
             return (from a in context.GLAccounts

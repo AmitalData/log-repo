@@ -65,7 +65,7 @@ namespace WebFreight.Web.Helpers
                 ImporterDepositionAM importerDepositionAM = new ImporterDepositionAM();
                 MapImporterDepositionPMToImporterDepositionAM(importerDepositionPM, importerDepositionAM);
                 importerDepositionAM.CustomerTenant = (int)customerTenant;
-                string logId = AddAPILogs(importerDepositionAM, "Start Sending Importer Deposition to LogBox ..",tenant);
+                string logId = AddAPILogs(importerDepositionAM, "Start Sending Importer Deposition to LogBox ..", tenant);
                 string token = string.Empty;
                 APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
                 {
@@ -84,6 +84,7 @@ namespace WebFreight.Web.Helpers
                 }
 
               //  token = "Jmn4iSPqOvya/KOK3QRRJnfyj7SR+XF8iHs=";
+
 
                 if (!string.IsNullOrEmpty(token))
                 {
@@ -145,7 +146,7 @@ namespace WebFreight.Web.Helpers
 
                 IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
                 APILogsService apiLogsService = new APILogsService(webFreightContext, tenant);
-                apiLogsService.Create(LogPM); 
+                apiLogsService.Create(LogPM);
                 var msg = "There is no LogBox Tenant To Send this Composition to ..";
 
                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionPM), null, null, "");
@@ -258,7 +259,7 @@ namespace WebFreight.Web.Helpers
 
         #region API Logs
 
-        public string AddAPILogs(ImporterDepositionAM importerDepositionAM, string message = null,int tenant = 0)
+        public string AddAPILogs(ImporterDepositionAM importerDepositionAM, string message = null, int tenant = 0)
         {
             //int tenant = importerDepositionAM.CustomerTenant;
 

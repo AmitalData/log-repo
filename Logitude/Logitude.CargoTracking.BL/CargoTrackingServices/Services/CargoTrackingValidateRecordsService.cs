@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 {
-    public class CargoTrackingBlockRecordsService
+    public class CargoTrackingValidateRecordsService
     {
 
-        public static bool  BlockRecords (string TableName, SqlDataReader reader)
+        public static bool ValidateRecords(string TableName, SqlDataReader reader)
         {
             bool  IsValid = true;
             if (TableName == "CargoTrackingShipments" || TableName == "CargoTrackingShipmentSearches")

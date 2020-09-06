@@ -463,6 +463,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             cmp.EntityPM.MasterShipmentDataId = this.EntityPM.MasterShipmentDataId;
             cmp.EntityPM.CutoffDate = this.EntityPM.CutoffDate;
             cmp.EntityPM.SCI = this.EntityPM.SCI;
+            cmp.EntityPM.ShipmentSubTypeId = this.EntityPM.ShipmentSubTypeId;
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     this.isLoadHousesRequested = true;

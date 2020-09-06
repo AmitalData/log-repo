@@ -10,9 +10,12 @@ describe('Activities', () => {
         Resolvers.MainMenuResolver.Selector('#CRMACT').Select();
     });
  it('Test New Activities', () => {
-        scenarios.RunScenario('T');
+        scenarios.RunScenario('T');  
+    });
+    it('Test New Activities', () => {
         scenarios.RunScenario('P');
+    });
+    it('Test New Activities', () => {
         scenarios.RunScenario('A');
-    
     });
 });

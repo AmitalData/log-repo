@@ -77,6 +77,11 @@ namespace Logitude.BL.InvoiceModel.Tools
         }
         public void APPaymentQuickbooksValidating(APPaymentPM entityPM, Boolean IsSetApproved, Boolean isNewEntity, APPayment payment, IInvoiceContext invoiceContext, ICommonDataContext CommonContext,bool setCancelApproved, bool SystemWorkerRole = false )
         {
+            if (entityPM.TransferStatusCode == "BL")
+            {
+                return;
+            }
+
             if (IsSetApproved && !entityPM.SetVoided &&setCancelApproved == false)
             {
                 if (entityPM.TransferStatusCode == "RD" && entityPM.PaymentMethodCode == "FS")

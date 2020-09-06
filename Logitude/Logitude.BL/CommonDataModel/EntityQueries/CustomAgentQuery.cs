@@ -9,6 +9,9 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -389,42 +392,47 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<CustomAgentList> GetIQueryableEntityList(IQueryable<CustomAgent> iQueryable)
         {
-            IQueryable<CustomAgentList> result = from a in iQueryable.Include("Card")
-                                                 select new CustomAgentList()
-                                                 {
-                                                     Code = a.Card.Code,
-                                                     EnglishName = a.Card.EnglishName,
-                                                     LocalName = a.Card.LocalName,
-                                                     ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
-                                                     PayablesAccountingCard = a.Card.PayablesAccountingCard,
-                                                     InActive = a.Card.InActive,
-                                                     Notes = a.Card.Notes,
-                                                     PaymentTermId = a.Card.PaymentTermId,
-                                                     Id = a.Id,
-                                                     Tenant = a.Tenant,
-                                                     VatNumber = a.Card.VatNumber,
-                                                     SearchFields = a.Card.SearchFields,
-                                                     Website = a.Card.Website,
-                                                     InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
-                                                     VatTypeId = a.Card.VatTypeId,
-                                                     EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
-                                                     CityName = a.Card.CityName,
-                                                     CountryId = a.Card.CountryId,
-                                                     CountryCode = a.Card.CountryCode,
-                                                     CountryName = a.Card.CountryName,
-                                                     PaymentTermEnglishName = "",
-                                                     ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
-                                                     PaymentMethodCode = a.Card.SATPaymentMethodCode,
-                                                     ExternalId2 = a.Card.ExternalId2,
-                                                     MetodoPagoCode = a.Card.MetodoPagoCode,
-                                                     UsoCFDICode = a.Card.UsoCFDICode,
-                                                     SATForeignRFC = a.Card.SATForeignRFC,
-                                                     PrimaryContactName = a.PrimaryContactName,
-                                                     PrimaryContactEmail = a.PrimaryContactEmail,
-                                                     PrimaryContactPhone = a.PrimaryContactPhone,
-                                                     StateName = a.Card.StateName,
-                                                 };
+            //int Tenant = iQueryable.Select(s => s.Tenant).FirstOrDefault();
+            IQueryable<CustomAgentList> result = (from a in iQueryable.Include("Card")
+                                                  select new CustomAgentList()
+                                                  {
+                                                      Code = a.Card.Code,
+                                                      EnglishName = a.Card.EnglishName,
+                                                      LocalName = a.Card.LocalName,
+                                                      ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                                      PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                                      InActive = a.Card.InActive,
+                                                      Notes = a.Card.Notes,
+                                                      PaymentTermId = a.Card.PaymentTermId,
+                                                      Id = a.Id,
+                                                      Tenant = a.Tenant,
+                                                      VatNumber = a.Card.VatNumber,
+                                                      SearchFields = a.Card.SearchFields,
+                                                      Website = a.Card.Website,
+                                                      InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
+                                                      VatTypeId = a.Card.VatTypeId,
+                                                      EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
+                                                      CityName = a.Card.CityName,
+                                                      CountryId = a.Card.CountryId,
+                                                      CountryCode = a.Card.CountryCode,
+                                                      CountryName = a.Card.CountryName,
+                                                      PaymentTermEnglishName = "",
+                                                      ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
+                                                      PaymentMethodCode = a.Card.SATPaymentMethodCode,
+                                                      ExternalId2 = a.Card.ExternalId2,
+                                                      MetodoPagoCode = a.Card.MetodoPagoCode,
+                                                      UsoCFDICode = a.Card.UsoCFDICode,
+                                                      SATForeignRFC = a.Card.SATForeignRFC,
+                                                      PrimaryContactName = a.PrimaryContactName,
+                                                      PrimaryContactEmail = a.PrimaryContactEmail,
+                                                      PrimaryContactPhone = a.PrimaryContactPhone,
+                                                      StateName = a.Card.StateName,
+                                                      GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                                  });
+
+
             return result;
         }
+     
     }
 }

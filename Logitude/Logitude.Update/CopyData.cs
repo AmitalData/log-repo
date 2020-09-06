@@ -415,8 +415,11 @@ namespace Logitude.Update
                         DocumentsDataProvider = item.DocumentsDataProvider,
                         PrintingFieldsScreenCode = item.PrintingFieldsScreenCode,
                         OrderBy = item.OrderBy,
-                          
-                         
+                        OnPrintPopulateDateFieldName = item.OnPrintPopulateDateFieldName,
+                        OnSendPopulateDateFieldName = item.OnSendPopulateDateFieldName,
+                        OnUploadPopulateDateFieldName = item.OnUploadPopulateDateFieldName,
+
+
 
                     };
                     DestinationDocumentTypeRepository.Add(NewDocumentType);

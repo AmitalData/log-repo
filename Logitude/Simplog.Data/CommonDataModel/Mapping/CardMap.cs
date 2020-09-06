@@ -59,10 +59,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Phone).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.StateName).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.CreatedByPartner).HasMaxLength(25).IsUnicode(false);
+            this.Property(t => t.GLAccountDisplayNumber).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Cards");
             this.Property(t => t.Id).HasColumnName("Id");
+            this.Property(t => t.GLAccountDisplayNumber).HasColumnName("GLAccountDisplayNumber");
             this.Property(t => t.EnglishName).HasColumnName("EnglishName");
             this.Property(t => t.VatNumber).HasColumnName("VatNumber");
             this.Property(t => t.LocalName).HasColumnName("LocalName");

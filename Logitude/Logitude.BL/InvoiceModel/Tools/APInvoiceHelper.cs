@@ -82,6 +82,11 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         public  void APInvoiceQuickbooksValidating(APInvoicePM entityPM, Boolean IsSetApproved, Boolean isNewEntity, IInvoiceContext InvoiceContext, ICommonDataContext CommonContext)
         {
+            if (entityPM.TransferStatusCode == "BL")
+            {
+                return;
+            }
+
             if (IsSetApproved)
             {
                 commonContext = CommonContext;
@@ -279,7 +284,6 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                     }
             }
-
         }
 
         private  void Run(APInvoicePM invoice)
