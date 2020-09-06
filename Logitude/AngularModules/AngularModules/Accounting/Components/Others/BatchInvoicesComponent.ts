@@ -401,7 +401,7 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     logWindow.Height = 160;
     //logWindow.DataContext = "" ;
     logWindow.Show(myPath);
-    logWindow.IsShowCloseButton=true;
+    //logWindow.IsShowCloseButton=true;
     logWindow.WindowClosed.subscribe(s => {
         if (s!=null) {
            this.InvoiceDate = new Date(s);
