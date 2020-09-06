@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Quote">
-  <Sql Version="3">
+  <Sql Version="5">
     <![CDATA[
 					If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
 				Begin
@@ -152,18 +152,25 @@
 					set @PickupDeliveryChargeableWeight  = @Volumetric;
 
 				if(@PickupDeliveryCWeightUnitCode != 'MT' and @DirectionId = 'E' and @TransportModeId = 'A')
-				begin 
-						set @Decimal =CAST(CAST(@PickupDeliveryChargeableWeight AS decimal(38,19)) % 1 AS float) 
-						set @Integer = cast(@PickupDeliveryChargeableWeight AS int)
+				    begin 
+						    set @Decimal =CAST(CAST(@PickupDeliveryChargeableWeight AS decimal(38,19)) % 1 AS float) 
+						    set @Integer = cast(@PickupDeliveryChargeableWeight AS int)
 			
-						 if (@Decimal <= 0.5) 
-					 begin
+          if (@Decimal=0)
+          begin
+              set @PickupDeliveryChargeableWeight=@Integer;
+          end
+          else
+             begin
+					      if (@Decimal <= 0.5) 
+					       begin
 											 set @PickupDeliveryChargeableWeight = @Integer + 0.5;
-									 end
-					 else 
-					 begin
+								 end
+					       else 
+					       begin
 											 set @PickupDeliveryChargeableWeight = @Integer + 1;
-									 end
+						     end
+             end        
 				end
 
 				-- insert values in temp table 
