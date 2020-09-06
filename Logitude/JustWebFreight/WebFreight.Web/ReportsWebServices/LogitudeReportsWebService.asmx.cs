@@ -12442,7 +12442,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord= CreateNotRetreivedParent(item, tenant);
                                 totalData.ResultList.Add(parentrecord);
                             }
-                            else if (parent.Error)
+                            else 
                             {
                               
                                 RecalculateParentTotals(record,  totalData);
