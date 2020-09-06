@@ -388,7 +388,7 @@ private selectedItems:ObservableCollection;
       }
     
     else {
-  
+           this.AllSelected= false;
             this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == rowData.Id));
       this.SelectedItemsCount -= 1;
 
