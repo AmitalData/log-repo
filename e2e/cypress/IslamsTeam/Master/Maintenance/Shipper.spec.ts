@@ -43,7 +43,7 @@ it('Search For Shipper', () => {
 })
 
  it('Edit Shipper', () => {
-   //  cy.wait(100)
+     cy.wait(100)
      cy.get('#CustomerTHGeneral').click({ force: true })
    //  cy.wait(1000)
      cy.get('#Customer_LocalName').type('Test Company 123')
