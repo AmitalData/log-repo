@@ -66,5 +66,9 @@ namespace WebFreight.Web.DataProviders
         public string MasterNumber { get; set; }
         public string BranchId { get; set; }
         public string BranchName { get; set; }
+        public string Description { get; set; } 
+        public double? DebitInLocalCurrency { get; set; }
+        public double? CreditInLocalCurrency { get; set; }
+        public double? AccountBalanceInLocalCurrency { get; set; }
     }
 }
