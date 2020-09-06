@@ -1018,6 +1018,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string currencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyId  
+	   {
+	    
+	     get
+		{
+		   return currencyId;
+		 }
+		 set
+		 {
+		   if(currencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyId",OldValue=currencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -39,6 +39,7 @@ export class JournalList {
 	IsLedgerCreated: boolean;
 	DocumentDate: Date;
 	DueDate: Date;
+	CurrencyId: string;
 	
 }
  
