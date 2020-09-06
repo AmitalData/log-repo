@@ -22,7 +22,7 @@ namespace Logitude.CargoTracking.Data.Repositories
         }
 
         public IQueryable<CargoTrackingShipment> GetBySecurityKeies(List<string> shipmentsSecurityKeies, int tenant)
-        {
+        { 
             IQueryable<CargoTrackingShipment> shipments = (from shipment in currentContext.CargoTrackingShipments
                                                                  where
                                                                     shipmentsSecurityKeies.Contains(shipment.SecurityKey)

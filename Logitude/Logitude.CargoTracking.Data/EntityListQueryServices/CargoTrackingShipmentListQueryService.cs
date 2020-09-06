@@ -22,7 +22,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
     {
         private IQueryable<CargoTrackingShipmentList> GetIqueryableList(IQueryable<CargoTrackingShipment> iQueryable)
         {
-            IQueryable<CargoTrackingShipmentList> query = (from a in iQueryable
+          
+            IQueryable<CargoTrackingShipmentList> query = (from a in iQueryable join p in context.CargoTrackingPorts on a.FromPortId equals p.Id 
+                                                           join entity in context.CargoTrackingShipmentSearches on a.SecurityKey equals entity.SecurityKey 
+
                                                            select new CargoTrackingShipmentList()
                                                            {
 
@@ -31,7 +34,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                Tenant = a.Tenant,
 
                                                                EntityId = a.EntityId,
-
+                                                               
                                                                SecurityKey = a.SecurityKey,
 
                                                                ForwardingShipmentHeaderId = a.ForwardingShipmentHeaderId,
@@ -43,7 +46,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                CurrentMilestoneCode = a.CurrentMilestoneCode,
 
                                                                CurrentMilestoneDate = a.CurrentMilestoneDate,
-
+                                                               SearchReferences = string.Join(entity.SearchFields,","),
                                                                CustomerId = a.CustomerId,
 
                                                                TransportModeId = a.TransportModeId,
