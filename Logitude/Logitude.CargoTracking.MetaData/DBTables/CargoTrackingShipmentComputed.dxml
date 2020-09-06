@@ -30,4 +30,10 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

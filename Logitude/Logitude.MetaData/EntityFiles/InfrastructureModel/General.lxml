@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;644a&quot;" 
+  Code="&quot;b061&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5042,6 +5042,12 @@
       LocalDefaultText="&quot;שיטת גיול&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.FieldIsInactive&quot;"
+      DefaultText="&quot;%FieldName is Inactive&quot;"
+      LocalDefaultText="&quot;%FieldName  חסום&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -6988,7 +6994,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
     <Feature
       Code="&quot;UPLOADPARTNERS&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
@@ -6998,7 +7003,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
     <Feature
       Code="&quot;CARGOTRACKING&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -7008,6 +7012,5 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
   </AdditionalFeatures>
 </entity>

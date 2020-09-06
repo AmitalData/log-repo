@@ -9,6 +9,7 @@ import { DWAskUserFiltersComponent } from './Components/Workspaces/DWAskUserFilt
 import { DateSampleComponent } from './Components/Workspaces/DateSampleComponent'; 
 import { BIReportListTemplate } from './Components/ListTemplates/BIReportListTemplate';
 import { ChooseSpecificUserComponent } from './Components/NewEntity/ChooseSpecificUserComponent';
+import { BIExportSettingAdvanceComponent } from './Components/Workspaces/BIExportSettingAdvanceComponent';
 
 export const Components =
     [
@@ -22,7 +23,8 @@ export const Components =
         EditShipmentLinkRendererComponent,
         DateSampleComponent,
         BIReportListTemplate,
-        ChooseSpecificUserComponent
+        ChooseSpecificUserComponent,
+        BIExportSettingAdvanceComponent
     ];
 
 export class ModuleDeclarations {
@@ -39,6 +41,7 @@ export class ModuleDeclarations {
             case "EditShipmentLinkRendererComponent": { myResult = EditShipmentLinkRendererComponent; break; }
             case "DateSampleComponent": { myResult = DateSampleComponent; break; }
             case "ChooseSpecificUserComponent": { myResult = ChooseSpecificUserComponent; break; }
+            case "BIExportSettingAdvanceComponent": { myResult = BIExportSettingAdvanceComponent; break; }
             //Templates
             case "BIReportListTemplate": { myResult = BIReportListTemplate; break; }
 

@@ -33,6 +33,7 @@ import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 import { VatTypePercentagePM } from '../../../Common/EntityPMs/VatTypePercentagePM';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { InterestReportExtendedListService } from 'Accounting/Services/ExtendedLists/InterestReportExtendedListService';
 
 export class InterestReportMenuButtonsHandler extends BaseComponent  {
     public EntityPM: InterestReportPM;
@@ -45,7 +46,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
     private CurrentSession = SessionLocator.SelectedSession;
     private myCurrencyRatesService: CurrencyRatesService;
     private myCardListService: CardListService;
-    private myGLAccountPMService: GLAccountPMService;
+    private interestReportExtendedListService: InterestReportExtendedListService;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -55,7 +56,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         this.ChargesTypePMService = new ChargesTypeListService();
         this.myCurrencyRatesService = new CurrencyRatesService();
         this.myCardListService = new CardListService();
-        this.myGLAccountPMService = new GLAccountPMService();
+        this.interestReportExtendedListService = new InterestReportExtendedListService();
 
      }
  
@@ -73,7 +74,8 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                             }
                         case "CreateInvoice":
                             {
-                                if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "9" )
+
+                                if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "9")
                                     button.IsDisabled = false;
                                 else
                                     button.IsDisabled = true;
@@ -94,6 +96,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         return menuButtons;
     }
 
+
     public MenuButtonClick(menuButton: MenuButtonPM) {
         var errors = [];
 
@@ -106,15 +109,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                     }
                 case "CreateInvoice":
                     {
-                        if ((!this.EntityPM.TotalAmount) ||
-                            (!this.EntityPM.TotalAmount && !this.EntityPM.GLAccountMinimumInterest) ||
-                            (this.EntityPM.GLAccountMinimumInterest && this.EntityPM.GLAccountMinimumInterest >= this.EntityPM.TotalAmount)) {
-                            this.ConfirmCreateInvoice();
-                        }
-                        else {
-                            this.GeTARInvoice();
-
-                        }
+                        this.CheckInterestReportStatusCodeAndCreateInvoice();
                         break;
                     }
                 case "IRCN": {
@@ -236,6 +231,44 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
             }
         });
     }
+
+    
+    private CheckInterestReportStatusCodeAndCreateInvoice(){
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.interestReportExtendedListService.GetInterestReportStatusCode(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            var response: ServiceResponse = myResult;
+            if (!response.HasError) {
+               var InterestReportStatusCode:string =response.Result;
+               if(InterestReportStatusCode=="1" || InterestReportStatusCode=="9"){
+
+                if ((!this.EntityPM.TotalAmount) ||
+                   (!this.EntityPM.TotalAmount && !this.EntityPM.GLAccountMinimumInterest) ||
+                   (this.EntityPM.GLAccountMinimumInterest && this.EntityPM.GLAccountMinimumInterest >= this.EntityPM.TotalAmount)) {
+                      
+                       this.ConfirmCreateInvoice();
+                    }
+               
+                else {
+
+                     this.GeTARInvoice();
+
+                  }
+               }
+               else{
+
+                  this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate('InterestReport.O.CreatingInvoicepermitted'));
+                  this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+               }
+            }
+            else {
+
+                this.entityArgs.EditComponent.ValidationErrorsList = response.ErrorsArray;
+            }
+        });
+    }
+
     get ARInvoicePMWithLine(): ARInvoicePM {
         var _ARInvoicePM: ARInvoicePM = new ARInvoicePM();
         _ARInvoicePM.ARInvoiceTypeCode = "IT";
@@ -285,6 +318,10 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
          _ARInvoicePM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
         _ARInvoicePM.ProfitCurrencyCode = SessionLocator.TenantPM.ProfitCurrencyCode;
         // _ARInvoicePM.DueDate = _ARInvoicePM.InvoiceDate;
+
+        if(this.chargesTypeList!=null){
+            
+        
         var _ARInvoiceLinePM: ARInvoiceLinePM = new ARInvoiceLinePM(_ARInvoicePM);
         _ARInvoiceLinePM.DateForInterest = _ARInvoicePM.InvoiceDate;
         _ARInvoiceLinePM.Tenant = this.TenantPM.Id;
@@ -300,21 +337,17 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         _ARInvoiceLinePM.LocalCurrencyAmount = this.EntityPM.TotalAmount; 
             _ARInvoiceLinePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
             _ARInvoiceLinePM.Description = "Interest For Date " + this.getDateString(this.EntityPM.InterestCalculationDate);
-            _ARInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך " + this.getDateString(this.EntityPM.InterestCalculationDate);
+            _ARInvoiceLinePM.LocalDescription = "חישוב ריבית לתםריך " + this.getDateString(this.EntityPM.InterestCalculationDate);
          _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList? this.chargesTypeList.Id:null;
         //  if(this.cardList.VatTypeId){
         //     _ARInvoiceLinePM.VatTypeId =  this.cardList.VatTypeId; 
         //  }
         //  else{
-            _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList.VatTypeId; 
+            _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList?this.chargesTypeList.VatTypeId:null; 
 
         //  }
-         _ARInvoiceLinePM.GLAccountId = this.chargesTypeList.ReceivableCreditGLAccountId;
+         _ARInvoiceLinePM.GLAccountId = this.chargesTypeList?this.chargesTypeList.ReceivableCreditGLAccountId:null;
         _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
-         var objectTable = window.ObjectTables.filter(d => d.Name === "InterestReport")[0];
-        var objectTableId = objectTable.Id;
-        _ARInvoiceEntityPM.ObjectTableId = objectTableId;
-        _ARInvoicePM.InvoiceEntities.push(_ARInvoiceEntityPM);
         this.getVatTypePercentegeListByDates().then(res => {
             _ARInvoiceLinePM.VatPercentage = this.GetVatTypePercentage(_ARInvoiceLinePM.VatTypeId);
             this.GetVatTypeName( _ARInvoiceLinePM.VatTypeId).then(res => {
@@ -322,6 +355,12 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
             _ARInvoicePM.InvoiceLines.push(_ARInvoiceLinePM);
         }); 
         }); 
+    }
+         var objectTable = window.ObjectTables.filter(d => d.Name === "InterestReport")[0];
+        var objectTableId = objectTable.Id;
+        _ARInvoiceEntityPM.ObjectTableId = objectTableId;
+        _ARInvoicePM.InvoiceEntities.push(_ARInvoiceEntityPM);
+      
     }); 
         return _ARInvoicePM;
   }
@@ -404,6 +443,7 @@ public VatTypeName:string;
         var filters = new ApiQueryFilters(true);
         filters.addAdditionalFilter("Code", "INT", null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("Tenant", this.TenantPM.Id, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
         this.CurrentSession.StartBusyIndicatorLoading();
         this.ChargesTypePMService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();

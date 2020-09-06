@@ -5,6 +5,12 @@
   DBType="Main"
   Module="Common">
   <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Code"
     Type="varchar"
     Size="4">
@@ -25,12 +31,6 @@
     Size="1000">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="InActive"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="InterfaceType"

@@ -171,6 +171,8 @@ import {PaymentTermDateTypeListService} from './Services/StandardLists/PaymentTe
 import { NumberFormatListService } from './Services/StandardLists/NumberFormatListService';
 import { WarehouseWeightMeasurementListService } from './Services/StandardLists/WarehouseWeightMeasurementListService';
 import { WarehouseWeightRoundingListService } from './Services/StandardLists/WarehouseWeightRoundingListService';
+import { HorseListService } from './Services/StandardLists/HorseListService';
+import { HorsePMService } from './Services/StandardPMs/HorsePMService';
 
 // Extended Lists
 import {CarrierExtendedListService} from './Services/ExtendedLists/CarrierExtendedListService';
@@ -264,7 +266,7 @@ export class ModuleProviders {
             case "ParticipantListService": { myResult = new ParticipantListService(); break; }
             case "PartnerTypeListService": { myResult = new PartnerTypeListService(); break; }
             case "PasswordPolicyListService": { myResult = new PasswordPolicyListService(); break; }
-            case "PaymentTermListService": { myResult = new PaymentTermListService(); break; }                
+            case "PaymentTermListService": { myResult = new PaymentTermListService(); break; }
             case "PortService": { myResult = new PortService(); break; }
             case "WarehouseExtendedListService": { myResult = new WarehouseExtendedListService(); break; }
             case "PortListService": { myResult = new PortListService(); break; }
@@ -295,7 +297,7 @@ export class ModuleProviders {
             case "AgentSharedManifestListService": { myResult = new AgentSharedManifestListService(); break; }
             case "VatFormatTypeListService": { myResult = new VatFormatTypeListService(); break; }
             case "CustomsShipperListService": { myResult = new CustomsShipperListService(); break; }
-            case "CustomerTenantAccessPMService": { myResult = new CustomerTenantAccessPMService(); break; }                
+            case "CustomerTenantAccessPMService": { myResult = new CustomerTenantAccessPMService(); break; }
             case "AccountingSettingPMService": { myResult = new AccountingSettingPMService(); break; }
             case "AdditionalServicePMService": { myResult = new AdditionalServicePMService(); break; }
             case "AddressPMService": { myResult = new AddressPMService(); break; }
@@ -356,23 +358,23 @@ export class ModuleProviders {
             case "VesselPMService": { myResult = new VesselPMService(); break; }
             case "WarehousePMService": { myResult = new WarehousePMService(); break; }
             case "CustomsShipperPMService": { myResult = new CustomsShipperPMService(); break; }
-            case "AgentMenuButtonsHandler": { myResult = new AgentMenuButtonsHandler(); break;}
-            case "CustomerMenuButtonsHandler": { myResult = new CustomerMenuButtonsHandler(); break; }    
-            case "UserMenuButtonsHandler": { myResult = new UserMenuButtonsHandler(); break; }  
-            case "CommunicationLogMenuButtonsHandler": { myResult = new CommunicationLogMenuButtonsHandler(); break; } 
-            case "ContactMenuButtonsHandler": { myResult = new ContactMenuButtonsHandler(); break; }   
-            case "DocumentsFilingExtendedPMService": { myResult = new DocumentsFilingExtendedPMService(); break; }   
+            case "AgentMenuButtonsHandler": { myResult = new AgentMenuButtonsHandler(); break; }
+            case "CustomerMenuButtonsHandler": { myResult = new CustomerMenuButtonsHandler(); break; }
+            case "UserMenuButtonsHandler": { myResult = new UserMenuButtonsHandler(); break; }
+            case "CommunicationLogMenuButtonsHandler": { myResult = new CommunicationLogMenuButtonsHandler(); break; }
+            case "ContactMenuButtonsHandler": { myResult = new ContactMenuButtonsHandler(); break; }
+            case "DocumentsFilingExtendedPMService": { myResult = new DocumentsFilingExtendedPMService(); break; }
             case "CustomAgentMenuButtonsHandler": { myResult = new CustomAgentMenuButtonsHandler(); break; }
             case "ShippingAgentMenuButtonsHandler": { myResult = new ShippingAgentMenuButtonsHandler(); break; }
             case "ShippingLineMenuButtonsHandler": { myResult = new ShippingLineMenuButtonsHandler(); break; }
             case "VendorMenuButtonsHandler": { myResult = new VendorMenuButtonsHandler(); break; }
             case "TruckerMenuButtonsHandler": { myResult = new TruckerMenuButtonsHandler(); break; }
             case "AirlineMenuButtonsHandler": { myResult = new AirlineMenuButtonsHandler(); break; }
-            case "AccountingPartnerMenuButtonsHandler": { myResult = new AccountingPartnerMenuButtonsHandler(); break;}
-            case "CarrierExtendedListService": { myResult = new CarrierExtendedListService(); break; }   
-            case "PortExtendedListService": { myResult = new PortExtendedListService(); break; } 
-            case "PaymentTermDateTypeListService": { myResult = new PaymentTermDateTypeListService(); break; } 
-            case "AgentSharedManifestPMService": { myResult = new AgentSharedManifestPMService(); break; } 
+            case "AccountingPartnerMenuButtonsHandler": { myResult = new AccountingPartnerMenuButtonsHandler(); break; }
+            case "CarrierExtendedListService": { myResult = new CarrierExtendedListService(); break; }
+            case "PortExtendedListService": { myResult = new PortExtendedListService(); break; }
+            case "PaymentTermDateTypeListService": { myResult = new PaymentTermDateTypeListService(); break; }
+            case "AgentSharedManifestPMService": { myResult = new AgentSharedManifestPMService(); break; }
             case "AgentSharedManifestListService": { myResult = new AgentSharedManifestListService(); break; }
             case "CustomerFieldsUpdateSettingPMService": { myResult = new CustomerFieldsUpdateSettingPMService(); break; }
             case "CustomerFieldsUpdateSettingListService": { myResult = new CustomerFieldsUpdateSettingListService(); break; }
@@ -380,25 +382,25 @@ export class ModuleProviders {
             case "TwoFactorAuthenticationDeviceExtendedPMService": { myResult = new TwoFactorAuthenticationDeviceExtendedPMService(); break; }
             case "LoginPolicyListService": { myResult = new LoginPolicyListService(); break; }
             case "TwoFactorAuthenticationDeviceListService": { myResult = new TwoFactorAuthenticationDeviceListService(); break; }
-            case "FeaturePackageTypeListService": { myResult = new FeaturePackageTypeListService(); break; }  
-            case "MetodoPagoListService": { myResult = new MetodoPagoListService(); break; }  
-            case "UsoCFDIListService": { myResult = new UsoCFDIListService(); break; }  
+            case "FeaturePackageTypeListService": { myResult = new FeaturePackageTypeListService(); break; }
+            case "MetodoPagoListService": { myResult = new MetodoPagoListService(); break; }
+            case "UsoCFDIListService": { myResult = new UsoCFDIListService(); break; }
             case "ComputingPartnerPMService": { myResult = new ComputingPartnerPMService(); break; }
-            case "ComputingPartnerTranslationPMService": { myResult = new ComputingPartnerTranslationPMService(); break; }  
+            case "ComputingPartnerTranslationPMService": { myResult = new ComputingPartnerTranslationPMService(); break; }
             case "CustomerTenantAccessMenuButtonsHandler": { myResult = new CustomerTenantAccessMenuButtonsHandler(); break; }
-            case "CustomerTenantAccessListService": { myResult = new CustomerTenantAccessListService(); break; }  
+            case "CustomerTenantAccessListService": { myResult = new CustomerTenantAccessListService(); break; }
             case "TenantLoginPolicyListService": { myResult = new TenantLoginPolicyListService(); break; }
-            case "RegistryDateTypeListService": { myResult = new RegistryDateTypeListService(); break; }               
+            case "RegistryDateTypeListService": { myResult = new RegistryDateTypeListService(); break; }
             case "WarehouseTypeListService": { myResult = new WarehouseTypeListService(); break; }
-            case "ReportsTemplateListService": { myResult = new ReportsTemplateListService(); break; }               
+            case "ReportsTemplateListService": { myResult = new ReportsTemplateListService(); break; }
             case "ReportsTemplatesVersionListService": { myResult = new ReportsTemplatesVersionListService(); break; }
             case "ReportsTemplatePMService": { myResult = new ReportsTemplatePMService(); break; }
             case "ReportsTemplatesVersionPMService": { myResult = new ReportsTemplatesVersionPMService(); break; }
             case "DocumentFilingBackupSettingListService": { myResult = new DocumentFilingBackupSettingListService(); break; }
             case "DocumentFilingBackupBatchListService": { myResult = new DocumentFilingBackupBatchListService(); break; }
             case "DocumentFilingBackupSettingPMService": { myResult = new DocumentFilingBackupSettingPMService(); break; }
-            case "DocumentFilingBackupBatchPMService": { myResult = new DocumentFilingBackupBatchPMService(); break; }    
-            case "ReportsTemplatesVersionPMService": { myResult = new ReportsTemplatesVersionPMService(); break; }             
+            case "DocumentFilingBackupBatchPMService": { myResult = new DocumentFilingBackupBatchPMService(); break; }
+            case "ReportsTemplatesVersionPMService": { myResult = new ReportsTemplatesVersionPMService(); break; }
             case "TemperatureUnitListService": { myResult = new TemperatureUnitListService(); break; }
             case "NumberFormatListService": { myResult = new NumberFormatListService(); break; }
             case "CheckDigitControlAlgorithmListService": { myResult = new CheckDigitControlAlgorithmListService(); break; }
@@ -410,6 +412,8 @@ export class ModuleProviders {
             case "AddressTypeListService": { myResult = new AddressTypeListService(); break; }
             case "WarehouseWeightMeasurementListService": { myResult = new WarehouseWeightMeasurementListService(); break; }
             case "WarehouseWeightRoundingListService": { myResult = new WarehouseWeightRoundingListService(); break; }
+            case "HorseListService": { myResult = new HorseListService(); break; }
+            case "HorsePMService": { myResult = new HorsePMService(); break; }
         }
 
         return myResult;

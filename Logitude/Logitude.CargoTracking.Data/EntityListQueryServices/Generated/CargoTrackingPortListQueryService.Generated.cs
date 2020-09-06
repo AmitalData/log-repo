@@ -31,9 +31,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             GenericSort sortClass = new GenericSort();
 
             IQueryable<CargoTrackingPort> iQueryable = (from a in context.CargoTrackingPorts
-                                               select a);
-            			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable);
-						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+                                              
+                   where a.Tenant == tenant select a);
+            			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
+						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
@@ -143,15 +144,16 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
            
         }
 
-        public int GetListCount(QueryOperations queryOperations)
+        public int GetListCount(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CargoTrackingPort> iQueryable = (from a in context.CargoTrackingPorts  select a);
+            IQueryable<CargoTrackingPort> iQueryable = (from a in context.CargoTrackingPorts 
+                   where a.Tenant == tenant select a);
 
-			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable);
-						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
+						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();

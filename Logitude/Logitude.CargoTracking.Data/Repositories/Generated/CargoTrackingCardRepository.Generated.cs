@@ -28,16 +28,17 @@ namespace Logitude.CargoTracking.Data.Repositories
 
 		 
 		
-		public  CargoTrackingCard GetSingle(string id)
+		public  CargoTrackingCard GetSingle(string id, int tenant)
         {
             return (from a in context.CargoTrackingCards
-                    where a.Id == id 
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<CargoTrackingCard> GetAll()
+        public IQueryable<CargoTrackingCard> GetAll(int tenant)
         {
             return from a in context.CargoTrackingCards  
+                   where a.Tenant == tenant
                    select a;
         }
 				 

@@ -25,7 +25,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         Id, 
 	         Code, 
 	         EnglishName, 
-	         CountryId,
+	         CountryId, 
+	         Tenant,
 	      }
 
 
@@ -35,7 +36,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         Id, 
 	         Code, 
 	         EnglishName, 
-	         CountryId,
+	         CountryId, 
+	         Tenant,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -57,6 +59,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CountryId))
             {
 				entityPOCO.CountryId = entityPM.CountryId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
 			}
 			}
 
@@ -83,6 +90,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.CountryId = entityPOCO.CountryId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingPortPM entityPM, CargoTrackingPortPM oldEntityPM)
@@ -102,6 +114,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CountryId))
             {
                 oldEntityPM.CountryId = entityPM.CountryId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
             }
 			
 		}

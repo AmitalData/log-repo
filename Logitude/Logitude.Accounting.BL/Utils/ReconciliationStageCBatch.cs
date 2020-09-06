@@ -260,18 +260,64 @@ namespace Logitude.Accounting.BL.Utils
                     decimal ad = actualDifference;
                     if (actualDifference != 0m)
                     {
+                        decimal first_amount = jLL.ElementAt(0)._oneLineLedger.AmountToReconcile;
                         jLL.Reverse();
+                        while ((first_amount < actualDifference && actualDifference < 0m) || (first_amount > actualDifference && actualDifference > 0m))
+                        {
+                            int i = 0;
+                            int j = 0;
+                            int k = jLL.Count;
+                            decimal maximum = 0m;
+                            decimal minimum = 0m;
+                            bool found_to_remove = false;
+                            jLL.ForEach(item =>
+                            {
+
+                                if (item._oneLineLedger.AmountToReconcile > 0m && actualDifference > 0m && item._oneLineLedger.AmountToReconcile <= actualDifference)
+                                {
+                                    if (item._oneLineLedger.AmountToReconcile > maximum)
+                                    {
+                                        maximum = item._oneLineLedger.AmountToReconcile;
+                                        j = i;
+                                    }
+                                    else if (!found_to_remove)
+                                        j = i;
+                                    found_to_remove = true;
+                                }
+                                else if (item._oneLineLedger.AmountToReconcile < 0m && actualDifference < 0m && item._oneLineLedger.AmountToReconcile >= actualDifference)
+                                {
+                                    if (item._oneLineLedger.AmountToReconcile < minimum)
+                                    {
+                                        minimum = item._oneLineLedger.AmountToReconcile;
+                                        j = i;
+                                    }
+                                    else if (!found_to_remove)
+                                        j = i;
+                                    found_to_remove = true;
+                                }
+                                i++;
+                            });
+                            if (found_to_remove && j != k -1) // do not remove the very first (originally) element
+                            {
+                                actualDifference -= jLL.ElementAt(j)._oneLineLedger.AmountToReconcile;
+                                jLL.RemoveAt(j);
+                            }
+                            else
+                                break;
+
+                        }
+
                         jLL.ForEach(item =>
                         {
                             if (actualDifference != 0m)
                             {
-                                if (item._oneLineLedger.AmountToReconcile > actualDifference && actualDifference > 0)
+                                if (item._oneLineLedger.AmountToReconcile > actualDifference && actualDifference > 0m)
                                 {
                                     item._oneLineLedger.AmountToReconcile -= actualDifference;
                                     id = item._oneLineLedger.Id;
                                     actualDifference = 0m; //break
                                 }
-                                else if (item._oneLineLedger.AmountToReconcile < actualDifference && actualDifference < 0)
+                                else if (item._oneLineLedger.AmountToReconcile < actualDifference && actualDifference < 0m)
                                 {
                                     item._oneLineLedger.AmountToReconcile -= actualDifference;
                                     id = item._oneLineLedger.Id;

@@ -24,7 +24,7 @@ export class LOVResolver extends AbstractResolver implements IResolver {
     public Type(value: string) {
 
         const itemSelector = value == "{downarrow}" ? "li.DropDownListItem" : "li.DropDownListItem.liItemSelected";
-
+        cy.get(this.selector).clear();
         if (this.selector) {
             cy.get(this.GetContainer())
                 .find(this.selector)

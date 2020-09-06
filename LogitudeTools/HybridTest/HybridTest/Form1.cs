@@ -206,13 +206,13 @@ namespace HypredTest
             {
 
 
+                return new CloudStorageAccount(null, false);
+//                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("devstoreaccount1", "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=="),
+//new Uri(@"http://127.0.0.1:10000/devstoreaccount1/"),
+//new Uri(@"http://127.0.0.1:10001/devstoreaccount1/"),
+//new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
 
-                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("devstoreaccount1", "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=="),
-new Uri(@"http://127.0.0.1:10000/devstoreaccount1/"),
-new Uri(@"http://127.0.0.1:10001/devstoreaccount1/"),
-new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
-
-                return storageAccount;
+//                return storageAccount;
             }
 
         }

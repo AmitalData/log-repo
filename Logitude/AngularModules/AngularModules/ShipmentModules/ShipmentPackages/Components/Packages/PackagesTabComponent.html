@@ -262,7 +262,7 @@
                                                     <LogTextBox (LostFocus)="item.OnGrossWeightLostFocus($event)" [FocusOnMe]="'true'" [ObjectFieldName]="'Weight'" [Text]="item.Weight" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>  
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Commodity No-->
@@ -283,6 +283,16 @@
                                         </ng-template>
                                     </log-column>
 
+                                    <!-- Horse Name-->
+                                    <log-column [width]="'150'" [header]="'Horse'" *ngIf="HorseFieldIsVisible">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
+                                                {{item.HorseName}}
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- WarehouseReleaseNumber-->
                                     <log-column *ngIf="IsShowReleaseNumber" [width]="'100'" [header]="'Release #'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false">
@@ -290,7 +300,7 @@
                                                     {{item.WarehouseReleaseNumber}}
                                                 </span>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Buttons -->
@@ -328,7 +338,7 @@
                                                     </div>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <log-column *ngIf="IsShowReleaseNumber" [width]="'150'">

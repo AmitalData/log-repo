@@ -23,6 +23,7 @@ namespace Logitude.Infrastructure.BL.CloseTables
        public const string LogGridV2 = "LV2";  
        public const string CardSearchsToggle = "CST";  
        public const string ShipmentSubType = "SUB";  
+       public const string Horse = "HRS";  
     }
 }
 

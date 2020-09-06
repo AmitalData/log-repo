@@ -4,7 +4,7 @@
   ObjectTableName="&quot;OBLType&quot;"
   IsNew="false"
   DBTableName="&quot;OBLTypes&quot;"
-  OldDBTableName="&quot;OBLTypes&quot;"
+  DBTableOldNames="OBLTypes"
   ObjectTableSingular="&quot;OBL Type&quot;"
   ObjectTablePlural="&quot;OBL Types&quot;"
   HasCustomFilter="false"
@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;OBL Type&quot;"
-  Code="&quot;0005&quot;"
+  Code="&quot;1720&quot;"
   Name="&quot;OBLType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -65,7 +65,7 @@
   <field
     Id="&quot;b4c7773d-863b-4062-8b7a-435311fada13&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -115,6 +115,7 @@
     ListLableDefaultText="&quot;Code&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -140,7 +141,7 @@
   <field
     Id="&quot;a250e72c-ff52-4c75-ad56-f75623630681&quot;"
     FieldName="&quot;Name&quot;"
-    OldFieldName="&quot;Name&quot;"
+    OldNames="Name"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -190,6 +191,7 @@
     ListLableDefaultText="&quot;Name&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -215,7 +217,7 @@
   <field
     Id="&quot;3c38d209-6169-4c12-9844-e235ee9f4fc5&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -263,6 +265,7 @@
     HelpTextDefaultText="&quot;Searching by :&#xA;1: code&#xA;2: name&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -330,6 +333,14 @@
       Code="&quot;OBLR&quot;"
       SearchFields="&quot;OBLR,OBL Required&quot;"
       Name="&quot;OBL Required&quot;" />
+    <Record
+      Code="&quot;SEWY&quot;"
+      Name="&quot;Seaway&quot;"
+      SearchFields="&quot;SEWY,Seaway&quot;" />
+    <Record
+      Code="&quot;BLSR&quot;"
+      Name="&quot;BL Surrender&quot;"
+      SearchFields="&quot;BLSR,BL Surrender&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

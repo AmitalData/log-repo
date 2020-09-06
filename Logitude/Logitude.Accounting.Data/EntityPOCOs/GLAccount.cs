@@ -186,6 +186,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool Smallcashbook { get; set; }
         [Column("MinimumInterestInvoiceBilling")]
 	    public int? MinimumInterestInvoiceBilling { get; set; }
+        [Column("ReportingAsAnotherDocument")]
+	    public bool ReportingAsAnotherDocument { get; set; }
     }
 }
 	 

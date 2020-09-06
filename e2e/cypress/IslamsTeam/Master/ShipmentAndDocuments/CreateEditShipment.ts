@@ -32,9 +32,9 @@ it('Create Shipment Successfully', () => {
 
 
   cy.get('#Shipment_ConsigneeId').click({ force: true })
-  cy.get('#Shipment_ShipperId').type('TestConsigneeExport1')
+  cy.get('#Shipment_ConsigneeId').type('TestConsigneeExport1')
   cy.get('.DropDownListItem:first').click()
-  cy.get('#Shipment_ShipperReference1').type('Reference1')
+  cy.get('#Shipment_ConsigneeReference1').type('Reference1')
 
 
   cy.get('#Shipment_MainCarriageFromPortId').click()

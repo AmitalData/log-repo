@@ -66,6 +66,21 @@ namespace Logitude.Accounting.Data.CustomFilters
 
                                          select a);
 
+
+                        List<string> salesmanParentAccounts = queryableData.Select(s => s.Id).ToList();
+
+                        var splittedAccounts = (from a in context.GLAccounts
+                                                join c in context.GLAccountCurrencies on a.Id equals c.GLAccountId
+
+                                                where salesmanParentAccounts.Contains(c.MainGLAccountId)
+                                                select c.GLAccount);
+
+                        List<string> splittedAccountsIds =  splittedAccounts.Select(s => s.Id).ToList();
+
+                        queryableData = (from a in context.GLAccounts where (salesmanParentAccounts.Contains(a.Id) || splittedAccountsIds.Contains(a.Id)) select a);
+
+
+
                     }
 
                     if (item.FieldName == "BalanceInLocalCurrencyNotNull")

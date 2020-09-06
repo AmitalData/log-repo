@@ -22,6 +22,7 @@ using System.Transactions;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.Helpers;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -127,12 +128,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
-            entityRepository.SubmitChanges();         
+            entityRepository.SubmitChanges();
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
                 this.UpdateContactSearchField(itemPM);
-        }
+            }
+            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+
         }
 
         public void Update(ShippingAgentPM entityPM, bool mapComposition = false)
@@ -179,6 +182,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ShippingAgent");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+
         }
 
         private void InitializeComponent()

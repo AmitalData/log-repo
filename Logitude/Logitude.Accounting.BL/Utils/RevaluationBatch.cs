@@ -366,6 +366,7 @@ namespace Logitude.Accounting.BL.Utils
             public const string QP_RevaluationNumber = "RevaluationNumber";
             public void EnQueue(int tenant, int revaluationNumber)
             {
+                return;// YARON + IM  :USE BATCH EXECUCTION 
                 var queueservice = new DbQueueService();
                 queueservice.InitializeQueue(K_RevaluationWorkerRole, 0);
                 queueservice.Send(new Dictionary<string, string>()

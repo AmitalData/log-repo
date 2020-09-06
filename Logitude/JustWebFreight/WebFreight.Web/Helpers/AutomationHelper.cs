@@ -2,6 +2,8 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -17,10 +19,12 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 using System.Web;
 
 namespace WebFreight.Web.Helpers
@@ -300,7 +304,9 @@ namespace WebFreight.Web.Helpers
                         OnUpdateAutomationOrder += 1;
                         automation.Order = OnUpdateAutomationOrder;
                     }
-
+                    if (LogitudeSettings.DeploymentStage != "logboxwe1") {
+                        newAutomationPM.Inactive = true;
+                    }
                     service.Create(newAutomationPM);
 
                 }
@@ -375,17 +381,20 @@ namespace WebFreight.Web.Helpers
                     if (myDocType == null)
                     {
                         var docType = tenantZeroDocumentTypePmsUsedInAutomation.Where(d => d.Id == automationDocumentTypeClass.DocumentTypeTemplateId).FirstOrDefault();
-                        newDocType = CreateNewDocumentType(docType, documentTypeRepository, tenant);
+                        if (docType != null)
+                        {
+                            newDocType = CreateNewDocumentType(docType, documentTypeRepository, tenant);
 
-                        myDocType = new DocumentTypePM() { Code = newDocType.Code, Id = newDocType.Id, Tenant = newDocType.Tenant };
-                        myDocumentTypeListsUsedInAutomation.Add(myDocType);
+                            myDocType = new DocumentTypePM() { Code = newDocType.Code, Id = newDocType.Id, Tenant = newDocType.Tenant };
+                            myDocumentTypeListsUsedInAutomation.Add(myDocType);
+                        }
                         isChange = true;
                     }
                     #endregion
 
                     #region DocumentTypeTemplate
                     DocumentTypeTemplatePM myDocumentTypeTemplatePM = myDocumentTypeTempaltesUsedInAutomation.Where(d => d.OriginalTemplateId == automationDocumentTypeClass.DocumentTypeTemplateId).FirstOrDefault();
-                    if (myDocumentTypeTemplatePM == null)
+                    if (myDocumentTypeTemplatePM == null && myDocType != null)
                     {
                         isChange = true;
                         var tenantZeroDocumentTypeTemplate = tenantZeroDocumentTypeTemplatePmsUsedInAutomation.Where(d => d.Id == automationDocumentTypeClass.DocumentTypeTemplateId).FirstOrDefault();
@@ -400,9 +409,11 @@ namespace WebFreight.Web.Helpers
                         }
                     }
                     #endregion
-
-                    AutomationDocumentTypeClass automationDocumentType = CreateNewAutomationDocumentTypeClass(automationDocumentTypeClass, myDocType, myDocumentTypeTemplatePM);
-                    myAutomationDocumentTypeClassLists.Add(automationDocumentType);
+                    if (myDocType != null)
+                    {
+                        AutomationDocumentTypeClass automationDocumentType = CreateNewAutomationDocumentTypeClass(automationDocumentTypeClass, myDocType, myDocumentTypeTemplatePM);
+                        myAutomationDocumentTypeClassLists.Add(automationDocumentType);
+                    }
 
                 }
 
@@ -533,7 +544,7 @@ namespace WebFreight.Web.Helpers
             AutomationRepository automationRepository = new AutomationRepository(tenant);
             AutomationQuery automationQuery = new AutomationQuery(tenant);
             List<string> myAutomationListsCodes = automationQuery.GetAutomationCodeLists(tenant);
-            List<Automation> automations = automationRepository.GetAutomations(0).Where(d => d.ResultCode == "EMAIL" && !string.IsNullOrEmpty(d.Code) && !myAutomationListsCodes.Contains(d.Code)).ToList();
+            List<Automation> automations = automationRepository.GetAutomations(0).Where(d => d.ResultCode == "EMAIL" && !d.Inactive && !string.IsNullOrEmpty(d.Code) && !myAutomationListsCodes.Contains(d.Code)).ToList();
             return automations;
         }
 

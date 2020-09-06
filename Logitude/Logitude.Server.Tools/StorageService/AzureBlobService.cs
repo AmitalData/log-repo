@@ -54,13 +54,13 @@ namespace Logitude.Server.Tools.StorageService
             byte[] result = null;
             if (blobfile.Exists())
             {
-                BlobRequestOptions options = new BlobRequestOptions() // fix for issue# 62877
-                {
-                    DisableContentMD5Validation = true,
-                };
+                //BlobRequestOptions options = new BlobRequestOptions() // fix for issue# 62877
+                //{
+                //    DisableContentMD5Validation = true,
+                //};
                 using (MemoryStream memstream = new MemoryStream())
                 {
-                    blobfile.DownloadToStream(memstream,null, options);
+                    blobfile.DownloadToStream(memstream);
                     result = memstream.ToArray();
                 }
             }
@@ -253,6 +253,8 @@ namespace Logitude.Server.Tools.StorageService
             {
                 var finalcloudBlockBlob = blobContainer.GetBlockBlobReference(localPath);
 
+                //finalcloudBlockBlob.Properties.ContentMD5 = "12121";
+
                 MemoryStream memorystream = new MemoryStream(buffer);
                 tempcloudBlockBlob.PutBlock(blockIdsList[bufferNumber], memorystream, null);
 
@@ -272,7 +274,7 @@ namespace Logitude.Server.Tools.StorageService
 
                     using (Stream blobstream = finalcloudBlockBlob.OpenWrite())
                     {
-
+                        bool skippfileTest = false;
                         if (fileInfo.FolderName != "logos")
                         {
                             DocumentRepository documentRepository = new DocumentRepository(fileInfo.Tenant);
@@ -281,10 +283,13 @@ namespace Logitude.Server.Tools.StorageService
                             {
                                 AesFunction aesFunction = new AesFunction();
                                 result = aesFunction.EncryptData(result, fileInfo.Tenant);
+
+                                skippfileTest = (document != null && document.FileName == "test update failed");
                             }
                         }
 
-                        blobstream.Write(result, 0, (int)result.Length);
+                        if (!skippfileTest)
+                            blobstream.Write(result, 0, (int)result.Length);
 
                     }
 

@@ -14,6 +14,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.BL.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Linq;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -112,6 +113,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ShippingLine");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
+            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+
         }
 
         public void Update(ShippingLinePM entityPM, bool mapComposition = false)
@@ -162,6 +165,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ShippingLine");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
+            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+
         }
 
         private void InitializeComponent()

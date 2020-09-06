@@ -56,6 +56,7 @@ import {VesselListService} from '../../Common/Services/StandardLists/VesselListS
 import {WarehouseListService} from '../../Common/Services/StandardLists/WarehouseListService';
 import { JournalActionTypeListService } from '../../Accounting/Services/StandardLists/JournalActionTypeListService';
 import { BluesnapContractTypeListService } from '../Services/StandardLists/BluesnapContractTypeListService'; 
+import { HorseListService } from '../../Common/Services/StandardLists/HorseListService';
 
 //customs
 import {InternationalSiteListService} from '../../Customs/Services/StandardLists/InternationalSiteListService'; 
@@ -197,7 +198,9 @@ export class CachedDataManagerServices {
             case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }    
             case "TariffProductListService": { myResult = new TariffProductListService(); break; }
-            case "ShipmentSubTypeListService": { myResult = new ShipmentSubTypeListService(); break; }  
+            case "ShipmentSubTypeListService": { myResult = new ShipmentSubTypeListService(); break; }
+            case "HorseListService": { myResult = new HorseListService(); break; }
+
             default: {
                 alert(name + " is not declared in CachedDataManagerServices");
                 break;

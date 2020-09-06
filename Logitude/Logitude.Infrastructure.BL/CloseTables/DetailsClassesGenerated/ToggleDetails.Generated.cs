@@ -111,6 +111,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "Shipment Sub Type", 
                 SearchFields = "SUB,Shipment Sub Type", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "HRS", 
+                Name = "Horse", 
+                SearchFields = "HRS,Horse", 
+			});
 			
             return all;
        }

@@ -181,6 +181,7 @@
     </Content>
     <None Include="DBOthers\CommonDataModel\Procedures\ChangeVendorToTrucker.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldAuthenticationTokens.dxml" />
+    <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdateCardSearchFunction.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldAPILogs.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldCommunicationLogs.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\DeleteOldFilingInboxes.dxml" />
@@ -353,7 +354,10 @@
     <None Include="DBScripts\CommonModel\202007201436_FillWarehouseFieldsDefaultValues.sxml" />
     <None Include="DBScripts\CommonModel\202008051018_AddNewMeasurementAndChargesType.sxml" />
     <None Include="DBScripts\CommonModel\20200812_SetIATACodeToSRForImportStorageCharge.sxml" />
-    <None Include="DBScripts\CommonModel\202008110941_AddNewMeasurement.sxml" />
+    <None Include="DBScripts\CommonModel\202008110941_AddNewMeasurement.sxml" />\
+    <None Include="DBScripts\CommonModel\202009011450_ImportToUSADropMaman.sxml" />\
+    <None Include="DBScripts\CommonModel\202008261425_SetToggleCodeForHorsesFeature.sxml" />
+    <None Include="DBScripts\CommonModel\202008300915_AddHorsesEventTypesToTenants.sxml" />\
     <None Include="DBScripts\CommonModel\CargoTrackingMilestoneFillValues.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingHeaderEntityTypeFillValues.sxml" />
     <None Include="DBScripts\CommonModel\202006181218_DropCardCurrenciesAccountingsTable.sxml" />
@@ -519,6 +523,7 @@
     <None Include="DBTables\CommonDataModel\FormCustomField.dxml" />
     <None Include="DBTables\CommonDataModel\FTPDetail.dxml" />
     <None Include="DBTables\CommonDataModel\GlobalZone.dxml" />
+    <None Include="DBTables\CommonDataModel\Horse.dxml" />
     <None Include="DBTables\CommonDataModel\HybridPartner.dxml" />
     <None Include="DBTables\CommonDataModel\HybridPartnersPermission.dxml" />
     <None Include="DBTables\CommonDataModel\HybridTenantState.dxml" />
@@ -893,6 +898,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\CommonDataModel\CardSearch.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Horse.lxml" />
     <None Include="EntityFiles\CommonDataModel\HybridTenantState.lxml" />
     <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">
       <SubType>Designer</SubType>

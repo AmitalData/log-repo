@@ -282,6 +282,15 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         }
     }
 
+
+    get ReportingAsAnotherDocument() { return this.EntityPM.ReportingAsAnotherDocument }
+    set ReportingAsAnotherDocument(value: boolean) {
+        if (this.EntityPM.ReportingAsAnotherDocument != value) {
+            this.EntityPM.ReportingAsAnotherDocument = value;
+
+        }
+    }
+
     IsMultiCurrencyCheckboxEnabled: boolean = true;
     get ChartOfAccountsTypeCode() { return this.EntityPM.ChartOfAccountsTypeCode; }
     set ChartOfAccountsTypeCode(value: string) {

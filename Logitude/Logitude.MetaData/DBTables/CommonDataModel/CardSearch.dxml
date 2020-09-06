@@ -63,11 +63,15 @@
     ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Index
-    Columns="Keyword,Tenant,PartnerTypeId,InActive" />
+
 
   <Index
-  Columns="Tenant,RecordDate" />
+  Columns="Tenant,InActive,Keyword,PartnerTypeId"
+  Include="CardId" />
+
+
+  <Index
+  Columns="Tenant,Weight" />
 
   <Index
 Columns="Tenant,CardId" />

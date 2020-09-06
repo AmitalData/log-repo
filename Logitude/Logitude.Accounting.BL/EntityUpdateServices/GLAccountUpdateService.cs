@@ -1636,214 +1636,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         string eventCode = null;
         private void CreateEventsForSomeFields()
         {
-            List<string> properties = new List<string>() { "IsVatExempt", "Category1Id", "Category2Id", "Category3Id", "Category4Id", "Category5Id", "RevaluationEnabled", "IsMultiCurrency", "ReconcileMethodCode", "AutomaticReconcileId" };
+            List<string> properties = new List<string>() { "IsVatExempt", "Category1Id", "Category2Id", "Category3Id", "Category4Id", "Category5Id", "RevaluationEnabled", "IsMultiCurrency", "ReconcileMethodCode", "AutomaticReconcileId", "ReportingAsAnotherDocument" };
             //PropertyInfo[] pmProperties = EntityPM.GetType().GetProperties();
             //PropertyInfo[] pocoProperties = EntityPOCO.GetType().GetProperties();
             foreach (string property in properties)
             {
                 SetNotesAndEventCodeForTraceEvent(property);
-                if (notes != null)
-                {
-                    CreateUpdateTraceEvent(notes, eventCode);
-                }
-                //PropertyInfo pmProperty = pmProperties.Where(d => d.Name == property).FirstOrDefault();//[0];
-                //PropertyInfo pocoProperty = pocoProperties.Where(d => d.Name == property).FirstOrDefault();//[0];
-                //if (pmProperty != null)
-                //{
-                //    var pmPropertyValue = pmProperty.GetValue(EntityPM, null);
-                //    var pocoPropertyValue = pocoProperty.GetValue(EntityPOCO, null);
-                //    if (pocoPropertyValue != pmPropertyValue)
-                //    {
-
-                //    }
-                //}
+              if(notes != null)
+                 CreateUpdateTraceEvent(notes, eventCode);
+               
+               
             }
 
 
 
 
-
-            //if (EntityPOCO.Category1Id != EntityPM.Category1Id)
-            //{
-            //    string notes = GetTraceEventNotesForCategory1Field();
-            //    eventCode = "CAT1";
-
-
-            //}
-            //if (EntityPOCO.Category2Id != EntityPM.Category2Id)
-            //{
-            //    string notes = GetTraceEventNotesForCategory2Field();
-            //    eventCode = "CAT2";
-            //    CreateUpdateTraceEvent(notes, eventCode);
-
-            //}
-            //if (EntityPOCO.Category3Id != EntityPM.Category3Id)
-            //{
-            //    eventCode = "CAT3";
-            //    string oldValue = null;
-            //    string newValue = null;
-            //    Category3QueryService category3QueryService = new Category3QueryService(EntityPM.Tenant);
-            //    Category3PM category3 = category3QueryService.GetSinglePM(EntityPOCO.Category3Id, EntityPOCO.Tenant);
-            //    if (category3 != null)
-            //    {
-            //        if (showLocals)
-            //        {
-            //            oldValue = category3.LocalName;
-
-            //        }
-            //        else
-            //        {
-            //            oldValue = category3.EnglishName;
-
-            //        }
-            //    }
-            //    category3 = category3QueryService.GetSinglePM(EntityPM.Category3Id, EntityPM.Tenant);
-            //    if (category3 != null)
-            //    {
-            //        if (showLocals)
-            //        {
-            //            newValue = category3.LocalName;
-
-            //        }
-            //        else
-            //        {
-            //            newValue = category3.EnglishName;
-
-            //        }
-            //    }
-            //    CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
-            //}
-            //if (EntityPOCO.Category4Id != EntityPM.Category4Id)
-            //{
-            //    eventCode = "CAT4";
-            //    string oldValue = null;
-            //    string newValue = null;
-            //    Category4QueryService category4QueryService = new Category4QueryService(EntityPM.Tenant);
-            //    Category4PM category4 = category4QueryService.GetSinglePM(EntityPOCO.Category4Id, EntityPOCO.Tenant);
-            //    if (category4 != null)
-            //    {
-            //        if (showLocals)
-            //        {
-            //            oldValue = category4.LocalName;
-
-            //        }
-            //        else
-            //        {
-            //            oldValue = category4.EnglishName;
-
-            //        }
-            //    }
-            //    category4 = category4QueryService.GetSinglePM(EntityPM.Category4Id, EntityPM.Tenant);
-            //    if (category4 != null)
-            //    {
-            //        if (showLocals)
-            //        {
-            //            newValue = category4.LocalName;
-
-            //        }
-            //        else
-            //        {
-            //            newValue = category4.EnglishName;
-
-            //        }
-            //    }
-            //    CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
-            //}
-            //if (EntityPOCO.Category5Id != EntityPM.Category5Id)
-            //{
-            //    eventCode = "CAT5";
-            //    string oldValue = null;
-            //    string newValue = null;
-            //    Category5QueryService category5QueryService = new Category5QueryService(EntityPM.Tenant);
-            //    Category5PM category5 = category5QueryService.GetSinglePM(EntityPOCO.Category5Id, EntityPOCO.Tenant);
-            //    if (category5 != null)
-            //    {
-            //        if (showLocals)
-            //        {
-            //            oldValue = category5.LocalName;
-
-            //        }
-            //        else
-            //        {
-            //            oldValue = category5.EnglishName;
-
-            //        }
-            //    }
-            //    category5 = category5QueryService.GetSinglePM(EntityPM.Category5Id, EntityPM.Tenant);
-            //    if (category5 != null)
-            //    {
-            //        if (showLocals)
-            //        {
-            //            newValue = category5.LocalName;
-
-            //        }
-            //        else
-            //        {
-            //            newValue = category5.EnglishName;
-
-            //        }
-            //    }
-            //    CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
-            //}
-
-            //if (EntityPOCO.RevaluationEnabled != EntityPM.RevaluationEnabled)
-            //{
-            //    eventCode = "RVUP";
-            //    string oldValue = GetBooleanText(EntityPOCO.RevaluationEnabled);
-            //    string newValue = GetBooleanText(EntityPM.RevaluationEnabled);
-
-            //    CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
-            //}
-            //if (EntityPOCO.IsMultiCurrency != EntityPM.IsMultiCurrency)
-            //{
-            //    eventCode = "MLUP";
-
-            //    string oldValue = GetBooleanText(EntityPOCO.IsMultiCurrency);
-            //    string newValue = GetBooleanText(EntityPM.IsMultiCurrency);
-
-
-
-            //    //if (EntityPOCO.IsMultiCurrency == true)
-            //    //{
-            //    //    oldValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
-            //    //}
-            //    //else if (EntityPOCO.IsMultiCurrency == false || EntityPOCO.IsMultiCurrency == null)
-            //    //{
-            //    //    oldValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
-            //    //}
-
-            //    //if (EntityPM.IsMultiCurrency == true)
-            //    //{
-            //    //    newValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
-            //    //}
-            //    //else
-            //    //{
-            //    //    newValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
-            //    //}
-            //    CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
-            //}
-            //if (EntityPOCO.ReconcileMethodCode != EntityPM.ReconcileMethodCode)
-            //{
-            //    eventCode = "RMUP";
-
-            //    CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
-
-            //}
-            //if (EntityPOCO.AutomaticReconcileId != EntityPM.AutomaticReconcileId)
-            //{
-            //    eventCode = "ARCP";
-
-            //    CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
-            //}
-
-            // CreateEventForVatERxcempt();
         }
 
         private void SetNotesAndEventCodeForTraceEvent(string FieldName)
@@ -1929,6 +1736,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             notes = GetTraceEventNotesFordVatExcempt();
                         }
                         else notes = null;
+                        break;
+                    }
+                case "ReportingAsAnotherDocument":
+                    {
+                        if(EntityPOCO.ReportingAsAnotherDocument != EntityPM.ReportingAsAnotherDocument)
+                        {
+                            eventCode = "GLRC";
+                            notes = "";
+                        }
                         break;
                     }
             }

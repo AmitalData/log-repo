@@ -1,32 +1,37 @@
 
 
-  --DROP FUNCTION SplitBySpaceFunction 
+ --DROP FUNCTION dbo.BuildSearchKeywordFunction 
 
-
-
---CREATE FUNCTION dbo.SplitBySpaceFunction ( @stringToSplit VARCHAR(MAX) )
+--CREATE FUNCTION dbo.BuildSearchKeywordFunction ( @stringToSplit VARCHAR(MAX)  , @firstweight int , @Secondweight int)
 --RETURNS
--- @returnList TABLE ([Name] [nvarchar] (500))
+-- @returnList TABLE ([Keyword] [nvarchar] (500), [weight] int )
 --AS
 --BEGIN
--- set @stringToSplit =  RTrim(@stringToSplit)
 
+--   set @stringToSplit =  RTrim(@stringToSplit)
+--   DECLARE @IsFirstTime bit
+--   set @IsFirstTime = 1;
 -- DECLARE @name NVARCHAR(255)
 -- DECLARE @pos INT
+
+-- if(@stringToSplit!=' ') begin INSERT INTO @returnList  SELECT @stringToSplit ,@firstweight end
 
 -- WHILE CHARINDEX(' ', @stringToSplit) > 0
 -- BEGIN
 --  SELECT @pos  = CHARINDEX(' ', @stringToSplit)  
 --  SELECT @name = SUBSTRING(@stringToSplit, 1, @pos-1)
 
---  INSERT INTO @returnList 
---  SELECT @name
+--  if(@IsFirstTime= 0 and @name!=' ')   begin INSERT INTO @returnList  SELECT @stringToSplit ,@Secondweight end
 
 --  SELECT @stringToSplit = SUBSTRING(@stringToSplit, @pos+1, LEN(@stringToSplit)-@pos)
+--  set @IsFirstTime = 0;
+
 -- END
 
--- INSERT INTO @returnList
--- SELECT @stringToSplit
+--  if(@IsFirstTime= 0 and @stringToSplit!=' ')begin INSERT INTO @returnList SELECT @stringToSplit ,@Secondweight
+
+--  end
+
 
 -- RETURN
 --END
@@ -37,7 +42,6 @@
 
 TRUNCATE table CardSearches
 
-
 If(OBJECT_ID('tempdb..#temp_CardSearches') Is Not Null)
 Begin
     Drop Table #temp_CardSearches
@@ -46,7 +50,6 @@ End
  
 CREATE TABLE #temp_CardSearches
 (
-[Id] INT IDENTITY(1,1) NOT NULL,
 	[Tenant] [int] NOT NULL,
 	[RecordDate] [datetime] NOT NULL,
 	[Keyword] [nvarchar](100) NULL,
@@ -99,24 +102,18 @@ declare  @InActive bit
 	 DECLARE  @newId varchar(100) ;
 
 	  declare  @RecordDate datetime
-		 set @RecordDate = @UpdateDate;
-		 if(@RecordDate is null) set @RecordDate = @CreateDate
+    set @RecordDate = @CreateDate
 
 			 BEGIN TRY  
 
-			 set @SearchField = @Code;
-			 if(@EnglishName is not null) set @SearchField += (' ' + @EnglishName);
-			 if(@LocalName is not null) set @SearchField += (' ' + @LocalName);
-			 if(@VatNumber is not null) set @SearchField += (' ' + @VatNumber);
-			 if(@CountryName is not null) set @SearchField += (' ' + @CountryName);
-			 if(@CityName is not null) set @SearchField += (' ' + @CityName);
-			 if(@ReceivablesAccountingCard is not null) set @SearchField += (' ' + @ReceivablesAccountingCard);
-			 if(@PayablesAccountingCard is not null) set @SearchField += (' ' + @PayablesAccountingCard);
-
-
-			
-			 insert into #temp_CardSearches (Tenant, CardId  , RecordDate , Weight , PartnerTypeId,InActive , Keyword) select  @Tenant, @CardId , @RecordDate , @Weight , @PartnerTypeId,@InActive ,  Name from dbo.SplitBySpaceFunction(@SearchField) where Name !=' '
-
+		if (@Code is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@Code , 90 , 90) t where KeyWord !=' ' end
+		if (@EnglishName is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@EnglishName , 100 , 90) t where KeyWord !=' ' end
+		if (@LocalName is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@LocalName , 100 , 90) t where KeyWord !=' ' end
+		if (@VatNumber is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@VatNumber , 100 , 100) t where KeyWord !=' ' end
+		if (@CountryName is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@CountryName , 50 , 50) t where KeyWord !=' ' end
+		if (@CityName is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@CityName , 40 , 40) t where KeyWord !=' ' end
+		if (@ReceivablesAccountingCard is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ReceivablesAccountingCard , 80 , 80) t where KeyWord !=' ' end
+		if (@PayablesAccountingCard is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@PayablesAccountingCard , 80 , 80) t where KeyWord !=' ' end
 
 	  set @Count = @Count + 1;
         if(@Count = 500000)

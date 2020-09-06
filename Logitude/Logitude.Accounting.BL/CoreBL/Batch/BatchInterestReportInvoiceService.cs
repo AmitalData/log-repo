@@ -238,7 +238,34 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(interestReportArgs.Tenant);
             ObjectTableQuery objectTableQuery = new ObjectTableQuery(interestReportArgs.Tenant);
             CardPM cardPM = cardQueryService.GetSinglePM(interestReport.CustomerId, interestReportArgs.Tenant);
-            ChargesTypePM chargesType = chargesTypeQuery.GetSinglePMByCode("INT", interestReportArgs.Tenant);
+            List<ChargesTypePM> chargesTypes = chargesTypeQuery.GetChargesTypesByCode("INT", interestReportArgs.Tenant);
+            ChargesTypePM  chargesType = null;
+            if (chargesTypes == null || chargesTypes.Count==0)
+            {
+                ContactPM contactLocal = GetLoggedContact(interestReportArgs.Tenant);
+                bool showLocals = !contactLocal.DontShowLocal;
+                string ErrorMessage = TextCodesTranslator.TranslateText("General.M.FieldIsRequired", interestReportArgs.Tenant, showLocals);
+                ErrorMessage = ErrorMessage.Replace("%FieldName", TextCodesTranslator.TranslateText("ARInvoiceLine.F.ChargesTypeId", interestReportArgs.Tenant, showLocals));
+                throw new Exception(ErrorMessage);
+
+            }
+            else {
+                List<ChargesTypePM> ActivechargesType = chargesTypes.Where(s => s.InActive == false).ToList();
+                if (ActivechargesType==null || ActivechargesType.Count==0)
+                {
+                    ContactPM contactLocal = GetLoggedContact(interestReportArgs.Tenant);
+                    bool showLocals = !contactLocal.DontShowLocal;
+                    string ErrorMessage = TextCodesTranslator.TranslateText("General.O.FieldIsInactive", interestReportArgs.Tenant, showLocals);
+                    ErrorMessage = ErrorMessage.Replace("%FieldName", TextCodesTranslator.TranslateText("ARInvoiceLine.F.ChargesTypeId", interestReportArgs.Tenant, showLocals));
+                    throw new Exception(ErrorMessage);
+
+                }
+                else
+                {
+                    chargesType = chargesTypes.Where(s=>s.InActive ==false).FirstOrDefault();
+                }
+
+            }
             TenantPM tenantPM = tenantQuery.GetSinglePM(interestReportArgs.Tenant);
             string email = "system@tenant" + interestReportArgs.Tenant.ToString() + ".com";
             AuthenticationUtil.AuthenticatedUserEmail = email;
@@ -390,6 +417,13 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoiceLinePM.ChargesTypeId = chargesType.Id;
             aRInvoiceLinePM.VatTypeId = chargesType.VatTypeId;
             aRInvoiceLinePM.VatPercentage = vatTypePercentagePM.Percentage;
+            if (string.IsNullOrEmpty(chargesType.ReceivableCreditGLAccountId))
+            { 
+                    ContactPM contactLocal = GetLoggedContact(tenantPM.Id);
+                    bool showLocals = !contactLocal.DontShowLocal;
+                    string ErrorMessage = TextCodesTranslator.TranslateText("ARInvoice.O.TheReceivableGLAccountOfTheChargeNULL", tenantPM.Id, showLocals);
+                    throw new Exception(ErrorMessage);
+            }
             aRInvoiceLinePM.GLAccountId = chargesType.ReceivableCreditGLAccountId;
             if (aRInvoiceLinePM.ForiegnCurrencyAmount == null || aRInvoiceLinePM.LocalCurrencyAmount == null || aRInvoiceLinePM.LocalCurrencyAmount == 0)
             {

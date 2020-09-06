@@ -24,11 +24,6 @@ export class CargoTrackingShipmentPM {
       }
  	 
     
-    private id: number;
-    public get Id() { return this.id; }
-    public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-       
-	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
@@ -297,6 +292,11 @@ export class CargoTrackingShipmentPM {
     private customsClearanceDate: Date;
     public get CustomsClearanceDate() { return this.customsClearanceDate; }
     public set CustomsClearanceDate(newValue: Date) { if (this.customsClearanceDate != newValue) { this.customsClearanceDate = newValue; this.MarkAsDirty("CustomsClearanceDate"); } }
+       
+	 
+    private id: number;
+    public get Id() { return this.id; }
+    public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
 

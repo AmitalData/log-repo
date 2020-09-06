@@ -28,16 +28,17 @@ namespace Logitude.CargoTracking.Data.Repositories
 
 		 
 		
-		public  CargoTrackingCountry GetSingle(string id)
+		public  CargoTrackingCountry GetSingle(string id, int tenant)
         {
             return (from a in context.CargoTrackingCountries
-                    where a.Id == id 
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<CargoTrackingCountry> GetAll()
+        public IQueryable<CargoTrackingCountry> GetAll(int tenant)
         {
             return from a in context.CargoTrackingCountries  
+                   where a.Tenant == tenant
                    select a;
         }
 				 

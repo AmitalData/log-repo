@@ -1102,7 +1102,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
                             IQueueService queueservice = new DbQueueService();
-                            if (entityPM.CreatedFromDigital && entityPM.IsHybrid)
+                            if (IsShipmentMatchDigitalQueueConditions(entityPM))
                             {
                                 queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
                             }
@@ -1145,7 +1145,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
                             IQueueService queueservice = new DbQueueService();
-                            if (entityPM.CreatedFromDigital && entityPM.IsHybrid)
+                            if (IsShipmentMatchDigitalQueueConditions(entityPM))
                             {
                                 queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
                             }
@@ -1161,7 +1161,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             if (IsImporterTenantHasExportFeatureForExportShipments((int)entityPoco.CustomerTenantNumber, entityPM))
                             {
                                 IQueueService queueservice = new DbQueueService();
-                                if (entityPM.CreatedFromDigital && entityPM.IsHybrid)
+                                if (IsShipmentMatchDigitalQueueConditions(entityPM))
                                 {
                                     queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
                                 }
@@ -1177,7 +1177,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             var ImporterTenant = entityPM.CustomerTenantNumber;
                             IQueueService queueservice = new DbQueueService();
-                            if (entityPM.CreatedFromDigital && entityPM.IsHybrid)
+                            if (IsShipmentMatchDigitalQueueConditions(entityPM))
                             {
                                 queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
                             }
@@ -1237,6 +1237,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 return true;
             }
         }
+
+        private bool IsShipmentMatchDigitalQueueConditions(ShipmentPM entityPM)
+        {
+            return entityPM.IsHybrid && (entityPM.CreatedFromDigital || (entityPM.IsImporterApprovalRequired == true && !string.IsNullOrEmpty(entityPM.DeclarationXMLData)));
+        }
+
         private bool IsShipmentMatchLogBoxConditions(Tenant loggedTenant, ShipmentPM entityPM, bool isNewEntity)
         {
             if (!entityPM.DontAddToImportersQueue && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && (isNewEntity == true ? !entityPM.IsCancelled : true) && loggedTenant.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(loggedTenant, entityPM) || IsExportShipmentsAllowedForLogBox(loggedTenant, entityPM)))

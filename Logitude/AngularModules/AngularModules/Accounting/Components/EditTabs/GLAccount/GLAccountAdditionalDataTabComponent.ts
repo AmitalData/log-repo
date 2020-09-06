@@ -58,7 +58,7 @@ export class GLAccountAdditionalDataTabComponent extends BaseComponent  {
         //}
 
     }
-
+//this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     BuildConnectedGLAccountsList() {
 
 
@@ -211,7 +211,7 @@ Connect(){
            // if (!this.entityPM.ConnectedItems) this.entityPM.ConnectedItems = "";
             this.ConnectedGLAccounts.Insert(new SplittedByCurrencyAccount(data.accountPM, this));
           //  this.entityPM.ConnectedItems = this.entityPM.ConnectedItems + data.accountPM.CurrencyCode + ",";
-       
+              this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         }
 
     }
@@ -219,12 +219,14 @@ Connect(){
     AddNewConnectedGLAccountCurrecyLine(data:any) {
         if (data.SelectedGLAccount) {
             this.ConnectedGLAccounts.Insert(new SplittedByCurrencyAccount(data.SelectedGLAccount, this));
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         }
 
     }
     RemoveConnectedGLAccountCurrecyLine(GLAccount:GLAccountPM) {
          if (GLAccount) {
             this.ConnectedGLAccounts.Remove(this.ConnectedGLAccounts.Collection.filter(s=>s.DisplayNumber == GLAccount.DisplayNumber)[0]);
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         }
 
     }
@@ -325,7 +327,7 @@ export class SplittedByCurrencyAccount extends BaseComponent {
 
                 if (myResponse) {
                     if (!myResponse.HasError) {
-
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 }
 

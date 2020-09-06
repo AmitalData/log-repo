@@ -2597,6 +2597,182 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+
+	  private string salesmanName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SalesmanName  
+	   {
+	    
+	     get
+		{
+		   return salesmanName;
+		 }
+		 set
+		 {
+		   if(salesmanName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SalesmanName",OldValue=salesmanName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   salesmanName=value;
+		   }
+			
+		 }
+	   }
+	  private string collectorName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CollectorName  
+	   {
+	    
+	     get
+		{
+		   return collectorName;
+		 }
+		 set
+		 {
+		   if(collectorName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CollectorName",OldValue=collectorName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   collectorName=value;
+		   }
+			
+		 }
+	   }
+	  private string splitCurrencyAccount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SplitCurrencyAccount  
+	   {
+	    
+	     get
+		{
+		   return splitCurrencyAccount;
+		 }
+		 set
+		 {
+		   if(splitCurrencyAccount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SplitCurrencyAccount",OldValue=splitCurrencyAccount,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   splitCurrencyAccount=value;
+		   }
+			
+		 }
+	   }
+	  private string parentName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ParentName  
+	   {
+	    
+	     get
+		{
+		   return parentName;
+		 }
+		 set
+		 {
+		   if(parentName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ParentName",OldValue=parentName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   parentName=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<GLAccountCurrencyPM> gLAccountCurrencies;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("GLAccountCurrencyGLAccount", "Id","MainGLAccountId")]
+	   [DataMember]
+	   public virtual List<GLAccountCurrencyPM> GLAccountCurrencies  
+	   {
+	        get
+             {
+                 if (gLAccountCurrencies == null)
+                 {
+                     gLAccountCurrencies = new List<GLAccountCurrencyPM>();
+                 }
+                 return gLAccountCurrencies;
+              }
+             set { gLAccountCurrencies = value; }
+	    }
+		   
+	   private List<GLAccountCurrencyPM>  deletedGLAccountCurrencies;
+	   public virtual List<GLAccountCurrencyPM> DeletedGLAccountCurrencies  
+	   {
+	        get
+             {
+                 if ( deletedGLAccountCurrencies == null)
+                 {
+                      deletedGLAccountCurrencies = new List<GLAccountCurrencyPM>();
+                 }
+                 return  deletedGLAccountCurrencies;
+              }
+             set {  deletedGLAccountCurrencies = value; }
+	    }
+	  	  private string parentCurrencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ParentCurrencyId  
+	   {
+	    
+	     get
+		{
+		   return parentCurrencyId;
+		 }
+		 set
+		 {
+		   if(parentCurrencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ParentCurrencyId",OldValue=parentCurrencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   parentCurrencyId=value;
+		   }
+			
+		 }
+	   }
+
+	  private bool reportingAsAnotherDocument ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ReportingAsAnotherDocument  
+	   {
+	    
+	     get
+		{
+		   return reportingAsAnotherDocument;
+		 }
+		 set
+		 {
+		   if(reportingAsAnotherDocument != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReportingAsAnotherDocument",OldValue=reportingAsAnotherDocument,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   reportingAsAnotherDocument=value;
+		   }
+			
+		 }
+	   }
+
    }
    
 }

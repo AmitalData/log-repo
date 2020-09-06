@@ -1,14 +1,13 @@
 import { ShipmentArchiveFilter } from '../../../../Controls/ShipmentArchiveFilter';
 import { TransportsFilter } from '../../../../Controls/TransportsFilter';
 import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { SearchTextBox } from '../../../../Controls/SearchTextBox';
 import { IconButton } from '../../../../Controls/IconButton';
 import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
 import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { LogBoxDocumentsComponent } from './LogBoxDocumentsComponent';
 import { ShipmentDomainService, ImporterQueriesDataCounts } from '../../../../Shipment/Services/ShipmentDomainService';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -20,6 +19,9 @@ import { ShipmentAdditionalCloudDataService } from '../../../../Shipment/Service
 import { UserLastSettingsPM } from '../../../../Common/EntityPMs/UserLastSettingsPM';
 import { UserLastSettingsPMService } from '../../../../Common/Services/StandardPMs/UserLastSettingsPMService';
 import { UserLastSettingsExtendedPMService } from '../../../../Common/Services/ExtendedPMs/UserLastSettingsExtendedPMService';
+import { QueryColumnPM} from '../../../../Infrastructure/EntityPMs/QueryColumnPM';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { LogboxShipmentExportExcelArgs } from '../../../../Shipment/DataContract/LogboxShipmentExportExcelArgs';
 
 
 @Component({
@@ -41,13 +43,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public _UserLastSettingsPMService: UserLastSettingsPMService;
     public _UserLastSettingsExtendedPMService: UserLastSettingsExtendedPMService;
 
-
     RefTemplateWidth: string = '220px';
     constructor(private _entityListService: EntityListService) {
         this.myShipmentDomainService = new ShipmentDomainService();
         this.myUserPMService = new UserExtendedPMService();
         this._ShipmentPMService = new ShipmentPMService();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
+
         this._UserLastSettingsPMService = new UserLastSettingsPMService();
         this._UserLastSettingsExtendedPMService = new UserLastSettingsExtendedPMService();
         var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX" && d.TenantNumber == SessionLocator.Tenant)[0];
@@ -345,7 +347,25 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             return tempo;
         },
     };
+
+
+    GetQueryColumn(fieldName: string, dataTypeCode: string, displayText:string) {
+        var queryColum: QueryColumnPM = new QueryColumnPM();
+        queryColum.ObjectFieldDataTypeCode = dataTypeCode;
+        queryColum.ObjectFieldName = fieldName;
+        queryColum.DisplayText = displayText;
+        queryColum.ObjectFieldListLabelTextCodeCode = fieldName;
+        return queryColum;
+        
+
+    }
+
+    QueryColumns: QueryColumnPM[] = [];
+
+
     BuildColumns() {
+
+        this.QueryColumns = [];
         this.HoverTemplateIndex = 6;
         this.columns = [];
         this.columns.push({
@@ -359,6 +379,10 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             ServerSideSortable: true,
             SortByName: "ShipmentNumber"
         });
+
+        this.QueryColumns.push(this.GetQueryColumn(("ShipmentNumber_" + this.SelectedFilter.replace(" ","")), 'Text', 'Shipment #'));
+
+
         this.columns.push({
             FieldName: 'ShipperName',
             DataTypeCode: 'String',
@@ -368,6 +392,10 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             ServerSideSortable: true,
             SortByName: "ShipperName"
         });
+        this.QueryColumns.push(this.GetQueryColumn("ShipperName", 'Text', 'Supplier'));
+
+
+
         if (this.SelectedFilter == "Action Required") {
             this.columns.push({
                 FieldName: 'Task',
@@ -381,6 +409,11 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 SortByName: "Task"
             });
             this.HoverTemplateIndex = 5;
+
+
+            this.QueryColumns.push(this.GetQueryColumn("Task", 'Text', 'Task'));
+
+
         }
         else {
             this.columns.push({
@@ -394,6 +427,11 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 ServerSideSortable: true,
                 SortByName: "StatusName"
             });
+            this.QueryColumns.push(this.GetQueryColumn("StatusName", 'Text', 'Status'));
+
+
+
+
             if (this.isPrivateLabel == false || (this.isPrivateLabel == true && (this.SelectedFilter != "My Shipments" && this.SelectedFilter != "Action Required"))) {
                 this.columns.push({
                     FieldName: 'StatusDate',
@@ -406,6 +444,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                     ServerSideSortable: true,
                     SortByName: "StatusDate"
                 });
+                this.QueryColumns.push(this.GetQueryColumn("StatusDate", 'DateTime', 'Status Date' ));
+
             }
             else {
                 this.HoverTemplateIndex = 5;
@@ -433,6 +473,10 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             ServerSideSortable: true,
             SortByName: "CustomerReference2"
         });
+
+        this.QueryColumns.push(this.GetQueryColumn("CustomerReference", 'Text', 'Reference #'));
+
+
         this.columns.push({
             FieldName: 'IsOperationalClosed',
             DataTypeCode: 'String',
@@ -444,6 +488,10 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             ServerSideSortable: true,
             SortByName: "IsOperationalClosed"
         });
+
+        this.QueryColumns.push(this.GetQueryColumn("IsOperationalClosed", 'Boolean', 'Operational Closed' ));
+
+
         if (this.SelectedFilter == "My Shipments") {
             this.columns.push({
                 FieldName: 'ActionButtonsListTemplate',//'MyShipments',
@@ -510,6 +558,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 EnableHoverVisibility: true,
                 ServerSideSortable: false
             });
+
+
+
         }
         this.CustomColumnsReady.emit(this.columns);
     }
@@ -570,6 +621,27 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         return this._entityListService.getByFilters("Shipment", filters);
     }
 
+    GetExportToExcelArgs() {
+        this.filterAgrs = this.GetApiQueryFilters();
+        this.filterAgrs.Tenant = SessionLocator.Tenant;
+        var logboxShipmentExportExcelArgs: LogboxShipmentExportExcelArgs = new LogboxShipmentExportExcelArgs();
+        logboxShipmentExportExcelArgs.Tenant = SessionLocator.Tenant;
+        logboxShipmentExportExcelArgs.AdditionalFilters = this.filterAgrs.AdditionalFilters;
+        logboxShipmentExportExcelArgs.PageIndex = this.filterAgrs.PageIndex;
+        logboxShipmentExportExcelArgs.PageSize = this.filterAgrs.PageSize;
+        logboxShipmentExportExcelArgs.ObjectTableName = "Shipment";
+        logboxShipmentExportExcelArgs.QueryColumns = this.QueryColumns;
+        logboxShipmentExportExcelArgs.UserId = SessionLocator.LoggedUserId;
+        logboxShipmentExportExcelArgs.SortBy = this.filterAgrs.SortBy;
+        logboxShipmentExportExcelArgs.SortDirection = this.filterAgrs.SortDirection;
+        logboxShipmentExportExcelArgs.QueryName = this.SelectedFilter;
+        logboxShipmentExportExcelArgs.QuerySection = "Shipment";
+        logboxShipmentExportExcelArgs.Filters = this.filterAgrs; 
+        return logboxShipmentExportExcelArgs;
+    }
+
+
+    
     MenuFiltersClicked(Selected) {
         this.SelectedFilter = Selected;
         this.SelectedRow = null;
@@ -617,11 +689,15 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.BuildColumns();
         this.LoadQueriesCounts();
         //if (this.filterAgrs == null) {
+        
+        this.filterAgrs = this.GetApiQueryFilters();
+
+        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+    }
+
+
+    GetApiQueryFilters() {
         this.filterAgrs = new ApiQueryFilters();
-        //}
-        //if (!string.IsNullOrEmpty(SearchFilter)) {
-        //    searchValue = String.IsNullOrEmpty(SearchFilter.Trim()) ? null : SearchFilter.Trim();
-        //}
         if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'ImportersFilter').length > 0) {
             this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'ImportersFilter');
         }
@@ -752,8 +828,11 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.filterAgrs.SortDirection = "Descending";
 
         }
-        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+
+        return this.filterAgrs;
+
     }
+
     GridAfterViewInitCompleted($event) {
         this.setUserLastSettings();
         
@@ -765,8 +844,30 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             clearTimeout(this.timerToken);
         }
         this.timerToken = setTimeout(() => this.LoadImporterShipments(), 500);
+    }
+
+
+    btnExcelCLicked() {
+        var windowArgs: any = {};
+        windowArgs.ExportExcelArgs = this.GetExportToExcelArgs();
+
+        windowArgs.tenant = SessionLocator.Tenant;
+        windowArgs.ObjectTableName = "Shipment";
+        windowArgs.QueryName = this.SelectedFilter;
+        windowArgs.QueryType = "LogBox";
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 500;
+        logitudeWindow.Height = 200;
+        logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");//"Exporting View Data List To Excel File";
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./Infrastructure/Components/Export2ExcelControl/Export2ExcelControl');
+
 
     }
+
+
+
+
 
     AddNewEntity() {
         var NewShip = new ShipmentPM();
@@ -874,3 +975,4 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         });
     }
 }
+

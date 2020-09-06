@@ -1,10 +1,19 @@
 import { Resolvers } from "../../Resolvers/Resolvers";
-import { NewQuoteWizardScenarios } from '../../Scenarios/QuoteScenarios/NewQuoteWizardScenarios';
 import { LoginComp } from "../../../Login/Login.po";
+import { NewQuoteWizardScenarios } from '../../Scenarios/QuoteScenarios/NewQuoteWizardScenarios';
+import { EditQuoteTabsScenarios } from '../../Scenarios/QuoteScenarios/EditQuoteTabsScenarios';
+import { QuoteActions } from '../../Scenarios/QuoteScenarios/QuoteActions';
+
 
 describe('Quotes Modules', () => {
     let login: LoginComp = new LoginComp();
     let scenarios: NewQuoteWizardScenarios = new NewQuoteWizardScenarios();
+    let editScenarios: EditQuoteTabsScenarios = new EditQuoteTabsScenarios();
+    let quoteActions: QuoteActions = new QuoteActions();
+
+    var direction;
+    var transportMode;
+    var shipmentType;
 
     beforeEach(() => {
         Resolvers.MainMenuResolver.Selector('#GeneralMHCRM').Select();
@@ -12,7 +21,12 @@ describe('Quotes Modules', () => {
     });
 
     it('Test New Quote ', () => {
-        scenarios.RunScenario('E', 'A');
-        
+        direction = 'E';
+        transportMode = 'A';
+        shipmentType ='';
+        scenarios.RunScenario(direction, transportMode, shipmentType);
+        editScenarios.RunEditTabsScenarios(direction, transportMode, shipmentType);
+        quoteActions.RunQuoteActions();
+
     });
 });

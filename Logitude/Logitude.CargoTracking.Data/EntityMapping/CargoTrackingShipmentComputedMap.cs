@@ -30,6 +30,8 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.FinalDeliveryATA).HasColumnName("FinalDeliveryATA");
 
             this.Property(t => t.FinalDeliveryETA).HasColumnName("FinalDeliveryETA");
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
         }
     }
 }

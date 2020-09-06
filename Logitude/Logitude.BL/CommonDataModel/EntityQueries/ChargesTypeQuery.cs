@@ -335,6 +335,32 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return securedPm;
         }
 
+
+
+        public List<ChargesTypePM> GetChargesTypesByCode(string code, int tenant)
+        {
+
+
+            List<ChargesTypePM> Entities = (from a in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement")
+                              where a.Code == code && a.Tenant == tenant && a.InActive==false
+                              select new ChargesTypePM()
+                              {
+
+                                  Code = a.Code,
+                                  Id = a.Id,
+                                  InActive = a.InActive,
+                                  VatTypeId = a.VatTypeId,
+                                  ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
+                                  Tenant = a.Tenant,
+
+                              }).ToList();
+
+            return Entities;
+
+
+
+        }
+
         public IQueryable<ChargesTypePM> GetChargesTypePMsByTenant(int tenant)
         {
             IQueryable<ChargesTypePM> charges = from a in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount")
