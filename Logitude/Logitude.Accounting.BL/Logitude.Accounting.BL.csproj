@@ -105,7 +105,9 @@
     <Compile Include="APIDataContract\ChartOfAccountsType.Generated.cs" />
     <Compile Include="APIDataContract\GLAccount.cs" />
     <Compile Include="APIDataContract\GLAccount.Generated.cs" />
+    <Compile Include="APIDataContract\GLAccountMoreData.cs" />
     <Compile Include="APIDataContract\GLAccountMoreData.Generated.cs" />
+    <Compile Include="APIDataContract\GLAccountTotalsByCurrency.cs" />
     <Compile Include="APIDataContract\GLAccountType.Generated.cs" />
     <Compile Include="APIDataContract\Journal.Generated.cs" />
     <Compile Include="APIDataContract\JournalActionType.Generated.cs" />

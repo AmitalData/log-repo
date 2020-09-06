@@ -1,4 +1,9 @@
-﻿using Logitude.Accounting.BL.APIDataContract.ApiV1;
+﻿using Logitude.Accounting.BL.APIDataContract;
+using Logitude.Accounting.BL.APIDataContract.ApiV1;
+using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -75,9 +80,48 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 GLAccountMoreData accountMoreData = accountMoreDataQueryService.GetGLAccountMoreDataByAccountId(account.Id, account.Tenant);
                 accountMoreData.AccountId = null;
+                accountMoreData.GLAccountTotalsByCurrencies = GetTotalByCurrencies(account);
+
                 return accountMoreData;
             }
 
+        }
+
+        private List<GLAccountTotalsByCurrency> GetTotalByCurrencies(GLAccount account)
+        {
+            LedgerTransactionBalanceFilter LTBFilter = SetLTBFilters(account);              
+            var accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
+            var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
+            ledgerTransactionBalanceService.Run();
+            List<GLAccountTotalsByCurrency> totalsByCurrencies = new List<GLAccountTotalsByCurrency>();
+            foreach(var item in ledgerTransactionBalanceService.Response.EndBalanceForeignList)
+            {
+                CurrencyQueryService currencyQueryService = new CurrencyQueryService(account.Tenant);
+                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Currency currency = currencyQueryService.GetCurrencyById(item.CurrencyId, account.Tenant);
+                totalsByCurrencies.Add(new GLAccountTotalsByCurrency()
+                {
+                    CurrencyId = currency != null? currency.Code :null,
+                    BalanceForeign = item.BalanceForeign,
+                    BalanceLocal = item.BalanceLocal,
+                });
+            }
+            return totalsByCurrencies;
+        }
+        private LedgerTransactionBalanceFilter SetLTBFilters(GLAccount account)
+        {
+            var toDate = DateTime.Now;
+            return new LedgerTransactionBalanceFilter()
+            {
+                PageSize = 30,
+                PageStartAtRecordIndex = 0,
+                Tenant = account.Tenant,
+                GLAccountId = account.Id,
+                IncludeRelatedCurrenciesAccount = false,
+                IncludeChildAccounts = false,
+                DateTypeCode = "1",
+                From = DateTime.Now.AddMonths(-1),
+                To = new DateTime(toDate.Year, toDate.Month, toDate.Day, 23, 59, 59),
+            };
         }
     }
 }

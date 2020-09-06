@@ -234,7 +234,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 temp.BalanceInLocalCurrency = MyEntity.BalanceInLocalCurrency;
                 temp.RevaluationEnabled = MyEntity.RevaluationEnabled;
                 GLAccountQueryService ParentAccountGLAccountService = new GLAccountQueryService(Tenant);
-                if (MyEntity.ParentAccountId != null)
+                if (!string.IsNullOrEmpty( MyEntity.ParentAccountId ))
                 {
                     var myParentAccountPM = ParentAccountGLAccountService.GetGLAccountById(MyEntity.ParentAccountId, Tenant );
                     if (myParentAccountPM != null)
