@@ -361,7 +361,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
-        public List<DeclarationErrorView> GetDeclarationErrors(string declarationId, int tenant, string listVersionId, string courierFilter = "Declaration")
+        public List<DeclarationErrorView> GetDeclarationErrors(string declarationId, int tenant, string listVersionId, string courierFilter = "Declaration",bool IsAmendmentErrors=false)
         {
             ICustomContext context = MainContext as CustomContext;
             Declaration declaration = Repository.GetSingle(new DeclarationKeys() { Id = declarationId });
@@ -521,6 +521,168 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                 errorview.EntityName = "Declaration";
                             }
                             if (errorview.EntityName== "SupplierInvioceItemsCertificate")
+                            {
+                                errorview.EntityName = "SupplierInvioceItemCertificat";
+                            }
+                            errorview.FieldNameTextCode = errorview.Field != null ? "Customs." + errorview.EntityName + ".F." + errorview.Field : "Customs." + errorview.EntityName;
+                            errorview.TableNameTextCode = "Customs." + errorview.EntityName;
+                            declarationErrors.Add(errorview);
+                        }
+                    }
+                }
+
+            }
+            else if (IsAmendmentErrors )
+            {
+                if (!string.IsNullOrEmpty(declaration.AmendmentErrorXml))
+                {
+                    byte[] errorsByte = Encoding.UTF8.GetBytes(declaration.AmendmentErrorXml);
+                    MemoryStream memorystream = new MemoryStream(errorsByte);
+                    XmlSerializer serializer = new XmlSerializer(typeof(DeclarationError));
+                    DeclarationError declarationError = (DeclarationError)serializer.Deserialize(memorystream);
+
+
+
+                    foreach (Entity entity in declarationError.Entitites)
+                    {
+
+                        List<error> errors = new List<error>();
+                        if (listVersionId != null)
+                        {
+                            errors = entity.EntityErrors.Where(a => a.ListVersionID == listVersionId).ToList();
+                        }
+
+                        else
+                        {
+                            errors = entity.EntityErrors;
+                        }
+
+                        foreach (error error in errors)
+                        {
+                            DeclarationErrorView errorview = new DeclarationErrorView() { Id = Guid.NewGuid().ToString() };
+                            errorview.ConstraintId = error.ConstraintID;
+                            if (!string.IsNullOrEmpty(errorview.ConstraintId))
+                            {
+                                errorview.ConstraintIndication = constraints.Where(d => d.ConstraintNumber == errorview.ConstraintId).Any();
+                            }
+                            errorview.Description = error.MessageError.Replace(',', ';');
+                            errorview.ErrorType = error.Code;
+                            if (!string.IsNullOrEmpty(error.Code))
+                            {
+                                UIMessagePM uIMessagePM = uIMessageQueryService.GetUIMessageWithAdditional(error.Code, tenant);
+                                if (uIMessagePM != null)
+                                {
+                                    if (uIMessagePM.Sort == null)
+                                    {
+                                        uIMessagePM.Sort = 99999999;
+                                    }
+                                    errorview.Sort = uIMessagePM.Sort;
+                                }
+                            }
+                            errorview.DeclarationId = declaration.Id;
+                            errorview.ListVersionId = error.ListVersionID;
+                            if (!string.IsNullOrEmpty(entity.Child3Type))
+                            {
+
+                                errorview.EntityName = entity.Child3Type;
+                                errorview.Line = int.Parse(entity.Child3Sequence);
+                                errorview.ParentEntityName = entity.Child2Type;
+                                errorview.ParentLine = int.Parse(entity.Child2Sequence);
+                                errorview.LineNumber = entity.Child1Sequence + "," + entity.Child2Sequence + "," + entity.Child3Sequence;
+                            }
+                            else if (!string.IsNullOrEmpty(entity.Child2Type))
+                            {
+                                errorview.EntityName = entity.Child2Type;
+                                errorview.Line = int.Parse(entity.Child2Sequence);
+                                errorview.ParentEntityName = entity.Child1Type;
+                                errorview.ParentLine = int.Parse(entity.Child1Sequence);
+                                errorview.LineNumber = entity.Child1Sequence + "," + entity.Child2Sequence;
+
+                            }
+                            else if (!string.IsNullOrEmpty(entity.Child1Type))
+                            {
+                                errorview.EntityName = entity.Child1Type;
+                                errorview.Line = int.Parse(entity.Child1Sequence);
+                                errorview.ParentEntityName = "Declaration";
+                                errorview.LineNumber = entity.Child1Sequence;
+
+                            }
+                            else
+                            {
+                                errorview.EntityName = "Declaration";
+                            }
+                            errorview.TableNameTextCode = "Customs." + errorview.EntityName;
+                            declarationErrors.Add(errorview);
+                        }
+
+
+                        List<field> fields = new List<field>();
+                        if (listVersionId != null)
+                        {
+                            fields = entity.FieldErrors.Where(a => a.ListVersionID == listVersionId).ToList();
+                        }
+
+                        else
+                        {
+                            fields = entity.FieldErrors;
+                        }
+
+                        foreach (field error in fields)
+                        {
+                            DeclarationErrorView errorview = new DeclarationErrorView() { Id = Guid.NewGuid().ToString() }; ;
+                            errorview.ConstraintId = error.ConstraintID;
+                            if (!string.IsNullOrEmpty(errorview.ConstraintId))
+                            {
+                                errorview.ConstraintIndication = constraints.Where(d => d.ConstraintNumber == errorview.ConstraintId).Any();
+                            }
+                            errorview.Description = error.MessageError.Replace(',', ';');
+                            errorview.ErrorType = error.Code;
+                            if (!string.IsNullOrEmpty(error.Code))
+                            {
+                                UIMessagePM uIMessagePM = uIMessageQueryService.GetUIMessageWithAdditional(error.Code, tenant);
+                                if (uIMessagePM != null)
+                                {
+                                    if (uIMessagePM.Sort == null)
+                                    {
+                                        uIMessagePM.Sort = 99999999;
+                                    }
+                                    errorview.Sort = uIMessagePM.Sort;
+                                }
+                            }
+                            errorview.Field = error.Fieldcode;
+                            errorview.DeclarationId = declaration.Id;
+                            errorview.ListVersionId = error.ListVersionID;
+                            if (!string.IsNullOrEmpty(entity.Child3Type))
+                            {
+                                errorview.EntityName = entity.Child3Type;
+                                errorview.Line = int.Parse(entity.Child3Sequence);
+                                errorview.ParentEntityName = entity.Child2Type;
+                                errorview.ParentLine = int.Parse(entity.Child2Sequence);
+                                errorview.LineNumber = entity.Child1Sequence + "," + entity.Child2Sequence + "," + entity.Child3Sequence;
+
+                            }
+                            else if (!string.IsNullOrEmpty(entity.Child2Type))
+                            {
+                                errorview.EntityName = entity.Child2Type;
+                                errorview.Line = int.Parse(entity.Child2Sequence);
+                                errorview.ParentEntityName = entity.Child1Type;
+                                errorview.ParentLine = int.Parse(entity.Child1Sequence);
+                                errorview.LineNumber = entity.Child1Sequence + "," + entity.Child2Sequence;
+
+                            }
+                            else if (!string.IsNullOrEmpty(entity.Child1Type))
+                            {
+                                errorview.EntityName = entity.Child1Type;
+                                errorview.Line = int.Parse(entity.Child1Sequence);
+                                errorview.ParentEntityName = "Declaration";
+                                errorview.LineNumber = entity.Child1Sequence;
+
+                            }
+                            else
+                            {
+                                errorview.EntityName = "Declaration";
+                            }
+                            if (errorview.EntityName == "SupplierInvioceItemsCertificate")
                             {
                                 errorview.EntityName = "SupplierInvioceItemCertificat";
                             }

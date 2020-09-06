@@ -1,5 +1,5 @@
 declare var window: any;
-import {Component, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
+import {Component, AfterViewInit, ChangeDetectorRef, Output, Input}  from '@angular/core';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
@@ -32,7 +32,8 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
 
 @Component({    
     templateUrl: './CustomsAnswersComponent.html',
-    providers: [DeclarationExtendedListService]
+    providers: [DeclarationExtendedListService],
+    selector:"CustomsAnswer"
 })
 
 export class CustomsAnswersComponent extends BaseComponent implements AfterViewInit {
@@ -57,7 +58,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     SystemMessageDescribtion: string;
     IsCourierDeclaration: boolean = false;
     IsDisplayMessage: boolean;
-    
+    @Input() IsAmendmentErrors: boolean;
     public get DepositionStatusCode(): string {
         if (this.EntityPM == null) return null; 
         return this.EntityPM.DepositionStatusCode;
@@ -355,7 +356,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     AllConstraintCount: number = 0;
     // get errors code
     ReloadDeclarationErrors() {
-        this.CurrentSession.StartBusyIndicatorLoading();
+         this.CurrentSession.StartBusyIndicatorLoading();
 
         //[1] GetDeclarationConstraints();
         this.declarationWebService.GetDeclarationConstraintsByDeclrationId(this.EntityPM.Id)
@@ -451,9 +452,9 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     }
     errorsForDeclaration;
     LoadDeclarationErrors() {
-        //[2] GetDeclarationErrors();
+         //[2] GetDeclarationErrors();
         this.CurrentSession.StartBusyIndicatorLoading();//Avoiding ReSend !!
-        this.declarationWebService.GetDeclarationErrors(this.EntityPM.Id, this.ListVersionId, this.CourierFilterSelectedValue)
+        this.declarationWebService.GetDeclarationErrors(this.EntityPM.Id, this.ListVersionId, this.CourierFilterSelectedValue, this.IsAmendmentErrors)
             .subscribe((myServiceResponse: ServiceResponse) => {
                 console.log("[Response] GetDeclarationErrors : ", myServiceResponse.Result);
                 var res: any[] = myServiceResponse.Result;

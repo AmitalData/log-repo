@@ -37,6 +37,7 @@ import { CustomMessageProgressComponent } from '../../../../../CustomsModules/Cu
 import {DeclarationMessagesService} from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
 import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { ObjectsLocator } from '../../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -102,7 +103,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     public get AmendmentRemarks() { return this.EntityPM ? this.EntityPM.AmendmentRemarks : null; }
     public set AmendmentRemarks(newValue: string) { this.EntityPM.AmendmentRemarks = newValue; }
 
- 
+    LayoutDirection: string = 'ltr';
+
 
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
@@ -113,7 +115,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                     this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
                         this.EntityPM = this.entityArgs.EntityPM;
                         this.ObjectTableName = this.entityArgs.ObjectTableName;
-                
+                        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+
                         this.Listen();
 
                         console.log("Declaration", this.EntityPM);
@@ -152,8 +155,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     }
     BuildTabs() {
         this.SelectedTab = "Details";
-        this.TabsSource.push({ Name: "Details", isSelected: true, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Details") });
-        this.TabsSource.push({ Name: "Errors", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Declarations") });
+        this.TabsSource.push({ Name: "Details", isSelected: true, Header: TextCodeTranslator.Translate("Customs.Declaration.O.CorrectionStatement") });
+        this.TabsSource.push({ Name: "Errors", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Errors") });
     }
 
 
