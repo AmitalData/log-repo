@@ -97,7 +97,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             var IsCreditLimitActivated = mySettings.IsCreditLimitEnabled;
             var IsCreditLimitHasAction = (mySettings.ShipmentCreationBlock == false && mySettings.ShipmentCreationWarning == true) ? true : false;
 
-            if (isBuildFromQuote && IsCreditLimitActivated && IsCreditLimitHasAction && myCustomer != null && myCustomer.IsCreditLimitEnabled && !myCustomer.BlockNewShipmentCreation)
+            if (IsCreditLimitActivated && IsCreditLimitHasAction && myCustomer != null && myCustomer.IsCreditLimitEnabled && !myCustomer.BlockNewShipmentCreation)
             {
                 if (myCustomer.CreditLimitAmount != null)
                 {

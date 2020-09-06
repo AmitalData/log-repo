@@ -3772,7 +3772,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             IsCreditLimitHasAction = (ObjectsLocator.CreditLimitSettingPM.ShipmentCreationBlock == false && ObjectsLocator.CreditLimitSettingPM.ShipmentCreationWarning == true) ? true : false;
         }
 
-        if (this.IsBuildFromQuote && HasCreditLimitFeature && IsCreditLimitActivated && IsCreditLimitHasAction && this.IsCustomerCreditLimitEnabled) {
+        if (HasCreditLimitFeature && IsCreditLimitActivated && IsCreditLimitHasAction && this.IsCustomerCreditLimitEnabled) {
             isCheck = true;
         }
         return isCheck;
