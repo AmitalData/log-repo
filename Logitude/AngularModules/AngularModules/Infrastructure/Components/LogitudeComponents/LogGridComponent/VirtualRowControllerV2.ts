@@ -141,9 +141,9 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
         if (this.fetchedPages.has(page)) {
             if (!this.fetchedPages.has(page + 1)) {
                 this._fetchPage(page + 1);
-                if (!this.fetchedPages.has(page + 2)) {  
-                    this._fetchPage(page + 2);
-                } 
+                //if (!this.fetchedPages.has(page + 2)) {  
+                //    this._fetchPage(page + 2);
+                //} 
             } 
             //else {
             //this.dataStream.next(this.cachedData);

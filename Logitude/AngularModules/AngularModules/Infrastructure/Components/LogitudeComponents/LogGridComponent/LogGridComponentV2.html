@@ -204,7 +204,7 @@
             <!-- [ngStyle]="row.styles" [class.HLine]="row.rowData.ShowLineOverRow == true" || row.rowData.IsSelected == true  [style.background]="(ChangeColorByPropName && ChangeColorByPropValue && row.rowData[ChangeColorByPropName] == ChangeColorByPropValue) ? RowBackGroundColor : ((SelectedRow == row.rowData)? '#DFECF7':'transparent')"-->
             <!--(mouseout)="onRowMouseOut('rowtemplate'+rowIndex,rowIndex,row)" (mouseover)="onRowMouseOver('rowtemplate'+rowIndex,rowIndex,row)"-->
             <!-- autosize [minBufferPx]="778" [maxBufferPx]="778 * 3" [itemSize]="rowHeight"-->
-            <cdk-virtual-scroll-viewport [id]="LogGridRowsId" class="GeneratedGridBody" (scroll)="onScroll()" [itemSize]="rowHeight">
+            <cdk-virtual-scroll-viewport [id]="LogGridRowsId" class="GeneratedGridBody" (scroll)="onScroll()" [itemSize]="rowHeight" [minBufferPx]="viewportSize * rowHeight" [maxBufferPx]="viewportSize * 2 * rowHeight">
                 <!--(scrolledIndexChange)="onScroll($event)"-->
                 <!--row && row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight-->
                 <div [ngStyle]="headerStyle">

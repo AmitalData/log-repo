@@ -95,6 +95,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     private CurrentSession = SessionLocator.SelectedSession;
     DontApplyVirtualization: boolean = false;
     ConstantPageSize: number = 0;
+    UsingLogGridV2: boolean = false;
 
 
 
@@ -105,6 +106,9 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this.entityPMService = new EntityPMService;
         this.TenantPM = InfraSettings.TenantPM;
         //this.CurrentSession.SubscriptionAdd(
+        var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (UsingV2FeatureToggle || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") { this.UsingLogGridV2 = true; }
+
         this.PseventRowSelectEventSub=  this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
                 if (res == this.ObjectTableName) {
                     this.preventSelect = true;
