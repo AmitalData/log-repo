@@ -711,10 +711,10 @@ class JournalLineModel extends BaseComponent {
             this.JournalLinePM.ActionId = value;
             this.parent.CalculateTotals();
         }
-        if (value != null) {
-            this.CurrencyId = null;
-            this.Currency = null;
-        }
+       // if (value != null) {
+        //    this.CurrencyId = null;
+         //   this.Currency = null;
+       // }
     }
 
     get ActionCode() { return this.JournalLinePM.ActionCode; }
