@@ -31,8 +31,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public DateTime? EventDateTime { get; set; }
         public bool AllowedInAutomation { get; set; }
         public string CustomField { get; set; }
-
-        
-
+        public int? EntityStatusWeight { get; set; }
     }
 }
