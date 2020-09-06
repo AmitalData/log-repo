@@ -160,18 +160,22 @@ using Simplog.Data.CommonDataModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
+
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
 						 
-						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
 						{
-								throw new ApplicationException("Code Can't be update"); 
-						}  
+								//throw new ApplicationException("Code Can't be update"); 
+								temp.Code = MyEntity.Code;						}  
 
-						temp.Code = MyEntity.Code;
+						
+
 					}
 					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.CreatedByUser != null)
@@ -182,24 +186,26 @@ using Simplog.Data.CommonDataModel;
 						{ 
 
 						 
-							if(IsUpdate)
+							if(!IsUpdate)
 							{
-								throw new ApplicationException("CreatedByUser Can't be update"); 
+								//throw new ApplicationException("CreatedByUser Can't be update"); 
+								temp.CreatedByUserId = myCreatedByUserPM.Id;
 							}  
 
-							temp.CreatedByUserId = myCreatedByUserPM.Id;
+							
 						} 
 
 					}
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.EntityNumber))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EntityNumber))
 					{
-							throw new ApplicationException("EntityNumber Can't be update"); 
+							//throw new ApplicationException("EntityNumber Can't be update"); 
+							temp.EntityReference = MyEntity.EntityNumber;
 					}  
 
-					temp.EntityReference = MyEntity.EntityNumber;
+					
 					ObjectTableQueryService EntityTypeObjectTableService = new ObjectTableQueryService(Tenant);
 					if(MyEntity.EntityType != null)
 					{
@@ -209,12 +215,13 @@ using Simplog.Data.CommonDataModel;
 						{ 
 
 						 
-							if(IsUpdate)
+							if(!IsUpdate)
 							{
-								throw new ApplicationException("EntityType Can't be update"); 
+								//throw new ApplicationException("EntityType Can't be update"); 
+								temp.ObjectTableId = myEntityTypePM.Id;
 							}  
 
-							temp.ObjectTableId = myEntityTypePM.Id;
+							
 						} 
 
 					}
@@ -229,59 +236,66 @@ using Simplog.Data.CommonDataModel;
 						{ 
 
 						 
-							if(IsUpdate)
+							if(!IsUpdate)
 							{
-								throw new ApplicationException("DocumentType Can't be update"); 
+								//throw new ApplicationException("DocumentType Can't be update"); 
+								temp.DocumentTypeId = myDocumentTypePM.Id;
 							}  
 
-							temp.DocumentTypeId = myDocumentTypePM.Id;
+							
 						} 
 
 					}
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.BlobId))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.BlobId))
 					{
-							throw new ApplicationException("BlobId Can't be update"); 
+							//throw new ApplicationException("BlobId Can't be update"); 
+							temp.DocumentId = MyEntity.BlobId;
 					}  
 
-					temp.DocumentId = MyEntity.BlobId;
+					
                     
-					if(IsUpdate && (MyEntity.IsDigitallySigned != temp.IsDigitallySigned))
+					if(!IsUpdate)// && (MyEntity.IsDigitallySigned != temp.IsDigitallySigned))
 					{
-							throw new ApplicationException("IsDigitallySigned Can't be update"); 
+							//throw new ApplicationException("IsDigitallySigned Can't be update"); 
+							temp.IsDigitallySigned = MyEntity.IsDigitallySigned;
 					}  
 
-					temp.IsDigitallySigned = MyEntity.IsDigitallySigned;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.SignersList))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.SignersList))
 					{
-							throw new ApplicationException("SignersList Can't be update"); 
+							//throw new ApplicationException("SignersList Can't be update"); 
+							temp.SignersList = MyEntity.SignersList;
 					}  
 
-					temp.SignersList = MyEntity.SignersList;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.BlobName))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.BlobName))
 					{
-							throw new ApplicationException("BlobName Can't be update"); 
+							//throw new ApplicationException("BlobName Can't be update"); 
+							temp.FileName = MyEntity.BlobName;
 					}  
 
-					temp.FileName = MyEntity.BlobName;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Description))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Description))
 					{
-							throw new ApplicationException("Description Can't be update"); 
+							//throw new ApplicationException("Description Can't be update"); 
+							temp.Description = MyEntity.Description;
 					}  
 
-					temp.Description = MyEntity.Description;
+					
                     
-					if(IsUpdate && (MyEntity.IsSharedWithCustomer != temp.IsSharedWithCustomer))
+					if(!IsUpdate)// && (MyEntity.IsSharedWithCustomer != temp.IsSharedWithCustomer))
 					{
-							throw new ApplicationException("IsSharedWithCustomer Can't be update"); 
+							//throw new ApplicationException("IsSharedWithCustomer Can't be update"); 
+							temp.IsSharedWithCustomer = MyEntity.IsSharedWithCustomer;
 					}  
 
-					temp.IsSharedWithCustomer = MyEntity.IsSharedWithCustomer;					   
+										   
 					return temp;
 		    }
             catch (Exception ex)

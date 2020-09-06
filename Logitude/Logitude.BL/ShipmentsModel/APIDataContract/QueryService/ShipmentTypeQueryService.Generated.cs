@@ -99,15 +99,19 @@ using Simplog.Data.ShipmentsModel;
 						//{
 						//    temp.Id = MyEntity.Code;
 
-						//}
+						//} 
+
+						
+
 					}
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Name))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
 					{
-							throw new ApplicationException("Name Can't be update"); 
+							//throw new ApplicationException("Name Can't be update"); 
+							temp.Name = MyEntity.Name;
 					}  
 
-					temp.Name = MyEntity.Name;					   
+										   
 					return temp;
 		    }
             catch (Exception ex)

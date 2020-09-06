@@ -101,7 +101,10 @@ using Simplog.Data.InvoiceModel;
 						//{
 						//    temp.Id = item.Id;
 
-						//}
+						//} 
+
+						
+
 					}
 					VatTypeQueryService VatTypeVatTypeService = new VatTypeQueryService(Tenant);
 					if(item.VatType != null)
@@ -112,31 +115,34 @@ using Simplog.Data.InvoiceModel;
 						{ 
 
 						 
-							if(IsUpdate)
+							if(!IsUpdate)
 							{
-								throw new ApplicationException("VatType Can't be update"); 
+								//throw new ApplicationException("VatType Can't be update"); 
+								temp.VatTypeId = myVatTypePM.Id;
 							}  
 
-							temp.VatTypeId = myVatTypePM.Id;
+							
 						} 
 
 					}
 			
 					
                     
-					if(IsUpdate && item.VatPercent != null)
+					if(!IsUpdate)// && item.VatPercent != null)
 					{
-							throw new ApplicationException("VatPercent Can't be update"); 
+							//throw new ApplicationException("VatPercent Can't be update"); 
+							temp.VatPercent = item.VatPercent;
 					}  
 
-					temp.VatPercent = item.VatPercent;
+					
                     
-					if(IsUpdate && item.InvoiceCurrencyVATAmount != null)
+					if(!IsUpdate)// && item.InvoiceCurrencyVATAmount != null)
 					{
-							throw new ApplicationException("InvoiceCurrencyVATAmount Can't be update"); 
+							//throw new ApplicationException("InvoiceCurrencyVATAmount Can't be update"); 
+							temp.InvoiceCurrencyVATAmount = item.InvoiceCurrencyVATAmount;
 					}  
 
-					temp.InvoiceCurrencyVATAmount = item.InvoiceCurrencyVATAmount;					   
+										   
 						MyList.Add(temp);
 					}
 						

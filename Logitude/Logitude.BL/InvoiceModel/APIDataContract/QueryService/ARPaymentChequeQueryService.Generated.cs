@@ -108,71 +108,83 @@ using Simplog.Data.InvoiceModel;
 						//{
 						//    temp.Id = item.Id;
 
-						//}
+						//} 
+
+						
+
 					}
                     
-					if(IsUpdate && item.Tenant != null)
+					if(!IsUpdate)// && item.Tenant != null)
 					{
-							throw new ApplicationException("Tenant Can't be update"); 
+							//throw new ApplicationException("Tenant Can't be update"); 
+							temp.Tenant = item.Tenant;
 					}  
 
-					temp.Tenant = item.Tenant;
+					
                     
-					if(IsUpdate && item.LineNumber != null)
+					if(!IsUpdate)// && item.LineNumber != null)
 					{
-							throw new ApplicationException("LineNumber Can't be update"); 
+							//throw new ApplicationException("LineNumber Can't be update"); 
+							temp.LineNumber = item.LineNumber;
 					}  
 
-					temp.LineNumber = item.LineNumber;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.ChequeNumber))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.ChequeNumber))
 					{
-							throw new ApplicationException("ChequeNumber Can't be update"); 
+							//throw new ApplicationException("ChequeNumber Can't be update"); 
+							temp.ChequeNumber = item.ChequeNumber;
 					}  
 
-					temp.ChequeNumber = item.ChequeNumber;
+					
                     
-					if(IsUpdate && item.ValueDate != null)
+					if(!IsUpdate)// && item.ValueDate != null)
 					{
-							throw new ApplicationException("ValueDate Can't be update"); 
+							//throw new ApplicationException("ValueDate Can't be update"); 
+							temp.ValueDate = item.ValueDate;
 					}  
 
-					temp.ValueDate = item.ValueDate;
+					
                     
-					if(IsUpdate && item.LocalAmount != null)
+					if(!IsUpdate)// && item.LocalAmount != null)
 					{
-							throw new ApplicationException("LocalAmount Can't be update"); 
+							//throw new ApplicationException("LocalAmount Can't be update"); 
+							temp.LocalAmount = item.LocalAmount;
 					}  
 
-					temp.LocalAmount = item.LocalAmount;
+					
                     
-					if(IsUpdate && item.ForeignAmount != null)
+					if(!IsUpdate)// && item.ForeignAmount != null)
 					{
-							throw new ApplicationException("ForeignAmount Can't be update"); 
+							//throw new ApplicationException("ForeignAmount Can't be update"); 
+							temp.ForeignAmount = item.ForeignAmount;
 					}  
 
-					temp.ForeignAmount = item.ForeignAmount;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.BankBranch))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.BankBranch))
 					{
-							throw new ApplicationException("BankBranch Can't be update"); 
+							//throw new ApplicationException("BankBranch Can't be update"); 
+							temp.BankBranch = item.BankBranch;
 					}  
 
-					temp.BankBranch = item.BankBranch;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.BankAccount))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.BankAccount))
 					{
-							throw new ApplicationException("BankAccount Can't be update"); 
+							//throw new ApplicationException("BankAccount Can't be update"); 
+							temp.BankAccount = item.BankAccount;
 					}  
 
-					temp.BankAccount = item.BankAccount;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.Bank))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Bank))
 					{
-							throw new ApplicationException("Bank Can't be update"); 
+							//throw new ApplicationException("Bank Can't be update"); 
+							temp.BankId = item.Bank;
 					}  
 
-					temp.BankId = item.Bank;
+					
 					ARPaymentChequeStatusReplicaQueryService ChequeStatusARPaymentChequeStatusReplicaService = new ARPaymentChequeStatusReplicaQueryService(Tenant);
 					if(item.ChequeStatus != null)
 					{
@@ -182,12 +194,13 @@ using Simplog.Data.InvoiceModel;
 						{ 
 
 						 
-							if(IsUpdate)
+							if(!IsUpdate)
 							{
-								throw new ApplicationException("ChequeStatus Can't be update"); 
+								//throw new ApplicationException("ChequeStatus Can't be update"); 
+								temp.StatusCode = myChequeStatusPM.Code;
 							}  
 
-							temp.StatusCode = myChequeStatusPM.Code;
+							
 						} 
 
 					}

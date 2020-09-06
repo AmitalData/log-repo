@@ -146,36 +146,43 @@ using Simplog.Data.CommonDataModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
+
 					}
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
 					{
-							throw new ApplicationException("Code Can't be update"); 
+							//throw new ApplicationException("Code Can't be update"); 
+							temp.CombinedCode = MyEntity.Code;
 					}  
 
-					temp.CombinedCode = MyEntity.Code;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.LocalName))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
 					{
-							throw new ApplicationException("LocalName Can't be update"); 
+							//throw new ApplicationException("LocalName Can't be update"); 
+							temp.LocalName = MyEntity.LocalName;
 					}  
 
-					temp.LocalName = MyEntity.LocalName;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.EnglishName))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
 					{
-							throw new ApplicationException("EnglishName Can't be update"); 
+							//throw new ApplicationException("EnglishName Can't be update"); 
+							temp.EnglishName = MyEntity.EnglishName;
 					}  
 
-					temp.EnglishName = MyEntity.EnglishName;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.PartnerCode))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
-							throw new ApplicationException("PartnerCode Can't be update"); 
+							//throw new ApplicationException("PartnerCode Can't be update"); 
+							temp.CombinedCode = MyEntity.PartnerCode;
 					}  
 
-					temp.CombinedCode = MyEntity.PartnerCode;					   
+										   
 					return temp;
 		    }
             catch (Exception ex)

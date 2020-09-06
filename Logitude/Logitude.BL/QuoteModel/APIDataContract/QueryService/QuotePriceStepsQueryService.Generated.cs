@@ -94,36 +94,43 @@ using Simplog.Data.QuoteModel;
 						//{
 						//    temp.Id = item.Id;
 
-						//}
+						//} 
+
+						
+
 					}
                     
-					if(IsUpdate && item.PriceBreakStep != null)
+					if(!IsUpdate)// && item.PriceBreakStep != null)
 					{
-							throw new ApplicationException("PriceBreakStep Can't be update"); 
+							//throw new ApplicationException("PriceBreakStep Can't be update"); 
+							temp.Step = item.PriceBreakStep;
 					}  
 
-					temp.Step = item.PriceBreakStep;
+					
                     
-					if(IsUpdate && item.CostUnitPrice != null)
+					if(!IsUpdate)// && item.CostUnitPrice != null)
 					{
-							throw new ApplicationException("CostUnitPrice Can't be update"); 
+							//throw new ApplicationException("CostUnitPrice Can't be update"); 
+							temp.CostUnitPrice = item.CostUnitPrice;
 					}  
 
-					temp.CostUnitPrice = item.CostUnitPrice;
+					
                     
-					if(IsUpdate && item.SaleUnitPrice != null)
+					if(!IsUpdate)// && item.SaleUnitPrice != null)
 					{
-							throw new ApplicationException("SaleUnitPrice Can't be update"); 
+							//throw new ApplicationException("SaleUnitPrice Can't be update"); 
+							temp.SaleUnitPrice = item.SaleUnitPrice;
 					}  
 
-					temp.SaleUnitPrice = item.SaleUnitPrice;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.MeasurementUnit))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.MeasurementUnit))
 					{
-							throw new ApplicationException("MeasurementUnit Can't be update"); 
+							//throw new ApplicationException("MeasurementUnit Can't be update"); 
+							temp.MeasurementUnit = item.MeasurementUnit;
 					}  
 
-					temp.MeasurementUnit = item.MeasurementUnit;					   
+										   
 						MyList.Add(temp);
 					}
 						

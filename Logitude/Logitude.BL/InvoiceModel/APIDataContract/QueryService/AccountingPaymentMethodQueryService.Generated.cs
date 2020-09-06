@@ -105,33 +105,39 @@ using Simplog.Data.InvoiceModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
+
 					}
                     
-					if(IsUpdate && MyEntity.Tenant != null)
+					if(!IsUpdate)// && MyEntity.Tenant != null)
 					{
-							throw new ApplicationException("Tenant Can't be update"); 
+							//throw new ApplicationException("Tenant Can't be update"); 
+							temp.Tenant = MyEntity.Tenant;
 					}  
 
-					temp.Tenant = MyEntity.Tenant;
+					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
 						 
-						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
 						{
-								throw new ApplicationException("Code Can't be update"); 
-						}  
+								//throw new ApplicationException("Code Can't be update"); 
+								temp.Code = MyEntity.Code;						}  
 
-						temp.Code = MyEntity.Code;
+						
+
 					}
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Name))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
 					{
-							throw new ApplicationException("Name Can't be update"); 
+							//throw new ApplicationException("Name Can't be update"); 
+							temp.Name = MyEntity.Name;
 					}  
 
-					temp.Name = MyEntity.Name;					   
+										   
 					return temp;
 		    }
             catch (Exception ex)

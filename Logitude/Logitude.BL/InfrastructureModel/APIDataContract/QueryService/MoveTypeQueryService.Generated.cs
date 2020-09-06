@@ -105,33 +105,39 @@ using Simplog.Data.InfrastructureModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
+
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
 						 
-						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
 						{
-								throw new ApplicationException("Code Can't be update"); 
-						}  
+								//throw new ApplicationException("Code Can't be update"); 
+								temp.Code = MyEntity.Code;						}  
 
-						temp.Code = MyEntity.Code;
+						
+
 					}
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.MoveTypeEnglishName))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.MoveTypeEnglishName))
 					{
-							throw new ApplicationException("MoveTypeEnglishName Can't be update"); 
+							//throw new ApplicationException("MoveTypeEnglishName Can't be update"); 
+							temp.MoveTypeEnglishName = MyEntity.MoveTypeEnglishName;
 					}  
 
-					temp.MoveTypeEnglishName = MyEntity.MoveTypeEnglishName;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.MoveTypeLocalName))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.MoveTypeLocalName))
 					{
-							throw new ApplicationException("MoveTypeLocalName Can't be update"); 
+							//throw new ApplicationException("MoveTypeLocalName Can't be update"); 
+							temp.MoveTypeLocalName = MyEntity.MoveTypeLocalName;
 					}  
 
-					temp.MoveTypeLocalName = MyEntity.MoveTypeLocalName;					   
+										   
 					return temp;
 		    }
             catch (Exception ex)

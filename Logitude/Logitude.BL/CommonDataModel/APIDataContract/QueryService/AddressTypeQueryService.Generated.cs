@@ -115,20 +115,22 @@ using Simplog.Data.CommonDataModel;
 					{
 					   
 						 
-						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
 						{
-								throw new ApplicationException("Code Can't be update"); 
-						}  
+								//throw new ApplicationException("Code Can't be update"); 
+								temp.Code = MyEntity.Code;						}  
 
-						temp.Code = MyEntity.Code;
+						
+
 					}
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Name))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
 					{
-							throw new ApplicationException("Name Can't be update"); 
+							//throw new ApplicationException("Name Can't be update"); 
+							temp.Name = MyEntity.Name;
 					}  
 
-					temp.Name = MyEntity.Name;
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -141,7 +143,10 @@ using Simplog.Data.CommonDataModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
+
 					}					   
 					return temp;
 		    }

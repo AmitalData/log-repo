@@ -157,32 +157,38 @@ using Simplog.Data.CommonDataModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
+
 					}
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.EnglishName))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
 					{
-							throw new ApplicationException("EnglishName Can't be update"); 
+							//throw new ApplicationException("EnglishName Can't be update"); 
+							temp.EnglishName = MyEntity.EnglishName;
 					}  
 
-					temp.EnglishName = MyEntity.EnglishName;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.LocalName))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
 					{
-							throw new ApplicationException("LocalName Can't be update"); 
+							//throw new ApplicationException("LocalName Can't be update"); 
+							temp.LocalName = MyEntity.LocalName;
 					}  
 
-					temp.LocalName = MyEntity.LocalName;
+					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
 						 
-						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Code))
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
 						{
-								throw new ApplicationException("Code Can't be update"); 
-						}  
+								//throw new ApplicationException("Code Can't be update"); 
+								temp.Code = MyEntity.Code;						}  
 
-						temp.Code = MyEntity.Code;
+						
+
 					}
 					AddressQueryService MainAddressAddressService = new AddressQueryService(Tenant);
 					if(MyEntity.MainAddress != null)
@@ -193,42 +199,46 @@ using Simplog.Data.CommonDataModel;
 						{ 
 
 						 
-							if(IsUpdate)
+							if(!IsUpdate)
 							{
-								throw new ApplicationException("MainAddress Can't be update"); 
+								//throw new ApplicationException("MainAddress Can't be update"); 
+								temp.MainAddressId = myMainAddressPM.Id;
 							}  
 
-							temp.MainAddressId = myMainAddressPM.Id;
+							
 						} 
 
 					}
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.VatNumber))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.VatNumber))
 					{
-							throw new ApplicationException("VatNumber Can't be update"); 
+							//throw new ApplicationException("VatNumber Can't be update"); 
+							temp.VatNumber = MyEntity.VatNumber;
 					}  
 
-					temp.VatNumber = MyEntity.VatNumber;
+					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
 						 
-						if(IsUpdate && !string.IsNullOrEmpty(MyEntity.PartnerCode))
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
 						{
-								throw new ApplicationException("PartnerCode Can't be update"); 
-						}  
+								//throw new ApplicationException("PartnerCode Can't be update"); 
+								temp.Code = MyEntity.PartnerCode;						}  
 
-						temp.Code = MyEntity.PartnerCode;
+						
+
 					}
                     
-					if(IsUpdate && (MyEntity.IsDisconnectedFromGLAccount != temp.IsDisconnectedFromGLAccount))
+					if(!IsUpdate)// && (MyEntity.IsDisconnectedFromGLAccount != temp.IsDisconnectedFromGLAccount))
 					{
-							throw new ApplicationException("IsDisconnectedFromGLAccount Can't be update"); 
+							//throw new ApplicationException("IsDisconnectedFromGLAccount Can't be update"); 
+							temp.IsDisconnectedFromGLAccount = MyEntity.IsDisconnectedFromGLAccount;
 					}  
 
-					temp.IsDisconnectedFromGLAccount = MyEntity.IsDisconnectedFromGLAccount;					   
+										   
 					return temp;
 		    }
             catch (Exception ex)

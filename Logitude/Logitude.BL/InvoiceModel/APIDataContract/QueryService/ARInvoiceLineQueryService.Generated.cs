@@ -144,15 +144,19 @@ using Simplog.Data.InvoiceModel;
 						//{
 						//    temp.Id = item.Id;
 
-						//}
+						//} 
+
+						
+
 					}
                     
-					if(IsUpdate && item.LineNumber != null)
+					if(!IsUpdate)// && item.LineNumber != null)
 					{
-							throw new ApplicationException("LineNumber Can't be update"); 
+							//throw new ApplicationException("LineNumber Can't be update"); 
+							temp.LineNumber = item.LineNumber;
 					}  
 
-					temp.LineNumber = item.LineNumber;
+					
 					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
 					if(item.ChargesType != null)
 					{
@@ -162,12 +166,13 @@ using Simplog.Data.InvoiceModel;
 						{ 
 
 						 
-							if(IsUpdate)
+							if(!IsUpdate)
 							{
-								throw new ApplicationException("ChargesType Can't be update"); 
+								//throw new ApplicationException("ChargesType Can't be update"); 
+								temp.ChargesTypeId = myChargesTypePM.Id;
 							}  
 
-							temp.ChargesTypeId = myChargesTypePM.Id;
+							
 						} 
 
 					}
@@ -182,66 +187,74 @@ using Simplog.Data.InvoiceModel;
 						{ 
 
 						 
-							if(IsUpdate)
+							if(!IsUpdate)
 							{
-								throw new ApplicationException("ForeignCurrency Can't be update"); 
+								//throw new ApplicationException("ForeignCurrency Can't be update"); 
+								temp.ForiegnCurrencyId = myForeignCurrencyPM.Id;
 							}  
 
-							temp.ForiegnCurrencyId = myForeignCurrencyPM.Id;
+							
 						} 
 
 					}
 			
 					
                     
-					if(IsUpdate && item.ForeignExchangeRate != null)
+					if(!IsUpdate)// && item.ForeignExchangeRate != null)
 					{
-							throw new ApplicationException("ForeignExchangeRate Can't be update"); 
+							//throw new ApplicationException("ForeignExchangeRate Can't be update"); 
+							temp.ForiegnExchangeRate = item.ForeignExchangeRate;
 					}  
 
-					temp.ForiegnExchangeRate = item.ForeignExchangeRate;
+					
                     
-					if(IsUpdate && item.LocalCurrencyAmount != null)
+					if(!IsUpdate)// && item.LocalCurrencyAmount != null)
 					{
-							throw new ApplicationException("LocalCurrencyAmount Can't be update"); 
+							//throw new ApplicationException("LocalCurrencyAmount Can't be update"); 
+							temp.LocalCurrencyAmount = item.LocalCurrencyAmount;
 					}  
 
-					temp.LocalCurrencyAmount = item.LocalCurrencyAmount;
+					
                     
-					if(IsUpdate && item.ForeignCurrencyAmount != null)
+					if(!IsUpdate)// && item.ForeignCurrencyAmount != null)
 					{
-							throw new ApplicationException("ForeignCurrencyAmount Can't be update"); 
+							//throw new ApplicationException("ForeignCurrencyAmount Can't be update"); 
+							temp.ForiegnCurrencyAmount = item.ForeignCurrencyAmount;
 					}  
 
-					temp.ForiegnCurrencyAmount = item.ForeignCurrencyAmount;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.LocalDescription))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.LocalDescription))
 					{
-							throw new ApplicationException("LocalDescription Can't be update"); 
+							//throw new ApplicationException("LocalDescription Can't be update"); 
+							temp.LocalDescription = item.LocalDescription;
 					}  
 
-					temp.LocalDescription = item.LocalDescription;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.Notes))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Notes))
 					{
-							throw new ApplicationException("Notes Can't be update"); 
+							//throw new ApplicationException("Notes Can't be update"); 
+							temp.Notes = item.Notes;
 					}  
 
-					temp.Notes = item.Notes;
+					
                     
-					if(IsUpdate && item.ValueDate != null)
+					if(!IsUpdate)// && item.ValueDate != null)
 					{
-							throw new ApplicationException("ValueDate Can't be update"); 
+							//throw new ApplicationException("ValueDate Can't be update"); 
+							temp.ValueDate = item.ValueDate;
 					}  
 
-					temp.ValueDate = item.ValueDate;
+					
                     
-					if(IsUpdate && item.DateForInterest != null)
+					if(!IsUpdate)// && item.DateForInterest != null)
 					{
-							throw new ApplicationException("DateForInterest Can't be update"); 
+							//throw new ApplicationException("DateForInterest Can't be update"); 
+							temp.DateForInterest = item.DateForInterest;
 					}  
 
-					temp.DateForInterest = item.DateForInterest;
+					
 					VatTypeQueryService VatTypeVatTypeService = new VatTypeQueryService(Tenant);
 					if(item.VatType != null)
 					{
@@ -251,80 +264,90 @@ using Simplog.Data.InvoiceModel;
 						{ 
 
 						 
-							if(IsUpdate)
+							if(!IsUpdate)
 							{
-								throw new ApplicationException("VatType Can't be update"); 
+								//throw new ApplicationException("VatType Can't be update"); 
+								temp.VatTypeId = myVatTypePM.Id;
 							}  
 
-							temp.VatTypeId = myVatTypePM.Id;
+							
 						} 
 
 					}
 			
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.Description))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Description))
 					{
-							throw new ApplicationException("Description Can't be update"); 
+							//throw new ApplicationException("Description Can't be update"); 
+							temp.Description = item.Description;
 					}  
 
-					temp.Description = item.Description;
+					
                     
-					if(IsUpdate && item.InvoiceCurrencyAmount != null)
+					if(!IsUpdate)// && item.InvoiceCurrencyAmount != null)
 					{
-							throw new ApplicationException("InvoiceCurrencyAmount Can't be update"); 
+							//throw new ApplicationException("InvoiceCurrencyAmount Can't be update"); 
+							temp.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
 					}  
 
-					temp.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
+					
                     
-					if(IsUpdate && item.ProfitCurrencyAmount != null)
+					if(!IsUpdate)// && item.ProfitCurrencyAmount != null)
 					{
-							throw new ApplicationException("ProfitCurrencyAmount Can't be update"); 
+							//throw new ApplicationException("ProfitCurrencyAmount Can't be update"); 
+							temp.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
 					}  
 
-					temp.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+					
                     
-					if(IsUpdate && item.VatPercentage != null)
+					if(!IsUpdate)// && item.VatPercentage != null)
 					{
-							throw new ApplicationException("VatPercentage Can't be update"); 
+							//throw new ApplicationException("VatPercentage Can't be update"); 
+							temp.VatPercentage = item.VatPercentage;
 					}  
 
-					temp.VatPercentage = item.VatPercentage;
+					
                     
-					if(IsUpdate && item.UnitPriceInForeignCurrency != null)
+					if(!IsUpdate)// && item.UnitPriceInForeignCurrency != null)
 					{
-							throw new ApplicationException("UnitPriceInForeignCurrency Can't be update"); 
+							//throw new ApplicationException("UnitPriceInForeignCurrency Can't be update"); 
+							temp.UnitPrice = item.UnitPriceInForeignCurrency;
 					}  
 
-					temp.UnitPrice = item.UnitPriceInForeignCurrency;
+					
                     
-					if(IsUpdate && item.ExchangeRateDate != null)
+					if(!IsUpdate)// && item.ExchangeRateDate != null)
 					{
-							throw new ApplicationException("ExchangeRateDate Can't be update"); 
+							//throw new ApplicationException("ExchangeRateDate Can't be update"); 
+							temp.ExchangeRateDate = item.ExchangeRateDate;
 					}  
 
-					temp.ExchangeRateDate = item.ExchangeRateDate;
+					
                     
-					if(IsUpdate && item.Quantity != null)
+					if(!IsUpdate)// && item.Quantity != null)
 					{
-							throw new ApplicationException("Quantity Can't be update"); 
+							//throw new ApplicationException("Quantity Can't be update"); 
+							temp.Quantity = item.Quantity;
 					}  
 
-					temp.Quantity = item.Quantity;
+					
                     
-					if(IsUpdate && item.Tenant != null)
+					if(!IsUpdate)// && item.Tenant != null)
 					{
-							throw new ApplicationException("Tenant Can't be update"); 
+							//throw new ApplicationException("Tenant Can't be update"); 
+							temp.Tenant = item.Tenant;
 					}  
 
-					temp.Tenant = item.Tenant;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(item.GLAccountId))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.GLAccountId))
 					{
-							throw new ApplicationException("GLAccountId Can't be update"); 
+							//throw new ApplicationException("GLAccountId Can't be update"); 
+							temp.GLAccountId = item.GLAccountId;
 					}  
 
-					temp.GLAccountId = item.GLAccountId;
+					
 					ARInvoiceLineActionQueryService ARInvoiceLineActionARInvoiceLineActionService = new ARInvoiceLineActionQueryService(Tenant);
 					if(item.ARInvoiceLineAction != null)
 					{
@@ -334,24 +357,26 @@ using Simplog.Data.InvoiceModel;
 						{ 
 
 						 
-							if(IsUpdate)
+							if(!IsUpdate)
 							{
-								throw new ApplicationException("ARInvoiceLineAction Can't be update"); 
+								//throw new ApplicationException("ARInvoiceLineAction Can't be update"); 
+								temp.LineActionCode = myARInvoiceLineActionPM.Code;
 							}  
 
-							temp.LineActionCode = myARInvoiceLineActionPM.Code;
+							
 						} 
 
 					}
 			
 					
                     
-					if(IsUpdate && item.InvoiceCurrencyExchangeRate != null)
+					if(!IsUpdate)// && item.InvoiceCurrencyExchangeRate != null)
 					{
-							throw new ApplicationException("InvoiceCurrencyExchangeRate Can't be update"); 
+							//throw new ApplicationException("InvoiceCurrencyExchangeRate Can't be update"); 
+							temp.InvoiceCurrencyExchangeRate = item.InvoiceCurrencyExchangeRate;
 					}  
 
-					temp.InvoiceCurrencyExchangeRate = item.InvoiceCurrencyExchangeRate;					   
+										   
 						MyList.Add(temp);
 					}
 						

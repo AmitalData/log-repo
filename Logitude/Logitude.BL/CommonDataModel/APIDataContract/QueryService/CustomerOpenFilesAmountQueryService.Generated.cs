@@ -93,33 +93,37 @@ using Simplog.Data.CommonDataModel;
 					} 
 					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.CustomerId))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.CustomerId))
 					{
-							throw new ApplicationException("CustomerId Can't be update"); 
+							//throw new ApplicationException("CustomerId Can't be update"); 
+							temp.CustomerId = MyEntity.CustomerId;
 					}  
 
-					temp.CustomerId = MyEntity.CustomerId;
+					
                     
-					if(IsUpdate && MyEntity.TotalOpenFilesAmount != null)
+					if(!IsUpdate)// && MyEntity.TotalOpenFilesAmount != null)
 					{
-							throw new ApplicationException("TotalOpenFilesAmount Can't be update"); 
+							//throw new ApplicationException("TotalOpenFilesAmount Can't be update"); 
+							temp.TotalOpenFilesAmount = MyEntity.TotalOpenFilesAmount;
 					}  
 
-					temp.TotalOpenFilesAmount = MyEntity.TotalOpenFilesAmount;
+					
                     
-					if(IsUpdate && MyEntity.Tenant != null)
+					if(!IsUpdate)// && MyEntity.Tenant != null)
 					{
-							throw new ApplicationException("Tenant Can't be update"); 
+							//throw new ApplicationException("Tenant Can't be update"); 
+							temp.Tenant = MyEntity.Tenant;
 					}  
 
-					temp.Tenant = MyEntity.Tenant;
+					
                     
-					if(IsUpdate && !string.IsNullOrEmpty(MyEntity.Customer))
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Customer))
 					{
-							throw new ApplicationException("Customer Can't be update"); 
+							//throw new ApplicationException("Customer Can't be update"); 
+							temp.CustomerCode = MyEntity.Customer;
 					}  
 
-					temp.CustomerCode = MyEntity.Customer;					   
+										   
 					return temp;
 		    }
             catch (Exception ex)
