@@ -433,6 +433,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     {
                         UpdateDeclarationPending("901");
                     }
+                    UpdateNoIdUnder150();
                 }
             }
 
@@ -616,6 +617,25 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 this.IsAutonomy = true;
             }
         }
+
+        private void UpdateNoIdUnder150()
+        {
+            if (currentDeclarationCourierStatusPM == null)
+            {
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+            }
+
+            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD < 150)
+            {
+                string defValue = GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", "NON", ResolvedTenant());
+                if (defValue == "Y")
+                {
+                    if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode)) this._MyDeclarationPM.ImporterCode = null;
+                }
+            }
+        }
+        
 
         private void CheckMasterToUpdate(string MoreParams)
         {
