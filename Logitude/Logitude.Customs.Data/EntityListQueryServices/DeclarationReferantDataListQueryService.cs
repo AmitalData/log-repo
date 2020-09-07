@@ -27,6 +27,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                              join e in context.Cards.Include("CustomerCard")
                                                              on d.CustomerId equals e.Customer.Id
+
+                                                             join c in context.Clients.Include("Client")
+                                                             on d.ImporterCode equals c.Code
                                                              select new DeclarationReferantDataList()
                                                              {
                                                                  Tenant = a.Tenant,
@@ -63,13 +66,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                                  TransportModeId = d.TransportModeId,
 
-                                                                 DeclarationOfficeName = d.DeclarationOffice.LocalName,
+                                                                 DeclarationOfficeCode = d.DeclarationOfficeCode,
 
                                                                  VendorName = a.CustomsVendor.VendorName,
                                                                  ArrivalDate = a.ArrivalDate != null ? a.ArrivalDate : a.EstimatedArrivalDate,
                                                                  ATAOrETA = a.ArrivalDate != null ? "ATA" : "ETA",
 
-                                                                 DeclarationStatusTypeName = d.DeclarationStatusType.LocalName,
+                                                                 DeclarationStatusTypeName = d.DeclarationStatusType == null ? null : d.DeclarationStatusType.LocalName,
 
                                                                  DeclarationStatusTypeCode = d.DeclarationStatusTypeCode,
                                                                  ExceptionReasonsList = a.ExceptionReasonsList,
@@ -88,22 +91,16 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  LastStatusDate = a.LastStatusDate,
                                                                  LastStatusName = a.LastStatusName,
                                                                  OrderMoney = a.OrderMoney,
-                                                                 StorageSiteName=d.StorageSiteName,
+                                                                 StorageSiteCode=d.StorageSiteCode,
                                                                  HatraDate=d.HatraDate,
                                                                  PaymentDate=d.PaymentDate,
                                                                  TaxationDateTime=d.TaxationDateTime,
                                                                  CustomerCode = d.CustomerCard == null ? null : d.CustomerCard.Code,
                                                                  ImporterCode=d.ImporterCode,
-                                                                 ProcedureCurrentName = d.GovernmentProcedureCurrent.LocalName,
-
-                                                                 //LastStatusDate = a.LastStatusDate,
-                                                                 //LastStatusName = a.LastStatusName,
-                                                                 //OrderMoney = a.OrderMoney,
-
+                                                                  ProcedureCurrentCode = d.ProcedureCurrentCode,
+                                                                 ImporterFile=a.ImporterFile,
+                                                                 AEOImporter=c.FacilitationTypeCode,
                                                                  Team = a.ReferantTeam.LocalName,
-
-                                                                  
-
 
 
 

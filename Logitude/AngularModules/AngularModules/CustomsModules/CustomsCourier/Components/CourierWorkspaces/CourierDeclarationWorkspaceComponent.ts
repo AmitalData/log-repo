@@ -40,6 +40,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     // Queries Features
     public OpenCourierMasterVisibility: boolean = true;
+    public AllCourierDeclarationVisibility: boolean = true;
     public UnReleasedFastProcessVisibility: boolean = true;
     public CourierMasterOpenIndividualVisibility: boolean = true;
     public UnReleasedIndividualVisibility: boolean = true;
@@ -111,6 +112,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     SetQueriesVisibility() {
         //this.OpenCourierMasterVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ACTIVEGLACCOUNTS") ? true : false;
         this.OpenCourierMasterVisibility = true;
+        this.AllCourierDeclarationVisibility = true;
         this.UnReleasedFastProcessVisibility = true ;
         this.CourierMasterOpenIndividualVisibility = true;
         this.UnReleasedIndividualVisibility = true;
@@ -187,6 +189,13 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             queryCode = "All GLAccounts";
             var filters = new ApiQueryFilters();
             switch (myQueryCode) {
+                case "AllCourierDeclarations":
+                    {
+                        displayTitle = "All Declarations";
+                        displayTitle = TextCodeTranslator.Translate("Customs.Declaration.O.AllCourierDeclarations");
+
+                        break;
+                    }
                 case "OpenCourierMaster":
                     {
                         displayTitle = "Open Courier Master";

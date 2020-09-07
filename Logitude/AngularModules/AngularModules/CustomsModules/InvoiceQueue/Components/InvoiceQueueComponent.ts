@@ -29,27 +29,26 @@ export class InvoiceQueueComponent
     public IntegratedInvoiceList: ObservableCollection;
     public StatusList: ObservableCollection;
     public InvoiceListList: ObservableCollection;
+    public EMessagesList: ObservableCollection;
+    public WMessagesList: ObservableCollection;
     public declaration: DeclarationPM;
+    ErrorMessages: boolean ;
+    WarningMessages: boolean;
     _invoiceQueueWebService: InvoiceQueueWebService = new InvoiceQueueWebService();
     RowIndex: any;
     UnifreightMessage: any;
     constructor(private EntityResourceService: EntityResourceService, private _declarationPMService: DeclarationPMService) {
         super();
-        this.InvoiceLineList = new ObservableCollection([]);
-        this.IntegratedInvoiceList = new ObservableCollection([]);
-        this.StatusList = new ObservableCollection([]);
-        this.InvoiceListList =new ObservableCollection([]);
-
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                 this.GetData();
-
+                //this.GetData();
             });
         });
     }
     private GetData() {
+        this.ResetVariables();
         this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
-        //this._declarationPMService.get("1-5705").subscribe(data => {
+        //this._declarationPMService.get("1-5362").subscribe(data => {
             this.declaration = data.Result;
             SessionLocator.SelectedSession.StopBusyIndicator();
             if (this.declaration==null) {
@@ -57,9 +56,6 @@ export class InvoiceQueueComponent
                 myMessageWindow.Show("declaration NOT FOUND");
             }
             this._invoiceQueueWebService.GetInvoice(this.declaration.Tenant, this.declaration.CustomFileNo).subscribe(data => {
-                this.InvoiceLineList = new ObservableCollection([]);
-                this.IntegratedInvoiceList = new ObservableCollection([]);
-                this.StatusList = new ObservableCollection([]);
                 if ((data.Result.Invoice as AllInvoices).InvoiceLines != null) {
                     (data.Result.Invoice as AllInvoices).InvoiceLines.forEach(x => {
                         x = this.setClientForwarder(x);
@@ -81,11 +77,34 @@ export class InvoiceQueueComponent
                         this.InvoiceListList.Insert(x);
                     });
                 }
-
+              
+                if ((data.Result.Invoice as AllInvoices).Messages != null) {
+                    (data.Result.Invoice as AllInvoices).Messages.forEach(x => {
+                        if (x.E != null) {
+                            this.EMessagesList.Insert(x);
+                            this.ErrorMessages = true;
+                        }
+                        if (x.W != null) {
+                            this.WMessagesList.Insert(x);
+                            this.WarningMessages = true;
+                        }
+                   });
+                }
             });
         });
     }
 
+
+    ResetVariables() {
+        this.InvoiceLineList = new ObservableCollection([]);
+        this.IntegratedInvoiceList = new ObservableCollection([]);
+        this.StatusList = new ObservableCollection([]);
+        this.InvoiceListList = new ObservableCollection([]);
+        this.EMessagesList = new ObservableCollection([]);
+        this.WMessagesList = new ObservableCollection([]);
+        this.ErrorMessages = false;
+        this.WarningMessages = false;
+    }
     SetWindowArgs(args: any) {
         //var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "3000028" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-211622" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
 
@@ -101,7 +120,7 @@ export class InvoiceQueueComponent
 
     setClientForwarder(value: InvoiceLine) {
         switch (value.PayType) {
-            case "R": {
+            case "E": {
                 value.PayType = "Forwarder";
                 break;
             }

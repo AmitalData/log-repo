@@ -44,7 +44,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     public OriginalItemPM: SupplierInvoiceItemPM; 
     public ClonedItemPM: SupplierInvoiceItemPM;
 
-    //public OriginalItemPM: SupplierInvoiceItemPM; // screen binding
+    //public OriginalItemPM: SupplierInvoiceItemPM; // screen bindingObjectsLocator 
 
     public CustomsBookTypeFilterItems: ApiQueryFilters;
     public ObjectTableName: string = "Customs.SupplierInvoiceItem";

@@ -213,13 +213,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         _MyDeclarationPM.CurrentContextTag = _cargoContext;
 
                         OpenUnifreighTask();
-                    
+                        bool  IsAvailabilityDate2 = false;
                         myDeclarationUpdateService.SuppressNewConcurrencyGUID = true;
                         if (_status == "SST" || _status == "SMG")
-                            _MyDeclarationPM.AvailabilityDate = DateTime.Now;
-                        myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+                            if (_MyDeclarationPM.AvailabilityDate == null)
+                            {
+                                _MyDeclarationPM.AvailabilityDate = DateTime.Now;
+                                myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+                                IsAvailabilityDate2 = true;
+                            }
+
                         if (_status == "SST" || _status == "SMG")
-                            SendPayment(_MyDeclarationPM, context, requestParams);
+                            SendPayment(_MyDeclarationPM, context, requestParams, IsAvailabilityDate2);
 
                         //Yuval Chalup 13.03.2016 TASK-20524 --->
 
@@ -347,13 +352,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         StatusDate = statusDate,
                         FileAdditionalData = myFileAdditionalData
                     };
- 
+
+                    bool IsAvailabilityDate = false;
+
                     _MyDeclarationPM.CurrentContextTag = cargoContext;
                     if (status == "SST" || status == "SMG")
-                        _MyDeclarationPM.AvailabilityDate = DateTime.Now;
-                    myDeclarationUpdateService.Update(_MyDeclarationPM, true);
-                    if(status=="SST" || status=="SMG")
-                        SendPayment(_MyDeclarationPM, context, requestParams);
+                        if (_MyDeclarationPM.AvailabilityDate == null)
+                        {
+                            IsAvailabilityDate = true;
+                            _MyDeclarationPM.AvailabilityDate = DateTime.Now;
+                            myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+                        }
+
+                    if (status=="SST" || status=="SMG")
+                        SendPayment(_MyDeclarationPM, context, requestParams, IsAvailabilityDate);
 
                 }
             }
@@ -386,8 +398,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, CargoQueryRequestParams requestParams)
+        private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, CargoQueryRequestParams requestParams,bool IsAvailabilityDate)
         {
+            if (!IsAvailabilityDate) return;
+
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
             var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
             var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant); ;
