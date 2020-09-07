@@ -64,14 +64,14 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         }
                     }
                 }
-                
+
                 if (!string.IsNullOrEmpty(item.VesselId) && shipmentPM.TransportModeId != "O")
                 {
                     throw new ApplicationException("Can't send vessel for non-ocean shipments");
                 }
-                
+
                 this.ValidatePort(item.FromPortId, item.LegIndex, "from");
-                this.ValidatePort(item.ToPortId, item.LegIndex, "to");                
+                this.ValidatePort(item.ToPortId, item.LegIndex, "to");
                 this.ValidateCarrier(item.CarrierId, item.LegIndex);
 
                 if (item.LegIndex == 1)
@@ -80,7 +80,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 }
             }
 
-            this.ValidatePortsSequence();            
+            this.ValidatePortsSequence();
         }
         private void ValidatePort(string portId, int index, string direction)
         {
@@ -99,9 +99,9 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         case "A":
                             {
-                                if(!myPort.IsAir)
+                                if (!myPort.IsAir)
                                 {
-                                    isValid = false;                                    
+                                    isValid = false;
                                 }
                                 break;
                             }
@@ -134,11 +134,11 @@ namespace WebFreight.Web.Helpers.APIHelpers
         }
         private void ValidateCarrier(string carrierId, int index)
         {
-            if(!string.IsNullOrEmpty(carrierId))
+            if (!string.IsNullOrEmpty(carrierId))
             {
                 bool isValid = true;
                 Card myCarrier = cardRepository.GetSingleCard(carrierId, tenant);
-                if(myCarrier != null)
+                if (myCarrier != null)
                 {
                     switch (shipmentPM.TransportModeId)
                     {
@@ -175,7 +175,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         throw new ApplicationException("Transshipment " + index + " carrier is not allowed for shipment transport mode");
                     }
                 }
-            }            
+            }
         }
         private void ValidateFirstLeg(TransshipmentLeg item)
         {
@@ -205,9 +205,9 @@ namespace WebFreight.Web.Helpers.APIHelpers
             foreach (TransshipmentLeg item in shipmentPM.MainCarriageLegs.OrderBy(d => d.LegIndex))
             {
                 TransshipmentLeg nextLeg = shipmentPM.MainCarriageLegs.Where(d => d.LegIndex == item.LegIndex + 1).FirstOrDefault();
-                if(nextLeg != null)
+                if (nextLeg != null)
                 {
-                    if(item.ToPortId != nextLeg.FromPortId)
+                    if (item.ToPortId != nextLeg.FromPortId)
                     {
                         throw new ApplicationException("Invalid ports between leg " + item.LegIndex + " and " + nextLeg.LegIndex);
                     }
@@ -423,7 +423,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     throw new ApplicationException("Main-Carriage actual arrival must be less than Via3 actual departure");
                 }
             }
-            
+
             else if (shipmentPM.ShipmentDeliveries.Count > 0)
             {
                 if (shipmentPM.MainCarriageETA >= allDeliveriesETD)
@@ -450,7 +450,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 {
                     throw new ApplicationException("Via1 actual departure must be less than Via1 actual arrival");
                 }
-                
+
                 // Next
                 if (isTransshipment2Exists)
                 {
@@ -477,7 +477,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         throw new ApplicationException("Via1 actual arrival must be less than Via3 actual departure");
                     }
                 }
-                
+
                 else if (shipmentPM.ShipmentDeliveries.Count > 0)
                 {
                     if (shipmentPM.Transshipment1ETA >= allDeliveriesETD)
@@ -505,7 +505,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 {
                     throw new ApplicationException("Via2 actual departure must be less than Via2 actual arrival");
                 }
-                
+
                 // Next
                 if (isTransshipment3Exists)
                 {
@@ -519,7 +519,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         throw new ApplicationException("Via2 actual arrival must be less than Via3 actual departure");
                     }
                 }
-                
+
                 else if (shipmentPM.ShipmentDeliveries.Count > 0)
                 {
                     if (shipmentPM.Transshipment2ETA >= allDeliveriesETD)
@@ -548,7 +548,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 {
                     throw new ApplicationException("Via3 actual departure must be less than Via3 actual arrival");
                 }
-                
+
                 // Next
                 if (shipmentPM.ShipmentDeliveries.Count > 0)
                 {
@@ -615,7 +615,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             if (date1 != null && date2 != null)
             {
-                if(date1 > date2.Value.AddHours(24))
+                if (date1 > date2.Value.AddHours(24))
                 {
                     myResult = false;
                 }
@@ -664,6 +664,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         public void MapTransshipments()
         {
+            this.Reset();
+
             foreach (TransshipmentLeg item in shipmentPM.MainCarriageLegs.OrderBy(d => d.LegIndex))
             {
                 Card myCarrier = null;
@@ -691,7 +693,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             {
                                 shipmentPM.MainCarriageCarrierPrefix = myCarrier.Code;
                             }
-                            
+
                             break;
                         }
 
@@ -762,6 +764,45 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             this.ValidateRoutingsSeriesDates();
             this.ValidateActualDates();
+        }
+
+        private void Reset()
+        {
+            shipmentPM.Transshipment1CarrierId = null;
+            shipmentPM.Transshipment1VesselId = null;
+            shipmentPM.Transshipment1CarrierNumber = null;
+            shipmentPM.Transshipment1AdditionalMAWBOBLBL = null;
+            shipmentPM.Transshipment1FromPortId = null;
+            shipmentPM.Transshipment1ToPortId = null;
+            shipmentPM.Transshipment1ATA = null;
+            shipmentPM.Transshipment1ATD = null;
+            shipmentPM.Transshipment1ETA = null;
+            shipmentPM.Transshipment1ETD = null;
+            shipmentPM.Transshipment1CarrierPrefix = null;
+
+            shipmentPM.Transshipment2CarrierId = null;
+            shipmentPM.Transshipment2VesselId = null;
+            shipmentPM.Transshipment2CarrierNumber = null;
+            shipmentPM.Transshipment2AdditionalMAWBOBLBL = null;
+            shipmentPM.Transshipment2FromPortId = null;
+            shipmentPM.Transshipment2ToPortId = null;
+            shipmentPM.Transshipment2ATA = null;
+            shipmentPM.Transshipment2ATD = null;
+            shipmentPM.Transshipment2ETA = null;
+            shipmentPM.Transshipment2ETD = null;
+            shipmentPM.Transshipment2CarrierPrefix = null;
+
+            shipmentPM.Transshipment3CarrierId = null;
+            shipmentPM.Transshipment3VesselId = null;
+            shipmentPM.Transshipment3CarrierNumber = null;
+            shipmentPM.Transshipment3AdditionalMAWBOBLBL = null;
+            shipmentPM.Transshipment3FromPortId = null;
+            shipmentPM.Transshipment3ToPortId = null;
+            shipmentPM.Transshipment3ATA = null;
+            shipmentPM.Transshipment3ATD = null;
+            shipmentPM.Transshipment3ETA = null;
+            shipmentPM.Transshipment3ETD = null;
+            shipmentPM.Transshipment3CarrierPrefix = null;
         }
     }
 }
