@@ -169,7 +169,7 @@
                     </tr>
                     <!-- Title -->
                     <tr style="height: 28px;">
-                        <td  style="width:70px" class="subTitle">{{'Customs.Declaration.TH.CustomsAnswers' | TextCodeTranslationPipe}}</td>
+                        <td *ngIf="!IsAmendmentErrors"  style="width:70px" class="subTitle">{{'Customs.Declaration.TH.CustomsAnswers' | TextCodeTranslationPipe}}</td>
                         <td style="width: 320px;" *ngIf="IsCourierDeclaration">
                             <ul class="FiltersMenu">
                                 <li id="All" (click)="CourierFilterClicked('Declaration')" style="width: 80px; height: 22px;"
