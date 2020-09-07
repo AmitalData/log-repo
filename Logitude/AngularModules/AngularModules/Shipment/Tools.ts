@@ -1966,11 +1966,8 @@ export class ShipmentTool {
 
         var myPricigs: CalculatedPricingItem[] = [];
         if (!AppTool.IsNullOrZero(weight)) {
-            //var maxLineNumber: number = ArrayTool.Max(entityPM.ShipmentStoragePricings, "LineNumber")
 
             entityPM.ShipmentStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
-
-                //var isLastStep: boolean = item.LineNumber == maxLineNumber ? true : false;
 
                 var newItem: CalculatedPricingItem = new CalculatedPricingItem();
                 newItem.LineNumber = item.LineNumber;
@@ -1979,24 +1976,14 @@ export class ShipmentTool {
 
                 var previousLine: CalculatedPricingItem = myPricigs.filter(d => d.To == item.StepFrom)[0];
                 if (previousLine != null) {
-                    if (!AppTool.IsNullOrZero(item.StepTo)) {
+                    if (!AppTool.IsNullOrZero(item.StepTo) && previousLine.Days > 0) {
                         if ((item.StepTo - item.StepFrom) <= (days - previousLine.Days)) {
                             newItem.Days = item.StepTo - item.StepFrom;
                         }
 
                         else {
-                            newItem.Days = days - previousLine.Days
+                            newItem.Days = days - previousLine.Days;
                         }
-
-                        //if (isLastStep) {
-                        //    if (ArrayTool.Sum(myPricigs, "Days") == days) {
-                        //        newItem.Days = 0;                                
-                        //    }
-
-                        //    else {
-                        //        newItem.Days = days - ArrayTool.Sum(myPricigs, "Days");
-                        //    }
-                        //}
                     }
 
                     else {
