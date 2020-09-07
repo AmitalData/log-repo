@@ -76,9 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
- 
-		public const string HashString = "79da43e4ec23f679e8fc818541dea790";
- 
+		public const string HashString = "1622d3f76c205f2bddbda62fe82f8f0f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14063,6 +14061,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllCourierDeclarationsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 190 }, addedQueryColumns);
 
+			 QueryColumn AllCourierDeclarationsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 180 }, addedQueryColumns);
+
              AdvancedQueryFilter AllCourierDeclarationsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
@@ -15613,6 +15613,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "SCH",
+                EnglishName =  "נדרש לטפל בהזנת סגר",
+                LocalName =  "נדרש לטפל בהזנת סגר",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DeclarationObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -16724,7 +16742,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationTHDeclarationCancellation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DeclarationCancellation", DefaultText = "Declaration Cancellation",LocalDefaultText = @"ביטול הצהרה במכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 
  		   TextCode DeclarationTextCode_CustomsDeclarationFExporterCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.ExporterCode", DefaultText = "Exporter Code",LocalDefaultText = @"מספר יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationFTransferExporterCode2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.TransferExporterCode2", DefaultText = "Transfer Exporter Code",LocalDefaultText = @"סוג יצואן מעביר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -16770,9 +16787,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOAbachStatement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AbachStatement", DefaultText = "Abach Declaration",LocalDefaultText = @"הצהרות אב'כ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOConnectedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConnectedDeclarations", DefaultText = "Connected Declarations",LocalDefaultText = @"הצהרות מקושרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
- 
+
  		   TextCode DeclarationTextCode_CustomsDeclarationOAllCourierDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AllCourierDeclarations", DefaultText = "All Courier Declarations ",LocalDefaultText = @"כל ההצהרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
- 
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Errors", DefaultText = "Errors",LocalDefaultText = @"שגיאות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

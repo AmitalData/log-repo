@@ -184,6 +184,11 @@ export class DeclarationReferantDataPM {
     public set ImporterFile(newValue: string) { if (this.importerFile != newValue) { this.importerFile = newValue; this.MarkAsDirty("ImporterFile"); } }
        
 	 
+    private fileOpenDate: Date;
+    public get FileOpenDate() { return this.fileOpenDate; }
+    public set FileOpenDate(newValue: Date) { if (this.fileOpenDate != newValue) { this.fileOpenDate = newValue; this.MarkAsDirty("FileOpenDate"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		
