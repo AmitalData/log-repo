@@ -25,12 +25,12 @@
 
         <div class="field">
             <div class="label">Origin Port</div>
-            <div class="value">{{ Shipment.FromPortId }}</div>
+            <div class="value">{{ Shipment.FromPortName }}</div>
         </div>
 
         <div class="field">
             <div class="label">Destination Port</div>
-            <div class="value">{{ Shipment.ToPortId }}</div>
+            <div class="value">{{ Shipment.ToPortName }}</div>
         </div>
 
         <img class="hide-tablet" src="./assets/images/misc/cargo.svg" alt="">
@@ -150,7 +150,7 @@
 
                 <div class="field">
                     <div class="label">Sender</div>
-                    <div class="value">{{ Shipment.ShipperId }}</div>
+                    <div class="value">{{ Shipment.FromPortName }}</div>
                 </div>
 
                 <div class="field">
@@ -160,19 +160,19 @@
 
                 <div class="field">
                     <div class="label">Receiver</div>
-                    <div class="value">{{ Shipment.ShipperId }}</div>
+                    <div class="value">{{ Shipment.ToPortName }}</div>
                 </div>
 
 
                 <div class="field">
                     <div class="label">Transport By</div>
-                    <div class="value">{{ Shipment.TransportModeId }}</div>
+                    <div class="value">{{ Shipment.TransportModeName }}</div>
                 </div>
 
 
                 <div class="field">
                     <div class="label">Deleivery</div>
-                    <div class="value">{{ Shipment.ShipperId }}</div>
+                    <div class="value">{{ Shipment.FromPortName }}</div>
                 </div>
             </div>
 

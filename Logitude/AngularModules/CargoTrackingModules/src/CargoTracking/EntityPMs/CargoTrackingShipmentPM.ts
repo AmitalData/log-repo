@@ -299,6 +299,41 @@ export class CargoTrackingShipmentPM {
     public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
+    private searchReferences: string;
+    public get SearchReferences() { return this.searchReferences; }
+    public set SearchReferences(newValue: string) { if (this.searchReferences != newValue) { this.searchReferences = newValue; this.MarkAsDirty("SearchReferences"); } }
+       
+	 
+    private fromPortName: string;
+    public get FromPortName() { return this.fromPortName; }
+    public set FromPortName(newValue: string) { if (this.fromPortName != newValue) { this.fromPortName = newValue; this.MarkAsDirty("FromPortName"); } }
+       
+	 
+    private toPortName: string;
+    public get ToPortName() { return this.toPortName; }
+    public set ToPortName(newValue: string) { if (this.toPortName != newValue) { this.toPortName = newValue; this.MarkAsDirty("ToPortName"); } }
+       
+	 
+    private currentMilestoneName: string;
+    public get CurrentMilestoneName() { return this.currentMilestoneName; }
+    public set CurrentMilestoneName(newValue: string) { if (this.currentMilestoneName != newValue) { this.currentMilestoneName = newValue; this.MarkAsDirty("CurrentMilestoneName"); } }
+       
+	 
+    private transportModeName: string;
+    public get TransportModeName() { return this.transportModeName; }
+    public set TransportModeName(newValue: string) { if (this.transportModeName != newValue) { this.transportModeName = newValue; this.MarkAsDirty("TransportModeName"); } }
+       
+	 
+    private fromPortCountryCode: string;
+    public get FromPortCountryCode() { return this.fromPortCountryCode; }
+    public set FromPortCountryCode(newValue: string) { if (this.fromPortCountryCode != newValue) { this.fromPortCountryCode = newValue; this.MarkAsDirty("FromPortCountryCode"); } }
+       
+	 
+    private toPortCountryCode: string;
+    public get ToPortCountryCode() { return this.toPortCountryCode; }
+    public set ToPortCountryCode(newValue: string) { if (this.toPortCountryCode != newValue) { this.toPortCountryCode = newValue; this.MarkAsDirty("ToPortCountryCode"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

@@ -62,6 +62,13 @@ export class CargoTrackingShipmentList {
 	DeclarationDate: Date;
 	CustomsClearanceDate: Date;
 	Id: number;
+	SearchReferences: string;
+	FromPortName: string;
+	ToPortName: string;
+	CurrentMilestoneName: string;
+	TransportModeName: string;
+	FromPortCountryCode: string;
+	ToPortCountryCode: string;
 	
 }
  

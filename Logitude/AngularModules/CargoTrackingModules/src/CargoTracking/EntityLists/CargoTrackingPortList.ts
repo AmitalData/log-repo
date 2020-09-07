@@ -13,6 +13,7 @@ export class CargoTrackingPortList {
 	EnglishName: string;
 	CountryId: string;
 	Tenant: number;
+	CountryCode: string;
 	
 }
  

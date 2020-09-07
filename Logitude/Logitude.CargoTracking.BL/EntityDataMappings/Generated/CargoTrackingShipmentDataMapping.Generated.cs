@@ -137,7 +137,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         WarehouseLegRemarks, 
 	         DeclarationDate, 
 	         CustomsClearanceDate, 
-	         Id,
+	         Id, 
+	         SearchReferences, 
+	         FromPortName, 
+	         ToPortName, 
+	         CurrentMilestoneName, 
+	         TransportModeName, 
+	         FromPortCountryCode, 
+	         ToPortCountryCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

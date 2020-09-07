@@ -95,12 +95,13 @@
                         <!-- References -->
                         <div class="column col-md-2 reference" style="width: 14%;">
                             <div>
-                                <div class="subtitle">Reference NO.</div>
-                                <div>{{ shipment.ShipmentNumber }}</div>
-                                <div>{{ shipment.ShipmentNumber }}</div>
-                                <div class="hide-mobile">{{ shipment.ShipmentNumber }}</div>
-                                <div class="hide-mobile">{{ shipment.ShipmentNumber }}</div>
-
+                                <div [attr.src]="SplitReference(shipment.SearchReferences)" class="subtitle">Reference NO.</div>
+                                <div>{{ references[0] }}</div>
+                                <div>{{ references[1] }}</div>
+                                <div class="hide-mobile">{{ references[2] }}</div>
+                                <div class="hide-mobile">{{ references[3] }}</div>
+                                <div class="hide-mobile">{{ references[4] }}</div>
+                                <div class="hide-mobile">{{ references[5] }}</div>
                             </div>
                         </div>
 
@@ -109,22 +110,21 @@
                         <!-- Sender -->
                         <div class="column col-md-2 sender" style="width: 14%;">
                             <div>
-                                <div class="subtitle">Sender</div>
+                                <div class="subtitle">Origin Port</div>
                                 <div class="value uppercase">
-                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.ShipperId }}
+                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.FromPortName }} , {{shipment.FromPortCountryCode}}
                                 </div>
 
 
-                                <div class="subtitle">Receiver</div>
+                                <div class="subtitle">Destination Port</div>
                                 <div class="value uppercase">
-                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.CustomerId }}
+                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.ToPortName }} , {{shipment.ToPortCountryCode}}
                                 </div>
 
                             </div>
                         </div>
-
-                        <!-- Pickup -->
-                        <div class="column col-md-2 hide-mobile" style="width: 14%;">
+                           <!-- Pickup -->
+                        <!--<div class="column col-md-2 hide-mobile" style="width: 14%;">
                             <div>
                                 <div class="subtitle">Pickup</div>
                                 <div class="value uppercase">
@@ -137,7 +137,8 @@
                                 </div>
 
                             </div>
-                        </div>
+                        </div>-->
+                      
 
                         <!-- Shipment Id -->
                         <div class="column col-md-2 hide-mobile" style="width: 12%;">
@@ -170,7 +171,7 @@
                         <div class="column col-md-1 status" style="width: 17%;">
                             <div>
                                 <div class="subtitle">Status</div>
-                                <div class="value">{{ shipment.CurrentMilestoneCode }}</div>
+                                <div class="value">{{ shipment.CurrentMilestoneName }}</div>
 
 
                                 <div class="subtitle">Last Updated</div>
