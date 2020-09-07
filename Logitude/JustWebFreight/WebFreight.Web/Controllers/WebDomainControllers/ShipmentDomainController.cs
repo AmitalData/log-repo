@@ -30,6 +30,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
@@ -65,6 +67,26 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class ShipmentDomainController : ApiController
     {
+        public HttpResponseMessage GetCustomerCreditLimitDetails(string customerId, string quoteId, bool isBuildFromQuote)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                var limitWarningMsg = ShipmentValidating.GetCustomerCreditLimitDetails(customerId, quoteId, isBuildFromQuote, tenant);
+                
+                return Request.CreateResponse(HttpStatusCode.OK, limitWarningMsg);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetRecentShipments()
         {
             try
