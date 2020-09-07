@@ -73,6 +73,8 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 this.addOnsChangeSet = entityPM.AddOns;
             }
 
+            this.CheckSubscriptionSwitch();
+
             TenantManagementValidating.Validate(entityPM, entityPoco, isNewEntity, this.entityRepository);
 
             string entityName = "TenantManagement" + entityPM.Id;
@@ -91,8 +93,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             this.UpdateParticipants();
             this.UpdateDocumentsArchive();
             this.UpdateGlobalTenants();
-
-            this.CheckSubscriptionSwitch();
+            
             this.UpdateLicenses();
             this.UpdateAddOns();
             this.ClearAllUsersCache();
