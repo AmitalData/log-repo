@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CourierPendingReasonDataMapping();
         }
 		 
-		public  CourierPendingReasonPM GetSingle(string code,bool getComposition, bool getFromCache)
+		public  CourierPendingReasonPM GetSingle(string id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new CourierPendingReasonKeys(){ Code = code };
+             EntityKeys = new CourierPendingReasonKeys(){ Id = id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(CourierPendingReason entityPOCO)
         {
-            CourierPendingReasonKeys entityKeys = new CourierPendingReasonKeys() { Code = entityPOCO.Code,  };
+            CourierPendingReasonKeys entityKeys = new CourierPendingReasonKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
         }
      
