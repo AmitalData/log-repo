@@ -194,7 +194,11 @@ namespace Logitude.BL.QuoteModel
 
                         if (fromDate != null && toDate != null)
                         {
-                            queryableData = queryableData.Where(d => DbFunctions.TruncateTime(d.OpenDate) >= DbFunctions.TruncateTime(fromDate) && DbFunctions.TruncateTime(d.OpenDate) <= DbFunctions.TruncateTime(toDate));
+                            QuoteStageRepository quoteStageRepository = new QuoteStageRepository(tenant);
+                            string stage1Id = quoteStageRepository.GetQuoteStageIdByCode("QTCR", tenant);
+                            string stage2Id = quoteStageRepository.GetQuoteStageIdByCode("QTDR", tenant);
+
+                            queryableData = queryableData.Where(d => d.StageId != stage1Id && d.StageId != stage2Id && DbFunctions.TruncateTime(d.OpenDate) >= DbFunctions.TruncateTime(fromDate) && DbFunctions.TruncateTime(d.OpenDate) <= DbFunctions.TruncateTime(toDate));
                         }
                     }
 
