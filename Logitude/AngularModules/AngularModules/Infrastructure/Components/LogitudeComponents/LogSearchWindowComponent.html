@@ -136,6 +136,7 @@
                                                                     <logitude-grid-v2 *ngIf="true || UsingLogGridV2" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource"
                                                                                    [columns]="columns1" [autoLoad]="true" [rows]="items"
                                                                                    [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent" 
+                                                                                      [DontApplyVirtualization]="DontApplyVirtualization" [ConstantPageSize]="ConstantPageSize"
                                                                                    (rowSelectedEvent)="onRowSelected($event)">
                                                                     </logitude-grid-v2>
                                                                 </div>
@@ -193,6 +194,7 @@
                                                                     <logitude-grid-v2 *ngIf="true || UsingLogGridV2" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
                                                                                    [columns]="columns" [autoLoad]="true" [rows]="items"
                                                                                    [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent"
+                                                                                      [DontApplyVirtualization]="DontApplyVirtualization" [ConstantPageSize]="ConstantPageSize"
                                                                                    (rowSelectedEvent)="onRowSelected($event)">
                                                                     </logitude-grid-v2>
                                                                 </div>

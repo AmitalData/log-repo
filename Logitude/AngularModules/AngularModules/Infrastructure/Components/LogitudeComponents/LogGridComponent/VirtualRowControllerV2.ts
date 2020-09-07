@@ -210,7 +210,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
     ReloadData: boolean;
     RecievedDataCount: number = 0;
     MyCallTime: Date;
-    getRow(rowIndex: number, sortingCol: string, sortingDir: string, getCount: boolean, searchfields: string, returnCached: boolean, Filters: ApiQueryFilters, reload: boolean = false, IgnorerowsRequestedPage: boolean = false, PSize: number = this.pageSize, SearchFieldChanged: boolean = false) {
+    getRow(rowIndex: number, sortingCol: string, sortingDir: string, getCount: boolean, searchfields: string, returnCached: boolean, Filters: ApiQueryFilters, reload: boolean = false, IgnorerowsRequestedPage: boolean = false, PSize: number = this.pageSize, SearchFieldChanged: boolean = false , dontApplyVirtualization: boolean = false) {
         this.ReloadData = reload;
         if (searchfields != undefined && searchfields != null) {
             if (this.oldSearchFields != searchfields) {
@@ -233,7 +233,19 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
                 if (!viewResponse.HasError) {
                     //this.dataStream = new BehaviorSubject<(any | undefined)[]>(this.cachedData);
                     //this.dataStream.next(this.cachedData);
-                    this.requestedRowCount.emit(viewResponse.Count); 
+
+
+
+                    if (!getCount) {
+                        this.requestedRowsReady.emit(viewResponse.Count);
+                    }
+                    else {
+                        var dataCount = viewResponse.Count;
+                        if (dataCount > PSize) dataCount = PSize;
+
+                        this.requestedRowCount.emit(dontApplyVirtualization ? dataCount : viewResponse.Count);
+                    }
+
                 }
             });
         });
