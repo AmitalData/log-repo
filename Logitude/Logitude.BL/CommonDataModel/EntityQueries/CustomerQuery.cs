@@ -179,6 +179,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   GLAccountId = a.Card.GLAccountId,
                                   CreatedByPartner = a.Card.CreatedByPartner,
                                   StorageFreeDays = a.Card.StorageFreeDays,
+                                  GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -192,6 +193,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       PayablesAccountingCard = a.Card.PayablesAccountingCard,
                                       AccountingVATSplit = a.Card.AccountingVATSplit,
                                       GLAccountId = a.Card.GLAccountId,
+                                      GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
                                   },
 
                               }).FirstOrDefault();
@@ -336,6 +338,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               GLAccountId = a.Card.GLAccountId,
                               CreatedByPartner = a.Card.CreatedByPartner,
                               StorageFreeDays = a.Card.StorageFreeDays,
+                              GLAccountNumber = a.Card.GLAccountDisplayNumber,
                               Card = new CardPM
                               {
                                   Id = a.Id,
@@ -346,6 +349,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
                                   AccountingVATSplit = a.Card.AccountingVATSplit,
                                   GLAccountId = a.Card.GLAccountId,
+                                  GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
                               },
 
                           }).FirstOrDefault();
@@ -2569,6 +2573,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              SetAsInactiveByName = customer.SetAsInactiveByUser == null ? null : (customer.SetAsInactiveByUser.Contact == null ? null : customer.SetAsInactiveByUser.Contact.EnglishName),
                                              ActivationRequestedByUserName = customer.ActivationRequestedByUser == null ? null : (customer.ActivationRequestedByUser.Contact == null ? null : customer.ActivationRequestedByUser.Contact.EnglishName),
                                              CreatedByPartner = customer.Card.CreatedByPartner,
+                                             GLAccountNumber = customer.Card.GLAccountDisplayNumber,
                                          }).FirstOrDefault();
 
             return customerList;

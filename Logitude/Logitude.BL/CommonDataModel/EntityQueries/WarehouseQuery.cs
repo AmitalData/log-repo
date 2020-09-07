@@ -83,6 +83,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          AirWeightRoundingCode = a.AirWeightRoundingCode,
                                          OceanWeightRoundingCode = a.OceanWeightRoundingCode,
                                          InlandWeightRoundingCode = a.InlandWeightRoundingCode,
+                                         GLAccountNumber = a.Card.GLAccountDisplayNumber,
 
                                          Card = new CardPM()
                                          {
@@ -92,6 +93,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              PrimaryContactId = a.Card.PrimaryContactId,
                                              PartnerTypeId = a.Card.PartnerTypeId,
                                              Code = a.Card.Code,
+                                             GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
                                          },
                                      }).FirstOrDefault();
 

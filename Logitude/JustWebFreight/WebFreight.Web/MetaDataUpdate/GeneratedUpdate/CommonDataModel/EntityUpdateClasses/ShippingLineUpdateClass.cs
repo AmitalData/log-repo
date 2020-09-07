@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ShippingLineUpdateClass
    {  		
-		public const string HashString = "bc1c66153d5e537c0ca13f9385ba4947";
+		public const string HashString = "5face3ce97d711a44f2c1d04aadb57b0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3183,6 +3183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "GLAccountNumber",
 					  						ListPropertyPath =  "GLAccountNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3201,10 +3202,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountNumber",
 					  						DefaultText =  "Account Number",
-					  						FullLocalDefaultText =  "מספר חשבון",
+					  						FullLocalDefaultText =  "Account Number",
 					  						ListFieldLable =  "GLAccountNumberListLable",
 					  						ListLableDefaultText =  "Account Number",
-					  						ListLocalDefaultText =  "מספר חשבון",
+					  						ListLocalDefaultText =  "Account Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

@@ -324,12 +324,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                UsoCFDICode = a.Card.UsoCFDICode,
                                GLAccountId = a.Card.GLAccountId,
                                ImageDetailId = a.Card.ImageDetailId,
+                               GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                Card = new CardPM()
                                {
                                    Id = a.Id,
                                    Tenant = a.Tenant,
                                    EnglishName = a.Card.EnglishName,
                                    PrimaryContactId = a.Card.PrimaryContactId,
+                                   GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
                                },
                            }).FirstOrDefault();
 

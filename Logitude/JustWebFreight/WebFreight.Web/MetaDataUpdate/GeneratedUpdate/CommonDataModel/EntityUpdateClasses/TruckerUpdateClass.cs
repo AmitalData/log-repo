@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class TruckerUpdateClass
    {  		
-		public const string HashString = "b6e0914c915623cf8c4cf63f8e0344e7";
+		public const string HashString = "466954899a05d9c1d3200e9afa7333a7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2685,6 +2685,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "GLAccountNumber",
 					  						ListPropertyPath =  "GLAccountNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2703,10 +2704,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountNumber",
 					  						DefaultText =  "Account Number",
-					  						FullLocalDefaultText =  "מספר חשבון",
+					  						FullLocalDefaultText =  "Account Number",
 					  						ListFieldLable =  "GLAccountNumberListLable",
 					  						ListLableDefaultText =  "Account Number",
-					  						ListLocalDefaultText =  "מספר חשבון",
+					  						ListLocalDefaultText =  "Account Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

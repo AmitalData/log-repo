@@ -76,6 +76,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    UsoCFDICode = a.Card.UsoCFDICode,
                                    GLAccountId = a.Card.GLAccountId,
                                    CreatedByPartner = a.Card.CreatedByPartner,
+                                   GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                    Card = new CardPM()
                                    {
                                        Id = a.Id,
@@ -84,6 +85,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        PrimaryContactId = a.Card.PrimaryContactId,
                                        PartnerTypeId = a.Card.PartnerTypeId,
                                        Code = a.Card.Code,
+                                       GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
                                    },
                                }).FirstOrDefault();
 

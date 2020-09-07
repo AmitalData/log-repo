@@ -362,6 +362,11 @@ export class AccountingPartnerPM {
     public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
        
 	 
+    private gLAccountNumber: string;
+    public get GLAccountNumber() { return this.gLAccountNumber; }
+    public set GLAccountNumber(newValue: string) { if (this.gLAccountNumber != newValue) { this.gLAccountNumber = newValue; this.MarkAsDirty("GLAccountNumber"); } }
+       
+	 
     private accountingVATSplit: boolean;
     public get AccountingVATSplit() { return this.accountingVATSplit; }
     public set AccountingVATSplit(newValue: boolean) { if (this.accountingVATSplit != newValue) { this.accountingVATSplit = newValue; this.MarkAsDirty("AccountingVATSplit"); } }

@@ -300,5 +300,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public string UploadingUniqueKey { get; set; }
 
+        [DataMember]
+        public string GLAccountNumber { get; set; }
+
     }
 }

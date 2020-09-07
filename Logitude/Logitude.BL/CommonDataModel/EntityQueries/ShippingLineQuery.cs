@@ -81,12 +81,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     INTTRARegistrationNotes = a.INTTRARegistrationNotes,
                                     GLAccountId = a.Card.GLAccountId,
                                     INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
+                                    GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
                                         Tenant = a.Tenant,
                                         EnglishName = a.Card.EnglishName,
                                         PrimaryContactId = a.Card.PrimaryContactId,
+                                        GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
                                     },
                                 }).FirstOrDefault();
 
