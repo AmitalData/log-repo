@@ -615,6 +615,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             throw new ApplicationException("Can't update operationally cancelled shipments");
                         }
 
+                        APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(directPM, authToken.Tenant);
+                        aPITransshipmentHelper.ValidateTransshipments();
+                        aPITransshipmentHelper.MapTransshipments();
+
                         ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
                         service.Update(true);
                     }
