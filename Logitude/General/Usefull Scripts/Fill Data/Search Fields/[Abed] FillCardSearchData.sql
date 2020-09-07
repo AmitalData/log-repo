@@ -1,45 +1,4 @@
 
-
- --DROP FUNCTION dbo.BuildSearchKeywordFunction 
-
---CREATE FUNCTION dbo.BuildSearchKeywordFunction ( @stringToSplit VARCHAR(MAX)  , @firstweight int , @Secondweight int)
---RETURNS
--- @returnList TABLE ([Keyword] [nvarchar] (500), [weight] int )
---AS
---BEGIN
-
---   set @stringToSplit =  RTrim(@stringToSplit)
---   DECLARE @IsFirstTime bit
---   set @IsFirstTime = 1;
--- DECLARE @name NVARCHAR(255)
--- DECLARE @pos INT
-
--- if(@stringToSplit!=' ') begin INSERT INTO @returnList  SELECT @stringToSplit ,@firstweight end
-
--- WHILE CHARINDEX(' ', @stringToSplit) > 0
--- BEGIN
---  SELECT @pos  = CHARINDEX(' ', @stringToSplit)  
---  SELECT @name = SUBSTRING(@stringToSplit, 1, @pos-1)
-
---  if(@IsFirstTime= 0 and @name!=' ')   begin INSERT INTO @returnList  SELECT @stringToSplit ,@Secondweight end
-
---  SELECT @stringToSplit = SUBSTRING(@stringToSplit, @pos+1, LEN(@stringToSplit)-@pos)
---  set @IsFirstTime = 0;
-
--- END
-
---  if(@IsFirstTime= 0 and @stringToSplit!=' ')begin INSERT INTO @returnList SELECT @stringToSplit ,@Secondweight
-
---  end
-
-
--- RETURN
---END
-
-
-
-
-
 TRUNCATE table CardSearches
 
 If(OBJECT_ID('tempdb..#temp_CardSearches') Is Not Null)
