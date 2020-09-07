@@ -5,11 +5,18 @@
   DBType="Main"
   Module="Customs">
   <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Code"
     Type="varchar"
     Size="4">
     <Constraints
-      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
