@@ -22,14 +22,26 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
     {
         private IQueryable<CargoTrackingShipmentList> GetIqueryableList(IQueryable<CargoTrackingShipment> iQueryable)
         {
-          
-            IQueryable<CargoTrackingShipmentList> query = (from a in iQueryable join p in context.CargoTrackingPorts on a.FromPortId equals p.Id 
-                                                           join entity in context.CargoTrackingShipmentSearches on a.SecurityKey equals entity.SecurityKey 
+            IQueryable<CargoTrackingPortList> ports = (from p in context.CargoTrackingPorts
+                                                 join c in context.CargoTrackingCountries on p.CountryId equals c.Id
+                                                 select new CargoTrackingPortList() {
+                                                     Id = p.Id ,
+                                                     EnglishName = p.EnglishName,
+                                                     CountryCode = c.Code,
 
+
+                                                 });
+            IQueryable<CargoTrackingShipmentList> query = (from a in iQueryable join fp in ports on a.FromPortId equals fp.Id
+                                                           join tp in ports on a.ToPortId equals tp.Id
+                                                           join s in context.CargoTrackingShipmentSearches  on a.SecurityKey equals s.SecurityKey 
+                                                          join m in context.CargoTrackingMilestones on a.CurrentMilestoneCode equals m.Code 
+                                                          join t in context.CargoTrackingTransportModes on a.TransportModeId equals t.Id
+                                                         
+                                                               //  group g by new {a.SecurityKey , g.FirstOrDefault().SearchFields} into gp
                                                            select new CargoTrackingShipmentList()
                                                            {
 
-                                                               Id = a.Id,
+                                                               Id= a.Id,
 
                                                                Tenant = a.Tenant,
 
@@ -38,17 +50,18 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                SecurityKey = a.SecurityKey,
 
                                                                ForwardingShipmentHeaderId = a.ForwardingShipmentHeaderId,
-
+                                                               ToPortCountryCode = tp.CountryCode,
                                                                CustomsShipmentHeaderId = a.CustomsShipmentHeaderId,
-
+                                                               FromPortCountryCode = fp.CountryCode,
                                                                EntityType = a.EntityType,
-
+                                                               FromPortName = fp.EnglishName,
+                                                               ToPortName = tp.EnglishName,
                                                                CurrentMilestoneCode = a.CurrentMilestoneCode,
-
+                                                               CurrentMilestoneName = m.EnglishName,
                                                                CurrentMilestoneDate = a.CurrentMilestoneDate,
-                                                               SearchReferences = string.Join(entity.SearchFields,","),
+                                                               SearchReferences = s.SearchFields ,
                                                                CustomerId = a.CustomerId,
-
+                                                               TransportModeName = t.Name,
                                                                TransportModeId = a.TransportModeId,
 
                                                                Master = a.Master,
@@ -137,10 +150,25 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     ClearanceDate = poco.ClearanceDate,
 
                 };
+            if(list != null)
+            {
+             list=   FillShipmentListExtraFileds(list);
 
+            }
             return list;
         }
-
+        private CargoTrackingShipmentList FillShipmentListExtraFileds(CargoTrackingShipmentList list)
+        {
+            CargoTrackingPortListQueryService cargoTrackingPortListQuery = new CargoTrackingPortListQueryService(context);
+            CargoTrackingTransportModeListQueryService cargoTrackingTransportModeListQueryService = new CargoTrackingTransportModeListQueryService(context);
+            CargoTrackingPortList fromPort = cargoTrackingPortListQuery.GetSingle(list.FromPortId);
+            CargoTrackingPortList toPort = cargoTrackingPortListQuery.GetSingle(list.ToPortId);
+            CargoTrackingTransportModeList transportModeList = cargoTrackingTransportModeListQueryService.GetSingle(list.TransportModeId);
+            list.TransportModeName = transportModeList != null ? transportModeList.Name : null;
+            list.FromPortName = fromPort != null ? fromPort.EnglishName : null;
+            list.ToPortName = toPort != null ? toPort.EnglishName : null;
+            return list;
+        }
         private IQueryable<CargoTrackingShipment> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<CargoTrackingShipment> iQueryable, int tenant)
         {
             return iQueryable;
@@ -152,12 +180,20 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         public List<CargoTrackingShipmentList> GetShipments(List<string> shipmentsSecurityKeies, int tenant)
         {
-            CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(tenant);
+            CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
             IQueryable<CargoTrackingShipment> shipments = repo.GetBySecurityKeies(shipmentsSecurityKeies, tenant);
 
-            IQueryable<CargoTrackingShipmentList> shipmetsLists = GetIqueryableList(shipments);
+            List<CargoTrackingShipmentList> shipmetsLists = GetIqueryableList(shipments).ToList();
+            
+            foreach (var key in shipmentsSecurityKeies)
+            {
 
-            return shipmetsLists.ToList();
+                string[] references = shipmetsLists.Where(d => d.SecurityKey == key).Select(d => d.SearchReferences).ToArray();
+            //  List< CargoTrackingShipmentList> shipmetsList = shipmetsLists.ToList();
+                shipmetsLists.Where(d => d.SecurityKey == key).ToList().ForEach(d => { d.SearchReferences = String.Join(",", references); });
+                shipmetsLists = shipmetsLists.GroupBy(p =>  p.SecurityKey ).Select(g => g.Last()).ToList();
+            }
+            return shipmetsLists;
         }
         public CargoTrackingShipmentList GetShipment(string SecurityKey, int tenant)
         {

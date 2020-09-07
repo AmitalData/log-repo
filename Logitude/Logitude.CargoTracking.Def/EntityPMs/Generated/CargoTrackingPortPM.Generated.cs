@@ -135,6 +135,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string countryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CountryCode  
+	   {
+	    
+	     get
+		{
+		   return countryCode;
+		 }
+		 set
+		 {
+		   if(countryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryCode",OldValue=countryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   countryCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

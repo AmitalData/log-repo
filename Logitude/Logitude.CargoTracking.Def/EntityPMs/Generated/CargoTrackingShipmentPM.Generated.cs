@@ -1308,6 +1308,144 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string fromPortName ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromPortName  
+	   {
+	    
+	     get
+		{
+		   return fromPortName;
+		 }
+		 set
+		 {
+		   if(fromPortName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromPortName",OldValue=fromPortName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromPortName=value;
+		   }
+			
+		 }
+	   }
+	  private string toPortName ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToPortName  
+	   {
+	    
+	     get
+		{
+		   return toPortName;
+		 }
+		 set
+		 {
+		   if(toPortName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToPortName",OldValue=toPortName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toPortName=value;
+		   }
+			
+		 }
+	   }
+	  private string currentMilestoneName ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrentMilestoneName  
+	   {
+	    
+	     get
+		{
+		   return currentMilestoneName;
+		 }
+		 set
+		 {
+		   if(currentMilestoneName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrentMilestoneName",OldValue=currentMilestoneName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currentMilestoneName=value;
+		   }
+			
+		 }
+	   }
+	  private string transportModeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransportModeName  
+	   {
+	    
+	     get
+		{
+		   return transportModeName;
+		 }
+		 set
+		 {
+		   if(transportModeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransportModeName",OldValue=transportModeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transportModeName=value;
+		   }
+			
+		 }
+	   }
+	  private string fromPortCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromPortCountryCode  
+	   {
+	    
+	     get
+		{
+		   return fromPortCountryCode;
+		 }
+		 set
+		 {
+		   if(fromPortCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromPortCountryCode",OldValue=fromPortCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromPortCountryCode=value;
+		   }
+			
+		 }
+	   }
+	  private string toPortCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToPortCountryCode  
+	   {
+	    
+	     get
+		{
+		   return toPortCountryCode;
+		 }
+		 set
+		 {
+		   if(toPortCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToPortCountryCode",OldValue=toPortCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toPortCountryCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
