@@ -1771,47 +1771,52 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (this.entityPM.DirectionId == "I")
             {
-                if (entityPoco.WarehouseLegActualEntryDate != entityPM.WarehouseLegActualEntryDate)
+               
+                 if (entityPoco.WarehouseLegActualEntryDate != null && entityPM.WarehouseLegActualEntryDate == null)
+                {
+                    this.DeleteTraceEvent("WHED");
+                }
+                else if (entityPoco.WarehouseLegActualEntryDate != entityPM.WarehouseLegActualEntryDate)
                 {
                     this.CreateTraceEvent("WHED", entityPM.WarehouseLegActualEntryDate);
                 }
 
-                else if (entityPoco.WarehouseLegActualEntryDate != null && entityPM.WarehouseLegActualEntryDate == null)
-                {
-                    this.DeleteTraceEvent("WHED");
-                }
 
-                if (entityPoco.WarehouseLegActualReleaseDate != entityPM.WarehouseLegActualReleaseDate)
-                {
-                    this.CreateTraceEvent("WHRD", entityPM.WarehouseLegActualReleaseDate);
-                }
 
-                else if (entityPoco.WarehouseLegActualReleaseDate != null && entityPM.WarehouseLegActualReleaseDate == null)
+                 if (entityPoco.WarehouseLegActualReleaseDate != null && entityPM.WarehouseLegActualReleaseDate == null)
                 {
                     this.DeleteTraceEvent("WHRD");
+                }
+                else if (entityPoco.WarehouseLegActualReleaseDate != entityPM.WarehouseLegActualReleaseDate)
+                {
+                    this.CreateTraceEvent("WHRD", entityPM.WarehouseLegActualReleaseDate);
                 }
             }
             else
             {
-                if (entityPoco.WarehouseLegActualEntryDate != entityPM.WarehouseLegActualEntryDate)
+                
+
+               if (entityPoco.WarehouseLegActualEntryDate != null && entityPM.WarehouseLegActualEntryDate == null)
+                {
+                    this.DeleteTraceEvent("WEDE");
+                }
+               else if (entityPoco.WarehouseLegActualEntryDate != entityPM.WarehouseLegActualEntryDate)
                 {
                     this.CreateTraceEvent("WEDE", entityPM.WarehouseLegActualEntryDate);
                 }
 
-                else if (entityPoco.WarehouseLegActualEntryDate != null && entityPM.WarehouseLegActualEntryDate == null)
+
+
+                if (entityPoco.WarehouseLegActualReleaseDate != null && entityPM.WarehouseLegActualReleaseDate == null)
                 {
-                    this.DeleteTraceEvent("WEDE");
+                    this.DeleteTraceEvent("WRDE");
                 }
 
-                if (entityPoco.WarehouseLegActualReleaseDate != entityPM.WarehouseLegActualReleaseDate)
+               else if (entityPoco.WarehouseLegActualReleaseDate != entityPM.WarehouseLegActualReleaseDate)
                 {
                     this.CreateTraceEvent("WRDE", entityPM.WarehouseLegActualReleaseDate);
                 }
 
-                else if (entityPoco.WarehouseLegActualReleaseDate != null && entityPM.WarehouseLegActualReleaseDate == null)
-                {
-                    this.DeleteTraceEvent("WRDE");
-                }
             }
         }
         private static void ComputeLastSharedEvent(ShipmentPM entityPM)
