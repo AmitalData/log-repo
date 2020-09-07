@@ -22,12 +22,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<DeclarationReferantDataList> GetIqueryableList(IQueryable<DeclarationReferantData> iQueryable)
         {
             IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
-                                                             join d in context.Declarations.Include("CustomerCard").Include("DeclarationOffice").Include("DeclarationStatusType")
+                                                             join d in context.Declarations.Include("CustomerCard").Include("DeclarationOffice").Include("DeclarationStatusType").Include("Importer")
                                                              on a.DeclarationId equals d.Id
 
                                                            
-                                                             join c in context.Clients.Include("Client")
-                                                             on d.ImporterCode equals c.Code
+                                                             //join c in context.Clients.Include("Client")
+                                                             //on d.ImporterCode equals c.Code
                                                              select new DeclarationReferantDataList()
                                                              {
                                                                  Tenant = a.Tenant,
@@ -97,7 +97,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ImporterCode=d.ImporterCode,
                                                                   ProcedureCurrentCode = d.ProcedureCurrentCode,
                                                                  ImporterFile=a.ImporterFile,
-                                                                 AEOImporter=c.FacilitationTypeCode,
+                                                                 AEOImporter=d.Importer.FacilitationTypeCode,
                                                                  Team = a.ReferantTeam.LocalName,
 
 
