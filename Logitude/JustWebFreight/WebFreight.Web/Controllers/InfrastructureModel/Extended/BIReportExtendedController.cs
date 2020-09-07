@@ -1,5 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityListQueryServices;
 using Logitude.Infrastructure.Data.EntityLists;
@@ -8,13 +10,16 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
@@ -192,6 +197,37 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
         }
 
+        public HttpResponseMessage PutWithoutAGGridXML(BIReportPM entityPM)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string logKey = PerformanceLogger.LogCurrentTime();
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("BIReport", "UPDATE", authToken.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("BIReport", entityPM.Tenant, authToken.Tenant);
 
+                    BIReportQueryService query = new BIReportQueryService(entityPM.Tenant);
+                    BIReportPM oldEntityPM = query.GetSingle(entityPM.Id, false, false);
+                    entityPM.AGGridOptionsXML = oldEntityPM.AGGridOptionsXML;
+                    IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
+                    BIReportUpdateService service = new BIReportUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    service.InitializeEntityPM(entityPM);
+                    entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    service.Update(entityPM, true);
+                    scope.Complete();
+                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                    return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

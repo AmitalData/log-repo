@@ -25,6 +25,7 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { LastRunDetailPM } from '../../../../Infrastructure/EntityPMs/LastRunDetailPM';
 import { LastRunDetailExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/LastRunDetailExtendedPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { BIReportExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/BIReportExtendedPMService';
 @Component({
     
     templateUrl: 'BIReportPreviewComponent.html',
@@ -47,6 +48,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public _DWQueryBuilderService: DWQueryBuilderService;
     public _DWQueryBuilderHelper: DWQueryBuilderHelper
     public _BIReportPMService: BIReportPMService;
+    public BIReportExtendedPMService: BIReportExtendedPMService;
     public LastRunDetailExtendedPMService: LastRunDetailExtendedPMService;
     DataContext: any = this;
     public _InfrastructureDomainService: InfrastructureDomainService;
@@ -114,6 +116,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this._InfrastructureDomainService = new InfrastructureDomainService();
         this._DWSubQueryPMService = new DWSubQueryPMService();
         this._BIReportPMService = new BIReportPMService();
+        this.BIReportExtendedPMService = new BIReportExtendedPMService();
         this.LastRunDetailExtendedPMService = new LastRunDetailExtendedPMService();
         this._DWQueryBuilderService = new DWQueryBuilderService();
         this._ShipmentPMService = new ShipmentPMService();
@@ -144,7 +147,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
                     // this.BuildColumns(result);
                     if (IsBIReportUpdated) {
-                        this._BIReportPMService.update(this.EntityPM).subscribe((response:any) => {
+                        this.BIReportExtendedPMService.UpdateWithoutAGGridXML(this.EntityPM).subscribe((response: any) => {
                             this.BuildRows(result);
                         });
                     }
