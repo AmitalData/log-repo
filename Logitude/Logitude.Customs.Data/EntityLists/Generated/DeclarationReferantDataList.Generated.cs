@@ -102,6 +102,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string Team  { get; set; }
        [DataMember]
        public string ImporterFile  { get; set; }
+       [DataMember]
+       public DateTime? FileOpenDate  { get; set; }
    }
 
 }

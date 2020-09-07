@@ -52,6 +52,7 @@ export class DeclarationReferantDataList {
 	OrderMoney: boolean;
 	Team: string;
 	ImporterFile: string;
+	FileOpenDate: Date;
 	
 }
  
