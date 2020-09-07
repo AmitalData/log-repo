@@ -41,7 +41,7 @@ export class InvoiceQueueComponent
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                this.GetData();
+                //this.GetData();
             });
         });
     }
@@ -120,7 +120,7 @@ export class InvoiceQueueComponent
 
     setClientForwarder(value: InvoiceLine) {
         switch (value.PayType) {
-            case "R": {
+            case "E": {
                 value.PayType = "Forwarder";
                 break;
             }
