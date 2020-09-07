@@ -40,6 +40,8 @@ using Logitude.Accounting.Data.Repositories;
 using System.Transactions;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
+using Simplog.Data.Helpers;
+
 namespace WebFreight.Web.Controllers.AccountingModel 
 {
     public partial class ExternalReconciliationController : ApiController
@@ -66,9 +68,10 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
 
+
                 #region Trans filters
 
-              
+
                 QueryOperations queryOperationsTrans = new QueryOperations()
                 {
                     ObjectTableName = "LedgerTransaction",
@@ -112,6 +115,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
                 }
 
+                DateTime today = GetCurrentDateStart(tenant);
+
                 if (!string.IsNullOrEmpty(filters.AdditionalFilters))
                 {
                     JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
@@ -123,14 +128,16 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         if (field != null)
                         {
 
-
                             string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
                             object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
 
                             string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            queryOperationsTrans.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                            if (filter.FieldName == "DueDate")
+                                value1 = today;
+
+                                queryOperationsTrans.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
                         }
                         else
                         {
@@ -139,6 +146,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     }
                 }
                 #endregion
+
 
                 #region Bank lines filters
 
@@ -167,6 +175,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     if (filterNameProp != null)
                     {
                         string filterName = filterNameProp.ToString();
+
 
                         string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
                         ObjectField field = ReconcileExternalPageLineObjectFields.FirstOrDefault(f => f.FieldName == filterName);
@@ -202,7 +211,11 @@ namespace WebFreight.Web.Controllers.AccountingModel
                             filter.FieldName = filter.FieldName.Replace("CreateDate", "ReferenceDate");
                         }
 
-                        if (filter.FieldName == "IsExternalReconcile")
+                        if (filter.FieldName == "IsExternalReconcile"
+                            || filter.FieldName == "DueDate"
+                            || filter.FieldName == "DUMMY_TransferAccountId"
+                            || filter.FieldName == "InReconcileProgress"
+                            || filter.FieldName == "InProgressExternalReconcile")
                             continue;
 
                         //
@@ -227,6 +240,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     }
                 }
                 #endregion
+
+                string TransferGlAccountId = GetAndRemoveFilter(queryOperationsTrans, "DUMMY_TransferAccountId");
 
                 var args = new AutoExternalReconcileArgs()
                 {
@@ -256,6 +271,26 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
+        private DateTime GetCurrentDate(int tenant)
+        {
+            DateTime _today = TenantServerConfigration.GetCurrentDateTime(tenant);
+            _today = new DateTime(_today.Year, _today.Month, _today.Day, 11, 59, 59);
+            return _today;
+        }
+        private DateTime GetCurrentDateStart(int tenant)
+        {
+            DateTime _today = TenantServerConfigration.GetCurrentDateTime(tenant);
+            _today = new DateTime(_today.Year, _today.Month, _today.Day, 0, 0, 0,0);
+            return _today;
+        }
+        private static string GetAndRemoveFilter(QueryOperations queryOperations, string fieldName)
+        {
+            QueryFilterItem filterItem = queryOperations.QueryFilterItems.Find(d => d.FieldName == fieldName);
+            string TransferGlAccountId = filterItem?.FieldValue.ToString();
+            queryOperations.QueryFilterItems.Remove(filterItem);
+            return TransferGlAccountId;
+        }
+
 
         public HttpResponseMessage GetGenerateTestRecordsForExternalReco(string glAccountId, string bankAccountId, string type)
         {
