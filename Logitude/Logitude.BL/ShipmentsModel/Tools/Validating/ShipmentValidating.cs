@@ -95,9 +95,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             CustomerRepository myCustomerRepository = new CustomerRepository(myCommonContext);
             Customer myCustomer = myCustomerRepository.GetSingleCustomer(customerId, tenant, false);
             var IsCreditLimitActivated = mySettings.IsCreditLimitEnabled;
-            var IsCreditLimitHasAction = (mySettings.ShipmentCreationBlock == false && mySettings.ShipmentCreationWarning == true) ? true : false;
+            var IsCreditLimitHasAction = (mySettings.ShipmentCreationWarning == true) ? true : false;
 
-            if (IsCreditLimitActivated && IsCreditLimitHasAction && myCustomer != null && myCustomer.IsCreditLimitEnabled && !myCustomer.BlockNewShipmentCreation)
+            if (IsCreditLimitActivated && IsCreditLimitHasAction && myCustomer != null && myCustomer.IsCreditLimitEnabled)
             {
                 if (myCustomer.CreditLimitAmount != null)
                 {
@@ -130,11 +130,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     LimitAmount = MethodHelper.Roundd(LimitAmount, 2);
                     ActualBalance = MethodHelper.Roundd(ActualBalance, 2);
 
-                    if (ActualBalance > LimitAmount)
-                    {
-                        limitWarningMsg = "The customer exceeded the credit limit available.";
-                    }
-                    else if (WarningPercentage != null && (ActualBalance > (WarningPercentage * LimitAmount / 100)))
+                    if (WarningPercentage != null && (ActualBalance > (WarningPercentage * LimitAmount / 100))&& ActualBalance <= LimitAmount)
                     {
                         if (mySettings.ShipmentCreationWarning)
                         {

@@ -3769,7 +3769,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         HasCreditLimitFeature = FeatureLocator.HasFeaturePermession("CreditLimitSetting", "Module");
         if (HasCreditLimitFeature) {
             IsCreditLimitActivated = ObjectsLocator.CreditLimitSettingPM.IsCreditLimitEnabled;
-            IsCreditLimitHasAction = (ObjectsLocator.CreditLimitSettingPM.ShipmentCreationBlock == false && ObjectsLocator.CreditLimitSettingPM.ShipmentCreationWarning == true) ? true : false;
+            IsCreditLimitHasAction = (ObjectsLocator.CreditLimitSettingPM.ShipmentCreationWarning == true) ? true : false;
         }
 
         if (HasCreditLimitFeature && IsCreditLimitActivated && IsCreditLimitHasAction && this.IsCustomerCreditLimitEnabled) {
