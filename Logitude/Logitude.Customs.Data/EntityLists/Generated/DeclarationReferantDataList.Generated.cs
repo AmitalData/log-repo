@@ -99,7 +99,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool OrderMoney  { get; set; }
        [DataMember]
-
+       public string Team  { get; set; }
+       [DataMember]
        public string StorageSiteCode  { get; set; }
        [DataMember]
        public DateTime? TaxationDateTime  { get; set; }
@@ -117,8 +118,6 @@ namespace Logitude.Customs.Data.EntityLists
        public string ImporterFile  { get; set; }
        [DataMember]
        public string AEOImporter  { get; set; }
-       public string Team  { get; set; }
- 
    }
 
 }

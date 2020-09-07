@@ -25,9 +25,13 @@ var LoginComponent = /** @class */ (function () {
         this.ShowLoadingIndicator = false;
         this.LogoURL = "./Images/LoginScreen/header.jpg";
         this.SampleLogoURL = "./Images/ApplicationLogo/Angular/AngularLogo.png";
+        this.PasswordImage = "./Images/LoginScreen/password_eye_closed.png";
+        this.PasswordTitle = "Show";
+        this.PasswordWidth = 280;
         this.IsShowPasswordExpirationDateArea = false;
         this.IsShowFormLogin = false;
         this.IsHaveTenantInUrl = false;
+        this.InputPasswordType = "password";
         this.ShowTenantList = false;
         this.errorMessage = "";
         this.cookie_name = "email_cookie"; // added 
@@ -217,6 +221,14 @@ var LoginComponent = /** @class */ (function () {
             }
         }
     };
+    LoginComponent.prototype.ShowHidePasswordClick = function () {
+        var showHidePasswordImage = document.getElementById("ShowHidePasswordImageId");
+        if (showHidePasswordImage) {
+            this.PasswordImage = this.PasswordImage == "./Images/LoginScreen/password_eye.png" ? "./Images/LoginScreen/password_eye_closed.png" : "./Images/LoginScreen/password_eye.png";
+            this.InputPasswordType = this.InputPasswordType == "password" ? "text" : "password";
+            this.PasswordTitle = this.PasswordTitle == "Show" ? "Hide" : "Show";
+        }
+    };
     LoginComponent.prototype.PasswordExpirationButtomClicked = function (type) {
         if (type == "Yes") {
             SessionInfo_1.SessionInfo.LoggedUserEmail = this.UserDataPrompt.UserName;
@@ -335,16 +347,18 @@ var LoginComponent = /** @class */ (function () {
                         _this.CaptchaImageUrl = userData.CaptchaImage;
                     }
                     _this.errorMessage = "";
-                    if (userData.InValidCaptcha)
-                        _this.errorMessage = "Please re-enter the characters you see in the image above";
                     if (userData.IpRestricted)
-                        _this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)"; //
-                    if (userData.InActive)
+                        _this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";
+                    else if (userData.InActive)
                         _this.errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                    if (userData.Unlicensed)
+                    else if (userData.Unlicensed)
                         _this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
-                    if (userData.InValidMailOrPassword)
+                    else if (userData.InValidMailOrPassword)
                         _this.errorMessage = "Login failed! invalid user name or password.";
+                    else if (userData.InValidCaptcha && userData.CaptchaImage)
+                        _this.errorMessage = "Please re-enter the characters you see in the image above";
+                    else
+                        _this.errorMessage = "Login failed! invalid user name or password." + "<br/>";
                 }
             }
             else {
