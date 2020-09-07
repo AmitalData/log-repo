@@ -141,7 +141,7 @@ namespace Logitude.DBMigrations.Models
             string schemaName = dbMigrationsSetDefaultValue.SchemaName;
             string tableName = dbMigrationsSetDefaultValue.TableName;
             string columnName = dbMigrationsSetDefaultValue.ColumnName;
-            string checkConstraintName = "CK_NotNull_" + columnName;
+            string checkConstraintName = "CK_NotNull_" + tableName + "_" + columnName;
 
             string queryString = "ALTER TABLE [" + schemaName + "].[" + tableName + "] WITH NOCHECK ADD CONSTRAINT [" + checkConstraintName + "] CHECK([" + columnName + "] IS NOT NULL);";
 

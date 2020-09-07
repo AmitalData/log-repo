@@ -1100,89 +1100,92 @@ namespace Logitude.DBMigrations.Models
 
         protected void SaveDXMLHashesOnDB(string[] dxmlFiles)
         {
-            string connectionString = ToolConfigurations.GetConnectionString("Main");
-
-            foreach (var dxmlFile in dxmlFiles)
+            if (!ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
             {
-                bool saveDxmlHash = true;
+                string connectionString = ToolConfigurations.GetConnectionString("Main");
 
-                string dxmlFileName = Path.GetFileName(dxmlFile);
-                string dxmlString = File.ReadAllText(dxmlFile);
-                string dxmlHashStringFromFile = GenerateHashString(dxmlString);
-
-                DXMLHash dxmlHashFromDB = DXMLHashes.Where(d => d.FileName == dxmlFileName).FirstOrDefault();
-                if (dxmlHashFromDB != null)
+                foreach (var dxmlFile in dxmlFiles)
                 {
-                    string dxmlHashStringFromDB = dxmlHashFromDB.HashString;
+                    bool saveDxmlHash = true;
 
-                    if (dxmlHashStringFromFile == dxmlHashStringFromDB)
+                    string dxmlFileName = Path.GetFileName(dxmlFile);
+                    string dxmlString = File.ReadAllText(dxmlFile);
+                    string dxmlHashStringFromFile = GenerateHashString(dxmlString);
+
+                    DXMLHash dxmlHashFromDB = DXMLHashes.Where(d => d.FileName == dxmlFileName).FirstOrDefault();
+                    if (dxmlHashFromDB != null)
                     {
-                        saveDxmlHash = false;
+                        string dxmlHashStringFromDB = dxmlHashFromDB.HashString;
+
+                        if (dxmlHashStringFromFile == dxmlHashStringFromDB)
+                        {
+                            saveDxmlHash = false;
+                        }
+                    }
+
+                    if (saveDxmlHash)
+                    {
+                        if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+                        {
+                            string queryString = "DECLARE FileCount NUMBER; " +
+                                                 "BEGIN " +
+                                                 "SELECT COUNT(*) INTO FileCount FROM \"DXMLMIGRATIONHASHES\" WHERE DXMLFILENAME = '" + dxmlFileName + "'; " +
+                                                 "IF(FileCount = 0) " +
+                                                 "THEN " +
+                                                 "EXECUTE IMMEDIATE 'INSERT INTO \"DXMLMIGRATIONHASHES\"(DXMLFILENAME, HASHSTRING) VALUES(''" + dxmlFileName + "'', ''" + dxmlHashStringFromFile + "'')'; " +
+                                                 "ELSE " +
+                                                 "EXECUTE IMMEDIATE 'UPDATE \"DXMLMIGRATIONHASHES\" SET HASHSTRING = ''" + dxmlHashStringFromFile + "'' WHERE DXMLFILENAME = ''" + dxmlFileName + "'''; " +
+                                                 "END IF; " +
+                                                 "END;";
+
+                            OracleConnection oracleConnection = new OracleConnection(connectionString);
+
+                            try
+                            {
+                                oracleConnection.Open();
+                                OracleCommand oracleCommand = new OracleCommand();
+                                oracleCommand.Connection = oracleConnection;
+                                oracleCommand.CommandText = queryString;
+                                oracleCommand.ExecuteNonQuery();
+                                oracleConnection.Close();
+                            }
+                            catch (Exception exception)
+                            {
+                                oracleConnection.Close();
+                                ExitTool("Error: " + exception.Message);
+                            }
+                        }
+                        else
+                        {
+                            string queryString = "EXEC('IF (SELECT COUNT(*) FROM [dbo].[DXMLMigrationHashes] WHERE DxmlFileName = ''" + dxmlFileName + "'') = 0 " +
+                                                 "BEGIN " +
+                                                 "INSERT INTO [dbo].[DXMLMigrationHashes](DxmlFileName, HashString) VALUES(''" + dxmlFileName + "'', ''" + dxmlHashStringFromFile + "'') " +
+                                                 "END " +
+                                                 "ELSE " +
+                                                 "BEGIN " +
+                                                 "UPDATE [dbo].[DXMLMigrationHashes] SET HashString = ''" + dxmlHashStringFromFile + "'' WHERE DxmlFileName = ''" + dxmlFileName + "'' " +
+                                                 "END');";
+
+                            SqlConnection sqlConnection = new SqlConnection(connectionString);
+
+                            try
+                            {
+                                sqlConnection.Open();
+                                SqlCommand sqlCommand = new SqlCommand();
+                                sqlCommand.Connection = sqlConnection;
+                                sqlCommand.CommandText = queryString;
+                                sqlCommand.ExecuteNonQuery();
+                                sqlConnection.Close();
+                            }
+                            catch (Exception exception)
+                            {
+                                sqlConnection.Close();
+                                ExitTool("Error: " + exception.Message);
+                            }
+                        }
                     }
                 }
-
-                if (saveDxmlHash)
-                {
-                    if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
-                    {
-                        string queryString = "DECLARE FileCount NUMBER; " +
-                                             "BEGIN " +
-                                             "SELECT COUNT(*) INTO FileCount FROM \"DXMLMIGRATIONHASHES\" WHERE DXMLFILENAME = '" + dxmlFileName + "'; " +
-                                             "IF(FileCount = 0) " +
-                                             "THEN " +
-                                             "EXECUTE IMMEDIATE 'INSERT INTO \"DXMLMIGRATIONHASHES\"(DXMLFILENAME, HASHSTRING) VALUES(''" + dxmlFileName + "'', ''" + dxmlHashStringFromFile + "'')'; " +
-                                             "ELSE " +
-                                             "EXECUTE IMMEDIATE 'UPDATE \"DXMLMIGRATIONHASHES\" SET HASHSTRING = ''" + dxmlHashStringFromFile + "'' WHERE DXMLFILENAME = ''" + dxmlFileName + "'''; " +
-                                             "END IF; " +
-                                             "END;";
-
-                        OracleConnection oracleConnection = new OracleConnection(connectionString);
-
-                        try
-                        {
-                            oracleConnection.Open();
-                            OracleCommand oracleCommand = new OracleCommand();
-                            oracleCommand.Connection = oracleConnection;
-                            oracleCommand.CommandText = queryString;
-                            oracleCommand.ExecuteNonQuery();
-                            oracleConnection.Close();
-                        }
-                        catch (Exception exception)
-                        {
-                            oracleConnection.Close();
-                            ExitTool("Error: " + exception.Message);
-                        }
-                    }
-                    else
-                    {
-                        string queryString = "EXEC('IF (SELECT COUNT(*) FROM [dbo].[DXMLMigrationHashes] WHERE DxmlFileName = ''" + dxmlFileName + "'') = 0 " +
-                                             "BEGIN " +
-                                             "INSERT INTO [dbo].[DXMLMigrationHashes](DxmlFileName, HashString) VALUES(''" + dxmlFileName + "'', ''" + dxmlHashStringFromFile + "'') " +
-                                             "END " +
-                                             "ELSE " +
-                                             "BEGIN " +
-                                             "UPDATE [dbo].[DXMLMigrationHashes] SET HashString = ''" + dxmlHashStringFromFile + "'' WHERE DxmlFileName = ''" + dxmlFileName + "'' " +
-                                             "END');";
-
-                        SqlConnection sqlConnection = new SqlConnection(connectionString);
-
-                        try
-                        {
-                            sqlConnection.Open();
-                            SqlCommand sqlCommand = new SqlCommand();
-                            sqlCommand.Connection = sqlConnection;
-                            sqlCommand.CommandText = queryString;
-                            sqlCommand.ExecuteNonQuery();
-                            sqlConnection.Close();
-                        }
-                        catch (Exception exception)
-                        {
-                            sqlConnection.Close();
-                            ExitTool("Error: " + exception.Message);
-                        }
-                    }
-                }
-            }
+            } 
         }
 
         protected string GenerateHashString(string anyString)

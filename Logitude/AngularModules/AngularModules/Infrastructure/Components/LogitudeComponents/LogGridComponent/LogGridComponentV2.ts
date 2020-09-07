@@ -1410,7 +1410,9 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             this.canvasHeight = {
                 height: this.rowCount * this.rowHeight + 'px',
             };
-
+            if (this.SearchFieldChanged == true) {
+                this.IsDataLoaded = true;
+            }
             var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
 
             if (elem) {
