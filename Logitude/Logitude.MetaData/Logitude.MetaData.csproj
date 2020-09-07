@@ -53,6 +53,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CommonClassesGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="AutoGenerators\DataContractsClassesGenerator1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataContractsClassesGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="AutoGenerators\EntityControllersGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -62,11 +67,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityPMsGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AutoGenerators\DataContractsClassesGenerator.cs">
-      <DependentUpon>DataContractsClassesGenerator.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="AutoGenerators\GlobalClassesGenerator1.cs">
       <AutoGen>True</AutoGen>
@@ -136,7 +136,8 @@
     </Content>
     <Content Include="AutoGenerators\DataContractsClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastOutputs>.\DataContractsClassesGenerator.cs</LastOutputs>
+      <LastOutputs>.\DataContractsClassesGenerator1.cs</LastOutputs>
+      <LastGenOutput>DataContractsClassesGenerator1.cs</LastGenOutput>
     </Content>
     <Content Include="AutoGenerators\GlobalClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
