@@ -383,6 +383,11 @@ export class ShippingLinePM {
     public set UploadingUniqueKey(newValue: string) { if (this.uploadingUniqueKey != newValue) { this.uploadingUniqueKey = newValue; this.MarkAsDirty("UploadingUniqueKey"); } }
        
 	 
+    private gLAccountNumber: string;
+    public get GLAccountNumber() { return this.gLAccountNumber; }
+    public set GLAccountNumber(newValue: string) { if (this.gLAccountNumber != newValue) { this.gLAccountNumber = newValue; this.MarkAsDirty("GLAccountNumber"); } }
+       
+	 
 
     public OldEntityPM: ShippingLinePM;
 		

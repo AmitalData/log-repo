@@ -75,12 +75,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                MetodoPagoCode = a.Card.MetodoPagoCode,
                                UsoCFDICode = a.Card.UsoCFDICode,
                                GLAccountId = a.Card.GLAccountId,
+                               GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                Card = new CardPM()
                                {
                                    Id = a.Id,
                                    Tenant = a.Tenant,
                                    EnglishName = a.Card.EnglishName,
                                    PrimaryContactId = a.Card.PrimaryContactId,
+                                   GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
                                },
                            }).FirstOrDefault();
             

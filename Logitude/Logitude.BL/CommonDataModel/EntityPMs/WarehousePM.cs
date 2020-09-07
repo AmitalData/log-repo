@@ -330,5 +330,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
                 warehouseStoragePricings = value;
             }
         }
+
+        [DataMember]
+        public string GLAccountNumber { get; set; }
     }
 }

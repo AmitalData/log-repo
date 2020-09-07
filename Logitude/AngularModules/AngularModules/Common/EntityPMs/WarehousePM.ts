@@ -460,7 +460,12 @@ export class WarehousePM {
         }
     }
 	    //public WarehouseStoragePricings: Array<WarehouseStoragePricingPMPM>= [];
- 
+     private gLAccountNumber: string;
+    public get GLAccountNumber() { return this.gLAccountNumber; }
+    public set GLAccountNumber(newValue: string) { if (this.gLAccountNumber != newValue) { this.gLAccountNumber = newValue; this.MarkAsDirty("GLAccountNumber"); } }
+       
+	 
+
     public OldEntityPM: WarehousePM;
 		
     public IsDirty: boolean;
