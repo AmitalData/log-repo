@@ -75,6 +75,11 @@ export class LogToolTipComponent implements AfterViewInit {
         //}
 
     }
+
+    OnClickInsideToolTip(){
+        document.getElementById("tooltip-body" + this.name).style.visibility = "hidden";
+    }
+
     draw(){
 
 
