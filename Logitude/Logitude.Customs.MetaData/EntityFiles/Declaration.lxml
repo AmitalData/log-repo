@@ -19004,6 +19004,7 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+
     <EventType
       Code="&quot;CAP&quot;"
       ObjectTableName="&quot;Customs.Declaration&quot;"
@@ -19069,6 +19070,7 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+
   </EventTypes>
   <Records />
   <MenuButtons

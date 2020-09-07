@@ -91,7 +91,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  LastStatusDate = a.LastStatusDate,
                                                                  LastStatusName = a.LastStatusName,
                                                                  OrderMoney = a.OrderMoney,
-                                                                 Team=a.ReferantTeam.LocalName,
                                                                  StorageSiteCode=d.StorageSiteCode,
                                                                  HatraDate=d.HatraDate,
                                                                  PaymentDate=d.PaymentDate,
@@ -101,6 +100,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   ProcedureCurrentCode = d.ProcedureCurrentCode,
                                                                  ImporterFile=a.ImporterFile,
                                                                  AEOImporter=c.FacilitationTypeCode,
+                                                                 Team = a.ReferantTeam.LocalName,
 
 
 

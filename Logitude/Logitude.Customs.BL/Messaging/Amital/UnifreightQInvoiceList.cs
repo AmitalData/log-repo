@@ -53,6 +53,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                     //xmlStatusList = UnifreightListsUtil.GetHtmlDecodeValue(ref response, "StatusList");
                     string alexGiveBadXML = $"<AllInvoices>{resXML}</AllInvoices>";
                     var StatusItemlist = LogitudeXmlSerializer.DeserializeObject<AllInvoices>(alexGiveBadXML);
+                   // return GetInvoice();
                     return StatusItemlist;
 
 
@@ -77,108 +78,95 @@ namespace Logitude.Customs.BL.Messaging.Amital
         public AllInvoices GetInvoice()
         {
 
-            var resXML = @"<AllInvoices><Statuses>
-<StatusData>
+            var resXML = @"<Statuses>
+ <StatusData>
   <Code>OPN</Code>
   <Name>פתיחה</Name>
-  <Date>29.03.20</Date>
-  <Time>10:05</Time>
+  <Date>07.05.20</Date>
+  <Time>12:40</Time>
   <Comments/>
-</StatusData>
-<StatusData>
-  <Code>ETA</Code>
-  <Name>תאריך הגעה משוער</Name>
-  <Date>01.06.19</Date>
-  <Time>00:00</Time>
-</StatusData>
-<StatusData>
-  <Code>MWB</Code>
-  <Name>בדיקה</Name>
-  <Date>26.03.20</Date>
-  <Time>00:00</Time>
-  <Comments>MAWB = 235-40044422</Comments>
-</StatusData>
-<StatusData>
-  <Code>ATA</Code>
-  <Name>הגעה</Name>
-  <Date>29.03.20</Date>
-  <Time>00:00</Time>
-  <Comments>הערך הישן הוא 01.06.19,
-הערך החדש הוא 29.03.20</Comments>
-</StatusData>
+ </StatusData>
 </Statuses>
 <InvoiceLines>
-<InvoiceLine>
-  <ServiceCode>1</ServiceCode>
-  <ServiceName>הובלה ימית/אוירית</ServiceName>
+ <InvoiceLine>
+  <ServiceCode>56</ServiceCode>
+  <ServiceName/>
   <PayType>L</PayType>
-  <AmountNIS>2457</AmountNIS>
+  <AmountNIS>100</AmountNIS>
   <Currency>NIS</Currency>
-  <AmountForeign>2457</AmountForeign>
-</InvoiceLine>
-<InvoiceLine>
-  <ServiceCode>1</ServiceCode>
-  <ServiceName>הובלה ימית/אוירית</ServiceName>
-  <PayType>L</PayType>
-  <AmountNIS>111</AmountNIS>
-  <Currency>NIS</Currency>
-  <AmountForeign>111</AmountForeign>
-</InvoiceLine>
-<InvoiceLine>
-  <ServiceCode>23</ServiceCode>
-  <ServiceName>בדיקה פיזית/פירוט</ServiceName>
-  <PayType>L</PayType>
-  <AmountNIS>15.5</AmountNIS>
-  <Currency>NIS</Currency>
-  <AmountForeign>15.5</AmountForeign>
-</InvoiceLine>
-<InvoiceLine>
+  <AmountForeign>100</AmountForeign>
+  <Wip>N</Wip>
+ </InvoiceLine>
+ <InvoiceLine>
   <ServiceCode>COM</ServiceCode>
   <ServiceName>עמלה</ServiceName>
   <PayType>L</PayType>
-  <AmountNIS>10</AmountNIS>
+  <AmountNIS>344</AmountNIS>
   <Currency>NIS</Currency>
-  <AmountForeign>10</AmountForeign>
-</InvoiceLine>
+  <AmountForeign>344</AmountForeign>
+  <Wip>N</Wip>
+ </InvoiceLine>
+ <InvoiceLine>
+  <ServiceCode>T16</ServiceCode>
+  <ServiceName>אגרת ביטחון</ServiceName>
+  <PayType>L</PayType>
+  <AmountNIS>41</AmountNIS>
+  <Currency>NIS</Currency>
+  <AmountForeign>41</AmountForeign>
+  <Wip>Y</Wip>
+ </InvoiceLine>
+ <InvoiceLine>
+  <ServiceCode>T6</ServiceCode>
+  <ServiceName>אגרת מחשב</ServiceName>
+  <PayType>L</PayType>
+  <AmountNIS>36</AmountNIS>
+  <Currency>NIS</Currency>
+  <AmountForeign>36</AmountForeign>
+  <Wip>Y</Wip>
+ </InvoiceLine>
+ <InvoiceLine>
+  <ServiceCode>TAX</ServiceCode>
+  <ServiceName>מס</ServiceName>
+  <PayType>L</PayType>
+  <AmountNIS>207144</AmountNIS>
+  <Currency>NIS</Currency>
+  <AmountForeign>207144</AmountForeign>
+  <Wip>Y</Wip>
+ </InvoiceLine>
 </InvoiceLines>
-<IntegratedInvoices>
-<IntegratedInvoice>
-  <InvoiceNumber>ci200026</InvoiceNumber>
-  <ForwarderFile>A00002928</ForwarderFile>
-  <InvoiceCurrency>NIS</InvoiceCurrency>
-  <InvoiceAmount>17685</InvoiceAmount>
-</IntegratedInvoice>
-</IntegratedInvoices>
+<IntegratedInvoices/>
 <Invoices>
-<Invoice>
-  <InvoiceBillTo>COM</ServiceCode>
-  <InvoiceType>עמלה</ServiceName>
-  <InvoiceDate>L</PayType>
-  <InvoiceCurrency>NIS</Currency>
-  <InvoiceAmount>10</AmountForeign>
-</Invoice>
+ <Invoice>
+  <InvoiceBillTo>אודליה</InvoiceBillTo>
+  <InvoiceBillToCard>10013234</InvoiceBillToCard>
+  <InvoiceDate>31.01.2020</InvoiceDate>
+  <InvoiceType>Client Invoice</InvoiceType>
+  <InvoiceCurrency>NIS</InvoiceCurrency>
+  <InvoiceAmount>207665</InvoiceAmount>
+ </Invoice>
 </Invoices>
 <Messages>
  <MessagesData>
-  <E>חסר תאור בשורה של סעיף MMN1</E>
+  <E>חסר תאור בשורה של סעיף 56</E>
  </MessagesData>
- <MessagesData>
-  <W>בכרטיס 10008559 מספר עוסק מורשה חייב להיות באורך 9</W>
+<MessagesData>
+<E>אריק בדיקה 1</E>
+</MessagesData>
+<MessagesData>
+  <W>שגיאה1</W>
  </MessagesData>
-</Messages>
-</AllInvoices>
- ";
+<MessagesData>
+<W>אריק שגיאה1</W>
+</MessagesData>
+</Messages>";
             if (!String.IsNullOrWhiteSpace(resXML))
             {
-                using (var stringReader = new System.IO.StringReader(resXML))
-                {
-                    var serializer = new XmlSerializer(typeof(AllInvoices));
-
-
-                   var x=  serializer.Deserialize(stringReader) as AllInvoices;
-                    return x;
-                }
-                
+                    string alexGiveBadXML = $"<AllInvoices>{resXML}</AllInvoices>";
+                    var StatusItemlist = LogitudeXmlSerializer.DeserializeObject<AllInvoices>(alexGiveBadXML);
+                    return StatusItemlist;
+               
+               // string alexGiveBadXML = $"<AllInvoices>{resXML}</AllInvoices>";
+               // var StatusItemlist = LogitudeXmlSerializer.DeserializeObject<AllInvoices>(alexGiveBadXML);
 
                 //var response = UnifreightListsUtil.Deserialize(resXML);
                 //var xmlStatusList = UnifreightListsUtil.GetHtmlDecodeValue(ref response, "InvoiceList");
@@ -200,7 +188,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public List<InvoiceLine> InvoiceLines;
             public List<IntegratedInvoice> IntegratedInvoices;
             public List<Invoice> Invoices;
-            public List<Messages> MessagesData;
+            public List<MessagesData> Messages;
 
 
         }
@@ -244,7 +232,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string InvoiceCurrency { get; set; }
             public decimal InvoiceAmount { get; set; }
         }
-        public class Messages
+        public class MessagesData
         {
             public string W { get; set; }
             public string E { get; set; }

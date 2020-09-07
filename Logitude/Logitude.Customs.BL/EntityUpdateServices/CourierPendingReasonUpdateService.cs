@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Customs.Data.Repsitories;
+using Logitude.Server.Tools.Counters;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -15,6 +16,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnCreating(CourierPendingReasonPM entityPM, EntityPM entityParentPM)
         {
             ValidateEntity(entityPM);
+            entityPM.Id = IdCounter.GetNumber("Customs.CourierPendingReason", entityPM.Tenant);
         }
 
         protected override void OnUpdating(CourierPendingReasonPM entityPM, CourierPendingReason entityPOCO)
@@ -33,7 +35,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         bool IsPendingCodeExisit(string code, int tenant)
         {
             CourierPendingReasonRepository repo = new CourierPendingReasonRepository(tenant);
-            var exist = repo.GetSingle(code, tenant);
+            var exist = repo.GetByCode(code, tenant);
 
             return ((exist != null) ? true : false);
         }

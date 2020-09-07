@@ -38,7 +38,10 @@ using System.Xml.Serialization;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.BL.CloseTables;
+
 using Unifreight.BL.EntityQueryServices;
+
+using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
 
 //using Simplog.Infrastructure.SimplogUtilities;
 
@@ -1404,9 +1407,9 @@ After that Remove file  from DCA  .. ");
                     communicationLogStep.StartDate = serverTime;
                 }
                 communicationLogStep.EndDate = serverTime;
-
-
-
+                PerformanceM.LastInstance.RequestStartDate = communicationLogStep.StartDate;
+                PerformanceM.LastInstance.RequestEndDate = communicationLogStep.EndDate;
+                
                 if (memstream != null)
                 {
 

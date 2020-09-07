@@ -14,9 +14,13 @@ import { DeclarationReferantDataList } from '../../EntityLists/DeclarationRefern
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { ResourceLoader } from '@angular/compiler';
 import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationReferantDataPMService';
+
 import { ExceptionReasonExtendedListService } from '../../Services/ExtendedLists/ExceptionReasonExtendedListService';
 import { ExceptionReasonListService } from '../../Services/StandardLists/ExceptionReasonListService';
 import { ExceptionReasonList } from '../../EntityLists/ExceptionReasonList';
+
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
@@ -39,7 +43,7 @@ export class FieldTemplateComponent {
     private _ListComponentArgs: ListComponentArgs;
     @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
     RowIndex: any;
-    constructor(private CD: ChangeDetectorRef) {
+    constructor(private CD: ChangeDetectorRef, private entityResourceService: EntityResourceService) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
         } else {
@@ -170,19 +174,31 @@ export class FieldTemplateComponent {
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Height = 400;
-        logitudeWindow.Width =700;
+        logitudeWindow.Height = 700;//400;
+        logitudeWindow.Width = 800;
         logitudeWindow.ShowCloseButton = true;
         if (this.Entity.IsClassificationRemarks) {
-            _declarationRemarksService.GetSVCOrSRVStatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
-                .subscribe((response: any) => {
-                    windowArgs.EntityPM = response.Result;
-                    windowArgs.length = response.Result.length;
-                    windowArgs.title = "  הערות מסווג  ";
-                    logitudeWindow.Title = windowArgs.length + "  הערות מסווג  ";
-                    logitudeWindow.WindowArgs = windowArgs;
-                    logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
+
+            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+                this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response: any) => {
+                    this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
+
+
+                        _declarationRemarksService.GetSVCOrSRVStatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
+                            .subscribe((response: any) => {
+                                windowArgs.EntityPM = response.Result;
+                                windowArgs.length = response.Result.length;
+                                windowArgs.title = "  הערות מסווג  ";
+                                windowArgs.IsSivug = true;
+                                windowArgs.DeclarationId = this.Entity.DeclarationId;
+
+                                logitudeWindow.Title = windowArgs.length + "  הערות מסווג  ";
+                                logitudeWindow.WindowArgs = windowArgs;
+                                logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
+                            });
+                    });
                 });
+            });
         }
     }
     OpenControllerRemarks() {
@@ -200,6 +216,9 @@ export class FieldTemplateComponent {
                     windowArgs.title = "  הערות מבקר  ";
                     let counter = response.Result.length;
                     logitudeWindow.Title = counter + "  הערות מבקר  ";
+                    windowArgs.IsSivug = false;
+                    windowArgs.DeclarationId = this.Entity.DeclarationId;
+
                     logitudeWindow.WindowArgs = windowArgs;
                     logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
                 });
@@ -214,7 +233,7 @@ export class FieldTemplateComponent {
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
             confirmWindow.Height = 150;
-            confirmWindow.Show("האם אתה בטוח שברצונך למחוק את שורת המפתח?");
+            confirmWindow.Show("הםם םתה בטוח שברצונך למחוק םת שורת המפתח?");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) { // YES
                     this.customsAutonomyKeywordExtendedPMService.deleteByid(value).subscribe((response: ServiceResponse) => {

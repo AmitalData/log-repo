@@ -50,20 +50,24 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(CourierPendingReasonPM entityPM)
         {
-            CourierPendingReasonKeys entityKeys = new CourierPendingReasonKeys() { Code = entityPM.Code };
+            CourierPendingReasonKeys entityKeys = new CourierPendingReasonKeys() { Id = entityPM.Id };
             return entityKeys;
         }
 
 		
-	    protected override void FillDefaultValuesOnCreate(CourierPendingReasonPM entityPM)
-        {
- 
-		}
-		protected override void FillDefaultValuesOnUpdate(CourierPendingReasonPM entityPM)
-		{
- 
-		}
+		protected override void FillDefaultValuesOnCreate(CourierPendingReasonPM entityPM)
+        {     
+  
 		
+		    entityPM.Id = IdCounter.GetNumber("CourierPendingReason", entityPM.Tenant); 
+					
+	    }
+        
+		protected override void FillDefaultValuesOnUpdate(CourierPendingReasonPM entityPM)
+        {       
+           
+        }
+		  
 		 
 	 
    }

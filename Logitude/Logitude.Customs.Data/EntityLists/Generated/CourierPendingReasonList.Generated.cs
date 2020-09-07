@@ -15,6 +15,8 @@ namespace Logitude.Customs.Data.EntityLists
    
        [Key]
        [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
        public string Code  { get; set; }
        [DataMember]
        public string LocalName  { get; set; }
