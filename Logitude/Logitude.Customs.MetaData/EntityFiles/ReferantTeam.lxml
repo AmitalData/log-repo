@@ -41,6 +41,8 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;רשימת צוותים&quot;"
   DefaultText="&quot;ReferantTeam &quot;"
+  NewButtonLocalDefaultText="&quot;&quot;"
+  NewButtonDefaultText="&quot;&quot;"
   Code="&quot;475a&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"

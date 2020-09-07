@@ -17799,6 +17799,11 @@
         IndexOrder="6"
         ObjectFieldName="&quot;ProcedureCurrentName&quot;"
         ColumnWidth="190" />
+      <QueryColumn
+        QueryCode="&quot;AllCourierDeclarations&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
+        ColumnWidth="180" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
@@ -19199,6 +19204,19 @@
       ObjectTableName="&quot;Customs.Declaration&quot;"
       EnglishName="&quot;Declaration Cancel Sent&quot;"
       LocalName="&quot;נשלחה בקשה לביטול הצהרה&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;SCH&quot;"
+      ObjectTableName="&quot;Customs.Declaration&quot;"
+      EnglishName="&quot;נדרש לטפל בהזנת סגר&quot;"
+      LocalName="&quot;נדרש לטפל בהזנת סגר&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -21206,7 +21224,7 @@
       LocalDefaultText="&quot;הצהרה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-	    <TextCode
+    <TextCode
       Code="&quot;Customs.Declaration.TH.DeclarationCancellation&quot;"
       DefaultText="&quot;Declaration Cancellation&quot;"
       LocalDefaultText="&quot;ביטול הצהרה במכס&quot;"
@@ -21356,6 +21374,12 @@
       Code="&quot;Customs.Declaration.O.AllCourierDeclarations&quot;"
       DefaultText="&quot;All Courier Declarations &quot;"
       LocalDefaultText="&quot;כל ההצהרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.Errors&quot;"
+      DefaultText="&quot;Errors&quot;"
+      LocalDefaultText="&quot;שגיאות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

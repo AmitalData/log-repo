@@ -4,7 +4,7 @@ import { BaseComponent } from       '../../../Infrastructure/Components/Logitude
 import { TextCodeTranslator } from  '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
-import { AppTool } from '../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
@@ -25,6 +25,7 @@ import { CustomsSettingList } from '../../../Customs/EntityLists/CustomsSettingL
 import { CustomsSettingPMService } from '../../../Customs/Services/StandardPMs/CustomsSettingPMService';
 import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
+import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
 
 @Component({
@@ -50,13 +51,14 @@ export class CustomsSettingsComponent
     private _CustomsSettingPMService: CustomsSettingPMService = new CustomsSettingPMService();
     private _CustomsSettingListService: CustomsSettingListService = new CustomsSettingListService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    public customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     ///public ComponentRef: ComponentRef<CustomsSettingsComponent>;
 
     _TenantCustomsSettingList: CustomsSettingList;
     entityPM: CustomsSettingPM;
 
     ValidationErrorsList: string[] = [];
-    
+    interval: any;
 
     constructor() {
         super();
@@ -67,7 +69,9 @@ export class CustomsSettingsComponent
         //ערכים C - דיפולטיבי (בסקריפט), או B == בלדרות - אסור ריק יאותחל עם הפצה ראשונה + DEFAULT == C
 
         this.CompanyTypeList = [];
-        
+        this.UIProperties.SetEnabled("LastRunningDCAWS", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("LastNumOfMessagesDCAWS", this.ObjectTableName, false);
+
         this.CompanyTypeList.push(new CodeNameClass("C", "עמילות"));
         this.CompanyTypeList.push(new CodeNameClass("B", "בלדרות"));
         this._SelectedCompanyType= this.CompanyTypeList[0];
@@ -91,7 +95,18 @@ export class CustomsSettingsComponent
                                         this.entityPM = myResponse.Result;
                                         if (AppTool.IsNullOrEmpty(this.entityPM.QtyFeedbackInPendingMessage)) this.entityPM.QtyFeedbackInPendingMessage = 100;
                                         this.Loaded = true;
+                                    
+                                        this.LastRunningDCAWS = this.entityPM.LastRunningDCAWS.toString();
 
+                                        this.interval = setInterval(() => {
+               
+                                            this._CustomsSettingPMService.get(this._TenantCustomsSettingList.Id).subscribe((response: ServiceResponse) => {
+
+                                                this.LastRunningDCAWS = response.Result.LastRunningDCAWS;
+                                                this.LastNumOfMessagesDCAWS = response.Result.LastNumOfMessagesDCAWS;
+
+                                            });
+                                        }, 30000);
                                         this.ValidScreen()
                                     });
 
@@ -106,6 +121,7 @@ export class CustomsSettingsComponent
         });
 
     }
+   
 
     ValidScreen() {
         if (!this.IsConnectedToUniFreight) {
@@ -233,12 +249,30 @@ export class CustomsSettingsComponent
     get UnfConnectionString() { return this.entityPM != null ? this.entityPM.UnfConnectionString : null; }
     set UnfConnectionString(value) { this.entityPM.UnfConnectionString = value; }
 
-
-    get LastRunningDCAWS() { return this.entityPM != null ? this.entityPM.LastRunningDCAWS : null; }
-    set LastRunningDCAWS(value) { this.entityPM.LastRunningDCAWS = value; }
-
+    get LastNumOfMessagesDCAWS() { return this.entityPM != null ? this.entityPM.LastNumOfMessagesDCAWS : null; }
+    set LastNumOfMessagesDCAWS(value) { this.entityPM.LastNumOfMessagesDCAWS = value; }
 
 
+    _LastRunningDCAWS: Date;
+    get LastRunningDCAWS() {
+       // if (this.entityPM != null) {
+          //  if (this.entityPM.LastRunningDCAWS != null) {
+        if (this._LastRunningDCAWS != null) {
+            var myFormats = DateTool.GetDateFormats(this._LastRunningDCAWS);
+                return myFormats.DateString + " " + myFormats.ShortTimeString;
+
+        }
+        //    }
+      //  }
+       return null;
+
+
+       //return this.entityPM != null ? this.entityPM.LastRunningDCAWS : null;
+    }
+    set LastRunningDCAWS(value: any) { this._LastRunningDCAWS =  value ; }
+
+
+    
 
     
     //#endregion

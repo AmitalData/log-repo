@@ -72,6 +72,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.QtyFeedbackInPendingMessage).HasColumnName("QtyFeedbackInPendingMessage");
 
             this.Property(t => t.LastRunningDCAWS).HasColumnName("LastRunningDCAWS");
+
+            this.Property(t => t.LastNumOfMessagesDCAWS).HasColumnName("LastNumOfMessagesDCAWS");
         }
     }
 }

@@ -5,6 +5,7 @@ export class AllInvoices {
     InvoiceLines: InvoiceLine[];
     IntegratedInvoices: IntegratedInvoice[];
     Invoices: Invoice[];
+    Messages: MessagesData[];
     static InvoiceList: any;
 
 }
@@ -41,4 +42,8 @@ export class Invoice {
     InvoiceDate: string;
     InvoiceCurrency: string;
     InvoiceAmount: any;
+}
+export class MessagesData {
+    W: string;
+    E: string;
 }

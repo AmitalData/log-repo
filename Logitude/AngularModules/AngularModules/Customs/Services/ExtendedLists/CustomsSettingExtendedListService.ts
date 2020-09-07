@@ -45,6 +45,25 @@ export class CustomsSettingExtendedListService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+
+    GetLastRunningDCAWS() {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetLastRunningDCAWS/?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+              
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+
     GetSincroOption(tenant: number, SincroScreen: string): any {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);

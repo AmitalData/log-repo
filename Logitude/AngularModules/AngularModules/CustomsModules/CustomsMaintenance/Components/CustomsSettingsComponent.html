@@ -178,10 +178,8 @@
                                          [Checked]="AutoFillAccountType"></LogCheckBox>
                         </td>
 
-                        <td class="tbl1LastCol">
-                            <div>
-                            </div>
-                        </td>
+                        <td class="tbl1LastCol"><div>
+                             </div></td>
 
                     </tr>
 
@@ -207,29 +205,6 @@
                         <td class="tbl1LastCol"><div></div></td>
 
                     </tr>
-
-                    <!--<tr class="FormFieldRow">
-                        <td class="tbl1Label">
-                            <LogLabel [ObjectFieldName]="'TotalInvoiceAmountInUSD'"
-                                      [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext">
-
-                            </LogLabel>
-                        </td>
-                        <td class="tbl1Col0"></td>
-
-                        <td colspan="2" style="padding-right: 15px;text-align:left">
-                            <LogTextBox [ObjectFieldName]="'TotalInvoiceAmountInUSD'"
-                                        [InputType]="'text'"
-                                        [DataContext]="DataContext"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [HideColumns]="true"
-                                        [Text]="TotalInvoiceAmountInUSD"></LogTextBox>
-                        </td>
-
-                        <td class="tbl1LastCol"><div></div></td>
-
-                    </tr>-->
 
                     <tr></tr>
 
@@ -530,32 +505,60 @@
 
 
                     <tr>
-                        <!--SignServiceAddress-->
                         <td style="padding:2px;">
-                           
                         </td>
 
-                        <!--DCAServiceAddress-->
-                        <td style="padding:2px;">
-                            <LogLabel [ObjectFieldName]="'LastRunningDCAWS'"
-                                      [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext">
+                        <td style="padding:2px;" width="250px">
+                            <table>
+                                <tr>
+                                    <td stye=" width: 70px">
+                                        <LogLabel [ObjectFieldName]="'LastRunningDCAWS'"
+                                                  [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext">
 
-                            </LogLabel>
+                                        </LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'LastRunningDCAWS'"
+                                                    [InputType]="'text'"
+                                                    [DataContext]="DataContext"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [HideColumns]="true"
+                                                    [Text]="LastRunningDCAWS"></LogTextBox>
+                                    </td>
+                                </tr>
+                            </table>
 
-                         
+
+
                         </td>
 
                         <!--UnfConnectionString-->
-                        <td style="padding:2px;">
-                            <LogTextBox [ObjectFieldName]="'LastRunningDCAWS'"
-                                        [InputType]="'text'"
-                                        [DataContext]="DataContext"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [HideColumns]="true"
-                                        [Text]="LastRunningDCAWS"
-                                      ></LogTextBox>
+                         <td style="padding:2px;" width="250px">
+                            <table>
+                                <tr>
+                                    <td stye=" width: 70px">
+                                        <LogLabel [ObjectFieldName]="'LastNumOfMessagesDCAWS'"
+                                                  [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext">
+
+                                        </LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'LastNumOfMessagesDCAWS'"
+                                                    [InputType]="'text'"
+                                                    [DataContext]="DataContext"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [HideColumns]="true"
+                                                    [Text]="LastNumOfMessagesDCAWS"></LogTextBox>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+
                         </td>
+ 
                     </tr>
 
                     <tr>

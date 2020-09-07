@@ -476,6 +476,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             iQueryable = filters.GetFreelancerDeclarations(queryOperations, iQueryable, tenant);
 
+            iQueryable = iQueryable.Where(x => x.AmendmentDontDisplayInList != true);
+
             return iQueryable;
         }
         /*
