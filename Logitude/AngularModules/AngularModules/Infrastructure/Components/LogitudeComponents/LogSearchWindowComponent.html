@@ -60,7 +60,7 @@
                                                     <table>
                                                         <tr>
                                                             <td style="color: #666666; font-size: 11px; padding-left: 15px;">
-                                                                My {{ObjectTableNamePluralName}} ({{DataSource.rowCount}}) <span style="margin-left:5px" *ngIf="DataSource.rowCount == ConstantPageSize && DontApplyVirtualization"> Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span> 
+                                                                My {{ObjectTableNamePluralName}} ({{DataSource.rowCount}}) <span style="margin-left:5px;" *ngIf="DataSource.rowCount == ConstantPageSize && DontApplyVirtualization"> Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span> 
                                                             </td>
 
                                                             <!-- Add US Warehouse Button -->
@@ -127,12 +127,17 @@
                                                         <tr>
                                                             <td style="height: 100%">
                                                                 <div *ngIf="IsDataReady" class="GeneratedGridContainer">
-                                                                    <logitude-grid GridWidth="100%" GridHeight="100%" [dataSource]="DataSource"
+                                                                    <logitude-grid *ngIf="false && !UsingLogGridV2" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource"
                                                                                    [columns]="columns1" [autoLoad]="true" [rows]="items"
                                                                                    [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent"
                                                                                    [DontApplyVirtualization]="DontApplyVirtualization" [ConstantPageSize]="ConstantPageSize"
                                                                                    (rowSelectedEvent)="onRowSelected($event)">
                                                                     </logitude-grid>
+                                                                    <logitude-grid-v2 *ngIf="true || UsingLogGridV2" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource"
+                                                                                   [columns]="columns1" [autoLoad]="true" [rows]="items"
+                                                                                   [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent" 
+                                                                                   (rowSelectedEvent)="onRowSelected($event)">
+                                                                    </logitude-grid-v2>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -180,11 +185,16 @@
                                                         <tr>
                                                             <td style="height: 100%">
                                                                 <div *ngIf="IsDataReady" class="GeneratedGridContainer">
-                                                                    <logitude-grid GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
+                                                                    <logitude-grid *ngIf="false && !UsingLogGridV2" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
                                                                                    [columns]="columns" [autoLoad]="true" [rows]="items" [DontApplyVirtualization]="DontApplyVirtualization" [ConstantPageSize]="ConstantPageSize"
                                                                                    [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent"
                                                                                    (rowSelectedEvent)="onRowSelected($event)">
                                                                     </logitude-grid>
+                                                                    <logitude-grid-v2 *ngIf="true || UsingLogGridV2" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
+                                                                                   [columns]="columns" [autoLoad]="true" [rows]="items"
+                                                                                   [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent"
+                                                                                   (rowSelectedEvent)="onRowSelected($event)">
+                                                                    </logitude-grid-v2>
                                                                 </div>
                                                             </td>
                                                         </tr>

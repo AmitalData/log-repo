@@ -52,5 +52,6 @@ export class AgentList {
 		PrimaryContactPhone: string;
 		StateName: string;
 		StorageFreeDays: number;
+		GLAccountNumber: string;
 	
 }

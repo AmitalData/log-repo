@@ -63,7 +63,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.IsAutonomy = entityPM.IsAutonomy;
             entityPOCO.CreatedByPartner = entityPM.CreatedByPartner;
             entityPOCO.AccountingVATSplit = entityPM.AccountingVATSplit;
-
+            entityPOCO.GLAccountDisplayNumber = entityPM.GLAccountDisplayNumber;
             BuildSearchFields(entityPM, entityPOCO);
         }
 
@@ -79,6 +79,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PayablesAccountingCard);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPOCO.CityName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPOCO.CountryName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPOCO.GLAccountDisplayNumber);
 
             if (mySearchFields.Length > 1000)
             {

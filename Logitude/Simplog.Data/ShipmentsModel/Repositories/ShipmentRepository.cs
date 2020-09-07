@@ -167,6 +167,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return result;
         }
 
+
+        public string GetShipmentCustomerShipmentNumber(string id, int tenant)
+        {
+            string customerShipmentNumber = (from s in context.Shipments where s.Tenant == tenant && s.Id == id select s.CustomerShipmentNumber).FirstOrDefault();
+            return customerShipmentNumber;
+        }
+
         public byte[] GetLastModifiedTimeStamp(string shipmentId, int tenant)
         {
             //return (from a in context.Shipments

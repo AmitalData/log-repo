@@ -387,6 +387,7 @@
     <None Include="DBScripts\ShipmentModel\202006111515_AddShipmentSubTypesToTenants.sxml" />
     <None Include="DBScripts\ShipmentModel\202006140958_FillAirShipmentShipmentTypeField.sxml" />
     <None Include="DBScripts\ShipmentModel\202006141227_FillShipmentSubTypeBackward.sxml" />
+    <None Include="DBScripts\ShipmentModel\202009031302_FillDataFromShipmentPackagesToShipmentComputedFields.sxml" />
     <None Include="DBScripts\ShipmentModel\202008110940_SetIsBondedWarehouseField.sxml" />
     <None Include="DBScripts\ShipmentModel\202007051320_UpdateAirShipmentSubType.sxml" />
     <None Include="DBScripts\ShipmentModel\202007051322_UpdateNotAirShipmentsSubType.sxml" />
@@ -672,6 +673,10 @@
     <None Include="DBTables\InfrastructureModel\CustomTable.dxml" />
     <None Include="DBTables\InfrastructureModel\DataBaseProperty.dxml" />
     <None Include="DBTables\InfrastructureModel\DBIdCounter.dxml" />
+    <None Include="DBTables\InfrastructureModel\DBMigrationsDataScriptCounters.dxml" />
+    <None Include="DBTables\InfrastructureModel\DBMigrationsSetValueCounters.dxml" />
+    <None Include="DBTables\InfrastructureModel\DBMigrationsDataScripts.dxml" />
+    <None Include="DBTables\InfrastructureModel\DBMigrationsSetDefaultValues.dxml" />
     <None Include="DBTables\InfrastructureModel\DBMigrationSettings.dxml" />
     <None Include="DBTables\InfrastructureModel\DBMigrationsHistory.dxml" />
     <None Include="DBTables\InfrastructureModel\DBScriptsHistory.dxml" />

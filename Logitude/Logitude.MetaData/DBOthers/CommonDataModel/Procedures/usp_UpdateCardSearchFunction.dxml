@@ -30,7 +30,6 @@ declare  @Weight int
 
 declare  @PartnerTypeId varchar(2)
 declare  @InActive bit
-Declare @SearchField nvarchar(max)
 
 
 if (@CardId is not null)
@@ -62,18 +61,15 @@ where Id = @CardId
 	  set @RecordDate = @UpdateDate;
 	  if(@RecordDate is null) set @RecordDate = @CreateDate
 
-	  	 set @SearchField = @Code;
-			 if(@EnglishName is not null) set @SearchField += (' ' + @EnglishName);
-			 if(@LocalName is not null) set @SearchField += (' ' + @LocalName);
-			 if(@VatNumber is not null) set @SearchField += (' ' + @VatNumber);
-			 if(@CountryName is not null) set @SearchField += (' ' + @CountryName);
-			 if(@CityName is not null) set @SearchField += (' ' + @CityName);
-			 if(@ReceivablesAccountingCard is not null) set @SearchField += (' ' + @ReceivablesAccountingCard);
-			 if(@PayablesAccountingCard is not null) set @SearchField += (' ' + @PayablesAccountingCard);
+		if (@Code is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@Code , 90 , 90) t where KeyWord !=' ' end
+		if (@EnglishName is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@EnglishName , 100 , 90) t where KeyWord !=' ' end
+		if (@LocalName is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@LocalName , 100 , 90) t where KeyWord !=' ' end
+		if (@VatNumber is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@VatNumber , 100 , 100) t where KeyWord !=' ' end
+		if (@CountryName is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@CountryName , 50 , 50) t where KeyWord !=' ' end
+		if (@CityName is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@CityName , 40 , 40) t where KeyWord !=' ' end
+		if (@ReceivablesAccountingCard is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ReceivablesAccountingCard , 80 , 80) t where KeyWord !=' ' end
+		if (@PayablesAccountingCard is not null)	begin 		 insert into CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive , Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive ,  t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@PayablesAccountingCard , 80 , 80) t where KeyWord !=' ' end
 
-
-
-    insert into CardSearches (Tenant, CardId  , RecordDate , Weight , PartnerTypeId,InActive , Keyword) select  @Tenant, @CardId , @RecordDate , @Weight , @PartnerTypeId,@InActive ,  Name from dbo.SplitBySpaceFunction(@SearchField) where Name !=' '
 
 
 

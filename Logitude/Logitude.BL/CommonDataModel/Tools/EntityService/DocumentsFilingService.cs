@@ -166,19 +166,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             DocumentsFilingValidating.Validate(theEntityPm);
             DocumentsFilingTracing.Trace(theEntityPm, Poco, isNewEntity);
             _OnCreateUnifreightFillingMode = BlobFileInfoExt.IsUnifreightFillingModeBase(theEntityPm.Tenant, theEntityPm.Folder);
-         
+
             if ((!FromService || _OnCreateUnifreightFillingMode) && documentId == null)
             {
                 if (entityPM.DirectionCode == "I")
                 {
                     entityPM.DocumentId = BuildDocument(fileData, true, entityPM.Id);
-                  
+
                 }
             }
             else if (string.IsNullOrEmpty(entityPM.DocumentId))
             {
                 entityPM.DocumentId = documentId;
-               
+
             }
 
             tenantQuery = new TenantQuery(theEntityPm.Tenant);
@@ -212,7 +212,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                     CusCode = mycustomer.Code;
                                 }
                             }
-                           
+
                             DocumentsFilingMetaDataValuePM value1 = new DocumentsFilingMetaDataValuePM();
                             value1.ChangeSetOp = ChangeSetOperation.Insert;
                             value1.DocumentsFilingId = entityPM.Id;
@@ -237,15 +237,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             //    theEntityPm.IsSharedWithCustomer = true;
             //} 
             bool HavingDREL = false;
-           
-           
-           
-           
+
+
+
+
             var OldIsSigned = Poco.IsDigitallySigned;
 
 
             DocumentsFilingMapping.MapEntity(theEntityPm, Poco, isNewEntity);
-          
+
 
             if (tenantPM.IsDocumentsArchive == true)
             {
@@ -267,7 +267,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         }
                         else if (this.entityPM.IsDigitallySigned)
                         {
-                            ShipmentCompField.IsDigitalSignRequired = documentsFilingQuery.GetIfSignRequiredForEntity(Poco.EntityId, tenant,false);
+                            ShipmentCompField.IsDigitalSignRequired = documentsFilingQuery.GetIfSignRequiredForEntity(Poco.EntityId, tenant, false);
                             Poco.IsDigitalSignRequired = false;
                         }
 
@@ -310,7 +310,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         {
                             ShipmentCompField.RequestedDocumentsCount++;
                         }
-                        
+
 
                         ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
                         shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField, shipmentComputedFieldsRepository.context);
@@ -323,10 +323,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             {
                                 IQueueService queueservice = new DbQueueService();
                                 queueservice.InitializeQueue("ForwardersShipmentDocumentsQueue", 0);
-                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() },  }, tenant);
+                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
                             }
 
-                          
+
                         }
                         catch (Exception ex)
                         {
@@ -366,19 +366,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
             }
-            if (theEntityPm.DirectionCode == "I" && (!theEntityPm.IsSharedWithForwarder || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)))
-            {
-                var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
-                if ((OTName != null && OTName.Name == "Shipment") || theEntityPm.IsDeleted)//&& !string.IsNullOrEmpty(this.Poco.EntityId)
-                {
-                    if (!entityPM.DontAddToQueue && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)) && !tenantPM.IsDocumentsArchive)
-                    {
-                        IQueueService queueservice = new DbQueueService();
-                        queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
-                        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() },  }, tenant);
-                    }
-                }
-            }
+
+            AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
 
             if (!string.IsNullOrEmpty(this.entityPM.DocumentId))
             {
@@ -389,6 +378,63 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
 
+        }
+
+        private void AddImporterQueue(DocumentsFilingPM theEntityPm, TenantPM tenantPM, bool HavingDREL)
+        {
+            //if (theEntityPm.DirectionCode == "I" && (!theEntityPm.IsSharedWithForwarder || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)))
+            //{
+            //    var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
+            //    if ((OTName != null && OTName.Name == "Shipment") || theEntityPm.IsDeleted)//&& !string.IsNullOrEmpty(this.Poco.EntityId)
+            //    {
+            //        if (!entityPM.DontAddToQueue && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)) && !tenantPM.IsDocumentsArchive)
+            //        {
+            //            IQueueService queueservice = new DbQueueService();
+            //            queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
+            //            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
+            //        }
+            //    }
+            //}
+
+
+
+            //if (theEntityPm.DirectionCode == "I" && (!theEntityPm.IsSharedWithForwarder || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)))
+            //{
+            //    //var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
+            //    //if (OTName != null && OTName.Name == "Shipment")//&& !string.IsNullOrEmpty(this.Poco.EntityId)
+            //    //{
+            //    if (!entityPM.DontAddToQueue && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)) && !tenantPM.IsDocumentsArchive 
+            //        && (!string.IsNullOrEmpty(entityPM.EntityId) || entityPM.IsDeleted))
+            //    {
+            //        IQueueService queueservice = new DbQueueService();
+            //        queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
+            //        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
+            //    }
+            //    //}
+            //}
+            if (theEntityPm.DirectionCode == "I" && (!theEntityPm.IsSharedWithForwarder || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)))
+            {
+                var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
+                if (OTName != null && OTName.Name == "Shipment" && !string.IsNullOrEmpty(theEntityPm.EntityId))//&& !string.IsNullOrEmpty(this.Poco.EntityId)
+                {
+                    if (!entityPM.DontAddToQueue
+                        && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true))
+                        && !tenantPM.IsDocumentsArchive
+                        && (!string.IsNullOrEmpty(entityPM.EntityId) || entityPM.IsDeleted)
+                        )
+                    {
+                        ShipmentRepository shipmentRepository = new ShipmentRepository(theEntityPm.Tenant);
+                        var customerShipmentNumber = shipmentRepository.GetShipmentCustomerShipmentNumber(theEntityPm.EntityId, theEntityPm.Tenant);
+
+                        if (!LogitudeSettings.IsCostomsDeploy && !string.IsNullOrEmpty(customerShipmentNumber)) //ITZIK + YARON 
+                        {
+                            IQueueService queueservice = new DbQueueService();
+                            queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
+                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
+                        }
+                    }
+                }
+            }
         }
 
         private void AddDocumentBackupLog()
@@ -547,21 +593,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         //shipmentComputedFieldsRepository.SubmitChanges();
                         try
                         {
-                            //if (!entityPM.DontAddToQueue)
-                            //{
-                            //    ShipmentQuery shipmentQuery = new ShipmentQuery(entityPM.Tenant);
-                            //    ShipmentPM CurrentShipment = shipmentQuery.GetSinglePM(entityPM.EntityId, entityPM.Tenant);
-                            //    CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
-                            //    CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, CurrentShipment.CustomerId);
-
-                            //    if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && CurrentShipment.DirectionId.ToUpper() == "I")
-                            //    {
-                            //        var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
-                            //        IQueueService queueservice = new DbQueueService();
-                            //        queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
-                            //        queueservice.Send(new Dictionary<string, string>() { { "ShipmentNumber", CurrentShipment.CustomerShipmentNumber }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() } });
-                            //    }
-                            //}
+                             
                             if (!entityPM.DontAddToQueue && ((entityPM.IsSharedWithForwarder && !theEntityPm.IsSharedWithCustomer) || (entityPM.IsSharedWithCustomer && entityPM.IsDigitallySigned && OldIsSigned == false) || (entityPM.IsSharedWithCustomer && WasRequested && entityPM.HasFile == true)))
                             {
                                 IQueueService queueservice = new DbQueueService();
@@ -616,19 +648,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
            
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-            if (theEntityPm.DirectionCode == "I" && (!theEntityPm.IsSharedWithForwarder || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)))
-            {
-                //var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
-                //if (OTName != null && OTName.Name == "Shipment")//&& !string.IsNullOrEmpty(this.Poco.EntityId)
-                //{
-                if (!entityPM.DontAddToQueue && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)) && !tenantPM.IsDocumentsArchive && (!string.IsNullOrEmpty(entityPM.EntityId) || entityPM.IsDeleted))
-                {
-                    IQueueService queueservice = new DbQueueService();
-                    queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
-                    queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() },  }, tenant);
-                }
-                //}
-            }
+
+            AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
 
             if (addBackupQueue)
             {
@@ -749,21 +770,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         // shipmentComputedFieldsRepository.SubmitChanges();
                         try
                         {
-                            //if (!entityPM.DontAddToQueue)
-                            //{
-                            //    ShipmentQuery shipmentQuery = new ShipmentQuery(entityPM.Tenant);
-                            //    ShipmentPM CurrentShipment = shipmentQuery.GetSinglePM(entityPM.EntityId, entityPM.Tenant);
-                            //    CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
-                            //    CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, CurrentShipment.CustomerId);
-
-                            //    if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && CurrentShipment.DirectionId.ToUpper() == "I")
-                            //    {
-                            //        var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
-                            //        IQueueService queueservice = new DbQueueService();
-                            //        queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
-                            //        queueservice.Send(new Dictionary<string, string>() { { "ShipmentNumber", CurrentShipment.CustomerShipmentNumber }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() } });
-                            //    }
-                            //}
+                            
                             if (!entityPM.DontAddToQueue && ((entityPM.IsSharedWithForwarder && !theEntityPm.IsSharedWithCustomer) || (entityPM.IsSharedWithCustomer && entityPM.IsDigitallySigned && OldIsSigned == false) || (entityPM.IsSharedWithCustomer && WasRequested && entityPM.HasFile == true)))
                             {
                                 IQueueService queueservice = new DbQueueService();
@@ -828,23 +835,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-            if (theEntityPm.DirectionCode == "I" && (!theEntityPm.IsSharedWithForwarder || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)))
-            {
-                //var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
-                //if (OTName != null && OTName.Name == "Shipment")//&& !string.IsNullOrEmpty(this.Poco.EntityId)
-                //{
-
-                if (!entityPM.DontAddToQueue && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)) && !tenantPM.IsDocumentsArchive && (!string.IsNullOrEmpty(entityPM.EntityId) || entityPM.IsDeleted))
-                {
-                    if (!LogitudeSettings.IsCostomsDeploy) //ITZIK + YARON 
-                    {
-                        IQueueService queueservice = new DbQueueService();
-                        queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
-                        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() },  }, tenant);
-                    }
-                }
-                //}
-            }
+            AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
+           
 
 
             if (entityPM.IsUpdateSharedDocument)

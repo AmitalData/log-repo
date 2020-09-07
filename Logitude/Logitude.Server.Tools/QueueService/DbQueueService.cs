@@ -478,8 +478,9 @@ namespace Logitude.Server.Tools.QueueService
             int nextRunDelayInSec = 60;
             return Receive(nextRunDelayInSec);
         }
-        public QueueResponse Receive(int nextRunDelayInSec = 60)
+        public QueueResponse Receive(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null)
         {
+            if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
             long messageId = -1;
 
             string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
@@ -632,6 +633,10 @@ namespace Logitude.Server.Tools.QueueService
 
             }
 
+            if (string.IsNullOrEmpty(response.MessageId))
+            {
+                Thread.Sleep(serverWaitTime.Value);
+            }
 
             return response;
         }

@@ -50,5 +50,6 @@ export class WarehouseList {
 		AirWeightRoundingCode: string;
 		OceanWeightRoundingCode: string;
 		InlandWeightRoundingCode: string;
+		GLAccountNumber: string;
 	
 }

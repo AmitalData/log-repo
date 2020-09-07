@@ -221,7 +221,7 @@ private selectedItems:ObservableCollection;
 
                 this.onCheckBoxChecked($event);
                 this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
-                this.MarkIsChecked.emit({ MyRecord: row,AllSelected:this.AllSelected });
+                this.MarkIsChecked.emit({ MyRecord: row,AllSelected:this.AllSelected , ExcludedLines:this.ExcludedItems});
               }
         });
 
@@ -260,7 +260,7 @@ private selectedItems:ObservableCollection;
           this.SelectedItemsCountText = "selected 0 of " + this.DataCount;
         } 
         var selectedLines = this.AllSelected?result: this.selectedItems;
-        this.MarkIsChecked.emit({ SelectedLines:selectedLines,AllSelected: this.AllSelected});
+        this.MarkIsChecked.emit({ SelectedLines:selectedLines,AllSelected: this.AllSelected, ExcludedLines:this.ExcludedItems});
     }
      today: Date = new Date();
      lastmonth:any = this.today.setDate(this.today.getDay() - 30);
@@ -310,13 +310,15 @@ private selectedItems:ObservableCollection;
         if (value) {
             this.IsSelectedItemsTextVisibile = true;
             this.SelectedItemsCountText = "selected " + this.DataSource.rowCount + " of " + this.DataSource.rowCount;
+            this.ExcludedItems.Clear();
             this.SelectedItemsCount = this.DataSource.rowCount;
 
         } else {
             this.IsSelectedItemsTextVisibile = false;
             this.SelectedItemsCount = 0;
             this.selectedItems.Clear();
-            this.MarkIsChecked.emit({ SelectedLines:this.selectedItems,AllSelected: value});
+            this.ExcludedItems.Clear();
+            this.MarkIsChecked.emit({ SelectedLines:this.selectedItems,AllSelected: value, ExcludedLines:this.ExcludedItems});
         }
         this.SetCreateInvoiceButtonText();
     }
@@ -388,7 +390,7 @@ private selectedItems:ObservableCollection;
       }
     
     else {
-  
+           //this.AllSelected= false;
             this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == rowData.Id));
       this.SelectedItemsCount -= 1;
 

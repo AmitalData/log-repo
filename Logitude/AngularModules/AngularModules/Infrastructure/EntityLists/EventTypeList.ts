@@ -32,5 +32,6 @@ export class EventTypeList {
 		EventDateTime: Date;
 		AllowedInAutomation: boolean;
 		CustomField: string;
+		EntityStatusWeight: number;
 	
 }

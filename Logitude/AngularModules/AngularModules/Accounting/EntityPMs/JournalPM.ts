@@ -284,6 +284,11 @@ export class JournalPM {
     public set APPaymentCancelDate(newValue: Date) { if (this.aPPaymentCancelDate != newValue) { this.aPPaymentCancelDate = newValue; this.MarkAsDirty("APPaymentCancelDate"); } }
        
 	 
+    private currencyId: string;
+    public get CurrencyId() { return this.currencyId; }
+    public set CurrencyId(newValue: string) { if (this.currencyId != newValue) { this.currencyId = newValue; this.MarkAsDirty("CurrencyId"); } }
+       
+	 
 
     public OldEntityPM: JournalPM;
 		

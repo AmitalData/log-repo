@@ -48,7 +48,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         QueueId, 
 	         IsLedgerCreated, 
 	         DocumentDate, 
-	         DueDate,
+	         DueDate, 
+	         CurrencyId,
 	      }
 
 
@@ -93,7 +94,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TaxReportJournalLineNumber, 
 	         DocumentDate, 
 	         DueDate, 
-	         APPaymentCancelDate,
+	         APPaymentCancelDate, 
+	         CurrencyId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -230,6 +232,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DueDate))
             {
 				entityPOCO.DueDate = entityPM.DueDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+				entityPOCO.CurrencyId = entityPM.CurrencyId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -373,6 +380,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.DueDate = entityPOCO.DueDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyId))
+            {
+					entityPM.CurrencyId = entityPOCO.CurrencyId;
+            }
+
 		}
 
 		public void PMToOldPM(JournalPM entityPM, JournalPM oldEntityPM)
@@ -507,6 +519,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DueDate))
             {
                 oldEntityPM.DueDate = entityPM.DueDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+                oldEntityPM.CurrencyId = entityPM.CurrencyId;
             }
 			
 		}

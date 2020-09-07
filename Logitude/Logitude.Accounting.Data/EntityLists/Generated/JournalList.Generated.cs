@@ -76,6 +76,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public DateTime? DocumentDate  { get; set; }
        [DataMember]
        public DateTime? DueDate  { get; set; }
+       [DataMember]
+       public string CurrencyId  { get; set; }
    }
 
 }

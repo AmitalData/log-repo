@@ -150,7 +150,20 @@
                           </td>
                         </tr>
 
+                        <tr class="FormFieldRow">
+                            <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Journal.F.CurrencyId' | TextCodeTranslationPipe}}</td>
 
+                            <td style="width: 180px;">
+                                <LogLov [ObjectFieldName]="'CurrencyId'"
+                                        [ObjectTableName]="'Journal'"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'Currency'"
+                                       [SelectedValue]="CurrencyId"
+                                        (SelectedItemChanged)="Currency = $event"
+                                        [HideColumns]="true">
+                                </LogLov>
+                            </td>
+                        </tr>
 
                         <tr>
                           <td>

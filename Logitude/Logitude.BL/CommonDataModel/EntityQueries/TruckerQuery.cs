@@ -9,6 +9,9 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -226,45 +229,49 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<TruckerList> GetIQueryableEntityList(IQueryable<Trucker> iQueryable)
         {
-            IQueryable<TruckerList> result = from a in iQueryable.Include("Card").Include("Card.PaymentTerm")
-                                             select new TruckerList()
-                                             {
-                                                 Code = a.Card.Code,
-                                                 EnglishName = a.Card.EnglishName,
-                                                 LocalName = a.Card.LocalName,
-                                                 ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
-                                                 PayablesAccountingCard = a.Card.PayablesAccountingCard,
-                                                 InActive = a.Card.InActive,
-                                                 Remark = a.Card.Notes,
-                                                 Id = a.Id,
-                                                 Tenant = a.Tenant,
-                                                 VatNumber = a.Card.VatNumber,
-                                                 AddedManually = a.AddedManually,
-                                                 PaymentTermId = a.Card.PaymentTermId,
-                                                 PaymentTermEnglishName = (a.Card.PaymentTerm != null ? a.Card.PaymentTerm.EnglishName : ""),
-                                                 SearchFields = a.Card.SearchFields,
-                                                 Notes = a.Card.Notes,
-                                                 Website = a.Card.Website,
-                                                 InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
-                                                 VatTypeId = a.Card.VatTypeId,
-                                                 EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
-                                                 CityName = a.Card.CityName,
-                                                 CountryId = a.Card.CountryId,
-                                                 CountryCode = a.Card.CountryCode,
-                                                 CountryName = a.Card.CountryName,
-                                                 ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
-                                                 PaymentMethodCode = a.Card.SATPaymentMethodCode,
-                                                 ExternalId2 = a.Card.ExternalId2,
-                                                 SATForeignRFC = a.Card.SATForeignRFC,
-                                                 MetodoPagoCode = a.Card.MetodoPagoCode,
-                                                 UsoCFDICode = a.Card.UsoCFDICode,
-                                                 PrimaryContactName = a.PrimaryContactName,
-                                                 PrimaryContactEmail = a.PrimaryContactEmail,
-                                                 PrimaryContactPhone = a.PrimaryContactPhone,
-                                                 StateName = a.Card.StateName,
-                                             };
+            IQueryable<TruckerList> result = (from a in iQueryable.Include("Card").Include("Card.PaymentTerm")
+                                              select new TruckerList()
+                                              {
+                                                  Code = a.Card.Code,
+                                                  EnglishName = a.Card.EnglishName,
+                                                  LocalName = a.Card.LocalName,
+                                                  ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                                  PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                                  InActive = a.Card.InActive,
+                                                  Remark = a.Card.Notes,
+                                                  Id = a.Id,
+                                                  Tenant = a.Tenant,
+                                                  VatNumber = a.Card.VatNumber,
+                                                  AddedManually = a.AddedManually,
+                                                  PaymentTermId = a.Card.PaymentTermId,
+                                                  PaymentTermEnglishName = (a.Card.PaymentTerm != null ? a.Card.PaymentTerm.EnglishName : ""),
+                                                  SearchFields = a.Card.SearchFields,
+                                                  Notes = a.Card.Notes,
+                                                  Website = a.Card.Website,
+                                                  InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
+                                                  VatTypeId = a.Card.VatTypeId,
+                                                  EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
+                                                  CityName = a.Card.CityName,
+                                                  CountryId = a.Card.CountryId,
+                                                  CountryCode = a.Card.CountryCode,
+                                                  CountryName = a.Card.CountryName,
+                                                  ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
+                                                  PaymentMethodCode = a.Card.SATPaymentMethodCode,
+                                                  ExternalId2 = a.Card.ExternalId2,
+                                                  SATForeignRFC = a.Card.SATForeignRFC,
+                                                  MetodoPagoCode = a.Card.MetodoPagoCode,
+                                                  UsoCFDICode = a.Card.UsoCFDICode,
+                                                  PrimaryContactName = a.PrimaryContactName,
+                                                  PrimaryContactEmail = a.PrimaryContactEmail,
+                                                  PrimaryContactPhone = a.PrimaryContactPhone,
+                                                  StateName = a.Card.StateName,
+                                                  GLAccountNumber = a.Card.GLAccountDisplayNumber
+                                              });
+
+
             return result;
         }
+ 
 
         public TruckerPM GetSinglePMByCode(string code, int tenant)
         {

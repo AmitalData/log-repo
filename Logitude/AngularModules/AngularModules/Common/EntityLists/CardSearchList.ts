@@ -14,6 +14,6 @@ export class CardSearchList {
 		CardId: string;
 		Weight: number;
 		PartnerTypeId: string;
-		InActive: boolean; 
+		InActive: boolean;
 	
 }

@@ -11,6 +11,10 @@ namespace Logitude.DBMigrations.Models
     [XmlRoot("Script", Namespace = "", IsNullable = false)]
     public class ScriptDefinition
     {
+        public string SxmlFileName { get; set; }
+
+        public string ScriptHistoryAction { get; set; }
+        
         [XmlAttribute()]
         public string DBType { get; set; }
 
@@ -20,6 +24,12 @@ namespace Logitude.DBMigrations.Models
         [XmlAttribute()]
         public bool Pre { get; set; }
 
+        [XmlAttribute()]
+        public bool AOT { get; set; }
+
+        [XmlAttribute()]
+        public string TargetTableName { get; set; }
+        
         [XmlElement]
         public SqlScriptDefinition Sql { get; set; }
 

@@ -9,6 +9,9 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -251,48 +254,51 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<ShippingAgentList> GetIQueryableEntityList(IQueryable<ShippingAgent> iQueryable)
         {
-            IQueryable<ShippingAgentList> result = from a in iQueryable.Include("Card").Include("Card.PaymentTerm").Include("Card.VatType")
-                                                   select new ShippingAgentList()
-                                                   {
-                                                       Code = a.Card.Code,
-                                                       EnglishName = a.Card.EnglishName,
-                                                       LocalName = a.Card.LocalName,
-                                                       ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
-                                                       PayablesAccountingCard = a.Card.PayablesAccountingCard,
-                                                       InActive = a.Card.InActive,
-                                                       Remark = a.Card.Notes,
-                                                       PaymentTermEnglishName = a.Card.PaymentTerm != null ? a.Card.PaymentTerm.EnglishName : "",
-                                                       Id = a.Id,
-                                                       Tenant = a.Tenant,
-                                                       VatNumber = a.Card.VatNumber,
-                                                       PaymentTermId = a.Card.PaymentTermId,
-                                                       SearchFields = a.Card.SearchFields,
-                                                       Website = a.Card.Website,
-                                                       ForwarderAccountNumber = a.ForwarderAccountNumber,
-                                                       ForwarderCreditNumber = a.ForwarderCreditNumber,
-                                                       Notes = a.Card.Notes,
-                                                       InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
-                                                       VatTypeId = a.Card.VatTypeId,
-                                                       LocalCustomsCode = a.LocalCustomsCode,
-                                                       EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
-                                                       CityName = a.Card.CityName,
-                                                       CountryId = a.Card.CountryId,
-                                                       CountryCode = a.Card.CountryCode,
-                                                       CountryName = a.Card.CountryName,
-                                                       ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
-                                                       PaymentMethodCode = a.Card.SATPaymentMethodCode,
-                                                       ExternalId2 = a.Card.ExternalId2,
-                                                       MetodoPagoCode = a.Card.MetodoPagoCode,
-                                                       UsoCFDICode = a.Card.UsoCFDICode,
-                                                       SATForeignRFC = a.Card.SATForeignRFC,
-                                                       PrimaryContactName = a.PrimaryContactName,
-                                                       PrimaryContactEmail = a.PrimaryContactEmail,
-                                                       PrimaryContactPhone = a.PrimaryContactPhone,
-                                                       StateName = a.Card.StateName,
-                                                   };
+            IQueryable<ShippingAgentList> result = (from a in iQueryable.Include("Card").Include("Card.PaymentTerm").Include("Card.VatType")
+                                                    select new ShippingAgentList()
+                                                    {
+                                                        Code = a.Card.Code,
+                                                        EnglishName = a.Card.EnglishName,
+                                                        LocalName = a.Card.LocalName,
+                                                        ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                                        PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                                        InActive = a.Card.InActive,
+                                                        Remark = a.Card.Notes,
+                                                        PaymentTermEnglishName = a.Card.PaymentTerm != null ? a.Card.PaymentTerm.EnglishName : "",
+                                                        Id = a.Id,
+                                                        Tenant = a.Tenant,
+                                                        VatNumber = a.Card.VatNumber,
+                                                        PaymentTermId = a.Card.PaymentTermId,
+                                                        SearchFields = a.Card.SearchFields,
+                                                        Website = a.Card.Website,
+                                                        ForwarderAccountNumber = a.ForwarderAccountNumber,
+                                                        ForwarderCreditNumber = a.ForwarderCreditNumber,
+                                                        Notes = a.Card.Notes,
+                                                        InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
+                                                        VatTypeId = a.Card.VatTypeId,
+                                                        LocalCustomsCode = a.LocalCustomsCode,
+                                                        EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
+                                                        CityName = a.Card.CityName,
+                                                        CountryId = a.Card.CountryId,
+                                                        CountryCode = a.Card.CountryCode,
+                                                        CountryName = a.Card.CountryName,
+                                                        ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
+                                                        PaymentMethodCode = a.Card.SATPaymentMethodCode,
+                                                        ExternalId2 = a.Card.ExternalId2,
+                                                        MetodoPagoCode = a.Card.MetodoPagoCode,
+                                                        UsoCFDICode = a.Card.UsoCFDICode,
+                                                        SATForeignRFC = a.Card.SATForeignRFC,
+                                                        PrimaryContactName = a.PrimaryContactName,
+                                                        PrimaryContactEmail = a.PrimaryContactEmail,
+                                                        PrimaryContactPhone = a.PrimaryContactPhone,
+                                                        StateName = a.Card.StateName,
+                                                        GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                                    });
+
+
             return result;
         }
-
+      
         public ShippingAgentList GetSingleShippingAgentList(string id, int tenant)
         {
             ShippingAgentList shippingAgentList = (from a in repository.context.ShippingAgents.Include("Card").Include("Card.PaymentTerm").Include("Card.VatType")

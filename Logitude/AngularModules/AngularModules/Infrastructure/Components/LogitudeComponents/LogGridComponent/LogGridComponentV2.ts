@@ -1168,6 +1168,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         var xx = this.Filters;
         var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridId);
         this.viewportSize = Math.round(elem.clientHeight / this.rowHeight);
+        this.cd.detectChanges();
         this.tripleViewport = this.viewportSize * 3;
         this.LogGridElement = elem;
         this.scrollPosition = elem.scrollTop;
@@ -1281,7 +1282,8 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
 
             this.rows = [];
             //**this.updateDisplayList();
-            this.myReloadData();
+            //this.myReloadData();
+            this.init(true);
             var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
             if (elem) {
                 elem.scrollTop = 0;
@@ -1393,7 +1395,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             if (this.controller) {
                 this.controller.disconnect(); 
             }
-            this.dataSource.pageSize = this.viewportSize * 2;
+            this.dataSource.pageSize = this.viewportSize * 3;
             this.controller = new VirtualRowControllerV2(this.virtualRowMetaData); 
             this.controller.setDataSource(this.dataSource);
             //this.controller.ClearCache();

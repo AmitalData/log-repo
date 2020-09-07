@@ -511,6 +511,9 @@ namespace WebFreight.Web.Helpers
                 DocumentTypeDefaultReportTemplateId = docType.DocumentTypeDefaultReportTemplateId,
                 IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
                 PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
+                OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName,
+                OnSendPopulateDateFieldName = docType.OnSendPopulateDateFieldName,
+                OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName,
             };
 
             documentTypeRepository.Add(newDocType);

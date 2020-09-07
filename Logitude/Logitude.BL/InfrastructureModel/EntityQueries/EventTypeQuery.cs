@@ -68,9 +68,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   IsCustomerView = a.IsCustomerView,
                                                   IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                                   AllowedInAutomation = a.AllowedInAutomation,
-                                                  CustomField = a.CustomField,
-
-                                                  
+                                                  CustomField = a.CustomField,                                                  
                                               });
 
                         foreach (var s in entitystatuses)
@@ -131,6 +129,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
             return null;
         }
+
         public IQueryable<EventTypePM> GetEventTypePMsByTenant(int tenant)
         {
             IQueryable<EventTypePM> eventTypes = from a in repository.context.EventType.Include("EntityStatus").Include("EventTypeCategory")
@@ -369,11 +368,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
             return null;
         }
-
-
-
-
-
+        
         public List<EventTypeList> GetEventTypeIdsByListEventCode(List<string> codeEventList, int tenant , string objectTableId)
         {
             List<EventTypeList> result = (from a in repository.context.EventType
@@ -409,13 +404,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    IsFollowUp = eventType.IsFollowUp,
                                                    InActive = eventType.InActive,
                                                    EntityStatusName = eventType.EntityStatus != null ? eventType.EntityStatus.Name : null,
+                                                   EntityStatusWeight = eventType.EntityStatus != null ? eventType.EntityStatus.StatusWeight : (int?)null,
                                                    EventTypeCategoryCode = eventType.EventTypeCategoryCode,
                                                    IsAgentView = eventType.IsAgentView,
                                                    IsCustomerView = eventType.IsCustomerView,
                                                    IsSharedLogisticsEnabled = eventType.IsSharedLogisticsEnabled,
                                                    AllowedInAutomation = eventType.AllowedInAutomation,
                                                    CustomField = eventType.CustomField,
-
                                                };
             return result;
         }

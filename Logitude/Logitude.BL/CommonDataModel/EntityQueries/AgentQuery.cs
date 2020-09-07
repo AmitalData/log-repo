@@ -9,6 +9,9 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -272,8 +275,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<AgentList> GetIQueryableEntityList(IQueryable<Agent> iQueryable)
         {
-            IQueryable<AgentList> result = from a in iQueryable.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("Card.InvoiceCurrency").Include("Card.PaymentTerm")
-                                           select new AgentList()
+            IQueryable<AgentList> result = (from a in iQueryable.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("Card.InvoiceCurrency").Include("Card.PaymentTerm")  
+                                           select  new AgentList()
                                            {
                                                Code = a.Card.Code,
                                                EnglishName = a.Card.EnglishName,
@@ -319,8 +322,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                PrimaryContactEmail = a.PrimaryContactEmail,
                                                PrimaryContactPhone = a.PrimaryContactPhone,
                                                StateName = a.Card.StateName,
-                                           };
+                                               GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                           });
+
+
             return result;
         }
+  
     }
 }

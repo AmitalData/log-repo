@@ -112,8 +112,14 @@ namespace CargoTrackingWinFormService.Forms
         }
         private void UpdateCargoDataBase(CargoTable table)
         {
- 
-           NumberOfCoulmnUpdated = cargoTrackingService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection }, NumberOfBulkPerTime).NumberOfRecordUpdated;
+            CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs = new CargoTrackingUpdateDataBaseArgs() {
+                buildCargoArgs = new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection },
+                NumberOfBulkPerTime = NumberOfBulkPerTime,
+                IsUpdateFromBuild = false,
+                CargoTrackingArguments = null,
+                IsUpdateAfterFinished = null,
+            };
+          NumberOfCoulmnUpdated = cargoTrackingService.UpdateCargoTrackingDataBase(cargoTrackingDataBaseArgs).NumberOfRecordUpdated;
   
         }
 

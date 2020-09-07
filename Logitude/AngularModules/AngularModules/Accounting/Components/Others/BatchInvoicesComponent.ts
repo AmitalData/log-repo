@@ -179,7 +179,7 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
 
                 this.onCheckBoxChecked($event);
                 this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
-                 this.MarkIsChecked.emit({ MyRecord: row,AllSelected:this.AllSelected });
+                 this.MarkIsChecked.emit({ MyRecord: row,AllSelected:this.AllSelected , ExcludedLines:this.ExcludedItems});
             }
         });
 
@@ -218,8 +218,10 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
           this.EnabledDataCount = result.Collection.filter(d => d.InterestReportStatusCode != "8").length;
           this.SelectedItemsCountText = "selected 0 of " + this.DataCount;
         }
-   var selectedLines = this.AllSelected?result: this.selectedItems;
-  this.MarkIsChecked.emit({ SelectedLines:selectedLines,AllSelected: this.AllSelected});
+   var selectedLines:ObservableCollection = this.AllSelected?result: this.selectedItems;
+
+ 
+  this.MarkIsChecked.emit({ SelectedLines:selectedLines,AllSelected: this.AllSelected , ExcludedLines:this.ExcludedItems });
 
     }
      today: Date = new Date();
@@ -274,13 +276,15 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
         if (value) {
             this.IsSelectedItemsTextVisibile = true;
             this.SelectedItemsCountText = "selected " + this.DataSource.rowCount + " of " + this.DataSource.rowCount;
+            this.ExcludedItems.Clear();
             this.SelectedItemsCount = this.DataSource.rowCount;
 
         } else {
             this.IsSelectedItemsTextVisibile = false;
             this.SelectedItemsCount = 0;
-        this.selectedItems.Clear();
-         this.MarkIsChecked.emit({ SelectedLines:this.selectedItems,AllSelected: value});
+            this.selectedItems.Clear();
+            this.ExcludedItems.Clear();
+         this.MarkIsChecked.emit({ SelectedLines:this.selectedItems,AllSelected: value, ExcludedLines:this.ExcludedItems });
 
         }
         this.SetCreateInvoiceButtonText();
@@ -358,7 +362,7 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
       }
     
     else {
-  
+          //  this.AllSelected=false;
             this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == rowData.Id));
       this.SelectedItemsCount -= 1;
 
@@ -399,6 +403,24 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
 
       });
   }
+
+  ShowInvoiceDateForBatchInvoiceComponent(){
+    var logWindow = new LogitudeWindow();
+    logWindow.Title = TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate");
+    var myPath = "./Accounting/Components/Packages/Others/InvoiceDateForBatchInvoicesComponent";
+    logWindow.Width = 360;
+    logWindow.Height = 160;
+    //logWindow.DataContext = "" ;
+    logWindow.Show(myPath);
+    //logWindow.IsShowCloseButton=true;
+    logWindow.WindowClosed.subscribe(s => {
+        if (s!=null) {
+           this.InvoiceDate = new Date(s);
+           this.CreateInvoiceButtonClicked(); 
+        }
+    })
+    //InvoiceDateForBatchInvoicesComponent
+  }
    CheckNumberOfInterestReportInvoicingWithoutInvoice(){
     this.ValidationErrorsList = [];
     if (this.SelectedItemsCount == 0) {
@@ -415,7 +437,8 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
           this.ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices,interestReportArgs);
          }
          else{
-          this.CreateInvoiceButtonClicked();
+         // this.CreateInvoiceButtonClicked();
+         this.ShowInvoiceDateForBatchInvoiceComponent();
          }
         }
         else {
@@ -497,7 +520,14 @@ ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices:number,int
       confirmWindow.Show(  NumberOfReportsWithoutInvoices+" "+TextCodeTranslator.Translate("InterestReport.O.OutOf")+" " + this.SelectedItemsCount + " " +TextCodeTranslator.Translate("InterestReport.O.SelectedReportsWillNotHaveAnInvoice"));
       confirmWindow.WindowClosed.subscribe((event: any) => {
           if (confirmWindow.Yes) {
-             this.CreateInvoiceButtonClicked();
+              
+             if(NumberOfReportsWithoutInvoices == this.SelectedItemsCount){
+              this.CreateInvoiceButtonClicked();
+             }
+             else{
+              this.ShowInvoiceDateForBatchInvoiceComponent();
+             }
+             
           } else if (confirmWindow.No) {
 
           }
@@ -518,6 +548,7 @@ this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateIn
     interestReportArgs.AllSelected = this.AllSelected;
     interestReportArgs.FromDate = this.FromDate;
     interestReportArgs.ToDate = this.ToDate;
+    interestReportArgs.InvoiceDate = this.InvoiceDate;
     interestReportArgs.SelectedIds = [];
     interestReportArgs.ExcludedIds = [];
     interestReportArgs.Tenant =SessionLocator.TenantPM.Id;
@@ -534,6 +565,13 @@ this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateIn
 
 }
 
+private invoiceDate:Date; 
+get InvoiceDate(){
+    return this.invoiceDate;
+}
+set InvoiceDate(val: Date){
+     this.invoiceDate=val;
+}
 
 CheckBatchTaskExcecutingAndCreateInvoices( BatchId:string) {
   this._BatchTaskExecutionListService.getSingle( BatchId).subscribe((myResult:any) => {
@@ -543,7 +581,8 @@ CheckBatchTaskExcecutingAndCreateInvoices( BatchId:string) {
           this.bteList = mm.Result;
           if (this.bteList.StatusCode == "D" || this.bteList.StatusCode == "F") // D- Done
           {  
-            this.CreateInvoiceButtonClicked();
+            //this.CreateInvoiceButtonClicked();
+            this.ShowInvoiceDateForBatchInvoiceComponent();
           }
           else{
             var msg = new MessageWindow();

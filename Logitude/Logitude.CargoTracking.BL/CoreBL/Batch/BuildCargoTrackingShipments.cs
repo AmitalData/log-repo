@@ -78,7 +78,15 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
                 Tenant = CargoTrackingArguments.Tenant,
                 ToDate = CargoTrackingArguments.ToDate,
             };
-             cargoTrackingMainService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString }, 1000,null, CargoTrackingArgs);
+            CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs = new CargoTrackingUpdateDataBaseArgs()
+            {
+                buildCargoArgs = new CargoArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },
+                NumberOfBulkPerTime = 1000,
+                IsUpdateAfterFinished = null,
+                CargoTrackingArguments = CargoTrackingArgs,
+                IsUpdateFromBuild = true,
+            };
+            cargoTrackingMainService.UpdateCargoTrackingDataBase(cargoTrackingDataBaseArgs);
         }
 
 

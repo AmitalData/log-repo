@@ -9,6 +9,9 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -386,45 +389,48 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<VendorList> GetIQueryableEntityList(IQueryable<Vendor> iQueryable)
         {
-            IQueryable<VendorList> result = from a in iQueryable.Include("Card")
-                                            select new VendorList()
-                                            {
-                                                Code = a.Card.Code,
-                                                EnglishName = a.Card.EnglishName,
-                                                LocalName = a.Card.LocalName,
-                                                ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
-                                                PayablesAccountingCard = a.Card.PayablesAccountingCard,
-                                                InActive = a.Card.InActive,
-                                                Notes = a.Card.Notes,
-                                                PaymentTermEnglishName = (a.Card.PaymentTerm != null ? a.Card.PaymentTerm.EnglishName : ""),
-                                                Id = a.Id,
-                                                Tenant = a.Tenant,
-                                                VatNumber = a.Card.VatNumber,
-                                                PaymentTermId = a.Card.PaymentTermId,
-                                                InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
-                                                VatTypeId = a.Card.VatTypeId,
-                                                Website = a.Card.Website,
-                                                SearchFields = a.Card.SearchFields,
-                                                EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
-                                                CityName = a.Card.CityName,
-                                                CountryId = a.Card.CountryId,
-                                                CountryCode = a.Card.CountryCode,
-                                                CountryName = a.Card.CountryName,
-                                                ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
-                                                PaymentMethodCode = a.Card.SATPaymentMethodCode,
-                                                ExternalId2 = a.Card.ExternalId2,
-                                                SATForeignRFC = a.Card.SATForeignRFC,
-                                                MetodoPagoCode = a.Card.MetodoPagoCode,
-                                                UsoCFDICode = a.Card.UsoCFDICode,
-                                                PrimaryContactName = a.PrimaryContactName,
-                                                PrimaryContactEmail = a.PrimaryContactEmail,
-                                                PrimaryContactPhone = a.PrimaryContactPhone,
-                                                CreatedByPartner = a.Card.CreatedByPartner,
-                                                StateName = a.Card.StateName,
-                                            };
+            IQueryable<VendorList> result = (from a in iQueryable.Include("Card")
+                                             select new VendorList()
+                                             {
+                                                 Code = a.Card.Code,
+                                                 EnglishName = a.Card.EnglishName,
+                                                 LocalName = a.Card.LocalName,
+                                                 ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                                 PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                                 InActive = a.Card.InActive,
+                                                 Notes = a.Card.Notes,
+                                                 PaymentTermEnglishName = (a.Card.PaymentTerm != null ? a.Card.PaymentTerm.EnglishName : ""),
+                                                 Id = a.Id,
+                                                 Tenant = a.Tenant,
+                                                 VatNumber = a.Card.VatNumber,
+                                                 PaymentTermId = a.Card.PaymentTermId,
+                                                 InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
+                                                 VatTypeId = a.Card.VatTypeId,
+                                                 Website = a.Card.Website,
+                                                 SearchFields = a.Card.SearchFields,
+                                                 EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
+                                                 CityName = a.Card.CityName,
+                                                 CountryId = a.Card.CountryId,
+                                                 CountryCode = a.Card.CountryCode,
+                                                 CountryName = a.Card.CountryName,
+                                                 ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
+                                                 PaymentMethodCode = a.Card.SATPaymentMethodCode,
+                                                 ExternalId2 = a.Card.ExternalId2,
+                                                 SATForeignRFC = a.Card.SATForeignRFC,
+                                                 MetodoPagoCode = a.Card.MetodoPagoCode,
+                                                 UsoCFDICode = a.Card.UsoCFDICode,
+                                                 PrimaryContactName = a.PrimaryContactName,
+                                                 PrimaryContactEmail = a.PrimaryContactEmail,
+                                                 PrimaryContactPhone = a.PrimaryContactPhone,
+                                                 CreatedByPartner = a.Card.CreatedByPartner,
+                                                 StateName = a.Card.StateName,
+                                                 GLAccountNumber = a.Card.GLAccountDisplayNumber
+                                             });
+
+
             return result;
         }
-
+     
         public VendorPM GetSingleVendorPMByCode(string code, int tenant)
         {
             VendorPM vendor = (from a in repository.context.Vendors.Include("Card")

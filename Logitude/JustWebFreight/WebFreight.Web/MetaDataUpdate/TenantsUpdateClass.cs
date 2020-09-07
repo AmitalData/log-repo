@@ -1983,7 +1983,10 @@ namespace WebFreight.Web.MetaDataUpdate
                                 DocumentTypeDefaultReportTemplateId = docType.DocumentTypeDefaultReportTemplateId,
                                 IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
                                 PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
-                                OrderBy = docType.OrderBy
+                                OrderBy = docType.OrderBy,
+                                OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName ,
+                                OnSendPopulateDateFieldName = docType.OnSendPopulateDateFieldName,
+                                OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName,
                             };
                             documentTypeRepository.Add(newDocType);
 

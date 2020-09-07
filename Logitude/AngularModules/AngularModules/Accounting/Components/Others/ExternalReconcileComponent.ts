@@ -116,7 +116,6 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         //#endregion
 
-        this.AmountCheckBoxChecked = true;
         this.GetDefaultValues();
 
     }
@@ -339,6 +338,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             let a: ReconcileExternalPageLinePM = r.PageLinePM;
             ReconcileExternalPageLinePMList.push(a);
         });
+
 
 
         var confirmWindow = new ConfirmWindow();
@@ -698,10 +698,12 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if (this.IsAutoReconcile) {
             // 1- find id of opposit line
             var transactionRow = this.TransactionSelectedLines.Collection.find(d => d.Id == id);
-            var oppositLine = this.ExtPageSelectedLines.Collection.find(d => d.GroupHash == transactionRow.GroupHash);
+            var transactionMatchedRows = this.TransactionSelectedLines.Collection.filter(d => d.GroupHash == transactionRow.GroupHash) || [];
+            var oppositLines = this.ExtPageSelectedLines.Collection.filter(d => d.GroupHash == transactionRow.GroupHash) || [];
 
             // 2- popline
-            if (!specialCase) this.ExtPagePopLine(oppositLine.Id, true);
+            if(oppositLines.length == 1 && transactionMatchedRows.length == 1)
+                if (!specialCase) this.ExtPagePopLine(oppositLines[0].Id, true);
         }
         //
 
@@ -949,10 +951,13 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if (this.IsAutoReconcile) {
             // 1- find id of opposit line
             var pageLineRow = this.ExtPageSelectedLines.Collection.find(d => d.Id == id);
-            var oppositLine = this.TransactionSelectedLines.Collection.find(d => d.GroupHash == pageLineRow.GroupHash);
+            var pageLineMatchedRows = this.ExtPageSelectedLines.Collection.filter(d => d.GroupHash == pageLineRow.GroupHash) || [];
+            var oppositLines = this.TransactionSelectedLines.Collection.filter(d => d.GroupHash == pageLineRow.GroupHash) || [];
+
 
             // 2- popline
-            if (!specialCase) this.PopLine(oppositLine.Id, true);
+            if(oppositLines.length == 1 && pageLineMatchedRows.length == 1)
+            if (!specialCase) this.PopLine(oppositLines[0].Id, true);
         }
         //
 
@@ -1071,7 +1076,20 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             filters.GetAll = true;
             filters.GetCount = true;
 
+
             filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
+            // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
+            filters.addAdditionalFilter("DueDate", new Date(), null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
+
+            if(this.ObjectTableName == "BankAccount")
+                filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
+
+            if (!this.showInProgessLines){
+                    filters.addAdditionalFilter("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean");
+                    filters.addAdditionalFilter("InProgressExternalReconcile", false, null, null, "Equals", false, false, false, "boolean");
+
+            }
+
             //#endregion
 
             this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
@@ -1534,7 +1552,39 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                 if (myResponse != null) {
                     var res = myResponse.Result;
                     this.FullAccountingSetting = res;
+
                     this.GetAutoRecoMethod();
+
+                    switch (this.FullAccountingSetting.ExternalReconciliationDefault) {
+                        case '1': { // Amount
+                            this.AmountCheckBoxChecked = true;
+                            this.ReferenceDateCheckBoxChecked = false;
+                            this.ReferenceCheckBoxChecked = false;
+                            break;
+                        }
+                        case '2': { // Reference
+                            this.AmountCheckBoxChecked = false;
+                            this.ReferenceDateCheckBoxChecked = false;
+                            this.ReferenceCheckBoxChecked = true;
+                            break;
+                        }
+                        case '3': { // Reference Date + Reference
+                            this.AmountCheckBoxChecked = false;
+                            this.ReferenceDateCheckBoxChecked = true;
+                            this.ReferenceCheckBoxChecked = true;
+                            break;
+                        }
+                        case '4': { // Amount + Reference + Reference Date
+                            this.AmountCheckBoxChecked = true;
+                            this.ReferenceDateCheckBoxChecked = true;
+                            this.ReferenceCheckBoxChecked = true;
+                            break;
+                        }
+
+                        default:
+                            break;
+                    }
+
                 }
             })
         });
@@ -1549,36 +1599,35 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                         this.AutoRecoMethod = res;
                         if (this.AutoRecoMethod) {
                             switch (this.AutoRecoMethod.Code) {
-                                case '1': // 1- Amount
-                                    {
-                                        this.AmountCheckBoxChecked = true;
-                                        this.ReferenceCheckBoxChecked = false;
-                                        this.ReferenceDateCheckBoxChecked = false;
-                                        break;
-                                    }
-                                case '2': // 2- Reference
-                                    {
-                                        this.AmountCheckBoxChecked = true;
-                                        this.ReferenceCheckBoxChecked = true;
-                                        this.ReferenceDateCheckBoxChecked = false;
-                                        break;
-                                    }
-                                case '3': // 3- Reference Date + Reference
-                                    {
-                                        this.AmountCheckBoxChecked = true;
-                                        this.ReferenceCheckBoxChecked = true;
-                                        this.ReferenceDateCheckBoxChecked = true;
-                                        break;
-                                    }
-                                case '4': // 4- Amount + Reference + Reference Date
-                                    {
-                                        this.AmountCheckBoxChecked = true;
-                                        this.ReferenceCheckBoxChecked = true;
-                                        this.ReferenceDateCheckBoxChecked = true;
-                                        break;
-                                    }
+                                case '1': { // Amount
+                                    this.AmountCheckBoxChecked = true;
+                                    this.ReferenceDateCheckBoxChecked = false;
+                                    this.ReferenceCheckBoxChecked = false;
+                                    break;
+                                }
+                                case '2': { // Reference
+                                    this.AmountCheckBoxChecked = false;
+                                    this.ReferenceDateCheckBoxChecked = false;
+                                    this.ReferenceCheckBoxChecked = true;
+                                    break;
+                                }
+                                case '3': { // Reference Date + Reference
+                                    this.AmountCheckBoxChecked = false;
+                                    this.ReferenceDateCheckBoxChecked = true;
+                                    this.ReferenceCheckBoxChecked = true;
+                                    break;
+                                }
+                                case '4': { // Amount + Reference + Reference Date
+                                    this.AmountCheckBoxChecked = true;
+                                    this.ReferenceDateCheckBoxChecked = true;
+                                    this.ReferenceCheckBoxChecked = true;
+                                    break;
+                                }
 
+                                default:
+                                    break;
                             }
+
                         }
 
                     }
