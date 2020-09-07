@@ -46,7 +46,9 @@ using Simplog.Data.InvoiceModel;
 				{
 				   
 				   var temp = new APInvoiceTotalVAT(); 
-				   temp.Id = item.Id;			  
+				   temp.Id = item.Id; 
+
+			  
 				   if(item.VatTypeId != null)
 				   {
 					   VatTypeQueryService VatTypeService0 = new VatTypeQueryService(Tenant);
@@ -68,7 +70,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public List<APInvoiceTotalVATPM> APInvoiceTotalVATDataMappingAndValidatin(List<APInvoiceTotalVAT> MyEntity,int Tenant,string ComputingPartnerName = "")
+		public List<APInvoiceTotalVATPM> APInvoiceTotalVATDataMappingAndValidatin(List<APInvoiceTotalVAT> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -86,6 +88,7 @@ using Simplog.Data.InvoiceModel;
 					{   
 					    throw new ApplicationException("APInvoiceTotalVAT with Id " + item.Id + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -98,26 +101,51 @@ using Simplog.Data.InvoiceModel;
 						//{
 						//    temp.Id = item.Id;
 
-						//}
+						//} 
+
+						
 					}
 					VatTypeQueryService VatTypeVatTypeService = new VatTypeQueryService(Tenant);
 					if(item.VatType != null)
 					{
 						var myVatTypePM = VatTypeVatTypeService.VatTypeCustomDataMappingAndValidatin(item.VatType,Tenant);
-												if(myVatTypePM != null)
-						{
-							temp.VatTypeId = myVatTypePM.Id;
-						}
+						
+						if(myVatTypePM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("VatType Can't be update"); 
+								temp.VatTypeId = myVatTypePM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.VatPercent = item.VatPercent;
-					temp.InvoiceCurrencyVATAmount = item.InvoiceCurrencyVATAmount;					   
+                    
+					if(!IsUpdate)// && item.VatPercent != null)
+					{							//throw new ApplicationException("VatPercent Can't be update"); 
+							temp.VatPercent = item.VatPercent;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && item.InvoiceCurrencyVATAmount != null)
+					{							//throw new ApplicationException("InvoiceCurrencyVATAmount Can't be update"); 
+							temp.InvoiceCurrencyVATAmount = item.InvoiceCurrencyVATAmount;
+
+										}  
+
+										   
 						MyList.Add(temp);
 					}
 						
-					   return MyList;
+					return MyList;
 		    }
             catch (Exception ex)
             {

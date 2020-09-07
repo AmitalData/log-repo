@@ -46,10 +46,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetDirectById(id, tenant);
+                Direct Result = Service.GetDirectById(id, tenant);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
+
             catch (Exception ex)
             {
                 var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
@@ -67,8 +68,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetDirectByShipmentNumber(number, tenant);
-                //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
+                Direct Result = Service.GetDirectByShipmentNumber(number, tenant);                
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
@@ -661,10 +661,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         public HttpResponseMessage Put(Direct entity)
         {
-            //var apiExceptionResult = ApiExceptionHandler.HandleException(new Exception("Updates are not supported"));
-            //APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "Direct API");
-            //return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-
             if (ModelState.IsValid)
             {
                 try
@@ -672,30 +668,35 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-                    DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
-                    ShipmentQuery query = new ShipmentQuery(authToken.Tenant);
-                    ShipmentPM entityPM = query.GetSinglePMByShipmentNumber(entity.ShipmentNumber, authToken.Tenant);
-
-
-
-
-                    // here is a new param IsUpdate = true
+                    DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);                    
                     ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, authToken.Tenant, "", true);
 
+                    if(directPM != null)
+                    {
+                        if(directPM.IsOperationalClosed)
+                        {
+                            throw new ApplicationException("Can't update operationally closed shipments");
+                        }
 
-                    ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
+                        if (directPM.IsCancelled)
+                        {
+                            throw new ApplicationException("Can't update operationally cancelled shipments");
+                        }
 
-                    service.Update(true);
+                        APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(directPM, authToken.Tenant);
+                        aPITransshipmentHelper.ValidateTransshipments();
+                        aPITransshipmentHelper.MapTransshipments();
 
-
-                    var result = mappingService.GetDirectById(entityPM.Id, authToken.Tenant);
-
-                    APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Direct API", authToken.Tenant);
-
+                        ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
+                        service.Update(true);
+                    }
+                    
+                    var result = mappingService.GetDirectById(directPM.Id, authToken.Tenant);
+                    APIHelper.AddCommunicationLog("D", entity, result, "Shipment", directPM.Id, "Direct API", authToken.Tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
-
 
                 catch (Exception ex)
                 {
@@ -710,141 +711,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "Direct API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
-
-            //if (ModelState.IsValid)
-            //{
-            //    try
-            //    {
-            //        string token = HttpContext.Current.Request.Headers["Token"];
-            //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            //        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            //        IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-            //        DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
-            //        ShipmentQuery query = new ShipmentQuery(authToken.Tenant);
-            //        ShipmentPM entityPM = query.GetSinglePMByShipmentNumber(entity.ShipmentNumber, authToken.Tenant);
-
-
-            //        using (TransactionScope scope = TransactionFactory.GetTransaction())
-            //        {
-            //            ShipmentRepository entityRepository = new ShipmentRepository(MyContext);
-            //            if (string.IsNullOrEmpty(entity.ShipmentNumber))
-            //            {
-            //                throw new ApplicationException("No shipment number found");
-            //            }
-            //            else
-            //            {
-            //                Shipment entityPoco = entityRepository.GetSingleShipmentByShipmentNumber(entity.ShipmentNumber, authToken.Tenant);
-            //                if (entityPoco == null)
-            //                {
-            //                    throw new ApplicationException("No shipment with such shipment number");
-            //                }
-            //                else
-            //                {
-            //                    ShipmentPM directPM = mappingService.DirectCustomDataMappingAndValidatin(entity, authToken.Tenant);
-            //                    if (entityPM.DirectionId != directPM.DirectionId)
-            //                    {
-            //                        throw new ApplicationException("You can't change the shipment direction");
-            //                    }
-            //                    else if (entityPM.TransportModeId != directPM.TransportModeId)
-            //                    {
-            //                        throw new ApplicationException("You can't change the shipment Transport Mode");
-            //                    }
-            //                    directPM.VolumeUnitCode = entity.VolumeUnit.Code;
-            //                    directPM.GrossWeightUnitCode = entity.GrossWeightUnit.Code;
-            //                    directPM.ChargeableWeightUnitCode = entity.ChargeableWeightUnit.Code;
-
-            //                    this.MapDirectToEntityPM(directPM, entityPM, MyContext);
-
-
-            //                    if (entityPM.IsOperationalClosed || entityPM.IsAccountingClosed || entityPM.IsCancelled)
-            //                    {
-            //                        this.CheckEntityChanges(entityPM, entityPoco);
-            //                        this.RemovePackages(directPM, entityPM, MyContext);
-            //                    }
-            //                    else
-            //                    {
-            //                        this.RemovePackages(directPM, entityPM, MyContext);
-
-            //                        if (!string.IsNullOrEmpty(entityPM.IncotermId))
-            //                        {
-            //                            IncotermRepository myIncotermRepository = new IncotermRepository(entityPM.Tenant);
-            //                            Incoterm myIncoterm = myIncotermRepository.GetSingleIncoterm(entityPM.IncotermId, entityPM.Tenant);
-            //                            if (myIncoterm != null)
-            //                            {
-            //                                entityPM.FreightPrepaidCollectId = myIncoterm.Freight;
-            //                                entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
-            //                            }
-            //                        }
-            //                        if (!string.IsNullOrEmpty(entityPM.CustomerId))
-            //                        {
-            //                            if (entityPM.CustomerId == entityPM.ShipperId || entityPM.CustomerId == entityPM.ConsigneeId || entityPM.CustomerId == entityPM.AgentId || entityPM.CustomerId == entityPM.IssuingCarrierAgentId || entityPM.CustomerId == entityPM.CustomAgentExportId || entityPM.CustomerId == entityPM.CustomAgentImportId || entityPM.CustomerId == entityPM.Notify1Id || entityPM.CustomerId == entityPM.Notify2Id || entityPM.CustomerId == entityPM.ShipperNotExporterId || entityPM.CustomerId == entityPM.ConsigneeNotImporterId || entityPM.CustomerId == entityPM.FreightForwarderId || entityPM.CustomerId == entityPM.ColoaderId || entityPM.CustomerId == entityPM.CustomClearancePointId || entityPM.CustomerId == entityPM.ConsolidatorId || entityPM.CustomerId == entityPM.ReleasingAgentId)
-            //                            {
-            //                                CardRepository cardRepository = new CardRepository(entityPM.Tenant);
-            //                                Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
-            //                                if (customer != null)
-            //                                {
-            //                                    entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
-            //                                    if (customer.Customer != null)
-            //                                    {
-            //                                        entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
-            //                                    }
-            //                                    else
-            //                                    {
-            //                                        throw new ApplicationException("The Customer Doesn't Exist on the shipment");
-            //                                    }
-            //                                }
-            //                            }
-            //                            else
-            //                            {
-            //                                throw new ApplicationException("The Customer Doesn't Exist on the shipment");
-            //                            }
-            //                        }
-            //                        if (entityPM.ShipmentPackages.Count > 0)
-            //                        {
-            //                            foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
-            //                            {
-            //                                if (item.Width != null || item.Height != null || item.Length != null)
-            //                                {
-            //                                    item.Volume = this.ComputeVolume(item, entityPM);
-            //                                }
-            //                                item.VolumetricWeight = this.ComputeVolumetricWeight(item, entityPM);
-            //                            }
-            //                        }
-
-            //                        this.ComputeTotals(entityPM);
-
-            //                        ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
-
-            //                        service.Update(true);
-            //                    }
-            //                }
-            //            }
-
-
-            //            scope.Complete();
-            //        }
-
-            //        var result = mappingService.GetDirectById(entityPM.Id, authToken.Tenant);
-
-            //        APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Direct API", authToken.Tenant);
-
-            //        return Request.CreateResponse(HttpStatusCode.OK, result);
-            //    }
-
-
-            //    catch (Exception ex)
-            //    {
-            //        var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-            //        APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "Direct API");
-            //        return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-            //    }
-            //}
-            //else
-            //{
-            //    var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
-            //    APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "Direct API");
-            //    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-            //}
         }
 
         private void MapDirectToEntityPM(ShipmentPM directPM, ShipmentPM entityPM, IShipmentsContext MyContext)

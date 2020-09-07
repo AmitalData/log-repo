@@ -128,6 +128,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public double? Ratio { get; set; }
     
     public List<MainCarriageLeg> MainCarriageLegs { get; set; }
+    
+	[XmlAttribute]
+    public string ShipmentNumber { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

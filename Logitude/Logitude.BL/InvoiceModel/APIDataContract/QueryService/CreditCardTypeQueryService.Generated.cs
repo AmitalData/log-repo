@@ -78,7 +78,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public CreditCardTypePM CreditCardTypeDataMappingAndValidatin(CreditCardType MyEntity,int Tenant,string ComputingPartnerName = "")
+		public CreditCardTypePM CreditCardTypeDataMappingAndValidatin(CreditCardType MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -92,6 +92,7 @@ using Simplog.Data.InvoiceModel;
 					{   
 					    throw new ApplicationException("CreditCardType with Id " + MyEntity.Id + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -104,16 +105,41 @@ using Simplog.Data.InvoiceModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
 					}
-					temp.Tenant = MyEntity.Tenant;
+                    
+					if(!IsUpdate)// && MyEntity.Tenant != null)
+					{							//throw new ApplicationException("Tenant Can't be update"); 
+							temp.Tenant = MyEntity.Tenant;
+
+										}  
+
+					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						temp.Code = MyEntity.LogitudeCode;
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LogitudeCode))
+						{
+								//throw new ApplicationException("LogitudeCode Can't be update"); 
+								temp.Code = MyEntity.LogitudeCode;
+								
+						
+						}  
+
+						
 					}
-					temp.Name = MyEntity.Name;					   
-					   return temp;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
+					{							//throw new ApplicationException("Name Can't be update"); 
+							temp.Name = MyEntity.Name;
+
+										}  
+
+										   
+					return temp;
 		    }
             catch (Exception ex)
             {

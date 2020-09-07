@@ -83,6 +83,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public string Master { get; set; }
     
+	[XmlAttribute]
     public string ShipmentNumber { get; set; }
     
     public User CreatedByUser { get; set; }

@@ -87,7 +87,9 @@ using Simplog.Data.CommonDataModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.EnglishName = MyEntityPM.EnglishName;
 				   temp.LocalName = MyEntityPM.LocalName;
-				   temp.Code = MyEntityPM.Code;			  
+				   temp.Code = MyEntityPM.Code; 
+
+			  
 				   if(MyEntityPM.MainAddressId != null)
 				   {
 					   AddressQueryService AddressService0 = new AddressQueryService(Tenant);
@@ -108,7 +110,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public CardPM CardDataMappingAndValidatin(Card MyEntity,int Tenant,string ComputingPartnerName = "")
+		public CardPM CardDataMappingAndValidatin(Card MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -142,6 +144,7 @@ using Simplog.Data.CommonDataModel;
 					{   
 					    throw new ApplicationException("Card with Code " + MyEntity.Code + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -154,35 +157,92 @@ using Simplog.Data.CommonDataModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
 					}
-					temp.EnglishName = MyEntity.EnglishName;
-					temp.LocalName = MyEntity.LocalName;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
+					{							//throw new ApplicationException("EnglishName Can't be update"); 
+							temp.EnglishName = MyEntity.EnglishName;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
+					{							//throw new ApplicationException("LocalName Can't be update"); 
+							temp.LocalName = MyEntity.LocalName;
+
+										}  
+
+					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						temp.Code = MyEntity.Code;
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
+						{
+								//throw new ApplicationException("Code Can't be update"); 
+								temp.Code = MyEntity.Code;
+								
+						
+						}  
+
+						
 					}
 					AddressQueryService MainAddressAddressService = new AddressQueryService(Tenant);
 					if(MyEntity.MainAddress != null)
 					{
 						var myMainAddressPM = MainAddressAddressService.AddressDataMappingAndValidatin(MyEntity.MainAddress,Tenant,ComputingPartnerName);
-												if(myMainAddressPM != null)
-						{
-							temp.MainAddressId = myMainAddressPM.Id;
-						}
+						
+						if(myMainAddressPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("MainAddress Can't be update"); 
+								temp.MainAddressId = myMainAddressPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.VatNumber = MyEntity.VatNumber;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.VatNumber))
+					{							//throw new ApplicationException("VatNumber Can't be update"); 
+							temp.VatNumber = MyEntity.VatNumber;
+
+										}  
+
+					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						temp.Code = MyEntity.PartnerCode;
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
+						{
+								//throw new ApplicationException("PartnerCode Can't be update"); 
+								temp.Code = MyEntity.PartnerCode;
+								
+						
+						}  
+
+						
 					}
-					temp.IsDisconnectedFromGLAccount = MyEntity.IsDisconnectedFromGLAccount;					   
-					   return temp;
+                    
+					if(!IsUpdate)// && (MyEntity.IsDisconnectedFromGLAccount != temp.IsDisconnectedFromGLAccount))
+					{							//throw new ApplicationException("IsDisconnectedFromGLAccount Can't be update"); 
+							temp.IsDisconnectedFromGLAccount = MyEntity.IsDisconnectedFromGLAccount;
+
+										}  
+
+										   
+					return temp;
 		    }
             catch (Exception ex)
             {

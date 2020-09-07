@@ -78,7 +78,7 @@ using Simplog.Data.QuoteModel;
             }
         } 
 
-		public QuoteStagePM QuoteStageDataMappingAndValidatin(QuoteStage MyEntity,int Tenant,string ComputingPartnerName = "")
+		public QuoteStagePM QuoteStageDataMappingAndValidatin(QuoteStage MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -92,6 +92,7 @@ using Simplog.Data.QuoteModel;
 					{   
 					    throw new ApplicationException("QuoteStage with Id " + MyEntity.Id + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -104,16 +105,41 @@ using Simplog.Data.QuoteModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						temp.Code = MyEntity.Code;
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
+						{
+								//throw new ApplicationException("Code Can't be update"); 
+								temp.Code = MyEntity.Code;
+								
+						
+						}  
+
+						
 					}
-					temp.Name = MyEntity.Name;
-					temp.Rank = MyEntity.Rank;					   
-					   return temp;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
+					{							//throw new ApplicationException("Name Can't be update"); 
+							temp.Name = MyEntity.Name;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.Rank != null)
+					{							//throw new ApplicationException("Rank Can't be update"); 
+							temp.Rank = MyEntity.Rank;
+
+										}  
+
+										   
+					return temp;
 		    }
             catch (Exception ex)
             {

@@ -63,7 +63,7 @@ using Simplog.Data.QuoteModel;
             }
         } 
 
-		public List<QuotePriceStepsPM> QuotePriceStepsDataMappingAndValidatin(List<QuotePriceSteps> MyEntity,int Tenant,string ComputingPartnerName = "")
+		public List<QuotePriceStepsPM> QuotePriceStepsDataMappingAndValidatin(List<QuotePriceSteps> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -81,6 +81,7 @@ using Simplog.Data.QuoteModel;
 					{   
 					    throw new ApplicationException("QuotePriceSteps with Id " + item.Id + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -93,16 +94,46 @@ using Simplog.Data.QuoteModel;
 						//{
 						//    temp.Id = item.Id;
 
-						//}
+						//} 
+
+						
 					}
-					temp.Step = item.PriceBreakStep;
-					temp.CostUnitPrice = item.CostUnitPrice;
-					temp.SaleUnitPrice = item.SaleUnitPrice;
-					temp.MeasurementUnit = item.MeasurementUnit;					   
+                    
+					if(!IsUpdate)// && item.PriceBreakStep != null)
+					{							//throw new ApplicationException("PriceBreakStep Can't be update"); 
+							temp.Step = item.PriceBreakStep;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && item.CostUnitPrice != null)
+					{							//throw new ApplicationException("CostUnitPrice Can't be update"); 
+							temp.CostUnitPrice = item.CostUnitPrice;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && item.SaleUnitPrice != null)
+					{							//throw new ApplicationException("SaleUnitPrice Can't be update"); 
+							temp.SaleUnitPrice = item.SaleUnitPrice;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.MeasurementUnit))
+					{							//throw new ApplicationException("MeasurementUnit Can't be update"); 
+							temp.MeasurementUnit = item.MeasurementUnit;
+
+										}  
+
+										   
 						MyList.Add(temp);
 					}
 						
-					   return MyList;
+					return MyList;
 		    }
             catch (Exception ex)
             {

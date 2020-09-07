@@ -99,7 +99,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public UserPM UserDataMappingAndValidatin(User MyEntity,int Tenant,string ComputingPartnerName = "")
+		public UserPM UserDataMappingAndValidatin(User MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -133,6 +133,7 @@ using Simplog.Data.CommonDataModel;
 					{   
 					    throw new ApplicationException("User with ExternalCode " + MyEntity.ExternalCode + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -145,17 +146,49 @@ using Simplog.Data.CommonDataModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
 					}
-					temp.EnglishName = MyEntity.EnglishName;
-					temp.LocalName = MyEntity.LocalName;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
+					{							//throw new ApplicationException("EnglishName Can't be update"); 
+							temp.EnglishName = MyEntity.EnglishName;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
+					{							//throw new ApplicationException("LocalName Can't be update"); 
+							temp.LocalName = MyEntity.LocalName;
+
+										}  
+
+					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						temp.Code = MyEntity.ExternalCode;
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ExternalCode))
+						{
+								//throw new ApplicationException("ExternalCode Can't be update"); 
+								temp.Code = MyEntity.ExternalCode;
+								
+						
+						}  
+
+						
 					}
-					temp.Email = MyEntity.PartnerCode;					   
-					   return temp;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
+					{							//throw new ApplicationException("PartnerCode Can't be update"); 
+							temp.Email = MyEntity.PartnerCode;
+
+										}  
+
+										   
+					return temp;
 		    }
             catch (Exception ex)
             {

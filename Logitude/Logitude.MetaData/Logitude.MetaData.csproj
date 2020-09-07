@@ -136,7 +136,6 @@
     </Content>
     <Content Include="AutoGenerators\DataContractsClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DataContractsClassesGenerator.cs</LastGenOutput>
       <LastOutputs>.\DataContractsClassesGenerator.cs</LastOutputs>
     </Content>
     <Content Include="AutoGenerators\GlobalClassesGenerator.tt">

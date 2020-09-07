@@ -72,7 +72,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public ARInvoiceTypePM ARInvoiceTypeDataMappingAndValidatin(ARInvoiceType MyEntity,int Tenant,string ComputingPartnerName = "")
+		public ARInvoiceTypePM ARInvoiceTypeDataMappingAndValidatin(ARInvoiceType MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -85,13 +85,30 @@ using Simplog.Data.InvoiceModel;
 					{   
 					    throw new ApplicationException("ARInvoiceType with Code " + MyEntity.Code + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						temp.Code = MyEntity.Code;
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
+						{
+								//throw new ApplicationException("Code Can't be update"); 
+								temp.Code = MyEntity.Code;
+								
+						
+						}  
+
+						
 					}
-					temp.Name = MyEntity.Name;					   
-					   return temp;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
+					{							//throw new ApplicationException("Name Can't be update"); 
+							temp.Name = MyEntity.Name;
+
+										}  
+
+										   
+					return temp;
 		    }
             catch (Exception ex)
             {

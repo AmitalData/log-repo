@@ -68,7 +68,9 @@ using Simplog.Data.CommonDataModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.Name = MyEntityPM.Name;
 				   temp.Address1 = MyEntityPM.Address1;
-				   temp.Address2 = MyEntityPM.Address2;			  
+				   temp.Address2 = MyEntityPM.Address2; 
+
+			  
 				   if(MyEntityPM.CountryId != null)
 				   {
 					   CountryQueryService CountryService0 = new CountryQueryService(Tenant);
@@ -79,7 +81,9 @@ using Simplog.Data.CommonDataModel;
 				   temp.City = MyEntityPM.City;
 				   temp.ZipCode = MyEntityPM.ZipCode;
 				   temp.PhoneNumber = MyEntityPM.PhoneNumber;
-				   temp.FaxNumber = MyEntityPM.FaxNumber;			  
+				   temp.FaxNumber = MyEntityPM.FaxNumber; 
+
+			  
 				   if(MyEntityPM.StateId != null)
 				   {
 					   StateQueryService StateService1 = new StateQueryService(Tenant);
@@ -97,7 +101,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public AddressPM AddressDataMappingAndValidatin(Address MyEntity,int Tenant,string ComputingPartnerName = "")
+		public AddressPM AddressDataMappingAndValidatin(Address MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -111,6 +115,7 @@ using Simplog.Data.CommonDataModel;
 					{   
 					    throw new ApplicationException("Address with Id " + MyEntity.Id + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -123,41 +128,117 @@ using Simplog.Data.CommonDataModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
 					}
-					temp.Name = MyEntity.Name;
-					temp.Address1 = MyEntity.Address1;
-					temp.Address2 = MyEntity.Address2;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
+					{							//throw new ApplicationException("Name Can't be update"); 
+							temp.Name = MyEntity.Name;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Address1))
+					{							//throw new ApplicationException("Address1 Can't be update"); 
+							temp.Address1 = MyEntity.Address1;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Address2))
+					{							//throw new ApplicationException("Address2 Can't be update"); 
+							temp.Address2 = MyEntity.Address2;
+
+										}  
+
+					
 					CountryQueryService CountryCountryService = new CountryQueryService(Tenant);
 					if(MyEntity.Country != null)
 					{
 						var myCountryPM = CountryCountryService.CountryDataMappingAndValidatin(MyEntity.Country,Tenant,ComputingPartnerName);
-												if(myCountryPM != null)
-						{
-							temp.CountryId = myCountryPM.Id;
-						}
+						
+						if(myCountryPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("Country Can't be update"); 
+								temp.CountryId = myCountryPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.City = MyEntity.City;
-					temp.ZipCode = MyEntity.ZipCode;
-					temp.PhoneNumber = MyEntity.PhoneNumber;
-					temp.FaxNumber = MyEntity.FaxNumber;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.City))
+					{							//throw new ApplicationException("City Can't be update"); 
+							temp.City = MyEntity.City;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ZipCode))
+					{							//throw new ApplicationException("ZipCode Can't be update"); 
+							temp.ZipCode = MyEntity.ZipCode;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PhoneNumber))
+					{							//throw new ApplicationException("PhoneNumber Can't be update"); 
+							temp.PhoneNumber = MyEntity.PhoneNumber;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.FaxNumber))
+					{							//throw new ApplicationException("FaxNumber Can't be update"); 
+							temp.FaxNumber = MyEntity.FaxNumber;
+
+										}  
+
+					
 					StateQueryService StateStateService = new StateQueryService(Tenant);
 					if(MyEntity.State != null)
 					{
 						var myStatePM = StateStateService.StateDataMappingAndValidatin(MyEntity.State,Tenant,ComputingPartnerName);
-												if(myStatePM != null)
-						{
-							temp.StateId = myStatePM.Id;
-						}
+						
+						if(myStatePM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("State Can't be update"); 
+								temp.StateId = myStatePM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.ExternalId = MyEntity.ExternalId;					   
-					   return temp;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ExternalId))
+					{							//throw new ApplicationException("ExternalId Can't be update"); 
+							temp.ExternalId = MyEntity.ExternalId;
+
+										}  
+
+										   
+					return temp;
 		    }
             catch (Exception ex)
             {
