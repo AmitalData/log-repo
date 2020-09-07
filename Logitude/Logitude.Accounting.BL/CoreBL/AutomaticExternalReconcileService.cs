@@ -251,7 +251,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<IGrouping<string, MyPageLine>> GetGroupedPageLinesByReference()
         {
             return externalPageLines
-                .GroupBy(d => d.Reference)
+                .GroupBy(d => d.Reference.Trim(' '))
                 .Where(d => d.Count() > 1 && d.Key != null).ToList();
         }
 
@@ -336,7 +336,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             foreach (var pageLine in externalPageLines.Where(d => d.Reference != null))
             {
-                string pageLineReference = pageLine.Reference.TrimStart('0');
+                string pageLineReference = pageLine.Reference.TrimStart('0').Trim(' ');
                 bool haveNewItems = false;
 
                 haveNewItems = AddMatchedLedger(groupNumberCounter, groupedTransactionsDictionary_ref1, groupedTransactionsDictionary_ref2, groupedTransactionsDictionary_ref3, pageLine, pageLineReference, haveNewItems);
@@ -359,7 +359,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             foreach (var pageLine in externalPageLines.Where(d => d.Reference != null))
             {
-                string pageLineReference = pageLine.Reference.TrimStart('0');
+                string pageLineReference = pageLine.Reference.TrimStart('0').Trim(' ');
                 bool haveNewItems = false;
 
                 haveNewItems = AddMatchedLedger(groupNumberCounter, groupedTransactionsDictionary_ref1, groupedTransactionsDictionary_ref2, groupedTransactionsDictionary_ref3, pageLine, new RefRefDateKey(pageLineReference,pageLine.ReferenceDate), haveNewItems);
@@ -398,11 +398,11 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             List<IGrouping<AmountRefKey, MyLedgerTransaction>> groupedTransactions_ref3 = new List<IGrouping<AmountRefKey, MyLedgerTransaction>>();
             if (refNumber == 1)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference1?.TrimStart('0'))).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference1?.TrimStart('0').Trim(' '))).ToList();
             else if (refNumber == 2)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference2?.TrimStart('0'))).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference2?.TrimStart('0').Trim(' '))).ToList();
             else if (refNumber == 3)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference3?.TrimStart('0'))).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference3?.TrimStart('0').Trim(' '))).ToList();
 
             var groupedTransactionsDictionary_ref3 = groupedTransactions_ref3.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
             return groupedTransactionsDictionary_ref3;
@@ -411,11 +411,11 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             var groupedTransactions_ref3 = new List<IGrouping<string, MyLedgerTransaction>>();
             if (refNumber == 1)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => x.Reference1?.TrimStart('0')).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => x.Reference1?.TrimStart('0').Trim(' ')).ToList();
             else if (refNumber == 2)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => x.Reference2?.TrimStart('0')).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => x.Reference2?.TrimStart('0').Trim(' ')).ToList();
             else if (refNumber == 3)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => x.Reference3?.TrimStart('0')).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => x.Reference3?.TrimStart('0').Trim(' ')).ToList();
 
             var groupedTransactionsDictionary_ref3 = groupedTransactions_ref3.Where(d=>d.Key != null).ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
             return groupedTransactionsDictionary_ref3;
@@ -425,11 +425,11 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             List<IGrouping<AmountRefRefDateKey, MyLedgerTransaction>> groupedTransactions_ref3 = new List<IGrouping<AmountRefRefDateKey, MyLedgerTransaction>>();
             if (refNumber == 1)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference1?.TrimStart('0'), x.DocumentDate)).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference1?.TrimStart('0').Trim(' '), x.DocumentDate)).ToList();
             else if (refNumber == 2)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference2?.TrimStart('0'), x.DocumentDate)).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference2?.TrimStart('0').Trim(' '), x.DocumentDate)).ToList();
             else if (refNumber == 3)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference3?.TrimStart('0'), x.DocumentDate)).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference3?.TrimStart('0').Trim(' '), x.DocumentDate)).ToList();
 
             var groupedTransactionsDictionary_ref3 = groupedTransactions_ref3.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
             return groupedTransactionsDictionary_ref3;
@@ -438,11 +438,11 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             List<IGrouping<RefRefDateKey, MyLedgerTransaction>> groupedTransactions_ref3 = new List<IGrouping<RefRefDateKey, MyLedgerTransaction>>();
             if (refNumber == 1)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new RefRefDateKey(x.Reference1?.TrimStart('0'), x.DocumentDate)).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new RefRefDateKey(x.Reference1?.TrimStart('0').Trim(' '), x.DocumentDate)).ToList();
             else if (refNumber == 2)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new RefRefDateKey(x.Reference2?.TrimStart('0'), x.DocumentDate)).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new RefRefDateKey(x.Reference2?.TrimStart('0').Trim(' '), x.DocumentDate)).ToList();
             else if (refNumber == 3)
-                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new RefRefDateKey(x.Reference3?.TrimStart('0'), x.DocumentDate)).ToList();
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new RefRefDateKey(x.Reference3?.TrimStart('0').Trim(' '), x.DocumentDate)).ToList();
 
             var groupedTransactionsDictionary_ref3 = groupedTransactions_ref3.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
             return groupedTransactionsDictionary_ref3;
