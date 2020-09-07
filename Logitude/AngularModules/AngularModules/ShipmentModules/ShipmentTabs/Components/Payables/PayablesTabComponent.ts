@@ -829,7 +829,9 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                         }
                     });
 
-                    message = "No rate for this date for the following lines: " + codes;
+                    if (!AppTool.IsNullOrEmpty(codes)) {
+                        message = "No rate for this date for the following lines: " + codes;
+                    }
                 }
             }
 
@@ -883,7 +885,9 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                         }
                     });
 
-                    message = "No rate for this date for the following lines: " + codes1;
+                    if (!AppTool.IsNullOrEmpty(codes1)) {
+                        message = "No rate for this date for the following lines: " + codes1;
+                    }
                 }
 
                 else {
