@@ -3109,7 +3109,34 @@ namespace WebFreight.Web.WebServices
                         Horse horse = (from pa in commonContext.Horses
                                        where pa.Id == package.HorseId
                                        select pa).FirstOrDefault();
-                        packageline.Horse = horse.Name;
+
+                        if (horse != null)
+                        {
+                            packageline.HorseName = horse.Name;
+                            packageline.HorseYearOfBirth = horse.YearOfBirth;
+                            packageline.HorseColor = horse.Color;
+                            packageline.HorseGender = horse.Gender;
+                            packageline.HorseBreed = horse.Breed;
+                            packageline.HorseDiscipline = horse.Discipline;
+                            packageline.HorseTravelBehavior = horse.TravelBehavior;
+                            packageline.HorseMicochipNumber = horse.MicochipNumber;
+                            packageline.HorsePassportNumber = horse.PassportNumber;
+                            packageline.HorseCurrentStable = horse.CurrentStable;
+                            packageline.HorseOwner = horse.Owner;
+                            packageline.HorseRemarks = horse.Remarks;
+
+                            if (!string.IsNullOrEmpty(horse.CountryOfBirthId))
+                            {
+                                Country country = (from pa in commonContext.Countries
+                                                   where pa.Id == horse.CountryOfBirthId
+                                                   select pa).FirstOrDefault();
+
+                                if (country != null)
+                                {
+                                    packageline.HorseCountryOfBirthName = country.EnglishName;
+                                }
+                            }
+                        }
                     }
 
                     if (myDataProvider.HasAttachmentList == "True")

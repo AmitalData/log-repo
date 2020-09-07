@@ -1369,7 +1369,42 @@ namespace WebFreight.Web.ReportsWebServices
                 packageDetail.Notes = package.Notes;
                 packageDetail.Harmonize = package.Harmonize;
                 packageDetail.Tare = package.Tare;
-                packageDetail.Horse = package.HorseName;
+
+                if (!string.IsNullOrEmpty(package.HorseId))
+                {
+                    Horse horse = (from pa in commonContext.Horses
+                                   where pa.Id == package.HorseId
+                                   select pa).FirstOrDefault();
+
+                    if (horse != null)
+                    {
+                        packageDetail.HorseName = horse.Name;
+                        packageDetail.HorseYearOfBirth = horse.YearOfBirth;
+                        packageDetail.HorseColor = horse.Color;
+                        packageDetail.HorseGender = horse.Gender;
+                        packageDetail.HorseBreed = horse.Breed;
+                        packageDetail.HorseDiscipline = horse.Discipline;
+                        packageDetail.HorseTravelBehavior = horse.TravelBehavior;
+                        packageDetail.HorseMicochipNumber = horse.MicochipNumber;
+                        packageDetail.HorsePassportNumber = horse.PassportNumber;
+                        packageDetail.HorseCurrentStable = horse.CurrentStable;
+                        packageDetail.HorseOwner = horse.Owner;
+                        packageDetail.HorseRemarks = horse.Remarks;
+
+                        if (!string.IsNullOrEmpty(horse.CountryOfBirthId))
+                        {
+                            Country country = (from pa in commonContext.Countries
+                                               where pa.Id == horse.CountryOfBirthId
+                                               select pa).FirstOrDefault();
+
+                            if (country != null)
+                            {
+                                packageDetail.HorseCountryOfBirthName = country.EnglishName;
+                            }
+                        }
+                    }
+                }
+
                 newDetail.PackageDetails.Add(packageDetail);
 
                 #region commented Code
