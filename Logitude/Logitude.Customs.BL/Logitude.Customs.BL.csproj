@@ -1891,6 +1891,8 @@
     <Compile Include="Messaging\Customs\DocumentExt.cs" />
     <Compile Include="Messaging\Customs\IMessageController.cs" />
     <Compile Include="Messaging\Customs\IMessagingServiceInterfaceType.cs" />
+    <Compile Include="Messaging\Customs\PerformanceLogger\PerformanceM.cs" />
+    <Compile Include="Messaging\Customs\PerformanceLogger\PerformanceQueue.cs" />
     <Compile Include="Messaging\Customs\RequestSheetRepushQService.cs" />
     <Compile Include="Messaging\Customs\SBQMessageService.cs" />
     <Compile Include="Messaging\Customs\CustomsStateMachineProcess.cs" />

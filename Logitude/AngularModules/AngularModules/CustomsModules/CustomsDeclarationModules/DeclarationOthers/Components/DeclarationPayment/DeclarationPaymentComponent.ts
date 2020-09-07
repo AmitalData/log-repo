@@ -798,7 +798,6 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         }
         else {
 
-
             if (!AppTool.IsNullOrEmpty(this.GetCreditInternalBankId)) {
                 if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
                     this.JustAutoFillPaymentScreen();
@@ -821,8 +820,10 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         }
                     }
                 });
+
+
         }
-      
+
 
     }
     AutoFillPaymentScreen() {

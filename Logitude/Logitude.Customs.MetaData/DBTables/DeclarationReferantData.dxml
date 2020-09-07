@@ -187,7 +187,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-
   <Column
     Name="ImporterFile"
     Type="varchar"

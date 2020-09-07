@@ -88,7 +88,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  LastStatusDate = a.LastStatusDate,
                                                                  LastStatusName = a.LastStatusName,
                                                                  OrderMoney = a.OrderMoney,
-                                                                 Team=a.ReferantTeam.LocalName,
                                                                  StorageSiteName=d.StorageSiteName,
                                                                  HatraDate=d.HatraDate,
                                                                  PaymentDate=d.PaymentDate,
@@ -100,6 +99,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  //LastStatusDate = a.LastStatusDate,
                                                                  //LastStatusName = a.LastStatusName,
                                                                  //OrderMoney = a.OrderMoney,
+
+                                                                 Team = a.ReferantTeam.LocalName,
 
                                                                   
 

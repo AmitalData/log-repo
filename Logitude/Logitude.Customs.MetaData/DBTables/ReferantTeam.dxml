@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="ReferantTeams"
-  OldNames="Teams,ReferantTeam"
+  OldNames="ReferantTeam"
   Schema="Customs"
   DBType="Main"
   Module="Customs">
