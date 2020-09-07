@@ -253,12 +253,12 @@ export class CustomsSettingsComponent
     set LastNumOfMessagesDCAWS(value) { this.entityPM.LastNumOfMessagesDCAWS = value; }
 
 
-    _LastRunningDCAWS: string;
+    _LastRunningDCAWS: Date;
     get LastRunningDCAWS() {
        // if (this.entityPM != null) {
           //  if (this.entityPM.LastRunningDCAWS != null) {
         if (this._LastRunningDCAWS != null) {
-            var myFormats = DateTool.GetDateFormats(new Date(this._LastRunningDCAWS));
+            var myFormats = DateTool.GetDateFormats(this._LastRunningDCAWS);
                 return myFormats.DateString + " " + myFormats.ShortTimeString;
 
         }
@@ -269,7 +269,7 @@ export class CustomsSettingsComponent
 
        //return this.entityPM != null ? this.entityPM.LastRunningDCAWS : null;
     }
-    set LastRunningDCAWS(value: string) { this._LastRunningDCAWS = value; }
+    set LastRunningDCAWS(value: any) { this._LastRunningDCAWS =  value ; }
 
 
     
