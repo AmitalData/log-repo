@@ -756,6 +756,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? fileOpenDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? FileOpenDate  
+	   {
+	    
+	     get
+		{
+		   return fileOpenDate;
+		 }
+		 set
+		 {
+		   if(fileOpenDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FileOpenDate",OldValue=fileOpenDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   fileOpenDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

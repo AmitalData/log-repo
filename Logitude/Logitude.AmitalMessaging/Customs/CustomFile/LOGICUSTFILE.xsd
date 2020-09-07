@@ -71,6 +71,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="NewFile" />
         <xs:element minOccurs="0" maxOccurs="1" ref="ImporterFile" />
         <xs:element minOccurs="0" maxOccurs="1" ref="Team" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="FileOpenDate" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -135,4 +136,5 @@
   <xs:element name="NewFile" type="xs:string" />
   <xs:element name="ImporterFile" type="xs:string" />
   <xs:element name="Team" type="xs:string" />
+  <xs:element name="FileOpenDate" type="xs:string" />
 </xs:schema>
