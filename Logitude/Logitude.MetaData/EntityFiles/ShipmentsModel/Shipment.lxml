@@ -89570,21 +89570,6 @@
         IsCompositKey="false"
         IsUpdateAllowed="true" />
       <DCField
-        DCFieldName="&quot;MAWBDate&quot;"
-        FieldName="&quot;MAWBOBLDate&quot;"
-        IsKey="false"
-        IsManualMapping="false"
-        IsMulti="false"
-        FieldsDataType="&quot;DateTime&quot;"
-        IsNullable="true"
-        IsSpecialField="false"
-        IsCustomType="false"
-        IsAttribute="false"
-        IgnoreCustomTypeCheck="false"
-        IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
-      <DCField
         DCFieldName="&quot;Ratio&quot;"
         FieldName="&quot;Ratio&quot;"
         IsKey="false"
@@ -90601,7 +90586,7 @@
         IsCompositKey="false"
         IsUpdateAllowed="true" />
       <DCField
-        DCFieldName="&quot;MAWBDate&quot;"
+        DCFieldName="&quot;MasterDate&quot;"
         FieldName="&quot;MAWBOBLDate&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -92087,7 +92072,7 @@
         IsCompositKey="false"
         IsUpdateAllowed="true" />
       <DCField
-        DCFieldName="&quot;MAWBDate&quot;"
+        DCFieldName="&quot;MasterDate&quot;"
         FieldName="&quot;MAWBOBLDate&quot;"
         IsKey="false"
         IsManualMapping="false"

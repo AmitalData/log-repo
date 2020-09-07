@@ -391,8 +391,14 @@ using Simplog.Data.ShipmentsModel;
 			       
 					   				   }
 				   
-				   temp.MAWBDate = MyEntityPM.MAWBOBLDate;
-				   temp.Ratio = MyEntityPM.Ratio;					
+				   temp.Ratio = MyEntityPM.Ratio;
+				if(MyEntityPM.Transshipments != null && MyEntityPM.Transshipments.Count > 0)
+				{
+					 TransshipmentQueryService TransshipmentService26 = new TransshipmentQueryService(Tenant);
+					 temp.Transshipments = TransshipmentService26.TransshipmentDataMapping(MyEntityPM.Transshipments,Tenant);
+				}
+
+							 					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1231,21 +1237,29 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && MyEntity.MAWBDate != null)
-					{							//throw new ApplicationException("MAWBDate Can't be update"); 
-							temp.MAWBOBLDate = MyEntity.MAWBDate;
-
-										}  
-
-					
-                    
 					if(!IsUpdate)// && MyEntity.Ratio != null)
 					{							//throw new ApplicationException("Ratio Can't be update"); 
 							temp.Ratio = MyEntity.Ratio;
 
 										}  
 
-										   
+					 
+
+					if(MyEntity.Transshipments != null && MyEntity.Transshipments.Count > 0)
+					{
+						TransshipmentQueryService TransshipmentService26 = new TransshipmentQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("Transshipments Can't be update"); 
+								temp.Transshipments = TransshipmentService26.TransshipmentDataMappingAndValidatin(MyEntity.Transshipments,Tenant,ComputingPartnerName);
+
+					 
+						}  
+
+						
+					}
+
+								 					   
 					return temp;
 		    }
             catch (Exception ex)
