@@ -16,6 +16,8 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -626,12 +628,21 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
             }
 
-            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD < 150)
+            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD < 150 && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
             {
-                string defValue = GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", "NON", ResolvedTenant());
-                if (defValue == "Y")
+                if (_CourierMasterPM != null)
                 {
-                    if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode)) this._MyDeclarationPM.ImporterCode = null;
+                    Card myCard = null;
+                    var repository = new CardRepository(ResolvedTenant());
+                    myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, ResolvedTenant());
+                    if (!String.IsNullOrWhiteSpace(myCard.Code))
+                    {
+                        string defValue = GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", myCard.Code, ResolvedTenant());
+                        if (defValue == "Y")
+                        {
+                            this._MyDeclarationPM.ImporterCode = null;
+                        }
+                    }
                 }
             }
         }
