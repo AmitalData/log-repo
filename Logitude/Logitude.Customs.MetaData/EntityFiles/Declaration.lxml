@@ -17615,39 +17615,39 @@
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllCourierDeclarations&quot;"
-        IndexOrder="8"
-        ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
-        ColumnWidth="180" />
-      <QueryColumn
-        QueryCode="&quot;AllCourierDeclarations&quot;"
-        IndexOrder="2"
+        IndexOrder="1"
         ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="110" />
       <QueryColumn
         QueryCode="&quot;AllCourierDeclarations&quot;"
-        IndexOrder="3"
+        IndexOrder="2"
         ObjectFieldName="&quot;CourierHAWB&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllCourierDeclarations&quot;"
-        IndexOrder="4"
+        IndexOrder="3"
         ObjectFieldName="&quot;FastIndividualProcessCode&quot;"
         ColumnWidth="140" />
       <QueryColumn
         QueryCode="&quot;AllCourierDeclarations&quot;"
-        IndexOrder="5"
+        IndexOrder="4"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="160" />
       <QueryColumn
         QueryCode="&quot;AllCourierDeclarations&quot;"
-        IndexOrder="6"
+        IndexOrder="5"
         ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllCourierDeclarations&quot;"
-        IndexOrder="7"
+        IndexOrder="6"
         ObjectFieldName="&quot;ProcedureCurrentName&quot;"
         ColumnWidth="190" />
+      <QueryColumn
+        QueryCode="&quot;AllCourierDeclarations&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
+        ColumnWidth="180" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
@@ -19004,7 +19004,6 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-
     <EventType
       Code="&quot;CAP&quot;"
       ObjectTableName="&quot;Customs.Declaration&quot;"
@@ -19070,7 +19069,6 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-
   </EventTypes>
   <Records />
   <MenuButtons
@@ -21070,7 +21068,7 @@
       LocalDefaultText="&quot;הצהרה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-	    <TextCode
+    <TextCode
       Code="&quot;Customs.Declaration.TH.DeclarationCancellation&quot;"
       DefaultText="&quot;Declaration Cancellation&quot;"
       LocalDefaultText="&quot;ביטול הצהרה במכס&quot;"
@@ -21082,7 +21080,12 @@
       LocalDefaultText="&quot;כל ההצהרות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
+    <TextCode
+      Code="&quot;Customs.Declaration.O.Errors&quot;"
+      DefaultText="&quot;Errors&quot;"
+      LocalDefaultText="&quot;שגיאות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
