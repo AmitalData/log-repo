@@ -142,9 +142,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        //http://localhost:9996/api/GLAccountViews/GetCheckBalanceByAccountDisplayNumber?tenant=62&accountDisplayNumber=70270&totalDateType=1&theDate=2020-02-04T09:15:03.1085624
-        public HttpResponseMessage GetCheckBalanceByAccountDisplayNumber(int tenant, string accountDisplayNumber, string totalDateType, DateTime theDate)
-        {
+        //http://localhost:9996/api/glaccountviews/GetCheckBalanceByAccountDisplayNumber?tenant=10&accountDisplayNumber=104355&totalDateType=1&theDate=2020-07-31T00:00:00.000&IncludeRelatedCurrenciesAccount=true
+        public HttpResponseMessage GetCheckBalanceByAccountDisplayNumber(int tenant, string accountDisplayNumber, string totalDateType, DateTime theDate
+            , bool IncludeRelatedCurrenciesAccount
+            )
+        {///
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
@@ -161,7 +163,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 var list=qs.GetByDisplayNumber(accountDisplayNumber, tenant);
                 var pm =list.First();
                 var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, pm.Id, null);
-                ac.ReSetAccountList(false, true);
+                ac.ReSetAccountList(false, IncludeRelatedCurrenciesAccount);
                 bool openBalancePlease_ReCalcYearTransfer = //true;//Yaron said this is Default !!!
                     (theDate.Day == 1 && theDate.Month == 1);
                 ac.CalculateBalance(
