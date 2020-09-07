@@ -24,6 +24,11 @@ export class CourierPendingReasonPM {
       }
  	 
     
+    private id: string;
+    public get Id() { return this.id; }
+    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+       
+	 
     private code: string;
     public get Code() { return this.code; }
     public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
