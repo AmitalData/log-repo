@@ -138,7 +138,7 @@ export class ShipmentComponent implements OnInit
     public AllMilestoneFields:Milestone[];
     public CompletedMilestoneFields:Milestone[]=[];
     public FuturesMilestoneFields:Milestone[]=[];
-    public CurrentMilestoneField:Milestone ;
+    public CurrentMilestoneField:Milestone = new Milestone();
 }
 
 

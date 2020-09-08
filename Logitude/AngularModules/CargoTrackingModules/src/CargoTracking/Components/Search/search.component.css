@@ -23,6 +23,11 @@ li {
     color:var(--MainColor); /*#002664;*/
 }
 
+.truncateText{
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
 li:hover {
     border: 1px solid rgb(195, 201, 221);
     ;
