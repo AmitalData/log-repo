@@ -1206,7 +1206,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
     sortingCol: string = ''; //'CreateDateTime';
     AfterServerSort: boolean = false;
     ServerSort(colDef, id, forced: boolean = false) {
-
+       
         if (forced == false) {
             this.selectedRow = null;
             this.MySelectedRowIndex = null;
@@ -1287,6 +1287,9 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             this.rows = [];
             //**this.updateDisplayList();
             //this.myReloadData();
+            //this.CurrentSession.StartBusyIndicator("Loading ...");
+            this.virtualRowMetaData.rowsCount = 0;
+            this.controller = new VirtualRowControllerV2(this.virtualRowMetaData); 
             this.init(true);
             var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
             if (elem) {
@@ -1385,7 +1388,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         }
         this.requestedRowCountSub = this.controllerForCount.requestedRowCount.subscribe((res) => {
 
-
+            //this.CurrentSession.StopBusyIndicator();
             this.rowCount = res;
             this.virtualRowMetaData.rowsCount = res;
             this.virtualRowMetaData.Filters = this.Filters;
