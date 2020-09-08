@@ -24,10 +24,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
                                                              join d in context.Declarations.Include("CustomerCard").Include("DeclarationOffice").Include("DeclarationStatusType").Include("Importer")
                                                              on a.DeclarationId equals d.Id
-
-                                                           
-                                                             //join c in context.Clients.Include("Client")
-                                                             //on d.ImporterCode equals c.Code
                                                              select new DeclarationReferantDataList()
                                                              {
                                                                  Tenant = a.Tenant,
@@ -99,7 +95,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ImporterFile=a.ImporterFile,
                                                                  AEOImporter=d.Importer.FacilitationTypeCode,
                                                                  Team = a.ReferantTeam.LocalName,
-
+                                                                 FileOpenDate=a.FileOpenDate,
 
 
                                                              }) ;
