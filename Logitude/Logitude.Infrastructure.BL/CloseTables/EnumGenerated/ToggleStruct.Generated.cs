@@ -24,6 +24,7 @@ namespace Logitude.Infrastructure.BL.CloseTables
        public const string CardSearchsToggle = "CST";  
        public const string ShipmentSubType = "SUB";  
        public const string Horse = "HRS";  
+       public const string KPIDocumentFields = "KPI";  
     }
 }
 
