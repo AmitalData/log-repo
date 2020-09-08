@@ -1,6 +1,6 @@
 <Configurations>
 
-<Config Name="DBConfigFileName" Value="Master.DBConfig.config"></Config>
+<Config Name="DBConfigFileName" Value="2020R4.DBConfig.config"></Config>
 <Config Name="AOTScriptsExecutionTimeOut" Value="30"></Config>
 <Config Name="AOTCreateIndexWithOnline" Value="true"></Config>
 
