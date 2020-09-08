@@ -723,7 +723,10 @@ namespace Logitude.DBMigrations.Models
 
                 if (!columnMigration.NewColumn.Constraints.Nullable)
                 {
-                    InsertIntoDBMigrationsSetDefaultValues(columnName, defaultValue);
+                    if (!IsColumnInDBMigrationsSetDefaultValues(columnName))
+                    {
+                        InsertIntoDBMigrationsSetDefaultValues(columnName, defaultValue);
+                    }
                 }
             }
             
@@ -1280,6 +1283,42 @@ namespace Logitude.DBMigrations.Models
             }
 
             return null;
+        }
+
+        protected bool IsColumnInDBMigrationsSetDefaultValues(string columnName)
+        {
+            string databaseType = DXMLTable.DBType;
+            string schemaName = TableMigrations.DxmlTableSchema;
+            string tableName = TableMigrations.DxmlTableName;
+
+            bool result = false;
+
+            string queryString = "SELECT * FROM [dbo].[DBMigrationsSetDefaultValues] WHERE [DatabaseType] = '" + databaseType + "' AND [SchemaName] = '" + schemaName + "' AND [TableName] = '" + tableName + "' AND [ColumnName] = '" + columnName + "';";
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = true;
+                }
+                reader.Close();
+                connection.Close();
+            }
+            catch (Exception exception)
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                connection.Close();
+                ExitDatabaseMigrations(exception.Message);
+            }
+
+            return result;
         }
 
         protected void InsertIntoDBMigrationsSetDefaultValues(string columnName, string defaultValue)

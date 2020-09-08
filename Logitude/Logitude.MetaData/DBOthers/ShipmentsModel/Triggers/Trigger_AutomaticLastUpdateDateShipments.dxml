@@ -4,8 +4,20 @@
   Name="Trigger_AutomaticLastUpdateDateShipments"
   Schema="dbo"
   Module="Shipment">
-  <SqlScript><![CDATA[
-CREATE TRIGGER Trigger_AutomaticLastUpdateDateShipments ON Shipments AFTER UPDATE  AS  BEGIN SET NOCOUNT ON; UPDATE Shipments SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;
+  <SqlScript>
+  <![CDATA[
+CREATE TRIGGER Trigger_AutomaticLastUpdateDateShipments ON Shipments AFTER UPDATE  AS  BEGIN
+
+SET NOCOUNT ON;
+
+IF TRIGGER_NESTLEVEL() > 1 RETURN;
+
+IF SESSION_CONTEXT(N'ZeroDownTimeMode') IS NULL
+BEGIN
+UPDATE Shipments SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted);
+END;
+
+END;
 ]]></SqlScript>
   <OracleScript>
 </OracleScript>

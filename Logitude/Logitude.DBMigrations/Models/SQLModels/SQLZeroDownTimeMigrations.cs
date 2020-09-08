@@ -103,7 +103,7 @@ namespace Logitude.DBMigrations.Models
                         }
                     }
 
-                    Thread.Sleep(1000);
+                    Thread.Sleep(500);
                 }
                 catch (Exception exception)
                 {
@@ -293,7 +293,7 @@ namespace Logitude.DBMigrations.Models
                     string data = batchNumberCounter.ToString() + "," + batchStartTime.ToString() + "," + batchEndTime.ToString() + "," + elapsedTime.ToString() + "," + affectedRows.ToString() + "\n";
                     AppendToCSVFile(csvFileName, data);
 
-                    Thread.Sleep(1000);
+                    Thread.Sleep(500);
                 }
                 catch (Exception exception)
                 {
@@ -381,7 +381,7 @@ namespace Logitude.DBMigrations.Models
                 SqlCommand sqlCommand = new SqlCommand();
                 sqlCommand.Connection = sqlConnection;
                 sqlCommand.CommandText = queryString;
-                sqlCommand.CommandTimeout = 3600;
+                sqlCommand.CommandTimeout = 7200;
                 sqlCommand.ExecuteNonQuery();
                 sqlConnection.Close();
             }
@@ -410,7 +410,63 @@ namespace Logitude.DBMigrations.Models
                 SqlCommand sqlCommand = new SqlCommand();
                 sqlCommand.Connection = sqlConnection;
                 sqlCommand.CommandText = queryString;
-                sqlCommand.CommandTimeout = 3600;
+                sqlCommand.CommandTimeout = 7200;
+                sqlCommand.ExecuteNonQuery();
+                sqlConnection.Close();
+            }
+            catch (Exception exception)
+            {
+                sqlConnection.Close();
+                ExitZeroDownTimeMigrations(exception.Message);
+            }
+        }
+
+        protected override void CreateResetLastScriptTrigger(string tableName)
+        {
+            string queryString = "IF NOT EXISTS (SELECT * FROM sys.objects WHERE [type] = 'TR' and [name] = 'TR_ResetLastScript_" + tableName + "')\n" +
+                "BEGIN\n" +
+                "CREATE TRIGGER [TR_ResetLastScript_" + tableName + "]\n" +
+                "ON [" + tableName + "]\n" +
+                "FOR UPDATE AS BEGIN\n" +
+                "SET NOCOUNT ON;\n" +
+                "IF TRIGGER_NESTLEVEL() > 1 RETURN;\n" +
+                "IF SESSION_CONTEXT(N'ZeroDownTimeMode') IS NULL\n" +
+                "BEGIN\n" +
+                "UPDATE [" + tableName + "] SET [DBMigrationsLastScript] = 0 WHERE Id IN (SELECT DISTINCT Id FROM Inserted);\n" +
+                "END\n" +
+                "END" +
+                "END";
+
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+
+            try
+            {
+                sqlConnection.Open();
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.Connection = sqlConnection;
+                sqlCommand.CommandText = queryString;
+                sqlCommand.ExecuteNonQuery();
+                sqlConnection.Close();
+            }
+            catch (Exception exception)
+            {
+                sqlConnection.Close();
+                ExitZeroDownTimeMigrations(exception.Message);
+            }
+        }
+
+        protected override void SetZeroDownTimeSession()
+        {
+            string queryString = "EXEC sp_set_session_context 'ZeroDownTimeMode', 1;";
+
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+
+            try
+            {
+                sqlConnection.Open();
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.Connection = sqlConnection;
+                sqlCommand.CommandText = queryString;
                 sqlCommand.ExecuteNonQuery();
                 sqlConnection.Close();
             }
