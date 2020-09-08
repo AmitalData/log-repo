@@ -91,7 +91,20 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
                 direction: '',
                 key: froalakey,
                 useClasses: false,
-
+                fontFamily: {
+                    "Arial": 'Arial',
+                    "Arial Black": 'Arial Black',
+                    "Times New Roman": 'Times New Roman',
+                    "Calibri": 'Calibri',
+                    "Impact": 'Impact',
+                    "Georgia": 'Georgia',
+                    "Tahoma": 'Tahoma',
+                    "Verdana": 'Verdana',
+                    "Comic Sans MS": 'Comic Sans MS',
+                    "Courier New": 'Courier New',
+                    "Lucida Sans Unicode": 'Lucida Sans Unicode',
+                    "Trebuchet MS": 'Trebuchet MS',
+                },
                 tableStyles: {
                     All: 'All',
                     Box: 'Box',
