@@ -39,7 +39,7 @@ export class TextDesignComponent implements OnInit {
     ngOnInit() {
         if (this.QuoteTemplateTextDesignPM) {
             this.Title =   TextCodeTranslator.Translate("QuoteTemplate.S." + this.QuoteTemplateTextDesignPM.Title.replace(" ", ""));
-            var fontFamilyString = "Arial,Arial Black,Calibri,Comic Sans MS,Courier New,Georgia,Lucida Sans Unicode,Times New Roman,Trebuchet MS,Verdana";
+            var fontFamilyString = "Arial,Arial Black,Calibri,Comic Sans MS,Courier New,Georgia,Lucida Sans Unicode,Times New Roman,Trebuchet MS,Verdana,Impact,Tahoma";
             var fontSizeString = "8,9,10,11,12,14,16,18,20,22,24,26,28,36,48,72";
             fontSizeString.split(',').forEach((fontsize) => { this.FontSizeLists.push(Number(fontsize)); });
             this.FontFamilyLists = fontFamilyString.split(',');
