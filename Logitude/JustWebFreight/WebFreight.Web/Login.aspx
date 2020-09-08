@@ -1727,11 +1727,8 @@
 
             }
 
-            if(document.location.href.indexOf('?Menu=protractor')>0){
-			    document.location.href = document.location.href.replace("?Menu=protractor", "").replace("/Login.aspx", "/").replace("/login.aspx", "/") + angularUrl;
-            }
-            else if (document.location.href.indexOf('?Menu=LogBox') > 0) {
-                document.location.href = document.location.href.split('?')[0] + angularUrl;
+            if (document.location.href.indexOf('?Menu=') > 0) {
+                document.location.href = document.location.href.replace("/Login.aspx", "/").replace("/login.aspx", "/").split('?')[0] + angularUrl;
             }
 			else{
                 document.location.href = document.location.href.replace("/Login.aspx", "/").replace("/login.aspx", "/") + angularUrl;
