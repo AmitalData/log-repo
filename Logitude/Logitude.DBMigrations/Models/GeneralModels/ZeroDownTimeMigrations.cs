@@ -14,6 +14,7 @@ namespace Logitude.DBMigrations.Models
         public void Start()
         {
             ServiceMode = false;
+            SetZeroDownTimeSession();
             StartZeroDownTimeForDataScripts(true);
             StartZeroDownTimeForDefaultValues();
             StartZeroDownTimeForDataScripts(false);
@@ -22,7 +23,7 @@ namespace Logitude.DBMigrations.Models
         public void StartAsService()
         {
             ServiceMode = true;
-
+            SetZeroDownTimeSession();
             while (true)
             {
                 StartZeroDownTimeForDataScripts(true);
@@ -68,6 +69,7 @@ namespace Logitude.DBMigrations.Models
         protected void HandleDBMigrationsDataScript(DBMigrationsDataScript dbMigrationsDataScript)
         {
             CreateDBMigrationsLastScriptColumn(dbMigrationsDataScript.TargetTableName);
+            //CreateResetLastScriptTrigger(dbMigrationsDataScript.TargetTableName);
             
             if (!ServiceMode)
             {
@@ -114,5 +116,9 @@ namespace Logitude.DBMigrations.Models
         protected abstract void CreateDBMigrationsLastDefaultValueColumn(string tableName);
 
         protected abstract void CreateDBMigrationsLastScriptColumn(string tableName);
+
+        protected abstract void CreateResetLastScriptTrigger(string tableName);
+
+        protected abstract void SetZeroDownTimeSession();
     }
 }

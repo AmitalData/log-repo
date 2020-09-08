@@ -2080,7 +2080,7 @@ namespace Logitude.DBMigrations.Models
             return sqlZeroDownTimeMigrations;
         }
 
-        private bool IsSxmlInDBMigrationsDataScripts(string sxmlFileName)
+        protected bool IsSxmlInDBMigrationsDataScripts(string sxmlFileName)
         {
             bool result = false;
 
