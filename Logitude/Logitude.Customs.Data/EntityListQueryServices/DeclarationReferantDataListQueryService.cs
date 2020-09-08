@@ -101,7 +101,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ImporterFile=a.ImporterFile,
                                                                  AEOImporter=c.FacilitationTypeCode,
                                                                  Team = a.ReferantTeam.LocalName,
-
+                                                                 FileOpenDate = a.FileOpenDate,
 
 
                                                              }) ;
