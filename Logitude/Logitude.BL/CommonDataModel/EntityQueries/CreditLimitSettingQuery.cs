@@ -65,6 +65,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                VendorsShipmentsBlock = a.VendorsShipmentsBlock,
                                                WarehousesInvoicesBlock = a.WarehousesInvoicesBlock,
                                                WarehousesShipmentsBlock = a.WarehousesShipmentsBlock,
+                                               ShipmentCreationWarning = a.ShipmentCreationWarning,
                                            }).FirstOrDefault();
 
 
@@ -102,6 +103,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             VendorsShipmentsBlock = a.VendorsShipmentsBlock,
                                                             WarehousesInvoicesBlock = a.WarehousesInvoicesBlock,
                                                             WarehousesShipmentsBlock = a.WarehousesShipmentsBlock,
+                                                            ShipmentCreationWarning = a.ShipmentCreationWarning,
                                                         };
             return result;
         }

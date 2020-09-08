@@ -79,9 +79,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(MyContext);
 
                 CargoTrackingShipmentList shipment = shipmentsQuery.GetShipment(SecurityKey, tenant);
+                List<Milestone> milestones = shipmentsQuery.GetMilestonesFieldsFromCargoTrackingShipment(shipment);
+                CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
+                {
+                    ShipmentList = shipment,
+                    Milestones = milestones,
 
-
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipment);
+                };
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentWithMilestones);
 
                 return reponseMessage;
             }
@@ -99,5 +104,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         public string SearchKey { get; set; }
         public int Tenant { get; set; }
     }
+
+
 }
 	 

@@ -24,7 +24,7 @@
     <tr>
         <td style="width: 35px;height:23px;">
             <div>
-                <CheckBox [IsChecked]="false" (Checked)="AllSelected = $event " [IsEnabled]="IsSelectAllEnabled"></CheckBox>
+                <CheckBox [IsChecked]="AllSelected" (Checked)="AllSelected = $event " [IsEnabled]="IsSelectAllEnabled"></CheckBox>
 
             </div>
         </td>

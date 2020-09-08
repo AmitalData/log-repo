@@ -896,6 +896,10 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.DWQueryData.FactTableName = this.FactTableName;
         this.DWQueryData.PageIndex = 0;
         this.DWQueryData.PageSize = 100;
+        this.SelectedFieldsDataSource.forEach(field => {
+            if (field.IsMultipleSelection)
+                this.DWQueryData.PageSize = 1000;
+        });
 
         //if (this.DWQueryData.Filters) {
         if (this.SelectedFiltersDataSource.length > 0 && this.ValidFiltersValues(this.SelectedFiltersDataSource[0]) != true) {

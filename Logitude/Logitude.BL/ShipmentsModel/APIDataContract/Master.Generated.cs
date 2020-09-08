@@ -123,11 +123,14 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public Card FreightForwarder { get; set; }
     
-    public DateTime? MAWBDate { get; set; }
+    public DateTime? MasterDate { get; set; }
     
     public double? Ratio { get; set; }
     
     public List<MainCarriageLeg> MainCarriageLegs { get; set; }
+    
+	[XmlAttribute]
+    public string ShipmentNumber { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

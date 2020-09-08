@@ -47,8 +47,19 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
                                            on d.StageId equals db_Stages.Id into QuoteStages
                                            from s in QuoteStages.DefaultIfEmpty()
                                            where s.Tenant == tenant
-                                           && s.Code != "QTDC"
+                                           && s.Code == "QTAC"
                                            select d);                            
+                        break;
+                    }
+                case "QCV":
+                    {
+                        dataSourceQuery = (from d in dataSourceQuery
+                                           join db_Stages in context.QuoteStages
+                                           on d.StageId equals db_Stages.Id into QuoteStages
+                                           from s in QuoteStages.DefaultIfEmpty()
+                                           where s.Tenant == tenant
+                                           && s.Code != "QTCR" && s.Code != "QTDR"
+                                           select d);
                         break;
                     }
             }
@@ -61,7 +72,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             if (args.ChartCode == "KPI")
             {
                 dataSourceQuery = dataSourceQuery.Where(a => a.SentDate != null && a.RequestDate != null);
-                //dataSourceQuery = this.FilterByAcceptedStage();
             }
 
             QuoteBusinessUnitFilter filter = new QuoteBusinessUnitFilter(tenant);
@@ -89,17 +99,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             {
                 args.ToDate = args.ToDate.Value.Date;
             }
-        }
-
-        private IQueryable<Quote> FilterByAcceptedStage()
-        {
-            QuoteStageRepository stageRepository = new QuoteStageRepository(this.tenant);
-            var myStage = stageRepository.GetSingleQuoteStageByCode("QTAC", this.tenant);
-
-            if (myStage != null) {
-                dataSourceQuery = dataSourceQuery.Where(d => d.StageId == myStage.Id);
-            }
-            return dataSourceQuery;
         }
 
         private void FilterCreateDate()

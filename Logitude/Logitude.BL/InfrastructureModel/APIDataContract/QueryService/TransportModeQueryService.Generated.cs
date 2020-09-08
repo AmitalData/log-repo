@@ -72,7 +72,7 @@ using Simplog.Data.InfrastructureModel;
             }
         } 
 
-		public TransportModePM TransportModeDataMappingAndValidatin(TransportMode MyEntity,int Tenant,string ComputingPartnerName = "")
+		public TransportModePM TransportModeDataMappingAndValidatin(TransportMode MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -86,6 +86,7 @@ using Simplog.Data.InfrastructureModel;
 					{   
 					    throw new ApplicationException("TransportMode with Code " + MyEntity.Code + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -98,10 +99,19 @@ using Simplog.Data.InfrastructureModel;
 						//{
 						//    temp.Id = MyEntity.Code;
 
-						//}
+						//} 
+
+						
 					}
-					temp.Name = MyEntity.Name;					   
-					   return temp;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
+					{							//throw new ApplicationException("Name Can't be update"); 
+							temp.Name = MyEntity.Name;
+
+										}  
+
+										   
+					return temp;
 		    }
             catch (Exception ex)
             {

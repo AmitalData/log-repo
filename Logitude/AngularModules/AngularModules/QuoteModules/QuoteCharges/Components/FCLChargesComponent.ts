@@ -2189,6 +2189,10 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     this.CostCurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
                 }
             }
+
+            if (this.fatherComponent.IsChargesByVAT) {
+                this.IsRegionalTax = list.ApplyRegionalTax;
+            }
         }
 
         else {
@@ -2199,6 +2203,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.CostMeasurementId = null;
             this.CostCurrencyId = null;
             this.EntityPM.IsBackToBack = false;
+            this.IsRegionalTax = false;
         }
 
         this.SetUIProperties();

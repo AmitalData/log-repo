@@ -76,6 +76,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.DocumentDate).HasColumnName("DocumentDate");
 
             this.Property(t => t.DueDate).HasColumnName("DueDate");
+
+            this.Property(t => t.CurrencyId).HasColumnName("CurrencyId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

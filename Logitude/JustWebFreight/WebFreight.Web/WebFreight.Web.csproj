@@ -969,6 +969,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\VatUniquePartnerTypeViewsController.Generated.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.WarehouseWeightMeasurement.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.WarehouseWeightRounding.cs" />
+    <Compile Include="AccountingModel\InteretInvoiceServices\InteretInvoiceBatchPrint.cs" />
     <Compile Include="Controllers\AccountingModel\InterestReportsForEligibleCustomerCreationController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestLastBatchServiceViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestReportsConnectInvoiceViewsController.Generated.cs" />

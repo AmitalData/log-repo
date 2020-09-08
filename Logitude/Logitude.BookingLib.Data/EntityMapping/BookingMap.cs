@@ -268,7 +268,7 @@ namespace Logitude.BookingLib.Data.EntityMapping
 
             this.Property(t => t.DangerousFlashPoint).HasColumnName("DangerousFlashPoint").HasMaxLength(8).IsUnicode(false);
 
-            this.Property(t => t.DangerousMaterialDescription).HasColumnName("DangerousMaterialDescription").HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.DangerousMaterialDescription).HasColumnName("DangerousMaterialDescription").HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.MainHarmonize).HasColumnName("MainHarmonize").HasMaxLength(9).IsUnicode(false);
 

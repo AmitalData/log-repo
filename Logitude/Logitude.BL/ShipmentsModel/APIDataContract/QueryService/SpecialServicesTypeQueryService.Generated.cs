@@ -145,36 +145,45 @@ using Simplog.Data.ShipmentsModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
 						 
-						if(IsUpdate)
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
 						{
-								throw new ApplicationException("Code Can't be update"); 
+								//throw new ApplicationException("Code Can't be update"); 
+								temp.Code = MyEntity.Code;
+								
+						
 						}  
 
-						temp.Code = MyEntity.Code;
+						
 					}
                     
-					if(IsUpdate)
-					{
-							throw new ApplicationException("Name Can't be update"); 
-					}  
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
+					{							//throw new ApplicationException("Name Can't be update"); 
+							temp.EnglishName = MyEntity.Name;
 
-					temp.EnglishName = MyEntity.Name;
+										}  
+
+					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
 						 
-						if(IsUpdate)
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
 						{
-								throw new ApplicationException("PartnerCode Can't be update"); 
+								//throw new ApplicationException("PartnerCode Can't be update"); 
+								temp.Code = MyEntity.PartnerCode;
+								
+						
 						}  
 
-						temp.Code = MyEntity.PartnerCode;
+						
 					}					   
 					return temp;
 		    }

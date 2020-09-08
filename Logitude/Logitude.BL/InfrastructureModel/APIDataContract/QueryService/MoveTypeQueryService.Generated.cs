@@ -78,7 +78,7 @@ using Simplog.Data.InfrastructureModel;
             }
         } 
 
-		public MoveTypePM MoveTypeDataMappingAndValidatin(MoveType MyEntity,int Tenant,string ComputingPartnerName = "")
+		public MoveTypePM MoveTypeDataMappingAndValidatin(MoveType MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -92,6 +92,7 @@ using Simplog.Data.InfrastructureModel;
 					{   
 					    throw new ApplicationException("MoveType with Id " + MyEntity.Id + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -104,16 +105,41 @@ using Simplog.Data.InfrastructureModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						temp.Code = MyEntity.Code;
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
+						{
+								//throw new ApplicationException("Code Can't be update"); 
+								temp.Code = MyEntity.Code;
+								
+						
+						}  
+
+						
 					}
-					temp.MoveTypeEnglishName = MyEntity.MoveTypeEnglishName;
-					temp.MoveTypeLocalName = MyEntity.MoveTypeLocalName;					   
-					   return temp;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.MoveTypeEnglishName))
+					{							//throw new ApplicationException("MoveTypeEnglishName Can't be update"); 
+							temp.MoveTypeEnglishName = MyEntity.MoveTypeEnglishName;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.MoveTypeLocalName))
+					{							//throw new ApplicationException("MoveTypeLocalName Can't be update"); 
+							temp.MoveTypeLocalName = MyEntity.MoveTypeLocalName;
+
+										}  
+
+										   
+					return temp;
 		    }
             catch (Exception ex)
             {

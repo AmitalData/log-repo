@@ -99,7 +99,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public PortPM PortDataMappingAndValidatin(Port MyEntity,int Tenant,string ComputingPartnerName = "")
+		public PortPM PortDataMappingAndValidatin(Port MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -133,6 +133,7 @@ using Simplog.Data.CommonDataModel;
 					{   
 					    throw new ApplicationException("Port with Code " + MyEntity.Code + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -145,13 +146,43 @@ using Simplog.Data.CommonDataModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
 					}
-					temp.CombinedCode = MyEntity.Code;
-					temp.LocalName = MyEntity.LocalName;
-					temp.EnglishName = MyEntity.EnglishName;
-					temp.CombinedCode = MyEntity.PartnerCode;					   
-					   return temp;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
+					{							//throw new ApplicationException("Code Can't be update"); 
+							temp.CombinedCode = MyEntity.Code;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
+					{							//throw new ApplicationException("LocalName Can't be update"); 
+							temp.LocalName = MyEntity.LocalName;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
+					{							//throw new ApplicationException("EnglishName Can't be update"); 
+							temp.EnglishName = MyEntity.EnglishName;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
+					{							//throw new ApplicationException("PartnerCode Can't be update"); 
+							temp.CombinedCode = MyEntity.PartnerCode;
+
+										}  
+
+										   
+					return temp;
 		    }
             catch (Exception ex)
             {

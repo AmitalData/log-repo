@@ -648,7 +648,7 @@
   <Column
     Name="DangerousMaterialDescription"
     Type="varchar"
-    Size="30">
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

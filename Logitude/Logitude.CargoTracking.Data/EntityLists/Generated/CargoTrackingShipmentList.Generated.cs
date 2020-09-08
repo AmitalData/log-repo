@@ -122,6 +122,20 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [Key]
        [DataMember]
        public int Id  { get; set; }
+       [DataMember]
+       public string SearchReferences  { get; set; }
+       [DataMember]
+       public string FromPortName  { get; set; }
+       [DataMember]
+       public string ToPortName  { get; set; }
+       [DataMember]
+       public string CurrentMilestoneName  { get; set; }
+       [DataMember]
+       public string TransportModeName  { get; set; }
+       [DataMember]
+       public string FromPortCountryCode  { get; set; }
+       [DataMember]
+       public string ToPortCountryCode  { get; set; }
    }
 
 }

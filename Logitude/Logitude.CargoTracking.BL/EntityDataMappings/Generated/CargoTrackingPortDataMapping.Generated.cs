@@ -37,7 +37,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         Code, 
 	         EnglishName, 
 	         CountryId, 
-	         Tenant,
+	         Tenant, 
+	         CountryCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

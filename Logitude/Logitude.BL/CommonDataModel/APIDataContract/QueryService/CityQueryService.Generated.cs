@@ -96,7 +96,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public CountryCityPM CityDataMappingAndValidatin(City MyEntity,int Tenant,string ComputingPartnerName = "")
+		public CountryCityPM CityDataMappingAndValidatin(City MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -114,6 +114,7 @@ using Simplog.Data.CommonDataModel;
 					{   
 					    throw new ApplicationException("CountryCity with Code " + MyEntity.Code + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -126,15 +127,33 @@ using Simplog.Data.CommonDataModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						temp.Code = MyEntity.Code;
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
+						{
+								//throw new ApplicationException("Code Can't be update"); 
+								temp.Code = MyEntity.Code;
+								
+						
+						}  
+
+						
 					}
-					temp.EnglishName = MyEntity.Name;					   
-					   return temp;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
+					{							//throw new ApplicationException("Name Can't be update"); 
+							temp.EnglishName = MyEntity.Name;
+
+										}  
+
+										   
+					return temp;
 		    }
             catch (Exception ex)
             {

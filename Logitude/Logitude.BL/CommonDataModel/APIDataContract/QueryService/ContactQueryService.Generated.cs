@@ -79,7 +79,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public ContactPM ContactDataMappingAndValidatin(Contact MyEntity,int Tenant,string ComputingPartnerName = "")
+		public ContactPM ContactDataMappingAndValidatin(Contact MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -93,6 +93,7 @@ using Simplog.Data.CommonDataModel;
 					{   
 					    throw new ApplicationException("Contact with Id " + MyEntity.Id + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -105,13 +106,43 @@ using Simplog.Data.CommonDataModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
 					}
-					temp.EnglishName = MyEntity.EnglishName;
-					temp.LocalName = MyEntity.LocalName;
-					temp.ExternalId = MyEntity.Code;
-					temp.Email = MyEntity.Email;					   
-					   return temp;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
+					{							//throw new ApplicationException("EnglishName Can't be update"); 
+							temp.EnglishName = MyEntity.EnglishName;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
+					{							//throw new ApplicationException("LocalName Can't be update"); 
+							temp.LocalName = MyEntity.LocalName;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
+					{							//throw new ApplicationException("Code Can't be update"); 
+							temp.ExternalId = MyEntity.Code;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Email))
+					{							//throw new ApplicationException("Email Can't be update"); 
+							temp.Email = MyEntity.Email;
+
+										}  
+
+										   
+					return temp;
 		    }
             catch (Exception ex)
             {

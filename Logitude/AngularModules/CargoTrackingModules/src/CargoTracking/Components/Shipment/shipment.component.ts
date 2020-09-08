@@ -4,6 +4,7 @@ import { Component, AfterViewInit, HostListener, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { db } from '../../../app/mem.data';
+import { IfStmt } from '@angular/compiler';
 
 @Component({
     selector: 'shipment',
@@ -104,8 +105,60 @@ export class ShipmentComponent implements OnInit
         {
             this.isLoading = false;
             console.log("[getShipment]", result);
-            this.Shipment = result;
+            this.ShipmentWithMilestones = result;
+            if(this.ShipmentWithMilestones){
+                this.Shipment = result.ShipmentList;
+                this.SetMilestonesFields(result);
+            }
+            
 
         });
     }
+
+    SetMilestonesFields(result:CargoTrackingShipmentWithMilestones){
+
+        this.AllMilestoneFields = result.Milestones;
+        if(this.AllMilestoneFields){
+            this.AllMilestoneFields.forEach(S=>{
+                
+                    if(S.IsEstimation){
+                         this.FuturesMilestoneFields.push(S);
+                    }
+                    else if(!S.IsCurrent){
+                        this.CompletedMilestoneFields.push(S);
+                    }
+                    else{
+                        this.CurrentMilestoneField = S;
+                    }
+            });
+        }
+    }
+
+    public ShipmentWithMilestones:CargoTrackingShipmentWithMilestones;
+    public AllMilestoneFields:Milestone[];
+    public CompletedMilestoneFields:Milestone[]=[];
+    public FuturesMilestoneFields:Milestone[]=[];
+    public CurrentMilestoneField:Milestone = new Milestone();
+}
+
+
+
+export class Milestone {
+   
+    public	Code: string;
+    public	Name: string;
+	public  Notes: string;
+	public  Date: Date;
+	public  EstimationDate: Date;
+    public  Done: boolean;
+    public  IsEstimation: boolean;
+    public  IsCurrent: boolean;
+}
+
+
+export class CargoTrackingShipmentWithMilestones
+{
+    public Milestones: Milestone[]  ;
+    public ShipmentList:CargoTrackingShipmentList   ;
+
 }

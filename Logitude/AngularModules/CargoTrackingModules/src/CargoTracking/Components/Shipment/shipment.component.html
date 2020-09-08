@@ -25,12 +25,12 @@
 
         <div class="field">
             <div class="label">Origin Port</div>
-            <div class="value">{{ Shipment.FromPortId }}</div>
+            <div class="value">{{ Shipment.FromPortName }}</div>
         </div>
 
         <div class="field">
             <div class="label">Destination Port</div>
-            <div class="value">{{ Shipment.ToPortId }}</div>
+            <div class="value">{{ Shipment.ToPortName }}</div>
         </div>
 
         <img class="hide-tablet" src="./assets/images/misc/cargo.svg" alt="">
@@ -81,58 +81,40 @@
                 <div class="title hide-mobile">Shipment Steps Details</div>
 
                 <div class="tag">Future steps</div>
-                <ul class="steps-list">
-                    <li class="dimmed">
-                        <div class="tick"> </div>
-                        <div class="date" style="width: 130px;">18-Nov-2019, 18:00</div>
-                        <div class="caption" style="width: 205px;">Shipment airport departed</div>
-                        <div class="desc" style="width: calc(100% - 450px); padding: 0;">Lorem ipsum dolor sit amet, consectetur adipiscing edivt. </div>
+                <ul *ngIf="FuturesMilestoneFields" class="steps-list">
+                    <li *ngFor="let item of FuturesMilestoneFields" class="dimmed">
+                        <ng-container *ngIf="item.EstimationDate">
+                            <div class="tick"> </div>
+                            <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy'}}</div>
+                            <div class="caption" style="width: 205px;">{{item.Name}}</div>
+                            <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}} </div>
+                        </ng-container>
+                        
                     </li>
                 </ul>
 
                 <div class="tag">Current step</div>
-                <ul class="steps-list">
-                    <li class="highlighted">
-                        <div class="tick"> </div>
-                        <div class="date" style="width: 130px;">18-Nov-2019, 18:00</div>
-                        <div class="caption" style="width: 205px;">Shipment airport departed</div>
-                        <div class="desc" style="width: calc(100% - 450px); padding: 0;">Lorem ipsum dolor sit amet, consectetur adipiscing edivt. </div>
+                <ul *ngIf="CurrentMilestoneField" class="steps-list">
+                    <li  class="highlighted">
+                        <ng-container *ngIf="CurrentMilestoneField.Date">
+                            <div class="tick"> </div>
+                            <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date: 'dd/MM/yyyy'}}</div>
+                            <div class="caption" style="width: 205px;">{{CurrentMilestoneField.Name}}</div>
+                            <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{CurrentMilestoneField.Notes}} </div>
+                        </ng-container>
                     </li>
                 </ul>
 
                 <div class="tag">Completed Steps</div>
-                <ul class="steps-list">
-                    <li>
-                        <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
-                        <div class="date" style="width: 130px;">18-Nov-2019, 18:00</div>
-                        <div class="caption" style="width: 205px;">Shipment airport departed</div>
-                        <div class="desc" style="width: calc(100% - 450px); padding: 0;">Lorem ipsum dolor sit amet, consectetur adipiscing edivt. </div>
+                <ul *ngIf="CompletedMilestoneFields" class="steps-list">
+                    <li *ngFor="let item of CompletedMilestoneFields">
+                        <ng-container *ngIf="item.Date">
+                            <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
+                            <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy'}}</div>
+                            <div class="caption" style="width: 205px;">{{item.Name}}</div>
+                            <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}}</div>
+                        </ng-container>
                     </li>
-
-                    <li>
-                        <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
-                        <div class="date" style="width: 130px;">18-Nov-2019, 18:00</div>
-                        <div class="caption" style="width: 205px;">Destination airport arrive</div>
-                        <div class="desc" style="width: calc(100% - 450px); padding: 0;"> sit amet, consectetur adipiscing edivt. </div>
-                    </li>
-
-
-                    <li>
-                        <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
-                        <div class="date" style="width: 130px;">18-Nov-2019, 18:00</div>
-                        <div class="caption" style="width: 205px;">Customs Check</div>
-                        <div class="desc" style="width: calc(100% - 450px); padding: 0;">ipsum dolor sit amet, consectetur adipiscing edivt. </div>
-                    </li>
-
-
-                    <li>
-                        <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
-                        <div class="date" style="width: 130px;">18-Nov-2019, 18:00</div>
-                        <div class="caption" style="width: 205px;">Preparing shipment</div>
-                        <div class="desc" style="width: calc(100% - 450px); padding: 0;">amet consectetur Lorem ipsum dolor sit adipiscing edivt. </div>
-                    </li>
-
-
                 </ul>
             </div>
 
@@ -145,12 +127,12 @@
 
                 <div class="field">
                     <div class="label">Creation Date</div>
-                    <div class="value">{{ Shipment.PickupDate | date: "d-MMM-y, h:mm" }}</div>
+                    <div class="value">{{ Shipment.CreateDate   | date: 'dd/MM/yyyy' }}</div>
                 </div>
 
                 <div class="field">
                     <div class="label">Sender</div>
-                    <div class="value">{{ Shipment.ShipperId }}</div>
+                    <div class="value">{{ Shipment.FromPortName }}</div>
                 </div>
 
                 <div class="field">
@@ -160,19 +142,19 @@
 
                 <div class="field">
                     <div class="label">Receiver</div>
-                    <div class="value">{{ Shipment.ShipperId }}</div>
+                    <div class="value">{{ Shipment.ToPortName }}</div>
                 </div>
 
 
                 <div class="field">
                     <div class="label">Transport By</div>
-                    <div class="value">{{ Shipment.TransportModeId }}</div>
+                    <div class="value">{{ Shipment.TransportModeName }}</div>
                 </div>
 
 
                 <div class="field">
                     <div class="label">Deleivery</div>
-                    <div class="value">{{ Shipment.ShipperId }}</div>
+                    <div class="value">{{ Shipment.FromPortName }}</div>
                 </div>
             </div>
 

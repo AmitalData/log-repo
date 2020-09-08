@@ -67,7 +67,9 @@ using Simplog.Data.InvoiceModel;
 				   var temp = new ARPayment(); 
 				   temp.Id = MyEntityPM.Id;
 				   temp.Tenant = MyEntityPM.Tenant;
-				   temp.PaymentNo = MyEntityPM.PaymentNo;			  
+				   temp.PaymentNo = MyEntityPM.PaymentNo; 
+
+			  
 				   if(MyEntityPM.AccountingPaymentMethodId != null)
 				   {
 					   AccountingPaymentMethodQueryService AccountingPaymentMethodService0 = new AccountingPaymentMethodQueryService(Tenant);
@@ -79,7 +81,9 @@ using Simplog.Data.InvoiceModel;
 				   temp.AmountInPaymentCurrency = MyEntityPM.AmountInPaymentCurrency;
 				   temp.PaidBy = MyEntityPM.PaidBy;
 				   temp.PaymentCurrencyExchangeRate = MyEntityPM.PaymentCurrencyExchangeRate;
-				   temp.ExchangeRateDate = MyEntityPM.ExchangeRateDate;			  
+				   temp.ExchangeRateDate = MyEntityPM.ExchangeRateDate; 
+
+			  
 				   if(MyEntityPM.CreatedByUserId != null)
 				   {
 					   UserQueryService UserService1 = new UserQueryService(Tenant);
@@ -87,21 +91,27 @@ using Simplog.Data.InvoiceModel;
 			       
 					   				   }
 				   
-				   temp.LocalCurrencyCode = MyEntityPM.LocalCurrencyCode;			  
+				   temp.LocalCurrencyCode = MyEntityPM.LocalCurrencyCode; 
+
+			  
 				   if(MyEntityPM.BranchId != null)
 				   {
 					   BranchQueryService BranchService2 = new BranchQueryService(Tenant);
 					   					   temp.Branch = BranchService2.GetBranchById(MyEntityPM.BranchId,Tenant); 
 			       
 					   				   }
-				   			  
+				    
+
+			  
 				   if(MyEntityPM.PaymentCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService3 = new CurrencyQueryService(Tenant);
 					   					   temp.PaymentCurrency = CurrencyService3.GetCurrencyById(MyEntityPM.PaymentCurrencyId,Tenant); 
 			       
 					   				   }
-				   			  
+				    
+
+			  
 				   if(MyEntityPM.BillToId != null)
 				   {
 					   CardQueryService CardService4 = new CardQueryService(Tenant);
@@ -114,7 +124,9 @@ using Simplog.Data.InvoiceModel;
 				   temp.BankBranch = MyEntityPM.BankBranch;
 				   temp.Account = MyEntityPM.Account;
 				   temp.ValueDate = MyEntityPM.ValueDate;
-				   temp.RegisterDate = MyEntityPM.RegisterDate;			  
+				   temp.RegisterDate = MyEntityPM.RegisterDate; 
+
+			  
 				   if(MyEntityPM.CreditCardTypeId != null)
 				   {
 					   CreditCardTypeQueryService CreditCardTypeService5 = new CreditCardTypeQueryService(Tenant);
@@ -140,7 +152,9 @@ using Simplog.Data.InvoiceModel;
 							 
 				   temp.BankAccountNumber = MyEntityPM.BankAccountNumber;
 				   temp.CancelationNotes = MyEntityPM.CancelationNotes;
-				   temp.AccountingCancelationDate = MyEntityPM.AccountingCancelationDate;			  
+				   temp.AccountingCancelationDate = MyEntityPM.AccountingCancelationDate; 
+
+			  
 				   if(MyEntityPM.StatusCode != null)
 				   {
 					   ARPaymentStatusQueryService ARPaymentStatusService6 = new ARPaymentStatusQueryService(Tenant);
@@ -157,7 +171,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public ARPaymentPM ARPaymentDataMappingAndValidatin(ARPayment MyEntity,int Tenant,string ComputingPartnerName = "")
+		public ARPaymentPM ARPaymentDataMappingAndValidatin(ARPayment MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -171,6 +185,7 @@ using Simplog.Data.InvoiceModel;
 					{   
 					    throw new ApplicationException("ARPayment with Id " + MyEntity.Id + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -183,49 +198,134 @@ using Simplog.Data.InvoiceModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
 					}
-					temp.Tenant = MyEntity.Tenant;
-					temp.PaymentNo = MyEntity.PaymentNo;
+                    
+					if(!IsUpdate)// && MyEntity.Tenant != null)
+					{							//throw new ApplicationException("Tenant Can't be update"); 
+							temp.Tenant = MyEntity.Tenant;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PaymentNo))
+					{							//throw new ApplicationException("PaymentNo Can't be update"); 
+							temp.PaymentNo = MyEntity.PaymentNo;
+
+										}  
+
+					
 					AccountingPaymentMethodQueryService AccountingPaymentMethodAccountingPaymentMethodService = new AccountingPaymentMethodQueryService(Tenant);
 					if(MyEntity.AccountingPaymentMethod != null)
 					{
 						var myAccountingPaymentMethodPM = AccountingPaymentMethodAccountingPaymentMethodService.AccountingPaymentMethodCustomDataMappingAndValidatin(MyEntity.AccountingPaymentMethod,Tenant);
-												if(myAccountingPaymentMethodPM != null)
-						{
-							temp.AccountingPaymentMethodId = myAccountingPaymentMethodPM.Id;
-						}
+						
+						if(myAccountingPaymentMethodPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("AccountingPaymentMethod Can't be update"); 
+								temp.AccountingPaymentMethodId = myAccountingPaymentMethodPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.AmountInLocalCurrency = MyEntity.AmountInLocalCurrency;
-					temp.AmountInPaymentCurrency = MyEntity.AmountInPaymentCurrency;
-					temp.PaidBy = MyEntity.PaidBy;
-					temp.PaymentCurrencyExchangeRate = MyEntity.PaymentCurrencyExchangeRate;
-					temp.ExchangeRateDate = MyEntity.ExchangeRateDate;
+                    
+					if(!IsUpdate)// && MyEntity.AmountInLocalCurrency != null)
+					{							//throw new ApplicationException("AmountInLocalCurrency Can't be update"); 
+							temp.AmountInLocalCurrency = MyEntity.AmountInLocalCurrency;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.AmountInPaymentCurrency != null)
+					{							//throw new ApplicationException("AmountInPaymentCurrency Can't be update"); 
+							temp.AmountInPaymentCurrency = MyEntity.AmountInPaymentCurrency;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PaidBy))
+					{							//throw new ApplicationException("PaidBy Can't be update"); 
+							temp.PaidBy = MyEntity.PaidBy;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.PaymentCurrencyExchangeRate != null)
+					{							//throw new ApplicationException("PaymentCurrencyExchangeRate Can't be update"); 
+							temp.PaymentCurrencyExchangeRate = MyEntity.PaymentCurrencyExchangeRate;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.ExchangeRateDate != null)
+					{							//throw new ApplicationException("ExchangeRateDate Can't be update"); 
+							temp.ExchangeRateDate = MyEntity.ExchangeRateDate;
+
+										}  
+
+					
 					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.CreatedByUser != null)
 					{
 						var myCreatedByUserPM = CreatedByUserUserService.UserDataMappingAndValidatin(MyEntity.CreatedByUser,Tenant,ComputingPartnerName);
-												if(myCreatedByUserPM != null)
-						{
-							temp.CreatedByUserId = myCreatedByUserPM.Id;
-						}
+						
+						if(myCreatedByUserPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("CreatedByUser Can't be update"); 
+								temp.CreatedByUserId = myCreatedByUserPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.LocalCurrencyCode = MyEntity.LocalCurrencyCode;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalCurrencyCode))
+					{							//throw new ApplicationException("LocalCurrencyCode Can't be update"); 
+							temp.LocalCurrencyCode = MyEntity.LocalCurrencyCode;
+
+										}  
+
+					
 					BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
 					if(MyEntity.Branch != null)
 					{
 						var myBranchPM = BranchBranchService.BranchDataMappingAndValidatin(MyEntity.Branch,Tenant,ComputingPartnerName);
-												if(myBranchPM != null)
-						{
-							temp.BranchId = myBranchPM.Id;
-						}
+						
+						if(myBranchPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("Branch Can't be update"); 
+								temp.BranchId = myBranchPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
@@ -233,11 +333,20 @@ using Simplog.Data.InvoiceModel;
 					if(MyEntity.PaymentCurrency != null)
 					{
 						var myPaymentCurrencyPM = PaymentCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.PaymentCurrency,Tenant,ComputingPartnerName);
-												if(myPaymentCurrencyPM != null)
-						{
-							temp.PaymentCurrencyId = myPaymentCurrencyPM.Id;
-						}
+						
+						if(myPaymentCurrencyPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("PaymentCurrency Can't be update"); 
+								temp.PaymentCurrencyId = myPaymentCurrencyPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
@@ -245,39 +354,121 @@ using Simplog.Data.InvoiceModel;
 					if(MyEntity.BillTo != null)
 					{
 						var myBillToPM = BillToCardService.CardDataMappingAndValidatin(MyEntity.BillTo,Tenant,ComputingPartnerName);
-												if(myBillToPM != null)
-						{
-							temp.BillToId = myBillToPM.Id;
-						}
+						
+						if(myBillToPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("BillTo Can't be update"); 
+								temp.BillToId = myBillToPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.ChequeOrPaymentRef = MyEntity.ChequeOrPaymentRef;
-					temp.Bank = MyEntity.Bank;
-					temp.BankBranch = MyEntity.BankBranch;
-					temp.Account = MyEntity.Account;
-					temp.ValueDate = MyEntity.ValueDate;
-					temp.RegisterDate = MyEntity.RegisterDate;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ChequeOrPaymentRef))
+					{							//throw new ApplicationException("ChequeOrPaymentRef Can't be update"); 
+							temp.ChequeOrPaymentRef = MyEntity.ChequeOrPaymentRef;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Bank))
+					{							//throw new ApplicationException("Bank Can't be update"); 
+							temp.Bank = MyEntity.Bank;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.BankBranch))
+					{							//throw new ApplicationException("BankBranch Can't be update"); 
+							temp.BankBranch = MyEntity.BankBranch;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Account))
+					{							//throw new ApplicationException("Account Can't be update"); 
+							temp.Account = MyEntity.Account;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.ValueDate != null)
+					{							//throw new ApplicationException("ValueDate Can't be update"); 
+							temp.ValueDate = MyEntity.ValueDate;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.RegisterDate != null)
+					{							//throw new ApplicationException("RegisterDate Can't be update"); 
+							temp.RegisterDate = MyEntity.RegisterDate;
+
+										}  
+
+					
 					CreditCardTypeQueryService CreditCardTypeCreditCardTypeService = new CreditCardTypeQueryService(Tenant);
 					if(MyEntity.CreditCardType != null)
 					{
 						var myCreditCardTypePM = CreditCardTypeCreditCardTypeService.CreditCardTypeDataMappingAndValidatin(MyEntity.CreditCardType,Tenant,ComputingPartnerName);
-												if(myCreditCardTypePM != null)
-						{
-							temp.CreditCardTypeId = myCreditCardTypePM.Id;
-						}
+						
+						if(myCreditCardTypePM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("CreditCardType Can't be update"); 
+								temp.CreditCardTypeId = myCreditCardTypePM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.PaymentCurrencyCode = MyEntity.PaymentCurrencyCode;
-					temp.CreateDate = MyEntity.CreateDate; 
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PaymentCurrencyCode))
+					{							//throw new ApplicationException("PaymentCurrencyCode Can't be update"); 
+							temp.PaymentCurrencyCode = MyEntity.PaymentCurrencyCode;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.CreateDate != null)
+					{							//throw new ApplicationException("CreateDate Can't be update"); 
+							temp.CreateDate = MyEntity.CreateDate;
+
+										}  
+
+					 
 
 					if(MyEntity.PaymentInvoices != null && MyEntity.PaymentInvoices.Count > 0)
 					{
 						ARPaymentInvoiceQueryService ARPaymentInvoiceService7 = new ARPaymentInvoiceQueryService(Tenant);
-						temp.PaymentInvoices = ARPaymentInvoiceService7.ARPaymentInvoiceDataMappingAndValidatin(MyEntity.PaymentInvoices,Tenant,ComputingPartnerName);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("PaymentInvoices Can't be update"); 
+								temp.PaymentInvoices = ARPaymentInvoiceService7.ARPaymentInvoiceDataMappingAndValidatin(MyEntity.PaymentInvoices,Tenant,ComputingPartnerName);
+
+					 
+						}  
+
+						
 					}
 
 								  
@@ -285,26 +476,64 @@ using Simplog.Data.InvoiceModel;
 					if(MyEntity.ARPaymentCheques != null && MyEntity.ARPaymentCheques.Count > 0)
 					{
 						ARPaymentChequeQueryService ARPaymentChequeService7 = new ARPaymentChequeQueryService(Tenant);
-						temp.ARPaymentChequeReplicas = ARPaymentChequeService7.ARPaymentChequeDataMappingAndValidatin(MyEntity.ARPaymentCheques,Tenant,ComputingPartnerName);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("ARPaymentCheques Can't be update"); 
+								temp.ARPaymentChequeReplicas = ARPaymentChequeService7.ARPaymentChequeDataMappingAndValidatin(MyEntity.ARPaymentCheques,Tenant,ComputingPartnerName);
+
+					 
+						}  
+
+						
 					}
 
 								 
-					temp.BankAccountNumber = MyEntity.BankAccountNumber;
-					temp.CancelationNotes = MyEntity.CancelationNotes;
-					temp.AccountingCancelationDate = MyEntity.AccountingCancelationDate;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.BankAccountNumber))
+					{							//throw new ApplicationException("BankAccountNumber Can't be update"); 
+							temp.BankAccountNumber = MyEntity.BankAccountNumber;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.CancelationNotes))
+					{							//throw new ApplicationException("CancelationNotes Can't be update"); 
+							temp.CancelationNotes = MyEntity.CancelationNotes;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.AccountingCancelationDate != null)
+					{							//throw new ApplicationException("AccountingCancelationDate Can't be update"); 
+							temp.AccountingCancelationDate = MyEntity.AccountingCancelationDate;
+
+										}  
+
+					
 					ARPaymentStatusQueryService StatusARPaymentStatusService = new ARPaymentStatusQueryService(Tenant);
 					if(MyEntity.Status != null)
 					{
 						var myStatusPM = StatusARPaymentStatusService.ARPaymentStatusDataMappingAndValidatin(MyEntity.Status,Tenant,ComputingPartnerName);
-												if(myStatusPM != null)
-						{
-							temp.StatusCode = myStatusPM.Code;
-						}
+						
+						if(myStatusPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("Status Can't be update"); 
+								temp.StatusCode = myStatusPM.Code;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 										   
-					   return temp;
+					return temp;
 		    }
             catch (Exception ex)
             {

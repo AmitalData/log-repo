@@ -475,19 +475,31 @@ using <#=myspacestring#>
 								 if(myBool != null){
 								 IsManualMapping = myBool.Value;
 								 } 
+								 var HasValueString = " && !string.IsNullOrEmpty(" + (IsComposition == "true" ? "item." + DCFieldName + ")" : "MyEntity." + DCFieldName + ")");
+								 if(type == "bool")
+								 {
+								     HasValueString = IsComposition == "true" ? " && (item." + DCFieldName + " != temp." + FieldName + ")": " && (MyEntity." + DCFieldName + " != temp." + FieldName + ")";
+								 }
+								 else if(type != "string")
+								 {
+								     HasValueString = IsComposition == "true" ? " && item." + DCFieldName + " != null" : " && MyEntity." + DCFieldName + " != null";
+								 }
+
 								 if(IsCustomType == "true" || IgnoreCustomTypeCheck == "true"){
 								 if(IsMulti == "true"){  #> 
 
 					if(<#+if(IsComposition == "true"){if(customType == "List"){#>item<#+}else{#><#=temp#><#+}}else{#>MyEntity<#+}#>.<#=DCFieldName#> != null <#+if(IgnoreCustomTypeCheck == "false"){#>&& <#+if(IsComposition == "true"){if(customType == "List"){#>item<#+}else{#><#=temp#><#+}}else{#>MyEntity<#+}#>.<#=DCFieldName#>.Count > 0<#+}#>)
 					{
 						<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>QueryService <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#> = new <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>QueryService(Tenant);
-						 <#+if(IsUpdateAllowed == "false"){#> 
-						if(IsUpdate)
-						{
-								throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
+						 <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#> 
+						if(!IsUpdate)
+						{<#+}#>
+								//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
+								temp.<#=FieldName#> = <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#>.<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMappingAndValidatin(<#+if(IsManualMapping == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>,<#+}#><#+if(IsComposition == "true"){if(customType == "List"){#>item<#+}else{#><#=temp#><#+}}else{#>MyEntity<#+}#>.<#=DCFieldName#>,Tenant,ComputingPartnerName);
+
+					<#+if(IsUpdateAllowed == "false" || IsKey == "true"){#> 
 						} <#+}#> 
 
-						temp.<#=FieldName#> = <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#>.<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMappingAndValidatin(<#+if(IsManualMapping == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>,<#+}#><#+if(IsComposition == "true"){if(customType == "List"){#>item<#+}else{#><#=temp#><#+}}else{#>MyEntity<#+}#>.<#=DCFieldName#>,Tenant,ComputingPartnerName);
 						
 					}
 
@@ -506,27 +518,32 @@ using <#=myspacestring#>
 						if(my<#=DCFieldName#>PM != null)
 						{ 
 
-						 <#+if(IsUpdateAllowed == "false"){#>
+						 <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
 
-							if(IsUpdate)
-							{
-								throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
+							if(!IsUpdate)
+							{<#+}#>
+								//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
+								temp.<#=FieldName#> = my<#=DCFieldName#>PM.<#+if(FieldName.Contains("Code")){#>Code<#+}else{#>Id<#+}#>;
+						 <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#> 
 							} <#+}#> 
 
-							temp.<#=FieldName#> = my<#=DCFieldName#>PM.<#+if(FieldName.Contains("Code")){#>Code<#+}else{#>Id<#+}#>;
+							
 						}<#+
 						}
 						else{
 						#>
 
-						 <#+if(IsUpdateAllowed == "false"){#>
+						 <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
 
-						if(IsUpdate)
-						{
-								throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
+						if(!IsUpdate)
+						{<#+}#>
+								//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
+								temp.<#=FieldName#> = my<#=DCFieldName#>PM;
+
+						<#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
 						} <#+}#> 
 
-						temp.<#=FieldName#> = my<#=DCFieldName#>PM;<#+
+						<#+
 						 }
 						#> 
 
@@ -561,27 +578,33 @@ using <#=myspacestring#>
 						//}<#+
 						}else{#>
 
-						 <#+if(IsUpdateAllowed == "false"){#>
+						 <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
 
-						if(IsUpdate)
+						if(!IsUpdate)//<#=HasValueString#>)
 						{
-								throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
+								//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
+								temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
+								<#+}#>
+
+						
 						} <#+}#> 
 
-						temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;<#+}#>
-
+						
 					}<#+}
 								 else{
 								  if(!string.IsNullOrEmpty(FieldName)){#>
 
-                    <#+if(IsUpdateAllowed == "false"){#>
+                    <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
 
-					if(IsUpdate)
-					{
-							throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
+					if(!IsUpdate)//<#=HasValueString#>)
+					{<#+}#>
+							//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
+							temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
+
+					<#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
 					} <#+}#> 
 
-					temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;<#+}}
+					<#+}}
 								 }}#>
 					   <#+if(IsComposition == "true"){#>
 

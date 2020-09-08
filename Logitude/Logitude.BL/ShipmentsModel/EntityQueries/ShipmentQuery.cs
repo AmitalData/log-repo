@@ -2416,11 +2416,86 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
 
             this.MapAnalyzerConcurrencyFields(shipmentPM);
+            this.MapMainCarriageLegsForAPI(shipmentPM);
 
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
             return returnShipment;
+        }
+
+        private void MapMainCarriageLegsForAPI(ShipmentPM shipmentPM)
+        {
+            shipmentPM.MainCarriageLegs = new List<TransshipmentLeg>();
+
+            shipmentPM.MainCarriageLegs.Add(new TransshipmentLeg()
+            {
+                LegIndex = 1,
+                ATA = shipmentPM.MainCarriageATA,
+                ATD = shipmentPM.MainCarriageATD,
+                ETA = shipmentPM.MainCarriageETA,
+                ETD = shipmentPM.MainCarriageETD,
+                FromPortId = shipmentPM.MainCarriageFromPortId,
+                ToPortId = shipmentPM.MainCarriageToPortId,
+                VesselId = shipmentPM.MainCarriageVesselId,
+                CarrierId = shipmentPM.MainCarriageCarrierId,
+                CarrierNumber = shipmentPM.MainCarriageCarrierNumber,
+                MasterNumber = shipmentPM.Master,
+            });
+
+            if(!string.IsNullOrEmpty(shipmentPM.Transshipment1FromPortId))
+            {
+                shipmentPM.MainCarriageLegs.Add(new TransshipmentLeg()
+                {
+                    LegIndex = 2,
+                    ATA = shipmentPM.Transshipment1ATA,
+                    ATD = shipmentPM.Transshipment1ATD,
+                    ETA = shipmentPM.Transshipment1ETA,
+                    ETD = shipmentPM.Transshipment1ETD,
+                    FromPortId = shipmentPM.Transshipment1FromPortId,
+                    ToPortId = shipmentPM.Transshipment1ToPortId,
+                    VesselId = shipmentPM.Transshipment1VesselId,
+                    CarrierId = shipmentPM.Transshipment1CarrierId,
+                    CarrierNumber = shipmentPM.Transshipment1CarrierNumber,
+                    MasterNumber = shipmentPM.Transshipment1AdditionalMAWBOBLBL,
+                });
+            }
+
+            if (!string.IsNullOrEmpty(shipmentPM.Transshipment2FromPortId))
+            {
+                shipmentPM.MainCarriageLegs.Add(new TransshipmentLeg()
+                {
+                    LegIndex = 2,
+                    ATA = shipmentPM.Transshipment2ATA,
+                    ATD = shipmentPM.Transshipment2ATD,
+                    ETA = shipmentPM.Transshipment2ETA,
+                    ETD = shipmentPM.Transshipment2ETD,
+                    FromPortId = shipmentPM.Transshipment2FromPortId,
+                    ToPortId = shipmentPM.Transshipment2ToPortId,
+                    VesselId = shipmentPM.Transshipment2VesselId,
+                    CarrierId = shipmentPM.Transshipment2CarrierId,
+                    CarrierNumber = shipmentPM.Transshipment2CarrierNumber,
+                    MasterNumber = shipmentPM.Transshipment2AdditionalMAWBOBLBL,
+                });
+            }
+
+            if (!string.IsNullOrEmpty(shipmentPM.Transshipment3FromPortId))
+            {
+                shipmentPM.MainCarriageLegs.Add(new TransshipmentLeg()
+                {
+                    LegIndex = 2,
+                    ATA = shipmentPM.Transshipment3ATA,
+                    ATD = shipmentPM.Transshipment3ATD,
+                    ETA = shipmentPM.Transshipment3ETA,
+                    ETD = shipmentPM.Transshipment3ETD,
+                    FromPortId = shipmentPM.Transshipment3FromPortId,
+                    ToPortId = shipmentPM.Transshipment3ToPortId,
+                    VesselId = shipmentPM.Transshipment3VesselId,
+                    CarrierId = shipmentPM.Transshipment3CarrierId,
+                    CarrierNumber = shipmentPM.Transshipment3CarrierNumber,
+                    MasterNumber = shipmentPM.Transshipment3AdditionalMAWBOBLBL,
+                });
+            }
         }
 
         private void ComputeHousesNumbersField(ShipmentPM shipmentPM)

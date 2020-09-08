@@ -68,14 +68,18 @@ using Simplog.Data.CommonDataModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.EnglishName = MyEntityPM.EnglishName;
 				   temp.LocalName = MyEntityPM.LocalName;
-				   temp.VatNumber = MyEntityPM.VatNumber;			  
+				   temp.VatNumber = MyEntityPM.VatNumber; 
+
+			  
 				   if(MyEntityPM.PaymentTermId != null)
 				   {
 					   PaymentTermQueryService PaymentTermService0 = new PaymentTermQueryService(Tenant);
 					   					   temp.PaymentTerm = PaymentTermService0.GetPaymentTermById(MyEntityPM.PaymentTermId,Tenant); 
 			       
 					   				   }
-				   			  
+				    
+
+			  
 				   if(MyEntityPM.MainAddressId != null)
 				   {
 					   AddressQueryService AddressService1 = new AddressQueryService(Tenant);
@@ -89,14 +93,18 @@ using Simplog.Data.CommonDataModel;
 					 temp.Contacts = ContactService2.ContactCustomDataMapping(MyEntityPM,MyEntityPM.Contacts,Tenant);
 				}
 
-							 			  
+							  
+
+			  
 				   if(MyEntityPM.BillingAddressId != null)
 				   {
 					   AddressQueryService AddressService2 = new AddressQueryService(Tenant);
 					   					   temp.BillingAddress = AddressService2.GetAddressById(MyEntityPM.BillingAddressId,Tenant); 
 			       
 					   				   }
-				   			  
+				    
+
+			  
 				   if(MyEntityPM.GLAccountId != null)
 				   {
 					   GLAccountQueryService GLAccountService3 = new GLAccountQueryService(Tenant);
@@ -115,7 +123,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public CardPM CustomerDataMappingAndValidatin(Customer MyEntity,int Tenant,string ComputingPartnerName = "")
+		public CardPM CustomerDataMappingAndValidatin(Customer MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -129,6 +137,7 @@ using Simplog.Data.CommonDataModel;
 					{   
 					    throw new ApplicationException("Card with Id " + MyEntity.Id + " doesn't exist");
 					} 
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -141,20 +150,52 @@ using Simplog.Data.CommonDataModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
 					}
-					temp.EnglishName = MyEntity.EnglishName;
-					temp.LocalName = MyEntity.LocalName;
-					temp.VatNumber = MyEntity.VatNumber;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
+					{							//throw new ApplicationException("EnglishName Can't be update"); 
+							temp.EnglishName = MyEntity.EnglishName;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
+					{							//throw new ApplicationException("LocalName Can't be update"); 
+							temp.LocalName = MyEntity.LocalName;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.VatNumber))
+					{							//throw new ApplicationException("VatNumber Can't be update"); 
+							temp.VatNumber = MyEntity.VatNumber;
+
+										}  
+
+					
 					PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
 					if(MyEntity.PaymentTerm != null)
 					{
 						var myPaymentTermPM = PaymentTermPaymentTermService.PaymentTermDataMappingAndValidatin(MyEntity.PaymentTerm,Tenant,ComputingPartnerName);
-												if(myPaymentTermPM != null)
-						{
-							temp.PaymentTermId = myPaymentTermPM.Id;
-						}
+						
+						if(myPaymentTermPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("PaymentTerm Can't be update"); 
+								temp.PaymentTermId = myPaymentTermPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
@@ -162,11 +203,20 @@ using Simplog.Data.CommonDataModel;
 					if(MyEntity.MainAddress != null)
 					{
 						var myMainAddressPM = MainAddressAddressService.AddressDataMappingAndValidatin(MyEntity.MainAddress,Tenant,ComputingPartnerName);
-												if(myMainAddressPM != null)
-						{
-							temp.MainAddressId = myMainAddressPM.Id;
-						}
+						
+						if(myMainAddressPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("MainAddress Can't be update"); 
+								temp.MainAddressId = myMainAddressPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					 
@@ -174,7 +224,15 @@ using Simplog.Data.CommonDataModel;
 					if(MyEntity.Contacts != null && MyEntity.Contacts.Count > 0)
 					{
 						ContactQueryService ContactService4 = new ContactQueryService(Tenant);
-						temp.Contacts = ContactService4.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("Contacts Can't be update"); 
+								temp.Contacts = ContactService4.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName);
+
+					 
+						}  
+
+						
 					}
 
 								 
@@ -182,11 +240,20 @@ using Simplog.Data.CommonDataModel;
 					if(MyEntity.BillingAddress != null)
 					{
 						var myBillingAddressPM = BillingAddressAddressService.AddressDataMappingAndValidatin(MyEntity.BillingAddress,Tenant,ComputingPartnerName);
-												if(myBillingAddressPM != null)
-						{
-							temp.BillingAddressId = myBillingAddressPM.Id;
-						}
+						
+						if(myBillingAddressPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("BillingAddress Can't be update"); 
+								temp.BillingAddressId = myBillingAddressPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
@@ -194,21 +261,46 @@ using Simplog.Data.CommonDataModel;
 					if(MyEntity.GLAccount != null)
 					{
 						var myGLAccountPM = GLAccountGLAccountService.GLAccountCustomDataMappingAndValidatin(MyEntity.GLAccount,Tenant);
-												if(myGLAccountPM != null)
-						{
-							temp.GLAccountId = myGLAccountPM.Id;
-						}
+						
+						if(myGLAccountPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("GLAccount Can't be update"); 
+								temp.GLAccountId = myGLAccountPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						temp.Code = MyEntity.Code;
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
+						{
+								//throw new ApplicationException("Code Can't be update"); 
+								temp.Code = MyEntity.Code;
+								
+						
+						}  
+
+						
 					}
-					temp.PartnerCode = MyEntity.PartnerCode;					   
-					   return temp;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
+					{							//throw new ApplicationException("PartnerCode Can't be update"); 
+							temp.PartnerCode = MyEntity.PartnerCode;
+
+										}  
+
+										   
+					return temp;
 		    }
             catch (Exception ex)
             {

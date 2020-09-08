@@ -86,6 +86,64 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             //ShipmentReceivableValidator.Validate(entityPM.ShipmentReceivables);
         }
 
+        public static string GetCustomerCreditLimitDetails(string customerId, string quoteId, bool isBuildFromQuote, int tenant)
+        {
+            var limitWarningMsg = "";
+            ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+            string myCreditLimitSettingsId = tenant.ToString();
+            CreditLimitSetting mySettings = (from d in myCommonContext.CreditLimitSettings where d.Id == myCreditLimitSettingsId select d).FirstOrDefault();
+            CustomerRepository myCustomerRepository = new CustomerRepository(myCommonContext);
+            Customer myCustomer = myCustomerRepository.GetSingleCustomer(customerId, tenant, false);
+            var IsCreditLimitActivated = mySettings.IsCreditLimitEnabled;
+            var IsCreditLimitHasAction = (mySettings.ShipmentCreationWarning == true) ? true : false;
+
+            if (IsCreditLimitActivated && IsCreditLimitHasAction && myCustomer != null && myCustomer.IsCreditLimitEnabled)
+            {
+                if (myCustomer.CreditLimitAmount != null)
+                {
+                    IInvoiceContext myContext = InvoiceContext.GetContext(tenant);
+                    ARInvoiceRepository invoiceRepository = new ARInvoiceRepository(myContext);
+                    ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(invoiceRepository);
+                    double? myResult = invoiceQuery.GetCustomerCreditLimitActualAmount(customerId, tenant);
+                    double LimitAmount = myCustomer.CreditLimitAmount == null ? 0 : myCustomer.CreditLimitAmount.Value;
+                    double ActualBalance = myResult == null ? 0 : myResult.Value;
+                    int? WarningPercentage = myCustomer.CreditLimitWarningPercentage;
+
+                    if (myCustomer.CreditLimitOpenBalance != null)
+                    {
+                        ActualBalance += myCustomer.CreditLimitOpenBalance.Value;
+                    }
+
+                    if (isBuildFromQuote && quoteId != null)
+                    {
+                        IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
+                        double? quoteSaleLocalAmount = (from d in quotesContext.QuoteCharges
+                                                        where d.QuoteId == quoteId
+                                                        select d.SaleTotalAmountLocal).Sum();
+
+                        if (quoteSaleLocalAmount != null)
+                        {
+                            ActualBalance += quoteSaleLocalAmount.Value;
+                        }
+                    }
+
+                    LimitAmount = MethodHelper.Roundd(LimitAmount, 2);
+                    ActualBalance = MethodHelper.Roundd(ActualBalance, 2);
+
+                    if (WarningPercentage != null && (ActualBalance > (WarningPercentage * LimitAmount / 100))&& ActualBalance <= LimitAmount)
+                    {
+                        if (mySettings.ShipmentCreationWarning)
+                        {
+                            var RemainingLimit = LimitAmount - ActualBalance;
+                            limitWarningMsg = "The remaining credit limit for this customer is (" + RemainingLimit + ")";
+                        }
+                    }
+                }
+            }
+
+            return limitWarningMsg;
+        }
+
         private static void ValidateProductTypePermission(ShipmentPM entityPM, ICommonDataContext myCommonContext)
         {
             string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();

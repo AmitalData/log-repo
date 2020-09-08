@@ -155,6 +155,11 @@ export class CreditLimitSettingPM {
     public set WarehousesInvoicesBlock(newValue: boolean) { if (this.warehousesInvoicesBlock != newValue) { this.warehousesInvoicesBlock = newValue; this.MarkAsDirty("WarehousesInvoicesBlock"); } }
        
 	 
+    private shipmentCreationWarning: boolean;
+    public get ShipmentCreationWarning() { return this.shipmentCreationWarning; }
+    public set ShipmentCreationWarning(newValue: boolean) { if (this.shipmentCreationWarning != newValue) { this.shipmentCreationWarning = newValue; this.MarkAsDirty("ShipmentCreationWarning"); } }
+       
+	 
 
     public OldEntityPM: CreditLimitSettingPM;
 		

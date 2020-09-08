@@ -612,74 +612,57 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         public HttpResponseMessage Put(House entity)
         {
-            var apiExceptionResult = ApiExceptionHandler.HandleException(new Exception("Updates are not supported"));
-            APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "House API");
-            return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-            //if (ModelState.IsValid)
-            //{
-            //    try
-            //    {
-            //        string token = HttpContext.Current.Request.Headers["Token"];
-            //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            //        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                    HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);                    
+                    ShipmentPM HousePM = mappingService.HouseDataMappingAndValidatin(entity, authToken.Tenant, "", true);
 
-            //        ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
-            //        string computingPartnerCode = "";
-            //        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode)) computingPartnerCode = entity.ComputingPartnerCode;//loggedContactInfo.ComputingPartnerCode;
+                    if (HousePM != null)
+                    {
+                        if (HousePM.IsOperationalClosed)
+                        {
+                            throw new ApplicationException("Can't update operationally closed shipments");
+                        }
 
-            //        IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-            //        HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
-            //        ShipmentPM entityPM = mappingService.HouseDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
+                        if (HousePM.IsCancelled)
+                        {
+                            throw new ApplicationException("Can't update operationally cancelled shipments");
+                        }
 
-            //        using (TransactionScope scope = TransactionFactory.GetTransaction())
-            //        {
-            //            ShipmentRepository entityRepository = new ShipmentRepository(MyContext);
-            //            Shipment entityPoco = null;
-            //            entityPoco = entityRepository.GetSingleShipment(entityPM.Id, authToken.Tenant);
+                        if (!string.IsNullOrEmpty(HousePM.MasterShipmentDataId))
+                        {
+                            throw new ApplicationException("Can't update house connected to master");
+                        }
 
-            //            if (entityPoco == null)
-            //            {
-            //                throw new ApplicationException("No shipment found");
-            //            }
+                        ShipmentService service = new ShipmentService(MyContext, HousePM, SecurityUtility.GetAuthenticatedUser());
+                        service.Update(true);
+                    }                    
 
-            //            else
-            //            {
-            //                if (!string.IsNullOrEmpty(entityPM.MasterShipmentDataId) || entityPM.IsOperationalClosed || entityPM.IsAccountingClosed || entityPM.IsCancelled)
-            //                {
-            //                    this.CheckEntityChanges(entityPM, entityPoco, MyContext, authToken.Tenant);
-            //                }
+                    var result = mappingService.GetHouseById(HousePM.Id, authToken.Tenant);
+                    APIHelper.AddCommunicationLog("D", entity, result, "Shipment", HousePM.Id, "House API", authToken.Tenant);
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
 
-            //                else
-            //                {
-            //                    this.DoUpdate(entityPM, MyContext, authToken.Tenant);
-            //                }
-            //            }
-
-
-            //            scope.Complete();
-            //        }
-
-            //        var result = mappingService.GetHouseById(entityPM.Id, authToken.Tenant);
-            //        APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "House API", authToken.Tenant);
-            //        return Request.CreateResponse(HttpStatusCode.OK, result);
-            //    }
-
-            //    catch (Exception ex)
-            //    {
-            //        var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-            //        APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "House API");
-            //        return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-            //    }
-            //}
-
-            //else
-            //{
-            //    var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
-            //    APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "House API");
-            //    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-
-            //}
+                catch (Exception ex)
+                {
+                    var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                    APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "House API");
+                    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                }
+            }
+            else
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
+                APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "House API");
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
         }
 
         private void CheckEntityChanges(ShipmentPM entityPM, Shipment entityPoco, IShipmentsContext context, int tenant)

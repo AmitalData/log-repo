@@ -59,6 +59,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
             List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetShipments(shipmentsSecurityKeies, tenant);
 
+          
             return shipments;
         }
 

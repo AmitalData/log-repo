@@ -49,6 +49,11 @@ export class CargoTrackingPortPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
+    private countryCode: string;
+    public get CountryCode() { return this.countryCode; }
+    public set CountryCode(newValue: string) { if (this.countryCode != newValue) { this.countryCode = newValue; this.MarkAsDirty("CountryCode"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingPortPM;
 		

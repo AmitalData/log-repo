@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CreditLimitSettingUpdateClass
    {  		
-		public const string HashString = "b9966b0032244da8a5d7c709b966da71";
+		public const string HashString = "1fa0d37c8dcebefceec3299122cd0246";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "CreditLimitSetting",
 			      				    IsNew =  false,
 			      				    DBTableName =  "CreditLimitSettings",
-			      				    OldDBTableName =  "CreditLimitSettings",
 			      				    ObjectTableSingular =  "Credit Limit Setting",
 			      				    ObjectTablePlural =  "Credit Limit Settings",
 			      				    HasCustomFilter =  false,
@@ -119,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Credit Limit Setting",
-			      				    Code =  "8581",
+			      				    Code =  "36e4",
 			      				    Name =  "CreditLimitSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -130,6 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "CreditLimitSetting,CreditLimitSettings,,Id,",
 			      				    HashString =  CreditLimitSettingUpdateClass.HashString,
 			                    
@@ -143,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsCreditLimitEnabled",
-					  						OldFieldName =  "IsCreditLimitEnabled",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -193,6 +192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsCreditLimitEnabled",
@@ -205,7 +205,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InvoiceCreationWarning",
-					  						OldFieldName =  "InvoiceCreationWarning",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -255,6 +254,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InvoiceCreationWarning",
@@ -267,7 +267,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InvoiceCreationBlock",
-					  						OldFieldName =  "InvoiceCreationBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -317,6 +316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InvoiceCreationBlock",
@@ -329,7 +329,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShipmentCreationBlock",
-					  						OldFieldName =  "ShipmentCreationBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -379,6 +378,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ShipmentCreationBlock",
@@ -391,7 +391,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomersShipmentsBlock",
-					  						OldFieldName =  "CustomersShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -438,6 +437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -449,7 +449,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AgentsShipmentsBlock",
-					  						OldFieldName =  "AgentsShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -496,6 +495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -507,7 +507,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShipperConsigneeShipmentBlock",
-					  						OldFieldName =  "ShipperConsigneeShipmentBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -554,6 +553,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -565,7 +565,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomsAgentsShipmentsBlock",
-					  						OldFieldName =  "CustomsAgentsShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -612,6 +611,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -623,7 +623,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShippingAgentsShipmentsBlock",
-					  						OldFieldName =  "ShippingAgentsShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -670,6 +669,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -681,7 +681,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AirlinesShipmentsBlock",
-					  						OldFieldName =  "AirlinesShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -728,6 +727,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -739,7 +739,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShippingLinesShipmentsBlock",
-					  						OldFieldName =  "ShippingLinesShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -786,6 +785,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -797,7 +797,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "TruckersShipmentsBlock",
-					  						OldFieldName =  "TruckersShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -844,6 +843,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -855,7 +855,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VendorsShipmentsBlock",
-					  						OldFieldName =  "VendorsShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -902,6 +901,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -913,7 +913,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "WarehousesShipmentsBlock",
-					  						OldFieldName =  "WarehousesShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -960,6 +959,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -971,7 +971,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomersInvoicesBlock",
-					  						OldFieldName =  "CustomersInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1018,6 +1017,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1029,7 +1029,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AgentsInvoicesBlock",
-					  						OldFieldName =  "AgentsInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1076,6 +1075,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1087,7 +1087,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShipperConsigneeInvoiceBlock",
-					  						OldFieldName =  "ShipperConsigneeInvoiceBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1134,6 +1133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1145,7 +1145,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomsAgentsInvoicesBlock",
-					  						OldFieldName =  "CustomsAgentsInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1192,6 +1191,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1203,7 +1203,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShippingAgentsInvoicesBlock",
-					  						OldFieldName =  "ShippingAgentsInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1250,6 +1249,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1261,7 +1261,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AirlinesInvoicesBlock",
-					  						OldFieldName =  "AirlinesInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1308,6 +1307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1319,7 +1319,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShippingLinesInvoicesBlock",
-					  						OldFieldName =  "ShippingLinesInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1366,6 +1365,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1377,7 +1377,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "TruckersInvoicesBlock",
-					  						OldFieldName =  "TruckersInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1424,6 +1423,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1435,7 +1435,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VendorsInvoicesBlock",
-					  						OldFieldName =  "VendorsInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1482,6 +1481,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1493,7 +1493,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "WarehousesInvoicesBlock",
-					  						OldFieldName =  "WarehousesInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1540,6 +1539,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShipmentCreationWarning",
+					  						ObjectTableName =  "CreditLimitSetting",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShipmentCreationWarning",
+					  						ListPropertyPath =  "ShipmentCreationWarning",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShipmentCreationWarning",
+					  						DefaultText =  "Shipment Creation Warning",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1553,7 +1608,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CreditLimitSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CreditLimitSetting" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CreditLimitSettingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CreditLimitSetting").ToList();
+		       
+	      
+
+	         Screen CreditLimitSettingCreditLimitSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CreditLimitSetting.HeaderScreen", Name = "CreditLimitSettingHeaderScreen", ObjectTableId = CreditLimitSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CreditLimitSettingObjectTable.HeaderScreenId = CreditLimitSettingCreditLimitSettingHeaderScreenScreen0.Id;
+		    CreditLimitSettingObjectTable.HeaderScreenCode = CreditLimitSettingCreditLimitSettingHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -1565,10 +1632,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable CreditLimitSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CreditLimitSetting" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CreditLimitSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CreditLimitSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditLimitSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CreditLimitSettingObjectTable);
-		   Feature CreditLimitSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CreditLimitSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditLimitSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CreditLimitSettingObjectTable);
-		   Feature CreditLimitSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CreditLimitSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditLimitSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CreditLimitSettingObjectTable);
-		   Feature CreditLimitSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CreditLimitSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditLimitSetting.Features.PackageFeature", NameTextCodeDefaultText = "CreditLimitSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CreditLimitSettingObjectTable); 
+		   Feature CreditLimitSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CreditLimitSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditLimitSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CreditLimitSettingObjectTable);
+		   Feature CreditLimitSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CreditLimitSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditLimitSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CreditLimitSettingObjectTable);
+		   Feature CreditLimitSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CreditLimitSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditLimitSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CreditLimitSettingObjectTable);
+		   Feature CreditLimitSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CreditLimitSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditLimitSetting.Features.PackageFeature", NameTextCodeDefaultText = "CreditLimitSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CreditLimitSettingObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 

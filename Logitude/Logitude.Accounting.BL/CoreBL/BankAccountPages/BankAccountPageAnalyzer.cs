@@ -372,8 +372,9 @@ s             b                   a
                 //}
                 //else
                 {
+                    bool checkSequnceDate = false;///Task 68865: בקליטת דפי בנק ישנים הודעת השגיאה איננה ברורה- שיוני של הוולידציה בקליטת דף בנק
                     //                    if (prevReconcileExternalPagePM.ToDate >= newBankPageLines.First().ReferenceDate)
-                    if (prevReconcileExternalPagePM.ToDate > newBankPageLines.First().ReferenceDate)
+                    if (checkSequnceDate && prevReconcileExternalPagePM.ToDate > newBankPageLines.First().ReferenceDate)
                     {
                         //MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add($"BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  prevReconcileExternalPagePM.ToDate {prevReconcileExternalPagePM.ToDate } >= newBankPageLines.First().ReferenceDate{newBankPageLines.First().ReferenceDate}");
                         var ACCNUMBER = $"{ newPageOfBankAccount.BankCode}-{ newPageOfBankAccount.MyBankAccountM.AccountNumber}";

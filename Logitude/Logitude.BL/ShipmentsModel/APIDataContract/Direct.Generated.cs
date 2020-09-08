@@ -83,6 +83,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public string Master { get; set; }
     
+	[XmlAttribute]
     public string ShipmentNumber { get; set; }
     
     public User CreatedByUser { get; set; }
@@ -145,7 +146,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public Card FreightForwarder { get; set; }
     
-    public DateTime? MAWBDate { get; set; }
+    public DateTime? MasterDate { get; set; }
     
     public double? Ratio { get; set; }
     

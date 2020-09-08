@@ -66,7 +66,9 @@ using Simplog.Data.InvoiceModel;
 				   
 				   var temp = new APInvoice(); 
 				   temp.Tenant = MyEntityPM.Tenant;
-				   temp.InternalNumber = MyEntityPM.InternalNumber;			  
+				   temp.InternalNumber = MyEntityPM.InternalNumber; 
+
+			  
 				   if(MyEntityPM.VendorId != null)
 				   {
 					   VendorQueryService VendorService0 = new VendorQueryService(Tenant);
@@ -75,7 +77,9 @@ using Simplog.Data.InvoiceModel;
 					   				   }
 				   
 				   temp.VATNumber = MyEntityPM.VATNumber;
-				   temp.InvoiceNumber = MyEntityPM.InvoiceNumber;			  
+				   temp.InvoiceNumber = MyEntityPM.InvoiceNumber; 
+
+			  
 				   if(MyEntityPM.InvoiceCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService1 = new CurrencyQueryService(Tenant);
@@ -85,7 +89,9 @@ using Simplog.Data.InvoiceModel;
 				   
 				   temp.InvoiceCurrencyExchangeRate = MyEntityPM.InvoiceCurrencyExchangeRate;
 				   temp.InvoiceDate = MyEntityPM.InvoiceDate;
-				   temp.AccountingDate = MyEntityPM.AccountingDate;			  
+				   temp.AccountingDate = MyEntityPM.AccountingDate; 
+
+			  
 				   if(MyEntityPM.PaymentTermId != null)
 				   {
 					   PaymentTermQueryService PaymentTermService2 = new PaymentTermQueryService(Tenant);
@@ -94,7 +100,9 @@ using Simplog.Data.InvoiceModel;
 					   				   }
 				   
 				   temp.DueDate = MyEntityPM.DueDate;
-				   temp.ExchangeRateDate = MyEntityPM.ExchangeRateDate;			  
+				   temp.ExchangeRateDate = MyEntityPM.ExchangeRateDate; 
+
+			  
 				   if(MyEntityPM.LocalCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService3 = new CurrencyQueryService(Tenant);
@@ -105,14 +113,18 @@ using Simplog.Data.InvoiceModel;
 				   temp.InternalNotes = MyEntityPM.InternalNotes;
 				   temp.SubTotalInLocalCurrency = MyEntityPM.SubTotalInLocalCurrency;
 				   temp.SubTotalInInvoiceCurrency = MyEntityPM.SubTotalInInvoiceCurrency;
-				   temp.AmountInLocalCurrency = MyEntityPM.AmountInLocalCurrency;			  
+				   temp.AmountInLocalCurrency = MyEntityPM.AmountInLocalCurrency; 
+
+			  
 				   if(MyEntityPM.StatusCode != null)
 				   {
 					   APInvoiceStatusQueryService APInvoiceStatusService4 = new APInvoiceStatusQueryService(Tenant);
 					   					   temp.Status = APInvoiceStatusService4.GetAPInvoiceStatusByCode(MyEntityPM.StatusCode,Tenant); 
 			       
 					   				   }
-				   			  
+				    
+
+			  
 				   if(MyEntityPM.ProfitCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService5 = new CurrencyQueryService(Tenant);
@@ -121,7 +133,9 @@ using Simplog.Data.InvoiceModel;
 					   				   }
 				   
 				   temp.ProfitCurrencyExchangeRate = MyEntityPM.ProfitCurrencyExchangeRate;
-				   temp.AmountInProfitCurrency = MyEntityPM.AmountInProfitCurrency;			  
+				   temp.AmountInProfitCurrency = MyEntityPM.AmountInProfitCurrency; 
+
+			  
 				   if(MyEntityPM.UpdatedByUserId != null)
 				   {
 					   UserQueryService UserService6 = new UserQueryService(Tenant);
@@ -133,7 +147,9 @@ using Simplog.Data.InvoiceModel;
 				   temp.AmountDue = MyEntityPM.AmountDue;
 				   temp.AmountDueInLocalCurrency = MyEntityPM.AmountDueInLocalCurrency;
 				   temp.AmountDueInProfitCurrency = MyEntityPM.AmountDueInProfitCurrency;
-				   temp.RefundAmount = MyEntityPM.RefundAmount;			  
+				   temp.RefundAmount = MyEntityPM.RefundAmount; 
+
+			  
 				   if(MyEntityPM.BranchId != null)
 				   {
 					   BranchQueryService BranchService7 = new BranchQueryService(Tenant);
@@ -146,7 +162,9 @@ using Simplog.Data.InvoiceModel;
 				   temp.Description = MyEntityPM.Description;
 				   temp.AccountingExternalCode = MyEntityPM.AccountingExternalCode;
 				   temp.CreditAccount = MyEntityPM.CreditAccount;
-				   temp.PaymentTermExternalId = MyEntityPM.PaymentTermExternalId;			  
+				   temp.PaymentTermExternalId = MyEntityPM.PaymentTermExternalId; 
+
+			  
 				   if(MyEntityPM.TransferStatusCode != null)
 				   {
 					   APInvoiceTransferStatusQueryService APInvoiceTransferStatusService8 = new APInvoiceTransferStatusQueryService(Tenant);
@@ -154,7 +172,9 @@ using Simplog.Data.InvoiceModel;
 			       
 					   				   }
 				   
-				   temp.ApprovedDate = MyEntityPM.ApprovedDate;			  
+				   temp.ApprovedDate = MyEntityPM.ApprovedDate; 
+
+			  
 				   if(MyEntityPM.ApprovedByUserId != null)
 				   {
 					   UserQueryService UserService9 = new UserQueryService(Tenant);
@@ -186,7 +206,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public APInvoicePM APInvoiceDataMappingAndValidatin(APInvoice MyEntity,int Tenant,string ComputingPartnerName = "")
+		public APInvoicePM APInvoiceDataMappingAndValidatin(APInvoice MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -200,76 +220,213 @@ using Simplog.Data.InvoiceModel;
 					{   
 					    throw new ApplicationException("APInvoice with Id " + MyEntity.Id + " doesn't exist");
 					} 
-					temp.Tenant = MyEntity.Tenant;
-					temp.InternalNumber = MyEntity.InternalNumber;
+					
+                    
+					if(!IsUpdate)// && MyEntity.Tenant != null)
+					{							//throw new ApplicationException("Tenant Can't be update"); 
+							temp.Tenant = MyEntity.Tenant;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.InternalNumber))
+					{							//throw new ApplicationException("InternalNumber Can't be update"); 
+							temp.InternalNumber = MyEntity.InternalNumber;
+
+										}  
+
+					
 					VendorQueryService VendorVendorService = new VendorQueryService(Tenant);
 					if(MyEntity.Vendor != null)
 					{
 						var myVendorPM = VendorVendorService.VendorDataMappingAndValidatin(MyEntity.Vendor,Tenant,ComputingPartnerName);
-												if(myVendorPM != null)
-						{
-							temp.VendorId = myVendorPM.Id;
-						}
+						
+						if(myVendorPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("Vendor Can't be update"); 
+								temp.VendorId = myVendorPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.VATNumber = MyEntity.VATNumber;
-					temp.InvoiceNumber = MyEntity.InvoiceNumber;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.VATNumber))
+					{							//throw new ApplicationException("VATNumber Can't be update"); 
+							temp.VATNumber = MyEntity.VATNumber;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.InvoiceNumber))
+					{							//throw new ApplicationException("InvoiceNumber Can't be update"); 
+							temp.InvoiceNumber = MyEntity.InvoiceNumber;
+
+										}  
+
+					
 					CurrencyQueryService InvoiceCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.InvoiceCurrency != null)
 					{
 						var myInvoiceCurrencyPM = InvoiceCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.InvoiceCurrency,Tenant,ComputingPartnerName);
-												if(myInvoiceCurrencyPM != null)
-						{
-							temp.InvoiceCurrencyId = myInvoiceCurrencyPM.Id;
-						}
+						
+						if(myInvoiceCurrencyPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("InvoiceCurrency Can't be update"); 
+								temp.InvoiceCurrencyId = myInvoiceCurrencyPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.InvoiceCurrencyExchangeRate = MyEntity.InvoiceCurrencyExchangeRate;
-					temp.InvoiceDate = MyEntity.InvoiceDate;
-					temp.AccountingDate = MyEntity.AccountingDate;
+                    
+					if(!IsUpdate)// && MyEntity.InvoiceCurrencyExchangeRate != null)
+					{							//throw new ApplicationException("InvoiceCurrencyExchangeRate Can't be update"); 
+							temp.InvoiceCurrencyExchangeRate = MyEntity.InvoiceCurrencyExchangeRate;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.InvoiceDate != null)
+					{							//throw new ApplicationException("InvoiceDate Can't be update"); 
+							temp.InvoiceDate = MyEntity.InvoiceDate;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.AccountingDate != null)
+					{							//throw new ApplicationException("AccountingDate Can't be update"); 
+							temp.AccountingDate = MyEntity.AccountingDate;
+
+										}  
+
+					
 					PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
 					if(MyEntity.PaymentTerm != null)
 					{
 						var myPaymentTermPM = PaymentTermPaymentTermService.PaymentTermDataMappingAndValidatin(MyEntity.PaymentTerm,Tenant,ComputingPartnerName);
-												if(myPaymentTermPM != null)
-						{
-							temp.PaymentTermId = myPaymentTermPM.Id;
-						}
+						
+						if(myPaymentTermPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("PaymentTerm Can't be update"); 
+								temp.PaymentTermId = myPaymentTermPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.DueDate = MyEntity.DueDate;
-					temp.ExchangeRateDate = MyEntity.ExchangeRateDate;
+                    
+					if(!IsUpdate)// && MyEntity.DueDate != null)
+					{							//throw new ApplicationException("DueDate Can't be update"); 
+							temp.DueDate = MyEntity.DueDate;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.ExchangeRateDate != null)
+					{							//throw new ApplicationException("ExchangeRateDate Can't be update"); 
+							temp.ExchangeRateDate = MyEntity.ExchangeRateDate;
+
+										}  
+
+					
 					CurrencyQueryService LocalCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.LocalCurrency != null)
 					{
 						var myLocalCurrencyPM = LocalCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.LocalCurrency,Tenant,ComputingPartnerName);
-												if(myLocalCurrencyPM != null)
-						{
-							temp.LocalCurrencyId = myLocalCurrencyPM.Id;
-						}
+						
+						if(myLocalCurrencyPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("LocalCurrency Can't be update"); 
+								temp.LocalCurrencyId = myLocalCurrencyPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.InternalNotes = MyEntity.InternalNotes;
-					temp.SubTotalInLocalCurrency = MyEntity.SubTotalInLocalCurrency;
-					temp.SubTotalInInvoiceCurrency = MyEntity.SubTotalInInvoiceCurrency;
-					temp.AmountInLocalCurrency = MyEntity.AmountInLocalCurrency;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.InternalNotes))
+					{							//throw new ApplicationException("InternalNotes Can't be update"); 
+							temp.InternalNotes = MyEntity.InternalNotes;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.SubTotalInLocalCurrency != null)
+					{							//throw new ApplicationException("SubTotalInLocalCurrency Can't be update"); 
+							temp.SubTotalInLocalCurrency = MyEntity.SubTotalInLocalCurrency;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.SubTotalInInvoiceCurrency != null)
+					{							//throw new ApplicationException("SubTotalInInvoiceCurrency Can't be update"); 
+							temp.SubTotalInInvoiceCurrency = MyEntity.SubTotalInInvoiceCurrency;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.AmountInLocalCurrency != null)
+					{							//throw new ApplicationException("AmountInLocalCurrency Can't be update"); 
+							temp.AmountInLocalCurrency = MyEntity.AmountInLocalCurrency;
+
+										}  
+
+					
 					APInvoiceStatusQueryService StatusAPInvoiceStatusService = new APInvoiceStatusQueryService(Tenant);
 					if(MyEntity.Status != null)
 					{
 						var myStatusPM = StatusAPInvoiceStatusService.APInvoiceStatusDataMappingAndValidatin(MyEntity.Status,Tenant,ComputingPartnerName);
-												if(myStatusPM != null)
-						{
-							temp.StatusCode = myStatusPM.Code;
-						}
+						
+						if(myStatusPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("Status Can't be update"); 
+								temp.StatusCode = myStatusPM.Code;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
@@ -277,79 +434,243 @@ using Simplog.Data.InvoiceModel;
 					if(MyEntity.ProfitCurrency != null)
 					{
 						var myProfitCurrencyPM = ProfitCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.ProfitCurrency,Tenant,ComputingPartnerName);
-												if(myProfitCurrencyPM != null)
-						{
-							temp.ProfitCurrencyId = myProfitCurrencyPM.Id;
-						}
+						
+						if(myProfitCurrencyPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("ProfitCurrency Can't be update"); 
+								temp.ProfitCurrencyId = myProfitCurrencyPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.ProfitCurrencyExchangeRate = MyEntity.ProfitCurrencyExchangeRate;
-					temp.AmountInProfitCurrency = MyEntity.AmountInProfitCurrency;
+                    
+					if(!IsUpdate)// && MyEntity.ProfitCurrencyExchangeRate != null)
+					{							//throw new ApplicationException("ProfitCurrencyExchangeRate Can't be update"); 
+							temp.ProfitCurrencyExchangeRate = MyEntity.ProfitCurrencyExchangeRate;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.AmountInProfitCurrency != null)
+					{							//throw new ApplicationException("AmountInProfitCurrency Can't be update"); 
+							temp.AmountInProfitCurrency = MyEntity.AmountInProfitCurrency;
+
+										}  
+
+					
 					UserQueryService UpdatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.UpdatedByUser != null)
 					{
 						var myUpdatedByUserPM = UpdatedByUserUserService.UserDataMappingAndValidatin(MyEntity.UpdatedByUser,Tenant,ComputingPartnerName);
-												if(myUpdatedByUserPM != null)
-						{
-							temp.UpdatedByUserId = myUpdatedByUserPM.Id;
-						}
+						
+						if(myUpdatedByUserPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("UpdatedByUser Can't be update"); 
+								temp.UpdatedByUserId = myUpdatedByUserPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.UpdateDate = MyEntity.UpdateDate;
-					temp.AmountDue = MyEntity.AmountDue;
-					temp.AmountDueInLocalCurrency = MyEntity.AmountDueInLocalCurrency;
-					temp.AmountDueInProfitCurrency = MyEntity.AmountDueInProfitCurrency;
-					temp.RefundAmount = MyEntity.RefundAmount;
+                    
+					if(!IsUpdate)// && MyEntity.UpdateDate != null)
+					{							//throw new ApplicationException("UpdateDate Can't be update"); 
+							temp.UpdateDate = MyEntity.UpdateDate;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.AmountDue != null)
+					{							//throw new ApplicationException("AmountDue Can't be update"); 
+							temp.AmountDue = MyEntity.AmountDue;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.AmountDueInLocalCurrency != null)
+					{							//throw new ApplicationException("AmountDueInLocalCurrency Can't be update"); 
+							temp.AmountDueInLocalCurrency = MyEntity.AmountDueInLocalCurrency;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.AmountDueInProfitCurrency != null)
+					{							//throw new ApplicationException("AmountDueInProfitCurrency Can't be update"); 
+							temp.AmountDueInProfitCurrency = MyEntity.AmountDueInProfitCurrency;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.RefundAmount != null)
+					{							//throw new ApplicationException("RefundAmount Can't be update"); 
+							temp.RefundAmount = MyEntity.RefundAmount;
+
+										}  
+
+					
 					BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
 					if(MyEntity.Branch != null)
 					{
 						var myBranchPM = BranchBranchService.BranchDataMappingAndValidatin(MyEntity.Branch,Tenant,ComputingPartnerName);
-												if(myBranchPM != null)
-						{
-							temp.BranchId = myBranchPM.Id;
-						}
+						
+						if(myBranchPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("Branch Can't be update"); 
+								temp.BranchId = myBranchPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.HouseNumber = MyEntity.HouseNumber;
-					temp.MasterNumber = MyEntity.MasterNumber;
-					temp.Description = MyEntity.Description;
-					temp.AccountingExternalCode = MyEntity.AccountingExternalCode;
-					temp.CreditAccount = MyEntity.CreditAccount;
-					temp.PaymentTermExternalId = MyEntity.PaymentTermExternalId;
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.HouseNumber))
+					{							//throw new ApplicationException("HouseNumber Can't be update"); 
+							temp.HouseNumber = MyEntity.HouseNumber;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.MasterNumber))
+					{							//throw new ApplicationException("MasterNumber Can't be update"); 
+							temp.MasterNumber = MyEntity.MasterNumber;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Description))
+					{							//throw new ApplicationException("Description Can't be update"); 
+							temp.Description = MyEntity.Description;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.AccountingExternalCode))
+					{							//throw new ApplicationException("AccountingExternalCode Can't be update"); 
+							temp.AccountingExternalCode = MyEntity.AccountingExternalCode;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.CreditAccount))
+					{							//throw new ApplicationException("CreditAccount Can't be update"); 
+							temp.CreditAccount = MyEntity.CreditAccount;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PaymentTermExternalId))
+					{							//throw new ApplicationException("PaymentTermExternalId Can't be update"); 
+							temp.PaymentTermExternalId = MyEntity.PaymentTermExternalId;
+
+										}  
+
+					
 					APInvoiceTransferStatusQueryService TransferStatusAPInvoiceTransferStatusService = new APInvoiceTransferStatusQueryService(Tenant);
 					if(MyEntity.TransferStatus != null)
 					{
 						var myTransferStatusPM = TransferStatusAPInvoiceTransferStatusService.APInvoiceTransferStatusDataMappingAndValidatin(MyEntity.TransferStatus,Tenant,ComputingPartnerName);
-												if(myTransferStatusPM != null)
-						{
-							temp.TransferStatusCode = myTransferStatusPM.Code;
-						}
+						
+						if(myTransferStatusPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("TransferStatus Can't be update"); 
+								temp.TransferStatusCode = myTransferStatusPM.Code;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.ApprovedDate = MyEntity.ApprovedDate;
+                    
+					if(!IsUpdate)// && MyEntity.ApprovedDate != null)
+					{							//throw new ApplicationException("ApprovedDate Can't be update"); 
+							temp.ApprovedDate = MyEntity.ApprovedDate;
+
+										}  
+
+					
 					UserQueryService ApprovedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.ApprovedByUser != null)
 					{
 						var myApprovedByUserPM = ApprovedByUserUserService.UserDataMappingAndValidatin(MyEntity.ApprovedByUser,Tenant,ComputingPartnerName);
-												if(myApprovedByUserPM != null)
-						{
-							temp.ApprovedByUserId = myApprovedByUserPM.Id;
-						}
+						
+						if(myApprovedByUserPM != null)
+						{ 
+
 						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("ApprovedByUser Can't be update"); 
+								temp.ApprovedByUserId = myApprovedByUserPM.Id;
+						  
+							}  
+
+							
+						} 
+
 					}
 			
 					
-					temp.IsExternalEntity = MyEntity.IsExternalEntity;
-					temp.IsGeneralInvoice = MyEntity.IsGeneralInvoice;
-					temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
+                    
+					if(!IsUpdate)// && (MyEntity.IsExternalEntity != temp.IsExternalEntity))
+					{							//throw new ApplicationException("IsExternalEntity Can't be update"); 
+							temp.IsExternalEntity = MyEntity.IsExternalEntity;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && (MyEntity.IsGeneralInvoice != temp.IsGeneralInvoice))
+					{							//throw new ApplicationException("IsGeneralInvoice Can't be update"); 
+							temp.IsGeneralInvoice = MyEntity.IsGeneralInvoice;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ExternalAccountingEntityId))
+					{							//throw new ApplicationException("ExternalAccountingEntityId Can't be update"); 
+							temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
+
+										}  
+
+					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -362,21 +683,59 @@ using Simplog.Data.InvoiceModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//}
+						//} 
+
+						
 					} 
 
 					if(MyEntity.InvoiceLines != null && MyEntity.InvoiceLines.Count > 0)
 					{
 						APInvoiceLineQueryService APInvoiceLineService10 = new APInvoiceLineQueryService(Tenant);
-						temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMappingAndValidatin(MyEntity.InvoiceLines,Tenant,ComputingPartnerName);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("InvoiceLines Can't be update"); 
+								temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMappingAndValidatin(MyEntity.InvoiceLines,Tenant,ComputingPartnerName);
+
+					 
+						}  
+
+						
 					}
 
 								 
-					temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
-					temp.InvoiceExpectedAmount = MyEntity.InvoiceExpectedAmount;
-					temp.MainEntityReference = MyEntity.EntityReference;
-					temp.VendorGLAccountId = MyEntity.VendorGLAccount;					   
-					   return temp;
+                    
+					if(!IsUpdate)// && MyEntity.AmountInInvoiceCurrency != null)
+					{							//throw new ApplicationException("AmountInInvoiceCurrency Can't be update"); 
+							temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && MyEntity.InvoiceExpectedAmount != null)
+					{							//throw new ApplicationException("InvoiceExpectedAmount Can't be update"); 
+							temp.InvoiceExpectedAmount = MyEntity.InvoiceExpectedAmount;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EntityReference))
+					{							//throw new ApplicationException("EntityReference Can't be update"); 
+							temp.MainEntityReference = MyEntity.EntityReference;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.VendorGLAccount))
+					{							//throw new ApplicationException("VendorGLAccount Can't be update"); 
+							temp.VendorGLAccountId = MyEntity.VendorGLAccount;
+
+										}  
+
+										   
+					return temp;
 		    }
             catch (Exception ex)
             {

@@ -162,4 +162,10 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ShipmentCreationWarning"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

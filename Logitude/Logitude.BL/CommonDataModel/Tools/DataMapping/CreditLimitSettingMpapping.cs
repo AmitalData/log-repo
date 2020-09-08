@@ -42,6 +42,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.TruckersInvoicesBlock = entityPM.TruckersInvoicesBlock;
             entityPOCO.VendorsInvoicesBlock = entityPM.VendorsInvoicesBlock;
             entityPOCO.WarehousesInvoicesBlock = entityPM.WarehousesInvoicesBlock;
+            entityPOCO.ShipmentCreationWarning = entityPM.ShipmentCreationWarning;
         }
     }
 }

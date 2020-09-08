@@ -43,6 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoGeneratorsMetaData\APIDataContractGenerator2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>APIDataContractGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="AutoGeneratorsMetaData\NewModelsAPIDataContractGenerator.cs">
       <DependentUpon>NewModelsAPIDataContractGenerator.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -250,7 +255,7 @@
     </Content>
     <None Include="AutoGeneratorsMetaData\APIDataContractGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>APIDataContractGenerator1.cs</LastGenOutput>
+      <LastGenOutput>APIDataContractGenerator2.cs</LastGenOutput>
     </None>
     <Content Include="AutoGeneratorsMetaData\MetadataClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
