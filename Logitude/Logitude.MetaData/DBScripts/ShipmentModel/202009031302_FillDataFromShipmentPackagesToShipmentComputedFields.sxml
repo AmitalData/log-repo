@@ -1,4 +1,4 @@
-﻿<Script DBType="Main" Module="Shipment">
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
   <Sql Version="1">
     <![CDATA[
     
@@ -30,7 +30,7 @@ CREATE TABLE #temp_ShipmentComputedFields
 select
 Shipments.Id, ShipmentPackages.ContainerNumber as ContainerNumber, PackageTypes.Code as PackageTypeCode
 into #temp
-from Shipments
+from Shipments where $LastCounterWhere$
 left outer join ShipmentPackages on Shipments.Id = ShipmentPackages.ShipmentId
 left outer join PackageTypes on ShipmentPackages.PackageTypeId = PackageTypes.Id
 

@@ -6,7 +6,18 @@
   Module="Shipment">
   <SqlScript>
     <![CDATA[
-CREATE TRIGGER Trigger_AutomaticLastUpdateDateShipmentPayableStatus ON ShipmentPayableStatus AFTER UPDATE  AS  BEGIN UPDATE ShipmentPayableStatus SET AutomaticLastUpdateDate = GETDATE() WHERE Code IN (SELECT DISTINCT Code FROM Inserted) END;
+CREATE TRIGGER Trigger_AutomaticLastUpdateDateShipmentPayableStatus ON ShipmentPayableStatus AFTER UPDATE  AS  BEGIN
+
+SET NOCOUNT ON;
+
+IF TRIGGER_NESTLEVEL() > 1 RETURN;
+
+IF SESSION_CONTEXT(N'ZeroDownTimeMode') IS NULL
+BEGIN
+UPDATE ShipmentPayableStatus SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted);
+END;
+
+END;
 ]]></SqlScript>
   <OracleScript>
 </OracleScript>

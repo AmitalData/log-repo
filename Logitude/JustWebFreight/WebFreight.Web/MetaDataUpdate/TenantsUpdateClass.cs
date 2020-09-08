@@ -1946,8 +1946,8 @@ namespace WebFreight.Web.MetaDataUpdate
                     DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(documentTypeTemplateRepository);
 
 
-                    if (!currentTenantDocumentTypes.Keys.Contains(docType.Code + docType.ObjectTableId))
-                    {
+                    //if (!currentTenantDocumentTypes.Keys.Contains(docType.Code + docType.ObjectTableId))
+                    //{
                         var documentType = (from a in currentTenantDocumentTypes.Values
                                             where a.Code.Trim().ToUpper() == docType.Code.Trim().ToUpper()
                                             select a).FirstOrDefault();
@@ -2097,7 +2097,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             documentType.OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName;
                             documentTypeRepository.Update(documentType);
                         }
-                    }
+                    //}
 
                 }
                 try
