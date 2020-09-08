@@ -88,6 +88,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  LastStatusName = a.LastStatusName,
                                                                  OrderMoney = a.OrderMoney,
                                                                  Team = a.ReferantTeam.LocalName,
+                                                                 ImporterFile = a.ImporterFile,
+                                                                 FileOpenDate = a.FileOpenDate,
 
                                                              }) ;
             return query;
