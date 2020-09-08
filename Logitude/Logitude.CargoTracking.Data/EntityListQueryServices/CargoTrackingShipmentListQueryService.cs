@@ -34,8 +34,9 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             IQueryable<CargoTrackingShipmentList> query = (from a in iQueryable join fp in ports on a.FromPortId equals fp.Id
                                                            join tp in ports on a.ToPortId equals tp.Id
                                                            join s in context.CargoTrackingShipmentSearches  on a.SecurityKey equals s.SecurityKey 
-                                                          join m in context.CargoTrackingMilestones on a.CurrentMilestoneCode equals m.Code 
-                                                          join t in context.CargoTrackingTransportModes on a.TransportModeId equals t.Id
+                                                           join m in context.CargoTrackingMilestones on a.CurrentMilestoneCode equals m.Code into lm
+                                                           from m in lm.DefaultIfEmpty()
+                                                           join t in context.CargoTrackingTransportModes on a.TransportModeId equals t.Id
                                                          
                                                                //  group g by new {a.SecurityKey , g.FirstOrDefault().SearchFields} into gp
                                                            select new CargoTrackingShipmentList()
