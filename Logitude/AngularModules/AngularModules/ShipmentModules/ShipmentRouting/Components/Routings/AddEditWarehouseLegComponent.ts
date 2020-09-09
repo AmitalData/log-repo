@@ -31,6 +31,7 @@ import { CurrencyRatesService, LastRate } from '../../../../Common/Services/Curr
 import { WarehouseEntryListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseEntryListExtendedService';
 import { WarehouseExtendedListService } from '../../../../Common/Services/ExtendedLists/WarehouseExtendedListService';
 import { ShipmentStoragePricingPM } from '../../../../Shipment/EntityPMs/ShipmentStoragePricingPM';
+import { CardPM } from '../../../../Common/EntityPMs/CardPM';
 
 @Component({
     moduleId: './ShipmentModules/ShipmentRouting/Components/Routings/',
@@ -86,14 +87,16 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
     }
 
+    private myConsignee: CardPM;
     InitFreeDaysStorage() {
         this.cardService.get(this.EntityPM.ConsigneeId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
-                    var result = myResponse.Result;
-                    if (result) {
-                        if (result.IsCustomer)
-                            this.WarehouseStorageFreeDays = result.StorageFreeDays;
+                    this.myConsignee = myResponse.Result;
+                    if (this.myConsignee) {
+                        if (this.IsNewLeg && this.myConsignee.IsCustomer) {
+                            this.WarehouseStorageFreeDays = this.myConsignee.StorageFreeDays;                            
+                        }
                     }
                 }
             }
@@ -127,6 +130,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.FatherComponent = args['FatherComponent'];
             this.WarehouseAddressList = this.FatherComponent.WarehouseAddressList;
             this.SetUIProperties();
+            this.InitFreeDaysStorage();
             this.Clone();
 
             if (this.IsNewLeg) {
@@ -139,8 +143,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                         }
                     }
                 }
+
                 this.GetShipmentDirection();
-                this.InitFreeDaysStorage();
             }
 
             if (!AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId)) {
@@ -300,6 +304,14 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                         this.FatherComponent.WarehouseLegTerminalName = result.EnglishName;
                         this.FatherComponent.EntityPM.WarehouseLegTerminalName = result.EnglishName;
                         this.WarehouseLegTerminalCode = result.FirmCode;
+
+                        if (this.myConsignee != null && !AppTool.IsNullOrZero(this.myConsignee.StorageFreeDays)) {
+                            this.WarehouseStorageFreeDays = this.myConsignee.StorageFreeDays;
+                        }
+
+                        else {
+                            this.WarehouseStorageFreeDays = result.StorageFreeDays;
+                        }
 
                         if (result.WarehouseTypeCode == "BO") {
                             this.StoragePricingEnabled = true;

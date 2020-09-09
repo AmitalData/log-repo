@@ -884,7 +884,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsAutonomy = entityPOCO.IsAutonomy,
                     CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
                     CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
-                    CreatedByPartner = entityPOCO.CreatedByPartner,                    
+                    CreatedByPartner = entityPOCO.CreatedByPartner,
+                    StorageFreeDays = entityPOCO.StorageFreeDays,
                 };
 
                 if (entityPOCO.Customer != null)

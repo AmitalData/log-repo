@@ -72,6 +72,13 @@ export class StorageDefaultsComponents extends BaseComponent {
         }
     }
 
+    get StorageFreeDays() { return this.EntityPM.StorageFreeDays; }
+    set StorageFreeDays(newValue: number) {
+        if (this.EntityPM.StorageFreeDays != newValue) {
+            this.EntityPM.StorageFreeDays = newValue;
+        }
+    }
+
     get AirWeightMeasurementCode() { return this.EntityPM.AirWeightMeasurementCode; }
     set AirWeightMeasurementCode(newValue: string) {
         if (this.EntityPM.AirWeightMeasurementCode != newValue) {

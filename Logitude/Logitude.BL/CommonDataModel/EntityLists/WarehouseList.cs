@@ -53,6 +53,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string InlandWeightRoundingCode { get; set; }
 
         public string GLAccountNumber { get; set; }
+        public int? StorageFreeDays { get; set; }
 
     }
 }
