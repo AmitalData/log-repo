@@ -15,6 +15,8 @@ import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/U
 import { ResourceLoader } from '@angular/compiler';
 import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationReferantDataPMService';
 import { ExceptionReasonExtendedListService } from '../../Services/ExtendedLists/ExceptionReasonExtendedListService';
+import { ExceptionReasonListService } from '../../Services/StandardLists/ExceptionReasonListService';
+import { ExceptionReasonList } from '../../EntityLists/ExceptionReasonList';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
@@ -113,11 +115,14 @@ export class FieldTemplateComponent {
         if (list.length > 1) {
             return list.toString();
         }
-        this.exceptionReasonExtendedListService.get(list[0]).subscribe((response: ServiceResponse) => {
-            if (response) {
-                return response.Result.LocalName;
-            }
-        });
+        ToolTipValue = list[0];
+        var myExceptionReasonListService = new ExceptionReasonListService();
+        myExceptionReasonListService.getSingleFromCache(ToolTipValue)
+            .subscribe(serviceResponse => {
+                var ExceptionReason = serviceResponse.Result as ExceptionReasonList;
+                ToolTipValue = ExceptionReason.LocalName;
+            });
+        return ToolTipValue;
     }
     OpenCourierMaster() {
         //static entityResourceService: EntityResourceService = new EntityResourceService();
@@ -166,7 +171,7 @@ export class FieldTemplateComponent {
         var windowArgs: any = {};
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Height = 400;
-        logitudeWindow.Width =700;
+        logitudeWindow.Width = 700;
         logitudeWindow.ShowCloseButton = true;
         if (this.Entity.IsClassificationRemarks) {
             _declarationRemarksService.GetSVCOrSRVStatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
