@@ -208,7 +208,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                 LogMessagingUtil.Instance.AppendLine("HAWB Received");
 
-                                if (!string.IsNullOrWhiteSpace(availableStatus))
+                                if (!string.IsNullOrWhiteSpace(availableStatus) && declarationPM.AvailabilityDate==null)
                                 {
                                     if (availableStatus == "SMG" && declarationPM.TransportModeId == "A")
                                     {
@@ -583,6 +583,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void SendPayment(DeclarationPM declarationPM,ICustomContext dbContext, DeclarationStatusRequestParams requestParams)
         {
+            if (declarationPM.AvailabilityDate != null) return;
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
             var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant); ;
 
@@ -591,12 +592,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
               var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
             _declarationPM.AvailabilityDate = DateTime.Now;
             _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-            //using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
-            {
-                myDeclarationUpdateService.Update(_declarationPM, true);
+            myDeclarationUpdateService.Update(_declarationPM, true);
 
-                 //scopeNewCRS.Complete();
-            }
             var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_declarationPM.Id, true, false);
             
 
@@ -662,7 +659,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                      SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
                                 }
 
-                                myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
 
 
                                 scopeNewCRS.Complete();
@@ -691,7 +687,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
                 }
+                myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
+
             }
+
 
         }
 
