@@ -113,7 +113,7 @@ namespace Logitude.DBMigrations.Models
 
             return generatedScript;
         }
-        
+
         protected GeneratedScript HandleSXMLFiles(List<ScriptDefinition> scriptDefinitions, bool execute, bool pre)
         {
             GeneratedScript generatedScript = null;
@@ -249,8 +249,12 @@ namespace Logitude.DBMigrations.Models
             GeneratedScript generatedScriptFromDXMLProcedures = GenerateScriptsFromDXMLProcedures(dxmlProcedures);
             generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLProcedures);
 
-            GeneratedScript generatedScriptFromDXMLTriggers = GenerateScriptsFromDXMLTriggers(dxmlTriggers);
-            generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLTriggers);
+            if (ToolArguments.IsArgumentProvided(Arguments.INCLUDETRIGGERS))
+            {
+                GeneratedScript generatedScriptFromDXMLTriggers = GenerateScriptsFromDXMLTriggers(dxmlTriggers);
+                generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLTriggers);
+            }
+
 
             return generatedScript;
         }
@@ -322,7 +326,7 @@ namespace Logitude.DBMigrations.Models
             string indexesScript = databaseMigrations.GetIndexesScript();
             string missingIndexesWarnings = databaseMigrations.GetMissingIndexesWarnings();
             string uniqueConstraintsScript = databaseMigrations.GetUniqueConstraintsScript();
-            
+
             return new DatabaseMigrationsResult
             {
                 MigrationsScript = migrationsScript,
@@ -432,7 +436,7 @@ namespace Logitude.DBMigrations.Models
                 ExecuteScript(generatedScript.CargoTrackingScript, "CargoTracking");
             }
         }
-        
+
         protected void ExecuteScript(string script, string dbType)
         {
             if (!String.IsNullOrEmpty(script))
@@ -1185,7 +1189,7 @@ namespace Logitude.DBMigrations.Models
                         }
                     }
                 }
-            } 
+            }
         }
 
         protected string GenerateHashString(string anyString)
@@ -1557,7 +1561,7 @@ namespace Logitude.DBMigrations.Models
         {
             List<ExecutedSxmlFile> executedSxmlFiles = new List<ExecutedSxmlFile>();
 
-            string[] dbTypes = new string[] { "Global", "Main", "SystemLogs","CargoTracking" };
+            string[] dbTypes = new string[] { "Global", "Main", "SystemLogs", "CargoTracking" };
 
             foreach (var dbType in dbTypes)
             {
@@ -1959,14 +1963,14 @@ namespace Logitude.DBMigrations.Models
                 SqlConnectionStringBuilder globalConnectionStringBuilder = new SqlConnectionStringBuilder(globalConnectionString);
                 SqlConnectionStringBuilder mainConnectionStringBuilder = new SqlConnectionStringBuilder(mainConnectionString);
                 SqlConnectionStringBuilder systemLogsConnectionStringBuilder = new SqlConnectionStringBuilder(systemLogsConnectionString);
-                
+
                 globalDB = globalConnectionStringBuilder.InitialCatalog;
                 globalSource = globalConnectionStringBuilder.DataSource;
                 mainDB = mainConnectionStringBuilder.InitialCatalog;
                 mainSource = mainConnectionStringBuilder.DataSource;
                 systemLogsDB = systemLogsConnectionStringBuilder.InitialCatalog;
                 systemLogsSource = systemLogsConnectionStringBuilder.DataSource;
-              
+
                 databaseTypeMessage = "MSQL";
                 databaseNameMessage = "Initial Catalog";
                 if (!string.IsNullOrEmpty(cargoTrackingConnectionString))
@@ -2059,7 +2063,7 @@ namespace Logitude.DBMigrations.Models
             if (ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
             {
                 Console.WriteLine("\nZero Down Time Migrations Started");
-                ZeroDownTimeMigrations zeroDownTimeMigrations  = CreateZeroDownTimeMigrations();
+                ZeroDownTimeMigrations zeroDownTimeMigrations = CreateZeroDownTimeMigrations();
                 zeroDownTimeMigrations.Start();
                 Console.WriteLine("Zero Down Time Migrations Finished");
             }
@@ -2125,8 +2129,8 @@ namespace Logitude.DBMigrations.Models
         {
             UpdateDataScriptCounter(scriptDefinition.TargetTableName);
             int scriptExecutionNumber = GetDataScriptCounter(scriptDefinition.TargetTableName);
-            
-            if(ToolConfigurations.DatabaseType.ToLower() == "oracle")
+
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
 
             }
@@ -2279,18 +2283,18 @@ namespace Logitude.DBMigrations.Models
                 Config dbConfigFileNameConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "DBConfigFileName".ToLower()).FirstOrDefault();
                 Config aotScriptsExecutionTimeOutConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "AOTScriptsExecutionTimeOut".ToLower()).FirstOrDefault();
                 Config aotCreateIndexWithOnlineConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "AOTCreateIndexWithOnline".ToLower()).FirstOrDefault();
-                
+
                 if (dbConfigFileNameConfig != null)
                 {
                     dbConfigFileName = dbConfigFileNameConfig.Value;
                 }
 
-                if(aotScriptsExecutionTimeOutConfig != null)
+                if (aotScriptsExecutionTimeOutConfig != null)
                 {
                     aotScriptsExecutionTimeOut = String.IsNullOrEmpty(aotScriptsExecutionTimeOutConfig.Value) ? 30 : Convert.ToInt32(aotScriptsExecutionTimeOutConfig.Value);
                 }
 
-                if(aotCreateIndexWithOnlineConfig != null)
+                if (aotCreateIndexWithOnlineConfig != null)
                 {
                     aotCreateIndexWithOnline = String.IsNullOrEmpty(aotCreateIndexWithOnlineConfig.Value) || (aotCreateIndexWithOnlineConfig.Value == "true");
                 }
