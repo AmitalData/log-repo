@@ -24,9 +24,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
                                                              join d in context.Declarations.Include("CustomerCard").Include("DeclarationOffice").Include("DeclarationStatusType")
                                                              on a.DeclarationId equals d.Id
-
-                                                             join e in context.Cards.Include("CustomerCard")
-                                                             on d.CustomerId equals e.Customer.Id
+                                        
                                                              select new DeclarationReferantDataList()
                                                              {
                                                                  Tenant = a.Tenant,
@@ -78,7 +76,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  AvailabilityDate = d.AvailabilityDate,
                                                                  NewFile = a.NewFile,
                                                                  Favorite = a.Favorite,
-                                                                 IsCustomerLogBoxActivated = e.Customer.LogBoxActivated,
+                                                                 IsCustomerLogBoxActivated = d.CustomerCard.Customer.LogBoxActivated,
                                                                  SortedColumns = (a.NewFile && a.Favorite ? 1 : (a.NewFile ? 2 : (a.Favorite ? 3 : 4))),
                                                                  IsCancelled = d.IsCancelled,
                                                                  ClassifiedUserName = a.ClassifiedUser.Contact.LocalName,
