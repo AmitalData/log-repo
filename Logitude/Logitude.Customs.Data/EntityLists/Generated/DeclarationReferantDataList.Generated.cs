@@ -101,7 +101,23 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string Team  { get; set; }
        [DataMember]
+       public string StorageSiteCode  { get; set; }
+       [DataMember]
+       public DateTime? TaxationDateTime  { get; set; }
+       [DataMember]
+       public string ProcedureCurrentCode  { get; set; }
+       [DataMember]
+       public DateTime? HatraDate  { get; set; }
+       [DataMember]
+       public DateTime? PaymentDate  { get; set; }
+       [DataMember]
+       public string ImporterCode  { get; set; }
+       [DataMember]
+       public string CustomerCode  { get; set; }
+       [DataMember]
        public string ImporterFile  { get; set; }
+       [DataMember]
+       public string AEOImporter  { get; set; }
        [DataMember]
        public DateTime? FileOpenDate  { get; set; }
    }
