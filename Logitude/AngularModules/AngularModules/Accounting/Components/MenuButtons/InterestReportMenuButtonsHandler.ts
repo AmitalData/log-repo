@@ -72,7 +72,8 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                                 button.IsDisabled = false;
                                 break;
                             }
-                        case "CreateInvoice":
+                        case "CreateInvoice" :
+                        case "CloseWithoutInvoice" :
                             {
 
                                 if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "9")
@@ -112,6 +113,11 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                         this.CheckInterestReportStatusCodeAndCreateInvoice();
                         break;
                     }
+                case "CloseWithoutInvoice":
+                    {
+                        this.ConfirmCreateInvoice(TextCodeTranslator.Translate('InterestReport.O.ConfirmClosingWithoutInvoice'));
+                        break;
+                    }
                 case "IRCN": {
                     this.CancelReport();
                     break;
@@ -134,7 +140,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
 
     private _ARInvoicePM: ARInvoicePM;
 
-    private ConfirmCreateInvoice() {
+    private ConfirmCreateInvoice(ConfirmText:string) {
         let confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 400;
         confirmWindow.YesButtonText = TextCodeTranslator.Translate('InterestReport.O.Approve');
@@ -145,7 +151,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                 this.ApproveConfirmCreateInvoice();
             }
         });
-        confirmWindow.Show(TextCodeTranslator.Translate('InterestReport.O.ReportTotalAmountIslowerthanGLAccountMinimumamount'));
+        confirmWindow.Show(ConfirmText);
     }
     ShowErrorMessage() {
 
@@ -246,7 +252,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                    (!this.EntityPM.TotalAmount && !this.EntityPM.GLAccountMinimumInterest) ||
                    (this.EntityPM.GLAccountMinimumInterest && this.EntityPM.GLAccountMinimumInterest >= this.EntityPM.TotalAmount)) {
                       
-                       this.ConfirmCreateInvoice();
+                       this.ConfirmCreateInvoice(TextCodeTranslator.Translate('InterestReport.O.ReportTotalAmountIslowerthanGLAccountMinimumamount'));
                     }
                
                 else {

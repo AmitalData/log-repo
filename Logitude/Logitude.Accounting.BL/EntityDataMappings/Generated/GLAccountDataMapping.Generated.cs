@@ -193,15 +193,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Smallcashbook, 
 	         MinimumInterestInvoiceBilling, 
 	         IsSplitted, 
-
 	         SalesmanName, 
 	         CollectorName, 
 	         SplitCurrencyAccount, 
 	         ParentName, 
-	         ParentCurrencyId,
-
+	         ParentCurrencyId, 
 	         ReportingAsAnotherDocument,
-
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

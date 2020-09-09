@@ -2597,7 +2597,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private string salesmanName ;
 	  	  
        
@@ -2748,7 +2747,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private bool reportingAsAnotherDocument ;
 	  	  
        
@@ -2772,7 +2770,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-
    }
    
 }
