@@ -82,7 +82,6 @@ export class SpecialActivityRequestComponent
     ViewDocumentsComponent() {
         var windowArgs: any = {};
         this.EntityPM = {};
-        debugger;
         this.EntityPM.Id = this.RequestId;
         this.EntityPM.Tenant = SessionLocator.Tenant;
         windowArgs.EntityPM = this.EntityPM;
@@ -101,7 +100,11 @@ export class SpecialActivityRequestComponent
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
        // logWindow.WindowClosed.subscribe(($event: any) => this.SkipCtor = true);
-        logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
+
+       
+            logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
+ 
+
     }
 
 
