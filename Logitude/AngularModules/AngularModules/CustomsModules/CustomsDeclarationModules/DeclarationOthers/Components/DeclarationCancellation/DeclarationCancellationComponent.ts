@@ -135,10 +135,12 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
 
         this._DeclarationWebService.GetIsDeclarationCancellationAttachmentNumberIsMoreThenAllow(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
-                if (!AppTool.IsNullOrEmpty(response.Result) && response.Result == false) {
-                    SessionLocator.SelectedSession.CurrentEditComponent.StopBusyIndicator();
-                    this.ValidationErrorsList = [];
-                    this.ValidationErrorsList.push("חובה לצרף מסמך אחד לפחות. ");
+            this.ValidationErrorsList = [];
+
+            if (!AppTool.IsNullOrEmpty(response.Result) && response.Result == false) {
+                //  SessionLocator.SelectedSession.CurrentEditComponent.StopBusyIndicator();
+                this.ValidationErrorsList.push("חובה לצרף מסמך אחד לפחות. ");
+            }
                     this.FillErrors();
                     if (this.ValidationErrorsList.length > 0) {
                         SessionLocator.SelectedSession.StopBusyIndicator();
@@ -233,7 +235,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
                         SessionLocator.SelectedSession.StopBusyIndicator();
                     });
-                }
+               
               
             });
          
