@@ -245,7 +245,7 @@ namespace Logitude.DBMigrations.Models
                 ExitTool("Error: " + exception.Message);
             }
         }
-
+        
         protected override void ExecuteScriptAsBatches(DBMigrationsDataScript dbMigrationsDataScript)
         {
             int exceptionSleep = 30000;
@@ -302,7 +302,9 @@ namespace Logitude.DBMigrations.Models
                 }
                 catch (SqlException exception)
                 {
-                    if(exception.Number == -2)
+                    sqlConnection.Close();
+
+                    if (exception.Number == -2)
                     {
                         retryNumber++;
                         if (retryNumber <= 10)
@@ -311,14 +313,12 @@ namespace Logitude.DBMigrations.Models
                         }
                         else
                         {
-                            sqlConnection.Close();
                             SendEmailsForDataScriptTimeout(dbMigrationsDataScript);
                             ExitTool("Error: " + exception.Message);
                         }
                     }
                     else
                     {
-                        sqlConnection.Close();
                         ExitTool("Error: " + exception.Message);
                     }
                 }
