@@ -379,6 +379,10 @@
       Code="&quot;KPI&quot;"
       Name="&quot;KPI Document Fields&quot;"
       SearchFields="&quot;KPI,KPI Document Fields&quot;" />
+	  <Record
+      Code="&quot;OI2&quot;"
+      Name="&quot;OceanInsightsV2&quot;"
+      SearchFields="&quot;OI2,OceanInsightsV2&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

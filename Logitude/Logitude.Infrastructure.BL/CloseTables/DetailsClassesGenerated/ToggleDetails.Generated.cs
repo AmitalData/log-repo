@@ -125,7 +125,12 @@ namespace Logitude.Infrastructure.BL
                 Name = "KPI Document Fields", 
                 SearchFields = "KPI,KPI Document Fields", 
 			});
-			
+            all.Add(new ToggleDetails()
+            {
+                Code = "OI2",
+                Name = "OceanInsightsV2",
+                SearchFields = "OI2,OceanInsightsV2",
+            });
             return all;
        }
 
