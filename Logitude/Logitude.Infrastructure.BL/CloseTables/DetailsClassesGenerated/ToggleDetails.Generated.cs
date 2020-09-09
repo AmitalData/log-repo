@@ -118,6 +118,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "Horse", 
                 SearchFields = "HRS,Horse", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "KPI", 
+                Name = "KPI Document Fields", 
+                SearchFields = "KPI,KPI Document Fields", 
+			});
 			
             return all;
        }
