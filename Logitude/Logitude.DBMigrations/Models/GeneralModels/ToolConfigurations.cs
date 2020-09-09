@@ -17,6 +17,13 @@ namespace Logitude.DBMigrations.Models
         public static int AOTScriptsExecutionTimeOut;
         public static bool AOTCreateIndexWithOnline;
 
+        public static string SmtpClientHost;
+        public static int SmtpClientPort;
+        public static string SmtpClientUsername;
+        public static string SmtpClientPassword;
+        public static string FromEmailAddress;
+        public static string ToEmailAddresses;
+
 
         public static string GetConnectionString(string dbType)
         {

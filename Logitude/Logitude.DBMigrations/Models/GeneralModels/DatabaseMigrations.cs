@@ -1049,9 +1049,9 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected void ExitDatabaseMigrations(string message)
+        protected void ExitTool(string message)
         {
-            Console.WriteLine("Error: " + message);
+            Console.WriteLine(message);
             Environment.Exit(1);
         }
 

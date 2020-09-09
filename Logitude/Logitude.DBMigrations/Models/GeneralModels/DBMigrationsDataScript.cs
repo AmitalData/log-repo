@@ -17,6 +17,7 @@ namespace Logitude.DBMigrations.Models
         public string ScriptHashValue { get; set; }
         public string ScriptHistoryAction { get; set; }
         public string TargetTableName { get; set; }
+        public int BatchSize { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
     }
