@@ -33,8 +33,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           KeywordsList = a.KeywordsList, 
                                                            SearchByFieldCode = a.SearchByFieldCode,
                                                             SearchByFieldName = a.SearchByFieldCode!=null ? (a.SearchByFieldCode=="1" ?
-                                                            "תאור טובין" :
-                                                            "שם יבואן") :null
+                                                            "תאור טובין"//"תאור טובין" 
+                                                            :
+                                                            "שם יבואן"///"שם יבואן"
+                                                            ) :null
 
                                                       });
             return query;
