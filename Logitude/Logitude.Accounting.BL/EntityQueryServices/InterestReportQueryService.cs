@@ -194,5 +194,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return InterestReportStatusCode;
 
         }
+
+        public dynamic GetCloseBalanceCalculationDateAndStatusOfTheLastInterestReport(int tenant,string glaccountId)
+        {
+            InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
+            return interestReportRepository.GetCloseBalanceCalculationDateAndStatusOfTheLastInterestReport(tenant, glaccountId);
+        }
     }
 }
