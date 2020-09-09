@@ -109,15 +109,12 @@ export class GLAccountList {
 	NameForPrintingCheques: string;
 	Smallcashbook: boolean;
 	MinimumInterestInvoiceBilling: number;
-
 	SalesmanName: string;
 	CollectorName: string;
 	SplitCurrencyAccount: string;
 	ParentName: string;
 	ParentCurrencyId: string;
-
 	ReportingAsAnotherDocument: boolean;
-
 	
 }
  
