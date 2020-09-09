@@ -241,9 +241,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             {
 
                 string[] references = shipmetsLists.Where(d => d.SecurityKey == key).Select(d => d.SearchReferences).ToArray();
-            //  List< CargoTrackingShipmentList> shipmetsList = shipmetsLists.ToList();
+                //  List< CargoTrackingShipmentList> shipmetsList = shipmetsLists.ToList();
+                shipmetsLists = shipmetsLists.GroupBy(p => p.SecurityKey).Select(g => g.Last()).ToList();
                 shipmetsLists.Where(d => d.SecurityKey == key).ToList().ForEach(d => { d.SearchReferences = String.Join(",", references); });
-                shipmetsLists = shipmetsLists.GroupBy(p =>  p.SecurityKey ).Select(g => g.Last()).ToList();
+               
             }
             return shipmetsLists;
         }
