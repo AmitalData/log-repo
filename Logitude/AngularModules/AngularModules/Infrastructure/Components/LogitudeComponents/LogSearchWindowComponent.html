@@ -186,12 +186,12 @@
                                                         <tr>
                                                             <td style="height: 100%">
                                                                 <div *ngIf="IsDataReady" class="GeneratedGridContainer">
-                                                                    <logitude-grid *ngIf="false && !UsingLogGridV2" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
+                                                                    <logitude-grid *ngIf="!UsingLogGridV2" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
                                                                                    [columns]="columns" [autoLoad]="true" [rows]="items" [DontApplyVirtualization]="DontApplyVirtualization" [ConstantPageSize]="ConstantPageSize"
                                                                                    [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent"
                                                                                    (rowSelectedEvent)="onRowSelected($event)">
                                                                     </logitude-grid>
-                                                                    <logitude-grid-v2 *ngIf="true || UsingLogGridV2" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
+                                                                    <logitude-grid-v2 *ngIf="UsingLogGridV2" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
                                                                                    [columns]="columns" [autoLoad]="true" [rows]="items"
                                                                                    [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent"
                                                                                       [DontApplyVirtualization]="DontApplyVirtualization" [ConstantPageSize]="ConstantPageSize"

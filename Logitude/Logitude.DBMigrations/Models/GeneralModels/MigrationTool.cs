@@ -255,7 +255,6 @@ namespace Logitude.DBMigrations.Models
                 generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLTriggers);
             }
 
-
             return generatedScript;
         }
 

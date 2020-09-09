@@ -380,8 +380,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             SortByName: "ShipmentNumber"
         });
 
-        this.QueryColumns.push(this.GetQueryColumn(("ShipmentNumber_" + this.SelectedFilter.replace(" ","")), 'Text', 'Shipment #'));
-
+        this.QueryColumns.push(this.GetQueryColumn("PartnerName", 'Text', 'Agent Name'));
+        this.QueryColumns.push(this.GetQueryColumn(("ShipmentNumber_" + this.SelectedFilter.replace(" ", "")), 'Text', 'Shipment #'));
 
         this.columns.push({
             FieldName: 'ShipperName',
