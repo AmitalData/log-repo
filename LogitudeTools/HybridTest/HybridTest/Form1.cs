@@ -206,13 +206,13 @@ namespace HypredTest
             {
 
 
+                return new CloudStorageAccount(null, false);
+//                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("devstoreaccount1", "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=="),
+//new Uri(@"http://127.0.0.1:10000/devstoreaccount1/"),
+//new Uri(@"http://127.0.0.1:10001/devstoreaccount1/"),
+//new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
 
-                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("devstoreaccount1", "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=="),
-new Uri(@"http://127.0.0.1:10000/devstoreaccount1/"),
-new Uri(@"http://127.0.0.1:10001/devstoreaccount1/"),
-new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
-
-                return storageAccount;
+//                return storageAccount;
             }
 
         }
@@ -1204,7 +1204,7 @@ new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
 
                    
 
-                    //Login("islam@logitudeworld.com", "Log950br@ve");
+                     
                     //Login();
 
                    
@@ -2333,7 +2333,7 @@ new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
             }
         }
         CustomerProxy.CustomerWcfServiceClient customerservice = new CustomerWcfServiceClient();
-        public void TestCustomerService(string token)
+        public CustomerProxy.Response TestCustomerService(string token, string paymentTermId = null)
         {
            
 
@@ -2351,11 +2351,12 @@ new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
                     Tenant = 1,
                     PartnerTypeId = "CS",
                     SalesmanUserId = "HybridU1",
-                    VatNumber = "112233",
+                    VatNumber = "98956454",
                     CustomerStatusCode = "ACT",
                     //SetActivated = true,
                     CreditLimitAmount = 50.65,
                     CountryCode = "IL",
+                    PaymentTermId = paymentTermId,
 
                 };
 
@@ -2370,10 +2371,12 @@ new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
                 //newCustomer.CustomerSalesmanByProducts = salesmanbyproducts;
 
                 var response = customerservice.Upsert(newCustomer, false);
+
+                return response;
                 //  var customer = customerservice.GetCustomerPM(new CustomerApiFilters() { ByVatNumber = true, SearchCode = "1234562322222" }, 1);
                 //  var customer2 = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "470690c4-8f9a-4-121212" }, 1);
                 // var contacts = customerservice.GetCustomerContacts(new CustomerApiFilters() { ByCode = true, SearchCode = "70002-1212" }, 1);
-                 var addresses = customerservice.GetCustomerAddresses(new CustomerApiFilters() { ByCode = true, SearchCode = "10110529" }, 10, ref resultResponse);
+                 //var addresses = customerservice.GetCustomerAddresses(new CustomerApiFilters() { ByCode = true, SearchCode = "10110529" }, 10, ref resultResponse);
 
             }
 
@@ -3141,6 +3144,34 @@ new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
                     break;
             }
             
+        }
+
+        private void btnPaymentTerms_Click(object sender, EventArgs e)
+        {
+            Login();
+
+            PaymentTermProxy.PaymentTermWcfServiceClient serviceReference = new PaymentTermProxy.PaymentTermWcfServiceClient();
+            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)serviceReference.InnerChannel))
+            {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+
+                var response = new PaymentTermProxy.Response();
+                var result = serviceReference.GetPaymentTerms(ref response, 1);
+                if(!response.HasError && result != null && result.Length > 0)
+                {
+                    var paymentTermId = result[0].Id;
+                    var customerResponse = TestCustomerService(Token, paymentTermId);
+                    if (customerResponse.HasError)
+                        MessageBox.Show("Failed: " + customerResponse.ErrorMessage);
+                    else
+                        MessageBox.Show("Success: CustomerId = " + customerResponse.Result + ", PaymentTermId: " + paymentTermId);
+                }
+                else
+                {
+                    MessageBox.Show("Failed: " + response.ErrorMessage);
+                }
+            }
+
         }
 
 

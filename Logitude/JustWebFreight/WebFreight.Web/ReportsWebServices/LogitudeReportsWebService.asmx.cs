@@ -2725,6 +2725,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                  {
                                                      Id = d.Id,
                                                      Name = d.EnglishName,
+                                                     Code = d.Code,
                                                      PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName,
                                                  }).ToList();
 
@@ -2746,8 +2747,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             foreach (string cardId in cardIdsList)
-            {
-                
+            {                
                 AgedAccountsReceivableDataProvider.AgedAccountsReceivable acountsRecored = new AgedAccountsReceivableDataProvider.AgedAccountsReceivable();
 
                 double? currentsum = 0;
@@ -2848,6 +2848,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     acountsRecored.PaymentTerm = cardEntity.PaymentTerm;
                     acountsRecored.CustomerName = cardEntity.Name;
+                    acountsRecored.CardCode = cardEntity.Code;
                 }
 
                 acountsRecored.CurrentDue = currentsum;
@@ -2873,14 +2874,10 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (acountsRecored.CustomerTotals != 0)
                 {
-
                     dataProvider.AgedAccountsReceivableList.Add(acountsRecored);
-
                 }
-            }
-              
-
-
+            }           
+            
             #endregion
 
             return dataProvider;
@@ -7078,7 +7075,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (!string.IsNullOrEmpty(AgentId))
             {
-                iQueryable = iQueryable.Where(d => d.AgentId == AgentId);
+                iQueryable = iQueryable.Where(d => d.AgentComputed == AgentId);
 
                 Card agent = CardRepository.GetSingleCard(AgentId, tenant, true);
                 dataProvider.Agent = agent.EnglishName;
@@ -12438,48 +12435,23 @@ namespace WebFreight.Web.ReportsWebServices
                         GLAccountParents.Add(record.ParentId);
                         if (!string.IsNullOrEmpty(record.Id))
                         {
-                            //if (record.ParentId == "1-1331" )
-                            //{
+                            totalData.ResultList.Add(record);
                             ResultList parent = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
                             if (parent == null)
                             {
-                                ChartOfAccountPM chartOfAccount = chartQuaryService.GetSinglePM(record.ParentId, tenant);
-                                string name = null;
-                                string code = null;
-                                if (chartOfAccount != null)
-                                {
-                                    name = chartOfAccount.LocalName;
-                                    code = chartOfAccount.Code;
-
-                                    ResultList parentrecord = new ResultList()
-                                    {
-                                        Id = record.ParentId,
-                                        Name = chartOfAccount.LocalName,
-                                        Number = chartOfAccount.Code,
-                                        ParentId = item.ChartOfAcountType,
-                                        LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
-                                        LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
-                                        LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
-                                        LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
-
-
-                                        ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
-                                        ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
-                                        ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
-                                        ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
-
-                                        Error = true,
-
-
-                                    };
-                                    totalData.ResultList.Add(parentrecord);
-                                }
+                                ResultList parentrecord= CreateNotRetreivedParent(item, tenant);
+                                totalData.ResultList.Add(parentrecord);
                             }
-
-                            //}
-                            //if (record.ParentId != "1-1331")
-                            //{
-                            totalData.ResultList.Add(record);
+                            else 
+                            {
+                              
+                                RecalculateParentTotals(record,  totalData);
+                               //ResultList resultList = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
+                            }
+                                //}
+                                //if (record.ParentId != "1-1331")
+                                //{
+                                
                             //}
 
 
@@ -12528,6 +12500,65 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             return totalData;
+        }
+        private void RecalculateParentTotals(ResultList record,  RevenueExpenseDataProvider  totalData)
+        {
+            List<ResultList> relatedRecords = totalData.ResultList.Where(c => c.ParentId == record.ParentId).ToList();
+
+            totalData.ResultList.Where(d => d.Id == record.ParentId).ToList().ForEach(d =>
+            {
+
+                d.LocalCloseBalance = relatedRecords.Sum(c => c.LocalCloseBalance);//.Sum(d=> d.LocalCloseBalance) item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
+                d.LocalCredit = relatedRecords.Sum(c => c.LocalCredit); // item.LocalCredit != null ? item.LocalCredit : 0,
+                d.LocalDebit = relatedRecords.Sum(c => c.LocalDebit);// item.LocalDebit != null ? item.LocalDebit : 0,
+                d.LocalOpenBalance = relatedRecords.Sum(c => c.LocalOpenBalance);// item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
+
+
+                d.ForeignCloseBalance = relatedRecords.Sum(c => c.ForeignCloseBalance);// item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                d.ForeignCredit = relatedRecords.Sum(c => c.ForeignCredit);// item.ForeignCredit != null ? item.ForeignCredit : 0,
+                d.ForeignDebit = relatedRecords.Sum(c => c.ForeignDebit);// item.ForeignDebit != null ? item.ForeignDebit : 0,
+                d.ForeignOpenBalance = relatedRecords.Sum(c => c.ForeignOpenBalance);// item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
+            });
+
+
+        }
+        private ResultList CreateNotRetreivedParent(TrailReportM item, int tenant)
+        {
+            ChartOfAccountQueryService chartQuaryService = new ChartOfAccountQueryService(tenant);
+            ChartOfAccountPM chartOfAccount = chartQuaryService.GetSinglePM(item.ChartOfAccountId, tenant);
+            string name = null;
+            string code = null;
+            if (chartOfAccount != null)
+            {
+                name = chartOfAccount.LocalName;
+                code = chartOfAccount.Code;
+
+                ResultList parentrecord = new ResultList()
+                {
+                    Id = item.ChartOfAccountId,
+                    Name = chartOfAccount.LocalName,
+                    Number = chartOfAccount.Code,
+                    ParentId = item.ChartOfAcountType,
+                    LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
+                    LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
+                    LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
+                    LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
+
+
+                    ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                    ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
+                    ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
+                    ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
+                    Error = true,
+
+
+                };
+                return parentrecord;
+            }
+            else return null;
+
         }
         private string SetDetailedCustomersAccounts(bool customer)
         {
@@ -13541,6 +13572,7 @@ namespace WebFreight.Web.ReportsWebServices
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public string Code { get; set; }
         public string PaymentTerm { get; set; }
     }
 

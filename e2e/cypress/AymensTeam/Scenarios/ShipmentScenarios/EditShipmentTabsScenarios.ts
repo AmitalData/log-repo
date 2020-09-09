@@ -5,12 +5,7 @@ export class EditShipmentTabsScenarios {
     public RunEditTabsScenarios() {
 
 
-
-        //this.OpenWizardWindow();
-        //this.FillRadioButtons();
-        //this.FillPartners();
-        //this.FillMainCarriage();
-        //this.FillGeneral();
+        this.FillGeneralTab();
         ////this.FillOrderDetails();
         ////this.Save(this);
 
@@ -22,4 +17,12 @@ export class EditShipmentTabsScenarios {
         //});
 
     }
+
+    private FillGeneralTab() {
+
+
+    }
+
+
+
 }

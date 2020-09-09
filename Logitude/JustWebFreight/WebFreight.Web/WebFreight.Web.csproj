@@ -930,6 +930,7 @@
     <Content Include="App_Code\AngularJS_App_Code\Common\CommunicationLogStepController.cs" />
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
+    <Compile Include="AccountingModel\InteretInvoiceServices\InteretInvoiceBatchPrint.cs" />
     <Compile Include="Controllers\AccountingModel\InterestReportsForEligibleCustomerCreationController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestLastBatchServiceViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestReportsConnectInvoiceViewsController.Generated.cs" />
@@ -942,6 +943,7 @@
     <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BIReportFolderExtendedController.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="DataContracts\InterestReportArgs.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentSubTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentSubTypeController.Generated.cs" />
@@ -3111,7 +3113,7 @@
     <Content Include="Integration Test\LoginVars\Master\TeamIslam\LoginVars.csv" />
     <Content Include="Integration Test\LoginVars\Production\Cloud\TeamAyman\CloudLoginVars.csv" />
     <Content Include="Integration Test\LoginVars\Production\Logitude\TeamIslam\LoginVars.csv" />
-    <Content Include="Integration Test\BIReports\BIRports.postman_collection.json" />
+    <Compile Include="AccountingModel\DomainServices\AccountingDomainService.InterestReport.cs" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
@@ -4546,6 +4548,7 @@
     <Content Include="WcfApi\CustomerAdditionalServiceDWWcfService.svc" />
     <Content Include="WcfApi\CustomerCompetitorDWWcfService.svc" />
     <Content Include="WcfApi\CustomerDWWcfService.svc" />
+    <Content Include="WcfApi\PaymentTermWcfService.svc" />
     <Content Include="WcfApi\UserIDNumberRequestWcfService.svc" />
     <Content Include="WcfApi\DeclarationApprovalRequestWcfService.svc" />
     <Content Include="WcfApi\DepositionRequestWcfService.svc" />
@@ -6073,7 +6076,11 @@
     <Compile Include="WcfApi\CustomerDWWcfService.svc.cs">
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\IPaymentTermWcfService.cs" />
     <Compile Include="WcfApi\IWarehouseWcfService.cs" />
+    <Compile Include="WcfApi\PaymentTermWcfService.svc.cs">
+      <DependentUpon>PaymentTermWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\UserIDNumberRequestWcfService.svc.cs">
       <DependentUpon>UserIDNumberRequestWcfService.svc</DependentUpon>
     </Compile>
@@ -6567,6 +6574,7 @@
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
+    <Folder Include="Integration Test\BIReports\" />
     <Folder Include="JustConfig\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />

@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.CoreBL.InterestReport;
+using Logitude.Accounting.BL.CoreBL.Mapping;
 using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
@@ -62,7 +63,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 {
                     userPM = userQuery.GetSinglePMByEmail(interestReportArgs.Email, 0);
                 }
-                CreateBatchesInvoice(interestReportArgs);
+                CreateInvoicesForInterestReports(interestReportArgs);
             }
             catch (Exception e)
             {
@@ -70,58 +71,21 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
         }
 
-
-        private void CheckAndUpdateInterestLastBatchByTenant(InterestReportArguments interestReportArguments)
-        {
-            InterestLastBatchServiceQueryService interestLastBatchServiceQueryService = new InterestLastBatchServiceQueryService(interestReportArguments.Tenant);
-            InterestLastBatchServicePM interestLastBatchServicePM = interestLastBatchServiceQueryService.CheckInterestLastBatchServicesByTenant(interestReportArguments.Tenant);
-            IAccountingContext MyContext = AccountingContext.GetContext(interestReportArguments.Tenant);
-            InterestLastBatchServiceUpdateService interestLastBatchServiceUpdateService = new InterestLastBatchServiceUpdateService(MyContext, new Dictionary<string, IContext>(), interestReportArguments.Tenant);
-
-            if (interestLastBatchServicePM == null)
-            {
-                interestLastBatchServicePM = new InterestLastBatchServicePM();
-                interestLastBatchServicePM.Tenant = interestReportArguments.Tenant;
-                interestLastBatchServicePM.CreateInvoicesBatchId = BatchTaskExecution.Id;
-                interestLastBatchServicePM.ChangeSetOp = ChangeSetOperation.Insert;
-                interestLastBatchServiceUpdateService.Update(interestLastBatchServicePM, true);
-            }
-            else
-            {
-                interestLastBatchServicePM.CreateInvoicesBatchId = BatchTaskExecution.Id;
-                interestLastBatchServicePM.ChangeSetOp = ChangeSetOperation.Update;
-                interestLastBatchServiceUpdateService.Update(interestLastBatchServicePM, true);
-
-            }
-
-        }
-        private void CreateBatchesInvoice(InterestReportArguments interestReportArguments)
+ 
+        private void CreateInvoicesForInterestReports(InterestReportArguments interestReportArguments) 
         {
             InterestReportArgs args = new InterestReportArgs();
             args.Tenant = interestReportArguments.Tenant;
             args.Email = interestReportArguments.Email;
+            args.InvoiceDate = interestReportArguments.InvoiceDate;
             if (interestReportArguments.AllSelected)
             {
-                List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant);
+                List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant, interestReportArguments.ExcludedIds == null ? new List<string>() : interestReportArguments.ExcludedIds);
 
-                if (interestReportArguments.ExcludedIds != null)
+                foreach (InterestReportPM report in interestReports)  
                 {
-                    interestReports = (from a in interestReports
-                                       where !interestReportArguments.ExcludedIds.Contains(a.Id)
-                                       select a).ToList();
-                }
-              
-                foreach (InterestReportPM report in interestReports)
-                {
-                    args.ReportNumber = report.ReportNumber;
-                    args.InterestReportId = report.Id;
-                    args.Tenant = interestReportArguments.Tenant;
-                    if (report.InterestReportStatusCode=="1" || report.InterestReportStatusCode =="9")
-                    {
-                        UpdateInterestReportsStatues(report, interestReportArguments.Tenant, "8");
-                        UpdateAndCreateInvoiceForInterestReport(args, report);
-                    }
-                   
+               
+                    CreateInvoiceForReportPM(args, interestReportArguments, report);
                 }
             }
             else
@@ -129,19 +93,22 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 foreach (string ReportId in interestReportArguments.SelectedIds)
                 {
                     InterestReportPM  interestReport = interestReportQueryService.GetSingle(ReportId, false,true);
-                    args.ReportNumber = interestReport.ReportNumber;
-                    args.InterestReportId = interestReport.Id;
-                    args.Tenant = interestReportArguments.Tenant;
-                    if (interestReport.InterestReportStatusCode == "1" || interestReport.InterestReportStatusCode == "9")
-                    {
-                        UpdateInterestReportsStatues(interestReport, interestReportArguments.Tenant, "8");
-                        UpdateAndCreateInvoiceForInterestReport(args, interestReport);
-                    }
-              
-
+                    CreateInvoiceForReportPM(args, interestReportArguments, interestReport);
                 }
             }
            
+        }
+
+        private void CreateInvoiceForReportPM(InterestReportArgs args, InterestReportArguments interestReportArguments, InterestReportPM interestReport)
+        {
+            args.ReportNumber = interestReport.ReportNumber;
+            args.InterestReportId = interestReport.Id;
+            args.Tenant = interestReportArguments.Tenant;
+            if (interestReport.InterestReportStatusCode == "1" || interestReport.InterestReportStatusCode == "9")
+            {
+                UpdateInterestReportsStatues(interestReport, interestReportArguments.Tenant, "8");
+                UpdateAndCreateInvoiceForInterestReport(args, interestReport);
+            }
         }
         private void UpdateAndCreateInvoiceForInterestReport(InterestReportArgs interestReportArgs, InterestReportPM interestReport)
         {
@@ -172,8 +139,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             if (interestReport.TotalAmount == null || interestReport.TotalAmount <= interestReport.GLAccountMinimumInterest)
             {
                 IAccountingContext iAccountingContext = AccountingContext.GetContext(interestReportArgs.Tenant);
-                InterestReportService interestTransactionQuery = new InterestReportService();
-                interestReport = interestTransactionQuery.PutConfirmCreateInvoice(interestReport, interestReportArgs.Tenant, iAccountingContext);
+                InterestReportService interestReportService = new InterestReportService(); 
+                interestReport = interestReportService.PutConfirmCreateInvoice(interestReport, interestReportArgs.Tenant, iAccountingContext); 
             }
             else
             {
@@ -230,24 +197,31 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             service.Update(interestReportPM, true);
 
         }
+  
         private ARInvoicePM FullMapInvoice(InterestReportArgs interestReportArgs, InterestReportPM interestReport)
         {
             CardQuery cardQueryService = new CardQuery(interestReportArgs.Tenant);
-            TenantQuery tenantQuery = new TenantQuery(interestReportArgs.Tenant);
-            ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(interestReportArgs.Tenant);
-            VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(interestReportArgs.Tenant);
-            ObjectTableQuery objectTableQuery = new ObjectTableQuery(interestReportArgs.Tenant);
             CardPM cardPM = cardQueryService.GetSinglePM(interestReport.CustomerId, interestReportArgs.Tenant);
-            ChargesTypePM chargesType = chargesTypeQuery.GetSinglePMByCode("INT", interestReportArgs.Tenant);
+
+            TenantQuery tenantQuery = new TenantQuery(interestReportArgs.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(interestReportArgs.Tenant);
-            string email = "system@tenant" + interestReportArgs.Tenant.ToString() + ".com";
-            AuthenticationUtil.AuthenticatedUserEmail = email;
-            string ObjectTableId = objectTableQuery.GetObjectTableIdByName("InterestReport");
+
+            ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(interestReportArgs.Tenant);
+            ChargesTypePM chargesType = chargesTypeQuery.GetSinglePMByCode("INT", interestReportArgs.Tenant);
+
+            VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(interestReportArgs.Tenant);
             VatTypePercentagePM vatTypePercentagePM = vatTypePercentageQuery.GetVatTypePercentagesForVatType(interestReportArgs.Tenant, chargesType.VatTypeId).ToList()[0];
 
-            ARInvoicePM aRInvoicePM = MappingARInvoice(interestReportArgs, interestReport, tenantPM, userPM, cardPM);
-            ARInvoiceEntityPM aRInvoiceEntityPM = MappingARInvoiceEntity(interestReportArgs, ObjectTableId);
-            ARInvoiceLinePM aRInvoiceLinePM = MappingARInvoiceLine(interestReport, tenantPM, chargesType, vatTypePercentagePM, aRInvoicePM);
+            ObjectTableQuery objectTableQuery = new ObjectTableQuery(interestReportArgs.Tenant);
+            string ObjectTableId = objectTableQuery.GetObjectTableIdByName("InterestReport");
+
+            string email = "system@tenant" + interestReportArgs.Tenant.ToString() + ".com";
+            AuthenticationUtil.AuthenticatedUserEmail = email;
+
+            InterestReportInvoiceMapping interestReportInvoiceMapping = new InterestReportInvoiceMapping();
+            ARInvoicePM aRInvoicePM = interestReportInvoiceMapping.MapARInvoice(interestReportArgs, interestReport, tenantPM, userPM, cardPM);
+            ARInvoiceEntityPM aRInvoiceEntityPM = interestReportInvoiceMapping.MapARInvoiceEntity(interestReportArgs, ObjectTableId);
+            ARInvoiceLinePM aRInvoiceLinePM = interestReportInvoiceMapping.MapARInvoiceLine(interestReport, tenantPM, chargesType, vatTypePercentagePM);
 
             aRInvoicePM.InvoiceEntities.Add(aRInvoiceEntityPM);
             aRInvoicePM.InvoiceLines.Add(aRInvoiceLinePM);
@@ -255,6 +229,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             return aRInvoicePM;
 
         }
+
         private ARInvoicePM MappingARInvoice(InterestReportArgs interestReportArgs, InterestReportPM interestReport, TenantPM tenantPM, UserPM userPM, CardPM cardPM)
         {
             ARInvoicePM aRInvoicePM = new ARInvoicePM();
@@ -272,7 +247,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoicePM.AmountInInvoiceCurrency = (double?)interestReport.TotalAmount;
             aRInvoicePM.AmountInProfitCurrency = (double?)interestReport.TotalAmount;
             aRInvoicePM.BranchId = userPM.BranchId;
-            aRInvoicePM.InvoiceDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
+            aRInvoicePM.InvoiceDate = interestReportArgs.InvoiceDate;
             aRInvoicePM.CreateDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
             aRInvoicePM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
             aRInvoicePM.IssuedByUserId = userPM.Id;
@@ -405,6 +380,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             return aRInvoiceLinePM;
 
         }
+
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         public static ContactPM GetLoggedContact(int tenant)
         {

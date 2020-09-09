@@ -67,4 +67,16 @@ export class InterestInvoiceListTemplate     {
                 });
         }
     }
+
+    OpenARInvoice(id) {
+      if (!AppTool.IsNullOrEmpty(id)) {
+          SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+              .then(cmpRef => {
+                  cmpRef.instance.ComponentRef = cmpRef;
+                  cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'ARInvoice' });
+                  cmpRef.instance.BackCompleted.subscribe(bk => {
+                  });
+              });
+      }
+  }
 }

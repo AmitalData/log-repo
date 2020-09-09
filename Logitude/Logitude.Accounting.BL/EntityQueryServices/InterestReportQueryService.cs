@@ -49,11 +49,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return result;
         }
-        public List<InterestReportPM> GetNotInvoicedInterestReportsByDates(DateTime fromDate, DateTime toDate, int tenant)
+        public List<InterestReportPM> GetNotInvoicedInterestReportsByDates(DateTime fromDate, DateTime toDate, int tenant, List<string> ExcludedIds)
         {
+            
             return (from a in context.InterestReports
                     where
-                     a.Tenant == tenant && a.InterestCalculationDate >= fromDate && a.InterestCalculationDate <= toDate && (a.InterestReportStatusCode == "1" || a.InterestReportStatusCode == "8" || a.InterestReportStatusCode == "9")
+                     a.Tenant == tenant&& !ExcludedIds.Contains(a.Id) && a.InterestCalculationDate >= fromDate && a.InterestCalculationDate <= toDate && (a.InterestReportStatusCode == "1" || a.InterestReportStatusCode == "8" || a.InterestReportStatusCode == "9")
                     select new InterestReportPM()
                     {
 
@@ -97,6 +98,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName
 
                     }).ToList();
+
+
         }
 
         public IQueryable<InterestReportPM> GetInterestReportsBySelectedIds(InterestReportArguments interestReportArgs)
@@ -185,6 +188,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             InterestReportPM interestReportPM = this.GetEntityPM(interestReport);
             
             return interestReportPM;
+        }
+
+        public string GetInterestReportStatusCode(string InterestReportId,   int tenant)
+        {
+            InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
+            string InterestReportStatusCode = interestReportRepository.GetInterestReportStatusCode(InterestReportId, tenant);
+            return InterestReportStatusCode;
+
         }
     }
 }

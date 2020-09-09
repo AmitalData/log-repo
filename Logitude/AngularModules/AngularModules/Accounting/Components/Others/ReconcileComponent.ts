@@ -227,6 +227,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     public recoCallback: RecoCallback;
     public lastGroupNumber: number;
     public lastColorOperation: boolean = false;
+    public ChangeCheckBoxesState: EventEmitter<any> = new EventEmitter();
     //public SelectedLines: LineModel[] = [];
     SelectedLines: ObservableCollection;//SelectedLines[];
     public isRTL: boolean = false;
@@ -357,6 +358,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         } else {
             this.ReloadScreen();
             this.SelectedLines.Clear();
+            this.CalculateTotals();
         }
     }
 
@@ -1092,18 +1094,19 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
                 if (!AppTool.IsNullOrEmpty(result)) {
                     this.SelectedLines.Clear();
-                    var array = [];
-                    for (var i = 0; i < result.length; i++) {
-                        var line1 = new LineModel(result[i], this,-1);
-                        array.push(line1);
-                        // this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: true, RowIndex: -1, ById: true });
-                    }
-                    this.SelectedLines.InsertCollection(array);
-
-                    for (var i = 0; i < this.SelectedLines.Collection.length; i++) {
-                        var line = this.SelectedLines.Collection[i];
-                        this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: false, RowIndex: line.myRowIndex, ById: true });
-                    }
+                    let emittedArray = result.map((res:LedgerTransactionPM)=>({rowData: res, IsChecked: false, RowIndex: -1, ById: true}));//result.map(res=>(new LineModel(res,this,-1)));//[];
+                    let selectedLines= result.map(res=>(new LineModel(res,this,-1)));//[];
+                    // for (var i = 0; i < result.length; i++) {
+                    //     var line1 = new LineModel(result[i], this,-1);
+                    //     array.push(line1);
+                    //     // this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: true, RowIndex: -1, ById: true });
+                    // }
+                    this.SelectedLines.InsertCollection(selectedLines);
+                    this.ChangeCheckBoxesState.emit(emittedArray);
+                    // for (var i = 0; i < this.SelectedLines.Collection.length; i++) {
+                    //     var line = this.SelectedLines.Collection[i];
+                    //     this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: false, RowIndex: line.myRowIndex, ById: true });
+                    // }
                     this.CalculateTotals();
                 }
             }
