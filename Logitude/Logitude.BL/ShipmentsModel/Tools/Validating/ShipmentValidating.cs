@@ -97,7 +97,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             var IsCreditLimitActivated = mySettings.IsCreditLimitEnabled;
             var IsCreditLimitHasAction = (mySettings.ShipmentCreationWarning == true) ? true : false;
 
-            if (IsCreditLimitActivated && IsCreditLimitHasAction && myCustomer != null && myCustomer.IsCreditLimitEnabled)
+            if (IsCreditLimitActivated && IsCreditLimitHasAction && myCustomer != null && myCustomer.IsCreditLimitEnabled && FeatureToggleHelper.HasFeatureToggle("SWC", tenant))
             {
                 if (myCustomer.CreditLimitAmount != null)
                 {

@@ -118,6 +118,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "Horse", 
                 SearchFields = "HRS,Horse", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Shipment Warning Checkbox", 
+                Code = "SWC", 
+                SearchFields = "SWC,Shipment Warning Checkbox", 
+			});
 			
             return all;
        }
