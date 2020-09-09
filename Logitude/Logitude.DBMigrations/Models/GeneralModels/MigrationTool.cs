@@ -249,9 +249,11 @@ namespace Logitude.DBMigrations.Models
             GeneratedScript generatedScriptFromDXMLProcedures = GenerateScriptsFromDXMLProcedures(dxmlProcedures);
             generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLProcedures);
 
-            GeneratedScript generatedScriptFromDXMLTriggers = GenerateScriptsFromDXMLTriggers(dxmlTriggers);
-            generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLTriggers);
-
+            if (ToolArguments.IsArgumentProvided(Arguments.INCLUDETRIGGERS))
+            {
+                GeneratedScript generatedScriptFromDXMLTriggers = GenerateScriptsFromDXMLTriggers(dxmlTriggers);
+                generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLTriggers);
+            }
             return generatedScript;
         }
 
