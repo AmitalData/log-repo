@@ -232,7 +232,8 @@ namespace WebFreight.Web.WcfApi
         public Response GetStatus(string RequestId, string Type)
         {
             Response response = new Response();
-            ContainerTasks Task = new ContainerTasks();
+            bool UseOIV2 = FeatureToggleHelper.HasFeatureToggle("OI2", 0);
+            ContainerTasks Task = new ContainerTasks(UseOIV2);
             string Result;
             string Status;
             string Errors;
