@@ -104,7 +104,12 @@ namespace Logitude.Infrastructure.BL
                 Name = "LogGrid V2", 
                 SearchFields = "LGV2,LogGrid V2", 
 			});
-			
+            all.Add(new ToggleDetails()
+            {
+                Code = "OI2",
+                Name = "OceanInsightsV2",
+                SearchFields = "OI2,OceanInsightsV2",
+            });
             return all;
        }
 
