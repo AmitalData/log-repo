@@ -395,6 +395,11 @@ export class QuoteSaleChargePM {
     public set SalesWithVATAmount(newValue: number) { if (this.salesWithVATAmount != newValue) { this.salesWithVATAmount = newValue; this.MarkAsDirty("SalesWithVATAmount"); } }
        
 	 
+    private isRegionalTax: boolean;
+    public get IsRegionalTax() { return this.isRegionalTax; }
+    public set IsRegionalTax(newValue: boolean) { if (this.isRegionalTax != newValue) { this.isRegionalTax = newValue; this.MarkAsDirty("IsRegionalTax"); } }
+       
+	 
 
     public OldEntityPM: QuoteSaleChargePM;
 		
