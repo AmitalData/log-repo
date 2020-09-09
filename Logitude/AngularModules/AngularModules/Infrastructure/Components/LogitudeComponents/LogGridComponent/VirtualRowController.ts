@@ -86,9 +86,7 @@ export class VirtualRowController implements OnInit, OnChanges {
                 this.dataSource.getRows(pageIndex * PSize, PSize, sortingCol, sortingDir, getCount, searchfields, Filters).then(res => {
                     res.subscribe((viewResponse: ServiceResponse) => {
                         if (!viewResponse.HasError) {
-                            var ResponseTime = viewResponse.CallTime.getTime();
-                            var MyCallExactTime = this.MyCallTime ? this.MyCallTime.getTime() : 0;
-                            if (this.MyCallTime == null || ResponseTime > MyCallExactTime || SearchFieldChanged == false) {
+                            if (this.MyCallTime == null || viewResponse.CallTime > this.MyCallTime || SearchFieldChanged == false) {
                                 this.MyCallTime = viewResponse.CallTime;
                                 console.log("this.MyCallTime " + this.MyCallTime);
                                 this.RecievedDataCount = viewResponse.Result.length;
