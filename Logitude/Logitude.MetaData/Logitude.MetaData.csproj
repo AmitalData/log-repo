@@ -358,6 +358,7 @@
     <None Include="DBScripts\CommonModel\202009011450_ImportToUSADropMaman.sxml" />
     <None Include="DBScripts\CommonModel\202008261425_SetToggleCodeForHorsesFeature.sxml" />
     <None Include="DBScripts\CommonModel\202008300915_AddHorsesEventTypesToTenants.sxml" />
+    <None Include="DBScripts\CommonModel\202009101501_AddChargeStorageGroupToTenants.sxml" />
     <None Include="DBScripts\CommonModel\BuildSearchKeywordFunction.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingMilestoneFillValues.sxml" />
     <None Include="DBScripts\CommonModel\CargoTrackingHeaderEntityTypeFillValues.sxml" />
