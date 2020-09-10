@@ -29,8 +29,8 @@ declare var insertAtSubject;
 export class AddEditRuleComponent extends BaseComponent {
   public ObjectTableName: string = null;
   public CurrentObjectTable: string = null;
-  public ActiveForNew: boolean = false;
-  public ActiveForUpdate: boolean = false;
+  //public ActiveForNew: boolean = false;
+  //public ActiveForUpdate: boolean = false;
   public AdvancedCondition: boolean = false;
   public InActive: boolean = false;
 

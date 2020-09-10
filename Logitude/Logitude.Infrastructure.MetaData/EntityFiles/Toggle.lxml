@@ -379,6 +379,10 @@
       Code="&quot;STR&quot;"
       SearchFields="&quot;STR,Storage Pricing&quot;"
       Name="&quot;Storage Pricing&quot;" />
+	   <Record
+      Code="&quot;OI2&quot;"
+      Name="&quot;OceanInsightsV2&quot;"
+      SearchFields="&quot;OI2,OceanInsightsV2&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

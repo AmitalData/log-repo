@@ -126,6 +126,12 @@ namespace Logitude.Infrastructure.BL
                 Name = "Storage Pricing", 
 			});
 			
+            all.Add(new ToggleDetails()
+            {
+                Code = "OI2",
+                Name = "OceanInsightsV2",
+                SearchFields = "OI2,OceanInsightsV2",
+            });
             return all;
        }
 

@@ -12,11 +12,13 @@
       <xs:element minOccurs="0" name="CustomerCareUserEmail" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Deleted" type="xs:boolean" />
       <xs:element minOccurs="0" name="EntityId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EntityNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EventDateTime" type="xs:dateTime" />
       <xs:element minOccurs="0" name="EventTypeCategoryCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EventTypeCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EventTypeEnglishName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EventTypeId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EventTypeLocalName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ExternalId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IsAddedManually" type="xs:boolean" />
@@ -27,6 +29,7 @@
       <xs:element minOccurs="0" name="LogDateTime" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ObjectTableId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PartnerName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ShortView" type="xs:boolean" />
       <xs:element minOccurs="0" name="Tenant" type="xs:int" />
       <xs:element minOccurs="0" name="UserId" nillable="true" type="xs:string" />

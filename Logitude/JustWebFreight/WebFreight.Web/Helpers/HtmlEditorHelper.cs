@@ -4275,7 +4275,7 @@ namespace WebFreight.Web.Helpers
             return resultValue;
         }
 
-        private string FormatNumber(string value, ObjectField field)
+        private string FormatNumber(string value, ObjectField field, int tenant)
         {
 
             string result = string.Empty;
@@ -4298,7 +4298,32 @@ namespace WebFreight.Web.Helpers
             //{
             //    result = ShowDigitsAfterPoint(value, field,3);
             //}
+            CurrentTenant = GetCurrentTenant(tenant);
+            if (CurrentTenant.NumberFormatCode != null)
+            {
+                result = FormatNumberPoints(result, CurrentTenant.NumberFormatCode);
+            }
 
+
+            return result;
+        }
+
+
+        private string FormatDate(string value, int tenant)
+        {
+            string result = value;
+            CurrentTenant = GetCurrentTenant(tenant);
+
+            string datetimeformat = @"dd\/MM\/yyyy";
+            if (!string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(CurrentTenant.DateTimeFormat))
+            {
+                datetimeformat = CurrentTenant.DateTimeFormat;
+                DateTime datetimeValue = Convert.ToDateTime(value);
+                string newFormatDate = datetimeValue.ToString(datetimeformat);
+                string[] currentDateTime = value.Split(' ');
+                currentDateTime[0] = newFormatDate;
+                result = string.Join(" ", currentDateTime);
+            }
 
             return result;
         }
@@ -4332,6 +4357,32 @@ namespace WebFreight.Web.Helpers
             return result;
         }
 
+        private string FormatNumberPoints(string value, string formatCode)
+        {
+            string result = value;
+            switch (formatCode)
+            {
+                case "CD":
+                    //nothing changed
+                    break;
+                case "AD":
+                    result = value.Replace(',', '\'');
+                    break;
+                case "DC":
+                    result = value.Replace(',', '\'');
+                    result = result.Replace('.', ',');
+                    result = result.Replace('\'', '.');
+                    break;
+            }
+            return result;
+        }
+
+        private Tenant GetCurrentTenant(int tenant)
+        {
+            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+            CurrentTenant = context.Tenants.Where(t => t.Id == tenant).FirstOrDefault();
+            return CurrentTenant;
+        }
         #endregion
 
         private bool CheckIfFieldHaveValueHtml(string fieldName)
@@ -4676,10 +4727,16 @@ namespace WebFreight.Web.Helpers
                 {
                     if (field.DataTypeCode.ToLower() == "double" || field.DataTypeCode.ToLower() == "decimal" || field.DataTypeCode.ToLower() == "sigdouble" || field.DataTypeCode.ToLower() == "sigdecimal")
                     {
-                        result = FormatNumber(result, field);
+                        result = FormatNumber(result, field, tenant);
+                    }
+                    else if (field.DataTypeCode.ToLower() == "datetime")
+                    {
+                        result = FormatDate(result, tenant);
                     }
                     else if (field.DataTypeCode.ToLower() == "boolean")
+                    {
                         result = result.ToLower() == "false" ? TranslateTextsClass.Translate("General.O.No", tenant) : TranslateTextsClass.Translate("General.O.Yes", tenant);
+                    }
                 }
             }
 

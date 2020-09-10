@@ -26,6 +26,9 @@ namespace HypredTest.UserProxy {
         private int ActiveModifiedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool AdditionalPackagesOnlyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> AnniversaryField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -71,7 +74,13 @@ namespace HypredTest.UserProxy {
         private string DistributorCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DocumentFilingInboxField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool DontShowLocalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool DontShowLocalLabelsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EmailField;
@@ -137,6 +146,9 @@ namespace HypredTest.UserProxy {
         private bool IsTwoFactorAuthenticationEnabledField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LayoutDirectionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool LicencedUserField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -179,6 +191,15 @@ namespace HypredTest.UserProxy {
         private bool SetAngularAsDefaultField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ShowInboxToolTipField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ShowLocalNameInLOVField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ShowLogBoxToolTipField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool SignupRoleField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -195,6 +216,9 @@ namespace HypredTest.UserProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.UserProxy.UserPermittedProductPM[] UserPermittedProductsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserRolesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UserRolesNamesListField;
@@ -224,6 +248,19 @@ namespace HypredTest.UserProxy {
                 if ((this.ActiveModifiedField.Equals(value) != true)) {
                     this.ActiveModifiedField = value;
                     this.RaisePropertyChanged("ActiveModified");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool AdditionalPackagesOnly {
+            get {
+                return this.AdditionalPackagesOnlyField;
+            }
+            set {
+                if ((this.AdditionalPackagesOnlyField.Equals(value) != true)) {
+                    this.AdditionalPackagesOnlyField = value;
+                    this.RaisePropertyChanged("AdditionalPackagesOnly");
                 }
             }
         }
@@ -424,6 +461,19 @@ namespace HypredTest.UserProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DocumentFilingInbox {
+            get {
+                return this.DocumentFilingInboxField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DocumentFilingInboxField, value) != true)) {
+                    this.DocumentFilingInboxField = value;
+                    this.RaisePropertyChanged("DocumentFilingInbox");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool DontShowLocal {
             get {
                 return this.DontShowLocalField;
@@ -432,6 +482,19 @@ namespace HypredTest.UserProxy {
                 if ((this.DontShowLocalField.Equals(value) != true)) {
                     this.DontShowLocalField = value;
                     this.RaisePropertyChanged("DontShowLocal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool DontShowLocalLabels {
+            get {
+                return this.DontShowLocalLabelsField;
+            }
+            set {
+                if ((this.DontShowLocalLabelsField.Equals(value) != true)) {
+                    this.DontShowLocalLabelsField = value;
+                    this.RaisePropertyChanged("DontShowLocalLabels");
                 }
             }
         }
@@ -710,6 +773,19 @@ namespace HypredTest.UserProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LayoutDirection {
+            get {
+                return this.LayoutDirectionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LayoutDirectionField, value) != true)) {
+                    this.LayoutDirectionField = value;
+                    this.RaisePropertyChanged("LayoutDirection");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool LicencedUser {
             get {
                 return this.LicencedUserField;
@@ -892,6 +968,45 @@ namespace HypredTest.UserProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ShowInboxToolTip {
+            get {
+                return this.ShowInboxToolTipField;
+            }
+            set {
+                if ((this.ShowInboxToolTipField.Equals(value) != true)) {
+                    this.ShowInboxToolTipField = value;
+                    this.RaisePropertyChanged("ShowInboxToolTip");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ShowLocalNameInLOV {
+            get {
+                return this.ShowLocalNameInLOVField;
+            }
+            set {
+                if ((this.ShowLocalNameInLOVField.Equals(value) != true)) {
+                    this.ShowLocalNameInLOVField = value;
+                    this.RaisePropertyChanged("ShowLocalNameInLOV");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ShowLogBoxToolTip {
+            get {
+                return this.ShowLogBoxToolTipField;
+            }
+            set {
+                if ((this.ShowLogBoxToolTipField.Equals(value) != true)) {
+                    this.ShowLogBoxToolTipField = value;
+                    this.RaisePropertyChanged("ShowLogBoxToolTip");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool SignupRole {
             get {
                 return this.SignupRoleField;
@@ -965,6 +1080,19 @@ namespace HypredTest.UserProxy {
                 if ((object.ReferenceEquals(this.UserPermittedProductsField, value) != true)) {
                     this.UserPermittedProductsField = value;
                     this.RaisePropertyChanged("UserPermittedProducts");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserRoles {
+            get {
+                return this.UserRolesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserRolesField, value) != true)) {
+                    this.UserRolesField = value;
+                    this.RaisePropertyChanged("UserRoles");
                 }
             }
         }
@@ -1046,6 +1174,9 @@ namespace HypredTest.UserProxy {
         private string BusinessPhoneField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.UserProxy.CardContactAdditionalServicePM[] CardContactAdditionalServicesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CardIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1077,6 +1208,9 @@ namespace HypredTest.UserProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool DontShowLocalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool DontShowLocalLabelsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EmailField;
@@ -1145,6 +1279,9 @@ namespace HypredTest.UserProxy {
         private bool IsInlandImportField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsLicencedUserField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsLockedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1155,6 +1292,9 @@ namespace HypredTest.UserProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsUserField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsUserAdditionalPackagesOnlyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string LocalNameField;
@@ -1279,6 +1419,19 @@ namespace HypredTest.UserProxy {
                 if ((object.ReferenceEquals(this.BusinessPhoneField, value) != true)) {
                     this.BusinessPhoneField = value;
                     this.RaisePropertyChanged("BusinessPhone");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.UserProxy.CardContactAdditionalServicePM[] CardContactAdditionalServices {
+            get {
+                return this.CardContactAdditionalServicesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CardContactAdditionalServicesField, value) != true)) {
+                    this.CardContactAdditionalServicesField = value;
+                    this.RaisePropertyChanged("CardContactAdditionalServices");
                 }
             }
         }
@@ -1422,6 +1575,19 @@ namespace HypredTest.UserProxy {
                 if ((this.DontShowLocalField.Equals(value) != true)) {
                     this.DontShowLocalField = value;
                     this.RaisePropertyChanged("DontShowLocal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool DontShowLocalLabels {
+            get {
+                return this.DontShowLocalLabelsField;
+            }
+            set {
+                if ((this.DontShowLocalLabelsField.Equals(value) != true)) {
+                    this.DontShowLocalLabelsField = value;
+                    this.RaisePropertyChanged("DontShowLocalLabels");
                 }
             }
         }
@@ -1713,6 +1879,19 @@ namespace HypredTest.UserProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsLicencedUser {
+            get {
+                return this.IsLicencedUserField;
+            }
+            set {
+                if ((this.IsLicencedUserField.Equals(value) != true)) {
+                    this.IsLicencedUserField = value;
+                    this.RaisePropertyChanged("IsLicencedUser");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool IsLocked {
             get {
                 return this.IsLockedField;
@@ -1760,6 +1939,19 @@ namespace HypredTest.UserProxy {
                 if ((this.IsUserField.Equals(value) != true)) {
                     this.IsUserField = value;
                     this.RaisePropertyChanged("IsUser");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsUserAdditionalPackagesOnly {
+            get {
+                return this.IsUserAdditionalPackagesOnlyField;
+            }
+            set {
+                if ((this.IsUserAdditionalPackagesOnlyField.Equals(value) != true)) {
+                    this.IsUserAdditionalPackagesOnlyField = value;
+                    this.RaisePropertyChanged("IsUserAdditionalPackagesOnly");
                 }
             }
         }
@@ -1967,6 +2159,9 @@ namespace HypredTest.UserProxy {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.UserProxy.UserPM UserField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserIdField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -2038,6 +2233,19 @@ namespace HypredTest.UserProxy {
                 if ((object.ReferenceEquals(this.UserField, value) != true)) {
                     this.UserField = value;
                     this.RaisePropertyChanged("User");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserId {
+            get {
+                return this.UserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserIdField, value) != true)) {
+                    this.UserIdField = value;
+                    this.RaisePropertyChanged("UserId");
                 }
             }
         }
@@ -2666,33 +2874,36 @@ namespace HypredTest.UserProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Response", Namespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CardContactAdditionalServicePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs")]
     [System.SerializableAttribute()]
-    public partial class Response : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class CardContactAdditionalServicePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ErrorMessageField;
+        private string AdditionalServiceIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool HasErrorField;
+        private string AdditionalServiceNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string InnerErrorMessageField;
+        private string CardContactIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsAuthenticationErrorField;
+        private string CardIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ResultField;
+        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string Result2Field;
+        private string ContactIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] ValidationErrorsField;
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TenantField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -2705,92 +2916,105 @@ namespace HypredTest.UserProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ErrorMessage {
+        public string AdditionalServiceId {
             get {
-                return this.ErrorMessageField;
+                return this.AdditionalServiceIdField;
             }
             set {
-                if ((object.ReferenceEquals(this.ErrorMessageField, value) != true)) {
-                    this.ErrorMessageField = value;
-                    this.RaisePropertyChanged("ErrorMessage");
+                if ((object.ReferenceEquals(this.AdditionalServiceIdField, value) != true)) {
+                    this.AdditionalServiceIdField = value;
+                    this.RaisePropertyChanged("AdditionalServiceId");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool HasError {
+        public string AdditionalServiceName {
             get {
-                return this.HasErrorField;
+                return this.AdditionalServiceNameField;
             }
             set {
-                if ((this.HasErrorField.Equals(value) != true)) {
-                    this.HasErrorField = value;
-                    this.RaisePropertyChanged("HasError");
+                if ((object.ReferenceEquals(this.AdditionalServiceNameField, value) != true)) {
+                    this.AdditionalServiceNameField = value;
+                    this.RaisePropertyChanged("AdditionalServiceName");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string InnerErrorMessage {
+        public string CardContactId {
             get {
-                return this.InnerErrorMessageField;
+                return this.CardContactIdField;
             }
             set {
-                if ((object.ReferenceEquals(this.InnerErrorMessageField, value) != true)) {
-                    this.InnerErrorMessageField = value;
-                    this.RaisePropertyChanged("InnerErrorMessage");
+                if ((object.ReferenceEquals(this.CardContactIdField, value) != true)) {
+                    this.CardContactIdField = value;
+                    this.RaisePropertyChanged("CardContactId");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsAuthenticationError {
+        public string CardId {
             get {
-                return this.IsAuthenticationErrorField;
+                return this.CardIdField;
             }
             set {
-                if ((this.IsAuthenticationErrorField.Equals(value) != true)) {
-                    this.IsAuthenticationErrorField = value;
-                    this.RaisePropertyChanged("IsAuthenticationError");
+                if ((object.ReferenceEquals(this.CardIdField, value) != true)) {
+                    this.CardIdField = value;
+                    this.RaisePropertyChanged("CardId");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Result {
+        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
             get {
-                return this.ResultField;
+                return this.ChangeSetOpField;
             }
             set {
-                if ((object.ReferenceEquals(this.ResultField, value) != true)) {
-                    this.ResultField = value;
-                    this.RaisePropertyChanged("Result");
+                if ((this.ChangeSetOpField.Equals(value) != true)) {
+                    this.ChangeSetOpField = value;
+                    this.RaisePropertyChanged("ChangeSetOp");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Result2 {
+        public string ContactId {
             get {
-                return this.Result2Field;
+                return this.ContactIdField;
             }
             set {
-                if ((object.ReferenceEquals(this.Result2Field, value) != true)) {
-                    this.Result2Field = value;
-                    this.RaisePropertyChanged("Result2");
+                if ((object.ReferenceEquals(this.ContactIdField, value) != true)) {
+                    this.ContactIdField = value;
+                    this.RaisePropertyChanged("ContactId");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] ValidationErrors {
+        public string Id {
             get {
-                return this.ValidationErrorsField;
+                return this.IdField;
             }
             set {
-                if ((object.ReferenceEquals(this.ValidationErrorsField, value) != true)) {
-                    this.ValidationErrorsField = value;
-                    this.RaisePropertyChanged("ValidationErrors");
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Tenant {
+            get {
+                return this.TenantField;
+            }
+            set {
+                if ((this.TenantField.Equals(value) != true)) {
+                    this.TenantField = value;
+                    this.RaisePropertyChanged("Tenant");
                 }
             }
         }
@@ -2903,10 +3127,10 @@ namespace HypredTest.UserProxy {
     public interface IUserWcfService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserWcfService/Upsert", ReplyAction="http://tempuri.org/IUserWcfService/UpsertResponse")]
-        HypredTest.UserProxy.Response Upsert(HypredTest.UserProxy.UserPM entityPM, bool batch);
+        Logitude.Server.Tools.Response Upsert(HypredTest.UserProxy.UserPM entityPM, bool batch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserWcfService/Upsert", ReplyAction="http://tempuri.org/IUserWcfService/UpsertResponse")]
-        System.Threading.Tasks.Task<HypredTest.UserProxy.Response> UpsertAsync(HypredTest.UserProxy.UserPM entityPM, bool batch);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.UserProxy.UserPM entityPM, bool batch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserWcfService/GetUser", ReplyAction="http://tempuri.org/IUserWcfService/GetUserResponse")]
         HypredTest.UserProxy.GetUserResponse GetUser(HypredTest.UserProxy.GetUserRequest request);
@@ -2928,12 +3152,12 @@ namespace HypredTest.UserProxy {
         public int tenant;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
-        public HypredTest.UserProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetUserRequest() {
         }
         
-        public GetUserRequest(HypredTest.UserProxy.UserApiFilters filter, int tenant, HypredTest.UserProxy.Response response) {
+        public GetUserRequest(HypredTest.UserProxy.UserApiFilters filter, int tenant, Logitude.Server.Tools.Response response) {
             this.filter = filter;
             this.tenant = tenant;
             this.response = response;
@@ -2949,12 +3173,12 @@ namespace HypredTest.UserProxy {
         public HypredTest.UserProxy.UserPM GetUserResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.UserProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetUserResponse() {
         }
         
-        public GetUserResponse(HypredTest.UserProxy.UserPM GetUserResult, HypredTest.UserProxy.Response response) {
+        public GetUserResponse(HypredTest.UserProxy.UserPM GetUserResult, Logitude.Server.Tools.Response response) {
             this.GetUserResult = GetUserResult;
             this.response = response;
         }
@@ -2987,11 +3211,11 @@ namespace HypredTest.UserProxy {
                 base(binding, remoteAddress) {
         }
         
-        public HypredTest.UserProxy.Response Upsert(HypredTest.UserProxy.UserPM entityPM, bool batch) {
+        public Logitude.Server.Tools.Response Upsert(HypredTest.UserProxy.UserPM entityPM, bool batch) {
             return base.Channel.Upsert(entityPM, batch);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.UserProxy.Response> UpsertAsync(HypredTest.UserProxy.UserPM entityPM, bool batch) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.UserProxy.UserPM entityPM, bool batch) {
             return base.Channel.UpsertAsync(entityPM, batch);
         }
         
@@ -3000,7 +3224,7 @@ namespace HypredTest.UserProxy {
             return base.Channel.GetUser(request);
         }
         
-        public HypredTest.UserProxy.UserPM GetUser(HypredTest.UserProxy.UserApiFilters filter, int tenant, ref HypredTest.UserProxy.Response response) {
+        public HypredTest.UserProxy.UserPM GetUser(HypredTest.UserProxy.UserApiFilters filter, int tenant, ref Logitude.Server.Tools.Response response) {
             HypredTest.UserProxy.GetUserRequest inValue = new HypredTest.UserProxy.GetUserRequest();
             inValue.filter = filter;
             inValue.tenant = tenant;

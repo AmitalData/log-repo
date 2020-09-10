@@ -15,604 +15,12 @@ namespace HypredTest.ActivityProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Response", Namespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools")]
-    [System.SerializableAttribute()]
-    public partial class Response : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ErrorMessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool HasErrorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string InnerErrorMessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsAuthenticationErrorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ResultField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] ValidationErrorsField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ErrorMessage {
-            get {
-                return this.ErrorMessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ErrorMessageField, value) != true)) {
-                    this.ErrorMessageField = value;
-                    this.RaisePropertyChanged("ErrorMessage");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool HasError {
-            get {
-                return this.HasErrorField;
-            }
-            set {
-                if ((this.HasErrorField.Equals(value) != true)) {
-                    this.HasErrorField = value;
-                    this.RaisePropertyChanged("HasError");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string InnerErrorMessage {
-            get {
-                return this.InnerErrorMessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.InnerErrorMessageField, value) != true)) {
-                    this.InnerErrorMessageField = value;
-                    this.RaisePropertyChanged("InnerErrorMessage");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsAuthenticationError {
-            get {
-                return this.IsAuthenticationErrorField;
-            }
-            set {
-                if ((this.IsAuthenticationErrorField.Equals(value) != true)) {
-                    this.IsAuthenticationErrorField = value;
-                    this.RaisePropertyChanged("IsAuthenticationError");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Result {
-            get {
-                return this.ResultField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ResultField, value) != true)) {
-                    this.ResultField = value;
-                    this.RaisePropertyChanged("Result");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] ValidationErrors {
-            get {
-                return this.ValidationErrorsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ValidationErrorsField, value) != true)) {
-                    this.ValidationErrorsField = value;
-                    this.RaisePropertyChanged("ValidationErrors");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="EntityPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools")]
-    [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(HypredTest.ActivityProxy.ActivityEmailRecipientPM))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(HypredTest.ActivityProxy.ActivityInviteePM))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(HypredTest.ActivityProxy.ActivityNotePM))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(HypredTest.ActivityProxy.ActivityPM))]
-    public partial class EntityPM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
-            get {
-                return this.ChangeSetOpField;
-            }
-            set {
-                if ((this.ChangeSetOpField.Equals(value) != true)) {
-                    this.ChangeSetOpField = value;
-                    this.RaisePropertyChanged("ChangeSetOp");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ActivityEmailRecipientPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.CRM.BL.EntityPMs")]
-    [System.SerializableAttribute()]
-    public partial class ActivityEmailRecipientPM : HypredTest.ActivityProxy.EntityPM {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ActivityIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContactIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string RecipientTypeCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SenderContactIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TenantField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ActivityId {
-            get {
-                return this.ActivityIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ActivityIdField, value) != true)) {
-                    this.ActivityIdField = value;
-                    this.RaisePropertyChanged("ActivityId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ContactId {
-            get {
-                return this.ContactIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContactIdField, value) != true)) {
-                    this.ContactIdField = value;
-                    this.RaisePropertyChanged("ContactId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
-            get {
-                return this.EmailField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdField, value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string RecipientTypeCode {
-            get {
-                return this.RecipientTypeCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RecipientTypeCodeField, value) != true)) {
-                    this.RecipientTypeCodeField = value;
-                    this.RaisePropertyChanged("RecipientTypeCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SenderContactId {
-            get {
-                return this.SenderContactIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SenderContactIdField, value) != true)) {
-                    this.SenderContactIdField = value;
-                    this.RaisePropertyChanged("SenderContactId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Tenant {
-            get {
-                return this.TenantField;
-            }
-            set {
-                if ((this.TenantField.Equals(value) != true)) {
-                    this.TenantField = value;
-                    this.RaisePropertyChanged("Tenant");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ActivityInviteePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.CRM.BL.EntityPMs")]
-    [System.SerializableAttribute()]
-    public partial class ActivityInviteePM : HypredTest.ActivityProxy.EntityPM {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ActivityIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContactIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContactNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsRequiredField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TenantField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ActivityId {
-            get {
-                return this.ActivityIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ActivityIdField, value) != true)) {
-                    this.ActivityIdField = value;
-                    this.RaisePropertyChanged("ActivityId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ContactId {
-            get {
-                return this.ContactIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContactIdField, value) != true)) {
-                    this.ContactIdField = value;
-                    this.RaisePropertyChanged("ContactId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ContactName {
-            get {
-                return this.ContactNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContactNameField, value) != true)) {
-                    this.ContactNameField = value;
-                    this.RaisePropertyChanged("ContactName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
-            get {
-                return this.EmailField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdField, value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsRequired {
-            get {
-                return this.IsRequiredField;
-            }
-            set {
-                if ((this.IsRequiredField.Equals(value) != true)) {
-                    this.IsRequiredField = value;
-                    this.RaisePropertyChanged("IsRequired");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Tenant {
-            get {
-                return this.TenantField;
-            }
-            set {
-                if ((this.TenantField.Equals(value) != true)) {
-                    this.TenantField = value;
-                    this.RaisePropertyChanged("Tenant");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ActivityNotePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.CRM.BL.EntityPMs")]
-    [System.SerializableAttribute()]
-    public partial class ActivityNotePM : HypredTest.ActivityProxy.EntityPM {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ActivityIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> CreateDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CreatedByUserIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CreatedByUserNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NotesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool PostToFollowersField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TenantField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> UpdateDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UpdatedByUserIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UpdatedByUserNameField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ActivityId {
-            get {
-                return this.ActivityIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ActivityIdField, value) != true)) {
-                    this.ActivityIdField = value;
-                    this.RaisePropertyChanged("ActivityId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> CreateDate {
-            get {
-                return this.CreateDateField;
-            }
-            set {
-                if ((this.CreateDateField.Equals(value) != true)) {
-                    this.CreateDateField = value;
-                    this.RaisePropertyChanged("CreateDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CreatedByUserId {
-            get {
-                return this.CreatedByUserIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CreatedByUserIdField, value) != true)) {
-                    this.CreatedByUserIdField = value;
-                    this.RaisePropertyChanged("CreatedByUserId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CreatedByUserName {
-            get {
-                return this.CreatedByUserNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CreatedByUserNameField, value) != true)) {
-                    this.CreatedByUserNameField = value;
-                    this.RaisePropertyChanged("CreatedByUserName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdField, value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Notes {
-            get {
-                return this.NotesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NotesField, value) != true)) {
-                    this.NotesField = value;
-                    this.RaisePropertyChanged("Notes");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool PostToFollowers {
-            get {
-                return this.PostToFollowersField;
-            }
-            set {
-                if ((this.PostToFollowersField.Equals(value) != true)) {
-                    this.PostToFollowersField = value;
-                    this.RaisePropertyChanged("PostToFollowers");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Tenant {
-            get {
-                return this.TenantField;
-            }
-            set {
-                if ((this.TenantField.Equals(value) != true)) {
-                    this.TenantField = value;
-                    this.RaisePropertyChanged("Tenant");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> UpdateDate {
-            get {
-                return this.UpdateDateField;
-            }
-            set {
-                if ((this.UpdateDateField.Equals(value) != true)) {
-                    this.UpdateDateField = value;
-                    this.RaisePropertyChanged("UpdateDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UpdatedByUserId {
-            get {
-                return this.UpdatedByUserIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UpdatedByUserIdField, value) != true)) {
-                    this.UpdatedByUserIdField = value;
-                    this.RaisePropertyChanged("UpdatedByUserId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UpdatedByUserName {
-            get {
-                return this.UpdatedByUserNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UpdatedByUserNameField, value) != true)) {
-                    this.UpdatedByUserNameField = value;
-                    this.RaisePropertyChanged("UpdatedByUserName");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ActivityPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.CRM.BL.EntityPMs")]
     [System.SerializableAttribute()]
-    public partial class ActivityPM : HypredTest.ActivityProxy.EntityPM {
+    public partial class ActivityPM : Logitude.Server.Tools.EntityPM, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Simplog.Server.Infrastructure.DataContracts.DocumentDataPM[] ActivityDocumentDatasField;
@@ -645,10 +53,19 @@ namespace HypredTest.ActivityProxy {
         private string ActivityTypePathCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActivityWithField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool AllDayEventField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> ArchiveDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BranchIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BusinessProcessQueueIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BusinessUnitIdField;
@@ -667,6 +84,9 @@ namespace HypredTest.ActivityProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CallWithIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CcField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CommunicationLogIdField;
@@ -696,10 +116,19 @@ namespace HypredTest.ActivityProxy {
         private string DescriptionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool DescriptionRightToLeftField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool DontSetNeedSynchronizationField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> DueDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DueDateDateFieldField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> DueDateOffsetField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<int> DurationField;
@@ -738,6 +167,9 @@ namespace HypredTest.ActivityProxy {
         private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field9Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FromField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -745,6 +177,9 @@ namespace HypredTest.ActivityProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsCustomerBlockedBusinessUnitField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsHybridField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsLeftVoiceMailField;
@@ -765,6 +200,9 @@ namespace HypredTest.ActivityProxy {
         private string MeetingSummaryField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool MeetingSummaryRightToLeftField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool NeedSynchronizationField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -778,6 +216,9 @@ namespace HypredTest.ActivityProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string OpportunitySubjectField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OriginalActivitySubjectField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string OutlookIdField;
@@ -807,6 +248,9 @@ namespace HypredTest.ActivityProxy {
         private string SearchFieldsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> SendReceiveDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SenderContactIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -816,10 +260,22 @@ namespace HypredTest.ActivityProxy {
         private string SenderEmailField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipmentIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SortingByField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> SortingDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> StartDateTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SubjectField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TeamIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int TenantField;
@@ -828,10 +284,23 @@ namespace HypredTest.ActivityProxy {
         private string TicketIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ToField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime UpdateDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UpdatedByUserIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public Simplog.Server.Infrastructure.DataContracts.DocumentDataPM[] ActivityDocumentDatas {
@@ -964,6 +433,19 @@ namespace HypredTest.ActivityProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ActivityWith {
+            get {
+                return this.ActivityWithField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActivityWithField, value) != true)) {
+                    this.ActivityWithField = value;
+                    this.RaisePropertyChanged("ActivityWith");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool AllDayEvent {
             get {
                 return this.AllDayEventField;
@@ -977,6 +459,19 @@ namespace HypredTest.ActivityProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> ArchiveDate {
+            get {
+                return this.ArchiveDateField;
+            }
+            set {
+                if ((this.ArchiveDateField.Equals(value) != true)) {
+                    this.ArchiveDateField = value;
+                    this.RaisePropertyChanged("ArchiveDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string BranchId {
             get {
                 return this.BranchIdField;
@@ -985,6 +480,19 @@ namespace HypredTest.ActivityProxy {
                 if ((object.ReferenceEquals(this.BranchIdField, value) != true)) {
                     this.BranchIdField = value;
                     this.RaisePropertyChanged("BranchId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BusinessProcessQueueId {
+            get {
+                return this.BusinessProcessQueueIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BusinessProcessQueueIdField, value) != true)) {
+                    this.BusinessProcessQueueIdField = value;
+                    this.RaisePropertyChanged("BusinessProcessQueueId");
                 }
             }
         }
@@ -1063,6 +571,19 @@ namespace HypredTest.ActivityProxy {
                 if ((object.ReferenceEquals(this.CallWithIdField, value) != true)) {
                     this.CallWithIdField = value;
                     this.RaisePropertyChanged("CallWithId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Cc {
+            get {
+                return this.CcField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CcField, value) != true)) {
+                    this.CcField = value;
+                    this.RaisePropertyChanged("Cc");
                 }
             }
         }
@@ -1185,6 +706,19 @@ namespace HypredTest.ActivityProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool DescriptionRightToLeft {
+            get {
+                return this.DescriptionRightToLeftField;
+            }
+            set {
+                if ((this.DescriptionRightToLeftField.Equals(value) != true)) {
+                    this.DescriptionRightToLeftField = value;
+                    this.RaisePropertyChanged("DescriptionRightToLeft");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool DontSetNeedSynchronization {
             get {
                 return this.DontSetNeedSynchronizationField;
@@ -1206,6 +740,32 @@ namespace HypredTest.ActivityProxy {
                 if ((this.DueDateField.Equals(value) != true)) {
                     this.DueDateField = value;
                     this.RaisePropertyChanged("DueDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DueDateDateField {
+            get {
+                return this.DueDateDateFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DueDateDateFieldField, value) != true)) {
+                    this.DueDateDateFieldField = value;
+                    this.RaisePropertyChanged("DueDateDateField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> DueDateOffset {
+            get {
+                return this.DueDateOffsetField;
+            }
+            set {
+                if ((this.DueDateOffsetField.Equals(value) != true)) {
+                    this.DueDateOffsetField = value;
+                    this.RaisePropertyChanged("DueDateOffset");
                 }
             }
         }
@@ -1367,6 +927,19 @@ namespace HypredTest.ActivityProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string From {
+            get {
+                return this.FromField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FromField, value) != true)) {
+                    this.FromField = value;
+                    this.RaisePropertyChanged("From");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Id {
             get {
                 return this.IdField;
@@ -1401,6 +974,19 @@ namespace HypredTest.ActivityProxy {
                 if ((this.IsCustomerBlockedBusinessUnitField.Equals(value) != true)) {
                     this.IsCustomerBlockedBusinessUnitField = value;
                     this.RaisePropertyChanged("IsCustomerBlockedBusinessUnit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsHybrid {
+            get {
+                return this.IsHybridField;
+            }
+            set {
+                if ((this.IsHybridField.Equals(value) != true)) {
+                    this.IsHybridField = value;
+                    this.RaisePropertyChanged("IsHybrid");
                 }
             }
         }
@@ -1484,6 +1070,19 @@ namespace HypredTest.ActivityProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool MeetingSummaryRightToLeft {
+            get {
+                return this.MeetingSummaryRightToLeftField;
+            }
+            set {
+                if ((this.MeetingSummaryRightToLeftField.Equals(value) != true)) {
+                    this.MeetingSummaryRightToLeftField = value;
+                    this.RaisePropertyChanged("MeetingSummaryRightToLeft");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool NeedSynchronization {
             get {
                 return this.NeedSynchronizationField;
@@ -1544,6 +1143,19 @@ namespace HypredTest.ActivityProxy {
                 if ((object.ReferenceEquals(this.OpportunitySubjectField, value) != true)) {
                     this.OpportunitySubjectField = value;
                     this.RaisePropertyChanged("OpportunitySubject");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OriginalActivitySubject {
+            get {
+                return this.OriginalActivitySubjectField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OriginalActivitySubjectField, value) != true)) {
+                    this.OriginalActivitySubjectField = value;
+                    this.RaisePropertyChanged("OriginalActivitySubject");
                 }
             }
         }
@@ -1666,6 +1278,19 @@ namespace HypredTest.ActivityProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> SendReceiveDate {
+            get {
+                return this.SendReceiveDateField;
+            }
+            set {
+                if ((this.SendReceiveDateField.Equals(value) != true)) {
+                    this.SendReceiveDateField = value;
+                    this.RaisePropertyChanged("SendReceiveDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string SenderContactId {
             get {
                 return this.SenderContactIdField;
@@ -1705,6 +1330,45 @@ namespace HypredTest.ActivityProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipmentId {
+            get {
+                return this.ShipmentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentIdField, value) != true)) {
+                    this.ShipmentIdField = value;
+                    this.RaisePropertyChanged("ShipmentId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SortingBy {
+            get {
+                return this.SortingByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SortingByField, value) != true)) {
+                    this.SortingByField = value;
+                    this.RaisePropertyChanged("SortingBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> SortingDate {
+            get {
+                return this.SortingDateField;
+            }
+            set {
+                if ((this.SortingDateField.Equals(value) != true)) {
+                    this.SortingDateField = value;
+                    this.RaisePropertyChanged("SortingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> StartDateTime {
             get {
                 return this.StartDateTimeField;
@@ -1726,6 +1390,19 @@ namespace HypredTest.ActivityProxy {
                 if ((object.ReferenceEquals(this.SubjectField, value) != true)) {
                     this.SubjectField = value;
                     this.RaisePropertyChanged("Subject");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TeamId {
+            get {
+                return this.TeamIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TeamIdField, value) != true)) {
+                    this.TeamIdField = value;
+                    this.RaisePropertyChanged("TeamId");
                 }
             }
         }
@@ -1757,6 +1434,19 @@ namespace HypredTest.ActivityProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string To {
+            get {
+                return this.ToField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ToField, value) != true)) {
+                    this.ToField = value;
+                    this.RaisePropertyChanged("To");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.DateTime UpdateDate {
             get {
                 return this.UpdateDateField;
@@ -1781,6 +1471,502 @@ namespace HypredTest.ActivityProxy {
                 }
             }
         }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ActivityEmailRecipientPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.CRM.BL.EntityPMs")]
+    [System.SerializableAttribute()]
+    public partial class ActivityEmailRecipientPM : Logitude.Server.Tools.EntityPM, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActivityIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContactIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RecipientTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SenderContactIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TenantField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ActivityId {
+            get {
+                return this.ActivityIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActivityIdField, value) != true)) {
+                    this.ActivityIdField = value;
+                    this.RaisePropertyChanged("ActivityId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContactId {
+            get {
+                return this.ContactIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContactIdField, value) != true)) {
+                    this.ContactIdField = value;
+                    this.RaisePropertyChanged("ContactId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RecipientTypeCode {
+            get {
+                return this.RecipientTypeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RecipientTypeCodeField, value) != true)) {
+                    this.RecipientTypeCodeField = value;
+                    this.RaisePropertyChanged("RecipientTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SenderContactId {
+            get {
+                return this.SenderContactIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SenderContactIdField, value) != true)) {
+                    this.SenderContactIdField = value;
+                    this.RaisePropertyChanged("SenderContactId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Tenant {
+            get {
+                return this.TenantField;
+            }
+            set {
+                if ((this.TenantField.Equals(value) != true)) {
+                    this.TenantField = value;
+                    this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ActivityInviteePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.CRM.BL.EntityPMs")]
+    [System.SerializableAttribute()]
+    public partial class ActivityInviteePM : Logitude.Server.Tools.EntityPM, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActivityIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContactIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContactNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsRequiredField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TenantField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ActivityId {
+            get {
+                return this.ActivityIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActivityIdField, value) != true)) {
+                    this.ActivityIdField = value;
+                    this.RaisePropertyChanged("ActivityId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContactId {
+            get {
+                return this.ContactIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContactIdField, value) != true)) {
+                    this.ContactIdField = value;
+                    this.RaisePropertyChanged("ContactId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContactName {
+            get {
+                return this.ContactNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContactNameField, value) != true)) {
+                    this.ContactNameField = value;
+                    this.RaisePropertyChanged("ContactName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsRequired {
+            get {
+                return this.IsRequiredField;
+            }
+            set {
+                if ((this.IsRequiredField.Equals(value) != true)) {
+                    this.IsRequiredField = value;
+                    this.RaisePropertyChanged("IsRequired");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Tenant {
+            get {
+                return this.TenantField;
+            }
+            set {
+                if ((this.TenantField.Equals(value) != true)) {
+                    this.TenantField = value;
+                    this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ActivityNotePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.CRM.BL.EntityPMs")]
+    [System.SerializableAttribute()]
+    public partial class ActivityNotePM : Logitude.Server.Tools.EntityPM, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActivityIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> CreateDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreatedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreatedByUserNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PostToFollowersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TenantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> UpdateDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpdatedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpdatedByUserNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ActivityId {
+            get {
+                return this.ActivityIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActivityIdField, value) != true)) {
+                    this.ActivityIdField = value;
+                    this.RaisePropertyChanged("ActivityId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> CreateDate {
+            get {
+                return this.CreateDateField;
+            }
+            set {
+                if ((this.CreateDateField.Equals(value) != true)) {
+                    this.CreateDateField = value;
+                    this.RaisePropertyChanged("CreateDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CreatedByUserId {
+            get {
+                return this.CreatedByUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByUserIdField, value) != true)) {
+                    this.CreatedByUserIdField = value;
+                    this.RaisePropertyChanged("CreatedByUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CreatedByUserName {
+            get {
+                return this.CreatedByUserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByUserNameField, value) != true)) {
+                    this.CreatedByUserNameField = value;
+                    this.RaisePropertyChanged("CreatedByUserName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Notes {
+            get {
+                return this.NotesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotesField, value) != true)) {
+                    this.NotesField = value;
+                    this.RaisePropertyChanged("Notes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool PostToFollowers {
+            get {
+                return this.PostToFollowersField;
+            }
+            set {
+                if ((this.PostToFollowersField.Equals(value) != true)) {
+                    this.PostToFollowersField = value;
+                    this.RaisePropertyChanged("PostToFollowers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Tenant {
+            get {
+                return this.TenantField;
+            }
+            set {
+                if ((this.TenantField.Equals(value) != true)) {
+                    this.TenantField = value;
+                    this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> UpdateDate {
+            get {
+                return this.UpdateDateField;
+            }
+            set {
+                if ((this.UpdateDateField.Equals(value) != true)) {
+                    this.UpdateDateField = value;
+                    this.RaisePropertyChanged("UpdateDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UpdatedByUserId {
+            get {
+                return this.UpdatedByUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdatedByUserIdField, value) != true)) {
+                    this.UpdatedByUserIdField = value;
+                    this.RaisePropertyChanged("UpdatedByUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UpdatedByUserName {
+            get {
+                return this.UpdatedByUserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdatedByUserNameField, value) != true)) {
+                    this.UpdatedByUserNameField = value;
+                    this.RaisePropertyChanged("UpdatedByUserName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1788,16 +1974,16 @@ namespace HypredTest.ActivityProxy {
     public interface IActivityWcfService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/isOnline", ReplyAction="http://tempuri.org/IActivityWcfService/isOnlineResponse")]
-        HypredTest.ActivityProxy.Response isOnline();
+        Logitude.Server.Tools.Response isOnline();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/isOnline", ReplyAction="http://tempuri.org/IActivityWcfService/isOnlineResponse")]
-        System.Threading.Tasks.Task<HypredTest.ActivityProxy.Response> isOnlineAsync();
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> isOnlineAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/Upsert", ReplyAction="http://tempuri.org/IActivityWcfService/UpsertResponse")]
-        HypredTest.ActivityProxy.Response Upsert(HypredTest.ActivityProxy.ActivityPM entityPM, string email);
+        Logitude.Server.Tools.Response Upsert(HypredTest.ActivityProxy.ActivityPM entityPM, string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/Upsert", ReplyAction="http://tempuri.org/IActivityWcfService/UpsertResponse")]
-        System.Threading.Tasks.Task<HypredTest.ActivityProxy.Response> UpsertAsync(HypredTest.ActivityProxy.ActivityPM entityPM, string email);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.ActivityProxy.ActivityPM entityPM, string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/GetActivities", ReplyAction="http://tempuri.org/IActivityWcfService/GetActivitiesResponse")]
         HypredTest.ActivityProxy.GetActivitiesResponse GetActivities(HypredTest.ActivityProxy.GetActivitiesRequest request);
@@ -1807,22 +1993,22 @@ namespace HypredTest.ActivityProxy {
         System.Threading.Tasks.Task<HypredTest.ActivityProxy.GetActivitiesResponse> GetActivitiesAsync(HypredTest.ActivityProxy.GetActivitiesRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/UpdateOutlookID", ReplyAction="http://tempuri.org/IActivityWcfService/UpdateOutlookIDResponse")]
-        HypredTest.ActivityProxy.Response UpdateOutlookID(string activityId, string outlookId, int tenant);
+        Logitude.Server.Tools.Response UpdateOutlookID(string activityId, string outlookId, int tenant);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/UpdateOutlookID", ReplyAction="http://tempuri.org/IActivityWcfService/UpdateOutlookIDResponse")]
-        System.Threading.Tasks.Task<HypredTest.ActivityProxy.Response> UpdateOutlookIDAsync(string activityId, string outlookId, int tenant);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpdateOutlookIDAsync(string activityId, string outlookId, int tenant);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/SetAsSynchronized", ReplyAction="http://tempuri.org/IActivityWcfService/SetAsSynchronizedResponse")]
-        HypredTest.ActivityProxy.Response SetAsSynchronized(string activityId, string email, int tenant);
+        Logitude.Server.Tools.Response SetAsSynchronized(string activityId, string email, int tenant);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/SetAsSynchronized", ReplyAction="http://tempuri.org/IActivityWcfService/SetAsSynchronizedResponse")]
-        System.Threading.Tasks.Task<HypredTest.ActivityProxy.Response> SetAsSynchronizedAsync(string activityId, string email, int tenant);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> SetAsSynchronizedAsync(string activityId, string email, int tenant);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/Delete", ReplyAction="http://tempuri.org/IActivityWcfService/DeleteResponse")]
-        HypredTest.ActivityProxy.Response Delete(string activityId, int tenant);
+        Logitude.Server.Tools.Response Delete(string activityId, int tenant);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/Delete", ReplyAction="http://tempuri.org/IActivityWcfService/DeleteResponse")]
-        System.Threading.Tasks.Task<HypredTest.ActivityProxy.Response> DeleteAsync(string activityId, int tenant);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> DeleteAsync(string activityId, int tenant);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/GetActivityPM", ReplyAction="http://tempuri.org/IActivityWcfService/GetActivityPMResponse")]
         HypredTest.ActivityProxy.GetActivityPMResponse GetActivityPM(HypredTest.ActivityProxy.GetActivityPMRequest request);
@@ -1830,6 +2016,12 @@ namespace HypredTest.ActivityProxy {
         // CODEGEN: Generating message contract since the operation has multiple return values.
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/GetActivityPM", ReplyAction="http://tempuri.org/IActivityWcfService/GetActivityPMResponse")]
         System.Threading.Tasks.Task<HypredTest.ActivityProxy.GetActivityPMResponse> GetActivityPMAsync(HypredTest.ActivityProxy.GetActivityPMRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/UploadDocumentFileData", ReplyAction="http://tempuri.org/IActivityWcfService/UploadDocumentFileDataResponse")]
+        Logitude.Server.Tools.Response UploadDocumentFileData(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActivityWcfService/UploadDocumentFileData", ReplyAction="http://tempuri.org/IActivityWcfService/UploadDocumentFileDataResponse")]
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UploadDocumentFileDataAsync(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1844,12 +2036,12 @@ namespace HypredTest.ActivityProxy {
         public int tenant;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
-        public HypredTest.ActivityProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetActivitiesRequest() {
         }
         
-        public GetActivitiesRequest(string email, int tenant, HypredTest.ActivityProxy.Response response) {
+        public GetActivitiesRequest(string email, int tenant, Logitude.Server.Tools.Response response) {
             this.email = email;
             this.tenant = tenant;
             this.response = response;
@@ -1865,12 +2057,12 @@ namespace HypredTest.ActivityProxy {
         public HypredTest.ActivityProxy.ActivityPM[] GetActivitiesResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.ActivityProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetActivitiesResponse() {
         }
         
-        public GetActivitiesResponse(HypredTest.ActivityProxy.ActivityPM[] GetActivitiesResult, HypredTest.ActivityProxy.Response response) {
+        public GetActivitiesResponse(HypredTest.ActivityProxy.ActivityPM[] GetActivitiesResult, Logitude.Server.Tools.Response response) {
             this.GetActivitiesResult = GetActivitiesResult;
             this.response = response;
         }
@@ -1888,12 +2080,12 @@ namespace HypredTest.ActivityProxy {
         public int tenant;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
-        public HypredTest.ActivityProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetActivityPMRequest() {
         }
         
-        public GetActivityPMRequest(string id, int tenant, HypredTest.ActivityProxy.Response response) {
+        public GetActivityPMRequest(string id, int tenant, Logitude.Server.Tools.Response response) {
             this.id = id;
             this.tenant = tenant;
             this.response = response;
@@ -1909,12 +2101,12 @@ namespace HypredTest.ActivityProxy {
         public HypredTest.ActivityProxy.ActivityPM GetActivityPMResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.ActivityProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetActivityPMResponse() {
         }
         
-        public GetActivityPMResponse(HypredTest.ActivityProxy.ActivityPM GetActivityPMResult, HypredTest.ActivityProxy.Response response) {
+        public GetActivityPMResponse(HypredTest.ActivityProxy.ActivityPM GetActivityPMResult, Logitude.Server.Tools.Response response) {
             this.GetActivityPMResult = GetActivityPMResult;
             this.response = response;
         }
@@ -1947,19 +2139,19 @@ namespace HypredTest.ActivityProxy {
                 base(binding, remoteAddress) {
         }
         
-        public HypredTest.ActivityProxy.Response isOnline() {
+        public Logitude.Server.Tools.Response isOnline() {
             return base.Channel.isOnline();
         }
         
-        public System.Threading.Tasks.Task<HypredTest.ActivityProxy.Response> isOnlineAsync() {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> isOnlineAsync() {
             return base.Channel.isOnlineAsync();
         }
         
-        public HypredTest.ActivityProxy.Response Upsert(HypredTest.ActivityProxy.ActivityPM entityPM, string email) {
+        public Logitude.Server.Tools.Response Upsert(HypredTest.ActivityProxy.ActivityPM entityPM, string email) {
             return base.Channel.Upsert(entityPM, email);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.ActivityProxy.Response> UpsertAsync(HypredTest.ActivityProxy.ActivityPM entityPM, string email) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.ActivityProxy.ActivityPM entityPM, string email) {
             return base.Channel.UpsertAsync(entityPM, email);
         }
         
@@ -1968,7 +2160,7 @@ namespace HypredTest.ActivityProxy {
             return base.Channel.GetActivities(request);
         }
         
-        public HypredTest.ActivityProxy.ActivityPM[] GetActivities(string email, int tenant, ref HypredTest.ActivityProxy.Response response) {
+        public HypredTest.ActivityProxy.ActivityPM[] GetActivities(string email, int tenant, ref Logitude.Server.Tools.Response response) {
             HypredTest.ActivityProxy.GetActivitiesRequest inValue = new HypredTest.ActivityProxy.GetActivitiesRequest();
             inValue.email = email;
             inValue.tenant = tenant;
@@ -1982,27 +2174,27 @@ namespace HypredTest.ActivityProxy {
             return base.Channel.GetActivitiesAsync(request);
         }
         
-        public HypredTest.ActivityProxy.Response UpdateOutlookID(string activityId, string outlookId, int tenant) {
+        public Logitude.Server.Tools.Response UpdateOutlookID(string activityId, string outlookId, int tenant) {
             return base.Channel.UpdateOutlookID(activityId, outlookId, tenant);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.ActivityProxy.Response> UpdateOutlookIDAsync(string activityId, string outlookId, int tenant) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpdateOutlookIDAsync(string activityId, string outlookId, int tenant) {
             return base.Channel.UpdateOutlookIDAsync(activityId, outlookId, tenant);
         }
         
-        public HypredTest.ActivityProxy.Response SetAsSynchronized(string activityId, string email, int tenant) {
+        public Logitude.Server.Tools.Response SetAsSynchronized(string activityId, string email, int tenant) {
             return base.Channel.SetAsSynchronized(activityId, email, tenant);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.ActivityProxy.Response> SetAsSynchronizedAsync(string activityId, string email, int tenant) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> SetAsSynchronizedAsync(string activityId, string email, int tenant) {
             return base.Channel.SetAsSynchronizedAsync(activityId, email, tenant);
         }
         
-        public HypredTest.ActivityProxy.Response Delete(string activityId, int tenant) {
+        public Logitude.Server.Tools.Response Delete(string activityId, int tenant) {
             return base.Channel.Delete(activityId, tenant);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.ActivityProxy.Response> DeleteAsync(string activityId, int tenant) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> DeleteAsync(string activityId, int tenant) {
             return base.Channel.DeleteAsync(activityId, tenant);
         }
         
@@ -2011,7 +2203,7 @@ namespace HypredTest.ActivityProxy {
             return base.Channel.GetActivityPM(request);
         }
         
-        public HypredTest.ActivityProxy.ActivityPM GetActivityPM(string id, int tenant, ref HypredTest.ActivityProxy.Response response) {
+        public HypredTest.ActivityProxy.ActivityPM GetActivityPM(string id, int tenant, ref Logitude.Server.Tools.Response response) {
             HypredTest.ActivityProxy.GetActivityPMRequest inValue = new HypredTest.ActivityProxy.GetActivityPMRequest();
             inValue.id = id;
             inValue.tenant = tenant;
@@ -2023,6 +2215,14 @@ namespace HypredTest.ActivityProxy {
         
         public System.Threading.Tasks.Task<HypredTest.ActivityProxy.GetActivityPMResponse> GetActivityPMAsync(HypredTest.ActivityProxy.GetActivityPMRequest request) {
             return base.Channel.GetActivityPMAsync(request);
+        }
+        
+        public Logitude.Server.Tools.Response UploadDocumentFileData(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId) {
+            return base.Channel.UploadDocumentFileData(buffer, fileSize, sentBytes, blockIdsList, bufferNumber, tenant, FileNameWithExtention, DocumentId);
+        }
+        
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UploadDocumentFileDataAsync(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId) {
+            return base.Channel.UploadDocumentFileDataAsync(buffer, fileSize, sentBytes, blockIdsList, bufferNumber, tenant, FileNameWithExtention, DocumentId);
         }
     }
 }

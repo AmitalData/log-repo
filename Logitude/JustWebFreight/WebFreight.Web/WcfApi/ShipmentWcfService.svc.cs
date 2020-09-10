@@ -43,6 +43,7 @@ using System.Data.Entity;
 using Simplog.Server.Infrastructure;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.ComponentModel;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -763,6 +764,27 @@ namespace WebFreight.Web.WcfApi
                             entityPM.NoFreightFile = !hasConnectedShipments;
                         }
 
+                        if(entityPM.DirectionId  != entity.DirectionId)
+                        {
+                           var vResponse = ValidateDirectionConversion(entityPM);
+                            if (vResponse.HasError)
+                            {
+                                return vResponse;
+                            }
+                            else
+                            {
+                                DirectionRepository directionRepository = new DirectionRepository(0);
+                                var directionsList = directionRepository.GetDirections();
+                                var oldDirectionName = directionsList.FirstOrDefault(d => d.Id == entity.DirectionId);
+                                var currentDirectionName = directionsList.FirstOrDefault(d => d.Id == entityPM.DirectionId);
+                                
+                                entityPM.ShipmentDirectionConverted = true;
+                                entityPM.EventNote = "Converted from [" + oldDirectionName + "] to [" + currentDirectionName + "]";
+                            }
+
+                        }
+
+
                         service.Update();
 
                         entityPM.SecurityKey = entity.SecurityKey;
@@ -820,6 +842,85 @@ namespace WebFreight.Web.WcfApi
 
 
         }
+
+        private static Response ValidateDirectionConversion(ShipmentPM entityPM)
+        {
+            Response response = new Response(); 
+            StringBuilder errors = new StringBuilder();
+            var isInlandDomestic = entityPM.TransportModeId == "I" && entityPM.DirectionId == "D";
+            if (isInlandDomestic)
+            {
+                if (string.IsNullOrEmpty(entityPM.ConsigneeId))
+                {
+                    errors.AppendLine("ConsigneeId field is required.");
+                }
+
+                if (string.IsNullOrEmpty(entityPM.ShipperId))
+                {
+                    errors.AppendLine("ShipperId field is required.");
+                }
+
+                if (entityPM.ShipmentLevelCode == "C")
+                {
+
+                    errors.AppendLine("Master inland domestic are not allowed");
+                }
+
+                else if (entityPM.ShipmentLevelCode == "H")
+                {
+                    errors.AppendLine("House inland domestic shipments are not allowed");
+                }
+
+                if (entityPM.ShipmentLevelCode != "C")
+                {
+                    if (!string.IsNullOrEmpty(entityPM.ShipperId) && !string.IsNullOrEmpty(entityPM.ConsigneeId))
+                    {
+                        if (entityPM.FromCountryId != entityPM.ToCountryId)
+                        {
+                            if (entityPM.FromCountryIsEC == false || entityPM.ToCountryIsEC == false)
+                            {
+                                errors.AppendLine("Both Addresses must be in the same country since the direction is Domestic");
+                            }
+                        }
+                    }
+                }
+            }
+
+            else
+            {
+                if (string.IsNullOrEmpty(entityPM.MainCarriageFromPortId))
+                {
+                    errors.AppendLine("MainCarriageFromPortId field is required.");
+                }
+                if (entityPM.DirectionId == "D")
+                {
+                    if (!string.IsNullOrEmpty(entityPM.MainCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.MainCarriageToPortId))
+                    {
+                        if (entityPM.FromCountryId != entityPM.ToCountryId)
+                        {
+                            if (entityPM.FromCountryIsEC == false || entityPM.ToCountryIsEC == false)
+                            {
+                                errors.AppendLine("Both Ports must be in the same country since the direction is Domestic");
+                            }
+                        }
+                    }
+                }
+            }
+
+            //if (entityPM.ShipmentLevelCode != "C")
+            //{
+            //    if (string.IsNullOrEmpty(entityPM.CustomerId))
+            //    {
+            //        errors.AppendLine("CustomerId field is required");
+            //    }
+            //}
+
+            response.HasError = errors.Length > 0;
+            response.ErrorMessage = errors.ToString();
+
+            return response;
+        }
+
 
         public Response Cancel(string shipmentNumber, int tenant)
         {

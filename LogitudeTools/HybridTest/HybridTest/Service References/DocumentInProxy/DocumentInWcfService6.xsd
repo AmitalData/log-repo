@@ -4,6 +4,7 @@
   <xs:import schemaLocation="http://localhost:9996/WcfApi/DocumentInWcfService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" />
   <xs:complexType name="DocumentsFilingPM">
     <xs:sequence>
+      <xs:element minOccurs="0" name="BackedupExternally" type="xs:boolean" />
       <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BlockIdsList" nillable="true" type="q1:ArrayOfstring" />
       <xs:element minOccurs="0" name="BranchId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BufferNumber" type="xs:int" />
@@ -67,6 +68,7 @@
       <xs:element minOccurs="0" name="IsCustomReference" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsCustomerView" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsDigitalSignRequired" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsDigitallySigned" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsFromUnifreightPodMobile" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsHybrid" type="xs:boolean" />
@@ -76,6 +78,7 @@
       <xs:element minOccurs="0" name="IsSharedOut" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsSharedWithCustomer" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsSharedWithForwarder" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsUoloadedField" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsUpdateSharedDocument" type="xs:boolean" />
       <xs:element minOccurs="0" name="LastShareDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="LastVersion" type="xs:int" />

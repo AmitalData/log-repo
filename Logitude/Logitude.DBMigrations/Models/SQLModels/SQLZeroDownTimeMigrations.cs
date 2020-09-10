@@ -54,7 +54,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 connection.Close();
 
-                ExitZeroDownTimeMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
 
             return dbMigrationsSetDefaultValues;
@@ -108,7 +108,7 @@ namespace Logitude.DBMigrations.Models
                 catch (Exception exception)
                 {
                     sqlConnection.Close();
-                    ExitZeroDownTimeMigrations(exception.Message + "\nError Details: " + exception.ToString());
+                    ExitTool("Error: " + exception.Message);
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace Logitude.DBMigrations.Models
             catch (Exception exception)
             {
                 sqlConnection.Close();
-                ExitZeroDownTimeMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
         }
 
@@ -159,7 +159,7 @@ namespace Logitude.DBMigrations.Models
             catch (Exception exception)
             {
                 sqlConnection.Close();
-                ExitZeroDownTimeMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
         }
 
@@ -201,7 +201,8 @@ namespace Logitude.DBMigrations.Models
                         ScriptVersion = Convert.ToInt32(reader["ScriptVersion"].ToString()),
                         ScriptHashValue = reader["ScriptHashValue"].ToString(),
                         ScriptHistoryAction = reader["ScriptHistoryAction"].ToString(),
-                        TargetTableName = reader["TargetTableName"].ToString()
+                        TargetTableName = reader["TargetTableName"].ToString(),
+                        BatchSize = String.IsNullOrEmpty(reader["BatchSize"].ToString()) ? 1000 : Convert.ToInt32(reader["BatchSize"].ToString())
                     };
                     dbMigrationsDataScripts.Add(dbMigrationsDataScript);
                 }
@@ -217,7 +218,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 connection.Close();
 
-                ExitZeroDownTimeMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
 
             return dbMigrationsDataScripts;
@@ -241,24 +242,26 @@ namespace Logitude.DBMigrations.Models
             catch (Exception exception)
             {
                 sqlConnection.Close();
-                ExitZeroDownTimeMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
         }
-
+        
         protected override void ExecuteScriptAsBatches(DBMigrationsDataScript dbMigrationsDataScript)
         {
+            int exceptionSleep = 30000;
+            int retryNumber = 0;
             int affectedRows = 1;
             int scriptExecutionNumber = dbMigrationsDataScript.ScriptExecutionNumber;
             string dbMigrationsDataScriptId = dbMigrationsDataScript.Id;
             string databaseType = dbMigrationsDataScript.DatabaseType;
             string targetTableName = dbMigrationsDataScript.TargetTableName;
+            int batchSize = dbMigrationsDataScript.BatchSize;
+
             string queryString = dbMigrationsDataScript.SxmlScript;
-            //queryString = Regex.Replace(queryString, "[$]Top[$]", "TOP(1000)", RegexOptions.IgnoreCase);
-            //queryString = Regex.Replace(queryString, "[$]UpdateLastCounter[$]", ("[DBMigrationsLastScript] = " + scriptExecutionNumber.ToString()), RegexOptions.IgnoreCase);
             queryString = Regex.Replace(queryString, "[$]LastCounterWhere[$]", "[Id] IN (SELECT Id from @IdsTable)", RegexOptions.IgnoreCase);
 
             queryString = "DECLARE @IdsTable TABLE (Id VARCHAR(20));\n" +
-                          "INSERT INTO @IdsTable SELECT TOP(1000) [Id] FROM [" + targetTableName + "] WHERE [DBMigrationsLastScript] = " + (scriptExecutionNumber - 1).ToString() +
+                          "INSERT INTO @IdsTable SELECT TOP(" + batchSize + ") [Id] FROM [" + targetTableName + "] WHERE [DBMigrationsLastScript] = " + (scriptExecutionNumber - 1).ToString() +
                           (scriptExecutionNumber - 1 == 0 ? " OR [DBMigrationsLastScript] IS NULL" : null) + ";\n" +
                           queryString + "\n" +
                           "UPDATE [" + targetTableName + "] SET [DBMigrationsLastScript] = " + scriptExecutionNumber.ToString() + " WHERE [Id] IN (SELECT Id FROM @IdsTable);\n" +
@@ -277,7 +280,7 @@ namespace Logitude.DBMigrations.Models
                     SqlCommand sqlCommand = new SqlCommand();
                     sqlCommand.Connection = sqlConnection;
                     sqlCommand.CommandText = queryString;
-                    sqlCommand.CommandTimeout = 7200;//ToolConfigurations.AOTScriptsExecutionTimeOut;
+                    sqlCommand.CommandTimeout = ToolConfigurations.AOTScriptsExecutionTimeOut;
                     DateTime batchStartTime = DateTime.Now;
                     affectedRows = sqlCommand.ExecuteNonQuery();
                     DateTime batchEndTime = DateTime.Now;
@@ -285,23 +288,40 @@ namespace Logitude.DBMigrations.Models
 
                     int elapsedTime = (int)(batchEndTime - batchStartTime).TotalMilliseconds;
 
-                    if (affectedRows >= 1000)
+                    if (affectedRows >= batchSize)
                     {
                         UpdateDBMigrationsDataScript(dbMigrationsDataScriptId, "LastBatchElapsedTime", elapsedTime.ToString());
                     }
 
                     string data = batchNumberCounter.ToString() + "," + batchStartTime.ToString() + "," + batchEndTime.ToString() + "," + elapsedTime.ToString() + "," + affectedRows.ToString() + "\n";
-                    AppendToCSVFile(csvFileName, data);
+                    //AppendToCSVFile(csvFileName, data);
 
+                    batchNumberCounter++;
+                    retryNumber = 0;
                     Thread.Sleep(500);
                 }
-                catch (Exception exception)
+                catch (SqlException exception)
                 {
                     sqlConnection.Close();
-                    ExitZeroDownTimeMigrations(exception.Message + "\nError Details: " + exception.ToString());
-                }
 
-                batchNumberCounter++;
+                    if (exception.Number == -2)
+                    {
+                        retryNumber++;
+                        if (retryNumber <= 10)
+                        {
+                            Thread.Sleep(exceptionSleep * retryNumber);
+                        }
+                        else
+                        {
+                            SendEmailsForDataScriptTimeout(dbMigrationsDataScript);
+                            ExitTool("Error: " + exception.Message);
+                        }
+                    }
+                    else
+                    {
+                        ExitTool("Error: " + exception.Message);
+                    }
+                }
             }
         }
 
@@ -343,7 +363,7 @@ namespace Logitude.DBMigrations.Models
             catch (Exception exception)
             {
                 sqlConnection.Close();
-                ExitZeroDownTimeMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
         }
 
@@ -363,7 +383,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected override void CreateDBMigrationsLastDefaultValueColumn(string tableName)
+        protected override void CreateDBMigrationsLastDefaultValueColumn(string databaseType, string tableName)
         {
             string indexOnlineOption = ToolConfigurations.AOTCreateIndexWithOnline ? " WITH (ONLINE = ON)" : null;
 
@@ -373,7 +393,7 @@ namespace Logitude.DBMigrations.Models
                                  "CREATE NONCLUSTERED INDEX [IX_" + tableName + "_DBMigrationsLastDefaultValue] ON [" + tableName + "]([DBMigrationsLastDefaultValue])" + indexOnlineOption + ";\n" +
                                  "END";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
 
             try
             {
@@ -388,11 +408,11 @@ namespace Logitude.DBMigrations.Models
             catch (Exception exception)
             {
                 sqlConnection.Close();
-                ExitZeroDownTimeMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
         }
 
-        protected override void CreateDBMigrationsLastScriptColumn(string tableName)
+        protected override void CreateDBMigrationsLastScriptColumn(string databaseType, string tableName)
         {
             string indexOnlineOption = ToolConfigurations.AOTCreateIndexWithOnline ? " WITH (ONLINE = ON)" : null;
 
@@ -402,7 +422,7 @@ namespace Logitude.DBMigrations.Models
                                  "CREATE NONCLUSTERED INDEX [IX_" + tableName + "_DBMigrationsLastScript] ON [" + tableName + "]([DBMigrationsLastScript])" + indexOnlineOption + ";\n" +
                                  "END";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
 
             try
             {
@@ -417,11 +437,11 @@ namespace Logitude.DBMigrations.Models
             catch (Exception exception)
             {
                 sqlConnection.Close();
-                ExitZeroDownTimeMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
         }
 
-        protected override void CreateResetLastScriptTrigger(string tableName)
+        protected override void CreateResetLastScriptTrigger(string databaseType, string tableName)
         {
             string queryString = "IF NOT EXISTS (SELECT * FROM sys.objects WHERE [type] = 'TR' and [name] = 'TR_ResetLastScript_" + tableName + "')\n" +
                 "BEGIN\n" +
@@ -437,7 +457,7 @@ namespace Logitude.DBMigrations.Models
                 "END" +
                 "END";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
 
             try
             {
@@ -451,30 +471,30 @@ namespace Logitude.DBMigrations.Models
             catch (Exception exception)
             {
                 sqlConnection.Close();
-                ExitZeroDownTimeMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
         }
 
         protected override void SetZeroDownTimeSession()
         {
-            string queryString = "EXEC sp_set_session_context 'ZeroDownTimeMode', 1;";
+            //string queryString = "EXEC sp_set_session_context 'ZeroDownTimeMode', 1;";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            //SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);??
 
-            try
-            {
-                sqlConnection.Open();
-                SqlCommand sqlCommand = new SqlCommand();
-                sqlCommand.Connection = sqlConnection;
-                sqlCommand.CommandText = queryString;
-                sqlCommand.ExecuteNonQuery();
-                sqlConnection.Close();
-            }
-            catch (Exception exception)
-            {
-                sqlConnection.Close();
-                ExitZeroDownTimeMigrations(exception.Message);
-            }
+            //try
+            //{
+            //    sqlConnection.Open();
+            //    SqlCommand sqlCommand = new SqlCommand();
+            //    sqlCommand.Connection = sqlConnection;
+            //    sqlCommand.CommandText = queryString;
+            //    sqlCommand.ExecuteNonQuery();
+            //    sqlConnection.Close();
+            //}
+            //catch (Exception exception)
+            //{
+            //    sqlConnection.Close();
+            //    ExitTool("Error: " + exception.Message);
+            //}
         }
     }
 }
