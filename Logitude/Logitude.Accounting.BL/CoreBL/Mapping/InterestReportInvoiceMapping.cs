@@ -1,236 +1,26 @@
-﻿using Logitude.Accounting.BL.CoreBL;
-using Logitude.Accounting.BL.CoreBL.InterestReport;
-using Logitude.Accounting.BL.CoreBL.Mapping;
-using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.BL.InterestService;
-using Logitude.Accounting.BL.InterestService.HelperClasses;
-using Logitude.Accounting.Data;
+﻿using Logitude.Accounting.BL.CoreBL.InterestReport;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.InvoiceModel.Tools.EntityService;
-using Logitude.BL.Resolvers;
-using Logitude.Infrastructure.BL.EntityPMs;
-using Logitude.Infrastructure.BL.EntityUpdateServices;
-using Logitude.Infrastructure.BL.ExtendedServices;
-using Logitude.Infrastructure.Data;
-using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.QueueService;
-using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
-namespace Logitude.Accounting.BL.CoreBL.Batch
+namespace Logitude.Accounting.BL.CoreBL.Mapping
 {
-    public class BatchInterestReportInvoiceService : BatchTaskExecutionsService
+    public class InterestReportInvoiceMapping
     {
-       private InterestReportQueryService interestReportQueryService;
-        private UserPM userPM;
-        private BatchTaskExecutionPM BatchTaskExecution;
-        public BatchInterestReportInvoiceService(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
-        {
-            BatchTaskExecution = batchTaskExecution ;
- 
-        }
- 
-        public override void RunCode()
-        {
-            try
-            {
-                InterestReportArguments interestReportArgs = GetInterestReportArgs();
-                interestReportQueryService = new InterestReportQueryService(interestReportArgs.Tenant);
-                UserQuery userQuery = new UserQuery(interestReportArgs.Tenant);
-                userPM = userQuery.GetSinglePMByEmail(interestReportArgs.Email, interestReportArgs.Tenant);
-                if (userPM==null)
-                {
-                    userPM = userQuery.GetSinglePMByEmail(interestReportArgs.Email, 0);
-                }
-                CreateInvoicesForInterestReports(interestReportArgs);
-            }
-            catch (Exception e)
-            {
-                throw new Exception("\n" + e.Message + "\n" + e.StackTrace);
-            }
-        }
-
- 
-        private void CreateInvoicesForInterestReports(InterestReportArguments interestReportArguments) 
-        {
-            InterestReportArgs args = new InterestReportArgs();
-            args.Tenant = interestReportArguments.Tenant;
-            args.Email = interestReportArguments.Email;
-            args.InvoiceDate = interestReportArguments.InvoiceDate;
-            if (interestReportArguments.AllSelected)
-            {
-                List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant, interestReportArguments.ExcludedIds == null ? new List<string>() : interestReportArguments.ExcludedIds);
-
-                foreach (InterestReportPM report in interestReports)  
-                {
-               
-                    CreateInvoiceForReportPM(args, interestReportArguments, report);
-                }
-            }
-            else
-            {
-                foreach (string ReportId in interestReportArguments.SelectedIds)
-                {
-                    InterestReportPM  interestReport = interestReportQueryService.GetSingle(ReportId, false,true);
-                    CreateInvoiceForReportPM(args, interestReportArguments, interestReport);
-                }
-            }
-           
-        }
-
-        private void CreateInvoiceForReportPM(InterestReportArgs args, InterestReportArguments interestReportArguments, InterestReportPM interestReport)
-        {
-            args.ReportNumber = interestReport.ReportNumber;
-            args.InterestReportId = interestReport.Id;
-            args.Tenant = interestReportArguments.Tenant;
-            if (interestReport.InterestReportStatusCode == "1" || interestReport.InterestReportStatusCode == "9")
-            {
-                UpdateInterestReportsStatues(interestReport, interestReportArguments.Tenant, "8");
-                UpdateAndCreateInvoiceForInterestReport(args, interestReport);
-            }
-        }
-        private void UpdateAndCreateInvoiceForInterestReport(InterestReportArgs interestReportArgs, InterestReportPM interestReport)
-        {
-            try
-            {
-                interestReport = interestReportQueryService.GetSingle(interestReportArgs.InterestReportId, false, true);
-                CreateInvoiceForInterestReport(interestReportArgs, interestReport);
-            }
-
-            catch (Exception e)
-            {
-                BatchTaskExecution.ErrorLog += "\n"+"Report # "+interestReport.ReportNumber + " " + e.Message;
-                UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "9",null, e.Message);
-            }
-
-          
-        }
-        private InterestReportArguments GetInterestReportArgs()
-        {
-            string xmlParameters = BatchTaskExecution.PrametersXml;
-            System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
-            XmlSerializer serializer = new XmlSerializer(typeof(InterestReportArguments));
-            InterestReportArguments interestReportArgs = serializer.Deserialize(stringReader) as InterestReportArguments;
-            return interestReportArgs;
-        }
-        private void CreateInvoiceForInterestReport(InterestReportArgs interestReportArgs, InterestReportPM interestReport)
-        {
-            if (interestReport.TotalAmount == null || interestReport.TotalAmount <= interestReport.GLAccountMinimumInterest)
-            {
-                IAccountingContext iAccountingContext = AccountingContext.GetContext(interestReportArgs.Tenant);
-                InterestReportService interestReportService = new InterestReportService(); 
-                interestReport = interestReportService.PutConfirmCreateInvoice(interestReport, interestReportArgs.Tenant, iAccountingContext); 
-            }
-            else
-            {
-                ARInvoicePM aRInvoicePM = FullMapInvoice(interestReportArgs, interestReport);
-                CheckVatNumber(interestReportArgs.Tenant, aRInvoicePM);
-                IInvoiceContext invoiceContext = InvoiceContext.GetContext(interestReportArgs.Tenant);
-                ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, interestReportArgs.Tenant);
-                invoiceService.Create(aRInvoicePM);
-                UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
-            }
-        }
-        private void CheckVatNumber(int Tenant, ARInvoicePM aRInvoicePM)
-        {
-            bool isFieldRequired = false;
-            AccountingSettingRepository accountingSettingsRepository = new AccountingSettingRepository(Tenant);
-            AccountingSetting iAccountingSetting = accountingSettingsRepository.GetSingleAccountSetting(Tenant);
-
-            if (iAccountingSetting.IsVatNumberMandatoryInAR)
-            {
-                if (string.IsNullOrEmpty(aRInvoicePM.VatNumber))
-                {
-                    isFieldRequired = true;
-                }
-                if (isFieldRequired== true)
-                {
-                    ContactPM contactLocal = GetLoggedContact(Tenant);
-                    bool showLocals = !contactLocal.DontShowLocal;
-                    string ErrorMessage = TextCodesTranslator.TranslateText("General.M.FieldIsRequired", Tenant, showLocals);
-                    ErrorMessage = ErrorMessage.Replace("%FieldName", TextCodesTranslator.TranslateText("ARInvoice.F.VatNumber", Tenant, showLocals));
-                    throw new Exception(ErrorMessage);
-                }
-             }
-        }
-        private void UpdateInterestReportsStatues(InterestReportPM interestReportPM, int Tenant, string Statues, ARInvoicePM aRInvoicePM = null, string InvoiceFailureReason=null)
-        {
-            var accountingContext = AccountingContext.GetContext(Tenant);
-
-            interestReportPM.InterestReportStatusCode = Statues;
-            interestReportPM.UpdatedByUserId = userPM.Id;
-            interestReportPM.UpdateDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
-            if (InvoiceFailureReason!=null)
-            {
-                interestReportPM.InvoiceFailureReason = InvoiceFailureReason;
-
-            }
-            if (aRInvoicePM != null)
-            {
-                interestReportPM.ARinvoiceId = aRInvoicePM.Id;
-                interestReportPM.InvoiceAmount = (decimal?)aRInvoicePM.AmountInLocalCurrency;
-            }
-            interestReportPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-            InterestReportUpdateService service = new InterestReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
-            interestReportPM.IsUpdatedFromBatch = true;
-            service.Update(interestReportPM, true);
-
-        }
-  
-        private ARInvoicePM FullMapInvoice(InterestReportArgs interestReportArgs, InterestReportPM interestReport)
-        {
-            CardQuery cardQueryService = new CardQuery(interestReportArgs.Tenant);
-            CardPM cardPM = cardQueryService.GetSinglePM(interestReport.CustomerId, interestReportArgs.Tenant);
-
-            TenantQuery tenantQuery = new TenantQuery(interestReportArgs.Tenant);
-            TenantPM tenantPM = tenantQuery.GetSinglePM(interestReportArgs.Tenant);
-
-            ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(interestReportArgs.Tenant);
-            ChargesTypePM chargesType = chargesTypeQuery.GetSinglePMByCode("INT", interestReportArgs.Tenant);
-
-            VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(interestReportArgs.Tenant);
-            VatTypePercentagePM vatTypePercentagePM = vatTypePercentageQuery.GetVatTypePercentagesForVatType(interestReportArgs.Tenant, chargesType.VatTypeId).ToList()[0];
-
-            ObjectTableQuery objectTableQuery = new ObjectTableQuery(interestReportArgs.Tenant);
-            string ObjectTableId = objectTableQuery.GetObjectTableIdByName("InterestReport");
-
-            string email = "system@tenant" + interestReportArgs.Tenant.ToString() + ".com";
-            AuthenticationUtil.AuthenticatedUserEmail = email;
-
-            InterestReportInvoiceMapping interestReportInvoiceMapping = new InterestReportInvoiceMapping();
-            ARInvoicePM aRInvoicePM = interestReportInvoiceMapping.MapARInvoice(interestReportArgs, interestReport, tenantPM, userPM, cardPM);
-            ARInvoiceEntityPM aRInvoiceEntityPM = interestReportInvoiceMapping.MapARInvoiceEntity(interestReportArgs, ObjectTableId);
-            ARInvoiceLinePM aRInvoiceLinePM = interestReportInvoiceMapping.MapARInvoiceLine(interestReport, tenantPM, chargesType, vatTypePercentagePM);
-
-            aRInvoicePM.InvoiceEntities.Add(aRInvoiceEntityPM);
-            aRInvoicePM.InvoiceLines.Add(aRInvoiceLinePM);
-
-            return aRInvoicePM;
-
-        }
-
-        private ARInvoicePM MappingARInvoice(InterestReportArgs interestReportArgs, InterestReportPM interestReport, TenantPM tenantPM, UserPM userPM, CardPM cardPM)
+        public ARInvoicePM MapARInvoice(InterestReportArgs interestReportArgs, InterestReportPM interestReport, TenantPM tenantPM, UserPM userPM, CardPM cardPM)
         {
             ARInvoicePM aRInvoicePM = new ARInvoicePM();
             aRInvoicePM.ARInvoiceTypeCode = "IT";
@@ -247,7 +37,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoicePM.AmountInInvoiceCurrency = (double?)interestReport.TotalAmount;
             aRInvoicePM.AmountInProfitCurrency = (double?)interestReport.TotalAmount;
             aRInvoicePM.BranchId = userPM.BranchId;
-            aRInvoicePM.InvoiceDate = interestReportArgs.InvoiceDate;
+            aRInvoicePM.InvoiceDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
             aRInvoicePM.CreateDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
             aRInvoicePM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
             aRInvoicePM.IssuedByUserId = userPM.Id;
@@ -261,7 +51,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoicePM.IsGeneralInvoice = true;
             aRInvoicePM.IsFullAccounting = true;
             aRInvoicePM.SetApproved = true;
-            //aRInvoicePM.DueDate = aRInvoicePM.InvoiceDate;
+
             if (!string.IsNullOrEmpty(cardPM.SATPaymentMethodCode))
             {
                 aRInvoicePM.SATPaymentMethodCode = cardPM.SATPaymentMethodCode;
@@ -294,6 +84,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             return aRInvoicePM;
         }
+
         private ARInvoicePM SetCurrencyRateData(ARInvoicePM aRInvoicePM, TenantPM tenantPM)
         {
             double? myRate = null;
@@ -325,7 +116,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             return aRInvoicePM;
         }
-        private ARInvoiceEntityPM MappingARInvoiceEntity(InterestReportArgs interestReportArgs, string ObjectTableId)
+        public ARInvoiceEntityPM MapARInvoiceEntity(InterestReportArgs interestReportArgs, string ObjectTableId)
         {
             ARInvoiceEntityPM aRInvoiceEntityPM = new ARInvoiceEntityPM();
             aRInvoiceEntityPM.Tenant = interestReportArgs.Tenant;
@@ -334,7 +125,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoiceEntityPM.ObjectTableId = ObjectTableId;
             return aRInvoiceEntityPM;
         }
-        private ARInvoiceLinePM MappingARInvoiceLine(InterestReportPM interestReport, TenantPM tenantPM, ChargesTypePM chargesType, VatTypePercentagePM vatTypePercentagePM, ARInvoicePM aRInvoicePM)
+        public ARInvoiceLinePM MapARInvoiceLine(InterestReportPM interestReport, TenantPM tenantPM, ChargesTypePM chargesType, VatTypePercentagePM vatTypePercentagePM)
         {
             ARInvoiceLinePM aRInvoiceLinePM = new ARInvoiceLinePM();
             aRInvoiceLinePM.Tenant = tenantPM.Id;
@@ -342,7 +133,6 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoiceLinePM.ForiegnCurrencyCode = tenantPM.CurrencyCode;
             aRInvoiceLinePM.InvoiceCurrencyCode = tenantPM.CurrencyCode;
             aRInvoiceLinePM.ForiegnCurrencyId = tenantPM.CurrencyId;
-            aRInvoiceLinePM.DateForInterest = aRInvoicePM.InvoiceDate;
             if (interestReport.TotalAmount == null)
             {
                 aRInvoiceLinePM.UnitPrice = 0;
@@ -365,7 +155,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoiceLinePM.ChargesTypeId = chargesType.Id;
             aRInvoiceLinePM.VatTypeId = chargesType.VatTypeId;
             aRInvoiceLinePM.VatPercentage = vatTypePercentagePM.Percentage;
-            aRInvoiceLinePM.GLAccountId = chargesType.ReceivableCreditGLAccountId;
+            aRInvoiceLinePM.GLAccountId = interestReport.GLAccountId;
             if (aRInvoiceLinePM.ForiegnCurrencyAmount == null || aRInvoiceLinePM.LocalCurrencyAmount == null || aRInvoiceLinePM.LocalCurrencyAmount == 0)
             {
                 aRInvoiceLinePM.ForiegnExchangeRate = 0;
@@ -381,16 +171,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
         }
 
-        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
-        public static ContactPM GetLoggedContact(int tenant)
-        {
-            if (OverrideGetLoggedContactFunc != null)
-            {
-                return OverrideGetLoggedContactFunc(tenant);
-            }
-            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
-            return loggedcontact;
-        }
+
         private List<LastRate> GetCurrenciesExchangeRateByValueDate(int tenant, string baseCurrencyId, DateTime? date)
         {
 
@@ -436,7 +217,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
             return resultList;
         }
-        private ARInvoicePM InitializeDueDate(ARInvoicePM entityPM)
+        private ARInvoicePM InitializeDueDate(ARInvoicePM entityPM)// make sure it goes with the new adjustment
         {
             if (entityPM.DueDate == null)
             {

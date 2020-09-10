@@ -33,14 +33,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
         public override void RunCode()
         {
             InterestReportArguments interestReportArgs = GetInterestReportArgs();
-            if (interestReportArgs.AllSelected)
-            {
-                UpdateStatusForALLNotInvoicedInterestReports(interestReportArgs, interestReportArgs.Tenant);
-            }
-            else
-            {
-                UpdateStatusForSelectedInterestReport(interestReportArgs, interestReportArgs.Tenant);
-            }
+           
         }
 
         private InterestReportArguments GetInterestReportArgs()
@@ -52,39 +45,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             return interestReportArgs;
         }
 
-        private void UpdateStatusForSelectedInterestReport(InterestReportArguments interestReportArgs, int tenant)
-        {
-            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-            List<InterestReportPM> interestReports = interestReportQueryService.GetInterestReportsByIds(interestReportArgs.SelectedIds, tenant);
-            UpdateInterestReports(interestReports, tenant);
-
-        }
-        private void UpdateInterestReports(List<InterestReportPM> interestReports, int tenant)
-        {
-            var accountingContext = AccountingContext.GetContext(tenant);
-            foreach (InterestReportPM report in interestReports)
-            {
-                report.InterestReportStatusCode = "8";
-                report.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                InterestReportUpdateService service = new InterestReportUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
-                report.IsUpdatedFromBatch = true;
-                service.Update(report, true);
-            }
-        }
-
-        private void UpdateStatusForALLNotInvoicedInterestReports(InterestReportArguments interestReportArgs, int tenant)
-        {
-            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-
-            List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArgs.FromDate, interestReportArgs.ToDate, tenant);
-
-            if (interestReportArgs.ExcludedIds != null)
-            {
-                interestReports = (from a in interestReports
-                                   where !interestReportArgs.ExcludedIds.Contains(a.Id)
-                                   select a).ToList();
-            }
-            UpdateInterestReports(interestReports, tenant);
-        }
+       
+        
+ 
     }
 }

@@ -822,9 +822,8 @@ namespace WebFreight.Web.Helpers
             }
             else if (column.ObjectFieldName.Contains("ShipmentNumber_"))
             {
-                value = GetPropertyValue(entity, "PartnerName") + " ";
-                if (column.ObjectFieldName.Split('_')[1] == "MyShipments") value += GetPropertyValue(entity, "CustomerReference1");
-                else value += GetPropertyValue(entity, "ForwarderShipmentNumber");
+                if (column.ObjectFieldName.Split('_')[1] == "MyShipments") value = GetPropertyValue(entity, "CustomerReference1");
+                else value = GetPropertyValue(entity, "ForwarderShipmentNumber");
             }
             else
             {

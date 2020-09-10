@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExternalReconciliationUpdateClass
    {  		
-		public const string HashString = "203c3f9e936280d440756176a54a66a5";
+		public const string HashString = "c0b461c76207cf428c6916cdf988b628";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "External Reconciliation",
-			      				    Code =  "0676",
+			      				    Code =  "6f9d",
 			      				    Name =  "ExternalReconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1110,6 +1110,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOblockTwoTransferOnePageLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.blockTwoTransferOnePageLine", DefaultText = "There is two transfer transactions selected, you can select page line only if one transfer ledger is selected",LocalDefaultText = null, ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOOnlyOneTransferTransactionCanReconciledWithOnePageLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.OnlyOneTransferTransactionCanReconciledWithOnePageLine", DefaultText = "Only one transfer transaction can be reconciled with only one page line in one time",LocalDefaultText = @"ניתן לפרוע  שיק אחד בכל פעולה , יש לסמן שורה אחת  מכרטיס שקים לפרעון ", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOSelectOneAutoRecoMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.SelectOneAutoRecoMethod", DefaultText = "At least one Automatic Reconcile method should be selected",LocalDefaultText = @"יש לסמן לפחות שיטת התאמה אחת", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOCantAutoRecoByRefDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.CantAutoRecoByRefDate", DefaultText = "You cannot automatically reconcile only by reference date. It must be paired with another option",LocalDefaultText = @"לא ניתן לבצע התאמה אוטומטית לפי תאריך אסמכתא בלבד", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

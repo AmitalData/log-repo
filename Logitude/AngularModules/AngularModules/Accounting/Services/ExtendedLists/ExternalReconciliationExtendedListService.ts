@@ -7,7 +7,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {LedgerTransactionList} from '../../EntityLists/LedgerTransactionList';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
- 
+
 @Injectable()
 
 export class ExternalReconciliationExtendedListService {
@@ -15,14 +15,14 @@ export class ExternalReconciliationExtendedListService {
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor() {
-    
+
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExternalReconciliation';
     }
 
     getExternalAutomaticReconcilationsByFilter(args: ExternalAutoReconcileServiceArgs)
     {
-   
+
 
         var url = this._apiUrl + "/GetExternalAutomaticReconcilationsByFilter";
 
@@ -32,8 +32,8 @@ export class ExternalReconciliationExtendedListService {
             + '&refDateReconcile=' + args.refDateReconcile
             + '&objectTableId=' + args.objectTableId
             + '&entityId=' + args.entityId
-            + '&glAccountId=' + args.glAccountId
-            + '&filters=' + args.filters;
+            + '&glAccountId=' + args.glAccountId;
+            // + '&filters=' + args.filters;
 
 
         var mykeys = Object.keys(args.filters);
@@ -60,11 +60,11 @@ export class ExternalReconciliationExtendedListService {
         if (addtionalFiltersValues) {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
-  
+
 
 
         var callUrl = url.concat(urlparameters);
-        
+
         return this.httpClient.get(callUrl,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var serviceResponse: ServiceResponse;
@@ -74,7 +74,7 @@ export class ExternalReconciliationExtendedListService {
                 var result = new AutoSelectedExternalReconciliationLines();
                 result = serviceResponse.Result.Result;
 
-              
+
                 result.Count = serviceResponse.Result.Count;
 
                 console.log("[Result]", result);
@@ -82,12 +82,12 @@ export class ExternalReconciliationExtendedListService {
                 serviceResponse.Result = result;
                 return serviceResponse;
             }),
-            catchError(ServiceHelper.HandleServiceError)); 
+            catchError(ServiceHelper.HandleServiceError));
 
     }
 
     getGenerateTestRecordsForExternalReco(bankAccountId: string, glAccountId: string, type: string) {
-     
+
 
         var url = this._apiUrl + "/GetGenerateTestRecordsForExternalReco";
 
@@ -104,9 +104,9 @@ export class ExternalReconciliationExtendedListService {
 
                 return serviceResponse;
             }),
-            catchError(ServiceHelper.HandleServiceError)); 
+            catchError(ServiceHelper.HandleServiceError));
 
-     
+
     }
 
 
@@ -124,7 +124,7 @@ export class ExternalReconciliationExtendedListService {
 
         return entityList;
     }
-   
+
 }
 
 export class AutoSelectedExternalReconciliationLines {

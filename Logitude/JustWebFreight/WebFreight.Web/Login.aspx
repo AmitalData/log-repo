@@ -1727,9 +1727,9 @@
 
             }
 
-            if(document.location.href.indexOf('?Menu=protractor')>0){
-			    document.location.href = document.location.href.replace("?Menu=protractor", "").replace("/Login.aspx", "/").replace("/login.aspx", "/") + angularUrl;
-			}
+            if (document.location.href.indexOf('?Menu=') > 0) {
+                document.location.href = document.location.href.replace("/Login.aspx", "/").replace("/login.aspx", "/").split('?')[0] + angularUrl;
+            }
 			else{
                 document.location.href = document.location.href.replace("/Login.aspx", "/").replace("/login.aspx", "/") + angularUrl;
 			}
