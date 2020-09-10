@@ -5,6 +5,7 @@ import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeCo
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
+import { FeatureToggleList } from '../../../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({    
     templateUrl: './WarehouseGeneralTabComponent.html',
@@ -15,12 +16,20 @@ export class WarehouseGeneralTabComponent extends BaseComponent {
     public ObjectTableName: string = "Warehouse";
     public DataContext: WarehouseGeneralTabComponent = this;
     public IsWarehouseFirmCodeVisible = false;
+    public IsStoragePricingVisible: boolean = false;
+    private pricingFeatureToggle: FeatureToggleList;
 
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+
         if (SessionLocator.TenantPM.CountryCode.toUpperCase() == "US") {
             this.IsWarehouseFirmCodeVisible = true;
+        }
+
+        this.pricingFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "STR" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (this.pricingFeatureToggle && this.TypeCode == "BO") {
+            this.IsStoragePricingVisible = true;
         }
     }
 
@@ -79,6 +88,14 @@ export class WarehouseGeneralTabComponent extends BaseComponent {
                 this.EntityPM.AirWeightRoundingCode = "NON";
                 this.EntityPM.OceanWeightRoundingCode = "NON";
                 this.EntityPM.InlandWeightRoundingCode = "NON";
+
+                if (this.pricingFeatureToggle) {
+                    this.IsStoragePricingVisible = true;
+                }
+            }
+
+            else {
+                this.IsStoragePricingVisible = false;
             }
         }
     }

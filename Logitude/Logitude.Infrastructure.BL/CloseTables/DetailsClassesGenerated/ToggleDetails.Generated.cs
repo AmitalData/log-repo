@@ -118,6 +118,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "Horse", 
                 SearchFields = "HRS,Horse", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "STR", 
+                SearchFields = "STR,Storage Pricing", 
+                Name = "Storage Pricing", 
+			});
 			
             return all;
        }

@@ -56,6 +56,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     public StoragePricingMessageVisible: boolean = false;
     public DisableNewWarehouseEntryButton: boolean = false;
     private warehouseType: string;
+    public IsStoragePricingAreaVisible: boolean = false;
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -116,6 +117,11 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 if (FeatureLocator.HasFeaturePermession("WarehouseEntry", "Module")) {
                     this.IsShowNewWarehouseEntryButton = true;
                 }
+            }
+
+            var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "STR" && d.TenantNumber == SessionLocator.Tenant)[0];
+            if (FeatureToggle) {
+                this.IsStoragePricingAreaVisible = true;
             }
 
             this.GetShipmentDirection();
