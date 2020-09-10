@@ -50,7 +50,6 @@ namespace WebFreight.Web.WebServices
         {
             StiReport report = new StiReport();
             report.ReportName = @".mrt";
-            
         }
 
         [WebMethod]
@@ -59,7 +58,6 @@ namespace WebFreight.Web.WebServices
                 ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                 string result = exportDocumentHelper.ExportDocument2Pdf(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId);
                 return result;
-      
         }
 
         [WebMethod]
@@ -88,6 +86,14 @@ namespace WebFreight.Web.WebServices
         {
             ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
             return exportDocumentHelper.BuildInvoiceDocument(invoiceId, documentOutId, tenant);
+        }
+
+
+        [WebMethod]
+        public void BuildDocsOut(BuildDocsOutArgs buildDocsOutArgs )
+        {
+            BuildDocsOutService buildDocsOutService = new BuildDocsOutService();
+            buildDocsOutService.BuildDocumentOut(new BuildDocsOutArgs() { EntityId = buildDocsOutArgs.EntityId, DocumentTypeId = buildDocsOutArgs.DocumentTypeId, LoggedUserId = buildDocsOutArgs.LoggedUserId, ObjectTableId = buildDocsOutArgs.ObjectTableId, Tenant = buildDocsOutArgs.Tenant });
         }
 
     }
