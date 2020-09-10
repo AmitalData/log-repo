@@ -44,7 +44,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.PerformanceLogger
                
                
                 _MyQueuePerformanceM.Add(newQue);
-                if (DateTime.Now.Subtract(_LastTimeWriteCSV) > TimeSpan.FromMinutes(15))
+                if (DateTime.Now.Subtract(_LastTimeWriteCSV) > TimeSpan.FromMinutes(5))
                 {
                     _LastTimeWriteCSV = DateTime.Now;
                     WriteCSV();
