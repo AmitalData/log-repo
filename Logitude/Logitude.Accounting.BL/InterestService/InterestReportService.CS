@@ -312,7 +312,7 @@ namespace Logitude.Accounting.BL.InterestService
 
         }
 
-        public IQueryable<InterestTransactionList> GetIQueryableInterestTransactionLists(string ReportId,int Tenant, IAccountingContext MyContext)
+        public IQueryable<InterestTransactionList> GetIQueryableInterestTransactionLists(string ReportId,int Tenant, IAccountingContext MyContext=null)
         {
             if (MyContext==null)
             {
