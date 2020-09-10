@@ -65,8 +65,7 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogLov
-                                [ObjectFieldName]="'CourierPendingReasonCode'"
+                        <LogLov [ObjectFieldName]="'CourierPendingReasonCode'"
                                 [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'Customs.CourierPendingReason'"
@@ -91,6 +90,19 @@
                     <td></td>
                 </tr>
 
+                <!-- KeywordsList -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'SearchByFieldCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <ComboBox [ItemsSource]="SearchByFieldCodes" [SelectedItem]="SelectedItemSearchByField" [Binding]="'Value'" (SelectedItemChanged)="SearchByFieldCodeClicked($event.Key)"></ComboBox>
+
+                        
+                    </td>
+                    <td></td>
+                </tr>
 
                 <tr>
                     <td></td>
