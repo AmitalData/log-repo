@@ -25,21 +25,21 @@ namespace Logitude.DBMigrations.Models
         public static string ToEmailAddresses;
 
 
-        public static string GetConnectionString(string dbType)
+        public static string GetConnectionString(string databaseType)
         {
-            if (dbType == "Global")
+            if (databaseType.ToLower() == "Global".ToLower())
             {
                 return GlobalConnectionString;
             }
-            else if (dbType == "Main")
+            else if (databaseType.ToLower() == "Main".ToLower())
             {
                 return MainConnectionString;
             }
-            else if (dbType == "SystemLogs")
+            else if (databaseType.ToLower() == "SystemLogs".ToLower())
             {
                 return SystemLogsConnectionString;
             }
-            else if (dbType == "CargoTracking")
+            else if (databaseType.ToLower() == "CargoTracking".ToLower())
             {
                 return CargoTrackingConnectionString;
             }
