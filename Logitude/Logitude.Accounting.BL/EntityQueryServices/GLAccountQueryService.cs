@@ -219,7 +219,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
         public IQueryable<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType, string chartOfAccountsId, 
-    bool IncludeChildAccounts,string ChartOfAccountsTypeCode, string salesmanId)
+    bool IncludeChildAccounts,string ChartOfAccountsTypeCode, string salesmanId,bool includeControlAccount)
         {
            // List<String> allIdAccounts = new List<string>() { GLAccountId };
             IQueryable<string> allIdAccounts = repository.GetQId(new List<string>() { GLAccountId }, tenant);
@@ -229,7 +229,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 || !String.IsNullOrWhiteSpace(salesmanId)
                 )
             {
-                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId);
+                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId, includeControlAccount);
                  //   .ToList();
             }
 
