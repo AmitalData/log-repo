@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="126aa451-97d7-43a5-a9d2-53f7ab665970" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8b3c3c6e-3d52-4c14-b2d4-1e9560dac3a0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,15 +19,15 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:9996/wcfapi/ExternalTasksQueueWcfService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:9996/WcfApi/ExternalTasksQueueWcfService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ExternalTasksQueueWcfService1.wsdl" MetadataType="Wsdl" ID="ce21b1fe-54ed-4486-95d7-3740f288aaa2" SourceId="1" SourceUrl="http://localhost:9996/wcfapi/ExternalTasksQueueWcfService.svc?wsdl" />
-    <MetadataFile FileName="ExternalTasksQueueWcfService4.xsd" MetadataType="Schema" ID="77eaa4f2-596d-4a2b-bc82-b07d3f177b06" SourceId="1" SourceUrl="http://localhost:9996/wcfapi/ExternalTasksQueueWcfService.svc?xsd=xsd1" />
-    <MetadataFile FileName="ExternalTasksQueueWcfService41.xsd" MetadataType="Schema" ID="f09d0dd4-d01e-4342-8883-772253131597" SourceId="1" SourceUrl="http://localhost:9996/wcfapi/ExternalTasksQueueWcfService.svc?xsd=xsd2" />
-    <MetadataFile FileName="ExternalTasksQueueWcfService42.xsd" MetadataType="Schema" ID="1fa0f8fd-05c8-452e-9f83-f75a89d41645" SourceId="1" SourceUrl="http://localhost:9996/wcfapi/ExternalTasksQueueWcfService.svc?xsd=xsd3" />
-    <MetadataFile FileName="ExternalTasksQueueWcfService43.xsd" MetadataType="Schema" ID="b0b230b9-aea6-45af-9314-3205bf25ff08" SourceId="1" SourceUrl="http://localhost:9996/wcfapi/ExternalTasksQueueWcfService.svc?xsd=xsd0" />
-    <MetadataFile FileName="ExternalTasksQueueWcfService1.disco" MetadataType="Disco" ID="7140f255-5072-419f-b4e2-7f076ab4b9c7" SourceId="1" SourceUrl="http://localhost:9996/wcfapi/ExternalTasksQueueWcfService.svc?disco" />
+    <MetadataFile FileName="ExternalTasksQueueWcfService.xsd" MetadataType="Schema" ID="6e338661-5d78-46b9-9f88-1859df86ca5c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ExternalTasksQueueWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ExternalTasksQueueWcfService1.xsd" MetadataType="Schema" ID="5fea7047-08e6-4c2c-8696-8d9dfd0f27f7" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ExternalTasksQueueWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ExternalTasksQueueWcfService.disco" MetadataType="Disco" ID="e537432d-8dc7-4e77-911b-ebd245a6472d" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ExternalTasksQueueWcfService.svc?disco" />
+    <MetadataFile FileName="ExternalTasksQueueWcfService.wsdl" MetadataType="Wsdl" ID="8c49ca47-f78c-44f1-a075-ff86958865b5" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ExternalTasksQueueWcfService.svc?wsdl" />
+    <MetadataFile FileName="ExternalTasksQueueWcfService2.xsd" MetadataType="Schema" ID="ca21e4bb-15cc-40c1-b4ad-2a8278414667" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ExternalTasksQueueWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ExternalTasksQueueWcfService3.xsd" MetadataType="Schema" ID="585ba865-a1d9-41f7-8ed3-d1197167c6a9" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ExternalTasksQueueWcfService.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

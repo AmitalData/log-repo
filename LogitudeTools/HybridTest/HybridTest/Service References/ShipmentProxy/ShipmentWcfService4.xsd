@@ -12,6 +12,7 @@
       <xs:element minOccurs="0" name="CustomerCareUserEmail" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Deleted" type="xs:boolean" />
       <xs:element minOccurs="0" name="EntityId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EntityNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EventDateTime" type="xs:dateTime" />
       <xs:element minOccurs="0" name="EventTypeCategoryCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EventTypeCode" nillable="true" type="xs:string" />
