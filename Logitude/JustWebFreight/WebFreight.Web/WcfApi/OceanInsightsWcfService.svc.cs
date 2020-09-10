@@ -2,6 +2,7 @@
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -77,7 +78,8 @@ namespace WebFreight.Web.WcfApi
                     //Table.Add("CARRIER_SCAC", ScacCode);
                     //Table.Add("TOKEN", "a020db8267898a2502414e8479215ed32de41106");
                     //Table.Add("REQ_ID","142707");
-                    ContainerTasks Task = new ContainerTasks();
+                    bool UseOIV2 = FeatureToggleHelper.HasFeatureToggle("OI2", 0);
+                    ContainerTasks Task = new ContainerTasks(UseOIV2);
                     string Result;
                     string Status;
                     string Errors;
@@ -230,7 +232,8 @@ namespace WebFreight.Web.WcfApi
         public Response GetStatus(string RequestId, string Type)
         {
             Response response = new Response();
-            ContainerTasks Task = new ContainerTasks();
+            bool UseOIV2 = FeatureToggleHelper.HasFeatureToggle("OI2", 0);
+            ContainerTasks Task = new ContainerTasks(UseOIV2);
             string Result;
             string Status;
             string Errors;
