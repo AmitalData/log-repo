@@ -1777,7 +1777,8 @@ namespace HypredTest
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-
+            Login();
+            TestShipmentService();
 
             //decimal mydec = 1298989741233.8784431545454999m;
             //mydec = Math.Truncate(mydec * 1000000m) / 1000000m;
@@ -1802,10 +1803,10 @@ namespace HypredTest
 
             TestCustomerService(Token);
             GetExternalTasksFromQueue(1, 1);
-            TetShipmentService();
+            TestShipmentService();
 
             Token = "e77I+6qjFreZnZ0rjp0gMruKhBOOp6plHW4=";//Token: e77I+6qjFreZnZ0rjp0gMruKhBOOp6plHW4=
-            TetShipmentService();
+            TestShipmentService();
             //TenantManagementDWProxy.TenantManagementDWWcfServiceClient tenantManagementService = new TenantManagementDWProxy.TenantManagementDWWcfServiceClient();
             //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)tenantManagementService.InnerChannel))
             //{
@@ -1927,7 +1928,7 @@ namespace HypredTest
             TestCustomerService(Token);
 
 
-          
+
 
             //TestQuotationDocument();
 
@@ -1971,7 +1972,6 @@ namespace HypredTest
 
 
 
-           
 
 
 
@@ -1981,7 +1981,8 @@ namespace HypredTest
 
 
 
-            TetShipmentService();
+
+            TestShipmentService();
 
             //FeatureProxy.FeatureWcfServiceClient featuresService = new FeatureProxy.FeatureWcfServiceClient();
             //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)featuresService.InnerChannel))
@@ -2685,11 +2686,12 @@ namespace HypredTest
             }
         }
 
-        private void TetShipmentService()
+        private void TestShipmentService()
         {
             ShipmentProxy.ShipmentPM consolepm = new ShipmentPM()
             {
                 ShipmentNumber = "SHIP_718741",
+                DirectionId = "R",
                 ShipmentLevelCode = "A",
                 Tenant = 1,
                 AccessDate = DateTime.Now,
@@ -2704,7 +2706,7 @@ namespace HypredTest
                 CreatedByUserId = "HybridU1",
                 CutoffDate = DateTime.Now,
                 DimensionsUnitCode = "CM",
-                DirectionId = "I",
+                
                 FinalDistenationPortId = "TLV",
                 FreightPrepaidCollectId = "C",
                 FromPortId = "JFK",
