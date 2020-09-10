@@ -9,150 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace HypredTest.ExternalTasksQueueProxy {
-    using System.Runtime.Serialization;
-    using System;
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Response", Namespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools")]
-    [System.SerializableAttribute()]
-    public partial class Response : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ErrorMessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool HasErrorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string InnerErrorMessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsAuthenticationErrorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ResultField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string Result2Field;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] ValidationErrorsField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ErrorMessage {
-            get {
-                return this.ErrorMessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ErrorMessageField, value) != true)) {
-                    this.ErrorMessageField = value;
-                    this.RaisePropertyChanged("ErrorMessage");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool HasError {
-            get {
-                return this.HasErrorField;
-            }
-            set {
-                if ((this.HasErrorField.Equals(value) != true)) {
-                    this.HasErrorField = value;
-                    this.RaisePropertyChanged("HasError");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string InnerErrorMessage {
-            get {
-                return this.InnerErrorMessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.InnerErrorMessageField, value) != true)) {
-                    this.InnerErrorMessageField = value;
-                    this.RaisePropertyChanged("InnerErrorMessage");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsAuthenticationError {
-            get {
-                return this.IsAuthenticationErrorField;
-            }
-            set {
-                if ((this.IsAuthenticationErrorField.Equals(value) != true)) {
-                    this.IsAuthenticationErrorField = value;
-                    this.RaisePropertyChanged("IsAuthenticationError");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Result {
-            get {
-                return this.ResultField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ResultField, value) != true)) {
-                    this.ResultField = value;
-                    this.RaisePropertyChanged("Result");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Result2 {
-            get {
-                return this.Result2Field;
-            }
-            set {
-                if ((object.ReferenceEquals(this.Result2Field, value) != true)) {
-                    this.Result2Field = value;
-                    this.RaisePropertyChanged("Result2");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] ValidationErrors {
-            get {
-                return this.ValidationErrorsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ValidationErrorsField, value) != true)) {
-                    this.ValidationErrorsField = value;
-                    this.RaisePropertyChanged("ValidationErrors");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ExternalTasksQueueProxy.IExternalTasksQueueWcfService")]
@@ -165,10 +22,10 @@ namespace HypredTest.ExternalTasksQueueProxy {
         System.Threading.Tasks.Task<string> GetTaskFromQueueAsync(int tenant, int priority);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IExternalTasksQueueWcfService/MarkTaskAsDone", ReplyAction="http://tempuri.org/IExternalTasksQueueWcfService/MarkTaskAsDoneResponse")]
-        HypredTest.ExternalTasksQueueProxy.Response MarkTaskAsDone(string communicationLogId, int tenant, int priority);
+        Logitude.Server.Tools.Response MarkTaskAsDone(string communicationLogId, int tenant, int priority);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IExternalTasksQueueWcfService/MarkTaskAsDone", ReplyAction="http://tempuri.org/IExternalTasksQueueWcfService/MarkTaskAsDoneResponse")]
-        System.Threading.Tasks.Task<HypredTest.ExternalTasksQueueProxy.Response> MarkTaskAsDoneAsync(string communicationLogId, int tenant, int priority);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> MarkTaskAsDoneAsync(string communicationLogId, int tenant, int priority);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -206,11 +63,11 @@ namespace HypredTest.ExternalTasksQueueProxy {
             return base.Channel.GetTaskFromQueueAsync(tenant, priority);
         }
         
-        public HypredTest.ExternalTasksQueueProxy.Response MarkTaskAsDone(string communicationLogId, int tenant, int priority) {
+        public Logitude.Server.Tools.Response MarkTaskAsDone(string communicationLogId, int tenant, int priority) {
             return base.Channel.MarkTaskAsDone(communicationLogId, tenant, priority);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.ExternalTasksQueueProxy.Response> MarkTaskAsDoneAsync(string communicationLogId, int tenant, int priority) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> MarkTaskAsDoneAsync(string communicationLogId, int tenant, int priority) {
             return base.Channel.MarkTaskAsDoneAsync(communicationLogId, tenant, priority);
         }
     }

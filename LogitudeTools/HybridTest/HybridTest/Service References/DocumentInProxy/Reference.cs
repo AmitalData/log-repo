@@ -23,6 +23,9 @@ namespace HypredTest.DocumentInProxy {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool BackedupExternallyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string[] BlockIdsListField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -212,6 +215,9 @@ namespace HypredTest.DocumentInProxy {
         private bool IsDeletedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsDigitalSignRequiredField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsDigitallySignedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -237,6 +243,9 @@ namespace HypredTest.DocumentInProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsSharedWithForwarderField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsUoloadedFieldField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsUpdateSharedDocumentField;
@@ -332,6 +341,19 @@ namespace HypredTest.DocumentInProxy {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool BackedupExternally {
+            get {
+                return this.BackedupExternallyField;
+            }
+            set {
+                if ((this.BackedupExternallyField.Equals(value) != true)) {
+                    this.BackedupExternallyField = value;
+                    this.RaisePropertyChanged("BackedupExternally");
+                }
             }
         }
         
@@ -1155,6 +1177,19 @@ namespace HypredTest.DocumentInProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsDigitalSignRequired {
+            get {
+                return this.IsDigitalSignRequiredField;
+            }
+            set {
+                if ((this.IsDigitalSignRequiredField.Equals(value) != true)) {
+                    this.IsDigitalSignRequiredField = value;
+                    this.RaisePropertyChanged("IsDigitalSignRequired");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool IsDigitallySigned {
             get {
                 return this.IsDigitallySignedField;
@@ -1267,6 +1302,19 @@ namespace HypredTest.DocumentInProxy {
                 if ((this.IsSharedWithForwarderField.Equals(value) != true)) {
                     this.IsSharedWithForwarderField = value;
                     this.RaisePropertyChanged("IsSharedWithForwarder");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsUoloadedField {
+            get {
+                return this.IsUoloadedFieldField;
+            }
+            set {
+                if ((this.IsUoloadedFieldField.Equals(value) != true)) {
+                    this.IsUoloadedFieldField = value;
+                    this.RaisePropertyChanged("IsUoloadedField");
                 }
             }
         }
@@ -1799,156 +1847,15 @@ namespace HypredTest.DocumentInProxy {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Response", Namespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools")]
-    [System.SerializableAttribute()]
-    public partial class Response : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ErrorMessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool HasErrorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string InnerErrorMessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsAuthenticationErrorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ResultField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string Result2Field;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] ValidationErrorsField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ErrorMessage {
-            get {
-                return this.ErrorMessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ErrorMessageField, value) != true)) {
-                    this.ErrorMessageField = value;
-                    this.RaisePropertyChanged("ErrorMessage");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool HasError {
-            get {
-                return this.HasErrorField;
-            }
-            set {
-                if ((this.HasErrorField.Equals(value) != true)) {
-                    this.HasErrorField = value;
-                    this.RaisePropertyChanged("HasError");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string InnerErrorMessage {
-            get {
-                return this.InnerErrorMessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.InnerErrorMessageField, value) != true)) {
-                    this.InnerErrorMessageField = value;
-                    this.RaisePropertyChanged("InnerErrorMessage");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsAuthenticationError {
-            get {
-                return this.IsAuthenticationErrorField;
-            }
-            set {
-                if ((this.IsAuthenticationErrorField.Equals(value) != true)) {
-                    this.IsAuthenticationErrorField = value;
-                    this.RaisePropertyChanged("IsAuthenticationError");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Result {
-            get {
-                return this.ResultField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ResultField, value) != true)) {
-                    this.ResultField = value;
-                    this.RaisePropertyChanged("Result");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Result2 {
-            get {
-                return this.Result2Field;
-            }
-            set {
-                if ((object.ReferenceEquals(this.Result2Field, value) != true)) {
-                    this.Result2Field = value;
-                    this.RaisePropertyChanged("Result2");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] ValidationErrors {
-            get {
-                return this.ValidationErrorsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ValidationErrorsField, value) != true)) {
-                    this.ValidationErrorsField = value;
-                    this.RaisePropertyChanged("ValidationErrors");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="DocumentInProxy.IDocumentInWcfService")]
     public interface IDocumentInWcfService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentInWcfService/Upsert", ReplyAction="http://tempuri.org/IDocumentInWcfService/UpsertResponse")]
-        HypredTest.DocumentInProxy.Response Upsert(HypredTest.DocumentInProxy.DocumentsFilingPM documentDataPM, bool batch);
+        Logitude.Server.Tools.Response Upsert(HypredTest.DocumentInProxy.DocumentsFilingPM documentDataPM, bool batch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentInWcfService/Upsert", ReplyAction="http://tempuri.org/IDocumentInWcfService/UpsertResponse")]
-        System.Threading.Tasks.Task<HypredTest.DocumentInProxy.Response> UpsertAsync(HypredTest.DocumentInProxy.DocumentsFilingPM documentDataPM, bool batch);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.DocumentInProxy.DocumentsFilingPM documentDataPM, bool batch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentInWcfService/GetDocumentDataByExternalId", ReplyAction="http://tempuri.org/IDocumentInWcfService/GetDocumentDataByExternalIdResponse")]
         HypredTest.DocumentInProxy.GetDocumentDataByExternalIdResponse GetDocumentDataByExternalId(HypredTest.DocumentInProxy.GetDocumentDataByExternalIdRequest request);
@@ -1958,16 +1865,16 @@ namespace HypredTest.DocumentInProxy {
         System.Threading.Tasks.Task<HypredTest.DocumentInProxy.GetDocumentDataByExternalIdResponse> GetDocumentDataByExternalIdAsync(HypredTest.DocumentInProxy.GetDocumentDataByExternalIdRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentInWcfService/UpsertDocumentData", ReplyAction="http://tempuri.org/IDocumentInWcfService/UpsertDocumentDataResponse")]
-        HypredTest.DocumentInProxy.Response UpsertDocumentData(Simplog.Server.Infrastructure.DataContracts.DocumentDataPM documentDataPM, bool batch);
+        Logitude.Server.Tools.Response UpsertDocumentData(Simplog.Server.Infrastructure.DataContracts.DocumentDataPM documentDataPM, bool batch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentInWcfService/UpsertDocumentData", ReplyAction="http://tempuri.org/IDocumentInWcfService/UpsertDocumentDataResponse")]
-        System.Threading.Tasks.Task<HypredTest.DocumentInProxy.Response> UpsertDocumentDataAsync(Simplog.Server.Infrastructure.DataContracts.DocumentDataPM documentDataPM, bool batch);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertDocumentDataAsync(Simplog.Server.Infrastructure.DataContracts.DocumentDataPM documentDataPM, bool batch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentInWcfService/UploadDocumentFileData", ReplyAction="http://tempuri.org/IDocumentInWcfService/UploadDocumentFileDataResponse")]
-        HypredTest.DocumentInProxy.Response UploadDocumentFileData(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId);
+        Logitude.Server.Tools.Response UploadDocumentFileData(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentInWcfService/UploadDocumentFileData", ReplyAction="http://tempuri.org/IDocumentInWcfService/UploadDocumentFileDataResponse")]
-        System.Threading.Tasks.Task<HypredTest.DocumentInProxy.Response> UploadDocumentFileDataAsync(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UploadDocumentFileDataAsync(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentInWcfService/GetDocumentDataByExternalIdWithoutBinara" +
             "y", ReplyAction="http://tempuri.org/IDocumentInWcfService/GetDocumentDataByExternalIdWithoutBinara" +
@@ -1993,12 +1900,12 @@ namespace HypredTest.DocumentInProxy {
         public int tenant;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
-        public HypredTest.DocumentInProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetDocumentDataByExternalIdRequest() {
         }
         
-        public GetDocumentDataByExternalIdRequest(string externalId, int tenant, HypredTest.DocumentInProxy.Response response) {
+        public GetDocumentDataByExternalIdRequest(string externalId, int tenant, Logitude.Server.Tools.Response response) {
             this.externalId = externalId;
             this.tenant = tenant;
             this.response = response;
@@ -2014,12 +1921,12 @@ namespace HypredTest.DocumentInProxy {
         public HypredTest.DocumentInProxy.DocumentsFilingPM GetDocumentDataByExternalIdResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.DocumentInProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetDocumentDataByExternalIdResponse() {
         }
         
-        public GetDocumentDataByExternalIdResponse(HypredTest.DocumentInProxy.DocumentsFilingPM GetDocumentDataByExternalIdResult, HypredTest.DocumentInProxy.Response response) {
+        public GetDocumentDataByExternalIdResponse(HypredTest.DocumentInProxy.DocumentsFilingPM GetDocumentDataByExternalIdResult, Logitude.Server.Tools.Response response) {
             this.GetDocumentDataByExternalIdResult = GetDocumentDataByExternalIdResult;
             this.response = response;
         }
@@ -2037,12 +1944,12 @@ namespace HypredTest.DocumentInProxy {
         public int tenant;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
-        public HypredTest.DocumentInProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetDocumentDataByExternalIdWithoutBinarayRequest() {
         }
         
-        public GetDocumentDataByExternalIdWithoutBinarayRequest(string externalId, int tenant, HypredTest.DocumentInProxy.Response response) {
+        public GetDocumentDataByExternalIdWithoutBinarayRequest(string externalId, int tenant, Logitude.Server.Tools.Response response) {
             this.externalId = externalId;
             this.tenant = tenant;
             this.response = response;
@@ -2058,12 +1965,12 @@ namespace HypredTest.DocumentInProxy {
         public HypredTest.DocumentInProxy.DocumentsFilingPM GetDocumentDataByExternalIdWithoutBinarayResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.DocumentInProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetDocumentDataByExternalIdWithoutBinarayResponse() {
         }
         
-        public GetDocumentDataByExternalIdWithoutBinarayResponse(HypredTest.DocumentInProxy.DocumentsFilingPM GetDocumentDataByExternalIdWithoutBinarayResult, HypredTest.DocumentInProxy.Response response) {
+        public GetDocumentDataByExternalIdWithoutBinarayResponse(HypredTest.DocumentInProxy.DocumentsFilingPM GetDocumentDataByExternalIdWithoutBinarayResult, Logitude.Server.Tools.Response response) {
             this.GetDocumentDataByExternalIdWithoutBinarayResult = GetDocumentDataByExternalIdWithoutBinarayResult;
             this.response = response;
         }
@@ -2096,11 +2003,11 @@ namespace HypredTest.DocumentInProxy {
                 base(binding, remoteAddress) {
         }
         
-        public HypredTest.DocumentInProxy.Response Upsert(HypredTest.DocumentInProxy.DocumentsFilingPM documentDataPM, bool batch) {
+        public Logitude.Server.Tools.Response Upsert(HypredTest.DocumentInProxy.DocumentsFilingPM documentDataPM, bool batch) {
             return base.Channel.Upsert(documentDataPM, batch);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.DocumentInProxy.Response> UpsertAsync(HypredTest.DocumentInProxy.DocumentsFilingPM documentDataPM, bool batch) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.DocumentInProxy.DocumentsFilingPM documentDataPM, bool batch) {
             return base.Channel.UpsertAsync(documentDataPM, batch);
         }
         
@@ -2109,7 +2016,7 @@ namespace HypredTest.DocumentInProxy {
             return base.Channel.GetDocumentDataByExternalId(request);
         }
         
-        public HypredTest.DocumentInProxy.DocumentsFilingPM GetDocumentDataByExternalId(string externalId, int tenant, ref HypredTest.DocumentInProxy.Response response) {
+        public HypredTest.DocumentInProxy.DocumentsFilingPM GetDocumentDataByExternalId(string externalId, int tenant, ref Logitude.Server.Tools.Response response) {
             HypredTest.DocumentInProxy.GetDocumentDataByExternalIdRequest inValue = new HypredTest.DocumentInProxy.GetDocumentDataByExternalIdRequest();
             inValue.externalId = externalId;
             inValue.tenant = tenant;
@@ -2123,19 +2030,19 @@ namespace HypredTest.DocumentInProxy {
             return base.Channel.GetDocumentDataByExternalIdAsync(request);
         }
         
-        public HypredTest.DocumentInProxy.Response UpsertDocumentData(Simplog.Server.Infrastructure.DataContracts.DocumentDataPM documentDataPM, bool batch) {
+        public Logitude.Server.Tools.Response UpsertDocumentData(Simplog.Server.Infrastructure.DataContracts.DocumentDataPM documentDataPM, bool batch) {
             return base.Channel.UpsertDocumentData(documentDataPM, batch);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.DocumentInProxy.Response> UpsertDocumentDataAsync(Simplog.Server.Infrastructure.DataContracts.DocumentDataPM documentDataPM, bool batch) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertDocumentDataAsync(Simplog.Server.Infrastructure.DataContracts.DocumentDataPM documentDataPM, bool batch) {
             return base.Channel.UpsertDocumentDataAsync(documentDataPM, batch);
         }
         
-        public HypredTest.DocumentInProxy.Response UploadDocumentFileData(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId) {
+        public Logitude.Server.Tools.Response UploadDocumentFileData(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId) {
             return base.Channel.UploadDocumentFileData(buffer, fileSize, sentBytes, blockIdsList, bufferNumber, tenant, FileNameWithExtention, DocumentId);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.DocumentInProxy.Response> UploadDocumentFileDataAsync(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UploadDocumentFileDataAsync(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId) {
             return base.Channel.UploadDocumentFileDataAsync(buffer, fileSize, sentBytes, blockIdsList, bufferNumber, tenant, FileNameWithExtention, DocumentId);
         }
         
@@ -2144,7 +2051,7 @@ namespace HypredTest.DocumentInProxy {
             return base.Channel.GetDocumentDataByExternalIdWithoutBinaray(request);
         }
         
-        public HypredTest.DocumentInProxy.DocumentsFilingPM GetDocumentDataByExternalIdWithoutBinaray(string externalId, int tenant, ref HypredTest.DocumentInProxy.Response response) {
+        public HypredTest.DocumentInProxy.DocumentsFilingPM GetDocumentDataByExternalIdWithoutBinaray(string externalId, int tenant, ref Logitude.Server.Tools.Response response) {
             HypredTest.DocumentInProxy.GetDocumentDataByExternalIdWithoutBinarayRequest inValue = new HypredTest.DocumentInProxy.GetDocumentDataByExternalIdWithoutBinarayRequest();
             inValue.externalId = externalId;
             inValue.tenant = tenant;
