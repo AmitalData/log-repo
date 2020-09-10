@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "143b874a4f1ad0f3fa1be44d39b2bae7";
+		public const string HashString = "d41a8ecae1d61813314b9ad14f4dd62d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2680,7 +2680,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  InterestReportFeature_MB12.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "סגירה ללא חשבונית",
 						FeatureUniqeCode=  InterestReportFeature_MB12.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

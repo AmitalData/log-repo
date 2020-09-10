@@ -2977,6 +2977,7 @@
         DefaultText="&quot;Close Without Invoice&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="2"
+        LocalDefaultText="&quot;סגירה ללא חשבונית&quot;"
         IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
