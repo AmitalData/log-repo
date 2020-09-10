@@ -383,7 +383,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected override void CreateDBMigrationsLastDefaultValueColumn(string tableName)
+        protected override void CreateDBMigrationsLastDefaultValueColumn(string databaseType, string tableName)
         {
             string indexOnlineOption = ToolConfigurations.AOTCreateIndexWithOnline ? " WITH (ONLINE = ON)" : null;
 
@@ -393,7 +393,7 @@ namespace Logitude.DBMigrations.Models
                                  "CREATE NONCLUSTERED INDEX [IX_" + tableName + "_DBMigrationsLastDefaultValue] ON [" + tableName + "]([DBMigrationsLastDefaultValue])" + indexOnlineOption + ";\n" +
                                  "END";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
 
             try
             {
@@ -412,7 +412,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected override void CreateDBMigrationsLastScriptColumn(string tableName)
+        protected override void CreateDBMigrationsLastScriptColumn(string databaseType, string tableName)
         {
             string indexOnlineOption = ToolConfigurations.AOTCreateIndexWithOnline ? " WITH (ONLINE = ON)" : null;
 
@@ -422,7 +422,7 @@ namespace Logitude.DBMigrations.Models
                                  "CREATE NONCLUSTERED INDEX [IX_" + tableName + "_DBMigrationsLastScript] ON [" + tableName + "]([DBMigrationsLastScript])" + indexOnlineOption + ";\n" +
                                  "END";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
 
             try
             {
@@ -441,7 +441,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected override void CreateResetLastScriptTrigger(string tableName)
+        protected override void CreateResetLastScriptTrigger(string databaseType, string tableName)
         {
             string queryString = "IF NOT EXISTS (SELECT * FROM sys.objects WHERE [type] = 'TR' and [name] = 'TR_ResetLastScript_" + tableName + "')\n" +
                 "BEGIN\n" +
@@ -457,7 +457,7 @@ namespace Logitude.DBMigrations.Models
                 "END" +
                 "END";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
 
             try
             {
@@ -479,7 +479,7 @@ namespace Logitude.DBMigrations.Models
         {
             //string queryString = "EXEC sp_set_session_context 'ZeroDownTimeMode', 1;";
 
-            //SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            //SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);??
 
             //try
             //{
