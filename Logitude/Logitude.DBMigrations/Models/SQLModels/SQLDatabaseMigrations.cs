@@ -52,7 +52,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 connection.Close();
 
-                ExitDatabaseMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
 
             return currentTable;
@@ -155,7 +155,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 connection.Close();
 
-                ExitDatabaseMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
 
             return currentTable;
@@ -217,7 +217,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 connection.Close();
 
-                ExitDatabaseMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
 
             return relations;
@@ -284,7 +284,7 @@ namespace Logitude.DBMigrations.Models
                     reader.Close();
                 }
                 connection.Close();
-                ExitDatabaseMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
 
             return indexes;
@@ -342,7 +342,7 @@ namespace Logitude.DBMigrations.Models
                     reader.Close();
                 }
                 connection.Close();
-                ExitDatabaseMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
 
             return uniqueConstraints;
@@ -715,7 +715,7 @@ namespace Logitude.DBMigrations.Models
                 string defaultValue = GetDefaultValue(columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
                 if (defaultValue == null && !columnMigration.NewColumn.Constraints.Nullable)
                 {
-                    ExitDatabaseMigrations("Cannot Use Zero Down Time Mode To Add Not Null Column Without Default Value, The Issue In Column [" + columnName + "] Inside [" + DXMLFileName + "]");
+                    ExitTool("Error: Cannot Use Zero Down Time Mode To Add Not Null Column Without Default Value, The Issue In Column [" + columnName + "] Inside [" + DXMLFileName + "]");
                 }
 
                 addScript += GetDefaultValueScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
@@ -1315,7 +1315,7 @@ namespace Logitude.DBMigrations.Models
                     reader.Close();
                 }
                 connection.Close();
-                ExitDatabaseMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
 
             return result;
@@ -1348,7 +1348,7 @@ namespace Logitude.DBMigrations.Models
             catch (Exception exception)
             {
                 sqlConnection.Close();
-                ExitDatabaseMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
         }
 
@@ -1375,7 +1375,7 @@ namespace Logitude.DBMigrations.Models
             catch (Exception exception)
             {
                 sqlConnection.Close();
-                ExitDatabaseMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
         }
 
@@ -1412,7 +1412,7 @@ namespace Logitude.DBMigrations.Models
                     reader.Close();
                 }
                 connection.Close();
-                ExitDatabaseMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
 
             return lastCounter;

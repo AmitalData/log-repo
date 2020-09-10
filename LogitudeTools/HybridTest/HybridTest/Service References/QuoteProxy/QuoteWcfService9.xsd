@@ -23,12 +23,14 @@
       <xs:element minOccurs="0" name="BusinessUnitName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CarrierName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ChargeableWeight" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="ChargeableWeightInKG" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="Consignee" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ConsigneeId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ConsigneeName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ConsigneeReference1" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ConsigneeReference2" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CreatedByUser" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedByUserId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CustomerName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CustomerReference1" nillable="true" type="xs:string" />
@@ -43,10 +45,22 @@
       <xs:element minOccurs="0" name="ETD" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="EstimateProfit" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="EstimateProfitEdited" type="xs:boolean" />
+      <xs:element minOccurs="0" name="EstimatedProfitInLocal" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="EstimatedProfitInProfit" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="ExpirationDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Field1" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Field10" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field11" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field12" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field13" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field14" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field15" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field16" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field17" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field18" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field19" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Field2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field20" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Field3" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Field4" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Field5" nillable="true" type="xs:string" />
@@ -73,6 +87,8 @@
       <xs:element minOccurs="0" name="FromPortId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FromPortName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="GrossWeight" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="GrossWeightInKG" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="GrossWeightPerTon" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="HAWBFBLBL" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IncotermCode" nillable="true" type="xs:string" />
@@ -80,8 +96,13 @@
       <xs:element minOccurs="0" name="IsByContainer" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsByKG" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsCancelled" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsChargesByVAT" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsClosed" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsDangerous" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsFixedPrice" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsQuoteDataExternal" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsQuoteDocumentExternal" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsSaleCurrencySameAsCost" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsSubjectEdited" type="xs:boolean" />
       <xs:element minOccurs="0" name="LastActivityByUserName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LastActivityDate" nillable="true" type="xs:dateTime" />
@@ -97,21 +118,32 @@
       <xs:element minOccurs="0" name="LastVersionNumber" type="xs:int" />
       <xs:element minOccurs="0" name="MainCarriageCarrierId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MainCarriageCarrierName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MoveTypeName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NewMessage" type="xs:boolean" />
       <xs:element minOccurs="0" name="NextActivityDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="NextActivitySubject" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NextActivityTypeCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NextActivityTypeName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NotifyAddressId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NotifyContactId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NotifyId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NotifyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NotifyNote" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NumberOfContainers" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfFollowUps" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="NumberOfPackages" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="OpenDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="OpportunityId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="OrderNumberOfPackages" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="PickupDeliveryChargeableWeight" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="PickupDeliveryVolumetricWeight" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="ProductCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="QuotationSections" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="QuoteClosingReasonCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="QuoteClosingReasonId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="QuoteClosingReasonName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="QuoteCutomerTypeCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="QuoteHTMLDocumentId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="QuoteNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="QuoteTemplateId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="QuoteTypeCode" nillable="true" type="xs:string" />
@@ -120,12 +152,17 @@
       <xs:element minOccurs="0" name="RatingCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="RatingIndexOrder" type="xs:int" />
       <xs:element minOccurs="0" name="RatingName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegionalTaxId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegionalTaxPercentage" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="RequestDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Routing" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Salesman" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SalesmanName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SalesmanUserId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SearchFields" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SentDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ShipmentSubTypeId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShipmentSubTypeName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ShipmentType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ShipmentTypeId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Shipper" nillable="true" type="xs:string" />
@@ -137,7 +174,9 @@
       <xs:element minOccurs="0" name="StageId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StageMaxDays" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="StageName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StartDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TEU" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="ToCountryCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ToPartnerAddressId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ToPartnerId" nillable="true" type="xs:string" />
@@ -145,12 +184,15 @@
       <xs:element minOccurs="0" name="ToPortCountry" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ToPortId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ToPortName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TotalPerContainer" type="xs:boolean" />
       <xs:element minOccurs="0" name="TransitTime" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TransportModeId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TransportModeName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UpdateDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="UpdatedByUserId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UsageCount" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ValueOfGoods" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="VolumeInCBM" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="hasChanges" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>

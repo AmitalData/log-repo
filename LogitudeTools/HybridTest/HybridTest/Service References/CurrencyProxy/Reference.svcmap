@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5aae071d-9ea5-4454-afa9-66362ccbb401" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1c6b4db7-eafd-405e-b4a4-c8bfb5d4c235" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,17 +19,17 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:9996//WcfApi/CurrencyWcfService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:9996/WcfApi/CurrencyWcfService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="CurrencyWcfService.xsd" MetadataType="Schema" ID="bb89d273-6c1f-4e0c-8564-90b396dfd75c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?xsd=xsd2" />
-    <MetadataFile FileName="CurrencyWcfService.wsdl" MetadataType="Wsdl" ID="4838b7bc-24a7-474d-a540-33ebedc1537d" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?wsdl" />
-    <MetadataFile FileName="CurrencyWcfService1.xsd" MetadataType="Schema" ID="4e7ff7e6-e116-464b-93ec-75742726d125" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?xsd=xsd0" />
-    <MetadataFile FileName="CurrencyWcfService.disco" MetadataType="Disco" ID="c303c373-29a0-4bae-b051-c1c0ca4c2957" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?disco" />
-    <MetadataFile FileName="CurrencyWcfService2.xsd" MetadataType="Schema" ID="18a80beb-c549-482d-bddf-c15de4d3f0a2" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?xsd=xsd5" />
-    <MetadataFile FileName="CurrencyWcfService3.xsd" MetadataType="Schema" ID="7e19d472-c398-4180-9386-7ef9bb9c4249" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?xsd=xsd3" />
-    <MetadataFile FileName="CurrencyWcfService4.xsd" MetadataType="Schema" ID="9343be09-d2be-450a-b67a-d112a6b23e05" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?xsd=xsd1" />
-    <MetadataFile FileName="CurrencyWcfService5.xsd" MetadataType="Schema" ID="5d4f3120-1c06-49dc-8042-e0009bf8063f" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="CurrencyWcfService.xsd" MetadataType="Schema" ID="c898924e-6007-46e8-a338-2f88730c44d2" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="CurrencyWcfService.wsdl" MetadataType="Wsdl" ID="aa35b45e-1cae-4ce3-bdfd-4eee220c4f76" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?wsdl" />
+    <MetadataFile FileName="CurrencyWcfService1.xsd" MetadataType="Schema" ID="0b4c218f-08d6-4e3c-a4c4-70f983342447" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="CurrencyWcfService.disco" MetadataType="Disco" ID="c76baa00-c95a-4612-b681-6ea04af582d3" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?disco" />
+    <MetadataFile FileName="CurrencyWcfService2.xsd" MetadataType="Schema" ID="8d3191fb-1022-425c-907c-e4eb388c584f" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="CurrencyWcfService3.xsd" MetadataType="Schema" ID="36cd2d85-4d0c-435f-a950-ab7d1821604c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="CurrencyWcfService4.xsd" MetadataType="Schema" ID="5b8fe805-095c-44b5-8e24-6cf318268e64" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="CurrencyWcfService5.xsd" MetadataType="Schema" ID="3dc0e534-3ba2-4f71-9ac2-62d6f1cc423e" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CurrencyWcfService.svc?xsd=xsd4" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

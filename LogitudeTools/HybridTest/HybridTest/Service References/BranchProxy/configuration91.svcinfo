@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="EyHqyjTtBnh9/mfvaWwsIqYA/AQ=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="/BYuzexKaKiR/E8y65SBTJ/qvk/lLo11C4tFafz1wjs=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IBranchWcfService">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IBranchWcfService" contract="BranchProxy.IBranchWcfService" bindingType="basicHttpBinding" address="http://localhost:62619/WcfApi/BranchWcfService.svc" bindingConfiguration="BasicHttpBinding_IBranchWcfService">
+    <endpoint name="BasicHttpBinding_IBranchWcfService" contract="BranchProxy.IBranchWcfService" bindingType="basicHttpBinding" address="http://localhost:9996/WcfApi/BranchWcfService.svc" bindingConfiguration="BasicHttpBinding_IBranchWcfService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:62619/WcfApi/BranchWcfService.svc</serializedValue>
+          <serializedValue>http://localhost:9996/WcfApi/BranchWcfService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

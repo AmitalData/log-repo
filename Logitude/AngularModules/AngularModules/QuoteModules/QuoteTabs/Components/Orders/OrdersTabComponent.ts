@@ -150,26 +150,26 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
     this.UIProperties.SetVisibility("DimFactor", this.ObjectTableName, isDimFactorVisibile);
   }
   private SetUIProperties_EntityClosed() {
-    this.UIProperties.SetEnabled("IncotermId", this.ObjectTableName, this.IsQuoteEditEnabled);
-    this.UIProperties.SetEnabled("MoveTypeId", this.ObjectTableName, this.IsQuoteEditEnabled);
-    this.UIProperties.SetEnabled("ExpirationDays", this.ObjectTableName, this.IsQuoteEditEnabled);
-    this.UIProperties.SetEnabled("StartDate", this.ObjectTableName, this.IsQuoteEditEnabled);
-    this.UIProperties.SetEnabled("ExpirationDate", this.ObjectTableName, this.IsQuoteEditEnabled);
-    this.UIProperties.SetEnabled("IsAutomaticallyClosed", this.ObjectTableName, this.IsQuoteEditEnabled);
-    this.UIProperties.SetEnabled("AutomaticallyCloseDate", this.ObjectTableName, this.IsQuoteEditEnabled);
-    this.UIProperties.SetEnabled("AutomaticallyCloseDays", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("IncotermId", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("MoveTypeId", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("ExpirationDays", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("StartDate", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("ExpirationDate", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("IsAutomaticallyClosed", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("AutomaticallyCloseDate", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("AutomaticallyCloseDays", this.ObjectTableName, this.IsQuoteEditEnabled);
 
-    this.UIProperties.SetEnabled("VolumeUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
-    this.UIProperties.SetEnabled("GrossWeightUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
-    this.UIProperties.SetEnabled("ChargeableWeightUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
-    this.UIProperties.SetEnabled("Ratio", this.ObjectTableName, this.IsQuoteEditEnabled);
-    this.UIProperties.SetEnabled("DimFactor", this.ObjectTableName, this.IsQuoteEditEnabled);
-    this.UIProperties.SetEnabled("TransitTime", this.ObjectTableName, this.IsQuoteEditEnabled);
-    this.UIProperties.SetEnabled("DepartureFrequency", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("VolumeUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("GrossWeightUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("ChargeableWeightUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("Ratio", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("DimFactor", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("TransitTime", this.ObjectTableName, this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("DepartureFrequency", this.ObjectTableName, this.IsQuoteEditEnabled);
   }
   private SetUIProperties_AutomaticallyClosed() {
-    this.UIProperties.SetEnabled("AutomaticallyCloseDate", this.ObjectTableName, this.IsAutomaticallyClosed && this.IsQuoteEditEnabled);
-    this.UIProperties.SetEnabled("AutomaticallyCloseDays", this.ObjectTableName, this.IsAutomaticallyClosed && this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("AutomaticallyCloseDate", this.ObjectTableName, this.IsAutomaticallyClosed && this.IsQuoteEditEnabled);
+    this.EntityPM.UIProperties.SetEnabled("AutomaticallyCloseDays", this.ObjectTableName, this.IsAutomaticallyClosed && this.IsQuoteEditEnabled);
   }
 
   public DimensionsDependencyProperty1: string = null;
