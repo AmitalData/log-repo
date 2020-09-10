@@ -45,50 +45,39 @@
                                     </td>
 
                                     <td>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <div class="MediaFill">
-                                                        <table *ngIf="IsRegionalTaxVisible && IsChargesByVAT">
-                                                            <tr class="FormFieldRow">
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-
-                                                                <td style="width: 100px;">
-                                                                    <LogLabel [ObjectFieldName]="'RegionalTaxId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                </td>
-
-                                                                <td style="width: 170px;">
-                                                                    <LogLov [ObjectFieldName]="'RegionalTaxId'"
-                                                                            [SelectedValue]="RegionalTaxId"
-                                                                            [ObjectTableName]="ObjectTableName"
-                                                                            [DataContext]="DataContext"
-                                                                            [LookUpTableName]="'VatType'"
-                                                                            [HideColumns]="true"
-                                                                            [DependencyFilter2Value]="true">
-                                                                    </LogLov>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-
-                                    <td style="width: 15px;">
                                         <div></div>
                                     </td>
 
-                                    <td style="width: 1px;" *ngIf="IsAdhoc">
+                                    <td style="width: 120px;" *ngIf="IsAdhoc">
                                         <CheckBox [IsChecked]="IsChargesByVAT" (Checked)="IsChargesByVAT = $event" [IsEnabled]="IsEditingEnabled" [Text]="'Quote.F.IsChargesByVAT' | TextCodeTranslationPipe"></CheckBox>
                                     </td>
 
-                                    <td style="width: 10px;" *ngIf="IsAdhoc">
-                                        <div></div>
+                                    <td style="width: 250px;">
+                                        <div class="MediaFill">
+                                            <table *ngIf="IsRegionalTaxVisible && IsChargesByVAT">
+                                                <tr class="FormFieldRow">
+                                                    <td style="width: 90px;">
+                                                        <LogLabel [ObjectFieldName]="'RegionalTaxId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td>
+                                                        <LogLov [ObjectFieldName]="'RegionalTaxId'"
+                                                                [SelectedValue]="RegionalTaxId"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'VatType'"
+                                                                [HideColumns]="true"
+                                                                [DependencyFilter2Value]="true">
+                                                        </LogLov>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </td>
 
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
 
                                     <td style="width: 1px;" *ngIf="IsPriceCheckVisible">
                                         <button id="{{'PriceCheck' | IdGeneratorPipe}}" class="Button" (click)="PriceCheck()" [disabled]="!IsEditingEnabled">{{'Quote.Features.QuotePriceCheck' | TextCodeTranslationPipe}}</button>
