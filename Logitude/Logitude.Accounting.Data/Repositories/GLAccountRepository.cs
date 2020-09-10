@@ -1073,22 +1073,24 @@ namespace Logitude.Accounting.Data.Repositories
         public IQueryable<InterestReportCustomerData> GetEligibleCustomersForInterestReports(int tenant)
         {
 
-            IQueryable<InterestReportCustomerData> gLAccounts = (from a in context.GLAccounts
-                                                                 where a.Tenant == tenant && a.ActiveForInterest == true
-                                                                 join csJoin in context.Cards on a.Id equals csJoin.GLAccountId
-                                                                 where csJoin.PartnerTypeId=="CS"
-                                                                 select new InterestReportCustomerData()
-                                                                 {
-                                                                     GLAccountId = a.Id,
-                                                                     ActiveForInterest = a.ActiveForInterest,
-                                                                     EnglishName = a.EnglishName,
-                                                                     InterestCalculationStartDate = a.InterestCalculationStartDate,
-                                                                     InterestCreditLimit = a.InterestCreditLimit,
-                                                                     LocalName = a.LocalName,
-                                                                     MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
-                                                                     Tenant = a.Tenant,
-                                                                     CustomerId = csJoin.Id,
-                                                                 });
+            IQueryable<InterestReportCustomerData> gLAccounts = (from GLAccount in context.GLAccounts
+                                                                 where GLAccount.Tenant == tenant && GLAccount.ActiveForInterest == true
+                                                                 join Card in context.Cards on GLAccount.Id equals Card.GLAccountId
+                                                                 where Card.PartnerTypeId == "CS"
+                                                                 select new { GLAccount = GLAccount, Card = Card }).GroupBy(x => x.GLAccount.Id)
+                                                                .Select(x => new InterestReportCustomerData()
+                                                                {
+                                                                    GLAccountId = x.FirstOrDefault().GLAccount.Id,
+                                                                    ActiveForInterest = x.FirstOrDefault().GLAccount.ActiveForInterest,
+                                                                    EnglishName = x.FirstOrDefault().GLAccount.EnglishName,
+                                                                    InterestCalculationStartDate = x.FirstOrDefault().GLAccount.InterestCalculationStartDate,
+                                                                    InterestCreditLimit = x.FirstOrDefault().GLAccount.InterestCreditLimit,
+                                                                    LocalName = x.FirstOrDefault().GLAccount.LocalName,
+                                                                    MinimumInterestInvoiceBilling = x.FirstOrDefault().GLAccount.MinimumInterestInvoiceBilling,
+                                                                    Tenant = x.FirstOrDefault().GLAccount.Tenant,
+                                                                    CustomerId = x.FirstOrDefault().Card.Id,
+
+                                                                });
             return gLAccounts;
 
         }
