@@ -17,22 +17,29 @@ namespace Logitude.DBMigrations.Models
         public static int AOTScriptsExecutionTimeOut;
         public static bool AOTCreateIndexWithOnline;
 
+        public static string SmtpClientHost;
+        public static int SmtpClientPort;
+        public static string SmtpClientUsername;
+        public static string SmtpClientPassword;
+        public static string FromEmailAddress;
+        public static string ToEmailAddresses;
 
-        public static string GetConnectionString(string dbType)
+
+        public static string GetConnectionString(string databaseType)
         {
-            if (dbType == "Global")
+            if (databaseType.ToLower() == "Global".ToLower())
             {
                 return GlobalConnectionString;
             }
-            else if (dbType == "Main")
+            else if (databaseType.ToLower() == "Main".ToLower())
             {
                 return MainConnectionString;
             }
-            else if (dbType == "SystemLogs")
+            else if (databaseType.ToLower() == "SystemLogs".ToLower())
             {
                 return SystemLogsConnectionString;
             }
-            else if (dbType == "CargoTracking")
+            else if (databaseType.ToLower() == "CargoTracking".ToLower())
             {
                 return CargoTrackingConnectionString;
             }

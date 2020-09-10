@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "2dd560ac0dadb17a1950afac11a3dbd7";
+		public const string HashString = "d41a8ecae1d61813314b9ad14f4dd62d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2582,6 +2582,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   Feature InterestReportFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestPrint", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Print", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestReportObjectTable);
              			   Feature InterestReportFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IRCN", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestReportObjectTable);
+             			   Feature InterestReportFeature_MB12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CloseWithoutInvoice", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.CloseWithoutInvoice", NameTextCodeDefaultText = "Close Without Invoice", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestReportObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -2663,6 +2664,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "ביטול דוח",
 						FeatureUniqeCode=  InterestReportFeature_MB11.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton InterestReportMenuButton12 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "CloseWithoutInvoice",
+						Index = 2, 
+						IsActive = true,
+						LabelTextCodeCode = "InterestReport.B.CloseWithoutInvoice",
+						LabelTextCodeDefaultText = "Close Without Invoice",
+						Tenant = 0,
+						MenuButtonGroupId = InterestReportMenuButtonGroup.Id,
+						ParentMenuButtonId = InterestReportMenuButton1.Id,
+						ObjectTableId = InterestReportObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  InterestReportFeature_MB12.Id,
+						Style = null,
+						LocalDefaultText = "סגירה ללא חשבונית",
+						FeatureUniqeCode=  InterestReportFeature_MB12.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
@@ -2763,6 +2782,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportOCreatingInvoicepermitted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CreatingInvoicepermitted", DefaultText = "Creating an Invoice is not permitted unless the report is 'Draft' or 'Invoicing Failed'",LocalDefaultText = @"ניתן להפיק חשבונית רק לדוח שבסטטוס טיוטה או נכשל", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOEntertheInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EntertheInvoiceDate", DefaultText = "Enter the Invoice Date to be used for the invoices for all selected reports",LocalDefaultText = null, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOConfirmClosingWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ConfirmClosingWithoutInvoice", DefaultText = "Confirm closing the report without invoice?",LocalDefaultText = @"נא לאשר סגירת דוחות ללא הפקת חשבוניות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

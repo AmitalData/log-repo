@@ -14,7 +14,7 @@ IF TRIGGER_NESTLEVEL() > 1 RETURN;
 
 IF SESSION_CONTEXT(N'ZeroDownTimeMode') IS NULL
 BEGIN
-UPDATE APInvoiceLines SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted);
+UPDATE APInvoiceLines SET AutomaticLastUpdateDate = GETDATE() WHERE APInvoiceId IN (SELECT DISTINCT APInvoiceId FROM Inserted);
 END;
 
 END;

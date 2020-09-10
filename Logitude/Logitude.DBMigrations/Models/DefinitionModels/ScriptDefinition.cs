@@ -29,7 +29,10 @@ namespace Logitude.DBMigrations.Models
 
         [XmlAttribute()]
         public string TargetTableName { get; set; }
-        
+
+        [XmlAttribute()]
+        public int BatchSize { get; set; }
+
         [XmlElement]
         public SqlScriptDefinition Sql { get; set; }
 

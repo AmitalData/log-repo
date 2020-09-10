@@ -7,11 +7,11 @@ namespace Logitude.DBMigrations.Models
 {
     public class DXMLValidation
     {
-        private string[] DXMLFiles;
-        private List<DXMLTable> DXMLTables;
-        private List<DXMLView> DXMLViews;
-        private List<DXMLProcedure> DXMLProcedures;
-        private List<DXMLTrigger> DXMLTriggers;
+        protected string[] DXMLFiles;
+        protected List<DXMLTable> DXMLTables;
+        protected List<DXMLView> DXMLViews;
+        protected List<DXMLProcedure> DXMLProcedures;
+        protected List<DXMLTrigger> DXMLTriggers;
         
         public DXMLValidation(string[] dxmlFiles)
         {
@@ -85,7 +85,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private DXMLDefinitions GetDXMLDefinitions()
+        protected DXMLDefinitions GetDXMLDefinitions()
         {
             List<DXMLTable> dxmlTables = new List<DXMLTable>();
             List<DXMLView> dxmlViews = new List<DXMLView>();
@@ -146,7 +146,7 @@ namespace Logitude.DBMigrations.Models
             };
         }
 
-        private DXMLTable CreateDXMLTable(string dxmlString, string dxmlFile)
+        protected DXMLTable CreateDXMLTable(string dxmlString, string dxmlFile)
         {
             try
             {
@@ -166,7 +166,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private DXMLView CreateDXMLView(string dxmlString, string dxmlFile)
+        protected DXMLView CreateDXMLView(string dxmlString, string dxmlFile)
         {
             try
             {
@@ -186,7 +186,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private DXMLProcedure CreateDXMLProcedure(string dxmlString, string dxmlFile)
+        protected DXMLProcedure CreateDXMLProcedure(string dxmlString, string dxmlFile)
         {
             try
             {
@@ -206,7 +206,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private DXMLTrigger CreateDXMLTrigger(string dxmlString, string dxmlFile)
+        protected DXMLTrigger CreateDXMLTrigger(string dxmlString, string dxmlFile)
         {
             try
             {
@@ -226,7 +226,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private string ValidateDXMLFilesNames()
+        protected string ValidateDXMLFilesNames()
         {
             string error = null;
 
@@ -245,7 +245,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidateDXMLViewsNames()
+        protected string ValidateDXMLViewsNames()
         {
             string error = null;
 
@@ -264,7 +264,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidateDXMLProceduresNames()
+        protected string ValidateDXMLProceduresNames()
         {
             string error = null;
 
@@ -283,7 +283,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidateDXMLTriggersNames()
+        protected string ValidateDXMLTriggersNames()
         {
             string error = null;
 
@@ -302,7 +302,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidateReferencedTables(DXMLTable dxmlTable)
+        protected string ValidateReferencedTables(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -329,7 +329,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidateReferencedColumns(DXMLTable dxmlTable)
+        protected string ValidateReferencedColumns(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -347,7 +347,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidateNumberOfReferencedColumns(DXMLTable dxmlTable)
+        protected string ValidateNumberOfReferencedColumns(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -363,7 +363,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidateForeignKeyColumns(DXMLTable dxmlTable)
+        protected string ValidateForeignKeyColumns(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -381,7 +381,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidateNumberOfForeignKeyColumns(DXMLTable dxmlTable)
+        protected string ValidateNumberOfForeignKeyColumns(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -396,7 +396,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidateForeignKeyColumnsDataType(DXMLTable dxmlTable)
+        protected string ValidateForeignKeyColumnsDataType(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -457,7 +457,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidatePrimaryKeys(DXMLTable dxmlTable)
+        protected string ValidatePrimaryKeys(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -471,7 +471,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidateIndexesColumns(DXMLTable dxmlTable)
+        protected string ValidateIndexesColumns(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -498,7 +498,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidateUniqueConstraintsColumns(DXMLTable dxmlTable)
+        protected string ValidateUniqueConstraintsColumns(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -516,7 +516,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidateDuplicateIndexes(DXMLTable dxmlTable)
+        protected string ValidateDuplicateIndexes(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -530,7 +530,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidateDuplicateUniqueConstraints(DXMLTable dxmlTable)
+        protected string ValidateDuplicateUniqueConstraints(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -544,7 +544,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private string ValidateIndexesAgainstRelations(DXMLTable dxmlTable)
+        protected string ValidateIndexesAgainstRelations(DXMLTable dxmlTable)
         {
             string error = null;
 
@@ -559,7 +559,7 @@ namespace Logitude.DBMigrations.Models
             return error;
         }
 
-        private void ExitTool(string message)
+        protected void ExitTool(string message)
         {
             Console.WriteLine(message);
             Environment.Exit(1);

@@ -127,8 +127,8 @@ export class AWBDangerousPackageComponent extends BaseComponent {
             errors.push("Packaging Group field max length is 10");
         }
 
-        if (!AppTool.IsNullOrEmpty(this.DangerousMaterialDescription) && this.DangerousMaterialDescription.length > 30) {
-            errors.push("Material Description field max length is 30");
+        if (!AppTool.IsNullOrEmpty(this.DangerousMaterialDescription) && this.DangerousMaterialDescription.length > 100) {
+            errors.push("Material Description field max length is 100");
         }
 
         this.ValidationErrorsList = errors;

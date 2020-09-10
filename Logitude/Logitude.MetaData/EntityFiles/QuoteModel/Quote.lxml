@@ -16489,7 +16489,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;IsChargesByVAT&quot;"
-    DefaultText="&quot;Charges By VAT&quot;"
+    DefaultText="&quot;Charges Include VAT&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"

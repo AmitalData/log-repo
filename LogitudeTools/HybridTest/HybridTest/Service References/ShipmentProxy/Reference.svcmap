@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b725f56e-a3c0-4a1b-98e4-9f350d4659b4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e347cfe3-06be-4c6a-b913-33e5e4e7d027" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,19 +22,19 @@
     <MetadataSource Address="http://localhost:9996/WcfApi/ShipmentWcfService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ShipmentWcfService.xsd" MetadataType="Schema" ID="645bb44b-3c07-4edc-971d-9223fae85aa4" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd10" />
-    <MetadataFile FileName="ShipmentWcfService1.xsd" MetadataType="Schema" ID="74a33f7e-fe8e-4bc4-924d-25952a3f612f" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd7" />
-    <MetadataFile FileName="ShipmentWcfService2.xsd" MetadataType="Schema" ID="0c2cac0a-f1f5-4949-923a-6429fc2ae79c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd2" />
-    <MetadataFile FileName="ShipmentWcfService3.xsd" MetadataType="Schema" ID="18e3b997-c38a-4237-ad98-1bcac2e6bc26" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd1" />
-    <MetadataFile FileName="ShipmentWcfService4.xsd" MetadataType="Schema" ID="a581c985-6521-42bf-a069-31248a13413f" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd8" />
-    <MetadataFile FileName="ShipmentWcfService5.xsd" MetadataType="Schema" ID="a45903ac-b0d6-4e08-84d6-66bf0ad10885" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd4" />
-    <MetadataFile FileName="ShipmentWcfService6.xsd" MetadataType="Schema" ID="b53f1e52-4dd6-4872-9d3b-cfeceec9b158" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd6" />
-    <MetadataFile FileName="ShipmentWcfService.wsdl" MetadataType="Wsdl" ID="f1fd3cae-b0d7-4d6e-822c-e813018a8410" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?wsdl" />
-    <MetadataFile FileName="ShipmentWcfService7.xsd" MetadataType="Schema" ID="a6bdf860-1781-465d-8ef9-f4829d58d547" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd0" />
-    <MetadataFile FileName="ShipmentWcfService8.xsd" MetadataType="Schema" ID="d00fefa0-3601-4785-95bf-b340ddf5b60c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd3" />
-    <MetadataFile FileName="ShipmentWcfService9.xsd" MetadataType="Schema" ID="51c672cd-214d-4c3c-ba70-2454a31eb01d" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd9" />
-    <MetadataFile FileName="ShipmentWcfService.disco" MetadataType="Disco" ID="639d2aba-a9f4-408a-b683-e67bf475fb35" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?disco" />
-    <MetadataFile FileName="ShipmentWcfService10.xsd" MetadataType="Schema" ID="da1d59e3-5553-44af-bb0c-bcc988dfa49e" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="ShipmentWcfService.xsd" MetadataType="Schema" ID="2fb461f4-78e6-4af3-8723-5bbdb0f6f37b" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd10" />
+    <MetadataFile FileName="ShipmentWcfService1.xsd" MetadataType="Schema" ID="25306164-7457-48c8-be92-7ba01d03eb66" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd7" />
+    <MetadataFile FileName="ShipmentWcfService2.xsd" MetadataType="Schema" ID="962f29a8-b50f-4566-94c9-bc7f9aef9da0" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ShipmentWcfService3.xsd" MetadataType="Schema" ID="579e3a7d-e653-4c0e-b951-5b7647dc380c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ShipmentWcfService4.xsd" MetadataType="Schema" ID="fcca1510-9971-4c03-841f-006528b13131" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd8" />
+    <MetadataFile FileName="ShipmentWcfService5.xsd" MetadataType="Schema" ID="5f3999ee-73e6-4ab8-9eaa-60ff3b641067" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="ShipmentWcfService6.xsd" MetadataType="Schema" ID="6c6b1665-388d-4def-9d2d-2a18d129f207" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd6" />
+    <MetadataFile FileName="ShipmentWcfService.wsdl" MetadataType="Wsdl" ID="40a55570-bcd1-4f52-82a2-2e199e41a3dc" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?wsdl" />
+    <MetadataFile FileName="ShipmentWcfService7.xsd" MetadataType="Schema" ID="675cb099-8042-4651-ad40-6188ae307d24" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ShipmentWcfService8.xsd" MetadataType="Schema" ID="020078cd-a8ad-43ff-9271-63db5c4462fe" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ShipmentWcfService9.xsd" MetadataType="Schema" ID="b2bdc940-79ca-4809-95f2-462b3600d55a" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd9" />
+    <MetadataFile FileName="ShipmentWcfService.disco" MetadataType="Disco" ID="e2e6c45f-1a75-44f8-b364-6efb79828490" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?disco" />
+    <MetadataFile FileName="ShipmentWcfService10.xsd" MetadataType="Schema" ID="23c4f334-a791-42f1-8bc7-cf62a5c4694e" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd5" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

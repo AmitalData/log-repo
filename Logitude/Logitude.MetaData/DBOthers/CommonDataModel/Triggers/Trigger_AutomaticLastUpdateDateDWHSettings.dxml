@@ -14,7 +14,7 @@ IF TRIGGER_NESTLEVEL() > 1 RETURN;
 
 IF SESSION_CONTEXT(N'ZeroDownTimeMode') IS NULL
 BEGIN
-UPDATE DWHSettings SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted);
+UPDATE DWHSettings SET AutomaticLastUpdateDate = GETDATE() WHERE Tenant IN (SELECT DISTINCT Tenant FROM Inserted);
 END;
 
 END;
