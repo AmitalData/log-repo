@@ -57,4 +57,8 @@
     <Constraints Nullable="false" />
   </Column>
 
+  <Column Name="BatchSize" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+
 </Table>

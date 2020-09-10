@@ -14,7 +14,7 @@ IF TRIGGER_NESTLEVEL() > 1 RETURN;
 
 IF SESSION_CONTEXT(N'ZeroDownTimeMode') IS NULL
 BEGIN
-UPDATE ShipmentReceivableStatus SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted);
+UPDATE ShipmentReceivableStatus SET AutomaticLastUpdateDate = GETDATE() WHERE Code IN (SELECT DISTINCT Code FROM Inserted);
 END;
 
 END;

@@ -53,7 +53,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 connection.Close();
 
-                ExitDatabaseMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
 
             return currentTable;
@@ -148,7 +148,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 connection.Close();
 
-                ExitDatabaseMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
 
             return FormatCaseSensitiveNames(currentTable);
@@ -204,7 +204,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 connection.Close();
 
-                ExitDatabaseMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
 
             return relations;
@@ -252,7 +252,7 @@ namespace Logitude.DBMigrations.Models
                     reader.Close();
                 }
                 connection.Close();
-                ExitDatabaseMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
 
             return indexes;
@@ -299,7 +299,7 @@ namespace Logitude.DBMigrations.Models
                     reader.Close();
                 }
                 connection.Close();
-                ExitDatabaseMigrations(exception.Message);
+                ExitTool("Error: " + exception.Message);
             }
 
             return uniqueConstraints;
