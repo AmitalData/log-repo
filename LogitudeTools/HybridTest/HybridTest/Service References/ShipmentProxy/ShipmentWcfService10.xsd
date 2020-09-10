@@ -84,6 +84,7 @@
       <xs:element minOccurs="0" name="IsSharedOut" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsSharedWithCustomer" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsSharedWithForwarder" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsUoloadedField" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsUpdateSharedDocument" type="xs:boolean" />
       <xs:element minOccurs="0" name="LastShareDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="LastVersion" type="xs:int" />

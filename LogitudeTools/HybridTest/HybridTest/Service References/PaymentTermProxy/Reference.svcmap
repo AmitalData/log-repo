@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a4264f5c-a04c-401a-9ad1-eb23c7b4e762" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c80bd59e-1b2a-48d2-84f9-9e43bad819f9" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,13 +22,13 @@
     <MetadataSource Address="http://localhost:9996/WcfApi/PaymentTermWcfService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="PaymentTermWcfService.xsd" MetadataType="Schema" ID="6cccfccd-bb62-4752-aab5-5c5148c2a489" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PaymentTermWcfService.svc?xsd=xsd2" />
-    <MetadataFile FileName="PaymentTermWcfService1.xsd" MetadataType="Schema" ID="cdb98c42-0321-497b-8d27-ecf2dba9b35b" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PaymentTermWcfService.svc?xsd=xsd1" />
-    <MetadataFile FileName="PaymentTermWcfService2.xsd" MetadataType="Schema" ID="fcae1432-e70e-4393-b1be-9bca7573161e" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PaymentTermWcfService.svc?xsd=xsd3" />
-    <MetadataFile FileName="PaymentTermWcfService3.xsd" MetadataType="Schema" ID="74ca7ca6-c755-42a5-8d26-c0730ab574dd" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PaymentTermWcfService.svc?xsd=xsd0" />
-    <MetadataFile FileName="PaymentTermWcfService.wsdl" MetadataType="Wsdl" ID="1fde7953-4420-43e5-88c0-c23ec9e97697" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PaymentTermWcfService.svc?wsdl" />
-    <MetadataFile FileName="PaymentTermWcfService.disco" MetadataType="Disco" ID="fb06a7e3-5704-4929-8cdf-2beab6d063e2" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PaymentTermWcfService.svc?disco" />
-    <MetadataFile FileName="PaymentTermWcfService4.xsd" MetadataType="Schema" ID="d173afa2-123e-4275-851d-67c465acdf87" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PaymentTermWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="PaymentTermWcfService.xsd" MetadataType="Schema" ID="b91c215c-89d5-4e19-b299-f4eed7510148" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PaymentTermWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PaymentTermWcfService1.xsd" MetadataType="Schema" ID="1bc6259c-ec75-4d68-91ca-733a6e74d780" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PaymentTermWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="PaymentTermWcfService2.xsd" MetadataType="Schema" ID="e571ba8d-c5c6-47d5-9d84-42322d37a135" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PaymentTermWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="PaymentTermWcfService3.xsd" MetadataType="Schema" ID="b51dce78-5bfd-4a25-832a-c0e6bc65838a" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PaymentTermWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="PaymentTermWcfService.wsdl" MetadataType="Wsdl" ID="b283e8cc-8f37-487f-bfb4-50e1038ff32a" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PaymentTermWcfService.svc?wsdl" />
+    <MetadataFile FileName="PaymentTermWcfService.disco" MetadataType="Disco" ID="52f2cf12-452f-49f9-a1ed-0bee0d5f6f77" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PaymentTermWcfService.svc?disco" />
+    <MetadataFile FileName="PaymentTermWcfService4.xsd" MetadataType="Schema" ID="375961ec-2c6a-4e8f-b1ac-b883482fab32" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/PaymentTermWcfService.svc?xsd=xsd4" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
