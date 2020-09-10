@@ -30,9 +30,10 @@ CREATE TABLE #temp_ShipmentComputedFields
 select
 Shipments.Id, ShipmentPackages.ContainerNumber as ContainerNumber, PackageTypes.Code as PackageTypeCode
 into #temp
-from Shipments where $LastCounterWhere$
+from Shipments 
 left outer join ShipmentPackages on Shipments.Id = ShipmentPackages.ShipmentId
 left outer join PackageTypes on ShipmentPackages.PackageTypeId = PackageTypes.Id
+where $LastCounterWhere$
 
 
 SELECT DISTINCT temp3.Id, 

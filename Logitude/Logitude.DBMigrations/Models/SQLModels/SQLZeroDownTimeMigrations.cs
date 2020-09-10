@@ -255,7 +255,7 @@ namespace Logitude.DBMigrations.Models
             string queryString = dbMigrationsDataScript.SxmlScript;
             //queryString = Regex.Replace(queryString, "[$]Top[$]", "TOP(1000)", RegexOptions.IgnoreCase);
             //queryString = Regex.Replace(queryString, "[$]UpdateLastCounter[$]", ("[DBMigrationsLastScript] = " + scriptExecutionNumber.ToString()), RegexOptions.IgnoreCase);
-            queryString = Regex.Replace(queryString, "[$]LastCounterWhere[$]", "[Id] IN (SELECT Id from @IdsTable)", RegexOptions.IgnoreCase);
+            queryString = Regex.Replace(queryString, "[$]LastCounterWhere[$]", targetTableName + ".[Id] IN (SELECT Id from @IdsTable)", RegexOptions.IgnoreCase);
 
             queryString = "DECLARE @IdsTable TABLE (Id VARCHAR(20));\n" +
                           "INSERT INTO @IdsTable SELECT TOP(1000) [Id] FROM [" + targetTableName + "] WHERE [DBMigrationsLastScript] = " + (scriptExecutionNumber - 1).ToString() +
