@@ -35,7 +35,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
              if (indexOfTab > -1) {
                  allTabs[indexOfTab].TabNameTextCodeCode = "Customs.Declaration.TH.ExporterInvoices";
              }
-            
+        
 
         }
          else {
@@ -43,8 +43,11 @@ export class DeclarationEditComponentController implements IEditComponentControl
              if (indexOfTab > -1) {
                  allTabs[indexOfTab].TabNameTextCodeCode = "Customs.Declaration.TH.Invoices";
              }
+               var indexOfTab = allTabs.findIndex(t => t.Code == "DCDI");
+              if (indexOfTab > -1) {
+                  allTabs.splice(indexOfTab, 1);
 
- 
+              }
          }
 
     }
