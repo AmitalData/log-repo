@@ -22,6 +22,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { LuhnAlgorithm } from '../../../Customs/Utilities/LuhnAlgorithm';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'SpecialActivityRequestComponent',
@@ -49,7 +50,7 @@ export class SpecialActivityRequestComponent
     public RepackingCurrentList: ObservableCollection;
     public RepackingDesiredList: ObservableCollection;
     public SampleRequestList: ObservableCollection;
-
+    public RequestId: number;
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
     _CustomsSettingListService: CustomsSettingListService = new CustomsSettingListService();
@@ -74,8 +75,38 @@ export class SpecialActivityRequestComponent
             console.log("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent != null");
         }
         this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
+        this.RequestId = new Date(Date.now()).getTime();
         this.subscribeWrapperComponent()
     }
+
+    ViewDocumentsComponent() {
+        var windowArgs: any = {};
+        this.EntityPM = {};
+        this.EntityPM.Id = this.RequestId;
+        this.EntityPM.Tenant = SessionLocator.Tenant;
+        windowArgs.EntityPM = this.EntityPM;
+        // windowArgs.ObjectTableName = "Customs.CustomsCollateral";Cancellation
+        windowArgs.ObjectTableName = "Customs.Declaration";// this.ObjectTableName;
+        windowArgs.EntityParentPM = "SpecialRequest";
+        //    windowArgs.SkipCtor = this.SkipCtor;
+
+        var windowTitle = "Customs.Declaration.TH.Documents";
+
+        var logWindow = new LogitudeWindow();
+        logWindow.IsHideHeader = true;
+        logWindow.Width = 1000;
+        logWindow.Height = 700;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+       // logWindow.WindowClosed.subscribe(($event: any) => this.SkipCtor = true);
+
+       
+            logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
+ 
+
+    }
+
 
     OnMassageDisplayMethod() {
         this.StorageFilterItems = new ApiQueryFilters();
@@ -1025,7 +1056,7 @@ export class SpecialActivityRequestComponent
         currRequestParams.RequestVIA = this._CustomSendOptionsArgs.RequestVIA;
         currRequestParams.ForcePersonalSign = this._CustomSendOptionsArgs.ForcePersonalSign;
         currRequestParams.Tenant = SessionLocator.Tenant;
-
+        currRequestParams.AppicationId = this.RequestId.toString();
         //GeneralDetails
         currRequestParams.GeneralDetailsData = new GeneralDetails();
         currRequestParams.GeneralDetailsData.SpecialActivityRequestNumber = this.SpecialActivityRequestNumber;

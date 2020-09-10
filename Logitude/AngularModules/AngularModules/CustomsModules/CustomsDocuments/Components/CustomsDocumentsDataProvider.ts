@@ -6,11 +6,14 @@ import { VehicleCustomsDocumentsController } from '../../../CustomsModules/Custo
 import {CustDocRelatedDocsWebService} from '../../../Customs/Services/WebServices/CustDocRelatedDocsWebService';
 import {ICustomsDocumentsController} from './ICustomsDocumentsController';
 import { DeclarationCancellationCustomsDocumentsController } from '../../CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/Documents/DeclarationCancellationCustomsDocumentsController';
+import { SpecialActivityCustomsDocumentsController } from '../../CustomsGeneralRequests/Components/Documents/SpecialActivityCustomsDocumentsController';
 
 export class CustomsDocumentsDataProvider {
     private declarationCustomsDocumentsController: DeclarationCustomsDocumentsController;
     private collateralCustomsDocumentsController: CollateralCustomsDocumentsController;
     private declarationCancellationCustomsDocumentsController: DeclarationCancellationCustomsDocumentsController;
+    private specialActivityCustomsDocumentsController: SpecialActivityCustomsDocumentsController;
+
     private claimCustomsDocumentsController: ClaimCustomsDocumentsController;
     private vehicleCustomsDocumentsController: VehicleCustomsDocumentsController;
     private custDocRelatedDocsWebService: CustDocRelatedDocsWebService;
@@ -27,6 +30,9 @@ export class CustomsDocumentsDataProvider {
                 if (this.parentEntityCode == "DeclarationCancellation")
                     
                     this.declarationCancellationCustomsDocumentsController = new DeclarationCancellationCustomsDocumentsController(entityPM, childEntity1Id, childEntity1Name);
+                else if (this.parentEntityCode == "SpecialRequest")
+                    this.specialActivityCustomsDocumentsController = new SpecialActivityCustomsDocumentsController(entityPM, childEntity1Id, childEntity1Name);
+
                 else
                 this.declarationCustomsDocumentsController = new DeclarationCustomsDocumentsController(entityPM, childEntity1Id, childEntity1Name);
                 break;
@@ -52,6 +58,8 @@ export class CustomsDocumentsDataProvider {
             case 'Customs.Declaration': {
                 if (this.parentEntityCode == "DeclarationCancellation")
                     return this.declarationCancellationCustomsDocumentsController;
+                else if (this.parentEntityCode == "SpecialRequest")
+                    return this.specialActivityCustomsDocumentsController;
 
                    else
                 return this.declarationCustomsDocumentsController;
