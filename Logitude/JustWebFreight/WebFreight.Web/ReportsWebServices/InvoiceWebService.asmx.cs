@@ -1174,6 +1174,7 @@ namespace WebFreight.Web.ReportsWebServices
                             newItem.Amount = pricing.Amount;
                             newItem.LineNumber = pricing.LineNumber;
                             newItem.WarehouseName = warehouseName;
+                            newItem.ChargeableDays = pricing.ChargeableDays;
 
                             invoicedataprovider.ShipmentStoragePricings.Add(newItem);
                         }

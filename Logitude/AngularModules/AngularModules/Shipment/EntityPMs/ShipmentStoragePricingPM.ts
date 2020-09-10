@@ -73,6 +73,11 @@ export class ShipmentStoragePricingPM {
     public set Amount(newValue: number) { if (this.amount != newValue) { this.amount = newValue; this.MarkAsDirty("Amount"); } }
        
 	 
+    private chargeableDays: number;
+    public get ChargeableDays() { return this.chargeableDays; }
+    public set ChargeableDays(newValue: number) { if (this.chargeableDays != newValue) { this.chargeableDays = newValue; this.MarkAsDirty("ChargeableDays"); } }
+       
+	 
     private lineNumber: number;
     public get LineNumber() { return this.lineNumber; }
     public set LineNumber(newValue: number) { if (this.lineNumber != newValue) { this.lineNumber = newValue; this.MarkAsDirty("LineNumber"); } }

@@ -21,6 +21,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public decimal? SalePrice { get; set; }
         public decimal? Amount { get; set; }
         public int LineNumber { get; set; }
+        public int? ChargeableDays { get; set; }
 
         public virtual Shipment Shipment { get; set; }
         public virtual Card Warehouse { get; set; }

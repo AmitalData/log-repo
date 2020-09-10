@@ -39,6 +39,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        SalePrice = a.SalePrice,
                        Amount = a.Amount,
                        LineNumber = a.LineNumber,
+                       ChargeableDays = a.ChargeableDays,
                    }).FirstOrDefault();
 
             return myResult;
@@ -61,6 +62,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        SalePrice = a.SalePrice,
                        Amount = a.Amount,
                        LineNumber = a.LineNumber,
+                       ChargeableDays = a.ChargeableDays,
                    }).ToList();
 
             return storagePricings;

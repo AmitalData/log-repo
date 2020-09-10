@@ -2777,8 +2777,7 @@ export class ArrayTool {
         }
 
         return myResult;
-    }
-
+    }    
     public static GroupIt(array: any[],
         funcReturnKeyFromItemOrLiteral: any 
             //(item: any) => string  //User-Defined Type Guards
@@ -2823,10 +2822,6 @@ export class ArrayTool {
 
             }, {});
     }
-
-
-    
-
 }
 export class FileLoader {
     public static AllFroalaResources: ResourceFile[] = [];

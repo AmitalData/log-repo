@@ -35,6 +35,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public decimal? Amount { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int? ChargeableDays { get; set; }
+
         public int LineNumber { get; set; }
 
         public ChangeSetOperation ChangeSetOp { get; set; }
