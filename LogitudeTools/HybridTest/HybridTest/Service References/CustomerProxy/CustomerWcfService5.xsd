@@ -27,7 +27,6 @@
       <xs:element minOccurs="0" name="BlockNewInvoiceCreation" type="xs:boolean" />
       <xs:element minOccurs="0" name="BlockNewShipmentCreation" type="xs:boolean" />
       <xs:element minOccurs="0" name="Card" nillable="true" type="tns:CardPM" />
-      <xs:element minOccurs="0" name="CardCurrenciesAccountings" nillable="true" type="tns:ArrayOfCardCurrenciesAccountingPM" />
       <xs:element minOccurs="0" name="CardExternalCodeByCurrencies" nillable="true" type="tns:ArrayOfCardExternalCodeByCurrencyPM" />
       <xs:element minOccurs="0" name="CardPMId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CityName" nillable="true" type="xs:string" />
@@ -91,6 +90,7 @@
       <xs:element minOccurs="0" name="ForwarderName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FreelancerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FreelancerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GLAccountNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="GoogleAddressString" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IBANNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IRSNumber" nillable="true" type="xs:string" />
@@ -181,6 +181,7 @@
       <xs:element minOccurs="0" name="UpdateDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="UpdatedByUserCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UpdatedByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UploadingUniqueKey" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UsoCFDICode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="VatNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="VatTypeId" nillable="true" type="xs:string" />
@@ -278,6 +279,7 @@
       <xs:element minOccurs="0" name="ExternalAccountingBusinessArea" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ExternalId2" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FieldsChanged" type="xs:boolean" />
+      <xs:element minOccurs="0" name="GLAccountDisplayNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="GLAccountId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IBANNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IRSNumber" nillable="true" type="xs:string" />
@@ -341,7 +343,6 @@
       <xs:element minOccurs="0" name="BlockNewInvoiceCreation" type="xs:boolean" />
       <xs:element minOccurs="0" name="BlockNewShipmentCreation" type="xs:boolean" />
       <xs:element minOccurs="0" name="CASSCode" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CardCurrenciesAccountings" nillable="true" type="tns:ArrayOfCardCurrenciesAccountingPM" />
       <xs:element minOccurs="0" name="CardExternalCodeByCurrencies" nillable="true" type="tns:ArrayOfCardExternalCodeByCurrencyPM" />
       <xs:element minOccurs="0" name="CardPMId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CityName" nillable="true" type="xs:string" />
@@ -359,6 +360,7 @@
       <xs:element minOccurs="0" name="ExternalId2" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FieldsChanged" type="xs:boolean" />
       <xs:element minOccurs="0" name="GLAccountId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GLAccountNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IATACode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IBANNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IRSNumber" nillable="true" type="xs:string" />
@@ -394,6 +396,7 @@
       <xs:element minOccurs="0" name="TenantAddressId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UpdateDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="UpdatedByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UploadingUniqueKey" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UsoCFDICode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="VatNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="VatTypeId" nillable="true" type="xs:string" />
@@ -401,28 +404,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AgentPM" nillable="true" type="tns:AgentPM" />
-  <xs:complexType name="ArrayOfCardCurrenciesAccountingPM">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="CardCurrenciesAccountingPM" nillable="true" type="tns:CardCurrenciesAccountingPM" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfCardCurrenciesAccountingPM" nillable="true" type="tns:ArrayOfCardCurrenciesAccountingPM" />
-  <xs:complexType name="CardCurrenciesAccountingPM">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="CardId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CardName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ChangeSetCode" nillable="true" type="xs:string" />
-      <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q11:ChangeSetOperation" />
-      <xs:element minOccurs="0" name="CurrencyCode" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CurrencyId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CurrencyName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PayableDebitAccount" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ReceivableCreditAccount" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="CardCurrenciesAccountingPM" nillable="true" type="tns:CardCurrenciesAccountingPM" />
   <xs:complexType name="ArrayOfCardExternalCodeByCurrencyPM">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="CardExternalCodeByCurrencyPM" nillable="true" type="tns:CardExternalCodeByCurrencyPM" />
@@ -432,9 +413,11 @@
   <xs:complexType name="CardExternalCodeByCurrencyPM">
     <xs:sequence>
       <xs:element minOccurs="0" name="CardId" nillable="true" type="xs:string" />
-      <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q12:ChangeSetOperation" />
+      <xs:element minOccurs="0" name="CardName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q11:ChangeSetOperation" />
       <xs:element minOccurs="0" name="CurrencyCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CurrencyId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrencyName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ExternalPayableTableId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ExternalRecievableTableId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ExternalTableCode" nillable="true" type="xs:string" />
@@ -527,7 +510,7 @@
       <xs:element minOccurs="0" name="AdditionalServiceName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CardContactId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CardId" nillable="true" type="xs:string" />
-      <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q13:ChangeSetOperation" />
+      <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q12:ChangeSetOperation" />
       <xs:element minOccurs="0" name="ContactId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Tenant" type="xs:int" />
@@ -542,7 +525,6 @@
       <xs:element minOccurs="0" name="BankAddress" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BankName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Card" nillable="true" type="tns:CardPM" />
-      <xs:element minOccurs="0" name="CardCurrenciesAccountings" nillable="true" type="tns:ArrayOfCardCurrenciesAccountingPM" />
       <xs:element minOccurs="0" name="CardExternalCodeByCurrencies" nillable="true" type="tns:ArrayOfCardExternalCodeByCurrencyPM" />
       <xs:element minOccurs="0" name="CardPMId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CityName" nillable="true" type="xs:string" />
@@ -561,6 +543,7 @@
       <xs:element minOccurs="0" name="ExternalId2" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FieldsChanged" type="xs:boolean" />
       <xs:element minOccurs="0" name="GLAccountId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GLAccountNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IBANNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IRSNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IRSPlace" nillable="true" type="xs:string" />
@@ -589,6 +572,7 @@
       <xs:element minOccurs="0" name="Tenant" type="xs:int" />
       <xs:element minOccurs="0" name="UpdateDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="UpdatedByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UploadingUniqueKey" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UsoCFDICode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="VatNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="VatTypeId" nillable="true" type="xs:string" />
@@ -602,7 +586,6 @@
       <xs:element minOccurs="0" name="AccountingVATSplit" type="xs:boolean" />
       <xs:element minOccurs="0" name="BankAddress" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BankName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CardCurrenciesAccountings" nillable="true" type="tns:ArrayOfCardCurrenciesAccountingPM" />
       <xs:element minOccurs="0" name="CardExternalCodeByCurrencies" nillable="true" type="tns:ArrayOfCardExternalCodeByCurrencyPM" />
       <xs:element minOccurs="0" name="CardPMId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CityName" nillable="true" type="xs:string" />
@@ -622,6 +605,7 @@
       <xs:element minOccurs="0" name="ForwarderAccountNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ForwarderCreditNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="GLAccountId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GLAccountNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IBANNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IRSNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IRSPlace" nillable="true" type="xs:string" />
@@ -651,6 +635,7 @@
       <xs:element minOccurs="0" name="Tenant" type="xs:int" />
       <xs:element minOccurs="0" name="UpdateDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="UpdatedByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UploadingUniqueKey" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UsoCFDICode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="VatNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="VatTypeId" nillable="true" type="xs:string" />
@@ -666,7 +651,6 @@
       <xs:element minOccurs="0" name="BankAddress" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BankName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Card" nillable="true" type="tns:CardPM" />
-      <xs:element minOccurs="0" name="CardCurrenciesAccountings" nillable="true" type="tns:ArrayOfCardCurrenciesAccountingPM" />
       <xs:element minOccurs="0" name="CardExternalCodeByCurrencies" nillable="true" type="tns:ArrayOfCardExternalCodeByCurrencyPM" />
       <xs:element minOccurs="0" name="CardPMId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CityName" nillable="true" type="xs:string" />
@@ -685,6 +669,7 @@
       <xs:element minOccurs="0" name="ExternalId2" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FieldsChanged" type="xs:boolean" />
       <xs:element minOccurs="0" name="GLAccountId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GLAccountNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IBANNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IRSNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IRSPlace" nillable="true" type="xs:string" />
@@ -714,6 +699,7 @@
       <xs:element minOccurs="0" name="TenantAddressId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UpdateDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="UpdatedByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UploadingUniqueKey" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UsoCFDICode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="VatNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="VatTypeId" nillable="true" type="xs:string" />
@@ -731,7 +717,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="AccountManagerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AccountManagerName" nillable="true" type="xs:string" />
-      <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q14:ChangeSetOperation" />
+      <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q13:ChangeSetOperation" />
       <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ProductTypeCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Tenant" type="xs:int" />
@@ -750,7 +736,7 @@
       <xs:element minOccurs="0" name="AdditionalServiceId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AdditionalServiceName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BusinessUnitId" nillable="true" type="xs:string" />
-      <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q15:ChangeSetOperation" />
+      <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q14:ChangeSetOperation" />
       <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CustomerName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
@@ -771,7 +757,7 @@
   <xs:element name="ArrayOfCustomerCompetitorPM" nillable="true" type="tns:ArrayOfCustomerCompetitorPM" />
   <xs:complexType name="CustomerCompetitorPM">
     <xs:sequence>
-      <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q16:ChangeSetOperation" />
+      <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q15:ChangeSetOperation" />
       <xs:element minOccurs="0" name="CompetitorId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CompetitorName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CompetitorOpportunity" nillable="true" type="xs:string" />
@@ -794,7 +780,7 @@
   <xs:element name="ArrayOfCustomerCompetitorProductPM" nillable="true" type="tns:ArrayOfCustomerCompetitorProductPM" />
   <xs:complexType name="CustomerCompetitorProductPM">
     <xs:sequence>
-      <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q17:ChangeSetOperation" />
+      <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q16:ChangeSetOperation" />
       <xs:element minOccurs="0" name="CompetitorId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CompetitorName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
@@ -813,7 +799,7 @@
   <xs:element name="ArrayOfCustomerCustomsAgentByProductPM" nillable="true" type="tns:ArrayOfCustomerCustomsAgentByProductPM" />
   <xs:complexType name="CustomerCustomsAgentByProductPM">
     <xs:sequence>
-      <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q18:ChangeSetOperation" />
+      <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q17:ChangeSetOperation" />
       <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CustomsAgentId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CustomsAgentName" nillable="true" type="xs:string" />
@@ -830,7 +816,7 @@
   <xs:element name="ArrayOfCustomerForwarderByProductPM" nillable="true" type="tns:ArrayOfCustomerForwarderByProductPM" />
   <xs:complexType name="CustomerForwarderByProductPM">
     <xs:sequence>
-      <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q19:ChangeSetOperation" />
+      <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q18:ChangeSetOperation" />
       <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ForwarderId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ForwarderName" nillable="true" type="xs:string" />
@@ -847,7 +833,7 @@
   <xs:element name="ArrayOfCustomerMediatorByProductPM" nillable="true" type="tns:ArrayOfCustomerMediatorByProductPM" />
   <xs:complexType name="CustomerMediatorByProductPM">
     <xs:sequence>
-      <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q20:ChangeSetOperation" />
+      <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q19:ChangeSetOperation" />
       <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MediatorId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MediatorName" nillable="true" type="xs:string" />
@@ -864,7 +850,7 @@
   <xs:element name="ArrayOfCustomerProductPM" nillable="true" type="tns:ArrayOfCustomerProductPM" />
   <xs:complexType name="CustomerProductPM">
     <xs:sequence>
-      <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q21:ChangeSetOperation" />
+      <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q20:ChangeSetOperation" />
       <xs:element minOccurs="0" name="CommitmentChargeableWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="CommitmentNumberOfShipments" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="CommitmentRevenue" nillable="true" type="xs:decimal" />
@@ -896,7 +882,7 @@
   <xs:element name="ArrayOfCustomerProductLocationPM" nillable="true" type="tns:ArrayOfCustomerProductLocationPM" />
   <xs:complexType name="CustomerProductLocationPM">
     <xs:sequence>
-      <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q22:ChangeSetOperation" />
+      <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q21:ChangeSetOperation" />
       <xs:element minOccurs="0" name="CommitmentChargeableWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="CommitmentNumberOfShipments" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="CommitmentRevenue" nillable="true" type="xs:decimal" />
@@ -922,7 +908,7 @@
   <xs:element name="ArrayOfCustomerSalesmanByProductPM" nillable="true" type="tns:ArrayOfCustomerSalesmanByProductPM" />
   <xs:complexType name="CustomerSalesmanByProductPM">
     <xs:sequence>
-      <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q23:ChangeSetOperation" />
+      <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q22:ChangeSetOperation" />
       <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ProductTypeCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SalesmanUserId" nillable="true" type="xs:string" />
@@ -939,7 +925,7 @@
   <xs:element name="ArrayOfCustomerSalesNotePM" nillable="true" type="tns:ArrayOfCustomerSalesNotePM" />
   <xs:complexType name="CustomerSalesNotePM">
     <xs:sequence>
-      <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q24:ChangeSetOperation" />
+      <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q23:ChangeSetOperation" />
       <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="CreatedByUserId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CreatedByUserName" nillable="true" type="xs:string" />

@@ -8,6 +8,7 @@
       <xs:element minOccurs="0" name="InnerErrorMessage" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IsAuthenticationError" type="xs:boolean" />
       <xs:element minOccurs="0" name="Result" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Result2" nillable="true" type="xs:string" />
       <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ValidationErrors" nillable="true" type="q1:ArrayOfstring" />
     </xs:sequence>
   </xs:complexType>

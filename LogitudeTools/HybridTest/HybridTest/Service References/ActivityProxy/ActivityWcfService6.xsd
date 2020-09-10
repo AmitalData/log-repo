@@ -12,6 +12,8 @@
       <xs:element minOccurs="0" name="ChildEntityReference" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ChildObjectTableName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CorrespondenceId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DocumentId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DocumentTypeId" nillable="true" type="xs:string" />
@@ -24,10 +26,14 @@
       <xs:element minOccurs="0" name="FileData" nillable="true" type="xs:base64Binary" />
       <xs:element minOccurs="0" name="FileExtension" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileSize" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ObjectTableName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ReceivedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SecurityId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+      <xs:element minOccurs="0" name="UpdateDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="UserEmail" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

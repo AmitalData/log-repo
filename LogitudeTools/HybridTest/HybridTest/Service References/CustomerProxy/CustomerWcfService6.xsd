@@ -35,6 +35,7 @@
       <xs:element minOccurs="0" name="CountryId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CountryName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreatedByPartner" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CreatedByUserId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CreatedByUserName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CreditLimitAmount" nillable="true" type="xs:double" />
@@ -67,6 +68,7 @@
       <xs:element minOccurs="0" name="ForwarderName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FreelancerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FreelancerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GLAccountNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="InActive" type="xs:boolean" />
       <xs:element minOccurs="0" name="InactiveDate" nillable="true" type="xs:dateTime" />

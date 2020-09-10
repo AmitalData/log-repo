@@ -35,7 +35,8 @@ using System.Diagnostics;
 using System.Net.Http;
 using Json2KeyValue;
 using HypredTest.CurrencyProxy;
- 
+using Logitude.Server.Tools;
+
 namespace HypredTest
 {
     public partial class Form1 : Form
@@ -244,19 +245,19 @@ namespace HypredTest
 
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                InsertCommTaskProxy.QueueTask[] mytasks = {
-                                                              new InsertCommTaskProxy.QueueTask()
-                                                              {
-                                                                  Action = "Test",
-                                                                  Parameters = new InsertCommTaskProxy.Parameter[]{
-                                                                      new InsertCommTaskProxy.Parameter(){  Name = "Param1", Order =1, Value = "<Param1></Param1>" }
-                                                                  },
-                                                              }
-                                                          };
-                var result = taskService.InsertTask(1, 1, 1, "testing the comm task", mytasks);
+                //QueueTask[] mytasks = {
+                //                                              new InsertCommTaskProxy.QueueTask()
+                //                                             {
+                //                                                  Action = "Test",
+                //                                                  Parameters = new InsertCommTaskProxy.Parameter[]{
+                //                                                      new InsertCommTaskProxy.Parameter(){  Name = "Param1", Order =1, Value = "<Param1></Param1>" }
+                //                                                  },
+                //                                              }
+                //                                          };
+                //var result = taskService.InsertTask(1, 1, 1, "testing the comm task", mytasks);
 
 
-                var headers = System.ServiceModel.Web.WebOperationContext.Current.IncomingResponse.Headers["SentQueueMessages"];
+                //var headers = System.ServiceModel.Web.WebOperationContext.Current.IncomingResponse.Headers["SentQueueMessages"];
 
 
             }
@@ -303,7 +304,7 @@ namespace HypredTest
             //    //  var addresses = customerservice.GetCustomerAddresses(new CustomerApiFilters() { ByCode = true, SearchCode = "70002-1212" }, 1);
 
             //}
-
+            
             ShipmentProxy.ShipmentWcfServiceClient shipmentservice = new ShipmentProxy.ShipmentWcfServiceClient();
             using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)shipmentservice.InnerChannel))
             {
@@ -383,7 +384,7 @@ namespace HypredTest
 
                 //};
 
-                ShipmentProxy.Response response = shipmentservice.Upsert(pm, false);
+                Response response = shipmentservice.Upsert(pm, false);
                 //var tenants = loginService.GetUserTenants("islam@fnarsoft.com", ref res2);
             }
 
@@ -415,7 +416,7 @@ namespace HypredTest
                 //activity.ActivityInvitees = new ActivityProxy.ActivityInviteePM[] { new ActivityProxy.ActivityInviteePM() { Email = "mohammad@fnarsoft.com", Tenant = 1 }, new ActivityProxy.ActivityInviteePM() { Email = "abbas@fnarsoft.com", IsRequired = true, Tenant = 1 }, new ActivityProxy.ActivityInviteePM() { Email = "morsi@fnarsoft.com", IsRequired = true, Tenant = 1, } };
                 //activity.ActivityEmailRecipients = new ActivityProxy.ActivityEmailRecipientPM[] { new ActivityProxy.ActivityEmailRecipientPM() { Email = "mohammad@fnarsoft.com", Tenant = 1, RecipientTypeCode = "TO" }, new ActivityProxy.ActivityEmailRecipientPM() { Email = "islam@fnarsoft.com", Tenant = 1, RecipientTypeCode = "BCC", }, new ActivityProxy.ActivityEmailRecipientPM() { Email = "mohammad@fnarsoft.com", Tenant = 1, RecipientTypeCode = "CC" } };
                 //ActivityProxy.Response actresponse = activityService.Upsert(activity, "islam@fnarsoft.com");
-                ActivityProxy.Response respRef = new ActivityProxy.Response();
+                Response respRef = new Response();
                 var activit = activityService.GetActivities("eladan@amital.co.il", 1, ref respRef);
                 var act = activityService.GetActivityPM("1-1473", 1, ref respRef);
 
@@ -427,21 +428,21 @@ namespace HypredTest
 
 
 
-            OpportunityProxy.OpportunityWcfServiceClient opportunityService = new OpportunityProxy.OpportunityWcfServiceClient();
-            OpportunityProxy.OpportunityApiFilters filters = new OpportunityProxy.OpportunityApiFilters()
-            {
-                IsOpen = false,
-                MyOpportunities = true,
-            };
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)opportunityService.InnerChannel))
-            {
+            //OpportunityProxy.OpportunityWcfServiceClient opportunityService = new OpportunityProxy.OpportunityWcfServiceClient();
+            //OpportunityProxy.OpportunityApiFilters filters = new OpportunityProxy.OpportunityApiFilters()
+            //{
+            //    IsOpen = false,
+            //    MyOpportunities = true,
+            //};
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)opportunityService.InnerChannel))
+            //{
 
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                OpportunityProxy.Response opp_Response = new OpportunityProxy.Response();
-                var result = opportunityService.GetOpportunityList("islam@fnarsoft.com", null, 1, 0, 30, filters, ref opp_Response);
+            //    OpportunityProxy.Response opp_Response = new OpportunityProxy.Response();
+            //    var result = opportunityService.GetOpportunityList("islam@fnarsoft.com", null, 1, 0, 30, filters, ref opp_Response);
 
-            }
+            //}
             //ActivityProxy.ActivityWcfServiceClient activityService = new ActivityProxy.ActivityWcfServiceClient();
 
             using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)activityService.InnerChannel))
@@ -467,16 +468,16 @@ namespace HypredTest
 
                 activity.ActivityInvitees = new ActivityProxy.ActivityInviteePM[] { new ActivityProxy.ActivityInviteePM() { Email = "mohammad@fnarsoft.com", Tenant = 1 }, new ActivityProxy.ActivityInviteePM() { Email = "abbas@fnarsoft.com", IsRequired = true, Tenant = 1 }, new ActivityProxy.ActivityInviteePM() { Email = "morsi@fnarsoft.com", IsRequired = true, Tenant = 1, } };
 
-                ActivityProxy.Response actresponse = activityService.Upsert(activity, "islam@fnarsoft.com");
-                ActivityProxy.Response respRef = new ActivityProxy.Response();
-                var activit = activityService.GetActivities("islam@fnarsoft.com", 1, ref respRef);
+                //ActivityProxy.Response actresponse = activityService.Upsert(activity, "islam@fnarsoft.com");
+                //ActivityProxy.Response respRef = new ActivityProxy.Response();
+                //var activit = activityService.GetActivities("islam@fnarsoft.com", 1, ref respRef);
 
             }
 
 
 
 
-            LoginProxy.Response res2 = new LoginProxy.Response();
+            //LoginProxy.Response res2 = new LoginProxy.Response();
 
 
             //ServiceHost host = new ServiceHost(typeof(CustomerWcfServiceClient));
@@ -501,27 +502,27 @@ namespace HypredTest
             //host.Open();
 
 
-            AddressProxy.AddressWcfServiceClient addressService = new AddressProxy.AddressWcfServiceClient();
-            AddressProxy.AddressPM address = new AddressProxy.AddressPM()
-            {
-                ExternalId = "E00001",
-                Tenant = 1,
-                Address1 = "Al Beireh",
-                Address2 = "Jawwal",
-                AddressTypeId = "M", // M: main address, B: billing // O:Other
-                ATTN = "11111",
-                CardId = "70002",
-                City = "Ramallah",
-                CountryId = "PS",
-                Name = "Main Address",
-                ZipCode = "0972",
-                Description = "ramallah address",
-            };
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)addressService.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", "aa");
-                AddressProxy.Response response = addressService.Upsert(address, false);
-            }
+            //AddressProxy.AddressWcfServiceClient addressService = new AddressProxy.AddressWcfServiceClient();
+            //AddressProxy.AddressPM address = new AddressProxy.AddressPM()
+            //{
+            //    ExternalId = "E00001",
+            //    Tenant = 1,
+            //    Address1 = "Al Beireh",
+            //    Address2 = "Jawwal",
+            //    AddressTypeId = "M", // M: main address, B: billing // O:Other
+            //    ATTN = "11111",
+            //    CardId = "70002",
+            //    City = "Ramallah",
+            //    CountryId = "PS",
+            //    Name = "Main Address",
+            //    ZipCode = "0972",
+            //    Description = "ramallah address",
+            //};
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)addressService.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", "aa");
+            //    AddressProxy.Response response = addressService.Upsert(address, false);
+            //}
 
 
 
@@ -853,32 +854,32 @@ namespace HypredTest
         public void TestWarehouseService(string token)
         {
 
-            WarehouseProxy.WarehouseWcfServiceClient warehouseService = new WarehouseProxy.WarehouseWcfServiceClient();
+            //WarehouseProxy.WarehouseWcfServiceClient warehouseService = new WarehouseProxy.WarehouseWcfServiceClient();
 
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)warehouseService.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)warehouseService.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
 
-                WarehouseProxy.Response resultResponse = new WarehouseProxy.Response();
-                // CustomerPM pm = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "10107933" }, 8, ref resultResponse);
-                WarehouseProxy.WarehousePM newCustomer = new WarehouseProxy.WarehousePM()
-                {
-                    Code = "HBWR",
-                    EnglishName = "Hybrid warehouse",
-                    LocalName = "Hybrid warehouse",
-                    Tenant = 1,
+            //    WarehouseProxy.Response resultResponse = new WarehouseProxy.Response();
+            //    // CustomerPM pm = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "10107933" }, 8, ref resultResponse);
+            //    WarehouseProxy.WarehousePM newCustomer = new WarehouseProxy.WarehousePM()
+            //    {
+            //        Code = "HBWR",
+            //        EnglishName = "Hybrid warehouse",
+            //        LocalName = "Hybrid warehouse",
+            //        Tenant = 1,
 
-                };
+            //    };
 
 
 
-                var response = warehouseService.Upsert(newCustomer, false);
-                if (response.HasError)
-                    MessageBox.Show("Failed: " + response.ErrorMessage);
-                else
-                    MessageBox.Show("Success: " + response.Result);
+            //    var response = warehouseService.Upsert(newCustomer, false);
+            //    if (response.HasError)
+            //        MessageBox.Show("Failed: " + response.ErrorMessage);
+            //    else
+            //        MessageBox.Show("Success: " + response.Result);
 
-            }
+            //}
 
           
          
@@ -886,71 +887,71 @@ namespace HypredTest
         private void TestEntityStatusService()
         {
 
-            EntityStatusProxy.EntityStatusWcfServiceClient entityStatusService = new EntityStatusProxy.EntityStatusWcfServiceClient();
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)entityStatusService.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
-                EntityStatusProxy.EntityStatusPM entityStatusPM = new EntityStatusProxy.EntityStatusPM()
-                {
-                    Code = "SARR",
-                    Name = "test hybrid status",
-                    Tenant = 0,
-                    ObjectTableName = "Customer",
-                    ObjectTableId = "Customer",
+            //EntityStatusProxy.EntityStatusWcfServiceClient entityStatusService = new EntityStatusProxy.EntityStatusWcfServiceClient();
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)entityStatusService.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //    EntityStatusProxy.EntityStatusPM entityStatusPM = new EntityStatusProxy.EntityStatusPM()
+            //    {
+            //        Code = "SARR",
+            //        Name = "test hybrid status",
+            //        Tenant = 0,
+            //        ObjectTableName = "Customer",
+            //        ObjectTableId = "Customer",
                      
-                };
+            //    };
 
-                EntityStatusProxy.Response statusResp = entityStatusService.Upsert(entityStatusPM, false);
-            }
+            //    EntityStatusProxy.Response statusResp = entityStatusService.Upsert(entityStatusPM, false);
+            //}
 
         }
 
         private void btnThreads_Click(object sender, EventArgs e)
         {
-            LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
-            LoginProxy.Response loginResponse = loginService.Login("islam@fnarsoft.com", "0");
-            if (!loginResponse.HasError)
-            {
-                Token = loginResponse.Result;
-            }
+            //LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
+            //LoginProxy.Response loginResponse = loginService.Login("islam@fnarsoft.com", "0");
+            //if (!loginResponse.HasError)
+            //{
+            //    Token = loginResponse.Result;
+            //}
 
-            int threads = 5;
-            for (int i = 0; i < threads; i++)
-            {
-                Thread workerThread = new Thread(UpsertShipments);
-                workerThread.Name = "Test" + i;
-                // Start the worker thread.
-                workerThread.Start("");//"Shipment_H_O" + i//Guid.NewGuid().ToString().Substring(0,15));
+            //int threads = 5;
+            //for (int i = 0; i < threads; i++)
+            //{
+            //    Thread workerThread = new Thread(UpsertShipments);
+            //    workerThread.Name = "Test" + i;
+            //    // Start the worker thread.
+            //    workerThread.Start("");//"Shipment_H_O" + i//Guid.NewGuid().ToString().Substring(0,15));
 
-            }
+            //}
 
         }
 
         private static void UpsertUsers(object param)
         {
-            UserProxy.UserWcfServiceClient userservice = new UserWcfServiceClient();
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)userservice.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
-                UserProxy.UserPM userpm = new UserPM()
-                {
-                    Email = "thread2@mail.com",
-                    Code = "thread2",
-                    EnglishName = "thread test",
-                    Tenant = 1,
-                    BranchId = "HybridB1",
-                    DepartmentId = "HybridD1",
-                    Password = "123",
-                    UserType = "R",
-                    InActive = true,
-                    BusinessUnitId = "1"
-                };
-                 UserProxy.Response response =  userservice.Upsert(userpm,false);
-                 if (response.HasError)
-                 {
+            //UserProxy.UserWcfServiceClient userservice = new UserWcfServiceClient();
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)userservice.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //    UserProxy.UserPM userpm = new UserPM()
+            //    {
+            //        Email = "thread2@mail.com",
+            //        Code = "thread2",
+            //        EnglishName = "thread test",
+            //        Tenant = 1,
+            //        BranchId = "HybridB1",
+            //        DepartmentId = "HybridD1",
+            //        Password = "123",
+            //        UserType = "R",
+            //        InActive = true,
+            //        BusinessUnitId = "1"
+            //    };
+            //     UserProxy.Response response =  userservice.Upsert(userpm,false);
+            //     if (response.HasError)
+            //     {
 
-                 }
-            }
+            //     }
+            //}
 
              //Id = "ISLM",
             //    Code = "ISLM",
@@ -1073,7 +1074,7 @@ namespace HypredTest
 
                     System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                    ShipmentProxy.Response response = shipmentservice.Upsert(pm, false);
+                    Response response = shipmentservice.Upsert(pm, false);
                     if (response.HasError)
                     {
                         Console.WriteLine("Error: Shipment no. " + shipmentnumber + " Update" + i + Environment.NewLine + response.ErrorMessage + Environment.NewLine + response.InnerErrorMessage);
@@ -1110,7 +1111,7 @@ namespace HypredTest
 
                 };
 
-                CustomerProxy.Response response = customerservice.Upsert(customer, false);
+                Response response = customerservice.Upsert(customer, false);
                 if (response.HasError)
                 {
                     Console.WriteLine("Error: Shipment no. " + customerCode + " Update" + i + Environment.NewLine + response.ErrorMessage + Environment.NewLine + response.InnerErrorMessage);
@@ -1186,7 +1187,7 @@ namespace HypredTest
                         //pm.Field19 = new CustomFieldClass("Field19", "Shipment", null);
                        // pm.Field20 = new CustomFieldClass("Field20", "Shipment", null);
 
-                        ShipmentProxy.Response myresp = shipmentService.Upsert(pm, false);
+                        Response myresp = shipmentService.Upsert(pm, false);
 
                     }
 
@@ -1494,7 +1495,7 @@ namespace HypredTest
                 };
 
 
-                DocumentInProxy.Response response = documentsInService.Upsert(documentDataPM, false);
+                Response response = documentsInService.Upsert(documentDataPM, false);
 
                 //DocumentsFilingPM documentDataPM = new DocumentsFilingPM()
                 //{
@@ -1577,7 +1578,7 @@ namespace HypredTest
 
                 //documentDataPM.DocumentsFilingMetaDataValues = new DocumentsFilingMetaDataValuePM[] { new DocumentsFilingMetaDataValuePM() { DocumentsMetaDataTypeId = "AAA", Tenant = 1, MetaDataValue = "hello this is me!" } };
 
-                DocumentInProxy.Response response = documentsInService.UpsertDocumentData(documentDataPM, false);
+                Response response = documentsInService.UpsertDocumentData(documentDataPM, false);
 
             }
 
@@ -1637,7 +1638,7 @@ namespace HypredTest
                 };
                 }
                 
-                ActivityProxy.Response response = activityService.Upsert(activity, "islam@fnarsoft.com");
+                Response response = activityService.Upsert(activity, "islam@fnarsoft.com");
 
             }
 
@@ -1646,7 +1647,7 @@ namespace HypredTest
         private string LoginByCredential(string key, int tenant)
         {
             LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
-            LoginProxy.Response loginResponse = loginService.LoginByCredential("", new LoginProxy.APICredentialsParameters() { PrimaryKey = key, Tenant = tenant });
+            Response loginResponse = loginService.LoginByCredential("", new LoginProxy.APICredentialsParameters() { PrimaryKey = key, Tenant = tenant });
             if (!loginResponse.HasError)
             {
                 Token = loginResponse.Result;
@@ -1658,7 +1659,7 @@ namespace HypredTest
         private string Login()
         {
             LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
-            LoginProxy.Response loginResponse = loginService.Login("angular@fnarsoft.com", "1");//"tomerp@amital.co.il", "!T123456");  ("islam@logitudeworld.com", "!I123456");//("yaronc@amital.co.il", "!Y123456");//"yaronc@amital.co.il", "!Y123456");//
+            Response loginResponse = loginService.Login("angular@fnarsoft.com", "1");//"tomerp@amital.co.il", "!T123456");  ("islam@logitudeworld.com", "!I123456");//("yaronc@amital.co.il", "!Y123456");//"yaronc@amital.co.il", "!Y123456");//
             if (!loginResponse.HasError)
             {
                 Token = loginResponse.Result;
@@ -1670,7 +1671,7 @@ namespace HypredTest
         private string LoginToTest()
         {
             LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
-            LoginProxy.Response loginResponse = loginService.Login("ahmadb@logitudeworld.com", @"!A123456");//"tomerp@amital.co.il", "!T123456");  ("islam@logitudeworld.com", "!I123456");//("yaronc@amital.co.il", "!Y123456");//"yaronc@amital.co.il", "!Y123456");//
+            Response loginResponse = loginService.Login("ahmadb@logitudeworld.com", @"!A123456");//"tomerp@amital.co.il", "!T123456");  ("islam@logitudeworld.com", "!I123456");//("yaronc@amital.co.il", "!Y123456");//"yaronc@amital.co.il", "!Y123456");//
             if (!loginResponse.HasError)
             {
                 Token = loginResponse.Result;
@@ -1682,7 +1683,7 @@ namespace HypredTest
         private string Login(string email,string password)
         {
             LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
-            LoginProxy.Response loginResponse = loginService.Login(email, password);//"tomerp@amital.co.il", "!T123456");
+            Response loginResponse = loginService.Login(email, password);//"tomerp@amital.co.il", "!T123456");
             if (!loginResponse.HasError)
             {
                 Token = loginResponse.Result;
@@ -1695,7 +1696,7 @@ namespace HypredTest
         private string LoginToCustoms()
         {
             LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
-            LoginProxy.Response loginResponse = loginService.Login("mohammad@fnarsoft.com", "1");//"tomerp@amital.co.il", "!T123456");
+            Response loginResponse = loginService.Login("mohammad@fnarsoft.com", "1");//"tomerp@amital.co.il", "!T123456");
             if (!loginResponse.HasError)
             {
                 Token = loginResponse.Result;
@@ -1708,12 +1709,12 @@ namespace HypredTest
 
         private string LoginToCloudWithCredentails(string primaryKey, int tenant)
         {
-            LogingProxyCloud.LoginWcfServiceClient loginService = new LogingProxyCloud.LoginWcfServiceClient();
-            LogingProxyCloud.Response loginResponse = loginService.LoginByCredential(null, new LogingProxyCloud.APICredentialsParameters() { PrimaryKey = primaryKey, Tenant = tenant });
-            if (!loginResponse.HasError)
-            {
-                Token = loginResponse.Result;
-            }
+            //LogingProxyCloud.LoginWcfServiceClient loginService = new LogingProxyCloud.LoginWcfServiceClient();
+            //LogingProxyCloud.Response loginResponse = loginService.LoginByCredential(null, new LogingProxyCloud.APICredentialsParameters() { PrimaryKey = primaryKey, Tenant = tenant });
+            //if (!loginResponse.HasError)
+            //{
+            //    Token = loginResponse.Result;
+            //}
 
             return Token;
         }
@@ -1722,12 +1723,12 @@ namespace HypredTest
 
         private string LoginToAmitalIIGTest()
         {
-            AmitalIIGTestLoginProxy.LoginWcfServiceClient loginService = new AmitalIIGTestLoginProxy.LoginWcfServiceClient();
-            AmitalIIGTestLoginProxy.Response loginResponse = loginService.Login("yaronc@amital.co.il", "!Y123456");//"tomerp@amital.co.il", "!T123456");
-            if (!loginResponse.HasError)
-            {
-                Token = loginResponse.Result;
-            }
+            //AmitalIIGTestLoginProxy.LoginWcfServiceClient loginService = new AmitalIIGTestLoginProxy.LoginWcfServiceClient();
+            //AmitalIIGTestLoginProxy.Response loginResponse = loginService.Login("yaronc@amital.co.il", "!Y123456");//"tomerp@amital.co.il", "!T123456");
+            //if (!loginResponse.HasError)
+            //{
+            //    Token = loginResponse.Result;
+            //}
 
             return Token;
         }
@@ -1736,12 +1737,12 @@ namespace HypredTest
         private string LoginToCloudOnline()
         {
 
-            LogingProxyCloud.LoginWcfServiceClient loginService = new LogingProxyCloud.LoginWcfServiceClient();
-            LogingProxyCloud.Response loginResponse = loginService.Login("eladan@amital.co.il", "!E123456");//"tomerp@amital.co.il", "!T123456");
-            if (!loginResponse.HasError)
-            {
-                Token = loginResponse.Result;
-            }
+            //LogingProxyCloud.LoginWcfServiceClient loginService = new LogingProxyCloud.LoginWcfServiceClient();
+            //LogingProxyCloud.Response loginResponse = loginService.Login("eladan@amital.co.il", "!E123456");//"tomerp@amital.co.il", "!T123456");
+            //if (!loginResponse.HasError)
+            //{
+            //    Token = loginResponse.Result;
+            //}
 
             return Token;
         }
@@ -1805,14 +1806,14 @@ namespace HypredTest
 
             Token = "e77I+6qjFreZnZ0rjp0gMruKhBOOp6plHW4=";//Token: e77I+6qjFreZnZ0rjp0gMruKhBOOp6plHW4=
             TetShipmentService();
-            TenantManagementDWProxy.TenantManagementDWWcfServiceClient tenantManagementService = new TenantManagementDWProxy.TenantManagementDWWcfServiceClient();
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)tenantManagementService.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
-                TenantManagementDWProxy.Response response = new TenantManagementDWProxy.Response();
+            //TenantManagementDWProxy.TenantManagementDWWcfServiceClient tenantManagementService = new TenantManagementDWProxy.TenantManagementDWWcfServiceClient();
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)tenantManagementService.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //    TenantManagementDWProxy.Response response = new TenantManagementDWProxy.Response();
 
-                var result = tenantManagementService.GetTenantManagements(341, 0, 10000,ref response);
-            }
+            //    var result = tenantManagementService.GetTenantManagements(341, 0, 10000,ref response);
+            //}
 
             
 
@@ -1824,46 +1825,46 @@ namespace HypredTest
            
             TestShipmentEvents();
 
-            CardContactProxy.CardContactWcfServiceClient cardContactService = new CardContactProxy.CardContactWcfServiceClient();
-            cardContactService.Endpoint.Address= new EndpointAddress("http://localhost:9996/WcfApi/CardContactWcfService.svc");
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)cardContactService.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
-                //CardContactProxy.Response response = new CardContactProxy.Response();
-                //var result = cardContactService.GetCardContactPM("HybridCont", "HypredC1", 1, ref response);
-                var cardContact = new CardContactProxy.CardContactPM()
-                {
-                    CardId = "1d710cd0-db3c-4",
-                    ContactId = "HybridCont",
-                    IsHybrid = true,
-                    IsAll = true,
-                    Tenant = 1,
-                };
-                cardContact.CardContactProducts = new List<CardContactProxy.CardContactProductPM>()
-                {
-                    new CardContactProxy.CardContactProductPM()
-                    {
-                         ProductTypeCode=  "AD",
-                          Tenant = 1,
+            //CardContactProxy.CardContactWcfServiceClient cardContactService = new CardContactProxy.CardContactWcfServiceClient();
+            //cardContactService.Endpoint.Address= new EndpointAddress("http://localhost:9996/WcfApi/CardContactWcfService.svc");
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)cardContactService.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //    //CardContactProxy.Response response = new CardContactProxy.Response();
+            //    //var result = cardContactService.GetCardContactPM("HybridCont", "HypredC1", 1, ref response);
+            //    var cardContact = new CardContactProxy.CardContactPM()
+            //    {
+            //        CardId = "1d710cd0-db3c-4",
+            //        ContactId = "HybridCont",
+            //        IsHybrid = true,
+            //        IsAll = true,
+            //        Tenant = 1,
+            //    };
+            //    cardContact.CardContactProducts = new List<CardContactProxy.CardContactProductPM>()
+            //    {
+            //        new CardContactProxy.CardContactProductPM()
+            //        {
+            //             ProductTypeCode=  "AD",
+            //              Tenant = 1,
 
-                    },
-                       new CardContactProxy.CardContactProductPM()
-                    {
-                         ProductTypeCode=  "AI",
-                          Tenant = 1,
+            //        },
+            //           new CardContactProxy.CardContactProductPM()
+            //        {
+            //             ProductTypeCode=  "AI",
+            //              Tenant = 1,
 
-                    },
-                    //        new CardContactProxy.CardContactProductPM()
-                    //{
-                    //     ProductTypeCode=  "DL",
-                    //      Tenant = 1,
+            //        },
+            //        //        new CardContactProxy.CardContactProductPM()
+            //        //{
+            //        //     ProductTypeCode=  "DL",
+            //        //      Tenant = 1,
 
-                    //},
+            //        //},
 
-                }.ToArray();
-                var m = cardContactService.Upsert(cardContact, false);
+            //    }.ToArray();
+            //    var m = cardContactService.Upsert(cardContact, false);
 
-            }
+            //}
 
 
             UserProxy.UserWcfServiceClient userservice = new UserProxy.UserWcfServiceClient();
@@ -1894,32 +1895,32 @@ namespace HypredTest
 
             GetExternalTasksFromQueue(1, 1);
 
-            HybridTenantStateProxy.HybridTenantStateWcfServiceClient hubridservice = new HybridTenantStateProxy.HybridTenantStateWcfServiceClient();
+            //HybridTenantStateProxy.HybridTenantStateWcfServiceClient hubridservice = new HybridTenantStateProxy.HybridTenantStateWcfServiceClient();
 
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)hubridservice.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)hubridservice.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                var result = hubridservice.Upsert(new HybridTenantStateProxy.HybridTenantStatePM() { Tenant = 1, FailedQueue = 0, WaitingQueue = 0,LastQueueDateTime = DateTime.Now.AddDays(-1) }, false);
+            //    var result = hubridservice.Upsert(new HybridTenantStateProxy.HybridTenantStatePM() { Tenant = 1, FailedQueue = 0, WaitingQueue = 0,LastQueueDateTime = DateTime.Now.AddDays(-1) }, false);
 
-            }
+            //}
 
-            TestCurrencyService();
+            //TestCurrencyService();
 
-            HybridPartnersPermissionsProxy.HybridPartnersPermissionsWcfServiceClient hybridPartnerPermService = new HybridPartnersPermissionsProxy.HybridPartnersPermissionsWcfServiceClient();
+            //HybridPartnersPermissionsProxy.HybridPartnersPermissionsWcfServiceClient hybridPartnerPermService = new HybridPartnersPermissionsProxy.HybridPartnersPermissionsWcfServiceClient();
              
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)hybridPartnerPermService.InnerChannel))
-            {
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)hybridPartnerPermService.InnerChannel))
+            //{
 
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                HybridPartnersPermissionsProxy.Response response = new HybridPartnersPermissionsProxy.Response();
-                var result = hybridPartnerPermService.Upsert(3, 2, false);
-                var result2 = hybridPartnerPermService.Upsert(6, 2, false);
-                var result3 = hybridPartnerPermService.Upsert(6, 3, false);
+            //    HybridPartnersPermissionsProxy.Response response = new HybridPartnersPermissionsProxy.Response();
+            //    var result = hybridPartnerPermService.Upsert(3, 2, false);
+            //    var result2 = hybridPartnerPermService.Upsert(6, 2, false);
+            //    var result3 = hybridPartnerPermService.Upsert(6, 3, false);
 
-                var allowedPartners = hybridPartnerPermService.GetAllowedPartners(6, ref response);
-            }
+            //    var allowedPartners = hybridPartnerPermService.GetAllowedPartners(6, ref response);
+            //}
             //TestQuotationDocument();
             //TestShipmentEvents();
 
@@ -1950,23 +1951,23 @@ namespace HypredTest
             //    }, false);
             //}
 
-            ContactProxy.ContactWcfServiceClient contactService = new ContactProxy.ContactWcfServiceClient();
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)contactService.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //ContactProxy.ContactWcfServiceClient contactService = new ContactProxy.ContactWcfServiceClient();
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)contactService.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                ContactProxy.ContactPM pm = new ContactProxy.ContactPM()
-                {
-                    ExternalId = "IslamExternalCon2",
-                    EnglishName = "test2",
-                    IsHybrid = true,
-                    Email = "islam-ext2@external.com",
-                    Tenant = 1,
-                };
+            //    ContactProxy.ContactPM pm = new ContactProxy.ContactPM()
+            //    {
+            //        ExternalId = "IslamExternalCon2",
+            //        EnglishName = "test2",
+            //        IsHybrid = true,
+            //        Email = "islam-ext2@external.com",
+            //        Tenant = 1,
+            //    };
 
-                ContactProxy.Response response = new ContactProxy.Response();
-                var result = contactService.Upsert(pm, false);
-            }
+            //    ContactProxy.Response response = new ContactProxy.Response();
+            //    var result = contactService.Upsert(pm, false);
+            //}
 
 
 
@@ -1982,17 +1983,17 @@ namespace HypredTest
 
             TetShipmentService();
 
-            FeatureProxy.FeatureWcfServiceClient featuresService = new FeatureProxy.FeatureWcfServiceClient();
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)featuresService.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
-                FeatureProxy.Response response = new FeatureProxy.Response();
-                List<FeatureProxy.FeatureAccessInfo> list = new List<FeatureProxy.FeatureAccessInfo>() { };
-                list.Add(new FeatureProxy.FeatureAccessInfo() { FeatureCode = "READ", ObjectTableName = "Shipment" });
-                list.Add(new FeatureProxy.FeatureAccessInfo() { FeatureCode = "READ", ObjectTableName = "DocumentFolder" });
-                var result = featuresService.GetActiveFeaturesForUser(list.ToArray(), 1, ref response);
+            //FeatureProxy.FeatureWcfServiceClient featuresService = new FeatureProxy.FeatureWcfServiceClient();
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)featuresService.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //    FeatureProxy.Response response = new FeatureProxy.Response();
+            //    List<FeatureProxy.FeatureAccessInfo> list = new List<FeatureProxy.FeatureAccessInfo>() { };
+            //    list.Add(new FeatureProxy.FeatureAccessInfo() { FeatureCode = "READ", ObjectTableName = "Shipment" });
+            //    list.Add(new FeatureProxy.FeatureAccessInfo() { FeatureCode = "READ", ObjectTableName = "DocumentFolder" });
+            //    var result = featuresService.GetActiveFeaturesForUser(list.ToArray(), 1, ref response);
 
-            }
+            //}
 
 
 
@@ -2104,33 +2105,33 @@ namespace HypredTest
 
         void TestCurrencyService()
         {
-            CurrencyProxy.CurrencyWcfServiceClient currencyservice = new CurrencyWcfServiceClient();
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)currencyservice.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //CurrencyProxy.CurrencyWcfServiceClient currencyservice = new CurrencyWcfServiceClient();
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)currencyservice.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                CurrencyProxy.Response response = new CurrencyProxy.Response();
+            //    CurrencyProxy.Response response = new CurrencyProxy.Response();
                  
-                var result = currencyservice.GetList(new CurrencyProxy.ApiSearchFilters() { SearchFields = null, Take = 10, Skip = 0 }, 0, ref response);
+            //    var result = currencyservice.GetList(new CurrencyProxy.ApiSearchFilters() { SearchFields = null, Take = 10, Skip = 0 }, 0, ref response);
 
                  
 
-            }
+            //}
 
 
 
-            CountryProxy.CountryWcfServiceClient countryservice = new CountryWcfServiceClient();
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)countryservice.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //CountryProxy.CountryWcfServiceClient countryservice = new CountryWcfServiceClient();
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)countryservice.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                CountryProxy.Response response = new CountryProxy.Response();
-                //quoteService.UploadDocument("A1029", fileData, fileExtension, "HybridU1", 1);
-                //var result = countryservice.GetList(new HypredTest.CountryProxy.WcfApiFilters() { SearchFields = "us", Take = 10, Skip = 0 }, 1, ref response);
+            //    CountryProxy.Response response = new CountryProxy.Response();
+            //    //quoteService.UploadDocument("A1029", fileData, fileExtension, "HybridU1", 1);
+            //    //var result = countryservice.GetList(new HypredTest.CountryProxy.WcfApiFilters() { SearchFields = "us", Take = 10, Skip = 0 }, 1, ref response);
 
 
 
-            }
+            //}
         }
         void TestPortService()
         {
@@ -2139,7 +2140,7 @@ namespace HypredTest
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                PortProxy.Response response = new PortProxy.Response();
+                Response response = new Response();
                 //quoteService.UploadDocument("A1029", fileData, fileExtension, "HybridU1", 1);
                //var result = portservice.GetList(new HypredTest.PortProxy.WcfApiFilters() { SearchFields = null, Take = 10, Skip = 0 }, 1, ref response);
 
@@ -2154,7 +2155,7 @@ namespace HypredTest
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                CountryProxy.Response response = new CountryProxy.Response();
+               Response response = new Response();
                 //quoteService.UploadDocument("A1029", fileData, fileExtension, "HybridU1", 1);
                 //var result = countryservice.GetList(new HypredTest.CountryProxy.WcfApiFilters() { SearchFields = "us", Take = 10, Skip = 0 }, 1, ref response);
 
@@ -2174,7 +2175,7 @@ namespace HypredTest
 
 
                 //quoteService.UploadDocument("A1029", fileData, fileExtension, "HybridU1", 1);
-                QuoteProxy.Response eventResponse = quoteservice.UploadQuotationDocument("AEAH-13712", fileInfo.FileData, fileInfo.FileExtension, "NOFARG", 4);
+                Response eventResponse = quoteservice.UploadQuotationDocument("AEAH-13712", fileInfo.FileData, fileInfo.FileExtension, "NOFARG", 4);
  
 
 
@@ -2229,54 +2230,54 @@ namespace HypredTest
 
 
 
-                ShipmentProxy.Response eventResponse2 = shipmentservice.BuildEventsList(1, "ship_7126", eventsList.ToArray());
+                Response eventResponse2 = shipmentservice.BuildEventsList(1, "ship_7126", eventsList.ToArray());
 
             }
         }
 
         private void TestDocumentsMetaDataTypeService()
         {
-            DocumentsMetaDataTypeProxy.DocumentsMetaDataTypeWcfServiceClient documentsservice = new DocumentsMetaDataTypeProxy.DocumentsMetaDataTypeWcfServiceClient();
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)documentsservice.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
-                DocumentsMetaDataTypeProxy.DocumentsMetaDataTypePM pm = new DocumentsMetaDataTypeProxy.DocumentsMetaDataTypePM()
-                {
-                    Code = "AAA",
-                    EnglishName = "Test",
-                    LocalName = "فحص",
+            //DocumentsMetaDataTypeProxy.DocumentsMetaDataTypeWcfServiceClient documentsservice = new DocumentsMetaDataTypeProxy.DocumentsMetaDataTypeWcfServiceClient();
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)documentsservice.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //    DocumentsMetaDataTypeProxy.DocumentsMetaDataTypePM pm = new DocumentsMetaDataTypeProxy.DocumentsMetaDataTypePM()
+            //    {
+            //        Code = "AAA",
+            //        EnglishName = "Test",
+            //        LocalName = "فحص",
 
-                    Format = "txt",
-                    Tenant = 1,
+            //        Format = "txt",
+            //        Tenant = 1,
 
 
-                };
-                DocumentsMetaDataTypeProxy.Response response = documentsservice.Upsert(pm, false);
-            }
+            //    };
+            //    DocumentsMetaDataTypeProxy.Response response = documentsservice.Upsert(pm, false);
+            //}
         }
 
         private void TestContactPasswordService()
         {
-            ContactPasswordProxy.ContactPasswordServiceClient passwordservice = new ContactPasswordProxy.ContactPasswordServiceClient();
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)passwordservice.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
-                ContactPasswordProxy.Response response = passwordservice.ChangeContactPassword("islam@fnarsoft.com", "1", "0");
-            }
+            //ContactPasswordProxy.ContactPasswordServiceClient passwordservice = new ContactPasswordProxy.ContactPasswordServiceClient();
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)passwordservice.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //    ContactPasswordProxy.Response response = passwordservice.ChangeContactPassword("islam@fnarsoft.com", "1", "0");
+            //}
         }
 
 
         private void TestPackageTypeService()
         {
-            PackageTypeProxy.PackageTypeWcfServiceClient packageTypeService = new PackageTypeProxy.PackageTypeWcfServiceClient();
+            //PackageTypeProxy.PackageTypeWcfServiceClient packageTypeService = new PackageTypeProxy.PackageTypeWcfServiceClient();
 
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)packageTypeService.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)packageTypeService.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                PackageTypeProxy.Response response = new PackageTypeProxy.Response();
-                var result = packageTypeService.GetPackageTypeList(new PackageTypeProxy.PackageTypeApiFilters() { Skip = 0, Take = 20, SearchFields = "zzz"}, 1, ref response);
-            }
+            //    PackageTypeProxy.Response response = new PackageTypeProxy.Response();
+            //    var result = packageTypeService.GetPackageTypeList(new PackageTypeProxy.PackageTypeApiFilters() { Skip = 0, Take = 20, SearchFields = "zzz"}, 1, ref response);
+            //}
         }
 
         private void TestDeleteEvent()
@@ -2303,7 +2304,7 @@ namespace HypredTest
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
 
-                QuoteProxy.Response eventResponse = quoteservice.DeleteQuoteEvent("a1036", "111", 1);
+                Response eventResponse = quoteservice.DeleteQuoteEvent("a1036", "111", 1);
 
 
             }
@@ -2311,29 +2312,29 @@ namespace HypredTest
 
         private void TestAutoSignupTest()
         {
-            AutoSignUpProxy.AutoSignUpWcfServiceClient autoservice = new AutoSignUpProxy.AutoSignUpWcfServiceClient();
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)autoservice.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //AutoSignUpProxy.AutoSignUpWcfServiceClient autoservice = new AutoSignUpProxy.AutoSignUpWcfServiceClient();
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)autoservice.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                AutoSignUpProxy.AutoSignUpData data = new AutoSignUpProxy.AutoSignUpData()
-                {
-                    Email = "abdallah@mail1.com",
-                    ContactName = "abdallah",
-                    CompanyName = "hejjawi",
-                    Country = "Palestine",
-                    NumberOfUsers = 10,
-                    NumberOfBranches = 2,
-                    PhoneNumber = "022984254",
-                    Comments = "testing",
-                };
+            //    AutoSignUpProxy.AutoSignUpData data = new AutoSignUpProxy.AutoSignUpData()
+            //    {
+            //        Email = "abdallah@mail1.com",
+            //        ContactName = "abdallah",
+            //        CompanyName = "hejjawi",
+            //        Country = "Palestine",
+            //        NumberOfUsers = 10,
+            //        NumberOfBranches = 2,
+            //        PhoneNumber = "022984254",
+            //        Comments = "testing",
+            //    };
 
-                var response = autoservice.Insert(data, false);
+            //    var response = autoservice.Insert(data, false);
 
-            }
+            //}
         }
         CustomerProxy.CustomerWcfServiceClient customerservice = new CustomerWcfServiceClient();
-        public CustomerProxy.Response TestCustomerService(string token, string paymentTermId = null)
+        public Response TestCustomerService(string token, string paymentTermId = null)
         {
            
 
@@ -2342,7 +2343,7 @@ namespace HypredTest
 
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
 
-                CustomerProxy.Response resultResponse = new CustomerProxy.Response();
+                Response resultResponse = new Response();
                 // CustomerPM pm = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "10107933" }, 8, ref resultResponse);
                 CustomerPM newCustomer = new CustomerPM()
                 {
@@ -2400,7 +2401,7 @@ namespace HypredTest
 
 
                 //quoteService.UploadDocument("A1029", fileData, fileExtension, "HybridU1", 1);
-                QuoteProxy.Response eventResponse = quoteservice.CreateEvent(1, "222", "A1029", "HybridSystemUser", "REMF", DateTime.Now.AddDays(-1), DateTime.Now.AddDays(-1), "Testing hybrid with id");
+                Response eventResponse = quoteservice.CreateEvent(1, "222", "A1029", "HybridSystemUser", "REMF", DateTime.Now.AddDays(-1), DateTime.Now.AddDays(-1), "Testing hybrid with id");
 
                 List<HypredTest.QuoteProxy.TraceEventPM> events = new List<HypredTest.QuoteProxy.TraceEventPM>() 
                  { 
@@ -2409,7 +2410,7 @@ namespace HypredTest
 
                  };
 
-                QuoteProxy.Response eventResponse2 = quoteservice.BuildEventsList(1, "A1029", events.ToArray());
+                Response eventResponse2 = quoteservice.BuildEventsList(1, "A1029", events.ToArray());
 
 
             }
@@ -2417,51 +2418,51 @@ namespace HypredTest
 
         private void TestCityService()
         {
-            Login();
-            CityProxy.CityWcfServiceClient cityService = new CityProxy.CityWcfServiceClient();
+            //Login();
+            //CityProxy.CityWcfServiceClient cityService = new CityProxy.CityWcfServiceClient();
 
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)cityService.InnerChannel))
-            {
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)cityService.InnerChannel))
+            //{
 
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                CityProxy.CountryCityPM pm = new CityProxy.CountryCityPM()
-                {
-                    Code = "TTT",
-                    EnglishName = "Testing city",
-                    CountryId = "IL",
-                    LocalName = "فحص",
-                    Tenant = 1,
-                    IsHybrid = true,
-                };
+            //    CityProxy.CountryCityPM pm = new CityProxy.CountryCityPM()
+            //    {
+            //        Code = "TTT",
+            //        EnglishName = "Testing city",
+            //        CountryId = "IL",
+            //        LocalName = "فحص",
+            //        Tenant = 1,
+            //        IsHybrid = true,
+            //    };
 
-                CityProxy.Response quoteresponse = cityService.Upsert(pm, false);
+            //    CityProxy.Response quoteresponse = cityService.Upsert(pm, false);
 
-                var result = cityService.GetCityListByCode("TTT", "IL", 1, ref quoteresponse);
+            //    var result = cityService.GetCityListByCode("TTT", "IL", 1, ref quoteresponse);
 
 
-            }
+            //}
 
         }
 
         private void TestContactService()
         {
-            ContactProxy.ContactWcfServiceClient contactService = new ContactProxy.ContactWcfServiceClient();
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)contactService.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //ContactProxy.ContactWcfServiceClient contactService = new ContactProxy.ContactWcfServiceClient();
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)contactService.InnerChannel))
+            //{
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                ContactProxy.ContactApiFilters filters = new ContactProxy.ContactApiFilters()
-                {
+            //    ContactProxy.ContactApiFilters filters = new ContactProxy.ContactApiFilters()
+            //    {
                      
-                    Take = 10,
-                     Skip = 30,
-                     //SearchFields = "islam@fnarsoft.com"
-                };
+            //        Take = 10,
+            //         Skip = 30,
+            //         //SearchFields = "islam@fnarsoft.com"
+            //    };
 
-                ContactProxy.Response response = new ContactProxy.Response();
-                var result = contactService.GetContactList(filters, 1, ref response);
-            }
+            //    ContactProxy.Response response = new ContactProxy.Response();
+            //    var result = contactService.GetContactList(filters, 1, ref response);
+            //}
         }
 
         private void TestShipmentEvents()
@@ -2578,7 +2579,7 @@ namespace HypredTest
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                ShipmentProxy.Response rspo1 = shipmentservice.Upsert(consolepm, false);
+                Response rspo1 = shipmentservice.Upsert(consolepm, false);
 
                // ShipmentProxy.Response rspo2 = shipmentservice.Upsert(housepm, false);
 
@@ -2608,7 +2609,7 @@ namespace HypredTest
 
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                CustomerProxy.Response response = new CustomerProxy.Response();
+                Response response = new Response();
 
                 var result = customerservice.GetCustomerPM(new CustomerApiFilters() { ById = true, SearchCode = "1-1000" }, 1, ref response);
 
@@ -2743,7 +2744,7 @@ namespace HypredTest
             using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)shipmentservice.InnerChannel))
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
-                ShipmentProxy.Response response = new ShipmentProxy.Response();
+                Response response = new Response();
                 response = shipmentservice.Upsert(consolepm, false);
                 //ShipmentProxy.ShipmentApiFilters filters = new ShipmentApiFilters()
                 //{
@@ -2773,7 +2774,7 @@ namespace HypredTest
             using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)documentsInService.InnerChannel))
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
-                DocumentInProxy.Response response = new DocumentInProxy.Response();
+                Response response = new Response();
                 var m = documentsInService.GetDocumentDataByExternalId("TRR", 1, ref response);
             }
         }
@@ -2801,7 +2802,7 @@ namespace HypredTest
                 {
 
                     System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
-                    var eventResponse2 = shipmentService.BuildEventsList(14, "4160209336", eventsList.Events.ToArray());
+                    //var eventResponse2 = shipmentService.BuildEventsList(14, "4160209336", eventsList.Events.ToArray());
 
                   //  pm.MainCarriageATA = DateTime.Now;
                    // ShipmentProxy.Response myresp = shipmentService.Upsert(pm, false);
@@ -2813,26 +2814,26 @@ namespace HypredTest
 
         private void btnTestCloud_Click(object sender, EventArgs e)
         {
-            LoginToCloud();
+            //LoginToCloud();
 
 
-            CustomerProxy.CustomerWcfServiceClient customerservice = new CustomerWcfServiceClient();
+            //CustomerProxy.CustomerWcfServiceClient customerservice = new CustomerWcfServiceClient();
 
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)customerservice.InnerChannel))
-            {
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)customerservice.InnerChannel))
+            //{
 
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                CustomerProxy.Response resultResponse = new CustomerProxy.Response();
-                CustomerPM pm = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "10107933" }, 8, ref resultResponse);
+            //    Response resultResponse = new Response();
+            //    CustomerPM pm = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "10107933" }, 8, ref resultResponse);
 
-                //var rres = customerservice.Upsert(customer111, false);
-                //  var customer = customerservice.GetCustomerPM(new CustomerApiFilters() { ByVatNumber = true, SearchCode = "1234562322222" }, 1);
-                //  var customer2 = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "470690c4-8f9a-4-121212" }, 1);
-                // var contacts = customerservice.GetCustomerContacts(new CustomerApiFilters() { ByCode = true, SearchCode = "70002-1212" }, 1);
-                //  var addresses = customerservice.GetCustomerAddresses(new CustomerApiFilters() { ByCode = true, SearchCode = "70002-1212" }, 1);
+            //    //var rres = customerservice.Upsert(customer111, false);
+            //    //  var customer = customerservice.GetCustomerPM(new CustomerApiFilters() { ByVatNumber = true, SearchCode = "1234562322222" }, 1);
+            //    //  var customer2 = customerservice.GetCustomerPM(new CustomerApiFilters() { ByCode = true, SearchCode = "470690c4-8f9a-4-121212" }, 1);
+            //    // var contacts = customerservice.GetCustomerContacts(new CustomerApiFilters() { ByCode = true, SearchCode = "70002-1212" }, 1);
+            //    //  var addresses = customerservice.GetCustomerAddresses(new CustomerApiFilters() { ByCode = true, SearchCode = "70002-1212" }, 1);
 
-            }
+            //}
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -2846,7 +2847,7 @@ namespace HypredTest
                 {
 
                     System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
-                    CustomerProxy.Response response = new CustomerProxy.Response();
+                    Response response = new Response();
                     var result = customerservice.GetReadyForActivationCustomer(1, ref response);
                     if (result != null)
                     {
@@ -2947,157 +2948,157 @@ namespace HypredTest
 
         private void btnCustomerWD_Click(object sender, EventArgs e)
         {
-            //LoginToCloudWithCredentails("92467eed-d734-44d5-b73e-b9282cebac3d", 341);
-            LoginToCloud();
+            ////LoginToCloudWithCredentails("92467eed-d734-44d5-b73e-b9282cebac3d", 341);
+            //LoginToCloud();
 
-            //BasicHttpBinding binding = new BasicHttpBinding(BasicHttpSecurityMode.None);
-            //binding.MaxBufferSize = 2147483647;
-            //binding.MaxReceivedMessageSize = 2147483647;
-            //binding.ReaderQuotas.MaxStringContentLength = 2147483647;
-            //binding.ReaderQuotas.MaxArrayLength = 2147483647;
-            //(binding, customerDWWcfServiceA.Endpoint.Address);
-            List<CustomerWDProxy.CustomerDW> customersList = new List<CustomerWDProxy.CustomerDW>();
-            CustomerWDProxy.CustomerDWWcfServiceClient customerWDService = new CustomerWDProxy.CustomerDWWcfServiceClient();
+            ////BasicHttpBinding binding = new BasicHttpBinding(BasicHttpSecurityMode.None);
+            ////binding.MaxBufferSize = 2147483647;
+            ////binding.MaxReceivedMessageSize = 2147483647;
+            ////binding.ReaderQuotas.MaxStringContentLength = 2147483647;
+            ////binding.ReaderQuotas.MaxArrayLength = 2147483647;
+            ////(binding, customerDWWcfServiceA.Endpoint.Address);
+            //List<CustomerWDProxy.CustomerDW> customersList = new List<CustomerWDProxy.CustomerDW>();
+            //CustomerWDProxy.CustomerDWWcfServiceClient customerWDService = new CustomerWDProxy.CustomerDWWcfServiceClient();
 
-            CustomerWDProxy.Response response = new CustomerWDProxy.Response();
-            int take = 20;
-            int skip = 0;
-            int i = 0;
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)customerWDService.InnerChannel))
-            {
-                customerWDService.Endpoint.Binding.SendTimeout = new TimeSpan(0, 3, 0);
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+            //CustomerWDProxy.Response response = new CustomerWDProxy.Response();
+            //int take = 20;
+            //int skip = 0;
+            //int i = 0;
+            //using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)customerWDService.InnerChannel))
+            //{
+            //    customerWDService.Endpoint.Binding.SendTimeout = new TimeSpan(0, 3, 0);
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                while (i <= 232 )
-                {
-                    try
-                    {
-                        skip = take * i;
-                        var r = customerWDService.GetCustomersByUpdateDate(341, new DateTime(2010, 1, 1), skip, take, ref response);
-                        if (r != null && !response.HasError)
-                        {
-                            List<CustomerWDProxy.CustomerDW> result = r.ToList();
-                            if (result.Count > 0)
-                            {
-                                customersList = customersList.Concat(result).ToList();
-                                i++;
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                        else
-                            break;
-                    }
-                    catch (Exception ex)
-                    {
-                        break;
-                    }
+            //    while (i <= 232 )
+            //    {
+            //        try
+            //        {
+            //            skip = take * i;
+            //            var r = customerWDService.GetCustomersByUpdateDate(341, new DateTime(2010, 1, 1), skip, take, ref response);
+            //            if (r != null && !response.HasError)
+            //            {
+            //                List<CustomerWDProxy.CustomerDW> result = r.ToList();
+            //                if (result.Count > 0)
+            //                {
+            //                    customersList = customersList.Concat(result).ToList();
+            //                    i++;
+            //                }
+            //                else
+            //                {
+            //                    break;
+            //                }
+            //            }
+            //            else
+            //                break;
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            break;
+            //        }
                     
-                }
+            //    }
 
 
-                ExportToExcel(customersList);
+            //    ExportToExcel(customersList);
                 //List<CustomerWDProxy.CustomerDW> result2 = customerWDService.GetCustomersByUpdateDate(341, new DateTime(2010, 1, 1), 200, 100, ref response).ToList();
                 //customersList = customersList.Concat(result2).ToList();
 
                 //List<CustomerWDProxy.CustomerDW> result3 = customerWDService.GetCustomersByUpdateDate(341, new DateTime(2010, 1, 1), 300, 100, ref response).ToList();
                 //customersList = customersList.Concat(result3).ToList();
 
-            }
+           // }
         }
 
 
-        public void ExportToExcel(List<CustomerWDProxy.CustomerDW> customersList)
-        {
-            //// Load Excel application
-            //Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+        //public void ExportToExcel(List<CustomerWDProxy.CustomerDW> customersList)
+        //{
+        //    //// Load Excel application
+        //    //Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
 
-            //// Create empty workbook
-            //excel.Workbooks.Add();
+        //    //// Create empty workbook
+        //    //excel.Workbooks.Add();
 
-            //// Create Worksheet from active sheet
-            //Microsoft.Office.Interop.Excel._Worksheet workSheet = excel.ActiveSheet;
+        //    //// Create Worksheet from active sheet
+        //    //Microsoft.Office.Interop.Excel._Worksheet workSheet = excel.ActiveSheet;
 
-            //// I created Application and Worksheet objects before try/catch,
-            //// so that i can close them in finnaly block.
-            //// It's IMPORTANT to release these COM objects!!
-            //try
-            //{
-            //    // ------------------------------------------------
-            //    // Creation of header cells
-            //    // ------------------------------------------------
-            //    workSheet.Cells[1, "A"] = "Name";
-            //    workSheet.Cells[1, "B"] = "Code";
-            //    workSheet.Cells[1, "C"] = "IsCustomer";
+        //    //// I created Application and Worksheet objects before try/catch,
+        //    //// so that i can close them in finnaly block.
+        //    //// It's IMPORTANT to release these COM objects!!
+        //    //try
+        //    //{
+        //    //    // ------------------------------------------------
+        //    //    // Creation of header cells
+        //    //    // ------------------------------------------------
+        //    //    workSheet.Cells[1, "A"] = "Name";
+        //    //    workSheet.Cells[1, "B"] = "Code";
+        //    //    workSheet.Cells[1, "C"] = "IsCustomer";
 
-            //    // ------------------------------------------------
-            //    // Populate sheet with some real data from "cars" list
-            //    // ------------------------------------------------
-            //    int row = 2; // start row (in row 1 are header cells)
-            //    foreach (CustomerWDProxy.CustomerDW customer in customersList)
-            //    {
-            //        workSheet.Cells[row, "A"] = customer.Name;
-            //        workSheet.Cells[row, "B"] = customer.Code;
-            //        workSheet.Cells[row, "C"] = customer.IsCustomer;
+        //    //    // ------------------------------------------------
+        //    //    // Populate sheet with some real data from "cars" list
+        //    //    // ------------------------------------------------
+        //    //    int row = 2; // start row (in row 1 are header cells)
+        //    //    foreach (CustomerWDProxy.CustomerDW customer in customersList)
+        //    //    {
+        //    //        workSheet.Cells[row, "A"] = customer.Name;
+        //    //        workSheet.Cells[row, "B"] = customer.Code;
+        //    //        workSheet.Cells[row, "C"] = customer.IsCustomer;
 
-            //        row++;
-            //    }
+        //    //        row++;
+        //    //    }
 
-            //    // Apply some predefined styles for data to look nicely :)
-            //    workSheet.Range["A1"].AutoFormat(Microsoft.Office.Interop.Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic1);
+        //    //    // Apply some predefined styles for data to look nicely :)
+        //    //    workSheet.Range["A1"].AutoFormat(Microsoft.Office.Interop.Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic1);
 
-            //    // Define filename
-            //    string fileName = string.Format(@"{0}\CustomersDWExcelData.xlsx", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory));
+        //    //    // Define filename
+        //    //    string fileName = string.Format(@"{0}\CustomersDWExcelData.xlsx", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory));
 
-            //    // Save this data as a file
-            //    workSheet.SaveAs(fileName);
+        //    //    // Save this data as a file
+        //    //    workSheet.SaveAs(fileName);
 
-            //    // Display SUCCESS message
-            //    MessageBox.Show(string.Format("The file '{0}' is saved successfully!", fileName));
-            //}
-            //catch (Exception exception)
-            //{
-            //    MessageBox.Show("Exception",
-            //    "There was a PROBLEM saving Excel file!\n" + exception.Message,
-            //    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-            //finally
-            //{
-            //    // Quit Excel application
-            //    excel.Quit();
+        //    //    // Display SUCCESS message
+        //    //    MessageBox.Show(string.Format("The file '{0}' is saved successfully!", fileName));
+        //    //}
+        //    //catch (Exception exception)
+        //    //{
+        //    //    MessageBox.Show("Exception",
+        //    //    "There was a PROBLEM saving Excel file!\n" + exception.Message,
+        //    //    MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    //}
+        //    //finally
+        //    //{
+        //    //    // Quit Excel application
+        //    //    excel.Quit();
 
-            //    // Release COM objects (very important!)
-            //    if (excel != null)
-            //        System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
+        //    //    // Release COM objects (very important!)
+        //    //    if (excel != null)
+        //    //        System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
 
-            //    if (workSheet != null)
-            //        System.Runtime.InteropServices.Marshal.ReleaseComObject(workSheet);
+        //    //    if (workSheet != null)
+        //    //        System.Runtime.InteropServices.Marshal.ReleaseComObject(workSheet);
 
-            //    // Empty variables
-            //    excel = null;
-            //    workSheet = null;
+        //    //    // Empty variables
+        //    //    excel = null;
+        //    //    workSheet = null;
 
-            //    // Force garbage collector cleaning
-            //    GC.Collect();
-            //}
-        }
+        //    //    // Force garbage collector cleaning
+        //    //    GC.Collect();
+        //    //}
+        //}
 
       
 
 
-        private string LoginToCloud()
-        {
-            LogingProxyCloud.LoginWcfServiceClient loginService = new LogingProxyCloud.LoginWcfServiceClient();
-            LogingProxyCloud.Response loginResponse = loginService.Login("yaronc@amital.co.il", "!Y123456");//("zaki@amital.co.il", "!Zz123456");
-            if (!loginResponse.HasError)
-            {
-                Token = loginResponse.Result;
-            }
+        //private string LoginToCloud()
+        //{
+        //    LogingProxyCloud.LoginWcfServiceClient loginService = new LogingProxyCloud.LoginWcfServiceClient();
+        //    LogingProxyCloud.Response loginResponse = loginService.Login("yaronc@amital.co.il", "!Y123456");//("zaki@amital.co.il", "!Zz123456");
+        //    if (!loginResponse.HasError)
+        //    {
+        //        Token = loginResponse.Result;
+        //    }
 
-            return Token;
-        }
+        //    return Token;
+        //}
 
         private void Button5_Click(object sender, EventArgs e)
         {
@@ -3155,7 +3156,7 @@ namespace HypredTest
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
 
-                var response = new PaymentTermProxy.Response();
+                var response = new Response();
                 var result = serviceReference.GetPaymentTerms(ref response, 1);
                 if(!response.HasError && result != null && result.Length > 0)
                 {

@@ -68,6 +68,12 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<double> ChargeableWeightField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ChargeableWeightEditedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> ChargeableWeightInKGField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ChargeableWeightUnitCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -98,10 +104,19 @@ namespace HypredTest.QuoteProxy {
         private string ConsigneeReference2Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ConvertToFCLField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ConvertToLCLField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> CostTotalAmountInLocalCurrencyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> CostTotalAmountInSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CountryForStatisticsIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CreatedByUserIdField;
@@ -131,10 +146,22 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<System.DateTime> DeclinedDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DeliveryAddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DeliveryAddressIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DeliveryCityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DeliveryCountryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DeliveryLocationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DeliveryZipCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DepartmentIdField;
@@ -161,6 +188,9 @@ namespace HypredTest.QuoteProxy {
         private string DirectionNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool DontExportQuotationsToIntegratedSystemField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> ETAField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -182,6 +212,12 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<double> EstimateProfitInSaleCurrencyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> EstimatedProfitInLocalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> EstimatedProfitInProfitField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EventNoteField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -194,13 +230,46 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<int> ExpirationDaysField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExternalEntityNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field1Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field10Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field11Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field12Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field13Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field14Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field15Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field16Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field17Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field18Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field19Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field20Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field3Field;
@@ -254,6 +323,9 @@ namespace HypredTest.QuoteProxy {
         private string FromCountryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool FromCountryIsECField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string FromCountryNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -282,6 +354,15 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> GrossWeightField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool GrossWeightEditedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> GrossWeightInKGField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> GrossWeightPerTonField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string GrossWeightUnitCodeField;
@@ -317,10 +398,19 @@ namespace HypredTest.QuoteProxy {
         private bool IsCancelledField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsChargesByVATField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsClosedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsCopyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsCopyExchangeRatesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsCreatedFromTicketField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsCustomerSetField;
@@ -342,6 +432,15 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsPotentialShipperField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsQuoteDataExternalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsQuoteDocumentExternalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsSaleCurrencySameAsCostField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsSecuredField;
@@ -377,6 +476,9 @@ namespace HypredTest.QuoteProxy {
         private bool MarkFollowUpsAsDoneField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MoveTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> NextActivityDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -389,7 +491,43 @@ namespace HypredTest.QuoteProxy {
         private string NotesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyAddress1Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyAddress2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyAddressIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyCityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyContactIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyCountryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyNoteField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyStateIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyZipCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<int> NumberOfContainersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> NumberOfFollowUpsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<int> NumberOfPackagesField;
@@ -399,9 +537,6 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string OpportunityIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> OrderNumberOfPackagesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PackageType1IdField;
@@ -434,19 +569,58 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<int> PackageType5QuantityField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PickUpAddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PickUpAddressIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PickupCityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PickupCountryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PickupDeliveryCWeightUnitCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> PickupDeliveryChargeableWeightField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> PickupDeliveryRatioField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> PickupDeliveryVolumetricWeightField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PickupLocationField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PickupZipCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ProductCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProfitCurrencyIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> ProfitExchangeRateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.QuoteProxy.QuoteSaleChargePM[] QuotationSaleChargesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string QuotationSectionsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.QuoteProxy.QuoteChargePM[] QuoteChargesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string QuoteClosingReasonCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string QuoteClosingReasonIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.QuoteProxy.QuoteCostChargePM[] QuoteCostChargesField;
@@ -458,6 +632,12 @@ namespace HypredTest.QuoteProxy {
         private HypredTest.QuoteProxy.QuoteDocumentVersionPM[] QuoteDocumentVersionsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string QuoteHTMLDocumentIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string QuoteLevelField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string QuoteNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -465,6 +645,9 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.QuoteProxy.QuoteSaleChargePM[] QuoteSaleChargesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.QuoteProxy.QuoteSalesTotalPM[] QuoteSalesTotalsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string QuoteTemplateIdField;
@@ -476,6 +659,9 @@ namespace HypredTest.QuoteProxy {
         private string QuoteTypeNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string QuoteVersionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string RatingCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -483,6 +669,15 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> RatioField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RegionalTaxIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> RegionalTaxPercentageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> RequestDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SaleCurrencyCodeField;
@@ -497,16 +692,28 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<double> SaleTotalAmountInSaleCurrencyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SalesTotalAmountsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SalesmanNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SalesmanUserIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SameOrFixedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SearchFieldsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> SentDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipmentSubTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipmentSubTypeNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ShipmentTypeIdField;
@@ -548,10 +755,19 @@ namespace HypredTest.QuoteProxy {
         private string StageNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> StartDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SubjectField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> TEUField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int TenantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> TicketCreateDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ToAddressCityField;
@@ -567,6 +783,9 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ToCountryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ToCountryIsECField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ToCountryNameField;
@@ -599,7 +818,22 @@ namespace HypredTest.QuoteProxy {
         private string TotalContainersField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool TotalPerContainerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> TotalReceivablesAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> TotalSaleIncludingVATAmountInLocalCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> TotalSaleIncludingVATAmountInSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.QuoteProxy.QuoteVATsTotalPM[] TotalVATPerQuoteField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.QuoteProxy.QuoteTotalVATPM[] TotalVATsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TransitTimeField;
@@ -620,7 +854,16 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<int> UsageCountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> ValueOfGoodsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ValueOfGoodsCurrencyIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> VolumeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VolumeInCBMField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string VolumeUnitCodeField;
@@ -834,6 +1077,32 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ChargeableWeightEdited {
+            get {
+                return this.ChargeableWeightEditedField;
+            }
+            set {
+                if ((this.ChargeableWeightEditedField.Equals(value) != true)) {
+                    this.ChargeableWeightEditedField = value;
+                    this.RaisePropertyChanged("ChargeableWeightEdited");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> ChargeableWeightInKG {
+            get {
+                return this.ChargeableWeightInKGField;
+            }
+            set {
+                if ((this.ChargeableWeightInKGField.Equals(value) != true)) {
+                    this.ChargeableWeightInKGField = value;
+                    this.RaisePropertyChanged("ChargeableWeightInKG");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ChargeableWeightUnitCode {
             get {
                 return this.ChargeableWeightUnitCodeField;
@@ -964,6 +1233,32 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ConvertToFCL {
+            get {
+                return this.ConvertToFCLField;
+            }
+            set {
+                if ((this.ConvertToFCLField.Equals(value) != true)) {
+                    this.ConvertToFCLField = value;
+                    this.RaisePropertyChanged("ConvertToFCL");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ConvertToLCL {
+            get {
+                return this.ConvertToLCLField;
+            }
+            set {
+                if ((this.ConvertToLCLField.Equals(value) != true)) {
+                    this.ConvertToLCLField = value;
+                    this.RaisePropertyChanged("ConvertToLCL");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<double> CostTotalAmountInLocalCurrency {
             get {
                 return this.CostTotalAmountInLocalCurrencyField;
@@ -985,6 +1280,19 @@ namespace HypredTest.QuoteProxy {
                 if ((this.CostTotalAmountInSaleCurrencyField.Equals(value) != true)) {
                     this.CostTotalAmountInSaleCurrencyField = value;
                     this.RaisePropertyChanged("CostTotalAmountInSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CountryForStatisticsId {
+            get {
+                return this.CountryForStatisticsIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryForStatisticsIdField, value) != true)) {
+                    this.CountryForStatisticsIdField = value;
+                    this.RaisePropertyChanged("CountryForStatisticsId");
                 }
             }
         }
@@ -1107,6 +1415,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DeliveryAddress {
+            get {
+                return this.DeliveryAddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeliveryAddressField, value) != true)) {
+                    this.DeliveryAddressField = value;
+                    this.RaisePropertyChanged("DeliveryAddress");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string DeliveryAddressId {
             get {
                 return this.DeliveryAddressIdField;
@@ -1120,6 +1441,32 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DeliveryCity {
+            get {
+                return this.DeliveryCityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeliveryCityField, value) != true)) {
+                    this.DeliveryCityField = value;
+                    this.RaisePropertyChanged("DeliveryCity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DeliveryCountryId {
+            get {
+                return this.DeliveryCountryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeliveryCountryIdField, value) != true)) {
+                    this.DeliveryCountryIdField = value;
+                    this.RaisePropertyChanged("DeliveryCountryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string DeliveryLocation {
             get {
                 return this.DeliveryLocationField;
@@ -1128,6 +1475,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.DeliveryLocationField, value) != true)) {
                     this.DeliveryLocationField = value;
                     this.RaisePropertyChanged("DeliveryLocation");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DeliveryZipCode {
+            get {
+                return this.DeliveryZipCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeliveryZipCodeField, value) != true)) {
+                    this.DeliveryZipCodeField = value;
+                    this.RaisePropertyChanged("DeliveryZipCode");
                 }
             }
         }
@@ -1237,6 +1597,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool DontExportQuotationsToIntegratedSystem {
+            get {
+                return this.DontExportQuotationsToIntegratedSystemField;
+            }
+            set {
+                if ((this.DontExportQuotationsToIntegratedSystemField.Equals(value) != true)) {
+                    this.DontExportQuotationsToIntegratedSystemField = value;
+                    this.RaisePropertyChanged("DontExportQuotationsToIntegratedSystem");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> ETA {
             get {
                 return this.ETAField;
@@ -1328,6 +1701,32 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> EstimatedProfitInLocal {
+            get {
+                return this.EstimatedProfitInLocalField;
+            }
+            set {
+                if ((this.EstimatedProfitInLocalField.Equals(value) != true)) {
+                    this.EstimatedProfitInLocalField = value;
+                    this.RaisePropertyChanged("EstimatedProfitInLocal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> EstimatedProfitInProfit {
+            get {
+                return this.EstimatedProfitInProfitField;
+            }
+            set {
+                if ((this.EstimatedProfitInProfitField.Equals(value) != true)) {
+                    this.EstimatedProfitInProfitField = value;
+                    this.RaisePropertyChanged("EstimatedProfitInProfit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string EventNote {
             get {
                 return this.EventNoteField;
@@ -1380,6 +1779,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ExternalEntityNumber {
+            get {
+                return this.ExternalEntityNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExternalEntityNumberField, value) != true)) {
+                    this.ExternalEntityNumberField = value;
+                    this.RaisePropertyChanged("ExternalEntityNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field1 {
             get {
                 return this.Field1Field;
@@ -1406,6 +1818,123 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field11 {
+            get {
+                return this.Field11Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field11Field, value) != true)) {
+                    this.Field11Field = value;
+                    this.RaisePropertyChanged("Field11");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field12 {
+            get {
+                return this.Field12Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field12Field, value) != true)) {
+                    this.Field12Field = value;
+                    this.RaisePropertyChanged("Field12");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field13 {
+            get {
+                return this.Field13Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field13Field, value) != true)) {
+                    this.Field13Field = value;
+                    this.RaisePropertyChanged("Field13");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field14 {
+            get {
+                return this.Field14Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field14Field, value) != true)) {
+                    this.Field14Field = value;
+                    this.RaisePropertyChanged("Field14");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field15 {
+            get {
+                return this.Field15Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field15Field, value) != true)) {
+                    this.Field15Field = value;
+                    this.RaisePropertyChanged("Field15");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field16 {
+            get {
+                return this.Field16Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field16Field, value) != true)) {
+                    this.Field16Field = value;
+                    this.RaisePropertyChanged("Field16");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field17 {
+            get {
+                return this.Field17Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field17Field, value) != true)) {
+                    this.Field17Field = value;
+                    this.RaisePropertyChanged("Field17");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field18 {
+            get {
+                return this.Field18Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field18Field, value) != true)) {
+                    this.Field18Field = value;
+                    this.RaisePropertyChanged("Field18");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field19 {
+            get {
+                return this.Field19Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field19Field, value) != true)) {
+                    this.Field19Field = value;
+                    this.RaisePropertyChanged("Field19");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field2 {
             get {
                 return this.Field2Field;
@@ -1414,6 +1943,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.Field2Field, value) != true)) {
                     this.Field2Field = value;
                     this.RaisePropertyChanged("Field2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.DataContracts.CustomFieldClass Field20 {
+            get {
+                return this.Field20Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field20Field, value) != true)) {
+                    this.Field20Field = value;
+                    this.RaisePropertyChanged("Field20");
                 }
             }
         }
@@ -1640,6 +2182,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool FromCountryIsEC {
+            get {
+                return this.FromCountryIsECField;
+            }
+            set {
+                if ((this.FromCountryIsECField.Equals(value) != true)) {
+                    this.FromCountryIsECField = value;
+                    this.RaisePropertyChanged("FromCountryIsEC");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string FromCountryName {
             get {
                 return this.FromCountryNameField;
@@ -1765,6 +2320,45 @@ namespace HypredTest.QuoteProxy {
                 if ((this.GrossWeightField.Equals(value) != true)) {
                     this.GrossWeightField = value;
                     this.RaisePropertyChanged("GrossWeight");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool GrossWeightEdited {
+            get {
+                return this.GrossWeightEditedField;
+            }
+            set {
+                if ((this.GrossWeightEditedField.Equals(value) != true)) {
+                    this.GrossWeightEditedField = value;
+                    this.RaisePropertyChanged("GrossWeightEdited");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> GrossWeightInKG {
+            get {
+                return this.GrossWeightInKGField;
+            }
+            set {
+                if ((this.GrossWeightInKGField.Equals(value) != true)) {
+                    this.GrossWeightInKGField = value;
+                    this.RaisePropertyChanged("GrossWeightInKG");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> GrossWeightPerTon {
+            get {
+                return this.GrossWeightPerTonField;
+            }
+            set {
+                if ((this.GrossWeightPerTonField.Equals(value) != true)) {
+                    this.GrossWeightPerTonField = value;
+                    this.RaisePropertyChanged("GrossWeightPerTon");
                 }
             }
         }
@@ -1913,6 +2507,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsChargesByVAT {
+            get {
+                return this.IsChargesByVATField;
+            }
+            set {
+                if ((this.IsChargesByVATField.Equals(value) != true)) {
+                    this.IsChargesByVATField = value;
+                    this.RaisePropertyChanged("IsChargesByVAT");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool IsClosed {
             get {
                 return this.IsClosedField;
@@ -1934,6 +2541,32 @@ namespace HypredTest.QuoteProxy {
                 if ((this.IsCopyField.Equals(value) != true)) {
                     this.IsCopyField = value;
                     this.RaisePropertyChanged("IsCopy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsCopyExchangeRates {
+            get {
+                return this.IsCopyExchangeRatesField;
+            }
+            set {
+                if ((this.IsCopyExchangeRatesField.Equals(value) != true)) {
+                    this.IsCopyExchangeRatesField = value;
+                    this.RaisePropertyChanged("IsCopyExchangeRates");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsCreatedFromTicket {
+            get {
+                return this.IsCreatedFromTicketField;
+            }
+            set {
+                if ((this.IsCreatedFromTicketField.Equals(value) != true)) {
+                    this.IsCreatedFromTicketField = value;
+                    this.RaisePropertyChanged("IsCreatedFromTicket");
                 }
             }
         }
@@ -2025,6 +2658,45 @@ namespace HypredTest.QuoteProxy {
                 if ((this.IsPotentialShipperField.Equals(value) != true)) {
                     this.IsPotentialShipperField = value;
                     this.RaisePropertyChanged("IsPotentialShipper");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsQuoteDataExternal {
+            get {
+                return this.IsQuoteDataExternalField;
+            }
+            set {
+                if ((this.IsQuoteDataExternalField.Equals(value) != true)) {
+                    this.IsQuoteDataExternalField = value;
+                    this.RaisePropertyChanged("IsQuoteDataExternal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsQuoteDocumentExternal {
+            get {
+                return this.IsQuoteDocumentExternalField;
+            }
+            set {
+                if ((this.IsQuoteDocumentExternalField.Equals(value) != true)) {
+                    this.IsQuoteDocumentExternalField = value;
+                    this.RaisePropertyChanged("IsQuoteDocumentExternal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsSaleCurrencySameAsCost {
+            get {
+                return this.IsSaleCurrencySameAsCostField;
+            }
+            set {
+                if ((this.IsSaleCurrencySameAsCostField.Equals(value) != true)) {
+                    this.IsSaleCurrencySameAsCostField = value;
+                    this.RaisePropertyChanged("IsSaleCurrencySameAsCost");
                 }
             }
         }
@@ -2173,6 +2845,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MoveTypeId {
+            get {
+                return this.MoveTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MoveTypeIdField, value) != true)) {
+                    this.MoveTypeIdField = value;
+                    this.RaisePropertyChanged("MoveTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> NextActivityDate {
             get {
                 return this.NextActivityDateField;
@@ -2225,6 +2910,149 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyAddress1 {
+            get {
+                return this.NotifyAddress1Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyAddress1Field, value) != true)) {
+                    this.NotifyAddress1Field = value;
+                    this.RaisePropertyChanged("NotifyAddress1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyAddress2 {
+            get {
+                return this.NotifyAddress2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyAddress2Field, value) != true)) {
+                    this.NotifyAddress2Field = value;
+                    this.RaisePropertyChanged("NotifyAddress2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyAddressId {
+            get {
+                return this.NotifyAddressIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyAddressIdField, value) != true)) {
+                    this.NotifyAddressIdField = value;
+                    this.RaisePropertyChanged("NotifyAddressId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyCity {
+            get {
+                return this.NotifyCityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyCityField, value) != true)) {
+                    this.NotifyCityField = value;
+                    this.RaisePropertyChanged("NotifyCity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyContactId {
+            get {
+                return this.NotifyContactIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyContactIdField, value) != true)) {
+                    this.NotifyContactIdField = value;
+                    this.RaisePropertyChanged("NotifyContactId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyCountryId {
+            get {
+                return this.NotifyCountryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyCountryIdField, value) != true)) {
+                    this.NotifyCountryIdField = value;
+                    this.RaisePropertyChanged("NotifyCountryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyId {
+            get {
+                return this.NotifyIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyIdField, value) != true)) {
+                    this.NotifyIdField = value;
+                    this.RaisePropertyChanged("NotifyId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyName {
+            get {
+                return this.NotifyNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyNameField, value) != true)) {
+                    this.NotifyNameField = value;
+                    this.RaisePropertyChanged("NotifyName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyNote {
+            get {
+                return this.NotifyNoteField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyNoteField, value) != true)) {
+                    this.NotifyNoteField = value;
+                    this.RaisePropertyChanged("NotifyNote");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyStateId {
+            get {
+                return this.NotifyStateIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyStateIdField, value) != true)) {
+                    this.NotifyStateIdField = value;
+                    this.RaisePropertyChanged("NotifyStateId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyZipCode {
+            get {
+                return this.NotifyZipCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyZipCodeField, value) != true)) {
+                    this.NotifyZipCodeField = value;
+                    this.RaisePropertyChanged("NotifyZipCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<int> NumberOfContainers {
             get {
                 return this.NumberOfContainersField;
@@ -2233,6 +3061,19 @@ namespace HypredTest.QuoteProxy {
                 if ((this.NumberOfContainersField.Equals(value) != true)) {
                     this.NumberOfContainersField = value;
                     this.RaisePropertyChanged("NumberOfContainers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> NumberOfFollowUps {
+            get {
+                return this.NumberOfFollowUpsField;
+            }
+            set {
+                if ((this.NumberOfFollowUpsField.Equals(value) != true)) {
+                    this.NumberOfFollowUpsField = value;
+                    this.RaisePropertyChanged("NumberOfFollowUps");
                 }
             }
         }
@@ -2272,19 +3113,6 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.OpportunityIdField, value) != true)) {
                     this.OpportunityIdField = value;
                     this.RaisePropertyChanged("OpportunityId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> OrderNumberOfPackages {
-            get {
-                return this.OrderNumberOfPackagesField;
-            }
-            set {
-                if ((this.OrderNumberOfPackagesField.Equals(value) != true)) {
-                    this.OrderNumberOfPackagesField = value;
-                    this.RaisePropertyChanged("OrderNumberOfPackages");
                 }
             }
         }
@@ -2420,6 +3248,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PickUpAddress {
+            get {
+                return this.PickUpAddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PickUpAddressField, value) != true)) {
+                    this.PickUpAddressField = value;
+                    this.RaisePropertyChanged("PickUpAddress");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string PickUpAddressId {
             get {
                 return this.PickUpAddressIdField;
@@ -2428,6 +3269,84 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.PickUpAddressIdField, value) != true)) {
                     this.PickUpAddressIdField = value;
                     this.RaisePropertyChanged("PickUpAddressId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PickupCity {
+            get {
+                return this.PickupCityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PickupCityField, value) != true)) {
+                    this.PickupCityField = value;
+                    this.RaisePropertyChanged("PickupCity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PickupCountryId {
+            get {
+                return this.PickupCountryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PickupCountryIdField, value) != true)) {
+                    this.PickupCountryIdField = value;
+                    this.RaisePropertyChanged("PickupCountryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PickupDeliveryCWeightUnitCode {
+            get {
+                return this.PickupDeliveryCWeightUnitCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PickupDeliveryCWeightUnitCodeField, value) != true)) {
+                    this.PickupDeliveryCWeightUnitCodeField = value;
+                    this.RaisePropertyChanged("PickupDeliveryCWeightUnitCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> PickupDeliveryChargeableWeight {
+            get {
+                return this.PickupDeliveryChargeableWeightField;
+            }
+            set {
+                if ((this.PickupDeliveryChargeableWeightField.Equals(value) != true)) {
+                    this.PickupDeliveryChargeableWeightField = value;
+                    this.RaisePropertyChanged("PickupDeliveryChargeableWeight");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> PickupDeliveryRatio {
+            get {
+                return this.PickupDeliveryRatioField;
+            }
+            set {
+                if ((this.PickupDeliveryRatioField.Equals(value) != true)) {
+                    this.PickupDeliveryRatioField = value;
+                    this.RaisePropertyChanged("PickupDeliveryRatio");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> PickupDeliveryVolumetricWeight {
+            get {
+                return this.PickupDeliveryVolumetricWeightField;
+            }
+            set {
+                if ((this.PickupDeliveryVolumetricWeightField.Equals(value) != true)) {
+                    this.PickupDeliveryVolumetricWeightField = value;
+                    this.RaisePropertyChanged("PickupDeliveryVolumetricWeight");
                 }
             }
         }
@@ -2446,6 +3365,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PickupZipCode {
+            get {
+                return this.PickupZipCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PickupZipCodeField, value) != true)) {
+                    this.PickupZipCodeField = value;
+                    this.RaisePropertyChanged("PickupZipCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ProductCode {
             get {
                 return this.ProductCodeField;
@@ -2454,6 +3386,58 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.ProductCodeField, value) != true)) {
                     this.ProductCodeField = value;
                     this.RaisePropertyChanged("ProductCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfitCurrencyId {
+            get {
+                return this.ProfitCurrencyIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfitCurrencyIdField, value) != true)) {
+                    this.ProfitCurrencyIdField = value;
+                    this.RaisePropertyChanged("ProfitCurrencyId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> ProfitExchangeRate {
+            get {
+                return this.ProfitExchangeRateField;
+            }
+            set {
+                if ((this.ProfitExchangeRateField.Equals(value) != true)) {
+                    this.ProfitExchangeRateField = value;
+                    this.RaisePropertyChanged("ProfitExchangeRate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.QuoteProxy.QuoteSaleChargePM[] QuotationSaleCharges {
+            get {
+                return this.QuotationSaleChargesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuotationSaleChargesField, value) != true)) {
+                    this.QuotationSaleChargesField = value;
+                    this.RaisePropertyChanged("QuotationSaleCharges");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string QuotationSections {
+            get {
+                return this.QuotationSectionsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuotationSectionsField, value) != true)) {
+                    this.QuotationSectionsField = value;
+                    this.RaisePropertyChanged("QuotationSections");
                 }
             }
         }
@@ -2480,6 +3464,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.QuoteClosingReasonCodeField, value) != true)) {
                     this.QuoteClosingReasonCodeField = value;
                     this.RaisePropertyChanged("QuoteClosingReasonCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string QuoteClosingReasonId {
+            get {
+                return this.QuoteClosingReasonIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuoteClosingReasonIdField, value) != true)) {
+                    this.QuoteClosingReasonIdField = value;
+                    this.RaisePropertyChanged("QuoteClosingReasonId");
                 }
             }
         }
@@ -2524,6 +3521,32 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string QuoteHTMLDocumentId {
+            get {
+                return this.QuoteHTMLDocumentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuoteHTMLDocumentIdField, value) != true)) {
+                    this.QuoteHTMLDocumentIdField = value;
+                    this.RaisePropertyChanged("QuoteHTMLDocumentId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string QuoteLevel {
+            get {
+                return this.QuoteLevelField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuoteLevelField, value) != true)) {
+                    this.QuoteLevelField = value;
+                    this.RaisePropertyChanged("QuoteLevel");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string QuoteNumber {
             get {
                 return this.QuoteNumberField;
@@ -2558,6 +3581,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.QuoteSaleChargesField, value) != true)) {
                     this.QuoteSaleChargesField = value;
                     this.RaisePropertyChanged("QuoteSaleCharges");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.QuoteProxy.QuoteSalesTotalPM[] QuoteSalesTotals {
+            get {
+                return this.QuoteSalesTotalsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuoteSalesTotalsField, value) != true)) {
+                    this.QuoteSalesTotalsField = value;
+                    this.RaisePropertyChanged("QuoteSalesTotals");
                 }
             }
         }
@@ -2602,6 +3638,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string QuoteVersion {
+            get {
+                return this.QuoteVersionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuoteVersionField, value) != true)) {
+                    this.QuoteVersionField = value;
+                    this.RaisePropertyChanged("QuoteVersion");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string RatingCode {
             get {
                 return this.RatingCodeField;
@@ -2636,6 +3685,45 @@ namespace HypredTest.QuoteProxy {
                 if ((this.RatioField.Equals(value) != true)) {
                     this.RatioField = value;
                     this.RaisePropertyChanged("Ratio");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RegionalTaxId {
+            get {
+                return this.RegionalTaxIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RegionalTaxIdField, value) != true)) {
+                    this.RegionalTaxIdField = value;
+                    this.RaisePropertyChanged("RegionalTaxId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> RegionalTaxPercentage {
+            get {
+                return this.RegionalTaxPercentageField;
+            }
+            set {
+                if ((this.RegionalTaxPercentageField.Equals(value) != true)) {
+                    this.RegionalTaxPercentageField = value;
+                    this.RaisePropertyChanged("RegionalTaxPercentage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> RequestDate {
+            get {
+                return this.RequestDateField;
+            }
+            set {
+                if ((this.RequestDateField.Equals(value) != true)) {
+                    this.RequestDateField = value;
+                    this.RaisePropertyChanged("RequestDate");
                 }
             }
         }
@@ -2693,6 +3781,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SalesTotalAmounts {
+            get {
+                return this.SalesTotalAmountsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SalesTotalAmountsField, value) != true)) {
+                    this.SalesTotalAmountsField = value;
+                    this.RaisePropertyChanged("SalesTotalAmounts");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string SalesmanName {
             get {
                 return this.SalesmanNameField;
@@ -2719,6 +3820,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SameOrFixed {
+            get {
+                return this.SameOrFixedField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SameOrFixedField, value) != true)) {
+                    this.SameOrFixedField = value;
+                    this.RaisePropertyChanged("SameOrFixed");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string SearchFields {
             get {
                 return this.SearchFieldsField;
@@ -2740,6 +3854,32 @@ namespace HypredTest.QuoteProxy {
                 if ((this.SentDateField.Equals(value) != true)) {
                     this.SentDateField = value;
                     this.RaisePropertyChanged("SentDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipmentSubTypeId {
+            get {
+                return this.ShipmentSubTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentSubTypeIdField, value) != true)) {
+                    this.ShipmentSubTypeIdField = value;
+                    this.RaisePropertyChanged("ShipmentSubTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipmentSubTypeName {
+            get {
+                return this.ShipmentSubTypeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentSubTypeNameField, value) != true)) {
+                    this.ShipmentSubTypeNameField = value;
+                    this.RaisePropertyChanged("ShipmentSubTypeName");
                 }
             }
         }
@@ -2914,6 +4054,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> StartDate {
+            get {
+                return this.StartDateField;
+            }
+            set {
+                if ((this.StartDateField.Equals(value) != true)) {
+                    this.StartDateField = value;
+                    this.RaisePropertyChanged("StartDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Subject {
             get {
                 return this.SubjectField;
@@ -2927,6 +4080,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> TEU {
+            get {
+                return this.TEUField;
+            }
+            set {
+                if ((this.TEUField.Equals(value) != true)) {
+                    this.TEUField = value;
+                    this.RaisePropertyChanged("TEU");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int Tenant {
             get {
                 return this.TenantField;
@@ -2935,6 +4101,19 @@ namespace HypredTest.QuoteProxy {
                 if ((this.TenantField.Equals(value) != true)) {
                     this.TenantField = value;
                     this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> TicketCreateDate {
+            get {
+                return this.TicketCreateDateField;
+            }
+            set {
+                if ((this.TicketCreateDateField.Equals(value) != true)) {
+                    this.TicketCreateDateField = value;
+                    this.RaisePropertyChanged("TicketCreateDate");
                 }
             }
         }
@@ -3000,6 +4179,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.ToCountryIdField, value) != true)) {
                     this.ToCountryIdField = value;
                     this.RaisePropertyChanged("ToCountryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ToCountryIsEC {
+            get {
+                return this.ToCountryIsECField;
+            }
+            set {
+                if ((this.ToCountryIsECField.Equals(value) != true)) {
+                    this.ToCountryIsECField = value;
+                    this.RaisePropertyChanged("ToCountryIsEC");
                 }
             }
         }
@@ -3135,6 +4327,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool TotalPerContainer {
+            get {
+                return this.TotalPerContainerField;
+            }
+            set {
+                if ((this.TotalPerContainerField.Equals(value) != true)) {
+                    this.TotalPerContainerField = value;
+                    this.RaisePropertyChanged("TotalPerContainer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<double> TotalReceivablesAmount {
             get {
                 return this.TotalReceivablesAmountField;
@@ -3143,6 +4348,58 @@ namespace HypredTest.QuoteProxy {
                 if ((this.TotalReceivablesAmountField.Equals(value) != true)) {
                     this.TotalReceivablesAmountField = value;
                     this.RaisePropertyChanged("TotalReceivablesAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> TotalSaleIncludingVATAmountInLocalCurrency {
+            get {
+                return this.TotalSaleIncludingVATAmountInLocalCurrencyField;
+            }
+            set {
+                if ((this.TotalSaleIncludingVATAmountInLocalCurrencyField.Equals(value) != true)) {
+                    this.TotalSaleIncludingVATAmountInLocalCurrencyField = value;
+                    this.RaisePropertyChanged("TotalSaleIncludingVATAmountInLocalCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> TotalSaleIncludingVATAmountInSaleCurrency {
+            get {
+                return this.TotalSaleIncludingVATAmountInSaleCurrencyField;
+            }
+            set {
+                if ((this.TotalSaleIncludingVATAmountInSaleCurrencyField.Equals(value) != true)) {
+                    this.TotalSaleIncludingVATAmountInSaleCurrencyField = value;
+                    this.RaisePropertyChanged("TotalSaleIncludingVATAmountInSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.QuoteProxy.QuoteVATsTotalPM[] TotalVATPerQuote {
+            get {
+                return this.TotalVATPerQuoteField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TotalVATPerQuoteField, value) != true)) {
+                    this.TotalVATPerQuoteField = value;
+                    this.RaisePropertyChanged("TotalVATPerQuote");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.QuoteProxy.QuoteTotalVATPM[] TotalVATs {
+            get {
+                return this.TotalVATsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TotalVATsField, value) != true)) {
+                    this.TotalVATsField = value;
+                    this.RaisePropertyChanged("TotalVATs");
                 }
             }
         }
@@ -3226,6 +4483,32 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> ValueOfGoods {
+            get {
+                return this.ValueOfGoodsField;
+            }
+            set {
+                if ((this.ValueOfGoodsField.Equals(value) != true)) {
+                    this.ValueOfGoodsField = value;
+                    this.RaisePropertyChanged("ValueOfGoods");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ValueOfGoodsCurrencyId {
+            get {
+                return this.ValueOfGoodsCurrencyIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValueOfGoodsCurrencyIdField, value) != true)) {
+                    this.ValueOfGoodsCurrencyIdField = value;
+                    this.RaisePropertyChanged("ValueOfGoodsCurrencyId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<double> Volume {
             get {
                 return this.VolumeField;
@@ -3234,6 +4517,19 @@ namespace HypredTest.QuoteProxy {
                 if ((this.VolumeField.Equals(value) != true)) {
                     this.VolumeField = value;
                     this.RaisePropertyChanged("Volume");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> VolumeInCBM {
+            get {
+                return this.VolumeInCBMField;
+            }
+            set {
+                if ((this.VolumeInCBMField.Equals(value) != true)) {
+                    this.VolumeInCBMField = value;
+                    this.RaisePropertyChanged("VolumeInCBM");
                 }
             }
         }
@@ -3284,13 +4580,22 @@ namespace HypredTest.QuoteProxy {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeOpField;
+        private string AreaField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AutomationIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> DateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool DeletedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DocumentTypeIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool DoneField;
@@ -3360,14 +4665,40 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeOp {
+        public string Area {
             get {
-                return this.ChangeOpField;
+                return this.AreaField;
             }
             set {
-                if ((this.ChangeOpField.Equals(value) != true)) {
-                    this.ChangeOpField = value;
-                    this.RaisePropertyChanged("ChangeOp");
+                if ((object.ReferenceEquals(this.AreaField, value) != true)) {
+                    this.AreaField = value;
+                    this.RaisePropertyChanged("Area");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AutomationId {
+            get {
+                return this.AutomationIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AutomationIdField, value) != true)) {
+                    this.AutomationIdField = value;
+                    this.RaisePropertyChanged("AutomationId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
+            get {
+                return this.ChangeSetOpField;
+            }
+            set {
+                if ((this.ChangeSetOpField.Equals(value) != true)) {
+                    this.ChangeSetOpField = value;
+                    this.RaisePropertyChanged("ChangeSetOp");
                 }
             }
         }
@@ -3394,6 +4725,19 @@ namespace HypredTest.QuoteProxy {
                 if ((this.DeletedField.Equals(value) != true)) {
                     this.DeletedField = value;
                     this.RaisePropertyChanged("Deleted");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DocumentTypeId {
+            get {
+                return this.DocumentTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DocumentTypeIdField, value) != true)) {
+                    this.DocumentTypeIdField = value;
+                    this.RaisePropertyChanged("DocumentTypeId");
                 }
             }
         }
@@ -3657,21 +5001,27 @@ namespace HypredTest.QuoteProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="QuoteChargePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.QuoteModel.EntityPMs")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="QuoteSaleChargePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.QuoteModel.EntityPMs")]
     [System.SerializableAttribute()]
-    public partial class QuoteChargePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class QuoteSaleChargePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeOpField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ChargesGroupCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ChargesGroupNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ChargesGroupViewOrderField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ChargesTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ChargesTypeDescriptionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ChargesTypeIdField;
@@ -3683,10 +5033,19 @@ namespace HypredTest.QuoteProxy {
         private string ChargesTypeNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ChargesTypeViewOrderField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType1MarkUpTextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ContainerType1MarkUpTypeCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> ContainerType1MarkUpValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType2MarkUpTextField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ContainerType2MarkUpTypeCodeField;
@@ -3695,16 +5054,1248 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<double> ContainerType2MarkUpValueField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType3MarkUpTextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ContainerType3MarkUpTypeCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> ContainerType3MarkUpValueField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType4MarkUpTextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ContainerType4MarkUpTypeCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> ContainerType4MarkUpValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType5MarkUpTextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType5MarkUpTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> ContainerType5MarkUpValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> CostMaxAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> CostMinAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CurrencyCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CurrencyIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FixedAmountCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ForeignAmountFixedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IsAllINField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsChargeByStepsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsRegionalTaxField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocalAmountFixedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MarkUpTextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MarkUpTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> MarkUpValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PriceBreaksField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string QuoteIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string QuoteTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleAmountInSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleContainerType1UnitPriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleContainerType2UnitPriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleContainerType3UnitPriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleContainerType4UnitPriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleContainerType5UnitPriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleExchangeRateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleMaxAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SaleMeasurementCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SaleMeasurementIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SaleMeasurementLocalNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SaleMeasurementShortNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleMinAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleQuantityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleTotalAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleTotalAmountLocalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleUnitPriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleUnitPrice1InSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleUnitPrice2InSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleUnitPrice3InSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleUnitPrice4InSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleUnitPrice5InSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleUnitPriceInSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SalesWithVATAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TenantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UOMPercentageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime UpdateDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpdatedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime ValueDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VatAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VatPercentageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VatTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VatTypeNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ChargesGroupCode {
+            get {
+                return this.ChargesGroupCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChargesGroupCodeField, value) != true)) {
+                    this.ChargesGroupCodeField = value;
+                    this.RaisePropertyChanged("ChargesGroupCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ChargesGroupName {
+            get {
+                return this.ChargesGroupNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChargesGroupNameField, value) != true)) {
+                    this.ChargesGroupNameField = value;
+                    this.RaisePropertyChanged("ChargesGroupName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ChargesGroupViewOrder {
+            get {
+                return this.ChargesGroupViewOrderField;
+            }
+            set {
+                if ((this.ChargesGroupViewOrderField.Equals(value) != true)) {
+                    this.ChargesGroupViewOrderField = value;
+                    this.RaisePropertyChanged("ChargesGroupViewOrder");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ChargesTypeCode {
+            get {
+                return this.ChargesTypeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChargesTypeCodeField, value) != true)) {
+                    this.ChargesTypeCodeField = value;
+                    this.RaisePropertyChanged("ChargesTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ChargesTypeDescription {
+            get {
+                return this.ChargesTypeDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChargesTypeDescriptionField, value) != true)) {
+                    this.ChargesTypeDescriptionField = value;
+                    this.RaisePropertyChanged("ChargesTypeDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ChargesTypeId {
+            get {
+                return this.ChargesTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChargesTypeIdField, value) != true)) {
+                    this.ChargesTypeIdField = value;
+                    this.RaisePropertyChanged("ChargesTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ChargesTypeLocalName {
+            get {
+                return this.ChargesTypeLocalNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChargesTypeLocalNameField, value) != true)) {
+                    this.ChargesTypeLocalNameField = value;
+                    this.RaisePropertyChanged("ChargesTypeLocalName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ChargesTypeName {
+            get {
+                return this.ChargesTypeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChargesTypeNameField, value) != true)) {
+                    this.ChargesTypeNameField = value;
+                    this.RaisePropertyChanged("ChargesTypeName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ChargesTypeViewOrder {
+            get {
+                return this.ChargesTypeViewOrderField;
+            }
+            set {
+                if ((this.ChargesTypeViewOrderField.Equals(value) != true)) {
+                    this.ChargesTypeViewOrderField = value;
+                    this.RaisePropertyChanged("ChargesTypeViewOrder");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType1MarkUpText {
+            get {
+                return this.ContainerType1MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType1MarkUpTextField, value) != true)) {
+                    this.ContainerType1MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType1MarkUpText");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType1MarkUpTypeCode {
+            get {
+                return this.ContainerType1MarkUpTypeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType1MarkUpTypeCodeField, value) != true)) {
+                    this.ContainerType1MarkUpTypeCodeField = value;
+                    this.RaisePropertyChanged("ContainerType1MarkUpTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> ContainerType1MarkUpValue {
+            get {
+                return this.ContainerType1MarkUpValueField;
+            }
+            set {
+                if ((this.ContainerType1MarkUpValueField.Equals(value) != true)) {
+                    this.ContainerType1MarkUpValueField = value;
+                    this.RaisePropertyChanged("ContainerType1MarkUpValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType2MarkUpText {
+            get {
+                return this.ContainerType2MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType2MarkUpTextField, value) != true)) {
+                    this.ContainerType2MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType2MarkUpText");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType2MarkUpTypeCode {
+            get {
+                return this.ContainerType2MarkUpTypeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType2MarkUpTypeCodeField, value) != true)) {
+                    this.ContainerType2MarkUpTypeCodeField = value;
+                    this.RaisePropertyChanged("ContainerType2MarkUpTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> ContainerType2MarkUpValue {
+            get {
+                return this.ContainerType2MarkUpValueField;
+            }
+            set {
+                if ((this.ContainerType2MarkUpValueField.Equals(value) != true)) {
+                    this.ContainerType2MarkUpValueField = value;
+                    this.RaisePropertyChanged("ContainerType2MarkUpValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType3MarkUpText {
+            get {
+                return this.ContainerType3MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType3MarkUpTextField, value) != true)) {
+                    this.ContainerType3MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType3MarkUpText");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType3MarkUpTypeCode {
+            get {
+                return this.ContainerType3MarkUpTypeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType3MarkUpTypeCodeField, value) != true)) {
+                    this.ContainerType3MarkUpTypeCodeField = value;
+                    this.RaisePropertyChanged("ContainerType3MarkUpTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> ContainerType3MarkUpValue {
+            get {
+                return this.ContainerType3MarkUpValueField;
+            }
+            set {
+                if ((this.ContainerType3MarkUpValueField.Equals(value) != true)) {
+                    this.ContainerType3MarkUpValueField = value;
+                    this.RaisePropertyChanged("ContainerType3MarkUpValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType4MarkUpText {
+            get {
+                return this.ContainerType4MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType4MarkUpTextField, value) != true)) {
+                    this.ContainerType4MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType4MarkUpText");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType4MarkUpTypeCode {
+            get {
+                return this.ContainerType4MarkUpTypeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType4MarkUpTypeCodeField, value) != true)) {
+                    this.ContainerType4MarkUpTypeCodeField = value;
+                    this.RaisePropertyChanged("ContainerType4MarkUpTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> ContainerType4MarkUpValue {
+            get {
+                return this.ContainerType4MarkUpValueField;
+            }
+            set {
+                if ((this.ContainerType4MarkUpValueField.Equals(value) != true)) {
+                    this.ContainerType4MarkUpValueField = value;
+                    this.RaisePropertyChanged("ContainerType4MarkUpValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType5MarkUpText {
+            get {
+                return this.ContainerType5MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType5MarkUpTextField, value) != true)) {
+                    this.ContainerType5MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType5MarkUpText");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType5MarkUpTypeCode {
+            get {
+                return this.ContainerType5MarkUpTypeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType5MarkUpTypeCodeField, value) != true)) {
+                    this.ContainerType5MarkUpTypeCodeField = value;
+                    this.RaisePropertyChanged("ContainerType5MarkUpTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> ContainerType5MarkUpValue {
+            get {
+                return this.ContainerType5MarkUpValueField;
+            }
+            set {
+                if ((this.ContainerType5MarkUpValueField.Equals(value) != true)) {
+                    this.ContainerType5MarkUpValueField = value;
+                    this.RaisePropertyChanged("ContainerType5MarkUpValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> CostMaxAmount {
+            get {
+                return this.CostMaxAmountField;
+            }
+            set {
+                if ((this.CostMaxAmountField.Equals(value) != true)) {
+                    this.CostMaxAmountField = value;
+                    this.RaisePropertyChanged("CostMaxAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> CostMinAmount {
+            get {
+                return this.CostMinAmountField;
+            }
+            set {
+                if ((this.CostMinAmountField.Equals(value) != true)) {
+                    this.CostMinAmountField = value;
+                    this.RaisePropertyChanged("CostMinAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrencyCode {
+            get {
+                return this.CurrencyCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrencyCodeField, value) != true)) {
+                    this.CurrencyCodeField = value;
+                    this.RaisePropertyChanged("CurrencyCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrencyId {
+            get {
+                return this.CurrencyIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrencyIdField, value) != true)) {
+                    this.CurrencyIdField = value;
+                    this.RaisePropertyChanged("CurrencyId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FixedAmountCode {
+            get {
+                return this.FixedAmountCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FixedAmountCodeField, value) != true)) {
+                    this.FixedAmountCodeField = value;
+                    this.RaisePropertyChanged("FixedAmountCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ForeignAmountFixed {
+            get {
+                return this.ForeignAmountFixedField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ForeignAmountFixedField, value) != true)) {
+                    this.ForeignAmountFixedField = value;
+                    this.RaisePropertyChanged("ForeignAmountFixed");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IsAllIN {
+            get {
+                return this.IsAllINField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IsAllINField, value) != true)) {
+                    this.IsAllINField = value;
+                    this.RaisePropertyChanged("IsAllIN");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsChargeBySteps {
+            get {
+                return this.IsChargeByStepsField;
+            }
+            set {
+                if ((this.IsChargeByStepsField.Equals(value) != true)) {
+                    this.IsChargeByStepsField = value;
+                    this.RaisePropertyChanged("IsChargeBySteps");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsRegionalTax {
+            get {
+                return this.IsRegionalTaxField;
+            }
+            set {
+                if ((this.IsRegionalTaxField.Equals(value) != true)) {
+                    this.IsRegionalTaxField = value;
+                    this.RaisePropertyChanged("IsRegionalTax");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LocalAmountFixed {
+            get {
+                return this.LocalAmountFixedField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocalAmountFixedField, value) != true)) {
+                    this.LocalAmountFixedField = value;
+                    this.RaisePropertyChanged("LocalAmountFixed");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MarkUpText {
+            get {
+                return this.MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MarkUpTextField, value) != true)) {
+                    this.MarkUpTextField = value;
+                    this.RaisePropertyChanged("MarkUpText");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MarkUpTypeCode {
+            get {
+                return this.MarkUpTypeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MarkUpTypeCodeField, value) != true)) {
+                    this.MarkUpTypeCodeField = value;
+                    this.RaisePropertyChanged("MarkUpTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> MarkUpValue {
+            get {
+                return this.MarkUpValueField;
+            }
+            set {
+                if ((this.MarkUpValueField.Equals(value) != true)) {
+                    this.MarkUpValueField = value;
+                    this.RaisePropertyChanged("MarkUpValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Notes {
+            get {
+                return this.NotesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotesField, value) != true)) {
+                    this.NotesField = value;
+                    this.RaisePropertyChanged("Notes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PriceBreaks {
+            get {
+                return this.PriceBreaksField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PriceBreaksField, value) != true)) {
+                    this.PriceBreaksField = value;
+                    this.RaisePropertyChanged("PriceBreaks");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string QuoteId {
+            get {
+                return this.QuoteIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuoteIdField, value) != true)) {
+                    this.QuoteIdField = value;
+                    this.RaisePropertyChanged("QuoteId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string QuoteTypeCode {
+            get {
+                return this.QuoteTypeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuoteTypeCodeField, value) != true)) {
+                    this.QuoteTypeCodeField = value;
+                    this.RaisePropertyChanged("QuoteTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleAmountInSaleCurrency {
+            get {
+                return this.SaleAmountInSaleCurrencyField;
+            }
+            set {
+                if ((this.SaleAmountInSaleCurrencyField.Equals(value) != true)) {
+                    this.SaleAmountInSaleCurrencyField = value;
+                    this.RaisePropertyChanged("SaleAmountInSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleContainerType1UnitPrice {
+            get {
+                return this.SaleContainerType1UnitPriceField;
+            }
+            set {
+                if ((this.SaleContainerType1UnitPriceField.Equals(value) != true)) {
+                    this.SaleContainerType1UnitPriceField = value;
+                    this.RaisePropertyChanged("SaleContainerType1UnitPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleContainerType2UnitPrice {
+            get {
+                return this.SaleContainerType2UnitPriceField;
+            }
+            set {
+                if ((this.SaleContainerType2UnitPriceField.Equals(value) != true)) {
+                    this.SaleContainerType2UnitPriceField = value;
+                    this.RaisePropertyChanged("SaleContainerType2UnitPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleContainerType3UnitPrice {
+            get {
+                return this.SaleContainerType3UnitPriceField;
+            }
+            set {
+                if ((this.SaleContainerType3UnitPriceField.Equals(value) != true)) {
+                    this.SaleContainerType3UnitPriceField = value;
+                    this.RaisePropertyChanged("SaleContainerType3UnitPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleContainerType4UnitPrice {
+            get {
+                return this.SaleContainerType4UnitPriceField;
+            }
+            set {
+                if ((this.SaleContainerType4UnitPriceField.Equals(value) != true)) {
+                    this.SaleContainerType4UnitPriceField = value;
+                    this.RaisePropertyChanged("SaleContainerType4UnitPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleContainerType5UnitPrice {
+            get {
+                return this.SaleContainerType5UnitPriceField;
+            }
+            set {
+                if ((this.SaleContainerType5UnitPriceField.Equals(value) != true)) {
+                    this.SaleContainerType5UnitPriceField = value;
+                    this.RaisePropertyChanged("SaleContainerType5UnitPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleExchangeRate {
+            get {
+                return this.SaleExchangeRateField;
+            }
+            set {
+                if ((this.SaleExchangeRateField.Equals(value) != true)) {
+                    this.SaleExchangeRateField = value;
+                    this.RaisePropertyChanged("SaleExchangeRate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleMaxAmount {
+            get {
+                return this.SaleMaxAmountField;
+            }
+            set {
+                if ((this.SaleMaxAmountField.Equals(value) != true)) {
+                    this.SaleMaxAmountField = value;
+                    this.RaisePropertyChanged("SaleMaxAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SaleMeasurementCode {
+            get {
+                return this.SaleMeasurementCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SaleMeasurementCodeField, value) != true)) {
+                    this.SaleMeasurementCodeField = value;
+                    this.RaisePropertyChanged("SaleMeasurementCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SaleMeasurementId {
+            get {
+                return this.SaleMeasurementIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SaleMeasurementIdField, value) != true)) {
+                    this.SaleMeasurementIdField = value;
+                    this.RaisePropertyChanged("SaleMeasurementId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SaleMeasurementLocalName {
+            get {
+                return this.SaleMeasurementLocalNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SaleMeasurementLocalNameField, value) != true)) {
+                    this.SaleMeasurementLocalNameField = value;
+                    this.RaisePropertyChanged("SaleMeasurementLocalName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SaleMeasurementShortName {
+            get {
+                return this.SaleMeasurementShortNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SaleMeasurementShortNameField, value) != true)) {
+                    this.SaleMeasurementShortNameField = value;
+                    this.RaisePropertyChanged("SaleMeasurementShortName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleMinAmount {
+            get {
+                return this.SaleMinAmountField;
+            }
+            set {
+                if ((this.SaleMinAmountField.Equals(value) != true)) {
+                    this.SaleMinAmountField = value;
+                    this.RaisePropertyChanged("SaleMinAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleQuantity {
+            get {
+                return this.SaleQuantityField;
+            }
+            set {
+                if ((this.SaleQuantityField.Equals(value) != true)) {
+                    this.SaleQuantityField = value;
+                    this.RaisePropertyChanged("SaleQuantity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleTotalAmount {
+            get {
+                return this.SaleTotalAmountField;
+            }
+            set {
+                if ((this.SaleTotalAmountField.Equals(value) != true)) {
+                    this.SaleTotalAmountField = value;
+                    this.RaisePropertyChanged("SaleTotalAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleTotalAmountLocal {
+            get {
+                return this.SaleTotalAmountLocalField;
+            }
+            set {
+                if ((this.SaleTotalAmountLocalField.Equals(value) != true)) {
+                    this.SaleTotalAmountLocalField = value;
+                    this.RaisePropertyChanged("SaleTotalAmountLocal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleUnitPrice {
+            get {
+                return this.SaleUnitPriceField;
+            }
+            set {
+                if ((this.SaleUnitPriceField.Equals(value) != true)) {
+                    this.SaleUnitPriceField = value;
+                    this.RaisePropertyChanged("SaleUnitPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleUnitPrice1InSaleCurrency {
+            get {
+                return this.SaleUnitPrice1InSaleCurrencyField;
+            }
+            set {
+                if ((this.SaleUnitPrice1InSaleCurrencyField.Equals(value) != true)) {
+                    this.SaleUnitPrice1InSaleCurrencyField = value;
+                    this.RaisePropertyChanged("SaleUnitPrice1InSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleUnitPrice2InSaleCurrency {
+            get {
+                return this.SaleUnitPrice2InSaleCurrencyField;
+            }
+            set {
+                if ((this.SaleUnitPrice2InSaleCurrencyField.Equals(value) != true)) {
+                    this.SaleUnitPrice2InSaleCurrencyField = value;
+                    this.RaisePropertyChanged("SaleUnitPrice2InSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleUnitPrice3InSaleCurrency {
+            get {
+                return this.SaleUnitPrice3InSaleCurrencyField;
+            }
+            set {
+                if ((this.SaleUnitPrice3InSaleCurrencyField.Equals(value) != true)) {
+                    this.SaleUnitPrice3InSaleCurrencyField = value;
+                    this.RaisePropertyChanged("SaleUnitPrice3InSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleUnitPrice4InSaleCurrency {
+            get {
+                return this.SaleUnitPrice4InSaleCurrencyField;
+            }
+            set {
+                if ((this.SaleUnitPrice4InSaleCurrencyField.Equals(value) != true)) {
+                    this.SaleUnitPrice4InSaleCurrencyField = value;
+                    this.RaisePropertyChanged("SaleUnitPrice4InSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleUnitPrice5InSaleCurrency {
+            get {
+                return this.SaleUnitPrice5InSaleCurrencyField;
+            }
+            set {
+                if ((this.SaleUnitPrice5InSaleCurrencyField.Equals(value) != true)) {
+                    this.SaleUnitPrice5InSaleCurrencyField = value;
+                    this.RaisePropertyChanged("SaleUnitPrice5InSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleUnitPriceInSaleCurrency {
+            get {
+                return this.SaleUnitPriceInSaleCurrencyField;
+            }
+            set {
+                if ((this.SaleUnitPriceInSaleCurrencyField.Equals(value) != true)) {
+                    this.SaleUnitPriceInSaleCurrencyField = value;
+                    this.RaisePropertyChanged("SaleUnitPriceInSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SalesWithVATAmount {
+            get {
+                return this.SalesWithVATAmountField;
+            }
+            set {
+                if ((this.SalesWithVATAmountField.Equals(value) != true)) {
+                    this.SalesWithVATAmountField = value;
+                    this.RaisePropertyChanged("SalesWithVATAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Tenant {
+            get {
+                return this.TenantField;
+            }
+            set {
+                if ((this.TenantField.Equals(value) != true)) {
+                    this.TenantField = value;
+                    this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UOMPercentage {
+            get {
+                return this.UOMPercentageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UOMPercentageField, value) != true)) {
+                    this.UOMPercentageField = value;
+                    this.RaisePropertyChanged("UOMPercentage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime UpdateDate {
+            get {
+                return this.UpdateDateField;
+            }
+            set {
+                if ((this.UpdateDateField.Equals(value) != true)) {
+                    this.UpdateDateField = value;
+                    this.RaisePropertyChanged("UpdateDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UpdatedByUserId {
+            get {
+                return this.UpdatedByUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdatedByUserIdField, value) != true)) {
+                    this.UpdatedByUserIdField = value;
+                    this.RaisePropertyChanged("UpdatedByUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime ValueDate {
+            get {
+                return this.ValueDateField;
+            }
+            set {
+                if ((this.ValueDateField.Equals(value) != true)) {
+                    this.ValueDateField = value;
+                    this.RaisePropertyChanged("ValueDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> VatAmount {
+            get {
+                return this.VatAmountField;
+            }
+            set {
+                if ((this.VatAmountField.Equals(value) != true)) {
+                    this.VatAmountField = value;
+                    this.RaisePropertyChanged("VatAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> VatPercentage {
+            get {
+                return this.VatPercentageField;
+            }
+            set {
+                if ((this.VatPercentageField.Equals(value) != true)) {
+                    this.VatPercentageField = value;
+                    this.RaisePropertyChanged("VatPercentage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VatTypeId {
+            get {
+                return this.VatTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VatTypeIdField, value) != true)) {
+                    this.VatTypeIdField = value;
+                    this.RaisePropertyChanged("VatTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VatTypeName {
+            get {
+                return this.VatTypeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VatTypeNameField, value) != true)) {
+                    this.VatTypeNameField = value;
+                    this.RaisePropertyChanged("VatTypeName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="QuoteChargePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.QuoteModel.EntityPMs")]
+    [System.SerializableAttribute()]
+    public partial class QuoteChargePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ChargesGroupCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ChargesTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ChargesTypeDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ChargesTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ChargesTypeLocalNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ChargesTypeNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType1MarkUpTextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType1MarkUpTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> ContainerType1MarkUpValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType2MarkUpTextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType2MarkUpTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> ContainerType2MarkUpValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType3MarkUpTextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType3MarkUpTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> ContainerType3MarkUpValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType4MarkUpTextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType4MarkUpTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> ContainerType4MarkUpValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType5MarkUpTextField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ContainerType5MarkUpTypeCodeField;
@@ -3788,13 +6379,37 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<double> CostUnitPriceInSaleCurrencyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExternalTAXItemIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExternalVATCardField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool HasDeliveryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool HasPickupField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsAllINField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsBackToBackField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsChargeByStepsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsCostAllInField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsRegionalTaxField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MarkUpTextField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MarkUpTypeCodeField;
@@ -3816,6 +6431,9 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string QuoteTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleAmountInSaleCurrencyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> SaleContainerType1UnitPriceField;
@@ -3842,13 +6460,19 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<double> SaleExchangeRateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool SaleIsExchangeRateFixedField;
+        private bool SaleIsFixedRateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleMaxAmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SaleMeasurementCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SaleMeasurementIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SaleMeasurementLocalNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SaleMeasurementShortNameField;
@@ -3869,6 +6493,33 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<double> SaleUnitPriceField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleUnitPrice1InSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleUnitPrice2InSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleUnitPrice3InSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleUnitPrice4InSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleUnitPrice5InSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleUnitPriceInSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TariffIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TariffNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TariffVersionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int TenantField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -3879,6 +6530,24 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime ValueDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VatAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool VatIsMultiPercentageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VatPercentageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VatTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VatTypeNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VendorCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string VendorIdField;
@@ -3900,14 +6569,14 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeOp {
+        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
             get {
-                return this.ChangeOpField;
+                return this.ChangeSetOpField;
             }
             set {
-                if ((this.ChangeOpField.Equals(value) != true)) {
-                    this.ChangeOpField = value;
-                    this.RaisePropertyChanged("ChangeOp");
+                if ((this.ChangeSetOpField.Equals(value) != true)) {
+                    this.ChangeSetOpField = value;
+                    this.RaisePropertyChanged("ChangeSetOp");
                 }
             }
         }
@@ -3934,6 +6603,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.ChargesTypeCodeField, value) != true)) {
                     this.ChargesTypeCodeField = value;
                     this.RaisePropertyChanged("ChargesTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ChargesTypeDescription {
+            get {
+                return this.ChargesTypeDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChargesTypeDescriptionField, value) != true)) {
+                    this.ChargesTypeDescriptionField = value;
+                    this.RaisePropertyChanged("ChargesTypeDescription");
                 }
             }
         }
@@ -3978,6 +6660,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType1MarkUpText {
+            get {
+                return this.ContainerType1MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType1MarkUpTextField, value) != true)) {
+                    this.ContainerType1MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType1MarkUpText");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ContainerType1MarkUpTypeCode {
             get {
                 return this.ContainerType1MarkUpTypeCodeField;
@@ -3999,6 +6694,19 @@ namespace HypredTest.QuoteProxy {
                 if ((this.ContainerType1MarkUpValueField.Equals(value) != true)) {
                     this.ContainerType1MarkUpValueField = value;
                     this.RaisePropertyChanged("ContainerType1MarkUpValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType2MarkUpText {
+            get {
+                return this.ContainerType2MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType2MarkUpTextField, value) != true)) {
+                    this.ContainerType2MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType2MarkUpText");
                 }
             }
         }
@@ -4030,6 +6738,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType3MarkUpText {
+            get {
+                return this.ContainerType3MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType3MarkUpTextField, value) != true)) {
+                    this.ContainerType3MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType3MarkUpText");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ContainerType3MarkUpTypeCode {
             get {
                 return this.ContainerType3MarkUpTypeCodeField;
@@ -4056,6 +6777,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType4MarkUpText {
+            get {
+                return this.ContainerType4MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType4MarkUpTextField, value) != true)) {
+                    this.ContainerType4MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType4MarkUpText");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ContainerType4MarkUpTypeCode {
             get {
                 return this.ContainerType4MarkUpTypeCodeField;
@@ -4077,6 +6811,19 @@ namespace HypredTest.QuoteProxy {
                 if ((this.ContainerType4MarkUpValueField.Equals(value) != true)) {
                     this.ContainerType4MarkUpValueField = value;
                     this.RaisePropertyChanged("ContainerType4MarkUpValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType5MarkUpText {
+            get {
+                return this.ContainerType5MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType5MarkUpTextField, value) != true)) {
+                    this.ContainerType5MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType5MarkUpText");
                 }
             }
         }
@@ -4433,6 +7180,58 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ExternalTAXItemId {
+            get {
+                return this.ExternalTAXItemIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExternalTAXItemIdField, value) != true)) {
+                    this.ExternalTAXItemIdField = value;
+                    this.RaisePropertyChanged("ExternalTAXItemId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ExternalVATCard {
+            get {
+                return this.ExternalVATCardField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExternalVATCardField, value) != true)) {
+                    this.ExternalVATCardField = value;
+                    this.RaisePropertyChanged("ExternalVATCard");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool HasDelivery {
+            get {
+                return this.HasDeliveryField;
+            }
+            set {
+                if ((this.HasDeliveryField.Equals(value) != true)) {
+                    this.HasDeliveryField = value;
+                    this.RaisePropertyChanged("HasDelivery");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool HasPickup {
+            get {
+                return this.HasPickupField;
+            }
+            set {
+                if ((this.HasPickupField.Equals(value) != true)) {
+                    this.HasPickupField = value;
+                    this.RaisePropertyChanged("HasPickup");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Id {
             get {
                 return this.IdField;
@@ -4459,6 +7258,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsBackToBack {
+            get {
+                return this.IsBackToBackField;
+            }
+            set {
+                if ((this.IsBackToBackField.Equals(value) != true)) {
+                    this.IsBackToBackField = value;
+                    this.RaisePropertyChanged("IsBackToBack");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool IsChargeBySteps {
             get {
                 return this.IsChargeByStepsField;
@@ -4467,6 +7279,45 @@ namespace HypredTest.QuoteProxy {
                 if ((this.IsChargeByStepsField.Equals(value) != true)) {
                     this.IsChargeByStepsField = value;
                     this.RaisePropertyChanged("IsChargeBySteps");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsCostAllIn {
+            get {
+                return this.IsCostAllInField;
+            }
+            set {
+                if ((this.IsCostAllInField.Equals(value) != true)) {
+                    this.IsCostAllInField = value;
+                    this.RaisePropertyChanged("IsCostAllIn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsRegionalTax {
+            get {
+                return this.IsRegionalTaxField;
+            }
+            set {
+                if ((this.IsRegionalTaxField.Equals(value) != true)) {
+                    this.IsRegionalTaxField = value;
+                    this.RaisePropertyChanged("IsRegionalTax");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MarkUpText {
+            get {
+                return this.MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MarkUpTextField, value) != true)) {
+                    this.MarkUpTextField = value;
+                    this.RaisePropertyChanged("MarkUpText");
                 }
             }
         }
@@ -4558,6 +7409,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.QuoteTypeCodeField, value) != true)) {
                     this.QuoteTypeCodeField = value;
                     this.RaisePropertyChanged("QuoteTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleAmountInSaleCurrency {
+            get {
+                return this.SaleAmountInSaleCurrencyField;
+            }
+            set {
+                if ((this.SaleAmountInSaleCurrencyField.Equals(value) != true)) {
+                    this.SaleAmountInSaleCurrencyField = value;
+                    this.RaisePropertyChanged("SaleAmountInSaleCurrency");
                 }
             }
         }
@@ -4667,14 +7531,27 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool SaleIsExchangeRateFixed {
+        public bool SaleIsFixedRate {
             get {
-                return this.SaleIsExchangeRateFixedField;
+                return this.SaleIsFixedRateField;
             }
             set {
-                if ((this.SaleIsExchangeRateFixedField.Equals(value) != true)) {
-                    this.SaleIsExchangeRateFixedField = value;
-                    this.RaisePropertyChanged("SaleIsExchangeRateFixed");
+                if ((this.SaleIsFixedRateField.Equals(value) != true)) {
+                    this.SaleIsFixedRateField = value;
+                    this.RaisePropertyChanged("SaleIsFixedRate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleMaxAmount {
+            get {
+                return this.SaleMaxAmountField;
+            }
+            set {
+                if ((this.SaleMaxAmountField.Equals(value) != true)) {
+                    this.SaleMaxAmountField = value;
+                    this.RaisePropertyChanged("SaleMaxAmount");
                 }
             }
         }
@@ -4701,6 +7578,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.SaleMeasurementIdField, value) != true)) {
                     this.SaleMeasurementIdField = value;
                     this.RaisePropertyChanged("SaleMeasurementId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SaleMeasurementLocalName {
+            get {
+                return this.SaleMeasurementLocalNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SaleMeasurementLocalNameField, value) != true)) {
+                    this.SaleMeasurementLocalNameField = value;
+                    this.RaisePropertyChanged("SaleMeasurementLocalName");
                 }
             }
         }
@@ -4784,6 +7674,123 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleUnitPrice1InSaleCurrency {
+            get {
+                return this.SaleUnitPrice1InSaleCurrencyField;
+            }
+            set {
+                if ((this.SaleUnitPrice1InSaleCurrencyField.Equals(value) != true)) {
+                    this.SaleUnitPrice1InSaleCurrencyField = value;
+                    this.RaisePropertyChanged("SaleUnitPrice1InSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleUnitPrice2InSaleCurrency {
+            get {
+                return this.SaleUnitPrice2InSaleCurrencyField;
+            }
+            set {
+                if ((this.SaleUnitPrice2InSaleCurrencyField.Equals(value) != true)) {
+                    this.SaleUnitPrice2InSaleCurrencyField = value;
+                    this.RaisePropertyChanged("SaleUnitPrice2InSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleUnitPrice3InSaleCurrency {
+            get {
+                return this.SaleUnitPrice3InSaleCurrencyField;
+            }
+            set {
+                if ((this.SaleUnitPrice3InSaleCurrencyField.Equals(value) != true)) {
+                    this.SaleUnitPrice3InSaleCurrencyField = value;
+                    this.RaisePropertyChanged("SaleUnitPrice3InSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleUnitPrice4InSaleCurrency {
+            get {
+                return this.SaleUnitPrice4InSaleCurrencyField;
+            }
+            set {
+                if ((this.SaleUnitPrice4InSaleCurrencyField.Equals(value) != true)) {
+                    this.SaleUnitPrice4InSaleCurrencyField = value;
+                    this.RaisePropertyChanged("SaleUnitPrice4InSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleUnitPrice5InSaleCurrency {
+            get {
+                return this.SaleUnitPrice5InSaleCurrencyField;
+            }
+            set {
+                if ((this.SaleUnitPrice5InSaleCurrencyField.Equals(value) != true)) {
+                    this.SaleUnitPrice5InSaleCurrencyField = value;
+                    this.RaisePropertyChanged("SaleUnitPrice5InSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleUnitPriceInSaleCurrency {
+            get {
+                return this.SaleUnitPriceInSaleCurrencyField;
+            }
+            set {
+                if ((this.SaleUnitPriceInSaleCurrencyField.Equals(value) != true)) {
+                    this.SaleUnitPriceInSaleCurrencyField = value;
+                    this.RaisePropertyChanged("SaleUnitPriceInSaleCurrency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TariffId {
+            get {
+                return this.TariffIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TariffIdField, value) != true)) {
+                    this.TariffIdField = value;
+                    this.RaisePropertyChanged("TariffId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TariffNumber {
+            get {
+                return this.TariffNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TariffNumberField, value) != true)) {
+                    this.TariffNumberField = value;
+                    this.RaisePropertyChanged("TariffNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TariffVersion {
+            get {
+                return this.TariffVersionField;
+            }
+            set {
+                if ((this.TariffVersionField.Equals(value) != true)) {
+                    this.TariffVersionField = value;
+                    this.RaisePropertyChanged("TariffVersion");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int Tenant {
             get {
                 return this.TenantField;
@@ -4831,6 +7838,84 @@ namespace HypredTest.QuoteProxy {
                 if ((this.ValueDateField.Equals(value) != true)) {
                     this.ValueDateField = value;
                     this.RaisePropertyChanged("ValueDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> VatAmount {
+            get {
+                return this.VatAmountField;
+            }
+            set {
+                if ((this.VatAmountField.Equals(value) != true)) {
+                    this.VatAmountField = value;
+                    this.RaisePropertyChanged("VatAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool VatIsMultiPercentage {
+            get {
+                return this.VatIsMultiPercentageField;
+            }
+            set {
+                if ((this.VatIsMultiPercentageField.Equals(value) != true)) {
+                    this.VatIsMultiPercentageField = value;
+                    this.RaisePropertyChanged("VatIsMultiPercentage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> VatPercentage {
+            get {
+                return this.VatPercentageField;
+            }
+            set {
+                if ((this.VatPercentageField.Equals(value) != true)) {
+                    this.VatPercentageField = value;
+                    this.RaisePropertyChanged("VatPercentage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VatTypeId {
+            get {
+                return this.VatTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VatTypeIdField, value) != true)) {
+                    this.VatTypeIdField = value;
+                    this.RaisePropertyChanged("VatTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VatTypeName {
+            get {
+                return this.VatTypeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VatTypeNameField, value) != true)) {
+                    this.VatTypeNameField = value;
+                    this.RaisePropertyChanged("VatTypeName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VendorCode {
+            get {
+                return this.VendorCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VendorCodeField, value) != true)) {
+                    this.VendorCodeField = value;
+                    this.RaisePropertyChanged("VendorCode");
                 }
             }
         }
@@ -4906,10 +7991,16 @@ namespace HypredTest.QuoteProxy {
         private string ChargesTypeNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType1MarkUpTextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ContainerType1MarkUpTypeCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> ContainerType1MarkUpValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType2MarkUpTextField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ContainerType2MarkUpTypeCodeField;
@@ -4918,16 +8009,25 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<double> ContainerType2MarkUpValueField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType3MarkUpTextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ContainerType3MarkUpTypeCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> ContainerType3MarkUpValueField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType4MarkUpTextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ContainerType4MarkUpTypeCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> ContainerType4MarkUpValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerType5MarkUpTextField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ContainerType5MarkUpTypeCodeField;
@@ -4951,6 +8051,9 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<double> CostContainerType5UnitPriceField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> CostMaxAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CostMeasurementCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -4958,6 +8061,9 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CostMeasurementShortNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> CostMinAmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> CostQuantityField;
@@ -4981,6 +8087,12 @@ namespace HypredTest.QuoteProxy {
         private string IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsRegionalTaxField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MarkUpTextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MarkUpTypeCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -4999,7 +8111,16 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<double> SaleExchangeRateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleMaxAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> SaleMinAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int TenantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UOMPercentageField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime UpdateDateField;
@@ -5009,6 +8130,15 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime ValueDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VatPercentageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VatTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VatTypeNameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -5073,6 +8203,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType1MarkUpText {
+            get {
+                return this.ContainerType1MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType1MarkUpTextField, value) != true)) {
+                    this.ContainerType1MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType1MarkUpText");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ContainerType1MarkUpTypeCode {
             get {
                 return this.ContainerType1MarkUpTypeCodeField;
@@ -5094,6 +8237,19 @@ namespace HypredTest.QuoteProxy {
                 if ((this.ContainerType1MarkUpValueField.Equals(value) != true)) {
                     this.ContainerType1MarkUpValueField = value;
                     this.RaisePropertyChanged("ContainerType1MarkUpValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType2MarkUpText {
+            get {
+                return this.ContainerType2MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType2MarkUpTextField, value) != true)) {
+                    this.ContainerType2MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType2MarkUpText");
                 }
             }
         }
@@ -5125,6 +8281,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType3MarkUpText {
+            get {
+                return this.ContainerType3MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType3MarkUpTextField, value) != true)) {
+                    this.ContainerType3MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType3MarkUpText");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ContainerType3MarkUpTypeCode {
             get {
                 return this.ContainerType3MarkUpTypeCodeField;
@@ -5151,6 +8320,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType4MarkUpText {
+            get {
+                return this.ContainerType4MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType4MarkUpTextField, value) != true)) {
+                    this.ContainerType4MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType4MarkUpText");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ContainerType4MarkUpTypeCode {
             get {
                 return this.ContainerType4MarkUpTypeCodeField;
@@ -5172,6 +8354,19 @@ namespace HypredTest.QuoteProxy {
                 if ((this.ContainerType4MarkUpValueField.Equals(value) != true)) {
                     this.ContainerType4MarkUpValueField = value;
                     this.RaisePropertyChanged("ContainerType4MarkUpValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerType5MarkUpText {
+            get {
+                return this.ContainerType5MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerType5MarkUpTextField, value) != true)) {
+                    this.ContainerType5MarkUpTextField = value;
+                    this.RaisePropertyChanged("ContainerType5MarkUpText");
                 }
             }
         }
@@ -5268,6 +8463,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> CostMaxAmount {
+            get {
+                return this.CostMaxAmountField;
+            }
+            set {
+                if ((this.CostMaxAmountField.Equals(value) != true)) {
+                    this.CostMaxAmountField = value;
+                    this.RaisePropertyChanged("CostMaxAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string CostMeasurementCode {
             get {
                 return this.CostMeasurementCodeField;
@@ -5302,6 +8510,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.CostMeasurementShortNameField, value) != true)) {
                     this.CostMeasurementShortNameField = value;
                     this.RaisePropertyChanged("CostMeasurementShortName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> CostMinAmount {
+            get {
+                return this.CostMinAmountField;
+            }
+            set {
+                if ((this.CostMinAmountField.Equals(value) != true)) {
+                    this.CostMinAmountField = value;
+                    this.RaisePropertyChanged("CostMinAmount");
                 }
             }
         }
@@ -5398,6 +8619,32 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsRegionalTax {
+            get {
+                return this.IsRegionalTaxField;
+            }
+            set {
+                if ((this.IsRegionalTaxField.Equals(value) != true)) {
+                    this.IsRegionalTaxField = value;
+                    this.RaisePropertyChanged("IsRegionalTax");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MarkUpText {
+            get {
+                return this.MarkUpTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MarkUpTextField, value) != true)) {
+                    this.MarkUpTextField = value;
+                    this.RaisePropertyChanged("MarkUpText");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string MarkUpTypeCode {
             get {
                 return this.MarkUpTypeCodeField;
@@ -5476,6 +8723,32 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleMaxAmount {
+            get {
+                return this.SaleMaxAmountField;
+            }
+            set {
+                if ((this.SaleMaxAmountField.Equals(value) != true)) {
+                    this.SaleMaxAmountField = value;
+                    this.RaisePropertyChanged("SaleMaxAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SaleMinAmount {
+            get {
+                return this.SaleMinAmountField;
+            }
+            set {
+                if ((this.SaleMinAmountField.Equals(value) != true)) {
+                    this.SaleMinAmountField = value;
+                    this.RaisePropertyChanged("SaleMinAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int Tenant {
             get {
                 return this.TenantField;
@@ -5484,6 +8757,19 @@ namespace HypredTest.QuoteProxy {
                 if ((this.TenantField.Equals(value) != true)) {
                     this.TenantField = value;
                     this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UOMPercentage {
+            get {
+                return this.UOMPercentageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UOMPercentageField, value) != true)) {
+                    this.UOMPercentageField = value;
+                    this.RaisePropertyChanged("UOMPercentage");
                 }
             }
         }
@@ -5527,6 +8813,45 @@ namespace HypredTest.QuoteProxy {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> VatPercentage {
+            get {
+                return this.VatPercentageField;
+            }
+            set {
+                if ((this.VatPercentageField.Equals(value) != true)) {
+                    this.VatPercentageField = value;
+                    this.RaisePropertyChanged("VatPercentage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VatTypeId {
+            get {
+                return this.VatTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VatTypeIdField, value) != true)) {
+                    this.VatTypeIdField = value;
+                    this.RaisePropertyChanged("VatTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VatTypeName {
+            get {
+                return this.VatTypeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VatTypeNameField, value) != true)) {
+                    this.VatTypeNameField = value;
+                    this.RaisePropertyChanged("VatTypeName");
+                }
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -5547,7 +8872,7 @@ namespace HypredTest.QuoteProxy {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeOpField;
+        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime CreateDateField;
@@ -5562,10 +8887,13 @@ namespace HypredTest.QuoteProxy {
         private string DocumentIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExtensionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string FileNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> FileSizeField;
+        private System.Nullable<double> FileSizeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsSentField;
@@ -5611,14 +8939,14 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeOp {
+        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
             get {
-                return this.ChangeOpField;
+                return this.ChangeSetOpField;
             }
             set {
-                if ((this.ChangeOpField.Equals(value) != true)) {
-                    this.ChangeOpField = value;
-                    this.RaisePropertyChanged("ChangeOp");
+                if ((this.ChangeSetOpField.Equals(value) != true)) {
+                    this.ChangeSetOpField = value;
+                    this.RaisePropertyChanged("ChangeSetOp");
                 }
             }
         }
@@ -5676,6 +9004,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Extension {
+            get {
+                return this.ExtensionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExtensionField, value) != true)) {
+                    this.ExtensionField = value;
+                    this.RaisePropertyChanged("Extension");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string FileName {
             get {
                 return this.FileNameField;
@@ -5689,7 +9030,7 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> FileSize {
+        public System.Nullable<double> FileSize {
             get {
                 return this.FileSizeField;
             }
@@ -5864,7 +9205,10 @@ namespace HypredTest.QuoteProxy {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeOpField;
+        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DimensionsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> GrossWeightField;
@@ -5916,14 +9260,27 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeOp {
+        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
             get {
-                return this.ChangeOpField;
+                return this.ChangeSetOpField;
             }
             set {
-                if ((this.ChangeOpField.Equals(value) != true)) {
-                    this.ChangeOpField = value;
-                    this.RaisePropertyChanged("ChangeOp");
+                if ((this.ChangeSetOpField.Equals(value) != true)) {
+                    this.ChangeSetOpField = value;
+                    this.RaisePropertyChanged("ChangeSetOp");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Dimensions {
+            get {
+                return this.DimensionsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DimensionsField, value) != true)) {
+                    this.DimensionsField = value;
+                    this.RaisePropertyChanged("Dimensions");
                 }
             }
         }
@@ -6109,153 +9466,18 @@ namespace HypredTest.QuoteProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="QuoteSaleChargePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.QuoteModel.EntityPMs")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="QuoteSalesTotalPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.QuoteModel.EntityPMs")]
     [System.SerializableAttribute()]
-    public partial class QuoteSaleChargePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class QuoteSalesTotalPM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ChargesGroupCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ChargesTypeCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ChargesTypeIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ChargesTypeLocalNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ChargesTypeNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContainerType1MarkUpTypeCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> ContainerType1MarkUpValueField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContainerType2MarkUpTypeCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> ContainerType2MarkUpValueField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContainerType3MarkUpTypeCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> ContainerType3MarkUpValueField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContainerType4MarkUpTypeCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> ContainerType4MarkUpValueField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContainerType5MarkUpTypeCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> ContainerType5MarkUpValueField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> CostMinAmountField;
+        private System.Nullable<double> AmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CurrencyCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CurrencyIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FixedAmountCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ForeignAmountFixedField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IsAllINField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string LocalAmountFixedField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MarkUpTypeCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> MarkUpValueField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NotesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PriceBreaksField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string QuoteIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string QuoteTypeCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> SaleContainerType1UnitPriceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> SaleContainerType2UnitPriceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> SaleContainerType3UnitPriceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> SaleContainerType4UnitPriceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> SaleContainerType5UnitPriceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> SaleExchangeRateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SaleMeasurementCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SaleMeasurementIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SaleMeasurementShortNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> SaleMinAmountField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> SaleQuantityField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> SaleTotalAmountField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> SaleTotalAmountLocalField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> SaleUnitPriceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TenantField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime UpdateDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UpdatedByUserIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime ValueDateField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -6268,209 +9490,14 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ChargesGroupCode {
+        public System.Nullable<double> Amount {
             get {
-                return this.ChargesGroupCodeField;
+                return this.AmountField;
             }
             set {
-                if ((object.ReferenceEquals(this.ChargesGroupCodeField, value) != true)) {
-                    this.ChargesGroupCodeField = value;
-                    this.RaisePropertyChanged("ChargesGroupCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ChargesTypeCode {
-            get {
-                return this.ChargesTypeCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ChargesTypeCodeField, value) != true)) {
-                    this.ChargesTypeCodeField = value;
-                    this.RaisePropertyChanged("ChargesTypeCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ChargesTypeId {
-            get {
-                return this.ChargesTypeIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ChargesTypeIdField, value) != true)) {
-                    this.ChargesTypeIdField = value;
-                    this.RaisePropertyChanged("ChargesTypeId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ChargesTypeLocalName {
-            get {
-                return this.ChargesTypeLocalNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ChargesTypeLocalNameField, value) != true)) {
-                    this.ChargesTypeLocalNameField = value;
-                    this.RaisePropertyChanged("ChargesTypeLocalName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ChargesTypeName {
-            get {
-                return this.ChargesTypeNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ChargesTypeNameField, value) != true)) {
-                    this.ChargesTypeNameField = value;
-                    this.RaisePropertyChanged("ChargesTypeName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ContainerType1MarkUpTypeCode {
-            get {
-                return this.ContainerType1MarkUpTypeCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContainerType1MarkUpTypeCodeField, value) != true)) {
-                    this.ContainerType1MarkUpTypeCodeField = value;
-                    this.RaisePropertyChanged("ContainerType1MarkUpTypeCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> ContainerType1MarkUpValue {
-            get {
-                return this.ContainerType1MarkUpValueField;
-            }
-            set {
-                if ((this.ContainerType1MarkUpValueField.Equals(value) != true)) {
-                    this.ContainerType1MarkUpValueField = value;
-                    this.RaisePropertyChanged("ContainerType1MarkUpValue");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ContainerType2MarkUpTypeCode {
-            get {
-                return this.ContainerType2MarkUpTypeCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContainerType2MarkUpTypeCodeField, value) != true)) {
-                    this.ContainerType2MarkUpTypeCodeField = value;
-                    this.RaisePropertyChanged("ContainerType2MarkUpTypeCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> ContainerType2MarkUpValue {
-            get {
-                return this.ContainerType2MarkUpValueField;
-            }
-            set {
-                if ((this.ContainerType2MarkUpValueField.Equals(value) != true)) {
-                    this.ContainerType2MarkUpValueField = value;
-                    this.RaisePropertyChanged("ContainerType2MarkUpValue");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ContainerType3MarkUpTypeCode {
-            get {
-                return this.ContainerType3MarkUpTypeCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContainerType3MarkUpTypeCodeField, value) != true)) {
-                    this.ContainerType3MarkUpTypeCodeField = value;
-                    this.RaisePropertyChanged("ContainerType3MarkUpTypeCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> ContainerType3MarkUpValue {
-            get {
-                return this.ContainerType3MarkUpValueField;
-            }
-            set {
-                if ((this.ContainerType3MarkUpValueField.Equals(value) != true)) {
-                    this.ContainerType3MarkUpValueField = value;
-                    this.RaisePropertyChanged("ContainerType3MarkUpValue");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ContainerType4MarkUpTypeCode {
-            get {
-                return this.ContainerType4MarkUpTypeCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContainerType4MarkUpTypeCodeField, value) != true)) {
-                    this.ContainerType4MarkUpTypeCodeField = value;
-                    this.RaisePropertyChanged("ContainerType4MarkUpTypeCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> ContainerType4MarkUpValue {
-            get {
-                return this.ContainerType4MarkUpValueField;
-            }
-            set {
-                if ((this.ContainerType4MarkUpValueField.Equals(value) != true)) {
-                    this.ContainerType4MarkUpValueField = value;
-                    this.RaisePropertyChanged("ContainerType4MarkUpValue");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ContainerType5MarkUpTypeCode {
-            get {
-                return this.ContainerType5MarkUpTypeCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContainerType5MarkUpTypeCodeField, value) != true)) {
-                    this.ContainerType5MarkUpTypeCodeField = value;
-                    this.RaisePropertyChanged("ContainerType5MarkUpTypeCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> ContainerType5MarkUpValue {
-            get {
-                return this.ContainerType5MarkUpValueField;
-            }
-            set {
-                if ((this.ContainerType5MarkUpValueField.Equals(value) != true)) {
-                    this.ContainerType5MarkUpValueField = value;
-                    this.RaisePropertyChanged("ContainerType5MarkUpValue");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> CostMinAmount {
-            get {
-                return this.CostMinAmountField;
-            }
-            set {
-                if ((this.CostMinAmountField.Equals(value) != true)) {
-                    this.CostMinAmountField = value;
-                    this.RaisePropertyChanged("CostMinAmount");
+                if ((this.AmountField.Equals(value) != true)) {
+                    this.AmountField = value;
+                    this.RaisePropertyChanged("Amount");
                 }
             }
         }
@@ -6488,41 +9515,75 @@ namespace HypredTest.QuoteProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CurrencyId {
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="QuoteVATsTotalPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.QuoteModel.EntityPMs")]
+    [System.SerializableAttribute()]
+    public partial class QuoteVATsTotalPM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> AmountInLocalCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> AmountInSaleCurrencyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VatPercentageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VatTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VatTypeNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
-                return this.CurrencyIdField;
+                return this.extensionDataField;
             }
             set {
-                if ((object.ReferenceEquals(this.CurrencyIdField, value) != true)) {
-                    this.CurrencyIdField = value;
-                    this.RaisePropertyChanged("CurrencyId");
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> AmountInLocalCurrency {
+            get {
+                return this.AmountInLocalCurrencyField;
+            }
+            set {
+                if ((this.AmountInLocalCurrencyField.Equals(value) != true)) {
+                    this.AmountInLocalCurrencyField = value;
+                    this.RaisePropertyChanged("AmountInLocalCurrency");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FixedAmountCode {
+        public System.Nullable<double> AmountInSaleCurrency {
             get {
-                return this.FixedAmountCodeField;
+                return this.AmountInSaleCurrencyField;
             }
             set {
-                if ((object.ReferenceEquals(this.FixedAmountCodeField, value) != true)) {
-                    this.FixedAmountCodeField = value;
-                    this.RaisePropertyChanged("FixedAmountCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ForeignAmountFixed {
-            get {
-                return this.ForeignAmountFixedField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ForeignAmountFixedField, value) != true)) {
-                    this.ForeignAmountFixedField = value;
-                    this.RaisePropertyChanged("ForeignAmountFixed");
+                if ((this.AmountInSaleCurrencyField.Equals(value) != true)) {
+                    this.AmountInSaleCurrencyField = value;
+                    this.RaisePropertyChanged("AmountInSaleCurrency");
                 }
             }
         }
@@ -6541,79 +9602,247 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string IsAllIN {
+        public System.Nullable<double> VatPercentage {
             get {
-                return this.IsAllINField;
+                return this.VatPercentageField;
             }
             set {
-                if ((object.ReferenceEquals(this.IsAllINField, value) != true)) {
-                    this.IsAllINField = value;
-                    this.RaisePropertyChanged("IsAllIN");
+                if ((this.VatPercentageField.Equals(value) != true)) {
+                    this.VatPercentageField = value;
+                    this.RaisePropertyChanged("VatPercentage");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string LocalAmountFixed {
+        public string VatTypeId {
             get {
-                return this.LocalAmountFixedField;
+                return this.VatTypeIdField;
             }
             set {
-                if ((object.ReferenceEquals(this.LocalAmountFixedField, value) != true)) {
-                    this.LocalAmountFixedField = value;
-                    this.RaisePropertyChanged("LocalAmountFixed");
+                if ((object.ReferenceEquals(this.VatTypeIdField, value) != true)) {
+                    this.VatTypeIdField = value;
+                    this.RaisePropertyChanged("VatTypeId");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MarkUpTypeCode {
+        public string VatTypeName {
             get {
-                return this.MarkUpTypeCodeField;
+                return this.VatTypeNameField;
             }
             set {
-                if ((object.ReferenceEquals(this.MarkUpTypeCodeField, value) != true)) {
-                    this.MarkUpTypeCodeField = value;
-                    this.RaisePropertyChanged("MarkUpTypeCode");
+                if ((object.ReferenceEquals(this.VatTypeNameField, value) != true)) {
+                    this.VatTypeNameField = value;
+                    this.RaisePropertyChanged("VatTypeName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="QuoteTotalVATPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.QuoteModel.EntityPMs")]
+    [System.SerializableAttribute()]
+    public partial class QuoteTotalVATPM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExternalTAXItemIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExternalVATCardField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> LocalCurrencyVATAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> LocalCurrencyVatableAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> ProfitCurrencyVATAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> ProfitCurrencyVatableAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> QuoteCurrencyVATAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> QuoteCurrencyVatableAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string QuoteIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TenantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VatPercentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VatTypeCellField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VatTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VatTypeNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
+            get {
+                return this.ChangeSetOpField;
+            }
+            set {
+                if ((this.ChangeSetOpField.Equals(value) != true)) {
+                    this.ChangeSetOpField = value;
+                    this.RaisePropertyChanged("ChangeSetOp");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> MarkUpValue {
+        public string ExternalTAXItemId {
             get {
-                return this.MarkUpValueField;
+                return this.ExternalTAXItemIdField;
             }
             set {
-                if ((this.MarkUpValueField.Equals(value) != true)) {
-                    this.MarkUpValueField = value;
-                    this.RaisePropertyChanged("MarkUpValue");
+                if ((object.ReferenceEquals(this.ExternalTAXItemIdField, value) != true)) {
+                    this.ExternalTAXItemIdField = value;
+                    this.RaisePropertyChanged("ExternalTAXItemId");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Notes {
+        public string ExternalVATCard {
             get {
-                return this.NotesField;
+                return this.ExternalVATCardField;
             }
             set {
-                if ((object.ReferenceEquals(this.NotesField, value) != true)) {
-                    this.NotesField = value;
-                    this.RaisePropertyChanged("Notes");
+                if ((object.ReferenceEquals(this.ExternalVATCardField, value) != true)) {
+                    this.ExternalVATCardField = value;
+                    this.RaisePropertyChanged("ExternalVATCard");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PriceBreaks {
+        public string Id {
             get {
-                return this.PriceBreaksField;
+                return this.IdField;
             }
             set {
-                if ((object.ReferenceEquals(this.PriceBreaksField, value) != true)) {
-                    this.PriceBreaksField = value;
-                    this.RaisePropertyChanged("PriceBreaks");
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> LocalCurrencyVATAmount {
+            get {
+                return this.LocalCurrencyVATAmountField;
+            }
+            set {
+                if ((this.LocalCurrencyVATAmountField.Equals(value) != true)) {
+                    this.LocalCurrencyVATAmountField = value;
+                    this.RaisePropertyChanged("LocalCurrencyVATAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> LocalCurrencyVatableAmount {
+            get {
+                return this.LocalCurrencyVatableAmountField;
+            }
+            set {
+                if ((this.LocalCurrencyVatableAmountField.Equals(value) != true)) {
+                    this.LocalCurrencyVatableAmountField = value;
+                    this.RaisePropertyChanged("LocalCurrencyVatableAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> ProfitCurrencyVATAmount {
+            get {
+                return this.ProfitCurrencyVATAmountField;
+            }
+            set {
+                if ((this.ProfitCurrencyVATAmountField.Equals(value) != true)) {
+                    this.ProfitCurrencyVATAmountField = value;
+                    this.RaisePropertyChanged("ProfitCurrencyVATAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> ProfitCurrencyVatableAmount {
+            get {
+                return this.ProfitCurrencyVatableAmountField;
+            }
+            set {
+                if ((this.ProfitCurrencyVatableAmountField.Equals(value) != true)) {
+                    this.ProfitCurrencyVatableAmountField = value;
+                    this.RaisePropertyChanged("ProfitCurrencyVatableAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> QuoteCurrencyVATAmount {
+            get {
+                return this.QuoteCurrencyVATAmountField;
+            }
+            set {
+                if ((this.QuoteCurrencyVATAmountField.Equals(value) != true)) {
+                    this.QuoteCurrencyVATAmountField = value;
+                    this.RaisePropertyChanged("QuoteCurrencyVATAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> QuoteCurrencyVatableAmount {
+            get {
+                return this.QuoteCurrencyVatableAmountField;
+            }
+            set {
+                if ((this.QuoteCurrencyVatableAmountField.Equals(value) != true)) {
+                    this.QuoteCurrencyVatableAmountField = value;
+                    this.RaisePropertyChanged("QuoteCurrencyVatableAmount");
                 }
             }
         }
@@ -6632,201 +9861,6 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string QuoteTypeCode {
-            get {
-                return this.QuoteTypeCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.QuoteTypeCodeField, value) != true)) {
-                    this.QuoteTypeCodeField = value;
-                    this.RaisePropertyChanged("QuoteTypeCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> SaleContainerType1UnitPrice {
-            get {
-                return this.SaleContainerType1UnitPriceField;
-            }
-            set {
-                if ((this.SaleContainerType1UnitPriceField.Equals(value) != true)) {
-                    this.SaleContainerType1UnitPriceField = value;
-                    this.RaisePropertyChanged("SaleContainerType1UnitPrice");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> SaleContainerType2UnitPrice {
-            get {
-                return this.SaleContainerType2UnitPriceField;
-            }
-            set {
-                if ((this.SaleContainerType2UnitPriceField.Equals(value) != true)) {
-                    this.SaleContainerType2UnitPriceField = value;
-                    this.RaisePropertyChanged("SaleContainerType2UnitPrice");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> SaleContainerType3UnitPrice {
-            get {
-                return this.SaleContainerType3UnitPriceField;
-            }
-            set {
-                if ((this.SaleContainerType3UnitPriceField.Equals(value) != true)) {
-                    this.SaleContainerType3UnitPriceField = value;
-                    this.RaisePropertyChanged("SaleContainerType3UnitPrice");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> SaleContainerType4UnitPrice {
-            get {
-                return this.SaleContainerType4UnitPriceField;
-            }
-            set {
-                if ((this.SaleContainerType4UnitPriceField.Equals(value) != true)) {
-                    this.SaleContainerType4UnitPriceField = value;
-                    this.RaisePropertyChanged("SaleContainerType4UnitPrice");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> SaleContainerType5UnitPrice {
-            get {
-                return this.SaleContainerType5UnitPriceField;
-            }
-            set {
-                if ((this.SaleContainerType5UnitPriceField.Equals(value) != true)) {
-                    this.SaleContainerType5UnitPriceField = value;
-                    this.RaisePropertyChanged("SaleContainerType5UnitPrice");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> SaleExchangeRate {
-            get {
-                return this.SaleExchangeRateField;
-            }
-            set {
-                if ((this.SaleExchangeRateField.Equals(value) != true)) {
-                    this.SaleExchangeRateField = value;
-                    this.RaisePropertyChanged("SaleExchangeRate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SaleMeasurementCode {
-            get {
-                return this.SaleMeasurementCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SaleMeasurementCodeField, value) != true)) {
-                    this.SaleMeasurementCodeField = value;
-                    this.RaisePropertyChanged("SaleMeasurementCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SaleMeasurementId {
-            get {
-                return this.SaleMeasurementIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SaleMeasurementIdField, value) != true)) {
-                    this.SaleMeasurementIdField = value;
-                    this.RaisePropertyChanged("SaleMeasurementId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SaleMeasurementShortName {
-            get {
-                return this.SaleMeasurementShortNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SaleMeasurementShortNameField, value) != true)) {
-                    this.SaleMeasurementShortNameField = value;
-                    this.RaisePropertyChanged("SaleMeasurementShortName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> SaleMinAmount {
-            get {
-                return this.SaleMinAmountField;
-            }
-            set {
-                if ((this.SaleMinAmountField.Equals(value) != true)) {
-                    this.SaleMinAmountField = value;
-                    this.RaisePropertyChanged("SaleMinAmount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> SaleQuantity {
-            get {
-                return this.SaleQuantityField;
-            }
-            set {
-                if ((this.SaleQuantityField.Equals(value) != true)) {
-                    this.SaleQuantityField = value;
-                    this.RaisePropertyChanged("SaleQuantity");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> SaleTotalAmount {
-            get {
-                return this.SaleTotalAmountField;
-            }
-            set {
-                if ((this.SaleTotalAmountField.Equals(value) != true)) {
-                    this.SaleTotalAmountField = value;
-                    this.RaisePropertyChanged("SaleTotalAmount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> SaleTotalAmountLocal {
-            get {
-                return this.SaleTotalAmountLocalField;
-            }
-            set {
-                if ((this.SaleTotalAmountLocalField.Equals(value) != true)) {
-                    this.SaleTotalAmountLocalField = value;
-                    this.RaisePropertyChanged("SaleTotalAmountLocal");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> SaleUnitPrice {
-            get {
-                return this.SaleUnitPriceField;
-            }
-            set {
-                if ((this.SaleUnitPriceField.Equals(value) != true)) {
-                    this.SaleUnitPriceField = value;
-                    this.RaisePropertyChanged("SaleUnitPrice");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public int Tenant {
             get {
                 return this.TenantField;
@@ -6840,40 +9874,53 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime UpdateDate {
+        public System.Nullable<double> VatPercent {
             get {
-                return this.UpdateDateField;
+                return this.VatPercentField;
             }
             set {
-                if ((this.UpdateDateField.Equals(value) != true)) {
-                    this.UpdateDateField = value;
-                    this.RaisePropertyChanged("UpdateDate");
+                if ((this.VatPercentField.Equals(value) != true)) {
+                    this.VatPercentField = value;
+                    this.RaisePropertyChanged("VatPercent");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UpdatedByUserId {
+        public string VatTypeCell {
             get {
-                return this.UpdatedByUserIdField;
+                return this.VatTypeCellField;
             }
             set {
-                if ((object.ReferenceEquals(this.UpdatedByUserIdField, value) != true)) {
-                    this.UpdatedByUserIdField = value;
-                    this.RaisePropertyChanged("UpdatedByUserId");
+                if ((object.ReferenceEquals(this.VatTypeCellField, value) != true)) {
+                    this.VatTypeCellField = value;
+                    this.RaisePropertyChanged("VatTypeCell");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ValueDate {
+        public string VatTypeId {
             get {
-                return this.ValueDateField;
+                return this.VatTypeIdField;
             }
             set {
-                if ((this.ValueDateField.Equals(value) != true)) {
-                    this.ValueDateField = value;
-                    this.RaisePropertyChanged("ValueDate");
+                if ((object.ReferenceEquals(this.VatTypeIdField, value) != true)) {
+                    this.VatTypeIdField = value;
+                    this.RaisePropertyChanged("VatTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VatTypeName {
+            get {
+                return this.VatTypeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VatTypeNameField, value) != true)) {
+                    this.VatTypeNameField = value;
+                    this.RaisePropertyChanged("VatTypeName");
                 }
             }
         }
@@ -6898,7 +9945,7 @@ namespace HypredTest.QuoteProxy {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeOpField;
+        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> CostUnitPriceField;
@@ -6908,6 +9955,9 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> MarkupValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MeasurementUnitField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string QuoteChargeIdField;
@@ -6935,14 +9985,14 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeOp {
+        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
             get {
-                return this.ChangeOpField;
+                return this.ChangeSetOpField;
             }
             set {
-                if ((this.ChangeOpField.Equals(value) != true)) {
-                    this.ChangeOpField = value;
-                    this.RaisePropertyChanged("ChangeOp");
+                if ((this.ChangeSetOpField.Equals(value) != true)) {
+                    this.ChangeSetOpField = value;
+                    this.RaisePropertyChanged("ChangeSetOp");
                 }
             }
         }
@@ -6982,6 +10032,19 @@ namespace HypredTest.QuoteProxy {
                 if ((this.MarkupValueField.Equals(value) != true)) {
                     this.MarkupValueField = value;
                     this.RaisePropertyChanged("MarkupValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MeasurementUnit {
+            get {
+                return this.MeasurementUnitField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MeasurementUnitField, value) != true)) {
+                    this.MeasurementUnitField = value;
+                    this.RaisePropertyChanged("MeasurementUnit");
                 }
             }
         }
@@ -7047,131 +10110,6 @@ namespace HypredTest.QuoteProxy {
                 if ((this.TenantField.Equals(value) != true)) {
                     this.TenantField = value;
                     this.RaisePropertyChanged("Tenant");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Response", Namespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools")]
-    [System.SerializableAttribute()]
-    public partial class Response : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ErrorMessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool HasErrorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string InnerErrorMessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsAuthenticationErrorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ResultField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] ValidationErrorsField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ErrorMessage {
-            get {
-                return this.ErrorMessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ErrorMessageField, value) != true)) {
-                    this.ErrorMessageField = value;
-                    this.RaisePropertyChanged("ErrorMessage");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool HasError {
-            get {
-                return this.HasErrorField;
-            }
-            set {
-                if ((this.HasErrorField.Equals(value) != true)) {
-                    this.HasErrorField = value;
-                    this.RaisePropertyChanged("HasError");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string InnerErrorMessage {
-            get {
-                return this.InnerErrorMessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.InnerErrorMessageField, value) != true)) {
-                    this.InnerErrorMessageField = value;
-                    this.RaisePropertyChanged("InnerErrorMessage");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsAuthenticationError {
-            get {
-                return this.IsAuthenticationErrorField;
-            }
-            set {
-                if ((this.IsAuthenticationErrorField.Equals(value) != true)) {
-                    this.IsAuthenticationErrorField = value;
-                    this.RaisePropertyChanged("IsAuthenticationError");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Result {
-            get {
-                return this.ResultField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ResultField, value) != true)) {
-                    this.ResultField = value;
-                    this.RaisePropertyChanged("Result");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] ValidationErrors {
-            get {
-                return this.ValidationErrorsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ValidationErrorsField, value) != true)) {
-                    this.ValidationErrorsField = value;
-                    this.RaisePropertyChanged("ValidationErrors");
                 }
             }
         }
@@ -7366,6 +10304,9 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<double> ChargeableWeightField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> ChargeableWeightInKGField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ConsigneeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -7382,6 +10323,9 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CreatedByUserField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreatedByUserIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CustomerIdField;
@@ -7426,6 +10370,12 @@ namespace HypredTest.QuoteProxy {
         private bool EstimateProfitEditedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> EstimatedProfitInLocalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> EstimatedProfitInProfitField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> ExpirationDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -7435,7 +10385,37 @@ namespace HypredTest.QuoteProxy {
         private string Field10Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field11Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field12Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field13Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field14Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field15Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field16Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field17Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field18Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field19Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string Field2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field20Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string Field3Field;
@@ -7516,6 +10496,12 @@ namespace HypredTest.QuoteProxy {
         private System.Nullable<double> GrossWeightField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> GrossWeightInKGField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> GrossWeightPerTonField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string HAWBFBLBLField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -7537,10 +10523,25 @@ namespace HypredTest.QuoteProxy {
         private bool IsCancelledField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsChargesByVATField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsClosedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsDangerousField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsFixedPriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsQuoteDataExternalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsQuoteDocumentExternalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsSaleCurrencySameAsCostField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsSubjectEditedField;
@@ -7588,6 +10589,9 @@ namespace HypredTest.QuoteProxy {
         private string MainCarriageCarrierNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MoveTypeNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool NewMessageField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -7606,7 +10610,25 @@ namespace HypredTest.QuoteProxy {
         private string NotesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyAddressIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyContactIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotifyNoteField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<int> NumberOfContainersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> NumberOfFollowUpsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<int> NumberOfPackagesField;
@@ -7618,19 +10640,31 @@ namespace HypredTest.QuoteProxy {
         private string OpportunityIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> OrderNumberOfPackagesField;
+        private System.Nullable<double> PickupDeliveryChargeableWeightField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> PickupDeliveryVolumetricWeightField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ProductCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string QuotationSectionsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string QuoteClosingReasonCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string QuoteClosingReasonIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string QuoteClosingReasonNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string QuoteCutomerTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string QuoteHTMLDocumentIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string QuoteNumberField;
@@ -7657,6 +10691,15 @@ namespace HypredTest.QuoteProxy {
         private string RatingNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RegionalTaxIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> RegionalTaxPercentageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> RequestDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string RoutingField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -7673,6 +10716,12 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> SentDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipmentSubTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipmentSubTypeNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ShipmentTypeField;
@@ -7708,7 +10757,13 @@ namespace HypredTest.QuoteProxy {
         private string StageNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> StartDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SubjectField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> TEUField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ToCountryCodeField;
@@ -7732,6 +10787,9 @@ namespace HypredTest.QuoteProxy {
         private string ToPortNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool TotalPerContainerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TransitTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -7748,6 +10806,12 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<int> UsageCountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> ValueOfGoodsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VolumeInCBMField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool hasChangesField;
@@ -7958,6 +11022,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> ChargeableWeightInKG {
+            get {
+                return this.ChargeableWeightInKGField;
+            }
+            set {
+                if ((this.ChargeableWeightInKGField.Equals(value) != true)) {
+                    this.ChargeableWeightInKGField = value;
+                    this.RaisePropertyChanged("ChargeableWeightInKG");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Consignee {
             get {
                 return this.ConsigneeField;
@@ -8031,6 +11108,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.CreatedByUserField, value) != true)) {
                     this.CreatedByUserField = value;
                     this.RaisePropertyChanged("CreatedByUser");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CreatedByUserId {
+            get {
+                return this.CreatedByUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByUserIdField, value) != true)) {
+                    this.CreatedByUserIdField = value;
+                    this.RaisePropertyChanged("CreatedByUserId");
                 }
             }
         }
@@ -8218,6 +11308,32 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> EstimatedProfitInLocal {
+            get {
+                return this.EstimatedProfitInLocalField;
+            }
+            set {
+                if ((this.EstimatedProfitInLocalField.Equals(value) != true)) {
+                    this.EstimatedProfitInLocalField = value;
+                    this.RaisePropertyChanged("EstimatedProfitInLocal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> EstimatedProfitInProfit {
+            get {
+                return this.EstimatedProfitInProfitField;
+            }
+            set {
+                if ((this.EstimatedProfitInProfitField.Equals(value) != true)) {
+                    this.EstimatedProfitInProfitField = value;
+                    this.RaisePropertyChanged("EstimatedProfitInProfit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> ExpirationDate {
             get {
                 return this.ExpirationDateField;
@@ -8257,6 +11373,123 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field11 {
+            get {
+                return this.Field11Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field11Field, value) != true)) {
+                    this.Field11Field = value;
+                    this.RaisePropertyChanged("Field11");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field12 {
+            get {
+                return this.Field12Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field12Field, value) != true)) {
+                    this.Field12Field = value;
+                    this.RaisePropertyChanged("Field12");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field13 {
+            get {
+                return this.Field13Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field13Field, value) != true)) {
+                    this.Field13Field = value;
+                    this.RaisePropertyChanged("Field13");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field14 {
+            get {
+                return this.Field14Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field14Field, value) != true)) {
+                    this.Field14Field = value;
+                    this.RaisePropertyChanged("Field14");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field15 {
+            get {
+                return this.Field15Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field15Field, value) != true)) {
+                    this.Field15Field = value;
+                    this.RaisePropertyChanged("Field15");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field16 {
+            get {
+                return this.Field16Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field16Field, value) != true)) {
+                    this.Field16Field = value;
+                    this.RaisePropertyChanged("Field16");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field17 {
+            get {
+                return this.Field17Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field17Field, value) != true)) {
+                    this.Field17Field = value;
+                    this.RaisePropertyChanged("Field17");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field18 {
+            get {
+                return this.Field18Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field18Field, value) != true)) {
+                    this.Field18Field = value;
+                    this.RaisePropertyChanged("Field18");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field19 {
+            get {
+                return this.Field19Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field19Field, value) != true)) {
+                    this.Field19Field = value;
+                    this.RaisePropertyChanged("Field19");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Field2 {
             get {
                 return this.Field2Field;
@@ -8265,6 +11498,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.Field2Field, value) != true)) {
                     this.Field2Field = value;
                     this.RaisePropertyChanged("Field2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field20 {
+            get {
+                return this.Field20Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field20Field, value) != true)) {
+                    this.Field20Field = value;
+                    this.RaisePropertyChanged("Field20");
                 }
             }
         }
@@ -8608,6 +11854,32 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> GrossWeightInKG {
+            get {
+                return this.GrossWeightInKGField;
+            }
+            set {
+                if ((this.GrossWeightInKGField.Equals(value) != true)) {
+                    this.GrossWeightInKGField = value;
+                    this.RaisePropertyChanged("GrossWeightInKG");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> GrossWeightPerTon {
+            get {
+                return this.GrossWeightPerTonField;
+            }
+            set {
+                if ((this.GrossWeightPerTonField.Equals(value) != true)) {
+                    this.GrossWeightPerTonField = value;
+                    this.RaisePropertyChanged("GrossWeightPerTon");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string HAWBFBLBL {
             get {
                 return this.HAWBFBLBLField;
@@ -8699,6 +11971,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsChargesByVAT {
+            get {
+                return this.IsChargesByVATField;
+            }
+            set {
+                if ((this.IsChargesByVATField.Equals(value) != true)) {
+                    this.IsChargesByVATField = value;
+                    this.RaisePropertyChanged("IsChargesByVAT");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool IsClosed {
             get {
                 return this.IsClosedField;
@@ -8712,6 +11997,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsDangerous {
+            get {
+                return this.IsDangerousField;
+            }
+            set {
+                if ((this.IsDangerousField.Equals(value) != true)) {
+                    this.IsDangerousField = value;
+                    this.RaisePropertyChanged("IsDangerous");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool IsFixedPrice {
             get {
                 return this.IsFixedPriceField;
@@ -8720,6 +12018,45 @@ namespace HypredTest.QuoteProxy {
                 if ((this.IsFixedPriceField.Equals(value) != true)) {
                     this.IsFixedPriceField = value;
                     this.RaisePropertyChanged("IsFixedPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsQuoteDataExternal {
+            get {
+                return this.IsQuoteDataExternalField;
+            }
+            set {
+                if ((this.IsQuoteDataExternalField.Equals(value) != true)) {
+                    this.IsQuoteDataExternalField = value;
+                    this.RaisePropertyChanged("IsQuoteDataExternal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsQuoteDocumentExternal {
+            get {
+                return this.IsQuoteDocumentExternalField;
+            }
+            set {
+                if ((this.IsQuoteDocumentExternalField.Equals(value) != true)) {
+                    this.IsQuoteDocumentExternalField = value;
+                    this.RaisePropertyChanged("IsQuoteDocumentExternal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsSaleCurrencySameAsCost {
+            get {
+                return this.IsSaleCurrencySameAsCostField;
+            }
+            set {
+                if ((this.IsSaleCurrencySameAsCostField.Equals(value) != true)) {
+                    this.IsSaleCurrencySameAsCostField = value;
+                    this.RaisePropertyChanged("IsSaleCurrencySameAsCost");
                 }
             }
         }
@@ -8920,6 +12257,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MoveTypeName {
+            get {
+                return this.MoveTypeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MoveTypeNameField, value) != true)) {
+                    this.MoveTypeNameField = value;
+                    this.RaisePropertyChanged("MoveTypeName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool NewMessage {
             get {
                 return this.NewMessageField;
@@ -8998,6 +12348,71 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyAddressId {
+            get {
+                return this.NotifyAddressIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyAddressIdField, value) != true)) {
+                    this.NotifyAddressIdField = value;
+                    this.RaisePropertyChanged("NotifyAddressId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyContactId {
+            get {
+                return this.NotifyContactIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyContactIdField, value) != true)) {
+                    this.NotifyContactIdField = value;
+                    this.RaisePropertyChanged("NotifyContactId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyId {
+            get {
+                return this.NotifyIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyIdField, value) != true)) {
+                    this.NotifyIdField = value;
+                    this.RaisePropertyChanged("NotifyId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyName {
+            get {
+                return this.NotifyNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyNameField, value) != true)) {
+                    this.NotifyNameField = value;
+                    this.RaisePropertyChanged("NotifyName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NotifyNote {
+            get {
+                return this.NotifyNoteField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotifyNoteField, value) != true)) {
+                    this.NotifyNoteField = value;
+                    this.RaisePropertyChanged("NotifyNote");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<int> NumberOfContainers {
             get {
                 return this.NumberOfContainersField;
@@ -9006,6 +12421,19 @@ namespace HypredTest.QuoteProxy {
                 if ((this.NumberOfContainersField.Equals(value) != true)) {
                     this.NumberOfContainersField = value;
                     this.RaisePropertyChanged("NumberOfContainers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> NumberOfFollowUps {
+            get {
+                return this.NumberOfFollowUpsField;
+            }
+            set {
+                if ((this.NumberOfFollowUpsField.Equals(value) != true)) {
+                    this.NumberOfFollowUpsField = value;
+                    this.RaisePropertyChanged("NumberOfFollowUps");
                 }
             }
         }
@@ -9050,14 +12478,27 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> OrderNumberOfPackages {
+        public System.Nullable<double> PickupDeliveryChargeableWeight {
             get {
-                return this.OrderNumberOfPackagesField;
+                return this.PickupDeliveryChargeableWeightField;
             }
             set {
-                if ((this.OrderNumberOfPackagesField.Equals(value) != true)) {
-                    this.OrderNumberOfPackagesField = value;
-                    this.RaisePropertyChanged("OrderNumberOfPackages");
+                if ((this.PickupDeliveryChargeableWeightField.Equals(value) != true)) {
+                    this.PickupDeliveryChargeableWeightField = value;
+                    this.RaisePropertyChanged("PickupDeliveryChargeableWeight");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> PickupDeliveryVolumetricWeight {
+            get {
+                return this.PickupDeliveryVolumetricWeightField;
+            }
+            set {
+                if ((this.PickupDeliveryVolumetricWeightField.Equals(value) != true)) {
+                    this.PickupDeliveryVolumetricWeightField = value;
+                    this.RaisePropertyChanged("PickupDeliveryVolumetricWeight");
                 }
             }
         }
@@ -9076,6 +12517,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string QuotationSections {
+            get {
+                return this.QuotationSectionsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuotationSectionsField, value) != true)) {
+                    this.QuotationSectionsField = value;
+                    this.RaisePropertyChanged("QuotationSections");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string QuoteClosingReasonCode {
             get {
                 return this.QuoteClosingReasonCodeField;
@@ -9084,6 +12538,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.QuoteClosingReasonCodeField, value) != true)) {
                     this.QuoteClosingReasonCodeField = value;
                     this.RaisePropertyChanged("QuoteClosingReasonCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string QuoteClosingReasonId {
+            get {
+                return this.QuoteClosingReasonIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuoteClosingReasonIdField, value) != true)) {
+                    this.QuoteClosingReasonIdField = value;
+                    this.RaisePropertyChanged("QuoteClosingReasonId");
                 }
             }
         }
@@ -9110,6 +12577,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.QuoteCutomerTypeCodeField, value) != true)) {
                     this.QuoteCutomerTypeCodeField = value;
                     this.RaisePropertyChanged("QuoteCutomerTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string QuoteHTMLDocumentId {
+            get {
+                return this.QuoteHTMLDocumentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuoteHTMLDocumentIdField, value) != true)) {
+                    this.QuoteHTMLDocumentIdField = value;
+                    this.RaisePropertyChanged("QuoteHTMLDocumentId");
                 }
             }
         }
@@ -9219,6 +12699,45 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RegionalTaxId {
+            get {
+                return this.RegionalTaxIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RegionalTaxIdField, value) != true)) {
+                    this.RegionalTaxIdField = value;
+                    this.RaisePropertyChanged("RegionalTaxId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> RegionalTaxPercentage {
+            get {
+                return this.RegionalTaxPercentageField;
+            }
+            set {
+                if ((this.RegionalTaxPercentageField.Equals(value) != true)) {
+                    this.RegionalTaxPercentageField = value;
+                    this.RaisePropertyChanged("RegionalTaxPercentage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> RequestDate {
+            get {
+                return this.RequestDateField;
+            }
+            set {
+                if ((this.RequestDateField.Equals(value) != true)) {
+                    this.RequestDateField = value;
+                    this.RaisePropertyChanged("RequestDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Routing {
             get {
                 return this.RoutingField;
@@ -9292,6 +12811,32 @@ namespace HypredTest.QuoteProxy {
                 if ((this.SentDateField.Equals(value) != true)) {
                     this.SentDateField = value;
                     this.RaisePropertyChanged("SentDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipmentSubTypeId {
+            get {
+                return this.ShipmentSubTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentSubTypeIdField, value) != true)) {
+                    this.ShipmentSubTypeIdField = value;
+                    this.RaisePropertyChanged("ShipmentSubTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipmentSubTypeName {
+            get {
+                return this.ShipmentSubTypeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentSubTypeNameField, value) != true)) {
+                    this.ShipmentSubTypeNameField = value;
+                    this.RaisePropertyChanged("ShipmentSubTypeName");
                 }
             }
         }
@@ -9440,6 +12985,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> StartDate {
+            get {
+                return this.StartDateField;
+            }
+            set {
+                if ((this.StartDateField.Equals(value) != true)) {
+                    this.StartDateField = value;
+                    this.RaisePropertyChanged("StartDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Subject {
             get {
                 return this.SubjectField;
@@ -9448,6 +13006,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.SubjectField, value) != true)) {
                     this.SubjectField = value;
                     this.RaisePropertyChanged("Subject");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> TEU {
+            get {
+                return this.TEUField;
+            }
+            set {
+                if ((this.TEUField.Equals(value) != true)) {
+                    this.TEUField = value;
+                    this.RaisePropertyChanged("TEU");
                 }
             }
         }
@@ -9544,6 +13115,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool TotalPerContainer {
+            get {
+                return this.TotalPerContainerField;
+            }
+            set {
+                if ((this.TotalPerContainerField.Equals(value) != true)) {
+                    this.TotalPerContainerField = value;
+                    this.RaisePropertyChanged("TotalPerContainer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string TransitTime {
             get {
                 return this.TransitTimeField;
@@ -9622,6 +13206,32 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> ValueOfGoods {
+            get {
+                return this.ValueOfGoodsField;
+            }
+            set {
+                if ((this.ValueOfGoodsField.Equals(value) != true)) {
+                    this.ValueOfGoodsField = value;
+                    this.RaisePropertyChanged("ValueOfGoods");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> VolumeInCBM {
+            get {
+                return this.VolumeInCBMField;
+            }
+            set {
+                if ((this.VolumeInCBMField.Equals(value) != true)) {
+                    this.VolumeInCBMField = value;
+                    this.RaisePropertyChanged("VolumeInCBM");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool hasChanges {
             get {
                 return this.hasChangesField;
@@ -9667,6 +13277,9 @@ namespace HypredTest.QuoteProxy {
         private string EntityIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EntityNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime EventDateTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -9680,6 +13293,9 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EventTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EventTypeLocalNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ExternalIdField;
@@ -9710,6 +13326,9 @@ namespace HypredTest.QuoteProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ObjectTableIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PartnerNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool ShortViewField;
@@ -9783,6 +13402,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EntityNumber {
+            get {
+                return this.EntityNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EntityNumberField, value) != true)) {
+                    this.EntityNumberField = value;
+                    this.RaisePropertyChanged("EntityNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.DateTime EventDateTime {
             get {
                 return this.EventDateTimeField;
@@ -9843,6 +13475,19 @@ namespace HypredTest.QuoteProxy {
                 if ((object.ReferenceEquals(this.EventTypeIdField, value) != true)) {
                     this.EventTypeIdField = value;
                     this.RaisePropertyChanged("EventTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EventTypeLocalName {
+            get {
+                return this.EventTypeLocalNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EventTypeLocalNameField, value) != true)) {
+                    this.EventTypeLocalNameField = value;
+                    this.RaisePropertyChanged("EventTypeLocalName");
                 }
             }
         }
@@ -9978,6 +13623,19 @@ namespace HypredTest.QuoteProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PartnerName {
+            get {
+                return this.PartnerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PartnerNameField, value) != true)) {
+                    this.PartnerNameField = value;
+                    this.RaisePropertyChanged("PartnerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool ShortView {
             get {
                 return this.ShortViewField;
@@ -10031,16 +13689,16 @@ namespace HypredTest.QuoteProxy {
     public interface IQuoteWcfService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IQuoteWcfService/Upsert", ReplyAction="http://tempuri.org/IQuoteWcfService/UpsertResponse")]
-        HypredTest.QuoteProxy.Response Upsert(HypredTest.QuoteProxy.QuotePM entityPM, bool batch);
+        Logitude.Server.Tools.Response Upsert(HypredTest.QuoteProxy.QuotePM entityPM, bool batch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IQuoteWcfService/Upsert", ReplyAction="http://tempuri.org/IQuoteWcfService/UpsertResponse")]
-        System.Threading.Tasks.Task<HypredTest.QuoteProxy.Response> UpsertAsync(HypredTest.QuoteProxy.QuotePM entityPM, bool batch);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.QuoteProxy.QuotePM entityPM, bool batch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IQuoteWcfService/UploadQuotationDocument", ReplyAction="http://tempuri.org/IQuoteWcfService/UploadQuotationDocumentResponse")]
-        HypredTest.QuoteProxy.Response UploadQuotationDocument(string quoteNumber, byte[] fileData, string fileExtension, string userId, int tenant);
+        Logitude.Server.Tools.Response UploadQuotationDocument(string quoteNumber, byte[] fileData, string fileExtension, string userId, int tenant);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IQuoteWcfService/UploadQuotationDocument", ReplyAction="http://tempuri.org/IQuoteWcfService/UploadQuotationDocumentResponse")]
-        System.Threading.Tasks.Task<HypredTest.QuoteProxy.Response> UploadQuotationDocumentAsync(string quoteNumber, byte[] fileData, string fileExtension, string userId, int tenant);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UploadQuotationDocumentAsync(string quoteNumber, byte[] fileData, string fileExtension, string userId, int tenant);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IQuoteWcfService/GetQuoteList", ReplyAction="http://tempuri.org/IQuoteWcfService/GetQuoteListResponse")]
         HypredTest.QuoteProxy.GetQuoteListResponse GetQuoteList(HypredTest.QuoteProxy.GetQuoteListRequest request);
@@ -10050,22 +13708,22 @@ namespace HypredTest.QuoteProxy {
         System.Threading.Tasks.Task<HypredTest.QuoteProxy.GetQuoteListResponse> GetQuoteListAsync(HypredTest.QuoteProxy.GetQuoteListRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IQuoteWcfService/CreateEvent", ReplyAction="http://tempuri.org/IQuoteWcfService/CreateEventResponse")]
-        HypredTest.QuoteProxy.Response CreateEvent(int tenant, string externalId, string quoteNumber, string userId, string eventTypeCode, System.DateTime logDate, System.DateTime eventDate, string notes);
+        Logitude.Server.Tools.Response CreateEvent(int tenant, string externalId, string quoteNumber, string userId, string eventTypeCode, System.DateTime logDate, System.DateTime eventDate, string notes);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IQuoteWcfService/CreateEvent", ReplyAction="http://tempuri.org/IQuoteWcfService/CreateEventResponse")]
-        System.Threading.Tasks.Task<HypredTest.QuoteProxy.Response> CreateEventAsync(int tenant, string externalId, string quoteNumber, string userId, string eventTypeCode, System.DateTime logDate, System.DateTime eventDate, string notes);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> CreateEventAsync(int tenant, string externalId, string quoteNumber, string userId, string eventTypeCode, System.DateTime logDate, System.DateTime eventDate, string notes);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IQuoteWcfService/BuildEventsList", ReplyAction="http://tempuri.org/IQuoteWcfService/BuildEventsListResponse")]
-        HypredTest.QuoteProxy.Response BuildEventsList(int tenant, string quoteNumber, HypredTest.QuoteProxy.TraceEventPM[] eventsList);
+        Logitude.Server.Tools.Response BuildEventsList(int tenant, string quoteNumber, HypredTest.QuoteProxy.TraceEventPM[] eventsList);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IQuoteWcfService/BuildEventsList", ReplyAction="http://tempuri.org/IQuoteWcfService/BuildEventsListResponse")]
-        System.Threading.Tasks.Task<HypredTest.QuoteProxy.Response> BuildEventsListAsync(int tenant, string quoteNumber, HypredTest.QuoteProxy.TraceEventPM[] eventsList);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> BuildEventsListAsync(int tenant, string quoteNumber, HypredTest.QuoteProxy.TraceEventPM[] eventsList);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IQuoteWcfService/DeleteQuoteEvent", ReplyAction="http://tempuri.org/IQuoteWcfService/DeleteQuoteEventResponse")]
-        HypredTest.QuoteProxy.Response DeleteQuoteEvent(string quoteNumber, string traceEventId, int tenant);
+        Logitude.Server.Tools.Response DeleteQuoteEvent(string quoteNumber, string traceEventId, int tenant);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IQuoteWcfService/DeleteQuoteEvent", ReplyAction="http://tempuri.org/IQuoteWcfService/DeleteQuoteEventResponse")]
-        System.Threading.Tasks.Task<HypredTest.QuoteProxy.Response> DeleteQuoteEventAsync(string quoteNumber, string traceEventId, int tenant);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> DeleteQuoteEventAsync(string quoteNumber, string traceEventId, int tenant);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -10080,12 +13738,12 @@ namespace HypredTest.QuoteProxy {
         public int tenant;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
-        public HypredTest.QuoteProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetQuoteListRequest() {
         }
         
-        public GetQuoteListRequest(HypredTest.QuoteProxy.QuoteApiFilters filters, int tenant, HypredTest.QuoteProxy.Response response) {
+        public GetQuoteListRequest(HypredTest.QuoteProxy.QuoteApiFilters filters, int tenant, Logitude.Server.Tools.Response response) {
             this.filters = filters;
             this.tenant = tenant;
             this.response = response;
@@ -10101,12 +13759,12 @@ namespace HypredTest.QuoteProxy {
         public HypredTest.QuoteProxy.QuoteList[] GetQuoteListResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.QuoteProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetQuoteListResponse() {
         }
         
-        public GetQuoteListResponse(HypredTest.QuoteProxy.QuoteList[] GetQuoteListResult, HypredTest.QuoteProxy.Response response) {
+        public GetQuoteListResponse(HypredTest.QuoteProxy.QuoteList[] GetQuoteListResult, Logitude.Server.Tools.Response response) {
             this.GetQuoteListResult = GetQuoteListResult;
             this.response = response;
         }
@@ -10139,19 +13797,19 @@ namespace HypredTest.QuoteProxy {
                 base(binding, remoteAddress) {
         }
         
-        public HypredTest.QuoteProxy.Response Upsert(HypredTest.QuoteProxy.QuotePM entityPM, bool batch) {
+        public Logitude.Server.Tools.Response Upsert(HypredTest.QuoteProxy.QuotePM entityPM, bool batch) {
             return base.Channel.Upsert(entityPM, batch);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.QuoteProxy.Response> UpsertAsync(HypredTest.QuoteProxy.QuotePM entityPM, bool batch) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.QuoteProxy.QuotePM entityPM, bool batch) {
             return base.Channel.UpsertAsync(entityPM, batch);
         }
         
-        public HypredTest.QuoteProxy.Response UploadQuotationDocument(string quoteNumber, byte[] fileData, string fileExtension, string userId, int tenant) {
+        public Logitude.Server.Tools.Response UploadQuotationDocument(string quoteNumber, byte[] fileData, string fileExtension, string userId, int tenant) {
             return base.Channel.UploadQuotationDocument(quoteNumber, fileData, fileExtension, userId, tenant);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.QuoteProxy.Response> UploadQuotationDocumentAsync(string quoteNumber, byte[] fileData, string fileExtension, string userId, int tenant) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UploadQuotationDocumentAsync(string quoteNumber, byte[] fileData, string fileExtension, string userId, int tenant) {
             return base.Channel.UploadQuotationDocumentAsync(quoteNumber, fileData, fileExtension, userId, tenant);
         }
         
@@ -10160,7 +13818,7 @@ namespace HypredTest.QuoteProxy {
             return base.Channel.GetQuoteList(request);
         }
         
-        public HypredTest.QuoteProxy.QuoteList[] GetQuoteList(HypredTest.QuoteProxy.QuoteApiFilters filters, int tenant, ref HypredTest.QuoteProxy.Response response) {
+        public HypredTest.QuoteProxy.QuoteList[] GetQuoteList(HypredTest.QuoteProxy.QuoteApiFilters filters, int tenant, ref Logitude.Server.Tools.Response response) {
             HypredTest.QuoteProxy.GetQuoteListRequest inValue = new HypredTest.QuoteProxy.GetQuoteListRequest();
             inValue.filters = filters;
             inValue.tenant = tenant;
@@ -10174,27 +13832,27 @@ namespace HypredTest.QuoteProxy {
             return base.Channel.GetQuoteListAsync(request);
         }
         
-        public HypredTest.QuoteProxy.Response CreateEvent(int tenant, string externalId, string quoteNumber, string userId, string eventTypeCode, System.DateTime logDate, System.DateTime eventDate, string notes) {
+        public Logitude.Server.Tools.Response CreateEvent(int tenant, string externalId, string quoteNumber, string userId, string eventTypeCode, System.DateTime logDate, System.DateTime eventDate, string notes) {
             return base.Channel.CreateEvent(tenant, externalId, quoteNumber, userId, eventTypeCode, logDate, eventDate, notes);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.QuoteProxy.Response> CreateEventAsync(int tenant, string externalId, string quoteNumber, string userId, string eventTypeCode, System.DateTime logDate, System.DateTime eventDate, string notes) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> CreateEventAsync(int tenant, string externalId, string quoteNumber, string userId, string eventTypeCode, System.DateTime logDate, System.DateTime eventDate, string notes) {
             return base.Channel.CreateEventAsync(tenant, externalId, quoteNumber, userId, eventTypeCode, logDate, eventDate, notes);
         }
         
-        public HypredTest.QuoteProxy.Response BuildEventsList(int tenant, string quoteNumber, HypredTest.QuoteProxy.TraceEventPM[] eventsList) {
+        public Logitude.Server.Tools.Response BuildEventsList(int tenant, string quoteNumber, HypredTest.QuoteProxy.TraceEventPM[] eventsList) {
             return base.Channel.BuildEventsList(tenant, quoteNumber, eventsList);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.QuoteProxy.Response> BuildEventsListAsync(int tenant, string quoteNumber, HypredTest.QuoteProxy.TraceEventPM[] eventsList) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> BuildEventsListAsync(int tenant, string quoteNumber, HypredTest.QuoteProxy.TraceEventPM[] eventsList) {
             return base.Channel.BuildEventsListAsync(tenant, quoteNumber, eventsList);
         }
         
-        public HypredTest.QuoteProxy.Response DeleteQuoteEvent(string quoteNumber, string traceEventId, int tenant) {
+        public Logitude.Server.Tools.Response DeleteQuoteEvent(string quoteNumber, string traceEventId, int tenant) {
             return base.Channel.DeleteQuoteEvent(quoteNumber, traceEventId, tenant);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.QuoteProxy.Response> DeleteQuoteEventAsync(string quoteNumber, string traceEventId, int tenant) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> DeleteQuoteEventAsync(string quoteNumber, string traceEventId, int tenant) {
             return base.Channel.DeleteQuoteEventAsync(quoteNumber, traceEventId, tenant);
         }
     }
