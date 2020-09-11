@@ -1328,7 +1328,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
     FormatTextValue(txtValue: any) {
         let valueFromField  = txtValue;
-        if (valueFromField) {
+        if (!AppTool.IsNullOrEmpty(valueFromField)) {
             this.OriginalText.emit(valueFromField);
             if (this.InputType) {
                 switch (this.InputType.toLowerCase()) {
