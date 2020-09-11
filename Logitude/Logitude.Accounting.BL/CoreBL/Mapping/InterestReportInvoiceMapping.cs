@@ -51,7 +51,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             aRInvoicePM.IsGeneralInvoice = true;
             aRInvoicePM.IsFullAccounting = true;
             aRInvoicePM.SetApproved = true;
-
+            aRInvoicePM.HasInterestFeature = true;
             if (!string.IsNullOrEmpty(cardPM.SATPaymentMethodCode))
             {
                 aRInvoicePM.SATPaymentMethodCode = cardPM.SATPaymentMethodCode;
