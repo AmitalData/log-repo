@@ -42,15 +42,15 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 {
     public class BatchInterestReportInvoiceService : BatchTaskExecutionsService
     {
-       private InterestReportQueryService interestReportQueryService;
+        private InterestReportQueryService interestReportQueryService;
         private UserPM userPM;
         private BatchTaskExecutionPM BatchTaskExecution;
         public BatchInterestReportInvoiceService(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
-            BatchTaskExecution = batchTaskExecution ;
- 
+            BatchTaskExecution = batchTaskExecution;
+
         }
- 
+
         public override void RunCode()
         {
             try
@@ -59,7 +59,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 interestReportQueryService = new InterestReportQueryService(interestReportArgs.Tenant);
                 UserQuery userQuery = new UserQuery(interestReportArgs.Tenant);
                 userPM = userQuery.GetSinglePMByEmail(interestReportArgs.Email, interestReportArgs.Tenant);
-                if (userPM==null)
+                if (userPM == null)
                 {
                     userPM = userQuery.GetSinglePMByEmail(interestReportArgs.Email, 0);
                 }
@@ -71,8 +71,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
         }
 
- 
-        private void CreateInvoicesForInterestReports(InterestReportArguments interestReportArguments) 
+
+        private void CreateInvoicesForInterestReports(InterestReportArguments interestReportArguments)
         {
             InterestReportArgs args = new InterestReportArgs();
             args.Tenant = interestReportArguments.Tenant;
@@ -81,9 +81,9 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             {
                 List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant, interestReportArguments.ExcludedIds == null ? new List<string>() : interestReportArguments.ExcludedIds);
 
-                foreach (InterestReportPM report in interestReports)  
+                foreach (InterestReportPM report in interestReports)
                 {
-               
+
                     CreateInvoiceForReportPM(args, interestReportArguments, report);
                 }
             }
@@ -91,11 +91,11 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             {
                 foreach (string ReportId in interestReportArguments.SelectedIds)
                 {
-                    InterestReportPM  interestReport = interestReportQueryService.GetSingle(ReportId, false,true);
+                    InterestReportPM interestReport = interestReportQueryService.GetSingle(ReportId, false, true);
                     CreateInvoiceForReportPM(args, interestReportArguments, interestReport);
                 }
             }
-           
+
         }
 
         private void CreateInvoiceForReportPM(InterestReportArgs args, InterestReportArguments interestReportArguments, InterestReportPM interestReport)
@@ -119,11 +119,11 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             catch (Exception e)
             {
-                BatchTaskExecution.ErrorLog += "\n"+"Report # "+interestReport.ReportNumber + " " + e.Message;
-                UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "9",null, e.Message);
+                BatchTaskExecution.ErrorLog += "\n" + "Report # " + interestReport.ReportNumber + " " + e.Message;
+                UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "9", null, e.Message);
             }
 
-          
+
         }
         private InterestReportArguments GetInterestReportArgs()
         {
@@ -138,8 +138,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             if (interestReport.TotalAmount == null || interestReport.TotalAmount <= interestReport.GLAccountMinimumInterest)
             {
                 IAccountingContext iAccountingContext = AccountingContext.GetContext(interestReportArgs.Tenant);
-                InterestReportService interestReportService = new InterestReportService(); 
-                interestReport = interestReportService.PutConfirmCreateInvoice(interestReport, interestReportArgs.Tenant, iAccountingContext); 
+                InterestReportService interestReportService = new InterestReportService();
+                interestReport = interestReportService.PutConfirmCreateInvoice(interestReport, interestReportArgs.Tenant, iAccountingContext);
             }
             else
             {
@@ -163,7 +163,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 {
                     isFieldRequired = true;
                 }
-                if (isFieldRequired== true)
+                if (isFieldRequired == true)
                 {
                     ContactPM contactLocal = GetLoggedContact(Tenant);
                     bool showLocals = !contactLocal.DontShowLocal;
@@ -171,16 +171,16 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     ErrorMessage = ErrorMessage.Replace("%FieldName", TextCodesTranslator.TranslateText("ARInvoice.F.VatNumber", Tenant, showLocals));
                     throw new Exception(ErrorMessage);
                 }
-             }
+            }
         }
-        private void UpdateInterestReportsStatues(InterestReportPM interestReportPM, int Tenant, string Statues, ARInvoicePM aRInvoicePM = null, string InvoiceFailureReason=null)
+        private void UpdateInterestReportsStatues(InterestReportPM interestReportPM, int Tenant, string Statues, ARInvoicePM aRInvoicePM = null, string InvoiceFailureReason = null)
         {
             var accountingContext = AccountingContext.GetContext(Tenant);
 
             interestReportPM.InterestReportStatusCode = Statues;
             interestReportPM.UpdatedByUserId = userPM.Id;
             interestReportPM.UpdateDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
-            if (InvoiceFailureReason!=null)
+            if (InvoiceFailureReason != null)
             {
                 interestReportPM.InvoiceFailureReason = InvoiceFailureReason;
 
@@ -196,7 +196,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             service.Update(interestReportPM, true);
 
         }
-  
+
         private ARInvoicePM FullMapInvoice(InterestReportArgs interestReportArgs, InterestReportPM interestReport)
         {
             CardQuery cardQueryService = new CardQuery(interestReportArgs.Tenant);
@@ -232,6 +232,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             return aRInvoicePM;
 
+
         }
         private ChargesTypePM GetChargesType(List<ChargesTypePM> chargesTypes, InterestReportArgs interestReportArgs)
         {
@@ -266,6 +267,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             return chargesType;
         }
+
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         public static ContactPM GetLoggedContact(int tenant)
         {
@@ -275,134 +277,6 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
             ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
-        }
-        private List<LastRate> GetCurrenciesExchangeRateByValueDate(int tenant, string baseCurrencyId, DateTime? date)
-        {
-
-            List<LastRate> resultList = new List<LastRate>();
-
-            if (string.IsNullOrEmpty(baseCurrencyId))
-            {
-                string msg = TranslateTextsClass.Translate("General.M.AccountingCurrencyIsNotSet", tenant);
-                throw new ApplicationException(msg);
-            }
-
-            RatesTableRepository ratesTablesRepository = new RatesTableRepository(tenant);
-            RatesTableQuery ratesTableQuery = new RatesTableQuery(ratesTablesRepository);
-            CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
-            Currency baseCurrency = currencyRepository.GetCurrencies(tenant).Where(r => r.Id == baseCurrencyId).FirstOrDefault();
-            List<Currency> foreignCurrencies = currencyRepository.GetCurrencies(tenant).Where(c => c.Id != baseCurrencyId).ToList();
-
-            foreach (Currency currency in foreignCurrencies)
-            {
-                LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, currency.Id, baseCurrencyId, date);
-                if (lastRate != null)
-                {
-                    lastRate.BaseCurrencyId = baseCurrencyId;
-                    lastRate.BaseCurrencyCode = baseCurrency.Code;
-                    resultList.Add(lastRate);
-                }
-                else
-                {
-                    LastRate newLastRate = new LastRate()
-                    {
-                        Id = IdCounter.GetNumber("LastRate", tenant).ToString(),
-                        Tenant = tenant,
-                        ForeignCurrencyId = currency.Id,
-                        ForeignCurrencyCode = currency.Code,
-                        ForeignCurrencyName = currency.EnglishName,
-                        BaseCurrencyId = baseCurrency.Id,
-                        BaseCurrencyCode = baseCurrency.Code,
-                        HistoryCount = 0,
-                        Rate = null,
-                    };
-                    resultList.Add(newLastRate);
-                }
-            }
-            return resultList;
-        }
-        private ARInvoicePM InitializeDueDate(ARInvoicePM entityPM)
-        {
-            if (entityPM.DueDate == null)
-            {
-                if (string.IsNullOrEmpty(entityPM.PaymentTermId))
-                {
-                    entityPM.DueDate = entityPM.InvoiceDate;
-                }
-
-                else
-                {
-                    PaymentTermRepository paymentTermRepository = new PaymentTermRepository(entityPM.Tenant);
-                    PaymentTerm myPaymentTerm = paymentTermRepository.GetSinglePaymentTerm(entityPM.PaymentTermId, entityPM.Tenant);
-
-                    if (myPaymentTerm != null)
-                    {
-                        if (myPaymentTerm.IsManuallySet)
-                        {
-                            entityPM.DueDate = null;
-                        }
-
-                        else
-                        {
-                            DateTime? myComparativeDate = null;
-
-                            if (entityPM.IsConsolidationInvoice)
-                            {
-                                myComparativeDate = entityPM.InvoiceDate;
-                            }
-
-                            else
-                            {
-                                if (myPaymentTerm.FromDateTypeCode == "SHI")
-                                {
-                                    myComparativeDate = entityPM.OperationalDate;
-
-                                    if (myComparativeDate == null)
-                                    {
-                                        myComparativeDate = entityPM.InvoiceDate;
-                                    }
-                                }
-
-                                else
-                                {
-                                    myComparativeDate = entityPM.InvoiceDate;
-                                }
-                            }
-
-                            if (myComparativeDate != null)
-                            {
-                                if (myPaymentTerm.CurrentMonth)
-                                {
-                                    myComparativeDate = myComparativeDate.Value.AddMonths(1);
-
-                                    int dateYear = myComparativeDate.Value.Year;
-                                    int dateMonth = myComparativeDate.Value.Month;
-                                    int dateDay = myComparativeDate.Value.Day;
-                                    int dateHour = myComparativeDate.Value.Hour;
-                                    int dateMinute = myComparativeDate.Value.Minute;
-                                    int dateSecond = myComparativeDate.Value.Second;
-
-                                    myComparativeDate = new DateTime(dateYear, dateMonth, 1, dateHour, dateMinute, dateSecond);
-                                }
-
-                                DateTime? date = myComparativeDate.Value.AddDays(Convert.ToDouble(myPaymentTerm.Days));
-
-                                if (entityPM.DueDate != date)
-                                {
-                                    entityPM.DueDate = date;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (entityPM.DueDate != null)
-            {
-                entityPM.DueDate = entityPM.DueDate.Value.Date;
-            }
-
-            return entityPM;
         }
     }
 }
