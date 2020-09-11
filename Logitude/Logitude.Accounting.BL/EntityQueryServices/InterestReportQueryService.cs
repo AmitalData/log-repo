@@ -190,6 +190,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return interestReportPM;
         }
 
+        public InterestReportPM GetPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(string customerId, int tenant, DateTime CalculationDate)
+        {
+            InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
+            InterestReport interestReport = interestReportRepository.GetPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(customerId, tenant, CalculationDate);
+            InterestReportPM interestReportPM = this.GetEntityPM(interestReport);
+
+            return interestReportPM;
+        }
+
         public string GetInterestReportStatusCode(string InterestReportId,   int tenant)
         {
             InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);

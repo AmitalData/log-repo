@@ -234,12 +234,12 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
     
     private CheckInterestReportStatusCodeAndCreateInvoice(){
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.interestReportExtendedListService.GetInterestReportStatusCode(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+        this.interestReportExtendedListService.IsCreateInvoicedValid(this.EntityPM).subscribe((myResult: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             var response: ServiceResponse = myResult;
             if (!response.HasError) {
-               var InterestReportStatusCode:string =response.Result;
-               if(InterestReportStatusCode=="1" || InterestReportStatusCode=="9"){
+               var IsValid:boolean =response.Result;
+               if(IsValid){
 
                 if ((!this.EntityPM.TotalAmount) ||
                    (!this.EntityPM.TotalAmount && !this.EntityPM.GLAccountMinimumInterest) ||
@@ -255,15 +255,13 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                   }
                }
                else{
-
-                  this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate('InterestReport.O.CreatingInvoicepermitted'));
                   this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-
                }
             }
             else {
-
                 this.entityArgs.EditComponent.ValidationErrorsList = response.ErrorsArray;
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                
             }
         });
     }

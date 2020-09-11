@@ -76,10 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-
-
-		public const string HashString = "a0b982338e29ac43f87b1eed88cb6500";
-
+		public const string HashString = "7c36f2cfb94216571b7ffcd5c4def64c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2760,11 +2757,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterestReportTextCode_InterestReportOView = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.View", DefaultText = "View",LocalDefaultText = @"לצפות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-
  		   TextCode InterestReportTextCode_InterestReportOCreatingInvoicepermitted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CreatingInvoicepermitted", DefaultText = "Creating an Invoice is not permitted unless the report is 'Draft' or 'Invoicing Failed'",LocalDefaultText = @"ניתן להפיק חשבונית רק לדוח שבסטטוס טיוטה או נכשל", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOEntertheInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EntertheInvoiceDate", DefaultText = "Enter the Invoice Date to be used for the invoices for all selected reports",LocalDefaultText = null, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode InterestReportTextCode_InterestReportOCannotCreateReportWithCalculationDateLess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CannotCreateReportWithCalculationDateLess", DefaultText = "Cannot create a report with a calculation date less than or equal to the previously Invoiced/Closed report [Report ",LocalDefaultText = null, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.on", DefaultText = "on",LocalDefaultText = null, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
