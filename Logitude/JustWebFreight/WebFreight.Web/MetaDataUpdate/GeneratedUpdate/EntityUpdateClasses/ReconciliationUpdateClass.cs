@@ -1062,12 +1062,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen ReconciliationReconciliationHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Reconciliation.ReconciliationHeaderScreen", Name = "ReconciliationHeaderScreen", ObjectTableId = ReconciliationObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ReconciliationReconciliationReconciliationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id,ScreenCode = ReconciliationReconciliationHeaderScreenScreen0.Code, ObjectFieldCode = "Reconciliation.Number", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ReconciliationReconciliationReconciliationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id,ScreenCode = ReconciliationReconciliationHeaderScreenScreen0.Code, ObjectFieldCode = "Reconciliation.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ReconciliationReconciliationReconciliationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id,ScreenCode = ReconciliationReconciliationHeaderScreenScreen0.Code, ObjectFieldCode = "Reconciliation.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField ReconciliationReconciliationReconciliationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id,ScreenCode = ReconciliationReconciliationHeaderScreenScreen0.Code, ObjectFieldCode = "Reconciliation.Number", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ReconciliationReconciliationReconciliationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id,ScreenCode = ReconciliationReconciliationHeaderScreenScreen0.Code, ObjectFieldCode = "Reconciliation.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ReconciliationReconciliationReconciliationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id,ScreenCode = ReconciliationReconciliationHeaderScreenScreen0.Code, ObjectFieldCode = "Reconciliation.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ReconciliationObjectTable.HeaderScreenId = ReconciliationReconciliationHeaderScreenScreen0.Id;
 		    ReconciliationObjectTable.HeaderScreenCode = ReconciliationReconciliationHeaderScreenScreen0.Code;
 

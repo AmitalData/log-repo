@@ -764,26 +764,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen ChartOfAccountGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChartOfAccount.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = ChartOfAccountObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ChartOfAccountChartOfAccountGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ChartOfAccountGeneralTabScreenScreen0.Id,ScreenCode = ChartOfAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "ChartOfAccount.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ChartOfAccountChartOfAccountGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ChartOfAccountGeneralTabScreenScreen0.Id,ScreenCode = ChartOfAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "ChartOfAccount.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ChartOfAccountChartOfAccountGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ChartOfAccountGeneralTabScreenScreen0.Id,ScreenCode = ChartOfAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "ChartOfAccount.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ChartOfAccountChartOfAccountGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ChartOfAccountGeneralTabScreenScreen0.Id,ScreenCode = ChartOfAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "ChartOfAccount.TypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ChartOfAccountChartOfAccountGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ChartOfAccountGeneralTabScreenScreen0.Id,ScreenCode = ChartOfAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "ChartOfAccount.ParentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ChartOfAccountChartOfAccountGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = ChartOfAccountGeneralTabScreenScreen0.Id,ScreenCode = ChartOfAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "ChartOfAccount.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField ChartOfAccountChartOfAccountGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ChartOfAccountGeneralTabScreenScreen0.Id,ScreenCode = ChartOfAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "ChartOfAccount.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ChartOfAccountChartOfAccountGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ChartOfAccountGeneralTabScreenScreen0.Id,ScreenCode = ChartOfAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "ChartOfAccount.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ChartOfAccountChartOfAccountGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ChartOfAccountGeneralTabScreenScreen0.Id,ScreenCode = ChartOfAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "ChartOfAccount.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ChartOfAccountChartOfAccountGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ChartOfAccountGeneralTabScreenScreen0.Id,ScreenCode = ChartOfAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "ChartOfAccount.TypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ChartOfAccountChartOfAccountGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ChartOfAccountGeneralTabScreenScreen0.Id,ScreenCode = ChartOfAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "ChartOfAccount.ParentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ChartOfAccountChartOfAccountGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = ChartOfAccountGeneralTabScreenScreen0.Id,ScreenCode = ChartOfAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "ChartOfAccount.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen ChartOfAccountHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChartOfAccount.HeaderScreen", Name = "Header Screen", ObjectTableId = ChartOfAccountObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ChartOfAccountChartOfAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ChartOfAccountHeaderScreenScreen1.Id,ScreenCode = ChartOfAccountHeaderScreenScreen1.Code, ObjectFieldCode = "ChartOfAccount.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField ChartOfAccountChartOfAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ChartOfAccountHeaderScreenScreen1.Id,ScreenCode = ChartOfAccountHeaderScreenScreen1.Code, ObjectFieldCode = "ChartOfAccount.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField ChartOfAccountChartOfAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ChartOfAccountHeaderScreenScreen1.Id,ScreenCode = ChartOfAccountHeaderScreenScreen1.Code, ObjectFieldCode = "ChartOfAccount.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ChartOfAccountChartOfAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ChartOfAccountHeaderScreenScreen1.Id,ScreenCode = ChartOfAccountHeaderScreenScreen1.Code, ObjectFieldCode = "ChartOfAccount.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ChartOfAccountObjectTable.HeaderScreenId = ChartOfAccountHeaderScreenScreen1.Id;
 		    ChartOfAccountObjectTable.HeaderScreenCode = ChartOfAccountHeaderScreenScreen1.Code;
 

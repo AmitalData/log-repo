@@ -860,12 +860,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen InterestBasesTypeInterestBasesTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestBasesType.HeaderScreen", Name = "InterestBasesTypeHeaderScreen", ObjectTableId = InterestBasesTypeObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "InterestBasesType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "InterestBasesType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "InterestBasesType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "InterestBasesType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "InterestBasesType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "InterestBasesType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    InterestBasesTypeObjectTable.HeaderScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id;
 		    InterestBasesTypeObjectTable.HeaderScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code;
 
