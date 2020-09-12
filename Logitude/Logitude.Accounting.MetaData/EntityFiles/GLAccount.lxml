@@ -10558,6 +10558,11 @@
       <ScreenField
         Column="1"
         Row="1"
+        ObjectFieldName="&quot;Empty_Field&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="1"
+        Row="2"
         ObjectFieldName="&quot;LocalBalanceInDue&quot;"
         ScreenName="Header Screen" />
       <ScreenField
@@ -10568,6 +10573,11 @@
       <ScreenField
         Column="2"
         Row="1"
+        ObjectFieldName="&quot;Empty_Field&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="2"
+        Row="2"
         ObjectFieldName="&quot;ReconcileMethodName&quot;"
         ScreenName="Header Screen" />
       <ScreenField
@@ -10578,6 +10588,11 @@
       <ScreenField
         Column="3"
         Row="1"
+        ObjectFieldName="&quot;Empty_Field&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="3"
+        Row="2"
         ObjectFieldName="&quot;SplitCurrencyAccount&quot;"
         ScreenName="Header Screen" />
       <ScreenField
