@@ -206,7 +206,7 @@ export class ARInvoiceMenuButtonsHandler {
                                     }
                                 }
                             }
-                            myButtonIsDisabled = false; // Test
+                           // myButtonIsDisabled = false;  
                             break;
                         }
 
