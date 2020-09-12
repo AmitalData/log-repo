@@ -50,6 +50,11 @@
                                    VerticalAlignment="Center"
                                    FontWeight="Bold"
                                    Text="Column :" />
+                        <TextBlock Height="25"
+                            Margin="5,5,4.2,5"
+                            VerticalAlignment="Center"
+                            FontWeight="Bold"
+                            Text="Row (Optional) :" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Vertical">
                         <TextBox Height="25"
@@ -58,7 +63,9 @@
                                  IsEnabled="False"
                                  Text="{Binding ScreenName,
                                                 Mode=TwoWay}" />
-                        <ComboBox Height="22"
+                        <ComboBox 
+                                  Name="ObsListComboBox"
+                                  Height="22"
                                   Margin="5"
                                   VerticalAlignment="Center"
                                   DisplayMemberPath="DefaultText"
@@ -75,7 +82,14 @@
                                   SelectedValue="{Binding Column,
                                                           Mode=TwoWay}"
                                   SelectedValuePath="Id" />
-                        
+                        <ComboBox Height="22"
+                            Margin="5"
+                            VerticalAlignment="Center"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding Rows}"
+                            SelectedValue="{Binding Row, Mode=TwoWay}"
+                            SelectedValuePath="Id" />
+
                     </StackPanel>
                 </Grid>
             </Grid>
