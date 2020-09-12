@@ -80,7 +80,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class InterestReportUpdateClass
    {  		
 
-		public const string HashString = "7c36f2cfb94216571b7ffcd5c4def64c";
+
+		public const string HashString = "cd1684f7463e7e5c32f6d0f3e0400003";
+
 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -2788,9 +2790,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterestReportTextCode_InterestReportOConfirmClosingWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ConfirmClosingWithoutInvoice", DefaultText = "Confirm closing the report without invoice?",LocalDefaultText = @"נא לאשר סגירת דוחות ללא הפקת חשבוניות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+
  		   TextCode InterestReportTextCode_InterestReportOCannotCreateReportWithCalculationDateLess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CannotCreateReportWithCalculationDateLess", DefaultText = "Cannot create a report with a calculation date less than or equal to the previously Invoiced/Closed report [Report ",LocalDefaultText = null, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.on", DefaultText = "on",LocalDefaultText = null, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOAttachReportWithEachInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.AttachReportWithEachInvoice", DefaultText = "Attach Report with Each Invoice",LocalDefaultText = @"צרף פירוט ריבית להדפסה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
 
    
 	    
