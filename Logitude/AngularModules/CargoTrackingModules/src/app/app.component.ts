@@ -48,17 +48,22 @@ export class AppComponent
           if(this._Tenant==null || Number.isNaN(this._Tenant)){
             var url:string = event.url;
             var URLParts=url.split('/');
-                if (URLParts && URLParts.length > 0 && URLParts[1]) {
-                    
-                        this._Tenant = Number(URLParts[1]);
-                      
+
+            for(let i=0 ; i < URLParts.length ; i++){
+                if (URLParts && URLParts.length > 0 && URLParts[i]) {
+                this._Tenant = Number(URLParts[i]);
+                if(!Number.isNaN(this._Tenant)){
+                   break;
                 }
-                else if (Number.isNaN(this._Tenant)){
+              }
+            }
+
+                if (Number.isNaN(this._Tenant)){
                     this._Tenant=1;  
                 }
-                else{
-                    this._Tenant=1; 
-                }
+                // else{
+                //     this._Tenant=1; 
+                // }
                 this.getcargoTrackingData();
             }
                 
