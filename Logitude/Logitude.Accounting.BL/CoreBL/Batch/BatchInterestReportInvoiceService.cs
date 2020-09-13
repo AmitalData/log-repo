@@ -224,6 +224,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             InterestReportInvoiceMapping interestReportInvoiceMapping = new InterestReportInvoiceMapping();
             ARInvoicePM aRInvoicePM = interestReportInvoiceMapping.MapARInvoice(interestReportArgs, interestReport, tenantPM, userPM, cardPM);
+            aRInvoicePM.InvoiceDate = interestReportArgs.InvoiceDate;
             ARInvoiceEntityPM aRInvoiceEntityPM = interestReportInvoiceMapping.MapARInvoiceEntity(interestReportArgs, ObjectTableId);
             ARInvoiceLinePM aRInvoiceLinePM = interestReportInvoiceMapping.MapARInvoiceLine(interestReport, tenantPM, chargesType, vatTypePercentagePM);
 
