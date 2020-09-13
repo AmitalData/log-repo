@@ -86,10 +86,13 @@ export class InvoiceQueueComponent
                         }
                         if (x.W != null) {
                             this.WMessagesList.Insert(x);
-                            this.WarningMessages = true;
+                            this.ErrorMessages = true;
                         }
                    });
                 }
+                this.WMessagesList.Collection.forEach(x => {
+                    this.EMessagesList.Insert(x);
+                });
             });
         });
     }
@@ -140,7 +143,7 @@ export class InvoiceQueueComponent
         if (value.indexOf('.') == -1 ) {
             value = value + ".00";
         }
-        return value;
+        return value.toString();
     }
 
     ShowDisbursement() {

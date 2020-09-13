@@ -264,7 +264,7 @@
         </div>
     </div>
     <table>
-        <tr>
+        <tr style="height:25px;">
             <td>
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
                     מספר תיק
@@ -357,21 +357,21 @@
         </tr>
         <tr *ngIf="ErrorMessages">
             <td colspan="13">
-                <table style="min-height: 25px;">
+                <table style="min-height: 42px;">
                     <tr>
                         <td>
-                            <div class="ValidationSummary" style="max-height: 25px; overflow-y: auto ; overflow-x: hidden ; direction:ltr">
+                            <div class="ValidationSummary" style="overflow-y: auto ; overflow-x: hidden ; direction:ltr">
                                 <table>
                                     <tr>
                                         <td style="position: relative; vertical-align:top; padding-top: 2px; padding-bottom: 2px;">
-                                            <ul style="direction:rtl; left:90%">
+                                            <ul style="direction:rtl; left:90%; overflow:hidden;">
                                                 <li class="ValidationItem" *ngFor="let item of this.EMessagesList.Collection" [style.float]="'right'">
                                                     <div *ngIf="item.E != null ">
-                                                        <img src="./Images/SimplogIcons/Warning.png" style="width:15px;height:15px" />
+                                                        <img src="./Images/Error.png" style="width:15px;height:13px" />
                                                         <span [style.text-align]="'right'">{{item.E}}</span>
                                                     </div>
                                                     <div *ngIf="item.W != null ">
-                                                        <img src="./Images/Error.png" style="width:15px;height:15px" />
+                                                        <img src="./Images/SimplogIcons/Warning.png" style="width:15px;height:15px" />
                                                         <span [style.text-align]="'right'">{{item.W}}</span>
                                                     </div>
                                                 </li>
