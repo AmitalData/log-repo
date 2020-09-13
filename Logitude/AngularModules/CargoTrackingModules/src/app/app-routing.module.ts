@@ -2,6 +2,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from 'src/CargoTracking/Components/Dashboard/dashboard.component';
+import { FavoritesComponent } from 'src/CargoTracking/Components/Dashboard/favorites/favorites.component';
+import { DashboardShipmentsComponent } from 'src/CargoTracking/Components/Dashboard/shipments/dashboard-shipments.component';
 import { PublicGateComponent } from 'src/CargoTracking/Components/PublicGate/PublicGate.component';
 import { SearchComponent } from 'src/CargoTracking/Components/Search/search.component';
 import { ShipmentComponent } from 'src/CargoTracking/Components/Shipment/shipment.component';
@@ -10,7 +12,16 @@ const routes: Routes = [
     
 
       
-    { path: ':Tenant/dashboard', component: DashboardComponent },
+    { 
+        path: ':Tenant/dashboard', 
+        component: DashboardComponent,
+        children: [
+            { path: "", redirectTo: "shipments", pathMatch: "full" }, 
+            { path: "shipments", component: DashboardShipmentsComponent }, 
+            { path: "favorites", component: FavoritesComponent }, 
+           
+        ]
+    },
     {
         path: ':Tenant/search',
         component: PublicGateComponent,

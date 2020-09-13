@@ -1,0 +1,84 @@
+
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 170px;
+    background-color: #002664;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    text-align: center;
+    color: white;
+  }
+  
+  .sidebar a {
+    display: block;
+    padding: 10px;
+    margin: 11px 0px;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 100;
+  }
+   
+    .sidebar a.active {
+        /* background-color: #4CAF50; */
+        color: white;
+        font-weight: 700;
+        border-left: 6px solid white;
+    }
+    
+    .sidebar a:hover:not(.active) {
+        background-color: #555;
+        color: white;
+    }
+    
+  div.content {
+    margin-left: 200px;
+    padding: 1px 16px;
+    height: 1000px;
+  }
+
+  .sidebar .avatar > img{
+    border-radius: 50%;
+    width: 80px;
+  }
+  .sidebar .user-name{
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    padding-top: 15px;
+  }
+  .sidebar .signout{
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .sidebar .logo{
+    bottom: 50px;
+    position: absolute;
+    width: 100%;
+  }
+
+  .sidebar .logo > img{
+    width: 80px;
+  }
+
+  
+  @media screen and (max-width: 700px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+    .sidebar a {float: left;}
+    div.content {margin-left: 0;}
+  }
+  
+  @media screen and (max-width: 400px) {
+    .sidebar a {
+      text-align: center;
+      float: none;
+    }
+  }

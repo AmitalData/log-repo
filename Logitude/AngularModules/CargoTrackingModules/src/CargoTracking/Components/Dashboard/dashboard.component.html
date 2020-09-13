@@ -1,1 +1,34 @@
-Admin
+<div class="sidebar">
+
+    <div style="height: 50px;"></div>
+
+    <div class="avatar">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSnxXuSRioKtY5255bV-l1ZGs8OqP5vVSP-0Q&usqp=CAU" alt="">
+    </div>
+
+    <div class="user-name">
+        Saitama 
+    </div>
+
+    <div class="signout" href="#">Sign Out</div>   
+
+    <div style="height: 20px;"></div>
+
+    <a routerLinkActive="active" routerLink="shipments">Shipments</a>
+    <a routerLinkActive="active" routerLink="favorites">Favorite</a>
+    <a routerLinkActive="active" routerLink="Reports">Reports</a>
+    <a routerLinkActive="active" routerLink="Price">Price Offers</a>
+    <a routerLinkActive="active" routerLink="Accounting">Accounting</a>
+    <a routerLinkActive="active" routerLink="Archive">Archive</a>
+
+    <div class="logo">
+        <img src="https://logodix.com/logo/1723080.png" alt="" />
+        <!-- <img src="./assets/images/logo/path3410@1x.png" routerLinkActive="active" routerLink="/search" alt="" /> -->
+    </div>
+
+
+</div>
+
+<div class="content">
+    <router-outlet></router-outlet>
+</div>

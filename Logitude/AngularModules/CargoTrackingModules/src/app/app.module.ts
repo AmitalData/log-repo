@@ -11,14 +11,20 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from 'src/CargoTracking/Components/Dashboard/dashboard.component';
 import { PublicGateComponent } from 'src/CargoTracking/Components/PublicGate/PublicGate.component';
+import { DashboardShipmentsComponent } from 'src/CargoTracking/Components/Dashboard/shipments/dashboard-shipments.component';
+import { FavoritesComponent } from 'src/CargoTracking/Components/Dashboard/favorites/favorites.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         ShipmentComponent,
         SearchComponent,
-        DashboardComponent,
         PublicGateComponent,
+        
+        // Dashboard
+        DashboardComponent,
+        DashboardShipmentsComponent,
+        FavoritesComponent,
         
     ],
     imports: [
