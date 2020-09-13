@@ -70,6 +70,11 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
 
     private ComputeWeightLabel() {
         var weight: number = ShipmentTool.ComputeStorageWeight(this.EntityPM);
+
+        if (weight == null) {
+            weight = 0;
+        }
+
         this.WeightLabel = "Weight = " + weight;
     }
 
@@ -346,6 +351,9 @@ export class PricingItem extends BaseComponent {
         if (this.EntityPM.StepFrom != newValue) {
             this.EntityPM.StepFrom = AppTool.Round(newValue, 0);
             this.fatherComponent.PricesChanged = true;
+
+            this.ComputeStepTo();
+            this.ComputeDays();
         }
     }
 
@@ -435,7 +443,7 @@ export class PricingItem extends BaseComponent {
     }
 
     private ComputeDays() {
-        if (!AppTool.IsNullOrZero(this.StepFrom) && !AppTool.IsNullOrZero(this.StepTo)) {
+        if (this.StepFrom != null && this.StepTo != null) {
             this.EntityPM.Days = (this.StepTo - this.StepFrom) + 1;
         }
 
@@ -444,7 +452,7 @@ export class PricingItem extends BaseComponent {
         }
     }
     private ComputeStepTo() {
-        if (!AppTool.IsNullOrZero(this.StepFrom) && !AppTool.IsNullOrZero(this.Days)) {
+        if (this.StepFrom != null && this.Days != null) {
             this.EntityPM.StepTo = (this.StepFrom + this.Days) - 1;
         }
 
