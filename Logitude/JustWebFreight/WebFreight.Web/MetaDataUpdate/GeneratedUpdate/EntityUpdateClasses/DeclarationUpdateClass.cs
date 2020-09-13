@@ -76,8 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-
-		public const string HashString = "b6071888e584efca2d83a94a5df4d989";
+		public const string HashString = "bd822a8291f04903322d6d7a895e50d8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13747,21 +13746,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AllCourierDeclarationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_15.Id, NameTextCodeCode = DeclarationTextCode_15.Code, ObjectTableName = "Customs.Declaration", Code = "AllCourierDeclarations",  QueryGroupCode = "DECL", IndexOrder = 15, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_15.Id,FeatureUniqeCode= DeclarationFeature_15.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllCourierDeclarationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.MAWBCourierMaster" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn AllCourierDeclarationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.MAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllCourierDeclarationsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 180 }, addedQueryColumns);
+			 QueryColumn AllCourierDeclarationsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn AllCourierDeclarationsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn AllCourierDeclarationsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllCourierDeclarationsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn AllCourierDeclarationsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.FastIndividualProcessCode" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn AllCourierDeclarationsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.FastIndividualProcessCode" , ColumnWidth = 140 }, addedQueryColumns);
+			 QueryColumn AllCourierDeclarationsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn AllCourierDeclarationsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn AllCourierDeclarationsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllCourierDeclarationsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn AllCourierDeclarationsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 190 }, addedQueryColumns);
 
-			 QueryColumn AllCourierDeclarationsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 190 }, addedQueryColumns);
+			 QueryColumn AllCourierDeclarationsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 180 }, addedQueryColumns);
 
              AdvancedQueryFilter AllCourierDeclarationsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 

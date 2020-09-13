@@ -1093,8 +1093,4 @@
     ReferencedTableSchema="Customs" />
   <Index
     Columns="AmendmentOriginalDeclartation" />
-
-  <!--<Index
-      Columns="CourierCustomStatusCode" />-->
-
 </Table>
