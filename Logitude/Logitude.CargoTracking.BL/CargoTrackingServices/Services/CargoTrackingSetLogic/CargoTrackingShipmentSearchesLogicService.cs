@@ -17,6 +17,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private static void SetShipmentDate(DataRow TableRow, int ConditionNumber)
         {
             TableRow.SetField("ShipmentDate", TableRow["CreateDateTime"]);
+            TableRow.SetField("ShipmentId", TableRow["Id"]);
+
         }
     }
 }

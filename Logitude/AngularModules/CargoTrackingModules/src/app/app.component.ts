@@ -58,7 +58,7 @@ export class AppComponent
               }
             }
 
-                if (Number.isNaN(this._Tenant)){
+                if (Number.isNaN(this._Tenant) || !this._Tenant || this._Tenant==null){
                     this._Tenant=1;  
                 }
                 // else{

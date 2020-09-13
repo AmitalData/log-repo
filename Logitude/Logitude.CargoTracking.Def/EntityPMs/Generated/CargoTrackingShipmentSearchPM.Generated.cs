@@ -112,25 +112,25 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
-	  private string securityKey ;
+	  private string shipmentId ;
 	  	  
        
 	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string SecurityKey  
+       public string ShipmentId  
 	   {
 	    
 	     get
 		{
-		   return securityKey;
+		   return shipmentId;
 		 }
 		 set
 		 {
-		   if(securityKey != value)
+		   if(shipmentId != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SecurityKey",OldValue=securityKey,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentId",OldValue=shipmentId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   securityKey=value;
+		   shipmentId=value;
 		   }
 			
 		 }

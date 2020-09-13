@@ -12,7 +12,7 @@ export class CargoTrackingShipmentSearchList {
 	SearchFields: string;
 	ShipmentDate: Date;
 	Id: number;
-	SecurityKey: string;
+	ShipmentId: string;
 	
 }
  
