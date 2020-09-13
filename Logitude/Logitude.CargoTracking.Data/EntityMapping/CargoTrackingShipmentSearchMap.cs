@@ -32,6 +32,8 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasDatabaseGeneratedOption(null);
 
             this.Property(t => t.ShipmentId).HasColumnName("ShipmentId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IsPublic).HasColumnName("IsPublic");
         }
     }
 }

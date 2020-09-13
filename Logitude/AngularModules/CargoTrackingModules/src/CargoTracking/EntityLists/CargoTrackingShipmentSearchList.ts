@@ -13,6 +13,7 @@ export class CargoTrackingShipmentSearchList {
 	ShipmentDate: Date;
 	Id: number;
 	ShipmentId: string;
+	IsPublic: boolean;
 	
 }
  

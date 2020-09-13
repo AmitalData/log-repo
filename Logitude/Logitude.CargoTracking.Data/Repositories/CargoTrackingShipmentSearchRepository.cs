@@ -27,7 +27,8 @@ namespace Logitude.CargoTracking.Data.Repositories
                          where 
                             
                             searchEntity.Tenant == tenant &&
-                            searchEntity.SearchFields == searchField
+                            searchEntity.SearchFields == searchField &&
+                            searchEntity.IsPublic == true
                             orderby searchEntity.ShipmentDate descending
                             select searchEntity
                             

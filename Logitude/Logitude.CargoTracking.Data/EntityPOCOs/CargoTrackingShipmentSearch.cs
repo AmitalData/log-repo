@@ -29,6 +29,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public int Id { get; set; }
         [Column("ShipmentId")]
 	    public string ShipmentId { get; set; }
+        [Column("IsPublic")]
+	    public bool? IsPublic { get; set; }
     }
 }
 	 
