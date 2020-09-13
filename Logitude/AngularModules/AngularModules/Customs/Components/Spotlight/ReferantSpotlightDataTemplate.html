@@ -24,10 +24,10 @@
                                 <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionReasonsCode '| TextCodeTranslationPipe"  [binding]="'ExceptionReasonsCode'" [width]="'130'" [Alignment]="'center'">
                                      <ng-template let-item>
 <log-cell-template  #logcelltemplate [IsEnabled]="!item.ShowCode">
-                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <div class="TextTrimming RightCenter">
                                             <span>{{item.ExceptionReasonName}}</span>
                                         </div>
-                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                        <div>
                                             <LogLov #ReferantReasonLovBox
                                                     [ObjectFieldName]="'ExceptionReasonsCode'"
                                                     [ObjectTableName]="ObjectTableName"
@@ -44,10 +44,10 @@
                                 <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionRemarks ' | TextCodeTranslationPipe" [width]="'130'" [Editable]="true" [Alignment]="'center'">
                                      <ng-template let-item>
 <log-cell-template  #logcelltemplate>
-                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <div class="TextTrimming" style="text-align:right">
                                             <span>{{item.ExceptionRemarks}}</span>
                                         </div>
-                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                        <div>
                                             <LogTextBox [ObjectFieldName]="'ExceptionRemarks'" [InputType]="'ntext'" [DataContext]="item"
                                                         [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
                                         </div>
@@ -59,10 +59,10 @@
                                 <log-column [header]="'Customs.DeclarationReferantData.O.Status ' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'center'">
                                      <ng-template let-item>
 <log-cell-template  #logcelltemplate>
-                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <div class="TextTrimming" style="text-align:right">
                                             <span>{{item.SelectedItemStatus.Value}}</span>
                                         </div>
-                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                        <div>
                                             <ComboBox [ItemsSource]="item._StatusItems" [Binding]="'Value'" [SelectedItem]="item.SelectedItemStatus" (SelectedItemChanged)="item.StatusChanged($event)"></ComboBox>
                                         </div>
                                     </log-cell-template>
