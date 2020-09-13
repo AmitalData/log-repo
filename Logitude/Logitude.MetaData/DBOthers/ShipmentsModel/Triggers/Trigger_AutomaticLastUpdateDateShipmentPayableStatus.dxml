@@ -12,7 +12,7 @@ SET NOCOUNT ON;
 
 IF TRIGGER_NESTLEVEL() > 1 RETURN;
 
-IF SESSION_CONTEXT(N'ZeroDownTimeMode') IS NULL
+IF (SELECT program_name FROM sys.dm_exec_sessions WHERE session_id = (SELECT @@SPID)) <> 'ZeroDownTimeDBMigrationsTool'
 BEGIN
 UPDATE ShipmentPayableStatus SET AutomaticLastUpdateDate = GETDATE() WHERE Code IN (SELECT DISTINCT Code FROM Inserted);
 END;

@@ -250,27 +250,25 @@ namespace Logitude.DBMigrations.Models
         {
             int exceptionSleep = 30000;
             int retryNumber = 0;
+            int batchNumberCounter = 1;
             int affectedRows = 1;
             int scriptExecutionNumber = dbMigrationsDataScript.ScriptExecutionNumber;
+            int batchSize = dbMigrationsDataScript.BatchSize;
             string dbMigrationsDataScriptId = dbMigrationsDataScript.Id;
             string databaseType = dbMigrationsDataScript.DatabaseType;
             string targetTableName = dbMigrationsDataScript.TargetTableName;
-            int batchSize = dbMigrationsDataScript.BatchSize;
-
             string queryString = dbMigrationsDataScript.SxmlScript;
-            queryString = Regex.Replace(queryString, "[$]LastCounterWhere[$]", "[Id] IN (SELECT Id from @IdsTable)", RegexOptions.IgnoreCase);
+            //string csvFileName = dbMigrationsDataScript.SxmlFileName.Replace(".sxml", String.Empty) + "_" + DateTime.Now.Ticks.ToString();
 
+            queryString = Regex.Replace(queryString, "[$]LastCounterWhere[$]", targetTableName + ".[Id] IN (SELECT Id from @IdsTable)", RegexOptions.IgnoreCase);
             queryString = "DECLARE @IdsTable TABLE (Id VARCHAR(20));\n" +
-                          "INSERT INTO @IdsTable SELECT TOP(" + batchSize + ") [Id] FROM [" + targetTableName + "] WHERE [DBMigrationsLastScript] = " + (scriptExecutionNumber - 1).ToString() +
+                          "INSERT INTO @IdsTable SELECT TOP(" + batchSize.ToString() + ") [Id] FROM [" + targetTableName + "] WHERE [DBMigrationsLastScript] = " + (scriptExecutionNumber - 1).ToString() +
                           (scriptExecutionNumber - 1 == 0 ? " OR [DBMigrationsLastScript] IS NULL" : null) + ";\n" +
                           queryString + "\n" +
                           "UPDATE [" + targetTableName + "] SET [DBMigrationsLastScript] = " + scriptExecutionNumber.ToString() + " WHERE [Id] IN (SELECT Id FROM @IdsTable);\n" +
                           "DELETE FROM @IdsTable;";
 
             SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
-
-            int batchNumberCounter = 1;
-            string csvFileName = dbMigrationsDataScript.SxmlFileName.Replace(".sxml", String.Empty) + "_" + DateTime.Now.Ticks.ToString();
 
             while (affectedRows > 0)
             {
@@ -293,7 +291,7 @@ namespace Logitude.DBMigrations.Models
                         UpdateDBMigrationsDataScript(dbMigrationsDataScriptId, "LastBatchElapsedTime", elapsedTime.ToString());
                     }
 
-                    string data = batchNumberCounter.ToString() + "," + batchStartTime.ToString() + "," + batchEndTime.ToString() + "," + elapsedTime.ToString() + "," + affectedRows.ToString() + "\n";
+                    //string data = batchNumberCounter.ToString() + "," + batchStartTime.ToString() + "," + batchEndTime.ToString() + "," + elapsedTime.ToString() + "," + affectedRows.ToString() + "\n";
                     //AppendToCSVFile(csvFileName, data);
 
                     batchNumberCounter++;
@@ -450,7 +448,7 @@ namespace Logitude.DBMigrations.Models
                 "FOR UPDATE AS BEGIN\n" +
                 "SET NOCOUNT ON;\n" +
                 "IF TRIGGER_NESTLEVEL() > 1 RETURN;\n" +
-                "IF SESSION_CONTEXT(N'ZeroDownTimeMode') IS NULL\n" +
+                "IF (SELECT program_name FROM sys.dm_exec_sessions WHERE session_id = (SELECT @@SPID)) <> 'ZeroDownTimeDBMigrationsTool'\n" +
                 "BEGIN\n" +
                 "UPDATE [" + tableName + "] SET [DBMigrationsLastScript] = 0 WHERE Id IN (SELECT DISTINCT Id FROM Inserted);\n" +
                 "END\n" +
@@ -473,28 +471,6 @@ namespace Logitude.DBMigrations.Models
                 sqlConnection.Close();
                 ExitTool("Error: " + exception.Message);
             }
-        }
-
-        protected override void SetZeroDownTimeSession()
-        {
-            //string queryString = "EXEC sp_set_session_context 'ZeroDownTimeMode', 1;";
-
-            //SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);??
-
-            //try
-            //{
-            //    sqlConnection.Open();
-            //    SqlCommand sqlCommand = new SqlCommand();
-            //    sqlCommand.Connection = sqlConnection;
-            //    sqlCommand.CommandText = queryString;
-            //    sqlCommand.ExecuteNonQuery();
-            //    sqlConnection.Close();
-            //}
-            //catch (Exception exception)
-            //{
-            //    sqlConnection.Close();
-            //    ExitTool("Error: " + exception.Message);
-            //}
         }
     }
 }
