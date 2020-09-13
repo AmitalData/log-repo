@@ -114,7 +114,6 @@ export class ReferantSpotlightDataTemplate
         _exceptionReason.ShowCode = false;
         this.ReferantExceptionItemsSource.Insert(_exceptionReason);
 
-
     }
 
     private ExceptionsList: string[] = [];
