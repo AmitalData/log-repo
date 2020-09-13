@@ -32,7 +32,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
                                                                      SearchFields = a.SearchFields,
 
-                                                                     SecurityKey = a.SecurityKey,
+                                                                     ShipmentId = a.ShipmentId,
 
                                                                      ShipmentDate = a.ShipmentDate,
 
@@ -54,10 +54,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
             IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntities = repo.GetShipmentSearchEntities(searchText, tenant);
 
-            List<string> shipmentsSecurityKeies = shipmentsSearchEntities.Select(d => d.SecurityKey).ToList();
+            List<string> shipmentsIds = shipmentsSearchEntities.Select(d => d.ShipmentId).ToList();
 
             CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
-            List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetShipments(shipmentsSecurityKeies, tenant);
+            List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetShipments(shipmentsIds, tenant);
 
           
             return shipments;

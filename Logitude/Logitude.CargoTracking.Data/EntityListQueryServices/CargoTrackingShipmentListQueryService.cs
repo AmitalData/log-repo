@@ -33,7 +33,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                  });
             IQueryable<CargoTrackingShipmentList> query = (from a in iQueryable join fp in ports on a.FromPortId equals fp.Id
                                                            join tp in ports on a.ToPortId equals tp.Id
-                                                           join s in context.CargoTrackingShipmentSearches  on a.SecurityKey equals s.SecurityKey 
+                                                           join s in context.CargoTrackingShipmentSearches  on a.EntityId equals s.ShipmentId 
                                                            join m in context.CargoTrackingMilestones on a.CurrentMilestoneCode equals m.Code into lm
                                                            from m in lm.DefaultIfEmpty()
                                                            join t in context.CargoTrackingTransportModes on a.TransportModeId equals t.Id
@@ -230,20 +230,19 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return iQueryable;
         }
 
-        public List<CargoTrackingShipmentList> GetShipments(List<string> shipmentsSecurityKeies, int tenant)
+        public List<CargoTrackingShipmentList> GetShipments(List<string> ShipmentIds, int tenant)
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
-            IQueryable<CargoTrackingShipment> shipments = repo.GetBySecurityKeies(shipmentsSecurityKeies, tenant);
+            IQueryable<CargoTrackingShipment> shipments = repo.GetByShipmentIds(ShipmentIds, tenant);
 
             List<CargoTrackingShipmentList> shipmetsLists = GetIqueryableList(shipments).ToList();
             
-            foreach (var key in shipmentsSecurityKeies)
+            foreach (var Id in ShipmentIds)
             {
 
-                string[] references = shipmetsLists.Where(d => d.SecurityKey == key).Select(d => d.SearchReferences).ToArray();
-                //  List< CargoTrackingShipmentList> shipmetsList = shipmetsLists.ToList();
+                string[] references = shipmetsLists.Where(d => d.EntityId == Id).Select(d => d.SearchReferences).ToArray();
                 shipmetsLists = shipmetsLists.GroupBy(p => p.SecurityKey).Select(g => g.Last()).ToList();
-                shipmetsLists.Where(d => d.SecurityKey == key).ToList().ForEach(d => { d.SearchReferences = String.Join(",", references); });
+                shipmetsLists.Where(d => d.EntityId == Id).ToList().ForEach(d => { d.SearchReferences = String.Join(",", references); });
                
             }
             return shipmetsLists;
