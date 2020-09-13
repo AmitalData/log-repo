@@ -53,7 +53,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                     //xmlStatusList = UnifreightListsUtil.GetHtmlDecodeValue(ref response, "StatusList");
                     string alexGiveBadXML = $"<AllInvoices>{resXML}</AllInvoices>";
                     var StatusItemlist = LogitudeXmlSerializer.DeserializeObject<AllInvoices>(alexGiveBadXML);
-                   return GetInvoice();
+                  // return GetInvoice();
                     return StatusItemlist;
 
 
