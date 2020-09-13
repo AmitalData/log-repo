@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APPaymentUpdateClass
    {  		
-		public const string HashString = "dbfc5c8d607e91d04ba3b420da2030d3";
+		public const string HashString = "27a8f7860d561e065d66d9822f3b2be3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4398,7 +4398,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DontIncludeInDeductionReport",
 					  						DefaultText =  "Dont Include In Deduction Report",
-					  						FullLocalDefaultText =  "האם לדווח ביטול לניכוי במקור",
+					  						FullLocalDefaultText =  "לא לכלול בדוח ניכוי במקור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
