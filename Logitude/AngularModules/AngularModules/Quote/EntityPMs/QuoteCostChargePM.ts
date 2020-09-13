@@ -290,6 +290,11 @@ export class QuoteCostChargePM {
     public set ContainerType5MarkUpText(newValue: string) { if (this.containerType5MarkUpText != newValue) { this.containerType5MarkUpText = newValue; this.MarkAsDirty("ContainerType5MarkUpText"); } }
        
 	 
+    private isRegionalTax: boolean;
+    public get IsRegionalTax() { return this.isRegionalTax; }
+    public set IsRegionalTax(newValue: boolean) { if (this.isRegionalTax != newValue) { this.isRegionalTax = newValue; this.MarkAsDirty("IsRegionalTax"); } }
+       
+	 
 
     public OldEntityPM: QuoteCostChargePM;
 		

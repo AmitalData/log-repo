@@ -728,6 +728,8 @@ namespace WebFreight.Web.ReportsWebServices
                     profitrecord.FromPortName = a.MainCarriageFromPortName;
                     profitrecord.FinalDestinationPortCode = a.MainCarriageFinalDestinationPortCode;
                     profitrecord.FinalDestinationPortName = a.MainCarriageFinalDestinationPortName;
+                    profitrecord.ConsigneeReference1 = a.ConsigneeReference1;
+                    profitrecord.ConsigneeReference2 = a.ConsigneeReference2;
 
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, a, profitrecord);

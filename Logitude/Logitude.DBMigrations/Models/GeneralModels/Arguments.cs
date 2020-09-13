@@ -16,6 +16,5 @@ namespace Logitude.DBMigrations.Models
         public const string IGNORESETTINGSCHECK = "-ignoresettingscheck";
         public const string ZERODOWNTIME = "-zerodowntime";
         public const string SERVICE = "-service";
-        public const string INCLUDETRIGGERS = "-includetriggers";
     }
 }
