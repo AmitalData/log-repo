@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div *ngIf="FieldName == 'LocalName'">
-                        <div style="text-align: right; padding-right: 3px;">{{ FieldValue }}</div>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="padding-right: 3px;">{{ FieldValue }}</div>
                     </div>
                     <div *ngIf="FieldName == 'ActiveStatusName'">
                         <div [style.text-align]="isRTL ? 'right' : 'left'" [class.red]="FieldValue == 'Inactive'">

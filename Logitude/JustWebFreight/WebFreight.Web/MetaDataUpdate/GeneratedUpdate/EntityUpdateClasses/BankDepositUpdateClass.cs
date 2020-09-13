@@ -2063,26 +2063,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen BankDepositBankDepositDetailsScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankDeposit.BankDepositDetailsScreen", Name = "BankDepositDetailsScreen", ObjectTableId = BankDepositObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField BankDepositBankDepositBankDepositDetailsScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankDepositBankDepositDetailsScreenScreen0.Id,ScreenCode = BankDepositBankDepositDetailsScreenScreen0.Code, ObjectFieldCode = "BankDeposit.DepositNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
+             ScreenField BankDepositBankDepositBankDepositDetailsScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankDepositBankDepositDetailsScreenScreen0.Id,ScreenCode = BankDepositBankDepositDetailsScreenScreen0.Code, ObjectFieldCode = "BankDeposit.DepositNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 	      
 
 	         Screen BankDepositHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankDeposit.HeaderScreen", Name = "HeaderScreen", ObjectTableId = BankDepositObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BankDepositHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = "BankDeposit.DepositNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankDepositHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = "BankDeposit.LocalDepositAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankDepositHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = "BankDeposit.DepositDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankDepositHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = "BankDeposit.CashBookId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankDepositHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = "BankDeposit.JournalId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankDepositHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = "BankDeposit.IsCanceled", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField BankDepositHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = "BankDeposit.BankAccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
+             ScreenField BankDepositHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = "BankDeposit.DepositNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankDepositHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = "BankDeposit.LocalDepositAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankDepositHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = "BankDeposit.DepositDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankDepositHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = "BankDeposit.CashBookId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankDepositHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = "BankDeposit.JournalId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankDepositHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = "BankDeposit.IsCanceled", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankDepositHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = BankDepositHeaderScreenScreen1.Id,ScreenCode = BankDepositHeaderScreenScreen1.Code, ObjectFieldCode = "BankDeposit.BankAccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    BankDepositObjectTable.HeaderScreenId = BankDepositHeaderScreenScreen1.Id;
 		    BankDepositObjectTable.HeaderScreenCode = BankDepositHeaderScreenScreen1.Code;
 
