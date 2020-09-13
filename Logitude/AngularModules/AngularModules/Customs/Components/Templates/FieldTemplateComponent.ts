@@ -587,7 +587,7 @@ export class FieldTemplateComponent {
                     if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
                         SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
                     }
-                    this.OnBackFromEdit(this.Entity.DeclarationId, event)
+                    SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
                 });
             });
     }
