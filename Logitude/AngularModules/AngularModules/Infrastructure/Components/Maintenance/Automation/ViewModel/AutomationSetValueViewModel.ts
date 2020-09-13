@@ -1,4 +1,4 @@
-﻿
+
 import {AutomationPM} from '../../../../../Common/EntityPMs/AutomationPMExtended';
 import {AppTool, DateTool} from '../../../../../Infrastructure/Tools';
 
@@ -141,7 +141,7 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
     InitCustomLOVFilters(objectFieldPM: ObjectFieldPM) {
         this.CustomAutomationCondationFieldListFilterItems = new ApiQueryFilters();
         this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("ObjectTableId", this.AddEditAutomationsViewModel.ObjectTableId, null, null, "Equals", false, false, false, "string");
-        this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("CanAutomateSetValue", true, null, null, "Equals", false, false, false, "boolean");
+        this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("AllowedinAutomationConditions", true, null, null, "Equals", false, false, false, "boolean");
 
         if (this.SelectedCustomField) {
             if (this.SelectedCustomField.DataTypeCode == "LookUp") {
