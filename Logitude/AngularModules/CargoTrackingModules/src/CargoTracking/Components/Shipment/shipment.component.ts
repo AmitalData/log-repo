@@ -54,9 +54,9 @@ export class ShipmentComponent implements OnInit
     private GetIdFromURI()
     {      
         
-        var tenant = this.route.snapshot.paramMap.get('SecurityKey');
-        if(tenant!=null && tenant!=""){
-            this._Tenant = Number(this.route.snapshot.paramMap.get('Tenant'));
+        // var tenant = this.route.snapshot.paramMap.get('SecurityKey');
+        if(this._Tenant==null){
+            this._Tenant = Number(this.route.snapshot.parent.paramMap.get('Tenant'));
         }
         let _id = this.route.snapshot.paramMap.get('SecurityKey');
         this.SecurityKey = _id;

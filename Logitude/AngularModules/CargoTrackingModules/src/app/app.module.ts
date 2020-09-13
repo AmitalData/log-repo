@@ -9,12 +9,16 @@ import { CargoTrackingBrandingDataExtendedService } from '../CargoTracking/Servi
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DashboardComponent } from 'src/CargoTracking/Components/Dashboard/dashboard.component';
+import { PublicGateComponent } from 'src/CargoTracking/Components/PublicGate/PublicGate.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         ShipmentComponent,
         SearchComponent,
+        DashboardComponent,
+        PublicGateComponent,
         
     ],
     imports: [

@@ -1,5 +1,5 @@
-import { CargoTrackingShipmentList } from './../../EntityLists/CargoTrackingShipmentList';
-import { CargoTrackingSearchService } from './../../Services/Others/CargoTrackingSearchService';
+import { CargoTrackingShipmentList } from '../../EntityLists/CargoTrackingShipmentList';
+import { CargoTrackingSearchService } from '../../Services/Others/CargoTrackingSearchService';
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute, Event, RoutesRecognized } from '@angular/router';
 import { fromEvent } from 'rxjs';
@@ -10,11 +10,11 @@ import { CargoTrackingBrandingData } from '../../DataContracts/CargoTrackingBran
 
 
 @Component({
-    selector: 'search',
-    templateUrl: './search.component.html',
-    styleUrls: ['./search.component.css']
+    selector: 'dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.css']
 })
-export class SearchComponent implements AfterViewInit
+export class DashboardComponent implements AfterViewInit
 {
 
     @ViewChild('input') input: ElementRef;
@@ -31,16 +31,9 @@ export class SearchComponent implements AfterViewInit
         private formBuilder: FormBuilder,
         private searchService: CargoTrackingSearchService)
     {
-        this.GetVariablesFromURI();
-        this.GetSearchTextFromURI();
-        this.listenToRouterEvents();
+        // this.GetVariablesFromURI();
+        // this.listenToRouterEvents();
        
-
-        if (this.SearchText) {
-            this.Search();
-        }
-
-        this.InitForm();
     }
 
 
@@ -57,17 +50,17 @@ export class SearchComponent implements AfterViewInit
         let searchKey = this.route.snapshot.paramMap.get('searchKey');
       
 
-        var tenant = this.route.snapshot.parent.paramMap.get('Tenant');
+        var tenant = this.route.snapshot.paramMap.get('Tenant');
         if(tenant!=null && tenant!=""){
            this._Tenant = Number(tenant);
          }
          else{
-            //  if(searchKey!=null && searchKey!=""){
-            //     this.router.navigate([1,'search',searchKey]);
-            //  }
-            //  else{
-            //     this.router.navigate([1,'search']);
-            //  }
+             if(searchKey!=null && searchKey!=""){
+                this.router.navigate([1,'search',searchKey]);
+             }
+             else{
+                this.router.navigate([1,'search']);
+             }
             
          }
     }
@@ -166,7 +159,7 @@ export class SearchComponent implements AfterViewInit
     }
     Search()
     {
-        if(this._Tenant && this.SearchText){
+        if(this._Tenant){
             this.router.navigate([this._Tenant,'search', this.SearchText]);
             // this.FilterItems();
             this.LoadShipments();
@@ -202,7 +195,7 @@ export class SearchComponent implements AfterViewInit
     {
         var SecurityKey = item.SecurityKey;
 
-        this.router.navigate([this._Tenant,'search','shipment', SecurityKey]);
+        this.router.navigate([this._Tenant,'shipment', SecurityKey]);
 
     }
     LoadShipments()
