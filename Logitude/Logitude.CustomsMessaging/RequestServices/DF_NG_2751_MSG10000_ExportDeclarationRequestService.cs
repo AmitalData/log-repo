@@ -731,6 +731,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             customDeclaration.TypeCode = SetCodeTypeValue<DeclarationTypeCodeType>(declarationPM.DeclarationTypeCode);// MUST  hard coded
 
             customDeclaration.DMExtensions = GetDMExtensions(declarationPM);
+            customDeclaration.AdditionalDocument = GetDeclarationAdditionalDocuments(declarationPM);
              customDeclaration.Agent = GetDeclarationAgent(declarationPM);
             customDeclaration.Exporter = GetImporter(declarationPM);
 
@@ -871,29 +872,29 @@ namespace Logitude.CustomsMessaging.RequestServices
             return DMExtensions;
         }
 
-        //private DeclarationDMExtensionsAdditionalDocument[] GetDeclarationDMExtensionsAdditionalDocument(DeclarationPM declarationPM)
-        //{
-        //    var declarationDMExtensionsAdditionalDocumentList = new List<DeclarationDMExtensionsAdditionalDocument>();
-        //    var customsDocumentQueryService = new CustomsDocumentQueryService(_context);
-        //    var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = declarationPM.Id, ParentEntityCode = "Declaration" }, declarationPM.Tenant);
+        private DeclarationAdditionalDocument[] GetDeclarationAdditionalDocuments(DeclarationPM declarationPM)
+        {
+            var declarationDMExtensionsAdditionalDocumentList = new List<DeclarationAdditionalDocument>();
+            var customsDocumentQueryService = new CustomsDocumentQueryService(_context);
+            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = declarationPM.Id, ParentEntityCode = "Declaration" }, declarationPM.Tenant);
 
-        //    foreach (var customsDocumentPM in customsDocumentPMList)
-        //    {
-        //        //if (documentPointerItem.Child1EntityCode == null && documentPointerItem.Child2EntityCode == null && documentPointerItem.Child3EntityCode == null) this condition exists inside the query of get tickets for parent.
-        //        //{
-        //        //if (customsDocumentPM.DocumentsFilingId != null) // Only if there is a document ///mohammad.... customsdocuemntId is replaced by doucmentinid it's the same.
-        //        if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId)) // Mirit 22/12/15 19136
-        //        {
-        //            var declarationDMExtensionsAdditionalDocument = new DeclarationDMExtensionsAdditionalDocument();
-        //            declarationDMExtensionsAdditionalDocument.DMExtensions = new DeclarationDMExtensionsAdditionalDocumentDMExtensions();
-        //            declarationDMExtensionsAdditionalDocument.DMExtensions.ExternalAttachmentID = new ExternalAttachmentIDType();
-        //            declarationDMExtensionsAdditionalDocument.DMExtensions.ExternalAttachmentID.Value = customsDocumentPM.ExternalAttachmentId;
+            foreach (var customsDocumentPM in customsDocumentPMList)
+            {
+                //if (documentPointerItem.Child1EntityCode == null && documentPointerItem.Child2EntityCode == null && documentPointerItem.Child3EntityCode == null) this condition exists inside the query of get tickets for parent.
+                //{
+                //if (customsDocumentPM.DocumentsFilingId != null) // Only if there is a document ///mohammad.... customsdocuemntId is replaced by doucmentinid it's the same.
+                if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId)) // Mirit 22/12/15 19136
+                {
+                    var declarationDMExtensionsAdditionalDocument = new DeclarationAdditionalDocument();
+                    declarationDMExtensionsAdditionalDocument.DMExtensions = new DeclarationAdditionalDocumentDMExtensions();
+                    declarationDMExtensionsAdditionalDocument.DMExtensions.ExternalAttachmentID = new ExternalAttachmentIDType();
+                    declarationDMExtensionsAdditionalDocument.DMExtensions.ExternalAttachmentID.Value = customsDocumentPM.ExternalAttachmentId;
 
-        //            declarationDMExtensionsAdditionalDocumentList.Add(declarationDMExtensionsAdditionalDocument);
-        //        }
-        //    }
-        //    return declarationDMExtensionsAdditionalDocumentList.ToArray();
-        //}
+                    declarationDMExtensionsAdditionalDocumentList.Add(declarationDMExtensionsAdditionalDocument);
+                }
+            }
+            return declarationDMExtensionsAdditionalDocumentList.ToArray();
+        }
 
 
         private string ResolveFromGlobalScannedAttachmentToEntityOperation780()
