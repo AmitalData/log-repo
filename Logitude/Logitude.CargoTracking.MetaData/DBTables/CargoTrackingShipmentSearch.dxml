@@ -38,6 +38,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsPublic"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Index
-    Columns="Tenant,SearchFields" />
+    Columns="Tenant,SearchFields,IsPublic" />
 </Table>

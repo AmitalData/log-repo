@@ -135,6 +135,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? isPublic ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsPublic  
+	   {
+	    
+	     get
+		{
+		   return isPublic;
+		 }
+		 set
+		 {
+		   if(isPublic != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPublic",OldValue=isPublic,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isPublic=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
