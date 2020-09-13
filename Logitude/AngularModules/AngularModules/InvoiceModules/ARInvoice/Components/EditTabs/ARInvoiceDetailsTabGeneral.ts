@@ -57,6 +57,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsDatesFieldEnabledWhileCrediting: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public ShowLocal:boolean=false;
     constructor(private entityArgs: EntityArgs) {
         super();
        // this.CurrentSession.StartBusyIndicatorLoading();
@@ -67,7 +68,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.IsCustomsInvoice = (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") ? true : false;
         this.ObservableItems = new ObservableCollection([]);
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
-
+        this.ShowLocal=  !SessionLocator.LoggedUserPM.DontShowLocal;
 
 
 
@@ -1338,6 +1339,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     public EntityPM: ARInvoiceLinePM = null;
     public ObjectTableName = "ARInvoiceLine";
     public DataContext = this;
+   
     constructor(entityPM: ARInvoiceLinePM, public fatherComponent: ARInvoiceDetailsTabGeneral, public AddNewLineMode ) {
         super();
         this.EntityPM = entityPM;
@@ -1346,6 +1348,7 @@ export class ARInvoiceLineItem extends BaseComponent {
         this.ReadVatTypeData();
         this.ComputeRelativeRateDate();
         this.SetUIProperties();
+       
         if (this.EntityPM.ForiegnCurrencyCode != null) {
             this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", this.EntityPM.ForiegnCurrencyCode);
         } else {
