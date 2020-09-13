@@ -92,12 +92,18 @@ namespace Logitude.Customs.BL.Messaging.Customs.PerformanceLogger
         public string QueueDefinitionCode
         { get; set; }
         public string InterfaceTypeCode { get; set; }
-        public DateTime RequestCreateDate { get; set; }
+        //public DateTime RequestCreateDate { get; set; }
         public DateTime RequestStartDate { get; set; }
         public DateTime RequestEndDate { get; set; }
+
+        public double RequestDiff { get  { return this.RequestEndDate.Subtract(this.RequestStartDate).TotalMilliseconds; } }
+        
+
         //public DateTime QueueCreateDate { get; set; }
         public DateTime QueueStartDate { get; set; }
         public DateTime QueueEndDate { get; set; }
+
+        public double QueueDiff { get { return this.QueueEndDate.Subtract(this.QueueStartDate).TotalMilliseconds; } }
         public string ServerCPU { get; set; }
         public string RequestSheetID { get; set; }
         public string DBResponseTime { get; set; }
