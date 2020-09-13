@@ -83,13 +83,49 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
         private static void SetCurrentMilestone(DataRow TableRow)
         {
-            if (!TableRow["ClearanceDone"].Equals(null) && TableRow["ClearanceDone"].GetType().Name != "DBNull" && !TableRow["ClearanceDone"].Equals("False"))
+            if (!IsFieldNullOrEmpty(TableRow, "DeliveredDone") && !TableRow["DeliveredDone"].Equals("False"))
             {
-                TableRow.SetField("CurrentMilestoneCode", "9");
-                TableRow.SetField("CurrentMilestoneDate", TableRow["CustomsClearanceDate"]);
+                TableRow.SetField("CurrentMilestoneCode", "11");
+                TableRow.SetField("CurrentMilestoneDate", TableRow["DeliveredDate"]);
 
             }
-            else if (!TableRow["PickupDone"].Equals(null) && TableRow["PickupDone"].GetType().Name != "DBNull" && !TableRow["PickupDone"].Equals("False"))
+            else if (!IsFieldNullOrEmpty(TableRow, "ClearanceDone") && !TableRow["ClearanceDone"].Equals("False"))
+            {
+                TableRow.SetField("CurrentMilestoneCode", "9");
+                TableRow.SetField("CurrentMilestoneDate", TableRow["ClearanceDate"]);
+
+            }
+            else if (!IsFieldNullOrEmpty(TableRow, "CustomsPaymentDone") && !TableRow["CustomsPaymentDone"].Equals("False"))
+            {
+                TableRow.SetField("CurrentMilestoneCode", "8");
+                TableRow.SetField("CurrentMilestoneDate", TableRow["CustomsPaymentDate"]);
+
+            }
+            else if (!IsFieldNullOrEmpty(TableRow, "ToWarehouseDone") && !TableRow["ToWarehouseDone"].Equals("False"))
+            {
+                TableRow.SetField("CurrentMilestoneCode", "6");
+                TableRow.SetField("CurrentMilestoneDate", TableRow["ToWarehouseDate"]);
+
+            }
+            else if (!IsFieldNullOrEmpty(TableRow, "ArrivalDone") && !TableRow["ArrivalDone"].Equals("False"))
+            {
+                TableRow.SetField("CurrentMilestoneCode", "5");
+                TableRow.SetField("CurrentMilestoneDate", TableRow["ArrivalDate"]);
+
+            }
+            else if (!IsFieldNullOrEmpty(TableRow, "DepartureDone") && !TableRow["DepartureDone"].Equals("False"))
+            {
+                TableRow.SetField("CurrentMilestoneCode", "4");
+                TableRow.SetField("CurrentMilestoneDate", TableRow["DepartureDate"]);
+
+            }
+            else if (!IsFieldNullOrEmpty(TableRow, "FromWarehouseDone") && !TableRow["FromWarehouseDone"].Equals("False"))
+            {
+                TableRow.SetField("CurrentMilestoneCode", "3");
+                TableRow.SetField("CurrentMilestoneDate", TableRow["FromWarehouseDate"]);
+
+            }
+            else if (!IsFieldNullOrEmpty(TableRow, "PickupDone") && !TableRow["PickupDone"].Equals("False"))
             {
                 TableRow.SetField("CurrentMilestoneCode", "2");
                 TableRow.SetField("CurrentMilestoneDate", TableRow["PickupDate"]);
