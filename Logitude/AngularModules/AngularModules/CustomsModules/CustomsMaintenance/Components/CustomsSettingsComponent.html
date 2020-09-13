@@ -504,10 +504,65 @@
 
 
 
+                    <tr>
+                        <td style="padding:2px;">
+                        </td>
 
+                        <td style="padding:2px;" width="250px">
+                            <table>
+                                <tr>
+                                    <td stye=" width: 70px">
+                                        <LogLabel [ObjectFieldName]="'LastRunningDCAWS'"
+                                                  [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext">
+
+                                        </LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'LastRunningDCAWS'"
+                                                    [InputType]="'text'"
+                                                    [DataContext]="DataContext"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [HideColumns]="true"
+                                                    [Text]="LastRunningDCAWS"></LogTextBox>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+
+                        </td>
+
+                        <!--UnfConnectionString-->
+                         <td style="padding:2px;" width="250px">
+                            <table>
+                                <tr>
+                                    <td stye=" width: 70px">
+                                        <LogLabel [ObjectFieldName]="'LastNumOfMessagesDCAWS'"
+                                                  [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext">
+
+                                        </LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'LastNumOfMessagesDCAWS'"
+                                                    [InputType]="'text'"
+                                                    [DataContext]="DataContext"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [HideColumns]="true"
+                                                    [Text]="LastNumOfMessagesDCAWS"></LogTextBox>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+
+                        </td>
+ 
+                    </tr>
 
                     <tr>
-                        
+
 
                         <!--IIGServiceAddress-->
                         <td style="padding:2px;">
@@ -529,12 +584,11 @@
                         </td>
                         <!--UServerServiceAddress-->
                         <td style="padding:2px;">
-
                         </td>
                     </tr>
 
                     <tr>
-                       
+
 
                         <!--IIGServiceAddress-->
                         <td style="padding:2px;">
@@ -560,7 +614,6 @@
 
                         <!---->
                         <td style="padding:2px;">
-
                         </td>
                     </tr>
 

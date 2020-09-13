@@ -53,6 +53,7 @@ import { CustomsCountryListService } from '../../../../../Customs/Services/Stand
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
 import { DecimalPipe } from '@angular/common';
 import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
+import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 
 @Component({
     
@@ -128,12 +129,12 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
 
 
-        this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
+        //this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
+        this.accumulationFeature = FeatureLocator.HasFeaturePermession("Customs.Declaration", "ACCUMULATION")
         if (this.accumulationFeature) {
             this.IsAccumulationStateVisibile = true;
             this.IsNotForAccumaltionVisibile = true;
         }
-        this.CheckRequrierdFieldsForSend();
         //this.CurrentSession.SubscriptionAdd(
         //this.CurrentSession.SelectInvoiceItemEvent.subscribe((res) => {
         //    var item: SupplierInvoiceItemLine = this.ItemsSource.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
@@ -425,9 +426,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.oldIncoterm = this.EntityPM.IncotermCode;
         //this.InvoiceNumber = entityPM.InvoiceNumber;
         this.IsChecked = false;
-
-        if (this.declarationPM.Direction=="E" && FeatureLocator.HasFeaturePermession("Customs.Declaration", "EXPORTDECLARATIONPSCREEN"))
+         if (this.declarationPM.Direction=="E" && FeatureLocator.HasFeaturePermession("Customs.Declaration", "EXPORTDECLARATIONPSCREEN"))
             this.allowExport = true;
+        this.CheckRequrierdFieldsForSend();
 
 
         this.isNewEntity = IsNewEntity;
@@ -633,6 +634,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.UIProperties.SetEnabled("TotalFreightInFreightCurrency", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("InsurancePercentage", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("TotalFreightAmountInNIS", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("PartyRelationshipCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("BuyerName", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("BuyerCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("BuyerAddress", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("BuyerRoleCode", this.ObjectTableName, !this.IsDisplayOnly);
 
         if (this.IsDisplayOnly) {
             this.UIProperties.SetEnabled("FreightCurrencyTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
@@ -686,13 +692,21 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
 
     CheckRequrierdFieldsForSend() {
+        var isExport = false;
+        if (this.allowExport) {
+            isExport = true;
+        }
+
         var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.SupplierInvoice')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
+        var customsRequiredFieldExtendedListService: CustomsRequiredFieldExtendedListService = new CustomsRequiredFieldExtendedListService();
+        filters = customsRequiredFieldExtendedListService.GetFilter(filters, isExport)
+
         customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
-            requiredFields.forEach((field) => {
+             requiredFields.forEach((field) => {
                 var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
                 this.UIProperties.SetWarning(objectField.FieldName, 'Customs.SupplierInvoice', true);
             });
@@ -727,6 +741,40 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     public get ChangeInSupplierInvoice() { return this.EntityPM.ChangeInSupplierInvoice; }
     public set ChangeInSupplierInvoice(newValue: string) { this.EntityPM.ChangeInSupplierInvoice = newValue; }
+
+
+    public get BuyerName() { return this.EntityPM ? this.EntityPM.BuyerName : null; }
+    public set BuyerName(newValue: string) {
+        this.EntityPM.BuyerName = newValue;
+    }
+
+    public get BuyerAddress() { return this.EntityPM ? this.EntityPM.BuyerAddress : null; }
+    public set BuyerAddress(newValue: string) {
+
+        this.EntityPM.BuyerAddress = newValue;
+    }
+
+    public get BuyerCountryCode() { return this.EntityPM ? this.EntityPM.BuyerCountryCode : null; }
+    public set BuyerCountryCode(newValue: string) {
+
+        this.EntityPM.BuyerCountryCode = newValue;
+    }
+
+    public get BuyerRoleCode() { return this.EntityPM ? this.EntityPM.BuyerRoleCode : null; }
+    public set BuyerRoleCode(newValue: string) {
+      
+        this.EntityPM.BuyerRoleCode = newValue;
+    }
+
+    public get PartyRelationshipCode() { return this.EntityPM ? this.EntityPM.PartyRelationshipCode : null; }
+    public set PartyRelationshipCode(newValue: string) {
+        //if (AppTool.IsNullOrEmpty(newValue))
+        //    this.UIProperties.SetRequired("PartyRelationshipCode", this.ObjectTableName, true);
+        //else
+        //    this.UIProperties.SetRequired("PartyRelationshipCode", this.ObjectTableName, false);
+
+        this.EntityPM.PartyRelationshipCode = newValue;
+    }
 
     public get VendorId() { return this.EntityPM.VendorId; }
     public set VendorId(newValue: string) {
@@ -3093,6 +3141,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             windowArgs.SupplierInvoiceItemPM = item.entityPM;
             windowArgs.IsDisplayOnly = this.Parent.IsReadOnly;
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
+            windowArgs.allowExport = this.allowExport;
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 1000;
@@ -3116,8 +3165,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             windowArgs.SupplierInvoiceItemPM = item.entityPM;
             windowArgs.Parent = item;
             windowArgs.IsDisplayOnly = this.Parent.IsReadOnly;
- 
-            var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
+             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 1000;
@@ -3780,7 +3828,7 @@ export class SupplierInvoiceFreightAmountLine extends BaseComponent {
 
 
                     confirmWindow.Width = 400;
-
+                     
 
                     confirmWindow.Height = 200;
                     confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");

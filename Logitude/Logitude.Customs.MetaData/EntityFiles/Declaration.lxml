@@ -16497,6 +16497,80 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;3bbe317e-3d3b-4c10-b903-9ae6c1847a95&quot;"
+    FieldName="&quot;AmendmentErrorXml&quot;"
+    OldNames="AmendmentErrorXml"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="4000"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="4000"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;AmendmentErrorXml&quot;"
+    ListPropertyPath="&quot;AmendmentErrorXml&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customs.Declaration&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;AmendmentErrorXml&quot;"
+    DefaultText="&quot;Amendment Error Xml&quot;"
+    FullLocalDefaultText="&quot;שגיאות - תיקון הצהרה&quot;"
+    ListFieldLable="&quot;AmendmentErrorXmlListLable&quot;"
+    ListLableDefaultText="&quot;Amendment Error Xml&quot;"
+    ListLocalDefaultText="&quot;שגיאות - תיקון הצהרה&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="true"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;OpenCourierMaster&quot;"
     TextCode="&quot;Courier Master Open&quot;"
@@ -17675,6 +17749,72 @@
         IndexOrder="0" />
     </QueryFilters>
   </Query>
+  <Query
+    Code="&quot;AllCourierDeclarations&quot;"
+    TextCode="&quot;All Courier Declarations&quot;"
+    LocalTextCode="&quot;כל ההצהרות&quot;"
+    QueryGroupCode="&quot;DECL&quot;"
+    IndexOrder="15"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    QuerySection="&quot;Customs.Declaration&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;TaxationDateTime&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;AllCourierDeclarations&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;MAWBCourierMaster&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;AllCourierDeclarations&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
+        ColumnWidth="110" />
+      <QueryColumn
+        QueryCode="&quot;AllCourierDeclarations&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CourierHAWB&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;AllCourierDeclarations&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;FastIndividualProcessCode&quot;"
+        ColumnWidth="140" />
+      <QueryColumn
+        QueryCode="&quot;AllCourierDeclarations&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="160" />
+      <QueryColumn
+        QueryCode="&quot;AllCourierDeclarations&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;AllCourierDeclarations&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;ProcedureCurrentName&quot;"
+        ColumnWidth="190" />
+      <QueryColumn
+        QueryCode="&quot;AllCourierDeclarations&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
+        ColumnWidth="180" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;AllCourierDeclarations&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCourierDeclaration&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;Customs.Declaration&quot;"
@@ -17921,22 +18061,6 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;Docs In&quot;"
-    TabLocalName="&quot;מסמכים מקושרים&quot;"
-    ObjectTableName="&quot;Customs.Declaration&quot;"
-    Code="&quot;DCDI&quot;"
-    ControlPath="&quot;Logitude.Customs.Views.Documents.DeclarationDocsInControl&quot;"
-    TextCode="&quot;Customs.Declaration.TH.DocsIn&quot;"
-    IsPackagable="true"
-    IndexOrder="10"
-    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DocsIn/DeclarationDocsInTabComponent&quot;"
-    HtmlComponentName="&quot;DeclarationDocsInTabComponent&quot;"
-    FeatureCode="&quot;DOCSIN&quot;"
-    FeatureTextCodeCode="&quot;Customs.Declaration.Features.DocsIn&quot;"
-    FeatureDefaultText="&quot;DocsIn&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
     TabName="&quot;Request Sheets&quot;"
     TabLocalName="&quot;גליון בקשות&quot;"
     ObjectTableName="&quot;Customs.Declaration&quot;"
@@ -17944,7 +18068,7 @@
     ControlPath="&quot; &quot;"
     TextCode="&quot;Customs.Declaration.TH.RequestSheet&quot;"
     IsPackagable="false"
-    IndexOrder="11"
+    IndexOrder="10"
     HtmlComponentURL="&quot;./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent&quot;"
     HtmlComponentName="&quot;RequestSheetTabComponent&quot;"
     FeatureCode="&quot;DECLARATIONSHEET&quot;"
@@ -17960,7 +18084,7 @@
     ControlPath="&quot;Simplog.Infrastructure.Views.Communications.CommunicationsControl&quot;"
     TextCode="&quot;Customs.Declaration.TH.Communications&quot;"
     IsPackagable="false"
-    IndexOrder="12"
+    IndexOrder="11"
     FeatureCode="&quot;COMMUNICATIONS&quot;"
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Communication&quot;"
     FeatureDefaultText="&quot;Communication&quot;"
@@ -17974,7 +18098,7 @@
     ControlPath="&quot; &quot;"
     TextCode="&quot;Customs.Declaration.TH.MoreFields&quot;"
     IsPackagable="true"
-    IndexOrder="13"
+    IndexOrder="12"
     HtmlComponentName="&quot;&quot;"
     FeatureCode="&quot;MOREFIELDS&quot;"
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.MoreFields&quot;"
@@ -17989,7 +18113,7 @@
     ControlPath="&quot; &quot;"
     TextCode="&quot;Customs.Declaration.TH.Tapags&quot;"
     IsPackagable="false"
-    IndexOrder="14"
+    IndexOrder="13"
     HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Tapag/DeclarationTapagTabComponent&quot;"
     HtmlComponentName="&quot;DeclarationTapagTabComponent&quot;"
     FeatureCode="&quot;TAPAGS&quot;"
@@ -18005,7 +18129,7 @@
     ControlPath="&quot; &quot;"
     TextCode="&quot;Customs.Declaration.TH.Notification&quot;"
     IsPackagable="true"
-    IndexOrder="15"
+    IndexOrder="14"
     HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/NotificationReplyTabComponent&quot;"
     HtmlComponentName="&quot;NotificationReplyTabComponent&quot;"
     FeatureCode="&quot;NOTIFICATION&quot;"
@@ -18021,7 +18145,7 @@
     ControlPath="&quot; &quot;"
     TextCode="&quot;Customs.Declaration.TH.Notifications&quot;"
     IsPackagable="true"
-    IndexOrder="16"
+    IndexOrder="15"
     HtmlComponentURL="&quot;./CustomsModules/CustomsControls/Components/NotificationComponent&quot;"
     HtmlComponentName="&quot;NotificationComponent&quot;"
     FeatureCode="&quot;NOTIFICATIONS&quot;"
@@ -18037,7 +18161,7 @@
     ControlPath="&quot; &quot;"
     TextCode="&quot;General.TH.CustomsCollateral&quot;"
     IsPackagable="true"
-    IndexOrder="18"
+    IndexOrder="16"
     HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Collateral/DeclarationCollateralsComponent&quot;"
     HtmlComponentName="&quot;DeclarationCollateralsComponent&quot;"
     FeatureCode="&quot;COLLATERAL&quot;"
@@ -18053,7 +18177,7 @@
     ControlPath="&quot; &quot;"
     TextCode="&quot;Customs.Declaration.TH.CargoSplit&quot;"
     IsPackagable="true"
-    IndexOrder="19"
+    IndexOrder="18"
     HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSplit/DeclarationCargoSplitTabComponent&quot;"
     HtmlComponentName="&quot;DeclarationCargoSplitTabComponent&quot;"
     FeatureCode="&quot;DECLARATIONCASPLIT&quot;"
@@ -18069,7 +18193,7 @@
     ControlPath="&quot; &quot;"
     TextCode="&quot;Customs.Declaration.TH.Classification&quot;"
     IsPackagable="true"
-    IndexOrder="20"
+    IndexOrder="19"
     HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Classification/DeclarationClassificationComponent&quot;"
     HtmlComponentName="&quot;DeclarationClassificationComponent&quot;"
     FeatureCode="&quot;DECLARATIONCLASSIFICATION&quot;"
@@ -18085,7 +18209,7 @@
     ControlPath="&quot; &quot;"
     TextCode="&quot;Customs.Declaration.TH.CargoSeal&quot;"
     IsPackagable="true"
-    IndexOrder="21"
+    IndexOrder="20"
     HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSeal/DeclarationCargoSealTabComponent&quot;"
     HtmlComponentName="&quot;DeclarationCargoSealTabComponent&quot;"
     FeatureCode="&quot;DECLARATIONCARGOSEAL&quot;"
@@ -18101,12 +18225,28 @@
     ControlPath="&quot;Logitude.Customs.Views.Tabs.DeclarationAmendmentControl&quot;"
     TextCode="&quot;Customs.Declaration.TH.DeclarationAmendment&quot;"
     IsPackagable="true"
-    IndexOrder="22"
+    IndexOrder="21"
     HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DeclarationAmendment/DeclarationAmendmentComponent&quot;"
     HtmlComponentName="&quot;DeclarationAmendmentComponent&quot;"
     FeatureCode="&quot;DECLARATIONAMENDMENT&quot;"
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.DeclarationAmendment&quot;"
     FeatureDefaultText="&quot;Declaration Amendment&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Docs In&quot;"
+    TabLocalName="&quot;טעינת מסמכים&quot;"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    Code="&quot;DCDI&quot;"
+    ControlPath="&quot;Logitude.Customs.Views.Documents.DeclarationDocsInControl&quot;"
+    TextCode="&quot;Customs.Declaration.TH.DocsIn&quot;"
+    IsPackagable="true"
+    IndexOrder="22"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DocsIn/DeclarationDocsInTabComponent&quot;"
+    HtmlComponentName="&quot;DeclarationDocsInTabComponent&quot;"
+    FeatureCode="&quot;DOCSIN&quot;"
+    FeatureTextCodeCode="&quot;Customs.Declaration.Features.DocsIn&quot;"
+    FeatureDefaultText="&quot;DocsIn&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>
@@ -19007,7 +19147,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
     <EventType
-      Code="&quot;DPR&quot;"
+      Code="&quot;DWR&quot;"
       ObjectTableName="&quot;Customs.Declaration&quot;"
       EnglishName="&quot;Amendment Waiting for customs&quot;"
       LocalName="&quot;תיקון הצהרה ממתינה לטיפול מכס&quot;"
@@ -19064,6 +19204,19 @@
       ObjectTableName="&quot;Customs.Declaration&quot;"
       EnglishName="&quot;Declaration Cancel Sent&quot;"
       LocalName="&quot;נשלחה בקשה לביטול הצהרה&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;SCH&quot;"
+      ObjectTableName="&quot;Customs.Declaration&quot;"
+      EnglishName="&quot;נדרש לטפל בהזנת סגר&quot;"
+      LocalName="&quot;נדרש לטפל בהזנת סגר&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -21195,6 +21348,36 @@
       Code="&quot;Customs.Declaration.O.PaymentDetails&quot;"
       DefaultText="&quot;Payment Details&quot;"
       LocalDefaultText="&quot;פרטי תשלום&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.Prices&quot;"
+      DefaultText="&quot;Prices&quot;"
+      LocalDefaultText="&quot;מחירים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.AbachStatement&quot;"
+      DefaultText="&quot;Abach Declaration&quot;"
+      LocalDefaultText="&quot;הצהרות אב'כ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ConnectedDeclarations&quot;"
+      DefaultText="&quot;Connected Declarations&quot;"
+      LocalDefaultText="&quot;הצהרות מקושרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.AllCourierDeclarations&quot;"
+      DefaultText="&quot;All Courier Declarations &quot;"
+      LocalDefaultText="&quot;כל ההצהרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.Errors&quot;"
+      DefaultText="&quot;Errors&quot;"
+      LocalDefaultText="&quot;שגיאות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

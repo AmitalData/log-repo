@@ -366,6 +366,12 @@
 
         private string statisticQuantityTypeField;
 
+        private string ocrPageNumberField;
+
+        private string ocrTopField;
+
+        private string ocrHeightField;
+
         private CERTIFICATES[] cERTIFICATESField;
 
         private EXPENSES[] eXPENSESField;
@@ -575,6 +581,45 @@
             set
             {
                 this.statisticQuantityTypeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string OcrPageNumber
+        {
+            get
+            {
+                return this.ocrPageNumberField;
+            }
+            set
+            {
+                this.ocrPageNumberField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string OcrTop
+        {
+            get
+            {
+                return this.ocrTopField;
+            }
+            set
+            {
+                this.ocrTopField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string OcrHeight
+        {
+            get
+            {
+                return this.ocrHeightField;
+            }
+            set
+            {
+                this.ocrHeightField = value;
             }
         }
 

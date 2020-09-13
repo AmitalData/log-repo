@@ -30,6 +30,25 @@ export class DeclarationEditComponentController implements IEditComponentControl
             }
 
         }
+          if (currentEntity.Direction=="E") {
+            var indexOfTab = allTabs.findIndex(t => t.Code == "DEIN");
+             if (indexOfTab > -1) {
+                 allTabs[indexOfTab].TabNameTextCodeCode = "Customs.Declaration.TH.ExporterInvoices";
+             }
+        
+
+        }
+         else {
+             var indexOfTab = allTabs.findIndex(t => t.Code == "DEIN");
+             if (indexOfTab > -1) {
+                 allTabs[indexOfTab].TabNameTextCodeCode = "Customs.Declaration.TH.Invoices";
+             }
+               var indexOfTab = allTabs.findIndex(t => t.Code == "DCDI");
+              if (indexOfTab > -1) {
+                  allTabs.splice(indexOfTab, 1);
+
+              }
+         }
 
     }
     public MustRefresh: boolean = null;

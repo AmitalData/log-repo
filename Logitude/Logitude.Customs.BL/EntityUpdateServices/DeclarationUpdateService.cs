@@ -97,7 +97,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     PackageMeasureQualifierCode = "2",
                     Tenant = entityPM.Tenant,
                     LineNumber = 1,
-                    PackageQuantity = 33,
+                   // PackageQuantity = 33,
                     ChangeSetOp = ChangeSetOperation.Insert,
                 };
 
@@ -680,7 +680,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (extDocPM != null)
             {
                 var DeclarationVersionId = "0";
-                DocumentsFilingMetaDataValueQuery.UpSert(extDocPM, "VER", DeclarationVersionId);
+                DocumentsFilingMetaDataValueQuery.UpSert_Del(extDocPM, "VER", DeclarationVersionId);
             }
         }
 
@@ -1129,18 +1129,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
             }
-            if (entityPM.ReferentUserId != null)
-            {
-                ICustomContext context = MainContext as CustomContext;
-                DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
-                DeclarationReferantDataPM referant = declarationReferantDataQueryService.GetSingle(entityPM.Id, false, true);
-                if (referant != null)
-                {
-                    referant.ChangeSetOp = ChangeSetOperation.Update;
-                    DeclarationReferantDataUpdateService service = new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                    service.Update(referant, true);
-                }
-            }
         }
 
 
@@ -1166,23 +1154,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             if (!string.IsNullOrWhiteSpace(eventContextTagModel.EventCode))
                             {
-                                if(dirtyDeclarationPM.IsAmendment==true)
-                                {
-                                    string declarationNumber = null;
-                                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(dirtyDeclarationPM.Tenant);
-                                    var dec = declarationQueryService.GetAcceptDeclarationAmendment(dirtyDeclarationPM.AmendmentOriginalDeclartation,dirtyDeclarationPM.Tenant);
-                                    if(dec!=null)
-                                    {
-                                        declarationNumber = dec.DeclarationNumber;
-                                    }
-                                    DoUpdateNotification(dirtyDeclarationPM, loggingUserId, eventContextTagModel.EventCode, declarationNumber); // moran 11.8.14 - Task 7086
-
-                                }
-                                else
-                                {
-                                    DoUpdateNotification(dirtyDeclarationPM, loggingUserId, eventContextTagModel.EventCode); // moran 11.8.14 - Task 7086
-
-                                }
+                                DoUpdateNotification(dirtyDeclarationPM, loggingUserId, eventContextTagModel.EventCode); // moran 11.8.14 - Task 7086
                             }
                         }
                         break;
@@ -1201,7 +1173,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
         // moran 11.8.14 - Task 7086 -->
-        private void DoUpdateNotification(DeclarationPM declarationPM, string loggingUserId, string eventCode, string declarationNumber="")
+        private void DoUpdateNotification(DeclarationPM declarationPM, string loggingUserId, string eventCode)
         {
             string notificationDefinitionCode = "";
             string desc = "";
@@ -1267,49 +1239,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             else if (eventCode == "DCH")
             {
                 notificationDefinitionCode = "5117N";
-                if(string.IsNullOrEmpty( declarationPM.AmendmentRequestNumber))
-                desc = "בוצע תיקון הצהרה " + declarationNumber;
-                else
-                    desc = "בוצע תיקון הצהרה " + declarationNumber + " מספר בקשה  - " + declarationPM.AmendmentRequestNumber;
-
+                desc = "בוצע תיקון הצהרה " + declarationPM.DeclarationNumber;
                 type = "A";
                 LogMessagingUtil.Instance.AppendLine("Declaration Changed By Customs Notification");
             }
 
-            else if (eventCode == "DWR")
-            {
-                notificationDefinitionCode = "5117W";
-                desc = "תיקון הצהרה ממתין לטיפול המכס " + declarationNumber + " מספר בקשה - " + declarationPM.AmendmentRequestNumber;
-                type = "A";
-             }
-
-            else if (eventCode == "DMA")
-            {
-                notificationDefinitionCode = "5117A";
-                desc = "- תיקון הצהרה אושר" + declarationNumber + " מספר בקשה - " + declarationPM.AmendmentRequestNumber;
-                type = "A";
-            }
-
-            else if (eventCode == "DMD")
-            {
-                notificationDefinitionCode = "5117D";
-                desc = "תיקון הצהרה נדחה - " + declarationNumber + " מספר בקשה - " + declarationPM.AmendmentRequestNumber;
-                type = "A";
-            }
-
-            else if (eventCode == "DMC")
-            {
-                notificationDefinitionCode = "5117C";
-                desc = "תיקון הצהרה בוטל - " + declarationNumber + " מספר בקשה - " + declarationPM.AmendmentRequestNumber;
-                type = "A";
-            }
-
-            else if (eventCode == "DMP")
-            {
-                notificationDefinitionCode = "5117P";
-                desc = "תיקון הצהרה אושר חלקית - " + declarationNumber + "מספר בקשה - " + declarationPM.AmendmentRequestNumber;
-                type = "A";
-            }
             var notificationUpdateService = new NotificationUpdateService(this.MainContext as ICustomContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), declarationPM.Tenant);    //Yuval Chalup 17.11.2014 TASK-9089
             var notificationQueryService = new NotificationQueryService(this.MainContext as ICustomContext);  //Yuval Chalup 17.11.2014 TASK-9089
 
@@ -1803,91 +1737,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 toDeclaration.DeclarationNumberandVersionId = null;
                 toDeclaration.IsSignedVersion = false;
 
-                if (string.IsNullOrEmpty(toDeclaration.DestinationCountryCode))
-                {
-                    toDeclaration.DestinationCountryCode = fromDeclaration.DestinationCountryCode;
-                }
 
-                if ( toDeclaration.LoadingDateTime==null)
-                {
-                    toDeclaration.LoadingDateTime = fromDeclaration.LoadingDateTime;
-                }
-
-                if (string.IsNullOrEmpty(toDeclaration.ShipCode))
-                {
-                    toDeclaration.ShipCode = fromDeclaration.ShipCode;
-                }
-
-                if ( toDeclaration.IsExporterConfirmation==false)
-                {
-                    toDeclaration.IsExporterConfirmation = fromDeclaration.IsExporterConfirmation;
-                }
-
-                if (string.IsNullOrEmpty(toDeclaration.ExportAutonomyRegionTypeCode))
-                {
-                    toDeclaration.ExportAutonomyRegionTypeCode = fromDeclaration.ExportAutonomyRegionTypeCode;
-                }
-
-                if(fromDeclaration.DeclarationExportRecipients!= null && fromDeclaration.DeclarationExportRecipients.Count()>0 )
-                {
-
-                    foreach (DeclarationExportRecipientPM declarationExportRecipient in fromDeclaration.DeclarationExportRecipients)
-                    {
-                        if (toDeclaration.DeclarationExportRecipients == null)
-                        {
-                            toDeclaration.DeclarationExportRecipients = new List<DeclarationExportRecipientPM>();
-                        }
-                        DeclarationExportRecipientPM declarationExportRecipientPM = toDeclaration.DeclarationExportRecipients.Where(d => d.LineNumber == declarationExportRecipient.LineNumber).FirstOrDefault();
-
-                        if(declarationExportRecipientPM!= null) {
-
-                            if (string.IsNullOrEmpty(declarationExportRecipientPM.RecipientAddress))
-                            {
-                                declarationExportRecipientPM.RecipientAddress = declarationExportRecipient.RecipientAddress;
-
-                            }
-
-                            if (string.IsNullOrEmpty(declarationExportRecipientPM.RecipientIssueCountryCode))
-                            {
-                                declarationExportRecipientPM.RecipientIssueCountryCode = declarationExportRecipient.RecipientIssueCountryCode;
-
-                            }
-
-                            if (string.IsNullOrEmpty(declarationExportRecipientPM.RecipientName))
-                            {
-                                declarationExportRecipientPM.RecipientName = declarationExportRecipient.RecipientName;
-
-                            }
-
-                            declarationExportRecipientPM.ChangeSetOp = ChangeSetOperation.Update;
-
-
-                        }
-                        else
-                        {
-                            int? number = 0;
-                            if(toDeclaration.DeclarationExportRecipients != null)
-                            number = toDeclaration.DeclarationExportRecipients.Max(d => d.LineNumber);
-                            number += 1;
-
-
-                            declarationExportRecipientPM = new DeclarationExportRecipientPM()
-                            {
-                                LineNumber = number,
-                                DeclarationId = toDeclaration.Id,
-                                ChangeSetOp = ChangeSetOperation.Insert,
-                                RecipientAddress = declarationExportRecipient.RecipientAddress,
-                                RecipientIssueCountryCode = declarationExportRecipient.RecipientIssueCountryCode,
-                                RecipientName = declarationExportRecipient.RecipientName,
-                                Tenant = toDeclaration.Tenant,
-
-                            };
-
-                                toDeclaration.DeclarationExportRecipients.Add(declarationExportRecipientPM);
-                       
-                        }
-                    }
-                }
 
                 if (toDeclaration.Consignments.Count > 0)
                 {
@@ -2014,34 +1864,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 consignmentPM.CargoDescription = Consignment.CargoDescription;
 
                             }
-
-                            if (string.IsNullOrEmpty(consignmentPM.ExportLoadingPortCode))
-                            {
-                                consignmentPM.ExportLoadingPortCode = Consignment.ExportLoadingPortCode;
-
-                            }
-
-                            if (string.IsNullOrEmpty(consignmentPM.ExportRecieverWareHouseCode))
-                            {
-                                consignmentPM.ExportRecieverWareHouseCode = Consignment.ExportRecieverWareHouseCode;
-
-                            }
-
-                            if (string.IsNullOrEmpty(consignmentPM.ExportUnloadingPortCode))
-                            {
-                                consignmentPM.ExportUnloadingPortCode = Consignment.ExportUnloadingPortCode;
-
-                            }
-                          
-                                consignmentPM.IsDangerousGoods = Consignment.IsDangerousGoods;
-
-                        
-
-                            if (string.IsNullOrEmpty(consignmentPM.FinalDestinationPortCode))
-                            {
-                                consignmentPM.FinalDestinationPortCode = Consignment.FinalDestinationPortCode;
-
-                            }
                             consignmentPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
 
@@ -2077,12 +1899,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 UnloadDate = Consignment.UnloadDate,
                                 UnloadPortCode = Consignment.UnloadPortCode,
                                 UnloadPortName = Consignment.UnloadPortName,
-                                ExportLoadingPortCode= Consignment.ExportLoadingPortCode,
-                                ExportRecieverWareHouseCode= Consignment.ExportRecieverWareHouseCode,
-                                ExportUnloadingPortCode = Consignment.ExportUnloadingPortCode,
-                                IsDangerousGoods = Consignment.IsDangerousGoods,
-                                FinalDestinationPortCode= Consignment.FinalDestinationPortCode,
-
                                 ChangeSetOp = ChangeSetOperation.Insert,
                             };
 
@@ -2200,9 +2016,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
                 SupplierInvioceItemCertificatQueryService supplierInvioceItemCertificatQueryService = new SupplierInvioceItemCertificatQueryService(context);
                 SupplierInvoiceFreightAmountQueryService supplierInvoiceFreightAmountQueryService = new SupplierInvoiceFreightAmountQueryService(context);
-                SupplierInvoiceUCRQueryService supplierInvoiceUCRQueryService = new SupplierInvoiceUCRQueryService(context);
-                SupplierInvoicePaymentQueryService supplierInvoicePaymentQueryService = new SupplierInvoicePaymentQueryService(context);
-
                 //SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(context); --- mohammad bug 36761
 
                 foreach (SupplierInvoicePM invoice in fromDeclaration.SupplierInvoices)
@@ -2245,11 +2058,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         FullItemsCount = invoice.FullItemsCount,
                         FullParentsCount = invoice.FullParentsCount,
                         AccumalationStateCode = invoice.AccumalationStateCode,
-                        BuyerAddress = invoice.BuyerAddress,
-                        BuyerCountryCode=invoice.BuyerCountryCode,
-                        BuyerName=invoice.BuyerName,
-                        BuyerRoleCode= invoice.BuyerRoleCode,
-                        PartyRelationshipCode= invoice.PartyRelationshipCode,
+                        
 
                         ChangeSetOp = ChangeSetOperation.Insert,
 
@@ -2280,46 +2089,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     //    invoicePM.SupplierInvoiceModifications.Add(modificationPM);
                     //}
                     //----------------------
-
-                    invoice.SupplierInvoiceUCRs = supplierInvoiceUCRQueryService.GetMulti(new SupplierInvoiceKeys() { DeclarationId = fromDeclarationId, InvoiceCounterKey = invoicePM.InvoiceCounterKey }, true, true);
-
-                    foreach (SupplierInvoiceUCRPM UCR in invoice.SupplierInvoiceUCRs)
-                    {
-                        SupplierInvoiceUCRPM UCRPM = new SupplierInvoiceUCRPM()
-                        {
-                             DeclarationId = toDeclaration.Id,
-                             Tenant = toDeclaration.Tenant,
-                            InvoiceCounterKey = UCR.InvoiceCounterKey,
-                            AgentChargeID = UCR.AgentChargeID,
-                            SequenceNumeric= UCR.SequenceNumeric,
-                            SupplierChargeID= UCR.SupplierChargeID,
-                            ChangeSetOp = ChangeSetOperation.Insert,
-
-                        };
-                        invoicePM.SupplierInvoiceUCRs.Add(UCRPM);
-                    }
-
-
-                    invoice.SupplierInvoicePayments = supplierInvoicePaymentQueryService.GetMulti(new SupplierInvoiceKeys() { DeclarationId = fromDeclarationId, InvoiceCounterKey = invoicePM.InvoiceCounterKey }, true, true);
-
-                    foreach (SupplierInvoicePaymentPM Payment in invoice.SupplierInvoicePayments)
-                    {
-                        SupplierInvoicePaymentPM paymentPM = new SupplierInvoicePaymentPM()
-                        {
-                            DeclarationId = toDeclaration.Id,
-                            Tenant = toDeclaration.Tenant,
-                            InvoiceCounterKey = Payment.InvoiceCounterKey,
-                             SequenceNumeric = Payment.SequenceNumeric,
-                             PaymentAmount = Payment.PaymentAmount,
-                             PaymentTypeCode = Payment.PaymentTypeCode,
-                             ChangeSetOp = ChangeSetOperation.Insert,
-
-                        };
-                        invoicePM.SupplierInvoicePayments.Add(paymentPM);
-                    }
-
-
-
                     invoice.SupplierInvoiceFreightAmounts = supplierInvoiceFreightAmountQueryService.GetMulti(new SupplierInvoiceKeys() { DeclarationId = fromDeclarationId, InvoiceCounterKey = invoicePM.InvoiceCounterKey }, true, true); 
 
                     foreach (SupplierInvoiceFreightAmountPM amount in invoice.SupplierInvoiceFreightAmounts)
@@ -2388,10 +2157,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                              ItemHash= null,
                              DeferredCustomsTax = item.DeferredCustomsTax,
                              DeferredPurchaseTax= item.DeferredPurchaseTax,
-                            ClassificationTypeCode= item.ClassificationTypeCode,
-                            ClaimReasonCode= item.ClaimReasonCode,
-                            TransactionNatureCode = item.TransactionNatureCode,
-                            ItemAdditionalStatus = item.ItemAdditionalStatus,
+                             
+                            ItemAdditionalStatus= item.ItemAdditionalStatus,
                             ChangeSetOp = ChangeSetOperation.Insert,
 
 

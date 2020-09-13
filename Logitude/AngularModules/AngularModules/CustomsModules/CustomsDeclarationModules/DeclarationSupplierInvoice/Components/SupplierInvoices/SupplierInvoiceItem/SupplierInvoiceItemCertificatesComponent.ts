@@ -57,6 +57,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
     }
     IKEAFeature: string = 'hidden';
     LineNumber: string;
+    allowExport: boolean;
     SetWindowArgs(args: any) {
         var _entityResourceService: EntityResourceService = new EntityResourceService();
         _entityResourceService.getEntityResourceByTableName("Customs.CertificateExemptionType", 0).subscribe((res: any) => {
@@ -76,6 +77,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
             this.BuildCertificatesList();
             this.IsDisplayOnly = args.IsDisplayOnly;
             this.OriginalItemPM = args.SupplierInvoiceItemPM;
+            this.allowExport = args.allowExport;
             this.ClonedItemPM = this.CloneEntity(args.SupplierInvoiceItemPM);
             if (this.IsDisplayOnly) {
                 this.UIProperties.SetEnabled("CatalogNumber", "Customs.SupplierInvioceItemCertificat", false);

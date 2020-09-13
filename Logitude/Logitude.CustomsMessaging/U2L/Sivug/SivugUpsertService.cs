@@ -980,6 +980,40 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     SupplierInvoiceItemPM.TaxExemptCode = invoiceItem.TAXEXEMPTCODE; //TranslateTaxExemptCode(invoiceItem.TAXEXEMPTCODE);
                 }
 
+                if (SupplierInvoiceItemPM.OcrPageNumber == 0 && !string.IsNullOrWhiteSpace(invoiceItem.OcrPageNumber))
+                {
+                    if (decimal.TryParse(invoiceItem.OcrPageNumber, out decimal1))
+                    {
+                        if (decimal1 > 0) SupplierInvoiceItemPM.OcrPageNumber = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing OcrPageNumber (" + invoiceItem.OcrPageNumber + ") into decimal");
+                    }
+                }
+                if (SupplierInvoiceItemPM.OcrTop == 0 && !string.IsNullOrWhiteSpace(invoiceItem.OcrTop))
+                {
+                    if (decimal.TryParse(invoiceItem.OcrTop, out decimal1))
+                    {
+                        if (decimal1 > 0) SupplierInvoiceItemPM.OcrTop = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing OcrTop (" + invoiceItem.OcrTop + ") into decimal");
+                    }
+                }
+                if (SupplierInvoiceItemPM.OcrHeight == 0 && !string.IsNullOrWhiteSpace(invoiceItem.OcrHeight))
+                {
+                    if (decimal.TryParse(invoiceItem.OcrHeight, out decimal1))
+                    {
+                        if (decimal1 > 0) SupplierInvoiceItemPM.OcrHeight = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing OcrHeight (" + invoiceItem.OcrHeight + ") into decimal");
+                    }
+                }
+
                 if (invoiceItem.CERTIFICATES != null && invoiceItem.CERTIFICATES.Count() > 0)
                 {
                     try

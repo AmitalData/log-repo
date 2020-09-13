@@ -39,6 +39,10 @@ using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.BL.CloseTables;
 
+using Unifreight.BL.EntityQueryServices;
+
+using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
+
 //using Simplog.Infrastructure.SimplogUtilities;
 
 namespace Logitude.Customs.BL.Messaging.Customs
@@ -129,14 +133,19 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 SendRequestVIA requestVIA = _RequestParams.RequestVIA;
 
                 bool avoidSign = false;
-                bool notApprovedYet = true;
+                bool notApprovedYet = false;
                 if (!notApprovedYet)
                 {
                     avoidSign = AvoidSign(_RequestParams);
-                    if (avoidSign && _RequestParams.ForcePersonalSign)
+                    if (avoidSign)
                     {
-                        _RequestParams.ForcePersonalSign = false;
+                        _RequestParams.AvoidSign = true;
+                        if ( _RequestParams.ForcePersonalSign)
+                        {
+                            _RequestParams.ForcePersonalSign = false;
+                        }
                     }
+                    
                 }
                 if (_RequestParams.TestCase != null && !String.IsNullOrWhiteSpace(_RequestParams.TestCase.Code))
                 {
@@ -252,10 +261,17 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 bool tryConcurrentKiller = true; //ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
-                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode) )
                     {
                         if (!String.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
-                            !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId))
+                            !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId)
+
+                              &&
+                        // eitan: בקשת מכס אחת פר ישות בו זמנית -לא תתור במקביל 
+                        // itzik : CourierMaster מלבד בישות 
+                        // בשלב ראשון ב CUSTOMS יעבור ל PROD בהמשך 
+                        "Customs.CourierMaster" != ObjectTableRepository.GetSingleObjectTableById(requestParams.LoggingObjectTableId, requestParams.Tenant).Name
+                            )
                         {
                             string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSVirtualKey(requestParams);
                             var concurrentKiller = new ConcurrentKiller();
@@ -272,6 +288,13 @@ namespace Logitude.Customs.BL.Messaging.Customs
                                         }
                                     };
                             }
+
+                            string sAvoidInProgressSameInterfaceCodePerEntity = ConfigurationManager.AppSettings["20200805HD353811.AvoidInProgressSameInterfaceCodePerEntity"];
+                            if (!String.IsNullOrWhiteSpace(sAvoidInProgressSameInterfaceCodePerEntity))
+                            {
+                                AvoidInProgressSameInterfaceCodePerEntity(requestParams, reqSheetDetails);
+                            }
+
                         }
                     }
                 }
@@ -290,36 +313,88 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     if (listRequestInProgress.Count > 0)
                     {
                         var RequestInProgressInterfaceTypeName = listRequestInProgress.First().InterfaceTypeName;
-                        var text = //TranslateTextsClass.GetTranslation("Customs.General.RequestInProgress", "", null, null, this._Tenant);
-                            TranslateTextsClass.Translate("Customs.General.RequestInProgress", this._Tenant);
-                        text = String.Format(text, RequestInProgressInterfaceTypeName);
-                        NoteClientNoRequestSheet4U(requestParams, text);
-
-
-                        var ex = new CustomsRequestsSheetDomainModelServiceException(
-                        CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
-                            text, null);
-                        ex.SuppressExceptionTostring = true;
-                        throw ex;
+                        ThrowRequestInProgress(requestParams, RequestInProgressInterfaceTypeName);
+                        return;
                     }
                 }
             }
+        }
+
+        private void AvoidInProgressSameInterfaceCodePerEntity(TRequestParams requestParams, RequestSheetParam reqSheetDetails)
+        {
+            var listSameInterfaceCodePerEntity_InProgress = _CustomsRequestsSheetQueryService.SameInterfaceCodePerEntity_InProgress(
+                                    requestParams.Tenant, requestParams.InterfaceTypeCode,
+                                reqSheetDetails.ObjectTableId1, reqSheetDetails.EntityId1,
+                                reqSheetDetails.CustomFileNo);
+            if (listSameInterfaceCodePerEntity_InProgress.Count > 0)
+            {
+                var RequestInProgressInterfaceTypeName = listSameInterfaceCodePerEntity_InProgress.First().InterfaceTypeName;
+                ThrowRequestInProgress(requestParams, RequestInProgressInterfaceTypeName);
+            }
+        }
+
+        private void ThrowRequestInProgress(TRequestParams requestParams, string RequestInProgressInterfaceTypeName)
+        {
+            var text = //TranslateTextsClass.GetTranslation("Customs.General.RequestInProgress", "", null, null, this._Tenant);
+                TranslateTextsClass.Translate("Customs.General.RequestInProgress", this._Tenant);
+            text = String.Format(text, RequestInProgressInterfaceTypeName);
+            NoteClientNoRequestSheet4U(requestParams, text);
+
+
+            var ex = new CustomsRequestsSheetDomainModelServiceException(
+            CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
+                text, null);
+            ex.SuppressExceptionTostring = true;
+            throw ex;
         }
 
         private bool AvoidSign(TRequestParams requestParams)
         {
             try
             {
+                if (requestParams.MainInterfaceCode == "2715" //D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService
+                    &&
+                    String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
+                    CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).CompanyType == "B")//Courier
+                {
+                    return true;//in courier CompanyType -AvoidSign
+                }
                 if (!String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
                 {
-
+                    string defValue = GDFDATAQueryService.GetDefault(_Tenant,"ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
+                    decimal defaultAmount = 0;
+                    var boolvar = (decimal.TryParse(defValue, out defaultAmount));
                     if (requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration"))
                     {
-                        var qs = new DeclarationQueryService(requestParams.Tenant);
-                        var declarationPm = qs.GetSingle(requestParams.LoggingEntityId, false, true);
+
+                        //var customsSettingQueryService = new CustomsSettingQueryService(_Tenant);
+                        //var customsSettingPM = customsSettingQueryService.GetSingle(_Tenant.ToString(), false, true);
+                        //if (customsSettingPM.TotalInvoiceAmountInUSD.HasValue)
+                        {
+                            var declarationQueryService = new DeclarationQueryService(_Tenant);
+                            var declaration = declarationQueryService.GetSingle(RequestParams.LoggingEntityId, false, false);
+
+                            if (declaration.IsCourierDeclaration)
+                            {
+                                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_Tenant);
+                                DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declaration.Id, true, false);
+                                if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > defaultAmount)
+                                {
+                                    //myDeclarationCourierStatusPM.HighLowValue = "H";
+                                }
+                                else
+                                {
+                                    //myDeclarationCourierStatusPM.HighLowValue = "L";
+                                    LogMessagingUtil.Instance.AppendLine($"{defaultAmount} בלדרות ביטול חתימה במסרים - סך חשבון בהצהרה בדולרים   {myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD.GetValueOrDefault()} קטן מהגדרת המינימום");
+                                    return true;
+                                }
+                            }
+                           
 
 
-                        return declarationPm.IsCourierDeclaration;
+                        }
+
+                        return false;
                     }
                     else
                     {
@@ -330,6 +405,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 {
                     return false;
                 }
+                return false;
             }
             catch (Exception)
             {
@@ -442,7 +518,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 return;
             }
-
+            
             //if (Debugger.IsAttached)
             //{
             //    var doNotThrow = true;
@@ -1338,9 +1414,9 @@ After that Remove file  from DCA  .. ");
                     communicationLogStep.StartDate = serverTime;
                 }
                 communicationLogStep.EndDate = serverTime;
-
-
-
+                PerformanceM.LastInstance.RequestStartDate = communicationLogStep.StartDate;
+                PerformanceM.LastInstance.RequestEndDate = communicationLogStep.EndDate;
+                
                 if (memstream != null)
                 {
 
@@ -1818,14 +1894,16 @@ After that Remove file  from DCA  .. ");
                     return SheetStatusEnum.Created;
                     break;
                 case CustomsStepEnum.CustomRequest:
-
-                    //if (this._CommunicationLogStepList.Exists(rec => rec.StepNumber == (int)CustomsStepEnum.CustomRequestSign))
-                    if (InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByCustomsAgentId
-                        || InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByPersonId
-                        || _RequestParams.ForcePersonalSign)
+                    if (!_RequestParams.AvoidSign)
                     {
-                        return SheetStatusEnum.WaitingForSigning;
-                        break;
+                        //if (this._CommunicationLogStepList.Exists(rec => rec.StepNumber == (int)CustomsStepEnum.CustomRequestSign))
+                        if (InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByCustomsAgentId
+                            || InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByPersonId
+                            || _RequestParams.ForcePersonalSign)
+                        {
+                            return SheetStatusEnum.WaitingForSigning;
+                            break;
+                        }
                     }
                     return SheetStatusEnum.InProcess;
                     break;

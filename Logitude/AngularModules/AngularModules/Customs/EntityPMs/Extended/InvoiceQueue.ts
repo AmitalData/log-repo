@@ -1,10 +1,11 @@
  
-export class Invoices {
+export class AllInvoices {
  
     Statuses: StatusData[];
     InvoiceLines: InvoiceLine[];
     IntegratedInvoices: IntegratedInvoice[];
-    InvoiceList: InvoiceList[];
+    Invoices: Invoice[];
+    Messages: MessagesData[];
     static InvoiceList: any;
 
 }
@@ -35,9 +36,14 @@ export class IntegratedInvoice {
     InvoiceAmount: any;
  
 }
-export class InvoiceList {
+export class Invoice {
     InvoiceBillTo: string;
     InvoiceType: string;
     InvoiceDate: string;
     InvoiceCurrency: string;
+    InvoiceAmount: any;
+}
+export class MessagesData {
+    W: string;
+    E: string;
 }

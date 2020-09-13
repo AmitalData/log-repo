@@ -260,6 +260,10 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceFreightAmount").subscribe((response:any) => {
                     this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceModification").subscribe((response:any) => {
                         this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe((response:any) => {
+                            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoicePayment").subscribe((response: any) => {
+                                this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceUCR").subscribe((response: any) => {
+                                    this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsPrice").subscribe((response: any) => {
+                                        this.entityResourceService.getEntityResourceByTableName("Customs.SuppInvoiceItemsAbachStatement").subscribe((response: any) => {
 
                             this.BuildTabs();
                             this.RunComponent();
@@ -272,7 +276,10 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                             //    this.itemsLineNumbers = this.itemsLineNumbers.substring(0);
 
                             this.GetPointers();
-
+                            });
+                                    });
+                                });
+                            });
                         });
                     });
                 });
@@ -1486,6 +1493,28 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         }
 
+        //if (this.declarationPM.Direction == 'E') {
+        //    if (this.EntityPM.SupplierInvoicePayments == null || this.EntityPM.SupplierInvoicePayments.length == 0) {
+        //        errors.push("חובה להזין פרטי תשלום- מסך נוספים");
+
+        //    }
+        //    for (let item of this.EntityPM.SupplierInvoicePayments) {
+
+        //        Validator.TryValidateObject(item, "Customs.SupplierInvoicePayment", errors);
+
+        //        if (AppTool.IsNullOrEmpty(item.PaymentTypeCode)) {
+        //            errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoicePayment.F.PaymentTypeCode"));
+        //        }
+
+        //        else if (AppTool.IsNullOrEmpty(item.PaymentAmount)) {
+        //            errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoicePayment.F.PaymentAmount"));
+
+        //        }
+
+        //    }
+
+        //}
+      
         // SupplierInvoiceItem
         var emptyItems: string[] = [];
         for (let item of this.EntityPM.SupplierInvoiceItems) {

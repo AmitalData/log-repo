@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsPriceUpdateClass
    {  		
-		public const string HashString = "9ad7249643db97f0584590f7a11f925c";
+		public const string HashString = "311866a63bb5d685aa9a714d79055446";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Customs.SupplierInvoiceItemsPrice",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Customs.SupplierInvoiceItemsPrices",
-			      				    OldDBTableName =  "Customs.SupplierInvoiceItemsPrices",
 			      				    ObjectTableSingular =  "SupplierInvoiceItemsPrice",
 			      				    ObjectTablePlural =  "SupplierInvoiceItemsPrices",
 			      				    HasCustomFilter =  false,
@@ -116,8 +115,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
+			      				    LocalDefaultText =  "מחירים",
 			      				    DefaultText =  "Supplier Invoice Items Price (Export)",
-			      				    Code =  "7d7c",
+			      				    Code =  "9fc4",
 			      				    Name =  "Customs.SupplierInvoiceItemVehicle Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -142,7 +142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationId",
-					  						OldFieldName =  "DeclarationId",
 					  						ObjectTableName =  "Customs.SupplierInvoiceItemsPrice",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -179,7 +178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationId",
-					  						DefaultText =  "Declaration",
+					  						DefaultText =  "Declaration ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -187,6 +186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -198,7 +198,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InvoiceCounterKey",
-					  						OldFieldName =  "InvoiceCounterKey",
 					  						ObjectTableName =  "Customs.SupplierInvoiceItemsPrice",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -243,6 +242,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -254,7 +254,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InvoiceItemLineNumber",
-					  						OldFieldName =  "InvoiceItemLineNumber",
 					  						ObjectTableName =  "Customs.SupplierInvoiceItemsPrice",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -299,6 +298,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -310,7 +310,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LineNumber",
-					  						OldFieldName =  "LineNumber",
 					  						ObjectTableName =  "Customs.SupplierInvoiceItemsPrice",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -356,6 +355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -367,7 +367,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "Customs.SupplierInvoiceItemsPrice",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -412,6 +411,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -423,7 +423,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AdditionalPriceTypeCode",
-					  						OldFieldName =  "AdditionalPriceTypeCode",
 					  						ObjectTableName =  "Customs.SupplierInvoiceItemsPrice",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.AmountType",
@@ -470,6 +469,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -481,7 +481,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AdditionalPriceTypeName",
-					  						OldFieldName =  "AdditionalPriceTypeName",
 					  						ObjectTableName =  "Customs.SupplierInvoiceItemsPrice",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -527,6 +526,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -538,7 +538,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AdditionalPrice",
-					  						OldFieldName =  "AdditionalPrice",
 					  						ObjectTableName =  "Customs.SupplierInvoiceItemsPrice",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -586,6 +585,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -599,7 +599,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable SupplierInvoiceItemsPriceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SupplierInvoiceItemsPrice" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> SupplierInvoiceItemsPriceObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SupplierInvoiceItemsPrice").ToList();
+		       
+	      
+
+	         Screen SupplierInvoiceItemsPriceCustomsSupplierInvoiceItemsPriceHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SupplierInvoiceItemsPrice.HeaderScreen", Name = "Customs.SupplierInvoiceItemsPriceHeaderScreen", ObjectTableId = SupplierInvoiceItemsPriceObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    SupplierInvoiceItemsPriceObjectTable.HeaderScreenId = SupplierInvoiceItemsPriceCustomsSupplierInvoiceItemsPriceHeaderScreenScreen0.Id;
+		    SupplierInvoiceItemsPriceObjectTable.HeaderScreenCode = SupplierInvoiceItemsPriceCustomsSupplierInvoiceItemsPriceHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

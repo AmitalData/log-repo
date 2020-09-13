@@ -135,13 +135,11 @@
     <None Include="DBScripts\Post\202006031027_AddReferantException901.sxml" />
     <None Include="DBScripts\Pre\202005261026_AddSpellCheckedTextCodes.sxml" />
     <None Include="DBScripts\Pre\202006031905_default0Isdiamond.sxml" />
-
     <None Include="DBScripts\Pre\2020070502_ISVALIDTICKETSDIAMOND.sxml" />
     <None Include="DBScripts\Pre\2020070560750_UQ_CARDS_TENANT_CODE_PAR_CXQOV.sxml" />
-
     <None Include="DBScripts\Pre\202007091941_AddONDeclarationCancellationAndAmendment.sxml" />
     <None Include="DBScripts\Pre\202007091441_FixFKCliam.sxml" />
-
+    <None Include="DBScripts\Pre\202009061641_FixFKCourierPendingReason.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
@@ -157,7 +155,6 @@
     <None Include="DBTables\AttachmentType.dxml" />
     <None Include="DBTables\Authority.dxml" />
     <None Include="DBTables\AuthorizedSignerPermit.dxml" />
-    <None Include="DBTables\AutonomyRegionType.dxml" />
     <None Include="DBTables\AutonomyType.dxml" />
     <None Include="DBTables\Bank.dxml" />
     <None Include="DBTables\CancellationReasonRequestType.dxml" />
@@ -310,7 +307,6 @@
     <None Include="DBTables\DocumentTypeCustomsData.dxml" />
     <None Include="DBTables\EntitlementType.dxml" />
     <None Include="DBTables\EntityTypeLookup.dxml" />
-    <None Include="DBTables\ExporterRoleType.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
     <None Include="DBTables\FaultInspectionType.dxml" />
     <None Include="DBTables\FreightPaymentMethod.dxml" />
@@ -464,13 +460,8 @@
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
-
-    <None Include="EntityFiles\AutonomyRegionType.lxml" />
-    <None Include="EntityFiles\ExporterRoleType.lxml" />
-
     <None Include="EntityFiles\CancellationReasonRequestType.lxml" />
     <None Include="EntityFiles\CancellationRequestStatus.lxml" />
-
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />

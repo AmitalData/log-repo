@@ -28,6 +28,7 @@ import { CouriersVatExtendedPMService } from '../../../../../../Customs/Services
 import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
 import { WindowArgs } from '../../../../../../Infrastructure/DataContracts/WindowArgs';
+import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -422,12 +423,7 @@ export class ConsigmentTabContentComponent
     public get ExportLoadingPortCode() { return this.EntityPM.ExportLoadingPortCode; }
     public set ExportLoadingPortCode(newValue: string) {
         this.EntityPM.ExportLoadingPortCode = newValue;
-        if (newValue) {
-            this.UIProperties.SetRequired("ExportLoadingPortCode", this.ObjectTableName, false);
-        }
-        else {
-            this.UIProperties.SetRequired("ExportLoadingPortCode", this.ObjectTableName, true);
-        }
+      
     }
 
 
@@ -435,12 +431,7 @@ export class ConsigmentTabContentComponent
     public get ExportUnloadingPortCode() { return this.EntityPM.ExportUnloadingPortCode; }
     public set ExportUnloadingPortCode(newValue: string) {
         this.EntityPM.ExportUnloadingPortCode = newValue;
-        if (newValue) {
-            this.UIProperties.SetRequired("ExportUnloadingPortCode", this.ObjectTableName, false);
-        }
-        else {
-            this.UIProperties.SetRequired("ExportUnloadingPortCode", this.ObjectTableName, true);
-        }
+       
     }
 
 
@@ -837,10 +828,19 @@ export class ConsigmentTabContentComponent
     }
 
     CheckRequrierdFieldsForSend() {
-        var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
+        var isExport = false;
+        if (this.declarationPM.Direction == 'E') {
+            isExport = true;
+        }
+         var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.Consignment')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
+
+        var customsRequiredFieldExtendedListService: CustomsRequiredFieldExtendedListService = new CustomsRequiredFieldExtendedListService();
+        filters = customsRequiredFieldExtendedListService.GetFilter(filters, isExport)
+
+
         customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {

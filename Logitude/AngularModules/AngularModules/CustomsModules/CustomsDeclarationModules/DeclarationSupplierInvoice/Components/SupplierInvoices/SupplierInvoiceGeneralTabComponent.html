@@ -197,7 +197,7 @@
                 <tr>
                     <td style="width:500px;">
                         <div style="width:500px; margin:5px">
-                            <table>
+                            <table  *ngIf ="!allowExport">
 
                                 <tr style="height: 32px;">
                                     <td style="width: 150px;">
@@ -319,9 +319,9 @@
 
                                     <td style="width: 160px;">
                                         <LogTextBoxV2 [ObjectFieldName]="'InvoiceAmount'" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true" [DataContext]="DataContext" [AddCommasToNumbers]="true"
-                                                    [Text]="InvoiceAmount" [IsAccumulative]="true"
-                                                    (LostFocus)="InvoiceAmountBlur($event)"></LogTextBoxV2>
+                                                      [HideColumns]="true" [DataContext]="DataContext" [AddCommasToNumbers]="true"
+                                                      [Text]="InvoiceAmount" [IsAccumulative]="true"
+                                                      (LostFocus)="InvoiceAmountBlur($event)"></LogTextBoxV2>
 
                                     </td>
 
@@ -420,6 +420,262 @@
 
 
                             </table>
+                            <table *ngIf="allowExport">
+
+                                <tr style="height: 32px;">
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'AccountTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogLov tabindex="1" [ObjectFieldName]="'AccountTypeCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.InvoiceType'"
+                                                [HideColumns]="true"
+                                                [FocusOnMe]="true"
+                                                [SelectedValue]="AccountTypeCode"
+                                                [ForceFocus]="InvoiceTypeFocus">
+                                        </LogLov>
+                                    </td>
+                                    <td>
+                                        <div style="width:20px"></div>
+                                    </td>
+
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'InvoiceNumber'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogTextBox #InvoiceNumberTextBox [ObjectFieldName]="'InvoiceNumber'" [ObjectTableName]="ObjectTableName"
+                                                    [HideColumns]="true" [DataContext]="DataContext" [Text]="InvoiceNumber" [DebounceTime]="1"
+                                                    (LostFocus)="OnInvoiceNumberLostFocus(InvoiceNumberTextBox)"></LogTextBox>
+                                    </td>
+                                </tr>
+
+                                <tr style="height: 32px;">
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'IssueDate'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogDatePicker [ObjectFieldName]="'IssueDate'" [ObjectTableName]="ObjectTableName"
+                                                       [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="IssueDate"></LogDatePicker>
+
+                                    </td>
+                                    <td>
+                                        <div style="width:20px"></div>
+                                    </td>
+
+
+
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'InvoiceAmount'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogTextBoxV2 [ObjectFieldName]="'InvoiceAmount'" [ObjectTableName]="ObjectTableName"
+                                                      [HideColumns]="true" [DataContext]="DataContext" [AddCommasToNumbers]="true"
+                                                      [Text]="InvoiceAmount" [IsAccumulative]="true"
+                                                      (LostFocus)="InvoiceAmountBlur($event)"></LogTextBoxV2>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr style="height: 32px;">
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'InvoiceCurrencyTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'InvoiceCurrencyTypeCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.CurrencyType'"
+                                                [HideColumns]="true"
+                                                (SelectedItemChanged)="InvoiceCurrencyChanged($event)"
+                                                (LostFocus)="InvoiceAmountBlur($event)"
+                                                [SelectedValue]="InvoiceCurrencyTypeCode">
+                                        </LogLov>
+                                    </td>
+                                    <td>
+                                        <div style="width:20px"></div>
+                                    </td>
+
+
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'IssueCountryCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'IssueCountryCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.CustomsCountry'"
+                                                [SelectedValue]="IssueCountryCode"
+                                                [HideColumns]="true">
+                                        </LogLov>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr style="height: 32px;">
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'IncotermCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'IncotermCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.TermsOfSaleType'"
+                                                [HideColumns]="true"
+                                                [SelectedValue]="IncotermCode">
+
+                                        </LogLov>
+                                    </td>
+
+                                    <td>
+                                        <div style="width:20px"></div>
+                                    </td>
+
+
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'PreferenceDocumentTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'PreferenceDocumentTypeCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.TradeAgreement'"
+                                                [HideColumns]="true"
+                                                [SelectedValue]="PreferenceDocumentTypeCode">
+                                        </LogLov>
+
+                                    </td>
+                                </tr>
+
+                                <tr style="height: 32px;">
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'IsPreference'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogCheckBox [Checked]="IsPreference" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'IsPreference'" [DataContext]="DataContext"></LogCheckBox>
+
+                                    </td>
+                                    <td>
+                                        <div style="width:20px"></div>
+                                    </td>
+
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'PartyRelationshipCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'PartyRelationshipCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [HideColumns]="true"
+                                                [LookUpTableName]="'Customs.PartyRelationshipType'">
+                                        </LogLov>
+                                    </td>
+
+
+                                </tr>
+
+                                <tr style="height: 32px;">
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'BuyerName'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogTextBox [ObjectFieldName]="'BuyerName'" [ObjectTableName]="ObjectTableName" [Text]="BuyerName"
+                                                    [HideColumns]="true" [DataContext]="DataContext"  [InputType]="'ntext'"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div style="width:20px"></div>
+                                    </td>
+
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'BuyerCountryCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'BuyerCountryCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [HideColumns]="true"
+                                                [LookUpTableName]="'Customs.CustomsCountry'">
+                                        </LogLov>
+                                    </td>
+
+
+                                </tr>
+
+                                <tr style="height: 32px;">
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'BuyerAddress'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogTextBox [ObjectFieldName]="'BuyerAddress'" [ObjectTableName]="ObjectTableName" [Text]="BuyerAddress"
+                                                    [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true"  [InputType]="'ntext'"></LogTextBox>
+
+                                    </td>
+                                    <td>
+                                        <div style="width:20px"></div>
+                                    </td>
+
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'BuyerRoleCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'BuyerRoleCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [HideColumns]="true"
+                                                [LookUpTableName]="'Customs.CustomerRoleType'" >
+                                        </LogLov>
+                                    </td>
+
+
+                                </tr>
+                                <tr *ngIf="IsAccumulationStateVisibile">
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'AccumalationStateCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'AccumalationStateCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.AccumalationState'"
+                                                [HideColumns]="true"
+                                                [SelectedValue]="AccumalationStateCode">
+                                        </LogLov>
+
+                                    </td>
+                                </tr>
+
+
+                            </table>
+
                         </div>
                     </td>
 
@@ -427,12 +683,12 @@
                         <div style="width:30px"></div>
                     </td>
                     <td rowspan="2">
-                        <span *ngIf="allowExport" class="LeftTop buttonelipsis"
+                        <!--<span *ngIf="allowExport" class="LeftTop buttonelipsis"
                               style="background-color: white; color: black; border: 2px solid #e7e7e7; width: 30px; text-align: center; font-weight: bold;cursor: pointer;"
                               (click)="OpenExporterInvoiceWindow()">...E</span>
 
                         <br />
-                        <br />
+                        <br />-->
                         <table>
 
                             <tr>

@@ -31,6 +31,7 @@ import {CustomsCollateralPM} from '../../EntityPMs/CustomsCollateralPM';
 import {CollateralsRequestFileCondPM} from '../../EntityPMs/CollateralsRequestFileCondPM';
 import {CustomsCollateralsAnswerPM} from '../../EntityPMs/CustomsCollateralsAnswerPM';
 import {CustomsCollateralsConditionPM} from '../../EntityPMs/CustomsCollateralsConditionPM';
+import { AppTool } from '../../../Infrastructure/Tools';
 
 @Injectable()
 
@@ -74,7 +75,7 @@ export class DeclarationWebService {
 
         );
     }
-    GetDeclarationErrors(declarationId: string, listVersionId: string,courierFilter:string) {
+    GetDeclarationErrors(declarationId: string, listVersionId: string, courierFilter: string, IsAmendmentErrors: boolean=false) {
 
         return defer(() => {
 
@@ -82,13 +83,13 @@ export class DeclarationWebService {
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
 
-
+            if (AppTool.IsNullOrEmpty(IsAmendmentErrors)) IsAmendmentErrors = false;
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
             return this._http.get(this._apiUrl + "/GetDeclarationErrors/?declarationId=" + declarationId
-                + "&listVersionId=" + listVersionId + "&courierFilter=" + courierFilter, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                + "&listVersionId=" + listVersionId + "&courierFilter=" + courierFilter + "&IsAmendmentErrors=" + IsAmendmentErrors, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
                 var _mappedListsArray: Array<DeclarationErrorView> = [];
@@ -1161,6 +1162,22 @@ export class DeclarationWebService {
         });
     }
 
+    GetIsDeclarationCancellationAttachmentNumberIsMoreThenAllow(declarationId: string) {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetIsDeclarationCancellationAttachmentNumberIsMoreThenAllow/?' + '&declarationId=' + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                var pm = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = pm;
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     // ---------------------------------------- MAPING --------------------------------------------------
     MapJsonToEntity(jsonPM: any, mapParent: boolean = true, entityPM: DeclarationErrorView = null) {
 

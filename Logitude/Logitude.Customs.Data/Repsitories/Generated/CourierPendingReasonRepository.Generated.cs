@@ -28,7 +28,13 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CourierPendingReason GetSingle(string code, int tenant)
+		public  CourierPendingReason GetSingle(string id, int tenant)
+        {
+            return (from a in context.CourierPendingReasons
+                    where a.Id == id && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+        public CourierPendingReason GetByCode(string code, int tenant)
         {
             return (from a in context.CourierPendingReasons
                     where a.Code == code && a.Tenant == tenant
@@ -46,7 +52,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             CourierPendingReasonKeys keys = entityKeys as CourierPendingReasonKeys;
             return (from a in context.CourierPendingReasons
-                    where a.Code == keys.Code
+                    where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
 		         

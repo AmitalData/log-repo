@@ -154,6 +154,16 @@ export class CustomsSettingPM {
     public set QtyFeedbackInPendingMessage(newValue: number) { if (this.qtyFeedbackInPendingMessage != newValue) { this.qtyFeedbackInPendingMessage = newValue; this.MarkAsDirty("QtyFeedbackInPendingMessage"); } }
        
 	 
+    private lastRunningDCAWS: Date;
+    public get LastRunningDCAWS() { return this.lastRunningDCAWS; }
+    public set LastRunningDCAWS(newValue: Date) { if (this.lastRunningDCAWS != newValue) { this.lastRunningDCAWS = newValue; this.MarkAsDirty("LastRunningDCAWS"); } }
+       
+	 
+    private lastNumOfMessagesDCAWS: number;
+    public get LastNumOfMessagesDCAWS() { return this.lastNumOfMessagesDCAWS; }
+    public set LastNumOfMessagesDCAWS(newValue: number) { if (this.lastNumOfMessagesDCAWS != newValue) { this.lastNumOfMessagesDCAWS = newValue; this.MarkAsDirty("LastNumOfMessagesDCAWS"); } }
+       
+	 
 
     public OldEntityPM: CustomsSettingPM;
 		

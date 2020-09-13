@@ -15,6 +15,7 @@ using UnifreightIIG.Common.Faults;
 using UnifreightIIG.Common.ImportDeclarationSubmitRequestServiceReference;
 using UnifreightIIG.Common.TheGateway;
 using Logitude.Server.Tools.Helpers;
+using Logitude.CustomsMessaging.FakeMessagingServices;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -65,6 +66,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var response = new DF_NG_2754_MSG10004_ImportDeclarationResponse();
             //IResponseHeaderOrFault responseHeader;
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
+            if (requestParams.TestCase != null)
+            {
+                BuildRequestContentHeaderB4Sign(customRequest);
+
+
+                var Fake2755 = new Fake_2754_MSG10004_SumbitPayment(requestParams);
+                _ResponseHeader = Fake2755.CallWS(out response, requestParams);
+
+
+                exceptionMessage = null;
+                return response;
+
+            }
 
             using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
             {

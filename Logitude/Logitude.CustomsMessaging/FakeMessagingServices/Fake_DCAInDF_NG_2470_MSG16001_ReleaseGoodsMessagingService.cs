@@ -65,6 +65,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _generalData.governmentProcedureType = 4000001;
             _generalData.ReleaseMessageCode = 1;
             _generalData.currentDate = DateTime.Now;
+            _generalData.releaseDateSpecified = true;
             _generalData.releaseDate = DateTime.Now;
             _generalData.TaxationDate=DateTime.Now;
             _generalData.dealValueNISSpecified = true;

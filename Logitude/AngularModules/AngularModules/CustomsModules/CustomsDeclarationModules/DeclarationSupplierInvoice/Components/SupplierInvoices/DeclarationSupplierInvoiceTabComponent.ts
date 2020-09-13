@@ -454,21 +454,27 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             var logWindow = new LogitudeWindow();
             logWindow.Width = 1017;// this changed By Rabaia for Task No. 54930; Dont change it back before calling me. //995; // don't change this width!
             logWindow.Height = 600;
+            var textCodeTitle = "Customs.Declaration.O.EditInvoice";
 
+
+            if (this.EntityPM.Direction == "E") {
+                textCodeTitle = "Customs.Declaration.O.ExporterInvoice";
+            }
+            
                 if (!AppTool.IsNullOrEmpty(item.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
-                    windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + item.InvoiceNumber + "-" + this.EntityPM.DeclarationNumber;
+                    windowArgs.WindowTitle = TextCodeTranslator.Translate(textCodeTitle) + " " + item.InvoiceNumber + "-" + this.EntityPM.DeclarationNumber;
 
                 }
                 else if (AppTool.IsNullOrEmpty(item.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
-                    windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + this.EntityPM.DeclarationNumber;
+                    windowArgs.WindowTitle = TextCodeTranslator.Translate(textCodeTitle) + " " + this.EntityPM.DeclarationNumber;
 
                 }
                 else if (!AppTool.IsNullOrEmpty(item.InvoiceNumber) && AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
-                    windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + item.InvoiceNumber;
+                    windowArgs.WindowTitle = TextCodeTranslator.Translate(textCodeTitle) + " " + item.InvoiceNumber;
 
                 }
                 else if (AppTool.IsNullOrEmpty(item.InvoiceNumber) && AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
-                    windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+                    windowArgs.WindowTitle = TextCodeTranslator.Translate(textCodeTitle);
 
                 }
                 windowArgs.IsDisplayOnly = this.IsDisplayOnly;
@@ -611,7 +617,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         }
     }
     accumulationFeature: any;
-    notToCheckFeature: boolean = true;
+    notToCheckFeature: boolean = false;
     NewInvoice() {
         var itemPM = new SupplierInvoicePM();
         itemPM.DeclarationId = this.EntityPM.Id;
@@ -622,7 +628,8 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             itemPM.AccumalationStateCode = "3";
         }
         else {
-            this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
+            //this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
+            this.accumulationFeature = FeatureLocator.HasFeaturePermession("Customs.Declaration", "ACCUMULATION")
             if (this.accumulationFeature == null) {
                 itemPM.AccumalationStateCode = "3";
             }

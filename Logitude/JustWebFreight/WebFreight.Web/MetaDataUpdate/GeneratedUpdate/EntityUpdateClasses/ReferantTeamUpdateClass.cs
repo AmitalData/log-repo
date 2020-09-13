@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReferantTeamUpdateClass
    {  		
-		public const string HashString = "a4d73558fc5fc0137600b70bc1c47dda";
+		public const string HashString = "2810bbb8c2829a98e73a3dca1e5007f2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,8 +118,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "צוותים תפעוליים",
+			      				    LocalDefaultText =  "רשימת צוותים",
 			      				    DefaultText =  "ReferantTeam ",
+			      				    NewButtonLocalDefaultText =  "",
+			      				    NewButtonDefaultText =  "",
 			      				    Code =  "475a",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,

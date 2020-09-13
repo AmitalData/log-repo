@@ -283,6 +283,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\SupplierInvoiceItem\ExporterInvoiceItemComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ExportDeclarationComponent.ts" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\CopyDeclarationComponent.html" />
+    <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\Documents\SpecialActivityCustomsDocumentsController.ts" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\EndPhysicalCheckComponent.html" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\PhysicalCheckComponent.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\DeclarationAmendmentListTemplate.html" />
@@ -643,6 +644,9 @@
     <Content Include="Images\numberIcon.png" />
     <Content Include="Images\PriceCheck\EmptyTariffPrice.png" />
     <Content Include="Images\PriceCheck\FillDimensions.png" />
+    <Content Include="Images\Referant\AEO.png" />
+    <Content Include="Images\Referant\AI.png" />
+    <Content Include="Images\Referant\AEO-2X.png" />
     <Content Include="Images\Referant\New.png" />
     <Content Include="Images\Referant\Active_Favorite.png" />
     <Content Include="Images\Referant\Unactive_Favorite.png" />
@@ -1300,6 +1304,7 @@
     <TypeScriptCompile Include="Customs\Services\DataChange\CustomsCollateralAnswerSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\SpotlightSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierMasterExtendedListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedLists\CustomsRequiredFieldExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\ExceptionReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CustomsCollateralExtendedListService.ts" />

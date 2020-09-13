@@ -123,11 +123,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { GetValueIDType(declaration.ID) }, tenant).FirstOrDefault();
                     if (declarationOrg == null)
                     {
-                        declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { idOrg }, tenant).FirstOrDefault();
-
+                        declarationOrg = myQueryService.GetAcceptDeclarationAmendment(  idOrg , tenant);
+                        declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { declarationOrg.Id }, tenant).FirstOrDefault();
                     }
 
-                    if (declarationOrg.IsAmendment == true)
+                    if (declarationOrg.IsAmendment == true  )
                     {
                         isFromAmendment = true;
                     }
@@ -652,7 +652,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
                 supplierInvoicePM.SupplierInvoiceModifications = GetSupplierInvoiceModifications(item, ref supplierInvoicePM, declaration, declarationId, tenant);
-                supplierInvoicePM.SupplierInvoiceFreightAmounts = GetSupplierInvoiceFreightAmounts(ref supplierInvoicePM, tenant);
+                supplierInvoicePM.SupplierInvoiceFreightAmounts = GetSupplierInvoiceFreightAmounts(ref supplierInvoicePM, item, tenant);
                 SupplierInvoicePM SupplierInvoicePMOrg;
                 if(declarationPMOrg!=null)
                 {
@@ -675,21 +675,41 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return supplierInvoicePMs;
         }
 
-        private List<SupplierInvoiceFreightAmountPM> GetSupplierInvoiceFreightAmounts(ref SupplierInvoicePM supplierInvoicePM, int tenant)
+        private List<SupplierInvoiceFreightAmountPM> GetSupplierInvoiceFreightAmounts(ref SupplierInvoicePM supplierInvoicePM, DeclarationGoodsShipment declarationGoodsShipment, int tenant)
         {
 
             SupplierInvoiceFreightAmountQueryService supplierInvoiceFreightAmountQueryService = new SupplierInvoiceFreightAmountQueryService(tenant);
             List<SupplierInvoiceFreightAmountPM> supplierInvoiceFreightAmountPM = new List<SupplierInvoiceFreightAmountPM>();
-            if(decIdOrg!= null)
+            if (decIdOrg != null && isFromImporter)
             {
-  supplierInvoiceFreightAmountPM = supplierInvoiceFreightAmountQueryService.GetSupplierInvoiceFreightAmountsByInvoice(decIdOrg, _OrgSupplierInvoicePM.InvoiceCounterKey);
+                supplierInvoiceFreightAmountPM = supplierInvoiceFreightAmountQueryService.GetSupplierInvoiceFreightAmountsByInvoice(decIdOrg, _OrgSupplierInvoicePM.InvoiceCounterKey);
 
-            if (supplierInvoiceFreightAmountPM != null)
+                if (supplierInvoiceFreightAmountPM != null)
+                {
+                    supplierInvoiceFreightAmountPM.ForEach(x => { x.ChangeSetOp = ChangeSetOperation.Insert; });
+                }
+            }
+
+
+            else if (declarationGoodsShipment.CustomsValuation != null)
             {
-                supplierInvoiceFreightAmountPM.ForEach(x => { x.ChangeSetOp = ChangeSetOperation.Insert; });
+                foreach (var item in declarationGoodsShipment.CustomsValuation)
+                {
+                    if (item.ChargesTypeCode.Value == "144")
+                    {
+                        SupplierInvoiceFreightAmountPM supplierInvoiceFreightAmountPM1 = new SupplierInvoiceFreightAmountPM();
+                        supplierInvoiceFreightAmountPM1.Amount = GetValueAmountType(item.FreightChargeAmount);
+                        supplierInvoiceFreightAmountPM1.CurrencyTypeCode = item.FreightChargeAmount.currencyID.ToString();
+                        supplierInvoiceFreightAmountPM1.ChangeSetOp = ChangeSetOperation.Insert;
+                        supplierInvoiceFreightAmountPM1.DeclarationId = supplierInvoicePM.DeclarationId;
+                        supplierInvoiceFreightAmountPM1.InvoiceCounterKey = supplierInvoicePM.InvoiceCounterKey;
+                        supplierInvoiceFreightAmountPM1.Tenant = tenant;
+                         supplierInvoiceFreightAmountPM.Add(supplierInvoiceFreightAmountPM1);
+
+                    }
+                }
+               
             }
-            }
-          
 
             return supplierInvoiceFreightAmountPM;
         }
@@ -1003,7 +1023,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
             SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(tenant);
-            if (decIdOrg != null)
+            if (decIdOrg != null && isFromImporter)
             {
                 supplierInvoiceModificationPMs = supplierInvoiceModificationQueryService.GetSupplierInvoiceModificationsForInvoice(decIdOrg, _OrgSupplierInvoicePM.InvoiceCounterKey);
 
@@ -1044,19 +1064,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }; supplierInvoiceModificationPMs.Add(supplierInvoiceModificationPM);
                         }
 
-                        if (customsValuation.ExitToEntryChargeAmount == null) continue;
-                        if (customsValuation.ChargesTypeCode.Value == "67")
+                        if (customsValuation.ExitToEntryChargeAmount != null)
                         {
-                            supplierInvoicePM.InsruanceCurrencyTypeCode = customsValuation.ExitToEntryChargeAmount.currencyID.ToString();
-                            supplierInvoicePM.InsuranceAmount = GetValueAmountType(customsValuation.ExitToEntryChargeAmount);
+                            if (customsValuation.ChargesTypeCode.Value == "67")
+                            {
+                                supplierInvoicePM.InsruanceCurrencyTypeCode = customsValuation.ExitToEntryChargeAmount.currencyID.ToString();
+                                supplierInvoicePM.InsuranceAmount = GetValueAmountType(customsValuation.ExitToEntryChargeAmount);
+                            }
                         }
-
-                        if (customsValuation.ChargesTypeCode.Value == "144")
+                        if (customsValuation.FreightChargeAmount != null)
                         {
-                            supplierInvoicePM.FreightCurrencyTypeCode = customsValuation.ExitToEntryChargeAmount.currencyID.ToString();
-                            supplierInvoicePM.TotalFreightInFreightCurrency = GetValueAmountType(customsValuation.ExitToEntryChargeAmount);
-                        }
 
+                            if (customsValuation.ChargesTypeCode.Value == "144")
+                        {
+                            supplierInvoicePM.FreightCurrencyTypeCode = customsValuation.FreightChargeAmount.currencyID.ToString();
+                            supplierInvoicePM.TotalFreightInFreightCurrency = GetValueAmountType(customsValuation.FreightChargeAmount);
+                        }
+                        }
                     }
 
                 }

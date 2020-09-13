@@ -41,6 +41,30 @@ namespace Logitude.Customs.BL.EntityDataMappings
             CustomMappedPMProperties.Add(PMPropertyNames.IssueCountryName);
             CustomMappedPMProperties.Add(PMPropertyNames.PreferenceDocumentTypeName);
             CustomMappedPMProperties.Add(PMPropertyNames.InvoiceCurrencyTypeName);
+            CustomMappedPMProperties.Add(PMPropertyNames.BuyerCountryName);
+            CustomMappedPMProperties.Add(PMPropertyNames.PartyRelationshipName);
+            CustomMappedPMProperties.Add(PMPropertyNames.BuyerRoleName);
+
+            if (!string.IsNullOrWhiteSpace(entityPOCO.BuyerCountryCode))
+            {
+                CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(entityPOCO.Tenant);
+                CustomsCountryPM country = countryQueryService.GetSingle(entityPOCO.BuyerCountryCode, false, true);
+                entityPM.BuyerCountryName = country.LocalName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(entityPOCO.PartyRelationshipCode))
+            {
+                PartyRelationshipTypeQueryService partyRelationshipQueryService = new PartyRelationshipTypeQueryService(entityPOCO.Tenant);
+                PartyRelationshipTypePM partyRelationship = partyRelationshipQueryService.GetSingle(entityPOCO.PartyRelationshipCode, false, true);
+                entityPM.PartyRelationshipName = partyRelationship.LocalName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(entityPOCO.BuyerRoleCode))
+            {
+                CustomerRoleTypeQueryService buyerRoleCodeQueryService = new CustomerRoleTypeQueryService(entityPOCO.Tenant);
+                CustomerRoleTypePM buyerRoleCode = buyerRoleCodeQueryService.GetSingle(entityPOCO.BuyerRoleCode, false, true);
+                entityPM.BuyerRoleName= buyerRoleCode.LocalName;
+            } 
 
             if (!string.IsNullOrWhiteSpace(entityPOCO.IssueCountryCode))
             {

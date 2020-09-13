@@ -358,16 +358,16 @@
 
                                     <!-- AutonomyRegionTypeCode -->
                                     <td>
-                                        <LogLabel [ObjectFieldName]="'AutonomyRegionTypeCode'" [ObjectTableName]="ObjectTableName"
+                                        <LogLabel [ObjectFieldName]="'ExportAutonomyRegionTypeCode'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td>
-                                        <LogLov [ObjectFieldName]="'AutonomyRegionTypeCode'"
+                                        <LogLov [ObjectFieldName]="'ExportAutonomyRegionTypeCode'"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [HideColumns]="true"
-                                                [LookUpTableName]="'Customs.AutonomyType'"
-                                                [SelectedValue]="AutonomyRegionTypeCode">
+                                                [LookUpTableName]="'Customs.AutonomyRegionType'"
+                                                [SelectedValue]="ExportAutonomyRegionTypeCode">
                                         </LogLov>
                                     </td>
                                     <td><div></div></td>
@@ -521,7 +521,7 @@
                                     <td style="width: 160px;">
 
                                         <LogTextBox [ObjectFieldName]="'RecipientName'" [ObjectTableName]="DeclarationExportRecipientTableName"
-                                                    [HideColumns]="true" [DataContext]="item" [Text]="item.RecipientName"></LogTextBox>
+                                                    [HideColumns]="true" [DataContext]="item" [Text]="item.RecipientName" [InputType]="'ntext'"></LogTextBox>
 
                                     </td>
                                     <td><div></div></td>
@@ -534,7 +534,7 @@
 
                                     <td style="width: 160px;">
                                         <LogTextBox [ObjectFieldName]="'RecipientAddress'" [ObjectTableName]="DeclarationExportRecipientTableName"
-                                                    [HideColumns]="true" [DataContext]="item" [Text]="item.RecipientAddress"></LogTextBox>
+                                                    [HideColumns]="true" [DataContext]="item" [Text]="item.RecipientAddress"  [InputType]="'ntext'"></LogTextBox>
 
 
                                     </td>
@@ -564,7 +564,7 @@
                                                         style="position: absolute;top: 3px;"></IconButton>
                                         </div>
                                     </td>
-                                    <td *ngIf="item.LineNumber==1">
+                                    <td *ngIf="!item.LineNumber || item.LineNumber==1">
                                         <div style="vertical-align:top;float: right;">
                                             <IconButton style="float: right;" [IsSmall]="true" [Name]="'Add'" (click)="AddRecipientButtonClicked()" [IsEnabled]="AddRecipientEnabled"></IconButton>
                                         </div>

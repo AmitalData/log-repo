@@ -261,7 +261,7 @@ namespace WebFreight.Web.Security
                 }
             }
 
-            if (false)//(!exists)
+            if (!exists)
             {
                 string errorMessage = "Sorry! you have no permission to do this operation" + Environment.NewLine + "Table:" + objectTableName + Environment.NewLine + "User:" + overrideEmail + Environment.NewLine + "Tenant:" + tenant;
 
@@ -279,7 +279,7 @@ namespace WebFreight.Web.Security
 
                 //AzureLog.SaveLogsInStorage(errorMessage, "E", DateTime.Now, errorMessage, null, 0, HttpContext.Current.User.Identity.Name, HttpContext.Current.User.Identity.Name, ip);
 
-                throw new Exception("Sorry! you have no permission to do this operation on " + objectTableName);
+                throw new SecurityException("Sorry! you have no permission to do this operation on " + objectTableName);
             }
 
 

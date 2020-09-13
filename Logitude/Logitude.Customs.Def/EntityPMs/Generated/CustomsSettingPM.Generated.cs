@@ -618,6 +618,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? lastRunningDCAWS ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LastRunningDCAWS  
+	   {
+	    
+	     get
+		{
+		   return lastRunningDCAWS;
+		 }
+		 set
+		 {
+		   if(lastRunningDCAWS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunningDCAWS",OldValue=lastRunningDCAWS,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   lastRunningDCAWS=value;
+		   }
+			
+		 }
+	   }
+	  private int? lastNumOfMessagesDCAWS ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? LastNumOfMessagesDCAWS  
+	   {
+	    
+	     get
+		{
+		   return lastNumOfMessagesDCAWS;
+		 }
+		 set
+		 {
+		   if(lastNumOfMessagesDCAWS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastNumOfMessagesDCAWS",OldValue=lastNumOfMessagesDCAWS,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   lastNumOfMessagesDCAWS=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

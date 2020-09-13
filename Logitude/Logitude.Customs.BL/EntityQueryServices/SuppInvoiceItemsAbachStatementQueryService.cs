@@ -28,8 +28,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                                           InvoiceCounterKey = a.InvoiceCounterKey,
                                                                                           SequenceNumeric=a.SequenceNumeric,
                                                                                           Tenant = a.Tenant,
+                                                                                          StatementTypeName = a.NbcDeclarationType != null ? a.NbcDeclarationType.LocalName : null,
 
-                                                                                      }).ToList();
+                                                                                   }).ToList();
 
 
             return supplierInvoiceItemsPricePMs;

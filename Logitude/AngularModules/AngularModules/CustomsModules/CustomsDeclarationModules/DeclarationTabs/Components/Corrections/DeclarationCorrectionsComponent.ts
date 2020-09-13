@@ -37,6 +37,7 @@ import { CustomMessageProgressComponent } from '../../../../../CustomsModules/Cu
 import {DeclarationMessagesService} from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
 import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { ObjectsLocator } from '../../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -63,6 +64,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     private declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService;
     private declarationPMService: DeclarationPMService = new DeclarationPMService;
     private CurrentSession = SessionLocator.SelectedSession;
+    TabsSource: any[] = [];
+    SelectedTab: string = "";
 
     public get AmendmentRequestNumber() { return this.EntityPM ? this.EntityPM.AmendmentRequestNumber : null; }
     public set AmendmentRequestNumber(newValue: string) { this.EntityPM.AmendmentRequestNumber = newValue; }
@@ -85,6 +88,11 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     public get AmendmentDeficitInitiated() { return this.EntityPM ? this.EntityPM.AmendmentDeficitInitiated : null; }
     public set AmendmentDeficitInitiated(newValue: boolean) { this.EntityPM.AmendmentDeficitInitiated = newValue; }
 
+
+    public get AmendmentRejectionReason() { return this.EntityPM ? this.EntityPM.AmendmentRejectionReason : null; }
+    public set AmendmentRejectionReason(newValue: string) { this.EntityPM.AmendmentRejectionReason = newValue; }
+
+
     public get VersionId() { return this.EntityPM ? this.EntityPM.VersionId : null; }
     public set VersionId(newValue: string) { this.EntityPM.VersionId = newValue; }
 
@@ -95,7 +103,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     public get AmendmentRemarks() { return this.EntityPM ? this.EntityPM.AmendmentRemarks : null; }
     public set AmendmentRemarks(newValue: string) { this.EntityPM.AmendmentRemarks = newValue; }
 
- 
+    LayoutDirection: string = 'ltr';
+
 
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
@@ -106,10 +115,12 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                     this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
                         this.EntityPM = this.entityArgs.EntityPM;
                         this.ObjectTableName = this.entityArgs.ObjectTableName;
-                
+                        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+
                         this.Listen();
 
                         console.log("Declaration", this.EntityPM);
+                        this.BuildTabs();
 
                         this.ReloadDeclarationCorrection();
 
@@ -117,6 +128,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         this.UIProperties.SetEnabled("AmendmentRequestNumber", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentissueDate", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("VersionId", this.ObjectTableName, false);
+                        this.UIProperties.SetEnabled("AmendmentRejectionReason", this.ObjectTableName, false);
+
                         this.DisplayOnlyCheck();
 
                      });
@@ -126,6 +139,27 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
  
 
     }
+    SelectionChanged(tab: any) {
+
+        this.TabsSource.forEach(item => { // reset selection
+            item.isSelected = false;
+        });
+
+        var index = this.TabsSource.indexOf(tab);
+        if (index < 0) {
+            console.log("The tab was not found, cant not delete it :( ", tab); return;
+        }
+        var item = this.TabsSource[index];
+        item.isSelected = true;
+        this.SelectedTab = item.Name;
+    }
+    BuildTabs() {
+        this.SelectedTab = "Details";
+        this.TabsSource.push({ Name: "Details", isSelected: true, Header: TextCodeTranslator.Translate("Customs.Declaration.O.CorrectionStatement") });
+        this.TabsSource.push({ Name: "Errors", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Errors") });
+    }
+
+
     DisplayOnlyCheck() {
 
          var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();

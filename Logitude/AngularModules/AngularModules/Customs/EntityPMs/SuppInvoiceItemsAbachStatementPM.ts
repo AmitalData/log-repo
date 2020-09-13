@@ -62,6 +62,11 @@ export class SuppInvoiceItemsAbachStatementPM {
     public set IsStatementInd(newValue: boolean) { if (this.isStatementInd != newValue) { this.isStatementInd = newValue; this.MarkAsDirty("IsStatementInd"); } }
        
 	 
+    private statementTypeName: string;
+    public get StatementTypeName() { return this.statementTypeName; }
+    public set StatementTypeName(newValue: string) { if (this.statementTypeName != newValue) { this.statementTypeName = newValue; this.MarkAsDirty("StatementTypeName"); } }
+       
+	 
 
     public OldEntityPM: SuppInvoiceItemsAbachStatementPM;
 	

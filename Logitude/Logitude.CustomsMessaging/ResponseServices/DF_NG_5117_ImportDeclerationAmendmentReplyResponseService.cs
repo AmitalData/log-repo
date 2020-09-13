@@ -89,8 +89,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 }
              
-                //var key = "ResponseService,declarationNumber:" + declarationNumber + ",tenant:" + requestParams.Tenant.ToString();
-                string functionalReferenceID = "";
+                 string functionalReferenceID = "";
                 if (customResponse.Response.FunctionalReferenceID != null)
                     functionalReferenceID = customResponse.Response.FunctionalReferenceID.Value;
                 else
@@ -104,6 +103,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declaration != null)
                 {
                     _MyDeclarationPM = declaration;
+                  //  _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, true);
 
                 }
                 else
@@ -115,9 +115,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, true);
 
-                        //_MyDeclarationPM.AmendmentCorrectedByUserId = requestParams.LoggingUserId;
-                        //_MyDeclarationPM.AmendmentDontDisplayInList = false;
-                        //_MyDeclarationPM.IsAmendment = true;
+                   
                     }
 
                     else if(customResponse.Response.Declaration!= null)
@@ -143,11 +141,50 @@ namespace Logitude.CustomsMessaging.ResponseServices
                      return;
                 }
 
+           
+
+
+                if (customResponse.ProceduralFaults != null)
+                {
+                    var ProceduralFaultDetailsXml_5117 = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.ProceduralFaultDetails[]>
+                       .SerializeObject(customResponse.ProceduralFaults);
+
+                    var customResponse_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsg() { };
+                    customResponse_8218.ProceduralFaultDetails = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Fault.ProceduralFaultDetails[]>
+                        .DeSerializeObject(ProceduralFaultDetailsXml_5117);
+
+                    var ResponseService_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsgResponseService();
+                    ResponseService_8218.Update(customResponse_8218, requestParams);
+
+
+                    //update id original after create faults
+                    var proceduralFaultQueryService = new ProceduralFaultQueryService(requestParams.Tenant);
+                    var proceduralFaultUpdateService = new ProceduralFaultUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                    foreach (var proceduralFaultItem in customResponse_8218.ProceduralFaultDetails)
+                    {
+                        string faultId = proceduralFaultQueryService.GetFaultIdByFaultNumber(proceduralFaultItem.proceduralFaultNumber.ToString(), requestParams.Tenant);
+                      var  proceduralFaultPM = new ProceduralFaultPM();
+ 
+                        EventContextTagModel myInsertEventContextTagModel = new EventContextTagModel();
+                        myInsertEventContextTagModel.MyNotificationPM = new NotificationPM();
+
+                        if (!string.IsNullOrWhiteSpace(faultId))
+                        {
+                            proceduralFaultPM = proceduralFaultQueryService.GetSingle(faultId, true, false);
+                            proceduralFaultPM.ChangeSetOp = ChangeSetOperation.Update;
+                            proceduralFaultPM.DeclarationId = _MyDeclarationPM.Id;
+                            proceduralFaultUpdateService.Update(proceduralFaultPM, true);
+                         }
+                    }
+                      
+                }
+
+
 
                 var declarationQueryService = new DeclarationQueryService(_MyDeclarationPM.Tenant);
                 _MyDeclarationPMOrg = declarationQueryService.GetSingle(_MyDeclarationPM.AmendmentOriginalDeclartation, true, false);
 
- 
+
                 string loggingUserId = "";
                 UserRepository userRepository = new UserRepository(_MyDeclarationPM.Tenant);
                 var user = userRepository.GetSingleUserByCode("MEHES", _MyDeclarationPM.Tenant, true);
@@ -217,7 +254,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                         comments = "- תיקון הצהרה אושר" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     }
                                                 };
-                                                AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
+                                                AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel, iscustomUser: true);
 
                                                 myUpdateEventContextTagModel = new EventContextTagModel()
                                                 {
@@ -256,7 +293,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     }
                                                 };
 
-                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel2);
+                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel2, iscustomUser: true);
                                                   myUpdateEventContextTagModel = new EventContextTagModel()
                                                 {
                                                     CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
@@ -284,46 +321,46 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                                 break;
 
-                                            case "5":
-                                                _MyDeclarationPM.AmendmentStatus = "5";
+                                            //case "5":
+                                            //    _MyDeclarationPM.AmendmentStatus = "5";
 
 
-                                                var myAmitalEventTracerModel3 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                                                {
-                                                    Tenant = _MyDeclarationPM.Tenant,
-                                                    objectTableName = "Customs.Declaration",
-                                                    EventCode = "DMC",
-                                                    notes = "תיקון הצהרה בוטל - " +( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
-                                                    EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
-                                                    UserId = loggingUserId,
+                                            //    var myAmitalEventTracerModel3 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                                            //    {
+                                            //        Tenant = _MyDeclarationPM.Tenant,
+                                            //        objectTableName = "Customs.Declaration",
+                                            //        EventCode = "DMC",
+                                            //        notes = "תיקון הצהרה בוטל - " +( _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
+                                            //        CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
+                                            //        EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
+                                            //        UserId = loggingUserId,
 
-                                                    CommunicationSubject = "FU Status DMC from logitude ",
-                                                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                                                    {
-                                                        entname = "CFIFILEM",
-                                                        primary_number = _MyDeclarationPM.CustomFileNo,
-                                                        status = "new",
-                                                        xml_status = "new",
-                                                        status_id = "DMC",
-                                                        status_DateTime = DateTime.Now,
-                                                        comments = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber )+ " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                    }
-                                                };
+                                            //        CommunicationSubject = "FU Status DMC from logitude ",
+                                            //        MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                                            //        {
+                                            //            entname = "CFIFILEM",
+                                            //            primary_number = _MyDeclarationPM.CustomFileNo,
+                                            //            status = "new",
+                                            //            xml_status = "new",
+                                            //            status_id = "DMC",
+                                            //            status_DateTime = DateTime.Now,
+                                            //            comments = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber )+ " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
+                                            //        }
+                                            //    };
 
-                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel3);
-                                                myUpdateEventContextTagModel = new EventContextTagModel()
-                                                {
-                                                    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
-                                                    EventCode = "DMC",
-                                                    EventRemarks = "Declaration Amendment Cancelled",
-                                                    FUStatusRemarks = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                };
-
-
+                                            //    AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel3);
+                                            //    myUpdateEventContextTagModel = new EventContextTagModel()
+                                            //    {
+                                            //        CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
+                                            //        EventCode = "DMC",
+                                            //        EventRemarks = "Declaration Amendment Cancelled",
+                                            //        FUStatusRemarks = "תיקון הצהרה בוטל - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
+                                            //    };
 
 
-                                                break;
+
+
+                                            //    break;
 
 
 
@@ -360,7 +397,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     }
                                                 };
 
-                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel4);
+                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel4, iscustomUser: true);
                                                 myUpdateEventContextTagModel = new EventContextTagModel()
                                                 {
                                                     CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
@@ -397,7 +434,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     }
                                                 };
 
-                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel5);
+                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel5, iscustomUser: true);
                                                 myUpdateEventContextTagModel = new EventContextTagModel()
                                                 {
                                                     CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
@@ -417,6 +454,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     break;
                                 }
                         }
+                    }
+
+                    if(customResponse.Response.Error!= null)
+                    {
+                        DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
+
+                        this._MyDeclarationPM.AmendmentErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO);
+
                     }
 
 
@@ -457,7 +502,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     comments = "-  בוצע תיקון הצהרה" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
                                 }
                             };
-                            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+                            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, iscustomUser: true);
 
 
                             myUpdateEventContextTagModel = new EventContextTagModel()
@@ -499,22 +544,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             _MyDeclarationPM.UserNotes = "LoadTest";
                         }
 
-                        if (customResponse.ProceduralFaults != null)
-                        {
-                            var ProceduralFaultDetailsXml_5117 = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.ProceduralFaultDetails[]>
-                               .SerializeObject(customResponse.ProceduralFaults);
-
-                            var customResponse_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsg() { };
-                            customResponse_8218.ProceduralFaultDetails = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Fault.ProceduralFaultDetails[]>
-                                .DeSerializeObject(ProceduralFaultDetailsXml_5117);
-
-                            var ResponseService_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsgResponseService();
-                            ResponseService_8218.Update(customResponse_8218, requestParams);
-                        }
-
                         this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                         myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
+             
+                   
 
 
 

@@ -27,6 +27,9 @@ import {CustomsRequiredFieldListService} from '../../../../../../Customs/Service
 
 import {LuhnAlgorithm} from '../../../../../../Customs/Utilities/LuhnAlgorithm';
 import {ObjectsLocator} from '../../../../../../Infrastructure/Locators/ObjectsLocator';
+import { SupplierInvoiceItemsPricePM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsPricePM';
+import { SuppInvoiceItemsAbachStatementPM } from '../../../../../../Customs/EntityPMs/SuppInvoiceItemsAbachStatementPM';
+import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 
 
 @Component({
@@ -41,7 +44,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     public OriginalItemPM: SupplierInvoiceItemPM; 
     public ClonedItemPM: SupplierInvoiceItemPM;
 
-    //public OriginalItemPM: SupplierInvoiceItemPM; // screen binding
+    //public OriginalItemPM: SupplierInvoiceItemPM; // screen bindingObjectsLocator 
 
     public CustomsBookTypeFilterItems: ApiQueryFilters;
     public ObjectTableName: string = "Customs.SupplierInvoiceItem";
@@ -60,6 +63,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
 
         // Initilize lists
         this.ModificationsList = new ObservableCollection([]);
+        this.PricesList = new ObservableCollection([]);
         this.ProcessTypesList = new ObservableCollection([]);
         this.ConDeclarList = new ObservableCollection([]);
         this.SerialNumbersList = new ObservableCollection([]);
@@ -93,6 +97,16 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         this.ModificationsList = new ObservableCollection([]);
         for (let item of this.OriginalItemPM.SupplierInvoiceItemsMods) {
             this.ModificationsList.Insert(new ModificationItemModel(item));
+        }
+
+        this.PricesList = new ObservableCollection([]);
+        for (let item of this.OriginalItemPM.SupplierInvoiceItemsPrices) {
+            this.PricesList.Insert(new PriceItemModel(item));
+        }
+
+        this.AbachsList = new ObservableCollection([]);
+        for (let item of this.OriginalItemPM.SuppInvoiceItemsAbachStatements) {
+            this.AbachsList.Insert(new AbachItemModel(item));
         }
 
         // ProcessTypes List
@@ -153,13 +167,26 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         this.UIProperties.SetEnabled("ManufactureIdentifier", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("DangerousClassificationCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("DangerousPackingGroupTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("TransactionNatureCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ClaimReasonCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ClassificationTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+
     }
 
     CheckRequrierdFieldsForSend() {
+        var isExport = false;
+        if (this.allowExport) {
+            isExport = true;
+        }
+
         var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.SupplierInvoiceItem')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
+        var customsRequiredFieldExtendedListService: CustomsRequiredFieldExtendedListService = new CustomsRequiredFieldExtendedListService();
+        filters = customsRequiredFieldExtendedListService.GetFilter(filters, isExport)
+
+
         customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: any) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
@@ -370,8 +397,83 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         }
     }
 
+    public get ClassificationTypeCode() { return this.OriginalItemPM ? this.OriginalItemPM.ClassificationTypeCode : null; }
+    public set ClassificationTypeCode(newValue: string) {
+        this.OriginalItemPM.ClassificationTypeCode = newValue;
+    }
+
+    public get TransactionNatureCode() { return this.OriginalItemPM ? this.OriginalItemPM.TransactionNatureCode : null; }
+    public set TransactionNatureCode(newValue: string) {
+       
+        this.OriginalItemPM.TransactionNatureCode = newValue;
+    }
+
+    public get ClaimReasonCode() { return this.OriginalItemPM ? this.OriginalItemPM.ClaimReasonCode : null; }
+    public set ClaimReasonCode(newValue: string) {
+        this.OriginalItemPM.ClaimReasonCode = newValue;
+    }
 
     //#endregion
+
+    AbachsList: ObservableCollection;
+    abachCounter = 0;
+
+    AddAbachButton() {
+         var item = new SuppInvoiceItemsAbachStatementPM(this.OriginalItemPM);
+
+        if (this.AbachsList.Length > 0) {
+            this.abachCounter = this.getMax(this.AbachsList.Collection, "SequenceNumeric");
+        }
+             item.DeclarationId = this.OriginalItemPM.DeclarationId,
+                item.Tenant = this.OriginalItemPM.Tenant,
+                item.InvoiceCounterKey = this.OriginalItemPM.CounterKey,
+                item.InvoiceItemLineNumber = this.OriginalItemPM.LineNumber,
+                  item.SequenceNumeric=this.abachCounter +1,
+                item.ChangeSetOp = "Insert",
+
+                this.OriginalItemPM.AddSuppInvoiceItemsAbachStatement(item);
+            this.AbachsList.Insert(new AbachItemModel(item));
+            //this.CurrentSession.ResetRowIndex();
+         
+    }
+
+    RemoveAbach(item: AbachItemModel) {
+        console.log("... Removing ", item);
+        this.AbachsList.Remove(item);
+        this.OriginalItemPM.RemoveSuppInvoiceItemsAbachStatement(item.AbachPM); // remove from entity
+    }
+
+
+
+    PricesList: ObservableCollection;
+    priceCounter = 0;
+
+    AddPriceButton() {
+             var item = new SupplierInvoiceItemsPricePM(this.OriginalItemPM);
+
+        if (this.PricesList.Length > 0) {
+            this.priceCounter = this.getMax(this.PricesList.Collection, "LineNumber");
+        }
+             item.DeclarationId = this.OriginalItemPM.DeclarationId,
+                item.Tenant = this.OriginalItemPM.Tenant,
+                item.InvoiceCounterKey = this.OriginalItemPM.CounterKey,
+                item.InvoiceItemLineNumber = this.OriginalItemPM.LineNumber,
+                 item.LineNumber = this.priceCounter +1,
+
+                item.ChangeSetOp = "Insert",
+
+                this.OriginalItemPM.AddSupplierInvoiceItemsPrice(item);
+            this.PricesList.Insert(new PriceItemModel(item));
+            //this.CurrentSession.ResetRowIndex();
+         
+    }
+
+    RemovePrice(item: PriceItemModel) {
+        console.log("... Removing ", item);
+        this.PricesList.Remove(item);
+        this.OriginalItemPM.RemoveSupplierInvoiceItemsPrice(item.PricePM); // remove from entity
+    }
+
 
     //#region Modification List
 
@@ -883,7 +985,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     //#endregion
 
     getMax(list: any[], propertyName: string) {
-        var max = -99999;
+          var max = -99999;
         var maxObj = list ? list.reduce(function (prev, current) { return (prev[propertyName] > current[propertyName]) ? prev : current }) : null;
         if (maxObj != null)
             if (max <= maxObj[propertyName])
@@ -947,6 +1049,119 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     }
 }
 
+
+export class AbachItemModel extends BaseComponent {
+
+    public AbachPM: SuppInvoiceItemsAbachStatementPM = null;
+    public ObjectTableName = "Customs.SuppInvoiceItemsAbachStatement";
+    public DataContext = this;
+
+    constructor(private _abachPM: SuppInvoiceItemsAbachStatementPM) {
+        super();
+        this.AbachPM = _abachPM;
+    }
+
+    get StatementTypeCode() { return this.AbachPM.StatementTypeCode; }
+    set StatementTypeCode(value: string) {
+        if (this.AbachPM.StatementTypeCode != value) {
+            this.AbachPM.StatementTypeCode = value;
+
+        }
+    }
+
+    get SequenceNumeric() { return this.AbachPM.SequenceNumeric; }
+    set SequenceNumeric(value: number) {
+        if (this.AbachPM.SequenceNumeric != value) {
+            this.AbachPM.SequenceNumeric = value;
+
+        }
+    }
+
+
+    get StatementTypeName() { return this.AbachPM.StatementTypeName; }
+    set StatementTypeName(value: string) {
+        if (this.AbachPM.StatementTypeName != value) {
+            this.AbachPM.StatementTypeName = value;
+
+        }
+    }
+
+    get IsStatementInd() { return this.AbachPM.IsStatementInd; }
+    set IsStatementInd(value: boolean) {
+        if (this.AbachPM.IsStatementInd != value) {
+            this.AbachPM.IsStatementInd = value;
+
+        }
+    }
+
+
+
+    SetLocalName(entity, fieldName) {
+        if (!AppTool.IsNullOrEmpty(entity)) {
+            this[fieldName] = entity.LocalName;
+        } else {
+            this[fieldName] = null;
+        }
+
+    }
+}
+
+
+export class PriceItemModel extends BaseComponent {
+
+    public PricePM: SupplierInvoiceItemsPricePM = null;
+    public ObjectTableName = "Customs.SupplierInvoiceItemsPrice";
+    public DataContext = this;
+
+    constructor(private _pricePM: SupplierInvoiceItemsPricePM) {
+        super();
+        this.PricePM = _pricePM;
+    }
+
+    get AdditionalPrice() { return this.PricePM.AdditionalPrice; }
+    set AdditionalPrice(value: number) {
+        if (this.PricePM.AdditionalPrice != value) {
+            this.PricePM.AdditionalPrice = value;
+
+        }
+    }
+
+    get LineNumber() { return this.PricePM.LineNumber; }
+    set LineNumber(value: number) {
+        if (this.PricePM.LineNumber != value) {
+            this.PricePM.LineNumber = value;
+
+        }
+    }
+
+    get AdditionalPriceTypeCode() { return this.PricePM.AdditionalPriceTypeCode; }
+    set AdditionalPriceTypeCode(value: string) {
+        if (this.PricePM.AdditionalPriceTypeCode != value) {
+            this.PricePM.AdditionalPriceTypeCode = value;
+
+        }
+    }
+
+    get AdditionalPriceTypeName() { return this.PricePM.AdditionalPriceTypeName; }
+    set AdditionalPriceTypeName(value: string) {
+        if (this.PricePM.AdditionalPriceTypeName != value) {
+            this.PricePM.AdditionalPriceTypeName = value;
+
+        }
+    }
+
+
+
+    SetLocalName(entity, fieldName) {
+        if (!AppTool.IsNullOrEmpty(entity)) {
+            this[fieldName] = entity.LocalName;
+        } else {
+            this[fieldName] = null;
+        }
+
+    }
+}
+
 // Details Tab
 export class ModificationItemModel extends BaseComponent {
     public ModificationPM: SupplierInvoiceItemsModPM = null;
@@ -957,6 +1172,8 @@ export class ModificationItemModel extends BaseComponent {
         super();
         this.ModificationPM = modificationPM;
     }
+
+
 
     //#region Properties
     
@@ -1072,6 +1289,7 @@ export class ConDeclarItemModel extends BaseComponent { // connected declaration
 
         }
     }
+
 
     get DeclarationTypeName() { return this.ConnDeclarPM.DeclarationTypeName; }
     set DeclarationTypeName(value: string) {

@@ -170,7 +170,11 @@ public partial class LogitudeCustomsFile
 
     private string newFileField;
 
+    private string importerFileField;
+
     private string teamField;
+
+    private string fileOpenDateField;
 
     /// <remarks/>
     public string CustomFileNo
@@ -940,6 +944,19 @@ public partial class LogitudeCustomsFile
     }
 
     /// <remarks/>
+    public string ImporterFile
+    {
+        get
+        {
+            return this.importerFileField;
+        }
+        set
+        {
+            this.importerFileField = value;
+        }
+    }
+
+    /// <remarks/>
     public string Team
     {
         get
@@ -949,6 +966,19 @@ public partial class LogitudeCustomsFile
         set
         {
             this.teamField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string FileOpenDate
+    {
+        get
+        {
+            return this.fileOpenDateField;
+        }
+        set
+        {
+            this.fileOpenDateField = value;
         }
     }
 }

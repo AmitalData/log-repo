@@ -45,7 +45,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AutoUnitMeasurement, 
 	         CompanyType, 
 	         IsMessagesPending, 
-	         QtyFeedbackInPendingMessage,
+	         QtyFeedbackInPendingMessage, 
+	         LastRunningDCAWS, 
+	         LastNumOfMessagesDCAWS,
 	      }
 
 
@@ -77,7 +79,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AutoUnitMeasurement, 
 	         CompanyType, 
 	         IsMessagesPending, 
-	         QtyFeedbackInPendingMessage,
+	         QtyFeedbackInPendingMessage, 
+	         LastRunningDCAWS, 
+	         LastNumOfMessagesDCAWS,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -199,6 +203,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QtyFeedbackInPendingMessage))
             {
 				entityPOCO.QtyFeedbackInPendingMessage = entityPM.QtyFeedbackInPendingMessage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunningDCAWS))
+            {
+				entityPOCO.LastRunningDCAWS = entityPM.LastRunningDCAWS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumOfMessagesDCAWS))
+            {
+				entityPOCO.LastNumOfMessagesDCAWS = entityPM.LastNumOfMessagesDCAWS;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -327,6 +341,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.QtyFeedbackInPendingMessage = entityPOCO.QtyFeedbackInPendingMessage;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastRunningDCAWS))
+            {
+					entityPM.LastRunningDCAWS = entityPOCO.LastRunningDCAWS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastNumOfMessagesDCAWS))
+            {
+					entityPM.LastNumOfMessagesDCAWS = entityPOCO.LastNumOfMessagesDCAWS;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -446,6 +470,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QtyFeedbackInPendingMessage))
             {
                 oldEntityPM.QtyFeedbackInPendingMessage = entityPM.QtyFeedbackInPendingMessage;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunningDCAWS))
+            {
+                oldEntityPM.LastRunningDCAWS = entityPM.LastRunningDCAWS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumOfMessagesDCAWS))
+            {
+                oldEntityPM.LastNumOfMessagesDCAWS = entityPM.LastNumOfMessagesDCAWS;
             }
 			
 		}

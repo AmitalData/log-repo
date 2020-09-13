@@ -146,6 +146,20 @@ export class RequiredFieldsComponent extends BaseComponent {
         this.FieldsList.forEach((field) => {
             var objectField = window.ObjectFields.find(x => x.FieldCode == field.ObjectfieldCode);
             field.ObjectFieldName = TextCodeTranslator.Translate(objectField.FullNameTextCodeCode);
+             if (field.IsExport && field.IsImport) {
+                field.ObjectFieldName=  field.ObjectFieldName + " (יבוא, יצוא)";
+            }
+            else {
+                if (field.IsExport) {
+                    field.ObjectFieldName=  field.ObjectFieldName + " (יצוא)";
+
+                }
+                else if (field.IsImport) {
+                    field.ObjectFieldName=  field.ObjectFieldName + " (יבוא)";
+
+                }
+            }
+            
         });
     }
 

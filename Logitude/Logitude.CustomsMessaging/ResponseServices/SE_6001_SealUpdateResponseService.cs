@@ -1,5 +1,6 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
@@ -51,6 +52,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 cargoSealIdentifierPM.Status = "2";
                 this.MyResponseData.HasException = true;
                 this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
+
+ 
+
             }
             else
             {

@@ -79,17 +79,22 @@ export class CustomsDocumentsComponent
     DontLoadTickets: boolean = false;
     PreventEdit: boolean = false;
     public SelectedDocumentId: string = null;
-
     DocumentRequestCodeIcon: string = "";
     IsDocumentRequestCodeButton: boolean = false;
     IsDocumentRequestCodeSendDigital: boolean = false;
     DocumentRequestCodeText: string = "";
-    //*************************************//
+    ParentEntityCode_args: string = "";
+
+     //*************************************//
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
+        if (entityArgs.EntityParentPM != null) {
+            this.ParentEntityCode_args = entityArgs.EntityParentPM;
+          }
+    
         if (entityArgs.EntityPM && !entityArgs.SkipCtor) {
-            this.Start(entityArgs.EntityPM, entityArgs.ObjectTableName);
+            this.Start(entityArgs.EntityPM, entityArgs.ObjectTableName, entityArgs.EntityParentPM);
         }
     }
     ngOnDestroy() {
@@ -99,15 +104,34 @@ export class CustomsDocumentsComponent
         this.CustomsDocumentsTicketViewModels.forEach((item) => { item.DataContext = null; })
         this.CustomsDocumentsTicketViewModels = null;
     }
-    Start(entityPM: any, objectTableName: string) {
+    Start(entityPM: any, objectTableName: string, _ParentEntityCode_args:string) {
+         if (_ParentEntityCode_args != null) {
+            this.ParentEntityCode_args = _ParentEntityCode_args;
+        }
         this.EntityPM = entityPM;
         this.ObjectTableName = objectTableName;
-        this.ParentEntityCode = this.ObjectTableName.split('.')[1];
+        if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args)) {
+            this.ParentEntityCode = this.ParentEntityCode_args;
+        }
+        else {
+            this.ParentEntityCode = this.ObjectTableName.split('.')[1];
+
+        }
         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocument").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response: any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentsTicket").subscribe((response: any) => {
                     this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentPointer").subscribe((response: any) => {
-                        this.InsureCustomsDocumentsController();
+                       var timeout = 0;
+                        if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args))
+                        {
+                            this.InsureCustomsDocumentsController(true);
+                            timeout = 50;
+                        }
+                        else
+                            this.InsureCustomsDocumentsController();
+
+
+
                         //if (AppTool.IsNullOrEmpty(this.customsDocumentsDataProvider)) {
                         //    this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM);
                         //}
@@ -116,13 +140,18 @@ export class CustomsDocumentsComponent
                         //}
                         this.IsRelatedDocsVisible = this.iCustomsDocumentsController.IsRelatedDocumentsVisible();
                         this.DisplayOnlyCheck();
-                        this.InitiateComponent();
-                        this.Listen();
-                        this.BuildHeader = true;
-                        this.FilterSelectedValue = 'alltickets';
-                        this._ImageLibraryService = new ImageLibraryService();
-                        this.custDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
-                        this.GetDocumentRequestDefaults(this.EntityPM.CustomerCode);
+
+                        setTimeout(() => {
+                            this.InitiateComponent();
+                            this.Listen();
+                            this.BuildHeader = true;
+                            this.FilterSelectedValue = 'alltickets';
+                            this._ImageLibraryService = new ImageLibraryService();
+                            this.custDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
+                            this.GetDocumentRequestDefaults(this.EntityPM.CustomerCode);
+                        }, timeout);
+
+                    
                     });
                 });
             });
@@ -174,16 +203,23 @@ export class CustomsDocumentsComponent
             );
         }
     }
-    InsureCustomsDocumentsController() {
+    InsureCustomsDocumentsController(reload=false) {
         if (AppTool.IsNullOrEmpty(this.customsDocumentsDataProvider)) {
-            this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM);
+            this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM, null, null, this.ParentEntityCode);
         }
         if (AppTool.IsNullOrEmpty(this.iCustomsDocumentsController)) {
             this.iCustomsDocumentsController = this.customsDocumentsDataProvider.GetCustomsDocumentsController();
         }
+        else if (reload) {
+            this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM, null, null, this.ParentEntityCode);
+
+            this.iCustomsDocumentsController = this.customsDocumentsDataProvider.GetCustomsDocumentsController();
+        }
+
 
     }
     InitiateComponent(selectedDocId: string = null) {
+
         this.CurrentSession.StartBusyIndicatorLoading();
         this.CustomsDocumentsTickets = [];
         this.MetadataValues = [];
@@ -222,9 +258,14 @@ export class CustomsDocumentsComponent
         });
     }
 
-    FillCustomsDocumentsTickets(tickets: CustomsDocumentsTicketPM[], selectedDocId: string = null) {
+    FillCustomsDocumentsTickets(tickets: CustomsDocumentsTicketPM[], selectedDocId: string = null, reload=false) {
         if (this.CustomsDocumentsTicketViewModels == null) {
             this.CustomsDocumentsTicketViewModels = [];
+        }
+        if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args)) {
+            this.CustomsDocumentsTicketViewModels = [];
+            this.StaticCustomsDocumentsTicketViewModels = [];
+
         }
         for (var i = 0; i < tickets.length; i++) {
             var customsDocumentsTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(tickets[i], this.MetadataValues, false, this.IsDisplayOnly,
@@ -279,6 +320,7 @@ export class CustomsDocumentsComponent
     }
 
     FilterCustomsDocumentsTickets() {
+
         this.CustomsDocumentsTicketViewModels = [];
         if (!AppTool.IsNullOrEmpty(this.CustomDocumentTypeCode)) {
             this.CustomsDocumentsTicketViewModels = this.StaticCustomsDocumentsTicketViewModels.filter(d => d.DocumentTypeCode == this.CustomDocumentTypeCode);
@@ -391,8 +433,9 @@ export class CustomsDocumentsComponent
 
                             });
                         }
+                    
+                            this.FillCustomsDocumentsTickets(this.CustomsDocumentsTickets, selectedDocId);
 
-                        this.FillCustomsDocumentsTickets(this.CustomsDocumentsTickets, selectedDocId);
                         this.iCustomsDocumentsController.FillDefaultMetaData(this.CustomsDocumentsTicketViewModels);
                         this.iCustomsDocumentsController.FillDefaultMetaData(this.StaticCustomsDocumentsTicketViewModels);
                         this.SortCustomsDocumentTickets();
@@ -657,7 +700,7 @@ export class CustomsDocumentsComponent
 
     SetWindowArgs(windowArgs) {
         this.IsWindowMode = true;
-        this.Start(windowArgs.EntityPM, windowArgs.ObjectTableName);
+         this.Start(windowArgs.EntityPM, windowArgs.ObjectTableName, windowArgs.EntityParentPM);
     }
 
     CloseButtonClicked() {

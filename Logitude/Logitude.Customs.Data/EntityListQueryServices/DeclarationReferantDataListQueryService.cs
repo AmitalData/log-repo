@@ -22,12 +22,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<DeclarationReferantDataList> GetIqueryableList(IQueryable<DeclarationReferantData> iQueryable)
         {
             IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
-                                                             join d in context.Declarations.Include("CustomerCard").Include("DeclarationOffice").Include("DeclarationStatusType")
+                                                             join d in context.Declarations.Include("CustomerCard").Include("DeclarationOffice").Include("DeclarationStatusType").Include("Importer")
                                                              on a.DeclarationId equals d.Id
-                                                             where d.ReferentUserId != null
-
-                                                             join e in context.Cards.Include("CustomerCard")
-                                                             on d.CustomerId equals e.Customer.Id
                                                              select new DeclarationReferantDataList()
                                                              {
                                                                  Tenant = a.Tenant,
@@ -64,13 +60,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                                  TransportModeId = d.TransportModeId,
 
-                                                                 DeclarationOfficeName = d.DeclarationOffice.LocalName,
+                                                                 DeclarationOfficeCode = d.DeclarationOfficeCode,
 
                                                                  VendorName = a.CustomsVendor.VendorName,
                                                                  ArrivalDate = a.ArrivalDate != null ? a.ArrivalDate : a.EstimatedArrivalDate,
                                                                  ATAOrETA = a.ArrivalDate != null ? "ATA" : "ETA",
 
-                                                                 DeclarationStatusTypeName = d.DeclarationStatusType.LocalName,
+                                                                 DeclarationStatusTypeName = d.DeclarationStatusType == null ? null : d.DeclarationStatusType.LocalName,
 
                                                                  DeclarationStatusTypeCode = d.DeclarationStatusTypeCode,
                                                                  ExceptionReasonsList = a.ExceptionReasonsList,
@@ -80,7 +76,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
  
                                                                  NewFile = a.NewFile,
                                                                  Favorite = a.Favorite,
-                                                                 IsCustomerLogBoxActivated = e.Customer.LogBoxActivated,
+                                                                  IsCustomerLogBoxActivated = d.CustomerCard.Customer.LogBoxActivated,
                                                                  SortedColumns = (a.NewFile && a.Favorite ? 1 : (a.NewFile ? 2 : (a.Favorite ? 3 : 4))),
                                                                  IsCancelled = d.IsCancelled,
                                                                  ClassifiedUserName = a.ClassifiedUser.Contact.LocalName,
@@ -89,8 +85,19 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  LastStatusDate = a.LastStatusDate,
                                                                  LastStatusName = a.LastStatusName,
                                                                  OrderMoney = a.OrderMoney,
-                                                                 Team=a.ReferantTeam.LocalName,
-                                                              
+                                                                 StorageSiteCode=d.StorageSiteCode,
+                                                                 HatraDate=d.HatraDate,
+                                                                 PaymentDate=d.PaymentDate,
+                                                                 TaxationDateTime=d.TaxationDateTime,
+                                                                 CustomerCode = d.CustomerCard == null ? null : d.CustomerCard.Code,
+                                                                 ImporterCode=d.ImporterCode,
+                                                                  ProcedureCurrentCode = d.ProcedureCurrentCode,
+                                                                 ImporterFile=a.ImporterFile,
+                                                                 AEOImporter=d.Importer.FacilitationTypeCode,
+                                                                 Team = a.ReferantTeam.LocalName,
+                                                                 FileOpenDate=a.FileOpenDate,
+
+
                                                              }) ;
                                                                 
                                               return query;

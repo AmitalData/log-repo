@@ -24,7 +24,7 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<SupplierInvoiceItemsPrice> GetSupplierInvoiceItemsPricesForDeclarationId(string declarationId, int invoiceCounterKey,  List<int> itemsLineNumbers, int tenant)
         {
-            var query = (from a in context.SupplierInvoiceItemsPrices
+            var query = (from a in context.SupplierInvoiceItemsPrices.Include("AdditionalPriceType")
                          where a.DeclarationId == declarationId && a.Tenant == tenant && a.InvoiceCounterKey == invoiceCounterKey
                          select a);//.ToList();
 

@@ -179,6 +179,16 @@ export class DeclarationReferantDataPM {
     public set Team(newValue: string) { if (this.team != newValue) { this.team = newValue; this.MarkAsDirty("Team"); } }
        
 	 
+    private importerFile: string;
+    public get ImporterFile() { return this.importerFile; }
+    public set ImporterFile(newValue: string) { if (this.importerFile != newValue) { this.importerFile = newValue; this.MarkAsDirty("ImporterFile"); } }
+       
+	 
+    private fileOpenDate: Date;
+    public get FileOpenDate() { return this.fileOpenDate; }
+    public set FileOpenDate(newValue: Date) { if (this.fileOpenDate != newValue) { this.fileOpenDate = newValue; this.MarkAsDirty("FileOpenDate"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

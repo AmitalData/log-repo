@@ -933,6 +933,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AmendmentErrorXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"

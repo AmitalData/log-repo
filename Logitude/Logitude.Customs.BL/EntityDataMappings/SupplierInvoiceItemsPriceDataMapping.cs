@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -27,9 +28,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(SupplierInvoiceItemsPricePM entityPM, SupplierInvoiceItemsPrice entityPOCO)
         {
-            //throw new NotImplementedException();
+            CustomMappedPMProperties.Add(PMPropertyNames.AdditionalPriceTypeName);
+            if (entityPOCO.AdditionalPriceTypeCode != null)
+            {
+                AmountTypeQueryService amountTypeQueryService = new AmountTypeQueryService(entityPOCO.Tenant);
+                AmountTypePM amountTypePM = amountTypeQueryService.GetSingle(entityPOCO.AdditionalPriceTypeCode, false, true);
+                entityPM.AdditionalPriceTypeName = amountTypePM.LocalName;
+            }
+
+
         }
-   }
+    }
 
 
 }

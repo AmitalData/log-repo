@@ -41,7 +41,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SequenceNumeric, 
 	         Tenant, 
 	         StatementTypeCode, 
-	         IsStatementInd,
+	         IsStatementInd, 
+	         StatementTypeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

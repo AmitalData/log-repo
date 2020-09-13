@@ -35,6 +35,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual ObjectField ObjectField { get; set; }
         [Column("ObjectfieldCode")]
 	    public string ObjectfieldCode { get; set; }
+        [Column("IsImport")]
+	    public bool? IsImport { get; set; }
+        [Column("IsExport")]
+	    public bool? IsExport { get; set; }
     }
 }
 	 

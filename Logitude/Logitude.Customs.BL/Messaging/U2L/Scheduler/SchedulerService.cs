@@ -29,6 +29,9 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.BL.Validators;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Security;
+using Logitude.Customs.Def.Messaging.Customs;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 {
@@ -99,6 +102,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                     break;
                 case "DeletePending":
                     DeletePending();
+                    break;
+                case "IsReferantAddOn":
+                    CheckIsReferantAddOn();
                     break;
                 case "TEST":
                     SendGenericRequest();
@@ -665,6 +671,37 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
         }
 
 
+        private void CheckIsReferantAddOn()
+        {
+            try
+            {
+                int tenant = ResolvedTenant();
+                string email = AuthenticationUtil.ResolveUserIdentityName(tenant);
+                string id = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+
+                if (!string.IsNullOrWhiteSpace(id))
+                {
+                    ContactRepository contactrep = new ContactRepository(tenant);
+                    var contact = contactrep.GetSingleContact(id, tenant);
+                    email = contact.Email;
+
+                }
+                InjectionUtil.Instance.CheckContactFeature("General", "CUSTOMREFERANT", tenant, email);
+
+                var responseXML = new isReferantAddOnResponseXML();
+                responseXML.isReferantAddOn = "T";
+                if (responseXML != null)
+                {
+                    var xml = XmlGenericUtil<isReferantAddOnResponseXML>.SerializeObject(responseXML);
+                    MyGenericResponseObj.ResponseXml = xml;
+                }
+            }
+            catch (SecurityException ex)
+            {
+                AppendLogLine("Check for CUSTOMREFERANT Feature Failed, Referant related features will not be shown, Message: " + ex.Message);
+            }
+        }
+
         private bool IsDocumentMissing(DeclarationPM myDeclarationPM)
         {
             var customContext = CustomContext.GetContext(myDeclarationPM.Tenant);
@@ -845,6 +882,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
         public string MAND_FIELDS;
         public string MAND_DOC;
+
+    }
+
+    public class isReferantAddOnResponseXML
+    {
+
+        public string isReferantAddOn;
+
 
     }
 

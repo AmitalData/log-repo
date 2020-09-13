@@ -187,6 +187,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ImporterFile"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FileOpenDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"
