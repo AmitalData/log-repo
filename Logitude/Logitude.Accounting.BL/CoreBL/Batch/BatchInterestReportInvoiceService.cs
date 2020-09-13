@@ -263,20 +263,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 {
                     chargesType = chargesTypes.Where(s => s.InActive == false).FirstOrDefault();
                 }
-
-            aRInvoiceLinePM.Quantity = 1;
-            aRInvoiceLinePM.Description = "Interest between " + interestReport.InterestReportLinesByDates.First().FromDate.ToString("dd/MM/yyyy") + " and " + interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy");
-            aRInvoiceLinePM.LocalDescription = "ריבית לתאריכים  " + interestReport.InterestReportLinesByDates.First().FromDate.ToString("dd /MM/yyyy") + " עד " + interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy");
-            aRInvoiceLinePM.ChargesTypeId = chargesType.Id;
-            aRInvoiceLinePM.VatTypeId = chargesType.VatTypeId;
-            aRInvoiceLinePM.VatPercentage = vatTypePercentagePM.Percentage;
-            aRInvoiceLinePM.GLAccountId = chargesType.ReceivableCreditGLAccountId;
-            if (aRInvoiceLinePM.ForiegnCurrencyAmount == null || aRInvoiceLinePM.LocalCurrencyAmount == null || aRInvoiceLinePM.LocalCurrencyAmount == 0)
-            {
-                aRInvoiceLinePM.ForiegnExchangeRate = 0;
-
             }
-
             return chargesType;
         }
 
