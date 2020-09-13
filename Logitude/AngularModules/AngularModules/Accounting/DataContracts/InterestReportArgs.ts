@@ -12,6 +12,7 @@ export class InterestReportArguments {
   public securityId:string;
   public Entities:any[];
   public ShowPrintedInvoice:boolean;
+  public AttachReportWithEachInvoice:boolean;
 
 }
 
