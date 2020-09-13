@@ -1,10 +1,10 @@
-﻿<Script DBType="Main" Module="Common">
-  <Sql Version="1">
+﻿<Script DBType="Main" Module="Common" AOT="true" TargetTableName="Cards">
+  <Sql Version="2">
     <![CDATA[
 
 
 
-TRUNCATE table CardSearches
+--TRUNCATE table CardSearches
 
 If(OBJECT_ID('tempdb..#temp_CardSearches') Is Not Null)
 Begin
@@ -55,7 +55,7 @@ declare  @InActive bit
     DECLARE CardCursor CURSOR READ_ONLY
     FOR
     SELECT Id,Tenant, Code,EnglishName , LocalName , VatNumber ,CityName , CountryName , ReceivablesAccountingCard , PayablesAccountingCard , CreateDate ,UpdateDate , PartnerTypeId , InActive
-    From Cards 
+    From Cards where $LastCounterWhere$
     OPEN CardCursor FETCH NEXT FROM CardCursor INTO  @CardId,@Tenant, @Code,@EnglishName , @LocalName , @VatNumber , @CityName , @CountryName , @ReceivablesAccountingCard , @PayablesAccountingCard , @CreateDate , @UpdateDate , @PartnerTypeId,@InActive
     WHILE @@FETCH_STATUS = 0
     BEGIN

@@ -16,14 +16,18 @@
           <xs:element minOccurs="0" name="ActivityTypeCode" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ActivityTypeName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ActivityTypePathCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ActivityWith" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="AllDayEvent" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ArchiveDate" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="BranchId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BusinessProcessQueueId" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="BusinessUnitId" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CallDetails" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CallPurpose" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CallResult" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CallTypeCode" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CallWithId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Cc" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CommunicationLogId" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CompleteDate" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="ConcurrencyGUID" nillable="true" type="xs:string" />
@@ -33,8 +37,11 @@
           <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CustomerName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DescriptionRightToLeft" type="xs:boolean" />
           <xs:element minOccurs="0" name="DontSetNeedSynchronization" type="xs:boolean" />
           <xs:element minOccurs="0" name="DueDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DueDateDateField" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DueDateOffset" nillable="true" type="xs:int" />
           <xs:element minOccurs="0" name="Duration" nillable="true" type="xs:int" />
           <xs:element minOccurs="0" name="EndDateTime" nillable="true" type="xs:dateTime" />
           <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure.DataContracts" minOccurs="0" name="Field1" nillable="true" type="q3:CustomFieldClass" />
@@ -47,20 +54,24 @@
           <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure.DataContracts" minOccurs="0" name="Field7" nillable="true" type="q10:CustomFieldClass" />
           <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure.DataContracts" minOccurs="0" name="Field8" nillable="true" type="q11:CustomFieldClass" />
           <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure.DataContracts" minOccurs="0" name="Field9" nillable="true" type="q12:CustomFieldClass" />
+          <xs:element minOccurs="0" name="From" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="IsCopy" type="xs:boolean" />
           <xs:element minOccurs="0" name="IsCustomerBlockedBusinessUnit" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsHybrid" type="xs:boolean" />
           <xs:element minOccurs="0" name="IsLeftVoiceMail" type="xs:boolean" />
           <xs:element minOccurs="0" name="IsMarkedCompleted" type="xs:boolean" />
           <xs:element minOccurs="0" name="IsOpen" type="xs:boolean" />
           <xs:element minOccurs="0" name="LastModified" nillable="true" type="xs:base64Binary" />
           <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="MeetingSummary" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MeetingSummaryRightToLeft" type="xs:boolean" />
           <xs:element minOccurs="0" name="NeedSynchronization" type="xs:boolean" />
           <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ObjectTableName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="OpportunityId" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="OpportunitySubject" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OriginalActivitySubject" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="OutlookId" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="OwnerId" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="OwnerName" nillable="true" type="xs:string" />
@@ -70,13 +81,19 @@
           <xs:element minOccurs="0" name="QuoteId" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="QuoteNumber" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SearchFields" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SendReceiveDate" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="SenderContactId" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SenderContactName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SenderEmail" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ShipmentId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SortingBy" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SortingDate" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="StartDateTime" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TeamId" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Tenant" type="xs:int" />
           <xs:element minOccurs="0" name="TicketId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="To" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="UpdateDate" type="xs:dateTime" />
           <xs:element minOccurs="0" name="UpdatedByUserId" nillable="true" type="xs:string" />
         </xs:sequence>

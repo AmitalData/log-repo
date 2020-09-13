@@ -284,224 +284,6 @@ namespace HypredTest.CurrencyProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Response", Namespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools")]
-    [System.SerializableAttribute()]
-    public partial class Response : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ErrorMessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool HasErrorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string InnerErrorMessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsAuthenticationErrorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ResultField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string Result2Field;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] ValidationErrorsField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ErrorMessage {
-            get {
-                return this.ErrorMessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ErrorMessageField, value) != true)) {
-                    this.ErrorMessageField = value;
-                    this.RaisePropertyChanged("ErrorMessage");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool HasError {
-            get {
-                return this.HasErrorField;
-            }
-            set {
-                if ((this.HasErrorField.Equals(value) != true)) {
-                    this.HasErrorField = value;
-                    this.RaisePropertyChanged("HasError");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string InnerErrorMessage {
-            get {
-                return this.InnerErrorMessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.InnerErrorMessageField, value) != true)) {
-                    this.InnerErrorMessageField = value;
-                    this.RaisePropertyChanged("InnerErrorMessage");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsAuthenticationError {
-            get {
-                return this.IsAuthenticationErrorField;
-            }
-            set {
-                if ((this.IsAuthenticationErrorField.Equals(value) != true)) {
-                    this.IsAuthenticationErrorField = value;
-                    this.RaisePropertyChanged("IsAuthenticationError");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Result {
-            get {
-                return this.ResultField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ResultField, value) != true)) {
-                    this.ResultField = value;
-                    this.RaisePropertyChanged("Result");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Result2 {
-            get {
-                return this.Result2Field;
-            }
-            set {
-                if ((object.ReferenceEquals(this.Result2Field, value) != true)) {
-                    this.Result2Field = value;
-                    this.RaisePropertyChanged("Result2");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] ValidationErrors {
-            get {
-                return this.ValidationErrorsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ValidationErrorsField, value) != true)) {
-                    this.ValidationErrorsField = value;
-                    this.RaisePropertyChanged("ValidationErrors");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ApiSearchFilters", Namespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools")]
-    [System.SerializableAttribute()]
-    public partial class ApiSearchFilters : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SearchFieldsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int SkipField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TakeField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SearchFields {
-            get {
-                return this.SearchFieldsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SearchFieldsField, value) != true)) {
-                    this.SearchFieldsField = value;
-                    this.RaisePropertyChanged("SearchFields");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Skip {
-            get {
-                return this.SkipField;
-            }
-            set {
-                if ((this.SkipField.Equals(value) != true)) {
-                    this.SkipField = value;
-                    this.RaisePropertyChanged("Skip");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Take {
-            get {
-                return this.TakeField;
-            }
-            set {
-                if ((this.TakeField.Equals(value) != true)) {
-                    this.TakeField = value;
-                    this.RaisePropertyChanged("Take");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CurrencyList", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityLists")]
     [System.SerializableAttribute()]
     public partial class CurrencyList : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -710,10 +492,10 @@ namespace HypredTest.CurrencyProxy {
     public interface ICurrencyWcfService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICurrencyWcfService/Upsert", ReplyAction="http://tempuri.org/ICurrencyWcfService/UpsertResponse")]
-        HypredTest.CurrencyProxy.Response Upsert(HypredTest.CurrencyProxy.CurrencyPM entityPM, bool batch);
+        Logitude.Server.Tools.Response Upsert(HypredTest.CurrencyProxy.CurrencyPM entityPM, bool batch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICurrencyWcfService/Upsert", ReplyAction="http://tempuri.org/ICurrencyWcfService/UpsertResponse")]
-        System.Threading.Tasks.Task<HypredTest.CurrencyProxy.Response> UpsertAsync(HypredTest.CurrencyProxy.CurrencyPM entityPM, bool batch);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.CurrencyProxy.CurrencyPM entityPM, bool batch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICurrencyWcfService/GetList", ReplyAction="http://tempuri.org/ICurrencyWcfService/GetListResponse")]
         HypredTest.CurrencyProxy.GetListResponse GetList(HypredTest.CurrencyProxy.GetListRequest request);
@@ -729,18 +511,18 @@ namespace HypredTest.CurrencyProxy {
     public partial class GetListRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public HypredTest.CurrencyProxy.ApiSearchFilters filters;
+        public Logitude.Server.Tools.ApiSearchFilters filters;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
         public int tenant;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
-        public HypredTest.CurrencyProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetListRequest() {
         }
         
-        public GetListRequest(HypredTest.CurrencyProxy.ApiSearchFilters filters, int tenant, HypredTest.CurrencyProxy.Response response) {
+        public GetListRequest(Logitude.Server.Tools.ApiSearchFilters filters, int tenant, Logitude.Server.Tools.Response response) {
             this.filters = filters;
             this.tenant = tenant;
             this.response = response;
@@ -756,12 +538,12 @@ namespace HypredTest.CurrencyProxy {
         public HypredTest.CurrencyProxy.CurrencyList[] GetListResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.CurrencyProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetListResponse() {
         }
         
-        public GetListResponse(HypredTest.CurrencyProxy.CurrencyList[] GetListResult, HypredTest.CurrencyProxy.Response response) {
+        public GetListResponse(HypredTest.CurrencyProxy.CurrencyList[] GetListResult, Logitude.Server.Tools.Response response) {
             this.GetListResult = GetListResult;
             this.response = response;
         }
@@ -794,11 +576,11 @@ namespace HypredTest.CurrencyProxy {
                 base(binding, remoteAddress) {
         }
         
-        public HypredTest.CurrencyProxy.Response Upsert(HypredTest.CurrencyProxy.CurrencyPM entityPM, bool batch) {
+        public Logitude.Server.Tools.Response Upsert(HypredTest.CurrencyProxy.CurrencyPM entityPM, bool batch) {
             return base.Channel.Upsert(entityPM, batch);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.CurrencyProxy.Response> UpsertAsync(HypredTest.CurrencyProxy.CurrencyPM entityPM, bool batch) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.CurrencyProxy.CurrencyPM entityPM, bool batch) {
             return base.Channel.UpsertAsync(entityPM, batch);
         }
         
@@ -807,7 +589,7 @@ namespace HypredTest.CurrencyProxy {
             return base.Channel.GetList(request);
         }
         
-        public HypredTest.CurrencyProxy.CurrencyList[] GetList(HypredTest.CurrencyProxy.ApiSearchFilters filters, int tenant, ref HypredTest.CurrencyProxy.Response response) {
+        public HypredTest.CurrencyProxy.CurrencyList[] GetList(Logitude.Server.Tools.ApiSearchFilters filters, int tenant, ref Logitude.Server.Tools.Response response) {
             HypredTest.CurrencyProxy.GetListRequest inValue = new HypredTest.CurrencyProxy.GetListRequest();
             inValue.filters = filters;
             inValue.tenant = tenant;

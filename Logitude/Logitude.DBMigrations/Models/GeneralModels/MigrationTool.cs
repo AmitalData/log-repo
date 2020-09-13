@@ -249,11 +249,9 @@ namespace Logitude.DBMigrations.Models
             GeneratedScript generatedScriptFromDXMLProcedures = GenerateScriptsFromDXMLProcedures(dxmlProcedures);
             generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLProcedures);
 
-            if (ToolArguments.IsArgumentProvided(Arguments.INCLUDETRIGGERS))
-            {
-                GeneratedScript generatedScriptFromDXMLTriggers = GenerateScriptsFromDXMLTriggers(dxmlTriggers);
-                generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLTriggers);
-            }
+            GeneratedScript generatedScriptFromDXMLTriggers = GenerateScriptsFromDXMLTriggers(dxmlTriggers);
+            generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLTriggers);
+
             return generatedScript;
         }
 
@@ -2139,9 +2137,9 @@ namespace Logitude.DBMigrations.Models
                 string sxmlScriptHashValue = GenerateHashString(scriptDefinition.Sql.Script);
 
                 string queryString = "INSERT INTO [dbo].[DBMigrationsDataScripts]([Id], [SxmlFileName], [DatabaseType], [SxmlScript], [IsPreSxml], [Status], [ScriptExecutionNumber], " +
-                    "[StartDate], [EndDate], [LastBatchElapsedTime], [ScriptVersion], [ScriptHashValue], [ScriptHistoryAction], [TargetTableName]) " +
+                    "[StartDate], [EndDate], [LastBatchElapsedTime], [ScriptVersion], [ScriptHashValue], [ScriptHistoryAction], [TargetTableName], [BatchSize]) " +
                     "VALUES('" + Guid.NewGuid().ToString() + "', '" + scriptDefinition.SxmlFileName + "', '" + scriptDefinition.DBType + "', '" + sxmlScript + "', " +
-                    (scriptDefinition.Pre ? "1" : "0") + ", 'Waiting', " + scriptExecutionNumber + ", NULL, NULL, 0, " + sxmlVersion + ", '" + sxmlScriptHashValue + "', '" + scriptDefinition.ScriptHistoryAction + "', '" + scriptDefinition.TargetTableName + "');";
+                    (scriptDefinition.Pre ? "1" : "0") + ", 'Waiting', " + scriptExecutionNumber + ", NULL, NULL, 0, " + sxmlVersion + ", '" + sxmlScriptHashValue + "', '" + scriptDefinition.ScriptHistoryAction + "', '" + scriptDefinition.TargetTableName + "', " + (scriptDefinition.BatchSize > 0 ? scriptDefinition.BatchSize.ToString() : "NULL") + ");";
 
                 SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
 
@@ -2281,6 +2279,13 @@ namespace Logitude.DBMigrations.Models
                 Config dbConfigFileNameConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "DBConfigFileName".ToLower()).FirstOrDefault();
                 Config aotScriptsExecutionTimeOutConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "AOTScriptsExecutionTimeOut".ToLower()).FirstOrDefault();
                 Config aotCreateIndexWithOnlineConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "AOTCreateIndexWithOnline".ToLower()).FirstOrDefault();
+
+                Config smtpClientHostConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "SmtpClientHost".ToLower()).FirstOrDefault();
+                Config smtpClientPortConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "SmtpClientPort".ToLower()).FirstOrDefault();
+                Config smtpClientUsernameConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "SmtpClientUsername".ToLower()).FirstOrDefault();
+                Config smtpClientPasswordConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "SmtpClientPassword".ToLower()).FirstOrDefault();
+                Config fromEmailAddressConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "FromEmailAddress".ToLower()).FirstOrDefault();
+                Config toEmailAddressesConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "ToEmailAddresses".ToLower()).FirstOrDefault();
                 
                 if (dbConfigFileNameConfig != null)
                 {
@@ -2326,6 +2331,13 @@ namespace Logitude.DBMigrations.Models
                 ToolConfigurations.CargoTrackingConnectionString = cargoTrackingConnectionStringElement == null ? null : (cargoTrackingConnectionStringElement.Attributes["value"]?.Value);
                 ToolConfigurations.AOTScriptsExecutionTimeOut = aotScriptsExecutionTimeOut;
                 ToolConfigurations.AOTCreateIndexWithOnline = aotCreateIndexWithOnline;
+
+                ToolConfigurations.SmtpClientHost = smtpClientHostConfig?.Value;
+                ToolConfigurations.SmtpClientPort = Convert.ToInt32(smtpClientPortConfig?.Value);
+                ToolConfigurations.SmtpClientUsername = smtpClientUsernameConfig?.Value;
+                ToolConfigurations.SmtpClientPassword = smtpClientPasswordConfig?.Value;
+                ToolConfigurations.FromEmailAddress = fromEmailAddressConfig?.Value;
+                ToolConfigurations.ToEmailAddresses = toEmailAddressesConfig?.Value;
             }
             catch (Exception)
             {

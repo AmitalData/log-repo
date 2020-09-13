@@ -89,9 +89,6 @@ namespace HypredTest.CustomerProxy {
         private HypredTest.CustomerProxy.CardPM CardField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private HypredTest.CustomerProxy.CardCurrenciesAccountingPM[] CardCurrenciesAccountingsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.CustomerProxy.CardExternalCodeByCurrencyPM[] CardExternalCodeByCurrenciesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -279,6 +276,9 @@ namespace HypredTest.CustomerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string FreelancerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GLAccountNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string GoogleAddressStringField;
@@ -549,6 +549,9 @@ namespace HypredTest.CustomerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UpdatedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UploadingUniqueKeyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UsoCFDICodeField;
@@ -857,19 +860,6 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.CardField, value) != true)) {
                     this.CardField = value;
                     this.RaisePropertyChanged("Card");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public HypredTest.CustomerProxy.CardCurrenciesAccountingPM[] CardCurrenciesAccountings {
-            get {
-                return this.CardCurrenciesAccountingsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CardCurrenciesAccountingsField, value) != true)) {
-                    this.CardCurrenciesAccountingsField = value;
-                    this.RaisePropertyChanged("CardCurrenciesAccountings");
                 }
             }
         }
@@ -1689,6 +1679,19 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.FreelancerNameField, value) != true)) {
                     this.FreelancerNameField = value;
                     this.RaisePropertyChanged("FreelancerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GLAccountNumber {
+            get {
+                return this.GLAccountNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GLAccountNumberField, value) != true)) {
+                    this.GLAccountNumberField = value;
+                    this.RaisePropertyChanged("GLAccountNumber");
                 }
             }
         }
@@ -2864,6 +2867,19 @@ namespace HypredTest.CustomerProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UploadingUniqueKey {
+            get {
+                return this.UploadingUniqueKeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UploadingUniqueKeyField, value) != true)) {
+                    this.UploadingUniqueKeyField = value;
+                    this.RaisePropertyChanged("UploadingUniqueKey");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string UsoCFDICode {
             get {
                 return this.UsoCFDICodeField;
@@ -3048,6 +3064,9 @@ namespace HypredTest.CustomerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool FieldsChangedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GLAccountDisplayNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string GLAccountIdField;
@@ -3647,6 +3666,19 @@ namespace HypredTest.CustomerProxy {
                 if ((this.FieldsChangedField.Equals(value) != true)) {
                     this.FieldsChangedField = value;
                     this.RaisePropertyChanged("FieldsChanged");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GLAccountDisplayNumber {
+            get {
+                return this.GLAccountDisplayNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GLAccountDisplayNumberField, value) != true)) {
+                    this.GLAccountDisplayNumberField = value;
+                    this.RaisePropertyChanged("GLAccountDisplayNumber");
                 }
             }
         }
@@ -5014,9 +5046,9 @@ namespace HypredTest.CustomerProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CardCurrenciesAccountingPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CardExternalCodeByCurrencyPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs")]
     [System.SerializableAttribute()]
-    public partial class CardCurrenciesAccountingPM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class CardExternalCodeByCurrencyPM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -5026,9 +5058,6 @@ namespace HypredTest.CustomerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CardNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ChangeSetCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
@@ -5043,13 +5072,19 @@ namespace HypredTest.CustomerProxy {
         private string CurrencyNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExternalPayableTableIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExternalRecievableTableIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExternalTableCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExternalTableNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PayableDebitAccountField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ReceivableCreditAccountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int TenantField;
@@ -5086,19 +5121,6 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.CardNameField, value) != true)) {
                     this.CardNameField = value;
                     this.RaisePropertyChanged("CardName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ChangeSetCode {
-            get {
-                return this.ChangeSetCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ChangeSetCodeField, value) != true)) {
-                    this.ChangeSetCodeField = value;
-                    this.RaisePropertyChanged("ChangeSetCode");
                 }
             }
         }
@@ -5151,169 +5173,6 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.CurrencyNameField, value) != true)) {
                     this.CurrencyNameField = value;
                     this.RaisePropertyChanged("CurrencyName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdField, value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PayableDebitAccount {
-            get {
-                return this.PayableDebitAccountField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PayableDebitAccountField, value) != true)) {
-                    this.PayableDebitAccountField = value;
-                    this.RaisePropertyChanged("PayableDebitAccount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ReceivableCreditAccount {
-            get {
-                return this.ReceivableCreditAccountField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ReceivableCreditAccountField, value) != true)) {
-                    this.ReceivableCreditAccountField = value;
-                    this.RaisePropertyChanged("ReceivableCreditAccount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Tenant {
-            get {
-                return this.TenantField;
-            }
-            set {
-                if ((this.TenantField.Equals(value) != true)) {
-                    this.TenantField = value;
-                    this.RaisePropertyChanged("Tenant");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CardExternalCodeByCurrencyPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs")]
-    [System.SerializableAttribute()]
-    public partial class CardExternalCodeByCurrencyPM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CardIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CurrencyCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CurrencyIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ExternalPayableTableIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ExternalRecievableTableIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ExternalTableCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ExternalTableNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TenantField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CardId {
-            get {
-                return this.CardIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CardIdField, value) != true)) {
-                    this.CardIdField = value;
-                    this.RaisePropertyChanged("CardId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
-            get {
-                return this.ChangeSetOpField;
-            }
-            set {
-                if ((this.ChangeSetOpField.Equals(value) != true)) {
-                    this.ChangeSetOpField = value;
-                    this.RaisePropertyChanged("ChangeSetOp");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CurrencyCode {
-            get {
-                return this.CurrencyCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CurrencyCodeField, value) != true)) {
-                    this.CurrencyCodeField = value;
-                    this.RaisePropertyChanged("CurrencyCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CurrencyId {
-            get {
-                return this.CurrencyIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CurrencyIdField, value) != true)) {
-                    this.CurrencyIdField = value;
-                    this.RaisePropertyChanged("CurrencyId");
                 }
             }
         }
@@ -8367,9 +8226,6 @@ namespace HypredTest.CustomerProxy {
         private string CASSCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private HypredTest.CustomerProxy.CardCurrenciesAccountingPM[] CardCurrenciesAccountingsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.CustomerProxy.CardExternalCodeByCurrencyPM[] CardExternalCodeByCurrenciesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -8419,6 +8275,9 @@ namespace HypredTest.CustomerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string GLAccountIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GLAccountNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IATACodeField;
@@ -8524,6 +8383,9 @@ namespace HypredTest.CustomerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UpdatedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UploadingUniqueKeyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UsoCFDICodeField;
@@ -8647,19 +8509,6 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.CASSCodeField, value) != true)) {
                     this.CASSCodeField = value;
                     this.RaisePropertyChanged("CASSCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public HypredTest.CustomerProxy.CardCurrenciesAccountingPM[] CardCurrenciesAccountings {
-            get {
-                return this.CardCurrenciesAccountingsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CardCurrenciesAccountingsField, value) != true)) {
-                    this.CardCurrenciesAccountingsField = value;
-                    this.RaisePropertyChanged("CardCurrenciesAccountings");
                 }
             }
         }
@@ -8881,6 +8730,19 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.GLAccountIdField, value) != true)) {
                     this.GLAccountIdField = value;
                     this.RaisePropertyChanged("GLAccountId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GLAccountNumber {
+            get {
+                return this.GLAccountNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GLAccountNumberField, value) != true)) {
+                    this.GLAccountNumberField = value;
+                    this.RaisePropertyChanged("GLAccountNumber");
                 }
             }
         }
@@ -9341,6 +9203,19 @@ namespace HypredTest.CustomerProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UploadingUniqueKey {
+            get {
+                return this.UploadingUniqueKeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UploadingUniqueKeyField, value) != true)) {
+                    this.UploadingUniqueKeyField = value;
+                    this.RaisePropertyChanged("UploadingUniqueKey");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string UsoCFDICode {
             get {
                 return this.UsoCFDICodeField;
@@ -9430,9 +9305,6 @@ namespace HypredTest.CustomerProxy {
         private HypredTest.CustomerProxy.CardPM CardField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private HypredTest.CustomerProxy.CardCurrenciesAccountingPM[] CardCurrenciesAccountingsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.CustomerProxy.CardExternalCodeByCurrencyPM[] CardExternalCodeByCurrenciesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -9485,6 +9357,9 @@ namespace HypredTest.CustomerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string GLAccountIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GLAccountNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IBANNumberField;
@@ -9569,6 +9444,9 @@ namespace HypredTest.CustomerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UpdatedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UploadingUniqueKeyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UsoCFDICodeField;
@@ -9666,19 +9544,6 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.CardField, value) != true)) {
                     this.CardField = value;
                     this.RaisePropertyChanged("Card");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public HypredTest.CustomerProxy.CardCurrenciesAccountingPM[] CardCurrenciesAccountings {
-            get {
-                return this.CardCurrenciesAccountingsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CardCurrenciesAccountingsField, value) != true)) {
-                    this.CardCurrenciesAccountingsField = value;
-                    this.RaisePropertyChanged("CardCurrenciesAccountings");
                 }
             }
         }
@@ -9913,6 +9778,19 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.GLAccountIdField, value) != true)) {
                     this.GLAccountIdField = value;
                     this.RaisePropertyChanged("GLAccountId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GLAccountNumber {
+            get {
+                return this.GLAccountNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GLAccountNumberField, value) != true)) {
+                    this.GLAccountNumberField = value;
+                    this.RaisePropertyChanged("GLAccountNumber");
                 }
             }
         }
@@ -10282,6 +10160,19 @@ namespace HypredTest.CustomerProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UploadingUniqueKey {
+            get {
+                return this.UploadingUniqueKeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UploadingUniqueKeyField, value) != true)) {
+                    this.UploadingUniqueKeyField = value;
+                    this.RaisePropertyChanged("UploadingUniqueKey");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string UsoCFDICode {
             get {
                 return this.UsoCFDICodeField;
@@ -10365,9 +10256,6 @@ namespace HypredTest.CustomerProxy {
         private string BankNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private HypredTest.CustomerProxy.CardCurrenciesAccountingPM[] CardCurrenciesAccountingsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.CustomerProxy.CardExternalCodeByCurrencyPM[] CardExternalCodeByCurrenciesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -10423,6 +10311,9 @@ namespace HypredTest.CustomerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string GLAccountIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GLAccountNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IBANNumberField;
@@ -10512,6 +10403,9 @@ namespace HypredTest.CustomerProxy {
         private string UpdatedByUserIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UploadingUniqueKeyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UsoCFDICodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -10581,19 +10475,6 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.BankNameField, value) != true)) {
                     this.BankNameField = value;
                     this.RaisePropertyChanged("BankName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public HypredTest.CustomerProxy.CardCurrenciesAccountingPM[] CardCurrenciesAccountings {
-            get {
-                return this.CardCurrenciesAccountingsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CardCurrenciesAccountingsField, value) != true)) {
-                    this.CardCurrenciesAccountingsField = value;
-                    this.RaisePropertyChanged("CardCurrenciesAccountings");
                 }
             }
         }
@@ -10841,6 +10722,19 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.GLAccountIdField, value) != true)) {
                     this.GLAccountIdField = value;
                     this.RaisePropertyChanged("GLAccountId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GLAccountNumber {
+            get {
+                return this.GLAccountNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GLAccountNumberField, value) != true)) {
+                    this.GLAccountNumberField = value;
+                    this.RaisePropertyChanged("GLAccountNumber");
                 }
             }
         }
@@ -11223,6 +11117,19 @@ namespace HypredTest.CustomerProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UploadingUniqueKey {
+            get {
+                return this.UploadingUniqueKeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UploadingUniqueKeyField, value) != true)) {
+                    this.UploadingUniqueKeyField = value;
+                    this.RaisePropertyChanged("UploadingUniqueKey");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string UsoCFDICode {
             get {
                 return this.UsoCFDICodeField;
@@ -11312,9 +11219,6 @@ namespace HypredTest.CustomerProxy {
         private HypredTest.CustomerProxy.CardPM CardField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private HypredTest.CustomerProxy.CardCurrenciesAccountingPM[] CardCurrenciesAccountingsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.CustomerProxy.CardExternalCodeByCurrencyPM[] CardExternalCodeByCurrenciesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -11367,6 +11271,9 @@ namespace HypredTest.CustomerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string GLAccountIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GLAccountNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IBANNumberField;
@@ -11454,6 +11361,9 @@ namespace HypredTest.CustomerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UpdatedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UploadingUniqueKeyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UsoCFDICodeField;
@@ -11551,19 +11461,6 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.CardField, value) != true)) {
                     this.CardField = value;
                     this.RaisePropertyChanged("Card");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public HypredTest.CustomerProxy.CardCurrenciesAccountingPM[] CardCurrenciesAccountings {
-            get {
-                return this.CardCurrenciesAccountingsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CardCurrenciesAccountingsField, value) != true)) {
-                    this.CardCurrenciesAccountingsField = value;
-                    this.RaisePropertyChanged("CardCurrenciesAccountings");
                 }
             }
         }
@@ -11798,6 +11695,19 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.GLAccountIdField, value) != true)) {
                     this.GLAccountIdField = value;
                     this.RaisePropertyChanged("GLAccountId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GLAccountNumber {
+            get {
+                return this.GLAccountNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GLAccountNumberField, value) != true)) {
+                    this.GLAccountNumberField = value;
+                    this.RaisePropertyChanged("GLAccountNumber");
                 }
             }
         }
@@ -12175,6 +12085,19 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.UpdatedByUserIdField, value) != true)) {
                     this.UpdatedByUserIdField = value;
                     this.RaisePropertyChanged("UpdatedByUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UploadingUniqueKey {
+            get {
+                return this.UploadingUniqueKeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UploadingUniqueKeyField, value) != true)) {
+                    this.UploadingUniqueKeyField = value;
+                    this.RaisePropertyChanged("UploadingUniqueKey");
                 }
             }
         }
@@ -12826,147 +12749,6 @@ namespace HypredTest.CustomerProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Response", Namespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools")]
-    [System.SerializableAttribute()]
-    public partial class Response : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ErrorMessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool HasErrorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string InnerErrorMessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsAuthenticationErrorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ResultField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string Result2Field;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] ValidationErrorsField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ErrorMessage {
-            get {
-                return this.ErrorMessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ErrorMessageField, value) != true)) {
-                    this.ErrorMessageField = value;
-                    this.RaisePropertyChanged("ErrorMessage");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool HasError {
-            get {
-                return this.HasErrorField;
-            }
-            set {
-                if ((this.HasErrorField.Equals(value) != true)) {
-                    this.HasErrorField = value;
-                    this.RaisePropertyChanged("HasError");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string InnerErrorMessage {
-            get {
-                return this.InnerErrorMessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.InnerErrorMessageField, value) != true)) {
-                    this.InnerErrorMessageField = value;
-                    this.RaisePropertyChanged("InnerErrorMessage");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsAuthenticationError {
-            get {
-                return this.IsAuthenticationErrorField;
-            }
-            set {
-                if ((this.IsAuthenticationErrorField.Equals(value) != true)) {
-                    this.IsAuthenticationErrorField = value;
-                    this.RaisePropertyChanged("IsAuthenticationError");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Result {
-            get {
-                return this.ResultField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ResultField, value) != true)) {
-                    this.ResultField = value;
-                    this.RaisePropertyChanged("Result");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Result2 {
-            get {
-                return this.Result2Field;
-            }
-            set {
-                if ((object.ReferenceEquals(this.Result2Field, value) != true)) {
-                    this.Result2Field = value;
-                    this.RaisePropertyChanged("Result2");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] ValidationErrors {
-            get {
-                return this.ValidationErrorsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ValidationErrorsField, value) != true)) {
-                    this.ValidationErrorsField = value;
-                    this.RaisePropertyChanged("ValidationErrors");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CustomerList", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityLists")]
     [System.SerializableAttribute()]
     public partial class CustomerList : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -13054,6 +12836,9 @@ namespace HypredTest.CustomerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> CreateDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreatedByPartnerField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CreatedByUserIdField;
@@ -13150,6 +12935,9 @@ namespace HypredTest.CustomerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string FreelancerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GLAccountNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IdField;
@@ -13747,6 +13535,19 @@ namespace HypredTest.CustomerProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CreatedByPartner {
+            get {
+                return this.CreatedByPartnerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByPartnerField, value) != true)) {
+                    this.CreatedByPartnerField = value;
+                    this.RaisePropertyChanged("CreatedByPartner");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string CreatedByUserId {
             get {
                 return this.CreatedByUserIdField;
@@ -14158,6 +13959,19 @@ namespace HypredTest.CustomerProxy {
                 if ((object.ReferenceEquals(this.FreelancerNameField, value) != true)) {
                     this.FreelancerNameField = value;
                     this.RaisePropertyChanged("FreelancerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GLAccountNumber {
+            get {
+                return this.GLAccountNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GLAccountNumberField, value) != true)) {
+                    this.GLAccountNumberField = value;
+                    this.RaisePropertyChanged("GLAccountNumber");
                 }
             }
         }
@@ -15284,10 +15098,10 @@ namespace HypredTest.CustomerProxy {
     public interface ICustomerWcfService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerWcfService/Upsert", ReplyAction="http://tempuri.org/ICustomerWcfService/UpsertResponse")]
-        HypredTest.CustomerProxy.Response Upsert(HypredTest.CustomerProxy.CustomerPM entityPM, bool batch);
+        Logitude.Server.Tools.Response Upsert(HypredTest.CustomerProxy.CustomerPM entityPM, bool batch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerWcfService/Upsert", ReplyAction="http://tempuri.org/ICustomerWcfService/UpsertResponse")]
-        System.Threading.Tasks.Task<HypredTest.CustomerProxy.Response> UpsertAsync(HypredTest.CustomerProxy.CustomerPM entityPM, bool batch);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.CustomerProxy.CustomerPM entityPM, bool batch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerWcfService/GetCustomerList", ReplyAction="http://tempuri.org/ICustomerWcfService/GetCustomerListResponse")]
         HypredTest.CustomerProxy.GetCustomerListResponse GetCustomerList(HypredTest.CustomerProxy.GetCustomerListRequest request);
@@ -15339,10 +15153,10 @@ namespace HypredTest.CustomerProxy {
         System.Threading.Tasks.Task<HypredTest.CustomerProxy.GetReadyForActivationCustomerResponse> GetReadyForActivationCustomerAsync(HypredTest.CustomerProxy.GetReadyForActivationCustomerRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerWcfService/RemoveFromCustomersQueue", ReplyAction="http://tempuri.org/ICustomerWcfService/RemoveFromCustomersQueueResponse")]
-        HypredTest.CustomerProxy.Response RemoveFromCustomersQueue(System.Guid queueMessageLockToken, int tenant);
+        Logitude.Server.Tools.Response RemoveFromCustomersQueue(System.Guid queueMessageLockToken, int tenant);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICustomerWcfService/RemoveFromCustomersQueue", ReplyAction="http://tempuri.org/ICustomerWcfService/RemoveFromCustomersQueueResponse")]
-        System.Threading.Tasks.Task<HypredTest.CustomerProxy.Response> RemoveFromCustomersQueueAsync(System.Guid queueMessageLockToken, int tenant);
+        System.Threading.Tasks.Task<Logitude.Server.Tools.Response> RemoveFromCustomersQueueAsync(System.Guid queueMessageLockToken, int tenant);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -15369,12 +15183,12 @@ namespace HypredTest.CustomerProxy {
         public int take;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=6)]
-        public HypredTest.CustomerProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetCustomerListRequest() {
         }
         
-        public GetCustomerListRequest(string searchText, string email, bool myCustomer, int tenant, int skip, int take, HypredTest.CustomerProxy.Response response) {
+        public GetCustomerListRequest(string searchText, string email, bool myCustomer, int tenant, int skip, int take, Logitude.Server.Tools.Response response) {
             this.searchText = searchText;
             this.email = email;
             this.myCustomer = myCustomer;
@@ -15394,12 +15208,12 @@ namespace HypredTest.CustomerProxy {
         public HypredTest.CustomerProxy.CustomerList[] GetCustomerListResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.CustomerProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetCustomerListResponse() {
         }
         
-        public GetCustomerListResponse(HypredTest.CustomerProxy.CustomerList[] GetCustomerListResult, HypredTest.CustomerProxy.Response response) {
+        public GetCustomerListResponse(HypredTest.CustomerProxy.CustomerList[] GetCustomerListResult, Logitude.Server.Tools.Response response) {
             this.GetCustomerListResult = GetCustomerListResult;
             this.response = response;
         }
@@ -15417,12 +15231,12 @@ namespace HypredTest.CustomerProxy {
         public int tenant;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
-        public HypredTest.CustomerProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetCustomerListByEmailRequest() {
         }
         
-        public GetCustomerListByEmailRequest(string email, int tenant, HypredTest.CustomerProxy.Response response) {
+        public GetCustomerListByEmailRequest(string email, int tenant, Logitude.Server.Tools.Response response) {
             this.email = email;
             this.tenant = tenant;
             this.response = response;
@@ -15438,12 +15252,12 @@ namespace HypredTest.CustomerProxy {
         public HypredTest.CustomerProxy.CustomerList[] GetCustomerListByEmailResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.CustomerProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetCustomerListByEmailResponse() {
         }
         
-        public GetCustomerListByEmailResponse(HypredTest.CustomerProxy.CustomerList[] GetCustomerListByEmailResult, HypredTest.CustomerProxy.Response response) {
+        public GetCustomerListByEmailResponse(HypredTest.CustomerProxy.CustomerList[] GetCustomerListByEmailResult, Logitude.Server.Tools.Response response) {
             this.GetCustomerListByEmailResult = GetCustomerListByEmailResult;
             this.response = response;
         }
@@ -15461,12 +15275,12 @@ namespace HypredTest.CustomerProxy {
         public int tenant;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
-        public HypredTest.CustomerProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetCustomerListByIdRequest() {
         }
         
-        public GetCustomerListByIdRequest(string id, int tenant, HypredTest.CustomerProxy.Response response) {
+        public GetCustomerListByIdRequest(string id, int tenant, Logitude.Server.Tools.Response response) {
             this.id = id;
             this.tenant = tenant;
             this.response = response;
@@ -15482,12 +15296,12 @@ namespace HypredTest.CustomerProxy {
         public HypredTest.CustomerProxy.CustomerList GetCustomerListByIdResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.CustomerProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetCustomerListByIdResponse() {
         }
         
-        public GetCustomerListByIdResponse(HypredTest.CustomerProxy.CustomerList GetCustomerListByIdResult, HypredTest.CustomerProxy.Response response) {
+        public GetCustomerListByIdResponse(HypredTest.CustomerProxy.CustomerList GetCustomerListByIdResult, Logitude.Server.Tools.Response response) {
             this.GetCustomerListByIdResult = GetCustomerListByIdResult;
             this.response = response;
         }
@@ -15505,12 +15319,12 @@ namespace HypredTest.CustomerProxy {
         public int tenant;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
-        public HypredTest.CustomerProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetCustomerPMRequest() {
         }
         
-        public GetCustomerPMRequest(HypredTest.CustomerProxy.CustomerApiFilters filters, int tenant, HypredTest.CustomerProxy.Response response) {
+        public GetCustomerPMRequest(HypredTest.CustomerProxy.CustomerApiFilters filters, int tenant, Logitude.Server.Tools.Response response) {
             this.filters = filters;
             this.tenant = tenant;
             this.response = response;
@@ -15526,12 +15340,12 @@ namespace HypredTest.CustomerProxy {
         public HypredTest.CustomerProxy.CustomerPM GetCustomerPMResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.CustomerProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetCustomerPMResponse() {
         }
         
-        public GetCustomerPMResponse(HypredTest.CustomerProxy.CustomerPM GetCustomerPMResult, HypredTest.CustomerProxy.Response response) {
+        public GetCustomerPMResponse(HypredTest.CustomerProxy.CustomerPM GetCustomerPMResult, Logitude.Server.Tools.Response response) {
             this.GetCustomerPMResult = GetCustomerPMResult;
             this.response = response;
         }
@@ -15549,12 +15363,12 @@ namespace HypredTest.CustomerProxy {
         public int tenant;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
-        public HypredTest.CustomerProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetCustomerAddressesRequest() {
         }
         
-        public GetCustomerAddressesRequest(HypredTest.CustomerProxy.CustomerApiFilters filters, int tenant, HypredTest.CustomerProxy.Response response) {
+        public GetCustomerAddressesRequest(HypredTest.CustomerProxy.CustomerApiFilters filters, int tenant, Logitude.Server.Tools.Response response) {
             this.filters = filters;
             this.tenant = tenant;
             this.response = response;
@@ -15570,12 +15384,12 @@ namespace HypredTest.CustomerProxy {
         public HypredTest.CustomerProxy.AddressPM[] GetCustomerAddressesResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.CustomerProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetCustomerAddressesResponse() {
         }
         
-        public GetCustomerAddressesResponse(HypredTest.CustomerProxy.AddressPM[] GetCustomerAddressesResult, HypredTest.CustomerProxy.Response response) {
+        public GetCustomerAddressesResponse(HypredTest.CustomerProxy.AddressPM[] GetCustomerAddressesResult, Logitude.Server.Tools.Response response) {
             this.GetCustomerAddressesResult = GetCustomerAddressesResult;
             this.response = response;
         }
@@ -15593,12 +15407,12 @@ namespace HypredTest.CustomerProxy {
         public int tenant;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
-        public HypredTest.CustomerProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetCustomerContactsRequest() {
         }
         
-        public GetCustomerContactsRequest(HypredTest.CustomerProxy.CustomerApiFilters filters, int tenant, HypredTest.CustomerProxy.Response response) {
+        public GetCustomerContactsRequest(HypredTest.CustomerProxy.CustomerApiFilters filters, int tenant, Logitude.Server.Tools.Response response) {
             this.filters = filters;
             this.tenant = tenant;
             this.response = response;
@@ -15614,12 +15428,12 @@ namespace HypredTest.CustomerProxy {
         public HypredTest.CustomerProxy.ContactPM[] GetCustomerContactsResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.CustomerProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetCustomerContactsResponse() {
         }
         
-        public GetCustomerContactsResponse(HypredTest.CustomerProxy.ContactPM[] GetCustomerContactsResult, HypredTest.CustomerProxy.Response response) {
+        public GetCustomerContactsResponse(HypredTest.CustomerProxy.ContactPM[] GetCustomerContactsResult, Logitude.Server.Tools.Response response) {
             this.GetCustomerContactsResult = GetCustomerContactsResult;
             this.response = response;
         }
@@ -15634,12 +15448,12 @@ namespace HypredTest.CustomerProxy {
         public int tenant;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.CustomerProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetReadyForActivationCustomerRequest() {
         }
         
-        public GetReadyForActivationCustomerRequest(int tenant, HypredTest.CustomerProxy.Response response) {
+        public GetReadyForActivationCustomerRequest(int tenant, Logitude.Server.Tools.Response response) {
             this.tenant = tenant;
             this.response = response;
         }
@@ -15654,12 +15468,12 @@ namespace HypredTest.CustomerProxy {
         public HypredTest.CustomerProxy.CustomerPM GetReadyForActivationCustomerResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public HypredTest.CustomerProxy.Response response;
+        public Logitude.Server.Tools.Response response;
         
         public GetReadyForActivationCustomerResponse() {
         }
         
-        public GetReadyForActivationCustomerResponse(HypredTest.CustomerProxy.CustomerPM GetReadyForActivationCustomerResult, HypredTest.CustomerProxy.Response response) {
+        public GetReadyForActivationCustomerResponse(HypredTest.CustomerProxy.CustomerPM GetReadyForActivationCustomerResult, Logitude.Server.Tools.Response response) {
             this.GetReadyForActivationCustomerResult = GetReadyForActivationCustomerResult;
             this.response = response;
         }
@@ -15692,11 +15506,11 @@ namespace HypredTest.CustomerProxy {
                 base(binding, remoteAddress) {
         }
         
-        public HypredTest.CustomerProxy.Response Upsert(HypredTest.CustomerProxy.CustomerPM entityPM, bool batch) {
+        public Logitude.Server.Tools.Response Upsert(HypredTest.CustomerProxy.CustomerPM entityPM, bool batch) {
             return base.Channel.Upsert(entityPM, batch);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.CustomerProxy.Response> UpsertAsync(HypredTest.CustomerProxy.CustomerPM entityPM, bool batch) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> UpsertAsync(HypredTest.CustomerProxy.CustomerPM entityPM, bool batch) {
             return base.Channel.UpsertAsync(entityPM, batch);
         }
         
@@ -15705,7 +15519,7 @@ namespace HypredTest.CustomerProxy {
             return base.Channel.GetCustomerList(request);
         }
         
-        public HypredTest.CustomerProxy.CustomerList[] GetCustomerList(string searchText, string email, bool myCustomer, int tenant, int skip, int take, ref HypredTest.CustomerProxy.Response response) {
+        public HypredTest.CustomerProxy.CustomerList[] GetCustomerList(string searchText, string email, bool myCustomer, int tenant, int skip, int take, ref Logitude.Server.Tools.Response response) {
             HypredTest.CustomerProxy.GetCustomerListRequest inValue = new HypredTest.CustomerProxy.GetCustomerListRequest();
             inValue.searchText = searchText;
             inValue.email = email;
@@ -15728,7 +15542,7 @@ namespace HypredTest.CustomerProxy {
             return base.Channel.GetCustomerListByEmail(request);
         }
         
-        public HypredTest.CustomerProxy.CustomerList[] GetCustomerListByEmail(string email, int tenant, ref HypredTest.CustomerProxy.Response response) {
+        public HypredTest.CustomerProxy.CustomerList[] GetCustomerListByEmail(string email, int tenant, ref Logitude.Server.Tools.Response response) {
             HypredTest.CustomerProxy.GetCustomerListByEmailRequest inValue = new HypredTest.CustomerProxy.GetCustomerListByEmailRequest();
             inValue.email = email;
             inValue.tenant = tenant;
@@ -15747,7 +15561,7 @@ namespace HypredTest.CustomerProxy {
             return base.Channel.GetCustomerListById(request);
         }
         
-        public HypredTest.CustomerProxy.CustomerList GetCustomerListById(string id, int tenant, ref HypredTest.CustomerProxy.Response response) {
+        public HypredTest.CustomerProxy.CustomerList GetCustomerListById(string id, int tenant, ref Logitude.Server.Tools.Response response) {
             HypredTest.CustomerProxy.GetCustomerListByIdRequest inValue = new HypredTest.CustomerProxy.GetCustomerListByIdRequest();
             inValue.id = id;
             inValue.tenant = tenant;
@@ -15766,7 +15580,7 @@ namespace HypredTest.CustomerProxy {
             return base.Channel.GetCustomerPM(request);
         }
         
-        public HypredTest.CustomerProxy.CustomerPM GetCustomerPM(HypredTest.CustomerProxy.CustomerApiFilters filters, int tenant, ref HypredTest.CustomerProxy.Response response) {
+        public HypredTest.CustomerProxy.CustomerPM GetCustomerPM(HypredTest.CustomerProxy.CustomerApiFilters filters, int tenant, ref Logitude.Server.Tools.Response response) {
             HypredTest.CustomerProxy.GetCustomerPMRequest inValue = new HypredTest.CustomerProxy.GetCustomerPMRequest();
             inValue.filters = filters;
             inValue.tenant = tenant;
@@ -15785,7 +15599,7 @@ namespace HypredTest.CustomerProxy {
             return base.Channel.GetCustomerAddresses(request);
         }
         
-        public HypredTest.CustomerProxy.AddressPM[] GetCustomerAddresses(HypredTest.CustomerProxy.CustomerApiFilters filters, int tenant, ref HypredTest.CustomerProxy.Response response) {
+        public HypredTest.CustomerProxy.AddressPM[] GetCustomerAddresses(HypredTest.CustomerProxy.CustomerApiFilters filters, int tenant, ref Logitude.Server.Tools.Response response) {
             HypredTest.CustomerProxy.GetCustomerAddressesRequest inValue = new HypredTest.CustomerProxy.GetCustomerAddressesRequest();
             inValue.filters = filters;
             inValue.tenant = tenant;
@@ -15804,7 +15618,7 @@ namespace HypredTest.CustomerProxy {
             return base.Channel.GetCustomerContacts(request);
         }
         
-        public HypredTest.CustomerProxy.ContactPM[] GetCustomerContacts(HypredTest.CustomerProxy.CustomerApiFilters filters, int tenant, ref HypredTest.CustomerProxy.Response response) {
+        public HypredTest.CustomerProxy.ContactPM[] GetCustomerContacts(HypredTest.CustomerProxy.CustomerApiFilters filters, int tenant, ref Logitude.Server.Tools.Response response) {
             HypredTest.CustomerProxy.GetCustomerContactsRequest inValue = new HypredTest.CustomerProxy.GetCustomerContactsRequest();
             inValue.filters = filters;
             inValue.tenant = tenant;
@@ -15823,7 +15637,7 @@ namespace HypredTest.CustomerProxy {
             return base.Channel.GetReadyForActivationCustomer(request);
         }
         
-        public HypredTest.CustomerProxy.CustomerPM GetReadyForActivationCustomer(int tenant, ref HypredTest.CustomerProxy.Response response) {
+        public HypredTest.CustomerProxy.CustomerPM GetReadyForActivationCustomer(int tenant, ref Logitude.Server.Tools.Response response) {
             HypredTest.CustomerProxy.GetReadyForActivationCustomerRequest inValue = new HypredTest.CustomerProxy.GetReadyForActivationCustomerRequest();
             inValue.tenant = tenant;
             inValue.response = response;
@@ -15836,11 +15650,11 @@ namespace HypredTest.CustomerProxy {
             return base.Channel.GetReadyForActivationCustomerAsync(request);
         }
         
-        public HypredTest.CustomerProxy.Response RemoveFromCustomersQueue(System.Guid queueMessageLockToken, int tenant) {
+        public Logitude.Server.Tools.Response RemoveFromCustomersQueue(System.Guid queueMessageLockToken, int tenant) {
             return base.Channel.RemoveFromCustomersQueue(queueMessageLockToken, tenant);
         }
         
-        public System.Threading.Tasks.Task<HypredTest.CustomerProxy.Response> RemoveFromCustomersQueueAsync(System.Guid queueMessageLockToken, int tenant) {
+        public System.Threading.Tasks.Task<Logitude.Server.Tools.Response> RemoveFromCustomersQueueAsync(System.Guid queueMessageLockToken, int tenant) {
             return base.Channel.RemoveFromCustomersQueueAsync(queueMessageLockToken, tenant);
         }
     }

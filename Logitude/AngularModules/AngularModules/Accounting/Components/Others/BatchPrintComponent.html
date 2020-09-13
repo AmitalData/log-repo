@@ -17,7 +17,7 @@
 
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td colspan="12">
+        <td colspan="13">
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
@@ -28,16 +28,7 @@
 
             </div>
         </td>
-        <!--<td *ngIf="IsSelectedItemsTextVisibile" style="width:90px">
-            <div style="width: 100%;text-align:center;  height:30px;">
-                <div class="DisbleBox">
 
-                    {{SelectedItemsCountText}}
-
-
-                </div>
-            </div>
-        </td>-->
         <td style="width: 75px;">
             {{'Accounting.O.FromDate' | TextCodeTranslationPipe}}
         </td>
@@ -48,8 +39,6 @@
                                                         [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
         </td>
 
-
-        <!-- ToDate -->
         <td style="width:10px"></td>
         <td style="width: 70px;">
             {{'Accounting.General.O.ToDate' | TextCodeTranslationPipe}}
@@ -72,9 +61,21 @@
 
             </div>
         </td>
-        <td>
-
+        <td style="width: 250px;">
+            <div>
             {{'InterestReport.O.ShowReportsWithPrintedInvoices' | TextCodeTranslationPipe}}
+        </div>
+        </td>
+        <td style="width: 35px;height:23px;">
+            <div>
+                <CheckBox [IsChecked]="AttachReportWithEachInvoice" (Checked)="AttachReportWithEachInvoice = $event "></CheckBox>
+
+            </div>
+        </td>
+        <td>
+        <div>
+            {{'InterestReport.O.AttachReportWithEachInvoice' | TextCodeTranslationPipe}}
+        </div>
         </td>
         <td  ></td>
 
@@ -82,7 +83,7 @@
     </tr>
     <tr style="height:5px"></tr>
     <tr>
-        <td colspan="12" style="height: 100%; padding-bottom: 3px; vertical-align: top;">
+        <td colspan="13" style="height: 100%; padding-bottom: 3px; vertical-align: top;">
             <div class="GeneratedGridContainer" style="height: calc(100% - 20px)" *ngIf="LoadGrids">
                 <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'ARInvoice'"
                                [dataSource]="DataSource" [FireCheckBoxChecked]="FireCheckBoxChecked"
@@ -96,7 +97,7 @@
     </tr>
 
     <tr style="height: 32px;">
-        <td colspan="12" style="vertical-align: bottom">
+        <td colspan="13" style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
                  

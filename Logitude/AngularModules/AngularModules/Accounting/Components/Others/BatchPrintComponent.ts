@@ -50,6 +50,7 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
     this.ExcludedItems = new ObservableCollection([]);
     this.selectedItems = new ObservableCollection([]);
     this.BatchPrintServiceHelper = new BatchPrintServiceHelper();
+    this.AttachReportWithEachInvoice = true;
    // this.Listen();
  }
   @Output() onQueryChangeEvent = new EventEmitter();
@@ -296,6 +297,14 @@ private selectedItems:ObservableCollection;
 
     }
     }
+    private attachReportWithEachInvoice: boolean = false;
+    public get AttachReportWithEachInvoice() { return this.attachReportWithEachInvoice; }
+    public set AttachReportWithEachInvoice(value: boolean) {
+      if (this.attachReportWithEachInvoice != value) {
+          this.attachReportWithEachInvoice = value;
+       }
+      }
+
     public IsSelectedItemsTextVisibile: boolean = false;
     public IsSelectAllEnabled: boolean = true;
   private allSelected: boolean = false; 
@@ -606,6 +615,7 @@ public SelectedItems :SelectItem[]=[];
     interestReportArgs.Entities = [];
     interestReportArgs.SelectedItems = [];
     interestReportArgs.ShowPrintedInvoice = this.showPrintedInvoice;
+    interestReportArgs.AttachReportWithEachInvoice = this.AttachReportWithEachInvoice;
     interestReportArgs.Tenant =SessionLocator.TenantPM.Id;
     this.selectedItems.Collection.forEach((item) => {
       interestReportArgs.SelectedIds.push(item.Id);

@@ -14,7 +14,6 @@ namespace Logitude.DBMigrations.Models
         public void Start()
         {
             ServiceMode = false;
-            SetZeroDownTimeSession();
             StartZeroDownTimeForDataScripts(true);
             StartZeroDownTimeForDefaultValues();
             StartZeroDownTimeForDataScripts(false);
@@ -23,7 +22,6 @@ namespace Logitude.DBMigrations.Models
         public void StartAsService()
         {
             ServiceMode = true;
-            SetZeroDownTimeSession();
             while (true)
             {
                 StartZeroDownTimeForDataScripts(true);
@@ -56,7 +54,7 @@ namespace Logitude.DBMigrations.Models
 
         protected void HandleDBMigrationsSetDefaultValue(DBMigrationsSetDefaultValue dbMigrationsSetDefaultValue)
         {
-            CreateDBMigrationsLastDefaultValueColumn(dbMigrationsSetDefaultValue.TableName);
+            CreateDBMigrationsLastDefaultValueColumn(dbMigrationsSetDefaultValue.DatabaseType, dbMigrationsSetDefaultValue.TableName);
 
             UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue.Id, "Status", "InProgress");
             UpdateDBMigrationsSetDefaultValue(dbMigrationsSetDefaultValue.Id, "StartDate", DateTime.Now.ToString());
@@ -68,9 +66,9 @@ namespace Logitude.DBMigrations.Models
 
         protected void HandleDBMigrationsDataScript(DBMigrationsDataScript dbMigrationsDataScript)
         {
-            CreateDBMigrationsLastScriptColumn(dbMigrationsDataScript.TargetTableName);
-            //CreateResetLastScriptTrigger(dbMigrationsDataScript.TargetTableName);
-            
+            CreateDBMigrationsLastScriptColumn(dbMigrationsDataScript.DatabaseType, dbMigrationsDataScript.TargetTableName);
+            //CreateResetLastScriptTrigger(dbMigrationsDataScript.DatabaseType, dbMigrationsDataScript.TargetTableName);
+
             if (!ServiceMode)
             {
                 UpdateDBMigrationsDataScript(dbMigrationsDataScript.Id, "Status", "FullBuild");
@@ -89,9 +87,18 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected void ExitZeroDownTimeMigrations(string message)
+        protected void SendEmailsForDataScriptTimeout(DBMigrationsDataScript dbMigrationsDataScript)
         {
-            Console.WriteLine("Error: " + message);
+            string subject = "Timeout Exception While Executing Script By DBMigrations Tool";
+            string messageBody = "Timeout Exception Occured On " + dbMigrationsDataScript.DatabaseType + " Database While Executing Script From SXML File: " + dbMigrationsDataScript.SxmlFileName + "\nDBMigrationsDataScript Id: " + dbMigrationsDataScript.Id;
+
+            EmailSender emailSender = new EmailSender(subject, messageBody);
+            emailSender.Send();
+        }
+
+        protected void ExitTool(string message)
+        {
+            Console.WriteLine(message);
             Environment.Exit(1);
         }
 
@@ -113,12 +120,10 @@ namespace Logitude.DBMigrations.Models
         
         protected abstract string FormatDefaultValue(string defaultValue);
 
-        protected abstract void CreateDBMigrationsLastDefaultValueColumn(string tableName);
+        protected abstract void CreateDBMigrationsLastDefaultValueColumn(string databaseType, string tableName);
 
-        protected abstract void CreateDBMigrationsLastScriptColumn(string tableName);
+        protected abstract void CreateDBMigrationsLastScriptColumn(string databaseType, string tableName);
 
-        protected abstract void CreateResetLastScriptTrigger(string tableName);
-
-        protected abstract void SetZeroDownTimeSession();
+        protected abstract void CreateResetLastScriptTrigger(string databaseType, string tableName);
     }
 }
