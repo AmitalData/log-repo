@@ -93,6 +93,8 @@ namespace WebFreight.Web.DataProviders
             public string FromPortName { get; set; }
             public string FinalDestinationPortCode { get; set; }
             public string FinalDestinationPortName { get; set; }
+            public string ConsigneeReference1 { get; set; }
+            public string ConsigneeReference2 { get; set; }
             //public string PayablesExpectedAmount { get; set; }
 
         }
