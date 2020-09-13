@@ -17390,8 +17390,6 @@
     SystemLevel="true"
     IsAddNewEntity="true"
     IsPackagable="true"
-    DefaultSortName="&quot;TaxationDateTime&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
