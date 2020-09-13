@@ -40,10 +40,11 @@
         max-height: 40px;
         padding-top: 2px;
     }
+
     .container {
         text-align: right;
         height: 23px;
-        /*direction: rtl;*/
+        direction: rtl;
     }
 
     .x-split-button {
@@ -263,66 +264,6 @@
         </div>
     </div>
     <table>
-        <tr *ngIf="WarningMessages">
-            <td colspan="13">
-                <table style="min-height: 25px;">
-                    <tr>
-                        <td>
-                            <div class="ValidationSummary" style="max-height:25px; overflow-y:auto; overflow-x:hidden">
-                                <table>
-                                    <tr>
-                                        <td style="position: relative; vertical-align:top; padding-top: 2px; padding-bottom: 2px;">
-                                            <ul>
-                                                <li class="ValidationItem"  *ngFor="let item of this.EMessagesList.Collection" [style.float]="'right'">
-                                                    <img  src="./Images/SimplogIcons/Warning.png"   style="width:15px;height:15px"/>
-                                                    <span [style.text-align]="'right'">{{item.E}}</span>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr style="height: 5px;">
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr *ngIf="ErrorMessages">
-            <td colspan="13">
-                <table style="min-height: 25px;">
-                    <tr>
-                        <td>
-                            <div class="ValidationSummary" style="max-height:25px; overflow-y:auto; overflow-x:hidden">
-                                <table>
-                                    <tr>
-                                        <td style="position: relative; vertical-align:top; padding-top: 2px; padding-bottom: 2px;">
-                                            <ul>
-                                                <li class="ValidationItem"  *ngFor="let item of this.WMessagesList.Collection" [style.float]="'right'">
-                                                    <img src="./Images/Error.png"  style="width:15px;height:15px" />
-                                                    <span  [style.text-align]="'right' ">{{item.W}}</span>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr style="height: 5px;">
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
         <tr>
             <td>
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
@@ -414,6 +355,42 @@
 
             </td>
         </tr>
+        <tr *ngIf="ErrorMessages">
+            <td colspan="13">
+                <table style="min-height: 25px;">
+                    <tr>
+                        <td>
+                            <div class="ValidationSummary" style="max-height: 25px; overflow-y: auto ; overflow-x: hidden ; direction:ltr">
+                                <table>
+                                    <tr>
+                                        <td style="position: relative; vertical-align:top; padding-top: 2px; padding-bottom: 2px;">
+                                            <ul style="direction:rtl; left:90%">
+                                                <li class="ValidationItem" *ngFor="let item of this.EMessagesList.Collection" [style.float]="'right'">
+                                                    <div *ngIf="item.E != null ">
+                                                        <img src="./Images/SimplogIcons/Warning.png" style="width:15px;height:15px" />
+                                                        <span [style.text-align]="'right'">{{item.E}}</span>
+                                                    </div>
+                                                    <div *ngIf="item.W != null ">
+                                                        <img src="./Images/Error.png" style="width:15px;height:15px" />
+                                                        <span [style.text-align]="'right'">{{item.W}}</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
     </table>
     <br />
     <br />
@@ -480,7 +457,7 @@
                                 <ng-template let-item>
 
                                     <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                        <div class="RightCenter">
+                                        <div class="RightCenter" style="direction: ltr; display: inline-block;">
                                             <span>{{item.AmountNIS}}</span>
                                         </div>
                                     </log-cell-template>
@@ -504,7 +481,7 @@
                                 <ng-template let-item>
 
                                     <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                        <div class="RightCenter">
+                                        <div class="RightCenter" style="direction: ltr; display: inline-block;">
                                             <span>{{item.AmountForeign}}</span>
                                         </div>
                                     </log-cell-template>
@@ -661,7 +638,7 @@
                                 <ng-template let-item>
 
                                     <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                        <div style="text-align:right">
+                                        <div style="text-align:right; direction: ltr; display: inline-block;">
                                             <span>{{item.InvoiceAmount}}</span>
                                         </div>
                                     </log-cell-template>
@@ -742,7 +719,7 @@
                             <ng-template let-item>
 
                                 <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                    <div style="text-align:right">
+                                    <div style="text-align:right ;direction: ltr; display: inline-block;">
                                         <span>{{item.InvoiceAmount}}</span>
                                     </div>
                                 </log-cell-template>

@@ -22,14 +22,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<DeclarationReferantDataList> GetIqueryableList(IQueryable<DeclarationReferantData> iQueryable)
         {
             IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
-                                                             join d in context.Declarations.Include("CustomerCard").Include("DeclarationOffice").Include("DeclarationStatusType")
+                                                             join d in context.Declarations.Include("CustomerCard").Include("DeclarationOffice").Include("DeclarationStatusType").Include("Importer")
                                                              on a.DeclarationId equals d.Id
-
-                                                             join e in context.Cards.Include("CustomerCard")
-                                                             on d.CustomerId equals e.Customer.Id
-
-                                                             join c in context.Clients.Include("Client")
-                                                             on d.ImporterCode equals c.Code
                                                              select new DeclarationReferantDataList()
                                                              {
                                                                  Tenant = a.Tenant,
@@ -82,7 +76,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
  
                                                                  NewFile = a.NewFile,
                                                                  Favorite = a.Favorite,
-                                                                 IsCustomerLogBoxActivated = e.Customer.LogBoxActivated,
+                                                                  IsCustomerLogBoxActivated = d.CustomerCard.Customer.LogBoxActivated,
                                                                  SortedColumns = (a.NewFile && a.Favorite ? 1 : (a.NewFile ? 2 : (a.Favorite ? 3 : 4))),
                                                                  IsCancelled = d.IsCancelled,
                                                                  ClassifiedUserName = a.ClassifiedUser.Contact.LocalName,
@@ -99,9 +93,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ImporterCode=d.ImporterCode,
                                                                   ProcedureCurrentCode = d.ProcedureCurrentCode,
                                                                  ImporterFile=a.ImporterFile,
-                                                                 AEOImporter=c.FacilitationTypeCode,
+                                                                 AEOImporter=d.Importer.FacilitationTypeCode,
                                                                  Team = a.ReferantTeam.LocalName,
-                                                                 FileOpenDate = a.FileOpenDate,
+                                                                 FileOpenDate=a.FileOpenDate,
 
 
                                                              }) ;

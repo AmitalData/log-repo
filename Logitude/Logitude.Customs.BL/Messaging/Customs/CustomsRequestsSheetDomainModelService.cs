@@ -43,7 +43,6 @@ using Unifreight.BL.EntityQueryServices;
 
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
 
-
 //using Simplog.Infrastructure.SimplogUtilities;
 
 namespace Logitude.Customs.BL.Messaging.Customs
@@ -262,7 +261,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 bool tryConcurrentKiller = true; //ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
-                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode) )
                     {
                         if (!String.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
                             !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId)
@@ -272,59 +271,55 @@ namespace Logitude.Customs.BL.Messaging.Customs
                         // itzik : CourierMaster מלבד בישות 
                         // בשלב ראשון ב CUSTOMS יעבור ל PROD בהמשך 
                         "Customs.CourierMaster" != ObjectTableRepository.GetSingleObjectTableById(requestParams.LoggingObjectTableId, requestParams.Tenant).Name
-                        )
-
+                            )
                         {
-                            if (!String.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
-                                !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId))
+                            string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSVirtualKey(requestParams);
+                            var concurrentKiller = new ConcurrentKiller();
+                            concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, requestParams.Tenant);
+                            bool ReleaseConcurrentKeyOn1stStep = true;
+                            if (!ReleaseConcurrentKeyOn1stStep)
                             {
-                                string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSVirtualKey(requestParams);
-                                var concurrentKiller = new ConcurrentKiller();
-                                concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, requestParams.Tenant);
-                                bool ReleaseConcurrentKeyOn1stStep = true;
-                                if (!ReleaseConcurrentKeyOn1stStep)
-                                {
-                                    Transaction.Current.TransactionCompleted +=
-                                        (sender, e) =>
+                                Transaction.Current.TransactionCompleted +=
+                                    (sender, e) =>
+                                    {
+                                        if (e.Transaction.TransactionInformation.Status == TransactionStatus.Committed)
                                         {
-                                            if (e.Transaction.TransactionInformation.Status == TransactionStatus.Committed)
-                                            {
-                                                CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams);
-                                            }
-                                        };
-                                }
-
-                                string sAvoidInProgressSameInterfaceCodePerEntity = ConfigurationManager.AppSettings["20200805HD353811.AvoidInProgressSameInterfaceCodePerEntity"];
-                                if (!String.IsNullOrWhiteSpace(sAvoidInProgressSameInterfaceCodePerEntity))
-                                {
-                                    AvoidInProgressSameInterfaceCodePerEntity(requestParams, reqSheetDetails);
-                                }
-
+                                            CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams);
+                                        }
+                                    };
                             }
+
+                            string sAvoidInProgressSameInterfaceCodePerEntity = ConfigurationManager.AppSettings["20200805HD353811.AvoidInProgressSameInterfaceCodePerEntity"];
+                            if (!String.IsNullOrWhiteSpace(sAvoidInProgressSameInterfaceCodePerEntity))
+                            {
+                                AvoidInProgressSameInterfaceCodePerEntity(requestParams, reqSheetDetails);
+                            }
+
                         }
                     }
-                    var listRequestInProgress = _CustomsRequestsSheetQueryService.GetRequestInProgress(
-                        requestParams.Tenant, requestParams.InterfaceTypeCode,
-                    reqSheetDetails.ObjectTableId1, reqSheetDetails.EntityId1,
-                    reqSheetDetails.ObjectTableId2, reqSheetDetails.EntityId2,
-                    reqSheetDetails.CustomFileNo);
-                    if (listRequestInProgress != null)
+                }
+                var listRequestInProgress = _CustomsRequestsSheetQueryService.GetRequestInProgress(
+                    requestParams.Tenant, requestParams.InterfaceTypeCode,
+                reqSheetDetails.ObjectTableId1, reqSheetDetails.EntityId1,
+                reqSheetDetails.ObjectTableId2, reqSheetDetails.EntityId2,
+                reqSheetDetails.CustomFileNo);
+                if (listRequestInProgress != null)
+                {
+                    if (requestParams.SplitterModeLetCreateMyType)
                     {
-                        if (requestParams.SplitterModeLetCreateMyType)
-                        {
-                            listRequestInProgress = listRequestInProgress.Where(r => r.InterfaceTypeCode != requestParams.InterfaceTypeCode).ToList();
-                        }
+                        listRequestInProgress = listRequestInProgress.Where(r => r.InterfaceTypeCode != requestParams.InterfaceTypeCode).ToList();
+                    }
 
-                        if (listRequestInProgress.Count > 0)
-                        {
-                            var RequestInProgressInterfaceTypeName = listRequestInProgress.First().InterfaceTypeName;
-                            ThrowRequestInProgress(requestParams, RequestInProgressInterfaceTypeName);
-                            return;
-                        }
+                    if (listRequestInProgress.Count > 0)
+                    {
+                        var RequestInProgressInterfaceTypeName = listRequestInProgress.First().InterfaceTypeName;
+                        ThrowRequestInProgress(requestParams, RequestInProgressInterfaceTypeName);
+                        return;
                     }
                 }
             }
         }
+
         private void AvoidInProgressSameInterfaceCodePerEntity(TRequestParams requestParams, RequestSheetParam reqSheetDetails)
         {
             var listSameInterfaceCodePerEntity_InProgress = _CustomsRequestsSheetQueryService.SameInterfaceCodePerEntity_InProgress(

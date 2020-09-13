@@ -17,7 +17,8 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public List<DesiredPackingDetails> DesiredPackingDetailsDataList { get; set; }
         public OtherActivityDetails OtherActivityDetailsData { get; set; }
 
-        //////////////////////////////          General         //////////////////////////////
+        public string AppicationId { get; set; }
+         //////////////////////////////          General         //////////////////////////////
         public class GeneralDetails
         {
             public DateTime? ActivityRequestStartDate { get; set; }

@@ -4199,7 +4199,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-    Id="&quot;aa0f1bc8-dc5e-43ff-8764-bad4e58d5839&quot;"
+    Id="&quot;2541d5d6-8495-45f1-bc50-0d2566fe57c1&quot;"
     FieldName="&quot;FileOpenDate&quot;"
     OldNames="FileOpenDate"
     IsNew="true"
@@ -4227,6 +4227,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;FileOpenDate&quot;"
     ListPropertyPath="&quot;FileOpenDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
