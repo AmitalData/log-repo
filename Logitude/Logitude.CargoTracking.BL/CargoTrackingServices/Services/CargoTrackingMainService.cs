@@ -369,7 +369,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
                 }
 
-                cmd += " group by " + fieldName + ",ForwardingIdForCustom,com.FinalDeliveryETA,com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.MainCarriageETD,Mas.MainCarriageATA,Mas.MainCarriageETA ";
+                cmd += " group by " + fieldName + ",P.Id,com.FinalDeliveryETA,com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.MainCarriageETD,Mas.MainCarriageATA,Mas.MainCarriageETA ";
             }
             else if (cargoTrackingDataBaseArgs.buildCargoArgs.Table.Main_CT_TableName == "CargoTrackingShipments" && cargoTrackingDataBaseArgs.buildCargoArgs.Table.CurrentCondition == 2)
             {
