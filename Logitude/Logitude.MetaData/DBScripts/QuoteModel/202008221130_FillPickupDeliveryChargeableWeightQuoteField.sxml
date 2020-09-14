@@ -28,7 +28,7 @@
 
 
 		into #tempTable
-		FROM Quotes where StageId in (select id from QuoteStages where code in ('QTCR','QTDR'))
+		FROM Quotes where StageId in (select id from QuoteStages where code in ('QTCR','QTDR')) and $LastCounterWhere$
   
 			declare @Tenant as int
 				declare @EntityId as varchar(15)

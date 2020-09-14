@@ -19,7 +19,8 @@ namespace Logitude.DBMigrations.Models
             List<DBMigrationsSetDefaultValue> dbMigrationsSetDefaultValues = new List<DBMigrationsSetDefaultValue>();
 
             SqlDataReader reader = null;
-            SqlConnection connection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            string connectionString = GetZeroDownTimeConnectionString(ToolConfigurations.MainConnectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
             SqlCommand command = new SqlCommand(queryString, connection);
 
             try
@@ -76,7 +77,8 @@ namespace Logitude.DBMigrations.Models
                 "[DBMigrationsLastDefaultValue] = " + updateNumber.ToString() + " WHERE [DBMigrationsLastDefaultValue] = " + (updateNumber - 1).ToString() +
                 (updateNumber - 1 == 0 ? " OR [DBMigrationsLastDefaultValue] IS NULL" : null) + ";";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
+            string connectionString = GetZeroDownTimeConnectionString(ToolConfigurations.GetConnectionString(databaseType));
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
 
             while (affectedRows > 0)
             {
@@ -117,7 +119,8 @@ namespace Logitude.DBMigrations.Models
         {
             string queryString = "UPDATE [dbo].[DBMigrationsSetDefaultValues] SET [" + property + "] = '" + value + "' WHERE [Id] = '" + dbMigrationsSetDefaultValueId + "';";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            string connectionString = GetZeroDownTimeConnectionString(ToolConfigurations.MainConnectionString);
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
 
             try
             {
@@ -145,7 +148,8 @@ namespace Logitude.DBMigrations.Models
 
             string queryString = "ALTER TABLE [" + schemaName + "].[" + tableName + "] WITH NOCHECK ADD CONSTRAINT [" + checkConstraintName + "] CHECK([" + columnName + "] IS NOT NULL);";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
+            string connectionString = GetZeroDownTimeConnectionString(ToolConfigurations.GetConnectionString(databaseType));
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
 
             try
             {
@@ -181,7 +185,8 @@ namespace Logitude.DBMigrations.Models
             List<DBMigrationsDataScript> dbMigrationsDataScripts = new List<DBMigrationsDataScript>();
 
             SqlDataReader reader = null;
-            SqlConnection connection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            string connectionString = GetZeroDownTimeConnectionString(ToolConfigurations.MainConnectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
             SqlCommand command = new SqlCommand(queryString, connection);
 
             try
@@ -228,7 +233,8 @@ namespace Logitude.DBMigrations.Models
         {
             string queryString = "UPDATE [dbo].[DBMigrationsDataScripts] SET [" + property + "] = '" + value + "' WHERE [Id] = '" + dbMigrationsDataScriptId + "';";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.MainConnectionString);
+            string connectionString = GetZeroDownTimeConnectionString(ToolConfigurations.MainConnectionString);
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
 
             try
             {
@@ -268,7 +274,8 @@ namespace Logitude.DBMigrations.Models
                           "UPDATE [" + targetTableName + "] SET [DBMigrationsLastScript] = " + scriptExecutionNumber.ToString() + " WHERE [Id] IN (SELECT Id FROM @IdsTable);\n" +
                           "DELETE FROM @IdsTable;";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
+            string connectionString = GetZeroDownTimeConnectionString(ToolConfigurations.GetConnectionString(databaseType));
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
 
             while (affectedRows > 0)
             {
@@ -347,7 +354,8 @@ namespace Logitude.DBMigrations.Models
                     "', [ElapsedTimeInMs] = " + elapsedTime.ToString() + ", [HashValue] = '" + hashValue + "', [Version] = " + version.ToString() + " WHERE [SxmlFileName] = '" + sxmlFileName + "';\n";
             }
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
+            string connectionString = GetZeroDownTimeConnectionString(ToolConfigurations.GetConnectionString(databaseType));
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
 
             try
             {
@@ -391,7 +399,8 @@ namespace Logitude.DBMigrations.Models
                                  "CREATE NONCLUSTERED INDEX [IX_" + tableName + "_DBMigrationsLastDefaultValue] ON [" + tableName + "]([DBMigrationsLastDefaultValue])" + indexOnlineOption + ";\n" +
                                  "END";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
+            string connectionString = GetZeroDownTimeConnectionString(ToolConfigurations.GetConnectionString(databaseType));
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
 
             try
             {
@@ -420,7 +429,8 @@ namespace Logitude.DBMigrations.Models
                                  "CREATE NONCLUSTERED INDEX [IX_" + tableName + "_DBMigrationsLastScript] ON [" + tableName + "]([DBMigrationsLastScript])" + indexOnlineOption + ";\n" +
                                  "END";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
+            string connectionString = GetZeroDownTimeConnectionString(ToolConfigurations.GetConnectionString(databaseType));
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
 
             try
             {
@@ -442,20 +452,21 @@ namespace Logitude.DBMigrations.Models
         protected override void CreateResetLastScriptTrigger(string databaseType, string tableName)
         {
             string queryString = "IF NOT EXISTS (SELECT * FROM sys.objects WHERE [type] = 'TR' and [name] = 'TR_ResetLastScript_" + tableName + "')\n" +
-                "BEGIN\n" +
-                "CREATE TRIGGER [TR_ResetLastScript_" + tableName + "]\n" +
-                "ON [" + tableName + "]\n" +
-                "FOR UPDATE AS BEGIN\n" +
-                "SET NOCOUNT ON;\n" +
-                "IF TRIGGER_NESTLEVEL() > 1 RETURN;\n" +
-                "IF (SELECT program_name FROM sys.dm_exec_sessions WHERE session_id = (SELECT @@SPID)) <> 'ZeroDownTimeDBMigrationsTool'\n" +
-                "BEGIN\n" +
-                "UPDATE [" + tableName + "] SET [DBMigrationsLastScript] = 0 WHERE Id IN (SELECT DISTINCT Id FROM Inserted);\n" +
-                "END\n" +
-                "END" +
-                "END";
+                                 "BEGIN\n" +
+                                 "EXEC('CREATE TRIGGER [TR_ResetLastScript_" + tableName + "]\n" +
+                                 "ON [" + tableName + "]\n" +
+                                 "FOR UPDATE AS BEGIN\n" +
+                                 "SET NOCOUNT ON;\n" +
+                                 "IF TRIGGER_NESTLEVEL() > 1 RETURN;\n" +
+                                 "IF (SELECT program_name FROM sys.dm_exec_sessions WHERE session_id = (SELECT @@SPID)) <> ''ZeroDownTimeDBMigrationsTool''\n" +
+                                 "BEGIN\n" +
+                                 "UPDATE [" + tableName + "] SET [DBMigrationsLastScript] = 0 WHERE Id IN (SELECT DISTINCT Id FROM Inserted);\n" +
+                                 "END\n" +
+                                 "END');\n" +
+                                 "END";
 
-            SqlConnection sqlConnection = new SqlConnection(ToolConfigurations.GetConnectionString(databaseType));
+            string connectionString = GetZeroDownTimeConnectionString(ToolConfigurations.GetConnectionString(databaseType));
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
 
             try
             {
@@ -471,6 +482,12 @@ namespace Logitude.DBMigrations.Models
                 sqlConnection.Close();
                 ExitTool("Error: " + exception.Message);
             }
+        }
+
+        protected string GetZeroDownTimeConnectionString(string connectionString)
+        {
+            string zeroDownTimeConnectionString = (connectionString.EndsWith(";") ? connectionString : connectionString + ";") + "Application Name=ZeroDownTimeDBMigrationsTool;";
+            return zeroDownTimeConnectionString;
         }
     }
 }
