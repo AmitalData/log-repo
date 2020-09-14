@@ -6109,6 +6109,8 @@
       <DependentUpon>TrainingResourcesMainPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Validators\RulesValidator.cs" />
+    <Compile Include="WarehouseModel\DomainServices\WarehousesDomainService.WarehouseRelease.WarehouseEntry.cs" />
+    <Compile Include="WarehouseModel\DomainServices\WarehousesDomainService.WarehouseRelease.cs" />
     <Compile Include="WarehouseModel\DomainServices\WarehousesDomainService.cs" />
     <Compile Include="WcfApi\AccountingPartnerWcfService.svc.cs">
       <DependentUpon>AccountingPartnerWcfService.svc</DependentUpon>
