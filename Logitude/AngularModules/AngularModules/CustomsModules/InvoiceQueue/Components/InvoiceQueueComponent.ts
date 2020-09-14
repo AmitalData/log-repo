@@ -41,7 +41,7 @@ export class InvoiceQueueComponent
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                //this.GetData();
+             //this.GetData();
             });
         });
     }
@@ -139,11 +139,14 @@ export class InvoiceQueueComponent
     }
 
     SetFixedValue(value: string) {
-        value = parseFloat(value).toLocaleString();
-        if (value.indexOf('.') == -1 ) {
-            value = value + ".00";
+        if (value != "" && value != null) {
+            value = parseFloat(value).toLocaleString();
+            if (value.indexOf('.') == -1) {
+                value = value + ".00";
+            }
+            return value.toString();
         }
-        return value.toString();
+        return value;
     }
 
     ShowDisbursement() {

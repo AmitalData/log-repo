@@ -53,7 +53,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                     //xmlStatusList = UnifreightListsUtil.GetHtmlDecodeValue(ref response, "StatusList");
                     string alexGiveBadXML = $"<AllInvoices>{resXML}</AllInvoices>";
                     var StatusItemlist = LogitudeXmlSerializer.DeserializeObject<AllInvoices>(alexGiveBadXML);
-                  // return GetInvoice();
+                    // return GetInvoice();
                     return StatusItemlist;
 
 
@@ -94,7 +94,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
   <PayType>L</PayType>
   <AmountNIS>-100</AmountNIS>
   <Currency>NIS</Currency>
-  <AmountForeign>-100</AmountForeign>
+  <AmountForeign></AmountForeign>
   <Wip>N</Wip>
  </InvoiceLine>
  <InvoiceLine>
@@ -215,6 +215,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string PayType { get; set; }
             public string AmountNIS { get; set; }
             public string AmountForeign { get; set; }
+            public string Wip { get; set; }
             public string Currency { get; set; }
 
 

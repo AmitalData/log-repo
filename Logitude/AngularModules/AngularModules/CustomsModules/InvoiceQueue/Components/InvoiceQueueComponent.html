@@ -487,6 +487,20 @@
                                     </log-cell-template>
                                 </ng-template>
                             </log-column>
+                            <log-column [header]="'Wip'"
+                                        [width]="'60'" [Alignment]="'Right'"
+                                        [binding]="'Wip'">
+                                <ng-template let-item>
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                        <div *ngIf="item.Wip=='Y' " class="RightCenter" style="direction: ltr; display: inline-block; width:15px;">
+                                            <img class="CenterCenter" src="./Images/CheckBoxIcon.png" />
+                                            <span style="visibility:hidden">
+                                                {{item.Wip}}
+                                            </span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                            </log-column>
                         </logitude-edit-grid>
                     </div>
                 </div>

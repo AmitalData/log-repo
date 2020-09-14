@@ -27,6 +27,7 @@ export class InvoiceLine {
     AmountNIS: any;
     AmountForeign: any;
     Currency: string;
+    Wip: string;
 }
 
 export class IntegratedInvoice {
