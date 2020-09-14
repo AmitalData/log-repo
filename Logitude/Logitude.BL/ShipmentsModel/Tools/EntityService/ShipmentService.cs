@@ -531,6 +531,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                     shipmentBehaviourFacade.Handle();
 
+                    // the following two lines added since receivables and pricing modified where cross docs dates updated
+                    this.UpdateShipmentReceivablesCollection();
+                    this.UpdateShipmentStoragePricingsCollection();
+
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
 
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
