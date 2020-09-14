@@ -17,7 +17,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             bool  IsValid = true;
             if (TableName == "CargoTrackingShipments" || TableName == "CargoTrackingShipmentSearches")
             {
-                IsValid= IsRecordFieldsEqualValue(TableName, "ShipmentLevelCode", "C", reader);
+                IsValid= IsRecordFieldsValid("ShipmentLevelCode", "C", reader); // C Equal Consol not custom
 
             }
 
@@ -26,7 +26,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
 
 
-        private static bool IsRecordFieldsEqualValue<T>(string TableName, string CoulmnName, T FieldValue, SqlDataReader reader)
+        private static bool IsRecordFieldsValid<T>(string CoulmnName, T FieldValue, SqlDataReader reader)
         {
 
             for (int i = 0; i < reader.FieldCount; i++)
