@@ -573,6 +573,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.SetIsBondedWarehouseProperities();
                 this.SetChargeStorageProperies();
                 this.SetUIProperties_Storage();
+                this.PricesChanged = true;
             }
         }
     }
@@ -602,10 +603,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s == "PricesChanged") {
                     this.PricesChanged = true;
-
-                    if (this.IsBondedWarehouse) {
-                        this.CheckStorageProperties()
-                    };
+                    this.CheckStorageProperties();                    
                 }
             });
         });
@@ -662,6 +660,10 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         var storageReceivables: ShipmentReceivablePM[] = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE");
         if (storageReceivables.length > 0) {
             this.StorageFee = ArrayTool.Sum(storageReceivables, "TotalAmount");
+        }
+
+        else {
+            this.StorageFee = null;
         }
     }
     
@@ -728,10 +730,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            if (this.IsBondedWarehouse) {
-                this.CheckStorageProperties();
-            }
-
+            this.CheckStorageProperties(); 
             this.FatherComponent.BuildItemsCollection();
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
@@ -740,7 +739,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     private CheckStorageProperties() {
         var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
 
-        if (this.WarehouseLegActualReleaseDate != null && this.WarehouseLegActualReleaseDate != undefined && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
+        if (this.IsBondedWarehouse && this.WarehouseLegActualReleaseDate != null && this.WarehouseLegActualReleaseDate != undefined && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
             && !AppTool.IsNullOrZero(this.StorageDays) && this.ChargeStorage && this.EntityPM.ShipmentStoragePricings.length > 0) {
 
             if (this.PricesChanged) {
@@ -934,6 +933,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.myCloner.AddField('WarehouseLegCutOffDate');
         this.myCloner.AddField('WarehouseLegVGMCutOffDate');
         this.myCloner.AddField('WarehouseStorageFreeDays');
+        this.myCloner.AddField('IsBondedWarehouse');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.WarehouseAddressList);
         this.myCloner.AddEntity(this.FatherComponent.WarehouseAddressList);
