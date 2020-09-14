@@ -1,17 +1,24 @@
-﻿using Logitude.Accounting.BL.EntityUpdateServices;
+﻿using Logitude.Accounting.BL.CoreBL.Reconcile;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
     public class CreateReconciliationService
     {
+
         public ReconciliationPM GetReconciliation(List<LedgerTransactionPM> myMatchLedgerTransactionList)
         {
             LedgerTransactionPM firstMatch = myMatchLedgerTransactionList[0];
@@ -52,8 +59,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public RecoCallback CreateReconciliation(ReconciliationPM reconciliationPM)
         {
-            var accountingContext = AccountingContext.GetContext(reconciliationPM.Tenant);
-            ReconciliationUpdateService service = new ReconciliationUpdateService(accountingContext, new Dictionary<string, IContext>(), reconciliationPM.Tenant);
 
             // changeset
             if (reconciliationPM.ChangeSetOp != ChangeSetOperation.Insert)
@@ -66,7 +71,50 @@ namespace Logitude.Accounting.BL.CoreBL
                 item.ChangeSetOp = ChangeSetOperation.Insert;
             }
 
-            //multi-group split
+            RecoCallback recoCallBack = new RecoCallback();
+
+
+            List<LedgerTransactionPM> recoTransactions = GetReconcileTransactions(reconciliationPM);
+
+            bool hasMultipleARPayments = CheckIfHasMultiplePayment(reconciliationPM, recoTransactions);
+            if (hasMultipleARPayments == true)
+            {
+                CheckIfTotalNotEqualsZero(reconciliationPM);
+
+                MultipleARPaymentReconciliationSplitter splitter = new MultipleARPaymentReconciliationSplitter(reconciliationPM);
+                List<ReconciliationPM> paymentReconciliations = splitter.Split();
+
+                SubmitReconciliations(reconciliationPM.Tenant, paymentReconciliations);
+                recoCallBack = new RecoCallback() { isSplitted = true, splittedRecoCount = paymentReconciliations.Count };
+
+            }
+            else
+            {
+                recoCallBack = SplitAndSubmitReconciliationByGroupNumber(reconciliationPM);
+            }
+
+
+
+
+
+            return recoCallBack;
+        }
+
+        private void SubmitReconciliations(int tenant, List<ReconciliationPM> paymentReconciliations)
+        {
+            var accountingContext = AccountingContext.GetContext(tenant);
+            ReconciliationUpdateService service = new ReconciliationUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
+            foreach (ReconciliationPM recoPM in paymentReconciliations)
+            {
+                service.Update(recoPM, true);
+            }
+        }
+
+        private RecoCallback SplitAndSubmitReconciliationByGroupNumber(ReconciliationPM reconciliationPM)
+        {
+            var accountingContext = AccountingContext.GetContext(reconciliationPM.Tenant);
+            RecoCallback recoCallBack;
+            ReconciliationUpdateService service = new ReconciliationUpdateService(accountingContext, new Dictionary<string, IContext>(), reconciliationPM.Tenant);
             int groupsCount = reconciliationPM.ReconciliationLines.GroupBy(d => d.GroupNumber).Count();
             if (groupsCount > 1)
             {
@@ -76,17 +124,43 @@ namespace Logitude.Accounting.BL.CoreBL
                     service.Update(recoPM, true);
                 }
 
-                return new RecoCallback() { isSplitted = true, splittedRecoCount = recoPMs.Count };
+                recoCallBack = new RecoCallback() { isSplitted = true, splittedRecoCount = recoPMs.Count };
             }
             else
             {
                 service.Update(reconciliationPM, true);
+                recoCallBack = new RecoCallback(reconciliationPM);
+
             }
 
-            return new RecoCallback(reconciliationPM);
+            return recoCallBack;
         }
 
-        List<ReconciliationPM> SplitReconciliationByGroup(ReconciliationPM originalRecoPM)
+        private void CheckIfTotalNotEqualsZero(ReconciliationPM reconciliationPM)
+        {
+            decimal reconciliaionTotal = reconciliationPM.ReconciliationLines.Sum(d => d.ReconciliationAmount);
+            if (reconciliaionTotal != 0)
+            {
+                var msg = TextCodesTranslator.TranslateText("ARPayment.O.MultiPaymentZeroDifference", reconciliationPM.Tenant, LoggedContactResolver.GetLoggedContactShowLocal(reconciliationPM.Tenant));
+                throw new ApplicationException(msg);
+            }
+        }
+
+        private static bool CheckIfHasMultiplePayment(ReconciliationPM reconciliationPM, List<LedgerTransactionPM> recoTransactions)
+        {
+            bool hasMultipleARPayments = recoTransactions.Count(d => d.SourceTypeCode == AccountingEntities.ARPayment) > 1;
+            return hasMultipleARPayments;
+        }
+
+        private static List<LedgerTransactionPM> GetReconcileTransactions(ReconciliationPM reconciliationPM)
+        {
+            List<string> transactionsIds = reconciliationPM.ReconciliationLines.Select(d => d.TransactionId).ToList();
+            LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(reconciliationPM.Tenant);
+            List<LedgerTransactionPM> recoTransactions = transactionQueryService.GetLedgerTransactionPMsByIdList(transactionsIds, reconciliationPM.Tenant);
+            return recoTransactions;
+        }
+
+        private List<ReconciliationPM> SplitReconciliationByGroup(ReconciliationPM originalRecoPM)
         {
             List<ReconciliationPM> recoPMs = new List<ReconciliationPM>();
 
